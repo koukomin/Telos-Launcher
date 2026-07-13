@@ -30,7 +30,7 @@ android {
         }
     }
     defaultConfig {
-        applicationId = "de.mm20.launcher2"
+        applicationId = "com.dimitris.telos"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2026053100
