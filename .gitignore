@@ -295,4 +295,7 @@ fabric.properties
 .idea/other.xml
 .idea/studiobot.xml
 
+# Claude Code local settings temp files
+.claude/settings.local.json.tmp.*
+
 .kotlin
