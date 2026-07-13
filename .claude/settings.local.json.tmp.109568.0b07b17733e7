@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs -I{} basename {})",
+      "Bash(python3 -c \"import PIL; print\\(PIL.__version__\\)\")",
+      "Read(//tmp/**)",
+      "Bash(convert /home/koukos/Projects/Telos-Launcher/core/base/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png -format \"%c\" histogram:info:)",
+      "Bash(convert /home/koukos/Projects/Telos-Launcher/core/base/src/debug/res/mipmap-xxxhdpi/ic_launcher_foreground.png -format \"%c\" histogram:info:)",
+      "Bash(convert core/base/src/nightly/res/mipmap-xxxhdpi/ic_launcher_background.png -format \"%c\" histogram:info:)",
+      "Bash(convert -list font)",
+      "Bash(convert -size 432x432 'xc:#04327D' /tmp/claude-1000/-home-koukos-Projects-Telos-Launcher/47da8b5d-247c-4ad0-810c-6bd2a48cd212/scratchpad/icons/T_white_xxxhdpi.png -gravity center -composite /tmp/claude-1000/-home-koukos-Projects-Telos-Launcher/47da8b5d-247c-4ad0-810c-6bd2a48cd212/scratchpad/icons/preview_main.png)",
+      "Bash(convert -size 432x432 'xc:#E5EEFE' /tmp/claude-1000/-home-koukos-Projects-Telos-Launcher/47da8b5d-247c-4ad0-810c-6bd2a48cd212/scratchpad/icons/T_navy_xxxhdpi.png -gravity center -composite /tmp/claude-1000/-home-koukos-Projects-Telos-Launcher/47da8b5d-247c-4ad0-810c-6bd2a48cd212/scratchpad/icons/preview_debug.png)",
+      "Bash(convert core/base/src/nightly/res/mipmap-xxxhdpi/ic_launcher_background.png /tmp/claude-1000/-home-koukos-Projects-Telos-Launcher/47da8b5d-247c-4ad0-810c-6bd2a48cd212/scratchpad/icons/T_white_xxxhdpi.png -gravity center -composite /tmp/claude-1000/-home-koukos-Projects-Telos-Launcher/47da8b5d-247c-4ad0-810c-6bd2a48cd212/scratchpad/icons/preview_nightly.png)",
+      "Bash(montage /tmp/claude-1000/-home-koukos-Projects-Telos-Launcher/47da8b5d-247c-4ad0-810c-6bd2a48cd212/scratchpad/icons/preview_main.png /tmp/claude-1000/-home-koukos-Projects-Telos-Launcher/47da8b5d-247c-4ad0-810c-6bd2a48cd212/scratchpad/icons/preview_debug.png /tmp/claude-1000/-home-koukos-Projects-Telos-Launcher/47da8b5d-247c-4ad0-810c-6bd2a48cd212/scratchpad/icons/preview_nightly.png -tile 3x1 -geometry 200x200+5+5 -background gray /tmp/claude-1000/-home-koukos-Projects-Telos-Launcher/47da8b5d-247c-4ad0-810c-6bd2a48cd212/scratchpad/icons/preview_all.png)",
+      "Bash(git status *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(./gradlew assembleDefaultDebug --console=plain)",
+      "Bash(adb devices *)",
+      "Bash(emulator *)",
+      "Bash(/home/koukos/Android/Sdk/emulator/emulator *)",
+      "Bash(./gradlew assembleDefaultDebug --console=plain --max-workers=2)",
+      "Bash(echo \"EXIT_CODE=$?\")",
+      "Bash(update-alternatives --list java)",
+      "Read(//usr/lib/jvm/**)",
+      "Bash(java -version)",
+      "Bash(curl -sI --max-time 5 https://api.foojay.io)",
+      "Bash(pacman -Si jdk21-openjdk)",
+      "Bash(pacman -Q jdk21-openjdk jdk17-openjdk jdk-openjdk)",
+      "Bash(pacman -Q jdk21-openjdk)",
+      "Bash(adb install *)",
+      "Bash(adb shell *)",
+      "Bash(adb pull *)",
+      "Bash(adb uninstall *)",
+      "Bash(git commit *)"
+    ]
+  }
+}
