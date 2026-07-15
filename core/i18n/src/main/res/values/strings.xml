@@ -227,6 +227,8 @@
     <string name="widget_name_music">Media</string>
     <string name="widget_name_apps">Apps</string>
     <string name="widget_name_notes">Note</string>
+    <string name="widget_name_battery">Battery</string>
+    <string name="battery_widget_not_charging">Not charging</string>
     <string name="widget_name_unknown">Unknown</string>
     <string name="widget_add_widget">Add widget</string>
     <string name="widget_removed">Widget removed</string>

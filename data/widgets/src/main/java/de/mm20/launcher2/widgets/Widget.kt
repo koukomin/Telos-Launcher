@@ -71,6 +71,12 @@ sealed class Widget {
                             ?: NotesWidgetConfig()
                     NotesWidget(entity.id, entity.stackId, config)
                 }
+                BatteryWidget.Type -> {
+                    val config: BatteryWidgetConfig =
+                        Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
+                            ?: BatteryWidgetConfig()
+                    BatteryWidget(entity.id, entity.stackId, config)
+                }
 
                 else -> null
             }
@@ -93,6 +99,7 @@ fun Widget.withStackId(stackId: UUID?): Widget {
         is AppsWidget -> copy(stackId = stackId)
         is AppWidget -> copy(stackId = stackId)
         is NotesWidget -> copy(stackId = stackId)
+        is BatteryWidget -> copy(stackId = stackId)
     }
 }
 
@@ -108,6 +115,7 @@ val Widget.height: Int?
         is AppsWidget -> config.height
         is AppWidget -> config.height
         is NotesWidget -> config.height
+        is BatteryWidget -> config.height
     }
 
 fun Widget.withHeight(height: Int?): Widget {
@@ -118,5 +126,6 @@ fun Widget.withHeight(height: Int?): Widget {
         is AppsWidget -> copy(config = config.copy(height = height))
         is AppWidget -> copy(config = config.copy(height = height ?: config.height))
         is NotesWidget -> copy(config = config.copy(height = height))
+        is BatteryWidget -> copy(config = config.copy(height = height))
     }
 }

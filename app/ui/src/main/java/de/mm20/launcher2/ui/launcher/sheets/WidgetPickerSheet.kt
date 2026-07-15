@@ -68,6 +68,7 @@ import de.mm20.launcher2.ui.ktx.animateShapeAsState
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.AppWidgetConfig
 import de.mm20.launcher2.widgets.AppsWidget
+import de.mm20.launcher2.widgets.BatteryWidget
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
@@ -386,6 +387,7 @@ fun WidgetPickerSheet(
                                     MusicWidget.Type -> MusicWidget(id)
                                     AppsWidget.Type -> AppsWidget(id)
                                     NotesWidget.Type -> NotesWidget(id)
+                                    BatteryWidget.Type -> BatteryWidget(id)
                                     else -> return@clickable
                                 }
                                 onWidgetSelected(widget)
@@ -404,6 +406,7 @@ fun WidgetPickerSheet(
                                         MusicWidget.Type -> R.drawable.music_note_24px
                                         AppsWidget.Type -> R.drawable.apps_24px
                                         NotesWidget.Type -> R.drawable.sticky_note_2_24px
+                                        BatteryWidget.Type -> R.drawable.battery_full_24px
                                         else -> R.drawable.widgets_24px
                                     }
                                 ),

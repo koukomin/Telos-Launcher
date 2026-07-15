@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.pm.LauncherApps
 import android.os.Build
 import androidx.core.content.getSystemService
+import de.mm20.launcher2.widgets.BatteryWidget
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.AppsWidget
 import de.mm20.launcher2.widgets.MusicWidget
@@ -69,6 +70,10 @@ class WidgetsService(
             BuiltInWidgetInfo(
                 type = NotesWidget.Type,
                 label = context.getString(R.string.widget_name_notes),
+            ),
+            BuiltInWidgetInfo(
+                type = BatteryWidget.Type,
+                label = context.getString(R.string.widget_name_battery),
             ),
         )
     }
