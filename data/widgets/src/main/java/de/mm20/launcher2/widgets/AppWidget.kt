@@ -25,6 +25,7 @@ data class AppWidgetConfig(
 
 data class AppWidget(
     override val id: UUID,
+    override val stackId: UUID? = null,
     val config: AppWidgetConfig,
 ) : Widget() {
 
@@ -33,6 +34,7 @@ data class AppWidget(
             id = id,
             type = Type,
             config = Json.encodeToString(config),
+            stackId = stackId,
         )
     }
 

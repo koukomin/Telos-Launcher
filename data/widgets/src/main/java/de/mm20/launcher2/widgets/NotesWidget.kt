@@ -23,6 +23,7 @@ data class NotesWidgetConfig(
 
 data class NotesWidget(
     override val id: UUID,
+    override val stackId: UUID? = null,
     val config: NotesWidgetConfig = NotesWidgetConfig(),
 ) : Widget() {
 
@@ -31,6 +32,7 @@ data class NotesWidget(
             id = id,
             type = Type,
             config = Json.encodeToString(config),
+            stackId = stackId,
         )
     }
 

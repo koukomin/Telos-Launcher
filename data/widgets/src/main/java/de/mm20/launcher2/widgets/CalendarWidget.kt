@@ -22,6 +22,7 @@ data class CalendarWidgetConfig(
 )
 data class CalendarWidget(
     override val id: UUID,
+    override val stackId: UUID? = null,
     val config: CalendarWidgetConfig = CalendarWidgetConfig(),
 ) : Widget() {
     override fun toDatabaseEntity(): PartialWidgetEntity {
@@ -29,6 +30,7 @@ data class CalendarWidget(
             id = id,
             type = Type,
             config = Json.encodeToString(config),
+            stackId = stackId,
         )
     }
 

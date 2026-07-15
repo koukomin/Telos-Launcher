@@ -55,6 +55,7 @@ fun WidgetItem(
     onWidgetAdd: (widget: Widget, offset: Int) -> Unit = { _, _ -> },
     onWidgetUpdate: (widget: Widget) -> Unit = {},
     onWidgetRemove: () -> Unit = {},
+    onAddToStack: (() -> Unit)? = null,
     draggableState: DraggableState = rememberDraggableState {},
     onDragStopped: () -> Unit = {}
 ) {
@@ -113,6 +114,14 @@ fun WidgetItem(
                             painterResource(R.drawable.tune_24px),
                             contentDescription = stringResource(R.string.settings)
                         )
+                    }
+                    if (onAddToStack != null) {
+                        IconButton(onClick = onAddToStack) {
+                            Icon(
+                                painterResource(R.drawable.add_24px),
+                                contentDescription = stringResource(R.string.widget_stack_action_add)
+                            )
+                        }
                     }
                     IconButton(onClick = { onWidgetRemove() }) {
                         Icon(

@@ -41,6 +41,7 @@ import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.launcher.sheets.WidgetPickerSheet
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.widgets.AppWidget
+import de.mm20.launcher2.widgets.Widget
 import kotlinx.coroutines.launch
 import java.util.UUID
 
@@ -61,6 +62,7 @@ fun WidgetColumn(
     val snackbarHostState = LocalSnackbarHostState.current
 
     var addNewWidget by rememberSaveable { mutableStateOf(false) }
+    var stackTarget by rememberSaveable { mutableStateOf<Widget?>(null) }
 
 
     Column(
@@ -68,85 +70,112 @@ fun WidgetColumn(
     ) {
         val scope = rememberCoroutineScope()
         Column {
-            val widgets by viewModel.widgets.collectAsState()
-            val swapThresholds = remember(widgets) {
-                Array(widgets.size) { floatArrayOf(0f, 0f) }
+            val slots by viewModel.slots.collectAsState()
+            val swapThresholds = remember(slots) {
+                Array(slots.size) { floatArrayOf(0f, 0f) }
             }
-            val widgetsWithIndex = remember(widgets) { widgets.withIndex() }
-            for ((i, widget) in widgetsWithIndex) {
-                key(widget.id) {
+            val slotsWithIndex = remember(slots) { slots.withIndex() }
+            for ((i, slot) in slotsWithIndex) {
+                key(slot.first().stackId ?: slot.first().id) {
                     var dragOffsetAfterSwap = remember<Float?> { null }
                     val offsetY =
-                        remember(widgets) { mutableFloatStateOf(dragOffsetAfterSwap ?: 0f) }
+                        remember(slots) { mutableFloatStateOf(dragOffsetAfterSwap ?: 0f) }
 
-                    LaunchedEffect(widgets) {
+                    LaunchedEffect(slots) {
                         dragOffsetAfterSwap = null
                     }
 
                     val widgetHost = LocalAppWidgetHost.current
 
-                    WidgetItem(
-                        widget = widget,
-                        editMode = editMode,
-                        onWidgetAdd = { widget, offset ->
-                            viewModel.addWidget(widget, i + offset)
-                        },
-                        onWidgetRemove = {
-                            lifecycleOwner.lifecycleScope.launch {
-                                viewModel.removeWidget(widget)
-                                val result = snackbarHostState.showSnackbar(
-                                    message = context.getString(R.string.widget_removed),
-                                    actionLabel = context.getString(R.string.action_undo),
-                                    duration = SnackbarDuration.Short,
-                                )
-                                if (result == SnackbarResult.ActionPerformed) {
-                                    viewModel.addWidget(widget, i)
-                                } else {
-                                    if (widget is AppWidget) {
-                                        widgetHost.deleteAppWidgetId(widget.config.widgetId)
-                                    }
+                    val itemModifier = Modifier
+                        .fillMaxWidth()
+                        .onPlaced {
+                            swapThresholds[i][0] = it.positionInParent().y
+                            swapThresholds[i][1] = it.positionInParent().y + it.size.height
+                        }
+                        .padding(top = if (i > 0) 8.dp else 0.dp)
+                        .offset {
+                            IntOffset(0, offsetY.value.toInt())
+                        }
+                    val itemDraggableState = rememberDraggableState {
+                        scope.launch {
+                            val newOffset = offsetY.value + it
+                            offsetY.value = newOffset
+                            if (i > 0 && newOffset < (swapThresholds[i - 1][0] - swapThresholds[i - 1][1])) {
+                                if (dragOffsetAfterSwap == null) {
+                                    dragOffsetAfterSwap =
+                                        swapThresholds[i - 1][1] - swapThresholds[i - 1][0] + newOffset
+                                    viewModel.moveSlotUp(i)
                                 }
                             }
-                        },
-                        onWidgetUpdate = {
-                            viewModel.updateWidget(it)
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .onPlaced {
-                                swapThresholds[i][0] = it.positionInParent().y
-                                swapThresholds[i][1] = it.positionInParent().y + it.size.height
+                            if (i < slots.lastIndex && newOffset > (swapThresholds[i + 1][1] - swapThresholds[i + 1][0])) {
+                                if (dragOffsetAfterSwap == null) {
+                                    dragOffsetAfterSwap =
+                                        swapThresholds[i + 1][0] - swapThresholds[i + 1][1] + newOffset
+                                    viewModel.moveSlotDown(i)
+                                }
                             }
-                            .padding(top = if (i > 0) 8.dp else 0.dp)
-                            .offset {
-                                IntOffset(0, offsetY.value.toInt())
+                        }
+                    }
+                    val itemOnDragStopped: () -> Unit = {
+                        scope.launch {
+                            offsetY.animateTo(0f)
+                        }
+                    }
+
+                    val onWidgetRemove: (Widget) -> Unit = { widget ->
+                        lifecycleOwner.lifecycleScope.launch {
+                            viewModel.removeWidget(widget)
+                            val result = snackbarHostState.showSnackbar(
+                                message = context.getString(R.string.widget_removed),
+                                actionLabel = context.getString(R.string.action_undo),
+                                duration = SnackbarDuration.Short,
+                            )
+                            if (result == SnackbarResult.ActionPerformed) {
+                                viewModel.addWidget(widget, i)
+                            } else {
+                                if (widget is AppWidget) {
+                                    widgetHost.deleteAppWidgetId(widget.config.widgetId)
+                                }
+                            }
+                        }
+                    }
+
+                    if (slot.size == 1) {
+                        val widget = slot[0]
+                        WidgetItem(
+                            widget = widget,
+                            editMode = editMode,
+                            onWidgetAdd = { added, offset ->
+                                viewModel.addWidget(added, i + offset)
                             },
-                        draggableState = rememberDraggableState {
-                            scope.launch {
-                                val newOffset = offsetY.value + it
-                                offsetY.value = newOffset
-                                if (i > 0 && newOffset < (swapThresholds[i - 1][0] - swapThresholds[i - 1][1])) {
-                                    if (dragOffsetAfterSwap == null) {
-                                        dragOffsetAfterSwap =
-                                            swapThresholds[i - 1][1] - swapThresholds[i - 1][0] + newOffset
-                                        viewModel.moveUp(i)
-                                    }
-                                }
-                                if (i < widgets.lastIndex && newOffset > (swapThresholds[i + 1][1] - swapThresholds[i + 1][0])) {
-                                    if (dragOffsetAfterSwap == null) {
-                                        dragOffsetAfterSwap =
-                                            swapThresholds[i + 1][0] - swapThresholds[i + 1][1] + newOffset
-                                        viewModel.moveDown(i)
-                                    }
-                                }
-                            }
-                        },
-                        onDragStopped = {
-                            scope.launch {
-                                offsetY.animateTo(0f)
-                            }
-                        },
-                    )
+                            onWidgetRemove = { onWidgetRemove(widget) },
+                            onWidgetUpdate = {
+                                viewModel.updateWidget(it)
+                            },
+                            onAddToStack = { stackTarget = widget },
+                            modifier = itemModifier,
+                            draggableState = itemDraggableState,
+                            onDragStopped = itemOnDragStopped,
+                        )
+                    } else {
+                        WidgetStackItem(
+                            widgets = slot,
+                            editMode = editMode,
+                            onWidgetAdd = { added, offset ->
+                                viewModel.addWidget(added, i + offset)
+                            },
+                            onWidgetUpdate = {
+                                viewModel.updateWidget(it)
+                            },
+                            onWidgetRemove = onWidgetRemove,
+                            onAddToStack = { stackTarget = it },
+                            onRemoveFromStack = { viewModel.removeFromStack(it) },
+                            modifier = itemModifier,
+                            draggableState = itemDraggableState,
+                            onDragStopped = itemOnDragStopped,
+                        )
+                    }
                 }
             }
         }
@@ -192,6 +221,18 @@ fun WidgetColumn(
         onWidgetSelected = {
             viewModel.addWidget(it)
             addNewWidget = false
+        },
+    )
+
+    WidgetPickerSheet(
+        expanded = stackTarget != null,
+        onDismiss = { stackTarget = null },
+        onWidgetSelected = {
+            val target = stackTarget
+            if (target != null) {
+                viewModel.addToStack(target, it)
+            }
+            stackTarget = null
         },
     )
 }

@@ -10,6 +10,7 @@ import java.util.UUID
 sealed class Widget {
 
     abstract val id: UUID
+    abstract val stackId: UUID?
     internal fun toDatabaseEntity(position: Int, parentId: UUID? = null): WidgetEntity {
         return toDatabaseEntity().let {
             WidgetEntity(
@@ -18,6 +19,7 @@ sealed class Widget {
                 config = it.config,
                 position = position,
                 parentId = parentId,
+                stackId = it.stackId,
             )
         }
     }
@@ -33,10 +35,11 @@ sealed class Widget {
                     val config: WeatherWidgetConfig =
                         Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
                             ?: WeatherWidgetConfig()
-                    WeatherWidget(entity.id, config)
+                    WeatherWidget(entity.id, entity.stackId, config)
                 }
                 MusicWidget.Type -> MusicWidget(
                     entity.id,
+                    entity.stackId,
                     Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
                         ?: MusicWidgetConfig(),
                 )
@@ -44,13 +47,13 @@ sealed class Widget {
                     val config: CalendarWidgetConfig =
                         Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
                             ?: CalendarWidgetConfig()
-                    CalendarWidget(entity.id, config)
+                    CalendarWidget(entity.id, entity.stackId, config)
                 }
                 AppsWidget.Type -> {
                     val config: FavoritesWidgetConfig =
                         Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
                             ?: FavoritesWidgetConfig()
-                    AppsWidget(entity.id, config)
+                    AppsWidget(entity.id, entity.stackId, config)
                 }
                 AppWidget.Type -> {
                     val config: AppWidgetConfig =
@@ -58,6 +61,7 @@ sealed class Widget {
                             ?: return null
                     AppWidget(
                         entity.id,
+                        entity.stackId,
                         config,
                     )
                 }
@@ -65,7 +69,7 @@ sealed class Widget {
                     val config: NotesWidgetConfig =
                         Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
                             ?: NotesWidgetConfig()
-                    NotesWidget(entity.id, config)
+                    NotesWidget(entity.id, entity.stackId, config)
                 }
 
                 else -> null
@@ -79,4 +83,15 @@ sealed class Widget {
 enum class WidgetType(val value: String) {
     INTERNAL("internal"),
     THIRD_PARTY("3rdparty")
+}
+
+fun Widget.withStackId(stackId: UUID?): Widget {
+    return when (this) {
+        is WeatherWidget -> copy(stackId = stackId)
+        is MusicWidget -> copy(stackId = stackId)
+        is CalendarWidget -> copy(stackId = stackId)
+        is AppsWidget -> copy(stackId = stackId)
+        is AppWidget -> copy(stackId = stackId)
+        is NotesWidget -> copy(stackId = stackId)
+    }
 }

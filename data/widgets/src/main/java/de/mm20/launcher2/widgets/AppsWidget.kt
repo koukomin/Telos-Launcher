@@ -17,6 +17,7 @@ data class FavoritesWidgetConfig(
 
 data class AppsWidget(
     override val id: UUID,
+    override val stackId: UUID? = null,
     val config: FavoritesWidgetConfig = FavoritesWidgetConfig(),
 ) : Widget() {
 
@@ -25,6 +26,7 @@ data class AppsWidget(
             id = id,
             type = Type,
             config = Json.encodeToString(config),
+            stackId = stackId,
         )
     }
 

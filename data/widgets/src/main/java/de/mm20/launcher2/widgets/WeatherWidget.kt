@@ -14,6 +14,7 @@ data class WeatherWidgetConfig(
 
 data class WeatherWidget(
     override val id: UUID,
+    override val stackId: UUID? = null,
     val config: WeatherWidgetConfig = WeatherWidgetConfig(),
 ) : Widget() {
 
@@ -22,6 +23,7 @@ data class WeatherWidget(
             id = id,
             type = Type,
             config = Json.encodeToString(config),
+            stackId = stackId,
         )
     }
 

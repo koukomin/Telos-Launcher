@@ -12,6 +12,7 @@ data class WidgetEntity(
         var position: Int,
         @PrimaryKey val id: UUID,
         val parentId: UUID? = null,
+        val stackId: UUID? = null,
 )
 
 /**
@@ -21,4 +22,5 @@ data class PartialWidgetEntity(
         val type: String,
         var config: String?,
         @PrimaryKey val id: UUID,
+        val stackId: UUID? = null,
 )

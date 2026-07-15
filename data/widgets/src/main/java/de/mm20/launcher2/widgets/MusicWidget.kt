@@ -13,6 +13,7 @@ data class MusicWidgetConfig(
 
 data class MusicWidget(
     override val id: UUID,
+    override val stackId: UUID? = null,
     val config: MusicWidgetConfig = MusicWidgetConfig(),
 ) : Widget() {
     override fun toDatabaseEntity(): PartialWidgetEntity {
@@ -20,6 +21,7 @@ data class MusicWidget(
             id = id,
             type = Type,
             config = Json.encodeToString(config),
+            stackId = stackId,
         )
     }
 
