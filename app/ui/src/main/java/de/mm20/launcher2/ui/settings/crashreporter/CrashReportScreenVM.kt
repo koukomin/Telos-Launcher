@@ -35,7 +35,7 @@ class CrashReportScreenVM : ViewModel() {
                     "```\n\n" +
                     "## Device info\n" +
                     "${getDeviceInformation(context).replace("\n", "<br>")}\n"
-        val url = "https://github.com/MM2-0/Kvaesitso/issues/new?labels=crash+report&body=${
+        val url = "https://github.com/koukomin/Telos-Launcher/issues/new?labels=crash+report&body=${
             URLEncoder.encode(
                 body,
                 "utf8"
