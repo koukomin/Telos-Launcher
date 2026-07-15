@@ -561,8 +561,6 @@
     <string name="preference_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin">Sign in to Owncloud</string>
     <string name="preference_owncloud_signin_summary">Sign in to search your Owncloud server</string>
-    <string name="preference_about_telegram">Telegram group</string>
-    <string name="preference_about_fdroid">F-Droid repository</string>
     <string name="preference_enforce_icon_shape">Enforce shape</string>
     <string name="preference_enforce_icon_shape_summary">Apply shape to all icons including those that would normally not support it</string>
     <string name="preference_category_license">License</string>
@@ -1124,5 +1122,4 @@
     <string name="typo_preview_medium1">Hamburg</string>
     <string name="typo_preview_medium2">Preview</string>
     <string name="typo_preview_long">The quick brown fox\njumps over 1234790</string>
-    <string name="preference_category_donate">Support the development</string>
 </resources>

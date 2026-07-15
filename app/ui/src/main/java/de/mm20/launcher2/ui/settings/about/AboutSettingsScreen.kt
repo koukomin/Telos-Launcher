@@ -80,50 +80,14 @@ fun AboutSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(id = R.string.preference_category_donate)) {
-                Preference(
-                    icon = R.drawable.favorite_24px,
-                    title = "GitHub Sponsors",
-                    summary = "github.com/sponsors/MM2-0",
-                    onClick = {
-
-                        context.startActivity(Intent(Intent.ACTION_VIEW).apply {
-                            data = "https://github.com/sponsors/MM2-0".toUri()
-                        })
-                    }
-                )
-            }
-        }
-        item {
             PreferenceCategory(title = stringResource(id = R.string.preference_category_links)) {
                 Preference(
                     icon = R.drawable.github,
                     title = "GitHub",
-                    summary = "github.com/MM2-0/Kvaesitso",
+                    summary = "github.com/koukomin/Telos-Launcher",
                     onClick = {
                         context.startActivity(Intent(Intent.ACTION_VIEW).apply {
-                            data = "https://github.com/MM2-0/Kvaesitso".toUri()
-                        })
-                    }
-                )
-                Preference(
-                    icon = R.drawable.telegram,
-                    title = stringResource(id = R.string.preference_about_telegram),
-                    summary = "t.me/Kvaesitso",
-                    onClick = {
-                        context.startActivity(Intent(Intent.ACTION_VIEW).apply {
-                            data = "https://t.me/Kvaesitso".toUri()
-                        })
-                    }
-                )
-                Preference(
-                    icon = R.drawable.fdroid,
-                    title = stringResource(id = R.string.preference_about_fdroid),
-                    summary = "fdroid.mm20.de",
-                    onClick = {
-                        context.startActivity(Intent(Intent.ACTION_VIEW).apply {
-                            data =
-                                "https://fdroid.mm20.de".toUri()
+                            data = "https://github.com/koukomin/Telos-Launcher".toUri()
                         })
                     }
                 )
