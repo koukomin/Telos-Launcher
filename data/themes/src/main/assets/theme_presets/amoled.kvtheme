@@ -1,0 +1,21 @@
+{
+  "name": "AMOLED Black",
+  "author": "Telos Launcher",
+  "version": 2,
+  "colors": {
+    "id": "00000000-0000-0000-0000-000000000064",
+    "name": "AMOLED Black",
+    "darkColorScheme": {
+      "background": "#ff000000",
+      "surface": "#ff000000",
+      "surfaceDim": "#ff000000",
+      "surfaceBright": "#ff000000",
+      "surfaceVariant": "#ff000000",
+      "surfaceContainerLowest": "#ff000000",
+      "surfaceContainerLow": "#ff000000",
+      "surfaceContainer": "#ff000000",
+      "surfaceContainerHigh": "#ff000000",
+      "surfaceContainerHighest": "#ff000000"
+    }
+  }
+}

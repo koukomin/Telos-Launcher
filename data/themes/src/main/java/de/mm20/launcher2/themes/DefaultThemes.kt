@@ -8,6 +8,9 @@ val DefaultThemeId = UUID(0L, 0L)
 val HighContrastThemeId = UUID(0L, 2L)
 val BlackAndWhiteThemeId = UUID(0L, 1L)
 
+val AmoledPresetId = UUID(0L, 100L)
+val CyberpunkPresetId = UUID(0L, 101L)
+
 val ExtraRoundShapesId = UUID(0L, 1L)
 val CutShapesId = UUID(0L, 2L)
 val RectShapesId = UUID(0L, 3L)

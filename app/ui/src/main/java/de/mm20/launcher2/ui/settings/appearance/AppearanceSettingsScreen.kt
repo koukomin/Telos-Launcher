@@ -18,6 +18,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.appearance.presets.PresetsSettingsRoute
 import de.mm20.launcher2.ui.settings.colorscheme.ColorSchemesSettingsRoute
 import de.mm20.launcher2.ui.settings.shapes.ShapeSchemesSettingsRoute
 import de.mm20.launcher2.ui.settings.transparencies.TransparencySchemesSettingsRoute
@@ -60,6 +61,17 @@ fun AppearanceSettingsScreen() {
                         if (newValue == null) return@ListPreference
                         viewModel.setColorScheme(newValue)
                     }
+                )
+            }
+        }
+        item {
+            PreferenceCategory {
+                Preference(
+                    title = stringResource(id = R.string.preference_screen_presets),
+                    onClick = {
+                        backStack.add(PresetsSettingsRoute)
+                    },
+                    icon = R.drawable.auto_awesome_24dp,
                 )
             }
         }

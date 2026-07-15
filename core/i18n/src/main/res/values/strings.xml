@@ -428,6 +428,7 @@
     <string name="preference_theme_light">Light</string>
     <string name="preference_theme_dark">Dark</string>
     <string name="preference_screen_colors">Color scheme</string>
+    <string name="preference_screen_presets">Presets</string>
     <string name="preference_create_colors">New color scheme</string>
     <string name="preference_colors_default">Default</string>
     <string name="preference_colors_high_contrast">High contrast</string>

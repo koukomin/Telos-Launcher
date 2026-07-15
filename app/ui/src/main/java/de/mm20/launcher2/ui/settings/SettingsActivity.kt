@@ -50,6 +50,8 @@ import de.mm20.launcher2.ui.settings.appearance.ExportThemeSettingsRoute
 import de.mm20.launcher2.ui.settings.appearance.ExportThemeSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.ImportThemeSettingsRoute
 import de.mm20.launcher2.ui.settings.appearance.ImportThemeSettingsScreen
+import de.mm20.launcher2.ui.settings.appearance.presets.PresetsSettingsRoute
+import de.mm20.launcher2.ui.settings.appearance.presets.PresetsSettingsScreen
 import de.mm20.launcher2.ui.settings.apps.AppSearchSettingsRoute
 import de.mm20.launcher2.ui.settings.apps.AppSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsRoute
@@ -190,6 +192,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<ColorSchemeSettingsRoute> {
                 ColorSchemeSettingsScreen(it.id)
+            }
+            entry<PresetsSettingsRoute> {
+                PresetsSettingsScreen()
             }
             entry<ShapeSchemesSettingsRoute> {
                 ShapeSchemesSettingsScreen()
