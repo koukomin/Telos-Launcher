@@ -10,6 +10,7 @@ import java.util.UUID
 @Serializable
 data class WeatherWidgetConfig(
     val showForecast: Boolean = true,
+    val height: Int? = null,
 )
 
 data class WeatherWidget(

@@ -8,7 +8,8 @@ import java.util.UUID
 
 @Serializable
 data class MusicWidgetConfig(
-    val interactiveProgressBar: Boolean = false
+    val interactiveProgressBar: Boolean = false,
+    val height: Int? = null,
 )
 
 data class MusicWidget(

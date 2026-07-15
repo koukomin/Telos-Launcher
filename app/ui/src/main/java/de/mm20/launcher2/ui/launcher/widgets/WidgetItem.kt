@@ -8,8 +8,11 @@ import androidx.compose.foundation.gestures.DraggableState
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,14 +26,19 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.isUnspecified
 import androidx.compose.ui.zIndex
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.DragResizeHandle
 import de.mm20.launcher2.ui.component.LauncherCard
+import de.mm20.launcher2.ui.component.ResizeAxis
 import de.mm20.launcher2.ui.launcher.sheets.ConfigureWidgetSheet
 import de.mm20.launcher2.ui.launcher.widgets.calendar.CalendarWidget
 import de.mm20.launcher2.ui.launcher.widgets.external.AppWidget
@@ -46,6 +54,9 @@ import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
+import de.mm20.launcher2.widgets.height
+import de.mm20.launcher2.widgets.withHeight
+import kotlin.math.roundToInt
 
 @Composable
 fun WidgetItem(
@@ -131,38 +142,72 @@ fun WidgetItem(
                     }
                 }
             }
-            AnimatedVisibility(!editMode) {
-                when (widget) {
-                    is WeatherWidget -> {
-                        WeatherWidget(widget)
-                    }
+            var resizeHeight by remember(widget.id) {
+                mutableStateOf(widget.height?.dp ?: Dp.Unspecified)
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .then(if (editMode) Modifier.padding(bottom = 32.dp) else Modifier),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .then(
+                            if (resizeHeight.isUnspecified) Modifier
+                            else Modifier.height(resizeHeight).clipToBounds()
+                        ),
+                ) {
+                    when (widget) {
+                        is WeatherWidget -> {
+                            WeatherWidget(widget)
+                        }
 
-                    is MusicWidget -> {
-                        MusicWidget(widget)
-                    }
+                        is MusicWidget -> {
+                            MusicWidget(widget)
+                        }
 
-                    is CalendarWidget -> {
-                        CalendarWidget(widget)
-                    }
+                        is CalendarWidget -> {
+                            CalendarWidget(widget)
+                        }
 
-                    is AppsWidget -> {
-                        AppsWidget(widget)
-                    }
+                        is AppsWidget -> {
+                            AppsWidget(widget)
+                        }
 
-                    is NotesWidget -> {
-                        NotesWidget(
-                            widget,
-                            onWidgetAdd = onWidgetAdd,
-                        )
-                    }
+                        is NotesWidget -> {
+                            NotesWidget(
+                                widget,
+                                onWidgetAdd = onWidgetAdd,
+                            )
+                        }
 
-                    is AppWidget -> {
-                        AppWidget(
-                            widget,
-                            onWidgetUpdate = onWidgetUpdate,
-                            onWidgetRemove = onWidgetRemove,
-                        )
+                        is AppWidget -> {
+                            AppWidget(
+                                widget,
+                                onWidgetUpdate = onWidgetUpdate,
+                                onWidgetRemove = onWidgetRemove,
+                            )
+                        }
                     }
+                }
+                if (editMode) {
+                    DragResizeHandle(
+                        resizeAxis = ResizeAxis.Vertical,
+                        alignment = Alignment.BottomCenter,
+                        height = resizeHeight,
+                        minHeight = 56.dp,
+                        maxHeight = 1200.dp,
+                        snapToMeasuredHeight = true,
+                        onResize = { _, h -> resizeHeight = h },
+                        onResizeStopped = {
+                            onWidgetUpdate(
+                                widget.withHeight(
+                                    resizeHeight.takeIf { !it.isUnspecified }?.value?.roundToInt()
+                                )
+                            )
+                        },
+                    )
                 }
             }
         }

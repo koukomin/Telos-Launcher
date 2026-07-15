@@ -95,3 +95,28 @@ fun Widget.withStackId(stackId: UUID?): Widget {
         is NotesWidget -> copy(stackId = stackId)
     }
 }
+
+/**
+ * The user-configured height override for this widget, in dp, or `null` if
+ * it should size itself naturally (content-driven height).
+ */
+val Widget.height: Int?
+    get() = when (this) {
+        is WeatherWidget -> config.height
+        is MusicWidget -> config.height
+        is CalendarWidget -> config.height
+        is AppsWidget -> config.height
+        is AppWidget -> config.height
+        is NotesWidget -> config.height
+    }
+
+fun Widget.withHeight(height: Int?): Widget {
+    return when (this) {
+        is WeatherWidget -> copy(config = config.copy(height = height))
+        is MusicWidget -> copy(config = config.copy(height = height))
+        is CalendarWidget -> copy(config = config.copy(height = height))
+        is AppsWidget -> copy(config = config.copy(height = height))
+        is AppWidget -> copy(config = config.copy(height = height ?: config.height))
+        is NotesWidget -> copy(config = config.copy(height = height))
+    }
+}

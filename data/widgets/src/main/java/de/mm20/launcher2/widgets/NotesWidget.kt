@@ -19,6 +19,7 @@ data class NotesWidgetConfig(
      * If false, a conflict resolver will be shown if the note content differs from the file content.
      */
     val lastSyncSuccessful: Boolean = false,
+    val height: Int? = null,
 )
 
 data class NotesWidget(
