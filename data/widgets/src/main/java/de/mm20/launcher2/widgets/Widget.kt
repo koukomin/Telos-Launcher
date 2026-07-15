@@ -83,6 +83,12 @@ sealed class Widget {
                             ?: NetworkWidgetConfig()
                     NetworkWidget(entity.id, entity.stackId, config)
                 }
+                SystemWidget.Type -> {
+                    val config: SystemWidgetConfig =
+                        Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
+                            ?: SystemWidgetConfig()
+                    SystemWidget(entity.id, entity.stackId, config)
+                }
 
                 else -> null
             }
@@ -107,6 +113,7 @@ fun Widget.withStackId(stackId: UUID?): Widget {
         is NotesWidget -> copy(stackId = stackId)
         is BatteryWidget -> copy(stackId = stackId)
         is NetworkWidget -> copy(stackId = stackId)
+        is SystemWidget -> copy(stackId = stackId)
     }
 }
 
@@ -124,6 +131,7 @@ val Widget.height: Int?
         is NotesWidget -> config.height
         is BatteryWidget -> config.height
         is NetworkWidget -> config.height
+        is SystemWidget -> config.height
     }
 
 fun Widget.withHeight(height: Int?): Widget {
@@ -136,5 +144,6 @@ fun Widget.withHeight(height: Int?): Widget {
         is NotesWidget -> copy(config = config.copy(height = height))
         is BatteryWidget -> copy(config = config.copy(height = height))
         is NetworkWidget -> copy(config = config.copy(height = height))
+        is SystemWidget -> copy(config = config.copy(height = height))
     }
 }

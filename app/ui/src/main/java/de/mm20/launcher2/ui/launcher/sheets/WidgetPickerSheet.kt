@@ -73,6 +73,7 @@ import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NetworkWidget
 import de.mm20.launcher2.widgets.NotesWidget
+import de.mm20.launcher2.widgets.SystemWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
 import java.util.UUID
@@ -390,6 +391,7 @@ fun WidgetPickerSheet(
                                     NotesWidget.Type -> NotesWidget(id)
                                     BatteryWidget.Type -> BatteryWidget(id)
                                     NetworkWidget.Type -> NetworkWidget(id)
+                                    SystemWidget.Type -> SystemWidget(id)
                                     else -> return@clickable
                                 }
                                 onWidgetSelected(widget)
@@ -410,6 +412,7 @@ fun WidgetPickerSheet(
                                         NotesWidget.Type -> R.drawable.sticky_note_2_24px
                                         BatteryWidget.Type -> R.drawable.battery_full_24px
                                         NetworkWidget.Type -> R.drawable.wifi_24px
+                                        SystemWidget.Type -> R.drawable.memory_24px
                                         else -> R.drawable.widgets_24px
                                     }
                                 ),

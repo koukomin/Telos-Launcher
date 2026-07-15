@@ -118,6 +118,7 @@ import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NetworkWidget
 import de.mm20.launcher2.widgets.NotesWidget
+import de.mm20.launcher2.widgets.SystemWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
 import kotlinx.collections.immutable.toImmutableList
@@ -155,6 +156,7 @@ fun ConfigureWidgetSheet(
                 is NotesWidget -> ConfigureNotesWidget(widget, onWidgetUpdated)
                 is BatteryWidget -> {}
                 is NetworkWidget -> {}
+                is SystemWidget -> {}
             }
         }
 
@@ -669,6 +671,7 @@ fun ColumnScope.ConfigureAppWidget(
                     is NotesWidget -> it.copy(id = widget.id)
                     is BatteryWidget -> it.copy(id = widget.id)
                     is NetworkWidget -> it.copy(id = widget.id)
+                    is SystemWidget -> it.copy(id = widget.id)
                 }
                 onWidgetUpdated(updatedWidget)
                 replaceWidget = false

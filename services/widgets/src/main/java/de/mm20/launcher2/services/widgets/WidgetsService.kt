@@ -12,6 +12,7 @@ import de.mm20.launcher2.widgets.AppsWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NetworkWidget
 import de.mm20.launcher2.widgets.NotesWidget
+import de.mm20.launcher2.widgets.SystemWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetRepository
@@ -79,6 +80,10 @@ class WidgetsService(
             BuiltInWidgetInfo(
                 type = NetworkWidget.Type,
                 label = context.getString(R.string.widget_name_network),
+            ),
+            BuiltInWidgetInfo(
+                type = SystemWidget.Type,
+                label = context.getString(R.string.widget_name_system),
             ),
         )
     }

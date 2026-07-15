@@ -235,6 +235,10 @@
     <string name="network_widget_ethernet">Ethernet</string>
     <string name="network_widget_connected">Connected</string>
     <string name="network_widget_disconnected">No connection</string>
+    <string name="widget_name_system">System</string>
+    <string name="system_widget_ram">RAM</string>
+    <string name="system_widget_storage">Storage</string>
+    <string name="system_widget_used_of_total">%1$s of %2$s used</string>
     <string name="widget_name_unknown">Unknown</string>
     <string name="widget_add_widget">Add widget</string>
     <string name="widget_removed">Widget removed</string>
