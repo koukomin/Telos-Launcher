@@ -239,6 +239,8 @@
     <string name="system_widget_ram">RAM</string>
     <string name="system_widget_storage">Storage</string>
     <string name="system_widget_used_of_total">%1$s of %2$s used</string>
+    <string name="widget_name_reminders">Reminders</string>
+    <string name="reminders_widget_empty">No reminders</string>
     <string name="widget_name_unknown">Unknown</string>
     <string name="widget_add_widget">Add widget</string>
     <string name="widget_removed">Widget removed</string>
@@ -422,6 +424,7 @@
     <string name="missing_permission_notification_badges">Notification access is required to display notification badges</string>
     <!-- Missing calendar permission, used in calendar widget -->
     <string name="missing_permission_calendar_widget">Calendar permission is required to display upcoming events here</string>
+    <string name="missing_permission_reminders_widget">Tasks permission is required to display reminders here</string>
     <!-- Missing calendar permission, used in calendar search results -->
     <string name="missing_permission_calendar_search">Calendar permission is required to search your calendar</string>
     <!-- Missing location permission, used in location search results -->

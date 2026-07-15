@@ -89,6 +89,12 @@ sealed class Widget {
                             ?: SystemWidgetConfig()
                     SystemWidget(entity.id, entity.stackId, config)
                 }
+                RemindersWidget.Type -> {
+                    val config: RemindersWidgetConfig =
+                        Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
+                            ?: RemindersWidgetConfig()
+                    RemindersWidget(entity.id, entity.stackId, config)
+                }
 
                 else -> null
             }
@@ -114,6 +120,7 @@ fun Widget.withStackId(stackId: UUID?): Widget {
         is BatteryWidget -> copy(stackId = stackId)
         is NetworkWidget -> copy(stackId = stackId)
         is SystemWidget -> copy(stackId = stackId)
+        is RemindersWidget -> copy(stackId = stackId)
     }
 }
 
@@ -132,6 +139,7 @@ val Widget.height: Int?
         is BatteryWidget -> config.height
         is NetworkWidget -> config.height
         is SystemWidget -> config.height
+        is RemindersWidget -> config.height
     }
 
 fun Widget.withHeight(height: Int?): Widget {
@@ -145,5 +153,6 @@ fun Widget.withHeight(height: Int?): Widget {
         is BatteryWidget -> copy(config = config.copy(height = height))
         is NetworkWidget -> copy(config = config.copy(height = height))
         is SystemWidget -> copy(config = config.copy(height = height))
+        is RemindersWidget -> copy(config = config.copy(height = height))
     }
 }

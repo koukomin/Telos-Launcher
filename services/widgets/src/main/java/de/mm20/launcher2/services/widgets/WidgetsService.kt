@@ -12,6 +12,7 @@ import de.mm20.launcher2.widgets.AppsWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NetworkWidget
 import de.mm20.launcher2.widgets.NotesWidget
+import de.mm20.launcher2.widgets.RemindersWidget
 import de.mm20.launcher2.widgets.SystemWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
@@ -64,6 +65,10 @@ class WidgetsService(
             BuiltInWidgetInfo(
                 type = CalendarWidget.Type,
                 label = context.getString(R.string.widget_name_calendar),
+            ),
+            BuiltInWidgetInfo(
+                type = RemindersWidget.Type,
+                label = context.getString(R.string.widget_name_reminders),
             ),
             BuiltInWidgetInfo(
                 type = AppsWidget.Type,

@@ -47,6 +47,7 @@ import de.mm20.launcher2.ui.launcher.widgets.favorites.AppsWidget
 import de.mm20.launcher2.ui.launcher.widgets.music.MusicWidget
 import de.mm20.launcher2.ui.launcher.widgets.network.NetworkWidget
 import de.mm20.launcher2.ui.launcher.widgets.notes.NotesWidget
+import de.mm20.launcher2.ui.launcher.widgets.reminders.RemindersWidget
 import de.mm20.launcher2.ui.launcher.widgets.system.SystemWidget
 import de.mm20.launcher2.ui.launcher.widgets.weather.WeatherWidget
 import de.mm20.launcher2.ui.theme.transparency.transparency
@@ -57,6 +58,7 @@ import de.mm20.launcher2.widgets.AppsWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NetworkWidget
 import de.mm20.launcher2.widgets.NotesWidget
+import de.mm20.launcher2.widgets.RemindersWidget
 import de.mm20.launcher2.widgets.SystemWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
@@ -198,6 +200,10 @@ fun WidgetItem(
 
                         is SystemWidget -> {
                             SystemWidget(widget)
+                        }
+
+                        is RemindersWidget -> {
+                            RemindersWidget(widget)
                         }
 
                         is AppWidget -> {

@@ -73,6 +73,7 @@ import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NetworkWidget
 import de.mm20.launcher2.widgets.NotesWidget
+import de.mm20.launcher2.widgets.RemindersWidget
 import de.mm20.launcher2.widgets.SystemWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
@@ -392,6 +393,7 @@ fun WidgetPickerSheet(
                                     BatteryWidget.Type -> BatteryWidget(id)
                                     NetworkWidget.Type -> NetworkWidget(id)
                                     SystemWidget.Type -> SystemWidget(id)
+                                    RemindersWidget.Type -> RemindersWidget(id)
                                     else -> return@clickable
                                 }
                                 onWidgetSelected(widget)
@@ -413,6 +415,7 @@ fun WidgetPickerSheet(
                                         BatteryWidget.Type -> R.drawable.battery_full_24px
                                         NetworkWidget.Type -> R.drawable.wifi_24px
                                         SystemWidget.Type -> R.drawable.memory_24px
+                                        RemindersWidget.Type -> R.drawable.task_alt_24px
                                         else -> R.drawable.widgets_24px
                                     }
                                 ),
