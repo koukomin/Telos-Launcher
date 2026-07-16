@@ -75,6 +75,12 @@ data class LauncherSettingsData internal constructor(
     val appsShowDetails: Boolean = true,
 
     val fileSearchProviders: Set<String> = setOf("local"),
+    val fileSearchDocuments: Boolean = true,
+    val fileSearchImages: Boolean = true,
+    val fileSearchVideos: Boolean = true,
+    val fileSearchMusic: Boolean = true,
+    val fileSearchOther: Boolean = true,
+    val fileSearchExcludedFolders: Set<String> = emptySet(),
 
     @Deprecated("Use contactSearchProviders `local` instead")
     val contactSearchEnabled: Boolean = true,
@@ -505,6 +511,7 @@ enum class FreezeBackendPreference {
     @SerialName("shizuku") ShizukuOnly,
     @SerialName("root") RootOnly,
 }
+
 
 @Serializable
 enum class FreezeProfile {

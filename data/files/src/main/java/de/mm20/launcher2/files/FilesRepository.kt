@@ -60,7 +60,8 @@ internal class FileRepository(
                 when (it) {
                     "local" -> if (permission) LocalFileProvider(
                         context,
-                        permissionsManager
+                        permissionsManager,
+                        settings,
                     ) else null
 
                     "nextcloud" -> NextcloudFileProvider(nextcloudClient)
