@@ -51,6 +51,14 @@ internal class GestureSettingsScreenVM : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val homeButton = gestureSettings.homeButton
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    val pinchIn = gestureSettings.pinchIn
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    val pinchOut = gestureSettings.pinchOut
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    val twoFingerSwipeUp = gestureSettings.twoFingerSwipeUp
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    val twoFingerSwipeDown = gestureSettings.twoFingerSwipeDown
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setSwipeDown(action: GestureAction, searchable: SavableSearchable?) {
         saveShortcut(searchable)
@@ -87,6 +95,26 @@ internal class GestureSettingsScreenVM : ViewModel(), KoinComponent {
         gestureSettings.setHomeButton(action)
     }
 
+    fun setPinchIn(action: GestureAction, searchable: SavableSearchable?) {
+        saveShortcut(searchable)
+        gestureSettings.setPinchIn(action)
+    }
+
+    fun setPinchOut(action: GestureAction, searchable: SavableSearchable?) {
+        saveShortcut(searchable)
+        gestureSettings.setPinchOut(action)
+    }
+
+    fun setTwoFingerSwipeUp(action: GestureAction, searchable: SavableSearchable?) {
+        saveShortcut(searchable)
+        gestureSettings.setTwoFingerSwipeUp(action)
+    }
+
+    fun setTwoFingerSwipeDown(action: GestureAction, searchable: SavableSearchable?) {
+        saveShortcut(searchable)
+        gestureSettings.setTwoFingerSwipeDown(action)
+    }
+
     private fun saveShortcut(searchable: SavableSearchable?) {
         searchable?.let { searchableRepository.insert(it) }
     }
@@ -100,6 +128,10 @@ internal class GestureSettingsScreenVM : ViewModel(), KoinComponent {
             (it.doubleTap as? GestureAction.Launch)?.key,
             (it.homeButton as? GestureAction.Launch)?.key,
             (it.longPress as? GestureAction.Launch)?.key,
+            (it.pinchIn as? GestureAction.Launch)?.key,
+            (it.pinchOut as? GestureAction.Launch)?.key,
+            (it.twoFingerSwipeUp as? GestureAction.Launch)?.key,
+            (it.twoFingerSwipeDown as? GestureAction.Launch)?.key,
         )
         searchableRepository.getByKeys(keys)
     }

@@ -54,6 +54,10 @@ fun FailedGestureSheet(
             Gesture.SwipeRight -> R.string.preference_gesture_swipe_right
             Gesture.SwipeUp -> R.string.preference_gesture_swipe_up
             Gesture.HomeButton -> R.string.preference_gesture_home_button
+            Gesture.PinchIn -> R.string.preference_gesture_pinch_in
+            Gesture.PinchOut -> R.string.preference_gesture_pinch_out
+            Gesture.TwoFingerSwipeUp -> R.string.preference_gesture_two_finger_swipe_up
+            Gesture.TwoFingerSwipeDown -> R.string.preference_gesture_two_finger_swipe_down
             else -> throw IllegalArgumentException("Unknown gesture: ${it.gesture}")
         })
 

@@ -196,6 +196,74 @@ fun GestureSettingsScreen() {
                         widgetOptions = widgetOptions,
                     )
                 }
+
+                val pinchIn by viewModel.pinchIn.collectAsStateWithLifecycle(null)
+                GuardedPreference(
+                    locked = hasPermission == false && requiresAccessibilityService(pinchIn),
+                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
+                ) {
+                    GesturePreference(
+                        title = stringResource(R.string.preference_gesture_pinch_in),
+                        icon = R.drawable.pinch_zoom_in_24px,
+                        value = pinchIn,
+                        onValueChanged = viewModel::setPinchIn,
+                        options = options,
+                        shortcutOptions = shortcutOptions,
+                        widgetOptions = widgetOptions,
+                    )
+                }
+
+                val pinchOut by viewModel.pinchOut.collectAsStateWithLifecycle(null)
+                GuardedPreference(
+                    locked = hasPermission == false && requiresAccessibilityService(pinchOut),
+                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
+                ) {
+                    GesturePreference(
+                        title = stringResource(R.string.preference_gesture_pinch_out),
+                        icon = R.drawable.pinch_zoom_out_24px,
+                        value = pinchOut,
+                        onValueChanged = viewModel::setPinchOut,
+                        options = options,
+                        shortcutOptions = shortcutOptions,
+                        widgetOptions = widgetOptions,
+                    )
+                }
+
+                val twoFingerSwipeUp by viewModel.twoFingerSwipeUp.collectAsStateWithLifecycle(null)
+                GuardedPreference(
+                    locked = hasPermission == false && requiresAccessibilityService(twoFingerSwipeUp),
+                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
+                ) {
+                    GesturePreference(
+                        title = stringResource(R.string.preference_gesture_two_finger_swipe_up),
+                        icon = R.drawable.swipe_vertical_24px,
+                        value = twoFingerSwipeUp,
+                        onValueChanged = viewModel::setTwoFingerSwipeUp,
+                        options = options,
+                        shortcutOptions = shortcutOptions,
+                        widgetOptions = widgetOptions,
+                    )
+                }
+
+                val twoFingerSwipeDown by viewModel.twoFingerSwipeDown.collectAsStateWithLifecycle(null)
+                GuardedPreference(
+                    locked = hasPermission == false && requiresAccessibilityService(twoFingerSwipeDown),
+                    description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                    onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
+                ) {
+                    GesturePreference(
+                        title = stringResource(R.string.preference_gesture_two_finger_swipe_down),
+                        icon = R.drawable.swipe_vertical_24px,
+                        value = twoFingerSwipeDown,
+                        onValueChanged = viewModel::setTwoFingerSwipeDown,
+                        options = options,
+                        shortcutOptions = shortcutOptions,
+                        widgetOptions = widgetOptions,
+                    )
+                }
             }
         }
     }

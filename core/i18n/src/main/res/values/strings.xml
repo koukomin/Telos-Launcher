@@ -887,6 +887,10 @@
     <string name="preference_gesture_double_tap">Double tap</string>
     <string name="preference_gesture_long_press">Long press</string>
     <string name="preference_gesture_home_button">Home button/gesture</string>
+    <string name="preference_gesture_pinch_in">Pinch in</string>
+    <string name="preference_gesture_pinch_out">Pinch out</string>
+    <string name="preference_gesture_two_finger_swipe_up">Two-finger swipe up</string>
+    <string name="preference_gesture_two_finger_swipe_down">Two-finger swipe down</string>
     <string name="gesture_action_none">Do nothing</string>
     <string name="gesture_action_category_launcher">Launcher pages</string>
     <string name="gesture_action_category_system">System actions</string>
