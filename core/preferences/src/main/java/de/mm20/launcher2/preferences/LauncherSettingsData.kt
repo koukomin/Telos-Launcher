@@ -157,6 +157,10 @@ data class LauncherSettingsData internal constructor(
     val gesturesDoubleTap: GestureAction = GestureAction.ScreenLock,
     val gesturesLongPress: GestureAction = GestureAction.NoAction,
     val gesturesHomeButton: GestureAction = GestureAction.NoAction,
+    val gesturesPinchIn: GestureAction = GestureAction.NoAction,
+    val gesturesPinchOut: GestureAction = GestureAction.NoAction,
+    val gesturesTwoFingerSwipeUp: GestureAction = GestureAction.NoAction,
+    val gesturesTwoFingerSwipeDown: GestureAction = GestureAction.NoAction,
 
     val animationsCharging: Boolean = true,
 

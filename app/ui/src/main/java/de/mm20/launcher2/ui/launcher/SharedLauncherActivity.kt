@@ -393,6 +393,26 @@ abstract class SharedLauncherActivity(
                                             gestures.homeButtonApp,
                                             Gesture.HomeButton,
                                         ),
+                                        pinchIn = getScaffoldGesture(
+                                            gestures.pinchInAction,
+                                            gestures.pinchInApp,
+                                            Gesture.PinchIn,
+                                        ),
+                                        pinchOut = getScaffoldGesture(
+                                            gestures.pinchOutAction,
+                                            gestures.pinchOutApp,
+                                            Gesture.PinchOut,
+                                        ),
+                                        twoFingerSwipeUp = getScaffoldGesture(
+                                            gestures.twoFingerSwipeUpAction,
+                                            gestures.twoFingerSwipeUpApp,
+                                            Gesture.TwoFingerSwipeUp,
+                                        ),
+                                        twoFingerSwipeDown = getScaffoldGesture(
+                                            gestures.twoFingerSwipeDownAction,
+                                            gestures.twoFingerSwipeDownApp,
+                                            Gesture.TwoFingerSwipeDown,
+                                        ),
                                         fixedSearchBar = fixedSearchBar,
                                         searchBarStyle = searchBarStyle,
                                         searchBarPosition = if (bottomSearchBar) SearchBarPosition.Bottom else SearchBarPosition.Top,

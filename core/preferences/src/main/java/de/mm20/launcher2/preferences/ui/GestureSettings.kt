@@ -14,6 +14,10 @@ data class GestureSettingsData(
     val doubleTap: GestureAction,
     val longPress: GestureAction,
     val homeButton: GestureAction,
+    val pinchIn: GestureAction,
+    val pinchOut: GestureAction,
+    val twoFingerSwipeUp: GestureAction,
+    val twoFingerSwipeDown: GestureAction,
 )
 
 class GestureSettings internal constructor(
@@ -28,6 +32,10 @@ class GestureSettings internal constructor(
             doubleTap = it.gesturesDoubleTap,
             longPress = it.gesturesLongPress,
             homeButton = it.gesturesHomeButton,
+            pinchIn = it.gesturesPinchIn,
+            pinchOut = it.gesturesPinchOut,
+            twoFingerSwipeUp = it.gesturesTwoFingerSwipeUp,
+            twoFingerSwipeDown = it.gesturesTwoFingerSwipeDown,
         )
     }.distinctUntilChanged()
 ) {
@@ -94,5 +102,39 @@ class GestureSettings internal constructor(
         }
     }
 
+    val pinchIn: Flow<GestureAction> = dataStore.data.map { it.gesturesPinchIn }
+        .distinctUntilChanged()
 
+    val pinchOut: Flow<GestureAction> = dataStore.data.map { it.gesturesPinchOut }
+        .distinctUntilChanged()
+
+    val twoFingerSwipeUp: Flow<GestureAction> = dataStore.data.map { it.gesturesTwoFingerSwipeUp }
+        .distinctUntilChanged()
+
+    val twoFingerSwipeDown: Flow<GestureAction> = dataStore.data.map { it.gesturesTwoFingerSwipeDown }
+        .distinctUntilChanged()
+
+    fun setPinchIn(action: GestureAction) {
+        dataStore.update {
+            it.copy(gesturesPinchIn = action)
+        }
+    }
+
+    fun setPinchOut(action: GestureAction) {
+        dataStore.update {
+            it.copy(gesturesPinchOut = action)
+        }
+    }
+
+    fun setTwoFingerSwipeUp(action: GestureAction) {
+        dataStore.update {
+            it.copy(gesturesTwoFingerSwipeUp = action)
+        }
+    }
+
+    fun setTwoFingerSwipeDown(action: GestureAction) {
+        dataStore.update {
+            it.copy(gesturesTwoFingerSwipeDown = action)
+        }
+    }
 }

@@ -156,6 +156,10 @@ internal data class ScaffoldConfiguration(
     val doubleTap: ScaffoldGesture? = null,
     val longPress: ScaffoldGesture? = null,
     val homeButton: ScaffoldGesture? = null,
+    val pinchIn: ScaffoldGesture? = null,
+    val pinchOut: ScaffoldGesture? = null,
+    val twoFingerSwipeUp: ScaffoldGesture? = null,
+    val twoFingerSwipeDown: ScaffoldGesture? = null,
     /**
      * Position of the search bar
      */
@@ -209,6 +213,10 @@ internal data class ScaffoldConfiguration(
                     doubleTap,
                     longPress,
                     homeButton,
+                    pinchIn,
+                    pinchOut,
+                    twoFingerSwipeUp,
+                    twoFingerSwipeDown,
                 ).none { it.component.showSearchBar }
     }
 }
@@ -223,6 +231,10 @@ private operator fun ScaffoldConfiguration.get(gesture: Gesture): ScaffoldGestur
         Gesture.LongPress -> longPress
         Gesture.HomeButton -> homeButton
         Gesture.TapSearchBar -> searchBarTap
+        Gesture.PinchIn -> pinchIn
+        Gesture.PinchOut -> pinchOut
+        Gesture.TwoFingerSwipeUp -> twoFingerSwipeUp
+        Gesture.TwoFingerSwipeDown -> twoFingerSwipeDown
     }
 }
 
@@ -235,6 +247,12 @@ enum class Gesture(val orientation: Orientation?) {
     LongPress(null),
     TapSearchBar(null),
     HomeButton(null),
+
+    // Multi-finger gestures fire like tap gestures (no page drag), hence orientation = null.
+    PinchIn(null),
+    PinchOut(null),
+    TwoFingerSwipeUp(null),
+    TwoFingerSwipeDown(null),
 }
 
 internal class LauncherScaffoldState(
@@ -645,6 +663,22 @@ internal class LauncherScaffoldState(
 
     suspend fun onLongPress() {
         performTapGesture(Gesture.LongPress)
+    }
+
+    suspend fun onPinchIn() {
+        performTapGesture(Gesture.PinchIn)
+    }
+
+    suspend fun onPinchOut() {
+        performTapGesture(Gesture.PinchOut)
+    }
+
+    suspend fun onTwoFingerSwipeUp() {
+        performTapGesture(Gesture.TwoFingerSwipeUp)
+    }
+
+    suspend fun onTwoFingerSwipeDown() {
+        performTapGesture(Gesture.TwoFingerSwipeDown)
     }
 
     suspend fun onHomeButtonPress() {

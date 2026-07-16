@@ -92,6 +92,10 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
             val longPressAction = settings.longPress
             val doubleTapAction = settings.doubleTap
             val homeButtonAction = settings.homeButton
+            val pinchInAction = settings.pinchIn
+            val pinchOutAction = settings.pinchOut
+            val twoFingerSwipeUpAction = settings.twoFingerSwipeUp
+            val twoFingerSwipeDownAction = settings.twoFingerSwipeDown
 
             val swipeLeftAppKey = (swipeLeftAction as? GestureAction.Launch)?.key
             val swipeRightAppKey = (swipeRightAction as? GestureAction.Launch)?.key
@@ -100,6 +104,10 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
             val longPressAppKey = (longPressAction as? GestureAction.Launch)?.key
             val doubleTapAppKey = (doubleTapAction as? GestureAction.Launch)?.key
             val homeButtonAppKey = (homeButtonAction as? GestureAction.Launch)?.key
+            val pinchInAppKey = (pinchInAction as? GestureAction.Launch)?.key
+            val pinchOutAppKey = (pinchOutAction as? GestureAction.Launch)?.key
+            val twoFingerSwipeUpAppKey = (twoFingerSwipeUpAction as? GestureAction.Launch)?.key
+            val twoFingerSwipeDownAppKey = (twoFingerSwipeDownAction as? GestureAction.Launch)?.key
             val apps = listOfNotNull(
                 swipeLeftAppKey,
                 swipeRightAppKey,
@@ -108,6 +116,10 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
                 longPressAppKey,
                 doubleTapAppKey,
                 homeButtonAppKey,
+                pinchInAppKey,
+                pinchOutAppKey,
+                twoFingerSwipeUpAppKey,
+                twoFingerSwipeDownAppKey,
             ).let { searchableRepository.getByKeys(it).first() }
 
             GestureState(
@@ -118,6 +130,10 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
                 longPressAction = longPressAction,
                 doubleTapAction = doubleTapAction,
                 homeButtonAction = homeButtonAction,
+                pinchInAction = pinchInAction,
+                pinchOutAction = pinchOutAction,
+                twoFingerSwipeUpAction = twoFingerSwipeUpAction,
+                twoFingerSwipeDownAction = twoFingerSwipeDownAction,
                 swipeLeftApp = apps.find { it.key == swipeLeftAppKey },
                 swipeRightApp = apps.find { it.key == swipeRightAppKey },
                 swipeDownApp = apps.find { it.key == swipeDownAppKey },
@@ -125,6 +141,10 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
                 longPressApp = apps.find { it.key == longPressAppKey },
                 doubleTapApp = apps.find { it.key == doubleTapAppKey },
                 homeButtonApp = apps.find { it.key == homeButtonAppKey },
+                pinchInApp = apps.find { it.key == pinchInAppKey },
+                pinchOutApp = apps.find { it.key == pinchOutAppKey },
+                twoFingerSwipeUpApp = apps.find { it.key == twoFingerSwipeUpAppKey },
+                twoFingerSwipeDownApp = apps.find { it.key == twoFingerSwipeDownAppKey },
             )
         }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 }
@@ -137,6 +157,10 @@ data class GestureState(
     val longPressAction: GestureAction = GestureAction.NoAction,
     val doubleTapAction: GestureAction = GestureAction.NoAction,
     val homeButtonAction: GestureAction = GestureAction.NoAction,
+    val pinchInAction: GestureAction = GestureAction.NoAction,
+    val pinchOutAction: GestureAction = GestureAction.NoAction,
+    val twoFingerSwipeUpAction: GestureAction = GestureAction.NoAction,
+    val twoFingerSwipeDownAction: GestureAction = GestureAction.NoAction,
     val swipeLeftApp: SavableSearchable? = null,
     val swipeRightApp: SavableSearchable? = null,
     val swipeDownApp: SavableSearchable? = null,
@@ -144,5 +168,9 @@ data class GestureState(
     val longPressApp: SavableSearchable? = null,
     val doubleTapApp: SavableSearchable? = null,
     val homeButtonApp: SavableSearchable? = null,
+    val pinchInApp: SavableSearchable? = null,
+    val pinchOutApp: SavableSearchable? = null,
+    val twoFingerSwipeUpApp: SavableSearchable? = null,
+    val twoFingerSwipeDownApp: SavableSearchable? = null,
 )
 
