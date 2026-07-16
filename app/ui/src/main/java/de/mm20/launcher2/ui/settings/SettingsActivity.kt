@@ -90,6 +90,8 @@ import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsRoute
 import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsScreen
 import de.mm20.launcher2.ui.settings.feed.FeedIntegrationSettingsRoute
 import de.mm20.launcher2.ui.settings.feed.FeedIntegrationSettingsScreen
+import de.mm20.launcher2.ui.settings.filesearch.ExcludedFoldersSettingsRoute
+import de.mm20.launcher2.ui.settings.filesearch.ExcludedFoldersSettingsScreen
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsRoute
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.filterbar.FilterBarSettingsRoute
@@ -241,6 +243,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<OsmSettingsRoute> {
                 OsmSettingsScreen()
+            }
+            entry<ExcludedFoldersSettingsRoute> {
+                ExcludedFoldersSettingsScreen()
             }
             entry<FileSearchSettingsRoute> {
                 FileSearchSettingsScreen()

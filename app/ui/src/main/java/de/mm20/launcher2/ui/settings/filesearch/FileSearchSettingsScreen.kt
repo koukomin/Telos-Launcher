@@ -24,18 +24,24 @@ import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.GuardedPreference
+import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.serialization.Serializable
 
 @Serializable
 data object FileSearchSettingsRoute: NavKey
 
+@Serializable
+data object ExcludedFoldersSettingsRoute: NavKey
+
 @Composable
 fun FileSearchSettingsScreen() {
     val viewModel: FileSearchSettingsScreenVM = viewModel()
     val context = LocalContext.current
+    val backStack = LocalBackStack.current
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(null) {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
@@ -161,6 +167,48 @@ fun FileSearchSettingsScreen() {
                             },
                         )
                     }
+                }
+            }
+        }
+        item {
+            val localFiles by viewModel.localFiles.collectAsState()
+            val hasFilePermission by viewModel.hasFilePermission.collectAsState()
+            val typeFilters by viewModel.typeFilters.collectAsState()
+            val filters = typeFilters
+            if (localFiles == true && hasFilePermission == true && filters != null) {
+                PreferenceCategory(title = stringResource(R.string.preference_file_search_types)) {
+                    SwitchPreference(
+                        title = stringResource(R.string.file_search_type_documents),
+                        value = filters.documents,
+                        onValueChanged = { viewModel.setDocuments(it) },
+                    )
+                    SwitchPreference(
+                        title = stringResource(R.string.file_search_type_images),
+                        value = filters.images,
+                        onValueChanged = { viewModel.setImages(it) },
+                    )
+                    SwitchPreference(
+                        title = stringResource(R.string.file_search_type_videos),
+                        value = filters.videos,
+                        onValueChanged = { viewModel.setVideos(it) },
+                    )
+                    SwitchPreference(
+                        title = stringResource(R.string.file_search_type_music),
+                        value = filters.music,
+                        onValueChanged = { viewModel.setMusic(it) },
+                    )
+                    SwitchPreference(
+                        title = stringResource(R.string.file_search_type_other),
+                        value = filters.other,
+                        onValueChanged = { viewModel.setOther(it) },
+                    )
+                    Preference(
+                        title = stringResource(R.string.preference_file_search_excluded_folders),
+                        summary = stringResource(R.string.preference_file_search_excluded_folders_summary),
+                        onClick = {
+                            backStack.add(ExcludedFoldersSettingsRoute)
+                        }
+                    )
                 }
             }
         }

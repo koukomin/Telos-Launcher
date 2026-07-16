@@ -887,6 +887,17 @@
     <string name="preference_gesture_double_tap">Double tap</string>
     <string name="preference_gesture_long_press">Long press</string>
     <string name="preference_gesture_home_button">Home button/gesture</string>
+    <string name="preference_file_search_types">File types</string>
+    <string name="file_search_type_documents">Documents</string>
+    <string name="file_search_type_images">Images</string>
+    <string name="file_search_type_videos">Videos</string>
+    <string name="file_search_type_music">Music</string>
+    <string name="file_search_type_other">Other files</string>
+    <string name="preference_file_search_excluded_folders">Excluded folders</string>
+    <string name="preference_file_search_excluded_folders_summary">Folders that file search never looks into</string>
+    <string name="excluded_folders_add">Add folder</string>
+    <string name="excluded_folders_empty">No excluded folders</string>
+    <string name="excluded_folders_unsupported">This folder can\'t be excluded (unsupported storage location)</string>
     <string name="video_wallpaper_label">Video wallpaper</string>
     <string name="video_wallpaper_description">Plays your selected video in a loop, muted. Pauses automatically to save battery.</string>
     <string name="preference_screen_wallpaper">Wallpaper</string>

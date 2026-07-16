@@ -1,5 +1,8 @@
 package de.mm20.launcher2.ui.settings.filesearch
 
+import android.net.Uri
+import android.os.Environment
+import android.provider.DocumentsContract
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -83,5 +86,47 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setPluginEnabled(authority: String, enabled: Boolean) {
         fileSearchSettings.setPluginEnabled(authority, enabled)
+    }
+
+    val typeFilters = fileSearchSettings.typeFilters
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setDocuments(enabled: Boolean) = fileSearchSettings.setDocuments(enabled)
+    fun setImages(enabled: Boolean) = fileSearchSettings.setImages(enabled)
+    fun setVideos(enabled: Boolean) = fileSearchSettings.setVideos(enabled)
+    fun setMusic(enabled: Boolean) = fileSearchSettings.setMusic(enabled)
+    fun setOther(enabled: Boolean) = fileSearchSettings.setOther(enabled)
+
+    val excludedFolders = fileSearchSettings.excludedFolders
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
+
+    /**
+     * Resolves an ACTION_OPEN_DOCUMENT_TREE uri to a filesystem path that can be matched
+     * against MediaStore's DATA column. Returns null for tree ids we can't map (e.g. cloud
+     * document providers).
+     */
+    fun addExcludedFolder(treeUri: Uri): Boolean {
+        val docId = try {
+            DocumentsContract.getTreeDocumentId(treeUri)
+        } catch (e: IllegalArgumentException) {
+            return false
+        }
+        val (volume, relativePath) = docId.split(":", limit = 2)
+            .takeIf { it.size == 2 }
+            ?.let { it[0] to it[1] }
+            ?: return false
+        val root = if (volume == "primary") {
+            @Suppress("DEPRECATION")
+            Environment.getExternalStorageDirectory().absolutePath
+        } else {
+            "/storage/$volume"
+        }
+        val path = if (relativePath.isEmpty()) root else "$root/$relativePath"
+        fileSearchSettings.addExcludedFolder(path)
+        return true
+    }
+
+    fun removeExcludedFolder(path: String) {
+        fileSearchSettings.removeExcludedFolder(path)
     }
 }
