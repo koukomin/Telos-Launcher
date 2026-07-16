@@ -80,6 +80,8 @@ import de.mm20.launcher2.ui.settings.freeze.FreezeDashboardRoute
 import de.mm20.launcher2.ui.settings.freeze.FreezeDashboardScreen
 import de.mm20.launcher2.ui.settings.freeze.FreezeSettingsRoute
 import de.mm20.launcher2.ui.settings.freeze.FreezeSettingsScreen
+import de.mm20.launcher2.ui.settings.wallpaper.WallpaperSettingsRoute
+import de.mm20.launcher2.ui.settings.wallpaper.WallpaperSettingsScreen
 import de.mm20.launcher2.ui.settings.debug.StringNormalizerTestRoute
 import de.mm20.launcher2.ui.settings.debug.StringNormalizerTestScreen
 import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsRoute
@@ -308,6 +310,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<FreezeSettingsRoute> {
                 FreezeSettingsScreen()
+            }
+            entry<WallpaperSettingsRoute> {
+                WallpaperSettingsScreen()
             }
             entry<FreezeDashboardRoute> {
                 FreezeDashboardScreen()
