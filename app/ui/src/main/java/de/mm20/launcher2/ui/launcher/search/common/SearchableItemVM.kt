@@ -99,6 +99,16 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         else notificationRepository.notifications.map { it.filter { it.packageName == searchable.componentName.packageName && !it.isGroupSummary } }
     }
 
+    /**
+     * Live suspended (frozen) state of this app. Backed by the app repository, which reacts to
+     * the system's package-suspended callbacks, so this updates immediately on freeze/unfreeze.
+     */
+    val isSuspended = searchable.flatMapLatest { searchable ->
+        if (searchable !is Application) flowOf(false)
+        else appRepository.findOne(searchable.componentName.packageName, searchable.user)
+            .map { it?.isSuspended == true }
+    }.stateIn(viewModelScope, SharingStarted.Lazily, false)
+
     val children = searchable.flatMapLatest {
         when (it) {
             is Application -> appShortcutRepository

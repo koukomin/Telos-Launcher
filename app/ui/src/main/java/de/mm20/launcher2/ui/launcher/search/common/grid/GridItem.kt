@@ -130,6 +130,7 @@ fun GridItem(
     ) {
         val badge by viewModel.badge.collectAsStateWithLifecycle()
         val icon by viewModel.icon.collectAsStateWithLifecycle()
+        val isSuspended by viewModel.isSuspended.collectAsStateWithLifecycle()
 
 
         val windowSize = LocalWindowSize.current
@@ -184,6 +185,7 @@ fun GridItem(
                 size = LocalGridSettings.current.iconSize.dp,
                 badge = { badge },
                 icon = { icon },
+                grayscale = isSuspended,
             )
         }
         if (showLabels) {

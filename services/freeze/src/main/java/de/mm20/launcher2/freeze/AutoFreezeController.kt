@@ -71,10 +71,8 @@ class AutoFreezeController internal constructor(
                 freezeCandidates()
             }
         }
-    }
-
-    private fun onScreenOn() {
-        idleJob?.cancel()
+        // The idle timeout counts from the moment the screen turns off; turning the screen
+        // back on (onScreenOn) cancels it.
         idleJob = scope.launch {
             if (!settings.autoFreezeEnabled.first()) return@launch
             val resolved = profileManager.resolvedSettings.first()
@@ -82,6 +80,11 @@ class AutoFreezeController internal constructor(
             delay(resolved.idleTimeoutMinutes * 60_000L)
             freezeCandidates()
         }
+    }
+
+    private fun onScreenOn() {
+        idleJob?.cancel()
+        idleJob = null
     }
 
     private fun onPowerSaveModeChanged() {
@@ -106,7 +109,9 @@ class AutoFreezeController internal constructor(
     private suspend fun freezeCandidates() {
         val candidates = settings.candidates.first()
         if (candidates.isEmpty()) return
-        val freezable = candidates.filterNot { exclusionChecker.isExcluded(it) }
+        val freezable = candidates
+            .filterNot { freezeManager.isFrozen(it) }
+            .filterNot { exclusionChecker.isExcluded(it) }
         if (freezable.isEmpty()) return
         freezeManager.refreshBackendState()
         freezeManager.freeze(freezable)

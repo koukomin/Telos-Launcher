@@ -36,11 +36,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
+import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shader
 import androidx.compose.ui.graphics.ShaderBrush
@@ -95,7 +99,8 @@ fun ShapedLauncherIcon(
     size: Dp,
     icon: () -> LauncherIcon? = { null },
     badge: () -> Badge? = { null },
-    shape: Shape = LocalIconShape.current
+    shape: Shape = LocalIconShape.current,
+    grayscale: Boolean = false,
 ) {
 
     val _icon = icon()
@@ -141,7 +146,8 @@ fun ShapedLauncherIcon(
     ) {
         Box(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .then(if (grayscale) Modifier.grayscale() else Modifier),
             contentAlignment = Alignment.Center
         ) {
             val bmp = currentBitmap
@@ -311,6 +317,20 @@ private fun getTone(argb: Int, tone: Int): Int {
     return TonalPalette
         .fromInt(argb)
         .tone(tone)
+}
+
+/** Desaturates the content completely; used to mark frozen (suspended) apps. */
+private fun Modifier.grayscale(): Modifier = drawWithCache {
+    val paint = Paint().apply {
+        colorFilter = ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
+    }
+    onDrawWithContent {
+        drawIntoCanvas { canvas ->
+            canvas.saveLayer(Rect(Offset.Zero, size), paint)
+            drawContent()
+            canvas.restore()
+        }
+    }
 }
 
 @Composable

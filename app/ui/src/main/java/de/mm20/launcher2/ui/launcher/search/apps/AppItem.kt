@@ -81,6 +81,7 @@ fun AppItem(
 
     val badge by viewModel.badge.collectAsStateWithLifecycle(null)
     val icon by viewModel.icon.collectAsStateWithLifecycle()
+    val isSuspended by viewModel.isSuspended.collectAsStateWithLifecycle()
     val showAppDetails = LocalShowAppDetails.current
 
     LaunchedEffect(app) {
@@ -158,6 +159,7 @@ fun AppItem(
                                 .padding(16.dp),
                             badge = { badge },
                             icon = { icon },
+                            grayscale = isSuspended,
                         )
                     }
                     val notifications by viewModel.notifications.collectAsState(emptyList())
@@ -512,6 +514,7 @@ fun AppItem(
                                 .padding(end = 16.dp),
                             badge = { badge },
                             icon = { icon },
+                            grayscale = isSuspended,
                         )
                     }
                     Text(

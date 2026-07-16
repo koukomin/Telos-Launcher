@@ -542,9 +542,9 @@
     <string name="preference_freeze_auto_category">Auto-freeze</string>
     <string name="preference_freeze_auto_enabled">Enable auto-freeze</string>
     <string name="preference_freeze_auto_enabled_summary">Automatically freeze the apps selected below</string>
-    <string name="preference_freeze_on_screen_off">Freeze when screen turns off</string>
-    <string name="preference_freeze_on_idle">Freeze after being idle</string>
-    <string name="preference_freeze_idle_timeout">Idle timeout (minutes)</string>
+    <string name="preference_freeze_on_screen_off">Freeze immediately when screen turns off</string>
+    <string name="preference_freeze_on_idle">Freeze some time after screen turns off</string>
+    <string name="preference_freeze_idle_timeout">Minutes after screen off</string>
     <string name="preference_freeze_on_battery_saver">Freeze when battery saver is on</string>
     <string name="preference_freeze_apps_category">Apps</string>
     <string name="preference_freeze_apps_summary">Apps checked below are frozen automatically by the triggers above. Unfreezing happens automatically the next time you launch one.</string>
@@ -557,10 +557,10 @@
     <string name="freeze_profile_aggressive">Aggressive</string>
     <string name="freeze_profile_ultra_aggressive">Ultra Aggressive</string>
     <string name="freeze_profile_custom">Custom</string>
-    <string name="freeze_profile_battery_saver_summary">Freezes after 30 minutes idle, or when battery saver turns on. Never on screen off.</string>
-    <string name="freeze_profile_balanced_summary">Freezes after 15 minutes idle, or when battery saver turns on. Never on screen off.</string>
-    <string name="freeze_profile_aggressive_summary">Freezes when the screen turns off, after 5 minutes idle, or when battery saver turns on.</string>
-    <string name="freeze_profile_ultra_aggressive_summary">Freezes when the screen turns off, after 1 minute idle, or when battery saver turns on. Also freezes apps with a paused media session.</string>
+    <string name="freeze_profile_battery_saver_summary">Freezes 30 minutes after the screen turns off, or when battery saver turns on.</string>
+    <string name="freeze_profile_balanced_summary">Freezes 15 minutes after the screen turns off, or when battery saver turns on.</string>
+    <string name="freeze_profile_aggressive_summary">Freezes immediately when the screen turns off, or when battery saver turns on.</string>
+    <string name="freeze_profile_ultra_aggressive_summary">Freezes immediately when the screen turns off, or when battery saver turns on. Also freezes apps with a paused media session.</string>
     <string name="preference_freeze_exclusion_strictness">Exclusion strictness</string>
     <string name="preference_freeze_exclusion_strictness_summary">Foreground apps, active notifications, foreground services, and Android Auto are always protected, in every profile. This only affects the active media session check.</string>
     <string name="freeze_exclusion_strictness_strict">Strict</string>
