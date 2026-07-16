@@ -1272,6 +1272,15 @@ internal fun LauncherScaffold(
                 .fillMaxSize()
                 .hazeSource(hazeState)
                 .nestedScroll(nestedScrollConnection)
+                .multiFingerGestures(
+                    enabled = config.pinchIn != null || config.pinchOut != null ||
+                            config.twoFingerSwipeUp != null || config.twoFingerSwipeDown != null,
+                    isActive = { !state.isSettledOnSecondaryPage },
+                    onPinchIn = { scope.launch { state.onPinchIn() } },
+                    onPinchOut = { scope.launch { state.onPinchOut() } },
+                    onTwoFingerSwipeUp = { scope.launch { state.onTwoFingerSwipeUp() } },
+                    onTwoFingerSwipeDown = { scope.launch { state.onTwoFingerSwipeDown() } },
+                )
                 .draggable2D(
                     state = rememberDraggable2DState {
                         state.onDrag(it)
