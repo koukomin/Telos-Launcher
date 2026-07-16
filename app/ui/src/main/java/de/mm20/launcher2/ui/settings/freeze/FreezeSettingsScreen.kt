@@ -50,6 +50,7 @@ fun FreezeSettingsScreen() {
     val freezeOnIdle by viewModel.freezeOnIdle.collectAsStateWithLifecycle()
     val idleTimeoutMinutes by viewModel.idleTimeoutMinutes.collectAsStateWithLifecycle()
     val freezeOnBatterySaver by viewModel.freezeOnBatterySaver.collectAsStateWithLifecycle()
+    val usageAccessGranted by viewModel.usageAccessGranted.collectAsStateWithLifecycle()
 
     val apps by viewModel.allApps.collectAsStateWithLifecycle()
     val candidates by viewModel.candidates.collectAsStateWithLifecycle()
@@ -96,6 +97,16 @@ fun FreezeSettingsScreen() {
                 )
                 AnimatedVisibility(autoFreezeEnabled == true) {
                     Column {
+                        Preference(
+                            title = stringResource(R.string.preference_freeze_usage_access),
+                            summary = stringResource(
+                                if (usageAccessGranted) R.string.preference_freeze_usage_access_summary_granted
+                                else R.string.preference_freeze_usage_access_summary_not_granted
+                            ),
+                            onClick = {
+                                (context as? AppCompatActivity)?.let { viewModel.requestUsageAccess(it) }
+                            }
+                        )
                         SwitchPreference(
                             title = stringResource(R.string.preference_freeze_on_screen_off),
                             value = freezeOnScreenOff == true,

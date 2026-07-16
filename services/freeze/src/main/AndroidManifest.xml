@@ -1,4 +1,14 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+        Special access, granted manually via Settings > Usage access (not a runtime dialog).
+        Used only to check whether a freeze candidate is currently the foreground app, so we
+        never freeze it out from under the user. See PermissionGroup.UsageAccess.
+    -->
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
 
     <application>
         <provider

@@ -31,6 +31,7 @@ class AutoFreezeController internal constructor(
     private val context: Context,
     private val freezeManager: FreezeManager,
     private val settings: FreezeSettings,
+    private val exclusionChecker: FreezeExclusionChecker,
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private var idleJob: Job? = null
@@ -90,7 +91,9 @@ class AutoFreezeController internal constructor(
     private suspend fun freezeCandidates() {
         val candidates = settings.candidates.first()
         if (candidates.isEmpty()) return
+        val freezable = candidates.filterNot { exclusionChecker.isExcluded(it) }
+        if (freezable.isEmpty()) return
         freezeManager.refreshBackendState()
-        freezeManager.freeze(candidates.toList())
+        freezeManager.freeze(freezable)
     }
 }

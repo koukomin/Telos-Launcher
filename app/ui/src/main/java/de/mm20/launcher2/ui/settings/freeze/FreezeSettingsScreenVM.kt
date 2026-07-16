@@ -8,6 +8,8 @@ import de.mm20.launcher2.freeze.FreezeBackendType
 import de.mm20.launcher2.freeze.FreezeManager
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.permissions.PermissionGroup
+import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.freeze.FreezeSettings
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SavableSearchable
@@ -29,6 +31,14 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     private val freezeSettings: FreezeSettings by inject()
     private val appRepository: AppRepository by inject()
     private val iconService: IconService by inject()
+    private val permissionsManager: PermissionsManager by inject()
+
+    val usageAccessGranted = permissionsManager.hasPermission(PermissionGroup.UsageAccess)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+    fun requestUsageAccess(activity: AppCompatActivity) {
+        permissionsManager.requestPermission(activity, PermissionGroup.UsageAccess)
+    }
 
     val activeBackend: StateFlow<FreezeBackendType?> = freezeManager.activeBackend
 

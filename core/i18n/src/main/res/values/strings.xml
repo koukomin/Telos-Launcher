@@ -543,6 +543,9 @@
     <string name="preference_freeze_on_battery_saver">Freeze when battery saver is on</string>
     <string name="preference_freeze_apps_category">Apps</string>
     <string name="preference_freeze_apps_summary">Apps checked below are frozen automatically by the triggers above. Unfreezing happens automatically the next time you launch one.</string>
+    <string name="preference_freeze_usage_access">Usage access</string>
+    <string name="preference_freeze_usage_access_summary_granted">Granted. Foreground apps are never auto-frozen.</string>
+    <string name="preference_freeze_usage_access_summary_not_granted">Not granted. Without it, an app can be auto-frozen even while you\'re using it. Tap to grant.</string>
 
     <string name="preference_screen_plugins">Plugins</string>
     <string name="preference_screen_plugins_summary">Manage installed extensions</string>

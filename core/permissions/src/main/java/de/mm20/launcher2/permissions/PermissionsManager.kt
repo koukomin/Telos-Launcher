@@ -1,6 +1,7 @@
 package de.mm20.launcher2.permissions
 
 import android.Manifest
+import android.app.AppOpsManager
 import android.app.role.RoleManager
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -10,6 +11,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.os.Process
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -68,6 +70,7 @@ enum class PermissionGroup {
     Accessibility,
     ManageProfiles,
     Call,
+    UsageAccess,
 }
 
 internal class PermissionsManagerImpl(
@@ -101,6 +104,9 @@ internal class PermissionsManagerImpl(
     )
     private val callPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.Call)
+    )
+    private val usageAccessPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.UsageAccess)
     )
 
     override fun requestPermission(context: AppCompatActivity, permissionGroup: PermissionGroup) {
@@ -192,6 +198,15 @@ internal class PermissionsManagerImpl(
                     permissionGroup.ordinal
                 )
             }
+
+            PermissionGroup.UsageAccess -> {
+                try {
+                    context.tryStartActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
+                    pendingPermissionRequests.add(PermissionGroup.UsageAccess)
+                } catch (e: ActivityNotFoundException) {
+                    CrashReporter.logException(e)
+                }
+            }
         }
     }
 
@@ -242,6 +257,16 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Call -> {
                 callPermissions.all { context.checkPermission(it) }
             }
+
+            PermissionGroup.UsageAccess -> {
+                val appOps = context.getSystemService<AppOpsManager>()
+                val mode = appOps?.checkOpNoThrow(
+                    AppOpsManager.OPSTR_GET_USAGE_STATS,
+                    Process.myUid(),
+                    context.packageName,
+                )
+                mode == AppOpsManager.MODE_ALLOWED
+            }
         }
     }
 
@@ -257,6 +282,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Accessibility -> accessibilityPermissionState
             PermissionGroup.ManageProfiles -> manageProfilesPermissionState
             PermissionGroup.Call -> callPermissionState
+            PermissionGroup.UsageAccess -> usageAccessPermissionState
         }
     }
 
@@ -278,6 +304,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Accessibility -> accessibilityPermissionState.value = granted
             PermissionGroup.ManageProfiles -> manageProfilesPermissionState.value = granted
             PermissionGroup.Call -> callPermissionState.value = granted
+            PermissionGroup.UsageAccess -> usageAccessPermissionState.value = granted
         }
     }
 
@@ -285,6 +312,7 @@ internal class PermissionsManagerImpl(
         externalStoragePermissionState.value = checkPermissionOnce(PermissionGroup.ExternalStorage)
         appShortcutsPermissionState.value = checkPermissionOnce(PermissionGroup.AppShortcuts)
         manageProfilesPermissionState.value = checkPermissionOnce(PermissionGroup.ManageProfiles)
+        usageAccessPermissionState.value = checkPermissionOnce(PermissionGroup.UsageAccess)
     }
 
     override fun reportNotificationListenerState(running: Boolean) {
