@@ -19,9 +19,6 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
-    buildFeatures {
-        aidl = true
-    }
 
     buildTypes {
         release {
@@ -55,6 +52,7 @@ dependencies {
 
     implementation(libs.shizuku.api)
     implementation(libs.shizuku.provider)
+    implementation(libs.hiddenapibypass)
 
     implementation(project(":core:ktx"))
     implementation(project(":core:base"))

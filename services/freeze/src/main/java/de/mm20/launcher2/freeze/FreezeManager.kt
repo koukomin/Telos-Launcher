@@ -16,7 +16,7 @@ class FreezeManager internal constructor(
     private val context: Context,
     private val settings: FreezeSettings,
 ) {
-    private val shizukuProvider = ShizukuProvider(context)
+    private val shizukuProvider = ShizukuProvider()
     private val rootProvider = RootProvider()
 
     private val _activeBackend = MutableStateFlow<FreezeBackendType?>(null)
