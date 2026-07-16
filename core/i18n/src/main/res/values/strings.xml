@@ -240,6 +240,11 @@
     <string name="system_widget_storage">Storage</string>
     <string name="system_widget_used_of_total">%1$s of %2$s used</string>
     <string name="widget_name_reminders">Reminders</string>
+    <string name="widget_name_freeze">Freeze</string>
+    <string name="freeze_widget_freeze_now">Freeze now</string>
+    <string name="freeze_widget_candidates_summary">%1$d apps selected</string>
+    <string name="freeze_widget_no_candidates">No apps selected. Choose apps to freeze in settings.</string>
+    <string name="freeze_widget_frozen_now">Frozen %1$d of %2$d</string>
     <string name="reminders_widget_empty">No reminders</string>
     <string name="widget_name_unknown">Unknown</string>
     <string name="widget_add_widget">Add widget</string>
@@ -565,6 +570,16 @@
     <string name="freeze_app_state_never">Never freeze</string>
     <string name="preference_freeze_show_system_apps">Show system apps</string>
     <string name="preference_freeze_show_system_apps_summary">Freezing a system app can break core phone functionality. Only enable this if you know what you\'re doing.</string>
+    <string name="preference_freeze_dashboard">Dashboard</string>
+    <string name="preference_freeze_dashboard_summary">Currently frozen apps and freeze history</string>
+    <string name="freeze_dashboard_currently_frozen">Currently frozen</string>
+    <string name="freeze_dashboard_none_frozen">Nothing is frozen right now</string>
+    <string name="freeze_dashboard_history">History</string>
+    <string name="freeze_dashboard_no_history">No apps have been frozen or unfrozen yet</string>
+    <string name="freeze_dashboard_frozen_badge">Frozen</string>
+    <string name="freeze_dashboard_counts">Frozen %1$d times, unfrozen %2$d times</string>
+    <string name="freeze_dashboard_last_frozen">Last frozen %1$s</string>
+    <string name="freeze_dashboard_last_unfrozen">Last unfrozen %1$s</string>
 
     <string name="preference_screen_plugins">Plugins</string>
     <string name="preference_screen_plugins_summary">Manage installed extensions</string>

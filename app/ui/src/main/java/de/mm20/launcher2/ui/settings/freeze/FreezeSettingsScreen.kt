@@ -32,6 +32,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.serialization.Serializable
 import androidx.appcompat.app.AppCompatActivity
 
@@ -64,10 +65,20 @@ fun FreezeSettingsScreen() {
     val neverFreezeApps by viewModel.neverFreezeApps.collectAsStateWithLifecycle()
     val showSystemApps by viewModel.showSystemApps.collectAsStateWithLifecycle()
 
+    val backStack = LocalBackStack.current
+
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_freeze),
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
+        item {
+            Preference(
+                icon = R.drawable.bar_chart_24px,
+                title = stringResource(R.string.preference_freeze_dashboard),
+                summary = stringResource(R.string.preference_freeze_dashboard_summary),
+                onClick = { backStack.add(FreezeDashboardRoute) }
+            )
+        }
         item {
             PreferenceCategory(title = stringResource(R.string.preference_freeze_backend_category)) {
                 if (activeBackend == null) {

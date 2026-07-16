@@ -84,15 +84,15 @@ internal class ShizukuProvider(
         }
     }
 
-    override suspend fun setPackagesSuspended(packageNames: List<String>, suspended: Boolean): Boolean {
-        val service = bindService() ?: return false
+    override suspend fun setPackagesSuspended(packageNames: List<String>, suspended: Boolean): Set<String> {
+        val service = bindService() ?: return emptySet()
         val action = if (suspended) "suspend" else "unsuspend"
         return try {
-            packageNames.all { pkg -> service.runShellCommand("pm $action --user 0 $pkg") }
+            packageNames.filterTo(mutableSetOf()) { pkg -> service.runShellCommand("pm $action --user 0 $pkg") }
         } catch (e: Throwable) {
             Log.e(TAG, "setPackagesSuspended failed", e)
             boundService = null
-            false
+            emptySet()
         }
     }
 

@@ -44,6 +44,7 @@ import de.mm20.launcher2.ui.launcher.widgets.battery.BatteryWidget
 import de.mm20.launcher2.ui.launcher.widgets.calendar.CalendarWidget
 import de.mm20.launcher2.ui.launcher.widgets.external.AppWidget
 import de.mm20.launcher2.ui.launcher.widgets.favorites.AppsWidget
+import de.mm20.launcher2.ui.launcher.widgets.freeze.FreezeWidget
 import de.mm20.launcher2.ui.launcher.widgets.music.MusicWidget
 import de.mm20.launcher2.ui.launcher.widgets.network.NetworkWidget
 import de.mm20.launcher2.ui.launcher.widgets.notes.NotesWidget
@@ -55,6 +56,7 @@ import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.BatteryWidget
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.AppsWidget
+import de.mm20.launcher2.widgets.FreezeWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NetworkWidget
 import de.mm20.launcher2.widgets.NotesWidget
@@ -204,6 +206,10 @@ fun WidgetItem(
 
                         is RemindersWidget -> {
                             RemindersWidget(widget)
+                        }
+
+                        is FreezeWidget -> {
+                            FreezeWidget(widget)
                         }
 
                         is AppWidget -> {

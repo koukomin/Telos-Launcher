@@ -69,6 +69,7 @@ import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.AppWidgetConfig
 import de.mm20.launcher2.widgets.AppsWidget
 import de.mm20.launcher2.widgets.BatteryWidget
+import de.mm20.launcher2.widgets.FreezeWidget
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NetworkWidget
@@ -394,6 +395,7 @@ fun WidgetPickerSheet(
                                     NetworkWidget.Type -> NetworkWidget(id)
                                     SystemWidget.Type -> SystemWidget(id)
                                     RemindersWidget.Type -> RemindersWidget(id)
+                                    FreezeWidget.Type -> FreezeWidget(id)
                                     else -> return@clickable
                                 }
                                 onWidgetSelected(widget)
@@ -416,6 +418,7 @@ fun WidgetPickerSheet(
                                         NetworkWidget.Type -> R.drawable.wifi_24px
                                         SystemWidget.Type -> R.drawable.memory_24px
                                         RemindersWidget.Type -> R.drawable.task_alt_24px
+                                        FreezeWidget.Type -> R.drawable.ac_unit_24px
                                         else -> R.drawable.widgets_24px
                                     }
                                 ),

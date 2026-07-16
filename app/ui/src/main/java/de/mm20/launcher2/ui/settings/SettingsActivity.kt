@@ -76,6 +76,8 @@ import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterRoute
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterScreen
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsRoute
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
+import de.mm20.launcher2.ui.settings.freeze.FreezeDashboardRoute
+import de.mm20.launcher2.ui.settings.freeze.FreezeDashboardScreen
 import de.mm20.launcher2.ui.settings.freeze.FreezeSettingsRoute
 import de.mm20.launcher2.ui.settings.freeze.FreezeSettingsScreen
 import de.mm20.launcher2.ui.settings.debug.StringNormalizerTestRoute
@@ -306,6 +308,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<FreezeSettingsRoute> {
                 FreezeSettingsScreen()
+            }
+            entry<FreezeDashboardRoute> {
+                FreezeDashboardScreen()
             }
             entry<StringNormalizerTestRoute> {
                 StringNormalizerTestScreen()

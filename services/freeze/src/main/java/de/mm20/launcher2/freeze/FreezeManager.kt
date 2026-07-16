@@ -52,20 +52,26 @@ class FreezeManager internal constructor(
         null -> false
     }
 
-    suspend fun freeze(packageName: String): Boolean = setSuspended(listOf(packageName), true)
+    suspend fun freeze(packageName: String): Set<String> = setSuspended(listOf(packageName), true)
 
-    suspend fun unfreeze(packageName: String): Boolean = setSuspended(listOf(packageName), false)
+    suspend fun unfreeze(packageName: String): Set<String> = setSuspended(listOf(packageName), false)
 
-    suspend fun freeze(packageNames: List<String>): Boolean = setSuspended(packageNames, true)
+    suspend fun freeze(packageNames: List<String>): Set<String> = setSuspended(packageNames, true)
 
-    private suspend fun setSuspended(packageNames: List<String>, suspended: Boolean): Boolean {
-        if (packageNames.isEmpty()) return true
+    /** @return the subset of [packageNames] that were actually toggled successfully. */
+    private suspend fun setSuspended(packageNames: List<String>, suspended: Boolean): Set<String> {
+        if (packageNames.isEmpty()) return emptySet()
         val provider = when (_activeBackend.value) {
             FreezeBackendType.Shizuku -> shizukuProvider
             FreezeBackendType.Root -> rootProvider
-            null -> return false
+            null -> return emptySet()
         }
-        return provider.setPackagesSuspended(packageNames, suspended)
+        val succeeded = provider.setPackagesSuspended(packageNames, suspended)
+        val now = System.currentTimeMillis()
+        for (packageName in succeeded) {
+            if (suspended) settings.recordFrozen(packageName, now) else settings.recordUnfrozen(packageName, now)
+        }
+        return succeeded
     }
 
     /** Live read of the OS-level suspended flag; not dependent on any cached launcher state. */
@@ -84,4 +90,7 @@ class FreezeManager internal constructor(
     fun setAutoFreezeCandidate(packageName: String, enabled: Boolean) {
         settings.setCandidateEnabled(packageName, enabled)
     }
+
+    /** Freeze/unfreeze counters and last-toggled timestamps, keyed by package name. */
+    val stats = settings.stats
 }

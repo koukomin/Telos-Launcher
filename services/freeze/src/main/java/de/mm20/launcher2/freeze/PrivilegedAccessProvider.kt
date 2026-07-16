@@ -15,6 +15,9 @@ internal interface PrivilegedAccessProvider {
     /** Prompts the user if necessary. Suspends until the user responds. Returns the granted state. */
     suspend fun requestPermission(): Boolean
 
-    /** Suspends (freezes) or unsuspends (unfreezes) the given packages for the current user. */
-    suspend fun setPackagesSuspended(packageNames: List<String>, suspended: Boolean): Boolean
+    /**
+     * Suspends (freezes) or unsuspends (unfreezes) the given packages for the current user.
+     * @return the subset of [packageNames] that were actually toggled successfully.
+     */
+    suspend fun setPackagesSuspended(packageNames: List<String>, suspended: Boolean): Set<String>
 }

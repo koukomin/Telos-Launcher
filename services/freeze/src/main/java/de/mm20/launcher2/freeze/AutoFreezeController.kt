@@ -95,6 +95,14 @@ class AutoFreezeController internal constructor(
         }
     }
 
+    /**
+     * Manual trigger (e.g. the "Freeze now" widget button): freezes every candidate the user
+     * opted in, same exclusion checks as the automatic triggers above - it does not bypass them.
+     */
+    fun freezeAllCandidatesNow() {
+        scope.launch { freezeCandidates() }
+    }
+
     private suspend fun freezeCandidates() {
         val candidates = settings.candidates.first()
         if (candidates.isEmpty()) return

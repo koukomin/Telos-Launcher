@@ -25,9 +25,9 @@ internal class RootProvider : PrivilegedAccessProvider {
 
     override suspend fun requestPermission(): Boolean = isAvailable()
 
-    override suspend fun setPackagesSuspended(packageNames: List<String>, suspended: Boolean): Boolean {
+    override suspend fun setPackagesSuspended(packageNames: List<String>, suspended: Boolean): Set<String> {
         val action = if (suspended) "suspend" else "unsuspend"
-        return packageNames.all { pkg -> runAsRoot("pm $action --user 0 $pkg") }
+        return packageNames.filterTo(mutableSetOf()) { pkg -> runAsRoot("pm $action --user 0 $pkg") }
     }
 
     private suspend fun runAsRoot(command: String): Boolean = withContext(Dispatchers.IO) {

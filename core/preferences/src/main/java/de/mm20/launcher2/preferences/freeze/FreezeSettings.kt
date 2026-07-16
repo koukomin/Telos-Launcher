@@ -1,5 +1,6 @@
 package de.mm20.launcher2.preferences.freeze
 
+import de.mm20.launcher2.preferences.FreezeAppStats
 import de.mm20.launcher2.preferences.FreezeBackendPreference
 import de.mm20.launcher2.preferences.FreezeExclusionStrictness
 import de.mm20.launcher2.preferences.FreezeProfile
@@ -88,6 +89,33 @@ class FreezeSettings internal constructor(
             } else {
                 it.copy(freezeNeverFreezeApps = it.freezeNeverFreezeApps - packageName)
             }
+        }
+    }
+
+    val stats
+        get() = dataStore.data.map { it.freezeStats }
+
+    fun recordFrozen(packageName: String, timestamp: Long) {
+        dataStore.update {
+            val current = it.freezeStats[packageName] ?: FreezeAppStats()
+            it.copy(
+                freezeStats = it.freezeStats + (packageName to current.copy(
+                    freezeCount = current.freezeCount + 1,
+                    lastFrozenAt = timestamp,
+                ))
+            )
+        }
+    }
+
+    fun recordUnfrozen(packageName: String, timestamp: Long) {
+        dataStore.update {
+            val current = it.freezeStats[packageName] ?: FreezeAppStats()
+            it.copy(
+                freezeStats = it.freezeStats + (packageName to current.copy(
+                    unfreezeCount = current.unfreezeCount + 1,
+                    lastUnfrozenAt = timestamp,
+                ))
+            )
         }
     }
 }

@@ -9,6 +9,7 @@ import androidx.core.content.getSystemService
 import de.mm20.launcher2.widgets.BatteryWidget
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.AppsWidget
+import de.mm20.launcher2.widgets.FreezeWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NetworkWidget
 import de.mm20.launcher2.widgets.NotesWidget
@@ -89,6 +90,10 @@ class WidgetsService(
             BuiltInWidgetInfo(
                 type = SystemWidget.Type,
                 label = context.getString(R.string.widget_name_system),
+            ),
+            BuiltInWidgetInfo(
+                type = FreezeWidget.Type,
+                label = context.getString(R.string.widget_name_freeze),
             ),
         )
     }

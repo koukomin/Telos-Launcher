@@ -236,6 +236,7 @@ data class LauncherSettingsData internal constructor(
     val freezeProfile: FreezeProfile = FreezeProfile.Balanced,
     val freezeExclusionStrictness: FreezeExclusionStrictness = FreezeExclusionStrictness.Strict,
     val freezeNeverFreezeApps: Set<String> = emptySet(),
+    val freezeStats: Map<String, FreezeAppStats> = emptyMap(),
 
     ) {
     constructor(
@@ -512,3 +513,11 @@ enum class FreezeExclusionStrictness {
     @SerialName("strict") Strict,
     @SerialName("relaxed") Relaxed,
 }
+
+@Serializable
+data class FreezeAppStats(
+    val freezeCount: Int = 0,
+    val unfreezeCount: Int = 0,
+    val lastFrozenAt: Long? = null,
+    val lastUnfrozenAt: Long? = null,
+)
