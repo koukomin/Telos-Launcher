@@ -233,6 +233,9 @@ data class LauncherSettingsData internal constructor(
     val freezeIdleTimeoutMinutes: Int = 15,
     val freezeOnBatterySaver: Boolean = false,
     val freezeCandidates: Set<String> = emptySet(),
+    val freezeProfile: FreezeProfile = FreezeProfile.Balanced,
+    val freezeExclusionStrictness: FreezeExclusionStrictness = FreezeExclusionStrictness.Strict,
+    val freezeNeverFreezeApps: Set<String> = emptySet(),
 
     ) {
     constructor(
@@ -493,4 +496,19 @@ enum class FreezeBackendPreference {
     @SerialName("auto") Auto,
     @SerialName("shizuku") ShizukuOnly,
     @SerialName("root") RootOnly,
+}
+
+@Serializable
+enum class FreezeProfile {
+    @SerialName("battery_saver") BatterySaver,
+    @SerialName("balanced") Balanced,
+    @SerialName("aggressive") Aggressive,
+    @SerialName("ultra_aggressive") UltraAggressive,
+    @SerialName("custom") Custom,
+}
+
+@Serializable
+enum class FreezeExclusionStrictness {
+    @SerialName("strict") Strict,
+    @SerialName("relaxed") Relaxed,
 }

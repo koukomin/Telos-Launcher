@@ -18,12 +18,15 @@ import kotlinx.coroutines.launch
 
 /**
  * Watches for screen-off, idle timeout, and battery-saver events and freezes the apps the user
- * explicitly opted in via settings ([FreezeSettings.candidates]).
+ * explicitly opted in via settings ([FreezeSettings.candidates]) - minus whatever
+ * [FreezeExclusionChecker] vetoes (foreground, active notification/media session/foreground
+ * service, Android Auto, or a per-app "never freeze" override).
  *
- * Deliberately conservative for now: it only ever acts on that explicit opt-in list, never on
- * "whatever's running in the background". The exclusion-rule engine (never freeze foreground
- * apps, apps with an active notification/media session/foreground service, etc.) is a separate
- * stage that hasn't been built yet, so until it exists, this only touches apps the user picked.
+ * Trigger enablement and the idle timeout come from [FreezeProfileManager.resolvedSettings], i.e.
+ * whichever [de.mm20.launcher2.preferences.FreezeProfile] the user has selected.
+ *
+ * It only ever acts on the explicit opt-in candidate list, never on "whatever's running in the
+ * background".
  *
  * Registered as a Koin singleton so it's created (and starts listening) once, at app start.
  */
@@ -32,6 +35,7 @@ class AutoFreezeController internal constructor(
     private val freezeManager: FreezeManager,
     private val settings: FreezeSettings,
     private val exclusionChecker: FreezeExclusionChecker,
+    private val profileManager: FreezeProfileManager,
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private var idleJob: Job? = null
@@ -62,7 +66,8 @@ class AutoFreezeController internal constructor(
     private fun onScreenOff() {
         idleJob?.cancel()
         scope.launch {
-            if (settings.autoFreezeEnabled.first() && settings.freezeOnScreenOff.first()) {
+            if (!settings.autoFreezeEnabled.first()) return@launch
+            if (profileManager.resolvedSettings.first().freezeOnScreenOff) {
                 freezeCandidates()
             }
         }
@@ -71,9 +76,10 @@ class AutoFreezeController internal constructor(
     private fun onScreenOn() {
         idleJob?.cancel()
         idleJob = scope.launch {
-            if (!settings.autoFreezeEnabled.first() || !settings.freezeOnIdle.first()) return@launch
-            val timeoutMinutes = settings.idleTimeoutMinutes.first()
-            delay(timeoutMinutes * 60_000L)
+            if (!settings.autoFreezeEnabled.first()) return@launch
+            val resolved = profileManager.resolvedSettings.first()
+            if (!resolved.freezeOnIdle) return@launch
+            delay(resolved.idleTimeoutMinutes * 60_000L)
             freezeCandidates()
         }
     }
@@ -82,7 +88,8 @@ class AutoFreezeController internal constructor(
         val powerManager = context.getSystemService<PowerManager>() ?: return
         if (!powerManager.isPowerSaveMode) return
         scope.launch {
-            if (settings.autoFreezeEnabled.first() && settings.freezeOnBatterySaver.first()) {
+            if (!settings.autoFreezeEnabled.first()) return@launch
+            if (profileManager.resolvedSettings.first().freezeOnBatterySaver) {
                 freezeCandidates()
             }
         }

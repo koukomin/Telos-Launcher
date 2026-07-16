@@ -10,6 +10,8 @@ import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.FreezeExclusionStrictness
+import de.mm20.launcher2.preferences.FreezeProfile
 import de.mm20.launcher2.preferences.freeze.FreezeSettings
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SavableSearchable
@@ -52,6 +54,20 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     val candidates = freezeSettings.candidates
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
 
+    val neverFreezeApps = freezeSettings.neverFreezeApps
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
+
+    val profile = freezeSettings.profile
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setProfile(profile: FreezeProfile) = freezeSettings.setProfile(profile)
+
+    val exclusionStrictness = freezeSettings.exclusionStrictness
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setExclusionStrictness(strictness: FreezeExclusionStrictness) =
+        freezeSettings.setExclusionStrictness(strictness)
+
     val autoFreezeEnabled = freezeSettings.autoFreezeEnabled
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val freezeOnScreenOff = freezeSettings.freezeOnScreenOff
@@ -82,11 +98,23 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     fun setIdleTimeoutMinutes(minutes: Int) = freezeSettings.setIdleTimeoutMinutes(minutes)
     fun setFreezeOnBatterySaver(enabled: Boolean) = freezeSettings.setFreezeOnBatterySaver(enabled)
 
-    fun setCandidateEnabled(app: Application, enabled: Boolean) {
-        freezeManager.setAutoFreezeCandidate(app.componentName.packageName, enabled)
+    fun setAppFreezeState(app: Application, state: AppFreezeState) {
+        val packageName = app.componentName.packageName
+        freezeManager.setAutoFreezeCandidate(packageName, state == AppFreezeState.Candidate)
+        freezeSettings.setNeverFreeze(packageName, state == AppFreezeState.NeverFreeze)
     }
 
     fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon?> {
         return iconService.getIcon(searchable, size)
+    }
+}
+
+enum class AppFreezeState { None, Candidate, NeverFreeze }
+
+fun appFreezeState(packageName: String, candidates: Set<String>, neverFreeze: Set<String>): AppFreezeState {
+    return when {
+        neverFreeze.contains(packageName) -> AppFreezeState.NeverFreeze
+        candidates.contains(packageName) -> AppFreezeState.Candidate
+        else -> AppFreezeState.None
     }
 }

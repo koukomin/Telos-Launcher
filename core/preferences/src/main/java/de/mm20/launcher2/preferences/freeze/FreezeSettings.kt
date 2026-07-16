@@ -1,6 +1,8 @@
 package de.mm20.launcher2.preferences.freeze
 
 import de.mm20.launcher2.preferences.FreezeBackendPreference
+import de.mm20.launcher2.preferences.FreezeExclusionStrictness
+import de.mm20.launcher2.preferences.FreezeProfile
 import de.mm20.launcher2.preferences.LauncherDataStore
 import kotlinx.coroutines.flow.map
 
@@ -58,6 +60,33 @@ class FreezeSettings internal constructor(
                 it.copy(freezeCandidates = it.freezeCandidates + packageName)
             } else {
                 it.copy(freezeCandidates = it.freezeCandidates - packageName)
+            }
+        }
+    }
+
+    val profile
+        get() = dataStore.data.map { it.freezeProfile }
+
+    fun setProfile(profile: FreezeProfile) {
+        dataStore.update { it.copy(freezeProfile = profile) }
+    }
+
+    val exclusionStrictness
+        get() = dataStore.data.map { it.freezeExclusionStrictness }
+
+    fun setExclusionStrictness(strictness: FreezeExclusionStrictness) {
+        dataStore.update { it.copy(freezeExclusionStrictness = strictness) }
+    }
+
+    val neverFreezeApps
+        get() = dataStore.data.map { it.freezeNeverFreezeApps }
+
+    fun setNeverFreeze(packageName: String, never: Boolean) {
+        dataStore.update {
+            if (never) {
+                it.copy(freezeNeverFreezeApps = it.freezeNeverFreezeApps + packageName)
+            } else {
+                it.copy(freezeNeverFreezeApps = it.freezeNeverFreezeApps - packageName)
             }
         }
     }

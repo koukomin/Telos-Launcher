@@ -546,6 +546,23 @@
     <string name="preference_freeze_usage_access">Usage access</string>
     <string name="preference_freeze_usage_access_summary_granted">Granted. Foreground apps are never auto-frozen.</string>
     <string name="preference_freeze_usage_access_summary_not_granted">Not granted. Without it, an app can be auto-frozen even while you\'re using it. Tap to grant.</string>
+    <string name="preference_freeze_profile">Profile</string>
+    <string name="freeze_profile_battery_saver">Battery Saver</string>
+    <string name="freeze_profile_balanced">Balanced</string>
+    <string name="freeze_profile_aggressive">Aggressive</string>
+    <string name="freeze_profile_ultra_aggressive">Ultra Aggressive</string>
+    <string name="freeze_profile_custom">Custom</string>
+    <string name="freeze_profile_battery_saver_summary">Freezes after 30 minutes idle, or when battery saver turns on. Never on screen off.</string>
+    <string name="freeze_profile_balanced_summary">Freezes after 15 minutes idle, or when battery saver turns on. Never on screen off.</string>
+    <string name="freeze_profile_aggressive_summary">Freezes when the screen turns off, after 5 minutes idle, or when battery saver turns on.</string>
+    <string name="freeze_profile_ultra_aggressive_summary">Freezes when the screen turns off, after 1 minute idle, or when battery saver turns on. Also freezes apps with a paused media session.</string>
+    <string name="preference_freeze_exclusion_strictness">Exclusion strictness</string>
+    <string name="preference_freeze_exclusion_strictness_summary">Foreground apps, active notifications, foreground services, and Android Auto are always protected, in every profile. This only affects the active media session check.</string>
+    <string name="freeze_exclusion_strictness_strict">Strict</string>
+    <string name="freeze_exclusion_strictness_relaxed">Relaxed</string>
+    <string name="freeze_app_state_none">Not managed</string>
+    <string name="freeze_app_state_candidate">Auto-freeze candidate</string>
+    <string name="freeze_app_state_never">Never freeze</string>
 
     <string name="preference_screen_plugins">Plugins</string>
     <string name="preference_screen_plugins_summary">Manage installed extensions</string>

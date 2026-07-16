@@ -4,13 +4,16 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -18,10 +21,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.freeze.FreezeBackendType
-import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.preferences.FreezeExclusionStrictness
+import de.mm20.launcher2.preferences.FreezeProfile
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
+import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
@@ -46,6 +51,8 @@ fun FreezeSettingsScreen() {
     val hasPermission by viewModel.hasPermission.collectAsStateWithLifecycle()
 
     val autoFreezeEnabled by viewModel.autoFreezeEnabled.collectAsStateWithLifecycle()
+    val profile by viewModel.profile.collectAsStateWithLifecycle()
+    val exclusionStrictness by viewModel.exclusionStrictness.collectAsStateWithLifecycle()
     val freezeOnScreenOff by viewModel.freezeOnScreenOff.collectAsStateWithLifecycle()
     val freezeOnIdle by viewModel.freezeOnIdle.collectAsStateWithLifecycle()
     val idleTimeoutMinutes by viewModel.idleTimeoutMinutes.collectAsStateWithLifecycle()
@@ -54,6 +61,7 @@ fun FreezeSettingsScreen() {
 
     val apps by viewModel.allApps.collectAsStateWithLifecycle()
     val candidates by viewModel.candidates.collectAsStateWithLifecycle()
+    val neverFreezeApps by viewModel.neverFreezeApps.collectAsStateWithLifecycle()
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_freeze),
@@ -107,32 +115,65 @@ fun FreezeSettingsScreen() {
                                 (context as? AppCompatActivity)?.let { viewModel.requestUsageAccess(it) }
                             }
                         )
-                        SwitchPreference(
-                            title = stringResource(R.string.preference_freeze_on_screen_off),
-                            value = freezeOnScreenOff == true,
-                            onValueChanged = { viewModel.setFreezeOnScreenOff(it) }
+                        ListPreference(
+                            title = stringResource(R.string.preference_freeze_profile),
+                            items = listOf(
+                                stringResource(R.string.freeze_profile_battery_saver) to FreezeProfile.BatterySaver,
+                                stringResource(R.string.freeze_profile_balanced) to FreezeProfile.Balanced,
+                                stringResource(R.string.freeze_profile_aggressive) to FreezeProfile.Aggressive,
+                                stringResource(R.string.freeze_profile_ultra_aggressive) to FreezeProfile.UltraAggressive,
+                                stringResource(R.string.freeze_profile_custom) to FreezeProfile.Custom,
+                            ),
+                            value = profile ?: FreezeProfile.Balanced,
+                            summary = when (profile) {
+                                FreezeProfile.BatterySaver -> stringResource(R.string.freeze_profile_battery_saver_summary)
+                                FreezeProfile.Balanced -> stringResource(R.string.freeze_profile_balanced_summary)
+                                FreezeProfile.Aggressive -> stringResource(R.string.freeze_profile_aggressive_summary)
+                                FreezeProfile.UltraAggressive -> stringResource(R.string.freeze_profile_ultra_aggressive_summary)
+                                else -> null
+                            },
+                            onValueChanged = { viewModel.setProfile(it) }
                         )
-                        SwitchPreference(
-                            title = stringResource(R.string.preference_freeze_on_idle),
-                            value = freezeOnIdle == true,
-                            onValueChanged = { viewModel.setFreezeOnIdle(it) }
-                        )
-                        AnimatedVisibility(freezeOnIdle == true) {
-                            SliderPreference(
-                                title = stringResource(R.string.preference_freeze_idle_timeout),
-                                value = idleTimeoutMinutes ?: 15,
-                                min = 1,
-                                max = 120,
-                                step = 1,
-                                onValueChanged = { viewModel.setIdleTimeoutMinutes(it) },
-                                label = { Text("$it") }
-                            )
+                        AnimatedVisibility(profile == FreezeProfile.Custom) {
+                            Column {
+                                SwitchPreference(
+                                    title = stringResource(R.string.preference_freeze_on_screen_off),
+                                    value = freezeOnScreenOff == true,
+                                    onValueChanged = { viewModel.setFreezeOnScreenOff(it) }
+                                )
+                                SwitchPreference(
+                                    title = stringResource(R.string.preference_freeze_on_idle),
+                                    value = freezeOnIdle == true,
+                                    onValueChanged = { viewModel.setFreezeOnIdle(it) }
+                                )
+                                AnimatedVisibility(freezeOnIdle == true) {
+                                    SliderPreference(
+                                        title = stringResource(R.string.preference_freeze_idle_timeout),
+                                        value = idleTimeoutMinutes ?: 15,
+                                        min = 1,
+                                        max = 120,
+                                        step = 1,
+                                        onValueChanged = { viewModel.setIdleTimeoutMinutes(it) },
+                                        label = { Text("$it") }
+                                    )
+                                }
+                                SwitchPreference(
+                                    title = stringResource(R.string.preference_freeze_on_battery_saver),
+                                    value = freezeOnBatterySaver == true,
+                                    onValueChanged = { viewModel.setFreezeOnBatterySaver(it) }
+                                )
+                                ListPreference(
+                                    title = stringResource(R.string.preference_freeze_exclusion_strictness),
+                                    summary = stringResource(R.string.preference_freeze_exclusion_strictness_summary),
+                                    items = listOf(
+                                        stringResource(R.string.freeze_exclusion_strictness_strict) to FreezeExclusionStrictness.Strict,
+                                        stringResource(R.string.freeze_exclusion_strictness_relaxed) to FreezeExclusionStrictness.Relaxed,
+                                    ),
+                                    value = exclusionStrictness ?: FreezeExclusionStrictness.Strict,
+                                    onValueChanged = { viewModel.setExclusionStrictness(it) }
+                                )
+                            }
                         }
-                        SwitchPreference(
-                            title = stringResource(R.string.preference_freeze_on_battery_saver),
-                            value = freezeOnBatterySaver == true,
-                            onValueChanged = { viewModel.setFreezeOnBatterySaver(it) }
-                        )
                     }
                 }
             }
@@ -148,20 +189,45 @@ fun FreezeSettingsScreen() {
         }
         itemsIndexed(apps, key = { _, it -> it.key }) { _, app ->
             val icon by viewModel.getIcon(app, 32.dp.value.toInt()).collectAsStateWithLifecycle(null)
-            val isCandidate = candidates.contains(app.componentName.packageName)
+            val state = appFreezeState(app.componentName.packageName, candidates, neverFreezeApps)
+            var showMenu by remember { mutableStateOf(false) }
             Preference(
                 title = app.label,
                 icon = {
                     ShapedLauncherIcon(size = 32.dp, icon = { icon })
                 },
-                onClick = { viewModel.setCandidateEnabled(app, !isCandidate) },
-                controls = {
-                    Checkbox(
-                        checked = isCandidate,
-                        onCheckedChange = { viewModel.setCandidateEnabled(app, it) },
-                    )
-                }
+                summary = stringResource(
+                    when (state) {
+                        AppFreezeState.None -> R.string.freeze_app_state_none
+                        AppFreezeState.Candidate -> R.string.freeze_app_state_candidate
+                        AppFreezeState.NeverFreeze -> R.string.freeze_app_state_never
+                    }
+                ),
+                onClick = { showMenu = true },
             )
+            DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.freeze_app_state_none)) },
+                    onClick = {
+                        viewModel.setAppFreezeState(app, AppFreezeState.None)
+                        showMenu = false
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.freeze_app_state_candidate)) },
+                    onClick = {
+                        viewModel.setAppFreezeState(app, AppFreezeState.Candidate)
+                        showMenu = false
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.freeze_app_state_never)) },
+                    onClick = {
+                        viewModel.setAppFreezeState(app, AppFreezeState.NeverFreeze)
+                        showMenu = false
+                    }
+                )
+            }
         }
     }
 }

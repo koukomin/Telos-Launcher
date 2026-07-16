@@ -10,11 +10,19 @@ import androidx.core.content.getSystemService
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.FreezeExclusionStrictness
+import de.mm20.launcher2.preferences.freeze.FreezeSettings
 import kotlinx.coroutines.flow.first
 
 /**
  * Decides whether a freeze candidate must be left alone right now. Checked before every
  * auto-freeze trigger (screen-off, idle, battery saver) so none of them can bypass it.
+ *
+ * A per-app "never freeze" override ([FreezeSettings.neverFreezeApps]) always wins, regardless
+ * of profile. Of the five rules below, only rule 3 (active media session) is ever affected by
+ * [FreezeExclusionStrictness] - [FreezeProfile.UltraAggressive][de.mm20.launcher2.preferences.FreezeProfile]
+ * is the only profile that relaxes it. Rules 1, 2, 4, and 5 are always enforced, for every
+ * profile, with no exception - loosening them could freeze an app mid-call or mid-navigation.
  *
  * Deliberately does *not* look at downloads/uploads/network usage - that's a separate,
  * not-yet-built rule.
@@ -29,17 +37,25 @@ internal class FreezeExclusionChecker(
     private val context: Context,
     private val notificationRepository: NotificationRepository,
     private val permissionsManager: PermissionsManager,
+    private val settings: FreezeSettings,
+    private val profileManager: FreezeProfileManager,
 ) {
 
     suspend fun isExcluded(packageName: String): Boolean {
+        if (settings.neverFreezeApps.first().contains(packageName)) return true // per-app override
         if (isAndroidAutoActive()) return true
 
         val notifications = notificationRepository.notifications.first()
             .filter { it.packageName == packageName }
 
         if (notifications.isNotEmpty()) return true // rule 2: active notification
-        if (notifications.any { it.mediaSessionToken != null }) return true // rule 3: media session
         if (notifications.any { it.flags and Notification.FLAG_FOREGROUND_SERVICE != 0 }) return true // rule 4
+
+        // Rule 3: active media session. Only strictness that's ever relaxed - see class doc.
+        val strictness = profileManager.resolvedSettings.first().exclusionStrictness
+        if (strictness == FreezeExclusionStrictness.Strict &&
+            notifications.any { it.mediaSessionToken != null }
+        ) return true
 
         return isForeground(packageName) // rule 1
     }
