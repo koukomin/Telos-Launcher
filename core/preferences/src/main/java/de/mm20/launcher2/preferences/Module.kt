@@ -24,6 +24,7 @@ import de.mm20.launcher2.preferences.ui.LocaleSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.preferences.ui.UiState
+import de.mm20.launcher2.preferences.ui.WallpaperSettings
 import de.mm20.launcher2.preferences.weather.WeatherSettings
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
@@ -56,4 +57,5 @@ val preferencesModule = module {
     factory { LocaleSettings(get()) }
     factory { FeedSettings(get()) }
     factory { FreezeSettings(get()) }
+    factory { WallpaperSettings(get()) }
 }

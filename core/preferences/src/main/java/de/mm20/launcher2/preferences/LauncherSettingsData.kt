@@ -162,6 +162,9 @@ data class LauncherSettingsData internal constructor(
     val gesturesTwoFingerSwipeUp: GestureAction = GestureAction.NoAction,
     val gesturesTwoFingerSwipeDown: GestureAction = GestureAction.NoAction,
 
+    val videoWallpaperPauseOnBatterySaver: Boolean = true,
+    val videoWallpaperPauseOnThermalThrottling: Boolean = true,
+
     val animationsCharging: Boolean = true,
 
     val stateTagsMultiline: Boolean = false,
