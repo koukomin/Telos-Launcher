@@ -563,6 +563,8 @@
     <string name="freeze_app_state_none">Not managed</string>
     <string name="freeze_app_state_candidate">Auto-freeze candidate</string>
     <string name="freeze_app_state_never">Never freeze</string>
+    <string name="preference_freeze_show_system_apps">Show system apps</string>
+    <string name="preference_freeze_show_system_apps_summary">Freezing a system app can break core phone functionality. Only enable this if you know what you\'re doing.</string>
 
     <string name="preference_screen_plugins">Plugins</string>
     <string name="preference_screen_plugins_summary">Manage installed extensions</string>

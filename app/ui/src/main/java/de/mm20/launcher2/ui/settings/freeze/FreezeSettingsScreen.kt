@@ -62,6 +62,7 @@ fun FreezeSettingsScreen() {
     val apps by viewModel.allApps.collectAsStateWithLifecycle()
     val candidates by viewModel.candidates.collectAsStateWithLifecycle()
     val neverFreezeApps by viewModel.neverFreezeApps.collectAsStateWithLifecycle()
+    val showSystemApps by viewModel.showSystemApps.collectAsStateWithLifecycle()
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_freeze),
@@ -184,6 +185,12 @@ fun FreezeSettingsScreen() {
                     text = stringResource(R.string.preference_freeze_apps_summary),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_freeze_show_system_apps),
+                    summary = stringResource(R.string.preference_freeze_show_system_apps_summary),
+                    value = showSystemApps,
+                    onValueChanged = { viewModel.setShowSystemApps(it) }
                 )
             }
         }

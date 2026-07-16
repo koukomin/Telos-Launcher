@@ -1,5 +1,8 @@
 package de.mm20.launcher2.ui.settings.freeze
 
+import android.content.Context
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,6 +24,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -29,6 +33,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
+    private val context: Context by inject()
     private val freezeManager: FreezeManager by inject()
     private val freezeSettings: FreezeSettings by inject()
     private val appRepository: AppRepository by inject()
@@ -47,9 +52,32 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     private val _hasPermission = MutableStateFlow<Boolean?>(null)
     val hasPermission = _hasPermission.asStateFlow()
 
-    val allApps = appRepository.findMany().map {
+    private val sortedApps = appRepository.findMany().map {
         withContext(Dispatchers.Default) { it.sorted() }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
+    private val _showSystemApps = MutableStateFlow(false)
+    val showSystemApps = _showSystemApps.asStateFlow()
+
+    fun setShowSystemApps(show: Boolean) {
+        _showSystemApps.value = show
+    }
+
+    val allApps = combine(sortedApps, _showSystemApps) { apps, showSystem ->
+        if (showSystem) apps
+        else withContext(Dispatchers.Default) {
+            apps.filterNot { isSystemApp(it.componentName.packageName) }
+        }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
+    private fun isSystemApp(packageName: String): Boolean {
+        return try {
+            context.packageManager.getApplicationInfo(packageName, 0)
+                .flags and ApplicationInfo.FLAG_SYSTEM != 0
+        } catch (e: PackageManager.NameNotFoundException) {
+            false
+        }
+    }
 
     val candidates = freezeSettings.candidates
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
