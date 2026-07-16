@@ -224,8 +224,15 @@ data class LauncherSettingsData internal constructor(
      */
     val localeCurrencies: List<String> = emptyList(),
 
-    val feedProviderPackage: String? = null
+    val feedProviderPackage: String? = null,
 
+    val freezeBackend: FreezeBackendPreference = FreezeBackendPreference.Auto,
+    val freezeAutoFreezeEnabled: Boolean = false,
+    val freezeOnScreenOff: Boolean = false,
+    val freezeOnIdle: Boolean = false,
+    val freezeIdleTimeoutMinutes: Int = 15,
+    val freezeOnBatterySaver: Boolean = false,
+    val freezeCandidates: Set<String> = emptySet(),
 
     ) {
     constructor(
@@ -479,4 +486,11 @@ enum class BatteryStatusVisibility {
     @SerialName("hide") Hide,
     @SerialName("show") Show,
     @SerialName("always") Always
+}
+
+@Serializable
+enum class FreezeBackendPreference {
+    @SerialName("auto") Auto,
+    @SerialName("shizuku") ShizukuOnly,
+    @SerialName("root") RootOnly,
 }

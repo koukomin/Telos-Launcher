@@ -10,6 +10,7 @@ import de.mm20.launcher2.applications.AppRepository
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.BadgeService
 import de.mm20.launcher2.devicepose.DevicePoseProvider
+import de.mm20.launcher2.freeze.FreezeManager
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.notifications.Notification
@@ -56,6 +57,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
     private val contactSearchSettings: ContactSearchSettings by inject()
+    private val freezeManager: FreezeManager by inject()
 
     val isUpToDate = MutableStateFlow(true)
 
@@ -140,6 +142,19 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
             ActivityOptionsCompat.makeBasic()
         }
         val bundle = options.toBundle()
+
+        if (searchable is Application && freezeManager.isFrozen(searchable.componentName.packageName)) {
+            viewModelScope.launch {
+                freezeManager.unfreeze(searchable.componentName.packageName)
+                if (searchable.launch(context, bundle)) {
+                    reportUsage(searchable)
+                } else {
+                    favoritesService.reset(searchable)
+                }
+            }
+            return true
+        }
+
         if (searchable.launch(context, bundle)) {
             reportUsage(searchable)
             return true

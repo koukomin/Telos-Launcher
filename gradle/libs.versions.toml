@@ -47,6 +47,8 @@ espressoCore = "3.6.1"
 
 osmOpeningHours = "0.4.0"
 
+shizuku = "13.1.5"
+
 [libraries]
 mustache-compiler = { module = "com.github.spullara.mustache.java:compiler", version.ref = "mustache" }
 
@@ -132,6 +134,9 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 osmopeninghours = { group = "de.westnordost", name = "osm-opening-hours", version.ref = "osmOpeningHours" }
 
 smartspacer = { group = "com.kieronquinn.smartspacer", name = "sdk-client", version = "1.1.2" }
+
+shizuku-api = { group = "dev.rikka.shizuku", name = "api", version.ref = "shizuku" }
+shizuku-provider = { group = "dev.rikka.shizuku", name = "provider", version.ref = "shizuku" }
 
 [bundles]
 kotlin = ["kotlin-stdlib", "kotlinx-coroutines-core", "kotlinx-coroutines-android", "kotlinx-collections-immutable", "kotlinx-serialization-json"]
