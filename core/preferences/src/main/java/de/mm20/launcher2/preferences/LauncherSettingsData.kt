@@ -14,6 +14,10 @@ data class LauncherSettingsData internal constructor(
     val schemaVersion: Int = 6,
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
+    /** Hour of day [0,23] when the dark scheme starts, used only by [ColorScheme.Time]. */
+    val uiColorSchemeNightStart: Int = 20,
+    /** Hour of day [0,23] when the light scheme starts, used only by [ColorScheme.Time]. */
+    val uiColorSchemeDayStart: Int = 7,
     @Serializable(with = UUIDSerializer::class)
     val uiColorsId: UUID = UUID(0L, 0L),
     @Serializable(with = UUIDSerializer::class)
@@ -264,6 +268,8 @@ enum class ColorScheme {
     Light,
     Dark,
     System,
+    /** Switches between light and dark automatically based on the time of day. */
+    Time,
 }
 
 internal enum class ClockWidgetStyleEnum {

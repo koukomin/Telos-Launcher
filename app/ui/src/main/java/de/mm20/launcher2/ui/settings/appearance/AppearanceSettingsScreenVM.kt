@@ -24,6 +24,20 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
         uiSettings.setColorScheme(colorScheme)
     }
 
+    val colorSchemeNightStart = uiSettings.colorSchemeNightStart
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val colorSchemeDayStart = uiSettings.colorSchemeDayStart
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setColorSchemeNightStart(hour: Int) {
+        uiSettings.setColorSchemeNightStart(hour)
+    }
+
+    fun setColorSchemeDayStart(hour: Int) {
+        uiSettings.setColorSchemeDayStart(hour)
+    }
+
     val colorThemeName = uiSettings.colorsId.flatMapLatest {
         themeRepository.colors.getOrDefault(it)
     }.map {

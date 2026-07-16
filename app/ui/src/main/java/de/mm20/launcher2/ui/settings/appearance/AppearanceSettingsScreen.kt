@@ -2,6 +2,9 @@ package de.mm20.launcher2.ui.settings.appearance
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -16,7 +19,7 @@ import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.settings.appearance.presets.PresetsSettingsRoute
 import de.mm20.launcher2.ui.settings.colorscheme.ColorSchemesSettingsRoute
@@ -55,6 +58,7 @@ fun AppearanceSettingsScreen() {
                         stringResource(id = R.string.preference_theme_system) to ColorScheme.System,
                         stringResource(id = R.string.preference_theme_light) to ColorScheme.Light,
                         stringResource(id = R.string.preference_theme_dark) to ColorScheme.Dark,
+                        stringResource(id = R.string.preference_theme_time) to ColorScheme.Time,
                     ),
                     value = theme,
                     onValueChanged = { newValue ->
@@ -62,6 +66,30 @@ fun AppearanceSettingsScreen() {
                         viewModel.setColorScheme(newValue)
                     }
                 )
+                AnimatedVisibility(theme == ColorScheme.Time) {
+                    Column {
+                        val nightStart by viewModel.colorSchemeNightStart.collectAsState()
+                        val dayStart by viewModel.colorSchemeDayStart.collectAsState()
+                        SliderPreference(
+                            title = stringResource(id = R.string.preference_theme_night_start),
+                            value = nightStart ?: 20,
+                            min = 0,
+                            max = 23,
+                            step = 1,
+                            onValueChanged = { viewModel.setColorSchemeNightStart(it) },
+                            label = { Text(formatHour(it)) },
+                        )
+                        SliderPreference(
+                            title = stringResource(id = R.string.preference_theme_day_start),
+                            value = dayStart ?: 7,
+                            min = 0,
+                            max = 23,
+                            step = 1,
+                            onValueChanged = { viewModel.setColorSchemeDayStart(it) },
+                            label = { Text(formatHour(it)) },
+                        )
+                    }
+                }
             }
         }
         item {
@@ -149,4 +177,7 @@ fun AppearanceSettingsScreen() {
             }
         }
     }
+}
+private fun formatHour(hour: Int): String {
+    return "%02d:00".format(hour)
 }

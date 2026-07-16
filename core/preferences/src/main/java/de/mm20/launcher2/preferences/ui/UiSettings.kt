@@ -142,6 +142,16 @@ class UiSettings internal constructor(
             it.uiColorScheme
         }.distinctUntilChanged()
 
+    val colorSchemeNightStart
+        get() = launcherDataStore.data.map {
+            it.uiColorSchemeNightStart
+        }.distinctUntilChanged()
+
+    val colorSchemeDayStart
+        get() = launcherDataStore.data.map {
+            it.uiColorSchemeDayStart
+        }.distinctUntilChanged()
+
     val compatModeColors
         get() = launcherDataStore.data.map {
             it.uiCompatModeColors
@@ -333,6 +343,18 @@ class UiSettings internal constructor(
     fun setColorScheme(colorScheme: ColorScheme) {
         launcherDataStore.update {
             it.copy(uiColorScheme = colorScheme)
+        }
+    }
+
+    fun setColorSchemeNightStart(hour: Int) {
+        launcherDataStore.update {
+            it.copy(uiColorSchemeNightStart = hour.coerceIn(0, 23))
+        }
+    }
+
+    fun setColorSchemeDayStart(hour: Int) {
+        launcherDataStore.update {
+            it.copy(uiColorSchemeDayStart = hour.coerceIn(0, 23))
         }
     }
 

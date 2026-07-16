@@ -449,6 +449,9 @@
     <string name="preference_theme">Theme</string>
     <string name="preference_theme_light">Light</string>
     <string name="preference_theme_dark">Dark</string>
+    <string name="preference_theme_time">Time of day</string>
+    <string name="preference_theme_night_start">Dark theme starts at</string>
+    <string name="preference_theme_day_start">Light theme starts at</string>
     <string name="preference_screen_colors">Color scheme</string>
     <string name="preference_screen_presets">Presets</string>
     <string name="preference_create_colors">New color scheme</string>

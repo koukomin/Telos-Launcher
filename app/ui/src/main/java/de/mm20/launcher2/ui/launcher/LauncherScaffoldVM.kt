@@ -33,9 +33,21 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     private val dimBackgroundState = combine(
         uiSettings.dimWallpaper,
         uiSettings.colorScheme,
-        isSystemInDarkMode
-    ) { dim, theme, systemDarkMode ->
-        dim && (theme == ColorScheme.Dark || theme == ColorScheme.System && systemDarkMode)
+        isSystemInDarkMode,
+        uiSettings.colorSchemeNightStart,
+        uiSettings.colorSchemeDayStart,
+    ) { dim, theme, systemDarkMode, nightStart, dayStart ->
+        val isDark = when (theme) {
+            ColorScheme.Dark -> true
+            ColorScheme.Light -> false
+            ColorScheme.System -> systemDarkMode
+            ColorScheme.Time -> {
+                val hour = java.time.LocalTime.now().hour
+                nightStart != dayStart &&
+                    ((hour - nightStart) + 24) % 24 < ((dayStart - nightStart) + 24) % 24
+            }
+        }
+        dim && isDark
     }
     val dimBackground = dimBackgroundState.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
