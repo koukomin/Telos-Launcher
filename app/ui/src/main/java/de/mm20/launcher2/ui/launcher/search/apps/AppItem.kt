@@ -532,6 +532,17 @@ fun AppItem(
                     if (advancedFeaturesEnabled) {
                         toolbarActions.add(
                             DefaultToolbarAction(
+                                label = stringResource(
+                                    if (isSuspended) R.string.menu_unfreeze else R.string.menu_freeze
+                                ),
+                                icon = if (isSuspended) R.drawable.play_arrow_24px else R.drawable.ac_unit_24px,
+                                action = {
+                                    if (isSuspended) viewModel.unfreeze() else viewModel.freeze()
+                                }
+                            )
+                        )
+                        toolbarActions.add(
+                            DefaultToolbarAction(
                                 label = stringResource(R.string.menu_force_stop),
                                 icon = R.drawable.close_24px,
                                 action = {

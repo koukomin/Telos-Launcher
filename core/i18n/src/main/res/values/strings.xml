@@ -638,7 +638,9 @@
     <string name="preference_freeze_show_system_apps">Show system apps</string>
     <string name="preference_freeze_show_system_apps_summary">Freezing a system app can break core phone functionality. Only enable this if you know what you\'re doing.</string>
     <string name="preference_freeze_advanced_features">Advanced Features</string>
-    <string name="preference_freeze_advanced_features_summary">Unlocks Force Stop and Clear Cache actions in app context menus (Requires Shizuku or Root)</string>
+    <string name="preference_freeze_advanced_features_summary">Unlocks Freeze, Force Stop and Clear Cache actions in app context menus (Requires Shizuku or Root)</string>
+    <string name="menu_freeze">Freeze</string>
+    <string name="menu_unfreeze">Unfreeze</string>
     <string name="menu_force_stop">Force stop</string>
     <string name="menu_clear_cache">Clear cache</string>
     <string name="menu_shutter_set">Set shutter widget</string>

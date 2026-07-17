@@ -204,6 +204,31 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         }
     }
 
+    /**
+     * Freezes this app right away and also marks it as an auto-freeze candidate, so the
+     * auto-freeze triggers (screen off, idle, battery saver - whichever the user has enabled)
+     * keep freezing it going forward instead of this being a one-off action.
+     */
+    fun freeze() {
+        val searchable = searchable.value
+        if (searchable is Application) {
+            val packageName = searchable.componentName.packageName
+            viewModelScope.launch {
+                freezeManager.freeze(packageName)
+            }
+            freezeManager.setAutoFreezeCandidate(packageName, true)
+        }
+    }
+
+    fun unfreeze() {
+        val searchable = searchable.value
+        if (searchable is Application) {
+            viewModelScope.launch {
+                freezeManager.unfreeze(searchable.componentName.packageName)
+            }
+        }
+    }
+
     fun forceStop() {
         val searchable = searchable.value
         if (searchable is Application) {
