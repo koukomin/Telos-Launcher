@@ -546,11 +546,7 @@ enum class FreezeBackendPreference {
     @SerialName("auto") Auto,
     @SerialName("shizuku") ShizukuOnly,
     @SerialName("root") RootOnly,
-    @SerialName("icebox") IceBox,
-    @SerialName("hail") Hail,
-    @SerialName("amarok") Amarok,
     @SerialName("island") Island,
-    @SerialName("shelter") Shelter,
 }
 
 /**

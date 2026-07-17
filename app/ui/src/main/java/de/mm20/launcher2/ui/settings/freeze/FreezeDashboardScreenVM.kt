@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
@@ -51,6 +52,12 @@ class FreezeDashboardScreenVM : ViewModel(), KoinComponent {
             }.sortedByDescending { maxOf(it.lastFrozenAt ?: 0L, it.lastUnfrozenAt ?: 0L) }
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
+    val totalFreezes = rows.map { it.sumOf { row -> row.freezeCount } }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
+
+    val totalUnfreezes = rows.map { it.sumOf { row -> row.unfreezeCount } }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
 
     fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon?> {
         return iconService.getIcon(searchable, size)

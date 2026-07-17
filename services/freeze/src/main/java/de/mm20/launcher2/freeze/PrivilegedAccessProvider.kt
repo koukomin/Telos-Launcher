@@ -26,4 +26,10 @@ internal interface PrivilegedAccessProvider {
      * @return the subset of [packageNames] that were actually toggled successfully.
      */
     suspend fun setPackagesEnabled(packageNames: List<String>, enabled: Boolean): Set<String>
+
+    /** Force stops the given package. */
+    suspend fun forceStopPackage(packageName: String): Boolean
+
+    /** Clears the cache of the given package. */
+    suspend fun clearCache(packageName: String): Boolean
 }

@@ -5,7 +5,9 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import de.mm20.launcher2.freeze.providers.RootProvider
 import de.mm20.launcher2.freeze.providers.ShizukuProvider
+import de.mm20.launcher2.freeze.providers.IslandProvider
 import de.mm20.launcher2.preferences.FreezeBackendPreference
+import de.mm20.launcher2.preferences.FreezeMethod
 import de.mm20.launcher2.preferences.freeze.FreezeSettings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,6 +20,7 @@ class FreezeManager internal constructor(
 ) {
     private val shizukuProvider = ShizukuProvider()
     private val rootProvider = RootProvider()
+    private val islandProvider = IslandProvider(context)
 
     private val _activeBackend = MutableStateFlow<FreezeBackendType?>(null)
     val activeBackend: StateFlow<FreezeBackendType?> = _activeBackend.asStateFlow()
@@ -31,9 +34,13 @@ class FreezeManager internal constructor(
             FreezeBackendPreference.RootOnly ->
                 FreezeBackendType.Root.takeIf { rootProvider.isAvailable() }
 
+            FreezeBackendPreference.Island ->
+                FreezeBackendType.Island.takeIf { islandProvider.isAvailable() }
+
             FreezeBackendPreference.Auto -> when {
                 shizukuProvider.isAvailable() -> FreezeBackendType.Shizuku
                 rootProvider.isAvailable() -> FreezeBackendType.Root
+                islandProvider.isAvailable() -> FreezeBackendType.Island
                 else -> null
             }
         }
@@ -42,6 +49,7 @@ class FreezeManager internal constructor(
     suspend fun hasPermission(): Boolean = when (_activeBackend.value) {
         FreezeBackendType.Shizuku -> shizukuProvider.hasPermission()
         FreezeBackendType.Root -> rootProvider.hasPermission()
+        FreezeBackendType.Island -> true // Intent based, no runtime permission for us
         null -> false
     }
 
@@ -49,6 +57,7 @@ class FreezeManager internal constructor(
     suspend fun requestPermission(): Boolean = when (_activeBackend.value) {
         FreezeBackendType.Shizuku -> shizukuProvider.requestPermission()
         FreezeBackendType.Root -> rootProvider.requestPermission()
+        FreezeBackendType.Island -> true
         null -> false
     }
 
@@ -61,24 +70,67 @@ class FreezeManager internal constructor(
     /** @return the subset of [packageNames] that were actually toggled successfully. */
     private suspend fun setSuspended(packageNames: List<String>, suspended: Boolean): Set<String> {
         if (packageNames.isEmpty()) return emptySet()
-        val provider = when (_activeBackend.value) {
-            FreezeBackendType.Shizuku -> shizukuProvider
-            FreezeBackendType.Root -> rootProvider
-            null -> return emptySet()
+
+        val backend = _activeBackend.value ?: return emptySet()
+        val methods = settings.freezeMethods.first()
+
+        val succeeded = when (backend) {
+            FreezeBackendType.Shizuku -> {
+                if (suspended) {
+                    val toDisable = packageNames.filter { methods[it] == FreezeMethod.Disable }
+                    val toSuspend = packageNames.filter { methods[it] != FreezeMethod.Disable }
+                    shizukuProvider.setPackagesSuspended(toSuspend, true) +
+                            shizukuProvider.setPackagesEnabled(toDisable, false)
+                } else {
+                    val unsuspended = shizukuProvider.setPackagesSuspended(packageNames, false)
+                    val enabled = shizukuProvider.setPackagesEnabled(packageNames, true)
+                    unsuspended + enabled
+                }
+            }
+
+            FreezeBackendType.Root -> {
+                if (suspended) {
+                    val toDisable = packageNames.filter { methods[it] == FreezeMethod.Disable }
+                    val toSuspend = packageNames.filter { methods[it] != FreezeMethod.Disable }
+                    rootProvider.setPackagesSuspended(toSuspend, true) +
+                            rootProvider.setPackagesEnabled(toDisable, false)
+                } else {
+                    val unsuspended = rootProvider.setPackagesSuspended(packageNames, false)
+                    val enabled = rootProvider.setPackagesEnabled(packageNames, true)
+                    unsuspended + enabled
+                }
+            }
+
+            FreezeBackendType.Island -> {
+                if (islandProvider.setPackagesSuspended(packageNames, suspended)) {
+                    packageNames.toSet()
+                } else {
+                    emptySet()
+                }
+            }
         }
-        val succeeded = if (suspended) {
-            provider.setPackagesSuspended(packageNames, true)
-        } else {
-            // When unfreezing, try to BOTH unsuspend and enable, to cover apps frozen by other tools.
-            val unsuspended = provider.setPackagesSuspended(packageNames, false)
-            val enabled = provider.setPackagesEnabled(packageNames, true)
-            unsuspended + enabled
-        }
+
         val now = System.currentTimeMillis()
         for (packageName in succeeded) {
             if (suspended) settings.recordFrozen(packageName, now) else settings.recordUnfrozen(packageName, now)
         }
         return succeeded
+    }
+
+    suspend fun forceStop(packageName: String): Boolean {
+        return when (_activeBackend.value) {
+            FreezeBackendType.Shizuku -> shizukuProvider.forceStopPackage(packageName)
+            FreezeBackendType.Root -> rootProvider.forceStopPackage(packageName)
+            else -> false
+        }
+    }
+
+    suspend fun clearCache(packageName: String): Boolean {
+        return when (_activeBackend.value) {
+            FreezeBackendType.Shizuku -> shizukuProvider.clearCache(packageName)
+            FreezeBackendType.Root -> rootProvider.clearCache(packageName)
+            else -> false
+        }
     }
 
     /** Live read of the OS-level frozen state (suspended OR disabled). */

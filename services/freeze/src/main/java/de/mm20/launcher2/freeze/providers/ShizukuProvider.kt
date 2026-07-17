@@ -177,4 +177,38 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
         }
         return (failed as? Array<*>)?.isEmpty() ?: false
     }
+
+    override suspend fun forceStopPackage(packageName: String): Boolean = withContext(Dispatchers.IO) {
+        if (!hasPermission()) return@withContext false
+        runCatching {
+            val binder = ShizukuBinderWrapper(SystemServiceHelper.getSystemService("activity"))
+            val stub = Class.forName("android.app.IActivityManager\$Stub")
+            val am = if (isAtLeastApiLevel(Build.VERSION_CODES.P)) {
+                HiddenApiBypass.invoke(stub, null, "asInterface", binder)
+            } else {
+                stub.getMethod("asInterface", IBinder::class.java).invoke(null, binder)
+            }
+            if (isAtLeastApiLevel(Build.VERSION_CODES.P)) {
+                HiddenApiBypass.invoke(am.javaClass, am, "forceStopPackage", packageName, userId)
+            } else {
+                am.javaClass.getMethod("forceStopPackage", String::class.java, Int::class.javaPrimitiveType)
+                    .invoke(am, packageName, userId)
+            }
+            true
+        }.getOrDefault(false)
+    }
+
+    override suspend fun clearCache(packageName: String): Boolean = withContext(Dispatchers.IO) {
+        if (!hasPermission()) return@withContext false
+        val pm = packageManager() ?: return@withContext false
+        runCatching {
+            if (isAtLeastApiLevel(Build.VERSION_CODES.P)) {
+                HiddenApiBypass.invoke(pm.javaClass, pm, "deleteApplicationCacheFiles", packageName, null)
+            } else {
+                pm.javaClass.getMethod("deleteApplicationCacheFiles", String::class.java, Class.forName("android.content.pm.IPackageDataObserver"))
+                    .invoke(pm, packageName, null)
+            }
+            true
+        }.getOrDefault(false)
+    }
 }

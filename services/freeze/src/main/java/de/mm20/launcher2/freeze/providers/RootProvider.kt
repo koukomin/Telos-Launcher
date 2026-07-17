@@ -38,6 +38,15 @@ internal class RootProvider : PrivilegedAccessProvider {
         return packageNames.filterTo(mutableSetOf()) { pkg -> runAsRoot("pm $action --user $userId $pkg") }
     }
 
+    override suspend fun forceStopPackage(packageName: String): Boolean {
+        return runAsRoot("am force-stop --user $userId $packageName")
+    }
+
+    override suspend fun clearCache(packageName: String): Boolean {
+        // Clearing only cache to avoid data loss
+        return runAsRoot("rm -rf /data/user/$userId/$packageName/cache/*")
+    }
+
     private suspend fun runAsRoot(command: String): Boolean = withContext(Dispatchers.IO) {
         try {
             val process = Runtime.getRuntime().exec("su")

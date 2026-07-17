@@ -6,12 +6,15 @@ import android.app.usage.UsageEvents
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.res.Configuration
+import android.media.AudioManager
+import android.net.TrafficStats
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.FreezeExclusionStrictness
 import de.mm20.launcher2.preferences.freeze.FreezeSettings
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 
 /**
@@ -23,15 +26,6 @@ import kotlinx.coroutines.flow.first
  * [FreezeExclusionStrictness] - [FreezeProfile.UltraAggressive][de.mm20.launcher2.preferences.FreezeProfile]
  * is the only profile that relaxes it. Rules 1, 2, 4, and 5 are always enforced, for every
  * profile, with no exception - loosening them could freeze an app mid-call or mid-navigation.
- *
- * Deliberately does *not* look at downloads/uploads/network usage - that's a separate,
- * not-yet-built rule.
- *
- * Wear OS: there is no general-purpose, permission-free API for "is this specific app being
- * actively used from a paired watch right now". In practice, meaningful background work for a
- * Wear companion app requires a foreground service (Android's background execution limits
- * enforce this since API 26), so [hasForegroundService] already covers the realistic case.
- * We do not claim a dedicated Wear OS check because there isn't an honest one to build.
  */
 internal class FreezeExclusionChecker(
     private val context: Context,
@@ -51,13 +45,44 @@ internal class FreezeExclusionChecker(
         if (notifications.isNotEmpty()) return true // rule 2: active notification
         if (notifications.any { it.flags and Notification.FLAG_FOREGROUND_SERVICE != 0 }) return true // rule 4
 
-        // Rule 3: active media session. Only strictness that's ever relaxed - see class doc.
+        // Rule 3: active media session. Only strictness that's ever relaxed.
         val strictness = profileManager.resolvedSettings.first().exclusionStrictness
         if (strictness == FreezeExclusionStrictness.Strict &&
             notifications.any { it.mediaSessionToken != null }
         ) return true
 
-        return isForeground(packageName) // rule 1
+        if (isForeground(packageName)) return true // rule 1
+
+        if (settings.excludeMusic.first() && isMusicActive()) return true
+        if (settings.excludeNetwork.first() && isNetworkActive(packageName)) return true
+
+        return false
+    }
+
+    private fun isMusicActive(): Boolean {
+        val audioManager = context.getSystemService<AudioManager>() ?: return false
+        return audioManager.isMusicActive
+    }
+
+    private suspend fun isNetworkActive(packageName: String): Boolean {
+        val uid = try {
+            context.packageManager.getPackageUid(packageName, 0)
+        } catch (e: Exception) {
+            return false
+        }
+        val threshold = settings.networkThresholdKb.first() * 1024L
+        if (threshold <= 0) return false
+
+        val rx1 = TrafficStats.getUidRxBytes(uid)
+        val tx1 = TrafficStats.getUidTxBytes(uid)
+        if (rx1 == TrafficStats.UNSUPPORTED.toLong()) return false
+
+        delay(500) // Short sample to detect active transfer
+
+        val rx2 = TrafficStats.getUidRxBytes(uid)
+        val tx2 = TrafficStats.getUidTxBytes(uid)
+
+        return (rx2 - rx1) + (tx2 - tx1) > (threshold / 2) // Adjust for 0.5s sample
     }
 
     /**
@@ -86,7 +111,7 @@ internal class FreezeExclusionChecker(
         return foregroundPackage == packageName
     }
 
-    /** Rule 5 (partial): device-wide, not per-package - see class doc for the Wear OS gap. */
+    /** Rule 5 (partial): device-wide, not per-package. */
     private fun isAndroidAutoActive(): Boolean {
         val uiModeManager = context.getSystemService<UiModeManager>() ?: return false
         return uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_CAR

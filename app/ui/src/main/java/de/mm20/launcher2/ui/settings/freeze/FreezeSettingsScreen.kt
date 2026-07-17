@@ -21,7 +21,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.freeze.FreezeBackendType
+import de.mm20.launcher2.preferences.FreezeBackendPreference
 import de.mm20.launcher2.preferences.FreezeExclusionStrictness
+import de.mm20.launcher2.preferences.FreezeMethod
 import de.mm20.launcher2.preferences.FreezeProfile
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
@@ -49,6 +51,7 @@ fun FreezeSettingsScreen() {
     }
 
     val activeBackend by viewModel.activeBackend.collectAsStateWithLifecycle()
+    val backend by viewModel.backend.collectAsStateWithLifecycle()
     val hasPermission by viewModel.hasPermission.collectAsStateWithLifecycle()
 
     val autoFreezeEnabled by viewModel.autoFreezeEnabled.collectAsStateWithLifecycle()
@@ -58,6 +61,14 @@ fun FreezeSettingsScreen() {
     val freezeOnIdle by viewModel.freezeOnIdle.collectAsStateWithLifecycle()
     val idleTimeoutMinutes by viewModel.idleTimeoutMinutes.collectAsStateWithLifecycle()
     val freezeOnBatterySaver by viewModel.freezeOnBatterySaver.collectAsStateWithLifecycle()
+
+    val excludeMusic by viewModel.excludeMusic.collectAsStateWithLifecycle()
+    val excludeNetwork by viewModel.excludeNetwork.collectAsStateWithLifecycle()
+    val networkThresholdKb by viewModel.networkThresholdKb.collectAsStateWithLifecycle()
+
+    val freezeMethods by viewModel.freezeMethods.collectAsStateWithLifecycle()
+    val advancedFeaturesEnabled by viewModel.advancedFeaturesEnabled.collectAsStateWithLifecycle()
+
     val usageAccessGranted by viewModel.usageAccessGranted.collectAsStateWithLifecycle()
 
     val apps by viewModel.allApps.collectAsStateWithLifecycle()
@@ -81,6 +92,17 @@ fun FreezeSettingsScreen() {
         }
         item {
             PreferenceCategory(title = stringResource(R.string.preference_freeze_backend_category)) {
+                ListPreference(
+                    title = stringResource(R.string.preference_freeze_backend),
+                    items = listOf(
+                        stringResource(R.string.preference_value_system_default) to FreezeBackendPreference.Auto,
+                        stringResource(R.string.freeze_backend_shizuku) to FreezeBackendPreference.ShizukuOnly,
+                        stringResource(R.string.freeze_backend_root) to FreezeBackendPreference.RootOnly,
+                        stringResource(R.string.freeze_backend_island) to FreezeBackendPreference.Island,
+                    ),
+                    value = backend,
+                    onValueChanged = { viewModel.setBackend(it) }
+                )
                 if (activeBackend == null) {
                     Banner(
                         text = stringResource(R.string.freeze_no_backend_available),
@@ -93,6 +115,7 @@ fun FreezeSettingsScreen() {
                             when (activeBackend) {
                                 FreezeBackendType.Shizuku -> R.string.freeze_backend_shizuku
                                 FreezeBackendType.Root -> R.string.freeze_backend_root
+                                FreezeBackendType.Island -> R.string.freeze_backend_island
                                 null -> R.string.freeze_backend_none
                             }
                         ),
@@ -184,6 +207,29 @@ fun FreezeSettingsScreen() {
                                     value = exclusionStrictness ?: FreezeExclusionStrictness.Strict,
                                     onValueChanged = { viewModel.setExclusionStrictness(it) }
                                 )
+                                SwitchPreference(
+                                    title = stringResource(R.string.preference_freeze_exclude_music),
+                                    summary = stringResource(R.string.preference_freeze_exclude_music_summary),
+                                    value = excludeMusic == true,
+                                    onValueChanged = { viewModel.setExcludeMusic(it) }
+                                )
+                                SwitchPreference(
+                                    title = stringResource(R.string.preference_freeze_exclude_network),
+                                    summary = stringResource(R.string.preference_freeze_exclude_network_summary),
+                                    value = excludeNetwork == true,
+                                    onValueChanged = { viewModel.setExcludeNetwork(it) }
+                                )
+                                AnimatedVisibility(excludeNetwork == true) {
+                                    SliderPreference(
+                                        title = stringResource(R.string.preference_freeze_network_threshold),
+                                        value = networkThresholdKb ?: 100,
+                                        min = 1,
+                                        max = 1000,
+                                        step = 10,
+                                        onValueChanged = { viewModel.setNetworkThresholdKb(it) },
+                                        label = { Text("$it KB/s") }
+                                    )
+                                }
                             }
                         }
                     }
@@ -203,11 +249,18 @@ fun FreezeSettingsScreen() {
                     value = showSystemApps,
                     onValueChanged = { viewModel.setShowSystemApps(it) }
                 )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_freeze_advanced_features),
+                    summary = stringResource(R.string.preference_freeze_advanced_features_summary),
+                    value = advancedFeaturesEnabled,
+                    onValueChanged = { viewModel.setAdvancedFeaturesEnabled(it) }
+                )
             }
         }
         itemsIndexed(apps, key = { _, it -> it.key }) { _, app ->
             val icon by viewModel.getIcon(app, 32.dp.value.toInt()).collectAsStateWithLifecycle(null)
             val state = appFreezeState(app.componentName.packageName, candidates, neverFreezeApps)
+            val method = appFreezeMethod(app.componentName.packageName, freezeMethods)
             var showMenu by remember { mutableStateOf(false) }
             Preference(
                 title = app.label,
@@ -217,7 +270,10 @@ fun FreezeSettingsScreen() {
                 summary = stringResource(
                     when (state) {
                         AppFreezeState.None -> R.string.freeze_app_state_none
-                        AppFreezeState.Candidate -> R.string.freeze_app_state_candidate
+                        AppFreezeState.Candidate -> {
+                            if (method == FreezeMethod.Disable) R.string.freeze_app_state_candidate_disable
+                            else R.string.freeze_app_state_candidate_suspend
+                        }
                         AppFreezeState.NeverFreeze -> R.string.freeze_app_state_never
                     }
                 ),
@@ -232,9 +288,16 @@ fun FreezeSettingsScreen() {
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text(stringResource(R.string.freeze_app_state_candidate)) },
+                    text = { Text(stringResource(R.string.freeze_app_state_candidate_suspend)) },
                     onClick = {
-                        viewModel.setAppFreezeState(app, AppFreezeState.Candidate)
+                        viewModel.setAppFreezeState(app, AppFreezeState.Candidate, FreezeMethod.Suspend)
+                        showMenu = false
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.freeze_app_state_candidate_disable)) },
+                    onClick = {
+                        viewModel.setAppFreezeState(app, AppFreezeState.Candidate, FreezeMethod.Disable)
                         showMenu = false
                     }
                 )

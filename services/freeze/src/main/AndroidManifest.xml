@@ -10,6 +10,14 @@
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
 
+    <!-- Optional Island (com.oasisfeng.island) freeze backend. Harmless if Island isn't installed. -->
+    <uses-permission android:name="com.oasisfeng.island.permission.FREEZE_PACKAGE" />
+
+    <!-- So we can resolve/launch the Island app for its freeze intents on Android 11+. -->
+    <queries>
+        <package android:name="com.oasisfeng.island" />
+    </queries>
+
     <application>
         <provider
             android:name="rikka.shizuku.ShizukuProvider"

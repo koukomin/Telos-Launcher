@@ -3,6 +3,7 @@ package de.mm20.launcher2.preferences.freeze
 import de.mm20.launcher2.preferences.FreezeAppStats
 import de.mm20.launcher2.preferences.FreezeBackendPreference
 import de.mm20.launcher2.preferences.FreezeExclusionStrictness
+import de.mm20.launcher2.preferences.FreezeMethod
 import de.mm20.launcher2.preferences.FreezeProfile
 import de.mm20.launcher2.preferences.LauncherDataStore
 import kotlinx.coroutines.flow.map
@@ -90,6 +91,47 @@ class FreezeSettings internal constructor(
                 it.copy(freezeNeverFreezeApps = it.freezeNeverFreezeApps - packageName)
             }
         }
+    }
+
+    val excludeMusic
+        get() = dataStore.data.map { it.freezeExcludeMusic }
+
+    fun setExcludeMusic(exclude: Boolean) {
+        dataStore.update { it.copy(freezeExcludeMusic = exclude) }
+    }
+
+    val excludeNetwork
+        get() = dataStore.data.map { it.freezeExcludeNetwork }
+
+    fun setExcludeNetwork(exclude: Boolean) {
+        dataStore.update { it.copy(freezeExcludeNetwork = exclude) }
+    }
+
+    val networkThresholdKb
+        get() = dataStore.data.map { it.freezeNetworkThresholdKb }
+
+    fun setNetworkThresholdKb(threshold: Int) {
+        dataStore.update { it.copy(freezeNetworkThresholdKb = threshold) }
+    }
+
+    val freezeMethods
+        get() = dataStore.data.map { it.freezeMethods }
+
+    fun setFreezeMethod(packageName: String, method: FreezeMethod?) {
+        dataStore.update {
+            if (method == null) {
+                it.copy(freezeMethods = it.freezeMethods - packageName)
+            } else {
+                it.copy(freezeMethods = it.freezeMethods + (packageName to method))
+            }
+        }
+    }
+
+    val advancedFeaturesEnabled
+        get() = dataStore.data.map { it.freezeAdvancedFeaturesEnabled }
+
+    fun setAdvancedFeaturesEnabled(enabled: Boolean) {
+        dataStore.update { it.copy(freezeAdvancedFeaturesEnabled = enabled) }
     }
 
     val stats

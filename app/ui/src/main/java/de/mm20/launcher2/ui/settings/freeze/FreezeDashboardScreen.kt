@@ -26,6 +26,8 @@ data object FreezeDashboardRoute : NavKey
 fun FreezeDashboardScreen() {
     val viewModel: FreezeDashboardScreenVM = viewModel()
     val rows by viewModel.rows.collectAsStateWithLifecycle()
+    val totalFreezes by viewModel.totalFreezes.collectAsStateWithLifecycle()
+    val totalUnfreezes by viewModel.totalUnfreezes.collectAsStateWithLifecycle()
 
     val frozen = rows.filter { it.isFrozen }
 
@@ -33,6 +35,14 @@ fun FreezeDashboardScreen() {
         title = stringResource(R.string.preference_freeze_dashboard),
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
+        item {
+            PreferenceCategory(title = stringResource(R.string.preference_screen_presets)) {
+                Preference(
+                    title = stringResource(R.string.freeze_dashboard_counts, totalFreezes, totalUnfreezes),
+                    summary = stringResource(R.string.preference_freeze_dashboard_summary),
+                )
+            }
+        }
         item {
             PreferenceCategory(title = stringResource(R.string.freeze_dashboard_currently_frozen)) {
                 if (frozen.isEmpty()) {

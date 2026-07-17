@@ -13,7 +13,9 @@ import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.FreezeBackendPreference
 import de.mm20.launcher2.preferences.FreezeExclusionStrictness
+import de.mm20.launcher2.preferences.FreezeMethod
 import de.mm20.launcher2.preferences.FreezeProfile
 import de.mm20.launcher2.preferences.freeze.FreezeSettings
 import de.mm20.launcher2.search.Application
@@ -48,6 +50,14 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val activeBackend: StateFlow<FreezeBackendType?> = freezeManager.activeBackend
+
+    val backend = freezeSettings.backend
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), FreezeBackendPreference.Auto)
+
+    fun setBackend(backend: FreezeBackendPreference) {
+        freezeSettings.setBackend(backend)
+        refreshBackendState()
+    }
 
     private val _hasPermission = MutableStateFlow<Boolean?>(null)
     val hasPermission = _hasPermission.asStateFlow()
@@ -107,6 +117,19 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     val freezeOnBatterySaver = freezeSettings.freezeOnBatterySaver
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+    val excludeMusic = freezeSettings.excludeMusic
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    val excludeNetwork = freezeSettings.excludeNetwork
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    val networkThresholdKb = freezeSettings.networkThresholdKb
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val freezeMethods = freezeSettings.freezeMethods
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
+
+    val advancedFeaturesEnabled = freezeSettings.advancedFeaturesEnabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
     fun refreshBackendState() {
         viewModelScope.launch {
             freezeManager.refreshBackendState()
@@ -125,11 +148,18 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     fun setFreezeOnIdle(enabled: Boolean) = freezeSettings.setFreezeOnIdle(enabled)
     fun setIdleTimeoutMinutes(minutes: Int) = freezeSettings.setIdleTimeoutMinutes(minutes)
     fun setFreezeOnBatterySaver(enabled: Boolean) = freezeSettings.setFreezeOnBatterySaver(enabled)
+    fun setExcludeMusic(enabled: Boolean) = freezeSettings.setExcludeMusic(enabled)
+    fun setExcludeNetwork(enabled: Boolean) = freezeSettings.setExcludeNetwork(enabled)
+    fun setNetworkThresholdKb(threshold: Int) = freezeSettings.setNetworkThresholdKb(threshold)
+    fun setAdvancedFeaturesEnabled(enabled: Boolean) = freezeSettings.setAdvancedFeaturesEnabled(enabled)
 
-    fun setAppFreezeState(app: Application, state: AppFreezeState) {
+    fun setAppFreezeState(app: Application, state: AppFreezeState, method: FreezeMethod? = null) {
         val packageName = app.componentName.packageName
         freezeManager.setAutoFreezeCandidate(packageName, state == AppFreezeState.Candidate)
         freezeSettings.setNeverFreeze(packageName, state == AppFreezeState.NeverFreeze)
+        if (state == AppFreezeState.Candidate) {
+            freezeSettings.setFreezeMethod(packageName, method)
+        }
     }
 
     fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon?> {
@@ -145,4 +175,8 @@ fun appFreezeState(packageName: String, candidates: Set<String>, neverFreeze: Se
         candidates.contains(packageName) -> AppFreezeState.Candidate
         else -> AppFreezeState.None
     }
+}
+
+fun appFreezeMethod(packageName: String, methods: Map<String, FreezeMethod>): FreezeMethod {
+    return methods[packageName] ?: FreezeMethod.Suspend
 }
