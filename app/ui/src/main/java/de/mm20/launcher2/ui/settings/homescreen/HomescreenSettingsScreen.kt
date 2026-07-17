@@ -142,6 +142,13 @@ fun HomescreenSettingsScreen() {
                     onValueChanged = {
                         viewModel.setWidgetEditButton(it)
                     })
+                Preference(
+                    title = stringResource(R.string.preference_reset_widgets_tutorial),
+                    summary = stringResource(R.string.preference_reset_widgets_tutorial_summary),
+                    onClick = {
+                        viewModel.resetWidgetsTutorial()
+                    }
+                )
             }
 
         }

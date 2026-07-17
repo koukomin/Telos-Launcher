@@ -391,6 +391,17 @@ class UiSettings internal constructor(
         }
     }
 
+    val widgetsTutorialShown
+        get() = launcherDataStore.data.map {
+            it.widgetsTutorialShown
+        }.distinctUntilChanged()
+
+    fun setWidgetsTutorialShown(shown: Boolean) {
+        launcherDataStore.update {
+            it.copy(widgetsTutorialShown = shown)
+        }
+    }
+
     val widgetEditButton
         get() = launcherDataStore.data.map {
             it.widgetsEditButton

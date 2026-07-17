@@ -38,11 +38,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.preferences.WidgetScreenTarget
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
+import de.mm20.launcher2.ui.launcher.widgets.WidgetsTutorialOverlay
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 
 internal class WidgetsComponent(
     private val target: WidgetScreenTarget
@@ -86,6 +90,9 @@ internal class WidgetsComponent(
         state: LauncherScaffoldState
     ) {
         var editMode by rememberSaveable { mutableStateOf(false) }
+
+        val uiSettings = koinInject<UiSettings>()
+        val tutorialShown by uiSettings.widgetsTutorialShown.collectAsStateWithLifecycle(true)
 
         val scope = rememberCoroutineScope()
         val topPadding by animateDpAsState(if (editMode) 64.dp else 0.dp)
@@ -146,6 +153,9 @@ internal class WidgetsComponent(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer
                 )
             )
+        }
+        if (!tutorialShown) {
+            WidgetsTutorialOverlay(onFinished = { uiSettings.setWidgetsTutorialShown(true) })
         }
     }
 
