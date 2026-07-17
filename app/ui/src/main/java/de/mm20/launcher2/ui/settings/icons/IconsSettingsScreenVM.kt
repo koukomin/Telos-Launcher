@@ -95,6 +95,8 @@ class IconsSettingsScreenVM(
     }
 
     val hasNotificationsPermission = permissionsManager.hasPermission(PermissionGroup.Notifications)
+    val hasAttemptedNotificationsPermissionRequest =
+        permissionsManager.hasAttemptedRequest(PermissionGroup.Notifications)
 
     val notificationBadges = badgeSettings.notifications
     fun setNotifications(notifications: Boolean) {

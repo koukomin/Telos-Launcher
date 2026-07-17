@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
+import de.mm20.launcher2.ui.component.RestrictedSettingsBanner
 
 @Composable
 fun GuardedPreference(
@@ -23,6 +24,9 @@ fun GuardedPreference(
     description: String,
     @DrawableRes icon: Int = R.drawable.lock_24px,
     unlockLabel: String = stringResource(R.string.grant_permission),
+    /** Shows [RestrictedSettingsBanner] below the lock banner - pass true once the user has
+     * already tried to grant this permission at least once and it's still not showing granted. */
+    showRestrictedSettingsHint: Boolean = false,
     preference: @Composable () -> Unit,
 ) {
     Column(
@@ -46,6 +50,13 @@ fun GuardedPreference(
                     }
                 } else null
             )
+            if (showRestrictedSettingsHint) {
+                RestrictedSettingsBanner(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
+                )
+            }
         }
         preference()
     }

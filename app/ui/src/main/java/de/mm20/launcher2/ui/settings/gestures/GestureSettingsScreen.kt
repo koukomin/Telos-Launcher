@@ -53,6 +53,7 @@ fun GestureSettingsScreen() {
     val viewModel: GestureSettingsScreenVM = viewModel()
 
     val hasPermission by viewModel.hasPermission.collectAsStateWithLifecycle(null)
+    val hasAttemptedPermissionRequest by viewModel.hasAttemptedPermissionRequest.collectAsStateWithLifecycle(false)
 
     val options = buildSet {
         add(GestureAction.NoAction::class)
@@ -85,6 +86,7 @@ fun GestureSettingsScreen() {
                     locked = hasPermission == false && requiresAccessibilityService(swipeDown),
                     description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
+                    showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
                         title = stringResource(R.string.preference_gesture_swipe_down),
@@ -104,6 +106,7 @@ fun GestureSettingsScreen() {
                     locked = hasPermission == false && requiresAccessibilityService(swipeLeft),
                     description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
+                    showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
                         title = stringResource(R.string.preference_gesture_swipe_left),
@@ -123,6 +126,7 @@ fun GestureSettingsScreen() {
                     locked = hasPermission == false && requiresAccessibilityService(swipeRight),
                     description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
+                    showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
                         title = stringResource(R.string.preference_gesture_swipe_right),
@@ -142,6 +146,7 @@ fun GestureSettingsScreen() {
                     locked = hasPermission == false && requiresAccessibilityService(swipeUp),
                     description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
+                    showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
                         title = stringResource(R.string.preference_gesture_swipe_up),
@@ -161,6 +166,7 @@ fun GestureSettingsScreen() {
                     locked = hasPermission == false && requiresAccessibilityService(doubleTap),
                     description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
+                    showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
                         title = stringResource(R.string.preference_gesture_double_tap),
@@ -180,6 +186,7 @@ fun GestureSettingsScreen() {
                     locked = hasPermission == false && requiresAccessibilityService(longPress),
                     description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
+                    showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
                         title = stringResource(R.string.preference_gesture_long_press),
@@ -198,6 +205,7 @@ fun GestureSettingsScreen() {
                     locked = hasPermission == false && requiresAccessibilityService(homeButton),
                     description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
+                    showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
                         title = stringResource(R.string.preference_gesture_home_button),
@@ -217,6 +225,7 @@ fun GestureSettingsScreen() {
                     locked = hasPermission == false && requiresAccessibilityService(pinchIn),
                     description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
+                    showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
                         title = stringResource(R.string.preference_gesture_pinch_in),
@@ -236,6 +245,7 @@ fun GestureSettingsScreen() {
                     locked = hasPermission == false && requiresAccessibilityService(pinchOut),
                     description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
+                    showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
                         title = stringResource(R.string.preference_gesture_pinch_out),
@@ -255,6 +265,7 @@ fun GestureSettingsScreen() {
                     locked = hasPermission == false && requiresAccessibilityService(twoFingerSwipeUp),
                     description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
+                    showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
                         title = stringResource(R.string.preference_gesture_two_finger_swipe_up),
@@ -274,6 +285,7 @@ fun GestureSettingsScreen() {
                     locked = hasPermission == false && requiresAccessibilityService(twoFingerSwipeDown),
                     description = stringResource(R.string.missing_permission_accessibility_gesture_settings),
                     onUnlock = { viewModel.requestPermission(context as AppCompatActivity) },
+                    showRestrictedSettingsHint = hasAttemptedPermissionRequest,
                 ) {
                     GesturePreference(
                         title = stringResource(R.string.preference_gesture_two_finger_swipe_down),

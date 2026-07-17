@@ -513,6 +513,8 @@
     <string name="missing_permission_appshortcuts_create">Set %1$s as default home app to create shortcuts.</string>
     <!-- Grant a permission, shown in permission banners -->
     <string name="grant_permission">Grant</string>
+    <string name="restricted_settings_hint">Didn\'t work? Android blocks this setting the first time for apps installed outside an app store. Open App info, tap the ⋮ menu in the top right, then tap "Allow restricted settings".</string>
+    <string name="restricted_settings_hint_action">Open App info</string>
     <!-- Appearance preference title -->
     <string name="preference_screen_appearance">Appearance</string>
     <string name="preference_theme">Theme</string>
@@ -826,7 +828,7 @@
     <string name="preference_search_calendar_summary">Search upcoming appointments and events</string>
     <string name="preference_search_reminders">Reminders</string>
     <string name="preference_search_reminders_summary">Search tasks and reminders from supported apps</string>
-    <string name="preference_search_local_calendar_summary">Search calendars on this device</string>
+    <string name="preference_search_local_calendar_summary">Search calendars on this device. Works with any synced calendar account, including FOSS CalDAV calendars (e.g. via DAVx5), not just Google</string>
     <string name="preference_search_tasks">Tasks</string>
     <string name="preference_search_tasks_summary">Search tasks in the Tasks app</string>
     <string name="preference_search_appshortcuts">App shortcuts</string>

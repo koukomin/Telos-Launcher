@@ -14,6 +14,8 @@ class FailedGestureSheetVM : ViewModel(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
     private val gestureSettings: GestureSettings by inject()
 
+    val hasAttemptedPermissionRequest = permissionsManager.hasAttemptedRequest(PermissionGroup.Accessibility)
+
     fun requestPermission(context: AppCompatActivity) {
         permissionsManager.requestPermission(context, PermissionGroup.Accessibility)
     }

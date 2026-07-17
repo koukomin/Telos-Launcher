@@ -24,6 +24,7 @@ import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.BuildConfig
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
+import de.mm20.launcher2.ui.component.RestrictedSettingsBanner
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
@@ -39,6 +40,8 @@ fun MediaIntegrationSettingsScreen() {
     val context = LocalContext.current
     val viewModel: MediaIntegrationSettingsScreenVM = viewModel()
     val hasPermission by viewModel.hasPermission.collectAsStateWithLifecycle(null)
+    val hasAttemptedPermissionRequest by
+        viewModel.hasAttemptedPermissionRequest.collectAsStateWithLifecycle(false)
     val loading by viewModel.loading
 
     val density = LocalDensity.current
@@ -76,6 +79,18 @@ fun MediaIntegrationSettingsScreen() {
                         )
                         .padding(16.dp)
                 )
+            }
+            if (hasAttemptedPermissionRequest) {
+                item {
+                    RestrictedSettingsBanner(
+                        modifier = Modifier
+                            .background(
+                                MaterialTheme.colorScheme.surface,
+                                MaterialTheme.shapes.medium
+                            )
+                            .padding(16.dp)
+                    )
+                }
             }
         }
         item {

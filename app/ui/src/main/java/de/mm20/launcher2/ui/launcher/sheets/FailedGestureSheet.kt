@@ -10,6 +10,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -19,6 +21,7 @@ import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
+import de.mm20.launcher2.ui.component.RestrictedSettingsBanner
 import de.mm20.launcher2.ui.launcher.scaffold.Gesture
 
 data class FailedGesture(val gesture: Gesture, val action: GestureAction)
@@ -36,6 +39,7 @@ fun FailedGestureSheet(
     ) {
         it ?: return@DismissableBottomSheet
         val viewModel: FailedGestureSheetVM = viewModel()
+        val hasAttemptedPermissionRequest by viewModel.hasAttemptedPermissionRequest.collectAsState(false)
 
         val actionName = stringResource(when(it.action) {
             is GestureAction.Search -> R.string.gesture_action_open_search
@@ -87,6 +91,9 @@ fun FailedGestureSheet(
                     viewModel.requestPermission(context as AppCompatActivity)
                     onDismiss()
                 })
+            if (hasAttemptedPermissionRequest) {
+                RestrictedSettingsBanner()
+            }
         }
     }
 }

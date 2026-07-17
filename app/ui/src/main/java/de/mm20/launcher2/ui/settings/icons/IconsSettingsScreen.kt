@@ -88,6 +88,8 @@ fun IconsSettingsScreen() {
     val hasNotificationsPermission by viewModel.hasNotificationsPermission.collectAsStateWithLifecycle(
         null
     )
+    val hasAttemptedNotificationsPermissionRequest by
+        viewModel.hasAttemptedNotificationsPermissionRequest.collectAsStateWithLifecycle(false)
 
     val notificationBadges by viewModel.notificationBadges.collectAsStateWithLifecycle(null)
     val notificationBadgeStyle by viewModel.notificationBadgeStyle.collectAsStateWithLifecycle(null)
@@ -243,7 +245,8 @@ fun IconsSettingsScreen() {
                     description = stringResource(R.string.missing_permission_notification_badges),
                     onUnlock = {
                         viewModel.requestNotificationsPermission(context as AppCompatActivity)
-                    }
+                    },
+                    showRestrictedSettingsHint = hasAttemptedNotificationsPermissionRequest,
                 ) {
                     SwitchPreference(
                         title = stringResource(R.string.preference_notification_badges),

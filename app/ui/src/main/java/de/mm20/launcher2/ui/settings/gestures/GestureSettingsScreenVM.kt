@@ -51,6 +51,9 @@ internal class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     val hasPermission = permissionsManager.hasPermission(PermissionGroup.Accessibility)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+    val hasAttemptedPermissionRequest = permissionsManager.hasAttemptedRequest(PermissionGroup.Accessibility)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
     val swipeDown = gestureSettings.swipeDown
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val swipeLeft = gestureSettings.swipeLeft

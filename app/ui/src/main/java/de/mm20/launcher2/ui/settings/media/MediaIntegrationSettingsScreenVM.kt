@@ -34,6 +34,9 @@ class MediaIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
     val hasPermission =
         permissionsManager.hasPermission(PermissionGroup.Notifications)
 
+    val hasAttemptedPermissionRequest =
+        permissionsManager.hasAttemptedRequest(PermissionGroup.Notifications)
+
     val loading = mutableStateOf(false)
 
 

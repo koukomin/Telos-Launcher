@@ -22,6 +22,7 @@ import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.tryStartActivity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
 import androidx.core.net.toUri
 
 interface PermissionsManager {
@@ -45,6 +46,16 @@ interface PermissionsManager {
     }
 
     fun hasPermission(permissionGroup: PermissionGroup): Flow<Boolean>
+
+    /**
+     * True once [requestPermission] has been called at least once for this permission group in
+     * this app session. Android 13+ silently blocks the very first grant attempt for
+     * Accessibility/Notification-listener permissions from sideloaded apps ("Restricted
+     * Settings") without telling the app why, so this is used to show guidance about that
+     * mechanism only after the user has actually tried once - not proactively, since most
+     * permission groups don't need it and it would just be noise before that.
+     */
+    fun hasAttemptedRequest(permissionGroup: PermissionGroup): Flow<Boolean>
 
     /**
      * Special function for the Notification listener to report its status.
@@ -117,6 +128,9 @@ internal class PermissionsManagerImpl(
         checkPermissionOnce(PermissionGroup.Bluetooth)
     )
 
+    private val accessibilityRequestAttempted = MutableStateFlow(false)
+    private val notificationsRequestAttempted = MutableStateFlow(false)
+
     override fun requestPermission(context: AppCompatActivity, permissionGroup: PermissionGroup) {
         when (permissionGroup) {
             PermissionGroup.Calendar -> {
@@ -171,6 +185,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Notifications -> {
                 try {
                     context.startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+                    notificationsRequestAttempted.value = true
                 } catch (e: ActivityNotFoundException) {
                     CrashReporter.logException(e)
                 }
@@ -194,6 +209,7 @@ internal class PermissionsManagerImpl(
                 try {
                     context.tryStartActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
                     pendingPermissionRequests.add(PermissionGroup.Accessibility)
+                    accessibilityRequestAttempted.value = true
                 } catch (e: ActivityNotFoundException) {
                     CrashReporter.logException(e)
                 }
@@ -325,6 +341,14 @@ internal class PermissionsManagerImpl(
             PermissionGroup.UsageAccess -> usageAccessPermissionState
             PermissionGroup.OverlayWindow -> overlayWindowPermissionState
             PermissionGroup.Bluetooth -> bluetoothPermissionState
+        }
+    }
+
+    override fun hasAttemptedRequest(permissionGroup: PermissionGroup): Flow<Boolean> {
+        return when (permissionGroup) {
+            PermissionGroup.Accessibility -> accessibilityRequestAttempted
+            PermissionGroup.Notifications -> notificationsRequestAttempted
+            else -> flowOf(false)
         }
     }
 
