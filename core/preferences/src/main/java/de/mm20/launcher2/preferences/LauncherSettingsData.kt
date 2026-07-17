@@ -311,6 +311,12 @@ data class LauncherSettingsData internal constructor(
 
     val desktopModeEnabled: Boolean = false,
     val desktopModeOrientation: DesktopModeOrientation = DesktopModeOrientation.Auto,
+    /**
+     * User's intent for freeform windowing, separate from the OS-level `enable_freeform_support`
+     * setting this drives - the two can drift apart (e.g. another app changed the system setting)
+     * so this is only ever the last state the user explicitly chose via the toggle.
+     */
+    val desktopModeFreeformEnabled: Boolean = false,
 
     ) {
     constructor(

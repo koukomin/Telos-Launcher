@@ -21,4 +21,11 @@ class DesktopModeSettings internal constructor(
     fun setOrientation(orientation: DesktopModeOrientation) {
         dataStore.update { it.copy(desktopModeOrientation = orientation) }
     }
+
+    val freeformEnabled
+        get() = dataStore.data.map { it.desktopModeFreeformEnabled }.distinctUntilChanged()
+
+    fun setFreeformEnabled(enabled: Boolean) {
+        dataStore.update { it.copy(desktopModeFreeformEnabled = enabled) }
+    }
 }

@@ -50,6 +50,9 @@ dependencies {
 
     implementation(libs.koin.android)
 
+    implementation(libs.shizuku.api)
+    implementation(libs.hiddenapibypass)
+
     implementation(project(":core:ktx"))
     implementation(project(":core:base"))
     implementation(project(":core:preferences"))

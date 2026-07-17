@@ -1,0 +1,15 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+        Not granted at install time (protectionLevel includes "development"), which is exactly
+        why shell (and therefore Shizuku, running as shell/root) is allowed to grant it - the
+        well-known `adb shell pm grant <pkg> android.permission.WRITE_SECURE_SETTINGS` trick.
+        The permission must be declared here for PackageManagerService.grantRuntimePermission to
+        accept a grant for it at all; see FreeformAccessProvider.
+    -->
+    <uses-permission
+        android:name="android.permission.WRITE_SECURE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+
+</manifest>

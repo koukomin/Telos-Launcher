@@ -291,6 +291,16 @@
     <string name="desktop_mode_tray_battery">Battery</string>
     <string name="desktop_mode_tray_notifications">Notifications</string>
     <string name="desktop_mode_tray_notifications_empty">No notifications</string>
+    <string name="desktop_mode_window_management_category">Window management</string>
+    <string name="desktop_mode_freeform_unsupported">Floating windows not available</string>
+    <string name="desktop_mode_freeform_unsupported_summary">This device does not support launching apps on a secondary display, so freeform windowing cannot work either</string>
+    <string name="desktop_mode_freeform_enabled">Enable floating windows (via Shizuku)</string>
+    <string name="desktop_mode_freeform_enabled_summary">Off by default. Requires Shizuku to switch the device into freeform windowing mode</string>
+    <string name="desktop_mode_freeform_enabled_summary_pending">Waiting for Shizuku permission</string>
+    <string name="desktop_mode_freeform_enabled_summary_active">Freeform windowing is active system-wide</string>
+    <string name="desktop_mode_freeform_warning">This changes how every app on this device is windowed, not just this launcher, for as long as it stays on. Turn it back off here at any time to restore normal fullscreen behavior - no computer or ADB needed.</string>
+    <string name="desktop_mode_freeform_shizuku_unavailable">Shizuku is not running or not installed. Install and start Shizuku, then try again.</string>
+    <string name="desktop_mode_freeform_shizuku_denied">Shizuku permission was denied.</string>
     <string name="freeze_widget_freeze_now">Freeze now</string>
     <string name="freeze_widget_candidates_summary">%1$d apps selected</string>
     <string name="freeze_widget_no_candidates">No apps selected. Choose apps to freeze in settings.</string>

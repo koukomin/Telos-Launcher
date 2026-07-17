@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.desktopmode
 
 import android.app.ActivityOptions
 import android.content.Context
+import android.graphics.Rect
 import android.os.Build
 import android.view.Display
 import android.view.WindowManager
@@ -36,18 +37,22 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.desktopmode.DesktopModeManager
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toPixels
 import kotlinx.coroutines.flow.Flow
+import org.koin.compose.koinInject
 
 @Composable
 internal fun DesktopStartMenu(onDismiss: () -> Unit) {
     val viewModel: DesktopStartMenuVM = viewModel()
     val apps by viewModel.apps.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val desktopModeManager = koinInject<DesktopModeManager>()
+    val freeformActive by desktopModeManager.freeformActiveInSystem.collectAsStateWithLifecycle()
 
     Box(
         modifier = Modifier
@@ -85,7 +90,7 @@ internal fun DesktopStartMenu(onDismiss: () -> Unit) {
                             app = app,
                             getIcon = { size -> viewModel.getIcon(app, size) },
                             onClick = {
-                                launchOnDisplay(context, app)
+                                launchOnDisplay(context, app, freeformActive)
                                 onDismiss()
                             },
                         )
@@ -122,13 +127,37 @@ private fun StartMenuAppRow(
     }
 }
 
-/** Launches [app] onto the same display this composable is currently shown on. */
-private fun launchOnDisplay(context: Context, app: Application) {
+private var freeformLaunchCount = 0
+
+/**
+ * Launches [app] onto the same display this composable is currently shown on. When
+ * [freeformActive] is true (the OS-level `enable_freeform_support` setting is on), also hints a
+ * cascading window size/position via [ActivityOptions.setLaunchBounds] - this is a plain public
+ * API, no hidden APIs involved. If freeform isn't active, setLaunchBounds is never called and the
+ * OS falls back to launching the app fullscreen on the external display, which is the intended
+ * degrade path when freeform isn't available.
+ */
+private fun launchOnDisplay(context: Context, app: Application, freeformActive: Boolean) {
     val displayId = context.displayIdCompat()
     val options = ActivityOptions.makeBasic().apply {
         launchDisplayId = displayId
     }
+    if (freeformActive) {
+        options.setLaunchBounds(nextFreeformBounds(context))
+    }
     app.launch(context, options.toBundle())
+}
+
+private fun nextFreeformBounds(context: Context): Rect {
+    val metrics = context.resources.displayMetrics
+    val width = (metrics.widthPixels * 0.6f).toInt()
+    val height = (metrics.heightPixels * 0.65f).toInt()
+    val stepPx = (32 * metrics.density).toInt()
+    val step = (freeformLaunchCount % 6) + 1
+    freeformLaunchCount++
+    val left = stepPx * step
+    val top = stepPx * step
+    return Rect(left, top, left + width, top + height)
 }
 
 private fun Context.displayIdCompat(): Int {
