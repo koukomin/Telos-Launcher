@@ -72,6 +72,7 @@ enum class PermissionGroup {
     Call,
     UsageAccess,
     OverlayWindow,
+    Bluetooth,
 }
 
 internal class PermissionsManagerImpl(
@@ -111,6 +112,9 @@ internal class PermissionsManagerImpl(
     )
     private val overlayWindowPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.OverlayWindow)
+    )
+    private val bluetoothPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.Bluetooth)
     )
 
     override fun requestPermission(context: AppCompatActivity, permissionGroup: PermissionGroup) {
@@ -225,6 +229,16 @@ internal class PermissionsManagerImpl(
                     CrashReporter.logException(e)
                 }
             }
+
+            PermissionGroup.Bluetooth -> {
+                if (isAtLeastApiLevel(31)) {
+                    ActivityCompat.requestPermissions(
+                        context,
+                        bluetoothPermissions,
+                        permissionGroup.ordinal
+                    )
+                }
+            }
         }
     }
 
@@ -289,6 +303,10 @@ internal class PermissionsManagerImpl(
             PermissionGroup.OverlayWindow -> {
                 Settings.canDrawOverlays(context)
             }
+
+            PermissionGroup.Bluetooth -> {
+                !isAtLeastApiLevel(31) || bluetoothPermissions.all { context.checkPermission(it) }
+            }
         }
     }
 
@@ -306,6 +324,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Call -> callPermissionState
             PermissionGroup.UsageAccess -> usageAccessPermissionState
             PermissionGroup.OverlayWindow -> overlayWindowPermissionState
+            PermissionGroup.Bluetooth -> bluetoothPermissionState
         }
     }
 
@@ -329,6 +348,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Call -> callPermissionState.value = granted
             PermissionGroup.UsageAccess -> usageAccessPermissionState.value = granted
             PermissionGroup.OverlayWindow -> overlayWindowPermissionState.value = granted
+            PermissionGroup.Bluetooth -> bluetoothPermissionState.value = granted
         }
     }
 
@@ -338,6 +358,7 @@ internal class PermissionsManagerImpl(
         manageProfilesPermissionState.value = checkPermissionOnce(PermissionGroup.ManageProfiles)
         usageAccessPermissionState.value = checkPermissionOnce(PermissionGroup.UsageAccess)
         overlayWindowPermissionState.value = checkPermissionOnce(PermissionGroup.OverlayWindow)
+        bluetoothPermissionState.value = checkPermissionOnce(PermissionGroup.Bluetooth)
     }
 
     override fun reportNotificationListenerState(running: Boolean) {
@@ -361,5 +382,7 @@ internal class PermissionsManagerImpl(
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
         private val callPermissions = arrayOf(Manifest.permission.CALL_PHONE)
+        private val bluetoothPermissions: Array<String> =
+            if (isAtLeastApiLevel(31)) arrayOf(Manifest.permission.BLUETOOTH_CONNECT) else emptyArray()
     }
 }

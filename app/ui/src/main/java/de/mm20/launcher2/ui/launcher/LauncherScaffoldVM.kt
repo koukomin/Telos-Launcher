@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.contextprofiles.ContextProfileManager
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.preferences.ColorScheme
 import de.mm20.launcher2.preferences.GestureAction
@@ -27,6 +28,7 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     private val uiSettings: UiSettings by inject()
     private val gestureSettings: GestureSettings by inject()
     private val searchableRepository: SavableSearchableRepository by inject()
+    private val contextProfileManager: ContextProfileManager by inject()
 
     private var isSystemInDarkMode = MutableStateFlow(false)
 
@@ -64,6 +66,9 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     val hideStatusBar = uiSettings.hideStatusBar
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
+    val activeContextProfile = contextProfileManager.activeProfile
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setSystemInDarkMode(darkMode: Boolean) {
         isSystemInDarkMode.value = darkMode
     }
@@ -96,13 +101,17 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     val searchBarStyle = uiSettings.searchBarStyle
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), SearchBarStyle.Transparent)
 
-    val gestureState: StateFlow<GestureState?> = gestureSettings.map { settings ->
-            val swipeLeftAction = settings.swipeLeft
-            val swipeRightAction = settings.swipeRight
-            val swipeDownAction = settings.swipeDown
-            val swipeUpAction = settings.swipeUp
-            val longPressAction = settings.longPress
-            val doubleTapAction = settings.doubleTap
+    val gestureState: StateFlow<GestureState?> = combine(
+        gestureSettings,
+        contextProfileManager.activeProfile,
+    ) { settings, activeProfile ->
+            val overrides = activeProfile?.gestureOverrides
+            val swipeLeftAction = overrides?.swipeLeft ?: settings.swipeLeft
+            val swipeRightAction = overrides?.swipeRight ?: settings.swipeRight
+            val swipeDownAction = overrides?.swipeDown ?: settings.swipeDown
+            val swipeUpAction = overrides?.swipeUp ?: settings.swipeUp
+            val longPressAction = overrides?.longPress ?: settings.longPress
+            val doubleTapAction = overrides?.doubleTap ?: settings.doubleTap
             val homeButtonAction = settings.homeButton
             val pinchInAction = settings.pinchIn
             val pinchOutAction = settings.pinchOut

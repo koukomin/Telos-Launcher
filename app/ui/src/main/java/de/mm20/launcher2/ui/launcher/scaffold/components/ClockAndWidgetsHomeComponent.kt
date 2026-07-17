@@ -48,7 +48,9 @@ import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
-internal object ClockAndWidgetsHomeComponent : ScaffoldComponent() {
+internal class ClockAndWidgetsHomeComponent(
+    private val target: WidgetScreenTarget = WidgetScreenTarget.Default,
+) : ScaffoldComponent() {
     private var editMode by mutableStateOf(false)
     private val scrollState = ScrollState(0)
 
@@ -126,7 +128,7 @@ internal object ClockAndWidgetsHomeComponent : ScaffoldComponent() {
                     scope.launch { state.lock(hideSearchBar = true) }
                     editMode = it
                 },
-                parentId = WidgetScreenTarget.Default.id.toString(),
+                parentId = target.id.toString(),
             )
         }
         if (editMode) {

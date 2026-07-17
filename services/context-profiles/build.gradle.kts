@@ -39,7 +39,7 @@ android {
             jvmTarget.set(JvmTarget.JVM_1_8)
         }
     }
-    namespace = "de.mm20.launcher2.freeze"
+    namespace = "de.mm20.launcher2.contextprofiles"
 }
 
 dependencies {
@@ -50,15 +50,9 @@ dependencies {
 
     implementation(libs.koin.android)
 
-    implementation(libs.shizuku.api)
-    implementation(libs.shizuku.provider)
-    implementation(libs.hiddenapibypass)
-
     implementation(project(":core:ktx"))
     implementation(project(":core:base"))
     implementation(project(":core:preferences"))
     implementation(project(":core:crashreporter"))
     implementation(project(":core:permissions"))
-    implementation(project(":data:notifications"))
-    implementation(project(":services:context-profiles"))
 }

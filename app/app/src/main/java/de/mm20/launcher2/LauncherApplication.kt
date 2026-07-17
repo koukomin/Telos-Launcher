@@ -15,6 +15,7 @@ import de.mm20.launcher2.badges.badgesModule
 import de.mm20.launcher2.calculator.calculatorModule
 import de.mm20.launcher2.calendar.calendarModule
 import de.mm20.launcher2.contacts.contactsModule
+import de.mm20.launcher2.contextprofiles.contextProfilesModule
 import de.mm20.launcher2.data.customattrs.customAttrsModule
 import de.mm20.launcher2.data.i18nDataModule
 import de.mm20.launcher2.searchable.searchableModule
@@ -111,6 +112,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     feedModule,
                     freezeModule,
                     wallpapersModule,
+                    contextProfilesModule,
                 )
             )
         }

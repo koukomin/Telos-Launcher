@@ -166,6 +166,7 @@ dependencies {
     implementation(project(":services:feed"))
     implementation(project(":services:freeze"))
     implementation(project(":services:wallpapers"))
+    implementation(project(":services:context-profiles"))
 
     // Uncomment this if you want annoying notifications in your debug builds
     //debugImplementation(libs.leakcanary)

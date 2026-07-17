@@ -153,6 +153,7 @@ abstract class SharedLauncherActivity(
                         val searchBarColor by viewModel.searchBarColor.collectAsState()
                         val searchBarAutofocus by viewModel.autoFocusSearch.collectAsState(false)
                         val widgetsOnHomeScreen by viewModel.widgetsOnHomeScreen.collectAsState()
+                        val activeContextProfile by viewModel.activeContextProfile.collectAsState()
                         val wallpaperBlur by viewModel.wallpaperBlur.collectAsState()
                         val wallpaperBlurRadius by viewModel.wallpaperBlurRadius.collectAsState()
 
@@ -243,6 +244,7 @@ abstract class SharedLauncherActivity(
                                 hideStatus,
                                 hideNav,
                                 widgetsOnHomeScreen,
+                                activeContextProfile?.widgetScreenTargetOverride,
                                 searchBarAutofocus,
                                 wallpaperBlur,
                                 wallpaperBlurRadius,
@@ -365,7 +367,10 @@ abstract class SharedLauncherActivity(
 
                                     val config = ScaffoldConfiguration(
                                         homeComponent = if (widgetsOnHomeScreen == true) {
-                                            ClockAndWidgetsHomeComponent
+                                            ClockAndWidgetsHomeComponent(
+                                                target = activeContextProfile?.widgetScreenTargetOverride
+                                                    ?: WidgetScreenTarget.Default,
+                                            )
                                         } else {
                                             ClockHomeComponent
                                         },

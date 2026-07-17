@@ -1,5 +1,6 @@
 package de.mm20.launcher2.freeze
 
+import de.mm20.launcher2.contextprofiles.ContextProfileManager
 import de.mm20.launcher2.preferences.FreezeExclusionStrictness
 import de.mm20.launcher2.preferences.FreezeProfile
 import de.mm20.launcher2.preferences.freeze.FreezeSettings
@@ -67,6 +68,7 @@ private data class CustomRaw(
 
 class FreezeProfileManager internal constructor(
     private val settings: FreezeSettings,
+    private val contextProfileManager: ContextProfileManager,
 ) {
     private val customRaw: Flow<CustomRaw> = combine(
         settings.idleTimeoutMinutes,
@@ -78,8 +80,21 @@ class FreezeProfileManager internal constructor(
         CustomRaw(idleTimeoutMinutes, freezeOnIdle, freezeOnScreenOff, freezeOnBatterySaver, exclusionStrictness)
     }
 
-    val resolvedSettings: Flow<ResolvedFreezeSettings> = combine(
+    /**
+     * The base profile the user has set directly, or - if a context profile is currently active
+     * and overrides the freeze profile - the context profile's override instead. This is
+     * intentionally non-destructive: the user's own [FreezeSettings.profile] is never
+     * overwritten by a context profile, only shadowed while that context profile is active.
+     */
+    private val effectiveProfile: Flow<FreezeProfile> = combine(
         settings.profile,
+        contextProfileManager.activeProfile,
+    ) { baseProfile, activeContextProfile ->
+        activeContextProfile?.freezeProfileOverride ?: baseProfile
+    }
+
+    val resolvedSettings: Flow<ResolvedFreezeSettings> = combine(
+        effectiveProfile,
         customRaw,
     ) { profile, custom ->
         FreezeProfilePresets[profile] ?: ResolvedFreezeSettings(

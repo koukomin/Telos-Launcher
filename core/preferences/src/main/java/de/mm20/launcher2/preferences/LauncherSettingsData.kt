@@ -304,6 +304,11 @@ data class LauncherSettingsData internal constructor(
     val floatingLauncherColor: Int = 0xFF6750A4.toInt(),
     val floatingLauncherAlpha: Float = 0.6f,
 
+    val contextProfilesEnabled: Boolean = false,
+    val contextProfiles: List<ContextProfile> = emptyList(),
+    /** If set, this profile is force-active regardless of trigger evaluation. */
+    val contextProfileManualOverrideId: String? = null,
+
     ) {
     constructor(
         context: Context,

@@ -162,6 +162,7 @@ dependencies {
     implementation(project(":services:feed"))
     implementation(project(":services:freeze"))
     implementation(project(":services:wallpapers"))
+    implementation(project(":services:context-profiles"))
 
     implementation(libs.androidx.biometric)
     implementation(project(":core:devicepose"))
