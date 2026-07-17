@@ -95,7 +95,14 @@ fun GridItem(
     item: SavableSearchable,
     showLabels: Boolean = true,
     labelMaxLines: Int = 1,
-    highlight: Boolean = false
+    highlight: Boolean = false,
+    /**
+     * Whether swipe-up-for-shutter should be armed on this icon. Off by default: this grid item
+     * is also used inside lazily-scrolled lists (the app drawer), where a per-icon vertical drag
+     * detector would fight the list's own scroll gesture. Only the non-scrolling home screen
+     * favorites grid opts in.
+     */
+    enableShutterGesture: Boolean = false,
 ) {
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${item.key}")
     val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
@@ -130,7 +137,7 @@ fun GridItem(
         modifier = modifier
             .padding(4.dp)
             .then(
-                if (item is Application && shuttersEnabled) {
+                if (item is Application && shuttersEnabled && enableShutterGesture) {
                     Modifier.pointerInput(item.key) {
                         var totalDrag = 0f
                         detectVerticalDragGestures(
