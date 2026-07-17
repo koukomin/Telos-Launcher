@@ -3,11 +3,13 @@ package de.mm20.launcher2.applications
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.pm.LauncherApps
 import android.os.Process
 import android.os.UserManager
 import android.util.Log
 import androidx.core.content.getSystemService
+import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
@@ -75,8 +77,34 @@ class LauncherAppDeserializer(val context: Context) : SearchableDeserializer {
             val intent = Intent().also {
                 it.component = componentName
             }
-            val launcherActivityInfo = launcherApps.resolveActivity(intent, user) ?: return null
-            return LauncherApp(context, launcherActivityInfo)
+            val launcherActivityInfo = launcherApps.resolveActivity(intent, user)
+            if (launcherActivityInfo != null) {
+                return LauncherApp(context, launcherActivityInfo)
+            } else {
+                // Fallback for disabled apps (frozen by system or other tools)
+                val pm = context.packageManager
+                val info = try {
+                    pm.getActivityInfo(
+                        componentName,
+                        PackageManager.MATCH_DISABLED_COMPONENTS
+                    )
+                } catch (e: Exception) {
+                    null
+                }
+                if (info != null) {
+                    return LauncherApp(
+                        componentName = componentName,
+                        label = info.loadLabel(pm).toString(),
+                        user = user,
+                        launcherActivityInfo = null,
+                        applicationInfo = info.applicationInfo,
+                        versionName = LauncherApp.getPackageVersionName(context, pkg),
+                        isSuspended = true,
+                        userSerialNumber = userSerial,
+                    )
+                }
+            }
+            return null
         } catch (e: SecurityException) {
             Log.e("MM20", "Failed to deserialize app: $serialized", e)
             return null

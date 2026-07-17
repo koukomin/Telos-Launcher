@@ -34,18 +34,17 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 internal data class LauncherApp(
-    private val launcherActivityInfo: LauncherActivityInfo,
+    override val componentName: ComponentName,
+    override val label: String,
+    override val user: UserHandle,
+    private val launcherActivityInfo: LauncherActivityInfo?,
+    private val applicationInfo: ApplicationInfo,
     override val versionName: String?,
     override val isSuspended: Boolean = false,
     internal val userSerialNumber: Long,
     override val labelOverride: String? = null,
     override val score: ResultScore = ResultScore.Unspecified,
 ) : Application {
-
-    override val componentName: ComponentName
-        get() = launcherActivityInfo.componentName
-
-    override val label: String = launcherActivityInfo.label.toString()
 
     /**
      * Cached result of the normalized label.
@@ -60,7 +59,11 @@ internal data class LauncherApp(
         launcherActivityInfo: LauncherActivityInfo,
         score: ResultScore = ResultScore.Unspecified,
     ) : this(
-        launcherActivityInfo,
+        componentName = launcherActivityInfo.componentName,
+        label = launcherActivityInfo.label.toString(),
+        user = launcherActivityInfo.user,
+        launcherActivityInfo = launcherActivityInfo,
+        applicationInfo = launcherActivityInfo.applicationInfo,
         versionName = getPackageVersionName(
             context,
             launcherActivityInfo.applicationInfo.packageName
@@ -70,13 +73,10 @@ internal data class LauncherApp(
         score = score,
     )
 
-    override val user: UserHandle
-        get() = launcherActivityInfo.user
-
-    private val isMainProfile = launcherActivityInfo.user == Process.myUserHandle()
+    private val isMainProfile = user == Process.myUserHandle()
 
     private val isSystemApp: Boolean =
-        launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
+        applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
 
     override val canUninstall: Boolean
         get() = !isSystemApp && isMainProfile
@@ -102,9 +102,11 @@ internal data class LauncherApp(
         try {
             val icon =
                 withContext(Dispatchers.IO) {
-                    val density = size / (108 / 1.5)
-                    launcherActivityInfo.getIcon(0)
-
+                    if (launcherActivityInfo != null) {
+                        launcherActivityInfo.getIcon(0)
+                    } else {
+                        context.packageManager.getActivityIcon(componentName)
+                    }
                 } ?: return null
             if (icon is AdaptiveIconDrawable) {
                 if (themed && isAtLeastApiLevel(33) && icon.monochrome != null) {
@@ -152,7 +154,7 @@ internal data class LauncherApp(
         try {
             launcherApps.startMainActivity(
                 componentName,
-                launcherActivityInfo.user,
+                user,
                 null,
                 options
             )
@@ -235,7 +237,7 @@ internal data class LauncherApp(
 
     override fun getActivityInfo(context: Context): ActivityInfo? {
         if (isAtLeastApiLevel(31)) {
-            return launcherActivityInfo.activityInfo
+            return launcherActivityInfo?.activityInfo
         }
         return super.getActivityInfo(context)
     }

@@ -58,6 +58,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val locationSearchSettings: LocationSearchSettings by inject()
     private val contactSearchSettings: ContactSearchSettings by inject()
     private val freezeManager: FreezeManager by inject()
+    private val freezeSettings: de.mm20.launcher2.preferences.freeze.FreezeSettings by inject()
 
     val isUpToDate = MutableStateFlow(true)
 
@@ -69,6 +70,9 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         this.searchable.value = searchable
         this.iconSize.value = iconSize
     }
+
+    val advancedFeaturesEnabled = freezeSettings.advancedFeaturesEnabled
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     val isPinned = searchable.flatMapLatest {
         if (it == null) emptyFlow() else favoritesService.isPinned(it)
@@ -197,6 +201,24 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     fun launchChild(context: Context, child: SavableSearchable) {
         if (child.launch(context, null)) {
             reportUsage(child)
+        }
+    }
+
+    fun forceStop() {
+        val searchable = searchable.value
+        if (searchable is Application) {
+            viewModelScope.launch {
+                freezeManager.forceStop(searchable.componentName.packageName)
+            }
+        }
+    }
+
+    fun clearCache() {
+        val searchable = searchable.value
+        if (searchable is Application) {
+            viewModelScope.launch {
+                freezeManager.clearCache(searchable.componentName.packageName)
+            }
         }
     }
 

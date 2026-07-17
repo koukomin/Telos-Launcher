@@ -82,6 +82,7 @@ fun AppItem(
     val badge by viewModel.badge.collectAsStateWithLifecycle(null)
     val icon by viewModel.icon.collectAsStateWithLifecycle()
     val isSuspended by viewModel.isSuspended.collectAsStateWithLifecycle()
+    val advancedFeaturesEnabled by viewModel.advancedFeaturesEnabled.collectAsStateWithLifecycle()
     val showAppDetails = LocalShowAppDetails.current
 
     LaunchedEffect(app) {
@@ -487,6 +488,27 @@ fun AppItem(
                                 app.uninstall(context)
                                 onBack()
                             }
+                        )
+                    }
+
+                    if (advancedFeaturesEnabled) {
+                        toolbarActions.add(
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_force_stop),
+                                icon = R.drawable.close_24px,
+                                action = {
+                                    viewModel.forceStop()
+                                }
+                            )
+                        )
+                        toolbarActions.add(
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_clear_cache),
+                                icon = R.drawable.autorenew_24px,
+                                action = {
+                                    viewModel.clearCache()
+                                }
+                            )
                         )
                     }
 

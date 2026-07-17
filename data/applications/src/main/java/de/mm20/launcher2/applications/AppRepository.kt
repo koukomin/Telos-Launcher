@@ -3,13 +3,17 @@ package de.mm20.launcher2.applications
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
+import android.content.pm.PackageManager
 import android.content.pm.ShortcutInfo
 import android.os.Handler
 import android.os.Looper
 import android.os.Process
 import android.os.UserHandle
+import de.mm20.launcher2.ktx.getSerialNumber
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.profiles.ProfileManager
 import de.mm20.launcher2.search.Application
@@ -204,12 +208,53 @@ internal class AppRepositoryImpl(
     private fun getApplications(packageName: String?, userHandle: UserHandle): List<LauncherApp> {
         if (packageName == context.packageName) return emptyList()
 
-        return try {
+        val apps = try {
             launcherApps.getActivityList(packageName, userHandle)
                 .mapNotNull { getApplication(it) }
+                .toMutableList()
         } catch (e: SecurityException) {
-            emptyList()
+            mutableListOf()
         }
+
+        if (userHandle == Process.myUserHandle()) {
+            // For the primary user, also pick up apps that are disabled (frozen).
+            val pm = context.packageManager
+            val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
+            if (packageName != null) intent.`package` = packageName
+
+            val flags = PackageManager.MATCH_DISABLED_COMPONENTS or
+                    PackageManager.MATCH_DIRECT_BOOT_AWARE or
+                    PackageManager.MATCH_DIRECT_BOOT_UNAWARE
+
+            val allActivities = if (isAtLeastApiLevel(33)) {
+                pm.queryIntentActivities(intent, PackageManager.ResolveInfoFlags.of(flags.toLong()))
+            } else {
+                pm.queryIntentActivities(intent, flags)
+            }
+
+            val seen = apps.map { it.componentName }.toSet()
+            for (info in allActivities) {
+                val activityInfo = info.activityInfo ?: continue
+                val cn = ComponentName(activityInfo.packageName, activityInfo.name)
+                if (cn in seen) continue
+                if (activityInfo.packageName == context.packageName) continue
+
+                apps.add(
+                    LauncherApp(
+                        componentName = cn,
+                        label = info.loadLabel(pm).toString(),
+                        user = userHandle,
+                        launcherActivityInfo = null,
+                        applicationInfo = activityInfo.applicationInfo,
+                        versionName = LauncherApp.getPackageVersionName(context, cn.packageName),
+                        isSuspended = (activityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SUSPENDED) != 0 || !activityInfo.applicationInfo.enabled || !activityInfo.enabled,
+                        userSerialNumber = userHandle.getSerialNumber(context),
+                    )
+                )
+            }
+        }
+
+        return apps
     }
 
 
