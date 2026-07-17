@@ -40,7 +40,8 @@ import org.koin.core.component.inject
 
 /**
  * Advanced video wallpaper service using Media3 (ExoPlayer).
- * Supports looping, speed/volume control, zoom, brightness, parallax, and color extraction.
+ * Supports looping, speed control, zoom, brightness, parallax, and color extraction.
+ * Always muted, unconditionally.
  */
 class VideoWallpaperService : WallpaperService() {
 
@@ -71,7 +72,6 @@ class VideoWallpaperService : WallpaperService() {
             1f, 0f, 0f, 1f, false, 0.2f
         )
         private var speed = 1f
-        private var volume = 0f
         private var startBehavior = VideoWallpaperStartBehavior.Resume
 
         private var xOffset = 0.5f
@@ -117,12 +117,6 @@ class VideoWallpaperService : WallpaperService() {
                 settings.videoSpeed.collect {
                     speed = it
                     player?.setPlaybackSpeed(speed)
-                }
-            }
-            scope.launch {
-                settings.videoVolume.collect {
-                    volume = it
-                    player?.volume = volume
                 }
             }
             scope.launch {
@@ -279,7 +273,8 @@ class VideoWallpaperService : WallpaperService() {
                 p.setMediaItems(mediaItems)
 
                 p.setPlaybackSpeed(speed)
-                p.volume = volume
+                // Video wallpapers are always muted, unconditionally.
+                p.volume = 0f
 
                 // Effects must be installed before prepare(). With default transforms we skip
                 // the GL effects pipeline entirely and let MediaCodec crop-fill the surface,

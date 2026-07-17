@@ -180,7 +180,6 @@ data class LauncherSettingsData internal constructor(
     val videoWallpaperPositionY: Float = 0f,
     val videoWallpaperBrightness: Float = 1f,
     val videoWallpaperSpeed: Float = 1f,
-    val videoWallpaperVolume: Float = 0f,
     val videoWallpaperStartBehavior: VideoWallpaperStartBehavior = VideoWallpaperStartBehavior.Resume,
     val videoWallpaperParallax: Boolean = false,
     val videoWallpaperParallaxStrength: Float = 0.2f,

@@ -80,13 +80,6 @@ class WallpaperSettings internal constructor(
         dataStore.update { it.copy(videoWallpaperSpeed = speed) }
     }
 
-    val videoVolume
-        get() = dataStore.data.map { it.videoWallpaperVolume }.distinctUntilChanged()
-
-    fun setVideoVolume(volume: Float) {
-        dataStore.update { it.copy(videoWallpaperVolume = volume) }
-    }
-
     val videoStartBehavior
         get() = dataStore.data.map { it.videoWallpaperStartBehavior }.distinctUntilChanged()
 
