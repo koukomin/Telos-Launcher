@@ -35,7 +35,9 @@ import de.mm20.launcher2.preferences.SettingsLockMethod
 import de.mm20.launcher2.preferences.protection.ProtectionSettings
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -48,10 +50,57 @@ class SettingsLockVM : ViewModel(), KoinComponent {
     val lockMethod = protectionSettings.lockMethod
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+    val useCustomLock = protectionSettings.useCustomLock
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val customLockHashed = protectionSettings.customLockHashed
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setLockSensitiveSettings(locked: Boolean) =
         protectionSettings.setLockSensitiveSettings(locked)
 
     fun setLockMethod(method: SettingsLockMethod) = protectionSettings.setLockMethod(method)
+
+    fun setUseCustomLock(use: Boolean) = protectionSettings.setUseCustomLock(use)
+
+    fun setCustomLock(pin: String) {
+        protectionSettings.setCustomLockHashed(hashPin(pin, newSalt()))
+    }
+
+    suspend fun verifyCustomLock(pin: String): Boolean {
+        val stored = protectionSettings.customLockHashed.first() ?: return false
+        val salt = stored.substringBefore(':', "")
+        if (salt.isEmpty()) return false
+        return constantTimeEquals(stored, hashPin(pin, salt))
+    }
+}
+
+/**
+ * Salted SHA-256 PIN hash, stored as "salt:hash" (both Base64). This is not a substitute for the
+ * system credential - it only exists for the optional separate-lock mode - but it must at least
+ * not be trivially reversible the way a raw String.hashCode() would be.
+ */
+private fun hashPin(pin: String, salt: String): String {
+    val digest = java.security.MessageDigest.getInstance("SHA-256")
+    digest.update(android.util.Base64.decode(salt, android.util.Base64.NO_WRAP))
+    val hash = digest.digest(pin.toByteArray(Charsets.UTF_8))
+    return salt + ":" + android.util.Base64.encodeToString(hash, android.util.Base64.NO_WRAP)
+}
+
+private fun newSalt(): String {
+    val bytes = ByteArray(16)
+    java.security.SecureRandom().nextBytes(bytes)
+    return android.util.Base64.encodeToString(bytes, android.util.Base64.NO_WRAP)
+}
+
+/** Length-constant comparison to avoid leaking the hash through timing. */
+private fun constantTimeEquals(a: String, b: String): Boolean {
+    val ba = a.toByteArray(Charsets.UTF_8)
+    val bb = b.toByteArray(Charsets.UTF_8)
+    if (ba.size != bb.size) return false
+    var result = 0
+    for (i in ba.indices) result = result or (ba[i].toInt() xor bb[i].toInt())
+    return result == 0
 }
 
 private fun authenticatorsFor(method: SettingsLockMethod): Int = when (method) {
@@ -139,25 +188,48 @@ fun ProtectedSettingsScreen(
     val viewModel: SettingsLockVM = viewModel()
     val locked by viewModel.lockSensitiveSettings.collectAsStateWithLifecycle()
     val method by viewModel.lockMethod.collectAsStateWithLifecycle()
+    val useCustomLock by viewModel.useCustomLock.collectAsStateWithLifecycle()
 
     var unlocked by remember { mutableStateOf(false) }
+    var showPinDialog by remember { mutableStateOf(false) }
     val activity = LocalContext.current as? FragmentActivity
     val promptTitle = stringResource(R.string.settings_lock_prompt_title)
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+
+    if (showPinDialog) {
+        CustomLockDialog(
+            title = stringResource(R.string.custom_lock_dialog_title),
+            onConfirm = { pin ->
+                scope.launch {
+                    if (viewModel.verifyCustomLock(pin)) {
+                        unlocked = true
+                        showPinDialog = false
+                    }
+                }
+            },
+            onDismiss = { showPinDialog = false }
+        )
+    }
 
     when {
-        locked == null || method == null -> {}
+        locked == null || method == null || useCustomLock == null -> {}
 
         locked == false || unlocked -> content()
 
         else -> {
             val currentMethod = method!!
-            val authAvailable =
-                activity != null && canAuthenticateSettings(activity, currentMethod)
+            val isCustom = useCustomLock == true
+            val authAvailable = isCustom ||
+                (activity != null && canAuthenticateSettings(activity, currentMethod))
 
             if (authAvailable) {
                 LaunchedEffect(Unit) {
-                    authenticateSettings(activity, currentMethod, promptTitle) {
-                        unlocked = it
+                    if (isCustom) {
+                        showPinDialog = true
+                    } else {
+                        authenticateSettings(activity!!, currentMethod, promptTitle) {
+                            unlocked = it
+                        }
                     }
                 }
             }
@@ -185,8 +257,12 @@ fun ProtectedSettingsScreen(
                 )
                 if (authAvailable) {
                     Button(onClick = {
-                        authenticateSettings(activity, currentMethod, promptTitle) {
-                            unlocked = it
+                        if (isCustom) {
+                            showPinDialog = true
+                        } else {
+                            authenticateSettings(activity!!, currentMethod, promptTitle) {
+                                unlocked = it
+                            }
                         }
                     }) {
                         Text(stringResource(R.string.settings_locked_unlock))

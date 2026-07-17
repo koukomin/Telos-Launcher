@@ -28,4 +28,20 @@ class ProtectionSettings internal constructor(
     fun setLockMethod(method: SettingsLockMethod) {
         dataStore.update { it.copy(protectionLockMethod = method) }
     }
+
+    val useCustomLock
+        get() = dataStore.data.map { it.protectionUseCustomLock }
+            .distinctUntilChanged()
+
+    fun setUseCustomLock(use: Boolean) {
+        dataStore.update { it.copy(protectionUseCustomLock = use) }
+    }
+
+    val customLockHashed
+        get() = dataStore.data.map { it.protectionCustomLockHashed }
+            .distinctUntilChanged()
+
+    fun setCustomLockHashed(hashed: String?) {
+        dataStore.update { it.copy(protectionCustomLockHashed = hashed) }
+    }
 }

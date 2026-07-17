@@ -11,7 +11,7 @@ import java.util.UUID
 @Serializable
 @ConsistentCopyVisibility
 data class LauncherSettingsData internal constructor(
-    val schemaVersion: Int = 6,
+    val schemaVersion: Int = 8,
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
     /** Hour of day [0,23] when the dark scheme starts, used only by [ColorScheme.Time]. */
@@ -211,12 +211,17 @@ data class LauncherSettingsData internal constructor(
     val searchFilter: SearchFilters = SearchFilters(),
     val searchFilterBar: Boolean = true,
     val searchFilterBarItems: List<KeyboardFilterBarItem> = listOf(
-        KeyboardFilterBarItem.OnlineResults,
         KeyboardFilterBarItem.Apps,
+        KeyboardFilterBarItem.Files,
+        KeyboardFilterBarItem.Contacts,
+        KeyboardFilterBarItem.OnlineResults,
         KeyboardFilterBarItem.Shortcuts,
         KeyboardFilterBarItem.Events,
-        KeyboardFilterBarItem.Contacts,
-        KeyboardFilterBarItem.Files,
+        KeyboardFilterBarItem.Reminders,
+        KeyboardFilterBarItem.Documents,
+        KeyboardFilterBarItem.Images,
+        KeyboardFilterBarItem.Video,
+        KeyboardFilterBarItem.Music,
         KeyboardFilterBarItem.Articles,
         KeyboardFilterBarItem.Websites,
         KeyboardFilterBarItem.Places,
@@ -264,6 +269,11 @@ data class LauncherSettingsData internal constructor(
     val freezeExclusionStrictness: FreezeExclusionStrictness = FreezeExclusionStrictness.Strict,
     val freezeNeverFreezeApps: Set<String> = emptySet(),
     val freezeStats: Map<String, FreezeAppStats> = emptyMap(),
+    val freezeExcludeMusic: Boolean = true,
+    val freezeExcludeNetwork: Boolean = true,
+    val freezeNetworkThresholdKb: Int = 100,
+    val freezeMethods: Map<String, FreezeMethod> = emptyMap(),
+    val freezeAdvancedFeaturesEnabled: Boolean = false,
 
     val protectionLockSensitiveSettings: Boolean = false,
     val protectionLockMethod: SettingsLockMethod = SettingsLockMethod.DeviceCredential,
@@ -496,9 +506,14 @@ enum class KeyboardFilterBarItem {
     @SerialName("articles") Articles,
     @SerialName("places") Places,
     @SerialName("files") Files,
+    @SerialName("documents") Documents,
+    @SerialName("images") Images,
+    @SerialName("video") Video,
+    @SerialName("music") Music,
     @SerialName("shortcuts") Shortcuts,
     @SerialName("contacts") Contacts,
     @SerialName("events") Events,
+    @SerialName("reminders") Reminders,
     @SerialName("tools") Tools,
     @SerialName("hidden") HiddenResults,
 }
@@ -531,6 +546,11 @@ enum class FreezeBackendPreference {
     @SerialName("auto") Auto,
     @SerialName("shizuku") ShizukuOnly,
     @SerialName("root") RootOnly,
+    @SerialName("icebox") IceBox,
+    @SerialName("hail") Hail,
+    @SerialName("amarok") Amarok,
+    @SerialName("island") Island,
+    @SerialName("shelter") Shelter,
 }
 
 /**
@@ -577,6 +597,12 @@ enum class FreezeProfile {
 enum class FreezeExclusionStrictness {
     @SerialName("strict") Strict,
     @SerialName("relaxed") Relaxed,
+}
+
+@Serializable
+enum class FreezeMethod {
+    @SerialName("suspend") Suspend,
+    @SerialName("disable") Disable,
 }
 
 @Serializable

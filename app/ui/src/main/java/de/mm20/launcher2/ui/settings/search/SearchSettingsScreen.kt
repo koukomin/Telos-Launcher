@@ -51,6 +51,7 @@ import de.mm20.launcher2.ui.settings.searchactions.SearchActionsSettingsRoute
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsRoute
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterSettingsRoute
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsRoute
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -60,11 +61,22 @@ data object SearchSettingsRoute : NavKey
 fun SearchSettingsScreen() {
 
     val viewModel: SearchSettingsScreenVM = viewModel()
+    val lockViewModel: SettingsLockVM = viewModel()
     val context = LocalContext.current
+    val activity = LocalContext.current as? FragmentActivity
+    val promptTitle = stringResource(R.string.settings_lock_prompt_title)
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
 
     val backStack = LocalBackStack.current
 
     var showFilterEditor by remember { mutableStateOf(false) }
+    var onUnlockAction by remember { mutableStateOf<(() -> Unit)?>(null) }
+    var showSetPinDialog by remember { mutableStateOf(false) }
+
+    val lockSettings by lockViewModel.lockSensitiveSettings.collectAsStateWithLifecycle()
+    val lockMethod by lockViewModel.lockMethod.collectAsStateWithLifecycle()
+    val useCustomLock by lockViewModel.useCustomLock.collectAsStateWithLifecycle()
+    val customLockHashed by lockViewModel.customLockHashed.collectAsStateWithLifecycle()
 
     val plugins by viewModel.plugins.collectAsStateWithLifecycle(null)
     val hasCalendarPlugins by remember { derivedStateOf { plugins?.any { it.plugin.type == PluginType.Calendar } } }
@@ -83,6 +95,7 @@ fun SearchSettingsScreen() {
     val allApps by viewModel.allApps.collectAsStateWithLifecycle(null)
     val appShortcuts by viewModel.appShortcuts.collectAsStateWithLifecycle(null)
     val calendar by viewModel.calendarSearch.collectAsStateWithLifecycle(null)
+    val reminders by viewModel.remindersSearch.collectAsStateWithLifecycle(null)
     val places by viewModel.placesSearch.collectAsStateWithLifecycle(null)
     val contacts by viewModel.contacts.collectAsStateWithLifecycle(null)
     val calculator by viewModel.calculator.collectAsStateWithLifecycle(null)
@@ -203,6 +216,15 @@ fun SearchSettingsScreen() {
                         )
                     }
                 }
+
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_reminders),
+                    summary = stringResource(R.string.preference_search_reminders_summary),
+                    icon = R.drawable.task_alt_24px,
+                    value = reminders == true,
+                    onValueChanged = { viewModel.setRemindersSearch(it) }
+                )
+
                 GuardedPreference(
                     locked = hasAppShortcutsPermission == false,
                     onUnlock = {
@@ -339,8 +361,42 @@ fun SearchSettingsScreen() {
                 val lockViewModel: SettingsLockVM = viewModel()
                 val lockSettings by lockViewModel.lockSensitiveSettings.collectAsStateWithLifecycle()
                 val lockMethod by lockViewModel.lockMethod.collectAsStateWithLifecycle()
+                val useCustomLock by lockViewModel.useCustomLock.collectAsStateWithLifecycle()
+                val customLockHashed by lockViewModel.customLockHashed.collectAsStateWithLifecycle()
                 val activity = LocalContext.current as? FragmentActivity
                 val promptTitle = stringResource(R.string.settings_lock_prompt_title)
+                val scope = androidx.compose.runtime.rememberCoroutineScope()
+
+                var onUnlockAction by remember { mutableStateOf<(() -> Unit)?>(null) }
+                var showSetPinDialog by remember { mutableStateOf(false) }
+
+                if (onUnlockAction != null) {
+                    de.mm20.launcher2.ui.settings.protection.CustomLockDialog(
+                        title = stringResource(R.string.custom_lock_dialog_title),
+                        onConfirm = { pin ->
+                            scope.launch {
+                                if (lockViewModel.verifyCustomLock(pin)) {
+                                    onUnlockAction?.invoke()
+                                    onUnlockAction = null
+                                }
+                            }
+                        },
+                        onDismiss = { onUnlockAction = null }
+                    )
+                }
+
+                if (showSetPinDialog) {
+                    de.mm20.launcher2.ui.settings.protection.CustomLockDialog(
+                        title = stringResource(R.string.custom_lock_dialog_title),
+                        confirmTitle = stringResource(R.string.custom_lock_dialog_confirm_title),
+                        onConfirm = { pin ->
+                            lockViewModel.setCustomLock(pin)
+                            lockViewModel.setUseCustomLock(true)
+                            showSetPinDialog = false
+                        },
+                        onDismiss = { showSetPinDialog = false }
+                    )
+                }
 
                 SwitchPreference(
                     title = stringResource(R.string.preference_lock_sensitive_settings),
@@ -348,44 +404,69 @@ fun SearchSettingsScreen() {
                     icon = R.drawable.lock_24px,
                     value = lockSettings == true,
                     onValueChanged = { newValue ->
-                        val method = lockMethod ?: return@SwitchPreference
                         if (newValue) {
-                            // Enabling doesn't need auth; the user just opted in.
                             lockViewModel.setLockSensitiveSettings(true)
                         } else if (activity != null) {
-                            // Turning protection off is itself a protected action.
-                            authenticateSettings(activity, method, promptTitle) { ok ->
-                                if (ok) lockViewModel.setLockSensitiveSettings(false)
+                            if (useCustomLock == true) {
+                                onUnlockAction = { lockViewModel.setLockSensitiveSettings(false) }
+                            } else {
+                                val method = lockMethod ?: SettingsLockMethod.DeviceCredential
+                                authenticateSettings(activity, method, promptTitle) { ok ->
+                                    if (ok) lockViewModel.setLockSensitiveSettings(false)
+                                }
                             }
                         }
                     }
                 )
                 AnimatedVisibility(lockSettings == true) {
-                    ListPreference(
-                        title = stringResource(R.string.preference_settings_lock_method),
-                        iconPadding = true,
-                        items = listOf(
-                            ListPreferenceItem(
-                                stringResource(R.string.settings_lock_method_device_credential),
-                                SettingsLockMethod.DeviceCredential,
-                            ),
-                            ListPreferenceItem(
-                                stringResource(R.string.settings_lock_method_biometrics_only),
-                                SettingsLockMethod.BiometricsOnly,
-                            ),
-                        ),
-                        value = lockMethod ?: SettingsLockMethod.DeviceCredential,
-                        onValueChanged = { newMethod ->
-                            val current = lockMethod ?: return@ListPreference
-                            if (newMethod == current) return@ListPreference
-                            if (activity != null) {
-                                // Changing the method requires passing the current one.
-                                authenticateSettings(activity, current, promptTitle) { ok ->
-                                    if (ok) lockViewModel.setLockMethod(newMethod)
+                    Column {
+                        SwitchPreference(
+                            title = stringResource(R.string.preference_use_custom_lock),
+                            summary = stringResource(R.string.preference_use_custom_lock_summary),
+                            iconPadding = true,
+                            value = useCustomLock == true,
+                            onValueChanged = { use ->
+                                if (use) {
+                                    showSetPinDialog = true
+                                } else if (activity != null) {
+                                    onUnlockAction = { lockViewModel.setUseCustomLock(false) }
                                 }
                             }
+                        )
+                        if (useCustomLock != true) {
+                            ListPreference(
+                                title = stringResource(R.string.preference_settings_lock_method),
+                                iconPadding = true,
+                                items = listOf(
+                                    ListPreferenceItem(
+                                        stringResource(R.string.settings_lock_method_device_credential),
+                                        SettingsLockMethod.DeviceCredential,
+                                    ),
+                                    ListPreferenceItem(
+                                        stringResource(R.string.settings_lock_method_biometrics_only),
+                                        SettingsLockMethod.BiometricsOnly,
+                                    ),
+                                ),
+                                value = lockMethod ?: SettingsLockMethod.DeviceCredential,
+                                onValueChanged = { newMethod ->
+                                    val current = lockMethod ?: return@ListPreference
+                                    if (newMethod == current) return@ListPreference
+                                    if (activity != null) {
+                                        authenticateSettings(activity, current, promptTitle) { ok ->
+                                            if (ok) lockViewModel.setLockMethod(newMethod)
+                                        }
+                                    }
+                                }
+                            )
+                        } else {
+                            Preference(
+                                title = stringResource(R.string.preference_set_custom_lock),
+                                summary = if (customLockHashed != null) "PIN is set" else "No PIN set",
+                                iconPadding = true,
+                                onClick = { showSetPinDialog = true }
+                            )
                         }
-                    )
+                    }
                 }
             }
         }
@@ -396,7 +477,17 @@ fun SearchSettingsScreen() {
                     summary = stringResource(R.string.preference_default_filter_summary),
                     icon = R.drawable.filter_alt_24px,
                     onClick = {
-                        showFilterEditor = true
+                        if (lockSettings == true && activity != null) {
+                            if (useCustomLock == true) {
+                                onUnlockAction = { showFilterEditor = true }
+                            } else {
+                                authenticateSettings(activity, lockMethod ?: SettingsLockMethod.DeviceCredential, promptTitle) { ok ->
+                                    if (ok) showFilterEditor = true
+                                }
+                            }
+                        } else {
+                            showFilterEditor = true
+                        }
                     },
                 )
                 SwitchPreference(

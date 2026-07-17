@@ -13,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -22,31 +23,54 @@ import de.mm20.launcher2.ui.R
 @Composable
 fun CustomLockDialog(
     title: String,
+    confirmTitle: String? = null,
     onConfirm: (String) -> Unit,
     onDismiss: () -> Unit,
 ) {
     var pin by remember { mutableStateOf("") }
+    var confirmPin by remember { mutableStateOf("") }
+    var isConfirming by remember { mutableStateOf(false) }
+    var showError by remember { mutableStateOf(false) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(title) },
+        title = { Text(if (isConfirming) confirmTitle ?: title else title) },
         text = {
             Column {
                 TextField(
-                    value = pin,
-                    onValueChange = { if (it.length <= 8) pin = it },
+                    value = if (isConfirming) confirmPin else pin,
+                    onValueChange = {
+                        showError = false
+                        if (it.length <= 8) {
+                            if (isConfirming) confirmPin = it else pin = it
+                        }
+                    },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                     visualTransformation = PasswordVisualTransformation(),
                     singleLine = true,
+                    isError = showError,
+                    supportingText = if (showError) {
+                        { Text(stringResource(R.string.custom_lock_error_mismatch)) }
+                    } else null
                 )
             }
         },
         confirmButton = {
             TextButton(
-                onClick = { if (pin.length >= 4) onConfirm(pin) },
-                enabled = pin.length >= 4
+                onClick = {
+                    if (confirmTitle != null && !isConfirming) {
+                        isConfirming = true
+                    } else {
+                        if (confirmTitle != null && pin != confirmPin) {
+                            showError = true
+                        } else {
+                            onConfirm(pin)
+                        }
+                    }
+                },
+                enabled = (if (isConfirming) confirmPin else pin).length >= 4
             ) {
-                Text(stringResource(android.R.string.ok))
+                Text(stringResource(if (confirmTitle != null && !isConfirming) R.string.action_next else android.R.string.ok))
             }
         },
         dismissButton = {

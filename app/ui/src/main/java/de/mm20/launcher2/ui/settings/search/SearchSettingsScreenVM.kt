@@ -20,8 +20,10 @@ import de.mm20.launcher2.preferences.search.WikipediaSearchSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import de.mm20.launcher2.search.SearchFilters
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -63,6 +65,15 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setCalendarSearch(enabled: Boolean) {
         calendarSearchSettings.setProviderEnabled("local", enabled)
+    }
+
+    val remindersSearch = searchFilterSettings.defaultFilter.map { it.reminders }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    fun setRemindersSearch(enabled: Boolean) {
+        viewModelScope.launch {
+            val filters = searchFilterSettings.defaultFilter.first()
+            searchFilterSettings.setDefaultFilter(filters.copy(reminders = enabled))
+        }
     }
 
     val hasContactsPermission = permissionsManager.hasPermission(PermissionGroup.Contacts)
