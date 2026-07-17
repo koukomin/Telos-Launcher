@@ -286,6 +286,11 @@
     <string name="desktop_mode_orientation_landscape">Landscape</string>
     <string name="desktop_mode_start_menu">Start menu</string>
     <string name="desktop_mode_start_menu_empty">No apps found</string>
+    <string name="desktop_mode_tray_volume">Volume</string>
+    <string name="desktop_mode_tray_network">Network</string>
+    <string name="desktop_mode_tray_battery">Battery</string>
+    <string name="desktop_mode_tray_notifications">Notifications</string>
+    <string name="desktop_mode_tray_notifications_empty">No notifications</string>
     <string name="freeze_widget_freeze_now">Freeze now</string>
     <string name="freeze_widget_candidates_summary">%1$d apps selected</string>
     <string name="freeze_widget_no_candidates">No apps selected. Choose apps to freeze in settings.</string>
