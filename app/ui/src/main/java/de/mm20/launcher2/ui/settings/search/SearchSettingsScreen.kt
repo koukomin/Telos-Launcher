@@ -17,15 +17,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.plugin.PluginType
+import de.mm20.launcher2.preferences.SettingsLockMethod
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.SmallMessage
 import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreference
+import de.mm20.launcher2.ui.component.preferences.ListPreferenceItem
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
@@ -42,6 +45,8 @@ import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsRoute
 import de.mm20.launcher2.ui.settings.filterbar.FilterBarSettingsRoute
 import de.mm20.launcher2.ui.settings.hiddenitems.HiddenItemsSettingsRoute
 import de.mm20.launcher2.ui.settings.locations.LocationsSettingsRoute
+import de.mm20.launcher2.ui.settings.protection.SettingsLockVM
+import de.mm20.launcher2.ui.settings.protection.authenticateSettings
 import de.mm20.launcher2.ui.settings.searchactions.SearchActionsSettingsRoute
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsRoute
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterSettingsRoute
@@ -327,6 +332,61 @@ fun SearchSettingsScreen() {
                         backStack.add(TagsSettingsRoute)
                     }
                 )
+            }
+        }
+        item {
+            PreferenceCategory(title = stringResource(R.string.preference_category_protection)) {
+                val lockViewModel: SettingsLockVM = viewModel()
+                val lockSettings by lockViewModel.lockSensitiveSettings.collectAsStateWithLifecycle()
+                val lockMethod by lockViewModel.lockMethod.collectAsStateWithLifecycle()
+                val activity = LocalContext.current as? FragmentActivity
+                val promptTitle = stringResource(R.string.settings_lock_prompt_title)
+
+                SwitchPreference(
+                    title = stringResource(R.string.preference_lock_sensitive_settings),
+                    summary = stringResource(R.string.preference_lock_sensitive_settings_summary),
+                    icon = R.drawable.lock_24px,
+                    value = lockSettings == true,
+                    onValueChanged = { newValue ->
+                        val method = lockMethod ?: return@SwitchPreference
+                        if (newValue) {
+                            // Enabling doesn't need auth; the user just opted in.
+                            lockViewModel.setLockSensitiveSettings(true)
+                        } else if (activity != null) {
+                            // Turning protection off is itself a protected action.
+                            authenticateSettings(activity, method, promptTitle) { ok ->
+                                if (ok) lockViewModel.setLockSensitiveSettings(false)
+                            }
+                        }
+                    }
+                )
+                AnimatedVisibility(lockSettings == true) {
+                    ListPreference(
+                        title = stringResource(R.string.preference_settings_lock_method),
+                        iconPadding = true,
+                        items = listOf(
+                            ListPreferenceItem(
+                                stringResource(R.string.settings_lock_method_device_credential),
+                                SettingsLockMethod.DeviceCredential,
+                            ),
+                            ListPreferenceItem(
+                                stringResource(R.string.settings_lock_method_biometrics_only),
+                                SettingsLockMethod.BiometricsOnly,
+                            ),
+                        ),
+                        value = lockMethod ?: SettingsLockMethod.DeviceCredential,
+                        onValueChanged = { newMethod ->
+                            val current = lockMethod ?: return@ListPreference
+                            if (newMethod == current) return@ListPreference
+                            if (activity != null) {
+                                // Changing the method requires passing the current one.
+                                authenticateSettings(activity, current, promptTitle) { ok ->
+                                    if (ok) lockViewModel.setLockMethod(newMethod)
+                                }
+                            }
+                        }
+                    )
+                }
             }
         }
         item {

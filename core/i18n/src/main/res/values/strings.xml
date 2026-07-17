@@ -890,6 +890,15 @@
     <string name="preference_gesture_double_tap">Double tap</string>
     <string name="preference_gesture_long_press">Long press</string>
     <string name="preference_gesture_home_button">Home button/gesture</string>
+    <string name="preference_category_protection">Protection</string>
+    <string name="preference_lock_sensitive_settings">Lock sensitive settings</string>
+    <string name="preference_lock_sensitive_settings_summary">Require authentication to open hidden items and excluded folders settings</string>
+    <string name="preference_settings_lock_method">Authentication method</string>
+    <string name="settings_lock_method_device_credential">Device lock (biometrics, PIN, or pattern)</string>
+    <string name="settings_lock_method_biometrics_only">Biometrics only</string>
+    <string name="settings_lock_prompt_title">Unlock settings</string>
+    <string name="settings_locked_message">These settings are protected. Authenticate to continue.</string>
+    <string name="settings_locked_unlock">Unlock</string>
     <string name="preference_file_search_types">File types</string>
     <string name="file_search_type_documents">Documents</string>
     <string name="file_search_type_images">Images</string>

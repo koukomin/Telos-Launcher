@@ -174,6 +174,17 @@ data class LauncherSettingsData internal constructor(
 
     val videoWallpaperPauseOnBatterySaver: Boolean = true,
     val videoWallpaperPauseOnThermalThrottling: Boolean = true,
+    val videoWallpaperScalingMode: VideoWallpaperScalingMode = VideoWallpaperScalingMode.Fill,
+    val videoWallpaperZoom: Float = 1f,
+    val videoWallpaperPositionX: Float = 0f,
+    val videoWallpaperPositionY: Float = 0f,
+    val videoWallpaperBrightness: Float = 1f,
+    val videoWallpaperSpeed: Float = 1f,
+    val videoWallpaperVolume: Float = 0f,
+    val videoWallpaperStartBehavior: VideoWallpaperStartBehavior = VideoWallpaperStartBehavior.Resume,
+    val videoWallpaperParallax: Boolean = false,
+    val videoWallpaperParallaxStrength: Float = 0.2f,
+    val videoWallpaperThemeColors: Boolean = true,
 
     val animationsCharging: Boolean = true,
 
@@ -254,6 +265,11 @@ data class LauncherSettingsData internal constructor(
     val freezeExclusionStrictness: FreezeExclusionStrictness = FreezeExclusionStrictness.Strict,
     val freezeNeverFreezeApps: Set<String> = emptySet(),
     val freezeStats: Map<String, FreezeAppStats> = emptyMap(),
+
+    val protectionLockSensitiveSettings: Boolean = false,
+    val protectionLockMethod: SettingsLockMethod = SettingsLockMethod.DeviceCredential,
+    val protectionUseCustomLock: Boolean = false,
+    val protectionCustomLockHashed: String? = null,
 
     ) {
     constructor(
@@ -516,6 +532,36 @@ enum class FreezeBackendPreference {
     @SerialName("auto") Auto,
     @SerialName("shizuku") ShizukuOnly,
     @SerialName("root") RootOnly,
+}
+
+/**
+ * How protected settings screens are unlocked. Both modes go through the system's
+ * BiometricPrompt - the launcher never stores or verifies credentials itself.
+ */
+@Serializable
+enum class SettingsLockMethod {
+    /** System biometrics, falling back to the device PIN/pattern/password. */
+    @SerialName("device_credential") DeviceCredential,
+
+    /** Biometrics only: the device PIN/pattern is deliberately not accepted. */
+    @SerialName("biometrics_only") BiometricsOnly,
+}
+
+@Serializable
+enum class VideoWallpaperScalingMode {
+    /** Letterbox: whole video visible, black bars if aspect ratios differ. */
+    @SerialName("fit") Fit,
+    /** Crop to cover the whole screen. */
+    @SerialName("fill") Fill,
+    /** Distort to exactly match the screen. */
+    @SerialName("stretch") Stretch,
+}
+
+@Serializable
+enum class VideoWallpaperStartBehavior {
+    @SerialName("resume") Resume,
+    @SerialName("restart") Restart,
+    @SerialName("random") Random,
 }
 
 
