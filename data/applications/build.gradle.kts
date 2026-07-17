@@ -55,5 +55,6 @@ dependencies {
     implementation(project(":core:ktx"))
     implementation(project(":core:compat"))
     implementation(project(":core:profiles"))
+    implementation(project(":core:preferences"))
 
 }

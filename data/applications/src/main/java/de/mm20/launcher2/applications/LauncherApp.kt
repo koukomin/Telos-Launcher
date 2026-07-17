@@ -44,6 +44,13 @@ internal data class LauncherApp(
     internal val userSerialNumber: Long,
     override val labelOverride: String? = null,
     override val score: ResultScore = ResultScore.Unspecified,
+    /**
+     * Set only for entries discovered through the disabled-components fallback scan (frozen
+     * apps): [launcherActivityInfo] can't be resolved for a disabled component, but this
+     * [ActivityInfo] - obtained via a MATCH_DISABLED_COMPONENTS-aware query - can still resolve
+     * an icon for it.
+     */
+    private val disabledActivityInfo: ActivityInfo? = null,
 ) : Application {
 
     /**
@@ -104,6 +111,8 @@ internal data class LauncherApp(
                 withContext(Dispatchers.IO) {
                     if (launcherActivityInfo != null) {
                         launcherActivityInfo.getIcon(0)
+                    } else if (disabledActivityInfo != null) {
+                        disabledActivityInfo.loadIcon(context.packageManager)
                     } else {
                         context.packageManager.getActivityIcon(componentName)
                     }
