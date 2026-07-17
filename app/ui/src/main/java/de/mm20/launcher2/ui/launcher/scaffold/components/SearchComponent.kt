@@ -18,6 +18,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.ui.launcher.scaffold.Gesture
 import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
@@ -105,7 +106,11 @@ internal class SearchComponent(
 
     override fun onPreActivate(state: LauncherScaffoldState) {
         super.onPreActivate(state)
-        if (openKeyboard) {
+        // Swipe-down is a "peek at search" gesture, not a deliberate tap into the text field -
+        // opening the keyboard immediately on every swipe down is intrusive, and the user can
+        // still tap the search bar explicitly to focus it (that path is unaffected, see
+        // LauncherScaffold's onFocusChange handling).
+        if (openKeyboard && state.currentGesture != Gesture.SwipeDown) {
             state.isSearchBarFocused = true
         }
     }

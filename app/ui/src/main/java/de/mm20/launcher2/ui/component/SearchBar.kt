@@ -41,6 +41,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.ui.R
@@ -182,10 +183,18 @@ fun SearchBar(
                             value = value,
                             onValueChange = onValueChange,
                             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+                            // KeyboardType.Password without a visualTransformation: text still
+                            // shows normally (no dots), but a password-variation input type is
+                            // what makes the platform IME layer add
+                            // EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING - Compose's
+                            // KeyboardOptions/ImeOptions don't expose that flag directly, so this
+                            // is how it's done. Also turns off keyboard suggestions/learning,
+                            // which is the point: no IME should learn or record search queries.
                             keyboardOptions = KeyboardOptions(
                                 imeAction = ImeAction.Go,
                                 autoCorrectEnabled = false,
                                 capitalization = KeyboardCapitalization.None,
+                                keyboardType = KeyboardType.Password,
                             ),
                             keyboardActions = KeyboardActions(
                                 onGo = onKeyboardActionGo,
