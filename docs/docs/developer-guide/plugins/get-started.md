@@ -64,3 +64,7 @@ Your next steps depend on the type of plugin that you want to develop:
   plugin: [Contact Search Provider](/docs/developer-guide/plugins/plugin-types/contact-search.html)
 - Calendar provider
   plugin: [Calendar Provider](/docs/developer-guide/plugins/plugin-types/calendar.html)
+- Gesture action
+  plugin: [Gesture Action Provider](/docs/developer-guide/plugins/plugin-types/gesture-action.html)
+- Widget
+  plugin: [Widget Provider](/docs/developer-guide/plugins/plugin-types/widget.html)
