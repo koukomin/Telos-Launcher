@@ -40,12 +40,14 @@ internal class BadgeServiceImpl(
 
     init {
         scope.launch {
-            settings.distinctUntilChanged().collectLatest {
+            settings.distinctUntilChanged()
+                .combine(settings.notificationStyle.distinctUntilChanged()) { data, style -> data to style }
+                .collectLatest { (it, notificationStyle) ->
                 val providers = mutableListOf<BadgeProvider>()
                 providers += ProfileBadgeProvider()
                 providers += HiddenItemBadgeProvider()
                 if (it.notifications) {
-                    providers += NotificationBadgeProvider()
+                    providers += NotificationBadgeProvider(notificationStyle)
                 }
                 if (it.cloudFiles) {
                     providers += CloudBadgeProvider(context)

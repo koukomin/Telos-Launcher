@@ -22,6 +22,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,12 +49,15 @@ import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.icons.IconPack
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.preferences.IconShape
+import de.mm20.launcher2.preferences.NotificationBadgeStyle
 import de.mm20.launcher2.preferences.ui.GridSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.getShape
+import de.mm20.launcher2.ui.component.preferences.ColorPreference
 import de.mm20.launcher2.ui.component.preferences.GuardedPreference
+import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
@@ -83,6 +88,8 @@ fun IconsSettingsScreen() {
     )
 
     val notificationBadges by viewModel.notificationBadges.collectAsStateWithLifecycle(null)
+    val notificationBadgeStyle by viewModel.notificationBadgeStyle.collectAsStateWithLifecycle(null)
+    val notificationBadgeColor by viewModel.notificationBadgeColor.collectAsStateWithLifecycle(null)
     val cloudFileBadges by viewModel.cloudFileBadges.collectAsStateWithLifecycle(null)
     val suspendedAppBadges by viewModel.suspendedAppBadges.collectAsStateWithLifecycle(null)
     val shortcutBadges by viewModel.shortcutBadges.collectAsStateWithLifecycle(null)
@@ -242,6 +249,26 @@ fun IconsSettingsScreen() {
                             viewModel.setNotifications(it)
                         }
                     )
+                }
+                AnimatedVisibility(notificationBadges == true) {
+                    Column {
+                        ListPreference(
+                            title = stringResource(R.string.preference_notification_badge_style),
+                            iconPadding = true,
+                            items = listOf(
+                                stringResource(R.string.preference_badge_style_dot) to NotificationBadgeStyle.Dot,
+                                stringResource(R.string.preference_badge_style_count) to NotificationBadgeStyle.Count,
+                            ),
+                            value = notificationBadgeStyle ?: NotificationBadgeStyle.Dot,
+                            onValueChanged = { viewModel.setNotificationBadgeStyle(it) },
+                        )
+                        ColorPreference(
+                            title = stringResource(R.string.preference_badge_color),
+                            summary = stringResource(R.string.preference_badge_color_summary),
+                            value = notificationBadgeColor?.let { Color(it) },
+                            onValueChanged = { viewModel.setNotificationBadgeColor(it?.toArgb()) },
+                        )
+                    }
                 }
                 SwitchPreference(
                     title = stringResource(R.string.preference_cloud_badges),

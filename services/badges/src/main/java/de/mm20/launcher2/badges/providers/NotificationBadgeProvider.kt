@@ -4,6 +4,7 @@ import android.util.Log
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.MutableBadge
 import de.mm20.launcher2.notifications.NotificationRepository
+import de.mm20.launcher2.preferences.NotificationBadgeStyle
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.Searchable
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +13,9 @@ import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class NotificationBadgeProvider : BadgeProvider, KoinComponent {
+class NotificationBadgeProvider(
+    private val style: NotificationBadgeStyle,
+) : BadgeProvider, KoinComponent {
     private val notificationRepository: NotificationRepository by inject()
 
     override fun getBadge(searchable: Searchable): Flow<Badge?> {
@@ -26,9 +29,12 @@ class NotificationBadgeProvider : BadgeProvider, KoinComponent {
                 return@map null
             } else {
                 val badge = MutableBadge(
-                    number = it.sumOf {
-                        if (it.canShowBadge && !it.isGroupSummary) it.number
-                        else 0
+                    // Dot mode never shows a number; Count mode counts active (non-summary)
+                    // notifications, since most apps never set the legacy Notification.number
+                    // field, so summing it is usually 0 and not a useful "count".
+                    number = when (style) {
+                        NotificationBadgeStyle.Dot -> null
+                        NotificationBadgeStyle.Count -> it.count { !it.isGroupSummary }
                     },
                     progress = it.mapNotNull {
                         val progress = it.progress ?: return@mapNotNull null

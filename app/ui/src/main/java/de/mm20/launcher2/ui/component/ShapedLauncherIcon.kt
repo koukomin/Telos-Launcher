@@ -53,6 +53,7 @@ import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.asComposePath
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.graphics.nativeCanvas
@@ -247,12 +248,16 @@ fun ShapedLauncherIcon(
         }
         val _badge = badge()
         if (_badge != null) {
+            val badgeColor = LocalBadgeColor.current ?: MaterialTheme.colorScheme.tertiary
+            val onBadgeColor = LocalBadgeColor.current?.let {
+                if (it.luminance() > 0.5f) Color.Black else Color.White
+            } ?: MaterialTheme.colorScheme.onTertiary
             Surface(
                 tonalElevation = 1.dp,
                 modifier = Modifier
                     .size(size * 0.33f)
                     .align(Alignment.BottomEnd),
-                color = MaterialTheme.colorScheme.tertiary,
+                color = badgeColor,
                 shape = CircleShape
             ) {
                 Box(
@@ -265,7 +270,7 @@ fun ShapedLauncherIcon(
                             modifier = Modifier.fillMaxSize(0.8f),
                             progress = { progress },
                             strokeWidth = size / 48,
-                            color = MaterialTheme.colorScheme.onTertiary
+                            color = onBadgeColor
                         )
                     }
                     val badgeIcon = _badge.icon
@@ -278,7 +283,7 @@ fun ShapedLauncherIcon(
                                 .padding(size / 24),
                             painter = painterResource(badgeIcon.iconRes),
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onTertiary,
+                            tint = onBadgeColor,
                         )
                     } else if (badgeIcon is BadgeIcon.Drawable) {
                         Canvas(
@@ -299,7 +304,7 @@ fun ShapedLauncherIcon(
                     } else if (number != null && number > 0 && number < 100) {
                         Text(
                             NumberFormat.getInstance(Locale.current.platformLocale).format(number),
-                            color = MaterialTheme.colorScheme.secondaryContainer,
+                            color = onBadgeColor,
                             style = MaterialTheme.typography.labelSmall.copy(
                                 fontSize = with(LocalDensity.current) {
                                     size.toSp() * 0.2f
@@ -390,6 +395,9 @@ class BitmapShaderBrush(
 }
 
 val LocalIconShape = compositionLocalOf<Shape> { CircleShape }
+
+/** Null = follow the theme's tertiary color (the default look). */
+val LocalBadgeColor = compositionLocalOf<Color?> { null }
 
 fun getShape(iconShape: IconShape): Shape {
     return when (iconShape) {

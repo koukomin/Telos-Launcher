@@ -101,6 +101,16 @@ class IconsSettingsScreenVM(
         badgeSettings.setNotifications(notifications)
     }
 
+    val notificationBadgeStyle = badgeSettings.notificationStyle
+    fun setNotificationBadgeStyle(style: de.mm20.launcher2.preferences.NotificationBadgeStyle) {
+        badgeSettings.setNotificationStyle(style)
+    }
+
+    val notificationBadgeColor = badgeSettings.notificationColor
+    fun setNotificationBadgeColor(color: Int?) {
+        badgeSettings.setNotificationColor(color)
+    }
+
     fun requestNotificationsPermission(context: AppCompatActivity) {
         permissionsManager.requestPermission(context, PermissionGroup.Notifications)
     }

@@ -2,6 +2,7 @@ package de.mm20.launcher2.preferences
 
 import android.content.Context
 import de.mm20.launcher2.search.SearchFilters
+import de.mm20.launcher2.serialization.ColorIntAsHexSerializer
 import de.mm20.launcher2.serialization.UUIDSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -114,6 +115,10 @@ data class LauncherSettingsData internal constructor(
     val badgesCloudFiles: Boolean = true,
     val badgesShortcuts: Boolean = true,
     val badgesPlugins: Boolean = true,
+    val badgesNotificationStyle: NotificationBadgeStyle = NotificationBadgeStyle.Dot,
+    /** Null = follow the theme's tertiary color (the pre-existing default look). */
+    @Serializable(with = ColorIntAsHexSerializer::class)
+    val badgesNotificationColor: Int? = null,
 
     val gridColumnCount: Int = 5,
     val gridIconSize: Int = 48,
@@ -577,6 +582,16 @@ enum class VideoWallpaperScalingMode {
     @SerialName("fill") Fill,
     /** Distort to exactly match the screen. */
     @SerialName("stretch") Stretch,
+}
+
+@Serializable
+enum class NotificationBadgeStyle {
+    /** A plain colored dot, no number. This is the pre-existing look most users already see,
+     *  since most apps never set a meaningful Notification.number, so summed counts were
+     *  usually 0 anyway. */
+    @SerialName("dot") Dot,
+    /** The number of active (non-summary) notifications from the app. */
+    @SerialName("count") Count,
 }
 
 @Serializable

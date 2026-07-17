@@ -11,9 +11,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
+import de.mm20.launcher2.preferences.ui.BadgeSettings
 import de.mm20.launcher2.preferences.ui.PerformanceSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.themes.ThemeRepository
+import de.mm20.launcher2.ui.component.LocalBadgeColor
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.theme.colorscheme.darkColorSchemeOf
 import de.mm20.launcher2.ui.theme.colorscheme.lightColorSchemeOf
@@ -36,9 +39,12 @@ fun LauncherTheme(
     val uiSettings: UiSettings = koinInject()
     val themeRepository: ThemeRepository = koinInject()
     val performanceSettings: PerformanceSettings = koinInject()
+    val badgeSettings: BadgeSettings = koinInject()
 
     val reduceAnimations by remember { performanceSettings.reduceAnimations }.collectAsState(false)
     val animationSpeed by remember { performanceSettings.animationSpeed }.collectAsState(1f)
+    val badgeColorArgb by remember { badgeSettings.notificationColor }.collectAsState(null)
+    val badgeColor = badgeColorArgb?.let { Color(it) }
 
     val themeColors by remember {
         uiSettings.colorsId.flatMapLatest {
@@ -96,6 +102,7 @@ fun LauncherTheme(
     CompositionLocalProvider(
         LocalDarkTheme provides darkTheme,
         LocalTransparencyScheme provides transparencyScheme,
+        LocalBadgeColor provides badgeColor,
     ) {
         MaterialExpressiveTheme(
             colorScheme = colorScheme,

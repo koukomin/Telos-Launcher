@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.colorpicker.HsvColorPicker
 import de.mm20.launcher2.ui.component.colorpicker.rememberHsvColorPickerState
 
@@ -63,6 +64,14 @@ fun ColorPreference(
                     showDialog = false
                 }) {
                     Text(stringResource(android.R.string.ok))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    onValueChanged(null)
+                    showDialog = false
+                }) {
+                    Text(stringResource(R.string.reset))
                 }
             }
         )

@@ -1,7 +1,9 @@
 package de.mm20.launcher2.preferences.ui
 
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.NotificationBadgeStyle
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
 data class BadgeSettingsData(
@@ -23,6 +25,20 @@ class BadgeSettings internal constructor(
         plugins = it.badgesPlugins,
     )
 }) {
+    val notificationStyle
+        get() = launcherDataStore.data.map { it.badgesNotificationStyle }.distinctUntilChanged()
+
+    fun setNotificationStyle(style: NotificationBadgeStyle) {
+        launcherDataStore.update { it.copy(badgesNotificationStyle = style) }
+    }
+
+    /** Null = follow the theme's tertiary color. */
+    val notificationColor
+        get() = launcherDataStore.data.map { it.badgesNotificationColor }.distinctUntilChanged()
+
+    fun setNotificationColor(color: Int?) {
+        launcherDataStore.update { it.copy(badgesNotificationColor = color) }
+    }
 
     val notifications
         get() = launcherDataStore.data.map { it.badgesNotifications }
