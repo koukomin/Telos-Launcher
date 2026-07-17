@@ -4,6 +4,10 @@ Display calendar events and appointments for the next seven days. In the widget 
 choose which calendars to display: Tap 'Edit widgets', then tap the <span class="material-symbols-rounded">tune</span> icon for the
 calendar widget. There is also an option to hide all-day events.
 
+Calendar search and this widget both read from Android's system calendar provider, so any account
+synced there works out of the box - this includes FOSS CalDAV calendars synced via
+[DAVx5](https://www.davx5.com/), not just Google/Outlook/Exchange accounts.
+
 ## My calendars don't show up!
 
 Calendar apps need to use the Android calendar provider APIs to store their calendar data in order

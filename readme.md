@@ -6,6 +6,14 @@ and open source launcher for Android.
 > **Note:** This fork currently uses a placeholder app icon and name. Final branding assets are
 > still in progress.
 
+## Calendar search
+
+Calendar search reads from Android's system calendar storage (`CalendarContract`), so it works
+with any calendar account synced to the device - not just Google Calendar. This includes FOSS
+CalDAV calendars synced via apps like [DAVx5](https://www.davx5.com/) or
+[Fossify Calendar](https://github.com/FossifyOrg/Calendar), as well as Exchange and other
+sync-adapter-backed accounts. There is no Google-specific dependency anywhere in calendar search.
+
 ## Credits
 
 Telos is built on top of the excellent work of the Kvaesitso project. All credit for the original
