@@ -14,6 +14,9 @@ internal class RootProvider : PrivilegedAccessProvider {
 
     private var hasRoot: Boolean? = null
 
+    private val userId: Int
+        get() = android.os.Process.myUid() / 100000
+
     override suspend fun isAvailable(): Boolean {
         hasRoot?.let { return it }
         val granted = runAsRoot("id")
@@ -27,7 +30,12 @@ internal class RootProvider : PrivilegedAccessProvider {
 
     override suspend fun setPackagesSuspended(packageNames: List<String>, suspended: Boolean): Set<String> {
         val action = if (suspended) "suspend" else "unsuspend"
-        return packageNames.filterTo(mutableSetOf()) { pkg -> runAsRoot("pm $action --user 0 $pkg") }
+        return packageNames.filterTo(mutableSetOf()) { pkg -> runAsRoot("pm $action --user $userId $pkg") }
+    }
+
+    override suspend fun setPackagesEnabled(packageNames: List<String>, enabled: Boolean): Set<String> {
+        val action = if (enabled) "enable" else "disable-user"
+        return packageNames.filterTo(mutableSetOf()) { pkg -> runAsRoot("pm $action --user $userId $pkg") }
     }
 
     private suspend fun runAsRoot(command: String): Boolean = withContext(Dispatchers.IO) {

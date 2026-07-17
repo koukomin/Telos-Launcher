@@ -101,6 +101,44 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
         }
     }
 
+    override suspend fun setPackagesEnabled(
+        packageNames: List<String>,
+        enabled: Boolean,
+    ): Set<String> = withContext(Dispatchers.IO) {
+        if (!hasPermission()) return@withContext emptySet()
+        val pm = packageManager() ?: return@withContext emptySet()
+        packageNames.filterTo(mutableSetOf()) { pkg ->
+            runCatching { setEnabled(pm, pkg, enabled) }
+                .onFailure { Log.e(TAG, "setPackagesEnabled($pkg) failed", it) }
+                .getOrDefault(false)
+        }
+    }
+
+    /**
+     * Toggles the app's enabled setting. When disabling from adb-backed Shizuku we use
+     * DISABLED_USER (the shell uid can't fully disable), matching Hail's behavior.
+     */
+    private fun setEnabled(pm: Any, packageName: String, enabled: Boolean): Boolean {
+        val newState = when {
+            enabled -> PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+            isRoot -> PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+            else -> PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER
+        }
+        if (isAtLeastApiLevel(Build.VERSION_CODES.P)) {
+            HiddenApiBypass.invoke(
+                pm.javaClass, pm, "setApplicationEnabledSetting",
+                packageName, newState, 0, userId, callerPackage,
+            )
+        } else {
+            pm.javaClass.getMethod(
+                "setApplicationEnabledSetting",
+                String::class.java, Int::class.javaPrimitiveType, Int::class.javaPrimitiveType,
+                Int::class.javaPrimitiveType, String::class.java,
+            ).invoke(pm, packageName, newState, 0, userId, callerPackage)
+        }
+        return true
+    }
+
     private fun packageManager(): Any? {
         return runCatching {
             val binder = ShizukuBinderWrapper(SystemServiceHelper.getSystemService("package"))

@@ -20,4 +20,10 @@ internal interface PrivilegedAccessProvider {
      * @return the subset of [packageNames] that were actually toggled successfully.
      */
     suspend fun setPackagesSuspended(packageNames: List<String>, suspended: Boolean): Set<String>
+
+    /**
+     * Enables or disables the given packages for the current user.
+     * @return the subset of [packageNames] that were actually toggled successfully.
+     */
+    suspend fun setPackagesEnabled(packageNames: List<String>, enabled: Boolean): Set<String>
 }

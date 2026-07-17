@@ -66,7 +66,14 @@ class FreezeManager internal constructor(
             FreezeBackendType.Root -> rootProvider
             null -> return emptySet()
         }
-        val succeeded = provider.setPackagesSuspended(packageNames, suspended)
+        val succeeded = if (suspended) {
+            provider.setPackagesSuspended(packageNames, true)
+        } else {
+            // When unfreezing, try to BOTH unsuspend and enable, to cover apps frozen by other tools.
+            val unsuspended = provider.setPackagesSuspended(packageNames, false)
+            val enabled = provider.setPackagesEnabled(packageNames, true)
+            unsuspended + enabled
+        }
         val now = System.currentTimeMillis()
         for (packageName in succeeded) {
             if (suspended) settings.recordFrozen(packageName, now) else settings.recordUnfrozen(packageName, now)
@@ -74,11 +81,14 @@ class FreezeManager internal constructor(
         return succeeded
     }
 
-    /** Live read of the OS-level suspended flag; not dependent on any cached launcher state. */
+    /** Live read of the OS-level frozen state (suspended OR disabled). */
     fun isFrozen(packageName: String): Boolean {
         return try {
-            val info = context.packageManager.getApplicationInfo(packageName, 0)
-            (info.flags and ApplicationInfo.FLAG_SUSPENDED) != 0
+            val info = context.packageManager.getApplicationInfo(
+                packageName,
+                PackageManager.MATCH_DISABLED_COMPONENTS
+            )
+            (info.flags and ApplicationInfo.FLAG_SUSPENDED) != 0 || !info.enabled
         } catch (e: PackageManager.NameNotFoundException) {
             false
         }
