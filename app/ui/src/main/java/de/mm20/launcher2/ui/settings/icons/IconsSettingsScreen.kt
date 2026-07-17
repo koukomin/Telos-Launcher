@@ -51,6 +51,7 @@ import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.preferences.IconShape
 import de.mm20.launcher2.preferences.NotificationBadgeStyle
 import de.mm20.launcher2.preferences.ui.GridSettings
+import de.mm20.launcher2.preferences.ui.ShutterSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
@@ -65,6 +66,7 @@ import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.Serializable
+import org.koin.compose.koinInject
 
 @Serializable
 data object IconsSettingsRoute : NavKey
@@ -94,6 +96,9 @@ fun IconsSettingsScreen() {
     val suspendedAppBadges by viewModel.suspendedAppBadges.collectAsStateWithLifecycle(null)
     val shortcutBadges by viewModel.shortcutBadges.collectAsStateWithLifecycle(null)
     val pluginBadges by viewModel.pluginBadges.collectAsStateWithLifecycle(null)
+
+    val shutterSettings = koinInject<ShutterSettings>()
+    val shuttersEnabled by shutterSettings.enabled.collectAsStateWithLifecycle(false)
 
     val iconSize = with(density) { grid.iconSize.dp.toPx() }.toInt()
 
@@ -300,6 +305,20 @@ fun IconsSettingsScreen() {
                     value = pluginBadges == true,
                     onValueChanged = {
                         viewModel.setPluginBadges(it)
+                    }
+                )
+            }
+        }
+        item {
+            PreferenceCategory(
+                title = stringResource(R.string.preference_category_shutters),
+            ) {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_shutters),
+                    summary = stringResource(R.string.preference_shutters_summary),
+                    value = shuttersEnabled,
+                    onValueChanged = {
+                        shutterSettings.setEnabled(it)
                     }
                 )
             }

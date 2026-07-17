@@ -26,6 +26,7 @@ import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.preferences.ui.UiState
 import de.mm20.launcher2.preferences.ui.PerformanceSettings
+import de.mm20.launcher2.preferences.ui.ShutterSettings
 import de.mm20.launcher2.preferences.ui.WallpaperSettings
 import de.mm20.launcher2.preferences.weather.WeatherSettings
 import org.koin.android.ext.koin.androidContext
@@ -62,4 +63,5 @@ val preferencesModule = module {
     factory { WallpaperSettings(get()) }
     factory { ProtectionSettings(get()) }
     factory { PerformanceSettings(get()) }
+    factory { ShutterSettings(get()) }
 }

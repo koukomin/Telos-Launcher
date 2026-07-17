@@ -579,6 +579,9 @@
     <string name="preference_freeze_advanced_features_summary">Unlocks Force Stop and Clear Cache actions in app context menus (Requires Shizuku or Root)</string>
     <string name="menu_force_stop">Force stop</string>
     <string name="menu_clear_cache">Clear cache</string>
+    <string name="menu_shutter_set">Set shutter widget</string>
+    <string name="menu_shutter_change">Change shutter widget</string>
+    <string name="menu_shutter_remove">Remove shutter widget</string>
     <string name="preference_freeze_dashboard">Dashboard</string>
     <string name="preference_freeze_dashboard_summary">Currently frozen apps and freeze history</string>
     <string name="preference_freeze_backend">Freeze backend</string>
@@ -650,6 +653,9 @@
     <string name="preference_shortcut_badges_summary">Show a badge which indicates to which app a shortcut belongs</string>
     <string name="preference_plugin_badges">Plugin badges</string>
     <string name="preference_plugin_badges_summary">Indicate by which plugin a search result was created</string>
+    <string name="preference_category_shutters">Shutters</string>
+    <string name="preference_shutters">Enable shutters</string>
+    <string name="preference_shutters_summary">Swipe up on an app icon to reveal that app\'s assigned widget without opening the app. Assign a widget from the app\'s info menu.</string>
     <string name="preference_nextcloud_signin">Sign in to Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Sign in to search your Nextcloud server</string>
     <string name="preference_nextcloud">Nextcloud</string>

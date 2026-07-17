@@ -8,6 +8,7 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -75,12 +76,16 @@ import de.mm20.launcher2.ui.launcher.search.shortcut.ShortcutItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.tags.TagItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.wikipedia.ArticleItemGridPopup
+import de.mm20.launcher2.ui.launcher.shutters.ShutterGate
 import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransitionParams
 import de.mm20.launcher2.ui.launcher.transitions.HandleEnterHomeTransition
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.overlays.Overlay
 import de.mm20.launcher2.ui.theme.transparency.transparency
+import de.mm20.launcher2.preferences.ui.ShutterSettings
+import kotlinx.coroutines.flow.flowOf
+import org.koin.compose.koinInject
 import kotlin.math.pow
 
 
@@ -111,9 +116,44 @@ fun GridItem(
         if (showPopup) viewModel.requestUpdatedSearchable(context)
     }
 
+    val shutterSettings = koinInject<ShutterSettings>()
+    val shuttersEnabled by shutterSettings.enabled.collectAsStateWithLifecycle(false)
+    val shutterRefFlow = remember(item.key) {
+        if (item is Application) shutterSettings.widgetFor(item.componentName.packageName)
+        else flowOf(null)
+    }
+    val shutterRef by shutterRefFlow.collectAsStateWithLifecycle(null)
+    var showShutter by remember(item.key) { mutableStateOf(false) }
+    val shutterSwipeThreshold = 48.dp.toPixels()
+
     Column(
         modifier = modifier
             .padding(4.dp)
+            .then(
+                if (item is Application && shuttersEnabled) {
+                    Modifier.pointerInput(item.key) {
+                        var totalDrag = 0f
+                        detectVerticalDragGestures(
+                            onDragStart = { totalDrag = 0f },
+                            onDragEnd = {
+                                if (totalDrag < -shutterSwipeThreshold) {
+                                    hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+                                    showShutter = true
+                                }
+                            },
+                            onDragCancel = {},
+                            onVerticalDrag = { change, dragAmount ->
+                                totalDrag += dragAmount
+                                if (totalDrag < -shutterSwipeThreshold) {
+                                    change.consume()
+                                }
+                            },
+                        )
+                    }
+                } else {
+                    Modifier
+                }
+            )
             .combinedClickable(
                 onClick = {
                     if (!launchOnPress || !viewModel.launch(context, bounds)) {
@@ -207,6 +247,15 @@ fun GridItem(
 
     if (showPopup) {
         ItemPopup(origin = bounds, searchable = item, onDismissRequest = { showPopup = false })
+    }
+
+    if (showShutter && item is Application) {
+        ShutterGate(
+            packageName = item.componentName.packageName,
+            label = item.labelOverride ?: item.label,
+            widgetRef = shutterRef,
+            onDismiss = { showShutter = false },
+        )
     }
 }
 
