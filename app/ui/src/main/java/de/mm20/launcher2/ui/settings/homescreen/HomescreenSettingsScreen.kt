@@ -43,6 +43,7 @@ import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.preferences.SystemBarColors
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.SearchBar
 import de.mm20.launcher2.ui.component.SearchBarLevel
@@ -84,6 +85,7 @@ fun HomescreenSettingsScreen() {
     val hideStatusBar by viewModel.hideStatusBar.collectAsStateWithLifecycle(null)
     val hideNavBar by viewModel.hideNavBar.collectAsStateWithLifecycle(null)
     val chargingAnimation by viewModel.chargingAnimation.collectAsStateWithLifecycle(null)
+    val homeScreenPageCount by viewModel.homeScreenPageCount.collectAsStateWithLifecycle(null)
 
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_homescreen)) {
         item {
@@ -96,6 +98,22 @@ fun HomescreenSettingsScreen() {
                         viewModel.setFixedRotation(it)
                     },
                 )
+                SliderPreference(
+                    title = stringResource(R.string.preference_home_screen_page_count),
+                    value = homeScreenPageCount ?: 1,
+                    min = 1,
+                    max = 9,
+                    onValueChanged = {
+                        viewModel.setHomeScreenPageCount(it)
+                    },
+                )
+                AnimatedVisibility((homeScreenPageCount ?: 1) > 1) {
+                    Banner(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        text = stringResource(R.string.preference_home_screen_page_count_warning),
+                        icon = R.drawable.info_24px,
+                    )
+                }
             }
         }
         item {

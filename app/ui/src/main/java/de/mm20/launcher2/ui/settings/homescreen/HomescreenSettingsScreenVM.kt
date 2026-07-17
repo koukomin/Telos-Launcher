@@ -170,6 +170,13 @@ class HomescreenSettingsScreenVM(
         uiSettings.setHomeScreenWidgets(widgetsOnHomeScreen)
     }
 
+    val homeScreenPageCount = uiSettings.homeScreenPageCount
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setHomeScreenPageCount(count: Int) {
+        uiSettings.setHomeScreenPageCount(count)
+    }
+
     companion object : KoinComponent {
         val Factory = viewModelFactory {
             initializer {

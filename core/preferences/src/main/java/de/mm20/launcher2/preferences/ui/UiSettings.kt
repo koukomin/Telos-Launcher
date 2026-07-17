@@ -402,6 +402,17 @@ class UiSettings internal constructor(
         }
     }
 
+    val homeScreenPageCount
+        get() = launcherDataStore.data.map {
+            it.homeScreenPageCount
+        }.distinctUntilChanged()
+
+    fun setHomeScreenPageCount(count: Int) {
+        launcherDataStore.update {
+            it.copy(homeScreenPageCount = count.coerceIn(1, 9))
+        }
+    }
+
     val widgetEditButton
         get() = launcherDataStore.data.map {
             it.widgetsEditButton

@@ -23,11 +23,13 @@ internal object ClockHomeComponent : ScaffoldComponent() {
         insets: PaddingValues,
         state: LauncherScaffoldState,
     ) {
-        ClockWidget(
-            modifier = modifier
-                .padding(insets)
-                .pointerInput(Unit) {},
-            fillScreenHeight = true,
-        )
+        HomeScreenPager(modifier = modifier, insets = insets, state = state) { pageModifier, pageInsets ->
+            ClockWidget(
+                modifier = pageModifier
+                    .padding(pageInsets)
+                    .pointerInput(Unit) {},
+                fillScreenHeight = true,
+            )
+        }
     }
 }

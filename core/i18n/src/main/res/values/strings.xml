@@ -1011,6 +1011,8 @@
     <string name="preference_layout_fixed_search_bar_summary">Don\'t scroll the search bar out of view</string>
     <string name="preference_layout_fixed_rotation">Fixed screen rotation</string>
     <string name="preference_layout_fixed_rotation_summary">Lock screen rotation to portrait mode</string>
+    <string name="preference_home_screen_page_count">Number of home screens</string>
+    <string name="preference_home_screen_page_count_warning">With more than one home screen, swiping left/right on the home screen moves between pages instead of triggering your configured swipe gesture actions (e.g. Feed). Map those to a different gesture (long-press, double-tap, ...) if you need both.</string>
     <string name="preference_screen_gestures">Gestures</string>
     <string name="preference_screen_gestures_summary">Gestures and gesture actions</string>
     <string name="preference_gesture_swipe_down">Swipe down</string>

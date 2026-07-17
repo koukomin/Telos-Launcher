@@ -47,9 +47,10 @@ import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import de.mm20.launcher2.ui.launcher.widgets.WidgetsTutorialOverlay
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
+import java.util.UUID
 
 internal class WidgetsComponent(
-    private val target: WidgetScreenTarget
+    private val parentId: UUID
 ) : ScaffoldComponent() {
 
     companion object {
@@ -57,15 +58,22 @@ internal class WidgetsComponent(
          * Cache for widget component instances.
          * Components are created lazily only when needed.
          */
-        private val componentCache = mutableMapOf<WidgetScreenTarget, WidgetsComponent>()
+        private val componentCache = mutableMapOf<UUID, WidgetsComponent>()
 
         /**
          * Get or create a WidgetsComponent for the given target.
          * This ensures we reuse the same instance for each target.
          */
-        fun forTarget(target: WidgetScreenTarget): WidgetsComponent {
-            return componentCache.getOrPut(target) {
-                WidgetsComponent(target)
+        fun forTarget(target: WidgetScreenTarget): WidgetsComponent = forId(target.id)
+
+        /**
+         * Get or create a WidgetsComponent for an arbitrary widget scope id - used for extra
+         * home screen pages, which aren't part of the fixed [WidgetScreenTarget] set since
+         * they're not individually reachable via a gesture mapping.
+         */
+        fun forId(id: UUID): WidgetsComponent {
+            return componentCache.getOrPut(id) {
+                WidgetsComponent(id)
             }
         }
     }
@@ -122,7 +130,7 @@ internal class WidgetsComponent(
                     scope.launch { state.lock(hideSearchBar = true) }
                     editMode = it
                 },
-                parentId = target.id.toString(),
+                parentId = parentId.toString(),
             )
         }
         if (editMode) {

@@ -75,93 +75,95 @@ internal class ClockAndWidgetsHomeComponent(
         insets: PaddingValues,
         state: LauncherScaffoldState
     ) {
-        val scope = rememberCoroutineScope()
+        HomeScreenPager(modifier = modifier, insets = insets, state = state) { pageModifier, pageInsets ->
+            val scope = rememberCoroutineScope()
 
-        val clockWidgetSettings: ClockWidgetSettings = koinInject()
-        val fillHeight by clockWidgetSettings.fillHeight.collectAsState(null)
+            val clockWidgetSettings: ClockWidgetSettings = koinInject()
+            val fillHeight by clockWidgetSettings.fillHeight.collectAsState(null)
 
-        if (fillHeight == null) return
+            if (fillHeight != null) {
+                val topPadding by animateDpAsState(if (editMode) 80.dp else 0.dp)
+                val previousScroll = remember { mutableIntStateOf(scrollState.value) }
 
-        val topPadding by animateDpAsState(if (editMode) 80.dp else 0.dp)
-        val previousScroll = remember { mutableIntStateOf(scrollState.value) }
-
-        LaunchedEffect(
-            scrollState.value,
-            scrollState.canScrollForward,
-            scrollState.canScrollBackward
-        ) {
-            val delta = scrollState.value - previousScroll.intValue
-            previousScroll.intValue = scrollState.value
-            if (!editMode) {
-                state.onComponentScroll(delta.toFloat())
-            }
-        }
-
-        Column(
-            modifier = modifier
-                .verticalScroll(scrollState, enabled = !state.isDragged)
-                .padding(horizontal = 8.dp)
-                .padding(top = topPadding)
-                .padding(insets),
-        ) {
-            val bottomPadding by animateDpAsState(
-                if (fillHeight == true && scrollState.value == 0) insets.calculateBottomPadding()
-                else 0.dp
-            )
-
-            ClockWidget(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    then if (fillHeight == true) {
-                        Modifier
-                            .padding(bottom = bottomPadding)
-                            .height(state.size.height.toDp() - insets.calculateTopPadding() - insets.calculateBottomPadding())
-                } else Modifier,
-                editMode = editMode,
-                fillScreenHeight = fillHeight == true,
-            )
-            WidgetColumn(
-                modifier = Modifier
-                    .padding(top = 16.dp),
-                editMode = editMode,
-                onEditModeChange = {
-                    scope.launch { state.lock(hideSearchBar = true) }
-                    editMode = it
-                },
-                parentId = target.id.toString(),
-            )
-        }
-        if (editMode) {
-            BackHandler {
-                editMode = false
-                scope.launch { state.unlock() }
-            }
-        }
-        AnimatedVisibility(
-            editMode,
-            modifier = Modifier.zIndex(10f),
-            enter = fadeIn() + expandVertically(expandFrom = Alignment.Top),
-            exit = shrinkVertically(shrinkTowards = Alignment.Top) + fadeOut(),
-        ) {
-            CenterAlignedTopAppBar(
-                title = { Text(stringResource(R.string.menu_edit_widgets)) },
-                navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            editMode = false
-                            scope.launch { state.unlock() }
-                        }
-                    ) {
-                        Icon(
-                            Icons.AutoMirrored.Rounded.ArrowBack,
-                            stringResource(R.string.action_done)
-                        )
+                LaunchedEffect(
+                    scrollState.value,
+                    scrollState.canScrollForward,
+                    scrollState.canScrollBackward
+                ) {
+                    val delta = scrollState.value - previousScroll.intValue
+                    previousScroll.intValue = scrollState.value
+                    if (!editMode) {
+                        state.onComponentScroll(delta.toFloat())
                     }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer
-                )
-            )
+                }
+
+                Column(
+                    modifier = pageModifier
+                        .verticalScroll(scrollState, enabled = !state.isDragged)
+                        .padding(horizontal = 8.dp)
+                        .padding(top = topPadding)
+                        .padding(pageInsets),
+                ) {
+                    val bottomPadding by animateDpAsState(
+                        if (fillHeight == true && scrollState.value == 0) pageInsets.calculateBottomPadding()
+                        else 0.dp
+                    )
+
+                    ClockWidget(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            then if (fillHeight == true) {
+                                Modifier
+                                    .padding(bottom = bottomPadding)
+                                    .height(state.size.height.toDp() - pageInsets.calculateTopPadding() - pageInsets.calculateBottomPadding())
+                        } else Modifier,
+                        editMode = editMode,
+                        fillScreenHeight = fillHeight == true,
+                    )
+                    WidgetColumn(
+                        modifier = Modifier
+                            .padding(top = 16.dp),
+                        editMode = editMode,
+                        onEditModeChange = {
+                            scope.launch { state.lock(hideSearchBar = true) }
+                            editMode = it
+                        },
+                        parentId = target.id.toString(),
+                    )
+                }
+                if (editMode) {
+                    BackHandler {
+                        editMode = false
+                        scope.launch { state.unlock() }
+                    }
+                }
+                AnimatedVisibility(
+                    editMode,
+                    modifier = Modifier.zIndex(10f),
+                    enter = fadeIn() + expandVertically(expandFrom = Alignment.Top),
+                    exit = shrinkVertically(shrinkTowards = Alignment.Top) + fadeOut(),
+                ) {
+                    CenterAlignedTopAppBar(
+                        title = { Text(stringResource(R.string.menu_edit_widgets)) },
+                        navigationIcon = {
+                            IconButton(
+                                onClick = {
+                                    editMode = false
+                                    scope.launch { state.unlock() }
+                                }
+                            ) {
+                                Icon(
+                                    Icons.AutoMirrored.Rounded.ArrowBack,
+                                    stringResource(R.string.action_done)
+                                )
+                            }
+                        },
+                        colors = TopAppBarDefaults.topAppBarColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceContainer
+                        )
+                    )
+                }
+            }
         }
     }
 
