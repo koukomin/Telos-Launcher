@@ -58,6 +58,7 @@ import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.LocalIconShape
@@ -71,6 +72,7 @@ import de.mm20.launcher2.ui.launcher.search.files.FileItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.search.location.LocationItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.shortcut.ShortcutItemGridPopup
+import de.mm20.launcher2.ui.launcher.search.tags.TagItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.wikipedia.ArticleItemGridPopup
 import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransitionParams
@@ -365,6 +367,18 @@ fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> U
                     is Location -> {
                         LocationItemGridPopup(
                             location = searchable,
+                            show = show,
+                            animationProgress = p,
+                            origin = origin,
+                            onDismiss = {
+                                show.targetState = false
+                            }
+                        )
+                    }
+
+                    is Tag -> {
+                        TagItemGridPopup(
+                            tag = searchable,
                             show = show,
                             animationProgress = p,
                             origin = origin,

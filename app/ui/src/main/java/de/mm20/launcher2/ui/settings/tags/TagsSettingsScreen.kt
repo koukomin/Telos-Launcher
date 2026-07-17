@@ -10,6 +10,7 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MenuDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -109,20 +110,49 @@ fun TagsSettingsScreen() {
             }
         }
         item {
-            FilledTonalButton(
-                contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
-                onClick = {
-                    viewModel.createTag.value = true
-                }) {
-                Icon(
-                    painterResource(R.drawable.add_20px),
-                    null,
-                    modifier = Modifier
-                        .padding(end = ButtonDefaults.IconSpacing)
-                        .size(ButtonDefaults.IconSize)
-                )
-                Text(stringResource(R.string.create_tag_title))
+            androidx.compose.foundation.layout.Row(
+                horizontalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp),
+            ) {
+                FilledTonalButton(
+                    contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+                    onClick = {
+                        viewModel.createTag.value = true
+                    }) {
+                    Icon(
+                        painterResource(R.drawable.add_20px),
+                        null,
+                        modifier = Modifier
+                            .padding(end = ButtonDefaults.IconSpacing)
+                            .size(ButtonDefaults.IconSize)
+                    )
+                    Text(stringResource(R.string.create_tag_title))
+                }
+                val autoCategorizing by viewModel.autoCategorizing
+                val context = androidx.compose.ui.platform.LocalContext.current
+                FilledTonalButton(
+                    contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+                    enabled = !autoCategorizing,
+                    onClick = {
+                        viewModel.autoCategorizeApps(context)
+                    }) {
+                    Icon(
+                        painterResource(R.drawable.auto_awesome_24dp),
+                        null,
+                        modifier = Modifier
+                            .padding(end = ButtonDefaults.IconSpacing)
+                            .size(ButtonDefaults.IconSize)
+                    )
+                    Text(stringResource(R.string.tags_auto_categorize))
+                }
             }
+        }
+        item {
+            Text(
+                text = stringResource(R.string.tags_auto_categorize_summary),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
         }
     }
     EditTagSheet(

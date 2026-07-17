@@ -941,6 +941,9 @@
     <string name="video_wallpaper_label">Video wallpaper</string>
     <string name="video_wallpaper_description">Plays your selected video in a loop, muted. Pauses automatically to save battery.</string>
     <string name="reset">Reset</string>
+    <string name="tag_folder_empty">Nothing tagged yet</string>
+    <string name="tags_auto_categorize">Auto-organize</string>
+    <string name="tags_auto_categorize_summary">Groups installed apps into tags by their system category (Games, Social, etc). Pin a tag as a favorite to use it as a folder. Re-run after installing new apps - this doesn\'t happen automatically, and re-running replaces the contents of any existing tag with the same name as a category.</string>
     <string name="preference_notification_badge_style">Badge style</string>
     <string name="preference_badge_style_dot">Dot</string>
     <string name="preference_badge_style_count">Count</string>
