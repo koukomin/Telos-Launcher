@@ -161,6 +161,7 @@ fun ConfigureWidgetSheet(
                 is SystemWidget -> {}
                 is RemindersWidget -> ConfigureRemindersWidget(widget, onWidgetUpdated)
                 is FreezeWidget -> {}
+                is de.mm20.launcher2.widgets.PluginWidget -> {}
             }
         }
 
@@ -678,6 +679,7 @@ fun ColumnScope.ConfigureAppWidget(
                     is SystemWidget -> it.copy(id = widget.id)
                     is RemindersWidget -> it.copy(id = widget.id)
                     is FreezeWidget -> it.copy(id = widget.id)
+                    is de.mm20.launcher2.widgets.PluginWidget -> it.copy(id = widget.id)
                 }
                 onWidgetUpdated(updatedWidget)
                 replaceWidget = false

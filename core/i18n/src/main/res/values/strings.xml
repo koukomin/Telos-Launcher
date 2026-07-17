@@ -241,6 +241,7 @@
     <string name="system_widget_used_of_total">%1$s of %2$s used</string>
     <string name="widget_name_reminders">Reminders</string>
     <string name="widget_name_freeze">Freeze</string>
+    <string name="widget_plugin_empty">No data</string>
     <string name="freeze_widget_freeze_now">Freeze now</string>
     <string name="freeze_widget_candidates_summary">%1$d apps selected</string>
     <string name="freeze_widget_no_candidates">No apps selected. Choose apps to freeze in settings.</string>

@@ -74,6 +74,8 @@ import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NetworkWidget
 import de.mm20.launcher2.widgets.NotesWidget
+import de.mm20.launcher2.widgets.PluginWidget
+import de.mm20.launcher2.widgets.PluginWidgetConfig
 import de.mm20.launcher2.widgets.RemindersWidget
 import de.mm20.launcher2.widgets.SystemWidget
 import de.mm20.launcher2.widgets.WeatherWidget
@@ -310,6 +312,7 @@ fun WidgetPickerSheet(
         val query by viewModel.searchQuery.collectAsState("")
 
         val builtIn by viewModel.builtInWidgets.collectAsState(emptyList())
+        val pluginWidgets by viewModel.pluginWidgets.collectAsState(emptyList())
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(
@@ -422,6 +425,49 @@ fun WidgetPickerSheet(
                                         else -> R.drawable.widgets_24px
                                     }
                                 ),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary,
+                        )
+                        Text(
+                            text = it.label,
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
+                }
+            }
+            if (includeBuiltinWidgets) {
+                itemsIndexed(pluginWidgets, key = { _, it -> it.authority }) { i, it ->
+                    val shape = when {
+                        pluginWidgets.size == 1 -> singleShape
+                        i == 0 -> topShape
+                        i == pluginWidgets.lastIndex -> bottomShape
+                        else -> middleShape
+                    }
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(shape)
+                            .background(
+                                MaterialTheme.colorScheme.surfaceBright,
+                            )
+                            .clickable {
+                                onWidgetSelected(
+                                    PluginWidget(
+                                        id = UUID.randomUUID(),
+                                        config = PluginWidgetConfig(
+                                            authority = it.authority,
+                                            label = it.label,
+                                        ),
+                                    )
+                                )
+                                onDismiss()
+                            }
+                            .padding(16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.extension_24px),
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary,
                         )

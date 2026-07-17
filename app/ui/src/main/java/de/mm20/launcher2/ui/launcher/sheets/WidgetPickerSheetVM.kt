@@ -10,9 +10,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import de.mm20.launcher2.plugin.Plugin
+import de.mm20.launcher2.plugin.PluginType
+import de.mm20.launcher2.plugins.PluginService
 import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.StringNormalizer
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -29,9 +33,22 @@ class WidgetPickerSheetVM(
     private val widgetsService: WidgetsService,
     private val packageManager: PackageManager,
     private val stringNormalizer: StringNormalizer,
+    private val pluginService: PluginService,
 ) : ViewModel() {
 
     val searchQuery = MutableStateFlow("")
+
+    val pluginWidgets: Flow<List<Plugin>> =
+        pluginService.getPluginsWithState(type = PluginType.Widget, enabled = true)
+            .map { plugins -> plugins.map { it.plugin } }
+            .combine(searchQuery) { plugins, query ->
+                if (query.isBlank()) return@combine plugins
+                val normalizedQuery = stringNormalizer.normalize(query)
+                plugins.filter {
+                    stringNormalizer.normalize(it.label).contains(normalizedQuery)
+                }
+            }
+            .shareIn(viewModelScope, SharingStarted.WhileSubscribed(100))
 
     private val enabledWidgets = widgetsService.getWidgets()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(100), emptyList())
@@ -134,7 +151,7 @@ class WidgetPickerSheetVM(
     companion object : KoinComponent {
         val Factory = viewModelFactory {
             initializer {
-                WidgetPickerSheetVM(get(), get(), get())
+                WidgetPickerSheetVM(get(), get(), get(), get())
             }
         }
     }

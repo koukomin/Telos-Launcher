@@ -48,6 +48,7 @@ import de.mm20.launcher2.ui.launcher.widgets.freeze.FreezeWidget
 import de.mm20.launcher2.ui.launcher.widgets.music.MusicWidget
 import de.mm20.launcher2.ui.launcher.widgets.network.NetworkWidget
 import de.mm20.launcher2.ui.launcher.widgets.notes.NotesWidget
+import de.mm20.launcher2.ui.launcher.widgets.plugin.PluginWidget as PluginWidgetContent
 import de.mm20.launcher2.ui.launcher.widgets.reminders.RemindersWidget
 import de.mm20.launcher2.ui.launcher.widgets.system.SystemWidget
 import de.mm20.launcher2.ui.launcher.widgets.weather.WeatherWidget
@@ -218,6 +219,10 @@ fun WidgetItem(
                                 onWidgetUpdate = onWidgetUpdate,
                                 onWidgetRemove = onWidgetRemove,
                             )
+                        }
+
+                        is de.mm20.launcher2.widgets.PluginWidget -> {
+                            PluginWidgetContent(widget)
                         }
                     }
                 }
