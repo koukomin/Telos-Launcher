@@ -25,6 +25,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.plugin.Plugin
 import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.WidgetScreenTarget
 import de.mm20.launcher2.search.SavableSearchable
@@ -65,6 +67,8 @@ internal fun GesturePreference(
     options: Set<KClass<out GestureAction>>,
     shortcutOptions: List<SavableSearchable>,
     widgetOptions: List<WidgetPageOption>,
+    gestureActionPlugins: List<Plugin> = emptyList(),
+    getPluginActions: suspend (authority: String, pluginLabel: String) -> List<PluginGestureActionOption> = { _, _ -> emptyList() },
 ) {
     var showSheet by remember { mutableStateOf(false) }
 
@@ -111,6 +115,18 @@ internal fun GesturePreference(
             bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
         )
         var showShortcutPicker by remember { mutableStateOf(false) }
+
+        var pluginActions by remember { mutableStateOf<List<PluginGestureActionOption>>(emptyList()) }
+        LaunchedEffect(showSheet, gestureActionPlugins) {
+            if (!showSheet || gestureActionPlugins.isEmpty()) {
+                pluginActions = emptyList()
+                return@LaunchedEffect
+            }
+            pluginActions = gestureActionPlugins.flatMap {
+                getPluginActions(it.authority, it.label)
+            }
+        }
+
         AnimatedContent(
             showShortcutPicker
         ) { shortcutPicker ->
@@ -293,6 +309,31 @@ internal fun GesturePreference(
                             )
                         }
                     }
+                    if (pluginActions.isNotEmpty()) {
+                        item {
+                            PreferenceCategory(
+                                title = stringResource(R.string.gesture_action_category_plugins)
+                            ) {
+                                for (action in pluginActions) {
+                                    GestureItem(
+                                        title = action.label,
+                                        summary = action.pluginLabel,
+                                        icon = R.drawable.extension_24px,
+                                        selected = value is GestureAction.Plugin &&
+                                            value.authority == action.authority &&
+                                            value.actionId == action.actionId,
+                                        onClick = {
+                                            onValueChanged(
+                                                GestureAction.Plugin(action.authority, action.actionId),
+                                                null,
+                                            )
+                                            showSheet = false
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -412,6 +453,7 @@ private fun getActionLabel(
         GestureAction.ScreenLock -> resources.getString(R.string.gesture_action_lock_screen)
         GestureAction.Search -> resources.getString(R.string.gesture_action_open_search)
         GestureAction.LauncherSettings -> resources.getString(R.string.settings)
+        is GestureAction.Plugin -> resources.getString(R.string.gesture_action_plugin)
         is GestureAction.Widgets -> {
             when (action.target) {
                 WidgetScreenTarget.Widgets1 -> resources.getString(R.string.gesture_action_widgets)

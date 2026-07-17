@@ -1037,6 +1037,8 @@
     <string name="gesture_action_category_launcher">Launcher pages</string>
     <string name="gesture_action_category_system">System actions</string>
     <string name="gesture_action_category_apps">Apps and shortcuts</string>
+    <string name="gesture_action_category_plugins">Plugin actions</string>
+    <string name="gesture_action_plugin">Plugin action</string>
     <string name="gesture_action_open_search">Search / app drawer</string>
     <string name="gesture_action_widgets">Widgets</string>
     <string name="gesture_action_widgets_new">New widgets page</string>

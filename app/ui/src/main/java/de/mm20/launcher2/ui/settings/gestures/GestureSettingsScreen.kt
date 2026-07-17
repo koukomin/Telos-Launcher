@@ -68,6 +68,7 @@ fun GestureSettingsScreen() {
 
     val shortcutOptions by viewModel.shortcutOptions.collectAsStateWithLifecycle(emptyList())
     val widgetOptions by viewModel.widgetOptions.collectAsStateWithLifecycle(emptyList())
+    val gestureActionPlugins by viewModel.gestureActionPlugins.collectAsStateWithLifecycle(emptyList())
 
     val optionsWithFeed =
         if (FeatureFlags.feed) {
@@ -93,6 +94,8 @@ fun GestureSettingsScreen() {
                         options = options,
                         shortcutOptions = shortcutOptions,
                         widgetOptions = widgetOptions,
+                        gestureActionPlugins = gestureActionPlugins,
+                        getPluginActions = viewModel::getPluginActions,
                     )
                 }
 
@@ -110,6 +113,8 @@ fun GestureSettingsScreen() {
                         options = options,
                         shortcutOptions = shortcutOptions,
                         widgetOptions = widgetOptions,
+                        gestureActionPlugins = gestureActionPlugins,
+                        getPluginActions = viewModel::getPluginActions,
                     )
                 }
 
@@ -127,6 +132,8 @@ fun GestureSettingsScreen() {
                         options = optionsWithFeed,
                         shortcutOptions = shortcutOptions,
                         widgetOptions = widgetOptions,
+                        gestureActionPlugins = gestureActionPlugins,
+                        getPluginActions = viewModel::getPluginActions,
                     )
                 }
 
@@ -144,6 +151,8 @@ fun GestureSettingsScreen() {
                         options = options,
                         shortcutOptions = shortcutOptions,
                         widgetOptions = widgetOptions,
+                        gestureActionPlugins = gestureActionPlugins,
+                        getPluginActions = viewModel::getPluginActions,
                     )
                 }
 
@@ -161,6 +170,8 @@ fun GestureSettingsScreen() {
                         options = options,
                         shortcutOptions = shortcutOptions,
                         widgetOptions = widgetOptions,
+                        gestureActionPlugins = gestureActionPlugins,
+                        getPluginActions = viewModel::getPluginActions,
                     )
                 }
 
@@ -178,6 +189,8 @@ fun GestureSettingsScreen() {
                         options = options,
                         shortcutOptions = shortcutOptions,
                         widgetOptions = widgetOptions,
+                        gestureActionPlugins = gestureActionPlugins,
+                        getPluginActions = viewModel::getPluginActions,
                     )
                 }
                 val homeButton by viewModel.homeButton.collectAsStateWithLifecycle(null)
@@ -194,6 +207,8 @@ fun GestureSettingsScreen() {
                         options = options,
                         shortcutOptions = shortcutOptions,
                         widgetOptions = widgetOptions,
+                        gestureActionPlugins = gestureActionPlugins,
+                        getPluginActions = viewModel::getPluginActions,
                     )
                 }
 
@@ -211,6 +226,8 @@ fun GestureSettingsScreen() {
                         options = options,
                         shortcutOptions = shortcutOptions,
                         widgetOptions = widgetOptions,
+                        gestureActionPlugins = gestureActionPlugins,
+                        getPluginActions = viewModel::getPluginActions,
                     )
                 }
 
@@ -228,6 +245,8 @@ fun GestureSettingsScreen() {
                         options = options,
                         shortcutOptions = shortcutOptions,
                         widgetOptions = widgetOptions,
+                        gestureActionPlugins = gestureActionPlugins,
+                        getPluginActions = viewModel::getPluginActions,
                     )
                 }
 
@@ -245,6 +264,8 @@ fun GestureSettingsScreen() {
                         options = options,
                         shortcutOptions = shortcutOptions,
                         widgetOptions = widgetOptions,
+                        gestureActionPlugins = gestureActionPlugins,
+                        getPluginActions = viewModel::getPluginActions,
                     )
                 }
 
@@ -262,6 +283,8 @@ fun GestureSettingsScreen() {
                         options = options,
                         shortcutOptions = shortcutOptions,
                         widgetOptions = widgetOptions,
+                        gestureActionPlugins = gestureActionPlugins,
+                        getPluginActions = viewModel::getPluginActions,
                     )
                 }
             }

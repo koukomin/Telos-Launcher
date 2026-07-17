@@ -60,6 +60,7 @@ import de.mm20.launcher2.ui.launcher.scaffold.components.FeedComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.LaunchComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.LauncherSettingsComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.NotificationsComponent
+import de.mm20.launcher2.ui.launcher.scaffold.components.PluginActionComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.PowerMenuComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.QuickSettingsComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.RecentsComponent
@@ -344,6 +345,15 @@ abstract class SharedLauncherActivity(
 
                                             is GestureAction.LauncherSettings -> ScaffoldGesture(
                                                 component = LauncherSettingsComponent(this@SharedLauncherActivity),
+                                                animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
+                                            )
+
+                                            is GestureAction.Plugin -> ScaffoldGesture(
+                                                component = PluginActionComponent(
+                                                    this@SharedLauncherActivity,
+                                                    action.authority,
+                                                    action.actionId,
+                                                ),
                                                 animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
                                             )
 

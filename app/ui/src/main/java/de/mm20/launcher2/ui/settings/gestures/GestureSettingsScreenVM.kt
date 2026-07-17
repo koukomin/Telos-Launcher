@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.settings.gestures
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,10 +8,12 @@ import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.WidgetScreenTarget
 import de.mm20.launcher2.preferences.ui.GestureSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
+import de.mm20.launcher2.plugins.PluginService
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.widgets.Widget
@@ -33,6 +36,17 @@ internal class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     private val searchableRepository: SavableSearchableRepository by inject()
     private val iconService: IconService by inject()
     private val widgetRepository: WidgetRepository by inject()
+    private val pluginService: PluginService by inject()
+    private val context: Context by inject()
+
+    val gestureActionPlugins = pluginService.getPluginsWithState(
+        type = PluginType.GestureAction,
+        enabled = true,
+    ).map { it.map { p -> p.plugin } }
+
+    suspend fun getPluginActions(authority: String, pluginLabel: String): List<PluginGestureActionOption> {
+        return queryPluginGestureActions(context, authority, pluginLabel)
+    }
 
     val hasPermission = permissionsManager.hasPermission(PermissionGroup.Accessibility)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
