@@ -44,4 +44,16 @@ class ProtectionSettings internal constructor(
     fun setCustomLockHashed(hashed: String?) {
         dataStore.update { it.copy(protectionCustomLockHashed = hashed) }
     }
+
+    /**
+     * Opt-in lock for the launcher's home screen itself. Always uses the system
+     * BiometricPrompt via [lockMethod] - the custom PIN option does not apply here.
+     */
+    val lockLauncher
+        get() = dataStore.data.map { it.protectionLockLauncher }
+            .distinctUntilChanged()
+
+    fun setLockLauncher(locked: Boolean) {
+        dataStore.update { it.copy(protectionLockLauncher = locked) }
+    }
 }

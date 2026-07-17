@@ -67,6 +67,7 @@ import de.mm20.launcher2.ui.launcher.scaffold.components.ScreenOffComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.SearchComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.SecretComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.WidgetsComponent
+import de.mm20.launcher2.ui.launcher.lock.LauncherLockGate
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheetManager
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheets
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
@@ -213,6 +214,7 @@ abstract class SharedLauncherActivity(
                                 }
                         }
 
+                        LauncherLockGate(enabled = mode == LauncherActivityMode.Launcher) {
                         OverlayHost(
                             modifier = Modifier
                                 .background(
@@ -477,6 +479,7 @@ abstract class SharedLauncherActivity(
                                 }
                             }
                             LauncherBottomSheets()
+                        }
                         }
                     }
                 }

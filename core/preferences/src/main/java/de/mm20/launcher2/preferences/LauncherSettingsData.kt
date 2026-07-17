@@ -294,6 +294,7 @@ data class LauncherSettingsData internal constructor(
     val protectionLockMethod: SettingsLockMethod = SettingsLockMethod.DeviceCredential,
     val protectionUseCustomLock: Boolean = false,
     val protectionCustomLockHashed: String? = null,
+    val protectionLockLauncher: Boolean = false,
 
     ) {
     constructor(

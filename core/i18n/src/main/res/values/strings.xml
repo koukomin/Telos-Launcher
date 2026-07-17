@@ -933,6 +933,11 @@
     <string name="settings_locked_message">These settings are protected. Authenticate to continue.</string>
     <string name="settings_locked_unlock">Unlock</string>
     <string name="settings_locked_no_authenticator">These settings are protected, but no usable screen lock or biometrics are set up on this device. Set one up in system settings to unlock.</string>
+    <string name="preference_category_launcher_lock">Launcher lock</string>
+    <string name="preference_lock_launcher">Lock launcher</string>
+    <string name="preference_lock_launcher_summary">Require authentication to view the home screen after leaving it. Uses the device credential, not a separate PIN. If you get locked out, use system Settings → Apps → %1$s → the gear icon to open this launcher\'s settings directly and turn it back off.</string>
+    <string name="launcher_lock_prompt_title">Unlock launcher</string>
+    <string name="launcher_locked_message">The launcher is locked. Authenticate to continue.</string>
     <string name="preference_file_search_types">File types</string>
     <string name="file_search_type_documents">Documents</string>
     <string name="file_search_type_images">Images</string>

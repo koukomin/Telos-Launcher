@@ -56,6 +56,11 @@ class SettingsLockVM : ViewModel(), KoinComponent {
     val customLockHashed = protectionSettings.customLockHashed
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+    val lockLauncher = protectionSettings.lockLauncher
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setLockLauncher(locked: Boolean) = protectionSettings.setLockLauncher(locked)
+
     fun setLockSensitiveSettings(locked: Boolean) =
         protectionSettings.setLockSensitiveSettings(locked)
 

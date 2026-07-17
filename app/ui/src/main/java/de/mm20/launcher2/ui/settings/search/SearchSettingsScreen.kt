@@ -468,6 +468,31 @@ fun SearchSettingsScreen() {
                         }
                     }
                 }
+
+                val lockLauncher by lockViewModel.lockLauncher.collectAsStateWithLifecycle()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_lock_launcher),
+                    summary = stringResource(
+                        R.string.preference_lock_launcher_summary,
+                        stringResource(R.string.app_name),
+                    ),
+                    icon = R.drawable.lock_24px,
+                    value = lockLauncher == true,
+                    onValueChanged = { newValue ->
+                        if (newValue) {
+                            lockViewModel.setLockLauncher(true)
+                        } else if (activity != null) {
+                            if (useCustomLock == true) {
+                                onUnlockAction = { lockViewModel.setLockLauncher(false) }
+                            } else {
+                                val method = lockMethod ?: SettingsLockMethod.DeviceCredential
+                                authenticateSettings(activity, method, promptTitle) { ok ->
+                                    if (ok) lockViewModel.setLockLauncher(false)
+                                }
+                            }
+                        }
+                    }
+                )
             }
         }
         item {
