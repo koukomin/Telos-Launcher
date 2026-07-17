@@ -12,7 +12,7 @@ import java.util.UUID
 @Serializable
 @ConsistentCopyVisibility
 data class LauncherSettingsData internal constructor(
-    val schemaVersion: Int = 8,
+    val schemaVersion: Int = 9,
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
     /** Hour of day [0,23] when the dark scheme starts, used only by [ColorScheme.Time]. */
@@ -211,7 +211,7 @@ data class LauncherSettingsData internal constructor(
 
     val stateTagsMultiline: Boolean = false,
 
-    val weatherProvider: String = "metno",
+    val weatherProvider: String = "openmeteo",
     val weatherAutoLocation: Boolean = true,
     val weatherLocation: LatLon? = null,
     val weatherLocationName: String? = null,

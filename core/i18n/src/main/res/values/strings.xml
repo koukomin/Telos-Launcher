@@ -554,6 +554,7 @@
     <string name="preference_screen_about_summary">App and license information</string>
     <string name="preference_screen_appearance_summary">Customize the look and feel</string>
     <string name="preference_weather_provider">Provider</string>
+    <string name="provider_openmeteo">Open-Meteo</string>
     <string name="provider_metno">MET Norway</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (Germany only)</string>

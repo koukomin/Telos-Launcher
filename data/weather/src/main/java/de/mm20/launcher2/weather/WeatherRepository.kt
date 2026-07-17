@@ -17,6 +17,7 @@ import de.mm20.launcher2.preferences.weather.WeatherSettings
 import de.mm20.launcher2.weather.breezy.BreezyWeatherProvider
 import de.mm20.launcher2.weather.brightsky.BrightSkyProvider
 import de.mm20.launcher2.weather.metno.MetNoProvider
+import de.mm20.launcher2.weather.openmeteo.OpenMeteoProvider
 import de.mm20.launcher2.weather.openweathermap.OpenWeatherMapProvider
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -164,6 +165,12 @@ internal class WeatherRepositoryImpl(
 
     override fun getProviders(): Flow<List<WeatherProviderInfo>> {
         val providers = mutableListOf<WeatherProviderInfo>()
+        providers.add(
+            WeatherProviderInfo(
+                OpenMeteoProvider.Id,
+                context.getString(R.string.provider_openmeteo)
+            )
+        )
         providers.add(
             WeatherProviderInfo(
                 BrightSkyProvider.Id,
