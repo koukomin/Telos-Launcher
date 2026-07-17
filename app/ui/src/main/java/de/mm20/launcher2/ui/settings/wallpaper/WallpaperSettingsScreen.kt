@@ -25,6 +25,8 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.component.preferences.SliderPreference
+import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.wallpapers.StaticWallpaperTarget
 import kotlinx.serialization.Serializable
 
@@ -46,6 +48,9 @@ fun WallpaperSettingsScreen() {
 
     val pauseOnBatterySaver by viewModel.pauseOnBatterySaver.collectAsStateWithLifecycle()
     val pauseOnThermal by viewModel.pauseOnThermal.collectAsStateWithLifecycle()
+    val videoTransforms by viewModel.videoTransforms.collectAsStateWithLifecycle()
+    val videoSpeed by viewModel.videoSpeed.collectAsStateWithLifecycle()
+    val videoStartBehavior by viewModel.videoStartBehavior.collectAsStateWithLifecycle()
 
     val setResultToast: (Boolean) -> Unit = { ok ->
         Toast.makeText(
@@ -64,11 +69,12 @@ fun WallpaperSettingsScreen() {
         }
     }
 
+    var appendToPlaylist by remember { mutableStateOf(false) }
     val videoPicker = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri ->
         if (uri != null) {
-            viewModel.setVideoWallpaper(uri) { ok ->
+            viewModel.setVideoWallpaper(uri, appendToPlaylist) { ok ->
                 if (ok && !viewModel.isVideoWallpaperActive) {
                     context.tryStartActivity(viewModel.getActivationIntent())
                 } else {
@@ -127,12 +133,26 @@ fun WallpaperSettingsScreen() {
                     title = stringResource(R.string.preference_wallpaper_choose_video),
                     summary = stringResource(R.string.preference_wallpaper_choose_video_summary),
                     onClick = {
+                        appendToPlaylist = false
+                        videoPicker.launch(
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly)
+                        )
+                    }
+                )
+                Preference(
+                    title = stringResource(R.string.preference_wallpaper_add_video),
+                    onClick = {
+                        appendToPlaylist = true
                         videoPicker.launch(
                             PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly)
                         )
                     }
                 )
                 if (viewModel.hasVideoWallpaper) {
+                    Preference(
+                        title = stringResource(R.string.preference_wallpaper_clear_playlist),
+                        onClick = { viewModel.clearVideoPlaylist() }
+                    )
                     Preference(
                         title = stringResource(
                             if (viewModel.isVideoWallpaperActive) R.string.wallpaper_video_active
@@ -156,6 +176,82 @@ fun WallpaperSettingsScreen() {
                     value = pauseOnThermal == true,
                     onValueChanged = { viewModel.setPauseOnThermal(it) }
                 )
+            }
+        }
+        if (viewModel.hasVideoWallpaper && videoTransforms != null) {
+            val transforms = videoTransforms!!
+            item {
+                PreferenceCategory(title = stringResource(R.string.websearch_dialog_advanced)) {
+                    ListPreference(
+                        title = stringResource(R.string.preference_wallpaper_scaling_mode),
+                        items = listOf(
+                            stringResource(R.string.preference_wallpaper_scaling_mode_fit) to de.mm20.launcher2.preferences.VideoWallpaperScalingMode.Fit,
+                            stringResource(R.string.preference_wallpaper_scaling_mode_fill) to de.mm20.launcher2.preferences.VideoWallpaperScalingMode.Fill,
+                            stringResource(R.string.preference_wallpaper_scaling_mode_stretch) to de.mm20.launcher2.preferences.VideoWallpaperScalingMode.Stretch,
+                        ),
+                        value = transforms.scalingMode,
+                        onValueChanged = { if (it != null) viewModel.setVideoScalingMode(it) }
+                    )
+                    SliderPreference(
+                        title = stringResource(R.string.preference_wallpaper_brightness),
+                        value = transforms.brightness,
+                        min = 0f,
+                        max = 2f,
+                        onValueChanged = { viewModel.setVideoBrightness(it) },
+                    )
+                    SliderPreference(
+                        title = stringResource(R.string.preference_wallpaper_zoom),
+                        value = transforms.zoom,
+                        min = 0.5f,
+                        max = 5f,
+                        onValueChanged = { viewModel.setVideoZoom(it) },
+                    )
+                    SliderPreference(
+                        title = stringResource(R.string.preference_wallpaper_position_x),
+                        value = transforms.positionX,
+                        min = -1f,
+                        max = 1f,
+                        onValueChanged = { viewModel.setVideoPosition(it, transforms.positionY) },
+                    )
+                    SliderPreference(
+                        title = stringResource(R.string.preference_wallpaper_position_y),
+                        value = transforms.positionY,
+                        min = -1f,
+                        max = 1f,
+                        onValueChanged = { viewModel.setVideoPosition(transforms.positionX, it) },
+                    )
+                    SliderPreference(
+                        title = stringResource(R.string.preference_wallpaper_speed),
+                        value = videoSpeed ?: 1f,
+                        min = 0.25f,
+                        max = 3f,
+                        onValueChanged = { viewModel.setVideoSpeed(it) },
+                    )
+                    ListPreference(
+                        title = stringResource(R.string.preference_wallpaper_start_behavior),
+                        items = listOf(
+                            stringResource(R.string.preference_wallpaper_start_behavior_resume) to de.mm20.launcher2.preferences.VideoWallpaperStartBehavior.Resume,
+                            stringResource(R.string.preference_wallpaper_start_behavior_restart) to de.mm20.launcher2.preferences.VideoWallpaperStartBehavior.Restart,
+                            stringResource(R.string.preference_wallpaper_start_behavior_random) to de.mm20.launcher2.preferences.VideoWallpaperStartBehavior.Random,
+                        ),
+                        value = videoStartBehavior ?: de.mm20.launcher2.preferences.VideoWallpaperStartBehavior.Resume,
+                        onValueChanged = { if (it != null) viewModel.setVideoStartBehavior(it) }
+                    )
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_wallpaper_parallax),
+                        value = transforms.parallax,
+                        onValueChanged = { viewModel.setVideoParallax(it) }
+                    )
+                    if (transforms.parallax) {
+                        SliderPreference(
+                            title = stringResource(R.string.preference_wallpaper_parallax_strength),
+                            value = transforms.parallaxStrength,
+                            min = 0.1f,
+                            max = 1f,
+                            onValueChanged = { viewModel.setVideoParallaxStrength(it) },
+                        )
+                    }
+                }
             }
         }
     }

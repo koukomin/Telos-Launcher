@@ -30,11 +30,51 @@ class WallpaperSettingsScreenVM : ViewModel(), KoinComponent {
     val pauseOnThermal = wallpaperSettings.videoPauseOnThermalThrottling
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+    val videoTransforms = wallpaperSettings.videoTransforms
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val videoSpeed = wallpaperSettings.videoSpeed
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val videoStartBehavior = wallpaperSettings.videoStartBehavior
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setPauseOnBatterySaver(pause: Boolean) =
         wallpaperSettings.setVideoPauseOnBatterySaver(pause)
 
     fun setPauseOnThermal(pause: Boolean) =
         wallpaperSettings.setVideoPauseOnThermalThrottling(pause)
+
+    fun setVideoScalingMode(mode: de.mm20.launcher2.preferences.VideoWallpaperScalingMode) =
+        wallpaperSettings.setVideoScalingMode(mode)
+
+    fun setVideoZoom(zoom: Float) =
+        wallpaperSettings.setVideoZoom(zoom)
+
+    fun setVideoPosition(x: Float, y: Float) =
+        wallpaperSettings.setVideoPosition(x, y)
+
+    fun setVideoBrightness(brightness: Float) =
+        wallpaperSettings.setVideoBrightness(brightness)
+
+    fun setVideoParallax(enabled: Boolean) =
+        wallpaperSettings.setVideoParallax(enabled)
+
+    fun setVideoParallaxStrength(strength: Float) =
+        wallpaperSettings.setVideoParallaxStrength(strength)
+
+    fun setVideoSpeed(speed: Float) =
+        wallpaperSettings.setVideoSpeed(speed)
+
+    fun setVideoStartBehavior(behavior: de.mm20.launcher2.preferences.VideoWallpaperStartBehavior) =
+        wallpaperSettings.setVideoStartBehavior(behavior)
+
+    fun clearVideoPlaylist() {
+        viewModelScope.launch {
+            wallpapersService.clearVideoPlaylist()
+            refresh()
+        }
+    }
 
     fun refresh() {
         hasVideoWallpaper = wallpapersService.hasVideoWallpaper()
@@ -47,9 +87,9 @@ class WallpaperSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    fun setVideoWallpaper(uri: Uri, onResult: (Boolean) -> Unit) {
+    fun setVideoWallpaper(uri: Uri, appendToPlaylist: Boolean, onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
-            val ok = wallpapersService.setVideoWallpaper(uri)
+            val ok = wallpapersService.setVideoWallpaper(uri, appendToPlaylist)
             refresh()
             onResult(ok)
         }

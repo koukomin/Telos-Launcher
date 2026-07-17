@@ -82,6 +82,14 @@ class WallpapersService(private val context: Context) {
                 @Suppress("DEPRECATION") getVideoFile(context).exists()
     }
 
+    suspend fun clearVideoPlaylist() {
+        withContext(Dispatchers.IO) {
+            getVideoDir(context).listFiles()?.forEach { it.delete() }
+            @Suppress("DEPRECATION") getVideoFile(context).delete()
+            VideoWallpaperService.videoChanged.tryEmit(Unit)
+        }
+    }
+
     /** True if our video wallpaper service is the currently active system live wallpaper. */
     fun isVideoWallpaperActive(): Boolean {
         val info = WallpaperManager.getInstance(context).wallpaperInfo ?: return false
