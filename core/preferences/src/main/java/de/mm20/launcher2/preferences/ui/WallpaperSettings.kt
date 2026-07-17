@@ -93,4 +93,11 @@ class WallpaperSettings internal constructor(
     fun setVideoThemeColors(enabled: Boolean) {
         dataStore.update { it.copy(videoWallpaperThemeColors = enabled) }
     }
+
+    val videoPauseOnDesktopMode
+        get() = dataStore.data.map { it.videoWallpaperPauseOnDesktopMode }.distinctUntilChanged()
+
+    fun setVideoPauseOnDesktopMode(pause: Boolean) {
+        dataStore.update { it.copy(videoWallpaperPauseOnDesktopMode = pause) }
+    }
 }

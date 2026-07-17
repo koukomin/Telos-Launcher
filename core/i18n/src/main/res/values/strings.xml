@@ -274,7 +274,7 @@
     <string name="preference_screen_desktop_mode">Desktop mode</string>
     <string name="preference_screen_desktop_mode_summary">Show a taskbar and start menu on a connected external display</string>
     <string name="preference_desktop_mode_enabled">Enable desktop mode</string>
-    <string name="preference_desktop_mode_enabled_summary">Automatically shows a desktop-style shell whenever an external display is connected</string>
+    <string name="preference_desktop_mode_enabled_summary">Automatically shows a desktop-style shell whenever an external display is connected. Turns on by itself the first time you connect one; turn it off here any time.</string>
     <string name="desktop_mode_unsupported">Not supported on this device</string>
     <string name="desktop_mode_unsupported_summary">This device does not support launching apps on a secondary display</string>
     <string name="desktop_mode_display_status">External display</string>
@@ -291,6 +291,13 @@
     <string name="desktop_mode_tray_battery">Battery</string>
     <string name="desktop_mode_tray_notifications">Notifications</string>
     <string name="desktop_mode_tray_notifications_empty">No notifications</string>
+    <string name="desktop_mode_icon_size">Icon size</string>
+    <string name="desktop_mode_wallpaper_category">Wallpaper</string>
+    <string name="desktop_mode_wallpaper_mode">Desktop wallpaper</string>
+    <string name="desktop_mode_wallpaper_mode_solid_color">Solid color</string>
+    <string name="desktop_mode_wallpaper_mode_static_image">Static image</string>
+    <string name="desktop_mode_wallpaper_choose_image">Choose image</string>
+    <string name="desktop_mode_wallpaper_image_set">Image set</string>
     <string name="desktop_mode_window_management_category">Window management</string>
     <string name="desktop_mode_freeform_unsupported">Floating windows not available</string>
     <string name="desktop_mode_freeform_unsupported_summary">This device does not support launching apps on a secondary display, so freeform windowing cannot work either</string>
@@ -1072,6 +1079,8 @@
     <string name="preference_wallpaper_pause_battery_saver_summary">Freeze on the current frame while Battery Saver is on</string>
     <string name="preference_wallpaper_pause_thermal">Pause video on overheating</string>
     <string name="preference_wallpaper_pause_thermal_summary">Freeze on the current frame while the device is thermal throttling</string>
+    <string name="preference_wallpaper_pause_desktop_mode">Pause video in desktop mode</string>
+    <string name="preference_wallpaper_pause_desktop_mode_summary">Pause the video wallpaper on this screen while desktop mode is showing on an external display. Off by default, since the phone screen keeps showing it otherwise.</string>
     <string name="preference_wallpaper_scaling_mode">Scaling mode</string>
     <string name="preference_wallpaper_scaling_mode_fit">Fit</string>
     <string name="preference_wallpaper_scaling_mode_fill">Fill</string>

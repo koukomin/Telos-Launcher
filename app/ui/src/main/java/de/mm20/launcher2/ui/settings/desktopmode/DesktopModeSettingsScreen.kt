@@ -1,22 +1,30 @@
 package de.mm20.launcher2.ui.settings.desktopmode
 
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.preferences.DesktopModeOrientation
+import de.mm20.launcher2.preferences.DesktopWallpaperMode
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreferenceItem
+import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.component.preferences.TextPreference
 import kotlinx.serialization.Serializable
@@ -35,6 +43,24 @@ fun DesktopModeSettingsScreen() {
     val freeformActiveInSystem by viewModel.freeformActiveInSystem.collectAsStateWithLifecycle(false)
     val freeformShizukuUnavailable by viewModel.freeformShizukuUnavailable.collectAsStateWithLifecycle(false)
     val freeformShizukuPermissionDenied by viewModel.freeformShizukuPermissionDenied.collectAsStateWithLifecycle(false)
+    val wallpaperMode by viewModel.wallpaperMode.collectAsStateWithLifecycle(DesktopWallpaperMode.SolidColor)
+    val wallpaperImageUri by viewModel.wallpaperImageUri.collectAsStateWithLifecycle(null)
+    val gridIconSize by viewModel.gridIconSize.collectAsStateWithLifecycle(48)
+
+    val context = LocalContext.current
+    val imagePicker = rememberLauncherForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        if (uri != null) {
+            viewModel.setWallpaperImage(uri) { ok ->
+                Toast.makeText(
+                    context,
+                    if (ok) R.string.wallpaper_set_success else R.string.wallpaper_set_failure,
+                    Toast.LENGTH_SHORT,
+                ).show()
+            }
+        }
+    }
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_desktop_mode)) {
         item {
@@ -91,6 +117,44 @@ fun DesktopModeSettingsScreen() {
                         ),
                         value = orientation,
                         onValueChanged = { viewModel.setOrientation(it) },
+                    )
+                    SliderPreference(
+                        title = stringResource(R.string.desktop_mode_icon_size),
+                        value = gridIconSize,
+                        step = 8,
+                        min = 32,
+                        max = 80,
+                        onValueChanged = { viewModel.setGridIconSize(it) },
+                    )
+                }
+            }
+            item {
+                PreferenceCategory(title = stringResource(R.string.desktop_mode_wallpaper_category)) {
+                    ListPreference(
+                        title = stringResource(R.string.desktop_mode_wallpaper_mode),
+                        items = listOf(
+                            ListPreferenceItem(
+                                stringResource(R.string.desktop_mode_wallpaper_mode_solid_color),
+                                DesktopWallpaperMode.SolidColor,
+                            ),
+                            ListPreferenceItem(
+                                stringResource(R.string.desktop_mode_wallpaper_mode_static_image),
+                                DesktopWallpaperMode.StaticImage,
+                            ),
+                        ),
+                        value = wallpaperMode,
+                        onValueChanged = { viewModel.setWallpaperMode(it) },
+                    )
+                    Preference(
+                        title = stringResource(R.string.desktop_mode_wallpaper_choose_image),
+                        summary = wallpaperImageUri?.let {
+                            stringResource(R.string.desktop_mode_wallpaper_image_set)
+                        },
+                        onClick = {
+                            imagePicker.launch(
+                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                            )
+                        }
                     )
                 }
             }

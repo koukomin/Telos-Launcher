@@ -48,6 +48,7 @@ fun WallpaperSettingsScreen() {
 
     val pauseOnBatterySaver by viewModel.pauseOnBatterySaver.collectAsStateWithLifecycle()
     val pauseOnThermal by viewModel.pauseOnThermal.collectAsStateWithLifecycle()
+    val pauseOnDesktopMode by viewModel.pauseOnDesktopMode.collectAsStateWithLifecycle()
     val videoTransforms by viewModel.videoTransforms.collectAsStateWithLifecycle()
     val videoSpeed by viewModel.videoSpeed.collectAsStateWithLifecycle()
     val videoStartBehavior by viewModel.videoStartBehavior.collectAsStateWithLifecycle()
@@ -175,6 +176,12 @@ fun WallpaperSettingsScreen() {
                     summary = stringResource(R.string.preference_wallpaper_pause_thermal_summary),
                     value = pauseOnThermal == true,
                     onValueChanged = { viewModel.setPauseOnThermal(it) }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_wallpaper_pause_desktop_mode),
+                    summary = stringResource(R.string.preference_wallpaper_pause_desktop_mode_summary),
+                    value = pauseOnDesktopMode == true,
+                    onValueChanged = { viewModel.setPauseOnDesktopMode(it) }
                 )
             }
         }

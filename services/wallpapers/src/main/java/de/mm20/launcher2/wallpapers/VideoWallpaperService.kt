@@ -24,6 +24,7 @@ import androidx.media3.effect.MatrixTransformation
 import androidx.media3.effect.Presentation
 import androidx.media3.exoplayer.ExoPlayer
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.desktopmode.DesktopModeManager
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.VideoWallpaperStartBehavior
 import de.mm20.launcher2.preferences.ui.WallpaperSettings
@@ -52,6 +53,7 @@ class VideoWallpaperService : WallpaperService() {
     inner class VideoEngine : Engine(), KoinComponent {
 
         private val settings: WallpaperSettings by inject()
+        private val desktopModeManager: DesktopModeManager by inject()
         private val powerManager
             get() = this@VideoWallpaperService.getSystemService<PowerManager>()
 
@@ -67,6 +69,8 @@ class VideoWallpaperService : WallpaperService() {
 
         private var pauseOnBatterySaver = true
         private var pauseOnThermal = true
+        private var pauseOnDesktopMode = false
+        private var isDesktopModeActive = false
         private var transforms = VideoWallpaperTransforms(
             de.mm20.launcher2.preferences.VideoWallpaperScalingMode.Fill,
             1f, 0f, 0f, 1f, false, 0.2f
@@ -101,6 +105,18 @@ class VideoWallpaperService : WallpaperService() {
             scope.launch {
                 settings.videoPauseOnThermalThrottling.collect {
                     pauseOnThermal = it
+                    updatePlayback()
+                }
+            }
+            scope.launch {
+                settings.videoPauseOnDesktopMode.collect {
+                    pauseOnDesktopMode = it
+                    updatePlayback()
+                }
+            }
+            scope.launch {
+                desktopModeManager.shouldShowDesktopShell.collect {
+                    isDesktopModeActive = it
                     updatePlayback()
                 }
             }
@@ -230,6 +246,7 @@ class VideoWallpaperService : WallpaperService() {
             if (pauseOnThermal && isAtLeastApiLevel(29) &&
                 thermalStatus >= PowerManager.THERMAL_STATUS_SEVERE
             ) return false
+            if (pauseOnDesktopMode && isDesktopModeActive) return false
             return true
         }
 

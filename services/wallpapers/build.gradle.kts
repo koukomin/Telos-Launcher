@@ -56,4 +56,5 @@ dependencies {
     implementation(project(":core:i18n"))
     implementation(project(":core:preferences"))
     implementation(project(":core:crashreporter"))
+    implementation(project(":services:desktop-mode"))
 }

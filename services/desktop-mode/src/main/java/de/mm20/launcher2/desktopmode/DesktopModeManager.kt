@@ -63,6 +63,16 @@ class DesktopModeManager internal constructor(
                 },
                 Handler(Looper.getMainLooper()),
             )
+
+            // The very first external display this device ever sees auto-enables desktop mode,
+            // so it "just works" out of the box - but only until the user touches the toggle
+            // themselves (either direction), tracked by userConfigured, so this never fights a
+            // deliberate opt-out and never fires more than once.
+            combine(_externalDisplay, settings.userConfigured) { display, configured ->
+                display != null && !configured
+            }.distinctUntilChanged()
+                .onEach { shouldAutoEnable -> if (shouldAutoEnable) settings.autoEnable() }
+                .launchIn(scope)
         }
     }
 

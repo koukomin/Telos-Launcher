@@ -34,11 +34,13 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.desktopmode.DesktopModeManager
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.preferences.ui.DesktopModeSettings
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
@@ -53,6 +55,8 @@ internal fun DesktopStartMenu(onDismiss: () -> Unit) {
     val context = LocalContext.current
     val desktopModeManager = koinInject<DesktopModeManager>()
     val freeformActive by desktopModeManager.freeformActiveInSystem.collectAsStateWithLifecycle()
+    val desktopModeSettings = koinInject<DesktopModeSettings>()
+    val iconSize by desktopModeSettings.gridIconSize.collectAsStateWithLifecycle(48)
 
     Box(
         modifier = Modifier
@@ -88,6 +92,7 @@ internal fun DesktopStartMenu(onDismiss: () -> Unit) {
                     items(apps, key = { it.key }) { app ->
                         StartMenuAppRow(
                             app = app,
+                            iconSize = iconSize.dp,
                             getIcon = { size -> viewModel.getIcon(app, size) },
                             onClick = {
                                 launchOnDisplay(context, app, freeformActive)
@@ -104,11 +109,12 @@ internal fun DesktopStartMenu(onDismiss: () -> Unit) {
 @Composable
 private fun StartMenuAppRow(
     app: Application,
+    iconSize: Dp,
     getIcon: (Int) -> Flow<LauncherIcon?>,
     onClick: () -> Unit,
 ) {
-    val iconSizePx = 32.dp.toPixels().toInt()
-    val icon by remember(app.key) { getIcon(iconSizePx) }.collectAsStateWithLifecycle(null)
+    val iconSizePx = iconSize.toPixels().toInt()
+    val icon by remember(app.key, iconSizePx) { getIcon(iconSizePx) }.collectAsStateWithLifecycle(null)
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -117,7 +123,7 @@ private fun StartMenuAppRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        ShapedLauncherIcon(size = 32.dp, icon = { icon })
+        ShapedLauncherIcon(size = iconSize, icon = { icon })
         Text(
             text = app.labelOverride ?: app.label,
             style = MaterialTheme.typography.bodyMedium,

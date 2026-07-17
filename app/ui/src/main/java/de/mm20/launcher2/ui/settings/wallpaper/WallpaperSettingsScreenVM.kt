@@ -29,6 +29,8 @@ class WallpaperSettingsScreenVM : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val pauseOnThermal = wallpaperSettings.videoPauseOnThermalThrottling
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    val pauseOnDesktopMode = wallpaperSettings.videoPauseOnDesktopMode
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     val videoTransforms = wallpaperSettings.videoTransforms
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
@@ -44,6 +46,9 @@ class WallpaperSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setPauseOnThermal(pause: Boolean) =
         wallpaperSettings.setVideoPauseOnThermalThrottling(pause)
+
+    fun setPauseOnDesktopMode(pause: Boolean) =
+        wallpaperSettings.setVideoPauseOnDesktopMode(pause)
 
     fun setVideoScalingMode(mode: de.mm20.launcher2.preferences.VideoWallpaperScalingMode) =
         wallpaperSettings.setVideoScalingMode(mode)

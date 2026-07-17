@@ -77,6 +77,38 @@ class WallpapersService(private val context: Context) {
         }
     }
 
+    /**
+     * Copies the given image into app-private storage for use as the desktop mode wallpaper -
+     * same reasoning as [setVideoWallpaper]: the photo picker's URI grant isn't guaranteed to
+     * survive past this process, so the bytes are copied in immediately rather than persisting
+     * the picker URI itself. @return the copied file's absolute path, or null on failure.
+     */
+    suspend fun setDesktopWallpaper(uri: Uri): String? {
+        return withContext(Dispatchers.IO) {
+            val dir = getDesktopWallpaperDir(context)
+            dir.mkdirs()
+            val target = File(dir, "image")
+            val tmp = File(dir, "image.tmp")
+            try {
+                context.contentResolver.openInputStream(uri)?.use { input ->
+                    tmp.outputStream().use { output -> input.copyTo(output) }
+                } ?: return@withContext null
+                if (!tmp.renameTo(target)) return@withContext null
+                target.absolutePath
+            } catch (e: Exception) {
+                CrashReporter.logException(e)
+                tmp.delete()
+                null
+            }
+        }
+    }
+
+    suspend fun clearDesktopWallpaper() {
+        withContext(Dispatchers.IO) {
+            getDesktopWallpaperDir(context).listFiles()?.forEach { it.delete() }
+        }
+    }
+
     fun hasVideoWallpaper(): Boolean {
         return getVideoDir(context).listFiles()?.isNotEmpty() == true ||
                 @Suppress("DEPRECATION") getVideoFile(context).exists()
@@ -113,6 +145,10 @@ class WallpapersService(private val context: Context) {
     companion object {
         internal fun getVideoDir(context: Context): File {
             return File(context.filesDir, "wallpapers/video_playlist")
+        }
+
+        internal fun getDesktopWallpaperDir(context: Context): File {
+            return File(context.filesDir, "wallpapers/desktop_image")
         }
 
         @Deprecated("Use getVideoDir")

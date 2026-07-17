@@ -189,6 +189,13 @@ data class LauncherSettingsData internal constructor(
     val videoWallpaperParallax: Boolean = false,
     val videoWallpaperParallaxStrength: Float = 0.2f,
     val videoWallpaperThemeColors: Boolean = true,
+    /**
+     * Off by default: the video wallpaper's WallpaperService is tied to the default display and
+     * physically cannot render on the external display desktop mode uses, but the phone screen
+     * itself keeps showing it while desktop mode is active on an external display, so pausing it
+     * is a resource-saving choice the user should opt into rather than something sprung on them.
+     */
+    val videoWallpaperPauseOnDesktopMode: Boolean = false,
 
     val performanceReduceAnimations: Boolean = false,
     /** Multiplies the duration of tween-based (fade/effects) motion specs. 1.0 = default. */
@@ -310,6 +317,10 @@ data class LauncherSettingsData internal constructor(
     val contextProfileManualOverrideId: String? = null,
 
     val desktopModeEnabled: Boolean = false,
+    /** True once the user has explicitly touched the enable toggle (either direction), or
+     * auto-enable has already fired once - prevents auto-enable from firing repeatedly or
+     * fighting a deliberate opt-out. */
+    val desktopModeUserConfigured: Boolean = false,
     val desktopModeOrientation: DesktopModeOrientation = DesktopModeOrientation.Auto,
     /**
      * User's intent for freeform windowing, separate from the OS-level `enable_freeform_support`
@@ -317,6 +328,13 @@ data class LauncherSettingsData internal constructor(
      * so this is only ever the last state the user explicitly chose via the toggle.
      */
     val desktopModeFreeformEnabled: Boolean = false,
+    /** Separate from the phone's wallpaper - the phone's video wallpaper can't render on the
+     * external display, and a phone-shaped video wouldn't fit a landscape monitor anyway. */
+    val desktopWallpaperMode: DesktopWallpaperMode = DesktopWallpaperMode.SolidColor,
+    val desktopWallpaperImageUri: String? = null,
+    /** Independent of the phone's own gridIconSize - external displays are bigger and viewed
+     * from farther away, so the same icon size wouldn't make sense on both. */
+    val desktopGridIconSize: Int = 48,
 
     ) {
     constructor(
@@ -618,6 +636,13 @@ enum class DesktopModeOrientation {
     @SerialName("auto") Auto,
     @SerialName("portrait") Portrait,
     @SerialName("landscape") Landscape,
+}
+
+enum class DesktopWallpaperMode {
+    /** Solid theme-color background - the default, since it needs no picked image. */
+    @SerialName("solid_color") SolidColor,
+    /** A separate static image, picked independently of the phone's wallpaper. */
+    @SerialName("static_image") StaticImage,
 }
 
 @Serializable
