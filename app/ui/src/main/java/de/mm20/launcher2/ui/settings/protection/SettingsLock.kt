@@ -54,12 +54,25 @@ class SettingsLockVM : ViewModel(), KoinComponent {
     fun setLockMethod(method: SettingsLockMethod) = protectionSettings.setLockMethod(method)
 }
 
+private fun authenticatorsFor(method: SettingsLockMethod): Int = when (method) {
+    SettingsLockMethod.DeviceCredential ->
+        Authenticators.BIOMETRIC_WEAK or Authenticators.DEVICE_CREDENTIAL
+
+    SettingsLockMethod.BiometricsOnly -> Authenticators.BIOMETRIC_STRONG
+}
+
+/** Whether the device currently offers any way to pass the given lock method. */
+fun canAuthenticateSettings(activity: FragmentActivity, method: SettingsLockMethod): Boolean {
+    return BiometricManager.from(activity)
+        .canAuthenticate(authenticatorsFor(method)) == BiometricManager.BIOMETRIC_SUCCESS
+}
+
 /**
  * Runs the system authentication prompt for the given method.
  *
- * If the device has no way to authenticate with this method at all (no biometric hardware, or
- * nothing enrolled), this *fails open* and reports success: a lock that nobody can open isn't
- * protection, it's data loss - and the device itself offers no barrier in that state anyway.
+ * Strictly fail-closed: every path other than an explicit success from the system prompt -
+ * missing hardware, nothing enrolled, prompt errors, lockout after repeated failures, or an
+ * exception while showing the prompt - reports failure and the protected content stays locked.
  */
 fun authenticateSettings(
     activity: FragmentActivity,
@@ -67,19 +80,13 @@ fun authenticateSettings(
     title: String,
     onResult: (Boolean) -> Unit,
 ) {
-    val authenticators = when (method) {
-        SettingsLockMethod.DeviceCredential ->
-            Authenticators.BIOMETRIC_WEAK or Authenticators.DEVICE_CREDENTIAL
+    val authenticators = authenticatorsFor(method)
 
-        SettingsLockMethod.BiometricsOnly -> Authenticators.BIOMETRIC_STRONG
-    }
-
-    when (BiometricManager.from(activity).canAuthenticate(authenticators)) {
-        BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE,
-        BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-            onResult(true)
-            return
-        }
+    if (BiometricManager.from(activity).canAuthenticate(authenticators) !=
+        BiometricManager.BIOMETRIC_SUCCESS
+    ) {
+        onResult(false)
+        return
     }
 
     val prompt = BiometricPrompt(
@@ -91,6 +98,8 @@ fun authenticateSettings(
             }
 
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                // Includes user cancellation and LOCKOUT / LOCKOUT_PERMANENT after
+                // repeated failed attempts.
                 onResult(false)
             }
         },
@@ -107,13 +116,21 @@ fun authenticateSettings(
         }
         .build()
 
-    prompt.authenticate(promptInfo)
+    try {
+        prompt.authenticate(promptInfo)
+    } catch (e: Exception) {
+        onResult(false)
+    }
 }
 
 /**
  * Gates [content] behind the settings lock. If the lock is disabled, content shows directly.
  * If enabled, the system prompt opens automatically on entry, and again on every new entry to
  * the screen (the unlocked state lives only in this composition).
+ *
+ * Strictly fail-closed: content is only ever shown after an explicit successful authentication.
+ * If the host is not a FragmentActivity, or the device currently has no usable authenticator
+ * for the configured method, the screen stays locked (with an explanation in the latter case).
  */
 @Composable
 fun ProtectedSettingsScreen(
@@ -130,13 +147,18 @@ fun ProtectedSettingsScreen(
     when {
         locked == null || method == null -> {}
 
-        locked == false || unlocked || activity == null -> content()
+        locked == false || unlocked -> content()
 
         else -> {
             val currentMethod = method!!
-            LaunchedEffect(Unit) {
-                authenticateSettings(activity, currentMethod, promptTitle) {
-                    unlocked = it
+            val authAvailable =
+                activity != null && canAuthenticateSettings(activity, currentMethod)
+
+            if (authAvailable) {
+                LaunchedEffect(Unit) {
+                    authenticateSettings(activity, currentMethod, promptTitle) {
+                        unlocked = it
+                    }
                 }
             }
             Column(
@@ -153,17 +175,22 @@ fun ProtectedSettingsScreen(
                     tint = MaterialTheme.colorScheme.primary,
                 )
                 Text(
-                    text = stringResource(R.string.settings_locked_message),
+                    text = stringResource(
+                        if (authAvailable) R.string.settings_locked_message
+                        else R.string.settings_locked_no_authenticator
+                    ),
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(vertical = 16.dp),
                 )
-                Button(onClick = {
-                    authenticateSettings(activity, currentMethod, promptTitle) {
-                        unlocked = it
+                if (authAvailable) {
+                    Button(onClick = {
+                        authenticateSettings(activity, currentMethod, promptTitle) {
+                            unlocked = it
+                        }
+                    }) {
+                        Text(stringResource(R.string.settings_locked_unlock))
                     }
-                }) {
-                    Text(stringResource(R.string.settings_locked_unlock))
                 }
             }
         }
