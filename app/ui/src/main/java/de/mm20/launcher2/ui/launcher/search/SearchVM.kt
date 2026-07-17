@@ -44,6 +44,7 @@ import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
@@ -64,6 +65,7 @@ class SearchVM : ViewModel(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
     private val profileManager: ProfileManager by inject()
 
+    private val performanceSettings: de.mm20.launcher2.preferences.ui.PerformanceSettings by inject()
     private val fileSearchSettings: FileSearchSettings by inject()
     private val contactSearchSettings: ContactSearchSettings by inject()
     private val calendarSearchSettings: CalendarSearchSettings by inject()
@@ -294,6 +296,9 @@ class SearchVM : ViewModel(), KoinComponent {
                     }
 
             } else {
+                val debounceMs = performanceSettings.searchDebounceMs.first()
+                if (debounceMs > 0) delay(debounceMs.toLong())
+
                 val hiddenItemKeys = if (!filters.hiddenItems) searchableRepository.getKeys(
                     maxVisibility = VisibilityLevel.Hidden,
                 ) else flowOf(emptyList())

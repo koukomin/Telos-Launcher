@@ -36,6 +36,7 @@ import de.mm20.launcher2.icons.transformations.LegacyToAdaptiveTransformation
 import de.mm20.launcher2.icons.transformations.transform
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.ui.IconSettings
+import de.mm20.launcher2.preferences.ui.PerformanceSettings
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Searchable
@@ -62,6 +63,7 @@ class IconService(
     private val iconPackManager: IconPackManager,
     private val settings: IconSettings,
     private val customAttributesRepository: CustomAttributesRepository,
+    private val performanceSettings: PerformanceSettings,
 ) {
 
     private val appReceiver = object : BroadcastReceiver() {
@@ -87,6 +89,11 @@ class IconService(
         )
 
     init {
+        scope.launch {
+            performanceSettings.iconCacheSize.collectLatest { size ->
+                cache.resize(size.coerceAtLeast(1))
+            }
+        }
         requestIconPackListUpdate()
         context.registerReceiver(appReceiver, IntentFilter().apply {
             addAction(Intent.ACTION_PACKAGE_REPLACED)

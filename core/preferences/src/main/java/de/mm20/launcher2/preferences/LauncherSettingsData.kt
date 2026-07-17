@@ -185,6 +185,13 @@ data class LauncherSettingsData internal constructor(
     val videoWallpaperParallaxStrength: Float = 0.2f,
     val videoWallpaperThemeColors: Boolean = true,
 
+    val performanceReduceAnimations: Boolean = false,
+    /** Multiplies the duration of tween-based (fade/effects) motion specs. 1.0 = default. */
+    val performanceAnimationSpeed: Float = 1f,
+    /** 0 = no debounce (search fires on every keystroke, the historical behavior). */
+    val performanceSearchDebounceMs: Int = 0,
+    val performanceIconCacheSize: Int = 200,
+
     val animationsCharging: Boolean = true,
 
     val stateTagsMultiline: Boolean = false,

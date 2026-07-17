@@ -2,7 +2,9 @@ package de.mm20.launcher2.currencies
 
 import android.content.Context
 import android.util.Log
+import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import de.mm20.launcher2.database.AppDatabase
@@ -111,6 +113,12 @@ class CurrencyRepository(
     fun enableCurrencyUpdateWorker() {
         val currencyWorker =
             PeriodicWorkRequest.Builder(ExchangeRateWorker::class.java, 60, TimeUnit.MINUTES)
+                .setConstraints(
+                    Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .setRequiresBatteryNotLow(true)
+                        .build()
+                )
                 .build()
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             "ExchangeRates",

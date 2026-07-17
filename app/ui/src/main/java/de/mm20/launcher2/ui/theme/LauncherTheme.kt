@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialExpressiveTheme
+import androidx.compose.material3.MotionScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -10,11 +11,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import de.mm20.launcher2.preferences.ui.PerformanceSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.theme.colorscheme.darkColorSchemeOf
 import de.mm20.launcher2.ui.theme.colorscheme.lightColorSchemeOf
+import de.mm20.launcher2.ui.theme.motion.scaledBy
 import de.mm20.launcher2.ui.theme.shapes.shapesOf
 import de.mm20.launcher2.ui.theme.transparency.LocalTransparencyScheme
 import de.mm20.launcher2.ui.theme.transparency.transparencySchemeOf
@@ -32,6 +35,10 @@ fun LauncherTheme(
 ) {
     val uiSettings: UiSettings = koinInject()
     val themeRepository: ThemeRepository = koinInject()
+    val performanceSettings: PerformanceSettings = koinInject()
+
+    val reduceAnimations by remember { performanceSettings.reduceAnimations }.collectAsState(false)
+    val animationSpeed by remember { performanceSettings.animationSpeed }.collectAsState(1f)
 
     val themeColors by remember {
         uiSettings.colorsId.flatMapLatest {
@@ -94,6 +101,9 @@ fun LauncherTheme(
             colorScheme = colorScheme,
             typography = typography,
             shapes = shapes,
+            motionScheme = remember(reduceAnimations, animationSpeed) {
+                MotionScheme.expressive().scaledBy(!reduceAnimations, animationSpeed)
+            },
             content = content
         )
     }

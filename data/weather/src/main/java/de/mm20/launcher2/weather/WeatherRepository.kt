@@ -82,6 +82,11 @@ internal class WeatherRepositoryImpl(
                 val provider =  WeatherProvider.getInstance(it.provider)
                 val weatherRequest =
                     PeriodicWorkRequestBuilder<WeatherUpdateWorker>(Duration.ofMillis(provider.getUpdateInterval()))
+                        .setConstraints(
+                            Constraints.Builder()
+                                .setRequiredNetworkType(NetworkType.CONNECTED)
+                                .build()
+                        )
                         .build()
                 WorkManager.getInstance(context).enqueueUniquePeriodicWork(
                     "weather",
