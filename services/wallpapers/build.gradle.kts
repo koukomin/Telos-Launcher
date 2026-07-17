@@ -47,6 +47,11 @@ dependencies {
 
     implementation(libs.koin.android)
 
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.common)
+    implementation(libs.androidx.media3.effect)
+    implementation(libs.androidx.palette)
+
     implementation(project(":core:ktx"))
     implementation(project(":core:i18n"))
     implementation(project(":core:preferences"))

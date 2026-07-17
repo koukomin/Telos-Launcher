@@ -28,6 +28,8 @@ androidx-appcompat = "1.7.1"
 androidx-activity = "1.13.0"
 androidx-navigation3 = "1.1.1"
 
+media3 = "1.5.1"
+
 # Careful, 2.10.0 seems to require some fixes, or jobs aren't executed
 androidx-work = "2.11.2"
 androidx-browser = "1.10.0"
@@ -93,6 +95,10 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-work = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidx-work" }
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "androidx-browser" }
 androidx-palette = { group = "androidx.palette", name = "palette", version.ref = "androidx-palette" }
+
+androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media3" }
+androidx-media3-common = { group = "androidx.media3", name = "media3-common", version.ref = "media3" }
+androidx-media3-effect = { group = "androidx.media3", name = "media3-effect", version.ref = "media3" }
 
 accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
 accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanist" }

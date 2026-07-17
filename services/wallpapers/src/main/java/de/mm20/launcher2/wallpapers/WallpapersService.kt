@@ -43,18 +43,24 @@ class WallpapersService(private val context: Context) {
     }
 
     /**
-     * Copies the given video into app-private storage (so access survives permission loss and
-     * file moves) and notifies a running wallpaper engine to reload. Returns false on I/O errors.
-     *
-     * Note that this does not activate the wallpaper: live wallpapers can only be activated by
-     * the user through the system preview - use [getActivationIntent].
+     * Copies the given video into app-private storage and notifies a running wallpaper engine
+     * to reload. If [appendToPlaylist] is true, adds it to the list instead of replacing.
      */
-    suspend fun setVideoWallpaper(uri: Uri): Boolean {
+    suspend fun setVideoWallpaper(uri: Uri, appendToPlaylist: Boolean = false): Boolean {
         return withContext(Dispatchers.IO) {
-            val target = getVideoFile(context)
-            val tmp = File(target.parentFile, "${target.name}.tmp")
+            val dir = getVideoDir(context)
+            dir.mkdirs()
+            
+            val filename = if (appendToPlaylist) "video_${System.currentTimeMillis()}" else "video"
+            val target = File(dir, filename)
+            
+            if (!appendToPlaylist) {
+                // Clear existing videos if not appending
+                dir.listFiles()?.forEach { it.delete() }
+            }
+            
+            val tmp = File(dir, "$filename.tmp")
             try {
-                target.parentFile?.mkdirs()
                 context.contentResolver.openInputStream(uri)?.use { input ->
                     tmp.outputStream().use { output ->
                         input.copyTo(output)
@@ -72,7 +78,8 @@ class WallpapersService(private val context: Context) {
     }
 
     fun hasVideoWallpaper(): Boolean {
-        return getVideoFile(context).exists()
+        return getVideoDir(context).listFiles()?.isNotEmpty() == true ||
+                @Suppress("DEPRECATION") getVideoFile(context).exists()
     }
 
     /** True if our video wallpaper service is the currently active system live wallpaper. */
@@ -96,6 +103,11 @@ class WallpapersService(private val context: Context) {
     }
 
     companion object {
+        internal fun getVideoDir(context: Context): File {
+            return File(context.filesDir, "wallpapers/video_playlist")
+        }
+
+        @Deprecated("Use getVideoDir")
         internal fun getVideoFile(context: Context): File {
             return File(context.filesDir, "wallpapers/video")
         }
