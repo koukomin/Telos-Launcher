@@ -71,6 +71,7 @@ enum class PermissionGroup {
     ManageProfiles,
     Call,
     UsageAccess,
+    OverlayWindow,
 }
 
 internal class PermissionsManagerImpl(
@@ -107,6 +108,9 @@ internal class PermissionsManagerImpl(
     )
     private val usageAccessPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.UsageAccess)
+    )
+    private val overlayWindowPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.OverlayWindow)
     )
 
     override fun requestPermission(context: AppCompatActivity, permissionGroup: PermissionGroup) {
@@ -207,6 +211,20 @@ internal class PermissionsManagerImpl(
                     CrashReporter.logException(e)
                 }
             }
+
+            PermissionGroup.OverlayWindow -> {
+                try {
+                    context.tryStartActivity(
+                        Intent(
+                            Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                            "package:${context.packageName}".toUri(),
+                        )
+                    )
+                    pendingPermissionRequests.add(PermissionGroup.OverlayWindow)
+                } catch (e: ActivityNotFoundException) {
+                    CrashReporter.logException(e)
+                }
+            }
         }
     }
 
@@ -267,6 +285,10 @@ internal class PermissionsManagerImpl(
                 )
                 mode == AppOpsManager.MODE_ALLOWED
             }
+
+            PermissionGroup.OverlayWindow -> {
+                Settings.canDrawOverlays(context)
+            }
         }
     }
 
@@ -283,6 +305,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.ManageProfiles -> manageProfilesPermissionState
             PermissionGroup.Call -> callPermissionState
             PermissionGroup.UsageAccess -> usageAccessPermissionState
+            PermissionGroup.OverlayWindow -> overlayWindowPermissionState
         }
     }
 
@@ -305,6 +328,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.ManageProfiles -> manageProfilesPermissionState.value = granted
             PermissionGroup.Call -> callPermissionState.value = granted
             PermissionGroup.UsageAccess -> usageAccessPermissionState.value = granted
+            PermissionGroup.OverlayWindow -> overlayWindowPermissionState.value = granted
         }
     }
 
@@ -313,6 +337,7 @@ internal class PermissionsManagerImpl(
         appShortcutsPermissionState.value = checkPermissionOnce(PermissionGroup.AppShortcuts)
         manageProfilesPermissionState.value = checkPermissionOnce(PermissionGroup.ManageProfiles)
         usageAccessPermissionState.value = checkPermissionOnce(PermissionGroup.UsageAccess)
+        overlayWindowPermissionState.value = checkPermissionOnce(PermissionGroup.OverlayWindow)
     }
 
     override fun reportNotificationListenerState(running: Boolean) {

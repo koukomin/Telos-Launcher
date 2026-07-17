@@ -80,6 +80,8 @@ import de.mm20.launcher2.ui.settings.freeze.FreezeDashboardRoute
 import de.mm20.launcher2.ui.settings.freeze.FreezeDashboardScreen
 import de.mm20.launcher2.ui.settings.freeze.FreezeSettingsRoute
 import de.mm20.launcher2.ui.settings.freeze.FreezeSettingsScreen
+import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsRoute
+import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsScreen
 import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsRoute
 import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsScreen
 import de.mm20.launcher2.ui.settings.protection.ProtectedSettingsScreen
@@ -325,6 +327,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<PerformanceSettingsRoute> {
                 PerformanceSettingsScreen()
+            }
+            entry<FloatingLauncherSettingsRoute> {
+                FloatingLauncherSettingsScreen()
             }
             entry<WallpaperSettingsRoute> {
                 WallpaperSettingsScreen()

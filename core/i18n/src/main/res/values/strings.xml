@@ -421,6 +421,8 @@
     <string name="missing_permission_appshortcuts_search_settings">%1$s must be set as default home app to search app shortcuts</string>
     <!-- Missing file permission in search settings screen -->
     <string name="missing_permission_file_search_settings">External storage permission is required to search files on this device</string>
+    <!-- Missing "draw over other apps" permission in floating launcher settings screen -->
+    <string name="missing_permission_floating_launcher">Displaying over other apps is required for the floating launcher</string>
     <!-- Missing file permission in search settings screen.
         Used in Android 10+ because the required permission has changed from READ_EXTERNAL_STORAGE
         to MANAGE_EXTERNAL_STORAGE which is labeled differently in the Android OS -->
@@ -656,6 +658,23 @@
     <string name="preference_category_shutters">Shutters</string>
     <string name="preference_shutters">Enable shutters</string>
     <string name="preference_shutters_summary">Swipe up on an app icon to reveal that app\'s assigned widget without opening the app. Assign a widget from the app\'s info menu.</string>
+    <string name="preference_screen_floating_launcher">Floating launcher</string>
+    <string name="preference_screen_floating_launcher_summary">Edge tab for quick access to your favorite apps over other apps</string>
+    <string name="preference_floating_launcher">Enable floating launcher</string>
+    <string name="preference_floating_launcher_summary">Shows a small tab on the screen edge, even while using other apps. Tap it to open your favorite apps.</string>
+    <string name="preference_category_appearance">Appearance</string>
+    <string name="preference_floating_launcher_edge">Screen edge</string>
+    <string name="preference_floating_launcher_edge_left">Left</string>
+    <string name="preference_floating_launcher_edge_right">Right</string>
+    <string name="preference_floating_launcher_position">Vertical position</string>
+    <string name="preference_floating_launcher_thickness">Tab thickness</string>
+    <string name="preference_floating_launcher_color">Tab color</string>
+    <string name="preference_floating_launcher_alpha">Tab transparency</string>
+    <string name="floating_launcher_notification_channel">Floating launcher</string>
+    <string name="floating_launcher_notification_title">Floating launcher is active</string>
+    <string name="floating_launcher_notification_text">Tap to change settings</string>
+    <string name="floating_launcher_panel_title">Quick launcher</string>
+    <string name="floating_launcher_panel_empty">No favorite apps yet. Pin some from their app info menu.</string>
     <string name="preference_nextcloud_signin">Sign in to Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Sign in to search your Nextcloud server</string>
     <string name="preference_nextcloud">Nextcloud</string>

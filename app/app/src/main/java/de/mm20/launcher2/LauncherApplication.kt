@@ -1,6 +1,9 @@
 package de.mm20.launcher2
 
 import android.app.Application
+import android.content.Intent
+import android.provider.Settings
+import androidx.core.content.ContextCompat
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.decode.SvgDecoder
@@ -35,7 +38,9 @@ import de.mm20.launcher2.feed.feedModule
 import de.mm20.launcher2.freeze.freezeModule
 import de.mm20.launcher2.plugins.servicesPluginsModule
 import de.mm20.launcher2.preferences.preferencesModule
+import de.mm20.launcher2.preferences.ui.FloatingLauncherSettings
 import de.mm20.launcher2.profiles.profilesModule
+import de.mm20.launcher2.ui.floating.FloatingLauncherService
 import de.mm20.launcher2.searchactions.searchActionsModule
 import de.mm20.launcher2.services.favorites.favoritesModule
 import de.mm20.launcher2.services.tags.servicesTagsModule
@@ -44,6 +49,8 @@ import de.mm20.launcher2.themes.themesModule
 import de.mm20.launcher2.wallpapers.wallpapersModule
 import de.mm20.launcher2.weather.weatherModule
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.first
+import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -106,6 +113,19 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     wallpapersModule,
                 )
             )
+        }
+
+        // Resume the floating quick launcher overlay after a process restart (e.g. reboot),
+        // since it isn't a persistent system-level component and only runs while this process
+        // is alive.
+        launch {
+            val floatingLauncherSettings = get<FloatingLauncherSettings>()
+            if (floatingLauncherSettings.enabled.first() && Settings.canDrawOverlays(this@LauncherApplication)) {
+                ContextCompat.startForegroundService(
+                    this@LauncherApplication,
+                    Intent(this@LauncherApplication, FloatingLauncherService::class.java),
+                )
+            }
         }
     }
 

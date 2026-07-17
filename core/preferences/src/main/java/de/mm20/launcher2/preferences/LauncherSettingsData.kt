@@ -296,6 +296,14 @@ data class LauncherSettingsData internal constructor(
     val protectionCustomLockHashed: String? = null,
     val protectionLockLauncher: Boolean = false,
 
+    val floatingLauncherEnabled: Boolean = false,
+    val floatingLauncherEdge: FloatingLauncherEdge = FloatingLauncherEdge.Right,
+    val floatingLauncherPosition: Float = 0.5f,
+    val floatingLauncherThickness: Int = 24,
+    @Serializable(with = ColorIntAsHexSerializer::class)
+    val floatingLauncherColor: Int = 0xFF6750A4.toInt(),
+    val floatingLauncherAlpha: Float = 0.6f,
+
     ) {
     constructor(
         context: Context,
@@ -576,6 +584,13 @@ enum class SettingsLockMethod {
 
     /** Biometrics only: the device PIN/pattern is deliberately not accepted. */
     @SerialName("biometrics_only") BiometricsOnly,
+}
+
+/** Which screen edge the floating quick launcher's collapsed tab attaches to. */
+@Serializable
+enum class FloatingLauncherEdge {
+    @SerialName("left") Left,
+    @SerialName("right") Right,
 }
 
 @Serializable

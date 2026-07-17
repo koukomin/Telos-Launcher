@@ -20,6 +20,7 @@ import de.mm20.launcher2.ui.settings.integrations.IntegrationsSettingsRoute
 import de.mm20.launcher2.ui.settings.locale.LocaleSettingsRoute
 import de.mm20.launcher2.ui.settings.plugins.PluginsSettingsRoute
 import de.mm20.launcher2.ui.settings.search.SearchSettingsRoute
+import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsRoute
 import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsRoute
 import de.mm20.launcher2.ui.settings.wallpaper.WallpaperSettingsRoute
 import kotlinx.serialization.Serializable
@@ -65,6 +66,14 @@ fun MainSettingsScreen() {
                     summary = stringResource(id = R.string.preference_screen_wallpaper_summary),
                     onClick = {
                         backStack.add(WallpaperSettingsRoute)
+                    }
+                )
+                Preference(
+                    icon = R.drawable.apps_24px,
+                    title = stringResource(id = R.string.preference_screen_floating_launcher),
+                    summary = stringResource(id = R.string.preference_screen_floating_launcher_summary),
+                    onClick = {
+                        backStack.add(FloatingLauncherSettingsRoute)
                     }
                 )
                 Preference(

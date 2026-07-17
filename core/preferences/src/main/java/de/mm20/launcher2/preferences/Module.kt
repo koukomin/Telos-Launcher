@@ -19,6 +19,7 @@ import de.mm20.launcher2.preferences.search.WebsiteSearchSettings
 import de.mm20.launcher2.preferences.search.WikipediaSearchSettings
 import de.mm20.launcher2.preferences.ui.BadgeSettings
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
+import de.mm20.launcher2.preferences.ui.FloatingLauncherSettings
 import de.mm20.launcher2.preferences.ui.GestureSettings
 import de.mm20.launcher2.preferences.ui.IconSettings
 import de.mm20.launcher2.preferences.ui.LocaleSettings
@@ -64,4 +65,5 @@ val preferencesModule = module {
     factory { ProtectionSettings(get()) }
     factory { PerformanceSettings(get()) }
     factory { ShutterSettings(get()) }
+    factory { FloatingLauncherSettings(get()) }
 }
