@@ -10,6 +10,7 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -46,6 +47,12 @@ fun SearchFilters(
             label = { Text(stringResource(R.string.search_filter_online)) }
         )
         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+        Text(
+            text = stringResource(R.string.search_filter_quick_filters),
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.secondary,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
         FlowRow {
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
@@ -104,6 +111,85 @@ fun SearchFilters(
                 },
                 label = { Text(stringResource(R.string.preference_search_contacts)) }
             )
+        }
+        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+        FlowRow {
+            FilterChip(
+                modifier = Modifier.padding(end = 16.dp),
+                selected = filters.documents && (!allCategoriesEnabled || settings),
+                onClick = {
+                    if (settings) {
+                        onFiltersChange(filters.copy(documents = !filters.documents))
+                    } else {
+                        onFiltersChange(filters.toggleDocuments())
+                    }
+                },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(R.drawable.article_24px),
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                label = { Text(stringResource(R.string.file_type_document)) }
+            )
+            FilterChip(
+                modifier = Modifier.padding(end = 16.dp),
+                selected = filters.images && (!allCategoriesEnabled || settings),
+                onClick = {
+                    if (settings) {
+                        onFiltersChange(filters.copy(images = !filters.images))
+                    } else {
+                        onFiltersChange(filters.toggleImages())
+                    }
+                },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(R.drawable.photo_24px),
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                label = { Text(stringResource(R.string.file_type_image)) }
+            )
+            FilterChip(
+                modifier = Modifier.padding(end = 16.dp),
+                selected = filters.video && (!allCategoriesEnabled || settings),
+                onClick = {
+                    if (settings) {
+                        onFiltersChange(filters.copy(video = !filters.video))
+                    } else {
+                        onFiltersChange(filters.toggleVideo())
+                    }
+                },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(R.drawable.movie_24px),
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                label = { Text(stringResource(R.string.file_type_video)) }
+            )
+            FilterChip(
+                modifier = Modifier.padding(end = 16.dp),
+                selected = filters.music && (!allCategoriesEnabled || settings),
+                onClick = {
+                    if (settings) {
+                        onFiltersChange(filters.copy(music = !filters.music))
+                    } else {
+                        onFiltersChange(filters.toggleMusic())
+                    }
+                },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(R.drawable.music_note_24px),
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                label = { Text(stringResource(R.string.file_type_music)) }
+            )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
                 selected = filters.events && (!allCategoriesEnabled || settings),
@@ -122,6 +208,25 @@ fun SearchFilters(
                     )
                 },
                 label = { Text(stringResource(R.string.preference_search_calendar)) }
+            )
+            FilterChip(
+                modifier = Modifier.padding(end = 16.dp),
+                selected = filters.reminders && (!allCategoriesEnabled || settings),
+                onClick = {
+                    if (settings) {
+                        onFiltersChange(filters.copy(reminders = !filters.reminders))
+                    } else {
+                        onFiltersChange(filters.toggleReminders())
+                    }
+                },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(R.drawable.task_alt_24px),
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                label = { Text(stringResource(R.string.widget_name_reminders)) }
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),

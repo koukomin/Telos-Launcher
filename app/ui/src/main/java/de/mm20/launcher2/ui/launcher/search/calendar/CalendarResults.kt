@@ -27,10 +27,11 @@ fun LazyListScope.CalendarResults(
     reverse: Boolean,
     truncate: Boolean,
     onShowAll: () -> Unit,
+    key: String = "calendar"
 ) {
     ListResults(
         items = events.subList(0, if (truncate) min(5, events.size) else events.size),
-        key = "calendar",
+        key = key,
         reverse = reverse,
         selectedIndex = selectedIndex,
         itemContent = { calendar, showDetails, index ->

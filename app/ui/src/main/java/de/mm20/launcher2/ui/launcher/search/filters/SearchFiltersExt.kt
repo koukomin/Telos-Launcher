@@ -12,7 +12,12 @@ fun SearchFilters.withAllCategories(): SearchFilters {
         shortcuts = true,
         contacts = true,
         events = true,
-        tools = true
+        reminders = true,
+        tools = true,
+        documents = true,
+        images = true,
+        video = true,
+        music = true
     )
 }
 
@@ -25,7 +30,12 @@ fun SearchFilters.withOnlyCategory(
     shortcuts: Boolean = false,
     contacts: Boolean = false,
     events: Boolean = false,
-    utilities: Boolean = false
+    reminders: Boolean = false,
+    utilities: Boolean = false,
+    documents: Boolean = false,
+    images: Boolean = false,
+    video: Boolean = false,
+    music: Boolean = false
 ): SearchFilters {
     return copy(
         apps = apps,
@@ -36,7 +46,12 @@ fun SearchFilters.withOnlyCategory(
         shortcuts = shortcuts,
         contacts = contacts,
         events = events,
-        tools = utilities
+        reminders = reminders,
+        tools = utilities,
+        documents = documents,
+        images = images,
+        video = video,
+        music = music
     )
 }
 
@@ -143,4 +158,59 @@ fun SearchFilters.toggleTools(): SearchFilters {
     }
 
     return copy(tools = !tools)
+}
+
+fun SearchFilters.toggleReminders(): SearchFilters {
+    if (allCategoriesEnabled) {
+        return withOnlyCategory(reminders = true)
+    }
+    if (reminders && enabledCategories == 1) {
+        return withAllCategories()
+    }
+
+    return copy(reminders = !reminders)
+}
+
+fun SearchFilters.toggleDocuments(): SearchFilters {
+    if (allCategoriesEnabled) {
+        return withOnlyCategory(documents = true)
+    }
+    if (documents && enabledCategories == 1) {
+        return withAllCategories()
+    }
+
+    return copy(documents = !documents)
+}
+
+fun SearchFilters.toggleImages(): SearchFilters {
+    if (allCategoriesEnabled) {
+        return withOnlyCategory(images = true)
+    }
+    if (images && enabledCategories == 1) {
+        return withAllCategories()
+    }
+
+    return copy(images = !images)
+}
+
+fun SearchFilters.toggleVideo(): SearchFilters {
+    if (allCategoriesEnabled) {
+        return withOnlyCategory(video = true)
+    }
+    if (video && enabledCategories == 1) {
+        return withAllCategories()
+    }
+
+    return copy(video = !video)
+}
+
+fun SearchFilters.toggleMusic(): SearchFilters {
+    if (allCategoriesEnabled) {
+        return withOnlyCategory(music = true)
+    }
+    if (music && enabledCategories == 1) {
+        return withAllCategories()
+    }
+
+    return copy(music = !music)
 }

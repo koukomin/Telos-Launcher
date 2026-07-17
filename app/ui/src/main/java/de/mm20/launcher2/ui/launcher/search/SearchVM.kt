@@ -116,8 +116,13 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val appShortcutResults = mutableStateListOf<AppShortcut>()
     val fileResults = mutableStateListOf<File>()
+    val documentResults = mutableStateListOf<File>()
+    val imageResults = mutableStateListOf<File>()
+    val videoResults = mutableStateListOf<File>()
+    val musicResults = mutableStateListOf<File>()
     val contactResults = mutableStateListOf<Contact>()
     val calendarResults = mutableStateListOf<CalendarEvent>()
+    val reminderResults = mutableStateListOf<CalendarEvent>()
     val articleResults = mutableStateListOf<Article>()
     val websiteResults = mutableStateListOf<Website>()
     val calculatorResults = mutableStateListOf<Calculator>()
@@ -217,8 +222,13 @@ class SearchVM : ViewModel(), KoinComponent {
             expandedCategory.value = when {
                 filters.apps -> SearchCategory.Apps
                 filters.events -> SearchCategory.Calendar
+                filters.reminders -> SearchCategory.Reminders
                 filters.contacts -> SearchCategory.Contacts
                 filters.files -> SearchCategory.Files
+                filters.documents -> SearchCategory.Documents
+                filters.images -> SearchCategory.Images
+                filters.video -> SearchCategory.Video
+                filters.music -> SearchCategory.Music
                 filters.websites -> SearchCategory.Website
                 filters.articles -> SearchCategory.Articles
                 filters.places -> SearchCategory.Location
@@ -315,6 +325,26 @@ class SearchVM : ViewModel(), KoinComponent {
                             ?.filterNot { hiddenKeys.contains(it.key) }
                             ?.applyRanking(query)
                         )
+                        documentResults.updateItems(
+                            results.documents
+                            ?.filterNot { hiddenKeys.contains(it.key) }
+                            ?.applyRanking(query)
+                        )
+                        imageResults.updateItems(
+                            results.images
+                            ?.filterNot { hiddenKeys.contains(it.key) }
+                            ?.applyRanking(query)
+                        )
+                        videoResults.updateItems(
+                            results.video
+                            ?.filterNot { hiddenKeys.contains(it.key) }
+                            ?.applyRanking(query)
+                        )
+                        musicResults.updateItems(
+                            results.music
+                            ?.filterNot { hiddenKeys.contains(it.key) }
+                            ?.applyRanking(query)
+                        )
 
                         contactResults.updateItems(
                             results.contacts?.filterNot { hiddenKeys.contains(it.key) }
@@ -322,6 +352,10 @@ class SearchVM : ViewModel(), KoinComponent {
                         )
                         calendarResults.updateItems(
                             results.calendars?.filterNot { hiddenKeys.contains(it.key) }
+                                ?.applyRanking(query)
+                        )
+                        reminderResults.updateItems(
+                            results.reminders?.filterNot { hiddenKeys.contains(it.key) }
                                 ?.applyRanking(query)
                         )
                         locationResults.updateItems(
@@ -355,11 +389,16 @@ class SearchVM : ViewModel(), KoinComponent {
                                 appResults.isNotEmpty() -> appResults.first()
                                 appShortcutResults.isNotEmpty() -> appShortcutResults.first()
                                 calendarResults.isNotEmpty() -> calendarResults.first()
+                                reminderResults.isNotEmpty() -> reminderResults.first()
                                 locationResults.isNotEmpty() -> locationResults.first()
                                 contactResults.isNotEmpty() -> contactResults.first()
                                 articleResults.isNotEmpty() -> articleResults.first()
                                 websiteResults.isNotEmpty() -> websiteResults.first()
                                 fileResults.isNotEmpty() -> fileResults.first()
+                                documentResults.isNotEmpty() -> documentResults.first()
+                                imageResults.isNotEmpty() -> imageResults.first()
+                                videoResults.isNotEmpty() -> videoResults.first()
+                                musicResults.isNotEmpty() -> musicResults.first()
                                 searchActionResults.isNotEmpty() -> searchActionResults.first()
                                 else -> null
                             }
@@ -487,8 +526,13 @@ enum class SearchCategory {
     Apps,
     Calculator,
     Calendar,
+    Reminders,
     Contacts,
     Files,
+    Documents,
+    Images,
+    Video,
+    Music,
     UnitConverter,
     Articles,
     Website,

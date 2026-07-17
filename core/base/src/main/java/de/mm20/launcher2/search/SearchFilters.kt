@@ -15,9 +15,29 @@ data class SearchFilters(
     val shortcuts: Boolean = true,
     val contacts: Boolean = true,
     val events: Boolean = true,
+    val reminders: Boolean = true,
     val tools: Boolean = true,
+    val documents: Boolean = true,
+    val images: Boolean = true,
+    val video: Boolean = true,
+    val music: Boolean = true,
 ) {
-    private val categories = listOf(apps, websites, articles, places, files, shortcuts, contacts, events, tools)
+    private val categories = listOf(
+        apps,
+        websites,
+        articles,
+        places,
+        files,
+        shortcuts,
+        contacts,
+        events,
+        reminders,
+        tools,
+        documents,
+        images,
+        video,
+        music
+    )
 
     val allCategoriesEnabled
         get() = categories.all { it }

@@ -86,7 +86,12 @@ fun SearchColumn(
     val appShortcuts = viewModel.appShortcutResults
     val contacts = viewModel.contactResults
     val files = viewModel.fileResults
+    val documents = viewModel.documentResults
+    val images = viewModel.imageResults
+    val video = viewModel.videoResults
+    val music = viewModel.musicResults
     val events = viewModel.calendarResults
+    val reminders = viewModel.reminderResults
     val unitConverter = viewModel.unitConverterResults
     val calculator = viewModel.calculatorResults
     val wikipedia = viewModel.articleResults
@@ -118,7 +123,12 @@ fun SearchColumn(
     var selectedAppIndex: Int by remember(query) { mutableIntStateOf(-1) }
     var selectedContactIndex: Int by remember(query) { mutableIntStateOf(-1) }
     var selectedFileIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedDocumentIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedImageIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedVideoIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedMusicIndex: Int by remember(query) { mutableIntStateOf(-1) }
     var selectedCalendarIndex: Int by remember(query) { mutableIntStateOf(-1) }
+    var selectedReminderIndex: Int by remember(query) { mutableIntStateOf(-1) }
     var selectedLocationIndex: Int by remember(query) { mutableIntStateOf(-1) }
     var selectedShortcutIndex: Int by remember(query) { mutableIntStateOf(-1) }
     var selectedArticleIndex: Int by remember(query) { mutableIntStateOf(-1) }
@@ -276,6 +286,22 @@ fun SearchColumn(
                         }
                     )
 
+                    CalendarResults(
+                        events = reminders,
+                        missingPermission = false,
+                        onPermissionRequest = {},
+                        onPermissionRequestRejected = {},
+                        reverse = reverse,
+                        selectedIndex = selectedReminderIndex,
+                        onSelect = { selectedReminderIndex = it },
+                        highlightedItem = bestMatch as? CalendarEvent,
+                        truncate = expandedCategory != SearchCategory.Reminders,
+                        onShowAll = {
+                            viewModel.expandCategory(SearchCategory.Reminders)
+                        },
+                        key = "reminders"
+                    )
+
                     ContactResults(
                         contacts = contacts,
                         missingPermission = missingContactsPermission,
@@ -346,6 +372,74 @@ fun SearchColumn(
                         onShowAll = {
                             viewModel.expandCategory(SearchCategory.Files)
                         }
+                    )
+                    FileResults(
+                        files = documents,
+                        onPermissionRequest = {},
+                        onPermissionRequestRejected = {},
+                        reverse = reverse,
+                        highlightedItem = bestMatch as? File,
+                        missingPermission = false,
+                        selectedIndex = selectedDocumentIndex,
+                        onSelect = {
+                            selectedDocumentIndex = it
+                        },
+                        truncate = expandedCategory != SearchCategory.Documents,
+                        onShowAll = {
+                            viewModel.expandCategory(SearchCategory.Documents)
+                        },
+                        key = "documents"
+                    )
+                    FileResults(
+                        files = images,
+                        onPermissionRequest = {},
+                        onPermissionRequestRejected = {},
+                        reverse = reverse,
+                        highlightedItem = bestMatch as? File,
+                        missingPermission = false,
+                        selectedIndex = selectedImageIndex,
+                        onSelect = {
+                            selectedImageIndex = it
+                        },
+                        truncate = expandedCategory != SearchCategory.Images,
+                        onShowAll = {
+                            viewModel.expandCategory(SearchCategory.Images)
+                        },
+                        key = "images"
+                    )
+                    FileResults(
+                        files = video,
+                        onPermissionRequest = {},
+                        onPermissionRequestRejected = {},
+                        reverse = reverse,
+                        highlightedItem = bestMatch as? File,
+                        missingPermission = false,
+                        selectedIndex = selectedVideoIndex,
+                        onSelect = {
+                            selectedVideoIndex = it
+                        },
+                        truncate = expandedCategory != SearchCategory.Video,
+                        onShowAll = {
+                            viewModel.expandCategory(SearchCategory.Video)
+                        },
+                        key = "video"
+                    )
+                    FileResults(
+                        files = music,
+                        onPermissionRequest = {},
+                        onPermissionRequestRejected = {},
+                        reverse = reverse,
+                        highlightedItem = bestMatch as? File,
+                        missingPermission = false,
+                        selectedIndex = selectedMusicIndex,
+                        onSelect = {
+                            selectedMusicIndex = it
+                        },
+                        truncate = expandedCategory != SearchCategory.Music,
+                        onShowAll = {
+                            viewModel.expandCategory(SearchCategory.Music)
+                        },
+                        key = "music"
                     )
                 }
             }

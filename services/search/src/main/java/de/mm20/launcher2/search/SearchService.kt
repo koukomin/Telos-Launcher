@@ -65,7 +65,14 @@ internal class SearchServiceImpl(
                         shortcuts = if (filters.shortcuts) it.shortcuts else null,
                         contacts = if (filters.contacts) it.contacts else null,
                         calendars = if (filters.events) it.calendars else null,
+                        reminders = if (filters.reminders) it.reminders else null,
+                        // Type-specific file categories are an alternative to the generic
+                        // "files" list, not additional to it - otherwise a PDF shows up in both.
                         files = if (filters.files) it.files else null,
+                        documents = if (!filters.files && filters.documents) it.documents else null,
+                        images = if (!filters.files && filters.images) it.images else null,
+                        video = if (!filters.files && filters.video) it.video else null,
+                        music = if (!filters.files && filters.music) it.music else null,
                         calculators = if (filters.tools) it.calculators else null,
                         unitConverters = if (filters.tools) it.unitConverters else null,
                         websites = if (filters.websites) it.websites else null,
@@ -81,7 +88,12 @@ internal class SearchServiceImpl(
                     val shortcuts = mutableListOf<AppShortcut>()
                     val contacts = mutableListOf<Contact>()
                     val events = mutableListOf<CalendarEvent>()
+                    val reminders = mutableListOf<CalendarEvent>()
                     val files = mutableListOf<File>()
+                    val documents = mutableListOf<File>()
+                    val images = mutableListOf<File>()
+                    val video = mutableListOf<File>()
+                    val music = mutableListOf<File>()
                     val unitConverters = mutableListOf<UnitConverter>()
                     val websites = mutableListOf<Website>()
                     val wikipedia = mutableListOf<Article>()
@@ -92,8 +104,25 @@ internal class SearchServiceImpl(
                             is Application -> if (filters.apps) apps.add(it)
                             is AppShortcut -> if (filters.shortcuts) shortcuts.add(it)
                             is Contact -> if (filters.contacts) contacts.add(it)
-                            is CalendarEvent -> if (filters.events) events.add(it)
-                            is File -> if (filters.files) files.add(it)
+                            is CalendarEvent -> {
+                                if (it.isTask) {
+                                    if (filters.reminders) reminders.add(it)
+                                } else {
+                                    if (filters.events) events.add(it)
+                                }
+                            }
+                            is File -> {
+                                if (filters.files) {
+                                    files.add(it)
+                                } else {
+                                    // Only split into type categories when the generic "files"
+                                    // filter is off, so a file never appears in two categories.
+                                    if (it.isDocument() && filters.documents) documents.add(it)
+                                    if (it.isImage() && filters.images) images.add(it)
+                                    if (it.isVideo() && filters.video) video.add(it)
+                                    if (it.isMusic() && filters.music) music.add(it)
+                                }
+                            }
                             is UnitConverter -> if (filters.tools) unitConverters.add(it)
                             is Website -> if (filters.websites) websites.add(it)
                             is Article -> if (filters.articles) wikipedia.add(it)
@@ -106,7 +135,12 @@ internal class SearchServiceImpl(
                         shortcuts = shortcuts,
                         contacts = contacts,
                         calendars = events,
+                        reminders = reminders,
                         files = files,
+                        documents = documents,
+                        images = images,
+                        video = video,
+                        music = music,
                         unitConverters = unitConverters,
                         websites = websites,
                         wikipedia = wikipedia,
@@ -168,17 +202,22 @@ internal class SearchServiceImpl(
                         }
                 }
             }
-            if (filters.events) {
+            if (filters.events || filters.reminders) {
                 launch {
                     calendarRepository.search(query, filters.allowNetwork)
                         .combine(customAttrResults) { calendars, customAttrs ->
-                            if (customAttrs.calendars != null) calendars + customAttrs.calendars
-                            else calendars
+                            val base = if (customAttrs.calendars != null || customAttrs.reminders != null) {
+                                calendars + (customAttrs.calendars ?: emptyList()) + (customAttrs.reminders ?: emptyList())
+                            } else calendars
+                            base
                         }
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(calendars = r)
+                                it.copy(
+                                    calendars = if (filters.events) r.filter { !it.isTask } else null,
+                                    reminders = if (filters.reminders) r.filter { it.isTask } else null
+                                )
                             }
                         }
                 }
@@ -249,20 +288,28 @@ internal class SearchServiceImpl(
                         }
                 }
             }
-            if (filters.files) {
+            if (filters.files || filters.documents || filters.images || filters.video || filters.music) {
                 launch {
                     fileRepository.search(
                         query,
                         filters.allowNetwork
                     )
                         .combine(customAttrResults) { files, customAttrs ->
-                            if (customAttrs.files != null) files + customAttrs.files
-                            else files
+                            val base = if (customAttrs.files != null || customAttrs.documents != null || customAttrs.images != null || customAttrs.video != null || customAttrs.music != null) {
+                                files + (customAttrs.files ?: emptyList()) + (customAttrs.documents ?: emptyList()) + (customAttrs.images ?: emptyList()) + (customAttrs.video ?: emptyList()) + (customAttrs.music ?: emptyList())
+                            } else files
+                            base
                         }
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(files = r)
+                                it.copy(
+                                    files = if (filters.files) r else null,
+                                    documents = if (!filters.files && filters.documents) r.filter { it.isDocument() } else null,
+                                    images = if (!filters.files && filters.images) r.filter { it.isImage() } else null,
+                                    video = if (!filters.files && filters.video) r.filter { it.isVideo() } else null,
+                                    music = if (!filters.files && filters.music) r.filter { it.isMusic() } else null,
+                                )
                             }
                         }
                 }
@@ -320,7 +367,12 @@ data class SearchResults(
     val shortcuts: List<AppShortcut>? = null,
     val contacts: List<Contact>? = null,
     val calendars: List<CalendarEvent>? = null,
+    val reminders: List<CalendarEvent>? = null,
     val files: List<File>? = null,
+    val documents: List<File>? = null,
+    val images: List<File>? = null,
+    val video: List<File>? = null,
+    val music: List<File>? = null,
     val calculators: List<Calculator>? = null,
     val unitConverters: List<UnitConverter>? = null,
     val websites: List<Website>? = null,
@@ -341,7 +393,12 @@ fun SearchResults.toList(): List<Searchable> {
         shortcuts,
         contacts,
         calendars,
+        reminders,
         files,
+        documents,
+        images,
+        video,
+        music,
         calculators,
         unitConverters,
         websites,

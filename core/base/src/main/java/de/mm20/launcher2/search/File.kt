@@ -142,6 +142,22 @@ interface File : SavableSearchable {
 
 }
 
+private val documentMimePrefixes = listOf(
+    "text/",
+    "application/pdf",
+    "application/msword",
+    "application/vnd.openxmlformats-officedocument",
+    "application/vnd.ms-",
+    "application/vnd.oasis.opendocument",
+    "application/epub+zip",
+    "application/rtf",
+)
+
+fun File.isImage(): Boolean = mimeType.startsWith("image/")
+fun File.isVideo(): Boolean = mimeType.startsWith("video/")
+fun File.isMusic(): Boolean = mimeType.startsWith("audio/")
+fun File.isDocument(): Boolean = documentMimePrefixes.any { mimeType.startsWith(it) }
+
 @Serializable
 enum class FileMetaType {
     @SerialName("title") Title,

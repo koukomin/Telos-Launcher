@@ -12,12 +12,17 @@ val KeyboardFilterBarItem.iconMedium
         KeyboardFilterBarItem.Contacts -> R.drawable.person_24px
         KeyboardFilterBarItem.Places -> R.drawable.location_on_24px
         KeyboardFilterBarItem.Files -> R.drawable.description_24px
+        KeyboardFilterBarItem.Documents -> R.drawable.article_24px
+        KeyboardFilterBarItem.Images -> R.drawable.photo_24px
+        KeyboardFilterBarItem.Video -> R.drawable.movie_24px
+        KeyboardFilterBarItem.Music -> R.drawable.music_note_24px
         KeyboardFilterBarItem.Tools -> R.drawable.handyman_24px
         KeyboardFilterBarItem.Articles -> R.drawable.wikipedia
         KeyboardFilterBarItem.Websites -> R.drawable.public_24px
         KeyboardFilterBarItem.Shortcuts -> R.drawable.mobile_arrow_up_right_24px
         KeyboardFilterBarItem.HiddenResults -> R.drawable.visibility_off_24px
         KeyboardFilterBarItem.OnlineResults -> R.drawable.language_24px
+        KeyboardFilterBarItem.Reminders -> R.drawable.task_alt_24px
     }
 
 val KeyboardFilterBarItem.iconSmall
@@ -27,12 +32,17 @@ val KeyboardFilterBarItem.iconSmall
         KeyboardFilterBarItem.Contacts -> R.drawable.person_20px
         KeyboardFilterBarItem.Places -> R.drawable.location_on_20px
         KeyboardFilterBarItem.Files -> R.drawable.description_20px
+        KeyboardFilterBarItem.Documents -> R.drawable.article_24px
+        KeyboardFilterBarItem.Images -> R.drawable.photo_24px
+        KeyboardFilterBarItem.Video -> R.drawable.movie_24px
+        KeyboardFilterBarItem.Music -> R.drawable.music_note_24px
         KeyboardFilterBarItem.Tools -> R.drawable.handyman_20px
         KeyboardFilterBarItem.Articles -> R.drawable.wikipedia
         KeyboardFilterBarItem.Websites -> R.drawable.public_20px
         KeyboardFilterBarItem.Shortcuts -> R.drawable.mobile_arrow_up_right_20px
         KeyboardFilterBarItem.HiddenResults -> R.drawable.visibility_off_20px
         KeyboardFilterBarItem.OnlineResults -> R.drawable.language_20px
+        KeyboardFilterBarItem.Reminders -> R.drawable.task_alt_24px
     }
 
 fun KeyboardFilterBarItem.getLabel(context: Context): String {
@@ -42,12 +52,17 @@ fun KeyboardFilterBarItem.getLabel(context: Context): String {
         KeyboardFilterBarItem.Contacts -> context.getString(R.string.preference_search_contacts)
         KeyboardFilterBarItem.Places -> context.getString(R.string.preference_search_locations)
         KeyboardFilterBarItem.Files -> context.getString(R.string.preference_search_files)
+        KeyboardFilterBarItem.Documents -> context.getString(R.string.file_type_document)
+        KeyboardFilterBarItem.Images -> context.getString(R.string.file_type_image)
+        KeyboardFilterBarItem.Video -> context.getString(R.string.file_type_video)
+        KeyboardFilterBarItem.Music -> context.getString(R.string.file_type_music)
         KeyboardFilterBarItem.Tools -> context.getString(R.string.search_filter_tools)
         KeyboardFilterBarItem.Articles -> context.getString(R.string.preference_search_wikipedia)
         KeyboardFilterBarItem.Websites -> context.getString(R.string.preference_search_websites)
         KeyboardFilterBarItem.Shortcuts -> context.getString(R.string.preference_search_appshortcuts)
         KeyboardFilterBarItem.HiddenResults -> context.getString(R.string.preference_hidden_items)
         KeyboardFilterBarItem.OnlineResults -> context.getString(R.string.search_filter_online)
+        KeyboardFilterBarItem.Reminders -> context.getString(R.string.preference_search_reminders)
     }
 }
 
@@ -71,21 +86,31 @@ fun SearchFilters.isSelected(item: KeyboardFilterBarItem): Boolean {
         KeyboardFilterBarItem.Shortcuts -> shortcuts
         KeyboardFilterBarItem.HiddenResults -> hiddenItems
         KeyboardFilterBarItem.OnlineResults -> allowNetwork
+        KeyboardFilterBarItem.Documents -> documents
+        KeyboardFilterBarItem.Images -> images
+        KeyboardFilterBarItem.Video -> video
+        KeyboardFilterBarItem.Music -> music
+        KeyboardFilterBarItem.Reminders -> reminders
     }
 }
 
 fun SearchFilters.toggle(item: KeyboardFilterBarItem): SearchFilters {
     return when (item) {
-        KeyboardFilterBarItem.Apps -> return toggleApps()
-        KeyboardFilterBarItem.Events -> return toggleEvents()
-        KeyboardFilterBarItem.Contacts -> return toggleContacts()
-        KeyboardFilterBarItem.Places -> return togglePlaces()
-        KeyboardFilterBarItem.Files -> return toggleFiles()
-        KeyboardFilterBarItem.Tools -> return toggleTools()
-        KeyboardFilterBarItem.Articles -> return toggleArticles()
-        KeyboardFilterBarItem.Websites -> return toggleWebsites()
-        KeyboardFilterBarItem.Shortcuts -> return toggleShortcuts()
-        KeyboardFilterBarItem.HiddenResults -> return copy(hiddenItems = !hiddenItems)
-        KeyboardFilterBarItem.OnlineResults -> return copy(allowNetwork = !allowNetwork)
+        KeyboardFilterBarItem.Apps -> toggleApps()
+        KeyboardFilterBarItem.Events -> toggleEvents()
+        KeyboardFilterBarItem.Contacts -> toggleContacts()
+        KeyboardFilterBarItem.Places -> togglePlaces()
+        KeyboardFilterBarItem.Files -> toggleFiles()
+        KeyboardFilterBarItem.Tools -> toggleTools()
+        KeyboardFilterBarItem.Articles -> toggleArticles()
+        KeyboardFilterBarItem.Websites -> toggleWebsites()
+        KeyboardFilterBarItem.Shortcuts -> toggleShortcuts()
+        KeyboardFilterBarItem.HiddenResults -> copy(hiddenItems = !hiddenItems)
+        KeyboardFilterBarItem.OnlineResults -> copy(allowNetwork = !allowNetwork)
+        KeyboardFilterBarItem.Documents -> toggleDocuments()
+        KeyboardFilterBarItem.Images -> toggleImages()
+        KeyboardFilterBarItem.Video -> toggleVideo()
+        KeyboardFilterBarItem.Music -> toggleMusic()
+        KeyboardFilterBarItem.Reminders -> toggleReminders()
     }
 }
