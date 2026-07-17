@@ -270,6 +270,22 @@
     <string name="context_profile_active_now">active now</string>
     <string name="missing_permission_context_profile_wifi">Reading the connected WiFi network\'s name requires location access. This launcher only uses it to check the network name for this trigger.</string>
     <string name="missing_permission_context_profile_bluetooth">Detecting connected Bluetooth devices requires the Bluetooth permission.</string>
+
+    <string name="preference_screen_desktop_mode">Desktop mode</string>
+    <string name="preference_screen_desktop_mode_summary">Show a taskbar and start menu on a connected external display</string>
+    <string name="preference_desktop_mode_enabled">Enable desktop mode</string>
+    <string name="preference_desktop_mode_enabled_summary">Automatically shows a desktop-style shell whenever an external display is connected</string>
+    <string name="desktop_mode_unsupported">Not supported on this device</string>
+    <string name="desktop_mode_unsupported_summary">This device does not support launching apps on a secondary display</string>
+    <string name="desktop_mode_display_status">External display</string>
+    <string name="desktop_mode_display_connected">Connected</string>
+    <string name="desktop_mode_display_not_connected">Not connected</string>
+    <string name="desktop_mode_orientation">Orientation</string>
+    <string name="desktop_mode_orientation_auto">Automatic</string>
+    <string name="desktop_mode_orientation_portrait">Portrait</string>
+    <string name="desktop_mode_orientation_landscape">Landscape</string>
+    <string name="desktop_mode_start_menu">Start menu</string>
+    <string name="desktop_mode_start_menu_empty">No apps found</string>
     <string name="freeze_widget_freeze_now">Freeze now</string>
     <string name="freeze_widget_candidates_summary">%1$d apps selected</string>
     <string name="freeze_widget_no_candidates">No apps selected. Choose apps to freeze in settings.</string>

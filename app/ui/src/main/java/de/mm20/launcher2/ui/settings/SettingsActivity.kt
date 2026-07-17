@@ -82,6 +82,8 @@ import de.mm20.launcher2.ui.settings.freeze.FreezeSettingsRoute
 import de.mm20.launcher2.ui.settings.freeze.FreezeSettingsScreen
 import de.mm20.launcher2.ui.settings.contextprofiles.ContextProfilesSettingsRoute
 import de.mm20.launcher2.ui.settings.contextprofiles.ContextProfilesSettingsScreen
+import de.mm20.launcher2.ui.settings.desktopmode.DesktopModeSettingsRoute
+import de.mm20.launcher2.ui.settings.desktopmode.DesktopModeSettingsScreen
 import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsRoute
 import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsScreen
 import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsRoute
@@ -335,6 +337,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<ContextProfilesSettingsRoute> {
                 ContextProfilesSettingsScreen()
+            }
+            entry<DesktopModeSettingsRoute> {
+                DesktopModeSettingsScreen()
             }
             entry<WallpaperSettingsRoute> {
                 WallpaperSettingsScreen()

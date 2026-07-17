@@ -1,6 +1,7 @@
 package de.mm20.launcher2
 
 import android.app.Application
+import android.app.ActivityOptions
 import android.content.Intent
 import android.provider.Settings
 import androidx.core.content.ContextCompat
@@ -16,6 +17,8 @@ import de.mm20.launcher2.calculator.calculatorModule
 import de.mm20.launcher2.calendar.calendarModule
 import de.mm20.launcher2.contacts.contactsModule
 import de.mm20.launcher2.contextprofiles.contextProfilesModule
+import de.mm20.launcher2.desktopmode.DesktopModeManager
+import de.mm20.launcher2.desktopmode.desktopModeModule
 import de.mm20.launcher2.data.customattrs.customAttrsModule
 import de.mm20.launcher2.data.i18nDataModule
 import de.mm20.launcher2.searchable.searchableModule
@@ -41,6 +44,7 @@ import de.mm20.launcher2.plugins.servicesPluginsModule
 import de.mm20.launcher2.preferences.preferencesModule
 import de.mm20.launcher2.preferences.ui.FloatingLauncherSettings
 import de.mm20.launcher2.profiles.profilesModule
+import de.mm20.launcher2.ui.desktopmode.DesktopModeActivity
 import de.mm20.launcher2.ui.floating.FloatingLauncherService
 import de.mm20.launcher2.searchactions.searchActionsModule
 import de.mm20.launcher2.services.favorites.favoritesModule
@@ -113,6 +117,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     freezeModule,
                     wallpapersModule,
                     contextProfilesModule,
+                    desktopModeModule,
                 )
             )
         }
@@ -127,6 +132,39 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     this@LauncherApplication,
                     Intent(this@LauncherApplication, FloatingLauncherService::class.java),
                 )
+            }
+        }
+
+        // Show/hide the desktop shell on an external display as it connects/disconnects, or as
+        // the setting is toggled. DesktopModeManager only tracks state - this is the one place
+        // that actually knows about DesktopModeActivity (services:desktop-mode sits below app:ui
+        // in the dependency graph and can't reference it directly).
+        launch {
+            val desktopModeManager = get<DesktopModeManager>()
+            var shellStarted = false
+            desktopModeManager.shouldShowDesktopShell.collect { shouldShow ->
+                if (shouldShow && !shellStarted) {
+                    val displayId = desktopModeManager.currentExternalDisplayId() ?: return@collect
+                    val options = ActivityOptions.makeBasic().apply {
+                        launchDisplayId = displayId
+                    }
+                    try {
+                        startActivity(
+                            Intent(this@LauncherApplication, DesktopModeActivity::class.java).apply {
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            },
+                            options.toBundle(),
+                        )
+                        shellStarted = true
+                    } catch (e: Exception) {
+                        // Device doesn't actually support launching on this display despite
+                        // advertising the feature, or the display disappeared mid-launch.
+                    }
+                } else if (!shouldShow) {
+                    // DesktopModeActivity is destroyed by the system when its display goes away;
+                    // nothing to do here beyond letting it be relaunched next time.
+                    shellStarted = false
+                }
             }
         }
     }

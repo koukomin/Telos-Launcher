@@ -90,6 +90,14 @@
 
         <activity android:name=".launcher.sheets.BindAndConfigureAppWidgetActivity" />
 
+        <activity
+            android:name=".desktopmode.DesktopModeActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:resizeableActivity="true"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|uiMode|density"
+            android:theme="@style/LauncherTheme" />
+
         <service
             android:name=".floating.FloatingLauncherService"
             android:exported="false"

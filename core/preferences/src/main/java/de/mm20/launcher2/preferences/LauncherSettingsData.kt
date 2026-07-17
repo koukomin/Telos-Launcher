@@ -309,6 +309,9 @@ data class LauncherSettingsData internal constructor(
     /** If set, this profile is force-active regardless of trigger evaluation. */
     val contextProfileManualOverrideId: String? = null,
 
+    val desktopModeEnabled: Boolean = false,
+    val desktopModeOrientation: DesktopModeOrientation = DesktopModeOrientation.Auto,
+
     ) {
     constructor(
         context: Context,
@@ -601,6 +604,14 @@ enum class SettingsLockMethod {
 enum class FloatingLauncherEdge {
     @SerialName("left") Left,
     @SerialName("right") Right,
+}
+
+/** Requested orientation for the desktop shell activity on the external display. */
+@Serializable
+enum class DesktopModeOrientation {
+    @SerialName("auto") Auto,
+    @SerialName("portrait") Portrait,
+    @SerialName("landscape") Landscape,
 }
 
 @Serializable

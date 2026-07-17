@@ -20,6 +20,7 @@ import de.mm20.launcher2.preferences.search.WikipediaSearchSettings
 import de.mm20.launcher2.preferences.ui.BadgeSettings
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.preferences.ui.ContextProfileSettings
+import de.mm20.launcher2.preferences.ui.DesktopModeSettings
 import de.mm20.launcher2.preferences.ui.FloatingLauncherSettings
 import de.mm20.launcher2.preferences.ui.GestureSettings
 import de.mm20.launcher2.preferences.ui.IconSettings
@@ -68,4 +69,5 @@ val preferencesModule = module {
     factory { ShutterSettings(get()) }
     factory { FloatingLauncherSettings(get()) }
     factory { ContextProfileSettings(get()) }
+    factory { DesktopModeSettings(get()) }
 }
