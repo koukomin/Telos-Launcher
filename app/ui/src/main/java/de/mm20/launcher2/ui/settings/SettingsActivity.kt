@@ -86,6 +86,8 @@ import de.mm20.launcher2.ui.settings.desktopmode.DesktopModeSettingsRoute
 import de.mm20.launcher2.ui.settings.desktopmode.DesktopModeSettingsScreen
 import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsRoute
 import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsScreen
+import de.mm20.launcher2.ui.settings.dynamicisland.DynamicIslandSettingsRoute
+import de.mm20.launcher2.ui.settings.dynamicisland.DynamicIslandSettingsScreen
 import de.mm20.launcher2.ui.settings.floating.FloatingLauncherZoneAppsRoute
 import de.mm20.launcher2.ui.settings.floating.FloatingLauncherZoneAppsScreen
 import de.mm20.launcher2.ui.settings.webappshortcuts.WebAppShortcutsSettingsRoute
@@ -344,6 +346,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<WebAppShortcutsSettingsRoute> {
                 WebAppShortcutsSettingsScreen()
+            }
+            entry<DynamicIslandSettingsRoute> {
+                DynamicIslandSettingsScreen()
             }
             entry<ContextProfilesSettingsRoute> {
                 ContextProfilesSettingsScreen()

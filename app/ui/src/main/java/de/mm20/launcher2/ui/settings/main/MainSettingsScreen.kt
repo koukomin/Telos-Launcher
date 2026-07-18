@@ -26,6 +26,7 @@ import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsRoute
 import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsRoute
 import de.mm20.launcher2.ui.settings.wallpaper.WallpaperSettingsRoute
 import de.mm20.launcher2.ui.settings.webappshortcuts.WebAppShortcutsSettingsRoute
+import de.mm20.launcher2.ui.settings.dynamicisland.DynamicIslandSettingsRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -85,6 +86,14 @@ fun MainSettingsScreen() {
                     summary = stringResource(id = R.string.preference_screen_web_app_shortcuts_summary),
                     onClick = {
                         backStack.add(WebAppShortcutsSettingsRoute)
+                    }
+                )
+                Preference(
+                    icon = R.drawable.timer_24px,
+                    title = stringResource(id = R.string.preference_screen_dynamic_island),
+                    summary = stringResource(id = R.string.preference_screen_dynamic_island_summary),
+                    onClick = {
+                        backStack.add(DynamicIslandSettingsRoute)
                     }
                 )
                 Preference(

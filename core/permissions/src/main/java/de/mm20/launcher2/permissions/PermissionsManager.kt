@@ -87,6 +87,7 @@ enum class PermissionGroup {
     Bluetooth,
     NotificationPolicy,
     WriteSettings,
+    PhoneState,
 }
 
 internal class PermissionsManagerImpl(
@@ -135,6 +136,9 @@ internal class PermissionsManagerImpl(
     )
     private val writeSettingsPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.WriteSettings)
+    )
+    private val phoneStatePermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.PhoneState)
     )
 
     private val accessibilityRequestAttempted = MutableStateFlow(false)
@@ -287,6 +291,14 @@ internal class PermissionsManagerImpl(
                     CrashReporter.logException(e)
                 }
             }
+
+            PermissionGroup.PhoneState -> {
+                ActivityCompat.requestPermissions(
+                    context,
+                    phoneStatePermissions,
+                    permissionGroup.ordinal
+                )
+            }
         }
     }
 
@@ -364,6 +376,10 @@ internal class PermissionsManagerImpl(
             PermissionGroup.WriteSettings -> {
                 Settings.System.canWrite(context)
             }
+
+            PermissionGroup.PhoneState -> {
+                phoneStatePermissions.all { context.checkPermission(it) }
+            }
         }
     }
 
@@ -384,6 +400,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Bluetooth -> bluetoothPermissionState
             PermissionGroup.NotificationPolicy -> notificationPolicyPermissionState
             PermissionGroup.WriteSettings -> writeSettingsPermissionState
+            PermissionGroup.PhoneState -> phoneStatePermissionState
         }
     }
 
@@ -418,6 +435,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Bluetooth -> bluetoothPermissionState.value = granted
             PermissionGroup.NotificationPolicy -> notificationPolicyPermissionState.value = granted
             PermissionGroup.WriteSettings -> writeSettingsPermissionState.value = granted
+            PermissionGroup.PhoneState -> phoneStatePermissionState.value = granted
         }
     }
 
@@ -453,6 +471,7 @@ internal class PermissionsManagerImpl(
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
         private val callPermissions = arrayOf(Manifest.permission.CALL_PHONE)
+        private val phoneStatePermissions = arrayOf(Manifest.permission.READ_PHONE_STATE)
         private val bluetoothPermissions: Array<String> =
             if (isAtLeastApiLevel(31)) arrayOf(Manifest.permission.BLUETOOTH_CONNECT) else emptyArray()
     }

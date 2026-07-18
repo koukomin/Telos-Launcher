@@ -43,10 +43,13 @@ import de.mm20.launcher2.feed.feedModule
 import de.mm20.launcher2.freeze.freezeModule
 import de.mm20.launcher2.plugins.servicesPluginsModule
 import de.mm20.launcher2.preferences.preferencesModule
+import de.mm20.launcher2.preferences.ui.DynamicIslandSettings
 import de.mm20.launcher2.preferences.ui.FloatingLauncherSettings
 import de.mm20.launcher2.profiles.profilesModule
 import de.mm20.launcher2.ui.desktopmode.DesktopModeActivity
 import de.mm20.launcher2.ui.floating.FloatingLauncherService
+import de.mm20.launcher2.ui.islandoverlay.DynamicIslandService
+import de.mm20.launcher2.ui.islandoverlay.islandOverlayModule
 import de.mm20.launcher2.searchactions.searchActionsModule
 import de.mm20.launcher2.services.favorites.favoritesModule
 import de.mm20.launcher2.services.tags.servicesTagsModule
@@ -120,6 +123,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     wallpapersModule,
                     contextProfilesModule,
                     desktopModeModule,
+                    islandOverlayModule,
                 )
             )
         }
@@ -133,6 +137,18 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                 ContextCompat.startForegroundService(
                     this@LauncherApplication,
                     Intent(this@LauncherApplication, FloatingLauncherService::class.java),
+                )
+            }
+        }
+
+        // Same reasoning as the Floating Launcher above - resume the Dynamic Island overlay
+        // after a process restart.
+        launch {
+            val dynamicIslandSettings = get<DynamicIslandSettings>()
+            if (dynamicIslandSettings.enabled.first() && Settings.canDrawOverlays(this@LauncherApplication)) {
+                ContextCompat.startForegroundService(
+                    this@LauncherApplication,
+                    Intent(this@LauncherApplication, DynamicIslandService::class.java),
                 )
             }
         }

@@ -330,6 +330,10 @@ data class LauncherSettingsData internal constructor(
     val floatingLauncherHapticFeedback: Boolean = true,
     val floatingLauncherAutoHideGaming: Boolean = false,
 
+    val dynamicIslandEnabled: Boolean = false,
+    /** Optional - the pill only shows a call while active if this is granted. */
+    val dynamicIslandShowCalls: Boolean = true,
+
     val contextProfilesEnabled: Boolean = false,
     val contextProfiles: List<ContextProfile> = emptyList(),
     /** If set, this profile is force-active regardless of trigger evaluation. */
