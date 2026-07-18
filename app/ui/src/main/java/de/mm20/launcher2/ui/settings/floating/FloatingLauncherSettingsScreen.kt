@@ -57,7 +57,8 @@ fun FloatingLauncherSettingsScreen() {
     val thickness by viewModel.thickness.collectAsStateWithLifecycle(24)
     val color by viewModel.color.collectAsStateWithLifecycle(0xFF6750A4.toInt())
     val alpha by viewModel.alpha.collectAsStateWithLifecycle(0.6f)
-    val columns by viewModel.columns.collectAsStateWithLifecycle(1)
+    val columns by viewModel.columns.collectAsStateWithLifecycle(2)
+    val maxPerColumn by viewModel.maxPerColumn.collectAsStateWithLifecycle(10)
     val hideIndicator by viewModel.hideIndicator.collectAsStateWithLifecycle(false)
     val hapticFeedback by viewModel.hapticFeedback.collectAsStateWithLifecycle(true)
     val autoHideGaming by viewModel.autoHideGaming.collectAsStateWithLifecycle(false)
@@ -149,6 +150,13 @@ fun FloatingLauncherSettingsScreen() {
                     summary = stringResource(R.string.preference_floating_launcher_columns_summary),
                     value = columns == 2,
                     onValueChanged = { viewModel.setColumns(if (it) 2 else 1) },
+                )
+                SliderPreference(
+                    title = stringResource(R.string.preference_floating_launcher_max_per_column),
+                    value = maxPerColumn,
+                    min = 3,
+                    max = 20,
+                    onValueChanged = { viewModel.setMaxPerColumn(it) },
                 )
                 SwitchPreference(
                     title = stringResource(R.string.preference_floating_launcher_hide_indicator),

@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -67,7 +68,6 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.Lifecycle
@@ -92,9 +92,6 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
-import de.mm20.launcher2.ui.component.dragndrop.DraggableItem
-import de.mm20.launcher2.ui.component.dragndrop.LazyVerticalDragAndDropGrid
-import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropGridState
 import de.mm20.launcher2.ui.launcher.shutters.ShutterGate
 import de.mm20.launcher2.ui.overlays.OverlayHost
 import de.mm20.launcher2.ui.settings.SettingsActivity
@@ -224,13 +221,32 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
                 appRepository = appRepository,
                 contextProfileManager = contextProfileManager,
                 shutterSettings = shutterSettings,
+                onPanelExpandedChanged = { expanded -> updateBlurBehind(expanded) },
             )
         }
 
-        wm.addView(view, buildLayoutParams())
+        wm.addView(view, buildLayoutParams(blurBehind = false))
     }
 
-    private fun buildLayoutParams(): WindowManager.LayoutParams {
+    /**
+     * Blurs whatever's behind the overlay window while a panel is open, matching the OxygenOS
+     * Smart Sidebar's frosted-glass look. Only meaningful on API 31+, where WindowManager exposes
+     * a per-window blur radius - below that, FLAG_BLUR_BEHIND alone is an old, mostly-unsupported
+     * flag on modern devices, so this is a no-op there and the panel instead relies on its own
+     * translucent background color for the effect.
+     */
+    private fun updateBlurBehind(enabled: Boolean) {
+        if (!isAtLeastApiLevel(31)) return
+        val view = composeView ?: return
+        val wm = windowManager ?: return
+        try {
+            wm.updateViewLayout(view, buildLayoutParams(blurBehind = enabled))
+        } catch (_: Exception) {
+            // View not attached (e.g. service tearing down mid-update) - nothing to do.
+        }
+    }
+
+    private fun buildLayoutParams(blurBehind: Boolean): WindowManager.LayoutParams {
         val type = if (isAtLeastApiLevel(26)) {
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
         } else {
@@ -238,16 +254,24 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
             WindowManager.LayoutParams.TYPE_PHONE
         }
 
+        var flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+            WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        if (blurBehind && isAtLeastApiLevel(31)) {
+            flags = flags or WindowManager.LayoutParams.FLAG_BLUR_BEHIND
+        }
+
         return WindowManager.LayoutParams(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT,
             type,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            flags,
             PixelFormat.TRANSLUCENT,
         ).apply {
             gravity = Gravity.TOP or Gravity.START
+            if (blurBehind && isAtLeastApiLevel(31)) {
+                this.blurBehindRadius = BLUR_BEHIND_RADIUS_PX
+            }
         }
     }
 
@@ -283,6 +307,7 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
     companion object {
         private const val CHANNEL_ID = "floating_launcher"
         private const val NOTIFICATION_ID = 4820
+        private const val BLUR_BEHIND_RADIUS_PX = 60
     }
 }
 
@@ -295,6 +320,7 @@ private fun FloatingLauncherContent(
     appRepository: AppRepository,
     contextProfileManager: ContextProfileManager,
     shutterSettings: ShutterSettings,
+    onPanelExpandedChanged: (Boolean) -> Unit,
 ) {
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
@@ -313,7 +339,8 @@ private fun FloatingLauncherContent(
     val tabColor by settings.color.collectAsState(0xFF6750A4.toInt())
     val tabAlpha by settings.alpha.collectAsState(0.6f)
     val hideIndicator by settings.hideIndicator.collectAsState(false)
-    val columns by settings.columns.collectAsState(1)
+    val columns by settings.columns.collectAsState(2)
+    val maxPerColumn by settings.maxPerColumn.collectAsState(10)
     val hapticFeedbackEnabled by settings.hapticFeedback.collectAsState(true)
     val autoHideGaming by settings.autoHideGaming.collectAsState(false)
     // icon is the only field a ContextProfile carries that signals "this one's for gaming" -
@@ -325,6 +352,10 @@ private fun FloatingLauncherContent(
 
     LaunchedEffect(hiddenForGaming) {
         if (hiddenForGaming) expandedZone = null
+    }
+
+    LaunchedEffect(expandedZone) {
+        onPanelExpandedChanged(expandedZone != null)
     }
 
     fun addAppToZone(zone: FloatingLauncherZone, key: String) {
@@ -367,6 +398,7 @@ private fun FloatingLauncherContent(
                             zone = zone,
                             config = zoneConfig,
                             columns = columns,
+                            maxPerColumn = maxPerColumn,
                             searchableRepository = searchableRepository,
                             iconService = iconService,
                             freezeManager = freezeManager,
@@ -462,11 +494,15 @@ private fun ZoneTab(
     )
 }
 
+/** Icon cell size in the icons-only grid - matches OxygenOS Smart Sidebar's compact square tiles. */
+private val ICON_CELL_SIZE = 72.dp
+
 @Composable
 private fun ExpandedPanel(
     zone: FloatingLauncherZone,
     config: FloatingLauncherZoneConfig,
     columns: Int,
+    maxPerColumn: Int,
     searchableRepository: SavableSearchableRepository,
     iconService: IconService,
     freezeManager: FreezeManager,
@@ -486,18 +522,6 @@ private fun ExpandedPanel(
     val orderedApps = remember(apps, config.apps) {
         config.apps.mapNotNull { key -> apps.firstOrNull { it.key == key } }
     }
-    val dragState = rememberLazyDragAndDropGridState(
-        onItemMove = { from, to ->
-            val current = orderedApps.toMutableList()
-            val fromIndex = current.indexOfFirst { it.key == from.key }
-            val toIndex = current.indexOfFirst { it.key == to.key }
-            if (fromIndex != -1 && toIndex != -1) {
-                val moved = current.removeAt(fromIndex)
-                current.add(toIndex, moved)
-                onReorder(current.map { it.key })
-            }
-        },
-    )
     var isDropTarget by remember { mutableStateOf(false) }
 
     Box(
@@ -512,10 +536,13 @@ private fun ExpandedPanel(
             Alignment.CenterEnd
         },
     ) {
+        // OxygenOS Smart Sidebar look: a semi-transparent rounded card. The window behind it is
+        // additionally blurred on API 31+ (toggled by the service hosting this composable) -
+        // below that, this translucent color is the whole effect.
         Surface(
             modifier = Modifier
-                .widthIn(max = if (columns == 2) 360.dp else 280.dp)
-                .heightIn(max = 480.dp)
+                .widthIn(max = ICON_CELL_SIZE * columns + 32.dp)
+                .heightIn(max = ICON_CELL_SIZE * maxPerColumn + 56.dp)
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
@@ -548,55 +575,48 @@ private fun ExpandedPanel(
                     },
                 ),
             color = if (isDropTarget) {
-                MaterialTheme.colorScheme.secondaryContainer
+                MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.92f)
             } else {
-                MaterialTheme.colorScheme.surface
+                MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.85f)
             },
             shape = if (zone.isLeftEdge) {
-                RoundedCornerShape(topEnd = 24.dp, bottomEnd = 24.dp)
+                RoundedCornerShape(topEnd = 28.dp, bottomEnd = 28.dp)
             } else {
-                RoundedCornerShape(topStart = 24.dp, bottomStart = 24.dp)
+                RoundedCornerShape(topStart = 28.dp, bottomStart = 28.dp)
             },
-            tonalElevation = 8.dp,
             shadowElevation = 8.dp,
         ) {
-            Column(modifier = Modifier.padding(vertical = 12.dp)) {
+            Column(modifier = Modifier.padding(vertical = 8.dp)) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 4.dp),
+                        .padding(horizontal = 12.dp, vertical = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    horizontalArrangement = Arrangement.End,
                 ) {
-                    Text(
-                        text = stringResource(R.string.floating_launcher_panel_title),
-                        style = MaterialTheme.typography.titleSmall,
-                    )
-                    Row {
-                        IconButton(
-                            onClick = {
-                                onDismiss()
-                                val intent = Intent(context, SettingsActivity::class.java).apply {
-                                    putExtra(
-                                        SettingsActivity.EXTRA_ROUTE,
-                                        SettingsActivity.ROUTE_FLOATING_LAUNCHER,
-                                    )
-                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                }
-                                context.startActivity(intent)
-                            },
-                        ) {
-                            Icon(
-                                painterResource(R.drawable.settings_24px),
-                                contentDescription = stringResource(R.string.floating_launcher_panel_settings),
-                            )
-                        }
-                        IconButton(onClick = onDismiss) {
-                            Icon(
-                                painterResource(R.drawable.close_24px),
-                                contentDescription = stringResource(R.string.close),
-                            )
-                        }
+                    IconButton(
+                        onClick = {
+                            onDismiss()
+                            val intent = Intent(context, SettingsActivity::class.java).apply {
+                                putExtra(
+                                    SettingsActivity.EXTRA_ROUTE,
+                                    SettingsActivity.ROUTE_FLOATING_LAUNCHER,
+                                )
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            }
+                            context.startActivity(intent)
+                        },
+                    ) {
+                        Icon(
+                            painterResource(R.drawable.settings_24px),
+                            contentDescription = stringResource(R.string.floating_launcher_panel_settings),
+                        )
+                    }
+                    IconButton(onClick = onDismiss) {
+                        Icon(
+                            painterResource(R.drawable.close_24px),
+                            contentDescription = stringResource(R.string.close),
+                        )
                     }
                 }
                 if (orderedApps.isEmpty()) {
@@ -606,30 +626,25 @@ private fun ExpandedPanel(
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                     )
                 } else {
-                    LazyVerticalDragAndDropGrid(
-                        state = dragState,
-                        columns = GridCells.Fixed(columns),
-                    ) {
+                    LazyVerticalGrid(columns = GridCells.Fixed(columns)) {
                         items(orderedApps, key = { it.key }) { item ->
-                            DraggableItem(state = dragState, key = item.key) {
-                                FavoriteRow(
-                                    item = item,
-                                    iconService = iconService,
-                                    appRepository = appRepository,
-                                    shutterSettings = shutterSettings,
-                                    onClick = {
-                                        if (item is Application && freezeManager.isFrozen(item.componentName.packageName)) {
-                                            coroutineScope.launch {
-                                                freezeManager.unfreeze(item.componentName.packageName)
-                                                item.launch(context, null)
-                                            }
-                                        } else {
+                            FavoriteIcon(
+                                item = item,
+                                iconService = iconService,
+                                appRepository = appRepository,
+                                shutterSettings = shutterSettings,
+                                onClick = {
+                                    if (item is Application && freezeManager.isFrozen(item.componentName.packageName)) {
+                                        coroutineScope.launch {
+                                            freezeManager.unfreeze(item.componentName.packageName)
                                             item.launch(context, null)
                                         }
-                                        onAppLaunched()
-                                    },
-                                )
-                            }
+                                    } else {
+                                        item.launch(context, null)
+                                    }
+                                    onAppLaunched()
+                                },
+                            )
                         }
                     }
                 }
@@ -638,8 +653,12 @@ private fun ExpandedPanel(
     }
 }
 
+/**
+ * A single icons-only cell in the panel's grid - no label, matching the default (non-edit-mode)
+ * OxygenOS Smart Sidebar look. Labels only appear in edit mode (added in a later stage).
+ */
 @Composable
-private fun FavoriteRow(
+private fun FavoriteIcon(
     item: SavableSearchable,
     iconService: IconService,
     appRepository: AppRepository,
@@ -666,9 +685,9 @@ private fun FavoriteRow(
     var showShutter by remember(item.key) { mutableStateOf(false) }
     val hapticFeedback = LocalHapticFeedback.current
 
-    Row(
+    Box(
         modifier = Modifier
-            .fillMaxWidth()
+            .size(ICON_CELL_SIZE)
             .then(
                 if (shuttersEnabled && item is Application) {
                     Modifier.combinedClickable(
@@ -681,18 +700,10 @@ private fun FavoriteRow(
                 } else {
                     Modifier.clickable(onClick = onClick)
                 }
-            )
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
+            ),
+        contentAlignment = Alignment.Center,
     ) {
-        ShapedLauncherIcon(size = 32.dp, icon = { icon }, grayscale = isFrozen)
-        Text(
-            text = item.labelOverride ?: item.label,
-            style = MaterialTheme.typography.bodyMedium,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
+        ShapedLauncherIcon(size = 44.dp, icon = { icon }, grayscale = isFrozen)
     }
 
     if (showShutter && item is Application) {

@@ -47,6 +47,14 @@ class FloatingLauncherSettings internal constructor(
         dataStore.update { it.copy(floatingLauncherColumns = columns.coerceIn(1, 2)) }
     }
 
+    /** Caps how many rows the panel shows (per column) before it scrolls. */
+    val maxPerColumn
+        get() = dataStore.data.map { it.floatingLauncherMaxPerColumn }.distinctUntilChanged()
+
+    fun setMaxPerColumn(maxPerColumn: Int) {
+        dataStore.update { it.copy(floatingLauncherMaxPerColumn = maxPerColumn.coerceIn(3, 20)) }
+    }
+
     /** Width in dp of each collapsed tab. */
     val thickness
         get() = dataStore.data.map { it.floatingLauncherThickness }.distinctUntilChanged()

@@ -41,6 +41,9 @@ class FloatingLauncherSettingsScreenVM(
     val columns = floatingLauncherSettings.columns
     fun setColumns(columns: Int) = floatingLauncherSettings.setColumns(columns)
 
+    val maxPerColumn = floatingLauncherSettings.maxPerColumn
+    fun setMaxPerColumn(maxPerColumn: Int) = floatingLauncherSettings.setMaxPerColumn(maxPerColumn)
+
     val hideIndicator = floatingLauncherSettings.hideIndicator
     fun setHideIndicator(hide: Boolean) = floatingLauncherSettings.setHideIndicator(hide)
 

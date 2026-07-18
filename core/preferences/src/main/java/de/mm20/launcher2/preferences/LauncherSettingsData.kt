@@ -319,7 +319,9 @@ data class LauncherSettingsData internal constructor(
     ),
     /** Shared across every zone - simpler than a per-zone setting, and there's no real use case
      * for zones wanting a different column count from each other. */
-    val floatingLauncherColumns: Int = 1,
+    val floatingLauncherColumns: Int = 2,
+    /** Caps how many rows the panel shows before it scrolls, per column. */
+    val floatingLauncherMaxPerColumn: Int = 10,
     val floatingLauncherThickness: Int = 24,
     @Serializable(with = ColorIntAsHexSerializer::class)
     val floatingLauncherColor: Int = 0xFF6750A4.toInt(),
