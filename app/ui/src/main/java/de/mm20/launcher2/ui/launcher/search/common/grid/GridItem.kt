@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.launcher.search.common.grid
 
+import android.content.ClipData
+import android.view.View
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.MutableTransitionState
@@ -7,6 +9,7 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.draganddrop.dragAndDropSource
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -34,6 +37,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draganddrop.DragAndDropTransferData
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.boundsInWindow
@@ -103,6 +110,21 @@ fun GridItem(
      * favorites grid opts in.
      */
     enableShutterGesture: Boolean = false,
+    /**
+     * Whether long-pressing and dragging this icon can start a global (cross-window) Android
+     * drag, so it can be dropped onto the floating launcher's overlay panel to add it to a zone.
+     * Off by default - only the home screen favorites grid and the apps tab/drawer opt in; other
+     * grids that reuse this composable (search favorites row, clock widget favorites, the hidden
+     * items sheet) don't, to keep the added gesture complexity scoped to the two places browsing
+     * apps specifically to add one somewhere is the obvious intent.
+     *
+     * When on, replaces the long-press-opens-popup gesture with a custom one: holding still still
+     * opens the popup on release, but moving past touch slop while held starts the drag instead.
+     * Both drag-detector and tap-detector run as sibling coroutines sharing the same pointer
+     * input stream - the same technique combinedClickable itself is built on - so a drag "wins"
+     * and the tap it also raced against gets naturally cancelled once the touch moves.
+     */
+    enableFloatingLauncherDragSource: Boolean = false,
 ) {
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${item.key}")
     val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
@@ -173,6 +195,30 @@ fun GridItem(
                 },
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
+            )
+            .then(
+                if (enableFloatingLauncherDragSource && item is Application) {
+                    val decorationColor = MaterialTheme.colorScheme.primaryContainer
+                    val decoration: DrawScope.() -> Unit = {
+                        drawRoundRect(
+                            color = decorationColor,
+                            cornerRadius = CornerRadius(8.dp.toPx()),
+                        )
+                    }
+                    val transferData: (Offset) -> DragAndDropTransferData? = {
+                        hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+                        DragAndDropTransferData(
+                            clipData = ClipData.newPlainText(item.label, item.key),
+                            flags = View.DRAG_FLAG_GLOBAL,
+                        )
+                    }
+                    Modifier.dragAndDropSource(
+                        drawDragDecoration = decoration,
+                        transferData = transferData,
+                    )
+                } else {
+                    Modifier
+                }
             ) then if (!showLabels) Modifier.aspectRatio(1f) else Modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,

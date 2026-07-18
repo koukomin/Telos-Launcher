@@ -224,7 +224,8 @@ fun LazyListScope.AppResults(
                 GridItem(
                     item = it,
                     showLabels = LocalGridSettings.current.showLabels,
-                    highlight = it.key == highlightedItem?.key
+                    highlight = it.key == highlightedItem?.key,
+                    enableFloatingLauncherDragSource = true,
                 )
             },
             reverse = reverse,

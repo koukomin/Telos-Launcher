@@ -40,7 +40,12 @@ fun AppsWidget(widget: AppsWidget) {
         modifier = Modifier.padding(vertical = 4.dp)
     ) {
         if (favorites.isNotEmpty()) {
-            SearchResultGrid(favorites, transitionKey = selectedTag, enableShutterGesture = true)
+            SearchResultGrid(
+                favorites,
+                transitionKey = selectedTag,
+                enableShutterGesture = true,
+                enableFloatingLauncherDragSource = true,
+            )
         } else {
             Banner(
                 modifier = Modifier.padding(16.dp),

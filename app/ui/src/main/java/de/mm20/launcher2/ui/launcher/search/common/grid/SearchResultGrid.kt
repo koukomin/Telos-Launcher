@@ -29,6 +29,7 @@ fun SearchResultGrid(
     highlightedItem: SavableSearchable? = null,
     transitionKey: Any? = items,
     enableShutterGesture: Boolean = false,
+    enableFloatingLauncherDragSource: Boolean = false,
 ) {
     AnimatedContent(
         items to transitionKey,
@@ -56,6 +57,7 @@ fun SearchResultGrid(
                                     showLabels = showLabels,
                                     highlight = item.key == highlightedItem?.key,
                                     enableShutterGesture = enableShutterGesture,
+                                    enableFloatingLauncherDragSource = enableFloatingLauncherDragSource,
                                 )
                             }
                         } else {

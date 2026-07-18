@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
+import android.content.ClipDescription
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.PixelFormat
@@ -13,6 +14,7 @@ import android.view.Gravity
 import android.view.WindowManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.draganddrop.dragAndDropTarget
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -26,7 +28,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -48,6 +49,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draganddrop.DragAndDropEvent
+import androidx.compose.ui.draganddrop.DragAndDropTarget
+import androidx.compose.ui.draganddrop.mimeTypes
+import androidx.compose.ui.draganddrop.toAndroidDragEvent
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
@@ -79,6 +84,9 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
+import de.mm20.launcher2.ui.component.dragndrop.DraggableItem
+import de.mm20.launcher2.ui.component.dragndrop.LazyVerticalDragAndDropGrid
+import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropGridState
 import de.mm20.launcher2.ui.settings.SettingsActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -109,6 +117,13 @@ import org.koin.android.ext.android.inject
  * making the window focusable, which briefly steals input focus from whatever app is in the
  * foreground. That interaction is hard to get right without a physical device to verify it on,
  * so this only offers each zone's curated app list.
+ *
+ * Each zone's tab and panel also accept a drop from a global (cross-window) Android drag started
+ * elsewhere (home screen, app drawer - see GridItem.kt), carrying the dragged app's searchable
+ * key as plain text. Whether WindowManager actually routes those DragEvents to this window (given
+ * it's FLAG_NOT_TOUCH_MODAL) is, like the touch-passthrough behavior above, unverified without a
+ * real device - there's real precedent for it working (this is the same mechanism chat-heads-style
+ * bubbles use to accept a shared link), but it hasn't been tested here.
  */
 class FloatingLauncherService : Service(), SavedStateRegistryOwner {
 
@@ -285,6 +300,17 @@ private fun FloatingLauncherContent(
 
     var expandedZone by remember { mutableStateOf<FloatingLauncherZone?>(null) }
 
+    fun addAppToZone(zone: FloatingLauncherZone, key: String) {
+        val current = zones[zone]?.apps ?: emptyList()
+        if (key !in current) {
+            settings.setZoneApps(zone, current + key)
+        }
+    }
+
+    fun reorderZone(zone: FloatingLauncherZone, keys: List<String>) {
+        settings.setZoneApps(zone, keys)
+    }
+
     MaterialTheme(colorScheme = colorScheme) {
         Box(modifier = Modifier.fillMaxSize()) {
             for (zone in FloatingLauncherZone.entries) {
@@ -295,6 +321,7 @@ private fun FloatingLauncherContent(
                     thickness = thickness,
                     color = if (hideIndicator) Color.Transparent else Color(tabColor).copy(alpha = tabAlpha),
                     onClick = { expandedZone = zone },
+                    onAppDropped = { key -> addAppToZone(zone, key) },
                     modifier = Modifier.align(
                         BiasAlignment(
                             horizontalBias = if (zone.isLeftEdge) -1f else 1f,
@@ -316,6 +343,8 @@ private fun FloatingLauncherContent(
                     appRepository = appRepository,
                     onDismiss = { expandedZone = null },
                     onAppLaunched = { expandedZone = null },
+                    onAppDropped = { key -> addAppToZone(zone, key) },
+                    onReorder = { keys -> reorderZone(zone, keys) },
                 )
             }
         }
@@ -328,6 +357,7 @@ private fun ZoneTab(
     thickness: Int,
     color: Color,
     onClick: () -> Unit,
+    onAppDropped: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val shape = if (zone.isLeftEdge) {
@@ -335,15 +365,42 @@ private fun ZoneTab(
     } else {
         RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp)
     }
+    var isDropTarget by remember { mutableStateOf(false) }
     Box(
         modifier = modifier
             .size(width = thickness.dp, height = 72.dp)
             .clip(shape)
-            .background(color)
+            .background(if (isDropTarget) color.copy(alpha = (color.alpha + 0.35f).coerceAtMost(1f)) else color)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
                 onClick = onClick,
+            )
+            .dragAndDropTarget(
+                shouldStartDragAndDrop = { it.mimeTypes().contains(ClipDescription.MIMETYPE_TEXT_PLAIN) },
+                target = object : DragAndDropTarget {
+                    override fun onEntered(event: DragAndDropEvent) {
+                        isDropTarget = true
+                    }
+
+                    override fun onExited(event: DragAndDropEvent) {
+                        isDropTarget = false
+                    }
+
+                    override fun onEnded(event: DragAndDropEvent) {
+                        isDropTarget = false
+                    }
+
+                    override fun onDrop(event: DragAndDropEvent): Boolean {
+                        isDropTarget = false
+                        val key = event.toAndroidDragEvent().clipData
+                            ?.takeIf { it.itemCount > 0 }
+                            ?.getItemAt(0)?.text?.toString()
+                            ?: return false
+                        onAppDropped(key)
+                        return true
+                    }
+                },
             ),
     )
 }
@@ -359,6 +416,8 @@ private fun ExpandedPanel(
     appRepository: AppRepository,
     onDismiss: () -> Unit,
     onAppLaunched: () -> Unit,
+    onAppDropped: (String) -> Unit,
+    onReorder: (List<String>) -> Unit,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -369,6 +428,19 @@ private fun ExpandedPanel(
     val orderedApps = remember(apps, config.apps) {
         config.apps.mapNotNull { key -> apps.firstOrNull { it.key == key } }
     }
+    val dragState = rememberLazyDragAndDropGridState(
+        onItemMove = { from, to ->
+            val current = orderedApps.toMutableList()
+            val fromIndex = current.indexOfFirst { it.key == from.key }
+            val toIndex = current.indexOfFirst { it.key == to.key }
+            if (fromIndex != -1 && toIndex != -1) {
+                val moved = current.removeAt(fromIndex)
+                current.add(toIndex, moved)
+                onReorder(current.map { it.key })
+            }
+        },
+    )
+    var isDropTarget by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -390,7 +462,38 @@ private fun ExpandedPanel(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
                     onClick = {},
+                )
+                .dragAndDropTarget(
+                    shouldStartDragAndDrop = { it.mimeTypes().contains(ClipDescription.MIMETYPE_TEXT_PLAIN) },
+                    target = object : DragAndDropTarget {
+                        override fun onEntered(event: DragAndDropEvent) {
+                            isDropTarget = true
+                        }
+
+                        override fun onExited(event: DragAndDropEvent) {
+                            isDropTarget = false
+                        }
+
+                        override fun onEnded(event: DragAndDropEvent) {
+                            isDropTarget = false
+                        }
+
+                        override fun onDrop(event: DragAndDropEvent): Boolean {
+                            isDropTarget = false
+                            val key = event.toAndroidDragEvent().clipData
+                                ?.takeIf { it.itemCount > 0 }
+                                ?.getItemAt(0)?.text?.toString()
+                                ?: return false
+                            onAppDropped(key)
+                            return true
+                        }
+                    },
                 ),
+            color = if (isDropTarget) {
+                MaterialTheme.colorScheme.secondaryContainer
+            } else {
+                MaterialTheme.colorScheme.surface
+            },
             shape = if (zone.isLeftEdge) {
                 RoundedCornerShape(topEnd = 24.dp, bottomEnd = 24.dp)
             } else {
@@ -425,24 +528,29 @@ private fun ExpandedPanel(
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                     )
                 } else {
-                    LazyVerticalGrid(columns = GridCells.Fixed(columns)) {
+                    LazyVerticalDragAndDropGrid(
+                        state = dragState,
+                        columns = GridCells.Fixed(columns),
+                    ) {
                         items(orderedApps, key = { it.key }) { item ->
-                            FavoriteRow(
-                                item = item,
-                                iconService = iconService,
-                                appRepository = appRepository,
-                                onClick = {
-                                    if (item is Application && freezeManager.isFrozen(item.componentName.packageName)) {
-                                        coroutineScope.launch {
-                                            freezeManager.unfreeze(item.componentName.packageName)
+                            DraggableItem(state = dragState, key = item.key) {
+                                FavoriteRow(
+                                    item = item,
+                                    iconService = iconService,
+                                    appRepository = appRepository,
+                                    onClick = {
+                                        if (item is Application && freezeManager.isFrozen(item.componentName.packageName)) {
+                                            coroutineScope.launch {
+                                                freezeManager.unfreeze(item.componentName.packageName)
+                                                item.launch(context, null)
+                                            }
+                                        } else {
                                             item.launch(context, null)
                                         }
-                                    } else {
-                                        item.launch(context, null)
-                                    }
-                                    onAppLaunched()
-                                },
-                            )
+                                        onAppLaunched()
+                                    },
+                                )
+                            }
                         }
                     }
                 }
