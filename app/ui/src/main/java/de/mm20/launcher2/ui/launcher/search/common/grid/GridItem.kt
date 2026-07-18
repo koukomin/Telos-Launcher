@@ -208,7 +208,10 @@ fun GridItem(
                     val transferData: (Offset) -> DragAndDropTransferData? = {
                         hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
                         DragAndDropTransferData(
-                            clipData = ClipData.newPlainText(item.label, item.key),
+                            // The clip label (not the label callers see) doubles as a marker so
+                            // FloatingLauncherService can tell "one of our own app icons" apart
+                            // from arbitrary external content dropped for its File Dock.
+                            clipData = ClipData.newPlainText("kvaesitso_app_icon", item.key),
                             flags = View.DRAG_FLAG_GLOBAL,
                         )
                     }

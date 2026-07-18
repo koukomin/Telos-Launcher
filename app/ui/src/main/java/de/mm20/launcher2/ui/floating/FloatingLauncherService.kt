@@ -5,13 +5,18 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
+import android.content.ClipData
 import android.content.ClipDescription
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.PixelFormat
+import android.net.Uri
 import android.os.IBinder
 import android.view.Gravity
 import android.view.WindowManager
+import android.webkit.MimeTypeMap
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
@@ -43,6 +48,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -71,7 +77,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.ClipEntry
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -81,6 +89,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationCompat
+import androidx.core.content.FileProvider
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.setViewTreeLifecycleOwner
@@ -118,6 +127,9 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.util.UUID
 import org.koin.android.ext.android.inject
 
 /**
@@ -147,6 +159,14 @@ import org.koin.android.ext.android.inject
  * it's FLAG_NOT_TOUCH_MODAL) is, like the touch-passthrough behavior above, unverified without a
  * real device - there's real precedent for it working (this is the same mechanism chat-heads-style
  * bubbles use to accept a shared link), but it hasn't been tested here.
+ *
+ * The same drop target doubles as the entry point for the File Dock: dragging arbitrary text,
+ * images, or files from another app (not one of this launcher's own app icons) holds them
+ * temporarily instead of adding an app. Media items are copied into this app's own cache dir
+ * (exposed via FileProvider) immediately on drop, rather than keeping the original dragged-from-app
+ * URI - a drag's URI permission grant is only guaranteed to last for the drag itself, and a File
+ * Dock item is by definition opened well after that, so hanging onto the original URI risks a
+ * SecurityException the first time the user actually taps it.
  */
 class FloatingLauncherService : Service(), SavedStateRegistryOwner {
 
@@ -364,6 +384,10 @@ private fun FloatingLauncherContent(
     val hiddenForGaming = autoHideGaming && activeProfile?.icon == ContextProfileIcon.Gaming
 
     var expandedZone by remember { mutableStateOf<FloatingLauncherZone?>(null) }
+    // Deliberately not persisted (no DataStore field) - matches what "temporary" means for
+    // OxygenOS's File Dock, this shelf is cleared whenever the service restarts.
+    var fileDockItems by remember { mutableStateOf<List<FileDockItem>>(emptyList()) }
+    val fileDockScope = rememberCoroutineScope()
 
     LaunchedEffect(hiddenForGaming) {
         if (hiddenForGaming) expandedZone = null
@@ -401,6 +425,34 @@ private fun FloatingLauncherContent(
         settings.deleteFolder(zone, folderId)
     }
 
+    fun handleExternalDrop(clipData: ClipData) {
+        fileDockScope.launch {
+            for (i in 0 until clipData.itemCount) {
+                val item = clipData.getItemAt(i)
+                val uri = item.uri
+                if (uri != null) {
+                    val mimeType = clipData.description.getMimeType(0)
+                    val cachedUri = copyToDockCache(context, uri, mimeType) ?: continue
+                    fileDockItems = fileDockItems + FileDockItem.MediaItem(
+                        id = UUID.randomUUID().toString(),
+                        uri = cachedUri,
+                        mimeType = mimeType,
+                        label = uri.lastPathSegment ?: uri.toString(),
+                    )
+                } else {
+                    val text = item.text?.toString()
+                    if (!text.isNullOrBlank()) {
+                        fileDockItems = fileDockItems + FileDockItem.TextItem(UUID.randomUUID().toString(), text)
+                    }
+                }
+            }
+        }
+    }
+
+    fun removeFileDockItem(id: String) {
+        fileDockItems = fileDockItems.filterNot { it.id == id }
+    }
+
     MaterialTheme(colorScheme = colorScheme) {
         OverlayHost {
             if (!hiddenForGaming) {
@@ -415,6 +467,7 @@ private fun FloatingLauncherContent(
                             hapticFeedbackEnabled = hapticFeedbackEnabled,
                             onClick = { expandedZone = zone },
                             onAppDropped = { key -> addAppToZone(zone, key) },
+                            onExternalContentDropped = { clipData -> handleExternalDrop(clipData) },
                             modifier = Modifier.align(
                                 BiasAlignment(
                                     horizontalBias = if (zone.isLeftEdge) -1f else 1f,
@@ -444,6 +497,9 @@ private fun FloatingLauncherContent(
                             onCreateFolder = { name, keys -> createFolder(zone, name, keys) },
                             onRenameFolder = { folderId, name -> renameFolder(zone, folderId, name) },
                             onDeleteFolder = { folderId -> deleteFolder(zone, folderId) },
+                            onExternalContentDropped = { clipData -> handleExternalDrop(clipData) },
+                            fileDockItems = fileDockItems,
+                            onRemoveFileDockItem = { id -> removeFileDockItem(id) },
                         )
                     }
                 }
@@ -460,6 +516,7 @@ private fun ZoneTab(
     hapticFeedbackEnabled: Boolean,
     onClick: () -> Unit,
     onAppDropped: (String) -> Unit,
+    onExternalContentDropped: (ClipData) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val shape = if (zone.isLeftEdge) {
@@ -502,7 +559,10 @@ private fun ZoneTab(
                 )
             }
             .dragAndDropTarget(
-                shouldStartDragAndDrop = { it.mimeTypes().contains(ClipDescription.MIMETYPE_TEXT_PLAIN) },
+                // Accepts anything: our own app icons (text/plain, disambiguated below by clip
+                // label) as well as arbitrary external content for the File Dock (text, images,
+                // files - see APP_DRAG_CLIP_LABEL).
+                shouldStartDragAndDrop = { true },
                 target = object : DragAndDropTarget {
                     override fun onEntered(event: DragAndDropEvent) {
                         isDropTarget = true
@@ -518,11 +578,15 @@ private fun ZoneTab(
 
                     override fun onDrop(event: DragAndDropEvent): Boolean {
                         isDropTarget = false
-                        val key = event.toAndroidDragEvent().clipData
+                        val clipData = event.toAndroidDragEvent().clipData
                             ?.takeIf { it.itemCount > 0 }
-                            ?.getItemAt(0)?.text?.toString()
                             ?: return false
-                        onAppDropped(key)
+                        if (clipData.description.label == APP_DRAG_CLIP_LABEL) {
+                            val key = clipData.getItemAt(0)?.text?.toString() ?: return false
+                            onAppDropped(key)
+                        } else {
+                            onExternalContentDropped(clipData)
+                        }
                         return true
                     }
                 },
@@ -532,6 +596,59 @@ private fun ZoneTab(
 
 /** Icon cell size in the icons-only grid - matches OxygenOS Smart Sidebar's compact square tiles. */
 private val ICON_CELL_SIZE = 72.dp
+
+/**
+ * ClipData items dragged from this launcher's own app icons (GridItem.kt) carry this as their
+ * clip label so drops onto the floating launcher can tell "one of our own app icons" apart from
+ * arbitrary external content meant for the File Dock.
+ */
+private const val APP_DRAG_CLIP_LABEL = "kvaesitso_app_icon"
+
+/**
+ * Something dragged onto the floating launcher from another app and held temporarily - OxygenOS
+ * calls this the File Dock. Cleared whenever the service restarts (i.e. genuinely temporary, not
+ * persisted to disk/settings), matching what "temporary storage" means there.
+ */
+private sealed interface FileDockItem {
+    val id: String
+
+    data class TextItem(override val id: String, val text: String) : FileDockItem
+
+    /** [uri] always points at our own FileProvider-backed cache copy, never the original
+     * dragged-from-app URI - the permission grant on that one is tied to the drag gesture and
+     * isn't guaranteed to still be valid by the time the user taps this later. */
+    data class MediaItem(
+        override val id: String,
+        val uri: Uri,
+        val mimeType: String?,
+        val label: String,
+    ) : FileDockItem
+}
+
+/**
+ * Copies [sourceUri]'s content into this app's cache dir and returns a FileProvider URI pointing
+ * at that copy. Needed because the URI permission grant that comes with a drag-and-drop only
+ * covers the drag itself - reading it later (when the user taps a File Dock item) can't rely on
+ * that grant still being valid, so this makes an independent copy we own outright while the grant
+ * is still fresh.
+ */
+private suspend fun copyToDockCache(context: Context, sourceUri: Uri, mimeType: String?): Uri? =
+    withContext(Dispatchers.IO) {
+        try {
+            val dockDir = File(context.cacheDir, "floating_launcher_dock").apply { mkdirs() }
+            val extension = mimeType?.let { MimeTypeMap.getSingleton().getExtensionFromMimeType(it) }
+            val file = File(dockDir, buildString {
+                append(UUID.randomUUID().toString())
+                if (extension != null) append(".").append(extension)
+            })
+            context.contentResolver.openInputStream(sourceUri)?.use { input ->
+                file.outputStream().use { output -> input.copyTo(output) }
+            } ?: return@withContext null
+            FileProvider.getUriForFile(context, context.packageName + ".fileprovider", file)
+        } catch (e: Exception) {
+            null
+        }
+    }
 
 /**
  * One entry in a zone's grid: either a loose app, or a folder grouping several apps. Both share
@@ -569,6 +686,9 @@ private fun ExpandedPanel(
     onCreateFolder: (name: String, appKeys: List<String>) -> Unit,
     onRenameFolder: (folderId: String, name: String) -> Unit,
     onDeleteFolder: (folderId: String) -> Unit,
+    onExternalContentDropped: (ClipData) -> Unit,
+    fileDockItems: List<FileDockItem>,
+    onRemoveFileDockItem: (String) -> Unit,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -593,6 +713,7 @@ private fun ExpandedPanel(
     var editingFolder by remember(zone) { mutableStateOf<FloatingLauncherFolder?>(null) }
     var showCreateFolder by remember(zone) { mutableStateOf(false) }
     var showAllApps by remember(zone) { mutableStateOf(false) }
+    var showFileDock by remember(zone) { mutableStateOf(false) }
     val dragState = rememberLazyDragAndDropGridState(
         onItemMove = { from, to ->
             val current = orderedItems.toMutableList()
@@ -631,7 +752,7 @@ private fun ExpandedPanel(
                     onClick = {},
                 )
                 .dragAndDropTarget(
-                    shouldStartDragAndDrop = { it.mimeTypes().contains(ClipDescription.MIMETYPE_TEXT_PLAIN) },
+                    shouldStartDragAndDrop = { true },
                     target = object : DragAndDropTarget {
                         override fun onEntered(event: DragAndDropEvent) {
                             isDropTarget = true
@@ -647,11 +768,15 @@ private fun ExpandedPanel(
 
                         override fun onDrop(event: DragAndDropEvent): Boolean {
                             isDropTarget = false
-                            val key = event.toAndroidDragEvent().clipData
+                            val clipData = event.toAndroidDragEvent().clipData
                                 ?.takeIf { it.itemCount > 0 }
-                                ?.getItemAt(0)?.text?.toString()
                                 ?: return false
-                            onAppDropped(key)
+                            if (clipData.description.label == APP_DRAG_CLIP_LABEL) {
+                                val key = clipData.getItemAt(0)?.text?.toString() ?: return false
+                                onAppDropped(key)
+                            } else {
+                                onExternalContentDropped(clipData)
+                            }
                             return true
                         }
                     },
@@ -791,6 +916,17 @@ private fun ExpandedPanel(
                                 contentDescription = stringResource(R.string.floating_launcher_all_apps),
                             )
                         }
+                        IconButton(onClick = { showFileDock = true }) {
+                            Icon(
+                                painterResource(R.drawable.content_copy_24px),
+                                contentDescription = stringResource(R.string.floating_launcher_file_dock),
+                                tint = if (fileDockItems.isNotEmpty()) {
+                                    MaterialTheme.colorScheme.primary
+                                } else {
+                                    LocalContentColor.current
+                                },
+                            )
+                        }
                     }
                     IconButton(
                         onClick = {
@@ -845,6 +981,14 @@ private fun ExpandedPanel(
                     onAppLaunched()
                 },
                 onDismiss = { showAllApps = false },
+            )
+        }
+
+        if (showFileDock) {
+            FileDockOverlay(
+                items = fileDockItems,
+                onRemove = onRemoveFileDockItem,
+                onDismiss = { showFileDock = false },
             )
         }
     }
@@ -1203,7 +1347,7 @@ private fun AllAppsOverlay(
                             shutterSettings = shutterSettings,
                             editMode = false,
                             onClick = {
-                                if (item is Application && freezeManager.isFrozen(item.componentName.packageName)) {
+                                if (freezeManager.isFrozen(item.componentName.packageName)) {
                                     coroutineScope.launch {
                                         freezeManager.unfreeze(item.componentName.packageName)
                                         item.launch(context, null)
@@ -1215,6 +1359,146 @@ private fun AllAppsOverlay(
                             },
                             onRemove = {},
                         )
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+ * The File Dock's contents: text and media dragged onto the floating launcher from other apps,
+ * held temporarily. Tapping a text item copies it to the clipboard; tapping a media item opens
+ * a share sheet for it (there's no general way to "paste" into whatever app happens to be in the
+ * foreground from here, unlike a real in-app clipboard).
+ */
+@Composable
+private fun FileDockOverlay(
+    items: List<FileDockItem>,
+    onRemove: (String) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val context = LocalContext.current
+    val clipboard = LocalClipboard.current
+    val coroutineScope = rememberCoroutineScope()
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.3f))
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = { onDismiss() })
+            },
+        contentAlignment = Alignment.Center,
+    ) {
+        Surface(
+            modifier = Modifier
+                .padding(24.dp)
+                .widthIn(max = 320.dp)
+                .heightIn(max = ICON_CELL_SIZE * 6)
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = {},
+                ),
+            shape = RoundedCornerShape(24.dp),
+            color = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.95f),
+            shadowElevation = 8.dp,
+        ) {
+            Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = stringResource(R.string.floating_launcher_file_dock),
+                        style = MaterialTheme.typography.titleSmall,
+                    )
+                    IconButton(onClick = onDismiss) {
+                        Icon(
+                            painterResource(R.drawable.close_24px),
+                            contentDescription = stringResource(R.string.close),
+                        )
+                    }
+                }
+                if (items.isEmpty()) {
+                    Text(
+                        text = stringResource(R.string.floating_launcher_file_dock_empty),
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                    )
+                } else {
+                    LazyColumn {
+                        items(items, key = { it.id }) { dockItem ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable {
+                                        when (dockItem) {
+                                            is FileDockItem.TextItem -> {
+                                                coroutineScope.launch {
+                                                    clipboard.setClipEntry(
+                                                        ClipEntry(ClipData.newPlainText(null, dockItem.text))
+                                                    )
+                                                }
+                                                Toast.makeText(
+                                                    context,
+                                                    context.getString(R.string.floating_launcher_file_dock_copied),
+                                                    Toast.LENGTH_SHORT,
+                                                ).show()
+                                            }
+
+                                            is FileDockItem.MediaItem -> {
+                                                val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                                                    type = dockItem.mimeType ?: "*/*"
+                                                    putExtra(Intent.EXTRA_STREAM, dockItem.uri)
+                                                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                                }
+                                                context.startActivity(
+                                                    Intent.createChooser(shareIntent, dockItem.label).apply {
+                                                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                                    }
+                                                )
+                                            }
+                                        }
+                                    }
+                                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                            ) {
+                                Icon(
+                                    painterResource(
+                                        when (dockItem) {
+                                            is FileDockItem.TextItem -> R.drawable.description_24px
+                                            is FileDockItem.MediaItem -> R.drawable.attach_file_24px
+                                        }
+                                    ),
+                                    contentDescription = null,
+                                )
+                                Text(
+                                    text = when (dockItem) {
+                                        is FileDockItem.TextItem -> dockItem.text
+                                        is FileDockItem.MediaItem -> dockItem.label
+                                    },
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis,
+                                    modifier = Modifier.weight(1f),
+                                )
+                                IconButton(
+                                    onClick = { onRemove(dockItem.id) },
+                                    modifier = Modifier.size(32.dp),
+                                ) {
+                                    Icon(
+                                        painterResource(R.drawable.close_20px),
+                                        contentDescription = stringResource(R.string.floating_launcher_remove_app),
+                                        modifier = Modifier.size(18.dp),
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
             }

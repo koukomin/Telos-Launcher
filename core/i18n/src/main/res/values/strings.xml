@@ -810,6 +810,9 @@
     <string name="floating_launcher_save">Save</string>
     <string name="floating_launcher_open_folder">Open folder</string>
     <string name="floating_launcher_all_apps">All apps</string>
+    <string name="floating_launcher_file_dock">File Dock</string>
+    <string name="floating_launcher_file_dock_empty">Drag text, images or files onto a tab to hold them here temporarily.</string>
+    <string name="floating_launcher_file_dock_copied">Copied</string>
     <plurals name="floating_launcher_zone_apps_count">
         <item quantity="one">%1$d app</item>
         <item quantity="other">%1$d apps</item>
