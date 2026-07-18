@@ -265,11 +265,25 @@
     <string name="context_profile_trigger_bluetooth_device">Device name</string>
     <string name="context_profile_trigger_bluetooth_device_summary">Active while this device is connected (must match exactly)</string>
     <string name="context_profile_trigger_battery_saver">Battery Saver is on</string>
+    <string name="context_profile_trigger_charging">Charging</string>
+    <string name="context_profile_trigger_charging_type">Charger type</string>
+    <string name="charging_type_any">Any charger</string>
+    <string name="charging_type_usb">USB</string>
+    <string name="charging_type_ac">Power adapter</string>
+    <string name="charging_type_wireless">Wireless</string>
     <string name="context_profile_activate_now">Active now</string>
     <string name="context_profile_activate_now_summary">Force this profile on, ignoring its trigger, until turned off here</string>
     <string name="context_profile_active_now">active now</string>
     <string name="missing_permission_context_profile_wifi">Reading the connected WiFi network\'s name requires location access. This launcher only uses it to check the network name for this trigger.</string>
     <string name="missing_permission_context_profile_bluetooth">Detecting connected Bluetooth devices requires the Bluetooth permission.</string>
+    <string name="context_profile_override_dnd">Do Not Disturb</string>
+    <string name="context_profile_override_dnd_on">Turn on</string>
+    <string name="context_profile_override_dnd_off">Turn off</string>
+    <string name="missing_permission_context_profile_dnd">Overriding Do Not Disturb requires notification policy access.</string>
+    <string name="context_profile_override_brightness">Override brightness</string>
+    <string name="context_profile_override_brightness_value">Brightness</string>
+    <string name="missing_permission_context_profile_brightness">Overriding screen brightness requires the modify system settings permission.</string>
+    <string name="context_profile_override_launch_app">Launch app when activated</string>
 
     <string name="preference_screen_desktop_mode">Desktop mode</string>
     <string name="preference_screen_desktop_mode_summary">Show a taskbar and start menu on a connected external display</string>

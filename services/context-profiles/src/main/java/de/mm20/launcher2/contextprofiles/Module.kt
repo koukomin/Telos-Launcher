@@ -5,4 +5,5 @@ import org.koin.dsl.module
 
 val contextProfilesModule = module {
     single { ContextProfileManager(androidContext(), get(), get()) }
+    single { ContextProfileEffectsApplier(androidContext(), get(), get(), get()) }
 }

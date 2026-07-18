@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.preferences.ChargingType
 import de.mm20.launcher2.preferences.ContextProfile
 import de.mm20.launcher2.preferences.ContextProfileGestureOverrides
 import de.mm20.launcher2.preferences.ContextProfileIcon
@@ -43,16 +44,21 @@ import de.mm20.launcher2.preferences.ContextProfileTrigger
 import de.mm20.launcher2.preferences.FreezeProfile
 import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.WidgetScreenTarget
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.SearchablePicker
 import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreferenceItem
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.component.preferences.TextPreference
 import de.mm20.launcher2.ui.component.DismissableBottomSheet
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.serialization.Serializable
 import java.util.UUID
 
@@ -70,6 +76,8 @@ fun ContextProfilesSettingsScreen() {
     val manualOverrideId by viewModel.manualOverrideId.collectAsStateWithLifecycle(null)
     val hasLocationPermission by viewModel.hasLocationPermission.collectAsStateWithLifecycle(null)
     val hasBluetoothPermission by viewModel.hasBluetoothPermission.collectAsStateWithLifecycle(null)
+    val hasNotificationPolicyPermission by viewModel.hasNotificationPolicyPermission.collectAsStateWithLifecycle(null)
+    val hasWriteSettingsPermission by viewModel.hasWriteSettingsPermission.collectAsStateWithLifecycle(null)
 
     var editingProfile by remember { mutableStateOf<ContextProfile?>(null) }
     var showNewProfileSheet by remember { mutableStateOf(false) }
@@ -115,8 +123,13 @@ fun ContextProfilesSettingsScreen() {
             manuallyActive = false,
             hasLocationPermission = hasLocationPermission,
             hasBluetoothPermission = hasBluetoothPermission,
+            hasNotificationPolicyPermission = hasNotificationPolicyPermission,
+            hasWriteSettingsPermission = hasWriteSettingsPermission,
             onRequestLocationPermission = { viewModel.requestLocationPermission(context as AppCompatActivity) },
             onRequestBluetoothPermission = { viewModel.requestBluetoothPermission(context as AppCompatActivity) },
+            onRequestNotificationPolicyPermission = { viewModel.requestNotificationPolicyPermission(context as AppCompatActivity) },
+            onRequestWriteSettingsPermission = { viewModel.requestWriteSettingsPermission(context as AppCompatActivity) },
+            resolveSearchable = { viewModel.resolveSearchable(it) },
             onSave = { viewModel.saveProfile(it) },
             onDelete = null,
             onSetManuallyActive = { },
@@ -132,8 +145,13 @@ fun ContextProfilesSettingsScreen() {
             manuallyActive = manualOverrideId == profileBeingEdited.id,
             hasLocationPermission = hasLocationPermission,
             hasBluetoothPermission = hasBluetoothPermission,
+            hasNotificationPolicyPermission = hasNotificationPolicyPermission,
+            hasWriteSettingsPermission = hasWriteSettingsPermission,
             onRequestLocationPermission = { viewModel.requestLocationPermission(context as AppCompatActivity) },
             onRequestBluetoothPermission = { viewModel.requestBluetoothPermission(context as AppCompatActivity) },
+            onRequestNotificationPolicyPermission = { viewModel.requestNotificationPolicyPermission(context as AppCompatActivity) },
+            onRequestWriteSettingsPermission = { viewModel.requestWriteSettingsPermission(context as AppCompatActivity) },
+            resolveSearchable = { viewModel.resolveSearchable(it) },
             onSave = { viewModel.saveProfile(it) },
             onDelete = {
                 viewModel.deleteProfile(profileBeingEdited.id)
@@ -154,14 +172,20 @@ private fun ContextProfileEditSheet(
     manuallyActive: Boolean,
     hasLocationPermission: Boolean?,
     hasBluetoothPermission: Boolean?,
+    hasNotificationPolicyPermission: Boolean?,
+    hasWriteSettingsPermission: Boolean?,
     onRequestLocationPermission: () -> Unit,
     onRequestBluetoothPermission: () -> Unit,
+    onRequestNotificationPolicyPermission: () -> Unit,
+    onRequestWriteSettingsPermission: () -> Unit,
+    resolveSearchable: (String) -> Flow<SavableSearchable?>,
     onSave: (ContextProfile) -> Unit,
     onDelete: (() -> Unit)?,
     onSetManuallyActive: (Boolean) -> Unit,
     onDismiss: () -> Unit,
 ) {
     var current by remember(profile.id) { mutableStateOf(profile) }
+    var showLaunchAppPicker by remember { mutableStateOf(false) }
 
     DismissableBottomSheet(
         expanded = true,
@@ -224,6 +248,7 @@ private fun ContextProfileEditSheet(
                             ListPreferenceItem(stringResource(R.string.context_profile_trigger_wifi), 2),
                             ListPreferenceItem(stringResource(R.string.context_profile_trigger_bluetooth), 3),
                             ListPreferenceItem(stringResource(R.string.context_profile_trigger_battery_saver), 4),
+                            ListPreferenceItem(stringResource(R.string.context_profile_trigger_charging), 5),
                         ),
                         value = when (current.trigger) {
                             is ContextProfileTrigger.Manual -> 0
@@ -231,6 +256,7 @@ private fun ContextProfileEditSheet(
                             is ContextProfileTrigger.Wifi -> 2
                             is ContextProfileTrigger.Bluetooth -> 3
                             is ContextProfileTrigger.BatterySaver -> 4
+                            is ContextProfileTrigger.Charging -> 5
                         },
                         onValueChanged = {
                             current = current.copy(
@@ -239,6 +265,7 @@ private fun ContextProfileEditSheet(
                                     2 -> ContextProfileTrigger.Wifi()
                                     3 -> ContextProfileTrigger.Bluetooth()
                                     4 -> ContextProfileTrigger.BatterySaver
+                                    5 -> ContextProfileTrigger.Charging()
                                     else -> ContextProfileTrigger.Manual
                                 }
                             )
@@ -294,6 +321,22 @@ private fun ContextProfileEditSheet(
                                     },
                                 )
                             }
+                        }
+
+                        is ContextProfileTrigger.Charging -> {
+                            ListPreference(
+                                title = stringResource(R.string.context_profile_trigger_charging_type),
+                                items = listOf(
+                                    ListPreferenceItem(stringResource(R.string.charging_type_any), ChargingType.Any),
+                                    ListPreferenceItem(stringResource(R.string.charging_type_usb), ChargingType.Usb),
+                                    ListPreferenceItem(stringResource(R.string.charging_type_ac), ChargingType.Ac),
+                                    ListPreferenceItem(stringResource(R.string.charging_type_wireless), ChargingType.Wireless),
+                                ),
+                                value = trigger.type,
+                                onValueChanged = {
+                                    current = current.copy(trigger = trigger.copy(type = it))
+                                },
+                            )
                         }
 
                         else -> {}
@@ -356,6 +399,67 @@ private fun ContextProfileEditSheet(
                             current = current.copy(gestureOverrides = current.gestureOverrides.copy(doubleTap = it))
                         },
                     )
+                    GuardedPreference(
+                        locked = hasNotificationPolicyPermission == false,
+                        description = stringResource(R.string.missing_permission_context_profile_dnd),
+                        onUnlock = onRequestNotificationPolicyPermission,
+                    ) {
+                        ListPreference(
+                            title = stringResource(R.string.context_profile_override_dnd),
+                            items = listOf(
+                                ListPreferenceItem(stringResource(R.string.context_profile_no_override), null),
+                                ListPreferenceItem(stringResource(R.string.context_profile_override_dnd_on), true),
+                                ListPreferenceItem(stringResource(R.string.context_profile_override_dnd_off), false),
+                            ),
+                            value = current.doNotDisturbOverride,
+                            onValueChanged = { current = current.copy(doNotDisturbOverride = it) },
+                        )
+                    }
+                    GuardedPreference(
+                        locked = hasWriteSettingsPermission == false,
+                        description = stringResource(R.string.missing_permission_context_profile_brightness),
+                        onUnlock = onRequestWriteSettingsPermission,
+                    ) {
+                        Column {
+                            SwitchPreference(
+                                title = stringResource(R.string.context_profile_override_brightness),
+                                value = current.brightnessOverride != null,
+                                onValueChanged = {
+                                    current = current.copy(brightnessOverride = if (it) 50 else null)
+                                },
+                            )
+                            val brightness = current.brightnessOverride
+                            if (brightness != null) {
+                                SliderPreference(
+                                    title = stringResource(R.string.context_profile_override_brightness_value),
+                                    value = brightness,
+                                    min = 1,
+                                    max = 100,
+                                    onValueChanged = { current = current.copy(brightnessOverride = it) },
+                                    label = { Text("$it%") },
+                                )
+                            }
+                        }
+                    }
+                    val launchAppKey = current.launchAppOverride
+                    val launchApp by (launchAppKey?.let { resolveSearchable(it) } ?: emptyFlow())
+                        .collectAsStateWithLifecycle(null)
+                    Preference(
+                        icon = R.drawable.open_in_new_24px,
+                        title = stringResource(R.string.context_profile_override_launch_app),
+                        summary = launchApp?.label ?: stringResource(R.string.context_profile_no_override),
+                        onClick = { showLaunchAppPicker = true },
+                        controls = if (launchAppKey != null) {
+                            {
+                                IconButton(onClick = { current = current.copy(launchAppOverride = null) }) {
+                                    Icon(
+                                        painterResource(R.drawable.close_24px),
+                                        contentDescription = stringResource(R.string.context_profile_no_override),
+                                    )
+                                }
+                            }
+                        } else null,
+                    )
                 }
             }
             if (!isNew) {
@@ -377,6 +481,28 @@ private fun ContextProfileEditSheet(
                     }
                 }
             }
+        }
+    }
+
+    if (showLaunchAppPicker) {
+        val launchAppKey = current.launchAppOverride
+        val launchApp by (launchAppKey?.let { resolveSearchable(it) } ?: emptyFlow())
+            .collectAsStateWithLifecycle(null)
+        DismissableBottomSheet(
+            expanded = true,
+            onDismissRequest = { showLaunchAppPicker = false },
+        ) {
+            SearchablePicker(
+                modifier = Modifier.fillMaxWidth(),
+                contentPadding = PaddingValues(
+                    bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(),
+                ),
+                value = launchApp,
+                onValueChanged = {
+                    current = current.copy(launchAppOverride = it?.key)
+                    showLaunchAppPicker = false
+                },
+            )
         }
     }
 }
@@ -426,4 +552,5 @@ private fun triggerSummary(trigger: ContextProfileTrigger): String = when (trigg
     is ContextProfileTrigger.Wifi -> stringResource(R.string.context_profile_trigger_wifi)
     is ContextProfileTrigger.Bluetooth -> stringResource(R.string.context_profile_trigger_bluetooth)
     is ContextProfileTrigger.BatterySaver -> stringResource(R.string.context_profile_trigger_battery_saver)
+    is ContextProfileTrigger.Charging -> stringResource(R.string.context_profile_trigger_charging)
 }

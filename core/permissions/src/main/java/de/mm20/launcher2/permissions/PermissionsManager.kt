@@ -2,6 +2,7 @@ package de.mm20.launcher2.permissions
 
 import android.Manifest
 import android.app.AppOpsManager
+import android.app.NotificationManager
 import android.app.role.RoleManager
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -84,6 +85,8 @@ enum class PermissionGroup {
     UsageAccess,
     OverlayWindow,
     Bluetooth,
+    NotificationPolicy,
+    WriteSettings,
 }
 
 internal class PermissionsManagerImpl(
@@ -126,6 +129,12 @@ internal class PermissionsManagerImpl(
     )
     private val bluetoothPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.Bluetooth)
+    )
+    private val notificationPolicyPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.NotificationPolicy)
+    )
+    private val writeSettingsPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.WriteSettings)
     )
 
     private val accessibilityRequestAttempted = MutableStateFlow(false)
@@ -255,6 +264,29 @@ internal class PermissionsManagerImpl(
                     )
                 }
             }
+
+            PermissionGroup.NotificationPolicy -> {
+                try {
+                    context.tryStartActivity(Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS))
+                    pendingPermissionRequests.add(PermissionGroup.NotificationPolicy)
+                } catch (e: ActivityNotFoundException) {
+                    CrashReporter.logException(e)
+                }
+            }
+
+            PermissionGroup.WriteSettings -> {
+                try {
+                    context.tryStartActivity(
+                        Intent(
+                            Settings.ACTION_MANAGE_WRITE_SETTINGS,
+                            "package:${context.packageName}".toUri(),
+                        )
+                    )
+                    pendingPermissionRequests.add(PermissionGroup.WriteSettings)
+                } catch (e: ActivityNotFoundException) {
+                    CrashReporter.logException(e)
+                }
+            }
         }
     }
 
@@ -323,6 +355,15 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Bluetooth -> {
                 !isAtLeastApiLevel(31) || bluetoothPermissions.all { context.checkPermission(it) }
             }
+
+            PermissionGroup.NotificationPolicy -> {
+                context.getSystemService<NotificationManager>()
+                    ?.isNotificationPolicyAccessGranted == true
+            }
+
+            PermissionGroup.WriteSettings -> {
+                Settings.System.canWrite(context)
+            }
         }
     }
 
@@ -341,6 +382,8 @@ internal class PermissionsManagerImpl(
             PermissionGroup.UsageAccess -> usageAccessPermissionState
             PermissionGroup.OverlayWindow -> overlayWindowPermissionState
             PermissionGroup.Bluetooth -> bluetoothPermissionState
+            PermissionGroup.NotificationPolicy -> notificationPolicyPermissionState
+            PermissionGroup.WriteSettings -> writeSettingsPermissionState
         }
     }
 
@@ -373,6 +416,8 @@ internal class PermissionsManagerImpl(
             PermissionGroup.UsageAccess -> usageAccessPermissionState.value = granted
             PermissionGroup.OverlayWindow -> overlayWindowPermissionState.value = granted
             PermissionGroup.Bluetooth -> bluetoothPermissionState.value = granted
+            PermissionGroup.NotificationPolicy -> notificationPolicyPermissionState.value = granted
+            PermissionGroup.WriteSettings -> writeSettingsPermissionState.value = granted
         }
     }
 
@@ -383,6 +428,8 @@ internal class PermissionsManagerImpl(
         usageAccessPermissionState.value = checkPermissionOnce(PermissionGroup.UsageAccess)
         overlayWindowPermissionState.value = checkPermissionOnce(PermissionGroup.OverlayWindow)
         bluetoothPermissionState.value = checkPermissionOnce(PermissionGroup.Bluetooth)
+        notificationPolicyPermissionState.value = checkPermissionOnce(PermissionGroup.NotificationPolicy)
+        writeSettingsPermissionState.value = checkPermissionOnce(PermissionGroup.WriteSettings)
     }
 
     override fun reportNotificationListenerState(running: Boolean) {

@@ -17,6 +17,12 @@ data class ContextProfile(
     val gestureOverrides: ContextProfileGestureOverrides = ContextProfileGestureOverrides(),
     val freezeProfileOverride: FreezeProfile? = null,
     val widgetScreenTargetOverride: WidgetScreenTarget? = null,
+    /** While active: `true` forces Do Not Disturb on, `false` forces it off, `null` doesn't override it. */
+    val doNotDisturbOverride: Boolean? = null,
+    /** While active, forces screen brightness to this percentage (0-100). `null` doesn't override it. */
+    val brightnessOverride: Int? = null,
+    /** Key of a searchable (usually an app) to launch once whenever this profile becomes active. */
+    val launchAppOverride: String? = null,
 )
 
 @Serializable
@@ -83,4 +89,21 @@ sealed interface ContextProfileTrigger {
     @Serializable
     @SerialName("battery_saver")
     data object BatterySaver : ContextProfileTrigger
+
+    /**
+     * Active while the device is charging. Android doesn't expose the identity of a specific
+     * charger/USB device, only the connection type it reports - [ChargingType] is as specific as
+     * this can get.
+     */
+    @Serializable
+    @SerialName("charging")
+    data class Charging(val type: ChargingType = ChargingType.Any) : ContextProfileTrigger
+}
+
+@Serializable
+enum class ChargingType {
+    @SerialName("any") Any,
+    @SerialName("usb") Usb,
+    @SerialName("ac") Ac,
+    @SerialName("wireless") Wireless,
 }

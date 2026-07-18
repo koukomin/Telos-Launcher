@@ -10,4 +10,12 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
 
+    <!--
+        Special-access permissions for profile overrides: Do Not Disturb and screen brightness.
+        Both are opt-in per profile (only requested when the user actually adds that override) and
+        granted via a system settings screen, not a runtime dialog.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
 </manifest>

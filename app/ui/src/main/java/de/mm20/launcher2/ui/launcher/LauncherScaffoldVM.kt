@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.contextprofiles.ContextProfileEffectsApplier
 import de.mm20.launcher2.contextprofiles.ContextProfileManager
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.preferences.ColorScheme
@@ -20,6 +21,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -29,6 +31,13 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     private val gestureSettings: GestureSettings by inject()
     private val searchableRepository: SavableSearchableRepository by inject()
     private val contextProfileManager: ContextProfileManager by inject()
+    private val contextProfileEffectsApplier: ContextProfileEffectsApplier by inject()
+
+    init {
+        viewModelScope.launch {
+            contextProfileEffectsApplier.start()
+        }
+    }
 
     private var isSystemInDarkMode = MutableStateFlow(false)
 

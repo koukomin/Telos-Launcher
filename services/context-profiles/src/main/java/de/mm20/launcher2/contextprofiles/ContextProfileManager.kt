@@ -6,11 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.wifi.WifiManager
+import android.os.BatteryManager
 import android.os.PowerManager
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.ChargingType
 import de.mm20.launcher2.preferences.ContextProfile
 import de.mm20.launcher2.preferences.ContextProfileTrigger
 import de.mm20.launcher2.preferences.ui.ContextProfileSettings
@@ -97,6 +99,7 @@ class ContextProfileManager internal constructor(
         val ssid = currentWifiSsid()
         val batterySaverOn = isBatterySaverOn()
         val connectedDevices = connectedBluetoothDeviceNames.value
+        val chargingType = currentChargingType()
         return profiles.firstOrNull { profile ->
             when (val trigger = profile.trigger) {
                 ContextProfileTrigger.Manual -> false
@@ -104,6 +107,8 @@ class ContextProfileManager internal constructor(
                 is ContextProfileTrigger.Wifi -> ssid != null && ssid in trigger.ssids
                 is ContextProfileTrigger.Bluetooth -> connectedDevices.any { it in trigger.deviceNames }
                 ContextProfileTrigger.BatterySaver -> batterySaverOn
+                is ContextProfileTrigger.Charging -> chargingType != null &&
+                        (trigger.type == ChargingType.Any || trigger.type == chargingType)
             }
         }
     }
@@ -134,5 +139,23 @@ class ContextProfileManager internal constructor(
     private fun isBatterySaverOn(): Boolean {
         val powerManager = context.getSystemService<PowerManager>() ?: return false
         return powerManager.isPowerSaveMode
+    }
+
+    /**
+     * The kind of charger currently connected, or null if not charging. Android doesn't expose
+     * the identity of a specific charger/USB device, only this connection type.
+     */
+    private fun currentChargingType(): ChargingType? {
+        val batteryStatus = context.registerReceiver(
+            null,
+            IntentFilter(Intent.ACTION_BATTERY_CHANGED),
+        ) ?: return null
+        val plugged = batteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1)
+        return when (plugged) {
+            BatteryManager.BATTERY_PLUGGED_USB -> ChargingType.Usb
+            BatteryManager.BATTERY_PLUGGED_AC -> ChargingType.Ac
+            BatteryManager.BATTERY_PLUGGED_WIRELESS -> ChargingType.Wireless
+            else -> null
+        }
     }
 }
