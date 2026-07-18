@@ -38,6 +38,9 @@ class FloatingLauncherSettingsScreenVM(
     val alpha = floatingLauncherSettings.alpha
     fun setAlpha(alpha: Float) = floatingLauncherSettings.setAlpha(alpha)
 
+    val columns = floatingLauncherSettings.columns
+    fun setColumns(columns: Int) = floatingLauncherSettings.setColumns(columns)
+
     companion object : KoinComponent {
         val Factory = viewModelFactory {
             initializer {

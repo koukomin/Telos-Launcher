@@ -2,20 +2,30 @@ package de.mm20.launcher2.ui.settings.floating
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
-import androidx.compose.foundation.layout.padding
-import androidx.compose.ui.res.pluralStringResource
-import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.FloatingLauncherZone
 import de.mm20.launcher2.preferences.FloatingLauncherZoneConfig
 import de.mm20.launcher2.ui.R
@@ -47,6 +57,7 @@ fun FloatingLauncherSettingsScreen() {
     val thickness by viewModel.thickness.collectAsStateWithLifecycle(24)
     val color by viewModel.color.collectAsStateWithLifecycle(0xFF6750A4.toInt())
     val alpha by viewModel.alpha.collectAsStateWithLifecycle(0.6f)
+    val columns by viewModel.columns.collectAsStateWithLifecycle(1)
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_floating_launcher)) {
         item {
@@ -103,6 +114,13 @@ fun FloatingLauncherSettingsScreen() {
         }
         item {
             PreferenceCategory(title = stringResource(R.string.preference_category_appearance)) {
+                Text(
+                    text = stringResource(R.string.preference_floating_launcher_preview),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 4.dp),
+                )
+                TabPreview(thickness = thickness, color = color, alpha = alpha)
                 SliderPreference(
                     title = stringResource(R.string.preference_floating_launcher_thickness),
                     value = thickness,
@@ -123,8 +141,38 @@ fun FloatingLauncherSettingsScreen() {
                     max = 1f,
                     onValueChanged = { viewModel.setAlpha(it) },
                 )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_floating_launcher_columns),
+                    summary = stringResource(R.string.preference_floating_launcher_columns_summary),
+                    value = columns == 2,
+                    onValueChanged = { viewModel.setColumns(if (it) 2 else 1) },
+                )
             }
         }
+    }
+}
+
+/**
+ * Mirrors ZoneTab's own size/shape/color logic so this preview always matches what actually
+ * renders in the overlay - a right-edge tab, since that's where the only zone enabled by default
+ * (RightTop) lives.
+ */
+@Composable
+private fun TabPreview(thickness: Int, color: Int, alpha: Float) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(96.dp)
+            .clip(MaterialTheme.shapes.medium)
+            .background(MaterialTheme.colorScheme.surfaceVariant),
+        contentAlignment = Alignment.CenterEnd,
+    ) {
+        Box(
+            modifier = Modifier
+                .size(width = thickness.dp, height = 72.dp)
+                .clip(RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp))
+                .background(Color(color).copy(alpha = alpha)),
+        )
     }
 }
 

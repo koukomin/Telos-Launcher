@@ -778,6 +778,9 @@
     <string name="preference_floating_launcher_thickness">Tab thickness</string>
     <string name="preference_floating_launcher_color">Tab color</string>
     <string name="preference_floating_launcher_alpha">Tab transparency</string>
+    <string name="preference_floating_launcher_columns">Two columns</string>
+    <string name="preference_floating_launcher_columns_summary">Show two apps per row in each zone\'s panel instead of one</string>
+    <string name="preference_floating_launcher_preview">Preview</string>
     <string name="freeze_island_notification_channel">Freeze via Island</string>
     <string name="freeze_island_notification_title">Tap to freeze apps</string>
     <string name="freeze_island_notification_text">%d app(s) ready to freeze in Island - Android blocks apps from doing this on their own in the background, so this needs a tap</string>
