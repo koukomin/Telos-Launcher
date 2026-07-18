@@ -3,6 +3,7 @@ package de.mm20.launcher2.freeze
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.util.Log
 import de.mm20.launcher2.freeze.providers.RootProvider
 import de.mm20.launcher2.freeze.providers.ShizukuProvider
 import de.mm20.launcher2.freeze.providers.IslandProvider
@@ -67,11 +68,37 @@ class FreezeManager internal constructor(
 
     suspend fun freeze(packageNames: List<String>): Set<String> = setSuspended(packageNames, true)
 
+    /**
+     * Same as [freeze], except when the active backend is [FreezeBackendType.Island]: Island's
+     * freeze mechanism is an Activity intent, and Android silently drops Activity launches from
+     * a background process (no foreground UI) since API 29 - calling [freeze] directly from
+     * AutoFreezeController's screen-off/idle/battery-saver triggers would report success and
+     * freeze nothing. This posts a notification instead; the user's tap on it is exempt from that
+     * restriction. Shizuku/Root go through the same binder/shell path as [freeze] - no background
+     * restriction applies to them, so they freeze immediately as normal.
+     */
+    suspend fun freezeInBackground(packageNames: List<String>) {
+        if (packageNames.isEmpty()) return
+        if (_activeBackend.value == FreezeBackendType.Island) {
+            islandProvider.postFreezeNotification(packageNames)
+        } else {
+            freeze(packageNames)
+        }
+    }
+
     /** @return the subset of [packageNames] that were actually toggled successfully. */
     private suspend fun setSuspended(packageNames: List<String>, suspended: Boolean): Set<String> {
         if (packageNames.isEmpty()) return emptySet()
 
-        val backend = _activeBackend.value ?: return emptySet()
+        val backend = _activeBackend.value
+        if (backend == null) {
+            Log.w(TAG, "setSuspended($packageNames, $suspended): no active backend")
+            return emptySet()
+        }
+        if (!hasPermission()) {
+            Log.w(TAG, "setSuspended($packageNames, $suspended): $backend has no permission")
+            return emptySet()
+        }
         val methods = settings.freezeMethods.first()
 
         val succeeded = when (backend) {
@@ -155,4 +182,8 @@ class FreezeManager internal constructor(
 
     /** Freeze/unfreeze counters and last-toggled timestamps, keyed by package name. */
     val stats = settings.stats
+
+    companion object {
+        private const val TAG = "FreezeManager"
+    }
 }

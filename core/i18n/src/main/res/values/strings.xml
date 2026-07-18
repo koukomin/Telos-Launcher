@@ -755,6 +755,9 @@
     <string name="preference_floating_launcher_thickness">Tab thickness</string>
     <string name="preference_floating_launcher_color">Tab color</string>
     <string name="preference_floating_launcher_alpha">Tab transparency</string>
+    <string name="freeze_island_notification_channel">Freeze via Island</string>
+    <string name="freeze_island_notification_title">Tap to freeze apps</string>
+    <string name="freeze_island_notification_text">%d app(s) ready to freeze in Island - Android blocks apps from doing this on their own in the background, so this needs a tap</string>
     <string name="floating_launcher_notification_channel">Floating launcher</string>
     <string name="floating_launcher_notification_title">Floating launcher is active</string>
     <string name="floating_launcher_notification_text">Tap to change settings</string>

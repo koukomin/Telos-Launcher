@@ -59,6 +59,7 @@ dependencies {
     implementation(project(":core:preferences"))
     implementation(project(":core:crashreporter"))
     implementation(project(":core:permissions"))
+    implementation(project(":core:i18n"))
     implementation(project(":data:notifications"))
     implementation(project(":services:context-profiles"))
 }

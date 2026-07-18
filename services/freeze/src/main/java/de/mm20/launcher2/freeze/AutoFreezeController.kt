@@ -114,6 +114,9 @@ class AutoFreezeController internal constructor(
             .filterNot { exclusionChecker.isExcluded(it) }
         if (freezable.isEmpty()) return
         freezeManager.refreshBackendState()
-        freezeManager.freeze(freezable)
+        // Not freeze(): this runs from a background trigger (screen-off/idle/battery-saver, no
+        // foreground activity), and Island's freeze mechanism needs a foreground context to
+        // launch its Activity - see FreezeManager.freezeInBackground.
+        freezeManager.freezeInBackground(freezable)
     }
 }
