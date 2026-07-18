@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -68,6 +69,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.Lifecycle
@@ -92,6 +94,9 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
+import de.mm20.launcher2.ui.component.dragndrop.DraggableItem
+import de.mm20.launcher2.ui.component.dragndrop.LazyVerticalDragAndDropGrid
+import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropGridState
 import de.mm20.launcher2.ui.launcher.shutters.ShutterGate
 import de.mm20.launcher2.ui.overlays.OverlayHost
 import de.mm20.launcher2.ui.settings.SettingsActivity
@@ -369,6 +374,11 @@ private fun FloatingLauncherContent(
         settings.setZoneApps(zone, keys)
     }
 
+    fun removeAppFromZone(zone: FloatingLauncherZone, key: String) {
+        val current = zones[zone]?.apps ?: emptyList()
+        settings.setZoneApps(zone, current - key)
+    }
+
     MaterialTheme(colorScheme = colorScheme) {
         OverlayHost {
             if (!hiddenForGaming) {
@@ -408,6 +418,7 @@ private fun FloatingLauncherContent(
                             onAppLaunched = { expandedZone = null },
                             onAppDropped = { key -> addAppToZone(zone, key) },
                             onReorder = { keys -> reorderZone(zone, keys) },
+                            onRemoveApp = { key -> removeAppFromZone(zone, key) },
                         )
                     }
                 }
@@ -512,6 +523,7 @@ private fun ExpandedPanel(
     onAppLaunched: () -> Unit,
     onAppDropped: (String) -> Unit,
     onReorder: (List<String>) -> Unit,
+    onRemoveApp: (String) -> Unit,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -523,6 +535,19 @@ private fun ExpandedPanel(
         config.apps.mapNotNull { key -> apps.firstOrNull { it.key == key } }
     }
     var isDropTarget by remember { mutableStateOf(false) }
+    var editMode by remember(zone) { mutableStateOf(false) }
+    val dragState = rememberLazyDragAndDropGridState(
+        onItemMove = { from, to ->
+            val current = orderedApps.toMutableList()
+            val fromIndex = current.indexOfFirst { it.key == from.key }
+            val toIndex = current.indexOfFirst { it.key == to.key }
+            if (fromIndex != -1 && toIndex != -1) {
+                val moved = current.removeAt(fromIndex)
+                current.add(toIndex, moved)
+                onReorder(current.map { it.key })
+            }
+        },
+    )
 
     Box(
         modifier = Modifier
@@ -542,7 +567,7 @@ private fun ExpandedPanel(
         Surface(
             modifier = Modifier
                 .widthIn(max = ICON_CELL_SIZE * columns + 32.dp)
-                .heightIn(max = ICON_CELL_SIZE * maxPerColumn + 56.dp)
+                .heightIn(max = ICON_CELL_SIZE * maxPerColumn + 112.dp)
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
@@ -594,6 +619,81 @@ private fun ExpandedPanel(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.End,
                 ) {
+                    IconButton(onClick = onDismiss) {
+                        Icon(
+                            painterResource(R.drawable.close_24px),
+                            contentDescription = stringResource(R.string.close),
+                        )
+                    }
+                }
+                if (orderedApps.isEmpty()) {
+                    Text(
+                        text = stringResource(R.string.floating_launcher_panel_empty),
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                    )
+                } else if (editMode) {
+                    LazyVerticalDragAndDropGrid(
+                        state = dragState,
+                        columns = GridCells.Fixed(columns),
+                    ) {
+                        items(orderedApps, key = { it.key }) { item ->
+                            DraggableItem(state = dragState, key = item.key) {
+                                FavoriteIcon(
+                                    item = item,
+                                    iconService = iconService,
+                                    appRepository = appRepository,
+                                    shutterSettings = shutterSettings,
+                                    editMode = true,
+                                    onClick = {},
+                                    onRemove = { onRemoveApp(item.key) },
+                                )
+                            }
+                        }
+                    }
+                } else {
+                    LazyVerticalGrid(columns = GridCells.Fixed(columns)) {
+                        items(orderedApps, key = { it.key }) { item ->
+                            FavoriteIcon(
+                                item = item,
+                                iconService = iconService,
+                                appRepository = appRepository,
+                                shutterSettings = shutterSettings,
+                                editMode = false,
+                                onClick = {
+                                    if (item is Application && freezeManager.isFrozen(item.componentName.packageName)) {
+                                        coroutineScope.launch {
+                                            freezeManager.unfreeze(item.componentName.packageName)
+                                            item.launch(context, null)
+                                        }
+                                    } else {
+                                        item.launch(context, null)
+                                    }
+                                    onAppLaunched()
+                                },
+                                onRemove = {},
+                            )
+                        }
+                    }
+                }
+                // Bottom toolbar - the OxygenOS Smart Sidebar puts edit access here rather than
+                // at the top, so managing this zone's icons doesn't require hunting through the
+                // main settings tree.
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp, vertical = 4.dp),
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    IconButton(onClick = { editMode = !editMode }) {
+                        Icon(
+                            painterResource(if (editMode) R.drawable.check_24px else R.drawable.edit_24px),
+                            contentDescription = stringResource(
+                                if (editMode) R.string.floating_launcher_edit_done
+                                else R.string.floating_launcher_edit_start
+                            ),
+                        )
+                    }
                     IconButton(
                         onClick = {
                             onDismiss()
@@ -612,41 +712,6 @@ private fun ExpandedPanel(
                             contentDescription = stringResource(R.string.floating_launcher_panel_settings),
                         )
                     }
-                    IconButton(onClick = onDismiss) {
-                        Icon(
-                            painterResource(R.drawable.close_24px),
-                            contentDescription = stringResource(R.string.close),
-                        )
-                    }
-                }
-                if (orderedApps.isEmpty()) {
-                    Text(
-                        text = stringResource(R.string.floating_launcher_panel_empty),
-                        style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-                    )
-                } else {
-                    LazyVerticalGrid(columns = GridCells.Fixed(columns)) {
-                        items(orderedApps, key = { it.key }) { item ->
-                            FavoriteIcon(
-                                item = item,
-                                iconService = iconService,
-                                appRepository = appRepository,
-                                shutterSettings = shutterSettings,
-                                onClick = {
-                                    if (item is Application && freezeManager.isFrozen(item.componentName.packageName)) {
-                                        coroutineScope.launch {
-                                            freezeManager.unfreeze(item.componentName.packageName)
-                                            item.launch(context, null)
-                                        }
-                                    } else {
-                                        item.launch(context, null)
-                                    }
-                                    onAppLaunched()
-                                },
-                            )
-                        }
-                    }
                 }
             }
         }
@@ -654,8 +719,10 @@ private fun ExpandedPanel(
 }
 
 /**
- * A single icons-only cell in the panel's grid - no label, matching the default (non-edit-mode)
- * OxygenOS Smart Sidebar look. Labels only appear in edit mode (added in a later stage).
+ * A single cell in the panel's grid. Icons-only outside edit mode, matching the default OxygenOS
+ * Smart Sidebar look; in edit mode it also shows its label (so a bare icon isn't ambiguous while
+ * rearranging) and a small remove badge, and stops launching on tap since a tap there means
+ * "grab to drag" instead (handled by the drag grid this is placed inside).
  */
 @Composable
 private fun FavoriteIcon(
@@ -663,7 +730,9 @@ private fun FavoriteIcon(
     iconService: IconService,
     appRepository: AppRepository,
     shutterSettings: ShutterSettings,
+    editMode: Boolean,
     onClick: () -> Unit,
+    onRemove: () -> Unit,
 ) {
     val icon by remember(item.key) { iconService.getIcon(item, 48) }.collectAsState(null)
     // Reflects live package-suspended state, so it updates immediately on freeze/unfreeze -
@@ -685,25 +754,60 @@ private fun FavoriteIcon(
     var showShutter by remember(item.key) { mutableStateOf(false) }
     val hapticFeedback = LocalHapticFeedback.current
 
-    Box(
-        modifier = Modifier
-            .size(ICON_CELL_SIZE)
-            .then(
-                if (shuttersEnabled && item is Application) {
-                    Modifier.combinedClickable(
-                        onClick = onClick,
-                        onLongClick = {
-                            hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
-                            showShutter = true
-                        },
-                    )
-                } else {
-                    Modifier.clickable(onClick = onClick)
-                }
-            ),
-        contentAlignment = Alignment.Center,
-    ) {
-        ShapedLauncherIcon(size = 44.dp, icon = { icon }, grayscale = isFrozen)
+    Box(modifier = Modifier.size(ICON_CELL_SIZE)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .then(
+                    if (editMode) {
+                        Modifier
+                    } else if (shuttersEnabled && item is Application) {
+                        Modifier.combinedClickable(
+                            onClick = onClick,
+                            onLongClick = {
+                                hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+                                showShutter = true
+                            },
+                        )
+                    } else {
+                        Modifier.clickable(onClick = onClick)
+                    }
+                ),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            ShapedLauncherIcon(
+                size = if (editMode) 36.dp else 44.dp,
+                icon = { icon },
+                grayscale = isFrozen,
+            )
+            if (editMode) {
+                Text(
+                    text = item.labelOverride ?: item.label,
+                    style = MaterialTheme.typography.labelSmall,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(horizontal = 2.dp, vertical = 2.dp),
+                )
+            }
+        }
+        if (editMode) {
+            IconButton(
+                onClick = onRemove,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .size(22.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.errorContainer),
+            ) {
+                Icon(
+                    painterResource(R.drawable.close_20px),
+                    contentDescription = stringResource(R.string.floating_launcher_remove_app),
+                    tint = MaterialTheme.colorScheme.onErrorContainer,
+                    modifier = Modifier.size(14.dp),
+                )
+            }
+        }
     }
 
     if (showShutter && item is Application) {
