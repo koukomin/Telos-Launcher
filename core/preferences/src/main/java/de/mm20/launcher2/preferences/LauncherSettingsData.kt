@@ -674,9 +674,30 @@ enum class FloatingLauncherZone {
 @Serializable
 data class FloatingLauncherZoneConfig(
     val enabled: Boolean = false,
-    /** SavableSearchable keys, in display order. */
+    /** SavableSearchable keys, in display order. A folder's position in that same order is
+     * marked by a "floating_folder:<id>" sentinel entry (see [FloatingLauncherFolder]) instead
+     * of a real key, so reordering/removal can keep working on this one flat list uniformly
+     * whether an entry is a loose app or a folder. */
     val apps: List<String> = emptyList(),
+    val folders: List<FloatingLauncherFolder> = emptyList(),
 )
+
+@Serializable
+data class FloatingLauncherFolder(
+    val id: String,
+    val name: String,
+    /** SavableSearchable keys inside this folder, in display order. */
+    val appKeys: List<String> = emptyList(),
+) {
+    companion object {
+        private const val KEY_PREFIX = "floating_folder:"
+
+        fun sentinelKey(id: String) = "$KEY_PREFIX$id"
+
+        fun idFromSentinel(key: String): String? =
+            key.takeIf { it.startsWith(KEY_PREFIX) }?.removePrefix(KEY_PREFIX)
+    }
+}
 
 /** Requested orientation for the desktop shell activity on the external display. */
 @Serializable

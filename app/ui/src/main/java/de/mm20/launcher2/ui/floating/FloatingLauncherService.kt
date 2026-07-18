@@ -22,23 +22,32 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -85,6 +94,7 @@ import de.mm20.launcher2.freeze.FreezeManager
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.ContextProfileIcon
+import de.mm20.launcher2.preferences.FloatingLauncherFolder
 import de.mm20.launcher2.preferences.FloatingLauncherZone
 import de.mm20.launcher2.preferences.FloatingLauncherZoneConfig
 import de.mm20.launcher2.preferences.ui.FloatingLauncherSettings
@@ -379,6 +389,18 @@ private fun FloatingLauncherContent(
         settings.setZoneApps(zone, current - key)
     }
 
+    fun createFolder(zone: FloatingLauncherZone, name: String, appKeys: List<String>) {
+        settings.createFolder(zone, name, appKeys)
+    }
+
+    fun renameFolder(zone: FloatingLauncherZone, folderId: String, name: String) {
+        settings.renameFolder(zone, folderId, name)
+    }
+
+    fun deleteFolder(zone: FloatingLauncherZone, folderId: String) {
+        settings.deleteFolder(zone, folderId)
+    }
+
     MaterialTheme(colorScheme = colorScheme) {
         OverlayHost {
             if (!hiddenForGaming) {
@@ -419,6 +441,9 @@ private fun FloatingLauncherContent(
                             onAppDropped = { key -> addAppToZone(zone, key) },
                             onReorder = { keys -> reorderZone(zone, keys) },
                             onRemoveApp = { key -> removeAppFromZone(zone, key) },
+                            onCreateFolder = { name, keys -> createFolder(zone, name, keys) },
+                            onRenameFolder = { folderId, name -> renameFolder(zone, folderId, name) },
+                            onDeleteFolder = { folderId -> deleteFolder(zone, folderId) },
                         )
                     }
                 }
@@ -508,6 +533,23 @@ private fun ZoneTab(
 /** Icon cell size in the icons-only grid - matches OxygenOS Smart Sidebar's compact square tiles. */
 private val ICON_CELL_SIZE = 72.dp
 
+/**
+ * One entry in a zone's grid: either a loose app, or a folder grouping several apps. Both share
+ * one flat, reorderable position list (see [FloatingLauncherZoneConfig.apps]) - this is just the
+ * resolved, renderable form of that list for a given composition.
+ */
+private sealed interface ZoneGridItem {
+    val rawKey: String
+
+    data class AppEntry(val app: SavableSearchable) : ZoneGridItem {
+        override val rawKey get() = app.key
+    }
+
+    data class FolderEntry(val folder: FloatingLauncherFolder) : ZoneGridItem {
+        override val rawKey get() = FloatingLauncherFolder.sentinelKey(folder.id)
+    }
+}
+
 @Composable
 private fun ExpandedPanel(
     zone: FloatingLauncherZone,
@@ -524,27 +566,41 @@ private fun ExpandedPanel(
     onAppDropped: (String) -> Unit,
     onReorder: (List<String>) -> Unit,
     onRemoveApp: (String) -> Unit,
+    onCreateFolder: (name: String, appKeys: List<String>) -> Unit,
+    onRenameFolder: (folderId: String, name: String) -> Unit,
+    onDeleteFolder: (folderId: String) -> Unit,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val apps by remember(config.apps) {
         searchableRepository.getByKeys(config.apps)
     }.collectAsState(emptyList())
-    // getByKeys doesn't preserve order - restore the user's configured order.
-    val orderedApps = remember(apps, config.apps) {
-        config.apps.mapNotNull { key -> apps.firstOrNull { it.key == key } }
+    // getByKeys doesn't preserve order - restore the user's configured order, and resolve
+    // folder sentinel entries against the zone's folder list.
+    val orderedItems = remember(apps, config.apps, config.folders) {
+        config.apps.mapNotNull { key ->
+            val folderId = FloatingLauncherFolder.idFromSentinel(key)
+            if (folderId != null) {
+                config.folders.firstOrNull { it.id == folderId }?.let { ZoneGridItem.FolderEntry(it) }
+            } else {
+                apps.firstOrNull { it.key == key }?.let { ZoneGridItem.AppEntry(it) }
+            }
+        }
     }
     var isDropTarget by remember { mutableStateOf(false) }
     var editMode by remember(zone) { mutableStateOf(false) }
+    var openFolder by remember(zone) { mutableStateOf<FloatingLauncherFolder?>(null) }
+    var editingFolder by remember(zone) { mutableStateOf<FloatingLauncherFolder?>(null) }
+    var showCreateFolder by remember(zone) { mutableStateOf(false) }
     val dragState = rememberLazyDragAndDropGridState(
         onItemMove = { from, to ->
-            val current = orderedApps.toMutableList()
-            val fromIndex = current.indexOfFirst { it.key == from.key }
-            val toIndex = current.indexOfFirst { it.key == to.key }
+            val current = orderedItems.toMutableList()
+            val fromIndex = current.indexOfFirst { it.rawKey == from.key }
+            val toIndex = current.indexOfFirst { it.rawKey == to.key }
             if (fromIndex != -1 && toIndex != -1) {
                 val moved = current.removeAt(fromIndex)
                 current.add(toIndex, moved)
-                onReorder(current.map { it.key })
+                onReorder(current.map { it.rawKey })
             }
         },
     )
@@ -626,7 +682,7 @@ private fun ExpandedPanel(
                         )
                     }
                 }
-                if (orderedApps.isEmpty()) {
+                if (orderedItems.isEmpty()) {
                     Text(
                         text = stringResource(R.string.floating_launcher_panel_empty),
                         style = MaterialTheme.typography.bodySmall,
@@ -637,42 +693,65 @@ private fun ExpandedPanel(
                         state = dragState,
                         columns = GridCells.Fixed(columns),
                     ) {
-                        items(orderedApps, key = { it.key }) { item ->
-                            DraggableItem(state = dragState, key = item.key) {
-                                FavoriteIcon(
-                                    item = item,
-                                    iconService = iconService,
-                                    appRepository = appRepository,
-                                    shutterSettings = shutterSettings,
-                                    editMode = true,
-                                    onClick = {},
-                                    onRemove = { onRemoveApp(item.key) },
-                                )
+                        items(orderedItems, key = { it.rawKey }) { entry ->
+                            DraggableItem(state = dragState, key = entry.rawKey) {
+                                when (entry) {
+                                    is ZoneGridItem.AppEntry -> FavoriteIcon(
+                                        item = entry.app,
+                                        iconService = iconService,
+                                        appRepository = appRepository,
+                                        shutterSettings = shutterSettings,
+                                        editMode = true,
+                                        onClick = {},
+                                        onRemove = { onRemoveApp(entry.app.key) },
+                                    )
+
+                                    is ZoneGridItem.FolderEntry -> FolderIcon(
+                                        folder = entry.folder,
+                                        iconService = iconService,
+                                        searchableRepository = searchableRepository,
+                                        editMode = true,
+                                        onClick = { editingFolder = entry.folder },
+                                        onRemove = { onDeleteFolder(entry.folder.id) },
+                                    )
+                                }
                             }
                         }
                     }
                 } else {
                     LazyVerticalGrid(columns = GridCells.Fixed(columns)) {
-                        items(orderedApps, key = { it.key }) { item ->
-                            FavoriteIcon(
-                                item = item,
-                                iconService = iconService,
-                                appRepository = appRepository,
-                                shutterSettings = shutterSettings,
-                                editMode = false,
-                                onClick = {
-                                    if (item is Application && freezeManager.isFrozen(item.componentName.packageName)) {
-                                        coroutineScope.launch {
-                                            freezeManager.unfreeze(item.componentName.packageName)
+                        items(orderedItems, key = { it.rawKey }) { entry ->
+                            when (entry) {
+                                is ZoneGridItem.AppEntry -> FavoriteIcon(
+                                    item = entry.app,
+                                    iconService = iconService,
+                                    appRepository = appRepository,
+                                    shutterSettings = shutterSettings,
+                                    editMode = false,
+                                    onClick = {
+                                        val item = entry.app
+                                        if (item is Application && freezeManager.isFrozen(item.componentName.packageName)) {
+                                            coroutineScope.launch {
+                                                freezeManager.unfreeze(item.componentName.packageName)
+                                                item.launch(context, null)
+                                            }
+                                        } else {
                                             item.launch(context, null)
                                         }
-                                    } else {
-                                        item.launch(context, null)
-                                    }
-                                    onAppLaunched()
-                                },
-                                onRemove = {},
-                            )
+                                        onAppLaunched()
+                                    },
+                                    onRemove = {},
+                                )
+
+                                is ZoneGridItem.FolderEntry -> FolderIcon(
+                                    folder = entry.folder,
+                                    iconService = iconService,
+                                    searchableRepository = searchableRepository,
+                                    editMode = false,
+                                    onClick = { openFolder = entry.folder },
+                                    onRemove = {},
+                                )
+                            }
                         }
                     }
                 }
@@ -693,6 +772,17 @@ private fun ExpandedPanel(
                                 else R.string.floating_launcher_edit_start
                             ),
                         )
+                    }
+                    if (editMode) {
+                        IconButton(
+                            onClick = { showCreateFolder = true },
+                            enabled = orderedItems.count { it is ZoneGridItem.AppEntry } >= 2,
+                        ) {
+                            Icon(
+                                painterResource(R.drawable.folder_24px),
+                                contentDescription = stringResource(R.string.floating_launcher_new_folder),
+                            )
+                        }
                     }
                     IconButton(
                         onClick = {
@@ -715,6 +805,52 @@ private fun ExpandedPanel(
                 }
             }
         }
+
+        val folderToOpen = openFolder
+        if (folderToOpen != null) {
+            FolderContentsOverlay(
+                zone = zone,
+                folder = folderToOpen,
+                columns = columns,
+                searchableRepository = searchableRepository,
+                iconService = iconService,
+                freezeManager = freezeManager,
+                appRepository = appRepository,
+                shutterSettings = shutterSettings,
+                onAppLaunched = {
+                    openFolder = null
+                    onAppLaunched()
+                },
+                onDismiss = { openFolder = null },
+            )
+        }
+    }
+
+    if (showCreateFolder) {
+        CreateFolderDialog(
+            candidateApps = orderedItems.filterIsInstance<ZoneGridItem.AppEntry>().map { it.app },
+            onConfirm = { name, keys ->
+                onCreateFolder(name, keys)
+                showCreateFolder = false
+            },
+            onDismiss = { showCreateFolder = false },
+        )
+    }
+
+    val folderBeingEdited = editingFolder
+    if (folderBeingEdited != null) {
+        RenameOrDeleteFolderDialog(
+            folder = folderBeingEdited,
+            onRename = { name ->
+                onRenameFolder(folderBeingEdited.id, name)
+                editingFolder = null
+            },
+            onDelete = {
+                onDeleteFolder(folderBeingEdited.id)
+                editingFolder = null
+            },
+            onDismiss = { editingFolder = null },
+        )
     }
 }
 
@@ -758,21 +894,7 @@ private fun FavoriteIcon(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .then(
-                    if (editMode) {
-                        Modifier
-                    } else if (shuttersEnabled && item is Application) {
-                        Modifier.combinedClickable(
-                            onClick = onClick,
-                            onLongClick = {
-                                hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
-                                showShutter = true
-                            },
-                        )
-                    } else {
-                        Modifier.clickable(onClick = onClick)
-                    }
-                ),
+                .clickable(onClick = onClick),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
@@ -817,5 +939,326 @@ private fun FavoriteIcon(
             widgetRef = shutterRef,
             onDismiss = { showShutter = false },
         )
+    }
+}
+
+/**
+ * A folder's tile in the grid: up to 4 of its apps' icons arranged in a small 2x2 preview inside
+ * a rounded square, the same overall size as a single [FavoriteIcon] cell.
+ */
+@Composable
+private fun FolderIcon(
+    folder: FloatingLauncherFolder,
+    iconService: IconService,
+    searchableRepository: SavableSearchableRepository,
+    editMode: Boolean,
+    onClick: () -> Unit,
+    onRemove: () -> Unit,
+) {
+    val previewKeys = remember(folder.appKeys) { folder.appKeys.take(4) }
+    val previewApps by remember(previewKeys) {
+        searchableRepository.getByKeys(previewKeys)
+    }.collectAsState(emptyList())
+    val orderedPreview = remember(previewApps, previewKeys) {
+        previewKeys.mapNotNull { key -> previewApps.firstOrNull { it.key == key } }
+    }
+
+    Box(modifier = Modifier.size(ICON_CELL_SIZE)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .clickable(onClick = onClick),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(if (editMode) 36.dp else 44.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(MaterialTheme.colorScheme.surfaceContainerHighest),
+                contentAlignment = Alignment.Center,
+            ) {
+                if (orderedPreview.isEmpty()) {
+                    Icon(
+                        painterResource(R.drawable.folder_24px),
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp),
+                    )
+                } else {
+                    FlowRow(
+                        modifier = Modifier.padding(3.dp),
+                        maxItemsInEachRow = 2,
+                    ) {
+                        for (app in orderedPreview) {
+                            val icon by remember(app.key) {
+                                iconService.getIcon(app, 24)
+                            }.collectAsState(null)
+                            ShapedLauncherIcon(size = 14.dp, icon = { icon })
+                        }
+                    }
+                }
+            }
+            if (editMode) {
+                Text(
+                    text = folder.name,
+                    style = MaterialTheme.typography.labelSmall,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(horizontal = 2.dp, vertical = 2.dp),
+                )
+            }
+        }
+        if (editMode) {
+            IconButton(
+                onClick = onRemove,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .size(22.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.errorContainer),
+            ) {
+                Icon(
+                    painterResource(R.drawable.close_20px),
+                    contentDescription = stringResource(R.string.floating_launcher_remove_app),
+                    tint = MaterialTheme.colorScheme.onErrorContainer,
+                    modifier = Modifier.size(14.dp),
+                )
+            }
+        }
+    }
+}
+
+/** A folder's contents, shown as a nested panel layered above the zone's main panel. */
+@Composable
+private fun FolderContentsOverlay(
+    zone: FloatingLauncherZone,
+    folder: FloatingLauncherFolder,
+    columns: Int,
+    searchableRepository: SavableSearchableRepository,
+    iconService: IconService,
+    freezeManager: FreezeManager,
+    appRepository: AppRepository,
+    shutterSettings: ShutterSettings,
+    onAppLaunched: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val apps by remember(folder.appKeys) {
+        searchableRepository.getByKeys(folder.appKeys)
+    }.collectAsState(emptyList())
+    val orderedApps = remember(apps, folder.appKeys) {
+        folder.appKeys.mapNotNull { key -> apps.firstOrNull { it.key == key } }
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.3f))
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = { onDismiss() })
+            },
+        contentAlignment = Alignment.Center,
+    ) {
+        Surface(
+            modifier = Modifier
+                .padding(24.dp)
+                .widthIn(max = ICON_CELL_SIZE * columns + 32.dp)
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = {},
+                ),
+            shape = RoundedCornerShape(24.dp),
+            color = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.95f),
+            shadowElevation = 8.dp,
+        ) {
+            Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(folder.name, style = MaterialTheme.typography.titleSmall)
+                    IconButton(onClick = onDismiss) {
+                        Icon(
+                            painterResource(R.drawable.close_24px),
+                            contentDescription = stringResource(R.string.close),
+                        )
+                    }
+                }
+                LazyVerticalGrid(columns = GridCells.Fixed(columns)) {
+                    items(orderedApps, key = { it.key }) { item ->
+                        FavoriteIcon(
+                            item = item,
+                            iconService = iconService,
+                            appRepository = appRepository,
+                            shutterSettings = shutterSettings,
+                            editMode = false,
+                            onClick = {
+                                if (item is Application && freezeManager.isFrozen(item.componentName.packageName)) {
+                                    coroutineScope.launch {
+                                        freezeManager.unfreeze(item.componentName.packageName)
+                                        item.launch(context, null)
+                                    }
+                                } else {
+                                    item.launch(context, null)
+                                }
+                                onAppLaunched()
+                            },
+                            onRemove = {},
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun CreateFolderDialog(
+    candidateApps: List<SavableSearchable>,
+    onConfirm: (name: String, keys: List<String>) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    var selected by remember { mutableStateOf(setOf<String>()) }
+    var name by remember { mutableStateOf("") }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.4f))
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = { onDismiss() })
+            },
+        contentAlignment = Alignment.Center,
+    ) {
+        Surface(
+            modifier = Modifier
+                .padding(24.dp)
+                .widthIn(max = 320.dp)
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = {},
+                ),
+            shape = RoundedCornerShape(20.dp),
+            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            shadowElevation = 8.dp,
+        ) {
+            Column(modifier = Modifier.padding(20.dp)) {
+                Text(
+                    text = stringResource(R.string.floating_launcher_new_folder),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                Spacer(Modifier.height(12.dp))
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text(stringResource(R.string.floating_launcher_folder_name)) },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Spacer(Modifier.height(12.dp))
+                Text(
+                    text = stringResource(R.string.floating_launcher_folder_select_apps),
+                    style = MaterialTheme.typography.labelMedium,
+                )
+                LazyColumn(modifier = Modifier.heightIn(max = 240.dp)) {
+                    items(candidateApps, key = { it.key }) { app ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    selected = if (app.key in selected) selected - app.key else selected + app.key
+                                }
+                                .padding(vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Checkbox(checked = app.key in selected, onCheckedChange = null)
+                            Spacer(Modifier.width(8.dp))
+                            Text(
+                                text = app.labelOverride ?: app.label,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
+                    }
+                }
+                Spacer(Modifier.height(12.dp))
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                    TextButton(onClick = onDismiss) {
+                        Text(stringResource(R.string.floating_launcher_cancel))
+                    }
+                    TextButton(
+                        onClick = { onConfirm(name, selected.toList()) },
+                        enabled = selected.size >= 2 && name.isNotBlank(),
+                    ) {
+                        Text(stringResource(R.string.floating_launcher_create))
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun RenameOrDeleteFolderDialog(
+    folder: FloatingLauncherFolder,
+    onRename: (String) -> Unit,
+    onDelete: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    var name by remember(folder.id) { mutableStateOf(folder.name) }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.4f))
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = { onDismiss() })
+            },
+        contentAlignment = Alignment.Center,
+    ) {
+        Surface(
+            modifier = Modifier
+                .padding(24.dp)
+                .widthIn(max = 320.dp)
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = {},
+                ),
+            shape = RoundedCornerShape(20.dp),
+            color = MaterialTheme.colorScheme.surfaceContainerHigh,
+            shadowElevation = 8.dp,
+        ) {
+            Column(modifier = Modifier.padding(20.dp)) {
+                Text(
+                    text = stringResource(R.string.floating_launcher_rename_folder),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                Spacer(Modifier.height(12.dp))
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text(stringResource(R.string.floating_launcher_folder_name)) },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Spacer(Modifier.height(16.dp))
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    TextButton(onClick = onDelete) {
+                        Text(
+                            text = stringResource(R.string.floating_launcher_delete_folder),
+                            color = MaterialTheme.colorScheme.error,
+                        )
+                    }
+                    TextButton(onClick = { onRename(name) }, enabled = name.isNotBlank()) {
+                        Text(stringResource(R.string.floating_launcher_save))
+                    }
+                }
+            }
+        }
     }
 }

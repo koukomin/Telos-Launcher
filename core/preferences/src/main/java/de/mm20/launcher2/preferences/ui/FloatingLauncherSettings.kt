@@ -1,10 +1,12 @@
 package de.mm20.launcher2.preferences.ui
 
+import de.mm20.launcher2.preferences.FloatingLauncherFolder
 import de.mm20.launcher2.preferences.FloatingLauncherZone
 import de.mm20.launcher2.preferences.FloatingLauncherZoneConfig
 import de.mm20.launcher2.preferences.LauncherDataStore
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import java.util.UUID
 
 /**
  * One UI Edge Panel style overlay: up to six small tabs, one per zone (each screen edge split
@@ -100,5 +102,55 @@ class FloatingLauncherSettings internal constructor(
 
     fun setAutoHideGaming(enabled: Boolean) {
         dataStore.update { it.copy(floatingLauncherAutoHideGaming = enabled) }
+    }
+
+    /**
+     * Bundles [appKeys] (which must currently be loose top-level entries in [zone]'s app list)
+     * into a new folder named [name], replacing the first of them in the list with the folder's
+     * sentinel entry so its position is preserved.
+     */
+    fun createFolder(zone: FloatingLauncherZone, name: String, appKeys: List<String>) {
+        if (appKeys.isEmpty()) return
+        dataStore.update {
+            val current = it.floatingLauncherZones[zone] ?: FloatingLauncherZoneConfig()
+            val folder = FloatingLauncherFolder(id = UUID.randomUUID().toString(), name = name, appKeys = appKeys)
+            val insertAt = current.apps.indexOf(appKeys.first()).coerceAtLeast(0)
+            val newApps = current.apps.toMutableList()
+            newApps.removeAll(appKeys)
+            newApps.add(insertAt.coerceAtMost(newApps.size), FloatingLauncherFolder.sentinelKey(folder.id))
+            it.copy(
+                floatingLauncherZones = it.floatingLauncherZones + (
+                    zone to current.copy(apps = newApps, folders = current.folders + folder)
+                ),
+            )
+        }
+    }
+
+    fun renameFolder(zone: FloatingLauncherZone, folderId: String, name: String) {
+        dataStore.update {
+            val current = it.floatingLauncherZones[zone] ?: return@update it
+            val newFolders = current.folders.map { folder ->
+                if (folder.id == folderId) folder.copy(name = name) else folder
+            }
+            it.copy(floatingLauncherZones = it.floatingLauncherZones + (zone to current.copy(folders = newFolders)))
+        }
+    }
+
+    /** Deletes the folder, returning its apps to the top level at the folder's old position. */
+    fun deleteFolder(zone: FloatingLauncherZone, folderId: String) {
+        dataStore.update {
+            val current = it.floatingLauncherZones[zone] ?: return@update it
+            val folder = current.folders.firstOrNull { it.id == folderId } ?: return@update it
+            val sentinel = FloatingLauncherFolder.sentinelKey(folderId)
+            val insertAt = current.apps.indexOf(sentinel).coerceAtLeast(0)
+            val newApps = current.apps.toMutableList()
+            newApps.remove(sentinel)
+            newApps.addAll(insertAt.coerceAtMost(newApps.size), folder.appKeys)
+            it.copy(
+                floatingLauncherZones = it.floatingLauncherZones + (
+                    zone to current.copy(apps = newApps, folders = current.folders - folder)
+                ),
+            )
+        }
     }
 }

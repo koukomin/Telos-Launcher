@@ -800,6 +800,15 @@
     <string name="floating_launcher_edit_start">Edit icons</string>
     <string name="floating_launcher_edit_done">Done editing</string>
     <string name="floating_launcher_remove_app">Remove from this zone</string>
+    <string name="floating_launcher_new_folder">New folder</string>
+    <string name="floating_launcher_folder_name">Folder name</string>
+    <string name="floating_launcher_folder_select_apps">Choose at least 2 apps to group</string>
+    <string name="floating_launcher_create">Create</string>
+    <string name="floating_launcher_cancel">Cancel</string>
+    <string name="floating_launcher_rename_folder">Rename folder</string>
+    <string name="floating_launcher_delete_folder">Delete folder</string>
+    <string name="floating_launcher_save">Save</string>
+    <string name="floating_launcher_open_folder">Open folder</string>
     <plurals name="floating_launcher_zone_apps_count">
         <item quantity="one">%1$d app</item>
         <item quantity="other">%1$d apps</item>
