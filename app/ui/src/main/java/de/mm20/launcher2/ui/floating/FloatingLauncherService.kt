@@ -592,6 +592,7 @@ private fun ExpandedPanel(
     var openFolder by remember(zone) { mutableStateOf<FloatingLauncherFolder?>(null) }
     var editingFolder by remember(zone) { mutableStateOf<FloatingLauncherFolder?>(null) }
     var showCreateFolder by remember(zone) { mutableStateOf(false) }
+    var showAllApps by remember(zone) { mutableStateOf(false) }
     val dragState = rememberLazyDragAndDropGridState(
         onItemMove = { from, to ->
             val current = orderedItems.toMutableList()
@@ -783,6 +784,13 @@ private fun ExpandedPanel(
                                 contentDescription = stringResource(R.string.floating_launcher_new_folder),
                             )
                         }
+                    } else {
+                        IconButton(onClick = { showAllApps = true }) {
+                            Icon(
+                                painterResource(R.drawable.apps_24px),
+                                contentDescription = stringResource(R.string.floating_launcher_all_apps),
+                            )
+                        }
                     }
                     IconButton(
                         onClick = {
@@ -822,6 +830,21 @@ private fun ExpandedPanel(
                     onAppLaunched()
                 },
                 onDismiss = { openFolder = null },
+            )
+        }
+
+        if (showAllApps) {
+            AllAppsOverlay(
+                columns = columns,
+                appRepository = appRepository,
+                iconService = iconService,
+                freezeManager = freezeManager,
+                shutterSettings = shutterSettings,
+                onAppLaunched = {
+                    showAllApps = false
+                    onAppLaunched()
+                },
+                onDismiss = { showAllApps = false },
             )
         }
     }
@@ -1089,6 +1112,90 @@ private fun FolderContentsOverlay(
                 }
                 LazyVerticalGrid(columns = GridCells.Fixed(columns)) {
                     items(orderedApps, key = { it.key }) { item ->
+                        FavoriteIcon(
+                            item = item,
+                            iconService = iconService,
+                            appRepository = appRepository,
+                            shutterSettings = shutterSettings,
+                            editMode = false,
+                            onClick = {
+                                if (item is Application && freezeManager.isFrozen(item.componentName.packageName)) {
+                                    coroutineScope.launch {
+                                        freezeManager.unfreeze(item.componentName.packageName)
+                                        item.launch(context, null)
+                                    }
+                                } else {
+                                    item.launch(context, null)
+                                }
+                                onAppLaunched()
+                            },
+                            onRemove = {},
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+/** Every installed app, browsable from within the panel via the bottom toolbar's apps button. */
+@Composable
+private fun AllAppsOverlay(
+    columns: Int,
+    appRepository: AppRepository,
+    iconService: IconService,
+    freezeManager: FreezeManager,
+    shutterSettings: ShutterSettings,
+    onAppLaunched: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val apps by remember { appRepository.findMany() }.collectAsState(emptyList())
+    val sortedApps = remember(apps) { apps.sortedBy { (it.labelOverride ?: it.label).lowercase() } }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.3f))
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = { onDismiss() })
+            },
+        contentAlignment = Alignment.Center,
+    ) {
+        Surface(
+            modifier = Modifier
+                .padding(24.dp)
+                .widthIn(max = ICON_CELL_SIZE * columns + 32.dp)
+                .heightIn(max = ICON_CELL_SIZE * 6)
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = {},
+                ),
+            shape = RoundedCornerShape(24.dp),
+            color = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.95f),
+            shadowElevation = 8.dp,
+        ) {
+            Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = stringResource(R.string.floating_launcher_all_apps),
+                        style = MaterialTheme.typography.titleSmall,
+                    )
+                    IconButton(onClick = onDismiss) {
+                        Icon(
+                            painterResource(R.drawable.close_24px),
+                            contentDescription = stringResource(R.string.close),
+                        )
+                    }
+                }
+                LazyVerticalGrid(columns = GridCells.Fixed(columns)) {
+                    items(sortedApps, key = { it.key }) { item ->
                         FavoriteIcon(
                             item = item,
                             iconService = iconService,

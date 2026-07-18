@@ -809,6 +809,7 @@
     <string name="floating_launcher_delete_folder">Delete folder</string>
     <string name="floating_launcher_save">Save</string>
     <string name="floating_launcher_open_folder">Open folder</string>
+    <string name="floating_launcher_all_apps">All apps</string>
     <plurals name="floating_launcher_zone_apps_count">
         <item quantity="one">%1$d app</item>
         <item quantity="other">%1$d apps</item>
