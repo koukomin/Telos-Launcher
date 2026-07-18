@@ -765,7 +765,7 @@
     <string name="preference_screen_floating_launcher">Floating launcher</string>
     <string name="preference_screen_floating_launcher_summary">Edge tab for quick access to your favorite apps over other apps</string>
     <string name="preference_floating_launcher">Enable floating launcher</string>
-    <string name="preference_floating_launcher_summary">Shows a small tab on the screen edge, even while using other apps. Tap it to open your favorite apps.</string>
+    <string name="preference_floating_launcher_summary">Shows a small tab on the screen edge, even while using other apps. Drag it toward the middle of the screen to open your favorite apps.</string>
     <string name="preference_category_appearance">Appearance</string>
     <string name="preference_category_floating_launcher_zones">Trigger zones</string>
     <string name="preference_floating_launcher_zones_summary">Each zone is an independent tab on the screen edge. Turn on the ones you want, then add apps to them below.</string>

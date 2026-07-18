@@ -16,6 +16,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.draganddrop.dragAndDropTarget
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -405,16 +406,33 @@ private fun ZoneTab(
             .size(width = thickness.dp, height = 72.dp)
             .clip(shape)
             .background(if (isDropTarget) color.copy(alpha = (color.alpha + 0.35f).coerceAtMost(1f)) else color)
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null,
-                onClick = {
-                    if (hapticFeedbackEnabled) {
-                        hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
-                    }
-                    onClick()
-                },
-            )
+            // Swipe/drag the tab toward the panel side to open it, matching the OxygenOS Smart
+            // Sidebar's tab-drag interaction - a plain tap no longer opens it.
+            .pointerInput(zone, hapticFeedbackEnabled) {
+                val openThreshold = 32.dp.toPx()
+                var totalDrag = 0f
+                var triggered = false
+                detectHorizontalDragGestures(
+                    onDragStart = {
+                        totalDrag = 0f
+                        triggered = false
+                    },
+                    onHorizontalDrag = { change, dragAmount ->
+                        if (!triggered) {
+                            totalDrag += dragAmount
+                            val openingDrag = if (zone.isLeftEdge) totalDrag else -totalDrag
+                            if (openingDrag > openThreshold) {
+                                triggered = true
+                                if (hapticFeedbackEnabled) {
+                                    hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+                                }
+                                onClick()
+                            }
+                        }
+                        change.consume()
+                    },
+                )
+            }
             .dragAndDropTarget(
                 shouldStartDragAndDrop = { it.mimeTypes().contains(ClipDescription.MIMETYPE_TEXT_PLAIN) },
                 target = object : DragAndDropTarget {
