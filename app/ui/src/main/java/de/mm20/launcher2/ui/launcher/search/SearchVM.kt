@@ -34,6 +34,7 @@ import de.mm20.launcher2.search.SearchFilters
 import de.mm20.launcher2.search.SearchResults
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.search.data.Calculator
 import de.mm20.launcher2.search.data.UnitConverter
@@ -127,6 +128,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val reminderResults = mutableStateListOf<CalendarEvent>()
     val articleResults = mutableStateListOf<Article>()
     val websiteResults = mutableStateListOf<Website>()
+    val webAppShortcutResults = mutableStateListOf<WebAppShortcut>()
     val calculatorResults = mutableStateListOf<Calculator>()
     val unitConverterResults = mutableStateListOf<UnitConverter>()
     val searchActionResults = mutableStateListOf<SearchAction>()
@@ -292,6 +294,7 @@ class SearchVM : ViewModel(), KoinComponent {
                         appResults.updateItems(apps)
                         workAppResults.updateItems(workApps)
                         privateSpaceAppResults.updateItems(privateApps)
+                        webAppShortcutResults.updateItems(results.webAppShortcuts)
                         hiddenResults.updateItems(hiddenItems)
                     }
 
@@ -381,6 +384,9 @@ class SearchVM : ViewModel(), KoinComponent {
                         )
                         websiteResults.updateItems(
                             results.websites?.applyRanking(query)
+                        )
+                        webAppShortcutResults.updateItems(
+                            results.webAppShortcuts?.applyRanking(query)
                         )
                         calculatorResults.updateItems(results.calculators)
                         unitConverterResults.updateItems(results.unitConverters)

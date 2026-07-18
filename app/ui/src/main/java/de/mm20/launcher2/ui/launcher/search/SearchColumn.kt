@@ -34,6 +34,7 @@ import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.search.Contact
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.Location
+import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.launcher.search.apps.AppResults
@@ -47,6 +48,7 @@ import de.mm20.launcher2.ui.launcher.search.filters.SearchFilters
 import de.mm20.launcher2.ui.launcher.search.location.LocationResults
 import de.mm20.launcher2.ui.launcher.search.shortcut.ShortcutResults
 import de.mm20.launcher2.ui.launcher.search.unitconverter.UnitConverterResults
+import de.mm20.launcher2.ui.launcher.search.webappshortcut.WebAppShortcutResults
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteResults
 import de.mm20.launcher2.ui.launcher.search.wikipedia.ArticleResults
 import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
@@ -97,6 +99,7 @@ fun SearchColumn(
     val wikipedia = viewModel.articleResults
     val locations = viewModel.locationResults
     val website = viewModel.websiteResults
+    val webAppShortcuts = viewModel.webAppShortcutResults
     val hiddenResults = viewModel.hiddenResults
 
     val bestMatch by viewModel.bestMatch
@@ -231,6 +234,13 @@ fun SearchColumn(
                         onSelect = { selectedAppIndex = it },
                     )
                 }
+
+                WebAppShortcutResults(
+                    shortcuts = webAppShortcuts,
+                    highlightedItem = bestMatch as? WebAppShortcut,
+                    columns = columns,
+                    reverse = reverse,
+                )
 
                 if (!isSearchEmpty) {
 

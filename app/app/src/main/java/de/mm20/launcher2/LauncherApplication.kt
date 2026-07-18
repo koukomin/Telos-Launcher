@@ -28,6 +28,7 @@ import de.mm20.launcher2.music.musicModule
 import de.mm20.launcher2.search.searchModule
 import de.mm20.launcher2.unitconverter.unitConverterModule
 import de.mm20.launcher2.websites.websitesModule
+import de.mm20.launcher2.webappshortcuts.webAppShortcutsModule
 import de.mm20.launcher2.widgets.widgetsModule
 import de.mm20.launcher2.wikipedia.wikipediaModule
 import de.mm20.launcher2.database.databaseModule
@@ -102,6 +103,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     unitConverterModule,
                     weatherModule,
                     websitesModule,
+                    webAppShortcutsModule,
                     widgetsModule,
                     wikipediaModule,
                     locationsModule,

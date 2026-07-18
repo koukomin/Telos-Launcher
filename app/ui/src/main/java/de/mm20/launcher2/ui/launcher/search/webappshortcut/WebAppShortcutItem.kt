@@ -1,0 +1,135 @@
+package de.mm20.launcher2.ui.launcher.search.webappshortcut
+
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.shrinkOut
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntRect
+import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.search.WebAppShortcut
+import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.DefaultToolbarAction
+import de.mm20.launcher2.ui.component.Toolbar
+import de.mm20.launcher2.ui.component.ToolbarAction
+import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
+import de.mm20.launcher2.ui.launcher.search.listItemViewModel
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
+import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
+import de.mm20.launcher2.ui.locals.LocalGridSettings
+
+@Composable
+fun WebAppShortcutItem(
+    modifier: Modifier = Modifier,
+    shortcut: WebAppShortcut,
+    onBack: (() -> Unit)? = null,
+) {
+    val viewModel: SearchableItemVM = listItemViewModel(key = "search-${shortcut.key}")
+    val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
+
+    LaunchedEffect(shortcut, iconSize) {
+        viewModel.init(shortcut, iconSize.toInt())
+    }
+
+    Column(
+        modifier = modifier
+            .padding(16.dp),
+    ) {
+        Text(
+            text = shortcut.labelOverride ?: shortcut.label,
+            style = MaterialTheme.typography.titleLarge,
+        )
+        Text(
+            modifier = Modifier.padding(top = 4.dp, bottom = 16.dp),
+            text = shortcut.url,
+            style = MaterialTheme.typography.bodySmall,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+
+        val toolbarActions = mutableListOf<ToolbarAction>()
+
+        if (LocalFavoritesEnabled.current) {
+            val isPinned by viewModel.isPinned.collectAsState(false)
+            val favAction = if (isPinned) {
+                DefaultToolbarAction(
+                    label = stringResource(R.string.menu_favorites_unpin),
+                    icon = R.drawable.star_24px_filled,
+                    action = {
+                        viewModel.unpin()
+                        onBack?.invoke()
+                    }
+                )
+            } else {
+                DefaultToolbarAction(
+                    label = stringResource(R.string.menu_favorites_pin),
+                    icon = R.drawable.star_24px,
+                    action = {
+                        viewModel.pin()
+                        onBack?.invoke()
+                    })
+            }
+            toolbarActions.add(favAction)
+        }
+
+        val sheetManager = LocalBottomSheetManager.current
+        toolbarActions.add(
+            DefaultToolbarAction(
+                label = stringResource(R.string.menu_customize),
+                icon = R.drawable.tune_24px,
+                action = { sheetManager.showCustomizeSearchableModal(shortcut) }
+            )
+        )
+
+        Toolbar(
+            leftActions = if (onBack != null) listOf(
+                DefaultToolbarAction(
+                    stringResource(id = R.string.menu_back),
+                    icon = R.drawable.arrow_back_24px,
+                    action = onBack
+                )
+            ) else emptyList(),
+            rightActions = toolbarActions
+        )
+    }
+}
+
+@Composable
+fun WebAppShortcutItemGridPopup(
+    shortcut: WebAppShortcut,
+    show: MutableTransitionState<Boolean>,
+    origin: IntRect,
+    onDismiss: () -> Unit,
+) {
+    AnimatedVisibility(
+        show,
+        enter = expandIn(
+            animationSpec = tween(300),
+            expandFrom = Alignment.Center,
+        ) { origin.size },
+        exit = shrinkOut(
+            animationSpec = tween(300),
+            shrinkTowards = Alignment.Center,
+        ) { origin.size },
+    ) {
+        WebAppShortcutItem(
+            modifier = Modifier.fillMaxWidth(),
+            shortcut = shortcut,
+            onBack = onDismiss,
+        )
+    }
+}

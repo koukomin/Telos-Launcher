@@ -88,6 +88,8 @@ import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsRoute
 import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsScreen
 import de.mm20.launcher2.ui.settings.floating.FloatingLauncherZoneAppsRoute
 import de.mm20.launcher2.ui.settings.floating.FloatingLauncherZoneAppsScreen
+import de.mm20.launcher2.ui.settings.webappshortcuts.WebAppShortcutsSettingsRoute
+import de.mm20.launcher2.ui.settings.webappshortcuts.WebAppShortcutsSettingsScreen
 import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsRoute
 import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsScreen
 import de.mm20.launcher2.ui.settings.protection.ProtectedSettingsScreen
@@ -339,6 +341,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<FloatingLauncherZoneAppsRoute> {
                 FloatingLauncherZoneAppsScreen(it.zone)
+            }
+            entry<WebAppShortcutsSettingsRoute> {
+                WebAppShortcutsSettingsScreen()
             }
             entry<ContextProfilesSettingsRoute> {
                 ContextProfilesSettingsScreen()

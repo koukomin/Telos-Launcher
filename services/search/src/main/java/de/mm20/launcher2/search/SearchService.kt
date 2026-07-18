@@ -50,6 +50,7 @@ internal class SearchServiceImpl(
     private val searchActionService: SearchActionService,
     private val customAttributesRepository: CustomAttributesRepository,
     private val profileManager: ProfileManager,
+    private val webAppShortcutRepository: SearchableRepository<WebAppShortcut>,
 ) : SearchService {
 
     override fun search(
@@ -78,6 +79,7 @@ internal class SearchServiceImpl(
                         websites = if (filters.websites) it.websites else null,
                         wikipedia = if (filters.articles) it.wikipedia else null,
                         locations = if (filters.places) it.locations else null,
+                        webAppShortcuts = if (filters.apps) it.webAppShortcuts else null,
                     )
                 }
                     ?: SearchResults())
@@ -256,6 +258,16 @@ internal class SearchServiceImpl(
                         }
                 }
             }
+            if (filters.apps) {
+                launch {
+                    webAppShortcutRepository.search(query, filters.allowNetwork)
+                        .collectLatest { r ->
+                            results.update {
+                                it.copy(webAppShortcuts = r)
+                            }
+                        }
+                }
+            }
             if (filters.articles) {
                 launch {
                     delay(750)
@@ -325,7 +337,10 @@ internal class SearchServiceImpl(
             val privateSpace = profiles.find { it.type == Profile.Type.Private }
             appRepository.search("", false)
                 .withCustomLabels(customAttributesRepository)
-                .map { apps ->
+                .combine(webAppShortcutRepository.search("", false)) { apps, webAppShortcuts ->
+                    apps to webAppShortcuts
+                }
+                .map { (apps, webAppShortcuts) ->
                     val standardProfileApps = mutableListOf<Application>()
                     val workProfileApps = mutableListOf<Application>()
                     val privateSpaceApps = mutableListOf<Application>()
@@ -356,6 +371,7 @@ internal class SearchServiceImpl(
                         standardProfileApps = standardProfileApps.sorted(),
                         workProfileApps = workProfileApps.sorted(),
                         privateSpaceApps = privateSpaceApps.sorted(),
+                        webAppShortcuts = webAppShortcuts.sorted(),
                     )
                 }
         }
@@ -379,12 +395,14 @@ data class SearchResults(
     val wikipedia: List<Article>? = null,
     val locations: List<Location>? = null,
     val searchActions: List<SearchAction>? = null,
+    val webAppShortcuts: List<WebAppShortcut>? = null,
 )
 
 data class AllAppsResults(
     val standardProfileApps: List<Application>,
     val workProfileApps: List<Application>,
     val privateSpaceApps: List<Application>,
+    val webAppShortcuts: List<WebAppShortcut> = emptyList(),
 )
 
 fun SearchResults.toList(): List<Searchable> {
@@ -404,5 +422,6 @@ fun SearchResults.toList(): List<Searchable> {
         websites,
         wikipedia,
         searchActions,
+        webAppShortcuts,
     ).flatten()
 }

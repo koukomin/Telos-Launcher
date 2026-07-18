@@ -149,6 +149,7 @@ dependencies {
     implementation(project(":data:locations"))
     implementation(project(":core:permissions"))
     implementation(project(":data:websites"))
+    implementation(project(":data:webappshortcuts"))
     implementation(project(":data:unitconverter"))
     implementation(project(":libs:nextcloud"))
     implementation(project(":libs:owncloud"))

@@ -153,6 +153,7 @@ dependencies {
     implementation(project(":app:ui"))
     implementation(project(":data:weather"))
     implementation(project(":data:websites"))
+    implementation(project(":data:webappshortcuts"))
     implementation(project(":data:widgets"))
     implementation(project(":data:wikipedia"))
     implementation(project(":data:database"))

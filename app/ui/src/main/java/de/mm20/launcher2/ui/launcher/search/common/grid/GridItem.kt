@@ -67,6 +67,7 @@ import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.Tag
+import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.LocalIconShape
@@ -81,6 +82,7 @@ import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.search.location.LocationItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.shortcut.ShortcutItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.tags.TagItemGridPopup
+import de.mm20.launcher2.ui.launcher.search.webappshortcut.WebAppShortcutItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.wikipedia.ArticleItemGridPopup
 import de.mm20.launcher2.ui.launcher.shutters.ShutterGate
@@ -197,7 +199,7 @@ fun GridItem(
                 interactionSource = remember { MutableInteractionSource() },
             )
             .then(
-                if (enableFloatingLauncherDragSource && item is Application) {
+                if (enableFloatingLauncherDragSource && (item is Application || item is WebAppShortcut)) {
                     val decorationColor = MaterialTheme.colorScheme.primaryContainer
                     val decoration: DrawScope.() -> Unit = {
                         drawRoundRect(
@@ -486,6 +488,17 @@ fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> U
                             tag = searchable,
                             show = show,
                             animationProgress = p,
+                            origin = origin,
+                            onDismiss = {
+                                show.targetState = false
+                            }
+                        )
+                    }
+
+                    is WebAppShortcut -> {
+                        WebAppShortcutItemGridPopup(
+                            shortcut = searchable,
+                            show = show,
                             origin = origin,
                             onDismiss = {
                                 show.targetState = false

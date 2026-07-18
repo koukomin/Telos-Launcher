@@ -762,6 +762,14 @@
     <string name="preference_category_shutters">Shutters</string>
     <string name="preference_shutters">Enable shutters</string>
     <string name="preference_shutters_summary">Swipe up on an app icon to reveal that app\'s assigned widget without opening the app. Assign a widget from the app\'s info menu.</string>
+    <string name="preference_screen_web_app_shortcuts">Web app shortcuts</string>
+    <string name="preference_screen_web_app_shortcuts_summary">Add websites as app-like shortcuts with a custom icon</string>
+    <string name="web_app_shortcut_create">Add web app shortcut</string>
+    <string name="web_app_shortcut_edit">Edit web app shortcut</string>
+    <string name="web_app_shortcut_label">Name</string>
+    <string name="web_app_shortcut_url">URL</string>
+    <string name="web_app_shortcut_pick_icon">Choose icon</string>
+    <string name="web_app_shortcut_detect_icon">Auto-detect icon</string>
     <string name="preference_screen_floating_launcher">Floating launcher</string>
     <string name="preference_screen_floating_launcher_summary">Edge tab for quick access to your favorite apps over other apps</string>
     <string name="preference_floating_launcher">Enable floating launcher</string>
