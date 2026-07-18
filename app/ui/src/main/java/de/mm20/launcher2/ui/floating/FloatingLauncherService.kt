@@ -43,6 +43,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.BiasAlignment
@@ -66,11 +67,14 @@ import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
+import de.mm20.launcher2.applications.AppRepository
+import de.mm20.launcher2.freeze.FreezeManager
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.FloatingLauncherZone
 import de.mm20.launcher2.preferences.FloatingLauncherZoneConfig
 import de.mm20.launcher2.preferences.ui.FloatingLauncherSettings
+import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.ui.R
@@ -80,6 +84,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
@@ -109,6 +115,8 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
     private val floatingLauncherSettings: FloatingLauncherSettings by inject()
     private val iconService: IconService by inject()
     private val searchableRepository: SavableSearchableRepository by inject()
+    private val freezeManager: FreezeManager by inject()
+    private val appRepository: AppRepository by inject()
 
     private val lifecycleRegistry = LifecycleRegistry(this)
     private val savedStateRegistryController = SavedStateRegistryController.create(this)
@@ -184,6 +192,8 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
                 settings = floatingLauncherSettings,
                 iconService = iconService,
                 searchableRepository = searchableRepository,
+                freezeManager = freezeManager,
+                appRepository = appRepository,
             )
         }
 
@@ -251,6 +261,8 @@ private fun FloatingLauncherContent(
     settings: FloatingLauncherSettings,
     iconService: IconService,
     searchableRepository: SavableSearchableRepository,
+    freezeManager: FreezeManager,
+    appRepository: AppRepository,
 ) {
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
@@ -300,6 +312,8 @@ private fun FloatingLauncherContent(
                     columns = columns,
                     searchableRepository = searchableRepository,
                     iconService = iconService,
+                    freezeManager = freezeManager,
+                    appRepository = appRepository,
                     onDismiss = { expandedZone = null },
                     onAppLaunched = { expandedZone = null },
                 )
@@ -341,10 +355,13 @@ private fun ExpandedPanel(
     columns: Int,
     searchableRepository: SavableSearchableRepository,
     iconService: IconService,
+    freezeManager: FreezeManager,
+    appRepository: AppRepository,
     onDismiss: () -> Unit,
     onAppLaunched: () -> Unit,
 ) {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
     val apps by remember(config.apps) {
         searchableRepository.getByKeys(config.apps)
     }.collectAsState(emptyList())
@@ -413,8 +430,16 @@ private fun ExpandedPanel(
                             FavoriteRow(
                                 item = item,
                                 iconService = iconService,
+                                appRepository = appRepository,
                                 onClick = {
-                                    item.launch(context, null)
+                                    if (item is Application && freezeManager.isFrozen(item.componentName.packageName)) {
+                                        coroutineScope.launch {
+                                            freezeManager.unfreeze(item.componentName.packageName)
+                                            item.launch(context, null)
+                                        }
+                                    } else {
+                                        item.launch(context, null)
+                                    }
                                     onAppLaunched()
                                 },
                             )
@@ -430,9 +455,21 @@ private fun ExpandedPanel(
 private fun FavoriteRow(
     item: SavableSearchable,
     iconService: IconService,
+    appRepository: AppRepository,
     onClick: () -> Unit,
 ) {
     val icon by remember(item.key) { iconService.getIcon(item, 48) }.collectAsState(null)
+    // Reflects live package-suspended state, so it updates immediately on freeze/unfreeze -
+    // same source as the frozen-icon tint elsewhere (search results, favorites).
+    val isFrozen by remember(item.key) {
+        if (item is Application) {
+            appRepository.findOne(item.componentName.packageName, item.user)
+                .map { it?.isSuspended == true }
+        } else {
+            emptyFlow()
+        }
+    }.collectAsState(false)
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -441,7 +478,7 @@ private fun FavoriteRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        ShapedLauncherIcon(size = 32.dp, icon = { icon })
+        ShapedLauncherIcon(size = 32.dp, icon = { icon }, grayscale = isFrozen)
         Text(
             text = item.labelOverride ?: item.label,
             style = MaterialTheme.typography.bodyMedium,
