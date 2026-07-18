@@ -12,7 +12,7 @@ import java.util.UUID
 @Serializable
 @ConsistentCopyVisibility
 data class LauncherSettingsData internal constructor(
-    val schemaVersion: Int = 9,
+    val schemaVersion: Int = 10,
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
     /** Hour of day [0,23] when the dark scheme starts, used only by [ColorScheme.Time]. */
@@ -308,12 +308,25 @@ data class LauncherSettingsData internal constructor(
     val protectionLockLauncher: Boolean = false,
 
     val floatingLauncherEnabled: Boolean = false,
+    @Deprecated("Replaced by floatingLauncherZones - kept only so Migration10 can read the old single-tab position.")
     val floatingLauncherEdge: FloatingLauncherEdge = FloatingLauncherEdge.Right,
+    @Deprecated("Replaced by floatingLauncherZones - kept only so Migration10 can read the old single-tab position.")
     val floatingLauncherPosition: Float = 0.5f,
+    /** One tab per enabled zone; each zone has its own app list. Only RightTop is enabled by
+     * default - the other five are opt-in. */
+    val floatingLauncherZones: Map<FloatingLauncherZone, FloatingLauncherZoneConfig> = mapOf(
+        FloatingLauncherZone.RightTop to FloatingLauncherZoneConfig(enabled = true),
+    ),
+    /** Shared across every zone - simpler than a per-zone setting, and there's no real use case
+     * for zones wanting a different column count from each other. */
+    val floatingLauncherColumns: Int = 1,
     val floatingLauncherThickness: Int = 24,
     @Serializable(with = ColorIntAsHexSerializer::class)
     val floatingLauncherColor: Int = 0xFF6750A4.toInt(),
     val floatingLauncherAlpha: Float = 0.6f,
+    val floatingLauncherHideIndicator: Boolean = false,
+    val floatingLauncherHapticFeedback: Boolean = true,
+    val floatingLauncherAutoHideGaming: Boolean = false,
 
     val contextProfilesEnabled: Boolean = false,
     val contextProfiles: List<ContextProfile> = emptyList(),
@@ -633,6 +646,35 @@ enum class FloatingLauncherEdge {
     @SerialName("left") Left,
     @SerialName("right") Right,
 }
+
+/** Six independently-toggleable trigger zones - each screen edge split into thirds. */
+@Serializable
+enum class FloatingLauncherZone {
+    @SerialName("left_top") LeftTop,
+    @SerialName("left_middle") LeftMiddle,
+    @SerialName("left_bottom") LeftBottom,
+    @SerialName("right_top") RightTop,
+    @SerialName("right_middle") RightMiddle,
+    @SerialName("right_bottom") RightBottom;
+
+    val isLeftEdge: Boolean
+        get() = this == LeftTop || this == LeftMiddle || this == LeftBottom
+
+    /** Vertical anchor within the usable screen height, as a 0..1 fraction (thirds, centered). */
+    val verticalFraction: Float
+        get() = when (this) {
+            LeftTop, RightTop -> 1f / 6f
+            LeftMiddle, RightMiddle -> 0.5f
+            LeftBottom, RightBottom -> 5f / 6f
+        }
+}
+
+@Serializable
+data class FloatingLauncherZoneConfig(
+    val enabled: Boolean = false,
+    /** SavableSearchable keys, in display order. */
+    val apps: List<String> = emptyList(),
+)
 
 /** Requested orientation for the desktop shell activity on the external display. */
 @Serializable

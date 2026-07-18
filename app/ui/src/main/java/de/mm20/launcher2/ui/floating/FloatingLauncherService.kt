@@ -25,8 +25,9 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -44,6 +45,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -66,10 +68,11 @@ import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.preferences.FloatingLauncherEdge
+import de.mm20.launcher2.preferences.FloatingLauncherZone
+import de.mm20.launcher2.preferences.FloatingLauncherZoneConfig
 import de.mm20.launcher2.preferences.ui.FloatingLauncherSettings
 import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.services.favorites.FavoritesService
+import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.settings.SettingsActivity
@@ -81,20 +84,31 @@ import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 /**
- * Foreground service hosting the floating quick launcher: a small tab pinned to a screen edge
- * (via a SYSTEM_ALERT_WINDOW overlay) that expands into a scrollable list of favorite apps.
- * Opt-in, off by default - started/stopped by the settings screen when the user toggles it.
+ * Foreground service hosting the floating quick launcher: up to six small tabs, one per
+ * [FloatingLauncherZone] (each screen edge split into thirds, independently toggleable), each
+ * expanding into its own scrollable grid of apps. Opt-in, off by default - started/stopped by the
+ * settings screen when the user toggles it.
+ *
+ * Unlike the original single-tab version, the overlay window is always full-screen
+ * (MATCH_PARENT) with FLAG_NOT_TOUCH_MODAL: every zone's tab and whichever panel is currently
+ * expanded are positioned within one Compose tree via alignment, not by moving/resizing the
+ * WindowManager view itself. Touches on empty areas of that fullscreen window are expected to
+ * fall through to whatever's underneath, since nothing there claims them (no pointerInput/
+ * clickable modifier covers those regions) - this is the standard "chat heads" overlay pattern,
+ * but it's the one part of this whole redesign that most needs verifying on a real device: if
+ * Compose's hit-testing doesn't let untouched regions pass through as expected here, the app
+ * behind the overlay could become entirely untouchable.
  *
  * Deliberately does not include a search field: accepting text input in an overlay window means
  * making the window focusable, which briefly steals input focus from whatever app is in the
  * foreground. That interaction is hard to get right without a physical device to verify it on,
- * so this first version only offers the bounded, already-curated favorites list.
+ * so this only offers each zone's curated app list.
  */
 class FloatingLauncherService : Service(), SavedStateRegistryOwner {
 
     private val floatingLauncherSettings: FloatingLauncherSettings by inject()
-    private val favoritesService: FavoritesService by inject()
     private val iconService: IconService by inject()
+    private val searchableRepository: SavableSearchableRepository by inject()
 
     private val lifecycleRegistry = LifecycleRegistry(this)
     private val savedStateRegistryController = SavedStateRegistryController.create(this)
@@ -105,10 +119,6 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
 
     private var windowManager: WindowManager? = null
     private var composeView: ComposeView? = null
-    private var expanded = false
-
-    private var currentEdge = FloatingLauncherEdge.Right
-    private var currentPosition = 0.5f
 
     override fun onCreate() {
         super.onCreate()
@@ -130,18 +140,6 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
         scope.launch {
             floatingLauncherSettings.enabled.collect { enabled ->
                 if (!enabled) stopSelf()
-            }
-        }
-        scope.launch {
-            floatingLauncherSettings.edge.collect {
-                currentEdge = it
-                relayoutIfCollapsed()
-            }
-        }
-        scope.launch {
-            floatingLauncherSettings.position.collect {
-                currentPosition = it
-                relayoutIfCollapsed()
             }
         }
     }
@@ -184,35 +182,15 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
         view.setContent {
             FloatingLauncherContent(
                 settings = floatingLauncherSettings,
-                favoritesService = favoritesService,
                 iconService = iconService,
-                onExpandedChange = { setExpanded(it) },
+                searchableRepository = searchableRepository,
             )
         }
 
-        wm.addView(view, buildLayoutParams(expanded = false))
+        wm.addView(view, buildLayoutParams())
     }
 
-    private fun setExpanded(value: Boolean) {
-        if (expanded == value) return
-        expanded = value
-        relayout()
-    }
-
-    private fun relayoutIfCollapsed() {
-        if (!expanded) relayout()
-    }
-
-    private fun relayout() {
-        val view = composeView ?: return
-        val wm = windowManager ?: return
-        try {
-            wm.updateViewLayout(view, buildLayoutParams(expanded = expanded))
-        } catch (_: Exception) {
-        }
-    }
-
-    private fun buildLayoutParams(expanded: Boolean): WindowManager.LayoutParams {
+    private fun buildLayoutParams(): WindowManager.LayoutParams {
         val type = if (isAtLeastApiLevel(26)) {
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
         } else {
@@ -220,34 +198,16 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
             WindowManager.LayoutParams.TYPE_PHONE
         }
 
-        if (expanded) {
-            return WindowManager.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT,
-                type,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.TRANSLUCENT,
-            ).apply {
-                gravity = Gravity.TOP or Gravity.START
-            }
-        }
-
-        val metrics = resources.displayMetrics
-        val tabHeightPx = (72 * metrics.density).toInt()
-        val y = ((metrics.heightPixels - tabHeightPx) * currentPosition).toInt()
-
         return WindowManager.LayoutParams(
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT,
             type,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
                 WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             PixelFormat.TRANSLUCENT,
         ).apply {
-            gravity = Gravity.TOP or
-                if (currentEdge == FloatingLauncherEdge.Left) Gravity.START else Gravity.END
-            this.y = y
+            gravity = Gravity.TOP or Gravity.START
         }
     }
 
@@ -289,9 +249,8 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
 @Composable
 private fun FloatingLauncherContent(
     settings: FloatingLauncherSettings,
-    favoritesService: FavoritesService,
     iconService: IconService,
-    onExpandedChange: (Boolean) -> Unit,
+    searchableRepository: SavableSearchableRepository,
 ) {
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
@@ -305,55 +264,65 @@ private fun FloatingLauncherContent(
         else -> lightColorScheme()
     }
 
-    var expanded by remember { mutableStateOf(false) }
-    val edge by settings.edge.collectAsState(FloatingLauncherEdge.Right)
+    val zones by settings.zones.collectAsState(emptyMap())
     val thickness by settings.thickness.collectAsState(24)
     val tabColor by settings.color.collectAsState(0xFF6750A4.toInt())
     val tabAlpha by settings.alpha.collectAsState(0.6f)
+    val hideIndicator by settings.hideIndicator.collectAsState(false)
+    val columns by settings.columns.collectAsState(1)
+
+    var expandedZone by remember { mutableStateOf<FloatingLauncherZone?>(null) }
 
     MaterialTheme(colorScheme = colorScheme) {
-        if (!expanded) {
-            CollapsedTab(
-                thickness = thickness,
-                color = Color(tabColor).copy(alpha = tabAlpha),
-                edge = edge,
-                onClick = {
-                    expanded = true
-                    onExpandedChange(true)
-                },
-            )
-        } else {
-            ExpandedPanel(
-                edge = edge,
-                favoritesService = favoritesService,
-                iconService = iconService,
-                onDismiss = {
-                    expanded = false
-                    onExpandedChange(false)
-                },
-                onAppLaunched = {
-                    expanded = false
-                    onExpandedChange(false)
-                },
-            )
+        Box(modifier = Modifier.fillMaxSize()) {
+            for (zone in FloatingLauncherZone.entries) {
+                val config = zones[zone] ?: continue
+                if (!config.enabled) continue
+                ZoneTab(
+                    zone = zone,
+                    thickness = thickness,
+                    color = if (hideIndicator) Color.Transparent else Color(tabColor).copy(alpha = tabAlpha),
+                    onClick = { expandedZone = zone },
+                    modifier = Modifier.align(
+                        BiasAlignment(
+                            horizontalBias = if (zone.isLeftEdge) -1f else 1f,
+                            verticalBias = zone.verticalFraction * 2f - 1f,
+                        )
+                    ),
+                )
+            }
+            val zone = expandedZone
+            val zoneConfig = zone?.let { zones[it] }
+            if (zone != null && zoneConfig != null) {
+                ExpandedPanel(
+                    zone = zone,
+                    config = zoneConfig,
+                    columns = columns,
+                    searchableRepository = searchableRepository,
+                    iconService = iconService,
+                    onDismiss = { expandedZone = null },
+                    onAppLaunched = { expandedZone = null },
+                )
+            }
         }
     }
 }
 
 @Composable
-private fun CollapsedTab(
+private fun ZoneTab(
+    zone: FloatingLauncherZone,
     thickness: Int,
     color: Color,
-    edge: FloatingLauncherEdge,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    val shape = if (edge == FloatingLauncherEdge.Left) {
+    val shape = if (zone.isLeftEdge) {
         RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp)
     } else {
         RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp)
     }
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(width = thickness.dp, height = 72.dp)
             .clip(shape)
             .background(color)
@@ -367,16 +336,22 @@ private fun CollapsedTab(
 
 @Composable
 private fun ExpandedPanel(
-    edge: FloatingLauncherEdge,
-    favoritesService: FavoritesService,
+    zone: FloatingLauncherZone,
+    config: FloatingLauncherZoneConfig,
+    columns: Int,
+    searchableRepository: SavableSearchableRepository,
     iconService: IconService,
     onDismiss: () -> Unit,
     onAppLaunched: () -> Unit,
 ) {
     val context = LocalContext.current
-    val favorites by remember {
-        favoritesService.getFavorites(includeTypes = listOf("app"), limit = 12)
+    val apps by remember(config.apps) {
+        searchableRepository.getByKeys(config.apps)
     }.collectAsState(emptyList())
+    // getByKeys doesn't preserve order - restore the user's configured order.
+    val orderedApps = remember(apps, config.apps) {
+        config.apps.mapNotNull { key -> apps.firstOrNull { it.key == key } }
+    }
 
     Box(
         modifier = Modifier
@@ -384,7 +359,7 @@ private fun ExpandedPanel(
             .pointerInput(Unit) {
                 detectTapGestures(onTap = { onDismiss() })
             },
-        contentAlignment = if (edge == FloatingLauncherEdge.Left) {
+        contentAlignment = if (zone.isLeftEdge) {
             Alignment.CenterStart
         } else {
             Alignment.CenterEnd
@@ -392,14 +367,14 @@ private fun ExpandedPanel(
     ) {
         Surface(
             modifier = Modifier
-                .widthIn(max = 280.dp)
+                .widthIn(max = if (columns == 2) 360.dp else 280.dp)
                 .heightIn(max = 480.dp)
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
                     onClick = {},
                 ),
-            shape = if (edge == FloatingLauncherEdge.Left) {
+            shape = if (zone.isLeftEdge) {
                 RoundedCornerShape(topEnd = 24.dp, bottomEnd = 24.dp)
             } else {
                 RoundedCornerShape(topStart = 24.dp, bottomStart = 24.dp)
@@ -426,15 +401,15 @@ private fun ExpandedPanel(
                         )
                     }
                 }
-                if (favorites.isEmpty()) {
+                if (orderedApps.isEmpty()) {
                     Text(
                         text = stringResource(R.string.floating_launcher_panel_empty),
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                     )
                 } else {
-                    LazyColumn {
-                        items(favorites) { item ->
+                    LazyVerticalGrid(columns = GridCells.Fixed(columns)) {
+                        items(orderedApps, key = { it.key }) { item ->
                             FavoriteRow(
                                 item = item,
                                 iconService = iconService,

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.FloatingLauncherEdge
+import de.mm20.launcher2.preferences.FloatingLauncherZone
 import de.mm20.launcher2.preferences.ui.FloatingLauncherSettings
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -25,11 +25,9 @@ class FloatingLauncherSettingsScreenVM(
     val enabled = floatingLauncherSettings.enabled
     fun setEnabled(enabled: Boolean) = floatingLauncherSettings.setEnabled(enabled)
 
-    val edge = floatingLauncherSettings.edge
-    fun setEdge(edge: FloatingLauncherEdge) = floatingLauncherSettings.setEdge(edge)
-
-    val position = floatingLauncherSettings.position
-    fun setPosition(position: Float) = floatingLauncherSettings.setPosition(position)
+    val zones = floatingLauncherSettings.zones
+    fun setZoneEnabled(zone: FloatingLauncherZone, zoneEnabled: Boolean) =
+        floatingLauncherSettings.setZoneEnabled(zone, zoneEnabled)
 
     val thickness = floatingLauncherSettings.thickness
     fun setThickness(thickness: Int) = floatingLauncherSettings.setThickness(thickness)

@@ -767,10 +767,14 @@
     <string name="preference_floating_launcher">Enable floating launcher</string>
     <string name="preference_floating_launcher_summary">Shows a small tab on the screen edge, even while using other apps. Tap it to open your favorite apps.</string>
     <string name="preference_category_appearance">Appearance</string>
-    <string name="preference_floating_launcher_edge">Screen edge</string>
-    <string name="preference_floating_launcher_edge_left">Left</string>
-    <string name="preference_floating_launcher_edge_right">Right</string>
-    <string name="preference_floating_launcher_position">Vertical position</string>
+    <string name="preference_category_floating_launcher_zones">Trigger zones</string>
+    <string name="preference_floating_launcher_zones_summary">Each zone is an independent tab on the screen edge. Turn on the ones you want, then add apps to them below.</string>
+    <string name="floating_launcher_zone_left_top">Left, top</string>
+    <string name="floating_launcher_zone_left_middle">Left, middle</string>
+    <string name="floating_launcher_zone_left_bottom">Left, bottom</string>
+    <string name="floating_launcher_zone_right_top">Right, top</string>
+    <string name="floating_launcher_zone_right_middle">Right, middle</string>
+    <string name="floating_launcher_zone_right_bottom">Right, bottom</string>
     <string name="preference_floating_launcher_thickness">Tab thickness</string>
     <string name="preference_floating_launcher_color">Tab color</string>
     <string name="preference_floating_launcher_alpha">Tab transparency</string>
@@ -781,7 +785,7 @@
     <string name="floating_launcher_notification_title">Floating launcher is active</string>
     <string name="floating_launcher_notification_text">Tap to change settings</string>
     <string name="floating_launcher_panel_title">Quick launcher</string>
-    <string name="floating_launcher_panel_empty">No favorite apps yet. Pin some from their app info menu.</string>
+    <string name="floating_launcher_panel_empty">No apps assigned to this zone yet. Add some from its settings.</string>
     <string name="preference_nextcloud_signin">Sign in to Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Sign in to search your Nextcloud server</string>
     <string name="preference_nextcloud">Nextcloud</string>
