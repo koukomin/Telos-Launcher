@@ -2,16 +2,12 @@ package de.mm20.launcher2.freeze
 
 import android.app.Notification
 import android.app.UiModeManager
-import android.app.usage.UsageEvents
-import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.res.Configuration
 import android.media.AudioManager
 import android.net.TrafficStats
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.notifications.NotificationRepository
-import de.mm20.launcher2.permissions.PermissionGroup
-import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.FreezeExclusionStrictness
 import de.mm20.launcher2.preferences.freeze.FreezeSettings
 import kotlinx.coroutines.delay
@@ -30,7 +26,7 @@ import kotlinx.coroutines.flow.first
 internal class FreezeExclusionChecker(
     private val context: Context,
     private val notificationRepository: NotificationRepository,
-    private val permissionsManager: PermissionsManager,
+    private val usageStatsProvider: AppUsageStatsProvider,
     private val settings: FreezeSettings,
     private val profileManager: FreezeProfileManager,
 ) {
@@ -91,33 +87,12 @@ internal class FreezeExclusionChecker(
      * would silently do nothing at all for users who never grant that permission.
      */
     private fun isForeground(packageName: String): Boolean {
-        if (!permissionsManager.checkPermissionOnce(PermissionGroup.UsageAccess)) return false
-        val usageStatsManager = context.getSystemService<UsageStatsManager>() ?: return false
-
-        val end = System.currentTimeMillis()
-        val begin = end - FOREGROUND_LOOKBACK_MS
-        val events = usageStatsManager.queryEvents(begin, end) ?: return false
-
-        var foregroundPackage: String? = null
-        val event = UsageEvents.Event()
-        while (events.hasNextEvent()) {
-            events.getNextEvent(event)
-            when (event.eventType) {
-                UsageEvents.Event.MOVE_TO_FOREGROUND -> foregroundPackage = event.packageName
-                UsageEvents.Event.MOVE_TO_BACKGROUND ->
-                    if (event.packageName == foregroundPackage) foregroundPackage = null
-            }
-        }
-        return foregroundPackage == packageName
+        return usageStatsProvider.currentForegroundPackage() == packageName
     }
 
     /** Rule 5 (partial): device-wide, not per-package. */
     private fun isAndroidAutoActive(): Boolean {
         val uiModeManager = context.getSystemService<UiModeManager>() ?: return false
         return uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_CAR
-    }
-
-    companion object {
-        private const val FOREGROUND_LOOKBACK_MS = 60_000L
     }
 }

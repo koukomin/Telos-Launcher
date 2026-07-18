@@ -309,6 +309,12 @@
     <string name="desktop_mode_freeform_shizuku_unavailable">Shizuku is not running or not installed. Install and start Shizuku, then try again.</string>
     <string name="desktop_mode_freeform_shizuku_denied">Shizuku permission was denied.</string>
     <string name="freeze_widget_freeze_now">Freeze now</string>
+    <string name="freeze_ready_notification_channel">Ready to freeze</string>
+    <string name="freeze_ready_notification_text">Tap to freeze now, without waiting for screen off</string>
+    <plurals name="freeze_ready_notification_title">
+        <item quantity="one">%1$d app ready to freeze</item>
+        <item quantity="other">%1$d apps ready to freeze</item>
+    </plurals>
     <string name="freeze_widget_candidates_summary">%1$d apps selected</string>
     <string name="freeze_widget_no_candidates">No apps selected. Choose apps to freeze in settings.</string>
     <string name="freeze_widget_frozen_now">Frozen %1$d of %2$d</string>
@@ -685,6 +691,19 @@
     <string name="freeze_dashboard_counts">Frozen %1$d times, unfrozen %2$d times</string>
     <string name="freeze_dashboard_last_frozen">Last frozen %1$s</string>
     <string name="freeze_dashboard_last_unfrozen">Last unfrozen %1$s</string>
+    <string name="freeze_dashboard_app_status">App status</string>
+    <string name="freeze_dashboard_app_status_summary">Every app, how long it has run today, and whether it\'s running right now</string>
+    <string name="freeze_dashboard_state_normal">Normal</string>
+    <string name="freeze_dashboard_state_suspended">Suspended</string>
+    <string name="freeze_dashboard_state_disabled">Disabled</string>
+    <string name="freeze_dashboard_running_now">Running now</string>
+    <string name="freeze_dashboard_not_used_today">Not used today</string>
+    <string name="freeze_dashboard_runtime_today">%1$s today</string>
+    <string name="freeze_dashboard_runtime_hours_minutes">%1$dh %2$dm</string>
+    <string name="freeze_dashboard_runtime_minutes">%1$dm</string>
+    <string name="freeze_dashboard_runtime_under_a_minute">Under 1m</string>
+    <string name="freeze_dashboard_refresh">Refresh</string>
+    <string name="freeze_dashboard_no_apps_in_category">No apps in this category</string>
     <string name="preference_freeze_exclude_music">Exclude apps playing music</string>
     <string name="preference_freeze_exclude_music_summary">Prevents freezing if the app is currently producing audio or has an active media session</string>
     <string name="preference_freeze_exclude_network">Exclude apps with network activity</string>

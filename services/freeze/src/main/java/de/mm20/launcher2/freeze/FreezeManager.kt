@@ -162,14 +162,29 @@ class FreezeManager internal constructor(
 
     /** Live read of the OS-level frozen state (suspended OR disabled). */
     fun isFrozen(packageName: String): Boolean {
+        return freezeState(packageName) != AppFreezeState.Normal
+    }
+
+    /**
+     * Live read of the OS-level state, distinguishing *how* an app is frozen - unlike [isFrozen],
+     * which collapses suspended and disabled into one boolean. Reads PackageManager directly each
+     * call, not settings.freezeMethods (the user's configured intent), so this reflects reality
+     * even if the two have drifted apart (e.g. the method setting was changed after freezing,
+     * without re-freezing).
+     */
+    fun freezeState(packageName: String): AppFreezeState {
         return try {
             val info = context.packageManager.getApplicationInfo(
                 packageName,
                 PackageManager.MATCH_DISABLED_COMPONENTS
             )
-            (info.flags and ApplicationInfo.FLAG_SUSPENDED) != 0 || !info.enabled
+            when {
+                !info.enabled -> AppFreezeState.Disabled
+                (info.flags and ApplicationInfo.FLAG_SUSPENDED) != 0 -> AppFreezeState.Suspended
+                else -> AppFreezeState.Normal
+            }
         } catch (e: PackageManager.NameNotFoundException) {
-            false
+            AppFreezeState.Normal
         }
     }
 
