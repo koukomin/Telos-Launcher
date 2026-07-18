@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.pm.LauncherApps
 import android.os.Build
 import androidx.core.content.getSystemService
+import de.mm20.launcher2.widgets.AtAGlanceWidget
 import de.mm20.launcher2.widgets.BatteryWidget
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.AppsWidget
@@ -55,6 +56,10 @@ class WidgetsService(
 
     fun getBuiltInWidgets(): List<BuiltInWidgetInfo> {
         return listOf(
+            BuiltInWidgetInfo(
+                type = AtAGlanceWidget.Type,
+                label = context.getString(R.string.widget_name_at_a_glance),
+            ),
             BuiltInWidgetInfo(
                 type = WeatherWidget.Type,
                 label = context.getString(R.string.widget_name_weather),

@@ -107,6 +107,12 @@ sealed class Widget {
                             ?: return null
                     PluginWidget(entity.id, entity.stackId, config)
                 }
+                AtAGlanceWidget.Type -> {
+                    val config: AtAGlanceWidgetConfig =
+                        Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
+                            ?: AtAGlanceWidgetConfig()
+                    AtAGlanceWidget(entity.id, entity.stackId, config)
+                }
 
                 else -> null
             }
@@ -135,6 +141,7 @@ fun Widget.withStackId(stackId: UUID?): Widget {
         is RemindersWidget -> copy(stackId = stackId)
         is FreezeWidget -> copy(stackId = stackId)
         is PluginWidget -> copy(stackId = stackId)
+        is AtAGlanceWidget -> copy(stackId = stackId)
     }
 }
 
@@ -156,6 +163,7 @@ val Widget.height: Int?
         is RemindersWidget -> config.height
         is FreezeWidget -> config.height
         is PluginWidget -> config.height
+        is AtAGlanceWidget -> config.height
     }
 
 fun Widget.withHeight(height: Int?): Widget {
@@ -172,5 +180,6 @@ fun Widget.withHeight(height: Int?): Widget {
         is RemindersWidget -> copy(config = config.copy(height = height))
         is FreezeWidget -> copy(config = config.copy(height = height))
         is PluginWidget -> copy(config = config.copy(height = height))
+        is AtAGlanceWidget -> copy(config = config.copy(height = height))
     }
 }

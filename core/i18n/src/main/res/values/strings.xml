@@ -242,6 +242,11 @@
     <string name="widget_name_reminders">Reminders</string>
     <string name="widget_name_freeze">Freeze</string>
     <string name="widget_plugin_empty">No data</string>
+    <string name="widget_name_at_a_glance">At a Glance</string>
+    <string name="at_a_glance_no_data">Nothing to show right now</string>
+    <string name="at_a_glance_battery_charging">Charging</string>
+    <string name="at_a_glance_battery_low">Battery low</string>
+    <string name="at_a_glance_event_now">Now</string>
 
     <string name="preference_screen_context_profiles">Context profiles</string>
     <string name="preference_screen_context_profiles_summary">Automatically switch gestures, freeze profile and widgets based on time, WiFi, Bluetooth or Battery Saver</string>

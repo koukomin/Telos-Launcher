@@ -40,6 +40,7 @@ import de.mm20.launcher2.ui.component.DragResizeHandle
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.ResizeAxis
 import de.mm20.launcher2.ui.launcher.sheets.ConfigureWidgetSheet
+import de.mm20.launcher2.ui.launcher.widgets.ataglance.AtAGlanceWidget
 import de.mm20.launcher2.ui.launcher.widgets.battery.BatteryWidget
 import de.mm20.launcher2.ui.launcher.widgets.calendar.CalendarWidget
 import de.mm20.launcher2.ui.launcher.widgets.external.AppWidget
@@ -54,6 +55,7 @@ import de.mm20.launcher2.ui.launcher.widgets.system.SystemWidget
 import de.mm20.launcher2.ui.launcher.widgets.weather.WeatherWidget
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.widgets.AppWidget
+import de.mm20.launcher2.widgets.AtAGlanceWidget
 import de.mm20.launcher2.widgets.BatteryWidget
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.AppsWidget
@@ -223,6 +225,10 @@ fun WidgetItem(
 
                         is de.mm20.launcher2.widgets.PluginWidget -> {
                             PluginWidgetContent(widget)
+                        }
+
+                        is AtAGlanceWidget -> {
+                            AtAGlanceWidget(widget)
                         }
                     }
                 }

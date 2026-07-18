@@ -94,6 +94,7 @@ fun AppWidget(
                     is RemindersWidget -> it.copy(id = widget.id)
                     is FreezeWidget -> it.copy(id = widget.id)
                     is de.mm20.launcher2.widgets.PluginWidget -> it.copy(id = widget.id)
+                    is de.mm20.launcher2.widgets.AtAGlanceWidget -> it.copy(id = widget.id)
                 }
                 onWidgetUpdate(updatedWidget)
                 replaceWidget = false

@@ -113,6 +113,7 @@ import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.settings.SettingsActivity
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.AppsWidget
+import de.mm20.launcher2.widgets.AtAGlanceWidget
 import de.mm20.launcher2.widgets.BatteryWidget
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.FreezeWidget
@@ -162,6 +163,7 @@ fun ConfigureWidgetSheet(
                 is RemindersWidget -> ConfigureRemindersWidget(widget, onWidgetUpdated)
                 is FreezeWidget -> {}
                 is de.mm20.launcher2.widgets.PluginWidget -> {}
+                is AtAGlanceWidget -> {}
             }
         }
 
@@ -680,6 +682,7 @@ fun ColumnScope.ConfigureAppWidget(
                     is RemindersWidget -> it.copy(id = widget.id)
                     is FreezeWidget -> it.copy(id = widget.id)
                     is de.mm20.launcher2.widgets.PluginWidget -> it.copy(id = widget.id)
+                    is AtAGlanceWidget -> it.copy(id = widget.id)
                 }
                 onWidgetUpdated(updatedWidget)
                 replaceWidget = false

@@ -68,6 +68,7 @@ import de.mm20.launcher2.ui.ktx.animateShapeAsState
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.AppWidgetConfig
 import de.mm20.launcher2.widgets.AppsWidget
+import de.mm20.launcher2.widgets.AtAGlanceWidget
 import de.mm20.launcher2.widgets.BatteryWidget
 import de.mm20.launcher2.widgets.FreezeWidget
 import de.mm20.launcher2.widgets.CalendarWidget
@@ -389,6 +390,7 @@ fun WidgetPickerSheet(
                             .clickable {
                                 val id = UUID.randomUUID()
                                 val widget = when (it.type) {
+                                    AtAGlanceWidget.Type -> AtAGlanceWidget(id)
                                     WeatherWidget.Type -> WeatherWidget(id)
                                     CalendarWidget.Type -> CalendarWidget(id)
                                     MusicWidget.Type -> MusicWidget(id)
@@ -412,6 +414,7 @@ fun WidgetPickerSheet(
                             painter =
                                 painterResource(
                                     when (it.type) {
+                                        AtAGlanceWidget.Type -> R.drawable.visibility_24px
                                         WeatherWidget.Type -> R.drawable.light_mode_24px
                                         CalendarWidget.Type -> R.drawable.today_24px
                                         MusicWidget.Type -> R.drawable.music_note_24px
