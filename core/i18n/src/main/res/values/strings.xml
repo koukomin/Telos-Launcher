@@ -786,6 +786,13 @@
     <string name="floating_launcher_notification_text">Tap to change settings</string>
     <string name="floating_launcher_panel_title">Quick launcher</string>
     <string name="floating_launcher_panel_empty">No apps assigned to this zone yet. Add some from its settings.</string>
+    <string name="floating_launcher_panel_settings">Floating launcher settings</string>
+    <plurals name="floating_launcher_zone_apps_count">
+        <item quantity="one">%1$d app</item>
+        <item quantity="other">%1$d apps</item>
+    </plurals>
+    <string name="floating_launcher_zone_apps_empty">No apps installed.</string>
+    <string name="floating_launcher_zone_apps_summary">Apps you add here appear in this zone\'s panel. You can also drag an app icon from the home screen or the apps tab onto this zone to add it.</string>
     <string name="preference_nextcloud_signin">Sign in to Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Sign in to search your Nextcloud server</string>
     <string name="preference_nextcloud">Nextcloud</string>

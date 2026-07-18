@@ -86,6 +86,8 @@ import de.mm20.launcher2.ui.settings.desktopmode.DesktopModeSettingsRoute
 import de.mm20.launcher2.ui.settings.desktopmode.DesktopModeSettingsScreen
 import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsRoute
 import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsScreen
+import de.mm20.launcher2.ui.settings.floating.FloatingLauncherZoneAppsRoute
+import de.mm20.launcher2.ui.settings.floating.FloatingLauncherZoneAppsScreen
 import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsRoute
 import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsScreen
 import de.mm20.launcher2.ui.settings.protection.ProtectedSettingsScreen
@@ -335,6 +337,9 @@ class SettingsActivity : BaseActivity() {
             entry<FloatingLauncherSettingsRoute> {
                 FloatingLauncherSettingsScreen()
             }
+            entry<FloatingLauncherZoneAppsRoute> {
+                FloatingLauncherZoneAppsScreen(it.zone)
+            }
             entry<ContextProfilesSettingsRoute> {
                 ContextProfilesSettingsScreen()
             }
@@ -467,6 +472,7 @@ class SettingsActivity : BaseActivity() {
             ROUTE_MEDIA_INTEGRATION -> MediaIntegrationSettingsRoute
             ROUTE_SEARCH_ACTIONS -> SearchActionsSettingsRoute
             ROUTE_HIDDEN_ITEMS -> HiddenItemsSettingsRoute
+            ROUTE_FLOATING_LAUNCHER -> FloatingLauncherSettingsRoute
             ROUTE_CRASH_REPORT if (intent.hasExtra(EXTRA_CRASH_REPORT_PATH)) -> {
                 CrashReportRoute(intent.getStringExtra(EXTRA_CRASH_REPORT_PATH)!!)
             }
@@ -480,6 +486,7 @@ class SettingsActivity : BaseActivity() {
         const val ROUTE_MEDIA_INTEGRATION = "settings/integrations/media"
         const val ROUTE_SEARCH_ACTIONS = "settings/search/searchactions"
         const val ROUTE_HIDDEN_ITEMS = "settings/search/hiddenitems"
+        const val ROUTE_FLOATING_LAUNCHER = "settings/floatinglauncher"
         const val ROUTE_CRASH_REPORT = "settings/debug/crashreport"
         const val EXTRA_CRASH_REPORT_PATH = "crash_report_path"
     }

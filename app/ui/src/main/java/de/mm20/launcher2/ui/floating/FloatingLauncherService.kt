@@ -514,11 +514,31 @@ private fun ExpandedPanel(
                         text = stringResource(R.string.floating_launcher_panel_title),
                         style = MaterialTheme.typography.titleSmall,
                     )
-                    IconButton(onClick = onDismiss) {
-                        Icon(
-                            painterResource(R.drawable.close_24px),
-                            contentDescription = stringResource(R.string.close),
-                        )
+                    Row {
+                        IconButton(
+                            onClick = {
+                                onDismiss()
+                                val intent = Intent(context, SettingsActivity::class.java).apply {
+                                    putExtra(
+                                        SettingsActivity.EXTRA_ROUTE,
+                                        SettingsActivity.ROUTE_FLOATING_LAUNCHER,
+                                    )
+                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                }
+                                context.startActivity(intent)
+                            },
+                        ) {
+                            Icon(
+                                painterResource(R.drawable.settings_24px),
+                                contentDescription = stringResource(R.string.floating_launcher_panel_settings),
+                            )
+                        }
+                        IconButton(onClick = onDismiss) {
+                            Icon(
+                                painterResource(R.drawable.close_24px),
+                                contentDescription = stringResource(R.string.close),
+                            )
+                        }
                     }
                 }
                 if (orderedApps.isEmpty()) {

@@ -14,6 +14,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.FloatingLauncherZone
 import de.mm20.launcher2.preferences.FloatingLauncherZoneConfig
@@ -23,9 +24,11 @@ import de.mm20.launcher2.ui.component.preferences.ColorPreference
 import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.floating.FloatingLauncherService
+import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -36,6 +39,7 @@ fun FloatingLauncherSettingsScreen() {
     val viewModel: FloatingLauncherSettingsScreenVM =
         viewModel(factory = FloatingLauncherSettingsScreenVM.Factory)
     val context = LocalContext.current
+    val backStack = LocalBackStack.current
 
     val hasOverlayPermission by viewModel.hasOverlayPermission.collectAsStateWithLifecycle(null)
     val enabled by viewModel.enabled.collectAsStateWithLifecycle(false)
@@ -83,10 +87,16 @@ fun FloatingLauncherSettingsScreen() {
                 )
                 for (zone in FloatingLauncherZone.entries) {
                     val config = zones[zone] ?: FloatingLauncherZoneConfig()
-                    SwitchPreference(
+                    PreferenceWithSwitch(
                         title = stringResource(zoneLabelRes(zone)),
-                        value = config.enabled,
-                        onValueChanged = { viewModel.setZoneEnabled(zone, it) },
+                        summary = pluralStringResource(
+                            R.plurals.floating_launcher_zone_apps_count,
+                            config.apps.size,
+                            config.apps.size,
+                        ),
+                        onClick = { backStack.add(FloatingLauncherZoneAppsRoute(zone.name)) },
+                        switchValue = config.enabled,
+                        onSwitchChanged = { viewModel.setZoneEnabled(zone, it) },
                     )
                 }
             }
@@ -118,7 +128,7 @@ fun FloatingLauncherSettingsScreen() {
     }
 }
 
-private fun zoneLabelRes(zone: FloatingLauncherZone): Int = when (zone) {
+internal fun zoneLabelRes(zone: FloatingLauncherZone): Int = when (zone) {
     FloatingLauncherZone.LeftTop -> R.string.floating_launcher_zone_left_top
     FloatingLauncherZone.LeftMiddle -> R.string.floating_launcher_zone_left_middle
     FloatingLauncherZone.LeftBottom -> R.string.floating_launcher_zone_left_bottom
