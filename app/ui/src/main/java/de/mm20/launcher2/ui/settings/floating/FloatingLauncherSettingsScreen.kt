@@ -58,6 +58,9 @@ fun FloatingLauncherSettingsScreen() {
     val color by viewModel.color.collectAsStateWithLifecycle(0xFF6750A4.toInt())
     val alpha by viewModel.alpha.collectAsStateWithLifecycle(0.6f)
     val columns by viewModel.columns.collectAsStateWithLifecycle(1)
+    val hideIndicator by viewModel.hideIndicator.collectAsStateWithLifecycle(false)
+    val hapticFeedback by viewModel.hapticFeedback.collectAsStateWithLifecycle(true)
+    val autoHideGaming by viewModel.autoHideGaming.collectAsStateWithLifecycle(false)
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_floating_launcher)) {
         item {
@@ -146,6 +149,28 @@ fun FloatingLauncherSettingsScreen() {
                     summary = stringResource(R.string.preference_floating_launcher_columns_summary),
                     value = columns == 2,
                     onValueChanged = { viewModel.setColumns(if (it) 2 else 1) },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_floating_launcher_hide_indicator),
+                    summary = stringResource(R.string.preference_floating_launcher_hide_indicator_summary),
+                    value = hideIndicator,
+                    onValueChanged = { viewModel.setHideIndicator(it) },
+                )
+            }
+        }
+        item {
+            PreferenceCategory(title = stringResource(R.string.preference_category_behavior)) {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_floating_launcher_haptic_feedback),
+                    summary = stringResource(R.string.preference_floating_launcher_haptic_feedback_summary),
+                    value = hapticFeedback,
+                    onValueChanged = { viewModel.setHapticFeedback(it) },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_floating_launcher_auto_hide_gaming),
+                    summary = stringResource(R.string.preference_floating_launcher_auto_hide_gaming_summary),
+                    value = autoHideGaming,
+                    onValueChanged = { viewModel.setAutoHideGaming(it) },
                 )
             }
         }

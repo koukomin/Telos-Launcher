@@ -41,6 +41,15 @@ class FloatingLauncherSettingsScreenVM(
     val columns = floatingLauncherSettings.columns
     fun setColumns(columns: Int) = floatingLauncherSettings.setColumns(columns)
 
+    val hideIndicator = floatingLauncherSettings.hideIndicator
+    fun setHideIndicator(hide: Boolean) = floatingLauncherSettings.setHideIndicator(hide)
+
+    val hapticFeedback = floatingLauncherSettings.hapticFeedback
+    fun setHapticFeedback(enabled: Boolean) = floatingLauncherSettings.setHapticFeedback(enabled)
+
+    val autoHideGaming = floatingLauncherSettings.autoHideGaming
+    fun setAutoHideGaming(enabled: Boolean) = floatingLauncherSettings.setAutoHideGaming(enabled)
+
     companion object : KoinComponent {
         val Factory = viewModelFactory {
             initializer {

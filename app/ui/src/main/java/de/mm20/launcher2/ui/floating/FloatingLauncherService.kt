@@ -14,6 +14,7 @@ import android.view.Gravity
 import android.view.WindowManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.draganddrop.dragAndDropTarget
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -40,6 +41,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -55,10 +57,12 @@ import androidx.compose.ui.draganddrop.mimeTypes
 import androidx.compose.ui.draganddrop.toAndroidDragEvent
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -73,12 +77,15 @@ import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import de.mm20.launcher2.applications.AppRepository
+import de.mm20.launcher2.contextprofiles.ContextProfileManager
 import de.mm20.launcher2.freeze.FreezeManager
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.preferences.ContextProfileIcon
 import de.mm20.launcher2.preferences.FloatingLauncherZone
 import de.mm20.launcher2.preferences.FloatingLauncherZoneConfig
 import de.mm20.launcher2.preferences.ui.FloatingLauncherSettings
+import de.mm20.launcher2.preferences.ui.ShutterSettings
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.searchable.SavableSearchableRepository
@@ -87,12 +94,15 @@ import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.dragndrop.DraggableItem
 import de.mm20.launcher2.ui.component.dragndrop.LazyVerticalDragAndDropGrid
 import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropGridState
+import de.mm20.launcher2.ui.launcher.shutters.ShutterGate
+import de.mm20.launcher2.ui.overlays.OverlayHost
 import de.mm20.launcher2.ui.settings.SettingsActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -132,6 +142,8 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
     private val searchableRepository: SavableSearchableRepository by inject()
     private val freezeManager: FreezeManager by inject()
     private val appRepository: AppRepository by inject()
+    private val contextProfileManager: ContextProfileManager by inject()
+    private val shutterSettings: ShutterSettings by inject()
 
     private val lifecycleRegistry = LifecycleRegistry(this)
     private val savedStateRegistryController = SavedStateRegistryController.create(this)
@@ -209,6 +221,8 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
                 searchableRepository = searchableRepository,
                 freezeManager = freezeManager,
                 appRepository = appRepository,
+                contextProfileManager = contextProfileManager,
+                shutterSettings = shutterSettings,
             )
         }
 
@@ -278,6 +292,8 @@ private fun FloatingLauncherContent(
     searchableRepository: SavableSearchableRepository,
     freezeManager: FreezeManager,
     appRepository: AppRepository,
+    contextProfileManager: ContextProfileManager,
+    shutterSettings: ShutterSettings,
 ) {
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
@@ -297,8 +313,18 @@ private fun FloatingLauncherContent(
     val tabAlpha by settings.alpha.collectAsState(0.6f)
     val hideIndicator by settings.hideIndicator.collectAsState(false)
     val columns by settings.columns.collectAsState(1)
+    val hapticFeedbackEnabled by settings.hapticFeedback.collectAsState(true)
+    val autoHideGaming by settings.autoHideGaming.collectAsState(false)
+    // icon is the only field a ContextProfile carries that signals "this one's for gaming" -
+    // profiles are otherwise fully user-defined with no built-in category.
+    val activeProfile by contextProfileManager.activeProfile.collectAsState(null)
+    val hiddenForGaming = autoHideGaming && activeProfile?.icon == ContextProfileIcon.Gaming
 
     var expandedZone by remember { mutableStateOf<FloatingLauncherZone?>(null) }
+
+    LaunchedEffect(hiddenForGaming) {
+        if (hiddenForGaming) expandedZone = null
+    }
 
     fun addAppToZone(zone: FloatingLauncherZone, key: String) {
         val current = zones[zone]?.apps ?: emptyList()
@@ -312,40 +338,46 @@ private fun FloatingLauncherContent(
     }
 
     MaterialTheme(colorScheme = colorScheme) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            for (zone in FloatingLauncherZone.entries) {
-                val config = zones[zone] ?: continue
-                if (!config.enabled) continue
-                ZoneTab(
-                    zone = zone,
-                    thickness = thickness,
-                    color = if (hideIndicator) Color.Transparent else Color(tabColor).copy(alpha = tabAlpha),
-                    onClick = { expandedZone = zone },
-                    onAppDropped = { key -> addAppToZone(zone, key) },
-                    modifier = Modifier.align(
-                        BiasAlignment(
-                            horizontalBias = if (zone.isLeftEdge) -1f else 1f,
-                            verticalBias = zone.verticalFraction * 2f - 1f,
+        OverlayHost {
+            if (!hiddenForGaming) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    for (zone in FloatingLauncherZone.entries) {
+                        val config = zones[zone] ?: continue
+                        if (!config.enabled) continue
+                        ZoneTab(
+                            zone = zone,
+                            thickness = thickness,
+                            color = if (hideIndicator) Color.Transparent else Color(tabColor).copy(alpha = tabAlpha),
+                            hapticFeedbackEnabled = hapticFeedbackEnabled,
+                            onClick = { expandedZone = zone },
+                            onAppDropped = { key -> addAppToZone(zone, key) },
+                            modifier = Modifier.align(
+                                BiasAlignment(
+                                    horizontalBias = if (zone.isLeftEdge) -1f else 1f,
+                                    verticalBias = zone.verticalFraction * 2f - 1f,
+                                )
+                            ),
                         )
-                    ),
-                )
-            }
-            val zone = expandedZone
-            val zoneConfig = zone?.let { zones[it] }
-            if (zone != null && zoneConfig != null) {
-                ExpandedPanel(
-                    zone = zone,
-                    config = zoneConfig,
-                    columns = columns,
-                    searchableRepository = searchableRepository,
-                    iconService = iconService,
-                    freezeManager = freezeManager,
-                    appRepository = appRepository,
-                    onDismiss = { expandedZone = null },
-                    onAppLaunched = { expandedZone = null },
-                    onAppDropped = { key -> addAppToZone(zone, key) },
-                    onReorder = { keys -> reorderZone(zone, keys) },
-                )
+                    }
+                    val zone = expandedZone
+                    val zoneConfig = zone?.let { zones[it] }
+                    if (zone != null && zoneConfig != null) {
+                        ExpandedPanel(
+                            zone = zone,
+                            config = zoneConfig,
+                            columns = columns,
+                            searchableRepository = searchableRepository,
+                            iconService = iconService,
+                            freezeManager = freezeManager,
+                            appRepository = appRepository,
+                            shutterSettings = shutterSettings,
+                            onDismiss = { expandedZone = null },
+                            onAppLaunched = { expandedZone = null },
+                            onAppDropped = { key -> addAppToZone(zone, key) },
+                            onReorder = { keys -> reorderZone(zone, keys) },
+                        )
+                    }
+                }
             }
         }
     }
@@ -356,6 +388,7 @@ private fun ZoneTab(
     zone: FloatingLauncherZone,
     thickness: Int,
     color: Color,
+    hapticFeedbackEnabled: Boolean,
     onClick: () -> Unit,
     onAppDropped: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -366,6 +399,7 @@ private fun ZoneTab(
         RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp)
     }
     var isDropTarget by remember { mutableStateOf(false) }
+    val hapticFeedback = LocalHapticFeedback.current
     Box(
         modifier = modifier
             .size(width = thickness.dp, height = 72.dp)
@@ -374,7 +408,12 @@ private fun ZoneTab(
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
-                onClick = onClick,
+                onClick = {
+                    if (hapticFeedbackEnabled) {
+                        hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+                    }
+                    onClick()
+                },
             )
             .dragAndDropTarget(
                 shouldStartDragAndDrop = { it.mimeTypes().contains(ClipDescription.MIMETYPE_TEXT_PLAIN) },
@@ -414,6 +453,7 @@ private fun ExpandedPanel(
     iconService: IconService,
     freezeManager: FreezeManager,
     appRepository: AppRepository,
+    shutterSettings: ShutterSettings,
     onDismiss: () -> Unit,
     onAppLaunched: () -> Unit,
     onAppDropped: (String) -> Unit,
@@ -558,6 +598,7 @@ private fun ExpandedPanel(
                                     item = item,
                                     iconService = iconService,
                                     appRepository = appRepository,
+                                    shutterSettings = shutterSettings,
                                     onClick = {
                                         if (item is Application && freezeManager.isFrozen(item.componentName.packageName)) {
                                             coroutineScope.launch {
@@ -584,6 +625,7 @@ private fun FavoriteRow(
     item: SavableSearchable,
     iconService: IconService,
     appRepository: AppRepository,
+    shutterSettings: ShutterSettings,
     onClick: () -> Unit,
 ) {
     val icon by remember(item.key) { iconService.getIcon(item, 48) }.collectAsState(null)
@@ -598,10 +640,30 @@ private fun FavoriteRow(
         }
     }.collectAsState(false)
 
+    val shuttersEnabled by shutterSettings.enabled.collectAsState(false)
+    val shutterRef by remember(item.key) {
+        if (item is Application) shutterSettings.widgetFor(item.componentName.packageName)
+        else flowOf(null)
+    }.collectAsState(null)
+    var showShutter by remember(item.key) { mutableStateOf(false) }
+    val hapticFeedback = LocalHapticFeedback.current
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .then(
+                if (shuttersEnabled && item is Application) {
+                    Modifier.combinedClickable(
+                        onClick = onClick,
+                        onLongClick = {
+                            hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+                            showShutter = true
+                        },
+                    )
+                } else {
+                    Modifier.clickable(onClick = onClick)
+                }
+            )
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
@@ -612,6 +674,15 @@ private fun FavoriteRow(
             style = MaterialTheme.typography.bodyMedium,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
+        )
+    }
+
+    if (showShutter && item is Application) {
+        ShutterGate(
+            packageName = item.componentName.packageName,
+            label = item.labelOverride ?: item.label,
+            widgetRef = shutterRef,
+            onDismiss = { showShutter = false },
         )
     }
 }
