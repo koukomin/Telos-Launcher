@@ -1,0 +1,18 @@
+{
+  "name": "Clean Grid",
+  "author": "Telos Launcher",
+  "version": 2,
+  "layout": {
+    "gridColumnCount": 4,
+    "gridIconSize": 56,
+    "gridShowLabels": false,
+    "iconShape": "Squircle",
+    "dock": true,
+    "dockRows": 1,
+    "bottomSearchBar": true,
+    "searchBarStyle": "Transparent",
+    "fixedSearchBar": true,
+    "reduceAnimations": false,
+    "animationSpeed": 1.1
+  }
+}

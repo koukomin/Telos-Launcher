@@ -29,12 +29,16 @@ fun PresetsSettingsScreen() {
         item {
             PreferenceCategory {
                 for (bundle in presets) {
-                    val colors = bundle.colors ?: continue
                     Preference(
                         icon = R.drawable.palette_24px,
                         title = bundle.name,
                         summary = bundle.author?.takeIf { it.isNotBlank() },
-                        controls = { ColorSchemePreview(colors) },
+                        controls = {
+                            val colors = bundle.colors
+                            if (colors != null) {
+                                ColorSchemePreview(colors)
+                            }
+                        },
                         onClick = {
                             viewModel.install(bundle)
                             backStack.removeLastOrNull()

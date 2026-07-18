@@ -1,0 +1,38 @@
+{
+  "name": "Colorful Grid",
+  "author": "Telos Launcher",
+  "version": 2,
+  "colors": {
+    "id": "00d468af-9b5d-4983-8315-6d0f0a147114",
+    "name": "Colorful Grid",
+    "lightColorScheme": {
+      "primary": "#ff7a2ec7",
+      "onPrimary": "#ffffffff",
+      "primaryContainer": "#fff0dbff",
+      "onPrimaryContainer": "#ff2c0054",
+      "secondary": "#ffff7a1f",
+      "onSecondary": "#ffffffff"
+    },
+    "darkColorScheme": {
+      "primary": "#ffdba6ff",
+      "onPrimary": "#ff4a0080",
+      "primaryContainer": "#ff6200b3",
+      "onPrimaryContainer": "#fff0dbff",
+      "secondary": "#ffffb37a",
+      "onSecondary": "#ff542900"
+    }
+  },
+  "layout": {
+    "gridColumnCount": 5,
+    "gridIconSize": 48,
+    "gridShowLabels": true,
+    "iconShape": "Pebble",
+    "dock": true,
+    "dockRows": 1,
+    "bottomSearchBar": true,
+    "searchBarStyle": "Solid",
+    "fixedSearchBar": true,
+    "reduceAnimations": false,
+    "animationSpeed": 1.15
+  }
+}

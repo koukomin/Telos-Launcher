@@ -1,0 +1,18 @@
+{
+  "name": "Classic Grid",
+  "author": "Telos Launcher",
+  "version": 2,
+  "layout": {
+    "gridColumnCount": 4,
+    "gridIconSize": 52,
+    "gridShowLabels": true,
+    "iconShape": "RoundedSquare",
+    "dock": true,
+    "dockRows": 1,
+    "bottomSearchBar": true,
+    "searchBarStyle": "Solid",
+    "fixedSearchBar": true,
+    "reduceAnimations": false,
+    "animationSpeed": 1.0
+  }
+}

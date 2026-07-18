@@ -30,6 +30,8 @@ data class ThemeBundle(
     val typography: Typography? = null,
     val shapes: Shapes? = null,
     val transparencies: Transparencies? = null,
+    /** Grid/dock/search-bar/animation settings this bundle also applies, if any. */
+    val layout: LayoutPreset? = null,
     /**
      * The file version, always 2 for the new theme format.
      */
