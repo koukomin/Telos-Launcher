@@ -11,11 +11,13 @@ import de.mm20.launcher2.preferences.ui.WebAppsPanelSettings
 import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.webappshortcuts.WebAppShortcutRepository
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
@@ -32,6 +34,39 @@ class WebAppsPanelManager internal constructor(
     private val searchableRepository: SavableSearchableRepository,
     private val webAppShortcutRepository: WebAppShortcutRepository,
 ) {
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+    init {
+        // Panel membership used to live in a DataStore key list (webAppsPanelItems); the unified
+        // Web Apps model moved it onto each shortcut's own showInPanel flag, but shortcuts saved
+        // before that change deserialize with showInPanel = false - without this reconciliation,
+        // everything the user had put on the panel silently vanished from it. One-shot: applies
+        // the legacy list onto the flags, then clears it so it never runs again.
+        scope.launch {
+            val legacyKeys = webAppsPanelSettings.items.first()
+            if (legacyKeys.isEmpty()) return@launch
+            val shortcuts = webAppShortcutRepository.search("", false).first()
+            for ((index, key) in legacyKeys.withIndex()) {
+                val shortcut = shortcuts.firstOrNull { it.key == key } ?: continue
+                if (!shortcut.showInPanel) {
+                    webAppShortcutRepository.update(
+                        shortcut = shortcut,
+                        label = shortcut.label,
+                        url = shortcut.url,
+                        iconUri = shortcut.iconUri,
+                        faviconUrl = shortcut.faviconUrl,
+                        rendererPackage = shortcut.rendererPackage,
+                        showInGrid = shortcut.showInGrid,
+                        showInPanel = true,
+                        order = index,
+                        iconSource = shortcut.iconSource,
+                    )
+                }
+            }
+            webAppsPanelSettings.setItems(emptyList())
+        }
+    }
+
     /** The panel's web app shortcuts, resolved and restored to the configured order. */
     val items: Flow<List<WebAppShortcut>> = webAppShortcutRepository.search("", false)
         .map { shortcuts ->
@@ -39,9 +74,30 @@ class WebAppsPanelManager internal constructor(
                 .sortedBy { it.order }
         }
 
-    fun setOrder(orderedKeys: List<String>) {
-        // Update order in repository
-        // This is tricky because we need to update each item.
+    /** Registered web apps that are not on the panel yet - what the panel's edit mode offers to add. */
+    val availableToAdd: Flow<List<WebAppShortcut>> = webAppShortcutRepository.search("", false)
+        .map { shortcuts ->
+            shortcuts.filterNot { it.showInPanel }
+                .sortedBy { it.label.lowercase() }
+        }
+
+    /** Persists [orderedShortcuts]' positions as each shortcut's panel order. */
+    fun setOrder(orderedShortcuts: List<WebAppShortcut>) {
+        for ((index, shortcut) in orderedShortcuts.withIndex()) {
+            if (shortcut.order == index) continue
+            webAppShortcutRepository.update(
+                shortcut = shortcut,
+                label = shortcut.label,
+                url = shortcut.url,
+                iconUri = shortcut.iconUri,
+                faviconUrl = shortcut.faviconUrl,
+                rendererPackage = shortcut.rendererPackage,
+                showInGrid = shortcut.showInGrid,
+                showInPanel = shortcut.showInPanel,
+                order = index,
+                iconSource = shortcut.iconSource,
+            )
+        }
     }
 
     fun remove(shortcut: WebAppShortcut) {
@@ -49,7 +105,12 @@ class WebAppsPanelManager internal constructor(
     }
 
     fun addExisting(shortcut: WebAppShortcut) {
-        webAppShortcutRepository.update(shortcut, shortcut.label, shortcut.url, shortcut.iconUri, shortcut.faviconUrl, shortcut.rendererPackage, shortcut.showInGrid, true, shortcut.order, shortcut.iconSource)
+        scope.launch {
+            webAppShortcutRepository.update(
+                shortcut, shortcut.label, shortcut.url, shortcut.iconUri, shortcut.faviconUrl,
+                shortcut.rendererPackage, shortcut.showInGrid, true, nextOrder(), shortcut.iconSource,
+            )
+        }
     }
 
     fun createAndAdd(
@@ -58,19 +119,24 @@ class WebAppsPanelManager internal constructor(
         iconUri: String?,
         faviconUrl: String?,
         rendererPackage: String?,
-    ): WebAppShortcut {
-        return webAppShortcutRepository.create(
-            label = label,
-            url = url,
-            iconUri = iconUri,
-            faviconUrl = faviconUrl,
-            rendererPackage = rendererPackage,
-            showInGrid = true,
-            showInPanel = true,
-            order = 0, // Should determine next order
-            iconSource = WebAppShortcut.IconSource.Website
-        )
+    ) {
+        scope.launch {
+            webAppShortcutRepository.create(
+                label = label,
+                url = url,
+                iconUri = iconUri,
+                faviconUrl = faviconUrl,
+                rendererPackage = rendererPackage,
+                showInGrid = true,
+                showInPanel = true,
+                order = nextOrder(),
+                iconSource = WebAppShortcut.IconSource.Website,
+            )
+        }
     }
+
+    /** Order value that places a newly added shortcut at the end of the panel. */
+    private suspend fun nextOrder(): Int = (items.first().maxOfOrNull { it.order } ?: -1) + 1
 
     fun update(
         existing: WebAppShortcut,

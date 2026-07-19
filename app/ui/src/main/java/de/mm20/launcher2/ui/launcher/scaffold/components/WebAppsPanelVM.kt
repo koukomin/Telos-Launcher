@@ -15,8 +15,12 @@ class WebAppsPanelVM : ViewModel(), KoinComponent {
 
     val items = manager.items.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
+    /** Registered web apps not on the panel yet, offered by the edit mode for adding. */
+    val availableToAdd =
+        manager.availableToAdd.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
     fun moveItem(from: Int, to: Int) {
-        val current = items.value.map { it.key }.toMutableList()
+        val current = items.value.toMutableList()
         if (from !in current.indices || to !in current.indices) return
         val item = current.removeAt(from)
         current.add(to, item)
@@ -25,6 +29,10 @@ class WebAppsPanelVM : ViewModel(), KoinComponent {
 
     fun remove(shortcut: WebAppShortcut) {
         manager.remove(shortcut)
+    }
+
+    fun addExisting(shortcut: WebAppShortcut) {
+        manager.addExisting(shortcut)
     }
 
     fun createAndAdd(label: String, url: String, iconUri: String?, faviconUrl: String?, rendererPackage: String?) {

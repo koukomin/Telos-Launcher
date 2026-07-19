@@ -1270,6 +1270,7 @@
     <string name="web_apps_panel_direction_right">Swipe right</string>
     <string name="web_apps_panel_items">Web apps in panel</string>
     <string name="web_apps_panel_add_existing">Add existing web app shortcut</string>
+    <string name="web_apps_panel_empty_hint">No web apps on this panel yet. Tap the edit button in the top right corner to add some.</string>
     <string name="gesture_action_home_screen_menu">Home screen menu</string>
     <string name="home_screen_menu_change_wallpaper">Change wallpaper</string>
     <string name="gesture_action_feed">Feed</string>
