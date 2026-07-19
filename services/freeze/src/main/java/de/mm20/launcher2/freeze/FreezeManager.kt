@@ -62,11 +62,20 @@ class FreezeManager internal constructor(
         null -> false
     }
 
-    suspend fun freeze(packageName: String): Set<String> = setSuspended(listOf(packageName), true)
+    suspend fun freeze(packageName: String): Set<String> {
+        if (_activeBackend.value == null) refreshBackendState()
+        return setSuspended(listOf(packageName), true)
+    }
 
-    suspend fun unfreeze(packageName: String): Set<String> = setSuspended(listOf(packageName), false)
+    suspend fun unfreeze(packageName: String): Set<String> {
+        if (_activeBackend.value == null) refreshBackendState()
+        return setSuspended(listOf(packageName), false)
+    }
 
-    suspend fun freeze(packageNames: List<String>): Set<String> = setSuspended(packageNames, true)
+    suspend fun freeze(packageNames: List<String>): Set<String> {
+        if (_activeBackend.value == null) refreshBackendState()
+        return setSuspended(packageNames, true)
+    }
 
     /**
      * Same as [freeze], except when the active backend is [FreezeBackendType.Island]: Island's

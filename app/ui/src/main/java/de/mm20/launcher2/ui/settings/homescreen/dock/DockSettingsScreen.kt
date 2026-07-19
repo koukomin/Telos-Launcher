@@ -1,0 +1,303 @@
+package de.mm20.launcher2.ui.settings.homescreen.dock
+
+import android.appwidget.AppWidgetManager
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
+import coil.compose.AsyncImage
+import de.mm20.launcher2.preferences.DockItem
+import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.SearchablePicker
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
+import de.mm20.launcher2.ui.component.ShapedLauncherIcon
+import de.mm20.launcher2.ui.component.dragndrop.DraggableItem
+import de.mm20.launcher2.ui.component.dragndrop.LazyVerticalDragAndDropGrid
+import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropGridState
+import de.mm20.launcher2.ui.component.preferences.*
+import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.sheets.WidgetPickerSheet
+import de.mm20.launcher2.widgets.AppWidget
+import de.mm20.launcher2.widgets.AppWidgetConfig
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object DockSettingsRoute : NavKey
+
+@Composable
+fun DockSettingsScreen() {
+    val viewModel: DockSettingsScreenVM = viewModel()
+    val context = LocalContext.current
+    val dockPages by viewModel.dockPages.collectAsStateWithLifecycle()
+    val rows by viewModel.dockRows.collectAsStateWithLifecycle()
+    val columns by viewModel.dockColumns.collectAsStateWithLifecycle()
+    val defaultPage by viewModel.defaultPage.collectAsStateWithLifecycle()
+
+    var showSearchablePicker by remember { mutableStateOf(false) }
+    var showWidgetPicker by remember { mutableStateOf(false) }
+    var showChoiceDialog by remember { mutableStateOf(false) }
+
+    PreferenceScreen(title = stringResource(R.string.preference_clockwidget_favorites_part)) {
+        item {
+            PreferenceCategory {
+                SliderPreference(
+                    title = stringResource(R.string.preference_clockwidget_dock_rows),
+                    value = rows,
+                    min = 1,
+                    max = 4,
+                    onValueChanged = { viewModel.setRows(it) }
+                )
+                SliderPreference(
+                    title = stringResource(R.string.preference_dock_columns),
+                    value = columns,
+                    min = 1,
+                    max = 10,
+                    onValueChanged = { viewModel.setColumns(it) }
+                )
+            }
+        }
+
+        item {
+            PreferenceCategory(title = stringResource(R.string.preference_dock_pages)) {
+                if (dockPages.isEmpty()) {
+                    Preference(
+                        title = stringResource(R.string.preference_dock_custom_enable),
+                        summary = stringResource(R.string.preference_dock_custom_enable_summary),
+                        onClick = {
+                            viewModel.addPage()
+                        }
+                    )
+                } else {
+                    val pagerState = rememberPagerState { dockPages.size }
+                    
+                    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                        HorizontalPager(
+                            state = pagerState,
+                            modifier = Modifier.fillMaxWidth().height(200.dp)
+                        ) { pageIndex ->
+                            val pageItems = dockPages[pageIndex]
+                            val gridState = rememberLazyGridState()
+                            val dragAndDropState = rememberLazyDragAndDropGridState(
+                                gridState = gridState,
+                                onItemMove = { from, to ->
+                                    viewModel.moveItem(pageIndex, from.index, to.index)
+                                }
+                            )
+                            
+                            LazyVerticalDragAndDropGrid(
+                                state = dragAndDropState,
+                                columns = GridCells.Fixed(columns),
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .border(1.dp, MaterialTheme.colorScheme.outline, MaterialTheme.shapes.medium)
+                                    .padding(8.dp),
+                                verticalArrangement = Arrangement.Center,
+                                userScrollEnabled = false
+                            ) {
+                                items(rows * columns, key = { it }) { index ->
+                                    val item = pageItems.getOrNull(index)
+                                    DraggableItem(state = dragAndDropState, key = index) { isDragged ->
+                                        DockSlot(
+                                            item = item,
+                                            viewModel = viewModel,
+                                            isDragged = isDragged,
+                                            onClick = {
+                                                viewModel.pendingItemPos = Triple(pageIndex, index / columns, index % columns)
+                                                showChoiceDialog = true
+                                            }
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                        
+                        Spacer(modifier = Modifier.height(16.dp))
+                        
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            TextButton(onClick = { viewModel.removePage(pagerState.currentPage) }) {
+                                Text(stringResource(R.string.preference_dock_page_delete))
+                            }
+                            
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                RadioButton(
+                                    selected = defaultPage == pagerState.currentPage,
+                                    onClick = { viewModel.setDefaultPage(pagerState.currentPage) }
+                                )
+                                Text(stringResource(R.string.preference_dock_page_default), style = MaterialTheme.typography.labelMedium)
+                            }
+                            
+                            IconButton(onClick = { viewModel.addPage() }) {
+                                Icon(painterResource(R.drawable.add_24px), contentDescription = null)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        if (dockPages.isNotEmpty()) {
+            item {
+                Preference(
+                    title = stringResource(R.string.preference_dock_reset),
+                    summary = stringResource(R.string.preference_dock_reset_summary),
+                    onClick = { viewModel.setRows(1); viewModel.setColumns(5); viewModel.setDockPages(emptyList<List<DockItem>>()) }
+                )
+            }
+        }
+    }
+
+    if (showChoiceDialog) {
+        AlertDialog(
+            onDismissRequest = { showChoiceDialog = false },
+            title = { Text("Pick item type") },
+            text = { Text("What would you like to place in this slot?") },
+            confirmButton = {
+                TextButton(onClick = {
+                    showChoiceDialog = false
+                    showSearchablePicker = true
+                }) {
+                    Text("App")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    showChoiceDialog = false
+                    showWidgetPicker = true
+                }) {
+                    Text("Widget")
+                }
+            }
+        )
+    }
+
+    if (showSearchablePicker) {
+        DismissableBottomSheet(
+            expanded = true,
+            onDismissRequest = { showSearchablePicker = false }
+        ) {
+            SearchablePicker(
+                modifier = Modifier.fillMaxWidth().height(400.dp),
+                value = null,
+                onValueChanged = { searchable ->
+                    val pos = viewModel.pendingItemPos
+                    if (pos != null && searchable != null) {
+                        viewModel.setItem(pos.first, pos.second, pos.third, DockItem.Searchable(searchable.key), searchable)
+                    }
+                    showSearchablePicker = false
+                }
+            )
+        }
+    }
+
+    if (showWidgetPicker) {
+        WidgetPickerSheet(
+            expanded = true,
+            includeBuiltinWidgets = false,
+            filter1x1 = true,
+            onWidgetSelected = { widget ->
+                if (widget is AppWidget) {
+                    val pos = viewModel.pendingItemPos
+                    if (pos != null) {
+                        val manager = AppWidgetManager.getInstance(context)
+                        val info = manager.getAppWidgetInfo(widget.config.widgetId)
+                        if (info != null) {
+                            viewModel.setItem(
+                                pos.first, pos.second, pos.third,
+                                DockItem.Widget(
+                                    widget.config.widgetId,
+                                    info.provider.packageName,
+                                    info.provider.className
+                                )
+                            )
+                        }
+                    }
+                }
+                showWidgetPicker = false
+            },
+            onDismiss = { showWidgetPicker = false }
+        )
+    }
+}
+
+@Composable
+fun DockSlot(
+    item: DockItem?,
+    viewModel: DockSettingsScreenVM,
+    isDragged: Boolean = false,
+    onClick: () -> Unit
+) {
+    val context = LocalContext.current
+    val resolvedSearchable by remember(item) {
+        if (item is DockItem.Searchable && item.key.isNotEmpty()) {
+            viewModel.getSearchable(item.key)
+        } else {
+            flowOf(null)
+        }
+    }.collectAsStateWithLifecycle(null)
+
+    Box(
+        modifier = Modifier
+            .size(64.dp)
+            .clip(CircleShape)
+            .background(if (isDragged) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant)
+            .clickable { onClick() },
+        contentAlignment = Alignment.Center
+    ) {
+        if (item is DockItem.Widget) {
+            val widgetInfo = remember(item.widgetId) {
+                AppWidgetManager.getInstance(context)
+                    .getAppWidgetInfo(item.widgetId)
+            }
+            if (widgetInfo != null) {
+                AsyncImage(
+                    model = widgetInfo.loadIcon(context, 48.dp.toPixels().toInt()),
+                    contentDescription = null,
+                    modifier = Modifier.size(32.dp)
+                )
+            } else {
+                Icon(painterResource(R.drawable.widgets_24px), contentDescription = null)
+            }
+        } else if (resolvedSearchable != null) {
+            val iconSize = 48.dp.toPixels().toInt()
+            val icon by remember(resolvedSearchable!!.key) {
+                viewModel.getIcon(resolvedSearchable!!, iconSize)
+            }.collectAsStateWithLifecycle(null)
+
+            ShapedLauncherIcon(
+                icon = { icon ?: resolvedSearchable!!.getPlaceholderIcon(context) },
+                size = 32.dp
+            )
+        } else {
+            Icon(
+                painterResource(R.drawable.add_24px), 
+                contentDescription = null, 
+                tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
+            )
+        }
+    }
+}

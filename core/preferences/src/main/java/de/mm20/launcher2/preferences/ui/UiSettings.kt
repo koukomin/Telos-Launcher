@@ -104,39 +104,6 @@ class UiSettings internal constructor(
         }
     }
 
-    val dimWallpaper
-        get() = launcherDataStore.data.map {
-            it.wallpaperDim
-        }
-
-    fun setDimWallpaper(dimWallpaper: Boolean) {
-        launcherDataStore.update {
-            it.copy(wallpaperDim = dimWallpaper)
-        }
-    }
-
-    val blurWallpaper
-        get() = launcherDataStore.data.map {
-            it.wallpaperBlur
-        }.distinctUntilChanged()
-
-    fun setBlurWallpaper(blurWallpaper: Boolean) {
-        launcherDataStore.update {
-            it.copy(wallpaperBlur = blurWallpaper)
-        }
-    }
-
-    val wallpaperBlurRadius
-        get() = launcherDataStore.data.map {
-            it.wallpaperBlurRadius
-        }.distinctUntilChanged()
-
-    fun setWallpaperBlurRadius(wallpaperBlurRadius: Int) {
-        launcherDataStore.update {
-            it.copy(wallpaperBlurRadius = wallpaperBlurRadius)
-        }
-    }
-
     val colorScheme
         get() = launcherDataStore.data.map {
             it.uiColorScheme
@@ -380,6 +347,28 @@ class UiSettings internal constructor(
         }
     }
 
+    val dockColumns
+        get() = launcherDataStore.data.map {
+            it.homeScreenDockColumns
+        }.distinctUntilChanged()
+
+    fun setDockColumns(columns: Int) {
+        launcherDataStore.update {
+            it.copy(homeScreenDockColumns = columns)
+        }
+    }
+
+    val dockDefaultPage
+        get() = launcherDataStore.data.map {
+            it.homeScreenDockDefaultPage
+        }.distinctUntilChanged()
+
+    fun setDockDefaultPage(page: Int) {
+        launcherDataStore.update {
+            it.copy(homeScreenDockDefaultPage = page)
+        }
+    }
+
     val homeScreenWidgets
         get() = launcherDataStore.data.map {
             it.homeScreenWidgets
@@ -422,5 +411,12 @@ class UiSettings internal constructor(
         launcherDataStore.update {
             it.copy(widgetsEditButton = editButton)
         }
+    }
+
+    val dockPages
+        get() = launcherDataStore.data.map { it.homeScreenDockPages }
+
+    fun setDockPages(pages: List<List<de.mm20.launcher2.preferences.DockItem>>) {
+        launcherDataStore.update { it.copy(homeScreenDockPages = pages) }
     }
 }

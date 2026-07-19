@@ -1,3 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    </resources>
+        <!-- Freeze Manager -->
+    <string name="preference_freeze_backend">Механизм заморозки</string>
+    <string name="freeze_backend_icebox">Ice Box</string>
+    <string name="freeze_backend_hail">Hail</string>
+    <string name="freeze_backend_amarok">Amarok</string>
+    <string name="freeze_backend_island">Island</string>
+    <string name="freeze_backend_shelter">Shelter</string>
+    <string name="preference_freeze_exclude_music">Исключить приложения с музыкой</string>
+    <string name="preference_freeze_exclude_music_summary">Предотвращает заморозку, если приложение воспроизводит звук или имеет активную медиа-сессию</string>
+    <string name="preference_freeze_exclude_network">Исключить приложения с сетевой активностью</string>
+    <string name="preference_freeze_exclude_network_summary">Предотвращает заморозку, если приложение активно загружает или передает данные</string>
+    <string name="preference_freeze_network_threshold">Сетевой порог</string>
+    <string name="preference_freeze_network_threshold_summary">Килобайт в секунду</string>
+    <string name="freeze_app_state_candidate_suspend">Автозаморозка (Приостановка)</string>
+    <string name="freeze_app_state_candidate_disable">Автозаморозка (Отключение)</string>
+    <string name="preference_freeze_advanced_features">Расширенные функции</string>
+    <string name="preference_freeze_advanced_features_summary">Разблокирует функции заморозки, принудительной остановки и очистки кэша в контекстных меню (Требуется Shizuku или Root)</string>
+    <string name="menu_freeze">Заморозить</string>
+    <string name="menu_unfreeze">Разморозить</string>
+    <string name="menu_force_stop">Принудительно остановить</string>
+    <string name="menu_clear_cache">Очистить кэш</string>
+    <string name="freeze_dashboard_app_status">Статус приложений</string>
+    <string name="freeze_dashboard_app_status_summary">Время работы каждого приложения сегодня и текущее состояние</string>
+    <string name="freeze_dashboard_state_normal">Обычное</string>
+    <string name="freeze_dashboard_state_suspended">Приостановлено</string>
+    <string name="freeze_dashboard_state_disabled">Отключено</string>
+    <string name="freeze_dashboard_running_now">Работает сейчас</string>
+    <string name="freeze_dashboard_not_used_today">Не использовалось сегодня</string>
+    <string name="freeze_dashboard_runtime_today">%1$s сегодня</string>
+    <string name="freeze_dashboard_runtime_hours_minutes">%1$д %2$м</string>
+    <string name="freeze_dashboard_runtime_minutes">%1$м</string>
+    <string name="freeze_dashboard_runtime_under_a_minute">Меньше минуты</string>
+    <string name="freeze_dashboard_refresh">Обновить</string>
+    <string name="freeze_dashboard_no_apps_in_category">Нет приложений в этой категории</string>
+    <string name="web_app_shortcut_icon_source">Icon source</string>
+    <string name="web_app_shortcut_icon_source_website">Website icon</string>
+    <string name="web_app_shortcut_icon_source_system">System icon</string>
+    <string name="web_app_shortcut_icon_source_custom">Custom icon</string>
+</resources>

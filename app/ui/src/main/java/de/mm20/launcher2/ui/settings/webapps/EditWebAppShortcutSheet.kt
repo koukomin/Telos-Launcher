@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.settings.webappshortcuts
+package de.mm20.launcher2.ui.settings.webapps
 
 import android.content.Context
 import android.content.pm.PackageManager
@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
@@ -45,7 +46,7 @@ import kotlinx.coroutines.launch
 fun EditWebAppShortcutSheet(
     expanded: Boolean,
     existing: WebAppShortcut?,
-    onSave: (label: String, url: String, iconUri: String?, faviconUrl: String?, rendererPackage: String?) -> Unit,
+    onSave: (label: String, url: String, iconUri: String?, faviconUrl: String?, rendererPackage: String?, showInGrid: Boolean, showInPanel: Boolean, iconSource: WebAppShortcut.IconSource) -> Unit,
     onDismiss: () -> Unit,
     onImportIcon: suspend (uri: Uri, sizePx: Int) -> String?,
     onFindFavicon: suspend (url: String) -> String?,
@@ -59,8 +60,12 @@ fun EditWebAppShortcutSheet(
         var iconUri by remember(existing) { mutableStateOf(existing?.iconUri) }
         var faviconUrl by remember(existing) { mutableStateOf(existing?.faviconUrl) }
         var rendererPackage by remember(existing) { mutableStateOf(existing?.rendererPackage) }
+        var showInGrid by remember(existing) { mutableStateOf(existing?.showInGrid ?: true) }
+        var showInPanel by remember(existing) { mutableStateOf(existing?.showInPanel ?: false) }
+        var iconSource by remember(existing) { mutableStateOf(existing?.iconSource ?: WebAppShortcut.IconSource.Website) }
         var findingFavicon by remember { mutableStateOf(false) }
         var showRendererMenu by remember { mutableStateOf(false) }
+        var showIconSourceMenu by remember { mutableStateOf(false) }
 
         val scope = rememberCoroutineScope()
         val context = LocalContext.current
@@ -156,6 +161,78 @@ fun EditWebAppShortcutSheet(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
+                    text = stringResource(R.string.web_app_shortcut_icon_source),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.weight(1f),
+                )
+                TextButton(onClick = { showIconSourceMenu = true }) {
+                    Text(
+                        when (iconSource) {
+                            WebAppShortcut.IconSource.Website -> stringResource(R.string.web_app_shortcut_icon_source_website)
+                            WebAppShortcut.IconSource.System -> stringResource(R.string.web_app_shortcut_icon_source_system)
+                            WebAppShortcut.IconSource.Custom -> stringResource(R.string.web_app_shortcut_icon_source_custom)
+                        }
+                    )
+                }
+                DropdownMenuPopup(
+                    expanded = showIconSourceMenu,
+                    onDismissRequest = { showIconSourceMenu = false },
+                ) {
+                    WebAppShortcut.IconSource.entries.forEach { source ->
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    when (source) {
+                                        WebAppShortcut.IconSource.Website -> stringResource(R.string.web_app_shortcut_icon_source_website)
+                                        WebAppShortcut.IconSource.System -> stringResource(R.string.web_app_shortcut_icon_source_system)
+                                        WebAppShortcut.IconSource.Custom -> stringResource(R.string.web_app_shortcut_icon_source_custom)
+                                    }
+                                )
+                            },
+                            onClick = {
+                                iconSource = source
+                                showIconSourceMenu = false
+                            },
+                        )
+                    }
+                }
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(R.string.search_filter_apps),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.weight(1f),
+                )
+                Checkbox(checked = showInGrid, onCheckedChange = { showInGrid = it })
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(R.string.preference_clockwidget_favorites_part),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.weight(1f),
+                )
+                Checkbox(checked = showInPanel, onCheckedChange = { showInPanel = it })
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
                     text = stringResource(R.string.web_app_shortcut_renderer),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.weight(1f),
@@ -208,7 +285,7 @@ fun EditWebAppShortcutSheet(
                 TextButton(
                     enabled = label.isNotBlank() && url.isNotBlank(),
                     onClick = {
-                        onSave(label.trim(), url.trim(), iconUri, faviconUrl, rendererPackage)
+                        onSave(label.trim(), url.trim(), iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource)
                     }
                 ) {
                     Text(stringResource(R.string.save))

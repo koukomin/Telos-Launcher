@@ -31,6 +31,10 @@ internal data class WebAppShortcutImpl(
     override val color: Int?,
     override val rendererPackage: String? = null,
     override val labelOverride: String? = null,
+    override val showInGrid: Boolean = true,
+    override val showInPanel: Boolean = false,
+    override val order: Int = 0,
+    override val iconSource: WebAppShortcut.IconSource = WebAppShortcut.IconSource.Website,
 ) : WebAppShortcut {
 
     override val domain: String = Domain
@@ -46,6 +50,20 @@ internal data class WebAppShortcutImpl(
         size: Int,
         themed: Boolean,
     ): LauncherIcon? {
+        if (iconSource == WebAppShortcut.IconSource.System) {
+            // Try to find a matching system icon by label
+            val pm = context.packageManager
+            val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
+            val activities = pm.queryIntentActivities(intent, 0)
+            val match = activities.find { it.loadLabel(pm).toString().equals(label, ignoreCase = true) }
+            if (match != null) {
+                val icon = match.loadIcon(pm)
+                return StaticLauncherIcon(
+                    foregroundLayer = StaticIconLayer(icon = icon, scale = 1f),
+                    backgroundLayer = TransparentLayer
+                )
+            }
+        }
         val data = iconUri ?: faviconUrl ?: return null
         try {
             val request = ImageRequest.Builder(context)

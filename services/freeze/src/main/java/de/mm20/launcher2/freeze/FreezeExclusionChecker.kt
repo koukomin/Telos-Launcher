@@ -36,10 +36,12 @@ internal class FreezeExclusionChecker(
         if (isAndroidAutoActive()) return true
 
         val notifications = notificationRepository.notifications.first()
-            .filter { it.packageName == packageName }
+            .filter { it.packageName == packageName && !it.isGroupSummary }
 
-        if (notifications.isNotEmpty()) return true // rule 2: active notification
-        if (notifications.any { it.flags and Notification.FLAG_FOREGROUND_SERVICE != 0 }) return true // rule 4
+        // Rule 2 & 4: skip if app has an ongoing notification or foreground service
+        if (notifications.any { it.flags and (Notification.FLAG_ONGOING_EVENT or Notification.FLAG_NO_CLEAR or Notification.FLAG_FOREGROUND_SERVICE) != 0 }) {
+            return true
+        }
 
         // Rule 3: active media session. Only strictness that's ever relaxed.
         val strictness = profileManager.resolvedSettings.first().exclusionStrictness

@@ -13,6 +13,7 @@ import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.preferences.ui.GestureSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
+import de.mm20.launcher2.preferences.ui.WallpaperSettings
 import de.mm20.launcher2.search.SavableSearchable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -28,6 +29,7 @@ import org.koin.core.component.inject
 class LauncherScaffoldVM : ViewModel(), KoinComponent {
 
     private val uiSettings: UiSettings by inject()
+    private val wallpaperSettings: WallpaperSettings by inject()
     private val gestureSettings: GestureSettings by inject()
     private val searchableRepository: SavableSearchableRepository by inject()
     private val contextProfileManager: ContextProfileManager by inject()
@@ -42,7 +44,7 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     private var isSystemInDarkMode = MutableStateFlow(false)
 
     private val dimBackgroundState = combine(
-        uiSettings.dimWallpaper,
+        wallpaperSettings.dimWallpaper,
         uiSettings.colorScheme,
         isSystemInDarkMode,
         uiSettings.colorSchemeNightStart,
@@ -97,9 +99,9 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
 
     val autoFocusSearch = uiSettings.openKeyboardOnSearch
 
-    val wallpaperBlur = uiSettings.blurWallpaper
+    val wallpaperBlur = wallpaperSettings.blurWallpaper
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
-    val wallpaperBlurRadius = uiSettings.wallpaperBlurRadius
+    val wallpaperBlurRadius = wallpaperSettings.wallpaperBlurRadius
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 32)
 
 

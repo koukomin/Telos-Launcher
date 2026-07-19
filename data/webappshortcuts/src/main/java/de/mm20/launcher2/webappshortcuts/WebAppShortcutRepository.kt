@@ -37,6 +37,10 @@ interface WebAppShortcutRepository : SearchableRepository<WebAppShortcut> {
         iconUri: String?,
         faviconUrl: String?,
         rendererPackage: String? = null,
+        showInGrid: Boolean = true,
+        showInPanel: Boolean = false,
+        order: Int = 0,
+        iconSource: WebAppShortcut.IconSource = WebAppShortcut.IconSource.Website,
     ): WebAppShortcut
 
     fun update(
@@ -46,6 +50,10 @@ interface WebAppShortcutRepository : SearchableRepository<WebAppShortcut> {
         iconUri: String?,
         faviconUrl: String?,
         rendererPackage: String? = null,
+        showInGrid: Boolean = true,
+        showInPanel: Boolean = false,
+        order: Int = 0,
+        iconSource: WebAppShortcut.IconSource = WebAppShortcut.IconSource.Website,
     ): WebAppShortcut
 
     fun delete(shortcut: WebAppShortcut)
@@ -79,6 +87,10 @@ internal class WebAppShortcutRepositoryImpl(
         iconUri: String?,
         faviconUrl: String?,
         rendererPackage: String?,
+        showInGrid: Boolean,
+        showInPanel: Boolean,
+        order: Int,
+        iconSource: WebAppShortcut.IconSource,
     ): WebAppShortcut {
         val shortcut = WebAppShortcutImpl(
             id = UUID.randomUUID().toString(),
@@ -88,6 +100,10 @@ internal class WebAppShortcutRepositoryImpl(
             faviconUrl = faviconUrl,
             color = null,
             rendererPackage = rendererPackage,
+            showInGrid = showInGrid,
+            showInPanel = showInPanel,
+            order = order,
+            iconSource = iconSource,
         )
         savableSearchableRepository.insert(shortcut)
         return shortcut
@@ -100,6 +116,10 @@ internal class WebAppShortcutRepositoryImpl(
         iconUri: String?,
         faviconUrl: String?,
         rendererPackage: String?,
+        showInGrid: Boolean,
+        showInPanel: Boolean,
+        order: Int,
+        iconSource: WebAppShortcut.IconSource,
     ): WebAppShortcut {
         shortcut as WebAppShortcutImpl
         val updated = shortcut.copy(
@@ -108,6 +128,10 @@ internal class WebAppShortcutRepositoryImpl(
             iconUri = iconUri,
             faviconUrl = faviconUrl,
             rendererPackage = rendererPackage,
+            showInGrid = showInGrid,
+            showInPanel = showInPanel,
+            order = order,
+            iconSource = iconSource,
         )
         savableSearchableRepository.update(updated)
         return updated

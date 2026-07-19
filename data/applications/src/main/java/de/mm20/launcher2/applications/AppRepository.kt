@@ -211,64 +211,69 @@ internal class AppRepositoryImpl(
     private suspend fun getApplications(packageName: String?, userHandle: UserHandle): List<LauncherApp> {
         if (packageName == context.packageName) return emptyList()
 
-        val apps = try {
-            launcherApps.getActivityList(packageName, userHandle)
-                .mapNotNull { getApplication(it) }
-                .toMutableList()
-        } catch (e: SecurityException) {
-            mutableListOf()
+        val pm = context.packageManager
+        val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
+        if (packageName != null) intent.`package` = packageName
+
+        val flags = PackageManager.MATCH_DISABLED_COMPONENTS or
+                PackageManager.MATCH_DIRECT_BOOT_AWARE or
+                PackageManager.MATCH_DIRECT_BOOT_UNAWARE
+
+        val allActivities = if (isAtLeastApiLevel(33)) {
+            pm.queryIntentActivities(
+                intent,
+                PackageManager.ResolveInfoFlags.of(flags.toLong())
+            )
+        } else {
+            pm.queryIntentActivities(intent, flags)
         }
 
-        if (userHandle == Process.myUserHandle()) {
-            // For the primary user, also pick up apps this launcher's own Freeze Manager has
-            // disabled - LauncherApps.getActivityList() omits disabled components, so without
-            // this they'd vanish entirely instead of staying visible (frozen) and unfreezable.
-            // Scoped strictly to Freeze Manager's own candidate list: an unscoped
-            // MATCH_DISABLED_COMPONENTS scan would also surface every OEM-disabled system
-            // component and disabled icon-alias activity on the device, most of which have no
-            // resolvable icon and can never be launched by this or any app.
-            val freezeCandidates = freezeSettings.candidates.first()
-            if (freezeCandidates.isNotEmpty()) {
-                val pm = context.packageManager
-                val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
-                if (packageName != null) intent.`package` = packageName
+        val apps = mutableListOf<LauncherApp>()
+        val seenPackages = mutableSetOf<String>()
 
-                val flags = PackageManager.MATCH_DISABLED_COMPONENTS or
-                        PackageManager.MATCH_DIRECT_BOOT_AWARE or
-                        PackageManager.MATCH_DIRECT_BOOT_UNAWARE
+        for (info in allActivities) {
+            val activityInfo = info.activityInfo ?: continue
+            val pkg = activityInfo.packageName
+            if (pkg == context.packageName) continue
+            // If we've already seen this package and it was enabled, don't add a disabled variant.
+            // Usually we only want one launcher activity per app unless it's a multi-launcher app.
+            if (pkg in seenPackages) continue
 
-                val allActivities = if (isAtLeastApiLevel(33)) {
-                    pm.queryIntentActivities(
-                        intent,
-                        PackageManager.ResolveInfoFlags.of(flags.toLong())
-                    )
-                } else {
-                    pm.queryIntentActivities(intent, flags)
+            val label = info.loadLabel(pm).toString()
+            if (label.isEmpty()) continue
+            if (info.iconResource == 0 && activityInfo.applicationInfo.icon == 0) continue
+
+            val isAppEnabled = activityInfo.applicationInfo.enabled
+            val isActivityEnabled = activityInfo.enabled
+            val isSuspended = (activityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SUSPENDED) != 0
+
+            // If it's disabled but NOT a freeze candidate and NOT explicitly enabled,
+            // it might be one of those OEM-disabled components we want to avoid.
+            // HOWEVER, the user wants "frozen state from ANY source".
+            // So if it has a label and icon, we show it as frozen.
+            
+            val launcherActivityInfo = try {
+                launcherApps.getActivityList(pkg, userHandle).find { 
+                    it.componentName.className == activityInfo.name 
                 }
-
-                val seen = apps.map { it.componentName }.toSet()
-                for (info in allActivities) {
-                    val activityInfo = info.activityInfo ?: continue
-                    if (activityInfo.packageName !in freezeCandidates) continue
-                    val cn = ComponentName(activityInfo.packageName, activityInfo.name)
-                    if (cn in seen) continue
-                    if (activityInfo.packageName == context.packageName) continue
-
-                    apps.add(
-                        LauncherApp(
-                            componentName = cn,
-                            label = info.loadLabel(pm).toString(),
-                            user = userHandle,
-                            launcherActivityInfo = null,
-                            applicationInfo = activityInfo.applicationInfo,
-                            versionName = LauncherApp.getPackageVersionName(context, cn.packageName),
-                            isSuspended = (activityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SUSPENDED) != 0 || !activityInfo.applicationInfo.enabled || !activityInfo.enabled,
-                            userSerialNumber = userHandle.getSerialNumber(context),
-                            disabledActivityInfo = activityInfo,
-                        )
-                    )
-                }
+            } catch (e: SecurityException) {
+                null
             }
+
+            apps.add(
+                LauncherApp(
+                    componentName = ComponentName(pkg, activityInfo.name),
+                    label = label,
+                    user = userHandle,
+                    launcherActivityInfo = launcherActivityInfo,
+                    applicationInfo = activityInfo.applicationInfo,
+                    versionName = LauncherApp.getPackageVersionName(context, pkg),
+                    isSuspended = isSuspended || !isAppEnabled || !isActivityEnabled,
+                    userSerialNumber = userHandle.getSerialNumber(context),
+                    disabledActivityInfo = if (launcherActivityInfo == null) activityInfo else null,
+                )
+            )
+            seenPackages.add(pkg)
         }
 
         return apps

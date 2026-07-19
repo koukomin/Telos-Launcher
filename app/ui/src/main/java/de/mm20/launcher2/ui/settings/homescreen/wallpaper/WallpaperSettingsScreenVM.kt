@@ -1,12 +1,16 @@
-package de.mm20.launcher2.ui.settings.wallpaper
+package de.mm20.launcher2.ui.settings.homescreen.wallpaper
 
 import android.content.Intent
 import android.net.Uri
+import android.view.WindowManager
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.content.getSystemService
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.preferences.ui.WallpaperSettings
 import de.mm20.launcher2.wallpapers.StaticWallpaperTarget
 import de.mm20.launcher2.wallpapers.WallpapersService
@@ -24,6 +28,32 @@ class WallpaperSettingsScreenVM : ViewModel(), KoinComponent {
         private set
     var isVideoWallpaperActive by mutableStateOf(false)
         private set
+
+    val dimWallpaper = wallpaperSettings.dimWallpaper
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+    fun setDimWallpaper(dimWallpaper: Boolean) {
+        wallpaperSettings.setDimWallpaper(dimWallpaper)
+    }
+
+    val blurWallpaper = wallpaperSettings.blurWallpaper
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+    fun setBlurWallpaper(blurWallpaper: Boolean) {
+        wallpaperSettings.setBlurWallpaper(blurWallpaper)
+    }
+
+    val blurWallpaperRadius = wallpaperSettings.wallpaperBlurRadius
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 32)
+
+    fun setBlurWallpaperRadius(blurWallpaperRadius: Int) {
+        wallpaperSettings.setWallpaperBlurRadius(blurWallpaperRadius)
+    }
+
+    fun isBlurAvailable(context: android.content.Context): Boolean {
+        if (!isAtLeastApiLevel(31)) return false
+        return context.getSystemService<WindowManager>()?.isCrossWindowBlurEnabled == true
+    }
 
     val pauseOnBatterySaver = wallpaperSettings.videoPauseOnBatterySaver
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)

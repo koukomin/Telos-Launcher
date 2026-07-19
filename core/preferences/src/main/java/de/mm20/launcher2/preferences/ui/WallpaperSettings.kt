@@ -100,4 +100,37 @@ class WallpaperSettings internal constructor(
     fun setVideoPauseOnDesktopMode(pause: Boolean) {
         dataStore.update { it.copy(videoWallpaperPauseOnDesktopMode = pause) }
     }
+
+    val dimWallpaper
+        get() = dataStore.data.map {
+            it.wallpaperDim
+        }.distinctUntilChanged()
+
+    fun setDimWallpaper(dimWallpaper: Boolean) {
+        dataStore.update {
+            it.copy(wallpaperDim = dimWallpaper)
+        }
+    }
+
+    val blurWallpaper
+        get() = dataStore.data.map {
+            it.wallpaperBlur
+        }.distinctUntilChanged()
+
+    fun setBlurWallpaper(blurWallpaper: Boolean) {
+        dataStore.update {
+            it.copy(wallpaperBlur = blurWallpaper)
+        }
+    }
+
+    val wallpaperBlurRadius
+        get() = dataStore.data.map {
+            it.wallpaperBlurRadius
+        }.distinctUntilChanged()
+
+    fun setWallpaperBlurRadius(wallpaperBlurRadius: Int) {
+        dataStore.update {
+            it.copy(wallpaperBlurRadius = wallpaperBlurRadius)
+        }
+    }
 }

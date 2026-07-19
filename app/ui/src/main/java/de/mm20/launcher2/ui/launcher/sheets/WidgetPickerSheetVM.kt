@@ -4,7 +4,9 @@ import de.mm20.launcher2.services.widgets.WidgetsService
 import android.appwidget.AppWidgetProviderInfo
 import android.content.pm.PackageManager
 import androidx.annotation.StringRes
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -37,6 +39,7 @@ class WidgetPickerSheetVM(
 ) : ViewModel() {
 
     val searchQuery = MutableStateFlow("")
+    var filter1x1 by mutableStateOf(false)
 
     val pluginWidgets: Flow<List<Plugin>> =
         pluginService.getPluginsWithState(type = PluginType.Widget, enabled = true)
@@ -81,29 +84,39 @@ class WidgetPickerSheetVM(
 
     private val filteredAppWidgets = allAppWidgets
         .combine(searchQuery) { widgets, query ->
-            if (query.isBlank()) return@combine widgets
-            withContext(Dispatchers.IO) {
-                val normalizedQuery = stringNormalizer.normalize(query)
-                widgets.filter {
-                    val widgetNormalizedLabel = stringNormalizer.normalize(it.loadLabel(packageManager))
-                    if (widgetNormalizedLabel.contains(normalizedQuery)) {
-                        return@filter true
-                    }
-                    val pkg = it.provider.packageName
-                    val appInfo = try {
-                        packageManager.getApplicationInfo(pkg, 0)
-                    } catch (e: PackageManager.NameNotFoundException) {
-                        return@filter false
-                    }
-                    val normalizedAppLabel = stringNormalizer.normalize(appInfo.loadLabel(packageManager).toString())
+            widgets.filter {
+                if (filter1x1) {
+                    // Check if widget fits in 1x1. Standard cell size is roughly 70-80dp.
+                    // Most 1x1 widgets declare min size < 100dp.
+                    it.minWidth < 100 && it.minHeight < 100
+                } else true
+            }.let { filtered ->
+                if (query.isBlank()) return@combine filtered
+                withContext(Dispatchers.IO) {
+                    val normalizedQuery = stringNormalizer.normalize(query)
+                    filtered.filter {
+                        val widgetNormalizedLabel =
+                            stringNormalizer.normalize(it.loadLabel(packageManager))
+                        if (widgetNormalizedLabel.contains(normalizedQuery)) {
+                            return@filter true
+                        }
+                        val pkg = it.provider.packageName
+                        val appInfo = try {
+                            packageManager.getApplicationInfo(pkg, 0)
+                        } catch (e: PackageManager.NameNotFoundException) {
+                            return@filter false
+                        }
+                        val normalizedAppLabel =
+                            stringNormalizer.normalize(appInfo.loadLabel(packageManager).toString())
 
-                    ResultScore.from(
-                        query = normalizedQuery,
-                        primaryFields = listOf(
-                            widgetNormalizedLabel,
-                            normalizedAppLabel,
-                        )
-                    ).score >= 0.8f
+                        ResultScore.from(
+                            query = normalizedQuery,
+                            primaryFields = listOf(
+                                widgetNormalizedLabel,
+                                normalizedAppLabel,
+                            )
+                        ).score >= 0.8f
+                    }
                 }
             }
         }

@@ -261,6 +261,7 @@ internal class SearchServiceImpl(
             if (filters.apps) {
                 launch {
                     webAppShortcutRepository.search(query, filters.allowNetwork)
+                        .map { r -> r.filter { it.showInGrid } }
                         .collectLatest { r ->
                             results.update {
                                 it.copy(webAppShortcuts = r)
@@ -371,7 +372,7 @@ internal class SearchServiceImpl(
                         standardProfileApps = standardProfileApps.sorted(),
                         workProfileApps = workProfileApps.sorted(),
                         privateSpaceApps = privateSpaceApps.sorted(),
-                        webAppShortcuts = webAppShortcuts.sorted(),
+                        webAppShortcuts = webAppShortcuts.filter { it.showInGrid }.sorted(),
                     )
                 }
         }

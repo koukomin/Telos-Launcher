@@ -4,6 +4,7 @@ import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.search.WebAppShortcut
 import org.json.JSONObject
 import java.util.UUID
 
@@ -18,6 +19,10 @@ class WebAppShortcutSerializer : SearchableSerializer {
             "favicon" to searchable.faviconUrl,
             "color" to searchable.color,
             "rendererPackage" to searchable.rendererPackage,
+            "showInGrid" to searchable.showInGrid,
+            "showInPanel" to searchable.showInPanel,
+            "order" to searchable.order,
+            "iconSource" to searchable.iconSource.name,
         ).toString()
     }
 
@@ -36,6 +41,10 @@ class WebAppShortcutDeserializer : SearchableDeserializer {
             faviconUrl = json.optString("favicon").takeIf { it.isNotBlank() },
             color = json.optInt("color").takeIf { it != 0 },
             rendererPackage = json.optString("rendererPackage").takeIf { it.isNotBlank() },
+            showInGrid = json.optBoolean("showInGrid", true),
+            showInPanel = json.optBoolean("showInPanel", false),
+            order = json.optInt("order", 0),
+            iconSource = runCatching { WebAppShortcut.IconSource.valueOf(json.optString("iconSource", "Website")) }.getOrDefault(WebAppShortcut.IconSource.Website),
         )
     }
 }

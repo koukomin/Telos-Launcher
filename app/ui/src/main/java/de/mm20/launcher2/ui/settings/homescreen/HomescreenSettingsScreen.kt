@@ -56,6 +56,10 @@ import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.widgets.clock.ConfigureClockWidgetSheet
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
+import de.mm20.launcher2.ui.settings.desktopmode.DesktopModeSettingsRoute
+import de.mm20.launcher2.ui.settings.homescreen.dock.DockSettingsRoute
+import de.mm20.launcher2.ui.settings.homescreen.wallpaper.WallpaperSettingsRoute
+import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -67,6 +71,7 @@ fun HomescreenSettingsScreen() {
         viewModel(factory = HomescreenSettingsScreenVM.Factory)
 
     val context = LocalContext.current
+    val backStack = LocalBackStack.current
 
     val dock by viewModel.dock.collectAsStateWithLifecycle(null)
     val dockRows by viewModel.dockRows.collectAsStateWithLifecycle(1)
@@ -78,9 +83,6 @@ fun HomescreenSettingsScreen() {
     val bottomSearchBar by viewModel.bottomSearchBar.collectAsStateWithLifecycle(null)
     val fixedSearchBar by viewModel.fixedSearchBar.collectAsStateWithLifecycle(null)
     val lightStatusBar by viewModel.statusBarIcons.collectAsStateWithLifecycle(null)
-    val dimWallpaper by viewModel.dimWallpaper.collectAsStateWithLifecycle()
-    val blurWallpaper by viewModel.blurWallpaper.collectAsStateWithLifecycle()
-    val blurWallpaperRadius by viewModel.blurWallpaperRadius.collectAsStateWithLifecycle()
     val lightNavBar by viewModel.navBarIcons.collectAsStateWithLifecycle(null)
     val hideStatusBar by viewModel.hideStatusBar.collectAsStateWithLifecycle(null)
     val hideNavBar by viewModel.hideNavBar.collectAsStateWithLifecycle(null)
@@ -90,6 +92,30 @@ fun HomescreenSettingsScreen() {
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_homescreen)) {
         item {
             PreferenceCategory {
+                Preference(
+                    icon = R.drawable.wallpaper_24px,
+                    title = stringResource(id = R.string.wallpaper),
+                    summary = stringResource(id = R.string.preference_wallpaper_summary),
+                    onClick = {
+                        backStack.add(WallpaperSettingsRoute)
+                    }
+                )
+                Preference(
+                    icon = R.drawable.splitscreen_right_20px,
+                    title = stringResource(id = R.string.preference_screen_desktop_mode),
+                    summary = stringResource(id = R.string.preference_screen_desktop_mode_summary),
+                    onClick = {
+                        backStack.add(DesktopModeSettingsRoute)
+                    }
+                )
+                Preference(
+                    icon = R.drawable.today_24px,
+                    title = stringResource(R.string.preference_clockwidget_favorites_part),
+                    summary = stringResource(R.string.preference_clockwidget_favorites_part_summary),
+                    onClick = {
+                        backStack.add(DockSettingsRoute)
+                    }
+                )
                 SwitchPreference(
                     title = stringResource(R.string.preference_layout_fixed_rotation),
                     summary = stringResource(R.string.preference_layout_fixed_rotation_summary),
@@ -204,50 +230,6 @@ fun HomescreenSettingsScreen() {
                         viewModel.setFixedSearchBar(it)
                     },
                 )
-            }
-        }
-        item {
-            PreferenceCategory(stringResource(id = R.string.preference_category_wallpaper)) {
-                Preference(
-                    title = stringResource(R.string.wallpaper),
-                    summary = stringResource(R.string.preference_wallpaper_summary),
-                    onClick = {
-                        viewModel.openWallpaperChooser(context as AppCompatActivity)
-                    }
-                )
-                SwitchPreference(
-                    title = stringResource(R.string.preference_dim_wallpaper),
-                    summary = stringResource(R.string.preference_dim_wallpaper_summary),
-                    value = dimWallpaper,
-                    onValueChanged = {
-                        viewModel.setDimWallpaper(it)
-                    }
-                )
-                val isBlurSupported = remember { viewModel.isBlurAvailable(context) }
-                SwitchPreference(
-                    title = stringResource(R.string.preference_blur_wallpaper),
-                    summary = stringResource(
-                        if (isBlurSupported) R.string.preference_blur_wallpaper_summary
-                        else R.string.preference_blur_wallpaper_unsupported
-                    ),
-                    value = blurWallpaper && isBlurSupported,
-                    onValueChanged = {
-                        viewModel.setBlurWallpaper(it)
-                    },
-                    enabled = isBlurSupported
-                )
-                AnimatedVisibility(blurWallpaper && isBlurSupported) {
-                    SliderPreference(
-                        title = stringResource(R.string.preference_blur_wallpaper_radius),
-                        value = blurWallpaperRadius,
-                        onValueChanged = {
-                            viewModel.setBlurWallpaperRadius(it)
-                        },
-                        min = 4,
-                        max = 64,
-                        step = 4,
-                    )
-                }
             }
         }
         item {

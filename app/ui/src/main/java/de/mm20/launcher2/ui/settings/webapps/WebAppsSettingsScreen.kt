@@ -1,11 +1,14 @@
-package de.mm20.launcher2.ui.settings.webappshortcuts
+package de.mm20.launcher2.ui.settings.webapps
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -14,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -23,24 +27,53 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.preferences.ListPreference
+import de.mm20.launcher2.ui.component.preferences.ListPreferenceItem
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.settings.webapps.EditWebAppShortcutSheet
+import de.mm20.launcher2.ui.settings.webapps.WebAppsSettingsRoute
+import de.mm20.launcher2.ui.settings.webapps.WebAppsSettingsScreenVM
+import de.mm20.launcher2.ui.settings.webapps.PanelDirection
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object WebAppShortcutsSettingsRoute : NavKey
+data object WebAppsSettingsRoute : NavKey
 
 @Composable
-fun WebAppShortcutsSettingsScreen() {
-    val viewModel: WebAppShortcutsSettingsScreenVM = viewModel()
+fun WebAppsSettingsScreen() {
+    val viewModel: WebAppsSettingsScreenVM = viewModel()
     val shortcuts by viewModel.shortcuts.collectAsState()
+    val direction by viewModel.direction.collectAsState()
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_web_app_shortcuts),
     ) {
         item {
-            PreferenceCategory {
+            PreferenceCategory(title = stringResource(R.string.preference_screen_web_apps_panel)) {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_web_apps_panel),
+                    summary = stringResource(R.string.preference_web_apps_panel_summary),
+                    value = direction != null,
+                    onValueChanged = { viewModel.setEnabled(it) },
+                )
+                if (direction != null) {
+                    ListPreference(
+                        title = stringResource(R.string.web_apps_panel_direction),
+                        items = listOf(
+                            ListPreferenceItem(stringResource(R.string.web_apps_panel_direction_left), PanelDirection.Left),
+                            ListPreferenceItem(stringResource(R.string.web_apps_panel_direction_right), PanelDirection.Right),
+                        ),
+                        value = direction ?: PanelDirection.Right,
+                        onValueChanged = { if (it != null) viewModel.setDirection(it) },
+                    )
+                }
+            }
+        }
+        item {
+            PreferenceCategory(title = stringResource(R.string.web_apps_panel_items)) {
                 for (shortcut in shortcuts) {
                     Preference(
                         icon = {
@@ -66,11 +99,27 @@ fun WebAppShortcutsSettingsScreen() {
                             viewModel.editShortcut(shortcut)
                         },
                         controls = {
-                            IconButton(onClick = { viewModel.delete(shortcut) }) {
-                                Icon(
-                                    painterResource(R.drawable.delete_24px),
-                                    contentDescription = stringResource(R.string.menu_delete),
-                                )
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Checkbox(
+                                        checked = shortcut.showInGrid,
+                                        onCheckedChange = { viewModel.setPlacement(shortcut, it, shortcut.showInPanel) }
+                                    )
+                                    Text(stringResource(R.string.search_filter_apps), style = MaterialTheme.typography.labelSmall)
+                                }
+                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Checkbox(
+                                        checked = shortcut.showInPanel,
+                                        onCheckedChange = { viewModel.setPlacement(shortcut, shortcut.showInGrid, it) }
+                                    )
+                                    Text(stringResource(R.string.preference_screen_web_apps_panel), style = MaterialTheme.typography.labelSmall)
+                                }
+                                IconButton(onClick = { viewModel.delete(shortcut) }) {
+                                    Icon(
+                                        painterResource(R.drawable.delete_24px),
+                                        contentDescription = stringResource(R.string.menu_delete),
+                                    )
+                                }
                             }
                         }
                     )
@@ -106,8 +155,8 @@ fun WebAppShortcutsSettingsScreen() {
     EditWebAppShortcutSheet(
         expanded = createShortcut,
         existing = null,
-        onSave = { label, url, iconUri, faviconUrl, rendererPackage ->
-            viewModel.save(null, label, url, iconUri, faviconUrl, rendererPackage)
+        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource ->
+            viewModel.save(null, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource)
         },
         onDismiss = { viewModel.dismissDialogs() },
         onImportIcon = { uri, sizePx -> viewModel.importIcon(uri, sizePx) },
@@ -116,8 +165,8 @@ fun WebAppShortcutsSettingsScreen() {
     EditWebAppShortcutSheet(
         expanded = editShortcut != null,
         existing = editShortcut,
-        onSave = { label, url, iconUri, faviconUrl, rendererPackage ->
-            viewModel.save(editShortcut, label, url, iconUri, faviconUrl, rendererPackage)
+        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource ->
+            viewModel.save(editShortcut, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource)
         },
         onDismiss = { viewModel.dismissDialogs() },
         onImportIcon = { uri, sizePx -> viewModel.importIcon(uri, sizePx) },

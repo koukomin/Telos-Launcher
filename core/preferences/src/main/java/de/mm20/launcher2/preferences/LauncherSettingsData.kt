@@ -68,6 +68,8 @@ data class LauncherSettingsData internal constructor(
 
     val homeScreenDock: Boolean = false,
     val homeScreenDockRows: Int = 1,
+    val homeScreenDockColumns: Int = 5,
+    val homeScreenDockDefaultPage: Int = 0,
     val homeScreenWidgets: Boolean = false,
     val widgetsTutorialShown: Boolean = false,
     /** 1 = the single, original home screen (default, matches all prior behavior). Up to 9
@@ -366,6 +368,8 @@ data class LauncherSettingsData internal constructor(
     /** Independent of the phone's own gridIconSize - external displays are bigger and viewed
      * from farther away, so the same icon size wouldn't make sense on both. */
     val desktopGridIconSize: Int = 48,
+
+    val homeScreenDockPages: List<List<DockItem>> = emptyList(),
 
     ) {
     constructor(
@@ -700,13 +704,30 @@ enum class FloatingLauncherZone {
 }
 
 @Serializable
+sealed interface SidebarPanelConfig {
+    @Serializable
+    @SerialName("apps")
+    data class AppGrid(
+        val apps: List<String> = emptyList(),
+        val folders: List<FloatingLauncherFolder> = emptyList(),
+    ) : SidebarPanelConfig
+
+    @Serializable
+    @SerialName("plugin")
+    data class Plugin(
+        val authority: String,
+        val panelId: String,
+    ) : SidebarPanelConfig
+}
+
+@Serializable
 data class FloatingLauncherZoneConfig(
     val enabled: Boolean = false,
-    /** SavableSearchable keys, in display order. A folder's position in that same order is
-     * marked by a "floating_folder:<id>" sentinel entry (see [FloatingLauncherFolder]) instead
-     * of a real key, so reordering/removal can keep working on this one flat list uniformly
-     * whether an entry is a loose app or a folder. */
+    val panels: List<SidebarPanelConfig> = emptyList(),
+    val activePanelIndex: Int = 0,
+    /** Deprecated: migrated to [panels] */
     val apps: List<String> = emptyList(),
+    /** Deprecated: migrated to [panels] */
     val folders: List<FloatingLauncherFolder> = emptyList(),
 )
 
@@ -782,6 +803,21 @@ enum class VideoWallpaperStartBehavior {
     @SerialName("random") Random,
 }
 
+
+@Serializable
+sealed interface DockItem {
+    @Serializable
+    @SerialName("searchable")
+    data class Searchable(val key: String) : DockItem
+
+    @Serializable
+    @SerialName("widget")
+    data class Widget(
+        val widgetId: Int,
+        val providerPackage: String,
+        val providerClassName: String
+    ) : DockItem
+}
 
 @Serializable
 enum class FreezeProfile {

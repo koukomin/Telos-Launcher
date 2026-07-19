@@ -10,23 +10,14 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.settings.about.AboutSettingsRoute
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsRoute
-import de.mm20.launcher2.ui.settings.backup.BackupSettingsRoute
-import de.mm20.launcher2.ui.settings.debug.DebugSettingsRoute
-import de.mm20.launcher2.ui.settings.freeze.FreezeSettingsRoute
 import de.mm20.launcher2.ui.settings.gestures.GesturesSettingsRoute
 import de.mm20.launcher2.ui.settings.homescreen.HomescreenSettingsRoute
 import de.mm20.launcher2.ui.settings.icons.IconsSettingsRoute
 import de.mm20.launcher2.ui.settings.integrations.IntegrationsSettingsRoute
 import de.mm20.launcher2.ui.settings.locale.LocaleSettingsRoute
-import de.mm20.launcher2.ui.settings.plugins.PluginsSettingsRoute
 import de.mm20.launcher2.ui.settings.search.SearchSettingsRoute
-import de.mm20.launcher2.ui.settings.contextprofiles.ContextProfilesSettingsRoute
-import de.mm20.launcher2.ui.settings.desktopmode.DesktopModeSettingsRoute
-import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsRoute
-import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsRoute
-import de.mm20.launcher2.ui.settings.wallpaper.WallpaperSettingsRoute
-import de.mm20.launcher2.ui.settings.webappshortcuts.WebAppShortcutsSettingsRoute
-import de.mm20.launcher2.ui.settings.webappspanel.WebAppsPanelSettingsRoute
+import de.mm20.launcher2.ui.settings.advanced.AdvancedSettingsRoute
+import de.mm20.launcher2.ui.settings.webapps.WebAppsSettingsRoute
 import de.mm20.launcher2.ui.settings.dynamicisland.DynamicIslandSettingsRoute
 import kotlinx.serialization.Serializable
 
@@ -58,27 +49,11 @@ fun MainSettingsScreen() {
                     }
                 )
                 Preference(
-                    icon = R.drawable.speed_24px,
-                    title = stringResource(id = R.string.preference_screen_performance),
-                    summary = stringResource(id = R.string.preference_screen_performance_summary),
-                    onClick = {
-                        backStack.add(PerformanceSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = R.drawable.wallpaper_24px,
-                    title = stringResource(id = R.string.preference_screen_wallpaper),
-                    summary = stringResource(id = R.string.preference_screen_wallpaper_summary),
-                    onClick = {
-                        backStack.add(WallpaperSettingsRoute)
-                    }
-                )
-                Preference(
                     icon = R.drawable.apps_24px,
-                    title = stringResource(id = R.string.preference_screen_floating_launcher),
-                    summary = stringResource(id = R.string.preference_screen_floating_launcher_summary),
+                    title = stringResource(id = R.string.preference_screen_icons),
+                    summary = stringResource(id = R.string.preference_screen_icons_summary),
                     onClick = {
-                        backStack.add(FloatingLauncherSettingsRoute)
+                        backStack.add(IconsSettingsRoute)
                     }
                 )
                 Preference(
@@ -86,47 +61,7 @@ fun MainSettingsScreen() {
                     title = stringResource(id = R.string.preference_screen_web_app_shortcuts),
                     summary = stringResource(id = R.string.preference_screen_web_app_shortcuts_summary),
                     onClick = {
-                        backStack.add(WebAppShortcutsSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = R.drawable.language_24px,
-                    title = stringResource(id = R.string.preference_screen_web_apps_panel),
-                    summary = stringResource(id = R.string.preference_screen_web_apps_panel_summary),
-                    onClick = {
-                        backStack.add(WebAppsPanelSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = R.drawable.timer_24px,
-                    title = stringResource(id = R.string.preference_screen_dynamic_island),
-                    summary = stringResource(id = R.string.preference_screen_dynamic_island_summary),
-                    onClick = {
-                        backStack.add(DynamicIslandSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = R.drawable.dashboard_2_24px,
-                    title = stringResource(id = R.string.preference_screen_context_profiles),
-                    summary = stringResource(id = R.string.preference_screen_context_profiles_summary),
-                    onClick = {
-                        backStack.add(ContextProfilesSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = R.drawable.splitscreen_right_20px,
-                    title = stringResource(id = R.string.preference_screen_desktop_mode),
-                    summary = stringResource(id = R.string.preference_screen_desktop_mode_summary),
-                    onClick = {
-                        backStack.add(DesktopModeSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = R.drawable.apps_24px,
-                    title = stringResource(id = R.string.preference_screen_icons),
-                    summary = stringResource(id = R.string.preference_screen_icons_summary),
-                    onClick = {
-                        backStack.add(IconsSettingsRoute)
+                        backStack.add(WebAppsSettingsRoute)
                     }
                 )
                 Preference(
@@ -146,19 +81,19 @@ fun MainSettingsScreen() {
                     }
                 )
                 Preference(
+                    icon = R.drawable.timer_24px,
+                    title = stringResource(id = R.string.preference_screen_dynamic_island),
+                    summary = stringResource(id = R.string.preference_screen_dynamic_island_summary),
+                    onClick = {
+                        backStack.add(DynamicIslandSettingsRoute)
+                    }
+                )
+                Preference(
                     icon = R.drawable.power_24px,
                     title = stringResource(id = R.string.preference_screen_integrations),
                     summary = stringResource(id = R.string.preference_screen_integrations_summary),
                     onClick = {
                         backStack.add(IntegrationsSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = R.drawable.extension_24px,
-                    title = stringResource(id = R.string.preference_screen_plugins),
-                    summary = stringResource(id = R.string.preference_screen_plugins_summary),
-                    onClick = {
-                        backStack.add(PluginsSettingsRoute)
                     }
                 )
                 Preference(
@@ -170,27 +105,11 @@ fun MainSettingsScreen() {
                     }
                 )
                 Preference(
-                    icon = R.drawable.ac_unit_24px,
-                    title = stringResource(id = R.string.preference_screen_freeze),
-                    summary = stringResource(id = R.string.preference_screen_freeze_summary),
+                    icon = R.drawable.settings_24px,
+                    title = stringResource(id = R.string.preference_screen_advanced),
+                    summary = stringResource(id = R.string.preference_screen_advanced_summary),
                     onClick = {
-                        backStack.add(FreezeSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = R.drawable.settings_backup_restore_24px,
-                    title = stringResource(id = R.string.preference_screen_backup),
-                    summary = stringResource(id = R.string.preference_screen_backup_summary),
-                    onClick = {
-                        backStack.add(BackupSettingsRoute)
-                    }
-                )
-                Preference(
-                    icon = R.drawable.bug_report_24px,
-                    title = stringResource(id = R.string.preference_screen_debug),
-                    summary = stringResource(id = R.string.preference_screen_debug_summary),
-                    onClick = {
-                        backStack.add(DebugSettingsRoute)
+                        backStack.add(AdvancedSettingsRoute)
                     }
                 )
                 Preference(

@@ -45,7 +45,7 @@ import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropGridState
 import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import de.mm20.launcher2.ui.launcher.search.common.grid.GridItem
 import de.mm20.launcher2.ui.locals.LocalGridSettings
-import de.mm20.launcher2.ui.settings.webappshortcuts.EditWebAppShortcutSheet
+import de.mm20.launcher2.ui.settings.webapps.EditWebAppShortcutSheet
 import kotlinx.coroutines.launch
 
 /**
@@ -179,10 +179,10 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
         EditWebAppShortcutSheet(
             expanded = showCreateSheet,
             existing = null,
-            onSave = { label, url, iconUri, faviconUrl, rendererPackage ->
-                viewModel.createAndAdd(label, url, iconUri, faviconUrl, rendererPackage)
-                showCreateSheet = false
-            },
+            onSave = { label, url, iconUri, faviconUrl, rendererPackage, _, _, _ ->
+            viewModel.createAndAdd(label, url, iconUri, faviconUrl, rendererPackage)
+            showCreateSheet = false
+        },
             onDismiss = { showCreateSheet = false },
             onImportIcon = { uri, sizePx -> viewModel.importIcon(uri, sizePx) },
             onFindFavicon = { url -> viewModel.findFavicon(url) },

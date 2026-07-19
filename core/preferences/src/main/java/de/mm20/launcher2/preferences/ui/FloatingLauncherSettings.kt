@@ -3,6 +3,7 @@ package de.mm20.launcher2.preferences.ui
 import de.mm20.launcher2.preferences.FloatingLauncherFolder
 import de.mm20.launcher2.preferences.FloatingLauncherZone
 import de.mm20.launcher2.preferences.FloatingLauncherZoneConfig
+import de.mm20.launcher2.preferences.SidebarPanelConfig
 import de.mm20.launcher2.preferences.LauncherDataStore
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -37,7 +38,16 @@ class FloatingLauncherSettings internal constructor(
     fun setZoneApps(zone: FloatingLauncherZone, apps: List<String>) {
         dataStore.update {
             val current = it.floatingLauncherZones[zone] ?: FloatingLauncherZoneConfig()
-            it.copy(floatingLauncherZones = it.floatingLauncherZones + (zone to current.copy(apps = apps)))
+            val panel = current.panels.getOrNull(current.activePanelIndex) as? SidebarPanelConfig.AppGrid
+                ?: SidebarPanelConfig.AppGrid()
+            val newPanels = current.panels.toMutableList().apply {
+                if (current.activePanelIndex in indices) {
+                    set(current.activePanelIndex, panel.copy(apps = apps))
+                } else {
+                    add(panel.copy(apps = apps))
+                }
+            }
+            it.copy(floatingLauncherZones = it.floatingLauncherZones + (zone to current.copy(panels = newPanels)))
         }
     }
 
@@ -113,14 +123,24 @@ class FloatingLauncherSettings internal constructor(
         if (appKeys.isEmpty()) return
         dataStore.update {
             val current = it.floatingLauncherZones[zone] ?: FloatingLauncherZoneConfig()
+            val panel = current.panels.getOrNull(current.activePanelIndex) as? SidebarPanelConfig.AppGrid
+                ?: SidebarPanelConfig.AppGrid()
+            
             val folder = FloatingLauncherFolder(id = UUID.randomUUID().toString(), name = name, appKeys = appKeys)
-            val insertAt = current.apps.indexOf(appKeys.first()).coerceAtLeast(0)
-            val newApps = current.apps.toMutableList()
+            val insertAt = panel.apps.indexOf(appKeys.first()).coerceAtLeast(0)
+            val newApps = panel.apps.toMutableList()
             newApps.removeAll(appKeys)
             newApps.add(insertAt.coerceAtMost(newApps.size), FloatingLauncherFolder.sentinelKey(folder.id))
+            
+            val newPanel = panel.copy(apps = newApps, folders = panel.folders + folder)
+            val newPanels = current.panels.toMutableList().apply {
+                if (current.activePanelIndex in indices) set(current.activePanelIndex, newPanel)
+                else add(newPanel)
+            }
+            
             it.copy(
                 floatingLauncherZones = it.floatingLauncherZones + (
-                    zone to current.copy(apps = newApps, folders = current.folders + folder)
+                    zone to current.copy(panels = newPanels)
                 ),
             )
         }
@@ -129,10 +149,17 @@ class FloatingLauncherSettings internal constructor(
     fun renameFolder(zone: FloatingLauncherZone, folderId: String, name: String) {
         dataStore.update {
             val current = it.floatingLauncherZones[zone] ?: return@update it
-            val newFolders = current.folders.map { folder ->
+            val panel = current.panels.getOrNull(current.activePanelIndex) as? SidebarPanelConfig.AppGrid
+                ?: return@update it
+                
+            val newFolders = panel.folders.map { folder ->
                 if (folder.id == folderId) folder.copy(name = name) else folder
             }
-            it.copy(floatingLauncherZones = it.floatingLauncherZones + (zone to current.copy(folders = newFolders)))
+            val newPanel = panel.copy(folders = newFolders)
+            val newPanels = current.panels.toMutableList().apply {
+                set(current.activePanelIndex, newPanel)
+            }
+            it.copy(floatingLauncherZones = it.floatingLauncherZones + (zone to current.copy(panels = newPanels)))
         }
     }
 
@@ -140,17 +167,32 @@ class FloatingLauncherSettings internal constructor(
     fun deleteFolder(zone: FloatingLauncherZone, folderId: String) {
         dataStore.update {
             val current = it.floatingLauncherZones[zone] ?: return@update it
-            val folder = current.folders.firstOrNull { it.id == folderId } ?: return@update it
+            val panel = current.panels.getOrNull(current.activePanelIndex) as? SidebarPanelConfig.AppGrid
+                ?: return@update it
+                
+            val folder = panel.folders.firstOrNull { it.id == folderId } ?: return@update it
             val sentinel = FloatingLauncherFolder.sentinelKey(folderId)
-            val insertAt = current.apps.indexOf(sentinel).coerceAtLeast(0)
-            val newApps = current.apps.toMutableList()
+            val insertAt = panel.apps.indexOf(sentinel).coerceAtLeast(0)
+            val newApps = panel.apps.toMutableList()
             newApps.remove(sentinel)
             newApps.addAll(insertAt.coerceAtMost(newApps.size), folder.appKeys)
+            
+            val newPanel = panel.copy(apps = newApps, folders = panel.folders - folder)
+            val newPanels = current.panels.toMutableList().apply {
+                set(current.activePanelIndex, newPanel)
+            }
             it.copy(
                 floatingLauncherZones = it.floatingLauncherZones + (
-                    zone to current.copy(apps = newApps, folders = current.folders - folder)
+                    zone to current.copy(panels = newPanels)
                 ),
             )
+        }
+    }
+
+    fun setActivePanel(zone: FloatingLauncherZone, index: Int) {
+        dataStore.update {
+            val current = it.floatingLauncherZones[zone] ?: return@update it
+            it.copy(floatingLauncherZones = it.floatingLauncherZones + (zone to current.copy(activePanelIndex = index)))
         }
     }
 }

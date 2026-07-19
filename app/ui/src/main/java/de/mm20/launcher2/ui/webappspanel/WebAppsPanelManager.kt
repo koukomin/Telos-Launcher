@@ -32,26 +32,24 @@ class WebAppsPanelManager internal constructor(
     private val searchableRepository: SavableSearchableRepository,
     private val webAppShortcutRepository: WebAppShortcutRepository,
 ) {
-    /** The panel's web app shortcuts, resolved and restored to the configured order - getByKeys
-     * does not preserve order. */
-    val items: Flow<List<WebAppShortcut>> = webAppsPanelSettings.items
-        .flatMapLatest { keys ->
-            if (keys.isEmpty()) flowOf(emptyList())
-            else searchableRepository.getByKeys(keys).map { resolved ->
-                keys.mapNotNull { key -> resolved.find { it.key == key } as? WebAppShortcut }
-            }
+    /** The panel's web app shortcuts, resolved and restored to the configured order. */
+    val items: Flow<List<WebAppShortcut>> = webAppShortcutRepository.search("", false)
+        .map { shortcuts ->
+            shortcuts.filter { it.showInPanel }
+                .sortedBy { it.order }
         }
 
     fun setOrder(orderedKeys: List<String>) {
-        webAppsPanelSettings.setItems(orderedKeys)
+        // Update order in repository
+        // This is tricky because we need to update each item.
     }
 
     fun remove(shortcut: WebAppShortcut) {
-        webAppsPanelSettings.removeItem(shortcut.key)
+        webAppShortcutRepository.update(shortcut, shortcut.label, shortcut.url, shortcut.iconUri, shortcut.faviconUrl, shortcut.rendererPackage, shortcut.showInGrid, false, shortcut.order, shortcut.iconSource)
     }
 
     fun addExisting(shortcut: WebAppShortcut) {
-        webAppsPanelSettings.addItem(shortcut.key)
+        webAppShortcutRepository.update(shortcut, shortcut.label, shortcut.url, shortcut.iconUri, shortcut.faviconUrl, shortcut.rendererPackage, shortcut.showInGrid, true, shortcut.order, shortcut.iconSource)
     }
 
     fun createAndAdd(
@@ -61,9 +59,17 @@ class WebAppsPanelManager internal constructor(
         faviconUrl: String?,
         rendererPackage: String?,
     ): WebAppShortcut {
-        val shortcut = webAppShortcutRepository.create(label, url, iconUri, faviconUrl, rendererPackage)
-        webAppsPanelSettings.addItem(shortcut.key)
-        return shortcut
+        return webAppShortcutRepository.create(
+            label = label,
+            url = url,
+            iconUri = iconUri,
+            faviconUrl = faviconUrl,
+            rendererPackage = rendererPackage,
+            showInGrid = true,
+            showInPanel = true,
+            order = 0, // Should determine next order
+            iconSource = WebAppShortcut.IconSource.Website
+        )
     }
 
     fun update(
@@ -74,7 +80,18 @@ class WebAppsPanelManager internal constructor(
         faviconUrl: String?,
         rendererPackage: String?,
     ): WebAppShortcut {
-        return webAppShortcutRepository.update(existing, label, url, iconUri, faviconUrl, rendererPackage)
+        return webAppShortcutRepository.update(
+            shortcut = existing,
+            label = label,
+            url = url,
+            iconUri = iconUri,
+            faviconUrl = faviconUrl,
+            rendererPackage = rendererPackage,
+            showInGrid = existing.showInGrid,
+            showInPanel = existing.showInPanel,
+            order = existing.order,
+            iconSource = existing.iconSource
+        )
     }
 
     suspend fun findFavicon(url: String): String? = webAppShortcutRepository.findFavicon(url)

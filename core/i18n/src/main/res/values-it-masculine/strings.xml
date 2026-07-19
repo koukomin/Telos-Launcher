@@ -1,3 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Freeze Manager -->
+    <string name="preference_freeze_backend">Backend di congelamento</string>
+    <string name="freeze_backend_icebox">Ice Box</string>
+    <string name="freeze_backend_hail">Hail</string>
+    <string name="freeze_backend_amarok">Amarok</string>
+    <string name="freeze_backend_island">Island</string>
+    <string name="freeze_backend_shelter">Shelter</string>
+    <string name="preference_freeze_exclude_music">Escludi app che riproducono musica</string>
+    <string name="preference_freeze_exclude_music_summary">Impedisce il congelamento se l\'app sta producendo audio o ha una sessione multimediale attiva</string>
+    <string name="preference_freeze_exclude_network">Escludi app con attività di rete</string>
+    <string name="preference_freeze_exclude_network_summary">Impedisce il congelamento se l\'app sta scaricando o caricando dati attivamente</string>
+    <string name="preference_freeze_network_threshold">Soglia di rete</string>
+    <string name="preference_freeze_network_threshold_summary">Kilobyte al secondo</string>
+    <string name="freeze_app_state_candidate_suspend">Congelamento auto (Sospendi)</string>
+    <string name="freeze_app_state_candidate_disable">Congelamento auto (Disabilita)</string>
+    <string name="preference_freeze_advanced_features">Funzioni avanzate</string>
+    <string name="preference_freeze_advanced_features_summary">Sblocca Congela, Arresto forzato e Svuota cache nei menu contestuali (Richiede Shizuku o Root)</string>
+    <string name="menu_freeze">Congela</string>
+    <string name="menu_unfreeze">Scongela</string>
+    <string name="menu_force_stop">Arresto forzato</string>
+    <string name="menu_clear_cache">Svuota cache</string>
+    <string name="freeze_dashboard_app_status">Stato app</string>
+    <string name="freeze_dashboard_app_status_summary">Ogni app, per quanto tempo è stata eseguita oggi e se è in esecuzione ora</string>
+    <string name="freeze_dashboard_state_normal">Normale</string>
+    <string name="freeze_dashboard_state_suspended">Sospesa</string>
+    <string name="freeze_dashboard_state_disabled">Disabilitata</string>
+    <string name="freeze_dashboard_running_now">In esecuzione</string>
+    <string name="freeze_dashboard_not_used_today">Non usata oggi</string>
+    <string name="freeze_dashboard_runtime_today">%1$s oggi</string>
+    <string name="freeze_dashboard_runtime_hours_minutes">%1$dh %2$dm</string>
+    <string name="freeze_dashboard_runtime_minutes">%1$dm</string>
+    <string name="freeze_dashboard_runtime_under_a_minute">Meno di 1m</string>
+    <string name="freeze_dashboard_refresh">Aggiorna</string>
+    <string name="freeze_dashboard_no_apps_in_category">Nessuna app in questa categoria</string>
+    <string name="web_app_shortcut_icon_source">Icon source</string>
+    <string name="web_app_shortcut_icon_source_website">Website icon</string>
+    <string name="web_app_shortcut_icon_source_system">System icon</string>
+    <string name="web_app_shortcut_icon_source_custom">Custom icon</string>
 </resources>

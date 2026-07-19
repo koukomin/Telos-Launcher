@@ -11,7 +11,12 @@ import android.graphics.PixelFormat
 import android.os.IBinder
 import android.view.Gravity
 import android.view.WindowManager
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -33,6 +38,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -235,29 +241,44 @@ private fun DynamicIslandPill(
     val content by contentProvider.content.collectAsState(null)
     var expanded by remember { mutableStateOf(false) }
 
-    val current = content
-    if (current == null) {
-        expanded = false
-        return
+    // Capture the last non-null content to avoid crashes during exit animation
+    var lastContent by remember { mutableStateOf<IslandContent?>(null) }
+    LaunchedEffect(content) {
+        if (content != null) {
+            lastContent = content
+        } else {
+            expanded = false
+        }
     }
 
+    if (content == null && lastContent == null) return
+
     MaterialTheme(colorScheme = colorScheme) {
-        Surface(
-            modifier = Modifier
-                .padding(top = 8.dp)
-                .animateContentSize()
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                ) { expanded = !expanded },
-            shape = RoundedCornerShape(50),
-            color = Color.Black,
-            contentColor = Color.White,
+        AnimatedVisibility(
+            visible = content != null,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically(),
         ) {
-            if (!expanded) {
-                CollapsedPill(current)
-            } else {
-                ExpandedPill(current, musicService, onTimerCancel)
+            val currentToRender = content ?: lastContent
+            if (currentToRender != null) {
+                Surface(
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .animateContentSize()
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                        ) { expanded = !expanded },
+                    shape = RoundedCornerShape(50),
+                    color = Color.Black,
+                    contentColor = Color.White,
+                ) {
+                    if (!expanded) {
+                        CollapsedPill(currentToRender)
+                    } else {
+                        ExpandedPill(currentToRender, musicService, onTimerCancel)
+                    }
+                }
             }
         }
     }

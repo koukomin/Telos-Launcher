@@ -584,6 +584,8 @@
     <string name="preference_transparencies_default">Default</string>
     <string name="preference_transparencies_semi_transparent">Semi-transparent</string>
     <string name="preference_font">Font</string>
+    <string name="preference_screen_advanced">Advanced settings</string>
+    <string name="preference_screen_advanced_summary">Performance, profiles, plugins, and tools</string>
     <string name="preference_screen_about">About</string>
     <string name="preference_version">Version</string>
     <string name="preference_category_links">Links</string>
@@ -789,6 +791,18 @@
     <string name="web_app_shortcut_url">URL</string>
     <string name="web_app_shortcut_pick_icon">Choose icon</string>
     <string name="web_app_shortcut_detect_icon">Auto-detect icon</string>
+    <string name="web_app_shortcut_icon_source">Icon source</string>
+    <string name="web_app_shortcut_icon_source_website">Website icon</string>
+    <string name="web_app_shortcut_icon_source_system">System icon</string>
+    <string name="web_app_shortcut_icon_source_custom">Custom icon</string>
+    <string name="preference_dock_columns">Dock columns</string>
+    <string name="preference_dock_pages">Dock pages</string>
+    <string name="preference_dock_custom_enable">Enable custom dock</string>
+    <string name="preference_dock_custom_enable_summary">Manually place apps and widgets in the dock</string>
+    <string name="preference_dock_page_delete">Delete page</string>
+    <string name="preference_dock_page_default">Default</string>
+    <string name="preference_dock_reset">Reset to auto-favorites</string>
+    <string name="preference_dock_reset_summary">Clear all custom dock pages and use frequent apps instead</string>
     <string name="web_app_open_externally">Open in browser</string>
     <string name="web_app_shortcut_renderer">Open with</string>
     <string name="web_app_shortcut_renderer_embedded">Embedded (in-app)</string>

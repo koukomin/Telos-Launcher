@@ -1,19 +1,24 @@
-package de.mm20.launcher2.ui.settings.wallpaper
+package de.mm20.launcher2.ui.settings.homescreen.wallpaper
 
 import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
@@ -21,12 +26,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.Banner
+import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
-import de.mm20.launcher2.ui.component.preferences.ListPreference
+import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.wallpapers.StaticWallpaperTarget
 import kotlinx.serialization.Serializable
 
@@ -39,7 +45,6 @@ fun WallpaperSettingsScreen() {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    // Refresh on every resume: the user comes back from the system live wallpaper preview.
     LaunchedEffect(lifecycleOwner) {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
             viewModel.refresh()
@@ -52,6 +57,10 @@ fun WallpaperSettingsScreen() {
     val videoTransforms by viewModel.videoTransforms.collectAsStateWithLifecycle()
     val videoSpeed by viewModel.videoSpeed.collectAsStateWithLifecycle()
     val videoStartBehavior by viewModel.videoStartBehavior.collectAsStateWithLifecycle()
+
+    val dimWallpaper by viewModel.dimWallpaper.collectAsStateWithLifecycle()
+    val blurWallpaper by viewModel.blurWallpaper.collectAsStateWithLifecycle()
+    val blurWallpaperRadius by viewModel.blurWallpaperRadius.collectAsStateWithLifecycle()
 
     val setResultToast: (Boolean) -> Unit = { ok ->
         Toast.makeText(
@@ -93,38 +102,61 @@ fun WallpaperSettingsScreen() {
                     title = stringResource(R.string.preference_wallpaper_set_home),
                     onClick = {
                         pendingStaticTarget = StaticWallpaperTarget.Home
-                        imagePicker.launch(
-                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                        )
+                        imagePicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                     }
                 )
                 Preference(
                     title = stringResource(R.string.preference_wallpaper_set_lock),
                     onClick = {
                         pendingStaticTarget = StaticWallpaperTarget.Lock
-                        imagePicker.launch(
-                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                        )
+                        imagePicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                     }
                 )
                 Preference(
                     title = stringResource(R.string.preference_wallpaper_set_both),
                     onClick = {
                         pendingStaticTarget = StaticWallpaperTarget.Both
-                        imagePicker.launch(
-                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                        )
+                        imagePicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                     }
                 )
                 Preference(
                     title = stringResource(R.string.preference_wallpaper_system_picker),
                     summary = stringResource(R.string.preference_wallpaper_system_picker_summary),
                     onClick = {
-                        context.tryStartActivity(
-                            Intent.createChooser(Intent(Intent.ACTION_SET_WALLPAPER), null)
-                        )
+                        context.tryStartActivity(Intent.createChooser(Intent(Intent.ACTION_SET_WALLPAPER), null))
                     }
                 )
+            }
+        }
+        item {
+            PreferenceCategory(title = stringResource(R.string.preference_category_wallpaper)) {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_dim_wallpaper),
+                    summary = stringResource(R.string.preference_dim_wallpaper_summary),
+                    value = dimWallpaper,
+                    onValueChanged = { viewModel.setDimWallpaper(it) }
+                )
+                val isBlurSupported = remember { viewModel.isBlurAvailable(context) }
+                SwitchPreference(
+                    title = stringResource(R.string.preference_blur_wallpaper),
+                    summary = stringResource(
+                        if (isBlurSupported) R.string.preference_blur_wallpaper_summary
+                        else R.string.preference_blur_wallpaper_unsupported
+                    ),
+                    value = blurWallpaper && isBlurSupported,
+                    onValueChanged = { viewModel.setBlurWallpaper(it) },
+                    enabled = isBlurSupported
+                )
+                AnimatedVisibility(blurWallpaper && isBlurSupported) {
+                    SliderPreference(
+                        title = stringResource(R.string.preference_blur_wallpaper_radius),
+                        value = blurWallpaperRadius,
+                        onValueChanged = { viewModel.setBlurWallpaperRadius(it) },
+                        min = 4,
+                        max = 64,
+                        step = 4,
+                    )
+                }
             }
         }
         item {
@@ -135,18 +167,14 @@ fun WallpaperSettingsScreen() {
                     summary = stringResource(R.string.preference_wallpaper_choose_video_summary),
                     onClick = {
                         appendToPlaylist = false
-                        videoPicker.launch(
-                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly)
-                        )
+                        videoPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly))
                     }
                 )
                 Preference(
                     title = stringResource(R.string.preference_wallpaper_add_video),
                     onClick = {
                         appendToPlaylist = true
-                        videoPicker.launch(
-                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly)
-                        )
+                        videoPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly))
                     }
                 )
                 if (viewModel.hasVideoWallpaper) {
@@ -160,9 +188,7 @@ fun WallpaperSettingsScreen() {
                             else R.string.wallpaper_video_inactive
                         ),
                         enabled = !viewModel.isVideoWallpaperActive,
-                        onClick = {
-                            context.tryStartActivity(viewModel.getActivationIntent())
-                        }
+                        onClick = { context.tryStartActivity(viewModel.getActivationIntent()) }
                     )
                 }
                 SwitchPreference(

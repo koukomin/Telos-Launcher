@@ -41,6 +41,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -269,6 +270,7 @@ private class BindAndConfigureAppWidgetContract(
 fun WidgetPickerSheet(
     expanded: Boolean,
     includeBuiltinWidgets: Boolean = true,
+    filter1x1: Boolean = false,
     title: String = stringResource(R.string.widget_pick_widget),
     onWidgetSelected: (Widget) -> Unit,
     onDismiss: () -> Unit
@@ -281,6 +283,10 @@ fun WidgetPickerSheet(
         val context = LocalContext.current
         val density = LocalDensity.current
         val viewModel: WidgetPickerSheetVM = viewModel(factory = WidgetPickerSheetVM.Factory)
+
+        LaunchedEffect(filter1x1) {
+            viewModel.filter1x1 = filter1x1
+        }
 
         val bindAppWidgetStarter =
             rememberLauncherForActivityResult(BindAndConfigureAppWidgetContract(density)) {

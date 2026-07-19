@@ -76,7 +76,7 @@ class AutoFreezeController internal constructor(
                 addAction(Intent.ACTION_SCREEN_ON)
                 addAction(PowerManager.ACTION_POWER_SAVE_MODE_CHANGED)
             },
-            ContextCompat.RECEIVER_NOT_EXPORTED,
+            ContextCompat.RECEIVER_EXPORTED,
         )
         ContextCompat.registerReceiver(
             context,
@@ -84,6 +84,11 @@ class AutoFreezeController internal constructor(
             IntentFilter(ACTION_FREEZE_NOW),
             ContextCompat.RECEIVER_NOT_EXPORTED,
         )
+
+        scope.launch {
+            freezeManager.refreshBackendState()
+        }
+
         // Keep the "ready to freeze" notification in sync with the candidate list itself (e.g.
         // the user just added/removed a candidate in settings), on top of the trigger-driven
         // refreshes below. Deliberately not polled continuously - that would work against the

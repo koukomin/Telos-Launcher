@@ -160,10 +160,19 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         if (searchable is Application && freezeManager.isFrozen(searchable.componentName.packageName)) {
             viewModelScope.launch {
                 freezeManager.unfreeze(searchable.componentName.packageName)
+                // Small delay to allow the system to recognize the app is enabled
+                // before startMainActivity is called.
+                kotlinx.coroutines.delay(200)
                 if (searchable.launch(context, bundle)) {
                     reportUsage(searchable)
                 } else {
-                    favoritesService.reset(searchable)
+                    // Try one more time with a slightly longer delay if it failed
+                    kotlinx.coroutines.delay(300)
+                    if (searchable.launch(context, bundle)) {
+                        reportUsage(searchable)
+                    } else {
+                        favoritesService.reset(searchable)
+                    }
                 }
             }
             return true

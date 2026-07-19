@@ -44,6 +44,8 @@ import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 import de.mm20.launcher2.ui.overlays.OverlayHost
 import de.mm20.launcher2.ui.settings.about.AboutSettingsRoute
 import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
+import de.mm20.launcher2.ui.settings.advanced.AdvancedSettingsRoute
+import de.mm20.launcher2.ui.settings.advanced.AdvancedSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsRoute
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.ExportThemeSettingsRoute
@@ -90,15 +92,15 @@ import de.mm20.launcher2.ui.settings.dynamicisland.DynamicIslandSettingsRoute
 import de.mm20.launcher2.ui.settings.dynamicisland.DynamicIslandSettingsScreen
 import de.mm20.launcher2.ui.settings.floating.FloatingLauncherZoneAppsRoute
 import de.mm20.launcher2.ui.settings.floating.FloatingLauncherZoneAppsScreen
-import de.mm20.launcher2.ui.settings.webappshortcuts.WebAppShortcutsSettingsRoute
-import de.mm20.launcher2.ui.settings.webappshortcuts.WebAppShortcutsSettingsScreen
-import de.mm20.launcher2.ui.settings.webappspanel.WebAppsPanelSettingsRoute
-import de.mm20.launcher2.ui.settings.webappspanel.WebAppsPanelSettingsScreen
+import de.mm20.launcher2.ui.settings.homescreen.dock.DockSettingsRoute
+import de.mm20.launcher2.ui.settings.homescreen.dock.DockSettingsScreen
+import de.mm20.launcher2.ui.settings.homescreen.wallpaper.WallpaperSettingsRoute
+import de.mm20.launcher2.ui.settings.homescreen.wallpaper.WallpaperSettingsScreen
+import de.mm20.launcher2.ui.settings.webapps.WebAppsSettingsRoute
+import de.mm20.launcher2.ui.settings.webapps.WebAppsSettingsScreen
 import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsRoute
 import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsScreen
 import de.mm20.launcher2.ui.settings.protection.ProtectedSettingsScreen
-import de.mm20.launcher2.ui.settings.wallpaper.WallpaperSettingsRoute
-import de.mm20.launcher2.ui.settings.wallpaper.WallpaperSettingsScreen
 import de.mm20.launcher2.ui.settings.debug.StringNormalizerTestRoute
 import de.mm20.launcher2.ui.settings.debug.StringNormalizerTestScreen
 import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsRoute
@@ -346,11 +348,8 @@ class SettingsActivity : BaseActivity() {
             entry<FloatingLauncherZoneAppsRoute> {
                 FloatingLauncherZoneAppsScreen(it.zone)
             }
-            entry<WebAppShortcutsSettingsRoute> {
-                WebAppShortcutsSettingsScreen()
-            }
-            entry<WebAppsPanelSettingsRoute> {
-                WebAppsPanelSettingsScreen()
+            entry<WebAppsSettingsRoute> {
+                WebAppsSettingsScreen()
             }
             entry<DynamicIslandSettingsRoute> {
                 DynamicIslandSettingsScreen()
@@ -363,6 +362,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<WallpaperSettingsRoute> {
                 WallpaperSettingsScreen()
+            }
+            entry<DockSettingsRoute> {
+                DockSettingsScreen()
             }
             entry<FreezeDashboardRoute> {
                 FreezeDashboardScreen()

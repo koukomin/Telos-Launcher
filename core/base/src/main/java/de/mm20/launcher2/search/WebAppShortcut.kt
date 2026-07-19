@@ -27,4 +27,17 @@ interface WebAppShortcut : SavableSearchable {
 
     override val preferDetailsOverLaunch: Boolean
         get() = false
+
+    val showInGrid: Boolean
+    val showInPanel: Boolean
+
+    val order: Int
+
+    val iconSource: IconSource
+
+    enum class IconSource {
+        Website,
+        System,
+        Custom
+    }
 }
