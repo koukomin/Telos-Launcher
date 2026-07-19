@@ -106,8 +106,8 @@ fun WebAppShortcutsSettingsScreen() {
     EditWebAppShortcutSheet(
         expanded = createShortcut,
         existing = null,
-        onSave = { label, url, iconUri, faviconUrl ->
-            viewModel.save(null, label, url, iconUri, faviconUrl)
+        onSave = { label, url, iconUri, faviconUrl, rendererPackage ->
+            viewModel.save(null, label, url, iconUri, faviconUrl, rendererPackage)
         },
         onDismiss = { viewModel.dismissDialogs() },
         onImportIcon = { uri, sizePx -> viewModel.importIcon(uri, sizePx) },
@@ -116,8 +116,8 @@ fun WebAppShortcutsSettingsScreen() {
     EditWebAppShortcutSheet(
         expanded = editShortcut != null,
         existing = editShortcut,
-        onSave = { label, url, iconUri, faviconUrl ->
-            viewModel.save(editShortcut, label, url, iconUri, faviconUrl)
+        onSave = { label, url, iconUri, faviconUrl, rendererPackage ->
+            viewModel.save(editShortcut, label, url, iconUri, faviconUrl, rendererPackage)
         },
         onDismiss = { viewModel.dismissDialogs() },
         onImportIcon = { uri, sizePx -> viewModel.importIcon(uri, sizePx) },

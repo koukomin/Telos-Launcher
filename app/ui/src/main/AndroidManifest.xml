@@ -132,6 +132,12 @@
                 <data android:mimeType="application/vnd.de.mm20.launcher2.theme" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".webapp.WebAppActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:theme="@style/LauncherTheme" />
     </application>
 
 </manifest>

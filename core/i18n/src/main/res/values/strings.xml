@@ -789,6 +789,10 @@
     <string name="web_app_shortcut_url">URL</string>
     <string name="web_app_shortcut_pick_icon">Choose icon</string>
     <string name="web_app_shortcut_detect_icon">Auto-detect icon</string>
+    <string name="web_app_open_externally">Open in browser</string>
+    <string name="web_app_shortcut_renderer">Open with</string>
+    <string name="web_app_shortcut_renderer_embedded">Embedded (in-app)</string>
+    <string name="web_app_shortcut_renderer_none_detected">No installed browsers support Custom Tabs</string>
     <string name="preference_screen_floating_launcher">Floating launcher</string>
     <string name="preference_screen_floating_launcher_summary">Edge tab for quick access to your favorite apps over other apps</string>
     <string name="preference_floating_launcher">Enable floating launcher</string>

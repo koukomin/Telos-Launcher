@@ -1,8 +1,10 @@
 package de.mm20.launcher2.webappshortcuts
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import coil.imageLoader
@@ -17,6 +19,7 @@ import de.mm20.launcher2.icons.TransparentLayer
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.WebAppShortcut
+import de.mm20.launcher2.webapp.WebAppLaunchContract
 import java.util.concurrent.ExecutionException
 
 internal data class WebAppShortcutImpl(
@@ -83,15 +86,32 @@ internal data class WebAppShortcutImpl(
         )
     }
 
-    private fun getLaunchIntent(): Intent {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = url.toUri()
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        return intent
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        val renderer = rendererPackage
+        if (renderer != null &&
+            CustomTabsBrowsers.isInstalled(context, renderer) &&
+            CustomTabsBrowsers.isCustomTabsSupported(context, renderer)
+        ) {
+            try {
+                val customTabsIntent = CustomTabsIntent.Builder().build()
+                customTabsIntent.intent.setPackage(renderer)
+                customTabsIntent.launchUrl(context, url.toUri())
+                return true
+            } catch (e: ActivityNotFoundException) {
+                // Fall through to the embedded WebView below.
+            }
+        }
+        return openInWebView(context, options)
     }
 
-    override fun launch(context: Context, options: Bundle?): Boolean {
-        return context.tryStartActivity(getLaunchIntent(), options)
+    private fun openInWebView(context: Context, options: Bundle?): Boolean {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setClassName(context.packageName, WebAppLaunchContract.ACTIVITY_CLASS_NAME)
+            putExtra(WebAppLaunchContract.EXTRA_URL, url)
+            putExtra(WebAppLaunchContract.EXTRA_LABEL, labelOverride ?: label)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        return context.tryStartActivity(intent, options)
     }
 
     override fun getSerializer(): SearchableSerializer {

@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.settings.webappshortcuts
 
+import android.content.Context
+import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -11,6 +13,8 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -26,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -33,13 +38,14 @@ import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheet
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.webappshortcuts.CustomTabsBrowsers
 import kotlinx.coroutines.launch
 
 @Composable
 fun EditWebAppShortcutSheet(
     expanded: Boolean,
     existing: WebAppShortcut?,
-    onSave: (label: String, url: String, iconUri: String?, faviconUrl: String?) -> Unit,
+    onSave: (label: String, url: String, iconUri: String?, faviconUrl: String?, rendererPackage: String?) -> Unit,
     onDismiss: () -> Unit,
     onImportIcon: suspend (uri: Uri, sizePx: Int) -> String?,
     onFindFavicon: suspend (url: String) -> String?,
@@ -52,10 +58,14 @@ fun EditWebAppShortcutSheet(
         var url by remember(existing) { mutableStateOf(existing?.url ?: "") }
         var iconUri by remember(existing) { mutableStateOf(existing?.iconUri) }
         var faviconUrl by remember(existing) { mutableStateOf(existing?.faviconUrl) }
+        var rendererPackage by remember(existing) { mutableStateOf(existing?.rendererPackage) }
         var findingFavicon by remember { mutableStateOf(false) }
+        var showRendererMenu by remember { mutableStateOf(false) }
 
         val scope = rememberCoroutineScope()
+        val context = LocalContext.current
         val iconSizePx = 48.dp.toPixels().toInt()
+        val supportedBrowsers = remember { CustomTabsBrowsers.findSupportedBrowsers(context) }
 
         val pickIconLauncher =
             rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri ->
@@ -142,6 +152,53 @@ fun EditWebAppShortcutSheet(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(top = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(R.string.web_app_shortcut_renderer),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.weight(1f),
+                )
+                TextButton(onClick = { showRendererMenu = true }) {
+                    Text(
+                        rendererPackage?.let { appLabel(context, it) }
+                            ?: stringResource(R.string.web_app_shortcut_renderer_embedded)
+                    )
+                }
+                DropdownMenuPopup(
+                    expanded = showRendererMenu,
+                    onDismissRequest = { showRendererMenu = false },
+                ) {
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.web_app_shortcut_renderer_embedded)) },
+                        onClick = {
+                            rendererPackage = null
+                            showRendererMenu = false
+                        },
+                    )
+                    if (supportedBrowsers.isEmpty()) {
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.web_app_shortcut_renderer_none_detected)) },
+                            enabled = false,
+                            onClick = {},
+                        )
+                    }
+                    for (pkg in supportedBrowsers) {
+                        DropdownMenuItem(
+                            text = { Text(appLabel(context, pkg)) },
+                            onClick = {
+                                rendererPackage = pkg
+                                showRendererMenu = false
+                            },
+                        )
+                    }
+                }
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(top = 16.dp),
                 horizontalArrangement = Arrangement.End,
             ) {
@@ -151,12 +208,22 @@ fun EditWebAppShortcutSheet(
                 TextButton(
                     enabled = label.isNotBlank() && url.isNotBlank(),
                     onClick = {
-                        onSave(label.trim(), url.trim(), iconUri, faviconUrl)
+                        onSave(label.trim(), url.trim(), iconUri, faviconUrl, rendererPackage)
                     }
                 ) {
                     Text(stringResource(R.string.save))
                 }
             }
         }
+    }
+}
+
+private fun appLabel(context: Context, packageName: String): String {
+    return try {
+        context.packageManager.getApplicationInfo(packageName, 0)
+            .loadLabel(context.packageManager)
+            .toString()
+    } catch (e: PackageManager.NameNotFoundException) {
+        packageName
     }
 }
