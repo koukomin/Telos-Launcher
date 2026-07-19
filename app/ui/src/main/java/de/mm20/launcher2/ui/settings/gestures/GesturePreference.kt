@@ -272,6 +272,17 @@ internal fun GesturePreference(
                                     }
                                 )
                             }
+                            if (options.contains(GestureAction.WebAppsPanel::class)) {
+                                GestureItem(
+                                    title = stringResource(R.string.gesture_action_web_apps_panel),
+                                    icon = R.drawable.language_24px,
+                                    selected = value is GestureAction.WebAppsPanel,
+                                    onClick = {
+                                        onValueChanged(GestureAction.WebAppsPanel, null)
+                                        showSheet = false
+                                    }
+                                )
+                            }
                         }
                     }
                     item {
@@ -454,6 +465,7 @@ private fun getActionLabel(
         GestureAction.Search -> resources.getString(R.string.gesture_action_open_search)
         GestureAction.LauncherSettings -> resources.getString(R.string.settings)
         is GestureAction.Plugin -> resources.getString(R.string.gesture_action_plugin)
+        GestureAction.WebAppsPanel -> resources.getString(R.string.gesture_action_web_apps_panel)
         is GestureAction.Widgets -> {
             when (action.target) {
                 WidgetScreenTarget.Widgets1 -> resources.getString(R.string.gesture_action_widgets)

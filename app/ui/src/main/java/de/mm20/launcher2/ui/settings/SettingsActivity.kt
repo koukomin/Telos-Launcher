@@ -92,6 +92,8 @@ import de.mm20.launcher2.ui.settings.floating.FloatingLauncherZoneAppsRoute
 import de.mm20.launcher2.ui.settings.floating.FloatingLauncherZoneAppsScreen
 import de.mm20.launcher2.ui.settings.webappshortcuts.WebAppShortcutsSettingsRoute
 import de.mm20.launcher2.ui.settings.webappshortcuts.WebAppShortcutsSettingsScreen
+import de.mm20.launcher2.ui.settings.webappspanel.WebAppsPanelSettingsRoute
+import de.mm20.launcher2.ui.settings.webappspanel.WebAppsPanelSettingsScreen
 import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsRoute
 import de.mm20.launcher2.ui.settings.performance.PerformanceSettingsScreen
 import de.mm20.launcher2.ui.settings.protection.ProtectedSettingsScreen
@@ -346,6 +348,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<WebAppShortcutsSettingsRoute> {
                 WebAppShortcutsSettingsScreen()
+            }
+            entry<WebAppsPanelSettingsRoute> {
+                WebAppsPanelSettingsScreen()
             }
             entry<DynamicIslandSettingsRoute> {
                 DynamicIslandSettingsScreen()

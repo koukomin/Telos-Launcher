@@ -50,6 +50,7 @@ import de.mm20.launcher2.ui.desktopmode.DesktopModeActivity
 import de.mm20.launcher2.ui.floating.FloatingLauncherService
 import de.mm20.launcher2.ui.islandoverlay.DynamicIslandService
 import de.mm20.launcher2.ui.islandoverlay.islandOverlayModule
+import de.mm20.launcher2.ui.webappspanel.webAppsPanelModule
 import de.mm20.launcher2.searchactions.searchActionsModule
 import de.mm20.launcher2.services.favorites.favoritesModule
 import de.mm20.launcher2.services.tags.servicesTagsModule
@@ -124,6 +125,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     contextProfilesModule,
                     desktopModeModule,
                     islandOverlayModule,
+                    webAppsPanelModule,
                 )
             )
         }

@@ -48,6 +48,7 @@ fun FailedGestureSheet(
             is GestureAction.QuickSettings -> R.string.gesture_action_quick_settings
             is GestureAction.Recents -> R.string.gesture_action_recents
             is GestureAction.PowerMenu -> R.string.gesture_action_power_menu
+            is GestureAction.WebAppsPanel -> R.string.gesture_action_web_apps_panel
             else -> R.string.gesture_action_none
         })
         val gestureName = stringResource(when(it.gesture) {

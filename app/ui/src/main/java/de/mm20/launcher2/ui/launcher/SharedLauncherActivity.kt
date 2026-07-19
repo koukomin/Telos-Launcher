@@ -67,6 +67,7 @@ import de.mm20.launcher2.ui.launcher.scaffold.components.RecentsComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.ScreenOffComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.SearchComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.SecretComponent
+import de.mm20.launcher2.ui.launcher.scaffold.components.WebAppsPanelComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.WidgetsComponent
 import de.mm20.launcher2.ui.launcher.lock.LauncherLockGate
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheetManager
@@ -334,6 +335,11 @@ abstract class SharedLauncherActivity(
 
                                             is GestureAction.Feed -> ScaffoldGesture(
                                                 component = FeedComponent,
+                                                animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
+                                            )
+
+                                            is GestureAction.WebAppsPanel -> ScaffoldGesture(
+                                                component = WebAppsPanelComponent,
                                                 animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
                                             )
 
