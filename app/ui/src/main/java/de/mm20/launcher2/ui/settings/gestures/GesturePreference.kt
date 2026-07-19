@@ -283,6 +283,17 @@ internal fun GesturePreference(
                                     }
                                 )
                             }
+                            if (options.contains(GestureAction.HomeScreenMenu::class)) {
+                                GestureItem(
+                                    title = stringResource(R.string.gesture_action_home_screen_menu),
+                                    icon = R.drawable.more_vert_24px,
+                                    selected = value is GestureAction.HomeScreenMenu,
+                                    onClick = {
+                                        onValueChanged(GestureAction.HomeScreenMenu, null)
+                                        showSheet = false
+                                    }
+                                )
+                            }
                         }
                     }
                     item {
@@ -466,6 +477,7 @@ private fun getActionLabel(
         GestureAction.LauncherSettings -> resources.getString(R.string.settings)
         is GestureAction.Plugin -> resources.getString(R.string.gesture_action_plugin)
         GestureAction.WebAppsPanel -> resources.getString(R.string.gesture_action_web_apps_panel)
+        GestureAction.HomeScreenMenu -> resources.getString(R.string.gesture_action_home_screen_menu)
         is GestureAction.Widgets -> {
             when (action.target) {
                 WidgetScreenTarget.Widgets1 -> resources.getString(R.string.gesture_action_widgets)

@@ -57,6 +57,7 @@ import de.mm20.launcher2.ui.launcher.scaffold.components.ClockAndWidgetsHomeComp
 import de.mm20.launcher2.ui.launcher.scaffold.components.ClockHomeComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.DismissComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.FeedComponent
+import de.mm20.launcher2.ui.launcher.scaffold.components.HomeScreenMenuComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.LaunchComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.LauncherSettingsComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.NotificationsComponent
@@ -340,6 +341,11 @@ abstract class SharedLauncherActivity(
 
                                             is GestureAction.WebAppsPanel -> ScaffoldGesture(
                                                 component = WebAppsPanelComponent,
+                                                animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
+                                            )
+
+                                            is GestureAction.HomeScreenMenu -> ScaffoldGesture(
+                                                component = HomeScreenMenuComponent,
                                                 animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
                                             )
 

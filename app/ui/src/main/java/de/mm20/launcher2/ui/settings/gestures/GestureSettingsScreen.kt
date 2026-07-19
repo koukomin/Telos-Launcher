@@ -66,6 +66,7 @@ fun GestureSettingsScreen() {
         add(GestureAction.Widgets::class)
         add(GestureAction.Launch::class)
         add(GestureAction.WebAppsPanel::class)
+        add(GestureAction.HomeScreenMenu::class)
     }
 
     val shortcutOptions by viewModel.shortcutOptions.collectAsStateWithLifecycle(emptyList())

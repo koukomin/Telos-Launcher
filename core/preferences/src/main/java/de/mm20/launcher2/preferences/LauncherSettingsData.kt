@@ -174,7 +174,7 @@ data class LauncherSettingsData internal constructor(
     val gesturesSwipeRight: GestureAction = GestureAction.NoAction,
     val gesturesSwipeUp: GestureAction = GestureAction.Widgets(),
     val gesturesDoubleTap: GestureAction = GestureAction.ScreenLock,
-    val gesturesLongPress: GestureAction = GestureAction.NoAction,
+    val gesturesLongPress: GestureAction = GestureAction.HomeScreenMenu,
     val gesturesHomeButton: GestureAction = GestureAction.NoAction,
     val gesturesPinchIn: GestureAction = GestureAction.NoAction,
     val gesturesPinchOut: GestureAction = GestureAction.NoAction,
@@ -577,6 +577,12 @@ sealed interface GestureAction {
     @Serializable
     @SerialName("web_apps_panel")
     data object WebAppsPanel : GestureAction
+
+    /** Shows a small menu (change wallpaper / add widget) - the same thing a long-press on an
+     * empty area of the home screen shows on most stock launchers. */
+    @Serializable
+    @SerialName("home_screen_menu")
+    data object HomeScreenMenu : GestureAction
 }
 
 
