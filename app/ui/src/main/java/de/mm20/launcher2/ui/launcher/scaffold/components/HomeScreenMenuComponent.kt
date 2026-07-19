@@ -96,8 +96,13 @@ internal object HomeScreenMenuComponent : ScaffoldComponent() {
             pendingAppWidgetId = null
             if (widgetId == null) return@rememberLauncherForActivityResult
             if (result.resultCode != Activity.RESULT_OK) {
+                // The raw picker can resolve to a real system activity (e.g. Android Settings'
+                // own AppWidgetPickActivity) that then fails or cancels immediately for a caller
+                // it doesn't recognize as a proper widget host - "resolvable" is not the same as
+                // "will actually work". Fall back to our own picker instead of just giving up, so
+                // the user still gets a working flow rather than the menu silently closing.
                 widgetHost.deleteAppWidgetId(widgetId)
-                dismiss()
+                showWidgetPicker = true
                 return@rememberLauncherForActivityResult
             }
             val info = AppWidgetManager.getInstance(context).getAppWidgetInfo(widgetId)

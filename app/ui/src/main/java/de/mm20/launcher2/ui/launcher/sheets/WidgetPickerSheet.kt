@@ -65,7 +65,6 @@ import coil.request.ImageRequest
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DismissableBottomSheet
-import de.mm20.launcher2.ui.ktx.animateShapeAsState
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.AppWidgetConfig
 import de.mm20.launcher2.widgets.AppsWidget
@@ -296,20 +295,12 @@ fun WidgetPickerSheet(
                 }
             }
 
-        val xs = MaterialTheme.shapes.extraSmall
-        val md = MaterialTheme.shapes.medium
-
-        val topShape = md.copy(
-            bottomStart = xs.bottomStart,
-            bottomEnd = xs.bottomEnd,
-        )
-        val bottomShape = md.copy(
-            topStart = xs.topStart,
-            topEnd = xs.topEnd,
-        )
-        val middleShape = xs
-        val singleShape = md
-
+        // Every row is its own distinct card - no more "seamless grouped list" (1dp seams +
+        // corner-shape-by-position) that read as cramped/crowded, especially once a group's
+        // widgets (each with a preview image) are expanded inline. A single uniform shape and
+        // real spacing between rows is simpler to reason about and reads clearly at a glance.
+        val cardShape = MaterialTheme.shapes.medium
+        val rowSpacing = 10.dp
 
         val appWidgetGroups by viewModel.appWidgetGroups.collectAsState(emptyList())
         val expandAllGroups by viewModel.expandAllGroups.collectAsState(false)
@@ -328,7 +319,7 @@ fun WidgetPickerSheet(
                 bottom = WindowInsets.navigationBars.asPaddingValues()
                     .calculateBottomPadding() + 16.dp
             ),
-            verticalArrangement = Arrangement.spacedBy(1.dp),
+            verticalArrangement = Arrangement.spacedBy(rowSpacing),
         ) {
             stickyHeader {
                 DockedSearchBar(
@@ -380,16 +371,10 @@ fun WidgetPickerSheet(
             }
             if (includeBuiltinWidgets) {
                 itemsIndexed(builtIn) { i, it ->
-                    val shape = when {
-                        builtIn.size == 1 -> singleShape
-                        i == 0 -> topShape
-                        i == builtIn.lastIndex -> bottomShape
-                        else -> middleShape
-                    }
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clip(shape)
+                            .clip(cardShape)
                             .background(
                                 MaterialTheme.colorScheme.surfaceBright,
                             )
@@ -446,16 +431,10 @@ fun WidgetPickerSheet(
             }
             if (includeBuiltinWidgets) {
                 itemsIndexed(pluginWidgets, key = { _, it -> it.authority }) { i, it ->
-                    val shape = when {
-                        pluginWidgets.size == 1 -> singleShape
-                        i == 0 -> topShape
-                        i == pluginWidgets.lastIndex -> bottomShape
-                        else -> middleShape
-                    }
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clip(shape)
+                            .clip(cardShape)
                             .background(
                                 MaterialTheme.colorScheme.surfaceBright,
                             )
@@ -492,9 +471,6 @@ fun WidgetPickerSheet(
                 item(
                     key = group.packageName,
                 ) {
-                    val shape by animateShapeAsState(
-                        if (expanded && group.widgets.isNotEmpty()) topShape else singleShape
-                    )
                     val icon = remember(group.packageName) {
                         try {
                             context.packageManager.getApplicationIcon(group.packageName)
@@ -504,8 +480,7 @@ fun WidgetPickerSheet(
                     }
                     Row(
                         modifier = Modifier
-                            .padding(top = 7.dp)
-                            .clip(shape)
+                            .clip(cardShape)
                             .background(MaterialTheme.colorScheme.surfaceBright)
                             .clickable(enabled = !expandAllGroups) {
                                 viewModel.toggleGroup(group.packageName)
@@ -545,7 +520,6 @@ fun WidgetPickerSheet(
                         group.widgets,
                         key = { _, it -> it }
                     ) { i, it ->
-                        val shape = if (i == group.widgets.lastIndex) bottomShape else middleShape
                         val previewImage = remember(it.provider) {
                             it.loadPreviewImage(context, (160f * density.density).roundToInt())
                         }
@@ -556,7 +530,8 @@ fun WidgetPickerSheet(
                             modifier = Modifier
                                 .animateItem()
                                 .fillMaxWidth()
-                                .clip(shape)
+                                .padding(start = 20.dp)
+                                .clip(cardShape)
                                 .background(MaterialTheme.colorScheme.surfaceBright)
                                 .clickable {
                                     bindAppWidgetStarter.launch(it)
