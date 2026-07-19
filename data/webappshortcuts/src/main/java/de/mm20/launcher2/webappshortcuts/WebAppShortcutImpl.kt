@@ -26,6 +26,7 @@ internal data class WebAppShortcutImpl(
     override val iconUri: String?,
     override val faviconUrl: String?,
     override val color: Int?,
+    override val rendererPackage: String? = null,
     override val labelOverride: String? = null,
 ) : WebAppShortcut {
 

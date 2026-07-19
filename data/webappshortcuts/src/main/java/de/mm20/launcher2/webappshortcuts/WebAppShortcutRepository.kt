@@ -31,7 +31,13 @@ interface WebAppShortcutRepository : SearchableRepository<WebAppShortcut> {
      */
     suspend fun findFavicon(url: String): String?
 
-    fun create(label: String, url: String, iconUri: String?, faviconUrl: String?): WebAppShortcut
+    fun create(
+        label: String,
+        url: String,
+        iconUri: String?,
+        faviconUrl: String?,
+        rendererPackage: String? = null,
+    ): WebAppShortcut
 
     fun update(
         shortcut: WebAppShortcut,
@@ -39,6 +45,7 @@ interface WebAppShortcutRepository : SearchableRepository<WebAppShortcut> {
         url: String,
         iconUri: String?,
         faviconUrl: String?,
+        rendererPackage: String? = null,
     ): WebAppShortcut
 
     fun delete(shortcut: WebAppShortcut)
@@ -71,6 +78,7 @@ internal class WebAppShortcutRepositoryImpl(
         url: String,
         iconUri: String?,
         faviconUrl: String?,
+        rendererPackage: String?,
     ): WebAppShortcut {
         val shortcut = WebAppShortcutImpl(
             id = UUID.randomUUID().toString(),
@@ -79,6 +87,7 @@ internal class WebAppShortcutRepositoryImpl(
             iconUri = iconUri,
             faviconUrl = faviconUrl,
             color = null,
+            rendererPackage = rendererPackage,
         )
         savableSearchableRepository.insert(shortcut)
         return shortcut
@@ -90,6 +99,7 @@ internal class WebAppShortcutRepositoryImpl(
         url: String,
         iconUri: String?,
         faviconUrl: String?,
+        rendererPackage: String?,
     ): WebAppShortcut {
         shortcut as WebAppShortcutImpl
         val updated = shortcut.copy(
@@ -97,6 +107,7 @@ internal class WebAppShortcutRepositoryImpl(
             url = normalizeUrl(url),
             iconUri = iconUri,
             faviconUrl = faviconUrl,
+            rendererPackage = rendererPackage,
         )
         savableSearchableRepository.update(updated)
         return updated

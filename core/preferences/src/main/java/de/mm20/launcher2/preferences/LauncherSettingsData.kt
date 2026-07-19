@@ -334,6 +334,14 @@ data class LauncherSettingsData internal constructor(
     /** Optional - the pill only shows a call while active if this is granted. */
     val dynamicIslandShowCalls: Boolean = true,
 
+    /**
+     * Keys of the WebAppShortcuts shown in the Web Apps Panel, in order. Membership here is
+     * independent of whether a shortcut also appears in search results - a shortcut can exist
+     * without being pinned to the panel. The panel itself is reached via whichever gesture slot
+     * has [GestureAction.WebAppsPanel] assigned - there's no separate enabled/direction field.
+     */
+    val webAppsPanelItems: List<String> = emptyList(),
+
     val contextProfilesEnabled: Boolean = false,
     val contextProfiles: List<ContextProfile> = emptyList(),
     /** If set, this profile is force-active regardless of trigger evaluation. */
@@ -559,6 +567,16 @@ sealed interface GestureAction {
     @Serializable
     @SerialName("plugin_action")
     data class Plugin(val authority: String, val actionId: String) : GestureAction
+
+    /**
+     * Opens the Web Apps Panel (a dedicated grid of web app shortcuts, distinct from the
+     * Floating Launcher sidebar). Assigning this to a gesture slot (typically swipeLeft or
+     * swipeRight) is how the panel's direction is chosen - there is no separate
+     * enabled/direction preference, this assignment IS the on/off + direction state.
+     */
+    @Serializable
+    @SerialName("web_apps_panel")
+    data object WebAppsPanel : GestureAction
 }
 
 

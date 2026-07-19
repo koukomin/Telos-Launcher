@@ -16,7 +16,8 @@ class WebAppShortcutSerializer : SearchableSerializer {
             "url" to searchable.url,
             "iconUri" to searchable.iconUri,
             "favicon" to searchable.faviconUrl,
-            "color" to searchable.color
+            "color" to searchable.color,
+            "rendererPackage" to searchable.rendererPackage,
         ).toString()
     }
 
@@ -34,6 +35,7 @@ class WebAppShortcutDeserializer : SearchableDeserializer {
             iconUri = json.optString("iconUri").takeIf { it.isNotBlank() },
             faviconUrl = json.optString("favicon").takeIf { it.isNotBlank() },
             color = json.optInt("color").takeIf { it != 0 },
+            rendererPackage = json.optString("rendererPackage").takeIf { it.isNotBlank() },
         )
     }
 }
