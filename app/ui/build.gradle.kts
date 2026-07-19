@@ -168,4 +168,6 @@ dependencies {
 
     implementation(libs.androidx.biometric)
     implementation(project(":core:devicepose"))
+
+    testImplementation(libs.bundles.tests)
 }

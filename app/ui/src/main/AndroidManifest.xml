@@ -112,6 +112,21 @@
                 android:value="Persistent floating quick-launcher overlay, opt-in and off by default" />
         </service>
 
+        <!--
+            Failsafe kill-switch for the floating launcher overlay - see
+            FloatingLauncherDisableReceiver's doc. Exported so it's reachable via adb even if the
+            overlay itself has made the device unresponsive to touch; it can only ever turn the
+            (opt-in, off-by-default) overlay off, never on or do anything else, so this is a
+            deliberately narrow, low-risk surface to expose.
+        -->
+        <receiver
+            android:name=".floating.FloatingLauncherDisableReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="de.mm20.launcher2.action.DISABLE_FLOATING_LAUNCHER" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name=".islandoverlay.DynamicIslandService"
             android:exported="false"

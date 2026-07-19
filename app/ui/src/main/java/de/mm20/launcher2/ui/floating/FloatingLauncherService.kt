@@ -46,6 +46,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
@@ -60,6 +61,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -67,7 +69,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draganddrop.DragAndDropEvent
 import androidx.compose.ui.draganddrop.DragAndDropTarget
@@ -124,12 +125,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.UUID
+import kotlin.math.roundToInt
 import org.koin.android.ext.android.inject
 
 /**
@@ -138,15 +141,22 @@ import org.koin.android.ext.android.inject
  * expanding into its own scrollable grid of apps. Opt-in, off by default - started/stopped by the
  * settings screen when the user toggles it.
  *
- * Unlike the original single-tab version, the overlay window is always full-screen
- * (MATCH_PARENT) with FLAG_NOT_TOUCH_MODAL: every zone's tab and whichever panel is currently
- * expanded are positioned within one Compose tree via alignment, not by moving/resizing the
- * WindowManager view itself. Touches on empty areas of that fullscreen window are expected to
- * fall through to whatever's underneath, since nothing there claims them (no pointerInput/
- * clickable modifier covers those regions) - this is the standard "chat heads" overlay pattern,
- * but it's the one part of this whole redesign that most needs verifying on a real device: if
- * Compose's hit-testing doesn't let untouched regions pass through as expected here, the app
- * behind the overlay could become entirely untouchable.
+ * Each enabled zone's collapsed tab is its own small overlay window (WRAP_CONTENT-sized,
+ * positioned at that zone's edge - see [buildTabLayoutParams]), and the expanded panel is a
+ * separate full-screen window added only while a zone is open (see [openZone]/[closeZone],
+ * [buildPanelLayoutParams]). An earlier version of this class instead used ONE always-full-screen
+ * window for everything, on the assumption that touches on empty Compose regions "fall through"
+ * to whatever's underneath since nothing there claims them. That assumption is wrong: a touchable
+ * window intercepts every touch across its whole bounds regardless of what Compose does with it
+ * afterwards, and FLAG_NOT_TOUCH_MODAL only affects touches *outside* a window's bounds - which a
+ * MATCH_PARENT window never has, on this display. On real hardware, that fullscreen-always design
+ * pointer-locked the entire device: nothing anywhere on screen was tappable while the sidebar was
+ * enabled. Small, individually-sized-and-positioned windows fix this by construction: there is
+ * never a window larger than what's actually meant to be touchable at that moment, and no
+ * per-pixel touchable-region bookkeeping to get right or wrong. (The natural public-API
+ * alternative - restricting one big window to a touchable sub-region via
+ * `ViewTreeObserver.OnComputeInternalInsetsListener` - turned out not to be usable here: that API
+ * is hidden/`@SystemApi`, not part of the public SDK a third-party app can compile against.)
  *
  * Deliberately does not include a search field: accepting text input in an overlay window means
  * making the window focusable, which briefly steals input focus from whatever app is in the
@@ -155,10 +165,10 @@ import org.koin.android.ext.android.inject
  *
  * Each zone's tab and panel also accept a drop from a global (cross-window) Android drag started
  * elsewhere (home screen, app drawer - see GridItem.kt), carrying the dragged app's searchable
- * key as plain text. Whether WindowManager actually routes those DragEvents to this window (given
- * it's FLAG_NOT_TOUCH_MODAL) is, like the touch-passthrough behavior above, unverified without a
- * real device - there's real precedent for it working (this is the same mechanism chat-heads-style
- * bubbles use to accept a shared link), but it hasn't been tested here.
+ * key as plain text. Whether WindowManager routes those DragEvents correctly to these small,
+ * individually-positioned windows is, like the rest of this overlay, something that needs
+ * verifying on real hardware - there's real precedent for drag delivery working on comparable
+ * "chat heads"-style overlays, but it hasn't been specifically tested here.
  *
  * The same drop target doubles as the entry point for the File Dock: dragging arbitrary text,
  * images, or files from another app (not one of this launcher's own app icons) holds them
@@ -166,7 +176,18 @@ import org.koin.android.ext.android.inject
  * (exposed via FileProvider) immediately on drop, rather than keeping the original dragged-from-app
  * URI - a drag's URI permission grant is only guaranteed to last for the drag itself, and a File
  * Dock item is by definition opened well after that, so hanging onto the original URI risks a
- * SecurityException the first time the user actually taps it.
+ * SecurityException the first time the user actually taps it. The File Dock's contents are shared
+ * across every zone's tab window and the one panel window (whichever is open at the time), so
+ * they're held in [fileDockItemsState] at the service level rather than inside any single
+ * composition - a drop can land on one zone's tab while a different zone's panel is what ends up
+ * displaying it.
+ *
+ * As a failsafe against a regression like the touch-lockout above ever shipping again unnoticed,
+ * [FloatingLauncherDisableReceiver] lets this be force-disabled from outside the app - including
+ * with the device otherwise fully unresponsive to touch - via
+ * `adb shell am broadcast -a de.mm20.launcher2.action.DISABLE_FLOATING_LAUNCHER -p de.mm20.launcher2`.
+ * That flips the exact same [FloatingLauncherSettings.enabled] flag the settings screen's toggle
+ * uses, which this service already watches to stop itself - no separate kill-switch plumbing.
  */
 class FloatingLauncherService : Service(), SavedStateRegistryOwner {
 
@@ -186,7 +207,13 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
     private val scope = CoroutineScope(Dispatchers.Main + Job())
 
     private var windowManager: WindowManager? = null
-    private var composeView: ComposeView? = null
+    private val zoneTabViews = mutableMapOf<FloatingLauncherZone, ComposeView>()
+    private var panelView: ComposeView? = null
+
+    // Deliberately not persisted (no DataStore field) - matches what "temporary" means for
+    // OxygenOS's File Dock, this shelf is cleared whenever the service restarts. See the class
+    // doc for why this lives here rather than inside a composition.
+    private val fileDockItemsState = mutableStateOf<List<FileDockItem>>(emptyList())
 
     override fun onCreate() {
         super.onCreate()
@@ -218,16 +245,39 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
 
     override fun onBind(intent: Intent?): IBinder? = null
 
-    override fun onDestroy() {
-        val view = composeView
-        val wm = windowManager
-        if (view != null && wm != null) {
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // Screen height (used to position each tab vertically) may have changed - most likely a
+        // rotation. The panel window is MATCH_PARENT and re-lays-out on its own; only the tabs'
+        // explicit x/y need recomputing.
+        val wm = windowManager ?: return
+        for ((zone, view) in zoneTabViews) {
             try {
-                wm.removeView(view)
+                wm.updateViewLayout(view, buildTabLayoutParams(zone))
             } catch (_: Exception) {
+                // View not attached - nothing to do.
             }
         }
-        composeView = null
+    }
+
+    override fun onDestroy() {
+        val wm = windowManager
+        if (wm != null) {
+            for (view in zoneTabViews.values) {
+                try {
+                    wm.removeView(view)
+                } catch (_: Exception) {
+                }
+            }
+            panelView?.let {
+                try {
+                    wm.removeView(it)
+                } catch (_: Exception) {
+                }
+            }
+        }
+        zoneTabViews.clear()
+        panelView = null
         windowManager = null
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_PAUSE)
         lifecycleRegistry.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
@@ -240,74 +290,201 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
         val wm = getSystemService(WINDOW_SERVICE) as WindowManager
         windowManager = wm
 
+        for (zone in FloatingLauncherZone.entries) {
+            val view = ComposeView(this).apply {
+                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                setViewTreeLifecycleOwner(this@FloatingLauncherService)
+                setViewTreeSavedStateRegistryOwner(this@FloatingLauncherService)
+                setContent {
+                    FloatingLauncherTabContent(
+                        zone = zone,
+                        settings = floatingLauncherSettings,
+                        contextProfileManager = contextProfileManager,
+                        onOpen = { openZone(zone) },
+                        onAppDropped = { key -> addAppToZone(zone, key) },
+                        onExternalContentDropped = { clipData -> handleExternalDrop(clipData) },
+                    )
+                }
+            }
+            zoneTabViews[zone] = view
+            wm.addView(view, buildTabLayoutParams(zone))
+        }
+    }
+
+    /** Adds the (single, shared) panel window for [zone], replacing any panel already open. */
+    private fun openZone(zone: FloatingLauncherZone) {
+        val wm = windowManager ?: return
+        closeZone()
         val view = ComposeView(this).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setViewTreeLifecycleOwner(this@FloatingLauncherService)
             setViewTreeSavedStateRegistryOwner(this@FloatingLauncherService)
+            setContent {
+                FloatingLauncherPanelContent(
+                    zone = zone,
+                    settings = floatingLauncherSettings,
+                    iconService = iconService,
+                    searchableRepository = searchableRepository,
+                    freezeManager = freezeManager,
+                    appRepository = appRepository,
+                    shutterSettings = shutterSettings,
+                    contextProfileManager = contextProfileManager,
+                    fileDockItemsState = fileDockItemsState,
+                    onDismiss = { closeZone() },
+                    onAppLaunched = { closeZone() },
+                    onAppDropped = { key -> addAppToZone(zone, key) },
+                    onReorder = { keys -> reorderZone(zone, keys) },
+                    onRemoveApp = { key -> removeAppFromZone(zone, key) },
+                    onCreateFolder = { name, keys -> createFolder(zone, name, keys) },
+                    onRenameFolder = { folderId, name -> renameFolder(zone, folderId, name) },
+                    onDeleteFolder = { folderId -> deleteFolder(zone, folderId) },
+                    onExternalContentDropped = { clipData -> handleExternalDrop(clipData) },
+                    onRemoveFileDockItem = { id -> removeFileDockItem(id) },
+                )
+            }
         }
-        composeView = view
+        panelView = view
+        wm.addView(view, buildPanelLayoutParams())
+    }
 
-        view.setContent {
-            FloatingLauncherContent(
-                settings = floatingLauncherSettings,
-                iconService = iconService,
-                searchableRepository = searchableRepository,
-                freezeManager = freezeManager,
-                appRepository = appRepository,
-                contextProfileManager = contextProfileManager,
-                shutterSettings = shutterSettings,
-                onPanelExpandedChanged = { expanded -> updateBlurBehind(expanded) },
-            )
+    private fun closeZone() {
+        val view = panelView ?: return
+        val wm = windowManager ?: return
+        try {
+            wm.removeView(view)
+        } catch (_: Exception) {
         }
+        panelView = null
+    }
 
-        wm.addView(view, buildLayoutParams(blurBehind = false))
+    private fun addAppToZone(zone: FloatingLauncherZone, key: String) {
+        scope.launch {
+            val current = floatingLauncherSettings.zones.first()[zone]?.apps ?: emptyList()
+            if (key !in current) {
+                floatingLauncherSettings.setZoneApps(zone, current + key)
+            }
+        }
+    }
+
+    private fun reorderZone(zone: FloatingLauncherZone, keys: List<String>) {
+        floatingLauncherSettings.setZoneApps(zone, keys)
+    }
+
+    private fun removeAppFromZone(zone: FloatingLauncherZone, key: String) {
+        scope.launch {
+            val current = floatingLauncherSettings.zones.first()[zone]?.apps ?: emptyList()
+            floatingLauncherSettings.setZoneApps(zone, current - key)
+        }
+    }
+
+    private fun createFolder(zone: FloatingLauncherZone, name: String, appKeys: List<String>) {
+        floatingLauncherSettings.createFolder(zone, name, appKeys)
+    }
+
+    private fun renameFolder(zone: FloatingLauncherZone, folderId: String, name: String) {
+        floatingLauncherSettings.renameFolder(zone, folderId, name)
+    }
+
+    private fun deleteFolder(zone: FloatingLauncherZone, folderId: String) {
+        floatingLauncherSettings.deleteFolder(zone, folderId)
+    }
+
+    private fun handleExternalDrop(clipData: ClipData) {
+        scope.launch {
+            for (i in 0 until clipData.itemCount) {
+                val item = clipData.getItemAt(i)
+                val uri = item.uri
+                if (uri != null) {
+                    val mimeType = clipData.description.getMimeType(0)
+                    val cachedUri =
+                        copyToDockCache(this@FloatingLauncherService, uri, mimeType) ?: continue
+                    fileDockItemsState.value = fileDockItemsState.value + FileDockItem.MediaItem(
+                        id = UUID.randomUUID().toString(),
+                        uri = cachedUri,
+                        mimeType = mimeType,
+                        label = uri.lastPathSegment ?: uri.toString(),
+                    )
+                } else {
+                    val text = item.text?.toString()
+                    if (!text.isNullOrBlank()) {
+                        fileDockItemsState.value = fileDockItemsState.value +
+                            FileDockItem.TextItem(UUID.randomUUID().toString(), text)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun removeFileDockItem(id: String) {
+        fileDockItemsState.value = fileDockItemsState.value.filterNot { it.id == id }
     }
 
     /**
-     * Blurs whatever's behind the overlay window while a panel is open, matching the OxygenOS
-     * Smart Sidebar's frosted-glass look. Only meaningful on API 31+, where WindowManager exposes
-     * a per-window blur radius - below that, FLAG_BLUR_BEHIND alone is an old, mostly-unsupported
-     * flag on modern devices, so this is a no-op there and the panel instead relies on its own
-     * translucent background color for the effect.
+     * WRAP_CONTENT-sized and positioned at [zone]'s edge, replicating what
+     * `BiasAlignment(horizontalBias = ..., verticalBias = zone.verticalFraction * 2f - 1f)` used
+     * to compute inside a single fullscreen Box - see the class doc for why this window is
+     * deliberately never MATCH_PARENT. Shrinks to ~0x0 by itself whenever
+     * [FloatingLauncherTabContent] has nothing to render for this zone (disabled, or auto-hidden
+     * for gaming), so no separate per-zone visibility plumbing is needed on the window side.
      */
-    private fun updateBlurBehind(enabled: Boolean) {
-        if (!isAtLeastApiLevel(31)) return
-        val view = composeView ?: return
-        val wm = windowManager ?: return
-        try {
-            wm.updateViewLayout(view, buildLayoutParams(blurBehind = enabled))
-        } catch (_: Exception) {
-            // View not attached (e.g. service tearing down mid-update) - nothing to do.
+    private fun buildTabLayoutParams(zone: FloatingLauncherZone): WindowManager.LayoutParams {
+        val density = resources.displayMetrics.density
+        val screenHeightPx = resources.displayMetrics.heightPixels
+        val tabHeightPx = (ZONE_TAB_HEIGHT_DP * density).roundToInt()
+        return WindowManager.LayoutParams(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            overlayWindowType(),
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            PixelFormat.TRANSLUCENT,
+        ).apply {
+            gravity = Gravity.TOP or if (zone.isLeftEdge) Gravity.START else Gravity.END
+            x = 0
+            y = computeTabY(screenHeightPx, tabHeightPx, zone.verticalFraction)
         }
     }
 
-    private fun buildLayoutParams(blurBehind: Boolean): WindowManager.LayoutParams {
-        val type = if (isAtLeastApiLevel(26)) {
-            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-        } else {
-            @Suppress("DEPRECATION")
-            WindowManager.LayoutParams.TYPE_PHONE
-        }
-
+    /**
+     * Full-screen - unlike the tab windows, this one's meant to be:
+     * [FloatingLauncherPanelContent] is a modal scrim (tapping anywhere outside the panel card
+     * dismisses it), which needs the whole screen touchable while it exists. Only ever added
+     * while a zone is actually expanded (see [openZone]/[closeZone]), so it isn't blocking
+     * anything the rest of the time - added fresh each time, rather than kept around
+     * permanently-but-invisible, so it's also always topmost (and so receives the scrim's taps
+     * ahead of the tab windows below it) the moment it's added.
+     */
+    private fun buildPanelLayoutParams(): WindowManager.LayoutParams {
         var flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
             WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        if (blurBehind && isAtLeastApiLevel(31)) {
+        // Blurs whatever's behind the panel, matching the OxygenOS Smart Sidebar's frosted-glass
+        // look. Only meaningful on API 31+, where WindowManager exposes a per-window blur radius -
+        // below that, this flag alone is old and mostly unsupported on modern devices, so the
+        // panel instead relies on its own translucent background color for the effect.
+        if (isAtLeastApiLevel(31)) {
             flags = flags or WindowManager.LayoutParams.FLAG_BLUR_BEHIND
         }
-
         return WindowManager.LayoutParams(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT,
-            type,
+            overlayWindowType(),
             flags,
             PixelFormat.TRANSLUCENT,
         ).apply {
             gravity = Gravity.TOP or Gravity.START
-            if (blurBehind && isAtLeastApiLevel(31)) {
-                this.blurBehindRadius = BLUR_BEHIND_RADIUS_PX
+            if (isAtLeastApiLevel(31)) {
+                blurBehindRadius = BLUR_BEHIND_RADIUS_PX
             }
         }
+    }
+
+    private fun overlayWindowType(): Int = if (isAtLeastApiLevel(26)) {
+        WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+    } else {
+        @Suppress("DEPRECATION")
+        WindowManager.LayoutParams.TYPE_PHONE
     }
 
     private fun buildNotification(): Notification {
@@ -343,167 +520,152 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
         private const val CHANNEL_ID = "floating_launcher"
         private const val NOTIFICATION_ID = 4820
         private const val BLUR_BEHIND_RADIUS_PX = 60
+        private const val ZONE_TAB_HEIGHT_DP = 72
     }
 }
 
+/**
+ * Pulled out of [FloatingLauncherService.buildTabLayoutParams] as a pure function purely so it's
+ * unit-testable without an Android runtime (`Resources`/`WindowManager` aren't available to a
+ * plain JVM unit test). Replicates what
+ * `BiasAlignment(verticalBias = verticalFraction * 2f - 1f)` used to compute for a child inside a
+ * fullscreen Box back when all six zones shared one window - see the class doc for why that
+ * window no longer exists, but the on-screen position each tab ends up at is unchanged.
+ */
+internal fun computeTabY(screenHeightPx: Int, tabHeightPx: Int, verticalFraction: Float): Int =
+    ((screenHeightPx - tabHeightPx) * verticalFraction).roundToInt()
+
 @Composable
-private fun FloatingLauncherContent(
-    settings: FloatingLauncherSettings,
-    iconService: IconService,
-    searchableRepository: SavableSearchableRepository,
-    freezeManager: FreezeManager,
-    appRepository: AppRepository,
-    contextProfileManager: ContextProfileManager,
-    shutterSettings: ShutterSettings,
-    onPanelExpandedChanged: (Boolean) -> Unit,
-) {
+private fun rememberFloatingLauncherColorScheme(): ColorScheme {
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val isSystemDark = (configuration.uiMode and
         Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-
-    val colorScheme = when {
+    return when {
         isAtLeastApiLevel(31) && isSystemDark -> dynamicDarkColorScheme(context)
         isAtLeastApiLevel(31) -> dynamicLightColorScheme(context)
         isSystemDark -> darkColorScheme()
         else -> lightColorScheme()
     }
+}
 
+@Composable
+private fun isHiddenForGaming(
+    settings: FloatingLauncherSettings,
+    contextProfileManager: ContextProfileManager,
+): Boolean {
+    val autoHideGaming by settings.autoHideGaming.collectAsState(false)
+    // icon is the only field a ContextProfile carries that signals "this one's for gaming" -
+    // profiles are otherwise fully user-defined with no built-in category.
+    val activeProfile by contextProfileManager.activeProfile.collectAsState(null)
+    return autoHideGaming && activeProfile?.icon == ContextProfileIcon.Gaming
+}
+
+/**
+ * Content of one zone's small, always-present tab window - see [FloatingLauncherService]'s class
+ * doc for why each zone gets its own window rather than all zones sharing one full-screen window.
+ * Renders nothing (letting the window shrink to ~0x0) whenever this zone isn't actually meant to
+ * be visible right now.
+ */
+@Composable
+private fun FloatingLauncherTabContent(
+    zone: FloatingLauncherZone,
+    settings: FloatingLauncherSettings,
+    contextProfileManager: ContextProfileManager,
+    onOpen: () -> Unit,
+    onAppDropped: (String) -> Unit,
+    onExternalContentDropped: (ClipData) -> Unit,
+) {
     val zones by settings.zones.collectAsState(emptyMap())
     val thickness by settings.thickness.collectAsState(24)
     val tabColor by settings.color.collectAsState(0xFF6750A4.toInt())
     val tabAlpha by settings.alpha.collectAsState(0.6f)
     val hideIndicator by settings.hideIndicator.collectAsState(false)
+    val hapticFeedbackEnabled by settings.hapticFeedback.collectAsState(true)
+    val hiddenForGaming = isHiddenForGaming(settings, contextProfileManager)
+
+    val config = zones[zone]
+    if (config?.enabled != true || hiddenForGaming) return
+
+    MaterialTheme(colorScheme = rememberFloatingLauncherColorScheme()) {
+        OverlayHost {
+            ZoneTab(
+                zone = zone,
+                thickness = thickness,
+                color = if (hideIndicator) Color.Transparent else Color(tabColor).copy(alpha = tabAlpha),
+                hapticFeedbackEnabled = hapticFeedbackEnabled,
+                onClick = onOpen,
+                onAppDropped = onAppDropped,
+                onExternalContentDropped = onExternalContentDropped,
+            )
+        }
+    }
+}
+
+/**
+ * Content of the one shared, full-screen panel window - only exists while [zone] is expanded (see
+ * [FloatingLauncherService.openZone]/[FloatingLauncherService.closeZone]). Dismisses itself if
+ * [zone] gets disabled, or auto-hide-for-gaming kicks in, while it's open.
+ */
+@Composable
+private fun FloatingLauncherPanelContent(
+    zone: FloatingLauncherZone,
+    settings: FloatingLauncherSettings,
+    iconService: IconService,
+    searchableRepository: SavableSearchableRepository,
+    freezeManager: FreezeManager,
+    appRepository: AppRepository,
+    shutterSettings: ShutterSettings,
+    contextProfileManager: ContextProfileManager,
+    fileDockItemsState: State<List<FileDockItem>>,
+    onDismiss: () -> Unit,
+    onAppLaunched: () -> Unit,
+    onAppDropped: (String) -> Unit,
+    onReorder: (List<String>) -> Unit,
+    onRemoveApp: (String) -> Unit,
+    onCreateFolder: (name: String, appKeys: List<String>) -> Unit,
+    onRenameFolder: (folderId: String, name: String) -> Unit,
+    onDeleteFolder: (folderId: String) -> Unit,
+    onExternalContentDropped: (ClipData) -> Unit,
+    onRemoveFileDockItem: (String) -> Unit,
+) {
+    val zones by settings.zones.collectAsState(emptyMap())
     val columns by settings.columns.collectAsState(2)
     val maxPerColumn by settings.maxPerColumn.collectAsState(10)
-    val hapticFeedbackEnabled by settings.hapticFeedback.collectAsState(true)
-    val autoHideGaming by settings.autoHideGaming.collectAsState(false)
-    // icon is the only field a ContextProfile carries that signals "this one's for gaming" -
-    // profiles are otherwise fully user-defined with no built-in category.
-    val activeProfile by contextProfileManager.activeProfile.collectAsState(null)
-    val hiddenForGaming = autoHideGaming && activeProfile?.icon == ContextProfileIcon.Gaming
+    val hiddenForGaming = isHiddenForGaming(settings, contextProfileManager)
+    val zoneConfig = zones[zone]
+    val fileDockItems by fileDockItemsState
 
-    var expandedZone by remember { mutableStateOf<FloatingLauncherZone?>(null) }
-    // Deliberately not persisted (no DataStore field) - matches what "temporary" means for
-    // OxygenOS's File Dock, this shelf is cleared whenever the service restarts.
-    var fileDockItems by remember { mutableStateOf<List<FileDockItem>>(emptyList()) }
-    val fileDockScope = rememberCoroutineScope()
-
-    LaunchedEffect(hiddenForGaming) {
-        if (hiddenForGaming) expandedZone = null
+    LaunchedEffect(hiddenForGaming, zoneConfig) {
+        if (hiddenForGaming || zoneConfig == null) onDismiss()
     }
 
-    LaunchedEffect(expandedZone) {
-        onPanelExpandedChanged(expandedZone != null)
-    }
+    if (hiddenForGaming || zoneConfig == null) return
 
-    fun addAppToZone(zone: FloatingLauncherZone, key: String) {
-        val current = zones[zone]?.apps ?: emptyList()
-        if (key !in current) {
-            settings.setZoneApps(zone, current + key)
-        }
-    }
-
-    fun reorderZone(zone: FloatingLauncherZone, keys: List<String>) {
-        settings.setZoneApps(zone, keys)
-    }
-
-    fun removeAppFromZone(zone: FloatingLauncherZone, key: String) {
-        val current = zones[zone]?.apps ?: emptyList()
-        settings.setZoneApps(zone, current - key)
-    }
-
-    fun createFolder(zone: FloatingLauncherZone, name: String, appKeys: List<String>) {
-        settings.createFolder(zone, name, appKeys)
-    }
-
-    fun renameFolder(zone: FloatingLauncherZone, folderId: String, name: String) {
-        settings.renameFolder(zone, folderId, name)
-    }
-
-    fun deleteFolder(zone: FloatingLauncherZone, folderId: String) {
-        settings.deleteFolder(zone, folderId)
-    }
-
-    fun handleExternalDrop(clipData: ClipData) {
-        fileDockScope.launch {
-            for (i in 0 until clipData.itemCount) {
-                val item = clipData.getItemAt(i)
-                val uri = item.uri
-                if (uri != null) {
-                    val mimeType = clipData.description.getMimeType(0)
-                    val cachedUri = copyToDockCache(context, uri, mimeType) ?: continue
-                    fileDockItems = fileDockItems + FileDockItem.MediaItem(
-                        id = UUID.randomUUID().toString(),
-                        uri = cachedUri,
-                        mimeType = mimeType,
-                        label = uri.lastPathSegment ?: uri.toString(),
-                    )
-                } else {
-                    val text = item.text?.toString()
-                    if (!text.isNullOrBlank()) {
-                        fileDockItems = fileDockItems + FileDockItem.TextItem(UUID.randomUUID().toString(), text)
-                    }
-                }
-            }
-        }
-    }
-
-    fun removeFileDockItem(id: String) {
-        fileDockItems = fileDockItems.filterNot { it.id == id }
-    }
-
-    MaterialTheme(colorScheme = colorScheme) {
+    MaterialTheme(colorScheme = rememberFloatingLauncherColorScheme()) {
         OverlayHost {
-            if (!hiddenForGaming) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    for (zone in FloatingLauncherZone.entries) {
-                        val config = zones[zone] ?: continue
-                        if (!config.enabled) continue
-                        ZoneTab(
-                            zone = zone,
-                            thickness = thickness,
-                            color = if (hideIndicator) Color.Transparent else Color(tabColor).copy(alpha = tabAlpha),
-                            hapticFeedbackEnabled = hapticFeedbackEnabled,
-                            onClick = { expandedZone = zone },
-                            onAppDropped = { key -> addAppToZone(zone, key) },
-                            onExternalContentDropped = { clipData -> handleExternalDrop(clipData) },
-                            modifier = Modifier.align(
-                                BiasAlignment(
-                                    horizontalBias = if (zone.isLeftEdge) -1f else 1f,
-                                    verticalBias = zone.verticalFraction * 2f - 1f,
-                                )
-                            ),
-                        )
-                    }
-                    val zone = expandedZone
-                    val zoneConfig = zone?.let { zones[it] }
-                    if (zone != null && zoneConfig != null) {
-                        ExpandedPanel(
-                            zone = zone,
-                            config = zoneConfig,
-                            columns = columns,
-                            maxPerColumn = maxPerColumn,
-                            searchableRepository = searchableRepository,
-                            iconService = iconService,
-                            freezeManager = freezeManager,
-                            appRepository = appRepository,
-                            shutterSettings = shutterSettings,
-                            onDismiss = { expandedZone = null },
-                            onAppLaunched = { expandedZone = null },
-                            onAppDropped = { key -> addAppToZone(zone, key) },
-                            onReorder = { keys -> reorderZone(zone, keys) },
-                            onRemoveApp = { key -> removeAppFromZone(zone, key) },
-                            onCreateFolder = { name, keys -> createFolder(zone, name, keys) },
-                            onRenameFolder = { folderId, name -> renameFolder(zone, folderId, name) },
-                            onDeleteFolder = { folderId -> deleteFolder(zone, folderId) },
-                            onExternalContentDropped = { clipData -> handleExternalDrop(clipData) },
-                            fileDockItems = fileDockItems,
-                            onRemoveFileDockItem = { id -> removeFileDockItem(id) },
-                        )
-                    }
-                }
-            }
+            ExpandedPanel(
+                zone = zone,
+                config = zoneConfig,
+                columns = columns,
+                maxPerColumn = maxPerColumn,
+                searchableRepository = searchableRepository,
+                iconService = iconService,
+                freezeManager = freezeManager,
+                appRepository = appRepository,
+                shutterSettings = shutterSettings,
+                onDismiss = onDismiss,
+                onAppLaunched = onAppLaunched,
+                onAppDropped = onAppDropped,
+                onReorder = onReorder,
+                onRemoveApp = onRemoveApp,
+                onCreateFolder = onCreateFolder,
+                onRenameFolder = onRenameFolder,
+                onDeleteFolder = onDeleteFolder,
+                onExternalContentDropped = onExternalContentDropped,
+                fileDockItems = fileDockItems,
+                onRemoveFileDockItem = onRemoveFileDockItem,
+            )
         }
     }
 }
