@@ -7,9 +7,13 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.draganddrop.dragAndDropSource
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.awaitLongPressOrCancellation
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -43,6 +47,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -120,11 +125,10 @@ fun GridItem(
      * items sheet) don't, to keep the added gesture complexity scoped to the two places browsing
      * apps specifically to add one somewhere is the obvious intent.
      *
-     * When on, replaces the long-press-opens-popup gesture with a custom one: holding still still
-     * opens the popup on release, but moving past touch slop while held starts the drag instead.
-     * Both drag-detector and tap-detector run as sibling coroutines sharing the same pointer
-     * input stream - the same technique combinedClickable itself is built on - so a drag "wins"
-     * and the tap it also raced against gets naturally cancelled once the touch moves.
+     * When on, the icon's normal tap and long-press handling is untouched: a tap still launches,
+     * a held long press still opens the popup. Only long-pressing and then dragging past touch
+     * slop starts the cross-window drag (see the custom start detector at the use site below for
+     * why the stock detector can't be used).
      */
     enableFloatingLauncherDragSource: Boolean = false,
 ) {
@@ -207,7 +211,7 @@ fun GridItem(
                             cornerRadius = CornerRadius(8.dp.toPx()),
                         )
                     }
-                    val transferData: (Offset) -> DragAndDropTransferData? = {
+                    val transferData: (Offset) -> DragAndDropTransferData = {
                         hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
                         DragAndDropTransferData(
                             // The clip label (not the label callers see) doubles as a marker so
@@ -217,9 +221,38 @@ fun GridItem(
                             flags = View.DRAG_FLAG_GLOBAL,
                         )
                     }
+                    // The non-deprecated dragAndDropSource(transferData) overloads must NOT be
+                    // used here: their built-in start detector claims this node's entire pointer
+                    // stream, which starves the combinedClickable above of both taps and long
+                    // presses - icons stopped launching (and stopped opening their long-press
+                    // popup) everywhere this drag source is enabled. This custom detector only
+                    // ever consumes anything once a long-press-then-drag actually starts a
+                    // transfer; taps and held-still long presses pass through untouched.
+                    @Suppress("DEPRECATION")
+                    @OptIn(ExperimentalFoundationApi::class)
                     Modifier.dragAndDropSource(
                         drawDragDecoration = decoration,
-                        transferData = transferData,
+                        block = {
+                            awaitEachGesture {
+                                val down = awaitFirstDown(requireUnconsumed = false)
+                                val longPress = awaitLongPressOrCancellation(down.id)
+                                if (longPress != null) {
+                                    var dragDistance = Offset.Zero
+                                    while (true) {
+                                        val event = awaitPointerEvent()
+                                        val change = event.changes.firstOrNull { it.id == longPress.id }
+                                            ?: break
+                                        if (!change.pressed) break
+                                        dragDistance += change.positionChange()
+                                        if (dragDistance.getDistance() > viewConfiguration.touchSlop) {
+                                            change.consume()
+                                            startTransfer(transferData(change.position))
+                                            break
+                                        }
+                                    }
+                                }
+                            }
+                        },
                     )
                 } else {
                     Modifier
