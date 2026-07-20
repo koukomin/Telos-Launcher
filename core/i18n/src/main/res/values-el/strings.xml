@@ -544,6 +544,9 @@
     <string name="freeze_app_state_never">Να μην παγώνει ποτέ</string>
     <string name="preference_freeze_show_system_apps">Εμφάνιση εφαρμογών συστήματος</string>
     <string name="preference_freeze_show_system_apps_summary">Το πάγωμα μιας εφαρμογής συστήματος μπορεί να προκαλέσει προβλήματα. Ενεργοποιήστε το μόνο αν γνωρίζετε τι κάνετε.</string>
+    <string name="freeze_system_apps_warning">Η απενεργοποίηση ή ο τερματισμός μιας εφαρμογής συστήματος μπορεί να χαλάσει βασικές λειτουργίες του τηλεφώνου και, στη χειρότερη περίπτωση, να καταστήσει τη συσκευή σας μη εκκινήσιμη. Αλλάξτε την κατάσταση μιας εφαρμογής συστήματος μόνο αν γνωρίζετε ακριβώς τι κάνει.</string>
+    <string name="preference_freeze_show_iconless_apps">Εμφάνιση εφαρμογών χωρίς εικονίδιο</string>
+    <string name="preference_freeze_show_iconless_apps_summary">Εμφανίζει επίσης στοιχεία παρασκηνίου και υπηρεσίες συστήματος που δεν έχουν εικονίδιο εκκίνησης. Μπορούν και αυτά να παγώσουν ή να απενεργοποιηθούν όπως κάθε άλλη εφαρμογή.</string>
     <string name="preference_freeze_advanced_features">Προηγμένες Λειτουργίες</string>
     <string name="preference_freeze_advanced_features_summary">Ξεκλειδώνει τις ενέργειες Πάγωμα, Αναγκαστική Διακοπή και Εκκαθάριση Cache (Απαιτεί Shizuku ή Root)</string>
     <string name="menu_freeze">Πάγωμα</string>

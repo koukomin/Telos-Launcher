@@ -75,6 +75,7 @@ fun FreezeSettingsScreen() {
     val candidates by viewModel.candidates.collectAsStateWithLifecycle()
     val neverFreezeApps by viewModel.neverFreezeApps.collectAsStateWithLifecycle()
     val showSystemApps by viewModel.showSystemApps.collectAsStateWithLifecycle()
+    val showIconlessApps by viewModel.showIconlessApps.collectAsStateWithLifecycle()
 
     val backStack = LocalBackStack.current
 
@@ -248,6 +249,18 @@ fun FreezeSettingsScreen() {
                     summary = stringResource(R.string.preference_freeze_show_system_apps_summary),
                     value = showSystemApps,
                     onValueChanged = { viewModel.setShowSystemApps(it) }
+                )
+                AnimatedVisibility(showSystemApps) {
+                    Banner(
+                        text = stringResource(R.string.freeze_system_apps_warning),
+                        icon = R.drawable.error_24px,
+                    )
+                }
+                SwitchPreference(
+                    title = stringResource(R.string.preference_freeze_show_iconless_apps),
+                    summary = stringResource(R.string.preference_freeze_show_iconless_apps_summary),
+                    value = showIconlessApps,
+                    onValueChanged = { viewModel.setShowIconlessApps(it) }
                 )
                 SwitchPreference(
                     title = stringResource(R.string.preference_freeze_advanced_features),

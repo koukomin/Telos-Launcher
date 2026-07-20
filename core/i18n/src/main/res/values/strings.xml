@@ -687,6 +687,9 @@
     <string name="freeze_app_state_never">Never freeze</string>
     <string name="preference_freeze_show_system_apps">Show system apps</string>
     <string name="preference_freeze_show_system_apps_summary">Freezing a system app can break core phone functionality. Only enable this if you know what you\'re doing.</string>
+    <string name="freeze_system_apps_warning">Disabling or force-stopping a system app can break core phone functionality and, in the worst case, leave your device unable to boot. Only change the state of a system app if you know exactly what it does.</string>
+    <string name="preference_freeze_show_iconless_apps">Show apps without an icon</string>
+    <string name="preference_freeze_show_iconless_apps_summary">Also list background components and system services that don\'t have a launchable icon. These can still be frozen or disabled like any other app.</string>
     <string name="preference_freeze_advanced_features">Advanced Features</string>
     <string name="preference_freeze_advanced_features_summary">Unlocks Freeze, Force Stop and Clear Cache actions in app context menus (Requires Shizuku or Root)</string>
     <string name="menu_freeze">Freeze</string>

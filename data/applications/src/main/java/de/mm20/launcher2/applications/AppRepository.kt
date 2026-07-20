@@ -44,6 +44,15 @@ interface AppRepository : SearchableRepository<Application> {
     ): Flow<Application?>
 
     fun findMany(): Flow<ImmutableList<Application>>
+
+    /**
+     * One-shot scan for launchable activities that [findMany] skips because they have no icon
+     * resource at all (see the `iconResource == 0` check in `getApplications`) - background
+     * components and some system services resolve a MAIN/LAUNCHER activity but were never meant
+     * to show up in an app list. Freeze Manager's "apps without icon" toggle needs to reach these
+     * too, since anything with an activity can still be suspended/disabled like any other app.
+     */
+    suspend fun findIconlessApps(): List<Application>
 }
 
 internal class AppRepositoryImpl(
@@ -208,7 +217,11 @@ internal class AppRepositoryImpl(
         }
     }
 
-    private suspend fun getApplications(packageName: String?, userHandle: UserHandle): List<LauncherApp> {
+    private suspend fun getApplications(
+        packageName: String?,
+        userHandle: UserHandle,
+        includeIconless: Boolean = false,
+    ): List<LauncherApp> {
         if (packageName == context.packageName) return emptyList()
 
         val pm = context.packageManager
@@ -241,7 +254,7 @@ internal class AppRepositoryImpl(
 
             val label = info.loadLabel(pm).toString()
             if (label.isEmpty()) continue
-            if (info.iconResource == 0 && activityInfo.applicationInfo.icon == 0) continue
+            if (!includeIconless && info.iconResource == 0 && activityInfo.applicationInfo.icon == 0) continue
 
             val isAppEnabled = activityInfo.applicationInfo.enabled
             val isActivityEnabled = activityInfo.enabled
@@ -303,6 +316,13 @@ internal class AppRepositoryImpl(
 
     override fun findMany(): Flow<ImmutableList<Application>> {
         return installedApps.map { it.toImmutableList() }
+    }
+
+    override suspend fun findIconlessApps(): List<Application> = withContext(Dispatchers.Default) {
+        val existing = installedApps.value.map { it.componentName to it.user }.toSet()
+        profiles.first().flatMap { profile ->
+            getApplications(null, profile.userHandle, includeIconless = true)
+        }.filterNot { (it.componentName to it.user) in existing }
     }
 
     override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<LauncherApp>> {

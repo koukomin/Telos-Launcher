@@ -73,10 +73,27 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
         _showSystemApps.value = show
     }
 
-    val allApps = combine(sortedApps, _showSystemApps) { apps, showSystem ->
-        if (showSystem) apps
-        else withContext(Dispatchers.Default) {
-            apps.filterNot { isSystemApp(it.componentName.packageName) }
+    private val _showIconlessApps = MutableStateFlow(false)
+    val showIconlessApps = _showIconlessApps.asStateFlow()
+
+    private val _iconlessApps = MutableStateFlow<List<Application>>(emptyList())
+
+    fun setShowIconlessApps(show: Boolean) {
+        _showIconlessApps.value = show
+        if (show && _iconlessApps.value.isEmpty()) {
+            viewModelScope.launch {
+                _iconlessApps.value = appRepository.findIconlessApps().sorted()
+            }
+        }
+    }
+
+    val allApps = combine(
+        sortedApps, _showSystemApps, _showIconlessApps, _iconlessApps,
+    ) { apps, showSystem, showIconless, iconlessApps ->
+        withContext(Dispatchers.Default) {
+            val combined = if (showIconless) (apps + iconlessApps).sorted() else apps
+            if (showSystem) combined
+            else combined.filterNot { isSystemApp(it.componentName.packageName) }
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
