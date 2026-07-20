@@ -75,6 +75,8 @@ import de.mm20.launcher2.ui.settings.contacts.ContactsSettingsScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReportRoute
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReportScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterRoute
+import de.mm20.launcher2.ui.settings.applock.AppLockSettingsRoute
+import de.mm20.launcher2.ui.settings.applock.AppLockSettingsScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterScreen
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsRoute
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
@@ -338,6 +340,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<DebugSettingsRoute> {
                 DebugSettingsScreen()
+            }
+            entry<AppLockSettingsRoute> {
+                AppLockSettingsScreen()
             }
             entry<FreezeSettingsRoute> {
                 FreezeSettingsScreen()

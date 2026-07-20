@@ -1,6 +1,7 @@
 package de.mm20.launcher2.preferences
 
 import de.mm20.launcher2.backup.Backupable
+import de.mm20.launcher2.preferences.applock.AppLockSettings
 import de.mm20.launcher2.preferences.feed.FeedSettings
 import de.mm20.launcher2.preferences.freeze.FreezeSettings
 import de.mm20.launcher2.preferences.protection.ProtectionSettings
@@ -67,6 +68,7 @@ val preferencesModule = module {
     factory { FreezeSettings(get()) }
     factory { WallpaperSettings(get()) }
     factory { ProtectionSettings(get()) }
+    factory { AppLockSettings(get()) }
     factory { PerformanceSettings(get()) }
     factory { ShutterSettings(get()) }
     factory { FloatingLauncherSettings(get()) }

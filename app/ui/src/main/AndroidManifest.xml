@@ -95,6 +95,19 @@
 
         <activity android:name=".launcher.sheets.BindAndConfigureAppWidgetActivity" />
 
+        <!--
+            App Lock's gate screen. Its own task (no affinity, excluded from recents) so it sits
+            on top of whatever locked app triggered it without merging into that app's own task -
+            finishing it after a successful unlock reveals that app directly.
+        -->
+        <activity
+            android:name=".applock.AppLockActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:theme="@style/LauncherTheme"
+            android:enableOnBackInvokedCallback="true" />
+
         <activity
             android:name=".desktopmode.DesktopModeActivity"
             android:exported="false"
@@ -134,6 +147,15 @@
             <property
                 android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
                 android:value="Persistent Dynamic Island pill overlay, opt-in and off by default" />
+        </service>
+
+        <service
+            android:name=".applock.AppLockOverlayService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Watches for locked apps coming to the foreground and shows a blocking overlay, opt-in and off by default" />
         </service>
 
         <activity

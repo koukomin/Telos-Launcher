@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+        Special access, granted manually via Settings > Usage access (not a runtime dialog).
+        Used only for the UsageStatsManager half of App Lock's hybrid foreground-app detection -
+        see AppLockForegroundMonitor. Already declared by :services:freeze too; redeclared here
+        so this module documents its own requirements independently of that one.
+    -->
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+
+</manifest>

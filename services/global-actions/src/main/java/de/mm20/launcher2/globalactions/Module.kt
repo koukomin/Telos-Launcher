@@ -5,4 +5,5 @@ import org.koin.dsl.module
 
 val globalActionsModule = module {
     single { GlobalActionsService(androidContext()) }
+    single { AccessibilityForegroundBridge() }
 }

@@ -618,4 +618,27 @@
     <string name="web_apps_panel_add_existing">Προσθήκη υπάρχοντος</string>
     <string name="preference_screen_advanced">Προηγμένες ρυθμίσεις</string>
     <string name="preference_screen_advanced_summary">Απόδοση, προφίλ, πρόσθετα και εργαλεία</string>
+    <string name="app_lock_prompt_title">Ξεκλείδωμα %1$s</string>
+    <string name="app_lock_locked_message">Η εφαρμογή %1$s είναι κλειδωμένη. Πιστοποιηθείτε για να συνεχίσετε.</string>
+    <string name="preference_screen_app_lock">Κλείδωμα εφαρμογών</string>
+    <string name="preference_screen_app_lock_summary">Απαίτηση πιστοποίησης για το άνοιγμα συγκεκριμένων εφαρμογών</string>
+    <string name="preference_app_lock_enabled">Ενεργοποίηση κλειδώματος εφαρμογών</string>
+    <string name="preference_app_lock_enabled_summary">Οι παρακάτω κλειδωμένες εφαρμογές θα απαιτούν πιστοποίηση κάθε φορά που έρχονται στο προσκήνιο.</string>
+    <string name="preference_app_lock_method">Μέθοδος ξεκλειδώματος</string>
+    <string name="preference_app_lock_usage_access">Πρόσβαση χρήσης</string>
+    <string name="preference_app_lock_usage_access_summary_granted">Παραχωρήθηκε - χρησιμοποιείται για την ανίχνευση ανοίγματος κλειδωμένων εφαρμογών.</string>
+    <string name="preference_app_lock_usage_access_summary_not_granted">Απαιτείται ώστε το κλείδωμα εφαρμογών να ανιχνεύει πότε ανοίγει μια κλειδωμένη εφαρμογή.</string>
+    <string name="preference_app_lock_accessibility">Υπηρεσία προσβασιμότητας</string>
+    <string name="preference_app_lock_accessibility_summary_granted">Ενεργοποιήθηκε - οι κλειδωμένες εφαρμογές εντοπίζονται ακαριαία αντί με μια μικρή καθυστέρηση.</string>
+    <string name="preference_app_lock_accessibility_summary_not_granted">Προαιρετικό: η ενεργοποίηση εντοπίζει τις κλειδωμένες εφαρμογές τη στιγμή που ανοίγουν, αντί με μια μικρή καθυστέρηση. Το κλείδωμα εφαρμογών λειτουργεί και χωρίς αυτό.</string>
+    <string name="preference_category_app_lock_apps">Κλειδωμένες εφαρμογές</string>
+    <string name="missing_permission_app_lock">Η απόκρυψη του περιεχομένου μιας κλειδωμένης εφαρμογής απαιτεί την άδεια εμφάνισης πάνω από άλλες εφαρμογές.</string>
+    <string name="app_lock_notification_channel">Κλείδωμα εφαρμογών</string>
+    <string name="app_lock_notification_title">Το κλείδωμα εφαρμογών είναι ενεργό</string>
+    <string name="app_lock_notification_text">Παρακολούθηση για κλειδωμένες εφαρμογές</string>
+    <string name="preference_app_lock_detection_mode">Μέθοδος ανίχνευσης</string>
+    <string name="app_lock_detection_mode_usage_stats">Μόνο πρόσβαση χρήσης</string>
+    <string name="app_lock_detection_mode_accessibility">Μόνο υπηρεσία προσβασιμότητας</string>
+    <string name="app_lock_detection_mode_hybrid">Και τα δύο (προτείνεται)</string>
+    <string name="app_lock_detection_mode_hybrid_summary">Χρησιμοποιεί την υπηρεσία προσβασιμότητας για ακαριαία ανίχνευση όταν είναι ενεργή, και καταφεύγει στην πρόσβαση χρήσης όταν δεν είναι.</string>
 </resources>

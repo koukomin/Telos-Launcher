@@ -8,6 +8,7 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.applock.AppLockSettingsRoute
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsRoute
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsRoute
 import de.mm20.launcher2.ui.settings.freeze.FreezeSettingsRoute
@@ -57,6 +58,14 @@ fun AdvancedSettingsScreen() {
                     summary = stringResource(id = R.string.preference_screen_freeze_summary),
                     onClick = {
                         backStack.add(FreezeSettingsRoute)
+                    }
+                )
+                Preference(
+                    icon = R.drawable.lock_24px,
+                    title = stringResource(id = R.string.preference_screen_app_lock),
+                    summary = stringResource(id = R.string.preference_screen_app_lock_summary),
+                    onClick = {
+                        backStack.add(AppLockSettingsRoute)
                     }
                 )
                 Preference(

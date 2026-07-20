@@ -309,6 +309,11 @@ data class LauncherSettingsData internal constructor(
     val protectionCustomLockHashed: String? = null,
     val protectionLockLauncher: Boolean = false,
 
+    val appLockEnabled: Boolean = false,
+    val appLockMethod: SettingsLockMethod = SettingsLockMethod.DeviceCredential,
+    val appLockDetectionMode: AppLockDetectionMode = AppLockDetectionMode.Hybrid,
+    val appLockLockedPackages: Set<String> = emptySet(),
+
     val floatingLauncherEnabled: Boolean = false,
     @Deprecated("Replaced by floatingLauncherZones - kept only so Migration10 can read the old single-tab position.")
     val floatingLauncherEdge: FloatingLauncherEdge = FloatingLauncherEdge.Right,
@@ -672,6 +677,23 @@ enum class SettingsLockMethod {
 
     /** Biometrics only: the device PIN/pattern is deliberately not accepted. */
     @SerialName("biometrics_only") BiometricsOnly,
+}
+
+/**
+ * How App Lock notices that a locked app just came to the foreground. Both paths end up calling
+ * the same gate; this only controls detection latency/permission trade-offs.
+ */
+@Serializable
+enum class AppLockDetectionMode {
+    /** UsageStatsManager polling only (needs Usage Access, granted via Settings). */
+    @SerialName("usage_stats") UsageStats,
+
+    /** Real-time WINDOW_STATE_CHANGED events from the launcher's accessibility service only. */
+    @SerialName("accessibility") Accessibility,
+
+    /** Both at once: instant via accessibility when it's enabled, polling as a fallback
+     * whenever it isn't (or hasn't connected yet). */
+    @SerialName("hybrid") Hybrid,
 }
 
 /** Which screen edge the floating quick launcher's collapsed tab attaches to. */

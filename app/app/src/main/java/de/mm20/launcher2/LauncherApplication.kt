@@ -41,6 +41,9 @@ import de.mm20.launcher2.data.plugins.dataPluginsModule
 import de.mm20.launcher2.devicepose.devicePoseModule
 import de.mm20.launcher2.feed.feedModule
 import de.mm20.launcher2.freeze.freezeModule
+import de.mm20.launcher2.applock.appLockModule
+import de.mm20.launcher2.preferences.applock.AppLockSettings
+import de.mm20.launcher2.ui.applock.AppLockOverlayService
 import de.mm20.launcher2.plugins.servicesPluginsModule
 import de.mm20.launcher2.preferences.preferencesModule
 import de.mm20.launcher2.preferences.ui.DynamicIslandSettings
@@ -126,6 +129,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     desktopModeModule,
                     islandOverlayModule,
                     webAppsPanelModule,
+                    appLockModule,
                 )
             )
         }
@@ -151,6 +155,18 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                 ContextCompat.startForegroundService(
                     this@LauncherApplication,
                     Intent(this@LauncherApplication, DynamicIslandService::class.java),
+                )
+            }
+        }
+
+        // Same reasoning as the Floating Launcher above - resume App Lock's overlay watcher
+        // after a process restart.
+        launch {
+            val appLockSettings = get<AppLockSettings>()
+            if (appLockSettings.enabled.first() && Settings.canDrawOverlays(this@LauncherApplication)) {
+                ContextCompat.startForegroundService(
+                    this@LauncherApplication,
+                    Intent(this@LauncherApplication, AppLockOverlayService::class.java),
                 )
             }
         }

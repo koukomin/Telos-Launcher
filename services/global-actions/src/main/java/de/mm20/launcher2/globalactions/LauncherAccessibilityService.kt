@@ -10,9 +10,12 @@ import java.lang.ref.WeakReference
 class LauncherAccessibilityService: AccessibilityService() {
 
     private val permissionManager: PermissionsManager by inject()
+    private val foregroundBridge: AccessibilityForegroundBridge by inject()
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-
+        if (event?.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
+        val packageName = event.packageName?.toString() ?: return
+        foregroundBridge.onForegroundPackageChanged(packageName)
     }
 
     override fun onInterrupt() {
