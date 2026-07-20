@@ -12,13 +12,18 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.mm20.launcher2.preferences.WidgetScreenTarget
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import org.koin.compose.koinInject
@@ -52,11 +57,19 @@ internal fun HomeScreenPager(
     val pageCount by uiSettings.homeScreenPageCount.collectAsStateWithLifecycle(1)
 
     if (pageCount <= 1) {
+        // No pager showing, so there's only ever the one (default) home page - keep the shared
+        // index in sync in case it was left pointing at a page that no longer exists (the user
+        // had multiple pages, was on page 3+, then turned pages back down to 1).
+        CurrentHomeScreenPage.index = 0
         firstPage(modifier, insets)
         return
     }
 
     val pagerState = rememberPagerState(pageCount = { pageCount })
+
+    LaunchedEffect(pagerState) {
+        snapshotFlow { pagerState.currentPage }.collect { CurrentHomeScreenPage.index = it }
+    }
 
     Box(modifier = modifier) {
         HorizontalPager(
@@ -93,6 +106,28 @@ internal fun HomeScreenPager(
         }
     }
 }
+
+/**
+ * Which of [UiSettings.homeScreenPageCount]'s pages [HomeScreenPager] is currently showing (0 =
+ * the first/default page), kept here rather than threaded through [LauncherScaffoldState] since
+ * only this pager and things that need to target "whatever home page the user is looking at
+ * right now" - see [currentHomeScreenWidgetScopeId] - care about it, and those live outside the
+ * pager's own composition (e.g. [HomeScreenMenuComponent] is a separate gesture destination, not
+ * a child of the pager).
+ */
+internal object CurrentHomeScreenPage {
+    var index by mutableIntStateOf(0)
+}
+
+/** The widget-repository scope id ([WidgetScreenTarget.Default.id] for page 0, otherwise the
+ * same per-page id [HomeScreenPager] already renders that page's widgets against) matching
+ * [CurrentHomeScreenPage.index] - what a widget added from outside the pager (e.g. the home
+ * screen long-press menu) should be added to, so it lands on the page the user actually has open
+ * instead of always the first one. */
+internal fun currentHomeScreenWidgetScopeId(): UUID =
+    CurrentHomeScreenPage.index.let { page ->
+        if (page == 0) WidgetScreenTarget.Default.id else extraHomePageWidgetScopeId(page)
+    }
 
 /** Deterministic widget-repository scope id for extra home page [page] (1-based index within the
  * pager, i.e. page 1 is the second home screen). Independent of [de.mm20.launcher2.preferences.WidgetScreenTarget]

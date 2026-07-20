@@ -36,7 +36,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.WidgetScreenTarget
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalAppWidgetHost
 import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
@@ -54,13 +53,16 @@ import java.util.UUID
  * most stock launchers' "change wallpaper / add widget" menu.
  *
  * "Add widget" attempts the raw system [AppWidgetManager.ACTION_APPWIDGET_PICK] picker first.
- * That intent has had no AOSP handler since Google removed the built-in picker Activity, so on
- * stock Android this will almost always fall straight through to [WidgetPickerSheet] (the
- * launcher's own already-existing widget picker) - kept as a fallback rather than the primary
- * path so the feature still works even though the literally-requested system intent is
- * unavailable in practice. Either way, the resulting widget is added to the same widget list the
- * main home screen's [de.mm20.launcher2.ui.launcher.widgets.WidgetColumn] renders, so it can be
- * combined into a stack there using the existing stacking UI.
+ * Most stock Android builds have no handler for it at all, but at least one real one does
+ * (Android Settings' own AppWidgetPickActivity, confirmed on a Google Play system image) - and
+ * that one can still fail or cancel for a caller it doesn't recognize as a proper widget host, so
+ * "resolvable" is checked but never trusted: any non-OK result, for any reason, falls through to
+ * [WidgetPickerSheet] (the launcher's own already-existing widget picker) rather than giving up.
+ * Either way, the resulting widget is added to whichever home screen page the user actually has
+ * open right now (see [currentHomeScreenWidgetScopeId]), using the same
+ * [de.mm20.launcher2.ui.launcher.widgets.WidgetsVM]-backed list that page's own
+ * [de.mm20.launcher2.ui.launcher.widgets.WidgetColumn] renders, so it can be combined into a
+ * stack there using the existing stacking UI.
  */
 internal object HomeScreenMenuComponent : ScaffoldComponent() {
 
@@ -77,9 +79,23 @@ internal object HomeScreenMenuComponent : ScaffoldComponent() {
         val scope = rememberCoroutineScope()
         val widgetHost = LocalAppWidgetHost.current
 
+        // Not just WidgetScreenTarget.Default: if extra home screen pages are enabled (see
+        // HomeScreenPager), this targets whichever page the user actually has open right now,
+        // via the same per-page widget-repository scope id HomeScreenPager itself renders that
+        // page's widgets against - otherwise a widget added from here always landed on the
+        // first page no matter which one was visible.
+        //
+        // Deliberately NOT wrapped in remember(): LauncherScaffold's SecondaryPage keeps every
+        // gesture-destination component alive off-screen via movableContentOf for the entire
+        // life of the scaffold, composing them all once up front - a remembered value here would
+        // freeze at whatever page was current at that first, very early composition (almost
+        // always page 0) and never update again no matter which page the menu was later opened
+        // from. Reading CurrentHomeScreenPage.index directly on every composition makes this
+        // recompose - even while kept alive off-screen - whenever the visible page changes.
+        val widgetScopeId = currentHomeScreenWidgetScopeId()
         val widgetsViewModel: WidgetsVM = viewModel(
-            key = "widgets-column-${WidgetScreenTarget.Default.id}",
-            factory = WidgetsVM.Factory(WidgetScreenTarget.Default.id.toString()),
+            key = "widgets-column-$widgetScopeId",
+            factory = WidgetsVM.Factory(widgetScopeId.toString()),
         )
 
         var showWidgetPicker by remember { mutableStateOf(false) }
