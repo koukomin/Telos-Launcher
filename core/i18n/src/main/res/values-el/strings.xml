@@ -636,6 +636,10 @@
     <string name="app_lock_notification_channel">Κλείδωμα εφαρμογών</string>
     <string name="app_lock_notification_title">Το κλείδωμα εφαρμογών είναι ενεργό</string>
     <string name="app_lock_notification_text">Παρακολούθηση για κλειδωμένες εφαρμογές</string>
+    <plurals name="app_lock_apps_locked_count">
+        <item quantity="one">%1$d εφαρμογή κλειδωμένη</item>
+        <item quantity="other">%1$d εφαρμογές κλειδωμένες</item>
+    </plurals>
     <string name="preference_app_lock_detection_mode">Μέθοδος ανίχνευσης</string>
     <string name="app_lock_detection_mode_usage_stats">Μόνο πρόσβαση χρήσης</string>
     <string name="app_lock_detection_mode_accessibility">Μόνο υπηρεσία προσβασιμότητας</string>

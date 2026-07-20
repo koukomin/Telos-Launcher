@@ -2,12 +2,10 @@ package de.mm20.launcher2.ui.settings.applock
 
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -18,13 +16,13 @@ import de.mm20.launcher2.preferences.AppLockDetectionMode
 import de.mm20.launcher2.preferences.SettingsLockMethod
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.applock.AppLockOverlayService
-import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.preferences.GuardedPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.serialization.Serializable
 import androidx.appcompat.app.AppCompatActivity
 
@@ -32,20 +30,20 @@ import androidx.appcompat.app.AppCompatActivity
 data object AppLockSettingsRoute : NavKey
 
 /**
- * Master toggle, unlock method, the two detection permissions, and the per-app lock list. This
- * is deliberately not yet the polished picker piece 2 will build out (search, categories) - it's
- * the minimum needed to actually exercise the gate end to end.
+ * Master toggle, unlock method, the two detection permissions, and a link to
+ * [AppLockAppsScreen] (piece 2's polished, searchable per-app picker) rather than the app list
+ * itself - it doesn't belong mixed in with the rest of these settings.
  */
 @Composable
 fun AppLockSettingsScreen() {
     val context = LocalContext.current
+    val backStack = LocalBackStack.current
     val viewModel: AppLockSettingsScreenVM = viewModel()
 
     val enabled by viewModel.enabled.collectAsStateWithLifecycle()
     val lockMethod by viewModel.lockMethod.collectAsStateWithLifecycle()
     val detectionMode by viewModel.detectionMode.collectAsStateWithLifecycle()
     val lockedPackages by viewModel.lockedPackages.collectAsStateWithLifecycle()
-    val apps by viewModel.apps.collectAsStateWithLifecycle()
     val usageAccessGranted by viewModel.usageAccessGranted.collectAsStateWithLifecycle()
     val accessibilityGranted by viewModel.accessibilityGranted.collectAsStateWithLifecycle()
     val hasOverlayPermission by viewModel.hasOverlayPermission.collectAsStateWithLifecycle()
@@ -128,22 +126,18 @@ fun AppLockSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_app_lock_apps)) {}
-        }
-        itemsIndexed(apps, key = { _, it -> it.key }) { _, app ->
-            val icon by viewModel.getIcon(app, 32.dp.value.toInt()).collectAsStateWithLifecycle(null)
-            val locked = app.componentName.packageName in lockedPackages
-            Preference(
-                title = { Text(app.label) },
-                icon = { ShapedLauncherIcon(size = 32.dp, icon = { icon }) },
-                onClick = { viewModel.setLocked(app.componentName.packageName, !locked) },
-                controls = {
-                    Switch(
-                        checked = locked,
-                        onCheckedChange = { viewModel.setLocked(app.componentName.packageName, it) },
-                    )
-                },
-            )
+            PreferenceCategory {
+                Preference(
+                    icon = R.drawable.lock_24px,
+                    title = stringResource(R.string.preference_category_app_lock_apps),
+                    summary = pluralStringResource(
+                        R.plurals.app_lock_apps_locked_count,
+                        lockedPackages.size,
+                        lockedPackages.size,
+                    ),
+                    onClick = { backStack.add(AppLockAppsRoute) },
+                )
+            }
         }
     }
 }

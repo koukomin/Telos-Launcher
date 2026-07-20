@@ -1184,6 +1184,10 @@
     <string name="app_lock_notification_channel">App Lock</string>
     <string name="app_lock_notification_title">App Lock is active</string>
     <string name="app_lock_notification_text">Watching for locked apps</string>
+    <plurals name="app_lock_apps_locked_count">
+        <item quantity="one">%1$d app locked</item>
+        <item quantity="other">%1$d apps locked</item>
+    </plurals>
     <string name="preference_app_lock_detection_mode">Detection method</string>
     <string name="app_lock_detection_mode_usage_stats">Usage access only</string>
     <string name="app_lock_detection_mode_accessibility">Accessibility service only</string>
