@@ -321,6 +321,9 @@ data class LauncherSettingsData internal constructor(
      * the app drawer's work tab. Independent of [appLockEnabled] - protects a different surface
      * (a system action, not launching a package). */
     val appLockLockWorkProfileToggle: Boolean = false,
+    /** Web app shortcut keys (see WebAppShortcut.key) gated behind authentication before they
+     * open - independent of [appLockLockedPackages], which only matches installed packages. */
+    val appLockLockedWebAppShortcuts: Set<String> = emptySet(),
 
     val floatingLauncherEnabled: Boolean = false,
     @Deprecated("Replaced by floatingLauncherZones - kept only so Migration10 can read the old single-tab position.")

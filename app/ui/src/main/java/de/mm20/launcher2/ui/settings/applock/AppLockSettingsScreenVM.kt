@@ -35,6 +35,9 @@ class AppLockSettingsScreenVM : ViewModel(), KoinComponent {
     val lockedPackages = appLockSettings.lockedPackages
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
 
+    val lockedWebAppShortcuts = appLockSettings.lockedWebAppShortcuts
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
+
     val defaultGracePeriodMs = appLockSettings.defaultGracePeriodMs
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 

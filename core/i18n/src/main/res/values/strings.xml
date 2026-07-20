@@ -1188,6 +1188,11 @@
         <item quantity="one">%1$d app locked</item>
         <item quantity="other">%1$d apps locked</item>
     </plurals>
+    <string name="preference_category_app_lock_web_apps">Web apps</string>
+    <plurals name="app_lock_web_apps_locked_count">
+        <item quantity="one">%1$d web app locked</item>
+        <item quantity="other">%1$d web apps locked</item>
+    </plurals>
     <string name="preference_app_lock_default_grace_period">Auto-lock timing</string>
     <string name="preference_app_lock_grace_period_override">Auto-lock timing for this app</string>
     <string name="app_lock_grace_period_use_default">Use default</string>

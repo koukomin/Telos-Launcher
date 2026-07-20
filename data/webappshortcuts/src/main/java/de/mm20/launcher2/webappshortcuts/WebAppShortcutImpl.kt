@@ -20,6 +20,7 @@ import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.webapp.WebAppLaunchContract
+import de.mm20.launcher2.webapp.WebAppLockLaunchContract
 import java.util.concurrent.ExecutionException
 
 internal data class WebAppShortcutImpl(
@@ -105,6 +106,13 @@ internal data class WebAppShortcutImpl(
     }
 
     override fun launch(context: Context, options: Bundle?): Boolean {
+        if (key in WebAppLockCache.lockedKeys) {
+            return openLockGate(context, options)
+        }
+        return launchDirect(context, options)
+    }
+
+    private fun launchDirect(context: Context, options: Bundle?): Boolean {
         val renderer = rendererPackage
         if (renderer != null &&
             CustomTabsBrowsers.isInstalled(context, renderer) &&
@@ -120,6 +128,20 @@ internal data class WebAppShortcutImpl(
             }
         }
         return openInWebView(context, options)
+    }
+
+    /** Redirects into app:ui's biometric gate instead of opening the shortcut directly - see
+     * [WebAppLockLaunchContract]. The gate performs the same dispatch as [launchDirect] itself
+     * once authentication succeeds. */
+    private fun openLockGate(context: Context, options: Bundle?): Boolean {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setClassName(context.packageName, WebAppLockLaunchContract.ACTIVITY_CLASS_NAME)
+            putExtra(WebAppLockLaunchContract.EXTRA_URL, url)
+            putExtra(WebAppLockLaunchContract.EXTRA_LABEL, labelOverride ?: label)
+            putExtra(WebAppLockLaunchContract.EXTRA_RENDERER_PACKAGE, rendererPackage)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        return context.tryStartActivity(intent, options)
     }
 
     private fun openInWebView(context: Context, options: Bundle?): Boolean {

@@ -10,4 +10,5 @@ val webAppShortcutsModule = module {
     single<WebAppShortcutRepository> { WebAppShortcutRepositoryImpl(get()) }
     single<SearchableRepository<WebAppShortcut>>(named<WebAppShortcut>()) { get<WebAppShortcutRepository>() }
     factory<SearchableDeserializer>(named(WebAppShortcutImpl.Domain)) { WebAppShortcutDeserializer() }
+    single(createdAtStart = true) { WebAppLockCacheUpdater(get()) }
 }

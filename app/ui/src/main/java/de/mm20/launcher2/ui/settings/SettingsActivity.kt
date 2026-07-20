@@ -78,6 +78,8 @@ import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterRoute
 import de.mm20.launcher2.ui.settings.applock.AppLockAppsRoute
 import de.mm20.launcher2.ui.settings.applock.AppLockAppsScreen
 import de.mm20.launcher2.ui.settings.applock.AppLockSettingsRoute
+import de.mm20.launcher2.ui.settings.applock.AppLockWebAppsRoute
+import de.mm20.launcher2.ui.settings.applock.AppLockWebAppsScreen
 import de.mm20.launcher2.ui.settings.applock.AppLockSettingsScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterScreen
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsRoute
@@ -348,6 +350,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<AppLockAppsRoute> {
                 AppLockAppsScreen()
+            }
+            entry<AppLockWebAppsRoute> {
+                AppLockWebAppsScreen()
             }
             entry<FreezeSettingsRoute> {
                 FreezeSettingsScreen()

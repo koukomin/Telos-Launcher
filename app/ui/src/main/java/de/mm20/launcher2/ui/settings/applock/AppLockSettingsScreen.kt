@@ -44,6 +44,7 @@ fun AppLockSettingsScreen() {
     val lockMethod by viewModel.lockMethod.collectAsStateWithLifecycle()
     val detectionMode by viewModel.detectionMode.collectAsStateWithLifecycle()
     val lockedPackages by viewModel.lockedPackages.collectAsStateWithLifecycle()
+    val lockedWebAppShortcuts by viewModel.lockedWebAppShortcuts.collectAsStateWithLifecycle()
     val defaultGracePeriodMs by viewModel.defaultGracePeriodMs.collectAsStateWithLifecycle()
     val usageAccessGranted by viewModel.usageAccessGranted.collectAsStateWithLifecycle()
     val accessibilityGranted by viewModel.accessibilityGranted.collectAsStateWithLifecycle()
@@ -144,6 +145,16 @@ fun AppLockSettingsScreen() {
                         lockedPackages.size,
                     ),
                     onClick = { backStack.add(AppLockAppsRoute) },
+                )
+                Preference(
+                    icon = R.drawable.lock_24px,
+                    title = stringResource(R.string.preference_category_app_lock_web_apps),
+                    summary = pluralStringResource(
+                        R.plurals.app_lock_web_apps_locked_count,
+                        lockedWebAppShortcuts.size,
+                        lockedWebAppShortcuts.size,
+                    ),
+                    onClick = { backStack.add(AppLockWebAppsRoute) },
                 )
             }
         }

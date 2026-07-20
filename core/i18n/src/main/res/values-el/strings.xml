@@ -640,6 +640,11 @@
         <item quantity="one">%1$d εφαρμογή κλειδωμένη</item>
         <item quantity="other">%1$d εφαρμογές κλειδωμένες</item>
     </plurals>
+    <string name="preference_category_app_lock_web_apps">Εφαρμογές ιστού</string>
+    <plurals name="app_lock_web_apps_locked_count">
+        <item quantity="one">%1$d εφαρμογή ιστού κλειδωμένη</item>
+        <item quantity="other">%1$d εφαρμογές ιστού κλειδωμένες</item>
+    </plurals>
     <string name="preference_app_lock_default_grace_period">Χρόνος αυτόματου κλειδώματος</string>
     <string name="preference_app_lock_grace_period_override">Χρόνος αυτόματου κλειδώματος για αυτή την εφαρμογή</string>
     <string name="app_lock_grace_period_use_default">Χρήση προεπιλογής</string>

@@ -108,6 +108,18 @@
             android:theme="@style/LauncherTheme"
             android:enableOnBackInvokedCallback="true" />
 
+        <!--
+            App Lock's gate for a locked web app shortcut - reached from WebAppShortcutImpl.launch()
+            (see WebAppLockLaunchContract) directly from the user's own tap, same task shape as
+            WebAppActivity itself since there's no overlay/background-launch case to isolate from.
+        -->
+        <activity
+            android:name=".applock.WebAppLockActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:theme="@style/LauncherTheme"
+            android:enableOnBackInvokedCallback="true" />
+
         <activity
             android:name=".desktopmode.DesktopModeActivity"
             android:exported="false"

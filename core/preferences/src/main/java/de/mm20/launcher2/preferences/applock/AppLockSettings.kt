@@ -95,4 +95,18 @@ class AppLockSettings internal constructor(
     fun setLockWorkProfileToggle(locked: Boolean) {
         dataStore.update { it.copy(appLockLockWorkProfileToggle = locked) }
     }
+
+    /** Web app shortcut keys gated behind authentication before they open. */
+    val lockedWebAppShortcuts
+        get() = dataStore.data.map { it.appLockLockedWebAppShortcuts }
+            .distinctUntilChanged()
+
+    fun setWebAppShortcutLocked(key: String, locked: Boolean) {
+        dataStore.update {
+            val current = it.appLockLockedWebAppShortcuts
+            it.copy(
+                appLockLockedWebAppShortcuts = if (locked) current + key else current - key
+            )
+        }
+    }
 }
