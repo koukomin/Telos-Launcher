@@ -324,6 +324,13 @@ data class LauncherSettingsData internal constructor(
     /** Web app shortcut keys (see WebAppShortcut.key) gated behind authentication before they
      * open - independent of [appLockLockedPackages], which only matches installed packages. */
     val appLockLockedWebAppShortcuts: Set<String> = emptySet(),
+    /** Opt-in: silently take a front-camera photo on a failed App Lock authentication attempt.
+     * Off by default. Photos are stored in app-private internal storage only. */
+    val appLockIntruderPhotoEnabled: Boolean = false,
+    /** How long a captured intruder photo is kept before auto-deletion. Clamped to at most
+     * [de.mm20.launcher2.preferences.applock.INTRUDER_PHOTO_MAX_RETENTION_DAYS] wherever it's
+     * set, not just here, so no stored value can ever exceed that cap. */
+    val appLockIntruderPhotoRetentionDays: Int = 30,
 
     val floatingLauncherEnabled: Boolean = false,
     @Deprecated("Replaced by floatingLauncherZones - kept only so Migration10 can read the old single-tab position.")

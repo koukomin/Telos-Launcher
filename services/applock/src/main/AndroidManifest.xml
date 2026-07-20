@@ -12,4 +12,14 @@
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
 
+    <!--
+        Runtime-requested, opt-in. Used only for the intruder photo feature (IntruderPhotoManager)
+        to take a single front-camera photo on a failed App Lock authentication attempt. Not
+        required=true, since the launcher must work fully without a camera - the feature is
+        simply unavailable (its settings toggle stays gated behind the permission).
+    -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.front" android:required="false" />
+
 </manifest>

@@ -7,6 +7,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
+/** Hard ceiling on intruder photo retention, enforced in [AppLockSettings.setIntruderPhotoRetentionDays]
+ * itself (not just the settings UI) so no persisted value can ever exceed it. */
+const val INTRUDER_PHOTO_MAX_RETENTION_DAYS = 730
+
 /**
  * Per-app biometric lock: gates a chosen set of apps behind the system BiometricPrompt, the same
  * way [de.mm20.launcher2.preferences.protection.ProtectionSettings] gates settings screens -
@@ -108,5 +112,25 @@ class AppLockSettings internal constructor(
                 appLockLockedWebAppShortcuts = if (locked) current + key else current - key
             )
         }
+    }
+
+    /** Opt-in: silently take a front-camera photo on a failed App Lock authentication attempt. */
+    val intruderPhotoEnabled
+        get() = dataStore.data.map { it.appLockIntruderPhotoEnabled }
+            .distinctUntilChanged()
+
+    fun setIntruderPhotoEnabled(enabled: Boolean) {
+        dataStore.update { it.copy(appLockIntruderPhotoEnabled = enabled) }
+    }
+
+    val intruderPhotoRetentionDays
+        get() = dataStore.data.map { it.appLockIntruderPhotoRetentionDays }
+            .distinctUntilChanged()
+
+    /** Clamped to 1..[INTRUDER_PHOTO_MAX_RETENTION_DAYS] regardless of what's passed in, so the
+     * hard cap holds even if a caller (or a future settings-import path) tries to set more. */
+    fun setIntruderPhotoRetentionDays(days: Int) {
+        val clamped = days.coerceIn(1, INTRUDER_PHOTO_MAX_RETENTION_DAYS)
+        dataStore.update { it.copy(appLockIntruderPhotoRetentionDays = clamped) }
     }
 }

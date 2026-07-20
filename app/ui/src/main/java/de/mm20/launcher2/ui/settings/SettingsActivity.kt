@@ -80,6 +80,8 @@ import de.mm20.launcher2.ui.settings.applock.AppLockAppsScreen
 import de.mm20.launcher2.ui.settings.applock.AppLockSettingsRoute
 import de.mm20.launcher2.ui.settings.applock.AppLockWebAppsRoute
 import de.mm20.launcher2.ui.settings.applock.AppLockWebAppsScreen
+import de.mm20.launcher2.ui.settings.applock.IntruderPhotosRoute
+import de.mm20.launcher2.ui.settings.applock.IntruderPhotosScreen
 import de.mm20.launcher2.ui.settings.applock.AppLockSettingsScreen
 import de.mm20.launcher2.ui.settings.workprofile.WorkProfileSettingsRoute
 import de.mm20.launcher2.ui.settings.workprofile.WorkProfileSettingsScreen
@@ -355,6 +357,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<AppLockWebAppsRoute> {
                 AppLockWebAppsScreen()
+            }
+            entry<IntruderPhotosRoute> {
+                IntruderPhotosScreen()
             }
             entry<WorkProfileSettingsRoute> {
                 WorkProfileSettingsScreen()

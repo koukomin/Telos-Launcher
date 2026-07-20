@@ -1217,6 +1217,25 @@
     <string name="preference_work_profile_pause">Pause work profile</string>
     <string name="preference_work_profile_pause_summary">Temporarily disable work apps and their notifications</string>
     <string name="missing_permission_manage_profiles">Pausing or resuming the work profile requires setting Kvaesitso as your default home app.</string>
+    <string name="preference_category_intruder_photo">Intruder photo</string>
+    <string name="preference_intruder_photo_enabled">Capture intruder photo</string>
+    <string name="preference_intruder_photo_enabled_summary">Silently take a front-camera photo on a failed App Lock attempt. Stored on this device only, never uploaded.</string>
+    <string name="missing_permission_camera">Capturing an intruder photo requires camera access.</string>
+    <string name="preference_intruder_photo_retention">Auto-delete after</string>
+    <string name="intruder_photo_retention_7d">7 days</string>
+    <string name="intruder_photo_retention_30d">30 days</string>
+    <string name="intruder_photo_retention_90d">90 days</string>
+    <string name="intruder_photo_retention_1y">1 year</string>
+    <string name="intruder_photo_retention_2y">2 years</string>
+    <string name="preference_intruder_photos_gallery">Captured photos</string>
+    <plurals name="intruder_photo_count">
+        <item quantity="one">%1$d photo</item>
+        <item quantity="other">%1$d photos</item>
+    </plurals>
+    <string name="intruder_photos_empty">No intruder photos captured yet.</string>
+    <string name="intruder_photos_delete_all">Delete all</string>
+    <string name="intruder_photo_delete">Delete photo</string>
+    <string name="confirmation_delete_all_intruder_photos">Delete all captured intruder photos? This can\'t be undone.</string>
     <string name="preference_app_lock_detection_mode">Detection method</string>
     <string name="app_lock_detection_mode_usage_stats">Usage access only</string>
     <string name="app_lock_detection_mode_accessibility">Accessibility service only</string>

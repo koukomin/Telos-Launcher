@@ -6,4 +6,6 @@ import org.koin.dsl.module
 val appLockModule = module {
     single { AppLockForegroundMonitor(get(), get(), get()) }
     single(createdAtStart = true) { AppLockManager(androidContext(), get(), get()) }
+    single { IntruderPhotoManager(androidContext(), get()) }
+    single(createdAtStart = true) { IntruderPhotoCleanup(get()) }
 }

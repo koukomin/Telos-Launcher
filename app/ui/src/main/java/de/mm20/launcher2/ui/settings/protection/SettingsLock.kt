@@ -132,6 +132,7 @@ fun authenticateSettings(
     activity: FragmentActivity,
     method: SettingsLockMethod,
     title: String,
+    onAuthenticationFailed: (() -> Unit)? = null,
     onResult: (Boolean) -> Unit,
 ) {
     val authenticators = authenticatorsFor(method)
@@ -155,6 +156,12 @@ fun authenticateSettings(
                 // Includes user cancellation and LOCKOUT / LOCKOUT_PERMANENT after
                 // repeated failed attempts.
                 onResult(false)
+            }
+
+            override fun onAuthenticationFailed() {
+                // A single wrong biometric/credential attempt - the prompt stays open and the
+                // user can retry, so this fires separately from (and before) onResult.
+                onAuthenticationFailed?.invoke()
             }
         },
     )

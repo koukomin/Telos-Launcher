@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.settings.applock
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
@@ -49,6 +50,12 @@ fun AppLockSettingsScreen() {
     val usageAccessGranted by viewModel.usageAccessGranted.collectAsStateWithLifecycle()
     val accessibilityGranted by viewModel.accessibilityGranted.collectAsStateWithLifecycle()
     val hasOverlayPermission by viewModel.hasOverlayPermission.collectAsStateWithLifecycle()
+    val intruderPhotoEnabled by viewModel.intruderPhotoEnabled.collectAsStateWithLifecycle()
+    val intruderPhotoRetentionDays by viewModel.intruderPhotoRetentionDays.collectAsStateWithLifecycle()
+    val cameraPermissionGranted by viewModel.cameraPermissionGranted.collectAsStateWithLifecycle()
+    val intruderPhotoCount by viewModel.intruderPhotoCount.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) { viewModel.refreshIntruderPhotoCount() }
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_app_lock),
@@ -154,6 +161,41 @@ fun AppLockSettingsScreen() {
                         lockedWebAppShortcuts.size,
                     ),
                     onClick = { backStack.add(AppLockWebAppsRoute) },
+                )
+            }
+        }
+        item {
+            PreferenceCategory(title = stringResource(R.string.preference_category_intruder_photo)) {
+                GuardedPreference(
+                    locked = cameraPermissionGranted == false,
+                    description = stringResource(R.string.missing_permission_camera),
+                    onUnlock = {
+                        (context as? AppCompatActivity)?.let { viewModel.requestCameraPermission(it) }
+                    },
+                ) {
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_intruder_photo_enabled),
+                        summary = stringResource(R.string.preference_intruder_photo_enabled_summary),
+                        enabled = cameraPermissionGranted != false,
+                        value = intruderPhotoEnabled == true && cameraPermissionGranted == true,
+                        onValueChanged = { viewModel.setIntruderPhotoEnabled(it) },
+                    )
+                }
+                ListPreference(
+                    title = stringResource(R.string.preference_intruder_photo_retention),
+                    items = intruderPhotoRetentionOptions(),
+                    value = intruderPhotoRetentionDays ?: 30,
+                    onValueChanged = { viewModel.setIntruderPhotoRetentionDays(it) },
+                )
+                Preference(
+                    icon = R.drawable.photo_24px,
+                    title = stringResource(R.string.preference_intruder_photos_gallery),
+                    summary = pluralStringResource(
+                        R.plurals.intruder_photo_count,
+                        intruderPhotoCount,
+                        intruderPhotoCount,
+                    ),
+                    onClick = { backStack.add(IntruderPhotosRoute) },
                 )
             }
         }

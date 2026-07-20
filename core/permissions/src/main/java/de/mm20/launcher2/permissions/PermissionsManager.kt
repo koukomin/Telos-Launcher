@@ -88,6 +88,7 @@ enum class PermissionGroup {
     NotificationPolicy,
     WriteSettings,
     PhoneState,
+    Camera,
 }
 
 internal class PermissionsManagerImpl(
@@ -139,6 +140,9 @@ internal class PermissionsManagerImpl(
     )
     private val phoneStatePermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.PhoneState)
+    )
+    private val cameraPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.Camera)
     )
 
     private val accessibilityRequestAttempted = MutableStateFlow(false)
@@ -299,6 +303,14 @@ internal class PermissionsManagerImpl(
                     permissionGroup.ordinal
                 )
             }
+
+            PermissionGroup.Camera -> {
+                ActivityCompat.requestPermissions(
+                    context,
+                    cameraPermissions,
+                    permissionGroup.ordinal
+                )
+            }
         }
     }
 
@@ -380,6 +392,10 @@ internal class PermissionsManagerImpl(
             PermissionGroup.PhoneState -> {
                 phoneStatePermissions.all { context.checkPermission(it) }
             }
+
+            PermissionGroup.Camera -> {
+                cameraPermissions.all { context.checkPermission(it) }
+            }
         }
     }
 
@@ -401,6 +417,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.NotificationPolicy -> notificationPolicyPermissionState
             PermissionGroup.WriteSettings -> writeSettingsPermissionState
             PermissionGroup.PhoneState -> phoneStatePermissionState
+            PermissionGroup.Camera -> cameraPermissionState
         }
     }
 
@@ -436,6 +453,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.NotificationPolicy -> notificationPolicyPermissionState.value = granted
             PermissionGroup.WriteSettings -> writeSettingsPermissionState.value = granted
             PermissionGroup.PhoneState -> phoneStatePermissionState.value = granted
+            PermissionGroup.Camera -> cameraPermissionState.value = granted
         }
     }
 
@@ -472,6 +490,7 @@ internal class PermissionsManagerImpl(
         )
         private val callPermissions = arrayOf(Manifest.permission.CALL_PHONE)
         private val phoneStatePermissions = arrayOf(Manifest.permission.READ_PHONE_STATE)
+        private val cameraPermissions = arrayOf(Manifest.permission.CAMERA)
         private val bluetoothPermissions: Array<String> =
             if (isAtLeastApiLevel(31)) arrayOf(Manifest.permission.BLUETOOTH_CONNECT) else emptyArray()
     }

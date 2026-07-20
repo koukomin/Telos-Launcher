@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.applock
 
+import android.content.pm.PackageManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,6 +17,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,11 +26,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.mm20.launcher2.applock.IntruderPhotoManager
 import de.mm20.launcher2.preferences.SettingsLockMethod
+import de.mm20.launcher2.preferences.applock.AppLockSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.settings.protection.authenticateSettings
 import de.mm20.launcher2.ui.settings.protection.canAuthenticateSettings
+import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 
 /**
  * Full-screen gate shown by [AppLockActivity] over a locked app the instant it comes to the
@@ -48,13 +56,36 @@ fun AppLockGateScreen(
     onCancelled: () -> Unit,
 ) {
     var attempted by remember { mutableStateOf(false) }
-    val activity = LocalContext.current as? FragmentActivity
+    val context = LocalContext.current
+    val activity = context as? FragmentActivity
     val promptTitle = stringResource(R.string.app_lock_prompt_title, appLabel)
     val authAvailable = activity != null && canAuthenticateSettings(activity, lockMethod)
 
+    val appLockSettings: AppLockSettings = koinInject()
+    val intruderPhotoManager: IntruderPhotoManager = koinInject()
+    val intruderPhotoEnabled by appLockSettings.intruderPhotoEnabled.collectAsStateWithLifecycle(false)
+    val scope = rememberCoroutineScope()
+    // Capture at most once per gate instance, even if the prompt reports several failed
+    // attempts in a row (e.g. repeated fingerprint mismatches) before the user gives up.
+    var hasCapturedIntruderPhoto by remember { mutableStateOf(false) }
+
+    fun onAuthenticationFailed() {
+        if (!intruderPhotoEnabled || hasCapturedIntruderPhoto) return
+        if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
+            != PackageManager.PERMISSION_GRANTED
+        ) return
+        hasCapturedIntruderPhoto = true
+        scope.launch { intruderPhotoManager.capture() }
+    }
+
     fun authenticate() {
         if (!authAvailable) return
-        authenticateSettings(activity!!, lockMethod, promptTitle) { success ->
+        authenticateSettings(
+            activity!!,
+            lockMethod,
+            promptTitle,
+            onAuthenticationFailed = ::onAuthenticationFailed,
+        ) { success ->
             if (success) onUnlocked() else onCancelled()
         }
     }
