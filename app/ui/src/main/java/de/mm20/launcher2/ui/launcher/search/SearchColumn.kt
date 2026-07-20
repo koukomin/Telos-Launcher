@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.launcher.search
 
 import androidx.activity.compose.BackHandler
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -24,8 +25,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.preferences.SettingsLockMethod
+import de.mm20.launcher2.preferences.applock.AppLockSettings
 import de.mm20.launcher2.profiles.Profile
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
@@ -36,6 +40,7 @@ import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.search.Website
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.launcher.search.apps.AppResults
 import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorResults
@@ -54,7 +59,10 @@ import de.mm20.launcher2.ui.launcher.search.wikipedia.ArticleResults
 import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import de.mm20.launcher2.ui.settings.protection.authenticateSettings
+import de.mm20.launcher2.ui.settings.protection.canAuthenticateSettings
 import de.mm20.launcher2.ui.theme.transparency.transparency
+import org.koin.compose.koinInject
 
 @Composable
 fun SearchColumn(
@@ -113,6 +121,22 @@ fun SearchColumn(
     val missingLocationPermission by viewModel.missingLocationPermission.collectAsState(false)
     val missingFilesPermission by viewModel.missingFilesPermission.collectAsState(false)
     val hasProfilesPermission by viewModel.hasProfilesPermission.collectAsState(false)
+
+    val appLockSettings: AppLockSettings = koinInject()
+    val lockWorkProfileToggle by appLockSettings.lockWorkProfileToggle.collectAsState(false)
+    val appLockMethod by appLockSettings.lockMethod.collectAsState(SettingsLockMethod.DeviceCredential)
+    val workProfilePromptTitle = stringResource(R.string.app_lock_work_profile_prompt_title)
+    fun changeProfileLock(profile: Profile?, locked: Boolean) {
+        val activity = context as? FragmentActivity
+        if (lockWorkProfileToggle && activity != null && canAuthenticateSettings(activity, appLockMethod)) {
+            authenticateSettings(activity, appLockMethod, workProfilePromptTitle) { success ->
+                if (success) viewModel.setProfileLock(profile, locked)
+            }
+        } else if (!lockWorkProfileToggle) {
+            viewModel.setProfileLock(profile, locked)
+        }
+        // else: locking is on but there's no usable authenticator - fail closed, do nothing.
+    }
 
     val pinnedTags by favoritesVM.pinnedTags.collectAsState(emptyList())
     val selectedTag by favoritesVM.selectedTag.collectAsState(null)
@@ -211,7 +235,7 @@ fun SearchColumn(
                         },
                         isProfileLocked = profileStates.getOrNull(selectedAppProfileIndex)?.locked == true,
                         onProfileLockChange = { p, l ->
-                            viewModel.setProfileLock(p, l)
+                            changeProfileLock(p, l)
                         },
                         columns = columns,
                         reverse = reverse,

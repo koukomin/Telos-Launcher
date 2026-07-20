@@ -317,6 +317,10 @@ data class LauncherSettingsData internal constructor(
      * without re-authenticating. 0 = immediately re-lock. Per-app overrides in [appLockGracePeriodOverrides]. */
     val appLockDefaultGracePeriodMs: Long = 0L,
     val appLockGracePeriodOverrides: Map<String, Long> = emptyMap(),
+    /** Require authentication (using [appLockMethod]) to pause or resume the work profile from
+     * the app drawer's work tab. Independent of [appLockEnabled] - protects a different surface
+     * (a system action, not launching a package). */
+    val appLockLockWorkProfileToggle: Boolean = false,
 
     val floatingLauncherEnabled: Boolean = false,
     @Deprecated("Replaced by floatingLauncherZones - kept only so Migration10 can read the old single-tab position.")

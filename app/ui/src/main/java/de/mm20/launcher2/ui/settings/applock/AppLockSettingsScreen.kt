@@ -48,6 +48,7 @@ fun AppLockSettingsScreen() {
     val usageAccessGranted by viewModel.usageAccessGranted.collectAsStateWithLifecycle()
     val accessibilityGranted by viewModel.accessibilityGranted.collectAsStateWithLifecycle()
     val hasOverlayPermission by viewModel.hasOverlayPermission.collectAsStateWithLifecycle()
+    val lockWorkProfileToggle by viewModel.lockWorkProfileToggle.collectAsStateWithLifecycle()
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_app_lock),
@@ -143,6 +144,16 @@ fun AppLockSettingsScreen() {
                         lockedPackages.size,
                     ),
                     onClick = { backStack.add(AppLockAppsRoute) },
+                )
+            }
+        }
+        item {
+            PreferenceCategory(title = stringResource(R.string.preference_category_app_lock_work_profile)) {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_app_lock_work_profile_toggle),
+                    summary = stringResource(R.string.preference_app_lock_work_profile_toggle_summary),
+                    value = lockWorkProfileToggle == true,
+                    onValueChanged = { viewModel.setLockWorkProfileToggle(it) },
                 )
             }
         }

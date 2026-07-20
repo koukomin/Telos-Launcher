@@ -85,4 +85,14 @@ class AppLockSettings internal constructor(
         if (override != null) return override
         return defaultGracePeriodMs.first()
     }
+
+    /** Require authentication to pause or resume the work profile - a different, independent
+     * surface from [enabled]'s per-app locking. */
+    val lockWorkProfileToggle
+        get() = dataStore.data.map { it.appLockLockWorkProfileToggle }
+            .distinctUntilChanged()
+
+    fun setLockWorkProfileToggle(locked: Boolean) {
+        dataStore.update { it.copy(appLockLockWorkProfileToggle = locked) }
+    }
 }

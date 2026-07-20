@@ -40,6 +40,11 @@ class AppLockSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setDefaultGracePeriodMs(ms: Long) = appLockSettings.setDefaultGracePeriodMs(ms)
 
+    val lockWorkProfileToggle = appLockSettings.lockWorkProfileToggle
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setLockWorkProfileToggle(locked: Boolean) = appLockSettings.setLockWorkProfileToggle(locked)
+
     val usageAccessGranted = permissionsManager.hasPermission(PermissionGroup.UsageAccess)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 

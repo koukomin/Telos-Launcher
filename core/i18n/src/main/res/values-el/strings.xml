@@ -648,6 +648,10 @@
     <string name="app_lock_grace_period_1m">1 λεπτό</string>
     <string name="app_lock_grace_period_5m">5 λεπτά</string>
     <string name="app_lock_grace_period_30m">30 λεπτά</string>
+    <string name="preference_category_app_lock_work_profile">Προφίλ εργασίας</string>
+    <string name="preference_app_lock_work_profile_toggle">Κλείδωμα εναλλαγής προφίλ εργασίας</string>
+    <string name="preference_app_lock_work_profile_toggle_summary">Απαίτηση πιστοποίησης για παύση ή συνέχιση του προφίλ εργασίας από το συρτάρι εφαρμογών</string>
+    <string name="app_lock_work_profile_prompt_title">Πιστοποιηθείτε για αλλαγή κατάστασης προφίλ εργασίας</string>
     <string name="preference_app_lock_detection_mode">Μέθοδος ανίχνευσης</string>
     <string name="app_lock_detection_mode_usage_stats">Μόνο πρόσβαση χρήσης</string>
     <string name="app_lock_detection_mode_accessibility">Μόνο υπηρεσία προσβασιμότητας</string>
