@@ -199,6 +199,9 @@ class SettingsActivity : BaseActivity() {
             entry<MainRoute> {
                 MainSettingsScreen()
             }
+            entry<AdvancedSettingsRoute> {
+                AdvancedSettingsScreen()
+            }
             entry<AppearanceSettingsRoute> {
                 AppearanceSettingsScreen()
             }
