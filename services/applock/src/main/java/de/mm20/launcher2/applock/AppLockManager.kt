@@ -14,14 +14,15 @@ import kotlinx.coroutines.launch
 /**
  * Decides, from the raw foreground-package stream in [AppLockForegroundMonitor], when the App
  * Lock gate actually needs to show - i.e. the foreground app changed to one the user locked, and
- * it isn't the one currently unlocked.
+ * it isn't within its grace period after last being unlocked.
  *
- * "Unlocked" is intentionally not persisted or time-boxed (mirrors
- * [de.mm20.launcher2.ui.launcher.lock.LauncherLockGate]'s ON_STOP pattern, just triggered by
- * foreground-app changes instead of an Activity lifecycle event): the moment the foreground app
- * becomes anything other than the currently-unlocked package, that unlock is forgotten, so
- * switching away and back to a locked app always re-prompts. Per-app auto-lock grace periods are
- * a later piece, not this one.
+ * "Unlocked" is time-boxed by [AppLockSettings.gracePeriodMsFor] rather than reset the instant
+ * the foreground app changes (mirroring [de.mm20.launcher2.ui.launcher.lock.LauncherLockGate]'s
+ * ON_STOP pattern would mean always re-prompting, which is what piece 1/2 did): the grace clock
+ * only starts counting the moment the user actually *leaves* the unlocked app for something else,
+ * not while it's continuously in the foreground - so returning to it quickly (switching to check
+ * a notification, for instance) doesn't always demand a fresh prompt, but leaving it long enough
+ * does, and switching to a *different* locked app is never covered by another app's grace period.
  *
  * [pendingLock] - not a one-shot event stream - is deliberate: Android's background-activity-
  * launch restrictions block a plain `startActivity()` from here (confirmed on-device via a
@@ -46,6 +47,11 @@ class AppLockManager(
     @Volatile
     private var unlockedPackage: String? = null
 
+    /** When we last saw [unlockedPackage] leave the foreground, or null while it's still there
+     * (or there's no unlocked package at all). The grace period is measured from this instant. */
+    @Volatile
+    private var unlockedLeftAt: Long? = null
+
     private val _pendingLock = MutableStateFlow<String?>(null)
 
     /** The package the gate should currently be shown for, or null if none is pending. */
@@ -60,19 +66,41 @@ class AppLockManager(
                 }
                 monitor.foregroundPackageChanges().collectLatest { packageName ->
                     if (packageName == ownPackageName) return@collectLatest
-                    if (packageName != unlockedPackage) {
-                        unlockedPackage = null
-                        val locked = settings.lockedPackages.first().contains(packageName)
-                        _pendingLock.value = if (locked) packageName else null
+
+                    if (packageName == unlockedPackage) {
+                        val leftAt = unlockedLeftAt
+                        if (leftAt != null &&
+                            System.currentTimeMillis() - leftAt > settings.gracePeriodMsFor(packageName)
+                        ) {
+                            // Grace period ran out while we were away - treat as freshly locked.
+                            unlockedPackage = null
+                            unlockedLeftAt = null
+                            gateIfLocked(packageName)
+                        } else {
+                            // Still within (or never left) the grace window.
+                            unlockedLeftAt = null
+                        }
+                        return@collectLatest
                     }
+
+                    if (unlockedPackage != null && unlockedLeftAt == null) {
+                        unlockedLeftAt = System.currentTimeMillis()
+                    }
+                    gateIfLocked(packageName)
                 }
             }
         }
     }
 
+    private suspend fun gateIfLocked(packageName: String) {
+        val locked = settings.lockedPackages.first().contains(packageName)
+        _pendingLock.value = if (locked) packageName else null
+    }
+
     /** Called by the gate after a successful authentication for [packageName]. */
     fun reportUnlocked(packageName: String) {
         unlockedPackage = packageName
+        unlockedLeftAt = null
         _pendingLock.value = null
     }
 

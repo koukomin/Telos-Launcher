@@ -35,6 +35,11 @@ class AppLockSettingsScreenVM : ViewModel(), KoinComponent {
     val lockedPackages = appLockSettings.lockedPackages
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
 
+    val defaultGracePeriodMs = appLockSettings.defaultGracePeriodMs
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setDefaultGracePeriodMs(ms: Long) = appLockSettings.setDefaultGracePeriodMs(ms)
+
     val usageAccessGranted = permissionsManager.hasPermission(PermissionGroup.UsageAccess)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 

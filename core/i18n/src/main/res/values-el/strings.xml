@@ -640,6 +640,14 @@
         <item quantity="one">%1$d εφαρμογή κλειδωμένη</item>
         <item quantity="other">%1$d εφαρμογές κλειδωμένες</item>
     </plurals>
+    <string name="preference_app_lock_default_grace_period">Χρόνος αυτόματου κλειδώματος</string>
+    <string name="preference_app_lock_grace_period_override">Χρόνος αυτόματου κλειδώματος για αυτή την εφαρμογή</string>
+    <string name="app_lock_grace_period_use_default">Χρήση προεπιλογής</string>
+    <string name="app_lock_grace_period_immediately">Αμέσως</string>
+    <string name="app_lock_grace_period_30s">30 δευτερόλεπτα</string>
+    <string name="app_lock_grace_period_1m">1 λεπτό</string>
+    <string name="app_lock_grace_period_5m">5 λεπτά</string>
+    <string name="app_lock_grace_period_30m">30 λεπτά</string>
     <string name="preference_app_lock_detection_mode">Μέθοδος ανίχνευσης</string>
     <string name="app_lock_detection_mode_usage_stats">Μόνο πρόσβαση χρήσης</string>
     <string name="app_lock_detection_mode_accessibility">Μόνο υπηρεσία προσβασιμότητας</string>

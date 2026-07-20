@@ -31,6 +31,12 @@ class AppLockAppsScreenVM : ViewModel(), KoinComponent {
     fun setLocked(packageName: String, locked: Boolean) =
         appLockSettings.setLocked(packageName, locked)
 
+    val gracePeriodOverrides = appLockSettings.gracePeriodOverrides
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
+
+    fun setGracePeriodOverride(packageName: String, ms: Long?) =
+        appLockSettings.setGracePeriodOverride(packageName, ms)
+
     fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon?> {
         return iconService.getIcon(searchable, size)
     }

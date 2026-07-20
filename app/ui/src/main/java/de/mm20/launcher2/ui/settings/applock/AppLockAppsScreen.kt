@@ -1,6 +1,8 @@
 package de.mm20.launcher2.ui.settings.applock
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -29,6 +31,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
+import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import kotlinx.serialization.Serializable
@@ -48,6 +51,8 @@ fun AppLockAppsScreen() {
     val viewModel: AppLockAppsScreenVM = viewModel()
     val apps by viewModel.apps.collectAsStateWithLifecycle()
     val lockedPackages by viewModel.lockedPackages.collectAsStateWithLifecycle()
+    val gracePeriodOverrides by viewModel.gracePeriodOverrides.collectAsStateWithLifecycle()
+    val gracePeriodOverrideOptions = gracePeriodOverrideOptions()
 
     var searchQuery by rememberSaveable { mutableStateOf("") }
     val filteredApps = remember(apps, searchQuery) {
@@ -102,19 +107,30 @@ fun AppLockAppsScreen() {
             ) {}
         }
         itemsIndexed(filteredApps, key = { _, it -> it.key }) { _, app ->
+            val packageName = app.componentName.packageName
             val icon by viewModel.getIcon(app, 32.dp.value.toInt()).collectAsStateWithLifecycle(null)
-            val locked = app.componentName.packageName in lockedPackages
-            Preference(
-                title = { Text(app.label) },
-                icon = { ShapedLauncherIcon(size = 32.dp, icon = { icon }) },
-                onClick = { viewModel.setLocked(app.componentName.packageName, !locked) },
-                controls = {
-                    Switch(
-                        checked = locked,
-                        onCheckedChange = { viewModel.setLocked(app.componentName.packageName, it) },
+            val locked = packageName in lockedPackages
+            Column {
+                Preference(
+                    title = { Text(app.label) },
+                    icon = { ShapedLauncherIcon(size = 32.dp, icon = { icon }) },
+                    onClick = { viewModel.setLocked(packageName, !locked) },
+                    controls = {
+                        Switch(
+                            checked = locked,
+                            onCheckedChange = { viewModel.setLocked(packageName, it) },
+                        )
+                    },
+                )
+                AnimatedVisibility(locked) {
+                    ListPreference(
+                        title = stringResource(R.string.preference_app_lock_grace_period_override),
+                        items = gracePeriodOverrideOptions,
+                        value = gracePeriodOverrides[packageName],
+                        onValueChanged = { viewModel.setGracePeriodOverride(packageName, it) },
                     )
-                },
-            )
+                }
+            }
         }
     }
 }

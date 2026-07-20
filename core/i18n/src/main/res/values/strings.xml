@@ -1188,6 +1188,14 @@
         <item quantity="one">%1$d app locked</item>
         <item quantity="other">%1$d apps locked</item>
     </plurals>
+    <string name="preference_app_lock_default_grace_period">Auto-lock timing</string>
+    <string name="preference_app_lock_grace_period_override">Auto-lock timing for this app</string>
+    <string name="app_lock_grace_period_use_default">Use default</string>
+    <string name="app_lock_grace_period_immediately">Immediately</string>
+    <string name="app_lock_grace_period_30s">30 seconds</string>
+    <string name="app_lock_grace_period_1m">1 minute</string>
+    <string name="app_lock_grace_period_5m">5 minutes</string>
+    <string name="app_lock_grace_period_30m">30 minutes</string>
     <string name="preference_app_lock_detection_mode">Detection method</string>
     <string name="app_lock_detection_mode_usage_stats">Usage access only</string>
     <string name="app_lock_detection_mode_accessibility">Accessibility service only</string>

@@ -44,6 +44,7 @@ fun AppLockSettingsScreen() {
     val lockMethod by viewModel.lockMethod.collectAsStateWithLifecycle()
     val detectionMode by viewModel.detectionMode.collectAsStateWithLifecycle()
     val lockedPackages by viewModel.lockedPackages.collectAsStateWithLifecycle()
+    val defaultGracePeriodMs by viewModel.defaultGracePeriodMs.collectAsStateWithLifecycle()
     val usageAccessGranted by viewModel.usageAccessGranted.collectAsStateWithLifecycle()
     val accessibilityGranted by viewModel.accessibilityGranted.collectAsStateWithLifecycle()
     val hasOverlayPermission by viewModel.hasOverlayPermission.collectAsStateWithLifecycle()
@@ -98,6 +99,12 @@ fun AppLockSettingsScreen() {
                         stringResource(R.string.app_lock_detection_mode_hybrid_summary)
                     } else null,
                     onValueChanged = { viewModel.setDetectionMode(it) },
+                )
+                ListPreference(
+                    title = stringResource(R.string.preference_app_lock_default_grace_period),
+                    items = gracePeriodOptions(),
+                    value = defaultGracePeriodMs ?: 0L,
+                    onValueChanged = { viewModel.setDefaultGracePeriodMs(it) },
                 )
             }
         }

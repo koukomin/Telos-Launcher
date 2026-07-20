@@ -313,6 +313,10 @@ data class LauncherSettingsData internal constructor(
     val appLockMethod: SettingsLockMethod = SettingsLockMethod.DeviceCredential,
     val appLockDetectionMode: AppLockDetectionMode = AppLockDetectionMode.Hybrid,
     val appLockLockedPackages: Set<String> = emptySet(),
+    /** Default grace period (ms): how long after leaving a locked app it can be returned to
+     * without re-authenticating. 0 = immediately re-lock. Per-app overrides in [appLockGracePeriodOverrides]. */
+    val appLockDefaultGracePeriodMs: Long = 0L,
+    val appLockGracePeriodOverrides: Map<String, Long> = emptyMap(),
 
     val floatingLauncherEnabled: Boolean = false,
     @Deprecated("Replaced by floatingLauncherZones - kept only so Migration10 can read the old single-tab position.")
