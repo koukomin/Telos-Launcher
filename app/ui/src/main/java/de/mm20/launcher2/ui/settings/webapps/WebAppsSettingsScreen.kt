@@ -49,6 +49,7 @@ fun WebAppsSettingsScreen() {
     val direction by viewModel.direction.collectAsState()
     val adBlockEnabled by viewModel.adBlockEnabled.collectAsState()
     val zoomControlsEnabled by viewModel.zoomControlsEnabled.collectAsState()
+    val trackingParamStrippingEnabled by viewModel.trackingParamStrippingEnabled.collectAsState()
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_web_app_shortcuts),
@@ -87,6 +88,12 @@ fun WebAppsSettingsScreen() {
                     summary = stringResource(R.string.preference_web_app_zoom_controls_summary),
                     value = zoomControlsEnabled,
                     onValueChanged = { viewModel.setZoomControlsEnabled(it) },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_web_app_tracking_param_stripping),
+                    summary = stringResource(R.string.preference_web_app_tracking_param_stripping_summary),
+                    value = trackingParamStrippingEnabled,
+                    onValueChanged = { viewModel.setTrackingParamStrippingEnabled(it) },
                 )
             }
         }

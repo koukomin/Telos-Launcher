@@ -619,6 +619,8 @@
     <string name="preference_web_app_ad_block_summary">Ισχύει για web apps που ανοίγουν στον ενσωματωμένο browser, όχι σε εξωτερικό browser</string>
     <string name="preference_web_app_zoom_controls">Ζουμ με τσίμπημα</string>
     <string name="preference_web_app_zoom_controls_summary">Ισχύει για web apps που ανοίγουν στον ενσωματωμένο browser, όχι σε εξωτερικό browser</string>
+    <string name="preference_web_app_tracking_param_stripping">Αφαίρεση παραμέτρων παρακολούθησης από συνδέσμους</string>
+    <string name="preference_web_app_tracking_param_stripping_summary">Αφαιρεί παραμέτρους όπως utm_, fbclid, gclid από τα URL. Ισχύει για web apps που ανοίγουν στον ενσωματωμένο browser, όχι σε εξωτερικό browser</string>
     <string name="web_apps_panel_items">Στοιχεία</string>
     <string name="web_apps_panel_add_existing">Προσθήκη υπάρχοντος</string>
     <string name="preference_screen_advanced">Προηγμένες ρυθμίσεις</string>

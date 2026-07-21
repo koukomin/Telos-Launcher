@@ -47,6 +47,12 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setZoomControlsEnabled(enabled: Boolean) = browsingSettings.setZoomControlsEnabled(enabled)
 
+    val trackingParamStrippingEnabled = browsingSettings.trackingParamStrippingEnabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+
+    fun setTrackingParamStrippingEnabled(enabled: Boolean) =
+        browsingSettings.setTrackingParamStrippingEnabled(enabled)
+
     val shortcuts = webAppShortcutRepository.search("", false)
         .map { it.sortedBy { s -> s.label.lowercase() } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())

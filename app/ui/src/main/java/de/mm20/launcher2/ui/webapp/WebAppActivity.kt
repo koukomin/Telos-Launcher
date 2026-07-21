@@ -99,6 +99,8 @@ private fun WebAppScreen(
     val adBlockEnabledState = rememberUpdatedState(adBlockEnabled)
     val adBlocker = remember { WebAdBlocker(context) }
     val zoomControlsEnabled by browsingSettings.zoomControlsEnabled.collectAsStateWithLifecycle(true)
+    val trackingParamStrippingEnabled by browsingSettings.trackingParamStrippingEnabled.collectAsStateWithLifecycle(true)
+    val trackingParamStrippingEnabledState = rememberUpdatedState(trackingParamStrippingEnabled)
 
     BackHandler(enabled = true) {
         val wv = webView
@@ -179,6 +181,21 @@ private fun WebAppScreen(
                                 }
                                 return super.shouldInterceptRequest(view, request)
                             }
+
+                            override fun shouldOverrideUrlLoading(
+                                view: WebView,
+                                request: WebResourceRequest,
+                            ): Boolean {
+                                if (trackingParamStrippingEnabledState.value && request.isForMainFrame) {
+                                    val original = request.url.toString()
+                                    val stripped = TrackingParamStripper.strip(original)
+                                    if (stripped != original) {
+                                        view.loadUrl(stripped)
+                                        return true
+                                    }
+                                }
+                                return super.shouldOverrideUrlLoading(view, request)
+                            }
                         }
                         setDownloadListener { downloadUrl, userAgent, contentDisposition, mimeType, _ ->
                             val fileName = URLUtil.guessFileName(downloadUrl, contentDisposition, mimeType)
@@ -198,7 +215,10 @@ private fun WebAppScreen(
                             ).show()
                         }
                         webView = this
-                        loadUrl(url)
+                        loadUrl(
+                            if (trackingParamStrippingEnabled) TrackingParamStripper.strip(url)
+                            else url,
+                        )
                     }
                 },
             )
