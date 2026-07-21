@@ -36,10 +36,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
+import de.mm20.launcher2.applock.IntruderPhoto
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import kotlinx.serialization.Serializable
-import java.io.File
 import java.text.DateFormat
 import java.util.Date
 
@@ -53,7 +53,7 @@ fun IntruderPhotosScreen() {
     val viewModel: IntruderPhotosScreenVM = viewModel()
     val photos by viewModel.photos.collectAsStateWithLifecycle()
 
-    var viewing by remember { mutableStateOf<File?>(null) }
+    var viewing by remember { mutableStateOf<IntruderPhoto?>(null) }
     var confirmDeleteAll by remember { mutableStateOf(false) }
 
     if (confirmDeleteAll) {
@@ -76,11 +76,11 @@ fun IntruderPhotosScreen() {
         )
     }
 
-    viewing?.let { file ->
+    viewing?.let { photo ->
         IntruderPhotoViewerDialog(
-            file = file,
+            photo = photo,
             onDelete = {
-                viewModel.delete(file)
+                viewModel.delete(photo)
                 viewing = null
             },
             onDismiss = { viewing = null },
@@ -117,16 +117,16 @@ fun IntruderPhotosScreen() {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
-                    for (file in row) {
+                    for (photo in row) {
                         AsyncImage(
-                            model = file,
+                            model = photo.uri,
                             contentDescription = null,
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
                                 .weight(1f)
                                 .aspectRatio(1f)
                                 .clip(RoundedCornerShape(12.dp))
-                                .clickable { viewing = file },
+                                .clickable { viewing = photo },
                         )
                     }
                     repeat(3 - row.size) {
@@ -140,7 +140,7 @@ fun IntruderPhotosScreen() {
 
 @Composable
 private fun IntruderPhotoViewerDialog(
-    file: File,
+    photo: IntruderPhoto,
     onDelete: () -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -175,7 +175,7 @@ private fun IntruderPhotoViewerDialog(
                 }
             }
             AsyncImage(
-                model = file,
+                model = photo.uri,
                 contentDescription = null,
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
@@ -183,7 +183,7 @@ private fun IntruderPhotoViewerDialog(
                     .weight(1f),
             )
             Text(
-                text = DateFormat.getDateTimeInstance().format(Date(file.lastModified())),
+                text = DateFormat.getDateTimeInstance().format(Date(photo.lastModified)),
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
                 color = MaterialTheme.colorScheme.onSurface,

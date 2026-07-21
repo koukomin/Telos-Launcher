@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.settings.applock
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -89,8 +90,20 @@ class AppLockSettingsScreenVM : ViewModel(), KoinComponent {
 
     val intruderPhotoCount = MutableStateFlow(0)
 
+    val intruderPhotoVisibleInGallery = appLockSettings.intruderPhotoVisibleInGallery
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    /** Whether a custom storage folder is set - the gallery-visibility toggle only makes sense
+     * once one is, since app-private internal storage (the default) is never gallery-visible
+     * regardless of that setting. */
+    val hasCustomStorageFolder = appLockSettings.intruderPhotoStorageUri
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val intruderPhotoStoragePath = MutableStateFlow("")
+
     init {
         refreshIntruderPhotoCount()
+        refreshStoragePath()
     }
 
     /** The count is a plain file listing, not a Flow, so it can go stale after visiting the
@@ -101,4 +114,29 @@ class AppLockSettingsScreenVM : ViewModel(), KoinComponent {
             intruderPhotoCount.value = intruderPhotoManager.listPhotos().size
         }
     }
+
+    private fun refreshStoragePath() {
+        viewModelScope.launch {
+            intruderPhotoStoragePath.value = intruderPhotoManager.currentStorageDisplayPath()
+        }
+    }
+
+    /** Pass null to reset to the default app-private storage location. */
+    fun setCustomStorageFolder(uri: Uri?) {
+        viewModelScope.launch {
+            intruderPhotoStoragePath.value = intruderPhotoManager.setCustomFolder(uri)
+        }
+    }
+
+    fun setIntruderPhotoVisibleInGallery(visible: Boolean) {
+        viewModelScope.launch {
+            intruderPhotoManager.setVisibleInGallery(visible)
+        }
+    }
+
+    val intruderPhotoNotificationEnabled = appLockSettings.intruderPhotoNotificationEnabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setIntruderPhotoNotificationEnabled(enabled: Boolean) =
+        appLockSettings.setIntruderPhotoNotificationEnabled(enabled)
 }

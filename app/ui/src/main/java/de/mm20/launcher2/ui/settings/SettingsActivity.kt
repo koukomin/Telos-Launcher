@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.settings
 
 import android.content.Intent
 import android.os.Bundle
+import de.mm20.launcher2.applock.SettingsDeepLinkContract
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.setContent
@@ -519,6 +520,7 @@ class SettingsActivity : BaseActivity() {
             ROUTE_HIDDEN_ITEMS -> HiddenItemsSettingsRoute
             ROUTE_FLOATING_LAUNCHER -> FloatingLauncherSettingsRoute
             ROUTE_WALLPAPER -> WallpaperSettingsRoute
+            ROUTE_INTRUDER_PHOTOS -> IntruderPhotosRoute
             ROUTE_CRASH_REPORT if (intent.hasExtra(EXTRA_CRASH_REPORT_PATH)) -> {
                 CrashReportRoute(intent.getStringExtra(EXTRA_CRASH_REPORT_PATH)!!)
             }
@@ -527,13 +529,14 @@ class SettingsActivity : BaseActivity() {
     }
 
     companion object {
-        const val EXTRA_ROUTE = "de.mm20.launcher2.settings.ROUTE"
+        const val EXTRA_ROUTE = SettingsDeepLinkContract.EXTRA_ROUTE
         const val ROUTE_WEATHER_INTEGRATION = "settings/integrations/weather"
         const val ROUTE_MEDIA_INTEGRATION = "settings/integrations/media"
         const val ROUTE_SEARCH_ACTIONS = "settings/search/searchactions"
         const val ROUTE_HIDDEN_ITEMS = "settings/search/hiddenitems"
         const val ROUTE_FLOATING_LAUNCHER = "settings/floatinglauncher"
         const val ROUTE_WALLPAPER = "settings/wallpaper"
+        const val ROUTE_INTRUDER_PHOTOS = SettingsDeepLinkContract.ROUTE_INTRUDER_PHOTOS
         const val ROUTE_CRASH_REPORT = "settings/debug/crashreport"
         const val EXTRA_CRASH_REPORT_PATH = "crash_report_path"
     }

@@ -679,6 +679,17 @@
     <string name="intruder_photo_retention_90d">90 ημέρες</string>
     <string name="intruder_photo_retention_1y">1 χρόνο</string>
     <string name="intruder_photo_retention_2y">2 χρόνια</string>
+    <string name="preference_intruder_photo_storage_location">Τοποθεσία αποθήκευσης</string>
+    <string name="intruder_photo_storage_use_default">Χρήση προεπιλογής</string>
+    <string name="preference_intruder_photo_visible_in_gallery">Εμφάνιση στη συλλογή</string>
+    <string name="preference_intruder_photo_visible_in_gallery_summary">Οι φωτογραφίες στον επιλεγμένο φάκελο γίνονται ορατές από τη συλλογή/Φωτογραφίες του συστήματος αντί να παραμένουν κρυφές.</string>
+    <string name="preference_intruder_photo_visible_in_gallery_summary_no_folder">Επιλέξτε πρώτα φάκελο αποθήκευσης παραπάνω - ο προεπιλεγμένος χώρος αποθήκευσης της εφαρμογής δεν είναι ποτέ ορατός στη συλλογή.</string>
+    <string name="preference_intruder_photo_notification_enabled">Ειδοποίηση για αποτυχημένο ξεκλείδωμα</string>
+    <string name="preference_intruder_photo_notification_enabled_summary">Εμφάνιση ειδοποίησης κάθε φορά που αποτυγχάνει μια προσπάθεια App Lock, ανεξάρτητα από το αν καταγράφηκε φωτογραφία.</string>
+    <string name="intruder_photo_notification_channel">Αποτυχημένες προσπάθειες ξεκλειδώματος</string>
+    <string name="intruder_photo_notification_title">Αποτυχημένη προσπάθεια ξεκλειδώματος</string>
+    <string name="intruder_photo_notification_text">Κάποιος προσπάθησε να ξεκλειδώσει το %1$s και απέτυχε.</string>
+    <string name="intruder_photo_notification_show_more">Περισσότερα</string>
     <string name="preference_intruder_photos_gallery">Καταγεγραμμένες φωτογραφίες</string>
     <plurals name="intruder_photo_count">
         <item quantity="one">%1$d φωτογραφία</item>

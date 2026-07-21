@@ -8,4 +8,5 @@ val appLockModule = module {
     single(createdAtStart = true) { AppLockManager(androidContext(), get(), get()) }
     single { IntruderPhotoManager(androidContext(), get()) }
     single(createdAtStart = true) { IntruderPhotoCleanup(get()) }
+    single { IntruderPhotoNotifier(androidContext()) }
 }

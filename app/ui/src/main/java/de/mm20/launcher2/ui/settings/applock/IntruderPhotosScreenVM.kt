@@ -2,18 +2,18 @@ package de.mm20.launcher2.ui.settings.applock
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.applock.IntruderPhoto
 import de.mm20.launcher2.applock.IntruderPhotoManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.io.File
 
 class IntruderPhotosScreenVM : ViewModel(), KoinComponent {
     private val intruderPhotoManager: IntruderPhotoManager by inject()
 
-    private val _photos = MutableStateFlow<List<File>>(emptyList())
+    private val _photos = MutableStateFlow<List<IntruderPhoto>>(emptyList())
     val photos = _photos.asStateFlow()
 
     init {
@@ -26,9 +26,9 @@ class IntruderPhotosScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    fun delete(file: File) {
+    fun delete(photo: IntruderPhoto) {
         viewModelScope.launch {
-            intruderPhotoManager.delete(file)
+            intruderPhotoManager.delete(photo)
             refresh()
         }
     }

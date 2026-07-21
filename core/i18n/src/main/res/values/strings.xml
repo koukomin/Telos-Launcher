@@ -1227,6 +1227,17 @@
     <string name="intruder_photo_retention_90d">90 days</string>
     <string name="intruder_photo_retention_1y">1 year</string>
     <string name="intruder_photo_retention_2y">2 years</string>
+    <string name="preference_intruder_photo_storage_location">Storage location</string>
+    <string name="intruder_photo_storage_use_default">Use default</string>
+    <string name="preference_intruder_photo_visible_in_gallery">Show in gallery</string>
+    <string name="preference_intruder_photo_visible_in_gallery_summary">Photos in the chosen folder are discoverable by the system gallery/Photos app instead of staying hidden.</string>
+    <string name="preference_intruder_photo_visible_in_gallery_summary_no_folder">Choose a storage folder above first - the default app storage is never visible to the gallery.</string>
+    <string name="preference_intruder_photo_notification_enabled">Notify on failed unlock</string>
+    <string name="preference_intruder_photo_notification_enabled_summary">Show a notification whenever an App Lock attempt fails, independent of whether a photo is captured.</string>
+    <string name="intruder_photo_notification_channel">Failed unlock attempts</string>
+    <string name="intruder_photo_notification_title">Failed unlock attempt</string>
+    <string name="intruder_photo_notification_text">Someone tried to unlock %1$s and failed.</string>
+    <string name="intruder_photo_notification_show_more">Show more</string>
     <string name="preference_intruder_photos_gallery">Captured photos</string>
     <plurals name="intruder_photo_count">
         <item quantity="one">%1$d photo</item>

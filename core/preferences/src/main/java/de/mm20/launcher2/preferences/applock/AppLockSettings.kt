@@ -133,4 +133,33 @@ class AppLockSettings internal constructor(
         val clamped = days.coerceIn(1, INTRUDER_PHOTO_MAX_RETENTION_DAYS)
         dataStore.update { it.copy(appLockIntruderPhotoRetentionDays = clamped) }
     }
+
+    /** A SAF tree uri string to store intruder photos in, or null for the default app-private
+     * location. */
+    val intruderPhotoStorageUri
+        get() = dataStore.data.map { it.appLockIntruderPhotoStorageUri }
+            .distinctUntilChanged()
+
+    fun setIntruderPhotoStorageUri(uri: String?) {
+        dataStore.update { it.copy(appLockIntruderPhotoStorageUri = uri) }
+    }
+
+    /** Whether intruder photos should be discoverable by the system gallery - only meaningful
+     * together with a non-null [intruderPhotoStorageUri]. */
+    val intruderPhotoVisibleInGallery
+        get() = dataStore.data.map { it.appLockIntruderPhotoVisibleInGallery }
+            .distinctUntilChanged()
+
+    fun setIntruderPhotoVisibleInGallery(visible: Boolean) {
+        dataStore.update { it.copy(appLockIntruderPhotoVisibleInGallery = visible) }
+    }
+
+    /** Independent of [intruderPhotoEnabled]: post a notification on a failed App Lock attempt. */
+    val intruderPhotoNotificationEnabled
+        get() = dataStore.data.map { it.appLockIntruderPhotoNotificationEnabled }
+            .distinctUntilChanged()
+
+    fun setIntruderPhotoNotificationEnabled(enabled: Boolean) {
+        dataStore.update { it.copy(appLockIntruderPhotoNotificationEnabled = enabled) }
+    }
 }

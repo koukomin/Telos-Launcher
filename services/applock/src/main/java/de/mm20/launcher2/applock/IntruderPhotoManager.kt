@@ -7,32 +7,29 @@ import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraDevice
 import android.hardware.camera2.CameraManager
 import android.hardware.camera2.CaptureRequest
+import android.net.Uri
 import android.os.Handler
 import android.os.HandlerThread
 import android.media.ImageReader
 import android.util.Log
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.preferences.applock.AppLockSettings
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 /**
- * Silent front-camera capture triggered by a failed App Lock authentication attempt. Storage is
- * strictly local: files live in app-private internal storage ([Context.filesDir]) and are never
- * uploaded, shared, or exposed via MediaStore or any content provider.
+ * Silent front-camera capture triggered by a failed App Lock authentication attempt. Storage
+ * ([IntruderPhotoStorage]) defaults to app-private internal storage, never uploaded, shared, or
+ * exposed via MediaStore or any content provider - a custom folder is opt-in.
  */
 class IntruderPhotoManager(
     private val context: Context,
     private val appLockSettings: AppLockSettings,
 ) {
+    private val storage = IntruderPhotoStorage(context, appLockSettings)
+
     // A single persistent background thread for the camera2 callbacks, kept alive for this
     // singleton's process lifetime rather than spun up/torn down per capture - CameraDevice.close()
     // delivers its onClosed callback asynchronously, so quitting the thread right after a capture
@@ -49,43 +46,38 @@ class IntruderPhotoManager(
     suspend fun capture() {
         try {
             val bytes = captureJpeg() ?: return
-            withContext(Dispatchers.IO) {
-                val dir = photoDir()
-                dir.mkdirs()
-                val name = fileNameFormat.format(Date())
-                File(dir, "$name.jpg").writeBytes(bytes)
-            }
+            storage.write(bytes)
         } catch (e: Exception) {
             Log.w(TAG, "Failed to capture intruder photo", e)
         }
     }
 
-    suspend fun listPhotos(): List<File> = withContext(Dispatchers.IO) {
-        photoDir().listFiles()?.sortedByDescending { it.lastModified() } ?: emptyList()
-    }
+    suspend fun listPhotos(): List<IntruderPhoto> = storage.list()
 
-    suspend fun delete(file: File) = withContext(Dispatchers.IO) {
-        file.delete()
-        Unit
-    }
+    suspend fun delete(photo: IntruderPhoto) = storage.delete(photo)
 
-    suspend fun deleteAll() = withContext(Dispatchers.IO) {
-        photoDir().listFiles()?.forEach { it.delete() }
-        Unit
+    suspend fun deleteAll() {
+        storage.list().forEach { storage.delete(it) }
     }
 
     /** Deletes any photo older than the configured retention period. */
     suspend fun deleteExpired() {
         val retentionDays = appLockSettings.intruderPhotoRetentionDays.first()
         val cutoff = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(retentionDays.toLong())
-        withContext(Dispatchers.IO) {
-            photoDir().listFiles()?.forEach { file ->
-                if (file.lastModified() < cutoff) file.delete()
-            }
-        }
+        storage.list().forEach { if (it.lastModified < cutoff) storage.delete(it) }
     }
 
-    private fun photoDir() = File(context.filesDir, "intruder_photos")
+    /** Human-readable current storage location, for display in settings. */
+    suspend fun currentStorageDisplayPath(): String = storage.displayPath()
+
+    /** Switches to a custom SAF folder, or back to the default internal storage if [treeUri] is
+     * null. See [IntruderPhotoStorage.setCustomFolder]. */
+    suspend fun setCustomFolder(treeUri: Uri?) = storage.setCustomFolder(treeUri)
+
+    suspend fun setVisibleInGallery(visible: Boolean) {
+        appLockSettings.setIntruderPhotoVisibleInGallery(visible)
+        storage.applyVisibility(visible)
+    }
 
     private suspend fun captureJpeg(): ByteArray? {
         val cameraManager = context.getSystemService<CameraManager>() ?: return null
@@ -202,6 +194,5 @@ class IntruderPhotoManager(
     private companion object {
         private const val TAG = "IntruderPhotoManager"
         private const val CAPTURE_TIMEOUT_MS = 5000L
-        private val fileNameFormat = SimpleDateFormat("yyyy-MM-dd_HH-mm-ss-SSS", Locale.US)
     }
 }

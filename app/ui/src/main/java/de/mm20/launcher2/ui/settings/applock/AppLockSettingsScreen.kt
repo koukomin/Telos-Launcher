@@ -1,7 +1,14 @@
 package de.mm20.launcher2.ui.settings.applock
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -54,8 +61,30 @@ fun AppLockSettingsScreen() {
     val intruderPhotoRetentionDays by viewModel.intruderPhotoRetentionDays.collectAsStateWithLifecycle()
     val cameraPermissionGranted by viewModel.cameraPermissionGranted.collectAsStateWithLifecycle()
     val intruderPhotoCount by viewModel.intruderPhotoCount.collectAsStateWithLifecycle()
+    val intruderPhotoVisibleInGallery by viewModel.intruderPhotoVisibleInGallery.collectAsStateWithLifecycle()
+    val hasCustomStorageFolder by viewModel.hasCustomStorageFolder.collectAsStateWithLifecycle()
+    val intruderPhotoStoragePath by viewModel.intruderPhotoStoragePath.collectAsStateWithLifecycle()
+    val intruderPhotoNotificationEnabled by viewModel.intruderPhotoNotificationEnabled.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) { viewModel.refreshIntruderPhotoCount() }
+
+    val folderPicker = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenDocumentTree()
+    ) { uri ->
+        if (uri != null) {
+            context.contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION,
+            )
+            viewModel.setCustomStorageFolder(uri)
+        }
+    }
+
+    val notificationPermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) viewModel.setIntruderPhotoNotificationEnabled(true)
+    }
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_app_lock),
@@ -184,8 +213,49 @@ fun AppLockSettingsScreen() {
                 ListPreference(
                     title = stringResource(R.string.preference_intruder_photo_retention),
                     items = intruderPhotoRetentionOptions(),
-                    value = intruderPhotoRetentionDays ?: 30,
+                    value = intruderPhotoRetentionDays ?: 90,
                     onValueChanged = { viewModel.setIntruderPhotoRetentionDays(it) },
+                )
+                Preference(
+                    title = stringResource(R.string.preference_intruder_photo_storage_location),
+                    summary = intruderPhotoStoragePath,
+                    onClick = { folderPicker.launch(null) },
+                    controls = if (hasCustomStorageFolder != null) {
+                        {
+                            TextButton(onClick = { viewModel.setCustomStorageFolder(null) }) {
+                                Text(stringResource(R.string.intruder_photo_storage_use_default))
+                            }
+                        }
+                    } else null,
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_intruder_photo_visible_in_gallery),
+                    summary = stringResource(
+                        if (hasCustomStorageFolder != null) {
+                            R.string.preference_intruder_photo_visible_in_gallery_summary
+                        } else {
+                            R.string.preference_intruder_photo_visible_in_gallery_summary_no_folder
+                        }
+                    ),
+                    enabled = hasCustomStorageFolder != null,
+                    value = hasCustomStorageFolder != null && intruderPhotoVisibleInGallery == true,
+                    onValueChanged = { viewModel.setIntruderPhotoVisibleInGallery(it) },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_intruder_photo_notification_enabled),
+                    summary = stringResource(R.string.preference_intruder_photo_notification_enabled_summary),
+                    value = intruderPhotoNotificationEnabled == true,
+                    onValueChanged = { enabled ->
+                        val needsPermission = enabled &&
+                            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) !=
+                            PackageManager.PERMISSION_GRANTED
+                        if (needsPermission) {
+                            notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                        } else {
+                            viewModel.setIntruderPhotoNotificationEnabled(enabled)
+                        }
+                    },
                 )
                 Preference(
                     icon = R.drawable.photo_24px,

@@ -330,7 +330,20 @@ data class LauncherSettingsData internal constructor(
     /** How long a captured intruder photo is kept before auto-deletion. Clamped to at most
      * [de.mm20.launcher2.preferences.applock.INTRUDER_PHOTO_MAX_RETENTION_DAYS] wherever it's
      * set, not just here, so no stored value can ever exceed that cap. */
-    val appLockIntruderPhotoRetentionDays: Int = 30,
+    val appLockIntruderPhotoRetentionDays: Int = 90,
+    /** A persisted SAF tree uri (ACTION_OPEN_DOCUMENT_TREE) to store intruder photos in, instead
+     * of the default app-private internal storage. Null = use the default location. */
+    val appLockIntruderPhotoStorageUri: String? = null,
+    /** Whether intruder photos should be discoverable by the system gallery/Photos app. Only
+     * meaningful when [appLockIntruderPhotoStorageUri] is set to a folder outside app-private
+     * storage, since internal storage is never gallery-visible regardless of this flag. Off by
+     * default - a captured intruder photo should not surface anywhere the intruder (or anyone
+     * else with the device) might casually stumble onto it. */
+    val appLockIntruderPhotoVisibleInGallery: Boolean = false,
+    /** Opt-in, independent of [appLockIntruderPhotoEnabled]: post a notification on a failed App
+     * Lock attempt (regardless of whether a photo was actually captured), with a "show more"
+     * action that opens the captured-photos gallery. Off by default. */
+    val appLockIntruderPhotoNotificationEnabled: Boolean = false,
 
     val floatingLauncherEnabled: Boolean = false,
     @Deprecated("Replaced by floatingLauncherZones - kept only so Migration10 can read the old single-tab position.")

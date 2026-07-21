@@ -30,6 +30,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.applock.IntruderPhotoManager
+import de.mm20.launcher2.applock.IntruderPhotoNotifier
 import de.mm20.launcher2.preferences.SettingsLockMethod
 import de.mm20.launcher2.preferences.applock.AppLockSettings
 import de.mm20.launcher2.ui.R
@@ -63,19 +64,27 @@ fun AppLockGateScreen(
 
     val appLockSettings: AppLockSettings = koinInject()
     val intruderPhotoManager: IntruderPhotoManager = koinInject()
+    val intruderPhotoNotifier: IntruderPhotoNotifier = koinInject()
     val intruderPhotoEnabled by appLockSettings.intruderPhotoEnabled.collectAsStateWithLifecycle(false)
+    val intruderPhotoNotificationEnabled by appLockSettings.intruderPhotoNotificationEnabled.collectAsStateWithLifecycle(false)
     val scope = rememberCoroutineScope()
-    // Capture at most once per gate instance, even if the prompt reports several failed
+    // Capture/notify at most once per gate instance, even if the prompt reports several failed
     // attempts in a row (e.g. repeated fingerprint mismatches) before the user gives up.
     var hasCapturedIntruderPhoto by remember { mutableStateOf(false) }
+    var hasNotifiedFailedUnlock by remember { mutableStateOf(false) }
 
     fun onAuthenticationFailed() {
-        if (!intruderPhotoEnabled || hasCapturedIntruderPhoto) return
-        if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
-            != PackageManager.PERMISSION_GRANTED
-        ) return
-        hasCapturedIntruderPhoto = true
-        scope.launch { intruderPhotoManager.capture() }
+        if (intruderPhotoEnabled && !hasCapturedIntruderPhoto &&
+            ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA)
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            hasCapturedIntruderPhoto = true
+            scope.launch { intruderPhotoManager.capture() }
+        }
+        if (intruderPhotoNotificationEnabled && !hasNotifiedFailedUnlock) {
+            hasNotifiedFailedUnlock = true
+            intruderPhotoNotifier.notifyFailedUnlock(appLabel)
+        }
     }
 
     fun authenticate() {
