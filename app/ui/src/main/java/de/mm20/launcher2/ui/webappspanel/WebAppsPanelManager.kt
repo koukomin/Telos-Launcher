@@ -60,6 +60,7 @@ class WebAppsPanelManager internal constructor(
                         showInPanel = true,
                         order = index,
                         iconSource = shortcut.iconSource,
+                        customCss = shortcut.customCss,
                     )
                 }
             }
@@ -96,12 +97,13 @@ class WebAppsPanelManager internal constructor(
                 showInPanel = shortcut.showInPanel,
                 order = index,
                 iconSource = shortcut.iconSource,
+                customCss = shortcut.customCss,
             )
         }
     }
 
     fun remove(shortcut: WebAppShortcut) {
-        webAppShortcutRepository.update(shortcut, shortcut.label, shortcut.url, shortcut.iconUri, shortcut.faviconUrl, shortcut.rendererPackage, shortcut.showInGrid, false, shortcut.order, shortcut.iconSource)
+        webAppShortcutRepository.update(shortcut, shortcut.label, shortcut.url, shortcut.iconUri, shortcut.faviconUrl, shortcut.rendererPackage, shortcut.showInGrid, false, shortcut.order, shortcut.iconSource, shortcut.customCss)
     }
 
     fun addExisting(shortcut: WebAppShortcut) {
@@ -109,6 +111,7 @@ class WebAppsPanelManager internal constructor(
             webAppShortcutRepository.update(
                 shortcut, shortcut.label, shortcut.url, shortcut.iconUri, shortcut.faviconUrl,
                 shortcut.rendererPackage, shortcut.showInGrid, true, nextOrder(), shortcut.iconSource,
+                shortcut.customCss,
             )
         }
     }
@@ -156,7 +159,8 @@ class WebAppsPanelManager internal constructor(
             showInGrid = existing.showInGrid,
             showInPanel = existing.showInPanel,
             order = existing.order,
-            iconSource = existing.iconSource
+            iconSource = existing.iconSource,
+            customCss = existing.customCss,
         )
     }
 

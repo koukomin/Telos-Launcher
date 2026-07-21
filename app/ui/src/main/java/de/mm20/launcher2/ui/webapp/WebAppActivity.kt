@@ -46,6 +46,7 @@ import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.webapp.WebAppLaunchContract
+import org.json.JSONObject
 import org.koin.compose.koinInject
 
 /**
@@ -61,6 +62,7 @@ class WebAppActivity : BaseActivity() {
 
         val url = intent.getStringExtra(WebAppLaunchContract.EXTRA_URL) ?: return finish()
         val label = intent.getStringExtra(WebAppLaunchContract.EXTRA_LABEL) ?: ""
+        val customCss = intent.getStringExtra(WebAppLaunchContract.EXTRA_CUSTOM_CSS)
 
         setContent {
             LauncherTheme {
@@ -68,6 +70,7 @@ class WebAppActivity : BaseActivity() {
                     WebAppScreen(
                         url = url,
                         label = label,
+                        customCss = customCss,
                         onOpenExternally = { openExternally(it) },
                         onClose = { finish() },
                     )
@@ -86,6 +89,7 @@ class WebAppActivity : BaseActivity() {
 private fun WebAppScreen(
     url: String,
     label: String,
+    customCss: String?,
     onOpenExternally: (String) -> Unit,
     onClose: () -> Unit,
 ) {
@@ -170,6 +174,9 @@ private fun WebAppScreen(
                             override fun onPageFinished(view: WebView?, loadedUrl: String?) {
                                 super.onPageFinished(view, loadedUrl)
                                 if (loadedUrl != null) currentUrl = loadedUrl
+                                if (!customCss.isNullOrBlank()) {
+                                    view?.evaluateJavascript(injectCssScript(customCss), null)
+                                }
                             }
 
                             override fun shouldInterceptRequest(
@@ -224,4 +231,21 @@ private fun WebAppScreen(
             )
         }
     }
+}
+
+/** A `<style>` tag keyed by id, so re-running this on every page load (incl. in-page navigation)
+ * replaces the previous content instead of stacking duplicate tags. */
+private fun injectCssScript(css: String): String {
+    val quotedCss = JSONObject.quote(css)
+    return """
+        (function() {
+            var style = document.getElementById('__kvaesitso_custom_css');
+            if (!style) {
+                style = document.createElement('style');
+                style.id = '__kvaesitso_custom_css';
+                document.head.appendChild(style);
+            }
+            style.textContent = $quotedCss;
+        })();
+    """.trimIndent()
 }

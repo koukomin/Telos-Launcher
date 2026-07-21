@@ -50,6 +50,7 @@ class WebAppLockActivity : BaseActivity() {
             return
         }
         val rendererPackage = intent.getStringExtra(WebAppLockLaunchContract.EXTRA_RENDERER_PACKAGE)
+        val customCss = intent.getStringExtra(WebAppLockLaunchContract.EXTRA_CUSTOM_CSS)
 
         onBackPressedDispatcher.addCallback(this) {
             finish()
@@ -65,7 +66,7 @@ class WebAppLockActivity : BaseActivity() {
                         appLabel = label,
                         lockMethod = lockMethod,
                         onUnlocked = {
-                            openShortcut(url, label, rendererPackage)
+                            openShortcut(url, label, rendererPackage, customCss)
                             finish()
                         },
                         onCancelled = {
@@ -77,7 +78,7 @@ class WebAppLockActivity : BaseActivity() {
         }
     }
 
-    private fun openShortcut(url: String, label: String, rendererPackage: String?) {
+    private fun openShortcut(url: String, label: String, rendererPackage: String?, customCss: String?) {
         if (rendererPackage != null &&
             CustomTabsBrowsers.isInstalled(this, rendererPackage) &&
             CustomTabsBrowsers.isCustomTabsSupported(this, rendererPackage)
@@ -95,6 +96,7 @@ class WebAppLockActivity : BaseActivity() {
             setClassName(packageName, WebAppLaunchContract.ACTIVITY_CLASS_NAME)
             putExtra(WebAppLaunchContract.EXTRA_URL, url)
             putExtra(WebAppLaunchContract.EXTRA_LABEL, label)
+            putExtra(WebAppLaunchContract.EXTRA_CUSTOM_CSS, customCss)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
         tryStartActivity(intent)

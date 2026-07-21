@@ -31,6 +31,7 @@ internal data class WebAppShortcutImpl(
     override val faviconUrl: String?,
     override val color: Int?,
     override val rendererPackage: String? = null,
+    override val customCss: String? = null,
     override val labelOverride: String? = null,
     override val showInGrid: Boolean = true,
     override val showInPanel: Boolean = false,
@@ -139,6 +140,7 @@ internal data class WebAppShortcutImpl(
             putExtra(WebAppLockLaunchContract.EXTRA_URL, url)
             putExtra(WebAppLockLaunchContract.EXTRA_LABEL, labelOverride ?: label)
             putExtra(WebAppLockLaunchContract.EXTRA_RENDERER_PACKAGE, rendererPackage)
+            putExtra(WebAppLockLaunchContract.EXTRA_CUSTOM_CSS, customCss)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
         return context.tryStartActivity(intent, options)
@@ -149,6 +151,7 @@ internal data class WebAppShortcutImpl(
             setClassName(context.packageName, WebAppLaunchContract.ACTIVITY_CLASS_NAME)
             putExtra(WebAppLaunchContract.EXTRA_URL, url)
             putExtra(WebAppLaunchContract.EXTRA_LABEL, labelOverride ?: label)
+            putExtra(WebAppLaunchContract.EXTRA_CUSTOM_CSS, customCss)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
         return context.tryStartActivity(intent, options)

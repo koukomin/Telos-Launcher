@@ -11,4 +11,5 @@ object WebAppLockLaunchContract {
     const val EXTRA_URL = "de.mm20.launcher2.webapp.extra.URL"
     const val EXTRA_LABEL = "de.mm20.launcher2.webapp.extra.LABEL"
     const val EXTRA_RENDERER_PACKAGE = "de.mm20.launcher2.webapp.extra.RENDERER_PACKAGE"
+    const val EXTRA_CUSTOM_CSS = "de.mm20.launcher2.webapp.extra.CUSTOM_CSS"
 }

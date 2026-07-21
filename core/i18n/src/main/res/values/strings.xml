@@ -811,6 +811,8 @@
     <string name="web_app_shortcut_renderer">Open with</string>
     <string name="web_app_shortcut_renderer_embedded">Embedded (in-app)</string>
     <string name="web_app_shortcut_renderer_none_detected">No installed browsers support Custom Tabs</string>
+    <string name="web_app_shortcut_custom_css">Custom CSS (optional)</string>
+    <string name="web_app_shortcut_custom_css_summary">Injected into every page. Only applies to the built-in browser, not an external browser</string>
     <string name="preference_screen_floating_launcher">Floating launcher</string>
     <string name="preference_screen_floating_launcher_summary">Edge tab for quick access to your favorite apps over other apps</string>
     <string name="preference_floating_launcher">Enable floating launcher</string>

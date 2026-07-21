@@ -228,10 +228,10 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
         EditWebAppShortcutSheet(
             expanded = showCreateSheet,
             existing = null,
-            onSave = { label, url, iconUri, faviconUrl, rendererPackage, _, _, _ ->
-            viewModel.createAndAdd(label, url, iconUri, faviconUrl, rendererPackage)
-            showCreateSheet = false
-        },
+            onSave = { label, url, iconUri, faviconUrl, rendererPackage, _, _, _, _ ->
+                viewModel.createAndAdd(label, url, iconUri, faviconUrl, rendererPackage)
+                showCreateSheet = false
+            },
             onDismiss = { showCreateSheet = false },
             onImportIcon = { uri, sizePx -> viewModel.importIcon(uri, sizePx) },
             onFindFavicon = { url -> viewModel.findFavicon(url) },

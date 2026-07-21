@@ -46,7 +46,7 @@ import kotlinx.coroutines.launch
 fun EditWebAppShortcutSheet(
     expanded: Boolean,
     existing: WebAppShortcut?,
-    onSave: (label: String, url: String, iconUri: String?, faviconUrl: String?, rendererPackage: String?, showInGrid: Boolean, showInPanel: Boolean, iconSource: WebAppShortcut.IconSource) -> Unit,
+    onSave: (label: String, url: String, iconUri: String?, faviconUrl: String?, rendererPackage: String?, showInGrid: Boolean, showInPanel: Boolean, iconSource: WebAppShortcut.IconSource, customCss: String?) -> Unit,
     onDismiss: () -> Unit,
     onImportIcon: suspend (uri: Uri, sizePx: Int) -> String?,
     onFindFavicon: suspend (url: String) -> String?,
@@ -63,6 +63,7 @@ fun EditWebAppShortcutSheet(
         var showInGrid by remember(existing) { mutableStateOf(existing?.showInGrid ?: true) }
         var showInPanel by remember(existing) { mutableStateOf(existing?.showInPanel ?: false) }
         var iconSource by remember(existing) { mutableStateOf(existing?.iconSource ?: WebAppShortcut.IconSource.Website) }
+        var customCss by remember(existing) { mutableStateOf(existing?.customCss ?: "") }
         var findingFavicon by remember { mutableStateOf(false) }
         var showRendererMenu by remember { mutableStateOf(false) }
         var showIconSourceMenu by remember { mutableStateOf(false) }
@@ -273,6 +274,17 @@ fun EditWebAppShortcutSheet(
                 }
             }
 
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                value = customCss,
+                onValueChange = { customCss = it },
+                label = { Text(stringResource(R.string.web_app_shortcut_custom_css)) },
+                supportingText = { Text(stringResource(R.string.web_app_shortcut_custom_css_summary)) },
+                minLines = 3,
+            )
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -285,7 +297,10 @@ fun EditWebAppShortcutSheet(
                 TextButton(
                     enabled = label.isNotBlank() && url.isNotBlank(),
                     onClick = {
-                        onSave(label.trim(), url.trim(), iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource)
+                        onSave(
+                            label.trim(), url.trim(), iconUri, faviconUrl, rendererPackage,
+                            showInGrid, showInPanel, iconSource, customCss.trim().ifBlank { null },
+                        )
                     }
                 ) {
                     Text(stringResource(R.string.save))

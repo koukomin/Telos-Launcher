@@ -123,12 +123,13 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
         showInGrid: Boolean,
         showInPanel: Boolean,
         iconSource: WebAppShortcut.IconSource,
+        customCss: String?,
     ) {
         val oldIconUri = existing?.iconUri
         if (existing != null) {
-            webAppShortcutRepository.update(existing, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, existing.order, iconSource)
+            webAppShortcutRepository.update(existing, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, existing.order, iconSource, customCss)
         } else {
-            webAppShortcutRepository.create(label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, 0, iconSource)
+            webAppShortcutRepository.create(label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, 0, iconSource, customCss)
         }
         if (oldIconUri != null && oldIconUri != iconUri) {
             deleteIconFile(oldIconUri)
@@ -147,7 +148,8 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
             showInGrid,
             showInPanel,
             shortcut.order,
-            shortcut.iconSource
+            shortcut.iconSource,
+            shortcut.customCss,
         )
     }
 

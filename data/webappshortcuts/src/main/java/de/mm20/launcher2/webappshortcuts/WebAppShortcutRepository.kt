@@ -41,6 +41,7 @@ interface WebAppShortcutRepository : SearchableRepository<WebAppShortcut> {
         showInPanel: Boolean = false,
         order: Int = 0,
         iconSource: WebAppShortcut.IconSource = WebAppShortcut.IconSource.Website,
+        customCss: String? = null,
     ): WebAppShortcut
 
     fun update(
@@ -54,6 +55,7 @@ interface WebAppShortcutRepository : SearchableRepository<WebAppShortcut> {
         showInPanel: Boolean = false,
         order: Int = 0,
         iconSource: WebAppShortcut.IconSource = WebAppShortcut.IconSource.Website,
+        customCss: String? = null,
     ): WebAppShortcut
 
     fun delete(shortcut: WebAppShortcut)
@@ -91,6 +93,7 @@ internal class WebAppShortcutRepositoryImpl(
         showInPanel: Boolean,
         order: Int,
         iconSource: WebAppShortcut.IconSource,
+        customCss: String?,
     ): WebAppShortcut {
         val shortcut = WebAppShortcutImpl(
             id = UUID.randomUUID().toString(),
@@ -100,6 +103,7 @@ internal class WebAppShortcutRepositoryImpl(
             faviconUrl = faviconUrl,
             color = null,
             rendererPackage = rendererPackage,
+            customCss = customCss,
             showInGrid = showInGrid,
             showInPanel = showInPanel,
             order = order,
@@ -120,6 +124,7 @@ internal class WebAppShortcutRepositoryImpl(
         showInPanel: Boolean,
         order: Int,
         iconSource: WebAppShortcut.IconSource,
+        customCss: String?,
     ): WebAppShortcut {
         shortcut as WebAppShortcutImpl
         val updated = shortcut.copy(
@@ -128,6 +133,7 @@ internal class WebAppShortcutRepositoryImpl(
             iconUri = iconUri,
             faviconUrl = faviconUrl,
             rendererPackage = rendererPackage,
+            customCss = customCss,
             showInGrid = showInGrid,
             showInPanel = showInPanel,
             order = order,

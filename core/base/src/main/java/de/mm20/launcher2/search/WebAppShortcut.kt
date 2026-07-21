@@ -25,6 +25,12 @@ interface WebAppShortcut : SavableSearchable {
      */
     val rendererPackage: String?
 
+    /**
+     * Optional CSS injected into every page loaded by this shortcut's embedded WebView (not
+     * applied when opened via Custom Tabs).
+     */
+    val customCss: String?
+
     override val preferDetailsOverLaunch: Boolean
         get() = false
 
