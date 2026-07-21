@@ -380,6 +380,11 @@ data class LauncherSettingsData internal constructor(
      */
     val webAppsPanelItems: List<String> = emptyList(),
 
+    /** Applies to the embedded WebView renderer used by web app shortcuts (not Custom Tabs). */
+    val webAppAdBlockEnabled: Boolean = true,
+    val webAppTrackingParamStrippingEnabled: Boolean = true,
+    val webAppZoomControlsEnabled: Boolean = true,
+
     val contextProfilesEnabled: Boolean = false,
     val contextProfiles: List<ContextProfile> = emptyList(),
     /** If set, this profile is force-active regardless of trigger evaluation. */

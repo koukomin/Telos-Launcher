@@ -47,6 +47,7 @@ fun WebAppsSettingsScreen() {
     val viewModel: WebAppsSettingsScreenVM = viewModel()
     val shortcuts by viewModel.shortcuts.collectAsState()
     val direction by viewModel.direction.collectAsState()
+    val adBlockEnabled by viewModel.adBlockEnabled.collectAsState()
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_web_app_shortcuts),
@@ -70,6 +71,16 @@ fun WebAppsSettingsScreen() {
                         onValueChanged = { if (it != null) viewModel.setDirection(it) },
                     )
                 }
+            }
+        }
+        item {
+            PreferenceCategory(title = stringResource(R.string.preference_category_web_app_browsing)) {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_web_app_ad_block),
+                    summary = stringResource(R.string.preference_web_app_ad_block_summary),
+                    value = adBlockEnabled,
+                    onValueChanged = { viewModel.setAdBlockEnabled(it) },
+                )
             }
         }
         item {

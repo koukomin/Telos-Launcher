@@ -12,6 +12,7 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.ui.GestureSettings
+import de.mm20.launcher2.preferences.ui.WebAppBrowsingSettings
 import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.webappshortcuts.WebAppShortcutRepository
 import kotlinx.coroutines.Dispatchers
@@ -34,6 +35,12 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
     private val context: Context by inject()
     private val webAppShortcutRepository: WebAppShortcutRepository by inject()
     private val gestureSettings: GestureSettings by inject()
+    private val browsingSettings: WebAppBrowsingSettings by inject()
+
+    val adBlockEnabled = browsingSettings.adBlockEnabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+
+    fun setAdBlockEnabled(enabled: Boolean) = browsingSettings.setAdBlockEnabled(enabled)
 
     val shortcuts = webAppShortcutRepository.search("", false)
         .map { it.sortedBy { s -> s.label.lowercase() } }

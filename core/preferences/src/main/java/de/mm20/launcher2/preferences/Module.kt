@@ -23,6 +23,7 @@ import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.preferences.ui.ContextProfileSettings
 import de.mm20.launcher2.preferences.ui.DesktopModeSettings
 import de.mm20.launcher2.preferences.ui.DynamicIslandSettings
+import de.mm20.launcher2.preferences.ui.WebAppBrowsingSettings
 import de.mm20.launcher2.preferences.ui.WebAppsPanelSettings
 import de.mm20.launcher2.preferences.ui.FloatingLauncherSettings
 import de.mm20.launcher2.preferences.ui.GestureSettings
@@ -76,4 +77,5 @@ val preferencesModule = module {
     factory { DesktopModeSettings(get()) }
     factory { DynamicIslandSettings(get()) }
     factory { WebAppsPanelSettings(get()) }
+    factory { WebAppBrowsingSettings(get()) }
 }

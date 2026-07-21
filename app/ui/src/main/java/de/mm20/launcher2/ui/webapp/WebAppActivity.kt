@@ -4,6 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.ViewGroup
+import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.compose.BackHandler
@@ -22,18 +24,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.net.toUri
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.mm20.launcher2.preferences.ui.WebAppBrowsingSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.webapp.WebAppLaunchContract
+import org.koin.compose.koinInject
 
 /**
  * The embedded WebView renderer for a WebAppShortcut (the default, and the silent fallback when
@@ -79,6 +86,12 @@ private fun WebAppScreen(
     var webView by remember { mutableStateOf<WebView?>(null) }
     var currentUrl by remember { mutableStateOf(url) }
     var showMenu by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
+    val browsingSettings: WebAppBrowsingSettings = koinInject()
+    val adBlockEnabled by browsingSettings.adBlockEnabled.collectAsStateWithLifecycle(true)
+    val adBlockEnabledState = rememberUpdatedState(adBlockEnabled)
+    val adBlocker = remember { WebAdBlocker(context) }
 
     BackHandler(enabled = true) {
         val wv = webView
@@ -145,6 +158,16 @@ private fun WebAppScreen(
                             override fun onPageFinished(view: WebView?, loadedUrl: String?) {
                                 super.onPageFinished(view, loadedUrl)
                                 if (loadedUrl != null) currentUrl = loadedUrl
+                            }
+
+                            override fun shouldInterceptRequest(
+                                view: WebView,
+                                request: WebResourceRequest,
+                            ): WebResourceResponse? {
+                                if (adBlockEnabledState.value && adBlocker.shouldBlock(request.url.host)) {
+                                    return adBlocker.blockedResponse()
+                                }
+                                return super.shouldInterceptRequest(view, request)
                             }
                         }
                         webView = this
