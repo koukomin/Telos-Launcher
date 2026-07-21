@@ -807,6 +807,7 @@
     <string name="preference_dock_reset">Reset to auto-favorites</string>
     <string name="preference_dock_reset_summary">Clear all custom dock pages and use frequent apps instead</string>
     <string name="web_app_open_externally">Open in browser</string>
+    <string name="web_app_download_started">Downloading %1$s</string>
     <string name="web_app_shortcut_renderer">Open with</string>
     <string name="web_app_shortcut_renderer_embedded">Embedded (in-app)</string>
     <string name="web_app_shortcut_renderer_none_detected">No installed browsers support Custom Tabs</string>

@@ -1,13 +1,18 @@
 package de.mm20.launcher2.ui.webapp
 
+import android.app.DownloadManager
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.ViewGroup
+import android.webkit.CookieManager
+import android.webkit.URLUtil
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
@@ -32,6 +37,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.getSystemService
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.preferences.ui.WebAppBrowsingSettings
@@ -169,6 +175,23 @@ private fun WebAppScreen(
                                 }
                                 return super.shouldInterceptRequest(view, request)
                             }
+                        }
+                        setDownloadListener { downloadUrl, userAgent, contentDisposition, mimeType, _ ->
+                            val fileName = URLUtil.guessFileName(downloadUrl, contentDisposition, mimeType)
+                            val request = DownloadManager.Request(downloadUrl.toUri())
+                                .setMimeType(mimeType)
+                                .addRequestHeader("cookie", CookieManager.getInstance().getCookie(downloadUrl))
+                                .addRequestHeader("User-Agent", userAgent)
+                                .setDescription(fileName)
+                                .setTitle(fileName)
+                                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
+                            context.getSystemService<DownloadManager>()?.enqueue(request)
+                            Toast.makeText(
+                                context,
+                                context.getString(R.string.web_app_download_started, fileName),
+                                Toast.LENGTH_SHORT,
+                            ).show()
                         }
                         webView = this
                         loadUrl(url)
