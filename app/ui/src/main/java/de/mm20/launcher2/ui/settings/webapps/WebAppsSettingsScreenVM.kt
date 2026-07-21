@@ -42,6 +42,11 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setAdBlockEnabled(enabled: Boolean) = browsingSettings.setAdBlockEnabled(enabled)
 
+    val zoomControlsEnabled = browsingSettings.zoomControlsEnabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+
+    fun setZoomControlsEnabled(enabled: Boolean) = browsingSettings.setZoomControlsEnabled(enabled)
+
     val shortcuts = webAppShortcutRepository.search("", false)
         .map { it.sortedBy { s -> s.label.lowercase() } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())

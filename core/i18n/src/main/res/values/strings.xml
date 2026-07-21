@@ -1361,6 +1361,8 @@
     <string name="preference_category_web_app_browsing">Browsing</string>
     <string name="preference_web_app_ad_block">Block ads and trackers</string>
     <string name="preference_web_app_ad_block_summary">Applies to web apps opened in the built-in browser, not ones opened in an external browser</string>
+    <string name="preference_web_app_zoom_controls">Pinch to zoom</string>
+    <string name="preference_web_app_zoom_controls_summary">Applies to web apps opened in the built-in browser, not ones opened in an external browser</string>
     <string name="web_apps_panel_items">Web apps in panel</string>
     <string name="web_apps_panel_add_existing">Add existing web app shortcut</string>
     <string name="web_apps_panel_empty_hint">No web apps on this panel yet. Tap the edit button in the top right corner to add some.</string>

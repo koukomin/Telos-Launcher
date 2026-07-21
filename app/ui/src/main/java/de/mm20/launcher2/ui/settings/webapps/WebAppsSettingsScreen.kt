@@ -48,6 +48,7 @@ fun WebAppsSettingsScreen() {
     val shortcuts by viewModel.shortcuts.collectAsState()
     val direction by viewModel.direction.collectAsState()
     val adBlockEnabled by viewModel.adBlockEnabled.collectAsState()
+    val zoomControlsEnabled by viewModel.zoomControlsEnabled.collectAsState()
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_web_app_shortcuts),
@@ -80,6 +81,12 @@ fun WebAppsSettingsScreen() {
                     summary = stringResource(R.string.preference_web_app_ad_block_summary),
                     value = adBlockEnabled,
                     onValueChanged = { viewModel.setAdBlockEnabled(it) },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_web_app_zoom_controls),
+                    summary = stringResource(R.string.preference_web_app_zoom_controls_summary),
+                    value = zoomControlsEnabled,
+                    onValueChanged = { viewModel.setZoomControlsEnabled(it) },
                 )
             }
         }

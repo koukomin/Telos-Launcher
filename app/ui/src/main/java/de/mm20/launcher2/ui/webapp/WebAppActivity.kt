@@ -98,6 +98,7 @@ private fun WebAppScreen(
     val adBlockEnabled by browsingSettings.adBlockEnabled.collectAsStateWithLifecycle(true)
     val adBlockEnabledState = rememberUpdatedState(adBlockEnabled)
     val adBlocker = remember { WebAdBlocker(context) }
+    val zoomControlsEnabled by browsingSettings.zoomControlsEnabled.collectAsStateWithLifecycle(true)
 
     BackHandler(enabled = true) {
         val wv = webView
@@ -160,6 +161,9 @@ private fun WebAppScreen(
                         )
                         settings.javaScriptEnabled = true
                         settings.domStorageEnabled = true
+                        settings.setSupportZoom(zoomControlsEnabled)
+                        settings.builtInZoomControls = zoomControlsEnabled
+                        settings.displayZoomControls = false
                         webViewClient = object : WebViewClient() {
                             override fun onPageFinished(view: WebView?, loadedUrl: String?) {
                                 super.onPageFinished(view, loadedUrl)
