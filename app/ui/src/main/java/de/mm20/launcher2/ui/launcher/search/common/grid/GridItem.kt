@@ -153,11 +153,11 @@ fun GridItem(
 
     val shutterSettings = koinInject<ShutterSettings>()
     val shuttersEnabled by shutterSettings.enabled.collectAsStateWithLifecycle(false)
-    val shutterRefFlow = remember(item.key) {
-        if (item is Application) shutterSettings.widgetFor(item.componentName.packageName)
+    val shutterKeyFlow = remember(item.key) {
+        if (item is Application) shutterSettings.appFor(item.componentName.packageName)
         else flowOf(null)
     }
-    val shutterRef by shutterRefFlow.collectAsStateWithLifecycle(null)
+    val shutterKey by shutterKeyFlow.collectAsStateWithLifecycle(null)
     var showShutter by remember(item.key) { mutableStateOf(false) }
     val shutterSwipeThreshold = 48.dp.toPixels()
 
@@ -343,8 +343,7 @@ fun GridItem(
     if (showShutter && item is Application) {
         ShutterGate(
             packageName = item.componentName.packageName,
-            label = item.labelOverride ?: item.label,
-            widgetRef = shutterRef,
+            shutterKey = shutterKey,
             onDismiss = { showShutter = false },
         )
     }

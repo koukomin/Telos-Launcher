@@ -65,8 +65,8 @@ import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
-import de.mm20.launcher2.ui.launcher.sheets.WidgetPickerSheet
-import de.mm20.launcher2.ui.launcher.shutters.assignShutterWidget
+import de.mm20.launcher2.ui.common.SearchablePicker
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalShowAppDetails
 import de.mm20.launcher2.ui.locals.LocalGridSettings
@@ -97,8 +97,8 @@ fun AppItem(
 
     val shutterSettings = koinInject<ShutterSettings>()
     val shuttersEnabled by shutterSettings.enabled.collectAsStateWithLifecycle(false)
-    val shutterRef by remember(app.key) {
-        shutterSettings.widgetFor(app.componentName.packageName)
+    val shutterKey by remember(app.key) {
+        shutterSettings.appFor(app.componentName.packageName)
     }.collectAsStateWithLifecycle(null)
     var showShutterPicker by remember { mutableStateOf(false) }
 
@@ -506,20 +506,20 @@ fun AppItem(
                         toolbarActions.add(
                             DefaultToolbarAction(
                                 label = stringResource(
-                                    if (shutterRef != null) R.string.menu_shutter_change
+                                    if (shutterKey != null) R.string.menu_shutter_change
                                     else R.string.menu_shutter_set
                                 ),
                                 icon = R.drawable.swipe_up_alt_24px,
                                 action = { showShutterPicker = true }
                             )
                         )
-                        if (shutterRef != null) {
+                        if (shutterKey != null) {
                             toolbarActions.add(
                                 DefaultToolbarAction(
                                     label = stringResource(R.string.menu_shutter_remove),
                                     icon = R.drawable.close_24px,
                                     action = {
-                                        shutterSettings.setWidget(
+                                        shutterSettings.setApp(
                                             app.componentName.packageName,
                                             null
                                         )
@@ -605,19 +605,21 @@ fun AppItem(
     }
 
     if (showShutterPicker) {
-        WidgetPickerSheet(
+        DismissableBottomSheet(
             expanded = true,
-            includeBuiltinWidgets = false,
-            onWidgetSelected = { widget ->
-                assignShutterWidget(
-                    context,
-                    shutterSettings,
-                    app.componentName.packageName,
-                    widget
-                )
-            },
-            onDismiss = { showShutterPicker = false },
-        )
+            onDismissRequest = { showShutterPicker = false },
+        ) {
+            SearchablePicker(
+                modifier = Modifier.padding(bottom = 16.dp),
+                value = null,
+                onValueChanged = { picked ->
+                    if (picked != null) {
+                        shutterSettings.setApp(app.componentName.packageName, picked.key)
+                    }
+                    showShutterPicker = false
+                },
+            )
+        }
     }
 }
 

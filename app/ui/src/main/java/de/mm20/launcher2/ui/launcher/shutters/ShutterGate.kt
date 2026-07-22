@@ -1,72 +1,60 @@
 package de.mm20.launcher2.ui.launcher.shutters
 
-import android.appwidget.AppWidgetManager
-import android.content.Context
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import de.mm20.launcher2.preferences.ShutterWidgetRef
+import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.ui.ShutterSettings
-import de.mm20.launcher2.ui.launcher.sheets.WidgetPickerSheet
-import de.mm20.launcher2.widgets.AppWidget
-import de.mm20.launcher2.widgets.Widget
+import de.mm20.launcher2.searchable.SavableSearchableRepository
+import de.mm20.launcher2.ui.common.SearchablePicker
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
+import kotlinx.coroutines.flow.firstOrNull
 import org.koin.compose.koinInject
 
 /**
- * Persists [widget] as the shutter assigned to [packageName], if it's a real bound app widget
- * (built-in launcher widgets aren't backed by an [AppWidgetProviderInfo] and can't be hosted
- * from a swipe-up popup).
- */
-fun assignShutterWidget(
-    context: Context,
-    shutterSettings: ShutterSettings,
-    packageName: String,
-    widget: Widget,
-) {
-    if (widget !is AppWidget) return
-    val providerInfo = AppWidgetManager.getInstance(context)
-        .getAppWidgetInfo(widget.config.widgetId) ?: return
-    shutterSettings.setWidget(
-        packageName,
-        ShutterWidgetRef(
-            widgetId = widget.config.widgetId,
-            providerPackage = providerInfo.provider.packageName,
-            providerClassName = providerInfo.provider.className,
-        )
-    )
-}
-
-/**
- * Shows either the app's existing shutter widget, or (if none is assigned yet) the widget
- * picker so the user can assign one on first swipe-up. Reuses the same widget-binding flow
- * as home screen widgets ([WidgetPickerSheet]) rather than a dedicated per-app picker.
+ * Swiping up on an app icon either launches the app/shortcut/etc already assigned as that app's
+ * "shutter", or - on first use - shows a picker to assign one, then launches it immediately.
  */
 @Composable
 fun ShutterGate(
     packageName: String,
-    label: String,
-    widgetRef: ShutterWidgetRef?,
+    shutterKey: String?,
     onDismiss: () -> Unit,
 ) {
     val shutterSettings = koinInject<ShutterSettings>()
+    val searchableRepository = koinInject<SavableSearchableRepository>()
     val context = LocalContext.current
 
-    if (widgetRef != null) {
-        ShutterOverlay(
-            ref = widgetRef,
-            label = label,
-            onDismiss = onDismiss,
-            onProviderMissing = {
-                shutterSettings.setWidget(packageName, null)
-            },
-        )
+    if (shutterKey != null) {
+        LaunchedEffect(shutterKey) {
+            val target = searchableRepository.getByKeys(listOf(shutterKey)).firstOrNull()?.firstOrNull()
+            if (target != null) {
+                target.launch(context, null)
+            } else {
+                // Stale reference (e.g. the assigned shortcut/app was uninstalled) - clear it so
+                // the next swipe-up shows the picker instead of silently doing nothing.
+                shutterSettings.setApp(packageName, null)
+            }
+            onDismiss()
+        }
     } else {
-        WidgetPickerSheet(
+        DismissableBottomSheet(
             expanded = true,
-            includeBuiltinWidgets = false,
-            onWidgetSelected = { widget ->
-                assignShutterWidget(context, shutterSettings, packageName, widget)
-            },
-            onDismiss = onDismiss,
-        )
+            onDismissRequest = onDismiss,
+        ) {
+            SearchablePicker(
+                modifier = Modifier.padding(bottom = 16.dp),
+                value = null,
+                onValueChanged = { picked ->
+                    if (picked != null) {
+                        shutterSettings.setApp(packageName, picked.key)
+                        picked.launch(context, null)
+                    }
+                    onDismiss()
+                },
+            )
+        }
     }
 }

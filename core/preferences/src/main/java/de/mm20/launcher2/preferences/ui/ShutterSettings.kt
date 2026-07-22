@@ -1,13 +1,12 @@
 package de.mm20.launcher2.preferences.ui
 
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.ShutterWidgetRef
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
 /**
- * "Shutters" (Action Launcher style): swipe up on an app icon to reveal that app's assigned
- * widget in a transient popup. Opt-in, off by default.
+ * "Shutters" (Action Launcher style): swipe up on an app icon to launch an app/shortcut assigned
+ * to it, prompting for one on first use. Opt-in, off by default.
  */
 class ShutterSettings internal constructor(
     private val dataStore: LauncherDataStore,
@@ -19,20 +18,21 @@ class ShutterSettings internal constructor(
         dataStore.update { it.copy(shuttersEnabled = enabled) }
     }
 
-    val widgets
-        get() = dataStore.data.map { it.shutterWidgets }.distinctUntilChanged()
+    val apps
+        get() = dataStore.data.map { it.shutterApps }.distinctUntilChanged()
 
-    fun widgetFor(packageName: String) = dataStore.data
-        .map { it.shutterWidgets[packageName] }
+    /** The SavableSearchable key assigned as [packageName]'s shutter, if any. */
+    fun appFor(packageName: String) = dataStore.data
+        .map { it.shutterApps[packageName] }
         .distinctUntilChanged()
 
-    fun setWidget(packageName: String, ref: ShutterWidgetRef?) {
+    fun setApp(packageName: String, searchableKey: String?) {
         dataStore.update {
             it.copy(
-                shutterWidgets = if (ref != null) {
-                    it.shutterWidgets + (packageName to ref)
+                shutterApps = if (searchableKey != null) {
+                    it.shutterApps + (packageName to searchableKey)
                 } else {
-                    it.shutterWidgets - packageName
+                    it.shutterApps - packageName
                 }
             )
         }

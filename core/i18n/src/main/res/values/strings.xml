@@ -696,9 +696,9 @@
     <string name="menu_unfreeze">Unfreeze</string>
     <string name="menu_force_stop">Force stop</string>
     <string name="menu_clear_cache">Clear cache</string>
-    <string name="menu_shutter_set">Set shutter widget</string>
-    <string name="menu_shutter_change">Change shutter widget</string>
-    <string name="menu_shutter_remove">Remove shutter widget</string>
+    <string name="menu_shutter_set">Set shutter</string>
+    <string name="menu_shutter_change">Change shutter</string>
+    <string name="menu_shutter_remove">Remove shutter</string>
     <string name="preference_freeze_dashboard">Dashboard</string>
     <string name="preference_freeze_dashboard_summary">Currently frozen apps and freeze history</string>
     <string name="preference_freeze_backend">Freeze backend</string>
@@ -785,7 +785,7 @@
     <string name="preference_plugin_badges_summary">Indicate by which plugin a search result was created</string>
     <string name="preference_category_shutters">Shutters</string>
     <string name="preference_shutters">Enable shutters</string>
-    <string name="preference_shutters_summary">Swipe up on an app icon to reveal that app\'s assigned widget without opening the app. Assign a widget from the app\'s info menu.</string>
+    <string name="preference_shutters_summary">Swipe up on an app icon to launch that app\'s assigned shutter (another app, activity, or shortcut) instead of the app itself. You\'ll be asked to pick one on first use, or from the app\'s info menu.</string>
     <string name="preference_screen_web_app_shortcuts">Web app shortcuts</string>
     <string name="preference_screen_web_app_shortcuts_summary">Add websites as app-like shortcuts with a custom icon</string>
     <string name="web_app_shortcut_create">Add web app shortcut</string>

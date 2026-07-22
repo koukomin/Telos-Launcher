@@ -211,7 +211,8 @@ data class LauncherSettingsData internal constructor(
     val performanceIconCacheSize: Int = 200,
 
     val shuttersEnabled: Boolean = false,
-    val shutterWidgets: Map<String, ShutterWidgetRef> = emptyMap(),
+    /** Package name -> the assigned shutter's SavableSearchable key (an app, shortcut, etc). */
+    val shutterApps: Map<String, String> = emptyMap(),
 
     val animationsCharging: Boolean = true,
 
@@ -830,19 +831,6 @@ enum class VideoWallpaperScalingMode {
     /** Distort to exactly match the screen. */
     @SerialName("stretch") Stretch,
 }
-
-/**
- * Just enough to re-look-up an already-bound app widget's [android.appwidget.AppWidgetProviderInfo]
- * via [android.appwidget.AppWidgetManager] at render time. Deliberately independent of the
- * Room-backed home-screen widget system (WidgetRepository) - a shutter is a per-app, opt-in,
- * transient popup, not a home-screen widget.
- */
-@Serializable
-data class ShutterWidgetRef(
-    val widgetId: Int,
-    val providerPackage: String,
-    val providerClassName: String,
-)
 
 @Serializable
 enum class NotificationBadgeStyle {

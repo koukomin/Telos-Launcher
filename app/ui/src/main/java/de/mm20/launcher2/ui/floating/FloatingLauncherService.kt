@@ -1212,8 +1212,8 @@ private fun FavoriteIcon(
     }.collectAsState(false)
 
     val shuttersEnabled by shutterSettings.enabled.collectAsState(false)
-    val shutterRef by remember(item.key) {
-        if (item is Application) shutterSettings.widgetFor(item.componentName.packageName)
+    val shutterKey by remember(item.key) {
+        if (item is Application) shutterSettings.appFor(item.componentName.packageName)
         else flowOf(null)
     }.collectAsState(null)
     var showShutter by remember(item.key) { mutableStateOf(false) }
@@ -1264,8 +1264,7 @@ private fun FavoriteIcon(
     if (showShutter && item is Application) {
         ShutterGate(
             packageName = item.componentName.packageName,
-            label = item.labelOverride ?: item.label,
-            widgetRef = shutterRef,
+            shutterKey = shutterKey,
             onDismiss = { showShutter = false },
         )
     }
