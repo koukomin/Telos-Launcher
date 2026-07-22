@@ -31,7 +31,9 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.overlays.Overlay
@@ -137,6 +139,7 @@ fun <T>BottomSheet(
                     enter = slideInVertically(MaterialTheme.motionScheme.defaultSpatialSpec()) { it },
                     exit = slideOutVertically { it },
                 ) {
+                    val maxSheetHeight = LocalConfiguration.current.screenHeightDp.dp * 0.85f
                     Surface(
                         shadowElevation = 1.dp,
                         shape = BottomSheetDefaults.ExpandedShape,
@@ -146,6 +149,7 @@ fun <T>BottomSheet(
                             .fillMaxWidth()
                             .widthIn(max = BottomSheetDefaults.SheetMaxWidth)
                             .align(Alignment.BottomCenter)
+                            .heightIn(max = maxSheetHeight)
                             .wrapContentHeight()
                     ) {
                         content(
