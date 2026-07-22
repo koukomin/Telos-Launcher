@@ -1,6 +1,8 @@
 package de.mm20.launcher2.freeze
 
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.util.Log
@@ -183,12 +185,29 @@ class FreezeManager internal constructor(
      */
     fun freezeState(packageName: String): AppFreezeState {
         return try {
-            val info = context.packageManager.getApplicationInfo(
+            val pm = context.packageManager
+            val info = pm.getApplicationInfo(
                 packageName,
                 PackageManager.MATCH_DISABLED_COMPONENTS
             )
+            // Some freeze tools disable only the launcher activity component rather than the
+            // whole package, in which case ApplicationInfo.enabled stays true - resolve that
+            // component explicitly rather than relying on the package-level flag alone.
+            val launcherIntent = Intent(Intent.ACTION_MAIN)
+                .addCategory(Intent.CATEGORY_LAUNCHER)
+                .setPackage(packageName)
+            val launcherActivity = pm.resolveActivity(
+                launcherIntent,
+                PackageManager.MATCH_DISABLED_COMPONENTS,
+            )?.activityInfo
+            val isComponentDisabled = launcherActivity != null && (
+                !launcherActivity.enabled ||
+                    pm.getComponentEnabledSetting(
+                        ComponentName(launcherActivity.packageName, launcherActivity.name)
+                    ) == PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+                )
             when {
-                !info.enabled -> AppFreezeState.Disabled
+                !info.enabled || isComponentDisabled -> AppFreezeState.Disabled
                 (info.flags and ApplicationInfo.FLAG_SUSPENDED) != 0 -> AppFreezeState.Suspended
                 else -> AppFreezeState.Normal
             }
