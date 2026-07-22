@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
@@ -117,16 +118,25 @@ internal fun HomeScreenPager(
  */
 internal object CurrentHomeScreenPage {
     var index by mutableIntStateOf(0)
+
+    /** Which widget scope page 0 (the main home screen) is actually showing right now - null
+     * when it shows no widgets at all (`widgetsOnHomeScreen == false`, i.e. [ClockHomeComponent]
+     * is in use instead of [ClockAndWidgetsHomeComponent]). Kept in sync by
+     * [de.mm20.launcher2.ui.launcher.SharedLauncherActivity], the only place that resolves this,
+     * since it's derived from settings + the active context profile's override, neither of which
+     * this pager has access to. */
+    var homeWidgetTarget: WidgetScreenTarget? by mutableStateOf(WidgetScreenTarget.Default)
 }
 
-/** The widget-repository scope id ([WidgetScreenTarget.Default.id] for page 0, otherwise the
- * same per-page id [HomeScreenPager] already renders that page's widgets against) matching
- * [CurrentHomeScreenPage.index] - what a widget added from outside the pager (e.g. the home
- * screen long-press menu) should be added to, so it lands on the page the user actually has open
- * instead of always the first one. */
-internal fun currentHomeScreenWidgetScopeId(): UUID =
+/** The widget-repository scope id matching [CurrentHomeScreenPage.index] that a widget added
+ * from outside the pager (e.g. the home screen long-press menu) should be added to, so it lands
+ * on the page the user actually has open instead of always the first one. Null when the current
+ * page is page 0 and it isn't showing any widgets to add to
+ * ([CurrentHomeScreenPage.homeWidgetTarget] is null) - callers should not silently fall back to
+ * a different page in that case, since the result wouldn't be visible to the user either. */
+internal fun currentHomeScreenWidgetScopeId(): UUID? =
     CurrentHomeScreenPage.index.let { page ->
-        if (page == 0) WidgetScreenTarget.Default.id else extraHomePageWidgetScopeId(page)
+        if (page == 0) CurrentHomeScreenPage.homeWidgetTarget?.id else extraHomePageWidgetScopeId(page)
     }
 
 /** Deterministic widget-repository scope id for extra home page [page] (1-based index within the

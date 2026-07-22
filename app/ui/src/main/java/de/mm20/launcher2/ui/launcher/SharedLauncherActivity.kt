@@ -55,6 +55,7 @@ import de.mm20.launcher2.ui.launcher.scaffold.ScaffoldGesture
 import de.mm20.launcher2.ui.launcher.scaffold.SearchBarPosition
 import de.mm20.launcher2.ui.launcher.scaffold.components.ClockAndWidgetsHomeComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.ClockHomeComponent
+import de.mm20.launcher2.ui.launcher.scaffold.components.CurrentHomeScreenPage
 import de.mm20.launcher2.ui.launcher.scaffold.components.DismissComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.FeedComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.HomeScreenMenuComponent
@@ -170,6 +171,15 @@ abstract class SharedLauncherActivity(
                                 ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                             } else {
                                 ActivityInfo.SCREEN_ORIENTATION_USER
+                            }
+                        }
+
+                        LaunchedEffect(widgetsOnHomeScreen, activeContextProfile?.widgetScreenTargetOverride) {
+                            CurrentHomeScreenPage.homeWidgetTarget = if (widgetsOnHomeScreen == true) {
+                                activeContextProfile?.widgetScreenTargetOverride
+                                    ?: WidgetScreenTarget.Default
+                            } else {
+                                null
                             }
                         }
 

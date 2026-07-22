@@ -36,6 +36,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.preferences.WidgetScreenTarget
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalAppWidgetHost
 import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
@@ -92,10 +93,14 @@ internal object HomeScreenMenuComponent : ScaffoldComponent() {
         // always page 0) and never update again no matter which page the menu was later opened
         // from. Reading CurrentHomeScreenPage.index directly on every composition makes this
         // recompose - even while kept alive off-screen - whenever the visible page changes.
+        // Null when the current page is the main home screen and it isn't showing a widget
+        // column at all (widgetsOnHomeScreen == false) - there's nowhere visible to add a widget
+        // to in that case, so "Add widget" is hidden below rather than silently landing on a
+        // different, gesture-only widgets screen the user didn't ask for.
         val widgetScopeId = currentHomeScreenWidgetScopeId()
         val widgetsViewModel: WidgetsVM = viewModel(
             key = "widgets-column-$widgetScopeId",
-            factory = WidgetsVM.Factory(widgetScopeId.toString()),
+            factory = WidgetsVM.Factory((widgetScopeId ?: WidgetScreenTarget.Default.id).toString()),
         )
 
         var showWidgetPicker by remember { mutableStateOf(false) }
@@ -182,25 +187,27 @@ internal object HomeScreenMenuComponent : ScaffoldComponent() {
                             dismiss()
                         },
                     )
-                    MenuItem(
-                        icon = R.drawable.widgets_24px,
-                        label = stringResource(R.string.widget_add_widget),
-                        onClick = {
-                            val pickIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_PICK)
-                            val resolvable = context.packageManager.resolveActivity(
-                                pickIntent,
-                                PackageManager.MATCH_DEFAULT_ONLY,
-                            ) != null
-                            if (!resolvable) {
-                                showWidgetPicker = true
-                            } else {
-                                val widgetId = widgetHost.allocateAppWidgetId()
-                                pendingAppWidgetId = widgetId
-                                pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
-                                pickAppWidget.launch(pickIntent)
-                            }
-                        },
-                    )
+                    if (widgetScopeId != null) {
+                        MenuItem(
+                            icon = R.drawable.widgets_24px,
+                            label = stringResource(R.string.widget_add_widget),
+                            onClick = {
+                                val pickIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_PICK)
+                                val resolvable = context.packageManager.resolveActivity(
+                                    pickIntent,
+                                    PackageManager.MATCH_DEFAULT_ONLY,
+                                ) != null
+                                if (!resolvable) {
+                                    showWidgetPicker = true
+                                } else {
+                                    val widgetId = widgetHost.allocateAppWidgetId()
+                                    pendingAppWidgetId = widgetId
+                                    pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
+                                    pickAppWidget.launch(pickIntent)
+                                }
+                            },
+                        )
+                    }
                 }
             }
         }
