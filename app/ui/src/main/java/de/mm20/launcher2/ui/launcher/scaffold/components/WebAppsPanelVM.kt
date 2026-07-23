@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher.scaffold.components
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.data.customattrs.CustomIcon
 import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.ui.webappspanel.WebAppsPanelManager
 import kotlinx.coroutines.flow.SharingStarted
@@ -42,4 +43,7 @@ class WebAppsPanelVM : ViewModel(), KoinComponent {
     suspend fun findFavicon(url: String): String? = manager.findFavicon(url)
 
     suspend fun importIcon(uri: Uri, sizePx: Int): String? = manager.importIcon(uri, sizePx)
+
+    suspend fun exportIconPackIcon(customIcon: CustomIcon?, sizePx: Int): String? =
+        manager.exportIconPackIcon(customIcon, sizePx)
 }

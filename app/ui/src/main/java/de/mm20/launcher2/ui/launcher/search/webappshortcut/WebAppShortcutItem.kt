@@ -127,6 +127,7 @@ fun WebAppShortcutItem(
             onDismiss = { showEditSheet = false },
             onImportIcon = { uri, sizePx -> panelManager.importIcon(uri, sizePx) },
             onFindFavicon = { url -> panelManager.findFavicon(url) },
+            onExportIconPackIcon = { customIcon, sizePx -> panelManager.exportIconPackIcon(customIcon, sizePx) },
         )
     }
 }

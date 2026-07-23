@@ -794,6 +794,9 @@
     <string name="web_app_shortcut_url">URL</string>
     <string name="web_app_shortcut_pick_icon">Choose icon</string>
     <string name="web_app_shortcut_detect_icon">Auto-detect icon</string>
+    <string name="web_app_icon_picker_tab_icon_pack">Icon pack</string>
+    <string name="web_app_icon_picker_tab_photo">Photo</string>
+    <string name="web_app_icon_picker_tab_favicon">Favicon website</string>
     <string name="web_app_shortcut_icon_source">Icon source</string>
     <string name="web_app_shortcut_icon_source_website">Website icon</string>
     <string name="web_app_shortcut_icon_source_system">System icon</string>

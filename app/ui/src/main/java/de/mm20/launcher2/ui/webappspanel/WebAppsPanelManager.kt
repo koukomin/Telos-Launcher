@@ -7,9 +7,15 @@ import androidx.core.graphics.drawable.toBitmap
 import coil.imageLoader
 import coil.request.ImageRequest
 import coil.size.Scale
+import de.mm20.launcher2.data.customattrs.CustomIcon
+import de.mm20.launcher2.icons.DynamicLauncherIcon
+import de.mm20.launcher2.icons.IconService
+import de.mm20.launcher2.icons.LauncherIconRenderSettings
+import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.preferences.ui.WebAppsPanelSettings
 import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.searchable.SavableSearchableRepository
+import de.mm20.launcher2.ui.settings.webapps.WebAppIconPickerTarget
 import de.mm20.launcher2.webappshortcuts.WebAppShortcutRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +39,7 @@ class WebAppsPanelManager internal constructor(
     private val webAppsPanelSettings: WebAppsPanelSettings,
     private val searchableRepository: SavableSearchableRepository,
     private val webAppShortcutRepository: WebAppShortcutRepository,
+    private val iconService: IconService,
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
@@ -175,6 +182,36 @@ class WebAppsPanelManager internal constructor(
             .build()
         val drawable = context.imageLoader.execute(request).drawable ?: return@withContext null
         val bitmap = drawable.toBitmap()
+        FileOutputStream(file).use {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
+        }
+        file.absolutePath
+    }
+
+    /** Rasterizes an icon-pack/system-icon pick from [de.mm20.launcher2.ui.common.IconPicker] into
+     * a permanent PNG file, the same way [importIcon] does for an imported photo - so a web app
+     * shortcut's `iconUri` can point at it just like any other custom icon. Baked with fixed
+     * neutral colors rather than the current theme's, since this file is a one-time static
+     * snapshot: baking today's theme colors into it would freeze them in place, defeating the
+     * point of a themed icon for any icon-pack entry that relies on live theming. */
+    suspend fun exportIconPackIcon(customIcon: CustomIcon?, sizePx: Int): String? = withContext(Dispatchers.IO) {
+        val resolved = iconService.resolveCustomIcon(WebAppIconPickerTarget, sizePx, customIcon).first()
+            ?: return@withContext null
+        val staticIcon = when (resolved) {
+            is StaticLauncherIcon -> resolved
+            is DynamicLauncherIcon -> resolved.getIcon(System.currentTimeMillis())
+            else -> return@withContext null
+        }
+        val bitmap = staticIcon.render(
+            LauncherIconRenderSettings(
+                size = sizePx,
+                fgThemeColor = android.graphics.Color.BLACK,
+                bgThemeColor = android.graphics.Color.WHITE,
+                fgTone = 10,
+                bgTone = 90,
+            )
+        )
+        val file = File(context.filesDir, "webappshortcut_${UUID.randomUUID()}")
         FileOutputStream(file).use {
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
         }

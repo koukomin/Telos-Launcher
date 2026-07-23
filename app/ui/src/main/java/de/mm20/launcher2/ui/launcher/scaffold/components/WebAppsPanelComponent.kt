@@ -235,6 +235,7 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
             onDismiss = { showCreateSheet = false },
             onImportIcon = { uri, sizePx -> viewModel.importIcon(uri, sizePx) },
             onFindFavicon = { url -> viewModel.findFavicon(url) },
+            onExportIconPackIcon = { customIcon, sizePx -> viewModel.exportIconPackIcon(customIcon, sizePx) },
         )
     }
 }

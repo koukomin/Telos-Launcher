@@ -411,6 +411,7 @@ private fun WebAppScreen(
             onDismiss = { showEditSheet = false },
             onImportIcon = { uri, sizePx -> panelManager.importIcon(uri, sizePx) },
             onFindFavicon = { favUrl -> panelManager.findFavicon(favUrl) },
+            onExportIconPackIcon = { customIcon, sizePx -> panelManager.exportIconPackIcon(customIcon, sizePx) },
         )
     }
 }

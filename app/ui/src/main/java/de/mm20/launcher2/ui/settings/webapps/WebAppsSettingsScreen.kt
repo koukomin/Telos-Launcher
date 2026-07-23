@@ -203,6 +203,7 @@ fun WebAppsSettingsScreen() {
         onDismiss = { viewModel.dismissDialogs() },
         onImportIcon = { uri, sizePx -> viewModel.importIcon(uri, sizePx) },
         onFindFavicon = { url -> viewModel.findFavicon(url) },
+        onExportIconPackIcon = { customIcon, sizePx -> viewModel.exportIconPackIcon(customIcon, sizePx) },
     )
     EditWebAppShortcutSheet(
         expanded = editShortcut != null,
@@ -213,5 +214,6 @@ fun WebAppsSettingsScreen() {
         onDismiss = { viewModel.dismissDialogs() },
         onImportIcon = { uri, sizePx -> viewModel.importIcon(uri, sizePx) },
         onFindFavicon = { url -> viewModel.findFavicon(url) },
+        onExportIconPackIcon = { customIcon, sizePx -> viewModel.exportIconPackIcon(customIcon, sizePx) },
     )
 }

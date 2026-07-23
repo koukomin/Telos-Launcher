@@ -6,9 +6,11 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,11 +18,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -37,12 +43,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import de.mm20.launcher2.data.customattrs.CustomIcon
 import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.IconPicker
 import de.mm20.launcher2.ui.component.BottomSheet
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.webappshortcuts.CustomTabsBrowsers
 import kotlinx.coroutines.launch
+
+private enum class IconPickerTab { IconPack, Photo, Favicon }
 
 @Composable
 fun EditWebAppShortcutSheet(
@@ -52,6 +63,7 @@ fun EditWebAppShortcutSheet(
     onDismiss: () -> Unit,
     onImportIcon: suspend (uri: Uri, sizePx: Int) -> String?,
     onFindFavicon: suspend (url: String) -> String?,
+    onExportIconPackIcon: suspend (customIcon: CustomIcon?, sizePx: Int) -> String?,
 ) {
     BottomSheet(
         expanded = expanded,
@@ -69,6 +81,8 @@ fun EditWebAppShortcutSheet(
         var findingFavicon by remember { mutableStateOf(false) }
         var showRendererMenu by remember { mutableStateOf(false) }
         var showIconSourceMenu by remember { mutableStateOf(false) }
+        var showIconPicker by remember { mutableStateOf(false) }
+        var iconPickerTab by remember { mutableStateOf(IconPickerTab.IconPack) }
 
         val scope = rememberCoroutineScope()
         val context = LocalContext.current
@@ -80,7 +94,10 @@ fun EditWebAppShortcutSheet(
                 if (uri != null) {
                     scope.launch {
                         val path = onImportIcon(uri, iconSizePx)
-                        if (path != null) iconUri = path
+                        if (path != null) {
+                            iconUri = path
+                            iconSource = WebAppShortcut.IconSource.Custom
+                        }
                     }
                 }
             }
@@ -115,7 +132,7 @@ fun EditWebAppShortcutSheet(
                             .clip(MaterialTheme.shapes.small),
                     )
                 }
-                OutlinedButton(onClick = { pickIconLauncher.launch("image/*") }) {
+                OutlinedButton(onClick = { showIconPicker = true }) {
                     Text(stringResource(R.string.web_app_shortcut_pick_icon))
                 }
             }
@@ -143,21 +160,6 @@ fun EditWebAppShortcutSheet(
                 } else null,
             )
 
-            TextButton(
-                modifier = Modifier.padding(top = 4.dp),
-                enabled = url.isNotBlank() && !findingFavicon,
-                onClick = {
-                    findingFavicon = true
-                    scope.launch {
-                        val favicon = onFindFavicon(url)
-                        findingFavicon = false
-                        if (favicon != null) faviconUrl = favicon
-                    }
-                }
-            ) {
-                Text(stringResource(R.string.web_app_shortcut_detect_icon))
-            }
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -182,22 +184,27 @@ fun EditWebAppShortcutSheet(
                     expanded = showIconSourceMenu,
                     onDismissRequest = { showIconSourceMenu = false },
                 ) {
-                    WebAppShortcut.IconSource.entries.forEach { source ->
-                        DropdownMenuItem(
-                            text = {
-                                Text(
-                                    when (source) {
-                                        WebAppShortcut.IconSource.Website -> stringResource(R.string.web_app_shortcut_icon_source_website)
-                                        WebAppShortcut.IconSource.System -> stringResource(R.string.web_app_shortcut_icon_source_system)
-                                        WebAppShortcut.IconSource.Custom -> stringResource(R.string.web_app_shortcut_icon_source_custom)
-                                    }
-                                )
-                            },
-                            onClick = {
-                                iconSource = source
-                                showIconSourceMenu = false
-                            },
-                        )
+                    // DropdownMenuGroup wraps its content in an opaque Surface - a bare
+                    // DropdownMenuPopup has no background of its own, so this menu rendered
+                    // see-through onto whatever was behind the sheet.
+                    DropdownMenuGroup(shapes = MenuDefaults.groupShapes()) {
+                        WebAppShortcut.IconSource.entries.forEach { source ->
+                            DropdownMenuItem(
+                                text = {
+                                    Text(
+                                        when (source) {
+                                            WebAppShortcut.IconSource.Website -> stringResource(R.string.web_app_shortcut_icon_source_website)
+                                            WebAppShortcut.IconSource.System -> stringResource(R.string.web_app_shortcut_icon_source_system)
+                                            WebAppShortcut.IconSource.Custom -> stringResource(R.string.web_app_shortcut_icon_source_custom)
+                                        }
+                                    )
+                                },
+                                onClick = {
+                                    iconSource = source
+                                    showIconSourceMenu = false
+                                },
+                            )
+                        }
                     }
                 }
             }
@@ -251,28 +258,30 @@ fun EditWebAppShortcutSheet(
                     expanded = showRendererMenu,
                     onDismissRequest = { showRendererMenu = false },
                 ) {
-                    DropdownMenuItem(
-                        text = { Text(stringResource(R.string.web_app_shortcut_renderer_embedded)) },
-                        onClick = {
-                            rendererPackage = null
-                            showRendererMenu = false
-                        },
-                    )
-                    if (supportedBrowsers.isEmpty()) {
+                    DropdownMenuGroup(shapes = MenuDefaults.groupShapes()) {
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.web_app_shortcut_renderer_none_detected)) },
-                            enabled = false,
-                            onClick = {},
-                        )
-                    }
-                    for (pkg in supportedBrowsers) {
-                        DropdownMenuItem(
-                            text = { Text(appLabel(context, pkg)) },
+                            text = { Text(stringResource(R.string.web_app_shortcut_renderer_embedded)) },
                             onClick = {
-                                rendererPackage = pkg
+                                rendererPackage = null
                                 showRendererMenu = false
                             },
                         )
+                        if (supportedBrowsers.isEmpty()) {
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.web_app_shortcut_renderer_none_detected)) },
+                                enabled = false,
+                                onClick = {},
+                            )
+                        }
+                        for (pkg in supportedBrowsers) {
+                            DropdownMenuItem(
+                                text = { Text(appLabel(context, pkg)) },
+                                onClick = {
+                                    rendererPackage = pkg
+                                    showRendererMenu = false
+                                },
+                            )
+                        }
                     }
                 }
             }
@@ -307,6 +316,91 @@ fun EditWebAppShortcutSheet(
                     }
                 ) {
                     Text(stringResource(R.string.save))
+                }
+            }
+        }
+
+        DismissableBottomSheet(
+            expanded = showIconPicker,
+            onDismissRequest = { showIconPicker = false },
+        ) {
+            Column(modifier = Modifier.navigationBarsPadding()) {
+                TabRow(selectedTabIndex = iconPickerTab.ordinal) {
+                    Tab(
+                        selected = iconPickerTab == IconPickerTab.IconPack,
+                        onClick = { iconPickerTab = IconPickerTab.IconPack },
+                        text = { Text(stringResource(R.string.web_app_icon_picker_tab_icon_pack)) },
+                    )
+                    Tab(
+                        selected = iconPickerTab == IconPickerTab.Photo,
+                        onClick = { iconPickerTab = IconPickerTab.Photo },
+                        text = { Text(stringResource(R.string.web_app_icon_picker_tab_photo)) },
+                    )
+                    Tab(
+                        selected = iconPickerTab == IconPickerTab.Favicon,
+                        onClick = { iconPickerTab = IconPickerTab.Favicon },
+                        text = { Text(stringResource(R.string.web_app_icon_picker_tab_favicon)) },
+                    )
+                }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(420.dp),
+                ) {
+                    when (iconPickerTab) {
+                        IconPickerTab.IconPack -> {
+                            IconPicker(
+                                searchable = WebAppIconPickerTarget,
+                                onSelect = { customIcon ->
+                                    scope.launch {
+                                        val path = onExportIconPackIcon(customIcon, iconSizePx)
+                                        if (path != null) {
+                                            iconUri = path
+                                            iconSource = WebAppShortcut.IconSource.Custom
+                                        }
+                                        showIconPicker = false
+                                    }
+                                },
+                            )
+                        }
+
+                        IconPickerTab.Photo -> {
+                            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                                OutlinedButton(onClick = {
+                                    pickIconLauncher.launch("image/*")
+                                    showIconPicker = false
+                                }) {
+                                    Text(stringResource(R.string.web_app_shortcut_pick_icon))
+                                }
+                            }
+                        }
+
+                        IconPickerTab.Favicon -> {
+                            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                                if (findingFavicon) {
+                                    CircularProgressIndicator()
+                                } else {
+                                    TextButton(
+                                        enabled = url.isNotBlank(),
+                                        onClick = {
+                                            findingFavicon = true
+                                            scope.launch {
+                                                val favicon = onFindFavicon(url)
+                                                findingFavicon = false
+                                                if (favicon != null) {
+                                                    faviconUrl = favicon
+                                                    iconSource = WebAppShortcut.IconSource.Website
+                                                }
+                                                showIconPicker = false
+                                            }
+                                        },
+                                    ) {
+                                        Text(stringResource(R.string.web_app_shortcut_detect_icon))
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

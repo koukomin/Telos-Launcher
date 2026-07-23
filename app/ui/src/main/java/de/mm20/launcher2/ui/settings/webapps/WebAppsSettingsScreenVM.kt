@@ -10,10 +10,12 @@ import androidx.lifecycle.viewModelScope
 import coil.imageLoader
 import coil.request.ImageRequest
 import coil.size.Scale
+import de.mm20.launcher2.data.customattrs.CustomIcon
 import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.preferences.ui.GestureSettings
 import de.mm20.launcher2.preferences.ui.WebAppBrowsingSettings
 import de.mm20.launcher2.search.WebAppShortcut
+import de.mm20.launcher2.ui.webappspanel.WebAppsPanelManager
 import de.mm20.launcher2.webappshortcuts.WebAppShortcutRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
@@ -36,6 +38,7 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
     private val webAppShortcutRepository: WebAppShortcutRepository by inject()
     private val gestureSettings: GestureSettings by inject()
     private val browsingSettings: WebAppBrowsingSettings by inject()
+    private val panelManager: WebAppsPanelManager by inject()
 
     val adBlockEnabled = browsingSettings.adBlockEnabled
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
@@ -192,4 +195,7 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
         }
         file.absolutePath
     }
+
+    suspend fun exportIconPackIcon(customIcon: CustomIcon?, sizePx: Int): String? =
+        panelManager.exportIconPackIcon(customIcon, sizePx)
 }
