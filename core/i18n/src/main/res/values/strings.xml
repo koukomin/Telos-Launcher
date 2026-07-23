@@ -808,6 +808,12 @@
     <string name="preference_dock_reset_summary">Clear all custom dock pages and use frequent apps instead</string>
     <string name="web_app_open_externally">Open in browser</string>
     <string name="web_app_download_started">Downloading %1$s</string>
+    <string name="web_app_go_back">Back</string>
+    <string name="web_app_go_forward">Forward</string>
+    <string name="web_app_settings">Web app settings</string>
+    <string name="preference_web_app_top_bar_position">Top bar position</string>
+    <string name="preference_web_app_swipe_to_switch">Swipe to switch web apps</string>
+    <string name="preference_web_app_swipe_to_switch_summary">Swipe left or right on the top bar to switch between your other web app shortcuts</string>
     <string name="web_app_shortcut_renderer">Open with</string>
     <string name="web_app_shortcut_renderer_embedded">Embedded (in-app)</string>
     <string name="web_app_shortcut_renderer_none_detected">No installed browsers support Custom Tabs</string>

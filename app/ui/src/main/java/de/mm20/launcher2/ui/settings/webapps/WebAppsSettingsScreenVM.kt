@@ -53,6 +53,16 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
     fun setTrackingParamStrippingEnabled(enabled: Boolean) =
         browsingSettings.setTrackingParamStrippingEnabled(enabled)
 
+    val topBarAtBottom = browsingSettings.topBarAtBottom
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+    fun setTopBarAtBottom(atBottom: Boolean) = browsingSettings.setTopBarAtBottom(atBottom)
+
+    val swipeToSwitchEnabled = browsingSettings.swipeToSwitchEnabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+
+    fun setSwipeToSwitchEnabled(enabled: Boolean) = browsingSettings.setSwipeToSwitchEnabled(enabled)
+
     val shortcuts = webAppShortcutRepository.search("", false)
         .map { it.sortedBy { s -> s.label.lowercase() } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())

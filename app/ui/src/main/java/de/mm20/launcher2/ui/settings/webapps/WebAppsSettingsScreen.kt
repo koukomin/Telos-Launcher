@@ -50,6 +50,8 @@ fun WebAppsSettingsScreen() {
     val adBlockEnabled by viewModel.adBlockEnabled.collectAsState()
     val zoomControlsEnabled by viewModel.zoomControlsEnabled.collectAsState()
     val trackingParamStrippingEnabled by viewModel.trackingParamStrippingEnabled.collectAsState()
+    val topBarAtBottom by viewModel.topBarAtBottom.collectAsState()
+    val swipeToSwitchEnabled by viewModel.swipeToSwitchEnabled.collectAsState()
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_web_app_shortcuts),
@@ -94,6 +96,21 @@ fun WebAppsSettingsScreen() {
                     summary = stringResource(R.string.preference_web_app_tracking_param_stripping_summary),
                     value = trackingParamStrippingEnabled,
                     onValueChanged = { viewModel.setTrackingParamStrippingEnabled(it) },
+                )
+                ListPreference(
+                    title = stringResource(R.string.preference_web_app_top_bar_position),
+                    items = listOf(
+                        ListPreferenceItem(stringResource(R.string.search_bar_position_top), false),
+                        ListPreferenceItem(stringResource(R.string.search_bar_position_bottom), true),
+                    ),
+                    value = topBarAtBottom,
+                    onValueChanged = { if (it != null) viewModel.setTopBarAtBottom(it) },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_web_app_swipe_to_switch),
+                    summary = stringResource(R.string.preference_web_app_swipe_to_switch_summary),
+                    value = swipeToSwitchEnabled,
+                    onValueChanged = { viewModel.setSwipeToSwitchEnabled(it) },
                 )
             }
         }

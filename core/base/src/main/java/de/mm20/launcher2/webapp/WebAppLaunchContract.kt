@@ -10,4 +10,8 @@ object WebAppLaunchContract {
     const val EXTRA_URL = "de.mm20.launcher2.webapp.extra.URL"
     const val EXTRA_LABEL = "de.mm20.launcher2.webapp.extra.LABEL"
     const val EXTRA_CUSTOM_CSS = "de.mm20.launcher2.webapp.extra.CUSTOM_CSS"
+    /** The launched shortcut's [de.mm20.launcher2.search.SavableSearchable.key], so the Activity
+     * can look up the full shortcut (e.g. to build the swipe-to-switch list, or for "Edit this
+     * web app"). Absent/ignored for launches that don't originate from a saved shortcut. */
+    const val EXTRA_KEY = "de.mm20.launcher2.webapp.extra.KEY"
 }

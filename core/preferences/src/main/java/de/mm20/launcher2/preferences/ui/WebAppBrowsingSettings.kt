@@ -31,4 +31,20 @@ class WebAppBrowsingSettings internal constructor(
     fun setZoomControlsEnabled(enabled: Boolean) {
         dataStore.update { it.copy(webAppZoomControlsEnabled = enabled) }
     }
+
+    /** Whether the top bar (back/forward, menu) sits at the bottom of the screen instead of the top. */
+    val topBarAtBottom
+        get() = dataStore.data.map { it.webAppTopBarAtBottom }.distinctUntilChanged()
+
+    fun setTopBarAtBottom(atBottom: Boolean) {
+        dataStore.update { it.copy(webAppTopBarAtBottom = atBottom) }
+    }
+
+    /** Whether swiping on the top bar switches between the user's other web app shortcuts. */
+    val swipeToSwitchEnabled
+        get() = dataStore.data.map { it.webAppSwipeToSwitchEnabled }.distinctUntilChanged()
+
+    fun setSwipeToSwitchEnabled(enabled: Boolean) {
+        dataStore.update { it.copy(webAppSwipeToSwitchEnabled = enabled) }
+    }
 }

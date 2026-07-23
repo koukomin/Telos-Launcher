@@ -385,6 +385,10 @@ data class LauncherSettingsData internal constructor(
     val webAppAdBlockEnabled: Boolean = true,
     val webAppTrackingParamStrippingEnabled: Boolean = true,
     val webAppZoomControlsEnabled: Boolean = true,
+    /** Whether the web app renderer's top bar (nav arrows, menu) is pinned to the bottom of the
+     * screen instead of the top. */
+    val webAppTopBarAtBottom: Boolean = false,
+    val webAppSwipeToSwitchEnabled: Boolean = true,
 
     val contextProfilesEnabled: Boolean = false,
     val contextProfiles: List<ContextProfile> = emptyList(),

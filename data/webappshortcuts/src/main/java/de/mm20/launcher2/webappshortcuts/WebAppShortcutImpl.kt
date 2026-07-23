@@ -152,6 +152,7 @@ internal data class WebAppShortcutImpl(
             putExtra(WebAppLaunchContract.EXTRA_URL, url)
             putExtra(WebAppLaunchContract.EXTRA_LABEL, labelOverride ?: label)
             putExtra(WebAppLaunchContract.EXTRA_CUSTOM_CSS, customCss)
+            putExtra(WebAppLaunchContract.EXTRA_KEY, key)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
         return context.tryStartActivity(intent, options)
