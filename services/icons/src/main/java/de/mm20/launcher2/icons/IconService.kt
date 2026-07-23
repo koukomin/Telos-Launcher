@@ -175,7 +175,13 @@ class IconService(
 
     fun resolveCustomIcon(searchable: SavableSearchable, size: Int, customIcon: CustomIcon?): Flow<LauncherIcon?> {
         return combine(iconProviders, transformations) { providers, transformations ->
-            var icon: LauncherIcon? = cache.get(searchable.key + customIcon.hashCode() + providers.hashCode() + transformations.hashCode())
+            // Includes searchable.hashCode(), not just searchable.key: every SavableSearchable
+            // implementation in this codebase is a data class, so this reflects the searchable's
+            // own mutable icon-affecting fields (e.g. WebAppShortcut.iconUri/faviconUrl/iconSource)
+            // - keying on the key alone meant editing a web app shortcut's icon kept serving the
+            // pre-edit LauncherIcon from cache indefinitely, since the key never changes.
+            val cacheKey = searchable.key + searchable.hashCode() + customIcon.hashCode() + providers.hashCode() + transformations.hashCode()
+            var icon: LauncherIcon? = cache.get(cacheKey)
             if (icon != null) {
                 return@combine icon
             }
@@ -188,7 +194,7 @@ class IconService(
             if (icon != null) {
                 icon = icon.transform(transforms)
 
-                cache.put(searchable.key + customIcon.hashCode() + providers.hashCode() + transformations.hashCode(), icon)
+                cache.put(cacheKey, icon)
             }
             return@combine icon
         }
