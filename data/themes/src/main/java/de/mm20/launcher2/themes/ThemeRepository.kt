@@ -10,6 +10,7 @@ import de.mm20.launcher2.database.entities.TransparenciesEntity
 import de.mm20.launcher2.database.entities.TypographyEntity
 import de.mm20.launcher2.serialization.Json
 import de.mm20.launcher2.themes.colors.ColorsRepository
+import de.mm20.launcher2.themes.presets.ThemePresetsRepository
 import de.mm20.launcher2.themes.shapes.ShapesRepository
 import de.mm20.launcher2.themes.transparencies.TransparenciesRepository
 import de.mm20.launcher2.themes.typography.TypographyRepository
@@ -23,7 +24,7 @@ class ThemeRepository(
     private val context: Context,
     private val database: AppDatabase,
 ) : Backupable {
-    val colors = ColorsRepository(context, database)
+    val colors = ColorsRepository(context, database, ThemePresetsRepository(context))
     val shapes = ShapesRepository(context, database)
     val transparencies = TransparenciesRepository(context, database)
     val typographies = TypographyRepository(context, database)

@@ -2,14 +2,18 @@ package de.mm20.launcher2.themes.colors
 
 import android.content.Context
 import de.mm20.launcher2.database.AppDatabase
+import de.mm20.launcher2.themes.AmoledPresetId
 import de.mm20.launcher2.themes.BlackAndWhiteThemeId
+import de.mm20.launcher2.themes.CyberpunkPresetId
 import de.mm20.launcher2.themes.DefaultThemeId
 import de.mm20.launcher2.themes.HighContrastThemeId
 import de.mm20.launcher2.themes.R
+import de.mm20.launcher2.themes.presets.ThemePresetsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -19,6 +23,7 @@ import java.util.UUID
 class ColorsRepository(
     private val context: Context,
     private val database: AppDatabase,
+    private val themePresetsRepository: ThemePresetsRepository,
 ) {
     private val scope = CoroutineScope(Dispatchers.IO + Job())
 
@@ -32,8 +37,18 @@ class ColorsRepository(
         if (id == DefaultThemeId) return flowOf(default)
         if (id == HighContrastThemeId) return flowOf(highContrast)
         if (id == BlackAndWhiteThemeId) return flowOf(blackAndWhite)
+        if (id == AmoledPresetId || id == CyberpunkPresetId) {
+            return flow { emit(getPresetColors().find { it.id == id }) }
+        }
         return database.themeDao().getColors(id).map { it?.let { Colors(it) } }
             .flowOn(Dispatchers.Default)
+    }
+
+    /** Colors bundled in built-in theme presets (Cyberpunk, AMOLED, ...) - surfaced directly in
+     * the Colors picker as built-in options, without requiring a visit to the Presets screen to
+     * install them into the DB first. */
+    private suspend fun getPresetColors(): List<Colors> {
+        return themePresetsRepository.list().mapNotNull { it.colors?.copy(builtIn = true) }
     }
 
     fun create(colors: Colors) {
@@ -60,12 +75,12 @@ class ColorsRepository(
         return get(id).map { it ?: default }
     }
 
-    private fun getBuiltIn(): List<Colors> {
+    private suspend fun getBuiltIn(): List<Colors> {
         return listOf(
             default,
             highContrast,
             blackAndWhite,
-        )
+        ) + getPresetColors()
     }
 
     private val default: Colors
