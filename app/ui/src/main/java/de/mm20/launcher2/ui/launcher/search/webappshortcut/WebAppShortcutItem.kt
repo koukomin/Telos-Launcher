@@ -14,6 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -28,9 +31,12 @@ import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
-import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import de.mm20.launcher2.ui.settings.webapps.EditWebAppShortcutSheet
+import de.mm20.launcher2.ui.webappspanel.WebAppsPanelManager
+import de.mm20.launcher2.webappshortcuts.WebAppShortcutRepository
+import org.koin.compose.koinInject
 
 @Composable
 fun WebAppShortcutItem(
@@ -86,12 +92,12 @@ fun WebAppShortcutItem(
             toolbarActions.add(favAction)
         }
 
-        val sheetManager = LocalBottomSheetManager.current
+        var showEditSheet by remember { mutableStateOf(false) }
         toolbarActions.add(
             DefaultToolbarAction(
-                label = stringResource(R.string.menu_customize),
+                label = stringResource(R.string.web_app_shortcut_edit),
                 icon = R.drawable.tune_24px,
-                action = { sheetManager.showCustomizeSearchableModal(shortcut) }
+                action = { showEditSheet = true }
             )
         )
 
@@ -104,6 +110,23 @@ fun WebAppShortcutItem(
                 )
             ) else emptyList(),
             rightActions = toolbarActions
+        )
+
+        val webAppShortcutRepository: WebAppShortcutRepository = koinInject()
+        val panelManager: WebAppsPanelManager = koinInject()
+        EditWebAppShortcutSheet(
+            expanded = showEditSheet,
+            existing = shortcut,
+            onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss ->
+                webAppShortcutRepository.update(
+                    shortcut, label, url, iconUri, faviconUrl, rendererPackage,
+                    showInGrid, showInPanel, shortcut.order, iconSource, customCss,
+                )
+                showEditSheet = false
+            },
+            onDismiss = { showEditSheet = false },
+            onImportIcon = { uri, sizePx -> panelManager.importIcon(uri, sizePx) },
+            onFindFavicon = { url -> panelManager.findFavicon(url) },
         )
     }
 }
