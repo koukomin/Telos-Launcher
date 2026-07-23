@@ -94,20 +94,6 @@ class HomescreenSettingsScreenVM(
         uiSettings.setBottomSearchBar(bottomSearchBar)
     }
 
-    val dock = uiSettings.dock
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-    fun setDock(dock: Boolean) {
-        uiSettings.setDock(dock)
-    }
-
-    val dockRows = uiSettings.dockRows
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
-
-    fun setDockRows(rows: Int) {
-        uiSettings.setDockRows(rows)
-    }
-
     val fixedRotation = uiSettings.orientation.map { it != ScreenOrientation.Auto }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 

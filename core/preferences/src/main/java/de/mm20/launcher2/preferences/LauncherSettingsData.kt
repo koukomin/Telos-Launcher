@@ -210,7 +210,7 @@ data class LauncherSettingsData internal constructor(
     val performanceSearchDebounceMs: Int = 0,
     val performanceIconCacheSize: Int = 200,
 
-    val shuttersEnabled: Boolean = false,
+    val shuttersEnabled: Boolean = true,
     /** Package name -> the assigned shutter's SavableSearchable key (an app, shortcut, etc). */
     val shutterApps: Map<String, String> = emptyMap(),
 

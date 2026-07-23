@@ -26,6 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
 import de.mm20.launcher2.preferences.DockItem
+import de.mm20.launcher2.preferences.ui.ShutterSettings
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.SearchablePicker
@@ -41,6 +42,7 @@ import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.AppWidgetConfig
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.serialization.Serializable
+import org.koin.compose.koinInject
 
 @Serializable
 data object DockSettingsRoute : NavKey
@@ -53,6 +55,9 @@ fun DockSettingsScreen() {
     val rows by viewModel.dockRows.collectAsStateWithLifecycle()
     val columns by viewModel.dockColumns.collectAsStateWithLifecycle()
     val defaultPage by viewModel.defaultPage.collectAsStateWithLifecycle()
+
+    val shutterSettings = koinInject<ShutterSettings>()
+    val shuttersEnabled by shutterSettings.enabled.collectAsStateWithLifecycle(true)
 
     var showSearchablePicker by remember { mutableStateOf(false) }
     var showWidgetPicker by remember { mutableStateOf(false) }
@@ -166,6 +171,21 @@ fun DockSettingsScreen() {
                     title = stringResource(R.string.preference_dock_reset),
                     summary = stringResource(R.string.preference_dock_reset_summary),
                     onClick = { viewModel.setRows(1); viewModel.setColumns(5); viewModel.setDockPages(emptyList<List<DockItem>>()) }
+                )
+            }
+        }
+
+        item {
+            PreferenceCategory(
+                title = stringResource(R.string.preference_category_shutters),
+            ) {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_shutters),
+                    summary = stringResource(R.string.preference_shutters_summary),
+                    value = shuttersEnabled,
+                    onValueChanged = {
+                        shutterSettings.setEnabled(it)
+                    }
                 )
             }
         }
