@@ -303,6 +303,10 @@ data class LauncherSettingsData internal constructor(
     val freezeNetworkThresholdKb: Int = 100,
     val freezeMethods: Map<String, FreezeMethod> = emptyMap(),
     val freezeAdvancedFeaturesEnabled: Boolean = false,
+    /** Hides currently-frozen apps from the home screen, app drawer and search entirely - they
+     * remain fully manageable (freeze/unfreeze) from the Freeze Manager itself. Default off:
+     * frozen apps stay visible (grayed out), matching prior behavior. */
+    val freezeHideFromLauncher: Boolean = false,
 
     val protectionLockSensitiveSettings: Boolean = false,
     val protectionLockMethod: SettingsLockMethod = SettingsLockMethod.DeviceCredential,

@@ -147,6 +147,9 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     val advancedFeaturesEnabled = freezeSettings.advancedFeaturesEnabled
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
+    val hideFromLauncher = freezeSettings.hideFromLauncher
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
     fun refreshBackendState() {
         viewModelScope.launch {
             freezeManager.refreshBackendState()
@@ -169,6 +172,7 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     fun setExcludeNetwork(enabled: Boolean) = freezeSettings.setExcludeNetwork(enabled)
     fun setNetworkThresholdKb(threshold: Int) = freezeSettings.setNetworkThresholdKb(threshold)
     fun setAdvancedFeaturesEnabled(enabled: Boolean) = freezeSettings.setAdvancedFeaturesEnabled(enabled)
+    fun setHideFromLauncher(hide: Boolean) = freezeSettings.setHideFromLauncher(hide)
 
     fun setAppFreezeState(app: Application, state: AppFreezeState, method: FreezeMethod? = null) {
         val packageName = app.componentName.packageName

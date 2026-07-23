@@ -68,6 +68,7 @@ fun FreezeSettingsScreen() {
 
     val freezeMethods by viewModel.freezeMethods.collectAsStateWithLifecycle()
     val advancedFeaturesEnabled by viewModel.advancedFeaturesEnabled.collectAsStateWithLifecycle()
+    val hideFromLauncher by viewModel.hideFromLauncher.collectAsStateWithLifecycle()
 
     val usageAccessGranted by viewModel.usageAccessGranted.collectAsStateWithLifecycle()
 
@@ -267,6 +268,12 @@ fun FreezeSettingsScreen() {
                     summary = stringResource(R.string.preference_freeze_advanced_features_summary),
                     value = advancedFeaturesEnabled,
                     onValueChanged = { viewModel.setAdvancedFeaturesEnabled(it) }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_freeze_hide_from_launcher),
+                    summary = stringResource(R.string.preference_freeze_hide_from_launcher_summary),
+                    value = hideFromLauncher,
+                    onValueChanged = { viewModel.setHideFromLauncher(it) }
                 )
             }
         }

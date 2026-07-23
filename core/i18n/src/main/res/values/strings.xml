@@ -692,6 +692,8 @@
     <string name="preference_freeze_show_iconless_apps_summary">Also list background components and system services that don\'t have a launchable icon. These can still be frozen or disabled like any other app.</string>
     <string name="preference_freeze_advanced_features">Advanced Features</string>
     <string name="preference_freeze_advanced_features_summary">Unlocks Freeze, Force Stop and Clear Cache actions in app context menus (Requires Shizuku or Root)</string>
+    <string name="preference_freeze_hide_from_launcher">Hide frozen apps</string>
+    <string name="preference_freeze_hide_from_launcher_summary">Frozen apps are removed from the home screen, app drawer and search entirely, instead of shown grayed out. They stay fully manageable here in Freeze Manager.</string>
     <string name="menu_freeze">Freeze</string>
     <string name="menu_unfreeze">Unfreeze</string>
     <string name="menu_force_stop">Force stop</string>

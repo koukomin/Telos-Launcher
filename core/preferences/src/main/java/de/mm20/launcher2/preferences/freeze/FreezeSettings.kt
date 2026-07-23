@@ -134,6 +134,13 @@ class FreezeSettings internal constructor(
         dataStore.update { it.copy(freezeAdvancedFeaturesEnabled = enabled) }
     }
 
+    val hideFromLauncher
+        get() = dataStore.data.map { it.freezeHideFromLauncher }
+
+    fun setHideFromLauncher(hide: Boolean) {
+        dataStore.update { it.copy(freezeHideFromLauncher = hide) }
+    }
+
     val stats
         get() = dataStore.data.map { it.freezeStats }
 

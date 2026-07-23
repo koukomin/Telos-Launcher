@@ -75,6 +75,7 @@ class SearchVM : ViewModel(), KoinComponent {
     private val locationSearchSettings: LocationSearchSettings by inject()
     private val devicePoseProvider: DevicePoseProvider by inject()
     private val searchFilterSettings: SearchFilterSettings by inject()
+    private val freezeSettings: de.mm20.launcher2.preferences.freeze.FreezeSettings by inject()
 
     val launchOnEnter = searchUiSettings.launchOnEnter
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
@@ -265,28 +266,27 @@ class SearchVM : ViewModel(), KoinComponent {
 
                 allApps
                     .combine(hiddenItemKeys) { results, hiddenKeys -> results to hiddenKeys }
-                    .collectLatest { (results, hiddenKeys) ->
+                    .combine(freezeSettings.hideFromLauncher) { (results, hiddenKeys), hideFrozen -> Triple(results, hiddenKeys, hideFrozen) }
+                    .collectLatest { (results, hiddenKeys, hideFrozen) ->
                         val hiddenItems = mutableListOf<SavableSearchable>()
 
-                        val (hiddenApps, apps) = results.standardProfileApps.partition {
-                            hiddenKeys.contains(
-                                it.key
-                            )
-                        }
+                        // Frozen apps are dropped outright when hideFrozen is on, not routed into
+                        // hiddenItems - that bucket is for the user's own hidden-items list (with
+                        // its own "N hidden results" reveal UI), a different concept from "don't
+                        // show this at all right now because it's frozen".
+                        val (hiddenApps, apps) = results.standardProfileApps
+                            .filterNot { hideFrozen && it.isSuspended }
+                            .partition { hiddenKeys.contains(it.key) }
                         hiddenItems += hiddenApps
 
-                        val (hiddenWorkApps, workApps) = results.workProfileApps.partition {
-                            hiddenKeys.contains(
-                                it.key
-                            )
-                        }
+                        val (hiddenWorkApps, workApps) = results.workProfileApps
+                            .filterNot { hideFrozen && it.isSuspended }
+                            .partition { hiddenKeys.contains(it.key) }
                         hiddenItems += hiddenWorkApps
 
-                        val (hiddenPrivateApps, privateApps) = results.privateSpaceApps.partition {
-                            hiddenKeys.contains(
-                                it.key
-                            )
-                        }
+                        val (hiddenPrivateApps, privateApps) = results.privateSpaceApps
+                            .filterNot { hideFrozen && it.isSuspended }
+                            .partition { hiddenKeys.contains(it.key) }
                         hiddenItems += hiddenPrivateApps
                         previousResults = SearchResults(apps = apps)
 
@@ -311,7 +311,8 @@ class SearchVM : ViewModel(), KoinComponent {
                     previousResults,
                 )
                     .combine(hiddenItemKeys) { results, hiddenKeys -> results to hiddenKeys }
-                    .collectLatest { (results, hiddenKeys) ->
+                    .combine(freezeSettings.hideFromLauncher) { (results, hiddenKeys), hideFrozen -> Triple(results, hiddenKeys, hideFrozen) }
+                    .collectLatest { (results, hiddenKeys, hideFrozen) ->
                         previousResults = results
 
                         hiddenResults.clear()
@@ -320,7 +321,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
                         appResults.updateItems(
                             results.apps
-                            ?.filterNot { hiddenKeys.contains(it.key) }
+                            ?.filterNot { hiddenKeys.contains(it.key) || (hideFrozen && it.isSuspended) }
                             ?.applyRanking(query)
                         )
                         appShortcutResults.updateItems(
