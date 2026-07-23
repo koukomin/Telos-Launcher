@@ -260,7 +260,9 @@ fun PluginSettingsScreen(pluginId: String) {
 
             }
             Column(
-                modifier = Modifier.padding(horizontal = 12.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
                 MainSwitchPreference(
@@ -280,7 +282,10 @@ fun PluginSettingsScreen(pluginId: String) {
                         }
                     },
                 )
-                AnimatedVisibility(pluginPackage?.enabled == true && hasPermission == true) {
+                AnimatedVisibility(
+                    pluginPackage?.enabled == true && hasPermission == true,
+                    modifier = Modifier.weight(1f),
+                ) {
                     Column(
                         modifier = Modifier.verticalScroll(rememberScrollState())
                     ) {

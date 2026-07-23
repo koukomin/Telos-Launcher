@@ -23,6 +23,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.draganddrop.dragAndDropTarget
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -43,6 +44,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
@@ -1407,7 +1409,13 @@ private fun FolderContentsOverlay(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Text(folder.name, style = MaterialTheme.typography.titleSmall)
+                    Text(
+                        folder.name,
+                        style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier.weight(1f),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
                     IconButton(onClick = onDismiss) {
                         Icon(
                             painterResource(R.drawable.close_24px),
@@ -1491,6 +1499,9 @@ private fun AllAppsOverlay(
                     Text(
                         text = stringResource(R.string.floating_launcher_all_apps),
                         style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier.weight(1f),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                     IconButton(onClick = onDismiss) {
                         Icon(
@@ -1575,6 +1586,9 @@ private fun FileDockOverlay(
                     Text(
                         text = stringResource(R.string.floating_launcher_file_dock),
                         style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier.weight(1f),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                     )
                     IconButton(onClick = onDismiss) {
                         Icon(
@@ -1799,7 +1813,12 @@ private fun RenameOrDeleteFolderDialog(
                     modifier = Modifier.fillMaxWidth(),
                 )
                 Spacer(Modifier.height(16.dp))
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
                     TextButton(onClick = onDelete) {
                         Text(
                             text = stringResource(R.string.floating_launcher_delete_folder),
