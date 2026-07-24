@@ -72,4 +72,11 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
     fun setCompatModeColors(enabled: Boolean) {
         uiSettings.setCompatModeColors(enabled)
     }
+
+    val fontScale = uiSettings.fontScale
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 1f)
+
+    fun setFontScale(fontScale: Float) {
+        uiSettings.setFontScale(fontScale)
+    }
 }

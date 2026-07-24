@@ -584,6 +584,9 @@
     <string name="preference_transparencies_default">Default</string>
     <string name="preference_transparencies_semi_transparent">Semi-transparent</string>
     <string name="preference_font">Font</string>
+    <string name="preference_font_scale">Text size</string>
+    <string name="preference_font_scale_summary">Scale text across the home screen, search and settings, independently of the system font size</string>
+    <string name="preference_font_scale_preview_label">Camera</string>
     <string name="preference_screen_advanced">Advanced settings</string>
     <string name="preference_screen_advanced_summary">Performance, profiles, plugins, and tools</string>
     <string name="preference_screen_about">About</string>

@@ -30,6 +30,8 @@ fun SliderPreference(
     max: Float = 1f,
     step: Float? = null,
     onValueChanged: (Float) -> Unit,
+    /** Called on every drag tick with the not-yet-committed value, e.g. to drive a live preview. */
+    onValueChange: ((Float) -> Unit)? = null,
     enabled: Boolean = true,
     label: (@Composable (Float) -> Unit)? = null
 ) {
@@ -78,6 +80,7 @@ fun SliderPreference(
                     value = sliderValue,
                     onValueChange = {
                         sliderValue = it
+                        onValueChange?.invoke(it)
                     },
                     valueRange = min..max,
                     steps = step?.let { ((max - min) / it).toInt() - 1 } ?: 0,

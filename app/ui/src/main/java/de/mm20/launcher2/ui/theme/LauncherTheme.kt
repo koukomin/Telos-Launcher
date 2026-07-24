@@ -12,6 +12,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Density
 import de.mm20.launcher2.preferences.ui.BadgeSettings
 import de.mm20.launcher2.preferences.ui.PerformanceSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
@@ -75,6 +77,7 @@ fun LauncherTheme(
     )
     val nightStart by remember { uiSettings.colorSchemeNightStart }.collectAsState(20)
     val dayStart by remember { uiSettings.colorSchemeDayStart }.collectAsState(7)
+    val fontScale by remember { uiSettings.fontScale }.collectAsState(1f)
 
     val darkTheme = when (colorSchemePref) {
         ColorSchemePref.Dark -> true
@@ -99,10 +102,13 @@ fun LauncherTheme(
     val transparencyScheme = transparencySchemeOf(themeTransparencies!!)
 
 
+    val baseDensity = LocalDensity.current
+
     CompositionLocalProvider(
         LocalDarkTheme provides darkTheme,
         LocalTransparencyScheme provides transparencyScheme,
         LocalBadgeColor provides badgeColor,
+        LocalDensity provides Density(baseDensity.density, baseDensity.fontScale * fontScale),
     ) {
         MaterialExpressiveTheme(
             colorScheme = colorScheme,

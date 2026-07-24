@@ -307,6 +307,17 @@ class UiSettings internal constructor(
         }
     }
 
+    val fontScale
+        get() = launcherDataStore.data.map {
+            it.uiFontScale
+        }.distinctUntilChanged()
+
+    fun setFontScale(fontScale: Float) {
+        launcherDataStore.update {
+            it.copy(uiFontScale = fontScale.coerceIn(0.8f, 2f))
+        }
+    }
+
     fun setColorScheme(colorScheme: ColorScheme) {
         launcherDataStore.update {
             it.copy(uiColorScheme = colorScheme)

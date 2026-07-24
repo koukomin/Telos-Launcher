@@ -3,12 +3,30 @@ package de.mm20.launcher2.ui.settings.appearance
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
@@ -21,6 +39,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlin.math.roundToInt
 import de.mm20.launcher2.ui.settings.appearance.presets.PresetsSettingsRoute
 import de.mm20.launcher2.ui.settings.colorscheme.ColorSchemesSettingsRoute
 import de.mm20.launcher2.ui.settings.shapes.ShapeSchemesSettingsRoute
@@ -139,6 +158,23 @@ fun AppearanceSettingsScreen() {
                 )
             }
         }
+        item {
+            PreferenceCategory {
+                val committedFontScale by viewModel.fontScale.collectAsStateWithLifecycle(1f)
+                var liveFontScale by remember(committedFontScale) { mutableFloatStateOf(committedFontScale) }
+                FontScalePreview(fontScale = liveFontScale)
+                SliderPreference(
+                    title = stringResource(R.string.preference_font_scale),
+                    value = committedFontScale,
+                    min = 0.8f,
+                    max = 2f,
+                    step = 0.05f,
+                    onValueChange = { liveFontScale = it },
+                    onValueChanged = { viewModel.setFontScale(it) },
+                    label = { Text("${(it * 100).roundToInt()}%") },
+                )
+            }
+        }
 
         item {
             PreferenceCategory {
@@ -180,4 +216,37 @@ fun AppearanceSettingsScreen() {
 }
 private fun formatHour(hour: Int): String {
     return "%02d:00".format(hour)
+}
+
+/** Sample home-screen-style icon + label, scaled live as the font size slider is dragged. */
+@Composable
+private fun FontScalePreview(fontScale: Float) {
+    val baseDensity = LocalDensity.current
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(112.dp)
+            .clip(MaterialTheme.shapes.medium)
+            .background(MaterialTheme.colorScheme.surfaceVariant),
+        contentAlignment = Alignment.Center,
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Box(
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.primary),
+            )
+            CompositionLocalProvider(
+                LocalDensity provides Density(baseDensity.density, baseDensity.fontScale * fontScale),
+            ) {
+                Text(
+                    text = stringResource(R.string.preference_font_scale_preview_label),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(top = 8.dp),
+                )
+            }
+        }
+    }
 }

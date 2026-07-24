@@ -27,6 +27,8 @@ data class LauncherSettingsData internal constructor(
     val uiTransparenciesId: UUID = UUID(0L, 0L),
     @Serializable(with = UUIDSerializer::class)
     val uiTypographyId: UUID = UUID(0L, 0L),
+    /** Independent text-size multiplier for launcher UI, applied on top of the system font scale. */
+    val uiFontScale: Float = 1f,
 
     val uiCompatModeColors: Boolean = false,
     @Deprecated("No longer in use, only used for migration")
