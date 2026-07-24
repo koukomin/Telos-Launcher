@@ -981,8 +981,11 @@
     <string name="preference_dock_pages">Páginas de barra de inicio</string>
     <string name="preference_dock_custom_enable">Activar barra de inicio personalizada</string>
     <string name="preference_dock_custom_enable_summary">Colocar manualmente apps y widgets en la barra de inicio</string>
-    <string name="preference_dock_page_delete">Eliminar página</string>
     <string name="preference_dock_page_default">Predeterminada</string>
+    <string name="preference_dock_multiple">Varias barras de inicio</string>
+    <string name="preference_dock_multiple_enable">Activar varias barras de inicio</string>
+    <string name="preference_dock_multiple_enable_summary">Desliza sobre la barra para cambiar entre barras. Las barras adicionales empiezan vacías: coloca las apps tú mismo.</string>
+    <string name="preference_dock_count">Número de barras</string>
     <string name="preference_dock_reset">Restablecer a favoritos auto</string>
     <string name="preference_dock_reset_summary">Eliminar todas las páginas de la barra de inicio personalizada y usar apps frecuentes en su lugar</string>
 </resources>

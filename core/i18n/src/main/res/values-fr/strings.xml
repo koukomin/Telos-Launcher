@@ -1009,8 +1009,11 @@
     <string name="preference_dock_pages">Pages du dock</string>
     <string name="preference_dock_custom_enable">Activer le dock personnalisé</string>
     <string name="preference_dock_custom_enable_summary">Placer manuellement des applis et des widgets dans le dock</string>
-    <string name="preference_dock_page_delete">Supprimer la page</string>
     <string name="preference_dock_page_default">Par défaut</string>
+    <string name="preference_dock_multiple">Docks multiples</string>
+    <string name="preference_dock_multiple_enable">Activer les docks multiples</string>
+    <string name="preference_dock_multiple_enable_summary">Balayez le dock pour passer d\'un dock à l\'autre. Les docks supplémentaires sont vides au départ - placez-y vos applis vous-même.</string>
+    <string name="preference_dock_count">Nombre de docks</string>
     <string name="preference_dock_reset">Réinitialiser aux favoris auto</string>
     <string name="preference_dock_reset_summary">Supprimer toutes les pages de dock personnalisées et utiliser les applis fréquentes à la place</string>
 </resources>

@@ -810,8 +810,11 @@
     <string name="preference_dock_pages">Dock pages</string>
     <string name="preference_dock_custom_enable">Enable custom dock</string>
     <string name="preference_dock_custom_enable_summary">Manually place apps and widgets in the dock</string>
-    <string name="preference_dock_page_delete">Delete page</string>
     <string name="preference_dock_page_default">Default</string>
+    <string name="preference_dock_multiple">Multiple docks</string>
+    <string name="preference_dock_multiple_enable">Enable multiple docks</string>
+    <string name="preference_dock_multiple_enable_summary">Swipe on the dock to switch between docks. Extra docks start empty - place apps in them yourself.</string>
+    <string name="preference_dock_count">Number of docks</string>
     <string name="preference_dock_reset">Reset to auto-favorites</string>
     <string name="preference_dock_reset_summary">Clear all custom dock pages and use frequent apps instead</string>
     <string name="web_app_open_externally">Open in browser</string>

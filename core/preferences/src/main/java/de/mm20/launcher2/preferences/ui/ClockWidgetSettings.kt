@@ -73,8 +73,11 @@ class ClockWidgetSettings internal constructor(
         }
     }
 
+    /** Whether the dock part should render below the clock: either the legacy preset-driven
+     * auto-favorites dock is enabled, or the user has set up custom dock pages in settings. */
     val dock
-        get() = launcherDataStore.data.map { it.homeScreenDock }
+        get() = launcherDataStore.data.map { it.homeScreenDock || it.homeScreenDockPages.isNotEmpty() }
+            .distinctUntilChanged()
 
     val alignment
         get() = launcherDataStore.data.map { it.clockWidgetAlignment }

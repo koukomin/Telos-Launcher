@@ -103,15 +103,22 @@ class DockSettingsScreenVM : ViewModel(), KoinComponent {
         return items
     }
 
-    fun removePage(index: Int) {
+    /** Grows or shrinks the number of docks. New docks are always added EMPTY - default apps
+     * are only ever auto-resolved for the very first dock; extra docks are filled manually. */
+    fun setDockCount(count: Int) {
         val current = dockPages.value.toMutableList()
-        if (index in current.indices) {
-            current.removeAt(index)
-            uiSettings.setDockPages(current)
-            if (defaultPage.value >= current.size) {
-                setDefaultPage((current.size - 1).coerceAtLeast(0))
-            }
+        if (current.isEmpty()) return
+        val target = count.coerceIn(1, MAX_DOCKS)
+        while (current.size < target) current.add(emptyList())
+        while (current.size > target) current.removeAt(current.size - 1)
+        uiSettings.setDockPages(current)
+        if (defaultPage.value >= target) {
+            setDefaultPage(target - 1)
         }
+    }
+
+    companion object {
+        const val MAX_DOCKS = 5
     }
 
     fun setItem(page: Int, row: Int, col: Int, item: DockItem?, searchable: SavableSearchable? = null) {

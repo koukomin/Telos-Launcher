@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.settings.homescreen.dock
 
 import android.appwidget.AppWidgetManager
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -140,7 +141,7 @@ fun DockSettingsScreen() {
                         }
                         
                         Spacer(modifier = Modifier.height(16.dp))
-                        
+
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -148,9 +149,10 @@ fun DockSettingsScreen() {
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            TextButton(onClick = { viewModel.removePage(pagerState.currentPage) }) {
-                                Text(stringResource(R.string.preference_dock_page_delete))
-                            }
+                            Text(
+                                text = "${pagerState.currentPage + 1} / ${dockPages.size}",
+                                style = MaterialTheme.typography.labelMedium,
+                            )
 
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 RadioButton(
@@ -159,11 +161,31 @@ fun DockSettingsScreen() {
                                 )
                                 Text(stringResource(R.string.preference_dock_page_default), style = MaterialTheme.typography.labelMedium)
                             }
-
-                            IconButton(onClick = { viewModel.addPage() }) {
-                                Icon(painterResource(R.drawable.add_24px), contentDescription = null)
-                            }
                         }
+                    }
+                }
+            }
+        }
+
+        if (dockPages.isNotEmpty()) {
+            item {
+                PreferenceCategory(title = stringResource(R.string.preference_dock_multiple)) {
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_dock_multiple_enable),
+                        summary = stringResource(R.string.preference_dock_multiple_enable_summary),
+                        value = dockPages.size > 1,
+                        onValueChanged = { enabled ->
+                            viewModel.setDockCount(if (enabled) 2 else 1)
+                        }
+                    )
+                    AnimatedVisibility(dockPages.size > 1) {
+                        SliderPreference(
+                            title = stringResource(R.string.preference_dock_count),
+                            value = dockPages.size,
+                            min = 2,
+                            max = DockSettingsScreenVM.MAX_DOCKS,
+                            onValueChanged = { viewModel.setDockCount(it) }
+                        )
                     }
                 }
             }

@@ -603,8 +603,11 @@
     <string name="preference_dock_pages">Σελίδες dock</string>
     <string name="preference_dock_custom_enable">Ενεργοποίηση προσαρμοσμένου dock</string>
     <string name="preference_dock_custom_enable_summary">Τοποθετήστε χειροκίνητα εφαρμογές και widget στο dock</string>
-    <string name="preference_dock_page_delete">Διαγραφή σελίδας</string>
     <string name="preference_dock_page_default">Προεπιλογή</string>
+    <string name="preference_dock_multiple">Πολλαπλά docks</string>
+    <string name="preference_dock_multiple_enable">Ενεργοποίηση πολλαπλών docks</string>
+    <string name="preference_dock_multiple_enable_summary">Σύρετε πάνω στο dock για εναλλαγή μεταξύ docks. Τα επιπλέον docks ξεκινούν κενά - τοποθετήστε εφαρμογές μόνοι σας.</string>
+    <string name="preference_dock_count">Αριθμός docks</string>
     <string name="preference_dock_reset">Επαναφορά σε αυτόματα αγαπημένα</string>
     <string name="web_apps_panel_edit">Επεξεργασία Web Apps</string>
     <string name="preference_screen_web_apps_panel">Web Apps Panel</string>
