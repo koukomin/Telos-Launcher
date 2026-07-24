@@ -93,7 +93,7 @@ fun DockSettingsScreen() {
                         title = stringResource(R.string.preference_dock_custom_enable),
                         summary = stringResource(R.string.preference_dock_custom_enable_summary),
                         onClick = {
-                            viewModel.addPage()
+                            viewModel.enableCustomDock()
                         }
                     )
                 } else {

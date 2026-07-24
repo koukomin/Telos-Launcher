@@ -975,7 +975,7 @@
     <string name="web_app_shortcut_icon_source_system">Systemsymbol</string>
     <string name="web_app_shortcut_icon_source_custom">Benutzerdefiniertes Symbol</string>
     <string name="preference_dock_columns">Dock-Spalten</string>
-    <string name="preference_dock_pages">Dock-Seiten</string>
+    <string name="preference_dock_pages">Dock-Apps</string>
     <string name="preference_dock_custom_enable">Benutzerdefiniertes Dock aktivieren</string>
     <string name="preference_dock_custom_enable_summary">Apps und Widgets manuell im Dock platzieren</string>
     <string name="preference_dock_page_default">Standard</string>
@@ -984,5 +984,5 @@
     <string name="preference_dock_multiple_enable_summary">Auf dem Dock wischen, um zwischen Docks zu wechseln. Zusätzliche Docks sind anfangs leer - Apps selbst platzieren.</string>
     <string name="preference_dock_count">Anzahl der Docks</string>
     <string name="preference_dock_reset">Auf Auto-Favoriten zurücksetzen</string>
-    <string name="preference_dock_reset_summary">Alle benutzerdefinierten Dock-Seiten löschen und stattdessen häufige Apps verwenden</string>
+    <string name="preference_dock_reset_summary">Alle benutzerdefinierten Docks löschen und stattdessen häufige Apps verwenden</string>
 </resources>

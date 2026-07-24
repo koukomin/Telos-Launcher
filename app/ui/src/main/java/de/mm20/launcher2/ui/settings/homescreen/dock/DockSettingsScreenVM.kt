@@ -56,17 +56,12 @@ class DockSettingsScreenVM : ViewModel(), KoinComponent {
         uiSettings.setDockDefaultPage(page)
     }
 
-    fun addPage() {
+    /** Switches from auto-favorites to the custom dock. ONLY this first dock is seeded with
+     * default apps; any further docks (via [setDockCount]) always start empty. */
+    fun enableCustomDock() {
         viewModelScope.launch {
-            val current = dockPages.value.toMutableList()
-            if (current.isEmpty()) {
-                // Initialize first page with system defaults
-                val defaults = resolveDefaultApps()
-                current.add(defaults)
-            } else {
-                current.add(emptyList())
-            }
-            uiSettings.setDockPages(current)
+            if (dockPages.value.isNotEmpty()) return@launch
+            uiSettings.setDockPages(listOf(resolveDefaultApps()))
         }
     }
 

@@ -600,7 +600,7 @@
     <string name="web_app_shortcut_icon_source_system">Εικονίδιο συστήματος</string>
     <string name="web_app_shortcut_icon_source_custom">Προσαρμοσμένο εικονίδιο</string>
     <string name="preference_dock_columns">Στήλες dock</string>
-    <string name="preference_dock_pages">Σελίδες dock</string>
+    <string name="preference_dock_pages">Dock εφαρμογές</string>
     <string name="preference_dock_custom_enable">Ενεργοποίηση προσαρμοσμένου dock</string>
     <string name="preference_dock_custom_enable_summary">Τοποθετήστε χειροκίνητα εφαρμογές και widget στο dock</string>
     <string name="preference_dock_page_default">Προεπιλογή</string>
