@@ -51,6 +51,8 @@ import de.mm20.launcher2.ui.launcher.search.favorites.SearchFavoritesVM
 import de.mm20.launcher2.ui.launcher.search.files.FileResults
 import de.mm20.launcher2.ui.launcher.search.filters.SearchFilters
 import de.mm20.launcher2.ui.launcher.search.location.LocationResults
+import de.mm20.launcher2.ui.launcher.search.recommendations.AppRecommendations
+import de.mm20.launcher2.ui.launcher.search.recommendations.RecommendationResults
 import de.mm20.launcher2.ui.launcher.search.shortcut.ShortcutResults
 import de.mm20.launcher2.ui.launcher.search.unitconverter.UnitConverterResults
 import de.mm20.launcher2.ui.launcher.search.webappshortcut.WebAppShortcutResults
@@ -114,6 +116,7 @@ fun SearchColumn(
 
     val query by viewModel.searchQuery
     val isSearchEmpty by viewModel.isSearchEmpty
+    val showAppRecommendations by viewModel.showAppRecommendations.collectAsState(true)
 
     val missingCalendarPermission by viewModel.missingCalendarPermission.collectAsState(false)
     val missingShortcutsPermission by viewModel.missingAppShortcutPermission.collectAsState(false)
@@ -162,6 +165,15 @@ fun SearchColumn(
     var selectedWebsiteIndex: Int by remember(query) { mutableIntStateOf(-1) }
 
     val showFilters by viewModel.showFilters
+
+    val recommendationDayOfYear = remember { java.time.LocalDate.now().dayOfYear }
+    val recommendation = if (!showAppRecommendations) {
+        null
+    } else if (isSearchEmpty) {
+        AppRecommendations.forDrawer(recommendationDayOfYear)
+    } else {
+        AppRecommendations.matchQuery(query)
+    }
 
     AnimatedContent(
         showFilters,
@@ -476,6 +488,11 @@ fun SearchColumn(
                         key = "music"
                     )
                 }
+
+                RecommendationResults(
+                    recommendation = recommendation,
+                    reverse = reverse,
+                )
             }
         }
 

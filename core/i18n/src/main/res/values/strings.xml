@@ -1682,4 +1682,31 @@
     <string name="typo_preview_medium1">Hamburg</string>
     <string name="typo_preview_medium2">Preview</string>
     <string name="typo_preview_long">The quick brown fox\njumps over 1234790</string>
+
+    <!-- App recommendations: a small "you might also like" card shown in the drawer and in
+    keyword-matched search results, editorial picks with no affiliate relationship. -->
+    <string name="recommendation_category_vpn">VPN</string>
+    <string name="recommendation_category_browsers">Browser</string>
+    <string name="recommendation_category_mail">Mail</string>
+    <string name="recommendation_category_productivity">Productivity</string>
+    <string name="recommendation_category_tools">Tools</string>
+    <string name="recommendation_category_password_managers">Password manager</string>
+    <string name="recommendation_category_cloud_storage">Cloud storage</string>
+    <string name="recommendation_category_security">Security</string>
+    <string name="recommendation_category_communication">Messaging</string>
+    <string name="recommendation_desc_vpn">A privacy-focused VPN with a free tier</string>
+    <string name="recommendation_desc_browsers">A fast, privacy-respecting mobile browser</string>
+    <string name="recommendation_desc_mail">Encrypted email with a free tier</string>
+    <string name="recommendation_desc_productivity">Edit Office and OpenDocument files</string>
+    <string name="recommendation_desc_tools">A fast, ad-free gallery app</string>
+    <string name="recommendation_desc_password_managers">Open-source password manager</string>
+    <string name="recommendation_desc_cloud_storage">Self-hosted file sync and sharing</string>
+    <string name="recommendation_desc_security">On-device malware scanning</string>
+    <string name="recommendation_desc_communication">Private, encrypted messaging</string>
+    <string name="recommendation_card_label">Recommended</string>
+    <string name="recommendation_why_am_i_seeing_this">Why am I seeing this?</string>
+    <string name="recommendation_info_title">About this recommendation</string>
+    <string name="recommendation_info_body">Telos occasionally shows one editorial app suggestion in the drawer or in search results that match a category like VPN or password managers. These are separate from your search results and installed apps - Telos doesn\'t currently have any affiliate or advertising relationship with the apps shown. You can turn these suggestions off entirely in Search settings.</string>
+    <string name="preference_show_app_recommendations">Show app recommendations</string>
+    <string name="preference_show_app_recommendations_summary">Occasionally suggest one app in a category like VPN or password managers, in the drawer and in matching search results</string>
 </resources>

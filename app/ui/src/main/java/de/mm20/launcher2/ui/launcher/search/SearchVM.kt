@@ -145,6 +145,8 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val allAppsEnabled = searchUiSettings.allApps
 
+    val showAppRecommendations = searchUiSettings.showAppRecommendations
+
     val showFilters = mutableStateOf(false)
 
     private val defaultFilters = searchFilterSettings.defaultFilter.stateIn(

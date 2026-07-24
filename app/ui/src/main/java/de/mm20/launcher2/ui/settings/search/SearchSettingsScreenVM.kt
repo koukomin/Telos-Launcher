@@ -146,6 +146,13 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         searchUiSettings.setLaunchOnEnter(launchOnEnter)
     }
 
+    val showAppRecommendations = searchUiSettings.showAppRecommendations
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setShowAppRecommendations(show: Boolean) {
+        searchUiSettings.setShowAppRecommendations(show)
+    }
+
     val privateKeyboard = searchUiSettings.privateKeyboard
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 

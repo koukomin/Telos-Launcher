@@ -140,6 +140,9 @@ data class LauncherSettingsData internal constructor(
     /** Applies IME_FLAG_NO_PERSONALIZED_LEARNING to text fields across the launcher (search,
      * web app shortcut editing, etc.) so the keyboard doesn't learn from or store typed text. */
     val privateKeyboard: Boolean = false,
+    /** Shows a single editorial "recommended app" card in the drawer and in keyword-matched
+     * search results. See AppRecommendations - no affiliate relationship, editorial picks only. */
+    val showAppRecommendations: Boolean = true,
     val searchLaunchOnEnter: Boolean = true,
     val searchBarBottom: Boolean = false,
     val searchBarFixed: Boolean = false,
