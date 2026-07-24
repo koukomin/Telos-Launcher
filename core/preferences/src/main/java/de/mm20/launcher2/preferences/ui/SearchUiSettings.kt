@@ -52,6 +52,15 @@ class SearchUiSettings internal constructor(
         }
     }
 
+    val privateKeyboard
+        get() = launcherDataStore.data.map { it.privateKeyboard }.distinctUntilChanged()
+
+    fun setPrivateKeyboard(privateKeyboard: Boolean) {
+        launcherDataStore.update {
+            it.copy(privateKeyboard = privateKeyboard)
+        }
+    }
+
     val reversedResults
         get() = launcherDataStore.data.map { it.searchResultsReversed }.distinctUntilChanged()
 

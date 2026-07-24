@@ -137,6 +137,9 @@ data class LauncherSettingsData internal constructor(
     val searchBarStyle: SearchBarStyle = SearchBarStyle.Transparent,
     val searchBarColors: SearchBarColors = SearchBarColors.Auto,
     val searchBarKeyboard: Boolean = true,
+    /** Applies IME_FLAG_NO_PERSONALIZED_LEARNING to text fields across the launcher (search,
+     * web app shortcut editing, etc.) so the keyboard doesn't learn from or store typed text. */
+    val privateKeyboard: Boolean = false,
     val searchLaunchOnEnter: Boolean = true,
     val searchBarBottom: Boolean = false,
     val searchBarFixed: Boolean = false,

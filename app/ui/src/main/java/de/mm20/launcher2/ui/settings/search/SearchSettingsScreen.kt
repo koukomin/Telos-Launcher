@@ -106,6 +106,7 @@ fun SearchSettingsScreen() {
 
     val autoFocus by viewModel.autoFocus.collectAsStateWithLifecycle(null)
     val launchOnEnter by viewModel.launchOnEnter.collectAsStateWithLifecycle(null)
+    val privateKeyboard by viewModel.privateKeyboard.collectAsStateWithLifecycle(null)
     val reverseSearchResults by viewModel.reverseSearchResults.collectAsStateWithLifecycle(null)
     val filterBar by viewModel.filterBar.collectAsStateWithLifecycle(null)
 
@@ -554,6 +555,15 @@ fun SearchSettingsScreen() {
                     value = launchOnEnter == true,
                     onValueChanged = {
                         viewModel.setLaunchOnEnter(it)
+                    }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_private_keyboard),
+                    iconPadding = true,
+                    summary = stringResource(R.string.preference_private_keyboard_summary),
+                    value = privateKeyboard == true,
+                    onValueChanged = {
+                        viewModel.setPrivateKeyboard(it)
                     }
                 )
             }

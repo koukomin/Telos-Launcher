@@ -146,6 +146,13 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         searchUiSettings.setLaunchOnEnter(launchOnEnter)
     }
 
+    val privateKeyboard = searchUiSettings.privateKeyboard
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setPrivateKeyboard(privateKeyboard: Boolean) {
+        searchUiSettings.setPrivateKeyboard(privateKeyboard)
+    }
+
     val hasAppShortcutPermission = permissionsManager.hasPermission(PermissionGroup.AppShortcuts)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val appShortcuts = shortcutSearchSettings.enabled

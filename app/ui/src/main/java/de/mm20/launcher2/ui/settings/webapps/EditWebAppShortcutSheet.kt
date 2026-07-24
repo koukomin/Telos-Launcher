@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
@@ -31,6 +32,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,14 +46,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import de.mm20.launcher2.data.customattrs.CustomIcon
+import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.IconPicker
 import de.mm20.launcher2.ui.component.BottomSheet
 import de.mm20.launcher2.ui.component.DismissableBottomSheet
+import de.mm20.launcher2.ui.component.withPrivateKeyboard
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.webappshortcuts.CustomTabsBrowsers
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 
 private enum class IconPickerTab { IconPack, Photo, Favicon }
 
@@ -88,6 +93,8 @@ fun EditWebAppShortcutSheet(
         val context = LocalContext.current
         val iconSizePx = 48.dp.toPixels().toInt()
         val supportedBrowsers = remember { CustomTabsBrowsers.findSupportedBrowsers(context) }
+        val searchUiSettings: SearchUiSettings = koinInject()
+        val privateKeyboard by remember { searchUiSettings.privateKeyboard }.collectAsState(false)
 
         val pickIconLauncher =
             rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri ->
@@ -145,6 +152,7 @@ fun EditWebAppShortcutSheet(
                 onValueChange = { label = it },
                 label = { Text(stringResource(R.string.web_app_shortcut_label)) },
                 singleLine = true,
+                keyboardOptions = KeyboardOptions().withPrivateKeyboard(privateKeyboard),
             )
 
             OutlinedTextField(
@@ -155,6 +163,7 @@ fun EditWebAppShortcutSheet(
                 onValueChange = { url = it; findingFavicon = false },
                 label = { Text(stringResource(R.string.web_app_shortcut_url)) },
                 singleLine = true,
+                keyboardOptions = KeyboardOptions().withPrivateKeyboard(privateKeyboard),
                 trailingIcon = if (findingFavicon) {
                     { CircularProgressIndicator(modifier = Modifier.size(20.dp)) }
                 } else null,

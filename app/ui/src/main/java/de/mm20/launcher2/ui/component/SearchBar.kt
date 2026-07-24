@@ -24,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -41,12 +42,13 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.SearchBarStyle
+import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.layout.BottomReversed
 import de.mm20.launcher2.ui.theme.transparency.transparency
+import org.koin.compose.koinInject
 
 @Composable
 fun SearchBar(
@@ -68,6 +70,8 @@ fun SearchBar(
 
     val transition = updateTransition(level, label = "Searchbar")
     val context = LocalContext.current
+    val searchUiSettings: SearchUiSettings = koinInject()
+    val privateKeyboard by remember { searchUiSettings.privateKeyboard }.collectAsState(false)
 
     val elevation by transition.animateDp(
         label = "elevation",
@@ -183,19 +187,11 @@ fun SearchBar(
                             value = value,
                             onValueChange = onValueChange,
                             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-                            // KeyboardType.Password without a visualTransformation: text still
-                            // shows normally (no dots), but a password-variation input type is
-                            // what makes the platform IME layer add
-                            // EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING - Compose's
-                            // KeyboardOptions/ImeOptions don't expose that flag directly, so this
-                            // is how it's done. Also turns off keyboard suggestions/learning,
-                            // which is the point: no IME should learn or record search queries.
                             keyboardOptions = KeyboardOptions(
                                 imeAction = ImeAction.Go,
                                 autoCorrectEnabled = false,
                                 capitalization = KeyboardCapitalization.None,
-                                keyboardType = KeyboardType.Password,
-                            ),
+                            ).withPrivateKeyboard(privateKeyboard),
                             keyboardActions = KeyboardActions(
                                 onGo = onKeyboardActionGo,
                             ),
