@@ -30,6 +30,10 @@ fun SearchResultGrid(
     transitionKey: Any? = items,
     enableShutterGesture: Boolean = false,
     enableFloatingLauncherDragSource: Boolean = false,
+    /** When true, rows with fewer items than [columns] center the group of icons instead of
+     * left-aligning them with trailing blank cells. Used by the dock, where a partially-filled
+     * row should read as centered, not stuck to the start. */
+    centerRows: Boolean = false,
 ) {
     AnimatedContent(
         items to transitionKey,
@@ -45,14 +49,15 @@ fun SearchResultGrid(
             verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
         ) {
             for (i in 0 until ceil(items.size / columns.toFloat()).toInt()) {
-                Row {
-                    for (j in 0 until columns) {
-                        val item = items.getOrNull(i * columns + j)
-                        if (item != null) {
+                if (centerRows) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
+                        for (j in 0 until columns) {
+                            val item = items.getOrNull(i * columns + j) ?: continue
                             key(item.key) {
                                 GridItem(
-                                    modifier = Modifier
-                                        .weight(1f),
                                     item = item,
                                     showLabels = showLabels,
                                     highlight = item.key == highlightedItem?.key,
@@ -60,8 +65,27 @@ fun SearchResultGrid(
                                     enableFloatingLauncherDragSource = enableFloatingLauncherDragSource,
                                 )
                             }
-                        } else {
-                            Spacer(modifier = Modifier.weight(1f))
+                        }
+                    }
+                } else {
+                    Row {
+                        for (j in 0 until columns) {
+                            val item = items.getOrNull(i * columns + j)
+                            if (item != null) {
+                                key(item.key) {
+                                    GridItem(
+                                        modifier = Modifier
+                                            .weight(1f),
+                                        item = item,
+                                        showLabels = showLabels,
+                                        highlight = item.key == highlightedItem?.key,
+                                        enableShutterGesture = enableShutterGesture,
+                                        enableFloatingLauncherDragSource = enableFloatingLauncherDragSource,
+                                    )
+                                }
+                            } else {
+                                Spacer(modifier = Modifier.weight(1f))
+                            }
                         }
                     }
                 }

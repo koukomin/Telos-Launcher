@@ -65,7 +65,6 @@ fun WidgetColumn(
     )
     val snackbarHostState = LocalSnackbarHostState.current
 
-    var addNewWidget by rememberSaveable { mutableStateOf(false) }
     var stackTarget by rememberSaveable { mutableStateOf<Widget?>(null) }
 
 
@@ -186,48 +185,29 @@ fun WidgetColumn(
         }
 
         val editButton by viewModel.editButton.collectAsState()
-        if (!desktopLocked && (editMode || editButton == true)) {
-            val title = stringResource(
-                if (editMode) R.string.widget_add_widget
-                else R.string.menu_edit_widgets,
-            )
-
+        // Reorder/resize/remove existing widgets - a separate concern from adding new ones, which
+        // now happens exclusively via the home screen long-press menu or the search bar's overflow
+        // menu (see HomeScreenMenuComponent / SearchBarMenu). Only shown outside edit mode: once
+        // editing, the top app bar's back arrow (see WidgetsComponent) is the way out.
+        if (!desktopLocked && !editMode && editButton == true) {
             Button(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(vertical = 8.dp),
                 contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
-                onClick = {
-                    if (!editMode) {
-                        onEditModeChange(true)
-                    } else {
-                        addNewWidget = true
-                    }
-                },
+                onClick = { onEditModeChange(true) },
             ) {
                 Icon(
                     modifier = Modifier
                         .padding(end = ButtonDefaults.IconSpacing)
                         .size(ButtonDefaults.IconSize),
-                    painter = painterResource(
-                        if (editMode) R.drawable.add_20px else R.drawable.edit_20px,
-                    ),
+                    painter = painterResource(R.drawable.edit_20px),
                     contentDescription = null,
                 )
-                Text(title)
+                Text(stringResource(R.string.menu_edit_widgets))
             }
-
         }
     }
-
-    WidgetPickerSheet(
-        expanded = addNewWidget,
-        onDismiss = { addNewWidget = false },
-        onWidgetSelected = {
-            viewModel.addWidget(it)
-            addNewWidget = false
-        },
-    )
 
     WidgetPickerSheet(
         expanded = stackTarget != null,

@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
@@ -162,7 +164,8 @@ fun EditWebAppShortcutSheet(
                 onValueChange = { label = it },
                 label = { Text(stringResource(R.string.web_app_shortcut_label)) },
                 singleLine = true,
-                keyboardOptions = KeyboardOptions().withPrivateKeyboard(privateKeyboard),
+                keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)
+                    .withPrivateKeyboard(privateKeyboard),
             )
 
             OutlinedTextField(
@@ -173,7 +176,14 @@ fun EditWebAppShortcutSheet(
                 onValueChange = { url = it; findingFavicon = false },
                 label = { Text(stringResource(R.string.web_app_shortcut_url)) },
                 singleLine = true,
-                keyboardOptions = KeyboardOptions().withPrivateKeyboard(privateKeyboard),
+                // Explicitly Uri, never routed through withPrivateKeyboard: that helper's only way
+                // to get IME_FLAG_NO_PERSONALIZED_LEARNING set is KeyboardType.Password, which is
+                // exactly what was making Android's autofill/password-manager treat this field as
+                // a credential to save on every edit. A URL isn't a credential.
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Uri,
+                    autoCorrectEnabled = false,
+                ),
                 trailingIcon = if (findingFavicon) {
                     { CircularProgressIndicator(modifier = Modifier.size(20.dp)) }
                 } else null,

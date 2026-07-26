@@ -136,6 +136,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                                     columns = columns,
                                     transitionKey = page,
                                     enableShutterGesture = true,
+                                    centerRows = true,
                                 )
                             }
                         }
