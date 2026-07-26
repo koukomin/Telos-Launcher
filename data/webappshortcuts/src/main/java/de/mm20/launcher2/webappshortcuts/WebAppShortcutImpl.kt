@@ -37,6 +37,7 @@ internal data class WebAppShortcutImpl(
     override val showInPanel: Boolean = false,
     override val order: Int = 0,
     override val iconSource: WebAppShortcut.IconSource = WebAppShortcut.IconSource.Website,
+    override val notificationsEnabled: Boolean = false,
 ) : WebAppShortcut {
 
     override val domain: String = Domain

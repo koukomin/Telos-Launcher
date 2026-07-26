@@ -80,7 +80,7 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setShowIconlessApps(show: Boolean) {
         _showIconlessApps.value = show
-        if (show && _iconlessApps.value.isEmpty()) {
+        if (show) {
             viewModelScope.launch {
                 _iconlessApps.value = appRepository.findIconlessApps().sorted()
             }

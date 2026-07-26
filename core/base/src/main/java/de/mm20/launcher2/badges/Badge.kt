@@ -1,9 +1,7 @@
 package de.mm20.launcher2.badges
 
 import android.graphics.drawable.Drawable
-import android.util.Log
 import androidx.annotation.DrawableRes
-import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed interface BadgeIcon {
     @JvmInline
@@ -29,7 +27,7 @@ fun Badge(
     icon: BadgeIcon? = null
 ): Badge = MutableBadge(number, progress, icon)
 
-internal data class MutableBadge(
+data class MutableBadge(
     override var number: Int? = null,
     override var progress: Float? = null,
     override var icon: BadgeIcon? = null

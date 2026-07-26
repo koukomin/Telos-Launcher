@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -47,6 +48,7 @@ import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.SearchBar
 import de.mm20.launcher2.ui.component.SearchBarLevel
+import de.mm20.launcher2.ui.component.preferences.ColorPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -86,6 +88,10 @@ fun HomescreenSettingsScreen() {
     val hideNavBar by viewModel.hideNavBar.collectAsStateWithLifecycle(null)
     val chargingAnimation by viewModel.chargingAnimation.collectAsStateWithLifecycle(null)
     val homeScreenPageCount by viewModel.homeScreenPageCount.collectAsStateWithLifecycle(null)
+    val desktopLocked by viewModel.desktopLocked.collectAsStateWithLifecycle(false)
+    val dockBackgroundEnabled by viewModel.dockBackgroundEnabled.collectAsStateWithLifecycle(false)
+    val dockBackgroundColor by viewModel.dockBackgroundColor.collectAsStateWithLifecycle(null)
+    val dockBackgroundOpacity by viewModel.dockBackgroundOpacity.collectAsStateWithLifecycle(0.3f)
 
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_homescreen)) {
         item {
@@ -115,6 +121,13 @@ fun HomescreenSettingsScreen() {
                     }
                 )
                 SwitchPreference(
+                    title = stringResource(R.string.preference_desktop_lock),
+                    summary = stringResource(R.string.preference_desktop_lock_summary),
+                    icon = R.drawable.lock_24px,
+                    value = desktopLocked,
+                    onValueChanged = { viewModel.setDesktopLocked(it) }
+                )
+                SwitchPreference(
                     title = stringResource(R.string.preference_layout_fixed_rotation),
                     summary = stringResource(R.string.preference_layout_fixed_rotation_summary),
                     value = fixedRotation == true,
@@ -137,6 +150,32 @@ fun HomescreenSettingsScreen() {
                         text = stringResource(R.string.preference_home_screen_page_count_warning),
                         icon = R.drawable.info_24px,
                     )
+                }
+            }
+        }
+        item {
+            PreferenceCategory(title = stringResource(R.string.preference_category_grid_dock)) {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_dock_background),
+                    summary = stringResource(R.string.preference_dock_background_summary),
+                    value = dockBackgroundEnabled,
+                    onValueChanged = { viewModel.setDockBackgroundEnabled(it) }
+                )
+                AnimatedVisibility(dockBackgroundEnabled) {
+                    Column {
+                        ColorPreference(
+                            title = stringResource(R.string.preference_dock_background_color),
+                            value = dockBackgroundColor?.let { Color(it) },
+                            onValueChanged = { viewModel.setDockBackgroundColor(it?.toArgb()) }
+                        )
+                        SliderPreference(
+                            title = stringResource(R.string.preference_dock_background_opacity),
+                            value = (dockBackgroundOpacity * 100).toInt(),
+                            min = 0,
+                            max = 100,
+                            onValueChanged = { viewModel.setDockBackgroundOpacity(it / 100f) }
+                        )
+                    }
                 }
             }
         }

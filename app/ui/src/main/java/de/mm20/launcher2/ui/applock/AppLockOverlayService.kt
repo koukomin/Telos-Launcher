@@ -153,6 +153,7 @@ class AppLockOverlayService : Service(), SavedStateRegistryOwner {
                             startActivity(
                                 Intent(this@AppLockOverlayService, AppLockActivity::class.java).apply {
                                     putExtra(AppLockActivity.EXTRA_PACKAGE_NAME, packageName)
+                                    putExtra(AppLockActivity.EXTRA_INSTANT, true)
                                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                 }
                             )

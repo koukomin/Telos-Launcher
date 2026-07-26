@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalAppWidgetHost
 import de.mm20.launcher2.ui.ktx.animateTo
@@ -43,6 +44,7 @@ import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.Widget
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 import java.util.UUID
 
 @Composable
@@ -55,6 +57,8 @@ fun WidgetColumn(
 
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
+    val uiSettings: UiSettings = koinInject()
+    val desktopLocked by uiSettings.desktopLocked.collectAsState(false)
     val viewModel: WidgetsVM = viewModel(
         key = "widgets-column-$parentId",
         factory = WidgetsVM.Factory(parentId),
@@ -98,6 +102,7 @@ fun WidgetColumn(
                             IntOffset(0, offsetY.value.toInt())
                         }
                     val itemDraggableState = rememberDraggableState {
+                        if (desktopLocked) return@rememberDraggableState
                         scope.launch {
                             val newOffset = offsetY.value + it
                             offsetY.value = newOffset
@@ -181,7 +186,7 @@ fun WidgetColumn(
         }
 
         val editButton by viewModel.editButton.collectAsState()
-        if (editMode || editButton == true) {
+        if (!desktopLocked && (editMode || editButton == true)) {
             val title = stringResource(
                 if (editMode) R.string.widget_add_widget
                 else R.string.menu_edit_widgets,

@@ -61,6 +61,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
@@ -68,12 +69,15 @@ import de.mm20.launcher2.search.Article
 import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.search.Contact
 import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.Folder
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.Tag
 import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.search.Website
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.LocalIconShape
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
@@ -98,6 +102,8 @@ import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.overlays.Overlay
 import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.preferences.ui.ShutterSettings
+import de.mm20.launcher2.preferences.ui.UiSettings
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import org.koin.compose.koinInject
 import kotlin.math.pow
@@ -131,15 +137,21 @@ fun GridItem(
      * why the stock detector can't be used).
      */
     enableFloatingLauncherDragSource: Boolean = false,
+    inDock: Boolean = false,
+    onRemoveFromDock: (() -> Unit)? = null,
+    onReplaceInDock: (() -> Unit)? = null,
 ) {
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${item.key}")
-    val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
+    val gridSettings = LocalGridSettings.current
+    val iconSize = gridSettings.iconSize.dp.toPixels()
 
     LaunchedEffect(item, iconSize) {
         viewModel.init(item, iconSize.toInt())
     }
 
     val context = LocalContext.current
+    val uiSettings: UiSettings = koinInject()
+    val desktopLocked by uiSettings.desktopLocked.collectAsStateWithLifecycle(false)
 
     var showPopup by remember(item.key) { mutableStateOf(false) }
     var bounds by remember { mutableStateOf(IntRect.Zero) }
@@ -165,7 +177,7 @@ fun GridItem(
         modifier = modifier
             .padding(4.dp)
             .then(
-                if (item is Application && shuttersEnabled && enableShutterGesture) {
+                if ((item is Application && shuttersEnabled && enableShutterGesture) || (item is Folder && item.isCover)) {
                     Modifier.pointerInput(item.key) {
                         var totalDrag = 0f
                         detectVerticalDragGestures(
@@ -173,7 +185,7 @@ fun GridItem(
                             onDragEnd = {
                                 if (totalDrag < -shutterSwipeThreshold) {
                                     hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
-                                    showShutter = true
+                                    if (item is Folder) showPopup = true else showShutter = true
                                 }
                             },
                             onDragCancel = {},
@@ -191,7 +203,11 @@ fun GridItem(
             )
             .combinedClickable(
                 onClick = {
-                    if (!launchOnPress || !viewModel.launch(context, bounds)) {
+                    if (item is Folder && item.isCover) {
+                        viewModel.launchChildAt(context, 0)
+                    } else if (item is Folder) {
+                        showPopup = true
+                    } else if (!launchOnPress || !viewModel.launch(context, bounds)) {
                         showPopup = true
                     }
                 },
@@ -328,8 +344,15 @@ fun GridItem(
                     .padding(vertical = 4.dp),
                 text = item.labelOverride ?: item.label,
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.bodySmall,
-                maxLines = labelMaxLines,
+                style = MaterialTheme.typography.bodySmall.copy(
+                    fontSize = gridSettings.labelSize.sp,
+                    shadow = if (gridSettings.labelShadow) Shadow(
+                        color = androidx.compose.ui.graphics.Color.Black.copy(alpha = 0.5f),
+                        offset = Offset(1f, 1f),
+                        blurRadius = 2f
+                    ) else null
+                ),
+                maxLines = gridSettings.labelMaxLines,
                 overflow = TextOverflow.Ellipsis,
                 color = MaterialTheme.colorScheme.onBackground,
             )
@@ -337,7 +360,14 @@ fun GridItem(
     }
 
     if (showPopup) {
-        ItemPopup(origin = bounds, searchable = item, onDismissRequest = { showPopup = false })
+        ItemPopup(
+            origin = bounds,
+            searchable = item,
+            onDismissRequest = { showPopup = false },
+            inDock = inDock,
+            onRemoveFromDock = onRemoveFromDock,
+            onReplaceInDock = onReplaceInDock,
+        )
     }
 
     if (showShutter && item is Application) {
@@ -350,7 +380,14 @@ fun GridItem(
 }
 
 @Composable
-fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> Unit) {
+fun ItemPopup(
+    origin: IntRect,
+    searchable: Searchable,
+    inDock: Boolean = false,
+    onRemoveFromDock: (() -> Unit)? = null,
+    onReplaceInDock: (() -> Unit)? = null,
+    onDismissRequest: () -> Unit
+) {
     val show = remember {
         MutableTransitionState(false).apply {
             targetState = true
@@ -425,6 +462,9 @@ fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> U
                             show = show,
                             animationProgress = p,
                             origin = origin,
+                            inDock = inDock,
+                            onRemoveFromDock = onRemoveFromDock,
+                            onReplaceInDock = onReplaceInDock,
                             onDismiss = {
                                 show.targetState = false
                             }
@@ -531,6 +571,21 @@ fun ItemPopup(origin: IntRect, searchable: Searchable, onDismissRequest: () -> U
                         WebAppShortcutItemGridPopup(
                             shortcut = searchable,
                             show = show,
+                            origin = origin,
+                            inDock = inDock,
+                            onRemoveFromDock = onRemoveFromDock,
+                            onReplaceInDock = onReplaceInDock,
+                            onDismiss = {
+                                show.targetState = false
+                            }
+                        )
+                    }
+
+                    is Folder -> {
+                        FolderGridPopup(
+                            folder = searchable,
+                            show = show,
+                            animationProgress = p,
                             origin = origin,
                             onDismiss = {
                                 show.targetState = false

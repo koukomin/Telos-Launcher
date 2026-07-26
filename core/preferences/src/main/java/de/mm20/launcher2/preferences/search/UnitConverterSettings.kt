@@ -14,24 +14,24 @@ class UnitConverterSettings internal constructor(
     private val dataStore: LauncherDataStore,
 ) : Flow<UnitConverterSettingsData> by (dataStore.data.map {
     UnitConverterSettingsData(
-        enabled = it.unitConverterEnabled,
-        currencies = it.unitConverterCurrencies,
+        enabled = it.unitConverter.unitConverterEnabled,
+        currencies = it.unitConverter.unitConverterCurrencies,
     )
 }.distinctUntilChanged()) {
     val enabled: Flow<Boolean>
-        get() = dataStore.data.map { it.unitConverterEnabled }.distinctUntilChanged()
+        get() = dataStore.data.map { it.unitConverter.unitConverterEnabled }.distinctUntilChanged()
 
     fun setEnabled(enabled: Boolean) {
-        dataStore.update { it.copy(unitConverterEnabled = enabled) }
+        dataStore.update { it.copy(unitConverter = it.unitConverter.copy(unitConverterEnabled = enabled)) }
     }
 
     val currenciesEnabled: Flow<Boolean>
-        get() = dataStore.data.map { it.unitConverterCurrencies }.distinctUntilChanged()
+        get() = dataStore.data.map { it.unitConverter.unitConverterCurrencies }.distinctUntilChanged()
 
     fun setCurrenciesEnabled(currencies: Boolean) {
-        dataStore.update { it.copy(unitConverterCurrencies = currencies) }
+        dataStore.update { it.copy(unitConverter = it.unitConverter.copy(unitConverterCurrencies = currencies)) }
     }
 
     val preferredCurrencies: Flow<List<String>>
-        get() = dataStore.data.map { it.localeCurrencies }.distinctUntilChanged()
+        get() = dataStore.data.map { it.locale.localeCurrencies }.distinctUntilChanged()
 }

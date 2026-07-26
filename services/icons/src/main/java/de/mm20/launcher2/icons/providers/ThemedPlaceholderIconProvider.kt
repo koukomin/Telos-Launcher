@@ -37,6 +37,7 @@ internal class ThemedPlaceholderIconProvider(
             is TextLayer -> layer.copy(color = 0)
             is TintedIconLayer -> layer.copy(color = 0)
             is TintedClockLayer -> return layer.copy(color = 0)
+            is GridLayer -> layer.copy(layers = layer.layers.map { asThemed(it) })
             is TransparentLayer -> return layer
         }
     }

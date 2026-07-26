@@ -9,12 +9,14 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryOwner
 import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.launcher.scaffold.Gesture
 
 class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
     SavedStateRegistry.SavedStateProvider {
     val customizeSearchableSheetShown = mutableStateOf<SavableSearchable?>(null)
+    val appInfoSheetShown = mutableStateOf<Application?>(null)
     val editFavoritesSheetShown = mutableStateOf(false)
     val hiddenItemsSheetShown = mutableStateOf(false)
     val editTagSheetShown = mutableStateOf<String?>(null)
@@ -50,6 +52,14 @@ class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
 
     fun dismissCustomizeSearchableModal() {
         customizeSearchableSheetShown.value = null
+    }
+
+    fun showAppInfoModal(app: Application) {
+        appInfoSheetShown.value = app
+    }
+
+    fun dismissAppInfoModal() {
+        appInfoSheetShown.value = null
     }
 
     fun showEditFavoritesSheet() {

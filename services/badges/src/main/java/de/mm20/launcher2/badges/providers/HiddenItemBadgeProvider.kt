@@ -2,6 +2,7 @@ package de.mm20.launcher2.badges.providers
 
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.BadgeIcon
+import de.mm20.launcher2.badges.BadgeProvider
 import de.mm20.launcher2.badges.R
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Searchable

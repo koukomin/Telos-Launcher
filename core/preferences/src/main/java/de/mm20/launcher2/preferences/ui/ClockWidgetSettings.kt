@@ -22,148 +22,150 @@ class ClockWidgetSettings internal constructor(
     private val launcherDataStore: LauncherDataStore,
 ) {
     val compact
-        get() = launcherDataStore.data.map { it.clockWidgetCompact }
+        get() = launcherDataStore.data.map { it.clock.clockWidgetCompact }
 
     fun setCompact(compact: Boolean) {
         launcherDataStore.update {
-            it.copy(clockWidgetCompact = compact)
+            it.copy(clock = it.clock.copy(clockWidgetCompact = compact))
         }
     }
 
     val parts
         get() = launcherDataStore.data.map {
             ClockWidgetParts(
-                date = it.clockWidgetDatePart,
-                music = it.clockWidgetMusicPart,
-                battery = it.clockWidgetBatteryPart,
-                alarm = it.clockWidgetAlarmPart,
+                date = it.clock.clockWidgetDatePart,
+                music = it.clock.clockWidgetMusicPart,
+                battery = it.clock.clockWidgetBatteryPart,
+                alarm = it.clock.clockWidgetAlarmPart,
             )
         }.distinctUntilChanged()
 
     fun setDatePart(datePart: Boolean) {
         launcherDataStore.update {
-            it.copy(clockWidgetDatePart = datePart)
+            it.copy(clock = it.clock.copy(clockWidgetDatePart = datePart))
         }
     }
 
     fun setMusicPart(musicPart: Boolean) {
         launcherDataStore.update {
-            it.copy(clockWidgetMusicPart = musicPart)
+            it.copy(clock = it.clock.copy(clockWidgetMusicPart = musicPart))
         }
     }
 
     fun setBatteryPart(batteryPart: BatteryStatusVisibility) {
         launcherDataStore.update {
-            it.copy(clockWidgetBatteryPart = batteryPart)
+            it.copy(clock = it.clock.copy(clockWidgetBatteryPart = batteryPart))
         }
     }
 
     fun setAlarmPart(alarmPart: Boolean) {
         launcherDataStore.update {
-            it.copy(clockWidgetAlarmPart = alarmPart)
+            it.copy(clock = it.clock.copy(clockWidgetAlarmPart = alarmPart))
         }
     }
 
     val fillHeight
-        get() = launcherDataStore.data.map { it.clockWidgetFillHeight || !it.homeScreenWidgets }
+        get() = launcherDataStore.data.map { it.clock.clockWidgetFillHeight || !it.home.homeScreenWidgets }
 
     fun setFillHeight(fillHeight: Boolean) {
         launcherDataStore.update {
-            it.copy(clockWidgetFillHeight = fillHeight)
+            it.copy(clock = it.clock.copy(clockWidgetFillHeight = fillHeight))
         }
     }
 
     /** Whether the dock part should render below the clock: either the legacy preset-driven
      * auto-favorites dock is enabled, or the user has set up custom dock pages in settings. */
     val dock
-        get() = launcherDataStore.data.map { it.homeScreenDock || it.homeScreenDockPages.isNotEmpty() }
+        get() = launcherDataStore.data.map { it.home.homeScreenDock || it.home.homeScreenDockPages.isNotEmpty() }
             .distinctUntilChanged()
 
     val alignment
-        get() = launcherDataStore.data.map { it.clockWidgetAlignment }
+        get() = launcherDataStore.data.map { it.clock.clockWidgetAlignment }
 
     fun setAlignment(alignment: ClockWidgetAlignment) {
         launcherDataStore.update {
-            it.copy(clockWidgetAlignment = alignment)
+            it.copy(clock = it.clock.copy(clockWidgetAlignment = alignment))
         }
     }
 
     val clockStyle: Flow<ClockWidgetStyle>
         get() = launcherDataStore.data.map {
-            when (it.clockWidgetStyle) {
-                ClockWidgetStyleEnum.Digital1 -> it.clockWidgetDigital1
+            when (it.clock.clockWidgetStyle) {
+                ClockWidgetStyleEnum.Digital1 -> it.clock.clockWidgetDigital1
                 ClockWidgetStyleEnum.Digital2 -> ClockWidgetStyle.Digital2
                 ClockWidgetStyleEnum.Orbit -> ClockWidgetStyle.Orbit
-                ClockWidgetStyleEnum.Analog -> it.clockWidgetAnalog
+                ClockWidgetStyleEnum.Analog -> it.clock.clockWidgetAnalog
                 ClockWidgetStyleEnum.Binary -> ClockWidgetStyle.Binary
                 ClockWidgetStyleEnum.Segment -> ClockWidgetStyle.Segment
                 ClockWidgetStyleEnum.Empty -> ClockWidgetStyle.Empty
-                ClockWidgetStyleEnum.Custom -> it.clockWidgetCustom
+                ClockWidgetStyleEnum.Custom -> it.clock.clockWidgetCustom
             }
         }
 
     val digital1: Flow<ClockWidgetStyle.Digital1>
-        get() = launcherDataStore.data.map { it.clockWidgetDigital1 }
+        get() = launcherDataStore.data.map { it.clock.clockWidgetDigital1 }
 
     val analog: Flow<ClockWidgetStyle.Analog>
-        get() = launcherDataStore.data.map { it.clockWidgetAnalog }
+        get() = launcherDataStore.data.map { it.clock.clockWidgetAnalog }
 
     val custom: Flow<ClockWidgetStyle.Custom>
-        get() = launcherDataStore.data.map { it.clockWidgetCustom }
+        get() = launcherDataStore.data.map { it.clock.clockWidgetCustom }
 
     fun setClockStyle(clockStyle: ClockWidgetStyle) {
         launcherDataStore.update {
             it.copy(
-                clockWidgetStyle = clockStyle.enumValue,
-                clockWidgetDigital1 = clockStyle as? ClockWidgetStyle.Digital1 ?: it.clockWidgetDigital1,
-                clockWidgetAnalog = clockStyle as? ClockWidgetStyle.Analog ?: it.clockWidgetAnalog,
-                clockWidgetCustom = clockStyle as? ClockWidgetStyle.Custom ?: it.clockWidgetCustom,
+                clock = it.clock.copy(
+                    clockWidgetStyle = clockStyle.enumValue,
+                    clockWidgetDigital1 = clockStyle as? ClockWidgetStyle.Digital1 ?: it.clock.clockWidgetDigital1,
+                    clockWidgetAnalog = clockStyle as? ClockWidgetStyle.Analog ?: it.clock.clockWidgetAnalog,
+                    clockWidgetCustom = clockStyle as? ClockWidgetStyle.Custom ?: it.clock.clockWidgetCustom,
+                )
             )
         }
     }
 
     val color
-        get() = launcherDataStore.data.map { it.clockWidgetColors }
+        get() = launcherDataStore.data.map { it.clock.clockWidgetColors }
 
     fun setColor(color: ClockWidgetColors) {
         launcherDataStore.update {
-            it.copy(clockWidgetColors = color)
+            it.copy(clock = it.clock.copy(clockWidgetColors = color))
         }
     }
 
     val showSeconds
-        get() = launcherDataStore.data.map { it.clockWidgetShowSeconds }
+        get() = launcherDataStore.data.map { it.clock.clockWidgetShowSeconds }
 
     fun setShowSeconds(enabled: Boolean) {
         launcherDataStore.update {
-            it.copy(clockWidgetShowSeconds = enabled)
+            it.copy(clock = it.clock.copy(clockWidgetShowSeconds = enabled))
         }
     }
 
     val monospaced
-        get() = launcherDataStore.data.map { it.clockWidgetMonospaced }
+        get() = launcherDataStore.data.map { it.clock.clockWidgetMonospaced }
 
     fun setMonospaced(enabled: Boolean) {
         launcherDataStore.update {
-            it.copy(clockWidgetMonospaced = enabled)
+            it.copy(clock = it.clock.copy(clockWidgetMonospaced = enabled))
         }
     }
 
     val useThemeColor
-        get() = launcherDataStore.data.map { it.clockWidgetUseThemeColor }
+        get() = launcherDataStore.data.map { it.clock.clockWidgetUseThemeColor }
 
     fun setUseThemeColor(enabled: Boolean) {
         launcherDataStore.update {
-            it.copy(clockWidgetUseThemeColor = enabled)
+            it.copy(clock = it.clock.copy(clockWidgetUseThemeColor = enabled))
         }
     }
 
     val useSmartspacer
-        get() = launcherDataStore.data.map { it.clockWidgetSmartspacer }
+        get() = launcherDataStore.data.map { it.clock.clockWidgetSmartspacer }
 
     fun setUseSmartspacer(enabled: Boolean) {
         launcherDataStore.update {
-            it.copy(clockWidgetSmartspacer = enabled)
+            it.copy(clock = it.clock.copy(clockWidgetSmartspacer = enabled))
         }
     }
 

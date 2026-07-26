@@ -23,6 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -40,11 +41,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import de.mm20.launcher2.preferences.WidgetScreenTarget
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
+import de.mm20.launcher2.preferences.ui.GridSettings
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
+import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
@@ -75,6 +79,14 @@ internal class ClockAndWidgetsHomeComponent(
         insets: PaddingValues,
         state: LauncherScaffoldState
     ) {
+        val uiSettings: UiSettings = koinInject()
+        val gridSettings by uiSettings.homeGridSettings.collectAsState(GridSettings())
+        val desktopLocked by uiSettings.desktopLocked.collectAsState(false)
+
+        LaunchedEffect(desktopLocked) {
+            if (desktopLocked) editMode = false
+        }
+
         HomeScreenPager(modifier = modifier, insets = insets, state = state) { pageModifier, pageInsets ->
             val scope = rememberCoroutineScope()
 
@@ -97,39 +109,41 @@ internal class ClockAndWidgetsHomeComponent(
                     }
                 }
 
-                Column(
-                    modifier = pageModifier
-                        .verticalScroll(scrollState, enabled = !state.isDragged)
-                        .padding(horizontal = 8.dp)
-                        .padding(top = topPadding)
-                        .padding(pageInsets),
-                ) {
-                    val bottomPadding by animateDpAsState(
-                        if (fillHeight == true && scrollState.value == 0) pageInsets.calculateBottomPadding()
-                        else 0.dp
-                    )
+                CompositionLocalProvider(LocalGridSettings provides gridSettings) {
+                    Column(
+                        modifier = pageModifier
+                            .verticalScroll(scrollState, enabled = !state.isDragged)
+                            .padding(horizontal = 8.dp)
+                            .padding(top = topPadding)
+                            .padding(pageInsets),
+                    ) {
+                        val bottomPadding by animateDpAsState(
+                            if (fillHeight == true && scrollState.value == 0) pageInsets.calculateBottomPadding()
+                            else 0.dp
+                        )
 
-                    ClockWidget(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            then if (fillHeight == true) {
-                                Modifier
-                                    .padding(bottom = bottomPadding)
-                                    .height(state.size.height.toDp() - pageInsets.calculateTopPadding() - pageInsets.calculateBottomPadding())
-                        } else Modifier,
-                        editMode = editMode,
-                        fillScreenHeight = fillHeight == true,
-                    )
-                    WidgetColumn(
-                        modifier = Modifier
-                            .padding(top = 16.dp),
-                        editMode = editMode,
-                        onEditModeChange = {
-                            scope.launch { state.lock(hideSearchBar = true) }
-                            editMode = it
-                        },
-                        parentId = target.id.toString(),
-                    )
+                        ClockWidget(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                then if (fillHeight == true) {
+                                    Modifier
+                                        .padding(bottom = bottomPadding)
+                                        .height(state.size.height.toDp() - pageInsets.calculateTopPadding() - pageInsets.calculateBottomPadding())
+                            } else Modifier,
+                            editMode = editMode,
+                            fillScreenHeight = fillHeight == true,
+                        )
+                        WidgetColumn(
+                            modifier = Modifier
+                                .padding(top = 16.dp),
+                            editMode = editMode,
+                            onEditModeChange = {
+                                scope.launch { state.lock(hideSearchBar = true) }
+                                editMode = it
+                            },
+                            parentId = target.id.toString(),
+                        )
+                    }
                 }
                 if (editMode) {
                     BackHandler {

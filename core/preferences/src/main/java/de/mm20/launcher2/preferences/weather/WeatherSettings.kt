@@ -46,19 +46,19 @@ class WeatherSettings internal constructor(
     Flow<WeatherSettingsData> by (
             launcherDataStore.data.map {
                 WeatherSettingsData(
-                    provider = it.weatherProvider,
-                    autoLocation = it.weatherAutoLocation,
-                    location = it.weatherLocation,
-                    locationName = it.weatherLocationName,
-                    lastLocation = it.weatherLastLocation,
-                    lastUpdate = it.weatherLastUpdate,
-                    providerSettings = it.weatherProviderSettings,
+                    provider = it.weather.weatherProvider,
+                    autoLocation = it.weather.weatherAutoLocation,
+                    location = it.weather.weatherLocation,
+                    locationName = it.weather.weatherLocationName,
+                    lastLocation = it.weather.weatherLastLocation,
+                    lastUpdate = it.weather.weatherLastUpdate,
+                    providerSettings = it.weather.weatherProviderSettings,
                 )
             }.distinctUntilChanged()
             ) {
 
     val location = launcherDataStore.data.map {
-        val providerSettings = it.weatherProviderSettings[it.weatherProvider]
+        val providerSettings = it.weather.weatherProviderSettings[it.weather.weatherProvider]
 
         if (providerSettings?.managedLocation == true) {
             return@map WeatherLocation.Managed
@@ -68,79 +68,85 @@ class WeatherSettings internal constructor(
 
         if (id != null && name != null) {
             WeatherLocation.Id(name, id)
-        } else if (it.weatherLocation != null && it.weatherLocationName != null) {
+        } else if (it.weather.weatherLocation != null && it.weather.weatherLocationName != null) {
             WeatherLocation.LatLon(
-                it.weatherLocationName,
-                it.weatherLocation.lat,
-                it.weatherLocation.lon
+                it.weather.weatherLocationName,
+                it.weather.weatherLocation.lat,
+                it.weather.weatherLocation.lon
             )
         } else {
             null
         }
     }.distinctUntilChanged()
 
-    val autoLocation = launcherDataStore.data.map { it.weatherAutoLocation }
+    val autoLocation = launcherDataStore.data.map { it.weather.weatherAutoLocation }
         .distinctUntilChanged()
 
     fun setLocation(location: WeatherLocation) {
         launcherDataStore.update {
             val providerSettings =
-                it.weatherProviderSettings.getOrDefault(it.weatherProvider, ProviderSettings())
+                it.weather.weatherProviderSettings.getOrDefault(it.weather.weatherProvider, ProviderSettings())
             when (location) {
                 is WeatherLocation.LatLon -> {
                     it.copy(
-                        weatherLocation = LatLon(lat = location.lat, lon = location.lon),
-                        weatherLocationName = location.name,
-                        weatherLastUpdate = 0L,
-                        weatherAutoLocation = false,
-                        weatherProviderSettings = it.weatherProviderSettings.toMutableMap().apply {
-                            put(
-                                it.weatherProvider,
-                                providerSettings.copy(
-                                    locationId = null,
-                                    locationName = null,
-                                    managedLocation = false,
+                        weather = it.weather.copy(
+                            weatherLocation = LatLon(lat = location.lat, lon = location.lon),
+                            weatherLocationName = location.name,
+                            weatherLastUpdate = 0L,
+                            weatherAutoLocation = false,
+                            weatherProviderSettings = it.weather.weatherProviderSettings.toMutableMap().apply {
+                                put(
+                                    it.weather.weatherProvider,
+                                    providerSettings.copy(
+                                        locationId = null,
+                                        locationName = null,
+                                        managedLocation = false,
+                                    )
                                 )
-                            )
-                        }
+                            }
+                        )
                     )
                 }
 
                 is WeatherLocation.Id -> {
                     it.copy(
-                        weatherLocation = null,
-                        weatherLocationName = null,
-                        weatherAutoLocation = false,
-                        weatherLastUpdate = 0L,
-                        weatherProviderSettings = it.weatherProviderSettings.toMutableMap().apply {
-                            put(
-                                it.weatherProvider,
-                                providerSettings.copy(
-                                    locationId = location.locationId,
-                                    locationName = location.name,
-                                    managedLocation = false,
+                        weather = it.weather.copy(
+                            weatherLocation = null,
+                            weatherLocationName = null,
+                            weatherAutoLocation = false,
+                            weatherLastUpdate = 0L,
+                            weatherProviderSettings = it.weather.weatherProviderSettings.toMutableMap().apply {
+                                put(
+                                    it.weather.weatherProvider,
+                                    providerSettings.copy(
+                                        locationId = location.locationId,
+                                        locationName = location.name,
+                                        managedLocation = false,
+                                    )
                                 )
-                            )
-                        }
+                            }
+                        )
                     )
                 }
 
                 is WeatherLocation.Managed -> {
                     it.copy(
-                        weatherLocation = null,
-                        weatherLocationName = null,
-                        weatherAutoLocation = true,
-                        weatherLastUpdate = 0L,
-                        weatherProviderSettings = it.weatherProviderSettings.toMutableMap().apply {
-                            put(
-                                it.weatherProvider,
-                                providerSettings.copy(
-                                    locationId = null,
-                                    locationName = null,
-                                    managedLocation = true,
+                        weather = it.weather.copy(
+                            weatherLocation = null,
+                            weatherLocationName = null,
+                            weatherAutoLocation = true,
+                            weatherLastUpdate = 0L,
+                            weatherProviderSettings = it.weather.weatherProviderSettings.toMutableMap().apply {
+                                put(
+                                    it.weather.weatherProvider,
+                                    providerSettings.copy(
+                                        locationId = null,
+                                        locationName = null,
+                                        managedLocation = true,
+                                    )
                                 )
-                            )
-                        }
+                            }
+                        )
                     )
                 }
             }
@@ -150,28 +156,30 @@ class WeatherSettings internal constructor(
     fun setLastLocation(location: LatLon) {
         launcherDataStore.update {
             it.copy(
-                weatherLastLocation = location,
+                weather = it.weather.copy(weatherLastLocation = location),
             )
         }
     }
 
-    val lastUpdate = launcherDataStore.data.map { it.weatherLastUpdate }
+    val lastUpdate = launcherDataStore.data.map { it.weather.weatherLastUpdate }
         .distinctUntilChanged()
 
     fun setLastUpdate(lastUpdate: Long) {
         launcherDataStore.update {
-            it.copy(weatherLastUpdate = lastUpdate)
+            it.copy(weather = it.weather.copy(weatherLastUpdate = lastUpdate))
         }
     }
 
-    val providerId = launcherDataStore.data.map { it.weatherProvider }
+    val providerId = launcherDataStore.data.map { it.weather.weatherProvider }
         .distinctUntilChanged()
 
     fun setProvider(provider: String) {
         launcherDataStore.update {
             it.copy(
-                weatherProvider = provider,
-                weatherLastUpdate = 0L,
+                weather = it.weather.copy(
+                    weatherProvider = provider,
+                    weatherLastUpdate = 0L,
+                )
             )
         }
     }
@@ -179,17 +187,19 @@ class WeatherSettings internal constructor(
     fun setAutoLocation(autoLocation: Boolean) {
         launcherDataStore.update {
             it.copy(
-                weatherAutoLocation = autoLocation,
-                weatherLastUpdate = 0L,
+                weather = it.weather.copy(
+                    weatherAutoLocation = autoLocation,
+                    weatherLastUpdate = 0L,
+                )
             )
         }
     }
 
     val measurementSystem = launcherDataStore.data.map {
-        it.localeMeasurementSystem
+        it.locale.localeMeasurementSystem
     }.distinctUntilChanged()
 
     val timeFormat = launcherDataStore.data.map {
-        it.localeTimeFormat
+        it.locale.localeTimeFormat
     }.distinctUntilChanged()
 }

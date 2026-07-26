@@ -18,70 +18,70 @@ class BadgeSettings internal constructor(
     private val launcherDataStore: LauncherDataStore,
 ) : Flow<BadgeSettingsData> by (launcherDataStore.data.map {
     BadgeSettingsData(
-        notifications = it.badgesNotifications,
-        suspendedApps = it.badgesSuspendedApps,
-        cloudFiles = it.badgesCloudFiles,
-        shortcuts = it.badgesShortcuts,
-        plugins = it.badgesPlugins,
+        notifications = it.badges.badgesNotifications,
+        suspendedApps = it.badges.badgesSuspendedApps,
+        cloudFiles = it.badges.badgesCloudFiles,
+        shortcuts = it.badges.badgesShortcuts,
+        plugins = it.badges.badgesPlugins,
     )
 }) {
     val notificationStyle
-        get() = launcherDataStore.data.map { it.badgesNotificationStyle }.distinctUntilChanged()
+        get() = launcherDataStore.data.map { it.badges.badgesNotificationStyle }.distinctUntilChanged()
 
     fun setNotificationStyle(style: NotificationBadgeStyle) {
-        launcherDataStore.update { it.copy(badgesNotificationStyle = style) }
+        launcherDataStore.update { it.copy(badges = it.badges.copy(badgesNotificationStyle = style)) }
     }
 
     /** Null = follow the theme's tertiary color. */
     val notificationColor
-        get() = launcherDataStore.data.map { it.badgesNotificationColor }.distinctUntilChanged()
+        get() = launcherDataStore.data.map { it.badges.badgesNotificationColor }.distinctUntilChanged()
 
     fun setNotificationColor(color: Int?) {
-        launcherDataStore.update { it.copy(badgesNotificationColor = color) }
+        launcherDataStore.update { it.copy(badges = it.badges.copy(badgesNotificationColor = color)) }
     }
 
     val notifications
-        get() = launcherDataStore.data.map { it.badgesNotifications }
+        get() = launcherDataStore.data.map { it.badges.badgesNotifications }
 
     fun setNotifications(notifications: Boolean) {
         launcherDataStore.update {
-            it.copy(badgesNotifications = notifications)
+            it.copy(badges = it.badges.copy(badgesNotifications = notifications))
         }
     }
 
     val suspendedApps
-        get() = launcherDataStore.data.map { it.badgesSuspendedApps }
+        get() = launcherDataStore.data.map { it.badges.badgesSuspendedApps }
 
     fun setSuspendedApps(suspendedApps: Boolean) {
         launcherDataStore.update {
-            it.copy(badgesSuspendedApps = suspendedApps)
+            it.copy(badges = it.badges.copy(badgesSuspendedApps = suspendedApps))
         }
     }
 
     val cloudFiles
-        get() = launcherDataStore.data.map { it.badgesCloudFiles }
+        get() = launcherDataStore.data.map { it.badges.badgesCloudFiles }
 
     fun setCloudFiles(cloudFiles: Boolean) {
         launcherDataStore.update {
-            it.copy(badgesCloudFiles = cloudFiles)
+            it.copy(badges = it.badges.copy(badgesCloudFiles = cloudFiles))
         }
     }
 
     val shortcuts
-        get() = launcherDataStore.data.map { it.badgesShortcuts }
+        get() = launcherDataStore.data.map { it.badges.badgesShortcuts }
 
     fun setShortcuts(shortcuts: Boolean) {
         launcherDataStore.update {
-            it.copy(badgesShortcuts = shortcuts)
+            it.copy(badges = it.badges.copy(badgesShortcuts = shortcuts))
         }
     }
 
     val plugins
-        get() = launcherDataStore.data.map { it.badgesPlugins }
+        get() = launcherDataStore.data.map { it.badges.badgesPlugins }
 
     fun setPlugins(plugins: Boolean) {
         launcherDataStore.update {
-            it.copy(badgesPlugins = plugins)
+            it.copy(badges = it.badges.copy(badgesPlugins = plugins))
         }
     }
 }

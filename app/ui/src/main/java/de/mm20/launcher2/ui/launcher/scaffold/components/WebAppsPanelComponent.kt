@@ -28,6 +28,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -59,6 +61,7 @@ import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.settings.webapps.EditWebAppShortcutSheet
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 
 /**
  * A dedicated grid of web app shortcuts, reached via whichever gesture slot has
@@ -210,16 +213,24 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
                 )
             }
             if (!editMode) {
+                val uiSettings: de.mm20.launcher2.preferences.ui.UiSettings = koinInject()
+                val searchBarStyle by uiSettings.searchBarStyle.collectAsState(de.mm20.launcher2.preferences.SearchBarStyle.Transparent)
+                val bottomSearchBar by uiSettings.bottomSearchBar.collectAsState(false)
+                val preferDarkContent = de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper.current
+
                 IconButton(
                     onClick = {
                         editMode = true
                         scope.launch { state.lock(hideSearchBar = true) }
                     },
-                    modifier = Modifier.align(Alignment.TopEnd),
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(top = if (!bottomSearchBar && searchBarStyle != de.mm20.launcher2.preferences.SearchBarStyle.Hidden) 64.dp else 0.dp),
                 ) {
                     Icon(
                         painterResource(R.drawable.tune_24px),
                         contentDescription = stringResource(R.string.web_apps_panel_edit),
+                        tint = if (preferDarkContent) Color(0, 0, 0, 180) else Color.White
                     )
                 }
             }
@@ -228,7 +239,7 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
         EditWebAppShortcutSheet(
             expanded = showCreateSheet,
             existing = null,
-            onSave = { label, url, iconUri, faviconUrl, rendererPackage, _, _, _, _ ->
+            onSave = { label, url, iconUri, faviconUrl, rendererPackage, _, _, _, _, _, _ ->
                 viewModel.createAndAdd(label, url, iconUri, faviconUrl, rendererPackage)
                 showCreateSheet = false
             },

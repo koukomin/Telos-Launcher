@@ -24,6 +24,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.WebAppShortcut
+import de.mm20.launcher2.preferences.WebAppGroup
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.Toolbar
@@ -36,12 +37,17 @@ import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.settings.webapps.EditWebAppShortcutSheet
 import de.mm20.launcher2.ui.webappspanel.WebAppsPanelManager
 import de.mm20.launcher2.webappshortcuts.WebAppShortcutRepository
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
 fun WebAppShortcutItem(
     modifier: Modifier = Modifier,
     shortcut: WebAppShortcut,
+    inDock: Boolean = false,
+    onRemoveFromDock: (() -> Unit)? = null,
+    onReplaceInDock: (() -> Unit)? = null,
     onBack: (() -> Unit)? = null,
 ) {
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${shortcut.key}")
@@ -101,6 +107,29 @@ fun WebAppShortcutItem(
             )
         )
 
+        if (inDock) {
+            toolbarActions.add(
+                DefaultToolbarAction(
+                    label = stringResource(R.string.dock_menu_remove),
+                    icon = R.drawable.delete_24px,
+                    action = {
+                        onRemoveFromDock?.invoke()
+                        onBack?.invoke()
+                    }
+                )
+            )
+            toolbarActions.add(
+                DefaultToolbarAction(
+                    label = stringResource(R.string.dock_menu_replace),
+                    icon = R.drawable.autorenew_24px,
+                    action = {
+                        onReplaceInDock?.invoke()
+                        onBack?.invoke()
+                    }
+                )
+            )
+        }
+
         Toolbar(
             leftActions = if (onBack != null) listOf(
                 DefaultToolbarAction(
@@ -117,11 +146,24 @@ fun WebAppShortcutItem(
         EditWebAppShortcutSheet(
             expanded = showEditSheet,
             existing = shortcut,
-            onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss ->
+            onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId ->
                 webAppShortcutRepository.update(
                     shortcut, label, url, iconUri, faviconUrl, rendererPackage,
                     showInGrid, showInPanel, shortcut.order, iconSource, customCss,
+                    notificationsEnabled,
                 )
+                val browsingSettings: de.mm20.launcher2.preferences.ui.WebAppBrowsingSettings = org.koin.java.KoinJavaComponent.getKoin().get()
+                kotlinx.coroutines.MainScope().launch {
+                    val groups: List<WebAppGroup> = browsingSettings.groups.first()
+                    val currentGroups = groups.map { g ->
+                        if (g.id == groupId) {
+                            if (!g.appKeys.contains(shortcut.key)) g.copy(appKeys = g.appKeys + shortcut.key) else g
+                        } else {
+                            g.copy(appKeys = g.appKeys - shortcut.key)
+                        }
+                    }
+                    browsingSettings.setGroups(currentGroups)
+                }
                 showEditSheet = false
             },
             onDismiss = { showEditSheet = false },
@@ -137,6 +179,9 @@ fun WebAppShortcutItemGridPopup(
     shortcut: WebAppShortcut,
     show: MutableTransitionState<Boolean>,
     origin: IntRect,
+    inDock: Boolean = false,
+    onRemoveFromDock: (() -> Unit)? = null,
+    onReplaceInDock: (() -> Unit)? = null,
     onDismiss: () -> Unit,
 ) {
     AnimatedVisibility(
@@ -153,6 +198,9 @@ fun WebAppShortcutItemGridPopup(
         WebAppShortcutItem(
             modifier = Modifier.fillMaxWidth(),
             shortcut = shortcut,
+            inDock = inDock,
+            onRemoveFromDock = onRemoveFromDock,
+            onReplaceInDock = onReplaceInDock,
             onBack = onDismiss,
         )
     }

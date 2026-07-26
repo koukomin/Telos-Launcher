@@ -21,116 +21,123 @@ class WallpaperSettings internal constructor(
     private val dataStore: LauncherDataStore,
 ) {
     val videoPauseOnBatterySaver
-        get() = dataStore.data.map { it.videoWallpaperPauseOnBatterySaver }
+        get() = dataStore.data.map { it.videoWallpaper.videoWallpaperPauseOnBatterySaver }
             .distinctUntilChanged()
 
     fun setVideoPauseOnBatterySaver(pause: Boolean) {
-        dataStore.update { it.copy(videoWallpaperPauseOnBatterySaver = pause) }
+        dataStore.update { it.copy(videoWallpaper = it.videoWallpaper.copy(videoWallpaperPauseOnBatterySaver = pause)) }
     }
 
     val videoPauseOnThermalThrottling
-        get() = dataStore.data.map { it.videoWallpaperPauseOnThermalThrottling }
+        get() = dataStore.data.map { it.videoWallpaper.videoWallpaperPauseOnThermalThrottling }
             .distinctUntilChanged()
 
     fun setVideoPauseOnThermalThrottling(pause: Boolean) {
-        dataStore.update { it.copy(videoWallpaperPauseOnThermalThrottling = pause) }
+        dataStore.update { it.copy(videoWallpaper = it.videoWallpaper.copy(videoWallpaperPauseOnThermalThrottling = pause)) }
     }
 
     val videoTransforms
         get() = dataStore.data.map {
             VideoWallpaperTransforms(
-                scalingMode = it.videoWallpaperScalingMode,
-                zoom = it.videoWallpaperZoom,
-                positionX = it.videoWallpaperPositionX,
-                positionY = it.videoWallpaperPositionY,
-                brightness = it.videoWallpaperBrightness,
-                parallax = it.videoWallpaperParallax,
-                parallaxStrength = it.videoWallpaperParallaxStrength,
+                scalingMode = it.videoWallpaper.videoWallpaperScalingMode,
+                zoom = it.videoWallpaper.videoWallpaperZoom,
+                positionX = it.videoWallpaper.videoWallpaperPositionX,
+                positionY = it.videoWallpaper.videoWallpaperPositionY,
+                brightness = it.videoWallpaper.videoWallpaperBrightness,
+                parallax = it.videoWallpaper.videoWallpaperParallax,
+                parallaxStrength = it.videoWallpaper.videoWallpaperParallaxStrength,
             )
         }.distinctUntilChanged()
 
     fun setVideoScalingMode(mode: VideoWallpaperScalingMode) {
-        dataStore.update { it.copy(videoWallpaperScalingMode = mode) }
+        dataStore.update { it.copy(videoWallpaper = it.videoWallpaper.copy(videoWallpaperScalingMode = mode)) }
     }
 
     fun setVideoZoom(zoom: Float) {
-        dataStore.update { it.copy(videoWallpaperZoom = zoom) }
+        dataStore.update { it.copy(videoWallpaper = it.videoWallpaper.copy(videoWallpaperZoom = zoom)) }
     }
 
     fun setVideoPosition(x: Float, y: Float) {
-        dataStore.update { it.copy(videoWallpaperPositionX = x, videoWallpaperPositionY = y) }
+        dataStore.update {
+            it.copy(
+                videoWallpaper = it.videoWallpaper.copy(
+                    videoWallpaperPositionX = x,
+                    videoWallpaperPositionY = y,
+                )
+            )
+        }
     }
 
     fun setVideoBrightness(brightness: Float) {
-        dataStore.update { it.copy(videoWallpaperBrightness = brightness) }
+        dataStore.update { it.copy(videoWallpaper = it.videoWallpaper.copy(videoWallpaperBrightness = brightness)) }
     }
 
     fun setVideoParallax(enabled: Boolean) {
-        dataStore.update { it.copy(videoWallpaperParallax = enabled) }
+        dataStore.update { it.copy(videoWallpaper = it.videoWallpaper.copy(videoWallpaperParallax = enabled)) }
     }
 
     fun setVideoParallaxStrength(strength: Float) {
-        dataStore.update { it.copy(videoWallpaperParallaxStrength = strength) }
+        dataStore.update { it.copy(videoWallpaper = it.videoWallpaper.copy(videoWallpaperParallaxStrength = strength)) }
     }
 
     val videoSpeed
-        get() = dataStore.data.map { it.videoWallpaperSpeed }.distinctUntilChanged()
+        get() = dataStore.data.map { it.videoWallpaper.videoWallpaperSpeed }.distinctUntilChanged()
 
     fun setVideoSpeed(speed: Float) {
-        dataStore.update { it.copy(videoWallpaperSpeed = speed) }
+        dataStore.update { it.copy(videoWallpaper = it.videoWallpaper.copy(videoWallpaperSpeed = speed)) }
     }
 
     val videoStartBehavior
-        get() = dataStore.data.map { it.videoWallpaperStartBehavior }.distinctUntilChanged()
+        get() = dataStore.data.map { it.videoWallpaper.videoWallpaperStartBehavior }.distinctUntilChanged()
 
     fun setVideoStartBehavior(behavior: VideoWallpaperStartBehavior) {
-        dataStore.update { it.copy(videoWallpaperStartBehavior = behavior) }
+        dataStore.update { it.copy(videoWallpaper = it.videoWallpaper.copy(videoWallpaperStartBehavior = behavior)) }
     }
 
     val videoThemeColors
-        get() = dataStore.data.map { it.videoWallpaperThemeColors }.distinctUntilChanged()
+        get() = dataStore.data.map { it.videoWallpaper.videoWallpaperThemeColors }.distinctUntilChanged()
 
     fun setVideoThemeColors(enabled: Boolean) {
-        dataStore.update { it.copy(videoWallpaperThemeColors = enabled) }
+        dataStore.update { it.copy(videoWallpaper = it.videoWallpaper.copy(videoWallpaperThemeColors = enabled)) }
     }
 
     val videoPauseOnDesktopMode
-        get() = dataStore.data.map { it.videoWallpaperPauseOnDesktopMode }.distinctUntilChanged()
+        get() = dataStore.data.map { it.videoWallpaper.videoWallpaperPauseOnDesktopMode }.distinctUntilChanged()
 
     fun setVideoPauseOnDesktopMode(pause: Boolean) {
-        dataStore.update { it.copy(videoWallpaperPauseOnDesktopMode = pause) }
+        dataStore.update { it.copy(videoWallpaper = it.videoWallpaper.copy(videoWallpaperPauseOnDesktopMode = pause)) }
     }
 
     val dimWallpaper
         get() = dataStore.data.map {
-            it.wallpaperDim
+            it.wallpaper.wallpaperDim
         }.distinctUntilChanged()
 
     fun setDimWallpaper(dimWallpaper: Boolean) {
         dataStore.update {
-            it.copy(wallpaperDim = dimWallpaper)
+            it.copy(wallpaper = it.wallpaper.copy(wallpaperDim = dimWallpaper))
         }
     }
 
     val blurWallpaper
         get() = dataStore.data.map {
-            it.wallpaperBlur
+            it.wallpaper.wallpaperBlur
         }.distinctUntilChanged()
 
     fun setBlurWallpaper(blurWallpaper: Boolean) {
         dataStore.update {
-            it.copy(wallpaperBlur = blurWallpaper)
+            it.copy(wallpaper = it.wallpaper.copy(wallpaperBlur = blurWallpaper))
         }
     }
 
     val wallpaperBlurRadius
         get() = dataStore.data.map {
-            it.wallpaperBlurRadius
+            it.wallpaper.wallpaperBlurRadius
         }.distinctUntilChanged()
 
     fun setWallpaperBlurRadius(wallpaperBlurRadius: Int) {
         dataStore.update {
-            it.copy(wallpaperBlurRadius = wallpaperBlurRadius)
+            it.copy(wallpaper = it.wallpaper.copy(wallpaperBlurRadius = wallpaperBlurRadius))
         }
     }
 }

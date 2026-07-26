@@ -24,6 +24,7 @@ class WebAppShortcutSerializer : SearchableSerializer {
             "showInPanel" to searchable.showInPanel,
             "order" to searchable.order,
             "iconSource" to searchable.iconSource.name,
+            "notificationsEnabled" to searchable.notificationsEnabled,
         ).toString()
     }
 
@@ -47,6 +48,7 @@ class WebAppShortcutDeserializer : SearchableDeserializer {
             showInPanel = json.optBoolean("showInPanel", false),
             order = json.optInt("order", 0),
             iconSource = runCatching { WebAppShortcut.IconSource.valueOf(json.optString("iconSource", "Website")) }.getOrDefault(WebAppShortcut.IconSource.Website),
+            notificationsEnabled = json.optBoolean("notificationsEnabled", false),
         )
     }
 }

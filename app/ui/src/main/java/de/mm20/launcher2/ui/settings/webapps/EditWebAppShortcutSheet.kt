@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import de.mm20.launcher2.data.customattrs.CustomIcon
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
+import de.mm20.launcher2.preferences.ui.WebAppBrowsingSettings
 import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.IconPicker
@@ -64,12 +65,16 @@ private enum class IconPickerTab { IconPack, Photo, Favicon }
 fun EditWebAppShortcutSheet(
     expanded: Boolean,
     existing: WebAppShortcut?,
-    onSave: (label: String, url: String, iconUri: String?, faviconUrl: String?, rendererPackage: String?, showInGrid: Boolean, showInPanel: Boolean, iconSource: WebAppShortcut.IconSource, customCss: String?) -> Unit,
+    onSave: (label: String, url: String, iconUri: String?, faviconUrl: String?, rendererPackage: String?, showInGrid: Boolean, showInPanel: Boolean, iconSource: WebAppShortcut.IconSource, customCss: String?, notificationsEnabled: Boolean, groupId: String?) -> Unit,
     onDismiss: () -> Unit,
     onImportIcon: suspend (uri: Uri, sizePx: Int) -> String?,
     onFindFavicon: suspend (url: String) -> String?,
     onExportIconPackIcon: suspend (customIcon: CustomIcon?, sizePx: Int) -> String?,
 ) {
+    val browsingSettings: WebAppBrowsingSettings = koinInject()
+    val groupsEnabled by browsingSettings.groupsEnabled.collectAsState(false)
+    val groups by browsingSettings.groups.collectAsState(emptyList())
+
     BottomSheet(
         expanded = expanded,
         onDismissRequest = onDismiss,
@@ -83,9 +88,14 @@ fun EditWebAppShortcutSheet(
         var showInPanel by remember(existing) { mutableStateOf(existing?.showInPanel ?: false) }
         var iconSource by remember(existing) { mutableStateOf(existing?.iconSource ?: WebAppShortcut.IconSource.Website) }
         var customCss by remember(existing) { mutableStateOf(existing?.customCss ?: "") }
+        var notificationsEnabled by remember(existing) { mutableStateOf(existing?.notificationsEnabled ?: false) }
+        var groupId by remember(existing, groups) { 
+            mutableStateOf(existing?.let { e -> groups.find { it.appKeys.contains(e.key) }?.id }) 
+        }
         var findingFavicon by remember { mutableStateOf(false) }
         var showRendererMenu by remember { mutableStateOf(false) }
         var showIconSourceMenu by remember { mutableStateOf(false) }
+        var showGroupMenu by remember { mutableStateOf(false) }
         var showIconPicker by remember { mutableStateOf(false) }
         var iconPickerTab by remember { mutableStateOf(IconPickerTab.IconPack) }
 
@@ -309,6 +319,64 @@ fun EditWebAppShortcutSheet(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(top = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(R.string.web_app_shortcut_enable_notifications),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.weight(1f),
+                )
+                Checkbox(checked = notificationsEnabled, onCheckedChange = { notificationsEnabled = it })
+            }
+
+            if (groupsEnabled && groups.isNotEmpty()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "Group",
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.weight(1f),
+                    )
+                    TextButton(onClick = { showGroupMenu = true }) {
+                        Text(
+                            groupId?.let { id -> groups.find { it.id == id }?.name }
+                                ?: "None"
+                        )
+                    }
+                    DropdownMenuPopup(
+                        expanded = showGroupMenu,
+                        onDismissRequest = { showGroupMenu = false },
+                    ) {
+                        DropdownMenuGroup(shapes = MenuDefaults.groupShapes()) {
+                            DropdownMenuItem(
+                                text = { Text("None") },
+                                onClick = {
+                                    groupId = null
+                                    showGroupMenu = false
+                                },
+                            )
+                            groups.forEach { group ->
+                                DropdownMenuItem(
+                                    text = { Text(group.name) },
+                                    onClick = {
+                                        groupId = group.id
+                                        showGroupMenu = false
+                                    },
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(top = 16.dp),
                 horizontalArrangement = Arrangement.End,
             ) {
@@ -321,6 +389,7 @@ fun EditWebAppShortcutSheet(
                         onSave(
                             label.trim(), url.trim(), iconUri, faviconUrl, rendererPackage,
                             showInGrid, showInPanel, iconSource, customCss.trim().ifBlank { null },
+                            notificationsEnabled, groupId
                         )
                     }
                 ) {

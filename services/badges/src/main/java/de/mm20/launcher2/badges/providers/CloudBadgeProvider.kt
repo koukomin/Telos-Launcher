@@ -3,6 +3,7 @@ package de.mm20.launcher2.badges.providers
 import android.content.Context
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.BadgeIcon
+import de.mm20.launcher2.badges.BadgeProvider
 import de.mm20.launcher2.badges.MutableBadge
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.Searchable

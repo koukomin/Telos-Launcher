@@ -7,11 +7,11 @@ class WebsiteSearchSettings internal constructor(
     private val dataStore: LauncherDataStore,
 ){
     val enabled
-        get() = dataStore.data.map { it.websiteSearchEnabled }
+        get() = dataStore.data.map { it.website.websiteSearchEnabled }
 
     fun setEnabled(enabled: Boolean) {
         dataStore.update {
-            it.copy(websiteSearchEnabled = enabled)
+            it.copy(website = it.website.copy(websiteSearchEnabled = enabled))
         }
     }
 }

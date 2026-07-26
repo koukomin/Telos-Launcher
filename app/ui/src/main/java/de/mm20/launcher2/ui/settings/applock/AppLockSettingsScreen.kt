@@ -65,6 +65,7 @@ fun AppLockSettingsScreen() {
     val hasCustomStorageFolder by viewModel.hasCustomStorageFolder.collectAsStateWithLifecycle()
     val intruderPhotoStoragePath by viewModel.intruderPhotoStoragePath.collectAsStateWithLifecycle()
     val intruderPhotoNotificationEnabled by viewModel.intruderPhotoNotificationEnabled.collectAsStateWithLifecycle()
+    val relockOnlyOnScreenOff by viewModel.relockOnlyOnScreenOff.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) { viewModel.refreshIntruderPhotoCount() }
 
@@ -142,6 +143,12 @@ fun AppLockSettingsScreen() {
                     items = gracePeriodOptions(),
                     value = defaultGracePeriodMs ?: 0L,
                     onValueChanged = { viewModel.setDefaultGracePeriodMs(it) },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_app_lock_relock_only_on_screen_off),
+                    summary = stringResource(R.string.preference_app_lock_relock_only_on_screen_off_summary),
+                    value = relockOnlyOnScreenOff == true,
+                    onValueChanged = { viewModel.setRelockOnlyOnScreenOff(it) }
                 )
             }
         }

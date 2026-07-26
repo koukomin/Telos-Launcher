@@ -28,10 +28,7 @@ data class ClockSublayer(
 )
 
 enum class ClockSublayerRole {
-    Hour,
-    Minute,
-    Second,
-    Static,
+    Hour, Minute, Second, Static
 }
 
 data class TintedIconLayer(
@@ -54,10 +51,13 @@ data class TextLayer(
     val color: Int = 0,
 ) : LauncherIconLayer
 
-
 data class VectorLayer(
     @DrawableRes val icon: Int,
     val color: Int = 0,
 ) : LauncherIconLayer
 
-object TransparentLayer: LauncherIconLayer
+data class GridLayer(
+    val layers: List<LauncherIconLayer>,
+) : LauncherIconLayer
+
+object TransparentLayer : LauncherIconLayer

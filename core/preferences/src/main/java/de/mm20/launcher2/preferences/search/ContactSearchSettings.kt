@@ -8,31 +8,31 @@ import kotlinx.coroutines.flow.map
 class ContactSearchSettings internal constructor(private val dataStore: LauncherDataStore) {
 
     val enabledProviders: Flow<Set<String>>
-        get() = dataStore.data.map { it.contactSearchProviders }.distinctUntilChanged()
+        get() = dataStore.data.map { it.contactSearch.contactSearchProviders }.distinctUntilChanged()
 
-    fun isProviderEnabled(provider: String) = dataStore.data.map { it.contactSearchProviders.contains(provider) }
+    fun isProviderEnabled(provider: String) = dataStore.data.map { it.contactSearch.contactSearchProviders.contains(provider) }
 
     fun setProviderEnabled(provider: String, enabled: Boolean) {
         dataStore.update {
             if (enabled) {
-                it.copy(contactSearchProviders = it.contactSearchProviders + provider)
+                it.copy(contactSearch = it.contactSearch.copy(contactSearchProviders = it.contactSearch.contactSearchProviders + provider))
             } else {
-                it.copy(contactSearchProviders = it.contactSearchProviders - provider)
+                it.copy(contactSearch = it.contactSearch.copy(contactSearchProviders = it.contactSearch.contactSearchProviders - provider))
             }
         }
     }
 
     val enabledPlugins: Flow<Set<String>>
-        get() = dataStore.data.map { it.contactSearchProviders - "local" }
+        get() = dataStore.data.map { it.contactSearch.contactSearchProviders - "local" }
 
     fun setPluginEnabled(authority: String, enabled: Boolean) {
         setProviderEnabled(authority, enabled)
     }
 
     val callOnTap: Flow<Boolean>
-        get() = dataStore.data.map { it.contactSearchCallOnTap }.distinctUntilChanged()
+        get() = dataStore.data.map { it.contactSearch.contactSearchCallOnTap }.distinctUntilChanged()
 
     fun setCallOnTap(callOnTap: Boolean) {
-        dataStore.update { it.copy(contactSearchCallOnTap = callOnTap) }
+        dataStore.update { it.copy(contactSearch = it.contactSearch.copy(contactSearchCallOnTap = callOnTap)) }
     }
 }

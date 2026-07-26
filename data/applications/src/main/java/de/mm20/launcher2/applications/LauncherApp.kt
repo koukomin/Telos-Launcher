@@ -113,8 +113,10 @@ internal data class LauncherApp(
                         launcherActivityInfo.getIcon(0)
                     } else if (disabledActivityInfo != null) {
                         disabledActivityInfo.loadIcon(context.packageManager)
-                    } else {
+                    } else if (componentName.className.isNotEmpty()) {
                         context.packageManager.getActivityIcon(componentName)
+                    } else {
+                        applicationInfo.loadIcon(context.packageManager)
                     }
                 } ?: return null
             if (icon is AdaptiveIconDrawable) {
@@ -200,14 +202,22 @@ internal data class LauncherApp(
     }
 
     override fun openAppDetails(context: Context) {
-        val launcherApps = context.getSystemService<LauncherApps>()!!
+        if (componentName.className.isNotEmpty()) {
+            val launcherApps = context.getSystemService<LauncherApps>()!!
 
-        launcherApps.startAppDetailsActivity(
-            componentName,
-            user,
-            null,
-            null
-        )
+            launcherApps.startAppDetailsActivity(
+                componentName,
+                user,
+                null,
+                null
+            )
+        } else {
+            val intent = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                data = Uri.parse("package:${componentName.packageName}")
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+            context.startActivity(intent)
+        }
     }
 
     override val canShareApk: Boolean = true

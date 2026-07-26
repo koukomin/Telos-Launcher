@@ -12,11 +12,15 @@ class Migration5  : DataMigration<LauncherSettingsData>  {
     override suspend fun migrate(currentData: LauncherSettingsData): LauncherSettingsData {
         return currentData.copy(
             schemaVersion = 5,
-            gesturesSwipeDown = if (currentData.uiBaseLayout == BaseLayout.PullDown) GestureAction.Search else currentData.gesturesSwipeDown,
-            gesturesSwipeLeft = if (currentData.uiBaseLayout == BaseLayout.Pager) GestureAction.Search else currentData.gesturesSwipeLeft,
-            gesturesSwipeRight = if (currentData.uiBaseLayout == BaseLayout.PagerReversed) GestureAction.Search else currentData.gesturesSwipeRight,
-            gesturesSwipeUp = GestureAction.Widgets(),
-            homeScreenWidgets = !currentData.clockWidgetFillHeight,
+            gestures = currentData.gestures.copy(
+                gesturesSwipeDown = if (currentData.ui.uiBaseLayout == BaseLayout.PullDown) GestureAction.Search else currentData.gestures.gesturesSwipeDown,
+                gesturesSwipeLeft = if (currentData.ui.uiBaseLayout == BaseLayout.Pager) GestureAction.Search else currentData.gestures.gesturesSwipeLeft,
+                gesturesSwipeRight = if (currentData.ui.uiBaseLayout == BaseLayout.PagerReversed) GestureAction.Search else currentData.gestures.gesturesSwipeRight,
+                gesturesSwipeUp = GestureAction.Widgets(),
+            ),
+            home = currentData.home.copy(
+                homeScreenWidgets = !currentData.clock.clockWidgetFillHeight,
+            ),
         )
     }
 

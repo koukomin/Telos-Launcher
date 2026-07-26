@@ -2,6 +2,7 @@ package de.mm20.launcher2.badges.providers
 
 import android.util.Log
 import de.mm20.launcher2.badges.Badge
+import de.mm20.launcher2.badges.BadgeProvider
 import de.mm20.launcher2.badges.MutableBadge
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.preferences.NotificationBadgeStyle

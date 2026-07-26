@@ -14,11 +14,13 @@ class Migration3: DataMigration<LauncherSettingsData> {
     override suspend fun migrate(currentData: LauncherSettingsData): LauncherSettingsData {
         return currentData.copy(
             schemaVersion = 3,
-            locationSearchProviders = buildSet {
-                if (currentData.locationSearchEnabled) {
-                    add("openstreetmaps")
+            locationSearch = currentData.locationSearch.copy(
+                locationSearchProviders = buildSet {
+                    if (currentData.locationSearch.locationSearchEnabled) {
+                        add("openstreetmaps")
+                    }
                 }
-            }
+            )
         )
     }
 }

@@ -170,6 +170,7 @@ dependencies {
     implementation(project(":services:context-profiles"))
     implementation(project(":services:desktop-mode"))
     implementation(project(":services:applock"))
+    implementation(project(":services:app-management"))
 
     // Uncomment this if you want annoying notifications in your debug builds
     //debugImplementation(libs.leakcanary)

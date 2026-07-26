@@ -13,16 +13,16 @@ class DynamicIslandSettings internal constructor(
     private val dataStore: LauncherDataStore,
 ) {
     val enabled
-        get() = dataStore.data.map { it.dynamicIslandEnabled }.distinctUntilChanged()
+        get() = dataStore.data.map { it.dynamicIsland.dynamicIslandEnabled }.distinctUntilChanged()
 
     fun setEnabled(enabled: Boolean) {
-        dataStore.update { it.copy(dynamicIslandEnabled = enabled) }
+        dataStore.update { it.copy(dynamicIsland = it.dynamicIsland.copy(dynamicIslandEnabled = enabled)) }
     }
 
     val showCalls
-        get() = dataStore.data.map { it.dynamicIslandShowCalls }.distinctUntilChanged()
+        get() = dataStore.data.map { it.dynamicIsland.dynamicIslandShowCalls }.distinctUntilChanged()
 
     fun setShowCalls(showCalls: Boolean) {
-        dataStore.update { it.copy(dynamicIslandShowCalls = showCalls) }
+        dataStore.update { it.copy(dynamicIsland = it.dynamicIsland.copy(dynamicIslandShowCalls = showCalls)) }
     }
 }

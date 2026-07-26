@@ -41,6 +41,8 @@ interface WebAppShortcut : SavableSearchable {
 
     val iconSource: IconSource
 
+    val notificationsEnabled: Boolean
+
     enum class IconSource {
         Website,
         System,

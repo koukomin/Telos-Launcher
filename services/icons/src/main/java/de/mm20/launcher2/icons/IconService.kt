@@ -24,6 +24,7 @@ import de.mm20.launcher2.icons.providers.CustomTextIconProvider
 import de.mm20.launcher2.icons.providers.LegacyCustomIconPackIconProvider
 import de.mm20.launcher2.icons.providers.CustomThemedIconProvider
 import de.mm20.launcher2.icons.providers.DynamicClockIconProvider
+import de.mm20.launcher2.icons.providers.FolderIconProvider
 import de.mm20.launcher2.icons.providers.IconPackIconProvider
 import de.mm20.launcher2.icons.providers.IconProvider
 import de.mm20.launcher2.icons.providers.PlaceholderIconProvider
@@ -64,6 +65,7 @@ class IconService(
     private val settings: IconSettings,
     private val customAttributesRepository: CustomAttributesRepository,
     private val performanceSettings: PerformanceSettings,
+    private val searchableRepository: de.mm20.launcher2.searchable.SavableSearchableRepository,
 ) {
 
     private val appReceiver = object : BroadcastReceiver() {
@@ -132,6 +134,7 @@ class IconService(
                         }
                     }
                     providers.add(DynamicClockIconProvider(context, settings.themedIcons))
+                    providers.add(FolderIconProvider(context, searchableRepository, this@IconService, settings.themedIcons))
                     providers.add(CalendarIconProvider(context, settings.themedIcons))
                     if (!isAtLeastApiLevel(33)) {
                         providers.add(CompatIconProvider(context, settings.themedIcons))

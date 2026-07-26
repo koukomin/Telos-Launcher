@@ -10,8 +10,10 @@ class Migration4 : DataMigration<LauncherSettingsData> {
     override suspend fun migrate(currentData: LauncherSettingsData): LauncherSettingsData {
         return currentData.copy(
             schemaVersion = 4,
-            contactSearchProviders = setOfNotNull(
-                if (currentData.contactSearchEnabled) "local" else null,
+            contactSearch = currentData.contactSearch.copy(
+                contactSearchProviders = setOfNotNull(
+                    if (currentData.contactSearch.contactSearchEnabled) "local" else null,
+                )
             )
         )
     }

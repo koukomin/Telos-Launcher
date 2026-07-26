@@ -5,4 +5,6 @@ enum class AppFreezeState {
     Normal,
     Suspended,
     Disabled,
+    /** Hidden via DevicePolicyManager.setApplicationHidden (the Icebox/Island mechanism). */
+    Hidden,
 }

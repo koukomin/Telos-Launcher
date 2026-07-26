@@ -319,10 +319,34 @@ internal class AppRepositoryImpl(
     }
 
     override suspend fun findIconlessApps(): List<Application> = withContext(Dispatchers.Default) {
-        val existing = installedApps.value.map { it.componentName to it.user }.toSet()
+        val existing = installedApps.value.map { it.componentName.packageName to it.user }.toSet()
+        val pm = context.packageManager
         profiles.first().flatMap { profile ->
-            getApplications(null, profile.userHandle, includeIconless = true)
-        }.filterNot { (it.componentName to it.user) in existing }
+            // MATCH_UNINSTALLED_PACKAGES is required to see packages hidden via
+            // DevicePolicyManager.setApplicationHidden (the Icebox/Island freeze mechanism) -
+            // without it they're excluded just like truly uninstalled packages. Filter back down
+            // to FLAG_INSTALLED so we don't surface stale data-only leftovers as noise.
+            pm.getInstalledApplications(PackageManager.GET_META_DATA or PackageManager.MATCH_UNINSTALLED_PACKAGES).mapNotNull { appInfo ->
+                if (appInfo.packageName == context.packageName) return@mapNotNull null
+                if ((appInfo.flags and ApplicationInfo.FLAG_INSTALLED) == 0) return@mapNotNull null
+                if ((appInfo.packageName to profile.userHandle) in existing) return@mapNotNull null
+
+                val label = appInfo.loadLabel(pm).toString()
+                if (label.isEmpty()) return@mapNotNull null
+
+                LauncherApp(
+                    componentName = ComponentName(appInfo.packageName, ""),
+                    label = label,
+                    user = profile.userHandle,
+                    launcherActivityInfo = null,
+                    applicationInfo = appInfo,
+                    versionName = LauncherApp.getPackageVersionName(context, appInfo.packageName),
+                    isSuspended = (appInfo.flags and ApplicationInfo.FLAG_SUSPENDED) != 0 || !appInfo.enabled,
+                    userSerialNumber = profile.userHandle.getSerialNumber(context),
+                    disabledActivityInfo = null,
+                )
+            }
+        }
     }
 
     override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<LauncherApp>> {

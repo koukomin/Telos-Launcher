@@ -9,20 +9,20 @@ class FeedSettings internal constructor(
 ) {
 
     val enabled
-        get() = launcherDataStore.data.map { it.gesturesSwipeRight is GestureAction.Feed }
+        get() = launcherDataStore.data.map { it.gestures.gesturesSwipeRight is GestureAction.Feed }
 
     fun setEnabled(enabled: Boolean) {
         launcherDataStore.update {
-            it.copy(gesturesSwipeRight = if (enabled) GestureAction.Feed else GestureAction.NoAction)
+            it.copy(gestures = it.gestures.copy(gesturesSwipeRight = if (enabled) GestureAction.Feed else GestureAction.NoAction))
         }
     }
 
     val providerPackage
-        get() = launcherDataStore.data.map { it.feedProviderPackage }
+        get() = launcherDataStore.data.map { it.feed.feedProviderPackage }
 
     fun setProviderPackage(providerPackage: String?) {
         launcherDataStore.update {
-            it.copy(feedProviderPackage = providerPackage)
+            it.copy(feed = it.feed.copy(feedProviderPackage = providerPackage))
         }
     }
 

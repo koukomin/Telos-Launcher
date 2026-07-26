@@ -58,6 +58,7 @@ dependencies {
     implementation(project(":core:ktx"))
     implementation(project(":core:base"))
     implementation(project(":data:applications"))
+    implementation(project(":data:searchable"))
     implementation(project(":core:crashreporter"))
     api(project(":data:customattrs"))
 

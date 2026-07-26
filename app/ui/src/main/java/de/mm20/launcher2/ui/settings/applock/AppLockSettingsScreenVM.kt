@@ -139,4 +139,10 @@ class AppLockSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setIntruderPhotoNotificationEnabled(enabled: Boolean) =
         appLockSettings.setIntruderPhotoNotificationEnabled(enabled)
+
+    val relockOnlyOnScreenOff = appLockSettings.relockOnlyOnScreenOff
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setRelockOnlyOnScreenOff(enabled: Boolean) =
+        appLockSettings.setRelockOnlyOnScreenOff(enabled)
 }

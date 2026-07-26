@@ -1,6 +1,5 @@
-package de.mm20.launcher2.badges.providers
+package de.mm20.launcher2.badges
 
-import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.search.Searchable
 import kotlinx.coroutines.flow.Flow
 

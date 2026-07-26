@@ -72,6 +72,7 @@ interface SearchActionBuilder {
                 "websearch" -> return WebsearchActionBuilder(context)
                 "share" -> return ShareActionBuilder(context)
                 "private_space" -> return PrivateSpaceLockActionBuilder(context)
+                "work_profile" -> return WorkProfileLockActionBuilder(context)
                 else -> return null
             }
         }

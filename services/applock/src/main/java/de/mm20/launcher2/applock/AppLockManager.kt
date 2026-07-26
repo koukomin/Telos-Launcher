@@ -1,6 +1,9 @@
 package de.mm20.launcher2.applock
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import de.mm20.launcher2.preferences.applock.AppLockSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +40,7 @@ import kotlinx.coroutines.launch
  * polling/listening cost while the feature is off.
  */
 class AppLockManager(
-    context: Context,
+    private val context: Context,
     private val settings: AppLockSettings,
     private val monitor: AppLockForegroundMonitor,
 ) {
@@ -45,12 +48,10 @@ class AppLockManager(
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     @Volatile
-    private var unlockedPackage: String? = null
+    private var unlockedPackages = mutableSetOf<String>()
 
-    /** When we last saw [unlockedPackage] leave the foreground, or null while it's still there
-     * (or there's no unlocked package at all). The grace period is measured from this instant. */
     @Volatile
-    private var unlockedLeftAt: Long? = null
+    private var lastLeftAt = mutableMapOf<String, Long>()
 
     private val _pendingLock = MutableStateFlow<String?>(null)
 
@@ -58,6 +59,17 @@ class AppLockManager(
     val pendingLock: StateFlow<String?> = _pendingLock
 
     init {
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                if (intent.action == Intent.ACTION_SCREEN_OFF) {
+                    unlockedPackages.clear()
+                    lastLeftAt.clear()
+                    _pendingLock.value = null
+                }
+            }
+        }
+        context.registerReceiver(receiver, IntentFilter(Intent.ACTION_SCREEN_OFF))
+
         scope.launch {
             settings.enabled.collectLatest { enabled ->
                 if (!enabled) {
@@ -67,25 +79,36 @@ class AppLockManager(
                 monitor.foregroundPackageChanges().collectLatest { packageName ->
                     if (packageName == ownPackageName) return@collectLatest
 
-                    if (packageName == unlockedPackage) {
-                        val leftAt = unlockedLeftAt
+                    val isRelockOnlyOnScreenOff = settings.relockOnlyOnScreenOff.first()
+
+                    if (unlockedPackages.contains(packageName)) {
+                        if (isRelockOnlyOnScreenOff) {
+                            // Stays unlocked until screen off
+                            return@collectLatest
+                        }
+
+                        val leftAt = lastLeftAt[packageName]
                         if (leftAt != null &&
                             System.currentTimeMillis() - leftAt > settings.gracePeriodMsFor(packageName)
                         ) {
-                            // Grace period ran out while we were away - treat as freshly locked.
-                            unlockedPackage = null
-                            unlockedLeftAt = null
+                            // Grace period ran out
+                            unlockedPackages.remove(packageName)
+                            lastLeftAt.remove(packageName)
                             gateIfLocked(packageName)
                         } else {
-                            // Still within (or never left) the grace window.
-                            unlockedLeftAt = null
+                            // Still within grace
+                            lastLeftAt.remove(packageName)
                         }
                         return@collectLatest
                     }
 
-                    if (unlockedPackage != null && unlockedLeftAt == null) {
-                        unlockedLeftAt = System.currentTimeMillis()
+                    // Record leaving time for other unlocked packages
+                    unlockedPackages.forEach { pkg ->
+                        if (pkg != packageName && !lastLeftAt.containsKey(pkg)) {
+                            lastLeftAt[pkg] = System.currentTimeMillis()
+                        }
                     }
+
                     gateIfLocked(packageName)
                 }
             }
@@ -99,13 +122,26 @@ class AppLockManager(
 
     /** Called by the gate after a successful authentication for [packageName]. */
     fun reportUnlocked(packageName: String) {
-        unlockedPackage = packageName
-        unlockedLeftAt = null
+        unlockedPackages.add(packageName)
+        lastLeftAt.remove(packageName)
         _pendingLock.value = null
     }
 
     /** Called when the user dismisses the gate without authenticating. */
     fun dismiss() {
         _pendingLock.value = null
+    }
+
+    suspend fun isLocked(packageName: String): Boolean {
+        if (!settings.enabled.first()) return false
+        if (!settings.lockedPackages.first().contains(packageName)) return false
+        if (unlockedPackages.contains(packageName)) {
+            if (settings.relockOnlyOnScreenOff.first()) return false
+            val leftAt = lastLeftAt[packageName]
+            if (leftAt == null || System.currentTimeMillis() - leftAt <= settings.gracePeriodMsFor(packageName)) {
+                return false
+            }
+        }
+        return true
     }
 }

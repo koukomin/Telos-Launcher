@@ -21,7 +21,9 @@ class Migration9 : DataMigration<LauncherSettingsData> {
     override suspend fun migrate(currentData: LauncherSettingsData): LauncherSettingsData {
         return currentData.copy(
             schemaVersion = 9,
-            weatherProvider = if (currentData.weatherProvider == "metno") "openmeteo" else currentData.weatherProvider,
+            weather = currentData.weather.copy(
+                weatherProvider = if (currentData.weather.weatherProvider == "metno") "openmeteo" else currentData.weather.weatherProvider,
+            ),
         )
     }
 }

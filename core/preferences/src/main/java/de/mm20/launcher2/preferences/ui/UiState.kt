@@ -8,11 +8,11 @@ class UiState internal constructor(
     private val launcherDataStore: LauncherDataStore,
 ){
     val favoritesTagsExpanded
-        get() = launcherDataStore.data.map { it.stateTagsMultiline }.distinctUntilChanged()
+        get() = launcherDataStore.data.map { it.stateTags.stateTagsMultiline }.distinctUntilChanged()
 
     fun setFavoritesTagsExpanded(favoritesTagsExpanded: Boolean) {
         launcherDataStore.update {
-            it.copy(stateTagsMultiline = favoritesTagsExpanded)
+            it.copy(stateTags = it.stateTags.copy(stateTagsMultiline = favoritesTagsExpanded))
         }
     }
 }

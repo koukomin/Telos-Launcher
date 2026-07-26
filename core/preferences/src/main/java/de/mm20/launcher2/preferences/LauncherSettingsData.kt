@@ -9,11 +9,80 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
 import java.util.UUID
 
-@Serializable
+/**
+ * The full set of launcher settings, as read from / written to disk.
+ *
+ * This used to be one flat data class with every setting as a top-level constructor property.
+ * Once that list grew past ~250 properties, the compiler-generated `copy()` method exceeded the
+ * JVM's 255-word-per-method parameter limit (each property is a word, wide types like Long are
+ * two, plus the bitmask ints Kotlin generates for `copy`'s default arguments) - kotlinc/d8 didn't
+ * catch it, but ART's bytecode verifier rejected the class at runtime on first use, crashing the
+ * app on launch. Properties are now grouped into nested data classes by feature area, each with
+ * its own small `copy()`, well under the limit.
+ *
+ * The on-disk JSON format is unaffected by this grouping - see [LauncherSettingsDataKSerializer],
+ * which flattens/unflattens so every field keeps living at the JSON top level exactly as before.
+ * This means existing users' settings files keep working without a migration.
+ */
+@Serializable(with = LauncherSettingsDataKSerializer::class)
 @ConsistentCopyVisibility
 data class LauncherSettingsData internal constructor(
     val schemaVersion: Int = 10,
 
+    val ui: UiGroup = UiGroup(),
+    val wallpaper: WallpaperGroup = WallpaperGroup(),
+    val media: MediaGroup = MediaGroup(),
+    val clock: ClockGroup = ClockGroup(),
+    val home: HomeGroup = HomeGroup(),
+    val favorites: FavoritesGroup = FavoritesGroup(),
+    val appSearch: AppSearchGroup = AppSearchGroup(),
+    val fileSearch: FileSearchGroup = FileSearchGroup(),
+    val contactSearch: ContactSearchGroup = ContactSearchGroup(),
+    val calendarSearch: CalendarSearchGroup = CalendarSearchGroup(),
+    val shortcutSearch: ShortcutSearchGroup = ShortcutSearchGroup(),
+    val calculator: CalculatorGroup = CalculatorGroup(),
+    val unitConverter: UnitConverterGroup = UnitConverterGroup(),
+    val wikipedia: WikipediaGroup = WikipediaGroup(),
+    val website: WebsiteGroup = WebsiteGroup(),
+    val badges: BadgesGroup = BadgesGroup(),
+    val grid: GridGroup = GridGroup(),
+    val searchBar: SearchBarGroup = SearchBarGroup(),
+    val searchResults: SearchResultsGroup = SearchResultsGroup(),
+    val icons: IconsGroup = IconsGroup(),
+    val misc: MiscGroup = MiscGroup(),
+    val systemBars: SystemBarsGroup = SystemBarsGroup(),
+    val surfaces: SurfacesGroup = SurfacesGroup(),
+    val widgets: WidgetsGroup = WidgetsGroup(),
+    val gestures: GesturesGroup = GesturesGroup(),
+    val videoWallpaper: VideoWallpaperGroup = VideoWallpaperGroup(),
+    val performance: PerformanceGroup = PerformanceGroup(),
+    val shutters: ShuttersGroup = ShuttersGroup(),
+    val animations: AnimationsGroup = AnimationsGroup(),
+    val stateTags: StateTagsGroup = StateTagsGroup(),
+    val weather: WeatherGroup = WeatherGroup(),
+    val locationSearch: LocationSearchGroup = LocationSearchGroup(),
+    val searchFilterGroup: SearchFilterGroup = SearchFilterGroup(),
+    val locale: LocaleGroup = LocaleGroup(),
+    val feed: FeedGroup = FeedGroup(),
+    val freeze: FreezeGroup = FreezeGroup(),
+    val protection: ProtectionGroup = ProtectionGroup(),
+    val appLock: AppLockGroup = AppLockGroup(),
+    val floatingLauncher: FloatingLauncherGroup = FloatingLauncherGroup(),
+    val dynamicIsland: DynamicIslandGroup = DynamicIslandGroup(),
+    val webAppsPanel: WebAppsPanelGroup = WebAppsPanelGroup(),
+    val webAppBrowsing: WebAppBrowsingGroup = WebAppBrowsingGroup(),
+    val contextProfiles: ContextProfilesGroup = ContextProfilesGroup(),
+    val desktopMode: DesktopModeGroup = DesktopModeGroup(),
+) {
+    constructor(
+        context: Context,
+    ) : this(
+        grid = GridGroup(gridColumnCount = context.resources.getInteger(R.integer.config_columnCount)),
+    )
+}
+
+@Serializable
+data class UiGroup(
     val uiColorScheme: ColorScheme = ColorScheme.System,
     /** Hour of day [0,23] when the dark scheme starts, used only by [ColorScheme.Time]. */
     val uiColorSchemeNightStart: Int = 20,
@@ -29,22 +98,30 @@ data class LauncherSettingsData internal constructor(
     val uiTypographyId: UUID = UUID(0L, 0L),
     /** Independent text-size multiplier for launcher UI, applied on top of the system font scale. */
     val uiFontScale: Float = 1f,
-
     val uiCompatModeColors: Boolean = false,
     @Deprecated("No longer in use, only used for migration")
     val uiBaseLayout: BaseLayout = BaseLayout.PullDown,
     val uiOrientation: ScreenOrientation = ScreenOrientation.Auto,
+)
 
+@Serializable
+data class WallpaperGroup(
     val wallpaperDim: Boolean = false,
     val wallpaperBlur: Boolean = true,
     val wallpaperBlurRadius: Int = 32,
+)
 
+@Serializable
+data class MediaGroup(
     val mediaAllowList: Set<String> = emptySet(),
     val mediaDenyList: Set<String> = emptySet(),
+)
 
+@Serializable
+@ConsistentCopyVisibility
+data class ClockGroup internal constructor(
     val clockWidgetCompact: Boolean = false,
     val clockWidgetSmartspacer: Boolean = false,
-
     @Deprecated("")
     @SerialName("clockWidgetStyle")
     val _clockWidgetStyle: ClockWidgetStyle = ClockWidgetStyle.Digital1(),
@@ -67,7 +144,10 @@ data class LauncherSettingsData internal constructor(
     val clockWidgetDatePart: Boolean = true,
     val clockWidgetFillHeight: Boolean = false,
     val clockWidgetAlignment: ClockWidgetAlignment = ClockWidgetAlignment.Bottom,
+)
 
+@Serializable
+data class HomeGroup(
     val homeScreenDock: Boolean = false,
     val homeScreenDockRows: Int = 1,
     val homeScreenDockColumns: Int = 5,
@@ -77,16 +157,26 @@ data class LauncherSettingsData internal constructor(
     /** 1 = the single, original home screen (default, matches all prior behavior). Up to 9
      * enables extra swipeable pages to the right, each an independent widget area. */
     val homeScreenPageCount: Int = 1,
+    val homeScreenDockPages: List<List<DockItem>> = emptyList(),
+)
 
+@Serializable
+data class FavoritesGroup(
     val favoritesEnabled: Boolean = true,
     val favoritesFrequentlyUsed: Boolean = true,
     val favoritesFrequentlyUsedRows: Int = 1,
     val favoritesEditButton: Boolean = true,
     val favoritesCompactTags: Boolean = false,
+)
 
+@Serializable
+data class AppSearchGroup(
     val searchAllApps: Boolean = true,
     val appsShowDetails: Boolean = true,
+)
 
+@Serializable
+data class FileSearchGroup(
     val fileSearchProviders: Set<String> = setOf("local"),
     val fileSearchDocuments: Boolean = true,
     val fileSearchImages: Boolean = true,
@@ -94,30 +184,54 @@ data class LauncherSettingsData internal constructor(
     val fileSearchMusic: Boolean = true,
     val fileSearchOther: Boolean = true,
     val fileSearchExcludedFolders: Set<String> = emptySet(),
+)
 
+@Serializable
+data class ContactSearchGroup(
     @Deprecated("Use contactSearchProviders `local` instead")
     val contactSearchEnabled: Boolean = true,
     val contactSearchProviders: Set<String> = setOf("local"),
     val contactSearchCallOnTap: Boolean = false,
+)
 
+@Serializable
+data class CalendarSearchGroup(
     @Deprecated("Use calendarSearchProviders `local` instead")
     val calendarSearchEnabled: Boolean = true,
     val calendarSearchProviders: Set<String> = setOf("local"),
     val calendarSearchExcludedCalendars: Set<String> = setOf(),
+)
 
+@Serializable
+data class ShortcutSearchGroup(
     val shortcutSearchEnabled: Boolean = true,
+)
 
+@Serializable
+data class CalculatorGroup(
     val calculatorEnabled: Boolean = true,
+)
 
+@Serializable
+data class UnitConverterGroup(
     val unitConverterEnabled: Boolean = true,
     val unitConverterCurrencies: Boolean = true,
+)
 
+@Serializable
+data class WikipediaGroup(
     val wikipediaSearchEnabled: Boolean = true,
     val wikipediaSearchImages: Boolean = true,
     val wikipediaCustomUrl: String? = null,
+)
 
+@Serializable
+data class WebsiteGroup(
     val websiteSearchEnabled: Boolean = true,
+)
 
+@Serializable
+data class BadgesGroup(
     val badgesNotifications: Boolean = true,
     val badgesSuspendedApps: Boolean = true,
     val badgesCloudFiles: Boolean = true,
@@ -127,13 +241,34 @@ data class LauncherSettingsData internal constructor(
     /** Null = follow the theme's tertiary color (the pre-existing default look). */
     @Serializable(with = ColorIntAsHexSerializer::class)
     val badgesNotificationColor: Int? = null,
+)
 
+@Serializable
+data class GridGroup(
     val gridColumnCount: Int = 5,
     val gridIconSize: Int = 48,
     val gridLabels: Boolean = true,
+    val gridLabelSize: Float = 12f,
+    val gridLabelMaxLines: Int = 1,
+    val gridLabelShadow: Boolean = false,
     val gridList: Boolean = false,
     val gridListIcons: Boolean = true,
+    val homeGridColumnCount: Int? = null,
+    val homeGridIconSize: Int? = null,
+    val drawerGridColumnCount: Int? = null,
+    val drawerGridIconSize: Int? = null,
+    val dockGridColumnCount: Int? = null,
+    val dockGridIconSize: Int? = null,
+    val desktopLocked: Boolean = false,
+    val dockBackgroundEnabled: Boolean = false,
+    @Serializable(with = ColorIntAsHexSerializer::class)
+    val dockBackgroundColor: Int? = null,
+    val dockBackgroundOpacity: Float = 0.3f,
+    val dockBackgroundBlur: Int = 0,
+)
 
+@Serializable
+data class SearchBarGroup(
     val searchBarStyle: SearchBarStyle = SearchBarStyle.Transparent,
     val searchBarColors: SearchBarColors = SearchBarColors.Auto,
     val searchBarKeyboard: Boolean = true,
@@ -146,14 +281,18 @@ data class LauncherSettingsData internal constructor(
     val searchLaunchOnEnter: Boolean = true,
     val searchBarBottom: Boolean = false,
     val searchBarFixed: Boolean = false,
+)
 
+@Serializable
+data class SearchResultsGroup(
     val searchResultsReversed: Boolean = false,
     val separateWorkProfile: Boolean = true,
-
     val rankingWeightFactor: WeightFactor = WeightFactor.Default,
-
     val hiddenItemsShowButton: Boolean = false,
+)
 
+@Serializable
+data class IconsGroup(
     val iconsShape: IconShape = IconShape.PlatformDefault,
     val iconsAdaptify: Boolean = false,
     val iconsThemed: Boolean = false,
@@ -161,24 +300,39 @@ data class LauncherSettingsData internal constructor(
     val iconsPack: String? = null,
     @Deprecated("Use iconsThemed instead")
     val iconsPackThemed: Boolean = false,
+)
 
+@Serializable
+data class MiscGroup(
     val easterEgg: Boolean = false,
+)
 
+@Serializable
+data class SystemBarsGroup(
     val systemBarsHideStatus: Boolean = false,
     val systemBarsHideNav: Boolean = false,
     val systemBarsStatusColors: SystemBarColors = SystemBarColors.Auto,
     val systemBarsNavColors: SystemBarColors = SystemBarColors.Auto,
+)
 
+@Serializable
+data class SurfacesGroup(
     val surfacesOpacity: Float = 1f,
     @Deprecated("Replaces with shape schemes")
     val surfacesRadius: Int = 24,
     val surfacesBorderWidth: Int = 0,
     @Deprecated("Replaces with shape schemes")
     val surfacesShape: SurfaceShape = SurfaceShape.Rounded,
+)
 
+@Serializable
+data class WidgetsGroup(
     val widgetsEditButton: Boolean = true,
     val widgetScreenCount: Int = 1,
+)
 
+@Serializable
+data class GesturesGroup(
     val gesturesSwipeDown: GestureAction = GestureAction.Search,
     val gesturesSwipeLeft: GestureAction = GestureAction.NoAction,
     val gesturesSwipeRight: GestureAction = GestureAction.NoAction,
@@ -190,7 +344,10 @@ data class LauncherSettingsData internal constructor(
     val gesturesPinchOut: GestureAction = GestureAction.NoAction,
     val gesturesTwoFingerSwipeUp: GestureAction = GestureAction.NoAction,
     val gesturesTwoFingerSwipeDown: GestureAction = GestureAction.NoAction,
+)
 
+@Serializable
+data class VideoWallpaperGroup(
     val videoWallpaperPauseOnBatterySaver: Boolean = true,
     val videoWallpaperPauseOnThermalThrottling: Boolean = true,
     val videoWallpaperScalingMode: VideoWallpaperScalingMode = VideoWallpaperScalingMode.Fill,
@@ -210,22 +367,37 @@ data class LauncherSettingsData internal constructor(
      * is a resource-saving choice the user should opt into rather than something sprung on them.
      */
     val videoWallpaperPauseOnDesktopMode: Boolean = false,
+)
 
+@Serializable
+data class PerformanceGroup(
     val performanceReduceAnimations: Boolean = false,
     /** Multiplies the duration of tween-based (fade/effects) motion specs. 1.0 = default. */
     val performanceAnimationSpeed: Float = 1f,
     /** 0 = no debounce (search fires on every keystroke, the historical behavior). */
     val performanceSearchDebounceMs: Int = 0,
     val performanceIconCacheSize: Int = 200,
+)
 
+@Serializable
+data class ShuttersGroup(
     val shuttersEnabled: Boolean = true,
     /** Package name -> the assigned shutter's SavableSearchable key (an app, shortcut, etc). */
     val shutterApps: Map<String, String> = emptyMap(),
+)
 
+@Serializable
+data class AnimationsGroup(
     val animationsCharging: Boolean = true,
+)
 
+@Serializable
+data class StateTagsGroup(
     val stateTagsMultiline: Boolean = false,
+)
 
+@Serializable
+data class WeatherGroup(
     val weatherProvider: String = "openmeteo",
     val weatherAutoLocation: Boolean = true,
     val weatherLocation: LatLon? = null,
@@ -233,7 +405,10 @@ data class LauncherSettingsData internal constructor(
     val weatherLastLocation: LatLon? = null,
     val weatherLastUpdate: Long = 0L,
     val weatherProviderSettings: Map<String, ProviderSettings> = emptyMap(),
+)
 
+@Serializable
+data class LocationSearchGroup(
     @Deprecated("Use locationSearchProviders instead")
     val locationSearchEnabled: Boolean = false,
     val locationSearchProviders: Set<String> = setOf("openstreetmaps"),
@@ -244,7 +419,10 @@ data class LauncherSettingsData internal constructor(
     val locationSearchShowMap: Boolean = true,
     val locationSearchShowPositionOnMap: Boolean = false,
     val locationSearchThemeMap: Boolean = true,
+)
 
+@Serializable
+data class SearchFilterGroup(
     val searchFilter: SearchFilters = SearchFilters(),
     val searchFilterBar: Boolean = true,
     val searchFilterBarItems: List<KeyboardFilterBarItem> = listOf(
@@ -265,8 +443,10 @@ data class LauncherSettingsData internal constructor(
         KeyboardFilterBarItem.Tools,
         KeyboardFilterBarItem.HiddenResults,
     ),
+)
 
-
+@Serializable
+data class LocaleGroup(
     @JsonNames("clockWidgetTimeFormat")
     val localeTimeFormat: TimeFormat = TimeFormat.System,
     val localeMeasurementSystem: MeasurementSystem = MeasurementSystem.System,
@@ -275,26 +455,29 @@ data class LauncherSettingsData internal constructor(
      * automatically. null disables the transliterator.
      */
     val localeTransliterator: String? = "",
-
     /**
      * The ICU id of the primary calendar. `null` to use the default.
      */
     val localePrimaryCalendar: String? = null,
-
     /**
      * The ICU id of the secondary calendar. `null` to disable.
      */
     val localeSecondaryCalendar: String? = null,
-
     /**
      * Preferred currencies. These currencies are listed first in the currency converters.
      * ISO 4217 codes, e.g. "USD" for US Dollar, "EUR" for Euro, etc.
      * If empty, the default order is determined by the system locale.
      */
     val localeCurrencies: List<String> = emptyList(),
+)
 
+@Serializable
+data class FeedGroup(
     val feedProviderPackage: String? = null,
+)
 
+@Serializable
+data class FreezeGroup(
     val freezeBackend: FreezeBackendPreference = FreezeBackendPreference.Auto,
     val freezeAutoFreezeEnabled: Boolean = false,
     val freezeOnScreenOff: Boolean = false,
@@ -315,13 +498,19 @@ data class LauncherSettingsData internal constructor(
      * remain fully manageable (freeze/unfreeze) from the Freeze Manager itself. Default off:
      * frozen apps stay visible (grayed out), matching prior behavior. */
     val freezeHideFromLauncher: Boolean = false,
+)
 
+@Serializable
+data class ProtectionGroup(
     val protectionLockSensitiveSettings: Boolean = false,
     val protectionLockMethod: SettingsLockMethod = SettingsLockMethod.DeviceCredential,
     val protectionUseCustomLock: Boolean = false,
     val protectionCustomLockHashed: String? = null,
     val protectionLockLauncher: Boolean = false,
+)
 
+@Serializable
+data class AppLockGroup(
     val appLockEnabled: Boolean = false,
     val appLockMethod: SettingsLockMethod = SettingsLockMethod.DeviceCredential,
     val appLockDetectionMode: AppLockDetectionMode = AppLockDetectionMode.Hybrid,
@@ -357,7 +546,11 @@ data class LauncherSettingsData internal constructor(
      * Lock attempt (regardless of whether a photo was actually captured), with a "show more"
      * action that opens the captured-photos gallery. Off by default. */
     val appLockIntruderPhotoNotificationEnabled: Boolean = false,
+    val appLockRelockOnlyOnScreenOff: Boolean = false,
+)
 
+@Serializable
+data class FloatingLauncherGroup(
     val floatingLauncherEnabled: Boolean = false,
     @Deprecated("Replaced by floatingLauncherZones - kept only so Migration10 can read the old single-tab position.")
     val floatingLauncherEdge: FloatingLauncherEdge = FloatingLauncherEdge.Right,
@@ -380,11 +573,17 @@ data class LauncherSettingsData internal constructor(
     val floatingLauncherHideIndicator: Boolean = false,
     val floatingLauncherHapticFeedback: Boolean = true,
     val floatingLauncherAutoHideGaming: Boolean = false,
+)
 
+@Serializable
+data class DynamicIslandGroup(
     val dynamicIslandEnabled: Boolean = false,
     /** Optional - the pill only shows a call while active if this is granted. */
     val dynamicIslandShowCalls: Boolean = true,
+)
 
+@Serializable
+data class WebAppsPanelGroup(
     /**
      * Keys of the WebAppShortcuts shown in the Web Apps Panel, in order. Membership here is
      * independent of whether a shortcut also appears in search results - a shortcut can exist
@@ -392,7 +591,10 @@ data class LauncherSettingsData internal constructor(
      * has [GestureAction.WebAppsPanel] assigned - there's no separate enabled/direction field.
      */
     val webAppsPanelItems: List<String> = emptyList(),
+)
 
+@Serializable
+data class WebAppBrowsingGroup(
     /** Applies to the embedded WebView renderer used by web app shortcuts (not Custom Tabs). */
     val webAppAdBlockEnabled: Boolean = true,
     val webAppTrackingParamStrippingEnabled: Boolean = true,
@@ -401,12 +603,20 @@ data class LauncherSettingsData internal constructor(
      * screen instead of the top. */
     val webAppTopBarAtBottom: Boolean = false,
     val webAppSwipeToSwitchEnabled: Boolean = true,
+    val webAppGroupsEnabled: Boolean = false,
+    val webAppGroups: List<WebAppGroup> = emptyList(),
+)
 
+@Serializable
+data class ContextProfilesGroup(
     val contextProfilesEnabled: Boolean = false,
     val contextProfiles: List<ContextProfile> = emptyList(),
     /** If set, this profile is force-active regardless of trigger evaluation. */
     val contextProfileManualOverrideId: String? = null,
+)
 
+@Serializable
+data class DesktopModeGroup(
     val desktopModeEnabled: Boolean = false,
     /** True once the user has explicitly touched the enable toggle (either direction), or
      * auto-enable has already fired once - prevents auto-enable from firing repeatedly or
@@ -426,16 +636,7 @@ data class LauncherSettingsData internal constructor(
     /** Independent of the phone's own gridIconSize - external displays are bigger and viewed
      * from farther away, so the same icon size wouldn't make sense on both. */
     val desktopGridIconSize: Int = 48,
-
-    val homeScreenDockPages: List<List<DockItem>> = emptyList(),
-
-    ) {
-    constructor(
-        context: Context,
-    ) : this(
-        gridColumnCount = context.resources.getInteger(R.integer.config_columnCount),
-    )
-}
+)
 
 @Serializable
 enum class ColorScheme {

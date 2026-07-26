@@ -20,115 +20,115 @@ class FileSearchSettings internal constructor(
     private val launcherDataStore: LauncherDataStore,
 ) {
     val enabledProviders: Flow<Set<String>>
-        get() = launcherDataStore.data.map { it.fileSearchProviders }
+        get() = launcherDataStore.data.map { it.fileSearch.fileSearchProviders }
 
     val typeFilters: Flow<FileTypeFilters>
         get() = launcherDataStore.data.map {
             FileTypeFilters(
-                documents = it.fileSearchDocuments,
-                images = it.fileSearchImages,
-                videos = it.fileSearchVideos,
-                music = it.fileSearchMusic,
-                other = it.fileSearchOther,
+                documents = it.fileSearch.fileSearchDocuments,
+                images = it.fileSearch.fileSearchImages,
+                videos = it.fileSearch.fileSearchVideos,
+                music = it.fileSearch.fileSearchMusic,
+                other = it.fileSearch.fileSearchOther,
             )
         }
 
     fun setDocuments(enabled: Boolean) {
-        launcherDataStore.update { it.copy(fileSearchDocuments = enabled) }
+        launcherDataStore.update { it.copy(fileSearch = it.fileSearch.copy(fileSearchDocuments = enabled)) }
     }
 
     fun setImages(enabled: Boolean) {
-        launcherDataStore.update { it.copy(fileSearchImages = enabled) }
+        launcherDataStore.update { it.copy(fileSearch = it.fileSearch.copy(fileSearchImages = enabled)) }
     }
 
     fun setVideos(enabled: Boolean) {
-        launcherDataStore.update { it.copy(fileSearchVideos = enabled) }
+        launcherDataStore.update { it.copy(fileSearch = it.fileSearch.copy(fileSearchVideos = enabled)) }
     }
 
     fun setMusic(enabled: Boolean) {
-        launcherDataStore.update { it.copy(fileSearchMusic = enabled) }
+        launcherDataStore.update { it.copy(fileSearch = it.fileSearch.copy(fileSearchMusic = enabled)) }
     }
 
     fun setOther(enabled: Boolean) {
-        launcherDataStore.update { it.copy(fileSearchOther = enabled) }
+        launcherDataStore.update { it.copy(fileSearch = it.fileSearch.copy(fileSearchOther = enabled)) }
     }
 
     val excludedFolders: Flow<Set<String>>
-        get() = launcherDataStore.data.map { it.fileSearchExcludedFolders }
+        get() = launcherDataStore.data.map { it.fileSearch.fileSearchExcludedFolders }
 
     fun addExcludedFolder(path: String) {
         launcherDataStore.update {
-            it.copy(fileSearchExcludedFolders = it.fileSearchExcludedFolders + path.trimEnd('/'))
+            it.copy(fileSearch = it.fileSearch.copy(fileSearchExcludedFolders = it.fileSearch.fileSearchExcludedFolders + path.trimEnd('/')))
         }
     }
 
     fun removeExcludedFolder(path: String) {
         launcherDataStore.update {
-            it.copy(fileSearchExcludedFolders = it.fileSearchExcludedFolders - path)
+            it.copy(fileSearch = it.fileSearch.copy(fileSearchExcludedFolders = it.fileSearch.fileSearchExcludedFolders - path))
         }
     }
 
     val localFiles
-        get() = launcherDataStore.data.map { it.fileSearchProviders.contains("local") }
+        get() = launcherDataStore.data.map { it.fileSearch.fileSearchProviders.contains("local") }
 
     fun setLocalFiles(localFiles: Boolean) {
         launcherDataStore.update {
             if (localFiles) {
-                it.copy(fileSearchProviders = it.fileSearchProviders + "local")
+                it.copy(fileSearch = it.fileSearch.copy(fileSearchProviders = it.fileSearch.fileSearchProviders + "local"))
             } else {
-                it.copy(fileSearchProviders = it.fileSearchProviders - "local")
+                it.copy(fileSearch = it.fileSearch.copy(fileSearchProviders = it.fileSearch.fileSearchProviders - "local"))
             }
         }
     }
 
     val gdriveFiles
-        get() = launcherDataStore.data.map { it.fileSearchProviders.contains("gdrive") }
+        get() = launcherDataStore.data.map { it.fileSearch.fileSearchProviders.contains("gdrive") }
 
     fun setGdriveFiles(gdriveFiles: Boolean) {
         launcherDataStore.update {
             if (gdriveFiles) {
-                it.copy(fileSearchProviders = it.fileSearchProviders + "gdrive")
+                it.copy(fileSearch = it.fileSearch.copy(fileSearchProviders = it.fileSearch.fileSearchProviders + "gdrive"))
             } else {
-                it.copy(fileSearchProviders = it.fileSearchProviders - "gdrive")
+                it.copy(fileSearch = it.fileSearch.copy(fileSearchProviders = it.fileSearch.fileSearchProviders - "gdrive"))
             }
         }
     }
 
     val nextcloudFiles
-        get() = launcherDataStore.data.map { it.fileSearchProviders.contains("nextcloud") }
+        get() = launcherDataStore.data.map { it.fileSearch.fileSearchProviders.contains("nextcloud") }
 
     fun setNextcloudFiles(nextcloudFiles: Boolean) {
         launcherDataStore.update {
             if (nextcloudFiles) {
-                it.copy(fileSearchProviders = it.fileSearchProviders + "nextcloud")
+                it.copy(fileSearch = it.fileSearch.copy(fileSearchProviders = it.fileSearch.fileSearchProviders + "nextcloud"))
             } else {
-                it.copy(fileSearchProviders = it.fileSearchProviders - "nextcloud")
+                it.copy(fileSearch = it.fileSearch.copy(fileSearchProviders = it.fileSearch.fileSearchProviders - "nextcloud"))
             }
         }
     }
 
     val owncloudFiles
-        get() = launcherDataStore.data.map { it.fileSearchProviders.contains("owncloud") }
+        get() = launcherDataStore.data.map { it.fileSearch.fileSearchProviders.contains("owncloud") }
 
     fun setOwncloudFiles(owncloudFiles: Boolean) {
         launcherDataStore.update {
             if (owncloudFiles) {
-                it.copy(fileSearchProviders = it.fileSearchProviders + "owncloud")
+                it.copy(fileSearch = it.fileSearch.copy(fileSearchProviders = it.fileSearch.fileSearchProviders + "owncloud"))
             } else {
-                it.copy(fileSearchProviders = it.fileSearchProviders - "owncloud")
+                it.copy(fileSearch = it.fileSearch.copy(fileSearchProviders = it.fileSearch.fileSearchProviders - "owncloud"))
             }
         }
     }
 
     val enabledPlugins: Flow<Set<String>>
-        get() = launcherDataStore.data.map { it.fileSearchProviders - "local" - "gdrive" - "nextcloud" - "owncloud" }
+        get() = launcherDataStore.data.map { it.fileSearch.fileSearchProviders - "local" - "gdrive" - "nextcloud" - "owncloud" }
 
     fun setPluginEnabled(authority: String, enabled: Boolean) {
         launcherDataStore.update {
             if (enabled) {
-                it.copy(fileSearchProviders = it.fileSearchProviders + authority)
+                it.copy(fileSearch = it.fileSearch.copy(fileSearchProviders = it.fileSearch.fileSearchProviders + authority))
             } else {
-                it.copy(fileSearchProviders = it.fileSearchProviders - authority)
+                it.copy(fileSearch = it.fileSearch.copy(fileSearchProviders = it.fileSearch.fileSearchProviders - authority))
             }
         }
     }

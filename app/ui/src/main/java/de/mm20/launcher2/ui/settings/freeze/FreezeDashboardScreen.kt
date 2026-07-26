@@ -152,6 +152,7 @@ fun FreezeDashboardScreen() {
                             AppFreezeState.Normal,
                             AppFreezeState.Suspended,
                             AppFreezeState.Disabled,
+                            AppFreezeState.Hidden,
                         )) {
                             val count = runtimeRows.count { it.state == state }
                             FilterChip(
@@ -218,6 +219,7 @@ private fun stateLabel(state: AppFreezeState): String = when (state) {
     AppFreezeState.Normal -> stringResource(R.string.freeze_dashboard_state_normal)
     AppFreezeState.Suspended -> stringResource(R.string.freeze_dashboard_state_suspended)
     AppFreezeState.Disabled -> stringResource(R.string.freeze_dashboard_state_disabled)
+    AppFreezeState.Hidden -> stringResource(R.string.freeze_dashboard_state_hidden)
 }
 
 @Composable

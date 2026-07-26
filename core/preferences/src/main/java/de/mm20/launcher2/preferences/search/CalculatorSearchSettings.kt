@@ -8,11 +8,11 @@ class CalculatorSearchSettings internal constructor(
     private val dataStore: LauncherDataStore,
 ){
     val enabled
-        get() = dataStore.data.map { it.calculatorEnabled }.distinctUntilChanged()
+        get() = dataStore.data.map { it.calculator.calculatorEnabled }.distinctUntilChanged()
 
     fun setEnabled(enabled: Boolean) {
         dataStore.update {
-            it.copy(calculatorEnabled = enabled)
+            it.copy(calculator = it.calculator.copy(calculatorEnabled = enabled))
         }
     }
 }

@@ -22,6 +22,9 @@ data class GridSettings(
     val columnCount: Int = 5,
     val iconSize: Int = 48,
     val showLabels: Boolean = true,
+    val labelSize: Float = 12f,
+    val labelMaxLines: Int = 1,
+    val labelShadow: Boolean = false,
     val showList: Boolean = false,
     val showListIcons: Boolean = true,
 )
@@ -30,404 +33,520 @@ class UiSettings internal constructor(
     private val launcherDataStore: LauncherDataStore,
 ) {
     val favoritesEnabled
-        get() = launcherDataStore.data.map { it.favoritesEnabled || it.homeScreenDock }
+        get() = launcherDataStore.data.map { it.favorites.favoritesEnabled || it.home.homeScreenDock }
 
     val iconShape
         get() = launcherDataStore.data.map {
-            it.iconsShape
+            it.icons.iconsShape
         }
 
     fun setIconShape(iconShape: IconShape) {
         launcherDataStore.update {
-            it.copy(iconsShape = iconShape)
+            it.copy(icons = it.icons.copy(iconsShape = iconShape))
         }
     }
 
     val gridSettings
         get() = launcherDataStore.data.map {
             GridSettings(
-                showLabels = it.gridLabels,
-                showList = it.gridList,
-                showListIcons = it.gridListIcons,
-                iconSize = it.gridIconSize,
-                columnCount = it.gridColumnCount,
+                showLabels = it.grid.gridLabels,
+                labelSize = it.grid.gridLabelSize,
+                labelMaxLines = it.grid.gridLabelMaxLines,
+                labelShadow = it.grid.gridLabelShadow,
+                showList = it.grid.gridList,
+                showListIcons = it.grid.gridListIcons,
+                iconSize = it.grid.gridIconSize,
+                columnCount = it.grid.gridColumnCount,
             )
         }
 
     fun setGridColumnCount(columnCount: Int) {
         launcherDataStore.update {
-            it.copy(gridColumnCount = columnCount)
+            it.copy(grid = it.grid.copy(gridColumnCount = columnCount))
         }
     }
 
     fun setGridIconSize(iconSize: Int) {
         launcherDataStore.update {
-            it.copy(gridIconSize = iconSize)
+            it.copy(grid = it.grid.copy(gridIconSize = iconSize))
         }
     }
 
     fun setGridShowLabels(showLabels: Boolean) {
         launcherDataStore.update {
-            it.copy(gridLabels = showLabels)
+            it.copy(grid = it.grid.copy(gridLabels = showLabels))
         }
+    }
+
+    val homeGridSettings
+        get() = launcherDataStore.data.map {
+            GridSettings(
+                showLabels = it.grid.gridLabels,
+                labelSize = it.grid.gridLabelSize,
+                labelMaxLines = it.grid.gridLabelMaxLines,
+                labelShadow = it.grid.gridLabelShadow,
+                showList = it.grid.gridList,
+                showListIcons = it.grid.gridListIcons,
+                iconSize = it.grid.homeGridIconSize ?: it.grid.gridIconSize,
+                columnCount = it.grid.homeGridColumnCount ?: it.grid.gridColumnCount,
+            )
+        }
+
+    fun setHomeGridColumnCount(columnCount: Int?) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(homeGridColumnCount = columnCount)) }
+    }
+
+    fun setHomeGridIconSize(iconSize: Int?) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(homeGridIconSize = iconSize)) }
+    }
+
+    val drawerGridSettings
+        get() = launcherDataStore.data.map {
+            GridSettings(
+                showLabels = it.grid.gridLabels,
+                labelSize = it.grid.gridLabelSize,
+                labelMaxLines = it.grid.gridLabelMaxLines,
+                labelShadow = it.grid.gridLabelShadow,
+                showList = it.grid.gridList,
+                showListIcons = it.grid.gridListIcons,
+                iconSize = it.grid.drawerGridIconSize ?: it.grid.gridIconSize,
+                columnCount = it.grid.drawerGridColumnCount ?: it.grid.gridColumnCount,
+            )
+        }
+
+    fun setDrawerGridColumnCount(columnCount: Int?) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(drawerGridColumnCount = columnCount)) }
+    }
+
+    fun setDrawerGridIconSize(iconSize: Int?) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(drawerGridIconSize = iconSize)) }
+    }
+
+    val dockGridSettings
+        get() = launcherDataStore.data.map {
+            GridSettings(
+                showLabels = it.grid.gridLabels,
+                labelSize = it.grid.gridLabelSize,
+                labelMaxLines = it.grid.gridLabelMaxLines,
+                labelShadow = it.grid.gridLabelShadow,
+                showList = it.grid.gridList,
+                showListIcons = it.grid.gridListIcons,
+                iconSize = it.grid.dockGridIconSize ?: it.grid.gridIconSize,
+                columnCount = it.grid.dockGridColumnCount ?: it.grid.gridColumnCount,
+            )
+        }
+
+    fun setDockGridColumnCount(columnCount: Int?) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(dockGridColumnCount = columnCount)) }
+    }
+
+    fun setDockGridIconSize(iconSize: Int?) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(dockGridIconSize = iconSize)) }
+    }
+
+    fun setGridLabelSize(size: Float) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(gridLabelSize = size)) }
+    }
+
+    fun setGridLabelMaxLines(lines: Int) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(gridLabelMaxLines = lines)) }
+    }
+
+    fun setGridLabelShadow(enabled: Boolean) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(gridLabelShadow = enabled)) }
+    }
+
+    val desktopLocked
+        get() = launcherDataStore.data.map { it.grid.desktopLocked }.distinctUntilChanged()
+
+    fun setDesktopLocked(locked: Boolean) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(desktopLocked = locked)) }
+    }
+
+    val dockBackgroundEnabled
+        get() = launcherDataStore.data.map { it.grid.dockBackgroundEnabled }.distinctUntilChanged()
+
+    fun setDockBackgroundEnabled(enabled: Boolean) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(dockBackgroundEnabled = enabled)) }
+    }
+
+    val dockBackgroundColor
+        get() = launcherDataStore.data.map { it.grid.dockBackgroundColor }.distinctUntilChanged()
+
+    fun setDockBackgroundColor(color: Int?) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(dockBackgroundColor = color)) }
+    }
+
+    val dockBackgroundOpacity
+        get() = launcherDataStore.data.map { it.grid.dockBackgroundOpacity }.distinctUntilChanged()
+
+    fun setDockBackgroundOpacity(opacity: Float) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(dockBackgroundOpacity = opacity)) }
+    }
+
+    val dockBackgroundBlur
+        get() = launcherDataStore.data.map { it.grid.dockBackgroundBlur }.distinctUntilChanged()
+
+    fun setDockBackgroundBlur(radius: Int) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(dockBackgroundBlur = radius)) }
     }
 
     fun setGridShowList(showList: Boolean) {
         launcherDataStore.update {
-            it.copy(gridList = showList)
+            it.copy(grid = it.grid.copy(gridList = showList))
         }
     }
 
     fun setGridShowListIcons(showIcons: Boolean) {
         launcherDataStore.update {
-            it.copy(gridListIcons = showIcons)
+            it.copy(grid = it.grid.copy(gridListIcons = showIcons))
         }
     }
 
     val cardStyle
         get() = launcherDataStore.data.map {
             CardStyle(
-                opacity = it.surfacesOpacity,
-                borderWidth = it.surfacesBorderWidth,
+                opacity = it.surfaces.surfacesOpacity,
+                borderWidth = it.surfaces.surfacesBorderWidth,
             )
         }
 
     fun setCardOpacity(opacity: Float) {
         launcherDataStore.update {
-            it.copy(surfacesOpacity = opacity)
+            it.copy(surfaces = it.surfaces.copy(surfacesOpacity = opacity))
         }
     }
 
     fun setCardBorderWidth(borderWidth: Int) {
         launcherDataStore.update {
-            it.copy(surfacesBorderWidth = borderWidth)
+            it.copy(surfaces = it.surfaces.copy(surfacesBorderWidth = borderWidth))
         }
     }
 
     val colorScheme
         get() = launcherDataStore.data.map {
-            it.uiColorScheme
+            it.ui.uiColorScheme
         }.distinctUntilChanged()
 
     val colorSchemeNightStart
         get() = launcherDataStore.data.map {
-            it.uiColorSchemeNightStart
+            it.ui.uiColorSchemeNightStart
         }.distinctUntilChanged()
 
     val colorSchemeDayStart
         get() = launcherDataStore.data.map {
-            it.uiColorSchemeDayStart
+            it.ui.uiColorSchemeDayStart
         }.distinctUntilChanged()
 
     val compatModeColors
         get() = launcherDataStore.data.map {
-            it.uiCompatModeColors
+            it.ui.uiCompatModeColors
         }.distinctUntilChanged()
 
     fun setCompatModeColors(enabled: Boolean) {
         launcherDataStore.update {
-            it.copy(uiCompatModeColors = enabled)
+            it.copy(ui = it.ui.copy(uiCompatModeColors = enabled))
         }
     }
 
     val statusBarColor
         get() = launcherDataStore.data.map {
-            it.systemBarsStatusColors
+            it.systemBars.systemBarsStatusColors
         }.distinctUntilChanged()
 
     val hideStatusBar
         get() = launcherDataStore.data.map {
-            it.systemBarsHideStatus
+            it.systemBars.systemBarsHideStatus
         }.distinctUntilChanged()
 
     val hideNavigationBar
         get() = launcherDataStore.data.map {
-            it.systemBarsHideNav
+            it.systemBars.systemBarsHideNav
         }.distinctUntilChanged()
 
     fun setHideStatusBar(hideStatusBar: Boolean) {
         launcherDataStore.update {
-            it.copy(systemBarsHideStatus = hideStatusBar)
+            it.copy(systemBars = it.systemBars.copy(systemBarsHideStatus = hideStatusBar))
         }
     }
 
     fun setHideNavigationBar(hideNavigationBar: Boolean) {
         launcherDataStore.update {
-            it.copy(systemBarsHideNav = hideNavigationBar)
+            it.copy(systemBars = it.systemBars.copy(systemBarsHideNav = hideNavigationBar))
         }
     }
 
     val navigationBarColor
         get() = launcherDataStore.data.map {
-            it.systemBarsNavColors
+            it.systemBars.systemBarsNavColors
         }.distinctUntilChanged()
 
     fun setStatusBarColor(statusBarColor: SystemBarColors) {
         launcherDataStore.update {
-            it.copy(systemBarsStatusColors = statusBarColor)
+            it.copy(systemBars = it.systemBars.copy(systemBarsStatusColors = statusBarColor))
         }
     }
 
     fun setNavigationBarColor(navigationBarColor: SystemBarColors) {
         launcherDataStore.update {
-            it.copy(systemBarsNavColors = navigationBarColor)
+            it.copy(systemBars = it.systemBars.copy(systemBarsNavColors = navigationBarColor))
         }
     }
 
     val chargingAnimation
         get() = launcherDataStore.data.map {
-            it.animationsCharging
+            it.animations.animationsCharging
         }.distinctUntilChanged()
 
     fun setChargingAnimation(chargingAnimation: Boolean) {
         launcherDataStore.update {
-            it.copy(animationsCharging = chargingAnimation)
+            it.copy(animations = it.animations.copy(animationsCharging = chargingAnimation))
         }
     }
 
     val clockFillScreen
         get() = launcherDataStore.data.map {
-            it.homeScreenWidgets
+            it.home.homeScreenWidgets
         }.distinctUntilChanged()
 
     val searchBarStyle
         get() = launcherDataStore.data.map {
-            it.searchBarStyle
+            it.searchBar.searchBarStyle
         }.distinctUntilChanged()
 
     fun setSearchBarStyle(searchBarStyle: SearchBarStyle) {
         launcherDataStore.update {
-            it.copy(searchBarStyle = searchBarStyle)
+            it.copy(searchBar = it.searchBar.copy(searchBarStyle = searchBarStyle))
         }
     }
 
     val searchBarColor
         get() = launcherDataStore.data.map {
-            it.searchBarColors
+            it.searchBar.searchBarColors
         }.distinctUntilChanged()
 
     fun setSearchBarColor(color: SearchBarColors) {
         launcherDataStore.update {
-            it.copy(searchBarColors = color)
+            it.copy(searchBar = it.searchBar.copy(searchBarColors = color))
         }
     }
 
     val bottomSearchBar
         get() = launcherDataStore.data.map {
-            it.searchBarBottom
+            it.searchBar.searchBarBottom
         }.distinctUntilChanged()
 
     fun setBottomSearchBar(bottomSearchBar: Boolean) {
         launcherDataStore.update {
-            it.copy(searchBarBottom = bottomSearchBar)
+            it.copy(searchBar = it.searchBar.copy(searchBarBottom = bottomSearchBar))
         }
     }
 
     val reverseSearchResults
         get() = launcherDataStore.data.map {
-            it.searchResultsReversed
+            it.searchResults.searchResultsReversed
         }.distinctUntilChanged()
 
     fun setReverseSearchResults(reverseSearchResults: Boolean) {
         launcherDataStore.update {
-            it.copy(searchResultsReversed = reverseSearchResults)
+            it.copy(searchResults = it.searchResults.copy(searchResultsReversed = reverseSearchResults))
         }
     }
 
     val fixedSearchBar
         get() = launcherDataStore.data.map {
-            it.searchBarFixed
+            it.searchBar.searchBarFixed
         }.distinctUntilChanged()
 
     fun setFixedSearchBar(fixedSearchBar: Boolean) {
         launcherDataStore.update {
-            it.copy(searchBarFixed = fixedSearchBar)
+            it.copy(searchBar = it.searchBar.copy(searchBarFixed = fixedSearchBar))
         }
     }
 
     val openKeyboardOnSearch
         get() = launcherDataStore.data.map {
-            it.searchBarKeyboard
+            it.searchBar.searchBarKeyboard
         }.distinctUntilChanged()
 
 
     val orientation
         get() = launcherDataStore.data.map {
-            it.uiOrientation
+            it.ui.uiOrientation
         }.distinctUntilChanged()
 
     fun setOrientation(orientation: ScreenOrientation) {
         launcherDataStore.update {
-            it.copy(uiOrientation = orientation)
+            it.copy(ui = it.ui.copy(uiOrientation = orientation))
         }
     }
 
 
     val colorsId
         get() = launcherDataStore.data.map {
-            it.uiColorsId
+            it.ui.uiColorsId
         }.distinctUntilChanged()
 
     fun setColorsId(colorsId: UUID) {
         launcherDataStore.update {
-            it.copy(uiColorsId = colorsId)
+            it.copy(ui = it.ui.copy(uiColorsId = colorsId))
         }
     }
 
     val shapesId
         get() = launcherDataStore.data.map {
-            it.uiShapesId
+            it.ui.uiShapesId
         }.distinctUntilChanged()
 
     fun setShapesId(shapesId: UUID) {
         launcherDataStore.update {
-            it.copy(uiShapesId = shapesId)
+            it.copy(ui = it.ui.copy(uiShapesId = shapesId))
         }
     }
 
     val transparenciesId
         get() = launcherDataStore.data.map {
-            it.uiTransparenciesId
+            it.ui.uiTransparenciesId
         }.distinctUntilChanged()
 
     fun setTransparenciesId(transparenciesId: UUID) {
         launcherDataStore.update {
-            it.copy(uiTransparenciesId = transparenciesId)
+            it.copy(ui = it.ui.copy(uiTransparenciesId = transparenciesId))
         }
     }
 
     val typographyId
         get() = launcherDataStore.data.map {
-            it.uiTypographyId
+            it.ui.uiTypographyId
         }.distinctUntilChanged()
 
     fun setTypographyId(typographyId: UUID) {
         launcherDataStore.update {
-            it.copy(uiTypographyId = typographyId)
+            it.copy(ui = it.ui.copy(uiTypographyId = typographyId))
         }
     }
 
     val fontScale
         get() = launcherDataStore.data.map {
-            it.uiFontScale
+            it.ui.uiFontScale
         }.distinctUntilChanged()
 
     fun setFontScale(fontScale: Float) {
         launcherDataStore.update {
-            it.copy(uiFontScale = fontScale.coerceIn(0.8f, 2f))
+            it.copy(ui = it.ui.copy(uiFontScale = fontScale.coerceIn(0.8f, 2f)))
         }
     }
 
     fun setColorScheme(colorScheme: ColorScheme) {
         launcherDataStore.update {
-            it.copy(uiColorScheme = colorScheme)
+            it.copy(ui = it.ui.copy(uiColorScheme = colorScheme))
         }
     }
 
     fun setColorSchemeNightStart(hour: Int) {
         launcherDataStore.update {
-            it.copy(uiColorSchemeNightStart = hour.coerceIn(0, 23))
+            it.copy(ui = it.ui.copy(uiColorSchemeNightStart = hour.coerceIn(0, 23)))
         }
     }
 
     fun setColorSchemeDayStart(hour: Int) {
         launcherDataStore.update {
-            it.copy(uiColorSchemeDayStart = hour.coerceIn(0, 23))
+            it.copy(ui = it.ui.copy(uiColorSchemeDayStart = hour.coerceIn(0, 23)))
         }
     }
 
     val dock
         get() = launcherDataStore.data.map {
-            it.homeScreenDock
+            it.home.homeScreenDock
         }.distinctUntilChanged()
 
     fun setDock(dock: Boolean) {
         launcherDataStore.update {
-            it.copy(homeScreenDock = dock)
+            it.copy(home = it.home.copy(homeScreenDock = dock))
         }
     }
 
     val dockRows
         get() = launcherDataStore.data.map {
-            it.homeScreenDockRows
+            it.home.homeScreenDockRows
         }.distinctUntilChanged()
 
     fun setDockRows(rows: Int) {
         launcherDataStore.update {
-            it.copy(homeScreenDockRows = rows)
+            it.copy(home = it.home.copy(homeScreenDockRows = rows))
         }
     }
 
     val dockColumns
         get() = launcherDataStore.data.map {
-            it.homeScreenDockColumns
+            it.home.homeScreenDockColumns
         }.distinctUntilChanged()
 
     fun setDockColumns(columns: Int) {
         launcherDataStore.update {
-            it.copy(homeScreenDockColumns = columns)
+            it.copy(home = it.home.copy(homeScreenDockColumns = columns))
         }
     }
 
     val dockDefaultPage
         get() = launcherDataStore.data.map {
-            it.homeScreenDockDefaultPage
+            it.home.homeScreenDockDefaultPage
         }.distinctUntilChanged()
 
     fun setDockDefaultPage(page: Int) {
         launcherDataStore.update {
-            it.copy(homeScreenDockDefaultPage = page)
+            it.copy(home = it.home.copy(homeScreenDockDefaultPage = page))
         }
     }
 
     val homeScreenWidgets
         get() = launcherDataStore.data.map {
-            it.homeScreenWidgets
+            it.home.homeScreenWidgets
         }.distinctUntilChanged()
 
     fun setHomeScreenWidgets(widgets: Boolean) {
         launcherDataStore.update {
-            it.copy(homeScreenWidgets = widgets)
+            it.copy(home = it.home.copy(homeScreenWidgets = widgets))
         }
     }
 
     val widgetsTutorialShown
         get() = launcherDataStore.data.map {
-            it.widgetsTutorialShown
+            it.home.widgetsTutorialShown
         }.distinctUntilChanged()
 
     fun setWidgetsTutorialShown(shown: Boolean) {
         launcherDataStore.update {
-            it.copy(widgetsTutorialShown = shown)
+            it.copy(home = it.home.copy(widgetsTutorialShown = shown))
         }
     }
 
     val homeScreenPageCount
         get() = launcherDataStore.data.map {
-            it.homeScreenPageCount
+            it.home.homeScreenPageCount
         }.distinctUntilChanged()
 
     fun setHomeScreenPageCount(count: Int) {
         launcherDataStore.update {
-            it.copy(homeScreenPageCount = count.coerceIn(1, 9))
+            it.copy(home = it.home.copy(homeScreenPageCount = count.coerceIn(1, 9)))
         }
     }
 
     val widgetEditButton
         get() = launcherDataStore.data.map {
-            it.widgetsEditButton
+            it.widgets.widgetsEditButton
         }.distinctUntilChanged()
 
     fun setWidgetEditButton(editButton: Boolean) {
         launcherDataStore.update {
-            it.copy(widgetsEditButton = editButton)
+            it.copy(widgets = it.widgets.copy(widgetsEditButton = editButton))
         }
     }
 
     val dockPages
-        get() = launcherDataStore.data.map { it.homeScreenDockPages }
+        get() = launcherDataStore.data.map { it.home.homeScreenDockPages }
 
     fun setDockPages(pages: List<List<de.mm20.launcher2.preferences.DockItem>>) {
-        launcherDataStore.update { it.copy(homeScreenDockPages = pages) }
+        launcherDataStore.update { it.copy(home = it.home.copy(homeScreenDockPages = pages)) }
     }
 }

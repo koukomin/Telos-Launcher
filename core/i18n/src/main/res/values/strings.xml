@@ -725,6 +725,7 @@
     <string name="freeze_dashboard_state_normal">Normal</string>
     <string name="freeze_dashboard_state_suspended">Suspended</string>
     <string name="freeze_dashboard_state_disabled">Disabled</string>
+    <string name="freeze_dashboard_state_hidden">Hidden</string>
     <string name="freeze_dashboard_running_now">Running now</string>
     <string name="freeze_dashboard_not_used_today">Not used today</string>
     <string name="freeze_dashboard_runtime_today">%1$s today</string>
@@ -799,6 +800,9 @@
     <string name="web_app_shortcut_url">URL</string>
     <string name="web_app_shortcut_pick_icon">Choose icon</string>
     <string name="web_app_shortcut_detect_icon">Auto-detect icon</string>
+    <string name="web_app_shortcut_enable_notifications">Enable notifications</string>
+    <string name="notification_channel_web_apps">Web App Notifications</string>
+    <string name="notification_channel_web_apps_description">Notifications sent by your Web App shortcuts</string>
     <string name="web_app_icon_picker_tab_icon_pack">Icon pack</string>
     <string name="web_app_icon_picker_tab_photo">Photo</string>
     <string name="web_app_icon_picker_tab_favicon">Favicon website</string>
@@ -916,6 +920,19 @@
     <string name="preference_category_grid">Grid</string>
     <string name="preference_grid_icon_size">Icon size</string>
     <string name="preference_grid_column_count">Number of columns</string>
+    <string name="preference_category_grid_home">Home screen grid</string>
+    <string name="preference_category_grid_drawer">Search drawer grid</string>
+    <string name="preference_category_grid_dock">Dock grid</string>
+    <string name="preference_grid_label_size">Label size</string>
+    <string name="preference_grid_label_max_lines">Label max lines</string>
+    <string name="preference_grid_label_shadow">Label shadow</string>
+    <string name="preference_desktop_lock">Lock desktop</string>
+    <string name="preference_desktop_lock_summary">Prevent moving or removing items on the home screen</string>
+    <string name="preference_dock_background">Dock background</string>
+    <string name="preference_dock_background_summary">Show a background plate behind the dock</string>
+    <string name="preference_dock_background_color">Background color</string>
+    <string name="preference_dock_background_opacity">Background opacity</string>
+    <string name="preference_dock_background_blur">Background blur</string>
     <string name="preference_grid_list_style">Show apps in a list</string>
     <string name="preference_grid_list_icons">Show app icons in list</string>
     <string name="preference_grid_labels">Show labels</string>
@@ -1114,6 +1131,13 @@
     <string name="search_query_private_space">Private space</string>
     <string name="search_action_private_space_lock">Lock private space</string>
     <string name="search_action_private_space_unlock">Unlock private space</string>
+
+    <string name="search_query_work_profile">Work profile</string>
+    <string name="search_action_work_profile_pause">Pause work profile</string>
+    <string name="search_action_work_profile_resume">Resume work profile</string>
+    <string name="dock_menu_add_app">Add app to dock</string>
+    <string name="dock_menu_replace">Replace</string>
+    <string name="dock_menu_remove">Remove from dock</string>
     <string name="create_search_action_title">New quick action</string>
     <string name="edit_search_action_title">Edit quick action</string>
     <string name="create_search_action_type">What type of action do you want to create?</string>
@@ -1712,4 +1736,33 @@
     <string name="recommendation_info_body">Telos occasionally shows one editorial app suggestion in the drawer or in search results that match a category like VPN or password managers. These are separate from your search results and installed apps - Telos doesn\'t currently have any affiliate or advertising relationship with the apps shown. You can turn these suggestions off entirely in Search settings.</string>
     <string name="preference_show_app_recommendations">Show app recommendations</string>
     <string name="preference_show_app_recommendations_summary">Occasionally suggest one app in a category like VPN or password managers, in the drawer and in matching search results</string>
+
+    <string name="preference_screen_routines">Modes and Routines</string>
+    <string name="preference_routines_enabled">Enable routines</string>
+    <string name="preference_routines_enabled_summary">Automate your device based on conditions</string>
+    <string name="preference_category_routines">Routines</string>
+
+    <string name="preference_screen_advanced_search">Advanced search</string>
+    <string name="preference_advanced_search_enabled">Advanced search</string>
+    <string name="preference_advanced_search_enabled_summary">Sesam-style intelligent search features</string>
+    <string name="preference_category_advanced_search_features">Features</string>
+    <string name="preference_advanced_search_learning_ranking">Learning ranking</string>
+    <string name="preference_advanced_search_learning_ranking_summary">Results you pick more often rise to the top</string>
+    <string name="preference_advanced_search_fuzzy_matching">Fuzzy matching</string>
+    <string name="preference_advanced_search_fuzzy_matching_summary">Match results based on word initials (e.g. \"PS\" for Play Store)</string>
+    <string name="preference_advanced_search_app_shortcuts">App shortcuts</string>
+    <string name="preference_advanced_search_app_shortcuts_summary">Show dynamic actions from your apps</string>
+    <string name="preference_advanced_search_contact_actions">Quick contact actions</string>
+    <string name="preference_advanced_search_contact_actions_summary">Inline call/SMS/email buttons for contacts</string>
+    <string name="preference_advanced_search_quick_settings">Quick settings search</string>
+    <string name="preference_advanced_search_quick_settings_summary">Search for system settings like Wi-Fi or Bluetooth</string>
+    <string name="preference_advanced_search_frozen_apps">Search frozen apps</string>
+    <string name="preference_advanced_search_frozen_apps_summary">Include apps from Freeze Manager in results</string>
+    <string name="preference_advanced_search_user_shortcuts">User shortcuts</string>
+    <string name="preference_advanced_search_user_shortcuts_summary">Define custom keywords for actions</string>
+
+    <string name="preference_app_lock_relock_on_screen_off">Relock on screen off</string>
+    <string name="preference_app_lock_relock_on_screen_off_summary">Immediately lock all apps when screen is turned off</string>
+    <string name="preference_app_lock_relock_only_on_screen_off">Stay unlocked until screen off</string>
+    <string name="preference_app_lock_relock_only_on_screen_off_summary">Apps remain unlocked as long as the screen is on</string>
 </resources>

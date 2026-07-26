@@ -16,41 +16,41 @@ class IconSettings internal constructor(
 ) : Flow<IconSettingsData> by (
         launcherDataStore.data.map {
             IconSettingsData(
-                themedIcons = it.iconsThemed,
-                forceThemed = it.iconsForceThemed,
-                adaptify = it.iconsAdaptify,
-                iconPack = it.iconsPack,
+                themedIcons = it.icons.iconsThemed,
+                forceThemed = it.icons.iconsForceThemed,
+                adaptify = it.icons.iconsAdaptify,
+                iconPack = it.icons.iconsPack,
             )
         }
         ) {
 
     fun setAdaptifyLegacyIcons(adaptify: Boolean) {
         launcherDataStore.update {
-            it.copy(iconsAdaptify = adaptify)
+            it.copy(icons = it.icons.copy(iconsAdaptify = adaptify))
         }
     }
 
     fun setThemedIcons(themedIcons: Boolean) {
         launcherDataStore.update {
-            it.copy(iconsThemed = themedIcons)
+            it.copy(icons = it.icons.copy(iconsThemed = themedIcons))
         }
     }
 
     fun setForceThemedIcons(forceThemed: Boolean) {
         launcherDataStore.update {
-            it.copy(iconsForceThemed = forceThemed)
+            it.copy(icons = it.icons.copy(iconsForceThemed = forceThemed))
         }
     }
 
     fun setIconPack(iconPack: String?) {
         launcherDataStore.update {
-            it.copy(iconsPack = iconPack)
+            it.copy(icons = it.icons.copy(iconsPack = iconPack))
         }
     }
 
     fun setIconPackThemed(iconPackThemed: Boolean) {
         launcherDataStore.update {
-            it.copy(iconsPackThemed = iconPackThemed)
+            it.copy(icons = it.icons.copy(iconsPackThemed = iconPackThemed))
         }
     }
 

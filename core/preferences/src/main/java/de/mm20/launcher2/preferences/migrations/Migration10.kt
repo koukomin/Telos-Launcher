@@ -22,22 +22,24 @@ class Migration10 : DataMigration<LauncherSettingsData> {
     }
 
     override suspend fun migrate(currentData: LauncherSettingsData): LauncherSettingsData {
-        if (!currentData.floatingLauncherEnabled) {
+        if (!currentData.floatingLauncher.floatingLauncherEnabled) {
             return currentData.copy(schemaVersion = 10)
         }
-        val isLeft = currentData.floatingLauncherEdge == FloatingLauncherEdge.Left
+        val isLeft = currentData.floatingLauncher.floatingLauncherEdge == FloatingLauncherEdge.Left
         val zone = when {
-            currentData.floatingLauncherPosition < 1f / 3f ->
+            currentData.floatingLauncher.floatingLauncherPosition < 1f / 3f ->
                 if (isLeft) FloatingLauncherZone.LeftTop else FloatingLauncherZone.RightTop
 
-            currentData.floatingLauncherPosition > 2f / 3f ->
+            currentData.floatingLauncher.floatingLauncherPosition > 2f / 3f ->
                 if (isLeft) FloatingLauncherZone.LeftBottom else FloatingLauncherZone.RightBottom
 
             else -> if (isLeft) FloatingLauncherZone.LeftMiddle else FloatingLauncherZone.RightMiddle
         }
         return currentData.copy(
             schemaVersion = 10,
-            floatingLauncherZones = mapOf(zone to FloatingLauncherZoneConfig(enabled = true)),
+            floatingLauncher = currentData.floatingLauncher.copy(
+                floatingLauncherZones = mapOf(zone to FloatingLauncherZoneConfig(enabled = true)),
+            ),
         )
     }
 }

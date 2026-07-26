@@ -10,56 +10,56 @@ class LocaleSettings internal constructor(
     private val launcherDataStore: LauncherDataStore,
 ) {
     val timeFormat
-        get() = launcherDataStore.data.map { it.localeTimeFormat }
+        get() = launcherDataStore.data.map { it.locale.localeTimeFormat }
 
     fun setTimeFormat(timeFormat: TimeFormat) {
         launcherDataStore.update {
-            it.copy(localeTimeFormat = timeFormat)
+            it.copy(locale = it.locale.copy(localeTimeFormat = timeFormat))
         }
     }
 
     val measurementSystem
-        get() = launcherDataStore.data.map { it.localeMeasurementSystem }
+        get() = launcherDataStore.data.map { it.locale.localeMeasurementSystem }
 
     fun setMeasurementSystem(measurementSystem: MeasurementSystem) {
         launcherDataStore.update {
-            it.copy(localeMeasurementSystem = measurementSystem)
+            it.copy(locale = it.locale.copy(localeMeasurementSystem = measurementSystem))
         }
     }
 
     val transliterator
-        get() = launcherDataStore.data.map { it.localeTransliterator }
+        get() = launcherDataStore.data.map { it.locale.localeTransliterator }
 
     fun setTransliterator(transliterator: String?) {
         launcherDataStore.update {
-            it.copy(localeTransliterator = transliterator)
+            it.copy(locale = it.locale.copy(localeTransliterator = transliterator))
         }
     }
 
     val primaryCalendar
-        get() = launcherDataStore.data.map { it.localePrimaryCalendar }
+        get() = launcherDataStore.data.map { it.locale.localePrimaryCalendar }
 
     fun setPrimaryCalendar(primaryCalendar: String?) {
         launcherDataStore.update {
-            it.copy(localePrimaryCalendar = primaryCalendar)
+            it.copy(locale = it.locale.copy(localePrimaryCalendar = primaryCalendar))
         }
     }
 
     val secondaryCalendar
-        get() = launcherDataStore.data.map { it.localeSecondaryCalendar }
+        get() = launcherDataStore.data.map { it.locale.localeSecondaryCalendar }
 
     fun setSecondaryCalendar(secondaryCalendar: String?) {
         launcherDataStore.update {
-            it.copy(localeSecondaryCalendar = secondaryCalendar)
+            it.copy(locale = it.locale.copy(localeSecondaryCalendar = secondaryCalendar))
         }
     }
 
     val currencies
-        get() = launcherDataStore.data.map { it.localeCurrencies.distinct() }
+        get() = launcherDataStore.data.map { it.locale.localeCurrencies.distinct() }
 
      fun setCurrencies(currencies: List<String>) {
          launcherDataStore.update {
-             it.copy(localeCurrencies = currencies.distinct())
+             it.copy(locale = it.locale.copy(localeCurrencies = currencies.distinct()))
          }
      }
 }

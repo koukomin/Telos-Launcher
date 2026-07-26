@@ -9,11 +9,11 @@ class RankingSettings internal constructor(
     private val launcherDataStore: LauncherDataStore,
 ){
     val weightFactor
-        get() = launcherDataStore.data.map { it.rankingWeightFactor }.distinctUntilChanged()
+        get() = launcherDataStore.data.map { it.searchResults.rankingWeightFactor }.distinctUntilChanged()
 
     fun setWeightFactor(weightFactor: WeightFactor) {
         launcherDataStore.update {
-            it.copy(rankingWeightFactor = weightFactor)
+            it.copy(searchResults = it.searchResults.copy(rankingWeightFactor = weightFactor))
         }
     }
 }

@@ -14,35 +14,35 @@ class ProtectionSettings internal constructor(
     private val dataStore: LauncherDataStore,
 ) {
     val lockSensitiveSettings
-        get() = dataStore.data.map { it.protectionLockSensitiveSettings }
+        get() = dataStore.data.map { it.protection.protectionLockSensitiveSettings }
             .distinctUntilChanged()
 
     fun setLockSensitiveSettings(locked: Boolean) {
-        dataStore.update { it.copy(protectionLockSensitiveSettings = locked) }
+        dataStore.update { it.copy(protection = it.protection.copy(protectionLockSensitiveSettings = locked)) }
     }
 
     val lockMethod
-        get() = dataStore.data.map { it.protectionLockMethod }
+        get() = dataStore.data.map { it.protection.protectionLockMethod }
             .distinctUntilChanged()
 
     fun setLockMethod(method: SettingsLockMethod) {
-        dataStore.update { it.copy(protectionLockMethod = method) }
+        dataStore.update { it.copy(protection = it.protection.copy(protectionLockMethod = method)) }
     }
 
     val useCustomLock
-        get() = dataStore.data.map { it.protectionUseCustomLock }
+        get() = dataStore.data.map { it.protection.protectionUseCustomLock }
             .distinctUntilChanged()
 
     fun setUseCustomLock(use: Boolean) {
-        dataStore.update { it.copy(protectionUseCustomLock = use) }
+        dataStore.update { it.copy(protection = it.protection.copy(protectionUseCustomLock = use)) }
     }
 
     val customLockHashed
-        get() = dataStore.data.map { it.protectionCustomLockHashed }
+        get() = dataStore.data.map { it.protection.protectionCustomLockHashed }
             .distinctUntilChanged()
 
     fun setCustomLockHashed(hashed: String?) {
-        dataStore.update { it.copy(protectionCustomLockHashed = hashed) }
+        dataStore.update { it.copy(protection = it.protection.copy(protectionCustomLockHashed = hashed)) }
     }
 
     /**
@@ -50,10 +50,10 @@ class ProtectionSettings internal constructor(
      * BiometricPrompt via [lockMethod] - the custom PIN option does not apply here.
      */
     val lockLauncher
-        get() = dataStore.data.map { it.protectionLockLauncher }
+        get() = dataStore.data.map { it.protection.protectionLockLauncher }
             .distinctUntilChanged()
 
     fun setLockLauncher(locked: Boolean) {
-        dataStore.update { it.copy(protectionLockLauncher = locked) }
+        dataStore.update { it.copy(protection = it.protection.copy(protectionLockLauncher = locked)) }
     }
 }

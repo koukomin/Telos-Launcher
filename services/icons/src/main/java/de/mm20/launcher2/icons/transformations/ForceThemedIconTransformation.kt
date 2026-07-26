@@ -28,6 +28,7 @@ internal class ForceThemedIconTransformation : LauncherIconTransformation {
             is TextLayer -> layer.copy(
                 color = 0
             )
+            is GridLayer -> layer.copy(layers = layer.layers.map { asThemed(it) })
             else -> layer
         }
     }

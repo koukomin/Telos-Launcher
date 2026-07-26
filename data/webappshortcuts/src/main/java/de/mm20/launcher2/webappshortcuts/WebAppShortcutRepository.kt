@@ -42,6 +42,7 @@ interface WebAppShortcutRepository : SearchableRepository<WebAppShortcut> {
         order: Int = 0,
         iconSource: WebAppShortcut.IconSource = WebAppShortcut.IconSource.Website,
         customCss: String? = null,
+        notificationsEnabled: Boolean = false,
     ): WebAppShortcut
 
     fun update(
@@ -56,6 +57,7 @@ interface WebAppShortcutRepository : SearchableRepository<WebAppShortcut> {
         order: Int = 0,
         iconSource: WebAppShortcut.IconSource = WebAppShortcut.IconSource.Website,
         customCss: String? = null,
+        notificationsEnabled: Boolean = false,
     ): WebAppShortcut
 
     fun delete(shortcut: WebAppShortcut)
@@ -94,6 +96,7 @@ internal class WebAppShortcutRepositoryImpl(
         order: Int,
         iconSource: WebAppShortcut.IconSource,
         customCss: String?,
+        notificationsEnabled: Boolean,
     ): WebAppShortcut {
         val shortcut = WebAppShortcutImpl(
             id = UUID.randomUUID().toString(),
@@ -108,6 +111,7 @@ internal class WebAppShortcutRepositoryImpl(
             showInPanel = showInPanel,
             order = order,
             iconSource = iconSource,
+            notificationsEnabled = notificationsEnabled,
         )
         savableSearchableRepository.insert(shortcut)
         return shortcut
@@ -125,6 +129,7 @@ internal class WebAppShortcutRepositoryImpl(
         order: Int,
         iconSource: WebAppShortcut.IconSource,
         customCss: String?,
+        notificationsEnabled: Boolean,
     ): WebAppShortcut {
         shortcut as WebAppShortcutImpl
         val updated = shortcut.copy(
@@ -138,6 +143,7 @@ internal class WebAppShortcutRepositoryImpl(
             showInPanel = showInPanel,
             order = order,
             iconSource = iconSource,
+            notificationsEnabled = notificationsEnabled,
         )
         savableSearchableRepository.update(updated)
         return updated

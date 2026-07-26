@@ -14,20 +14,22 @@ class WebAppsPanelSettings internal constructor(
     private val dataStore: LauncherDataStore,
 ) {
     val items
-        get() = dataStore.data.map { it.webAppsPanelItems }.distinctUntilChanged()
+        get() = dataStore.data.map { it.webAppsPanel.webAppsPanelItems }.distinctUntilChanged()
 
     fun setItems(items: List<String>) {
-        dataStore.update { it.copy(webAppsPanelItems = items) }
+        dataStore.update { it.copy(webAppsPanel = it.webAppsPanel.copy(webAppsPanelItems = items)) }
     }
 
     fun addItem(key: String) {
         dataStore.update {
-            if (it.webAppsPanelItems.contains(key)) it
-            else it.copy(webAppsPanelItems = it.webAppsPanelItems + key)
+            if (it.webAppsPanel.webAppsPanelItems.contains(key)) it
+            else it.copy(webAppsPanel = it.webAppsPanel.copy(webAppsPanelItems = it.webAppsPanel.webAppsPanelItems + key))
         }
     }
 
     fun removeItem(key: String) {
-        dataStore.update { it.copy(webAppsPanelItems = it.webAppsPanelItems - key) }
+        dataStore.update {
+            it.copy(webAppsPanel = it.webAppsPanel.copy(webAppsPanelItems = it.webAppsPanel.webAppsPanelItems - key))
+        }
     }
 }

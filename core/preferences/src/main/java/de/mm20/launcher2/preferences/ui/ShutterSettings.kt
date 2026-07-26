@@ -12,28 +12,30 @@ class ShutterSettings internal constructor(
     private val dataStore: LauncherDataStore,
 ) {
     val enabled
-        get() = dataStore.data.map { it.shuttersEnabled }.distinctUntilChanged()
+        get() = dataStore.data.map { it.shutters.shuttersEnabled }.distinctUntilChanged()
 
     fun setEnabled(enabled: Boolean) {
-        dataStore.update { it.copy(shuttersEnabled = enabled) }
+        dataStore.update { it.copy(shutters = it.shutters.copy(shuttersEnabled = enabled)) }
     }
 
     val apps
-        get() = dataStore.data.map { it.shutterApps }.distinctUntilChanged()
+        get() = dataStore.data.map { it.shutters.shutterApps }.distinctUntilChanged()
 
     /** The SavableSearchable key assigned as [packageName]'s shutter, if any. */
     fun appFor(packageName: String) = dataStore.data
-        .map { it.shutterApps[packageName] }
+        .map { it.shutters.shutterApps[packageName] }
         .distinctUntilChanged()
 
     fun setApp(packageName: String, searchableKey: String?) {
         dataStore.update {
             it.copy(
-                shutterApps = if (searchableKey != null) {
-                    it.shutterApps + (packageName to searchableKey)
-                } else {
-                    it.shutterApps - packageName
-                }
+                shutters = it.shutters.copy(
+                    shutterApps = if (searchableKey != null) {
+                        it.shutters.shutterApps + (packageName to searchableKey)
+                    } else {
+                        it.shutters.shutterApps - packageName
+                    }
+                )
             )
         }
     }

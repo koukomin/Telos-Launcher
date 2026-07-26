@@ -58,4 +58,5 @@ dependencies {
     implementation(project(":core:base"))
     implementation(project(":data:files"))
     implementation(project(":data:searchable"))
+    implementation(project(":services:app-management"))
 }

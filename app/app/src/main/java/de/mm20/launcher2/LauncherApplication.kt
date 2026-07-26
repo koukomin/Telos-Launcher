@@ -41,6 +41,7 @@ import de.mm20.launcher2.data.plugins.dataPluginsModule
 import de.mm20.launcher2.devicepose.devicePoseModule
 import de.mm20.launcher2.feed.feedModule
 import de.mm20.launcher2.freeze.freezeModule
+import de.mm20.launcher2.appmanagement.appManagementModule
 import de.mm20.launcher2.applock.appLockModule
 import de.mm20.launcher2.preferences.applock.AppLockSettings
 import de.mm20.launcher2.ui.applock.AppLockOverlayService
@@ -130,6 +131,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     islandOverlayModule,
                     webAppsPanelModule,
                     appLockModule,
+                    appManagementModule,
                 )
             )
         }

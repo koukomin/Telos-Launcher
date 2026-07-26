@@ -42,6 +42,7 @@ import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LauncherCard
+import de.mm20.launcher2.ui.launcher.search.appmanagement.FossUpdateResults
 import de.mm20.launcher2.ui.launcher.search.apps.AppResults
 import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorResults
 import de.mm20.launcher2.ui.launcher.search.calendar.CalendarResults
@@ -111,6 +112,7 @@ fun SearchColumn(
     val website = viewModel.websiteResults
     val webAppShortcuts = viewModel.webAppShortcutResults
     val hiddenResults = viewModel.hiddenResults
+    val updateResults = viewModel.updateResults
 
     val bestMatch by viewModel.bestMatch
 
@@ -229,6 +231,14 @@ fun SearchColumn(
                     // Empty item to maintain scroll position
                     item(key = "favorites") {
                     }
+                }
+
+                if (isSearchEmpty && updateResults.isNotEmpty()) {
+                    FossUpdateResults(
+                        updates = updateResults,
+                        onDismiss = { viewModel.dismissUpdate(it.componentName.packageName) },
+                        reverse = reverse,
+                    )
                 }
 
                 if (isSearchEmpty && profiles.size > 1 && allAppsEnabled) {

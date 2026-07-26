@@ -68,6 +68,7 @@ class WebAppsPanelManager internal constructor(
                         order = index,
                         iconSource = shortcut.iconSource,
                         customCss = shortcut.customCss,
+                        notificationsEnabled = shortcut.notificationsEnabled,
                     )
                 }
             }
@@ -105,12 +106,13 @@ class WebAppsPanelManager internal constructor(
                 order = index,
                 iconSource = shortcut.iconSource,
                 customCss = shortcut.customCss,
+                notificationsEnabled = shortcut.notificationsEnabled,
             )
         }
     }
 
     fun remove(shortcut: WebAppShortcut) {
-        webAppShortcutRepository.update(shortcut, shortcut.label, shortcut.url, shortcut.iconUri, shortcut.faviconUrl, shortcut.rendererPackage, shortcut.showInGrid, false, shortcut.order, shortcut.iconSource, shortcut.customCss)
+        webAppShortcutRepository.update(shortcut, shortcut.label, shortcut.url, shortcut.iconUri, shortcut.faviconUrl, shortcut.rendererPackage, shortcut.showInGrid, false, shortcut.order, shortcut.iconSource, shortcut.customCss, shortcut.notificationsEnabled)
     }
 
     fun addExisting(shortcut: WebAppShortcut) {
@@ -118,7 +120,7 @@ class WebAppsPanelManager internal constructor(
             webAppShortcutRepository.update(
                 shortcut, shortcut.label, shortcut.url, shortcut.iconUri, shortcut.faviconUrl,
                 shortcut.rendererPackage, shortcut.showInGrid, true, nextOrder(), shortcut.iconSource,
-                shortcut.customCss,
+                shortcut.customCss, shortcut.notificationsEnabled,
             )
         }
     }
@@ -141,6 +143,7 @@ class WebAppsPanelManager internal constructor(
                 showInPanel = true,
                 order = nextOrder(),
                 iconSource = WebAppShortcut.IconSource.Website,
+                notificationsEnabled = false,
             )
         }
     }
@@ -168,6 +171,7 @@ class WebAppsPanelManager internal constructor(
             order = existing.order,
             iconSource = existing.iconSource,
             customCss = existing.customCss,
+            notificationsEnabled = existing.notificationsEnabled,
         )
     }
 

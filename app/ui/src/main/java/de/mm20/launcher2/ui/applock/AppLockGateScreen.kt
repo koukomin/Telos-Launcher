@@ -53,6 +53,7 @@ import org.koin.compose.koinInject
 fun AppLockGateScreen(
     appLabel: String,
     lockMethod: SettingsLockMethod,
+    instant: Boolean = false,
     onUnlocked: () -> Unit,
     onCancelled: () -> Unit,
 ) {
@@ -112,34 +113,36 @@ fun AppLockGateScreen(
             .background(MaterialTheme.colorScheme.surfaceContainer),
         contentAlignment = Alignment.Center,
     ) {
-        Column(
-            modifier = Modifier.padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-        ) {
-            Icon(
-                painterResource(R.drawable.lock_48px),
-                contentDescription = null,
-                modifier = Modifier.size(48.dp),
-                tint = MaterialTheme.colorScheme.primary,
-            )
-            Text(
-                text = stringResource(
-                    if (authAvailable) R.string.app_lock_locked_message
-                    else R.string.settings_locked_no_authenticator,
-                    appLabel,
-                ),
-                style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(vertical = 16.dp),
-            )
-            if (authAvailable) {
-                Button(onClick = { authenticate() }) {
-                    Text(stringResource(R.string.settings_locked_unlock))
-                }
-            } else {
-                Button(onClick = onCancelled) {
-                    Text(stringResource(android.R.string.cancel))
+        if (!instant) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+            ) {
+                Icon(
+                    painterResource(R.drawable.lock_48px),
+                    contentDescription = null,
+                    modifier = Modifier.size(48.dp),
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+                Text(
+                    text = stringResource(
+                        if (authAvailable) R.string.app_lock_locked_message
+                        else R.string.settings_locked_no_authenticator,
+                        appLabel,
+                    ),
+                    style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(vertical = 16.dp),
+                )
+                if (authAvailable) {
+                    Button(onClick = { authenticate() }) {
+                        Text(stringResource(R.string.settings_locked_unlock))
+                    }
+                } else {
+                    Button(onClick = onCancelled) {
+                        Text(stringResource(android.R.string.cancel))
+                    }
                 }
             }
         }

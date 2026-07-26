@@ -8,92 +8,92 @@ class SearchUiSettings internal constructor(
     private val launcherDataStore: LauncherDataStore,
 ) {
     val launchOnEnter
-        get() = launcherDataStore.data.map { it.searchLaunchOnEnter }.distinctUntilChanged()
+        get() = launcherDataStore.data.map { it.searchBar.searchLaunchOnEnter }.distinctUntilChanged()
 
     fun setLaunchOnEnter(launchOnEnter: Boolean) {
         launcherDataStore.update {
-            it.copy(searchLaunchOnEnter = launchOnEnter)
+            it.copy(searchBar = it.searchBar.copy(searchLaunchOnEnter = launchOnEnter))
         }
     }
 
     val hiddenItemsButton
-        get() = launcherDataStore.data.map { it.hiddenItemsShowButton }.distinctUntilChanged()
+        get() = launcherDataStore.data.map { it.searchResults.hiddenItemsShowButton }.distinctUntilChanged()
 
     fun setHiddenItemsButton(hiddenItemsButton: Boolean) {
         launcherDataStore.update {
-            it.copy(hiddenItemsShowButton = hiddenItemsButton)
+            it.copy(searchResults = it.searchResults.copy(hiddenItemsShowButton = hiddenItemsButton))
         }
     }
 
     val favorites
-        get() = launcherDataStore.data.map { it.favoritesEnabled }.distinctUntilChanged()
+        get() = launcherDataStore.data.map { it.favorites.favoritesEnabled }.distinctUntilChanged()
 
     fun setFavorites(favorites: Boolean) {
         launcherDataStore.update {
-            it.copy(favoritesEnabled = favorites)
+            it.copy(favorites = it.favorites.copy(favoritesEnabled = favorites))
         }
     }
 
     val allApps
-        get() = launcherDataStore.data.map { it.searchAllApps }.distinctUntilChanged()
+        get() = launcherDataStore.data.map { it.appSearch.searchAllApps }.distinctUntilChanged()
 
     fun setAllApps(allAppsGrid: Boolean) {
         launcherDataStore.update {
-            it.copy(searchAllApps = allAppsGrid)
+            it.copy(appSearch = it.appSearch.copy(searchAllApps = allAppsGrid))
         }
     }
 
     val openKeyboard
-        get() = launcherDataStore.data.map { it.searchBarKeyboard }.distinctUntilChanged()
+        get() = launcherDataStore.data.map { it.searchBar.searchBarKeyboard }.distinctUntilChanged()
 
     fun setOpenKeyboard(openKeyboard: Boolean) {
         launcherDataStore.update {
-            it.copy(searchBarKeyboard = openKeyboard)
+            it.copy(searchBar = it.searchBar.copy(searchBarKeyboard = openKeyboard))
         }
     }
 
     val privateKeyboard
-        get() = launcherDataStore.data.map { it.privateKeyboard }.distinctUntilChanged()
+        get() = launcherDataStore.data.map { it.searchBar.privateKeyboard }.distinctUntilChanged()
 
     fun setPrivateKeyboard(privateKeyboard: Boolean) {
         launcherDataStore.update {
-            it.copy(privateKeyboard = privateKeyboard)
+            it.copy(searchBar = it.searchBar.copy(privateKeyboard = privateKeyboard))
         }
     }
 
     val showAppRecommendations
-        get() = launcherDataStore.data.map { it.showAppRecommendations }.distinctUntilChanged()
+        get() = launcherDataStore.data.map { it.searchBar.showAppRecommendations }.distinctUntilChanged()
 
     fun setShowAppRecommendations(show: Boolean) {
         launcherDataStore.update {
-            it.copy(showAppRecommendations = show)
+            it.copy(searchBar = it.searchBar.copy(showAppRecommendations = show))
         }
     }
 
     val reversedResults
-        get() = launcherDataStore.data.map { it.searchResultsReversed }.distinctUntilChanged()
+        get() = launcherDataStore.data.map { it.searchResults.searchResultsReversed }.distinctUntilChanged()
 
     fun setReversedResults(reversedResults: Boolean) {
         launcherDataStore.update {
-            it.copy(searchResultsReversed = reversedResults)
+            it.copy(searchResults = it.searchResults.copy(searchResultsReversed = reversedResults))
         }
     }
 
     val separateWorkProfile
-        get() = launcherDataStore.data.map { it.separateWorkProfile }.distinctUntilChanged()
+        get() = launcherDataStore.data.map { it.searchResults.separateWorkProfile }.distinctUntilChanged()
 
     fun setSeparateWorkProfile(separateWorkProfile: Boolean) {
         launcherDataStore.update {
-            it.copy(separateWorkProfile = separateWorkProfile)
+            it.copy(searchResults = it.searchResults.copy(separateWorkProfile = separateWorkProfile))
         }
     }
 
     val showAppDetails
-        get() = launcherDataStore.data.map { it.appsShowDetails }.distinctUntilChanged()
+        get() = launcherDataStore.data.map { it.appSearch.appsShowDetails }.distinctUntilChanged()
 
     fun setShowAppDetails(showAppDetails: Boolean) {
         launcherDataStore.update {
-            it.copy(appsShowDetails = showAppDetails)
+            it.copy(appSearch = it.appSearch.copy(appsShowDetails = showAppDetails))
         }
     }
 

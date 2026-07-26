@@ -1,17 +1,28 @@
 package de.mm20.launcher2.ui.webapp
 
 import android.app.DownloadManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.webkit.CookieManager
+import android.webkit.JavascriptInterface
 import android.webkit.URLUtil
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.activity.compose.LocalActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
@@ -36,6 +47,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -53,6 +65,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -67,7 +81,11 @@ import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.webappspanel.WebAppsPanelManager
 import de.mm20.launcher2.webapp.WebAppLaunchContract
 import de.mm20.launcher2.webappshortcuts.WebAppShortcutRepository
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
+import org.koin.core.component.get
 import org.koin.compose.koinInject
 
 /**
@@ -85,6 +103,8 @@ class WebAppActivity : BaseActivity() {
         val label = intent.getStringExtra(WebAppLaunchContract.EXTRA_LABEL) ?: ""
         val customCss = intent.getStringExtra(WebAppLaunchContract.EXTRA_CUSTOM_CSS)
         val shortcutKey = intent.getStringExtra(WebAppLaunchContract.EXTRA_KEY)
+
+        createNotificationChannel()
 
         setContent {
             LauncherTheme {
@@ -112,6 +132,70 @@ class WebAppActivity : BaseActivity() {
     private fun openExternally(url: String) {
         startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
     }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = getString(R.string.notification_channel_web_apps)
+            val descriptionText = getString(R.string.notification_channel_web_apps_description)
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    inner class WebAppNotificationBridge(
+        private val label: String,
+        private val shortcutKey: String?
+    ) {
+        @JavascriptInterface
+        fun showNotification(title: String, body: String, tag: String?) {
+            val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            
+            val browsingSettings: WebAppBrowsingSettings = org.koin.java.KoinJavaComponent.getKoin().get()
+
+            val isGroupEnabled = runBlocking { browsingSettings.groupsEnabled.first() }
+            if (isGroupEnabled && shortcutKey != null) {
+                val groups = runBlocking { browsingSettings.groups.first() }
+                val group = groups.find { it.appKeys.contains(shortcutKey) }
+                if (group != null && !group.notificationsEnabled) {
+                    return
+                }
+            }
+
+            val launchIntent = Intent(this@WebAppActivity, WebAppActivity::class.java).apply {
+                action = Intent.ACTION_VIEW
+                putExtras(intent)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            }
+            
+            val pendingIntent = PendingIntent.getActivity(
+                this@WebAppActivity,
+                shortcutKey?.hashCode() ?: 0,
+                launchIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+
+            val notification = NotificationCompat.Builder(this@WebAppActivity, CHANNEL_ID)
+                .setSmallIcon(R.drawable.language_24px)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setSubText(label)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .build()
+
+            nm.notify(tag?.hashCode() ?: (System.currentTimeMillis() % Int.MAX_VALUE).toInt(), notification)
+        }
+    }
+
+    companion object {
+        private const val CHANNEL_ID = "web_app_notifications"
+    }
 }
 
 @android.annotation.SuppressLint("SetJavaScriptEnabled")
@@ -124,7 +208,6 @@ private fun WebAppScreen(
     onOpenExternally: (String) -> Unit,
     onClose: () -> Unit,
 ) {
-    var webView by remember { mutableStateOf<WebView?>(null) }
     var currentUrl by remember { mutableStateOf(url) }
     var canGoBack by remember { mutableStateOf(false) }
     var canGoForward by remember { mutableStateOf(false) }
@@ -149,17 +232,30 @@ private fun WebAppScreen(
     val trackingParamStrippingEnabledState = rememberUpdatedState(trackingParamStrippingEnabled)
     val topBarAtBottom by browsingSettings.topBarAtBottom.collectAsStateWithLifecycle(false)
     val swipeToSwitchEnabled by browsingSettings.swipeToSwitchEnabled.collectAsStateWithLifecycle(true)
+    val groupsEnabled by browsingSettings.groupsEnabled.collectAsStateWithLifecycle(false)
+    val groups by browsingSettings.groups.collectAsStateWithLifecycle(emptyList())
 
-    // Not a session/tab pool - each web app shortcut still launches its own Activity instance
-    // (see WebAppShortcutImpl.launch). "Switching" a swipe lands on just reuses *this* instance's
-    // WebView for a different shortcut's URL, which is what makes it feel like a tab strip
-    // without the memory cost of keeping every shortcut's WebView alive at once. Only shortcuts
-    // using the embedded renderer are included - one configured for Custom Tabs can't be shown
-    // here at all.
+    val activity = LocalActivity.current as WebAppActivity
+
+    // Each shortcut - including the one this screen was launched with - gets its own WebView, so
+    // its back/forward history is never contaminated by a different web app's navigation. Swiping
+    // only changes which already-created WebView is attached to the container below; it's never a
+    // shared loadUrl() the way it used to be. Only shortcuts using the embedded renderer are
+    // included - one configured for Custom Tabs can't be shown here at all.
     val shortcuts by webAppShortcutRepository.search("", false)
         .collectAsStateWithLifecycle(emptyList())
-    val embeddedShortcuts = remember(shortcuts) {
-        shortcuts.filter { it.rendererPackage == null }.sortedBy { it.order }
+    val embeddedShortcuts = remember(shortcuts, groups, groupsEnabled, shortcutKey) {
+        val allEmbedded = shortcuts.filter { it.rendererPackage == null }.sortedBy { it.order }
+        if (!groupsEnabled || shortcutKey == null) return@remember allEmbedded
+
+        val currentGroup = groups.find { it.appKeys.contains(shortcutKey) }
+        if (currentGroup == null) {
+            // Only show ungrouped apps
+            allEmbedded.filter { pkg -> groups.none { it.appKeys.contains(pkg.key) } }
+        } else {
+            // Only show apps in the same group
+            allEmbedded.filter { currentGroup.appKeys.contains(it.key) }
+        }
     }
     val initialIndex = remember(embeddedShortcuts, shortcutKey) {
         embeddedShortcuts.indexOfFirst { it.key == shortcutKey }.coerceAtLeast(0)
@@ -168,30 +264,59 @@ private fun WebAppScreen(
     val editTarget = activeShortcut
         ?: embeddedShortcuts.find { it.key == shortcutKey }
 
-    val displayLabel = activeShortcut?.let { it.labelOverride ?: it.label } ?: label
-    val displayCustomCssState = rememberUpdatedState(activeShortcut?.customCss ?: customCss)
+    // Stable identity for the screen's own initial content - falls back to the url itself if this
+    // screen wasn't launched with a shortcut key at all (defensive; shouldn't happen in practice).
+    val initialKey = remember(shortcutKey, url) { shortcutKey ?: "url:$url" }
+    val activeKey = activeShortcut?.key ?: initialKey
+
+    // Per-key metadata lookups, kept live via rememberUpdatedState so an edit to a shortcut (CSS,
+    // notifications, label) takes effect on that web app's next page load without needing to
+    // recreate its WebView. Resolved against the FULL shortcuts list (not the group-filtered
+    // [embeddedShortcuts]) so the initial shortcut always resolves even if group filtering would
+    // otherwise exclude it from the swipe list.
+    val shortcutsState = rememberUpdatedState(shortcuts)
+    fun shortcutForKey(key: String) =
+        shortcutsState.value.find { it.key == (if (key == initialKey) shortcutKey else key) }
+    fun cssForKey(key: String): String? =
+        shortcutForKey(key)?.customCss ?: customCss.takeIf { key == initialKey }
+    fun notificationsEnabledForKey(key: String): Boolean =
+        shortcutForKey(key)?.notificationsEnabled ?: false
+    fun labelForKey(key: String): String =
+        shortcutForKey(key)?.let { it.labelOverride ?: it.label } ?: label
+
+    val displayLabel = labelForKey(activeKey)
+    val activeNotificationsEnabled = notificationsEnabledForKey(activeKey)
+
+    if (activeNotificationsEnabled && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        val permissionLauncher = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.RequestPermission()
+        ) { _ -> }
+
+        LaunchedEffect(activeKey) {
+            if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                permissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
+
+    val webViewEntries = remember { mutableMapOf<String, WebView>() }
+    var activeWebView by remember { mutableStateOf<WebView?>(null) }
+    val activeKeyState = rememberUpdatedState(activeKey)
+
+    DisposableEffect(Unit) {
+        onDispose {
+            webViewEntries.values.forEach { it.destroy() }
+            webViewEntries.clear()
+        }
+    }
 
     BackHandler(enabled = true) {
-        val wv = webView
+        val wv = activeWebView
         if (wv != null && wv.canGoBack()) {
             wv.goBack()
         } else {
             onClose()
         }
-    }
-
-    // Only fires once the user has actually swiped (swipeIndex != null) - the initial shortcut is
-    // loaded directly by the WebView factory below, using the intent's own url/customCss, so this
-    // doesn't double-load it.
-    LaunchedEffect(activeShortcut?.key) {
-        val shortcut = activeShortcut ?: return@LaunchedEffect
-        val wv = webView ?: return@LaunchedEffect
-        val targetUrl = if (trackingParamStrippingEnabled) {
-            TrackingParamStripper.strip(shortcut.url)
-        } else {
-            shortcut.url
-        }
-        wv.loadUrl(targetUrl)
     }
 
     val swipeThresholdPx = with(density) { 72.dp.toPx() }
@@ -239,7 +364,7 @@ private fun WebAppScreen(
                         contentDescription = stringResource(R.string.menu_back),
                     )
                 }
-                IconButton(onClick = { webView?.goBack() }, enabled = canGoBack) {
+                IconButton(onClick = { activeWebView?.goBack() }, enabled = canGoBack) {
                     Icon(
                         painterResource(R.drawable.arrow_back_24px),
                         contentDescription = stringResource(R.string.web_app_go_back),
@@ -255,7 +380,7 @@ private fun WebAppScreen(
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleLarge,
                 )
-                IconButton(onClick = { webView?.goForward() }, enabled = canGoForward) {
+                IconButton(onClick = { activeWebView?.goForward() }, enabled = canGoForward) {
                     Icon(
                         painterResource(R.drawable.arrow_forward_24px),
                         contentDescription = stringResource(R.string.web_app_go_forward),
@@ -321,76 +446,129 @@ private fun WebAppScreen(
         Box(modifier = Modifier.padding(padding).fillMaxSize()) {
             AndroidView(
                 modifier = Modifier.fillMaxSize(),
-                factory = { context ->
-                    WebView(context).apply {
+                factory = { ctx ->
+                    FrameLayout(ctx).apply {
                         layoutParams = ViewGroup.LayoutParams(
                             ViewGroup.LayoutParams.MATCH_PARENT,
                             ViewGroup.LayoutParams.MATCH_PARENT,
                         )
-                        settings.javaScriptEnabled = true
-                        settings.domStorageEnabled = true
-                        settings.setSupportZoom(zoomControlsEnabled)
-                        settings.builtInZoomControls = zoomControlsEnabled
-                        settings.displayZoomControls = false
-                        webViewClient = object : WebViewClient() {
-                            override fun onPageFinished(view: WebView?, loadedUrl: String?) {
-                                super.onPageFinished(view, loadedUrl)
-                                if (loadedUrl != null) currentUrl = loadedUrl
-                                canGoBack = view?.canGoBack() ?: false
-                                canGoForward = view?.canGoForward() ?: false
-                                val css = displayCustomCssState.value
-                                if (!css.isNullOrBlank()) {
-                                    view?.evaluateJavascript(injectCssScript(css), null)
-                                }
+                    }
+                },
+                update = { container ->
+                    val key = activeKey
+                    val isNewWebView = key !in webViewEntries
+                    val wv = webViewEntries.getOrPut(key) {
+                        val keyNotificationsEnabled = notificationsEnabledForKey(key)
+                        WebView(container.context).apply {
+                            layoutParams = ViewGroup.LayoutParams(
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                            )
+                            settings.javaScriptEnabled = true
+                            settings.domStorageEnabled = true
+                            settings.setSupportZoom(zoomControlsEnabled)
+                            settings.builtInZoomControls = zoomControlsEnabled
+                            settings.displayZoomControls = false
+
+                            if (keyNotificationsEnabled) {
+                                val bridgeKey = if (key == initialKey) shortcutKey else key
+                                addJavascriptInterface(
+                                    activity.WebAppNotificationBridge(labelForKey(key), bridgeKey),
+                                    "WebAppNotificationBridge"
+                                )
                             }
 
-                            override fun shouldInterceptRequest(
-                                view: WebView,
-                                request: WebResourceRequest,
-                            ): WebResourceResponse? {
-                                if (adBlockEnabledState.value && adBlocker.shouldBlock(request.url.host)) {
-                                    return adBlocker.blockedResponse()
-                                }
-                                return super.shouldInterceptRequest(view, request)
-                            }
-
-                            override fun shouldOverrideUrlLoading(
-                                view: WebView,
-                                request: WebResourceRequest,
-                            ): Boolean {
-                                if (trackingParamStrippingEnabledState.value && request.isForMainFrame) {
-                                    val original = request.url.toString()
-                                    val stripped = TrackingParamStripper.strip(original)
-                                    if (stripped != original) {
-                                        view.loadUrl(stripped)
-                                        return true
+                            webViewClient = object : WebViewClient() {
+                                override fun onPageFinished(view: WebView?, loadedUrl: String?) {
+                                    super.onPageFinished(view, loadedUrl)
+                                    // Background WebViews (of a web app the user swiped away
+                                    // from) can still finish loading in-flight requests; only
+                                    // the currently active one should update the toolbar state.
+                                    if (key != activeKeyState.value) return
+                                    if (loadedUrl != null) currentUrl = loadedUrl
+                                    canGoBack = view?.canGoBack() ?: false
+                                    canGoForward = view?.canGoForward() ?: false
+                                    val css = cssForKey(key)
+                                    if (!css.isNullOrBlank()) {
+                                        view?.evaluateJavascript(injectCssScript(css), null)
+                                    }
+                                    if (keyNotificationsEnabled) {
+                                        view?.evaluateJavascript(notificationPolyfillScript(), null)
                                     }
                                 }
-                                return super.shouldOverrideUrlLoading(view, request)
+
+                                override fun shouldInterceptRequest(
+                                    view: WebView,
+                                    request: WebResourceRequest,
+                                ): WebResourceResponse? {
+                                    if (adBlockEnabledState.value && adBlocker.shouldBlock(request.url.host)) {
+                                        return adBlocker.blockedResponse()
+                                    }
+                                    return super.shouldInterceptRequest(view, request)
+                                }
+
+                                override fun shouldOverrideUrlLoading(
+                                    view: WebView,
+                                    request: WebResourceRequest,
+                                ): Boolean {
+                                    if (trackingParamStrippingEnabledState.value && request.isForMainFrame) {
+                                        val original = request.url.toString()
+                                        val stripped = TrackingParamStripper.strip(original)
+                                        if (stripped != original) {
+                                            view.loadUrl(stripped)
+                                            return true
+                                        }
+                                    }
+                                    return super.shouldOverrideUrlLoading(view, request)
+                                }
                             }
+                            setDownloadListener { downloadUrl, userAgent, contentDisposition, mimeType, _ ->
+                                val fileName = URLUtil.guessFileName(downloadUrl, contentDisposition, mimeType)
+                                val request = DownloadManager.Request(downloadUrl.toUri())
+                                    .setMimeType(mimeType)
+                                    .addRequestHeader("cookie", CookieManager.getInstance().getCookie(downloadUrl))
+                                    .addRequestHeader("User-Agent", userAgent)
+                                    .setDescription(fileName)
+                                    .setTitle(fileName)
+                                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
+                                context.getSystemService<DownloadManager>()?.enqueue(request)
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.web_app_download_started, fileName),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            }
+                            val targetUrl = if (key == initialKey) {
+                                url
+                            } else {
+                                shortcutForKey(key)?.url ?: url
+                            }
+                            loadUrl(
+                                if (trackingParamStrippingEnabled) TrackingParamStripper.strip(targetUrl)
+                                else targetUrl,
+                            )
                         }
-                        setDownloadListener { downloadUrl, userAgent, contentDisposition, mimeType, _ ->
-                            val fileName = URLUtil.guessFileName(downloadUrl, contentDisposition, mimeType)
-                            val request = DownloadManager.Request(downloadUrl.toUri())
-                                .setMimeType(mimeType)
-                                .addRequestHeader("cookie", CookieManager.getInstance().getCookie(downloadUrl))
-                                .addRequestHeader("User-Agent", userAgent)
-                                .setDescription(fileName)
-                                .setTitle(fileName)
-                                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
-                            context.getSystemService<DownloadManager>()?.enqueue(request)
-                            Toast.makeText(
-                                context,
-                                context.getString(R.string.web_app_download_started, fileName),
-                                Toast.LENGTH_SHORT,
-                            ).show()
+                    }
+                    if (container.getChildAt(0) !== wv) {
+                        activeWebView?.let {
+                            it.onPause()
+                            it.pauseTimers()
                         }
-                        webView = this
-                        loadUrl(
-                            if (trackingParamStrippingEnabled) TrackingParamStripper.strip(url)
-                            else url,
-                        )
+                        container.removeAllViews()
+                        (wv.parent as? ViewGroup)?.removeView(wv)
+                        container.addView(wv)
+                        wv.onResume()
+                        wv.resumeTimers()
+                        activeWebView = wv
+                        // A WebView we're switching back to already finished loading in the
+                        // past - nothing will re-fire onPageFinished, so pull its current nav
+                        // state directly instead of waiting for an event that isn't coming.
+                        if (!isNewWebView) {
+                            currentUrl = wv.url ?: currentUrl
+                            canGoBack = wv.canGoBack()
+                            canGoForward = wv.canGoForward()
+                        }
                     }
                 },
             )
@@ -401,11 +579,24 @@ private fun WebAppScreen(
         EditWebAppShortcutSheet(
             expanded = showEditSheet,
             existing = editTarget,
-            onSave = { newLabel, newUrl, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, newCustomCss ->
+            onSave = { newLabel, newUrl, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, newCustomCss, newNotificationsEnabled, newGroupId ->
                 webAppShortcutRepository.update(
                     editTarget, newLabel, newUrl, iconUri, faviconUrl, rendererPackage,
                     showInGrid, showInPanel, editTarget.order, iconSource, newCustomCss,
+                    newNotificationsEnabled,
                 )
+                val browsingSettings: de.mm20.launcher2.preferences.ui.WebAppBrowsingSettings = org.koin.java.KoinJavaComponent.getKoin().get()
+                kotlinx.coroutines.MainScope().launch {
+                    val groups: List<de.mm20.launcher2.preferences.WebAppGroup> = browsingSettings.groups.first()
+                    val currentGroups = groups.map { g ->
+                        if (g.id == newGroupId) {
+                            if (!g.appKeys.contains(editTarget.key)) g.copy(appKeys = g.appKeys + editTarget.key) else g
+                        } else {
+                            g.copy(appKeys = g.appKeys - editTarget.key)
+                        }
+                    }
+                    browsingSettings.setGroups(currentGroups)
+                }
                 showEditSheet = false
             },
             onDismiss = { showEditSheet = false },
@@ -429,6 +620,55 @@ private fun injectCssScript(css: String): String {
                 document.head.appendChild(style);
             }
             style.textContent = $quotedCss;
+        })();
+    """.trimIndent()
+}
+
+private fun notificationPolyfillScript(): String {
+    return """
+        (function() {
+            if (window.Notification && window.Notification.__kvaesitso_polyfill) return;
+
+            var NativeNotification = window.Notification;
+
+            window.Notification = function(title, options) {
+                this.title = title;
+                this.body = options ? options.body : '';
+                this.tag = options ? options.tag : '';
+                
+                if (typeof WebAppNotificationBridge !== 'undefined') {
+                    WebAppNotificationBridge.showNotification(this.title, this.body, this.tag);
+                } else if (NativeNotification) {
+                    new NativeNotification(title, options);
+                }
+            };
+
+            window.Notification.__kvaesitso_polyfill = true;
+            window.Notification.permission = 'granted';
+            window.Notification.requestPermission = function(callback) {
+                var promise = Promise.resolve('granted');
+                if (callback) promise.then(callback);
+                return promise;
+            };
+            
+            // Handle Notification.permission read
+            Object.defineProperty(window.Notification, 'permission', {
+                get: function() { return 'granted'; }
+            });
+
+            // For older apps using navigator.serviceWorker.ready.then(reg => reg.showNotification(...))
+            if (navigator.serviceWorker) {
+                var originalRegister = navigator.serviceWorker.register;
+                navigator.serviceWorker.register = function() {
+                    return originalRegister.apply(this, arguments).then(function(reg) {
+                        var originalShow = reg.showNotification;
+                        reg.showNotification = function(title, options) {
+                            window.Notification(title, options);
+                        };
+                        return reg;
+                    });
+                };
+            }
         })();
     """.trimIndent()
 }

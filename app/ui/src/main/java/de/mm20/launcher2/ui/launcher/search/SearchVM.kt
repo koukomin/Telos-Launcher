@@ -43,6 +43,7 @@ import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.searchable.VisibilityLevel
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.services.favorites.FavoritesService
+import de.mm20.launcher2.appmanagement.FossUpdateRepository
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -76,6 +77,10 @@ class SearchVM : ViewModel(), KoinComponent {
     private val devicePoseProvider: DevicePoseProvider by inject()
     private val searchFilterSettings: SearchFilterSettings by inject()
     private val freezeSettings: de.mm20.launcher2.preferences.freeze.FreezeSettings by inject()
+    private val fossUpdateRepository: de.mm20.launcher2.appmanagement.FossUpdateRepository by inject()
+
+    val pendingUpdates = fossUpdateRepository.pendingUpdates
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
 
     val launchOnEnter = searchUiSettings.launchOnEnter
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
@@ -134,6 +139,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val unitConverterResults = mutableStateListOf<UnitConverter>()
     val searchActionResults = mutableStateListOf<SearchAction>()
     val locationResults = mutableStateListOf<Location>()
+    val updateResults = mutableStateListOf<Application>()
 
     var previousResults: SearchResults? = null
 
@@ -298,6 +304,11 @@ class SearchVM : ViewModel(), KoinComponent {
                         privateSpaceAppResults.updateItems(privateApps)
                         webAppShortcutResults.updateItems(results.webAppShortcuts)
                         hiddenResults.updateItems(hiddenItems)
+
+                        val updates = (apps + workApps + privateApps).filter { 
+                            pendingUpdates.value.contains(it.componentName.packageName) 
+                        }
+                        updateResults.updateItems(updates)
                     }
 
             } else {
@@ -491,6 +502,10 @@ class SearchVM : ViewModel(), KoinComponent {
 
     fun expandCategory(category: SearchCategory) {
         expandedCategory.value = category
+    }
+
+    fun dismissUpdate(packageName: String) {
+        fossUpdateRepository.removeUpdate(packageName)
     }
 
     private suspend fun <T : SavableSearchable> List<T>.applyRanking(query: String): List<T> {

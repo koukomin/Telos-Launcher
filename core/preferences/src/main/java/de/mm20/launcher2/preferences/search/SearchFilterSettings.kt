@@ -9,29 +9,29 @@ class SearchFilterSettings internal constructor(
     private val launcherDataStore: LauncherDataStore,
 ) {
     val defaultFilter
-        get() = launcherDataStore.data.map { it.searchFilter }
+        get() = launcherDataStore.data.map { it.searchFilterGroup.searchFilter }
 
     fun setDefaultFilter(filter: SearchFilters) {
         launcherDataStore.update {
-            it.copy(searchFilter = filter)
+            it.copy(searchFilterGroup = it.searchFilterGroup.copy(searchFilter = filter))
         }
     }
 
     val filterBar
-        get() = launcherDataStore.data.map { it.searchFilterBar }
+        get() = launcherDataStore.data.map { it.searchFilterGroup.searchFilterBar }
 
     fun setFilterBar(filterBar: Boolean) {
         launcherDataStore.update {
-            it.copy(searchFilterBar = filterBar)
+            it.copy(searchFilterGroup = it.searchFilterGroup.copy(searchFilterBar = filterBar))
         }
     }
 
     val filterBarItems
-        get() = launcherDataStore.data.map { it.searchFilterBarItems.distinct() }
+        get() = launcherDataStore.data.map { it.searchFilterGroup.searchFilterBarItems.distinct() }
 
     fun setFilterBarItems(items: List<KeyboardFilterBarItem>) {
         launcherDataStore.update {
-            it.copy(searchFilterBarItems = items)
+            it.copy(searchFilterGroup = it.searchFilterGroup.copy(searchFilterBarItems = items))
         }
     }
 }

@@ -9,41 +9,43 @@ class ContextProfileSettings internal constructor(
     private val dataStore: LauncherDataStore,
 ) {
     val enabled
-        get() = dataStore.data.map { it.contextProfilesEnabled }.distinctUntilChanged()
+        get() = dataStore.data.map { it.contextProfiles.contextProfilesEnabled }.distinctUntilChanged()
 
     fun setEnabled(enabled: Boolean) {
-        dataStore.update { it.copy(contextProfilesEnabled = enabled) }
+        dataStore.update { it.copy(contextProfiles = it.contextProfiles.copy(contextProfilesEnabled = enabled)) }
     }
 
     val profiles
-        get() = dataStore.data.map { it.contextProfiles }.distinctUntilChanged()
+        get() = dataStore.data.map { it.contextProfiles.contextProfiles }.distinctUntilChanged()
 
     fun setProfile(profile: ContextProfile) {
         dataStore.update {
-            val existing = it.contextProfiles.indexOfFirst { p -> p.id == profile.id }
+            val existing = it.contextProfiles.contextProfiles.indexOfFirst { p -> p.id == profile.id }
             val updated = if (existing >= 0) {
-                it.contextProfiles.toMutableList().apply { set(existing, profile) }
+                it.contextProfiles.contextProfiles.toMutableList().apply { set(existing, profile) }
             } else {
-                it.contextProfiles + profile
+                it.contextProfiles.contextProfiles + profile
             }
-            it.copy(contextProfiles = updated)
+            it.copy(contextProfiles = it.contextProfiles.copy(contextProfiles = updated))
         }
     }
 
     fun deleteProfile(id: String) {
         dataStore.update {
             it.copy(
-                contextProfiles = it.contextProfiles.filterNot { p -> p.id == id },
-                contextProfileManualOverrideId = it.contextProfileManualOverrideId?.takeIf { existing -> existing != id },
+                contextProfiles = it.contextProfiles.copy(
+                    contextProfiles = it.contextProfiles.contextProfiles.filterNot { p -> p.id == id },
+                    contextProfileManualOverrideId = it.contextProfiles.contextProfileManualOverrideId?.takeIf { existing -> existing != id },
+                ),
             )
         }
     }
 
     val manualOverrideId
-        get() = dataStore.data.map { it.contextProfileManualOverrideId }.distinctUntilChanged()
+        get() = dataStore.data.map { it.contextProfiles.contextProfileManualOverrideId }.distinctUntilChanged()
 
     /** Force-activates [id] regardless of trigger evaluation, or clears the override if null. */
     fun setManualOverride(id: String?) {
-        dataStore.update { it.copy(contextProfileManualOverrideId = id) }
+        dataStore.update { it.copy(contextProfiles = it.contextProfiles.copy(contextProfileManualOverrideId = id)) }
     }
 }

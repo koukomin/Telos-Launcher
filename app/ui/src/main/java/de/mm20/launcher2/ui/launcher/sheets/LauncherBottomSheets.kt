@@ -8,6 +8,9 @@ fun LauncherBottomSheets() {
     CustomizeSearchableSheet(
         searchable = bottomSheetManager.customizeSearchableSheetShown.value,
         onDismiss = { bottomSheetManager.dismissCustomizeSearchableModal() })
+    AppInfoSheet(
+        app = bottomSheetManager.appInfoSheetShown.value,
+        onDismiss = { bottomSheetManager.dismissAppInfoModal() })
     EditFavoritesSheet(
         expanded = bottomSheetManager.editFavoritesSheetShown.value,
         onDismiss = { bottomSheetManager.dismissEditFavoritesSheet() })

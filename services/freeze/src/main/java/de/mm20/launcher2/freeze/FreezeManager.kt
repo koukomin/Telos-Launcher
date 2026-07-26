@@ -212,7 +212,18 @@ class FreezeManager internal constructor(
                 else -> AppFreezeState.Normal
             }
         } catch (e: PackageManager.NameNotFoundException) {
-            AppFreezeState.Normal
+            // Not visible to a plain lookup - either truly uninstalled, or hidden via
+            // setApplicationHidden (Icebox/Island). MATCH_UNINSTALLED_PACKAGES surfaces both;
+            // distinguish by checking whether package data still exists on disk.
+            try {
+                context.packageManager.getApplicationInfo(
+                    packageName,
+                    PackageManager.MATCH_UNINSTALLED_PACKAGES
+                )
+                AppFreezeState.Hidden
+            } catch (e: PackageManager.NameNotFoundException) {
+                AppFreezeState.Normal
+            }
         }
     }
 

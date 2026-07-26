@@ -15,37 +15,37 @@ class FavoritesSettings internal constructor(
     private val dataStore: LauncherDataStore,
 ) : Flow<FavoritesSettingsData> by (dataStore.data.map {
     FavoritesSettingsData(
-        columns = it.gridColumnCount,
-        frequentlyUsed = it.favoritesFrequentlyUsed,
-        frequentlyUsedRows = it.favoritesFrequentlyUsedRows,
+        columns = it.grid.gridColumnCount,
+        frequentlyUsed = it.favorites.favoritesFrequentlyUsed,
+        frequentlyUsedRows = it.favorites.favoritesFrequentlyUsedRows,
     )
 }.distinctUntilChanged()) {
 
     val showEditButton
-        get() = dataStore.data.map { it.favoritesEditButton }.distinctUntilChanged()
+        get() = dataStore.data.map { it.favorites.favoritesEditButton }.distinctUntilChanged()
 
     fun setShowEditButton(showEditButton: Boolean) {
-        dataStore.update { it.copy(favoritesEditButton = showEditButton) }
+        dataStore.update { it.copy(favorites = it.favorites.copy(favoritesEditButton = showEditButton)) }
     }
 
     val frequentlyUsed: Flow<Boolean>
-        get() = dataStore.data.map { it.favoritesFrequentlyUsed }.distinctUntilChanged()
+        get() = dataStore.data.map { it.favorites.favoritesFrequentlyUsed }.distinctUntilChanged()
 
     fun setFrequentlyUsed(frequentlyUsed: Boolean) {
-        dataStore.update { it.copy(favoritesFrequentlyUsed = frequentlyUsed) }
+        dataStore.update { it.copy(favorites = it.favorites.copy(favoritesFrequentlyUsed = frequentlyUsed)) }
     }
 
     val frequentlyUsedRows: Flow<Int>
-        get() = dataStore.data.map { it.favoritesFrequentlyUsedRows }.distinctUntilChanged()
+        get() = dataStore.data.map { it.favorites.favoritesFrequentlyUsedRows }.distinctUntilChanged()
 
     fun setFrequentlyUsedRows(frequentlyUsedRows: Int) {
-        dataStore.update { it.copy(favoritesFrequentlyUsedRows = frequentlyUsedRows) }
+        dataStore.update { it.copy(favorites = it.favorites.copy(favoritesFrequentlyUsedRows = frequentlyUsedRows)) }
     }
 
     val compactTags: Flow<Boolean>
-        get() = dataStore.data.map { it.favoritesCompactTags }.distinctUntilChanged()
+        get() = dataStore.data.map { it.favorites.favoritesCompactTags }.distinctUntilChanged()
 
     fun setCompactTags(compactTags: Boolean) {
-        dataStore.update { it.copy(favoritesCompactTags = compactTags) }
+        dataStore.update { it.copy(favorites = it.favorites.copy(favoritesCompactTags = compactTags)) }
     }
 }

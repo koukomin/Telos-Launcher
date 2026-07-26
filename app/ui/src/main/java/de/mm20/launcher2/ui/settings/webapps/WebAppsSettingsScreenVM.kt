@@ -66,6 +66,53 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setSwipeToSwitchEnabled(enabled: Boolean) = browsingSettings.setSwipeToSwitchEnabled(enabled)
 
+    val groupsEnabled = browsingSettings.groupsEnabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+    fun setGroupsEnabled(enabled: Boolean) = browsingSettings.setGroupsEnabled(enabled)
+
+    val groups = browsingSettings.groups
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
+    fun createGroup(name: String) {
+        viewModelScope.launch {
+            val current = groups.value
+            browsingSettings.setGroups(current + de.mm20.launcher2.preferences.WebAppGroup(id = UUID.randomUUID().toString(), name = name))
+        }
+    }
+
+    fun deleteGroup(groupId: String) {
+        viewModelScope.launch {
+            browsingSettings.setGroups(groups.value.filter { it.id != groupId })
+        }
+    }
+
+    fun updateGroup(group: de.mm20.launcher2.preferences.WebAppGroup) {
+        viewModelScope.launch {
+            browsingSettings.setGroups(groups.value.filter { it.id != group.id } + group)
+        }
+    }
+
+    fun toggleGroupNotifications(groupId: String, enabled: Boolean) {
+        viewModelScope.launch {
+            val group = groups.value.find { it.id == groupId } ?: return@launch
+            updateGroup(group.copy(notificationsEnabled = enabled))
+        }
+    }
+
+    fun assignToGroup(shortcutKey: String, groupId: String?) {
+        viewModelScope.launch {
+            val currentGroups = groups.value.map { g ->
+                if (g.id == groupId) {
+                    if (!g.appKeys.contains(shortcutKey)) g.copy(appKeys = g.appKeys + shortcutKey) else g
+                } else {
+                    g.copy(appKeys = g.appKeys - shortcutKey)
+                }
+            }
+            browsingSettings.setGroups(currentGroups)
+        }
+    }
+
     val shortcuts = webAppShortcutRepository.search("", false)
         .map { it.sortedBy { s -> s.label.lowercase() } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
@@ -137,13 +184,24 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
         showInPanel: Boolean,
         iconSource: WebAppShortcut.IconSource,
         customCss: String?,
+        notificationsEnabled: Boolean,
+        groupId: String?,
     ) {
         val oldIconUri = existing?.iconUri
-        if (existing != null) {
-            webAppShortcutRepository.update(existing, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, existing.order, iconSource, customCss)
+        val shortcut = if (existing != null) {
+            webAppShortcutRepository.update(
+                existing, label, url, iconUri, faviconUrl, rendererPackage,
+                showInGrid, showInPanel, existing.order, iconSource, customCss,
+                notificationsEnabled,
+            )
         } else {
-            webAppShortcutRepository.create(label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, 0, iconSource, customCss)
+            webAppShortcutRepository.create(
+                label, url, iconUri, faviconUrl, rendererPackage,
+                showInGrid, showInPanel, 0, iconSource, customCss,
+                notificationsEnabled,
+            )
         }
+        assignToGroup(shortcut.key, groupId)
         if (oldIconUri != null && oldIconUri != iconUri) {
             deleteIconFile(oldIconUri)
         }
@@ -163,6 +221,7 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
             shortcut.order,
             shortcut.iconSource,
             shortcut.customCss,
+            shortcut.notificationsEnabled,
         )
     }
 

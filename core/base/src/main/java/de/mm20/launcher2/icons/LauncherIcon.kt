@@ -97,6 +97,28 @@ data class StaticLauncherIcon(
                     )
                 }
             }
+            is TextLayer -> {
+                val paint = Paint().apply {
+                    color = if (layer.color == 0) themeColor else getTone(layer.color, tone)
+                    textSize = canvas.width * 0.6f
+                    textAlign = Paint.Align.CENTER
+                }
+                canvas.drawText(layer.text, canvas.width / 2f, canvas.height / 2f - (paint.descent() + paint.ascent()) / 2, paint)
+            }
+            is GridLayer -> {
+                val size = canvas.width / 2
+                layer.layers.take(4).forEachIndexed { index, subLayer ->
+                    val left = (index % 2) * size
+                    val top = (index / 2) * size
+                    canvas.save()
+                    canvas.translate(left.toFloat(), top.toFloat())
+                    canvas.clipRect(0, 0, size, size)
+                    // We need a sub-canvas or scaling
+                    canvas.scale(0.5f, 0.5f)
+                    renderLayer(canvas, subLayer, themeColor, tone)
+                    canvas.restore()
+                }
+            }
             else -> {}
         }
     }

@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -75,6 +76,10 @@ fun IconsSettingsScreen() {
     val context = LocalContext.current
 
     val grid by viewModel.grid.collectAsStateWithLifecycle(GridSettings())
+    val homeGrid by viewModel.homeGrid.collectAsStateWithLifecycle(GridSettings())
+    val drawerGrid by viewModel.drawerGrid.collectAsStateWithLifecycle(GridSettings())
+    val dockGrid by viewModel.dockGrid.collectAsStateWithLifecycle(GridSettings())
+
     val icons by viewModel.icons.collectAsStateWithLifecycle(null)
     val density = LocalDensity.current
     val iconShape by viewModel.iconShape.collectAsStateWithLifecycle(IconShape.PlatformDefault)
@@ -126,6 +131,28 @@ fun IconsSettingsScreen() {
                         viewModel.setShowLabels(it)
                     }
                 )
+                AnimatedVisibility(grid.showLabels) {
+                    Column {
+                        SliderPreference(
+                            title = stringResource(R.string.preference_grid_label_size),
+                            value = grid.labelSize.toInt(),
+                            min = 8,
+                            max = 24,
+                            onValueChanged = { viewModel.setGridLabelSize(it.toFloat()) }
+                        )
+                        ListPreference(
+                            title = stringResource(R.string.preference_grid_label_max_lines),
+                            items = listOf("1" to 1, "2" to 2),
+                            value = grid.labelMaxLines,
+                            onValueChanged = { if (it != null) viewModel.setGridLabelMaxLines(it) }
+                        )
+                        SwitchPreference(
+                            title = stringResource(R.string.preference_grid_label_shadow),
+                            value = grid.labelShadow,
+                            onValueChanged = { viewModel.setGridLabelShadow(it) }
+                        )
+                    }
+                }
                 SwitchPreference(
                     title = stringResource(R.string.preference_grid_list_style),
                     summary = stringResource(R.string.preference_grid_list_style_summary),
@@ -155,6 +182,120 @@ fun IconsSettingsScreen() {
                         viewModel.setColumnCount(it)
                     }
                 )
+            }
+        }
+        item {
+            PreferenceCategory(title = stringResource(R.string.preference_category_grid_home)) {
+                var override by remember { mutableStateOf(false) }
+                LaunchedEffect(homeGrid) {
+                    override = homeGrid.columnCount != grid.columnCount || homeGrid.iconSize != grid.iconSize
+                }
+                SwitchPreference(
+                    title = "Override Home Grid",
+                    value = override,
+                    onValueChanged = {
+                        override = it
+                        if (!it) {
+                            viewModel.setHomeGridColumnCount(null)
+                            viewModel.setHomeGridIconSize(null)
+                        }
+                    }
+                )
+                AnimatedVisibility(override) {
+                    Column {
+                        SliderPreference(
+                            title = stringResource(R.string.preference_grid_column_count),
+                            value = homeGrid.columnCount,
+                            min = 3,
+                            max = 12,
+                            onValueChanged = { viewModel.setHomeGridColumnCount(it) }
+                        )
+                        SliderPreference(
+                            title = stringResource(R.string.preference_grid_icon_size),
+                            value = homeGrid.iconSize,
+                            step = 8,
+                            min = 32,
+                            max = 64,
+                            onValueChanged = { viewModel.setHomeGridIconSize(it) }
+                        )
+                    }
+                }
+            }
+        }
+        item {
+            PreferenceCategory(title = stringResource(R.string.preference_category_grid_drawer)) {
+                var override by remember { mutableStateOf(false) }
+                LaunchedEffect(drawerGrid) {
+                    override = drawerGrid.columnCount != grid.columnCount || drawerGrid.iconSize != grid.iconSize
+                }
+                SwitchPreference(
+                    title = "Override Search Grid",
+                    value = override,
+                    onValueChanged = {
+                        override = it
+                        if (!it) {
+                            viewModel.setDrawerGridColumnCount(null)
+                            viewModel.setDrawerGridIconSize(null)
+                        }
+                    }
+                )
+                AnimatedVisibility(override) {
+                    Column {
+                        SliderPreference(
+                            title = stringResource(R.string.preference_grid_column_count),
+                            value = drawerGrid.columnCount,
+                            min = 3,
+                            max = 12,
+                            onValueChanged = { viewModel.setDrawerGridColumnCount(it) }
+                        )
+                        SliderPreference(
+                            title = stringResource(R.string.preference_grid_icon_size),
+                            value = drawerGrid.iconSize,
+                            step = 8,
+                            min = 32,
+                            max = 64,
+                            onValueChanged = { viewModel.setDrawerGridIconSize(it) }
+                        )
+                    }
+                }
+            }
+        }
+        item {
+            PreferenceCategory(title = stringResource(R.string.preference_category_grid_dock)) {
+                var override by remember { mutableStateOf(false) }
+                LaunchedEffect(dockGrid) {
+                    override = dockGrid.columnCount != grid.columnCount || dockGrid.iconSize != grid.iconSize
+                }
+                SwitchPreference(
+                    title = "Override Dock Grid",
+                    value = override,
+                    onValueChanged = {
+                        override = it
+                        if (!it) {
+                            viewModel.setDockGridColumnCount(null)
+                            viewModel.setDockGridIconSize(null)
+                        }
+                    }
+                )
+                AnimatedVisibility(override) {
+                    Column {
+                        SliderPreference(
+                            title = stringResource(R.string.preference_grid_column_count),
+                            value = dockGrid.columnCount,
+                            min = 3,
+                            max = 12,
+                            onValueChanged = { viewModel.setDockGridColumnCount(it) }
+                        )
+                        SliderPreference(
+                            title = stringResource(R.string.preference_grid_icon_size),
+                            value = dockGrid.iconSize,
+                            step = 8,
+                            min = 32,
+                            max = 64,
+                            onValueChanged = { viewModel.setDockGridIconSize(it) }
+                        )
+                    }
+                }
             }
         }
         item {

@@ -133,6 +133,26 @@ class HomescreenSettingsScreenVM(
         uiSettings.setHomeScreenPageCount(count)
     }
 
+    val desktopLocked = uiSettings.desktopLocked
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+    fun setDesktopLocked(locked: Boolean) = uiSettings.setDesktopLocked(locked)
+
+    val dockBackgroundEnabled = uiSettings.dockBackgroundEnabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+    fun setDockBackgroundEnabled(enabled: Boolean) = uiSettings.setDockBackgroundEnabled(enabled)
+
+    val dockBackgroundColor = uiSettings.dockBackgroundColor
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setDockBackgroundColor(color: Int?) = uiSettings.setDockBackgroundColor(color)
+
+    val dockBackgroundOpacity = uiSettings.dockBackgroundOpacity
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0.3f)
+
+    fun setDockBackgroundOpacity(opacity: Float) = uiSettings.setDockBackgroundOpacity(opacity)
+
     companion object : KoinComponent {
         val Factory = viewModelFactory {
             initializer {

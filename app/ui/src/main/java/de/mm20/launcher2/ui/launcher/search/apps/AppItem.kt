@@ -78,6 +78,9 @@ fun AppItem(
     modifier: Modifier = Modifier,
     app: Application,
     showDetails: Boolean,
+    inDock: Boolean = false,
+    onRemoveFromDock: (() -> Unit)? = null,
+    onReplaceInDock: (() -> Unit)? = null,
     onBack: () -> Unit
 ) {
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${app.key}")
@@ -388,6 +391,7 @@ fun AppItem(
 
                     val toolbarActions = mutableListOf<ToolbarAction>()
 
+                    val sheetManager = LocalBottomSheetManager.current
                     if (LocalFavoritesEnabled.current) {
                         val isPinned by viewModel.isPinned.collectAsState(false)
                         val favAction = if (isPinned) {
@@ -415,7 +419,7 @@ fun AppItem(
                                 label = stringResource(R.string.menu_app_info),
                                 icon = R.drawable.info_24px,
                             ) {
-                                app.openAppDetails(context)
+                                sheetManager.showAppInfoModal(app)
                             })
                     }
 
@@ -429,7 +433,6 @@ fun AppItem(
                         )
                     )
 
-                    val sheetManager = LocalBottomSheetManager.current
                     if (!app.isPrivate) {
                         toolbarActions.add(
                             DefaultToolbarAction(
@@ -561,7 +564,30 @@ fun AppItem(
                         )
                     }
 
-                    Toolbar(
+                    if (inDock) {
+            toolbarActions.add(
+                DefaultToolbarAction(
+                    label = stringResource(R.string.dock_menu_remove),
+                    icon = R.drawable.delete_24px,
+                    action = {
+                        onRemoveFromDock?.invoke()
+                        onBack()
+                    }
+                )
+            )
+            toolbarActions.add(
+                DefaultToolbarAction(
+                    label = stringResource(R.string.dock_menu_replace),
+                    icon = R.drawable.autorenew_24px,
+                    action = {
+                        onReplaceInDock?.invoke()
+                        onBack()
+                    }
+                )
+            )
+        }
+
+        Toolbar(
                         leftActions = listOf(
                             DefaultToolbarAction(
                                 label = stringResource(id = R.string.menu_back),
@@ -629,6 +655,9 @@ fun AppItemGridPopup(
     show: MutableTransitionState<Boolean>,
     animationProgress: Float,
     origin: IntRect,
+    inDock: Boolean = false,
+    onRemoveFromDock: (() -> Unit)? = null,
+    onReplaceInDock: (() -> Unit)? = null,
     onDismiss: () -> Unit
 ) {
     AnimatedVisibility(
@@ -651,6 +680,9 @@ fun AppItemGridPopup(
                 ),
             app = app,
             showDetails = true,
+            inDock = inDock,
+            onRemoveFromDock = onRemoveFromDock,
+            onReplaceInDock = onReplaceInDock,
             onBack = onDismiss
         )
     }

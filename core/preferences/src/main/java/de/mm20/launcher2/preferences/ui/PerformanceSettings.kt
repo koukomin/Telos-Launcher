@@ -8,30 +8,30 @@ class PerformanceSettings internal constructor(
     private val dataStore: LauncherDataStore,
 ) {
     val reduceAnimations
-        get() = dataStore.data.map { it.performanceReduceAnimations }.distinctUntilChanged()
+        get() = dataStore.data.map { it.performance.performanceReduceAnimations }.distinctUntilChanged()
 
     fun setReduceAnimations(reduce: Boolean) {
-        dataStore.update { it.copy(performanceReduceAnimations = reduce) }
+        dataStore.update { it.copy(performance = it.performance.copy(performanceReduceAnimations = reduce)) }
     }
 
     val animationSpeed
-        get() = dataStore.data.map { it.performanceAnimationSpeed }.distinctUntilChanged()
+        get() = dataStore.data.map { it.performance.performanceAnimationSpeed }.distinctUntilChanged()
 
     fun setAnimationSpeed(speed: Float) {
-        dataStore.update { it.copy(performanceAnimationSpeed = speed) }
+        dataStore.update { it.copy(performance = it.performance.copy(performanceAnimationSpeed = speed)) }
     }
 
     val searchDebounceMs
-        get() = dataStore.data.map { it.performanceSearchDebounceMs }.distinctUntilChanged()
+        get() = dataStore.data.map { it.performance.performanceSearchDebounceMs }.distinctUntilChanged()
 
     fun setSearchDebounceMs(ms: Int) {
-        dataStore.update { it.copy(performanceSearchDebounceMs = ms) }
+        dataStore.update { it.copy(performance = it.performance.copy(performanceSearchDebounceMs = ms)) }
     }
 
     val iconCacheSize
-        get() = dataStore.data.map { it.performanceIconCacheSize }.distinctUntilChanged()
+        get() = dataStore.data.map { it.performance.performanceIconCacheSize }.distinctUntilChanged()
 
     fun setIconCacheSize(size: Int) {
-        dataStore.update { it.copy(performanceIconCacheSize = size) }
+        dataStore.update { it.copy(performance = it.performance.copy(performanceIconCacheSize = size)) }
     }
 }

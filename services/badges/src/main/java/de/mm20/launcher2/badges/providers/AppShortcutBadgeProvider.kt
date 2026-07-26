@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.BadgeIcon
+import de.mm20.launcher2.badges.BadgeProvider
 import de.mm20.launcher2.badges.MutableBadge
 import de.mm20.launcher2.graphics.BadgeDrawable
 import de.mm20.launcher2.search.AppShortcut

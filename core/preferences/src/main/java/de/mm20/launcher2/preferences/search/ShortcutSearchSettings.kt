@@ -8,11 +8,11 @@ class ShortcutSearchSettings internal constructor(
     private val dataStore: LauncherDataStore
 ) {
     val enabled
-        get() = dataStore.data.map { it.shortcutSearchEnabled }.distinctUntilChanged()
+        get() = dataStore.data.map { it.shortcutSearch.shortcutSearchEnabled }.distinctUntilChanged()
 
     fun setEnabled(enabled: Boolean) {
         dataStore.update {
-            it.copy(shortcutSearchEnabled = enabled)
+            it.copy(shortcutSearch = it.shortcutSearch.copy(shortcutSearchEnabled = enabled))
         }
     }
 }

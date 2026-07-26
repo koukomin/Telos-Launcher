@@ -12,158 +12,162 @@ class FreezeSettings internal constructor(
     private val dataStore: LauncherDataStore,
 ) {
     val backend
-        get() = dataStore.data.map { it.freezeBackend }
+        get() = dataStore.data.map { it.freeze.freezeBackend }
 
     fun setBackend(backend: FreezeBackendPreference) {
-        dataStore.update { it.copy(freezeBackend = backend) }
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeBackend = backend)) }
     }
 
     val autoFreezeEnabled
-        get() = dataStore.data.map { it.freezeAutoFreezeEnabled }
+        get() = dataStore.data.map { it.freeze.freezeAutoFreezeEnabled }
 
     fun setAutoFreezeEnabled(enabled: Boolean) {
-        dataStore.update { it.copy(freezeAutoFreezeEnabled = enabled) }
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeAutoFreezeEnabled = enabled)) }
     }
 
     val freezeOnScreenOff
-        get() = dataStore.data.map { it.freezeOnScreenOff }
+        get() = dataStore.data.map { it.freeze.freezeOnScreenOff }
 
     fun setFreezeOnScreenOff(enabled: Boolean) {
-        dataStore.update { it.copy(freezeOnScreenOff = enabled) }
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeOnScreenOff = enabled)) }
     }
 
     val freezeOnIdle
-        get() = dataStore.data.map { it.freezeOnIdle }
+        get() = dataStore.data.map { it.freeze.freezeOnIdle }
 
     fun setFreezeOnIdle(enabled: Boolean) {
-        dataStore.update { it.copy(freezeOnIdle = enabled) }
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeOnIdle = enabled)) }
     }
 
     val idleTimeoutMinutes
-        get() = dataStore.data.map { it.freezeIdleTimeoutMinutes }
+        get() = dataStore.data.map { it.freeze.freezeIdleTimeoutMinutes }
 
     fun setIdleTimeoutMinutes(minutes: Int) {
-        dataStore.update { it.copy(freezeIdleTimeoutMinutes = minutes) }
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeIdleTimeoutMinutes = minutes)) }
     }
 
     val freezeOnBatterySaver
-        get() = dataStore.data.map { it.freezeOnBatterySaver }
+        get() = dataStore.data.map { it.freeze.freezeOnBatterySaver }
 
     fun setFreezeOnBatterySaver(enabled: Boolean) {
-        dataStore.update { it.copy(freezeOnBatterySaver = enabled) }
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeOnBatterySaver = enabled)) }
     }
 
     val candidates
-        get() = dataStore.data.map { it.freezeCandidates }
+        get() = dataStore.data.map { it.freeze.freezeCandidates }
 
     fun setCandidateEnabled(packageName: String, enabled: Boolean) {
         dataStore.update {
             if (enabled) {
-                it.copy(freezeCandidates = it.freezeCandidates + packageName)
+                it.copy(freeze = it.freeze.copy(freezeCandidates = it.freeze.freezeCandidates + packageName))
             } else {
-                it.copy(freezeCandidates = it.freezeCandidates - packageName)
+                it.copy(freeze = it.freeze.copy(freezeCandidates = it.freeze.freezeCandidates - packageName))
             }
         }
     }
 
     val profile
-        get() = dataStore.data.map { it.freezeProfile }
+        get() = dataStore.data.map { it.freeze.freezeProfile }
 
     fun setProfile(profile: FreezeProfile) {
-        dataStore.update { it.copy(freezeProfile = profile) }
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeProfile = profile)) }
     }
 
     val exclusionStrictness
-        get() = dataStore.data.map { it.freezeExclusionStrictness }
+        get() = dataStore.data.map { it.freeze.freezeExclusionStrictness }
 
     fun setExclusionStrictness(strictness: FreezeExclusionStrictness) {
-        dataStore.update { it.copy(freezeExclusionStrictness = strictness) }
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeExclusionStrictness = strictness)) }
     }
 
     val neverFreezeApps
-        get() = dataStore.data.map { it.freezeNeverFreezeApps }
+        get() = dataStore.data.map { it.freeze.freezeNeverFreezeApps }
 
     fun setNeverFreeze(packageName: String, never: Boolean) {
         dataStore.update {
             if (never) {
-                it.copy(freezeNeverFreezeApps = it.freezeNeverFreezeApps + packageName)
+                it.copy(freeze = it.freeze.copy(freezeNeverFreezeApps = it.freeze.freezeNeverFreezeApps + packageName))
             } else {
-                it.copy(freezeNeverFreezeApps = it.freezeNeverFreezeApps - packageName)
+                it.copy(freeze = it.freeze.copy(freezeNeverFreezeApps = it.freeze.freezeNeverFreezeApps - packageName))
             }
         }
     }
 
     val excludeMusic
-        get() = dataStore.data.map { it.freezeExcludeMusic }
+        get() = dataStore.data.map { it.freeze.freezeExcludeMusic }
 
     fun setExcludeMusic(exclude: Boolean) {
-        dataStore.update { it.copy(freezeExcludeMusic = exclude) }
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeExcludeMusic = exclude)) }
     }
 
     val excludeNetwork
-        get() = dataStore.data.map { it.freezeExcludeNetwork }
+        get() = dataStore.data.map { it.freeze.freezeExcludeNetwork }
 
     fun setExcludeNetwork(exclude: Boolean) {
-        dataStore.update { it.copy(freezeExcludeNetwork = exclude) }
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeExcludeNetwork = exclude)) }
     }
 
     val networkThresholdKb
-        get() = dataStore.data.map { it.freezeNetworkThresholdKb }
+        get() = dataStore.data.map { it.freeze.freezeNetworkThresholdKb }
 
     fun setNetworkThresholdKb(threshold: Int) {
-        dataStore.update { it.copy(freezeNetworkThresholdKb = threshold) }
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeNetworkThresholdKb = threshold)) }
     }
 
     val freezeMethods
-        get() = dataStore.data.map { it.freezeMethods }
+        get() = dataStore.data.map { it.freeze.freezeMethods }
 
     fun setFreezeMethod(packageName: String, method: FreezeMethod?) {
         dataStore.update {
             if (method == null) {
-                it.copy(freezeMethods = it.freezeMethods - packageName)
+                it.copy(freeze = it.freeze.copy(freezeMethods = it.freeze.freezeMethods - packageName))
             } else {
-                it.copy(freezeMethods = it.freezeMethods + (packageName to method))
+                it.copy(freeze = it.freeze.copy(freezeMethods = it.freeze.freezeMethods + (packageName to method)))
             }
         }
     }
 
     val advancedFeaturesEnabled
-        get() = dataStore.data.map { it.freezeAdvancedFeaturesEnabled }
+        get() = dataStore.data.map { it.freeze.freezeAdvancedFeaturesEnabled }
 
     fun setAdvancedFeaturesEnabled(enabled: Boolean) {
-        dataStore.update { it.copy(freezeAdvancedFeaturesEnabled = enabled) }
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeAdvancedFeaturesEnabled = enabled)) }
     }
 
     val hideFromLauncher
-        get() = dataStore.data.map { it.freezeHideFromLauncher }
+        get() = dataStore.data.map { it.freeze.freezeHideFromLauncher }
 
     fun setHideFromLauncher(hide: Boolean) {
-        dataStore.update { it.copy(freezeHideFromLauncher = hide) }
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeHideFromLauncher = hide)) }
     }
 
     val stats
-        get() = dataStore.data.map { it.freezeStats }
+        get() = dataStore.data.map { it.freeze.freezeStats }
 
     fun recordFrozen(packageName: String, timestamp: Long) {
         dataStore.update {
-            val current = it.freezeStats[packageName] ?: FreezeAppStats()
+            val current = it.freeze.freezeStats[packageName] ?: FreezeAppStats()
             it.copy(
-                freezeStats = it.freezeStats + (packageName to current.copy(
-                    freezeCount = current.freezeCount + 1,
-                    lastFrozenAt = timestamp,
-                ))
+                freeze = it.freeze.copy(
+                    freezeStats = it.freeze.freezeStats + (packageName to current.copy(
+                        freezeCount = current.freezeCount + 1,
+                        lastFrozenAt = timestamp,
+                    ))
+                )
             )
         }
     }
 
     fun recordUnfrozen(packageName: String, timestamp: Long) {
         dataStore.update {
-            val current = it.freezeStats[packageName] ?: FreezeAppStats()
+            val current = it.freeze.freezeStats[packageName] ?: FreezeAppStats()
             it.copy(
-                freezeStats = it.freezeStats + (packageName to current.copy(
-                    unfreezeCount = current.unfreezeCount + 1,
-                    lastUnfrozenAt = timestamp,
-                ))
+                freeze = it.freeze.copy(
+                    freezeStats = it.freeze.freezeStats + (packageName to current.copy(
+                        unfreezeCount = current.unfreezeCount + 1,
+                        lastUnfrozenAt = timestamp,
+                    ))
+                )
             )
         }
     }

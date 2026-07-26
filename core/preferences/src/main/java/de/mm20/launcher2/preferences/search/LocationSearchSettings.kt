@@ -11,67 +11,67 @@ class LocationSearchSettings internal constructor(
     val data
         get() = launcherDataStore.data.map {
             LocationSearchSettingsData(
-                providers = it.locationSearchProviders,
-                searchRadius = it.locationSearchRadius,
-                hideUncategorized = it.locationSearchHideUncategorized,
-                overpassUrl = it.locationSearchOverpassUrl,
-                tileServer = it.locationSearchTileServer,
-                measurementSystem = it.localeMeasurementSystem,
-                showMap = it.locationSearchShowMap,
-                showPositionOnMap = it.locationSearchShowPositionOnMap,
-                themeMap = it.locationSearchThemeMap,
+                providers = it.locationSearch.locationSearchProviders,
+                searchRadius = it.locationSearch.locationSearchRadius,
+                hideUncategorized = it.locationSearch.locationSearchHideUncategorized,
+                overpassUrl = it.locationSearch.locationSearchOverpassUrl,
+                tileServer = it.locationSearch.locationSearchTileServer,
+                measurementSystem = it.locale.localeMeasurementSystem,
+                showMap = it.locationSearch.locationSearchShowMap,
+                showPositionOnMap = it.locationSearch.locationSearchShowPositionOnMap,
+                themeMap = it.locationSearch.locationSearchThemeMap,
             )
         }
 
     val enabledProviders: Flow<Set<String>>
-        get() = launcherDataStore.data.map { it.locationSearchProviders }
+        get() = launcherDataStore.data.map { it.locationSearch.locationSearchProviders }
 
     val osmLocations
-        get() = launcherDataStore.data.map { it.locationSearchProviders.contains("openstreetmaps") }
+        get() = launcherDataStore.data.map { it.locationSearch.locationSearchProviders.contains("openstreetmaps") }
 
     fun setOsmLocations(osmLocations: Boolean) {
         launcherDataStore.update {
             if (osmLocations) {
-                it.copy(locationSearchProviders = it.locationSearchProviders + "openstreetmaps")
+                it.copy(locationSearch = it.locationSearch.copy(locationSearchProviders = it.locationSearch.locationSearchProviders + "openstreetmaps"))
             } else {
-                it.copy(locationSearchProviders = it.locationSearchProviders - "openstreetmaps")
+                it.copy(locationSearch = it.locationSearch.copy(locationSearchProviders = it.locationSearch.locationSearchProviders - "openstreetmaps"))
             }
         }
     }
 
     val enabledPlugins: Flow<Set<String>>
-        get() = launcherDataStore.data.map { it.locationSearchProviders - "openstreetmaps" }
+        get() = launcherDataStore.data.map { it.locationSearch.locationSearchProviders - "openstreetmaps" }
 
     fun setPluginEnabled(authority: String, enabled: Boolean) {
         launcherDataStore.update {
             if (enabled) {
-                it.copy(locationSearchProviders = it.locationSearchProviders + authority)
+                it.copy(locationSearch = it.locationSearch.copy(locationSearchProviders = it.locationSearch.locationSearchProviders + authority))
             } else {
-                it.copy(locationSearchProviders = it.locationSearchProviders - authority)
+                it.copy(locationSearch = it.locationSearch.copy(locationSearchProviders = it.locationSearch.locationSearchProviders - authority))
             }
         }
     }
 
     val searchRadius
-        get() = launcherDataStore.data.map { it.locationSearchRadius }
+        get() = launcherDataStore.data.map { it.locationSearch.locationSearchRadius }
 
     fun setSearchRadius(searchRadius: Int) {
         launcherDataStore.update {
-            it.copy(locationSearchRadius = searchRadius)
+            it.copy(locationSearch = it.locationSearch.copy(locationSearchRadius = searchRadius))
         }
     }
 
     val hideUncategorized
-        get() = launcherDataStore.data.map { it.locationSearchHideUncategorized }
+        get() = launcherDataStore.data.map { it.locationSearch.locationSearchHideUncategorized }
 
     fun setHideUncategorized(hideUncategorized: Boolean) {
         launcherDataStore.update {
-            it.copy(locationSearchHideUncategorized = hideUncategorized)
+            it.copy(locationSearch = it.locationSearch.copy(locationSearchHideUncategorized = hideUncategorized))
         }
     }
 
     val overpassUrl
-        get() = launcherDataStore.data.map { it.locationSearchOverpassUrl }
+        get() = launcherDataStore.data.map { it.locationSearch.locationSearchOverpassUrl }
 
     fun setOverpassUrl(overpassUrl: String?) {
         var url = overpassUrl
@@ -89,12 +89,12 @@ class LocationSearchSettings internal constructor(
             }
         }
         launcherDataStore.update {
-            it.copy(locationSearchOverpassUrl = url)
+            it.copy(locationSearch = it.locationSearch.copy(locationSearchOverpassUrl = url))
         }
     }
 
     val tileServer
-        get() = launcherDataStore.data.map { it.locationSearchTileServer }
+        get() = launcherDataStore.data.map { it.locationSearch.locationSearchTileServer }
 
     fun setTileServer(tileServer: String?) {
         var url = tileServer
@@ -109,30 +109,30 @@ class LocationSearchSettings internal constructor(
             }
         }
         launcherDataStore.update {
-            it.copy(locationSearchTileServer = url)
+            it.copy(locationSearch = it.locationSearch.copy(locationSearchTileServer = url))
         }
     }
 
     val showMap
-        get() = launcherDataStore.data.map { it.locationSearchShowMap }
+        get() = launcherDataStore.data.map { it.locationSearch.locationSearchShowMap }
 
     fun setShowMap(showMap: Boolean) {
         launcherDataStore.update {
-            it.copy(locationSearchShowMap = showMap)
+            it.copy(locationSearch = it.locationSearch.copy(locationSearchShowMap = showMap))
         }
     }
 
     val themeMap
-        get() = launcherDataStore.data.map { it.locationSearchThemeMap }
+        get() = launcherDataStore.data.map { it.locationSearch.locationSearchThemeMap }
 
     fun setThemeMap(themeMap: Boolean) {
         launcherDataStore.update {
-            it.copy(locationSearchThemeMap = themeMap)
+            it.copy(locationSearch = it.locationSearch.copy(locationSearchThemeMap = themeMap))
         }
     }
 
     val measurementSystem
-        get() = launcherDataStore.data.map { it.localeMeasurementSystem }
+        get() = launcherDataStore.data.map { it.locale.localeMeasurementSystem }
 
     companion object {
         const val DefaultTileServerUrl = "https://tile.openstreetmap.org/\${z}/\${x}/\${y}.png"

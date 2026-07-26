@@ -15,11 +15,13 @@ class Migration6 : DataMigration<LauncherSettingsData> {
     override suspend fun migrate(currentData: LauncherSettingsData): LauncherSettingsData {
         return currentData.copy(
             schemaVersion = 6,
-            clockWidgetBatteryPart = if (currentData._clockWidgetBatteryPart) {
-                BatteryStatusVisibility.Show
-            } else {
-                BatteryStatusVisibility.Hide
-            }
+            clock = currentData.clock.copy(
+                clockWidgetBatteryPart = if (currentData.clock._clockWidgetBatteryPart) {
+                    BatteryStatusVisibility.Show
+                } else {
+                    BatteryStatusVisibility.Hide
+                }
+            )
         )
     }
 }

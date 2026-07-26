@@ -6,8 +6,11 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -18,10 +21,14 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.preferences.ui.GridSettings
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.ui.launcher.scaffold.Gesture
 import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
+import de.mm20.launcher2.ui.locals.LocalGridSettings
+import org.koin.compose.koinInject
 
 internal class SearchComponent(
     private val reverse: Boolean = false,
@@ -43,6 +50,9 @@ internal class SearchComponent(
         insets: PaddingValues,
         state: LauncherScaffoldState
     ) {
+        val uiSettings: UiSettings = koinInject()
+        val gridSettings by uiSettings.drawerGridSettings.collectAsState(GridSettings())
+
         val searchVM = viewModel<SearchVM>()
         val lazyListState = rememberLazyListState()
 
@@ -82,21 +92,23 @@ internal class SearchComponent(
             }
         }
 
-        Box(
-            modifier = modifier,
-            contentAlignment = Alignment.Center
-        ) {
+        CompositionLocalProvider(LocalGridSettings provides gridSettings) {
+            Box(
+                modifier = modifier,
+                contentAlignment = Alignment.Center
+            ) {
 
-            SearchColumn(
-                modifier = Modifier.nestedScroll(scrollConnection).widthIn(max = 916.dp).fillMaxHeight(),
-                paddingValues = insets,
-                state = lazyListState,
-                reverse = reverse,
-                userScrollEnabled = !state.isDragged,
-                onHideKeyboard = {
-                    state.isSearchBarFocused = false
-                }
-            )
+                SearchColumn(
+                    modifier = Modifier.nestedScroll(scrollConnection).widthIn(max = 916.dp).fillMaxHeight(),
+                    paddingValues = insets,
+                    state = lazyListState,
+                    reverse = reverse,
+                    userScrollEnabled = !state.isDragged,
+                    onHideKeyboard = {
+                        state.isSearchBarFocused = false
+                    }
+                )
+            }
         }
     }
 

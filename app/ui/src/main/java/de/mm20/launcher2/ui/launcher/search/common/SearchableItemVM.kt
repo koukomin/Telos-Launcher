@@ -22,6 +22,8 @@ import de.mm20.launcher2.preferences.search.ContactSearchSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.search.Folder
+import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.UpdatableSearchable
@@ -30,6 +32,8 @@ import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.services.tags.TagsService
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.search.ListItemViewModel
+import de.mm20.launcher2.ui.settings.protection.authenticateSettings
+import de.mm20.launcher2.ui.settings.protection.canAuthenticateSettings
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,6 +44,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -59,6 +64,9 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val contactSearchSettings: ContactSearchSettings by inject()
     private val freezeManager: FreezeManager by inject()
     private val freezeSettings: de.mm20.launcher2.preferences.freeze.FreezeSettings by inject()
+    private val appLockManager: de.mm20.launcher2.applock.AppLockManager by inject()
+    private val appLockSettings: de.mm20.launcher2.preferences.applock.AppLockSettings by inject()
+    private val searchableRepository: de.mm20.launcher2.searchable.SavableSearchableRepository by inject()
 
     val isUpToDate = MutableStateFlow(true)
 
@@ -135,6 +143,8 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                     .map { listOfNotNull(it) }
             }
 
+            is Folder -> searchableRepository.getByKeys(it.itemKeys)
+
             else -> flowOf(
                 emptyList()
             )
@@ -143,6 +153,53 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
 
     fun launch(context: Context, bounds: IntRect? = null): Boolean {
         val searchable = searchable.value ?: return false
+        
+        val activity = context as? AppCompatActivity
+        val promptTitle = context.getString(R.string.app_lock_prompt_title, searchable.label)
+
+        if (searchable is Application) {
+            val packageName = searchable.componentName.packageName
+            viewModelScope.launch {
+                if (appLockManager.isLocked(packageName)) {
+                    val method = appLockSettings.lockMethod.first()
+                    if (activity != null && canAuthenticateSettings(activity, method)) {
+                        authenticateSettings(activity, method, promptTitle) { success ->
+                            if (success) {
+                                appLockManager.reportUnlocked(packageName)
+                                launchDirect(context, searchable, bounds)
+                            }
+                        }
+                    }
+                } else {
+                    launchDirect(context, searchable, bounds)
+                }
+            }
+            return true
+        }
+
+        if (searchable is WebAppShortcut) {
+            viewModelScope.launch {
+                if (appLockManager.isLocked(searchable.key)) {
+                    val method = appLockSettings.lockMethod.first()
+                    if (activity != null && canAuthenticateSettings(activity, method)) {
+                        authenticateSettings(activity, method, promptTitle) { success ->
+                            if (success) {
+                                appLockManager.reportUnlocked(searchable.key)
+                                launchDirect(context, searchable, bounds)
+                            }
+                        }
+                    }
+                } else {
+                    launchDirect(context, searchable, bounds)
+                }
+            }
+            return true
+        }
+
+        return launchDirect(context, searchable, bounds)
+    }
+
+    private fun launchDirect(context: Context, searchable: SavableSearchable, bounds: IntRect?): Boolean {
         val view = (context as? AppCompatActivity)?.window?.decorView
         val options = if (bounds != null && view != null) {
             ActivityOptionsCompat.makeScaleUpAnimation(
@@ -210,6 +267,15 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     fun launchChild(context: Context, child: SavableSearchable) {
         if (child.launch(context, null)) {
             reportUsage(child)
+        }
+    }
+
+    fun launchChildAt(context: Context, index: Int) {
+        viewModelScope.launch {
+            val child = children.first().getOrNull(index)
+            if (child != null) {
+                launchChild(context, child)
+            }
         }
     }
 

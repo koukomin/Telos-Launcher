@@ -35,6 +35,7 @@ class AppLockActivity : BaseActivity() {
         enableEdgeToEdge()
 
         val packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME)
+        val instant = intent.getBooleanExtra(EXTRA_INSTANT, false)
         if (packageName == null) {
             finish()
             return
@@ -63,6 +64,7 @@ class AppLockActivity : BaseActivity() {
                     AppLockGateScreen(
                         appLabel = appLabel,
                         lockMethod = lockMethod,
+                        instant = instant,
                         onUnlocked = {
                             appLockManager.reportUnlocked(packageName)
                             finish()
@@ -88,5 +90,6 @@ class AppLockActivity : BaseActivity() {
 
     companion object {
         const val EXTRA_PACKAGE_NAME = "de.mm20.launcher2.applock.PACKAGE_NAME"
+        const val EXTRA_INSTANT = "de.mm20.launcher2.applock.INSTANT"
     }
 }

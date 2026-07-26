@@ -8,20 +8,20 @@ class WikipediaSearchSettings internal constructor(
     private val dataStore: LauncherDataStore
 ) {
     val enabled
-        get() = dataStore.data.map { it.wikipediaSearchEnabled }.distinctUntilChanged()
+        get() = dataStore.data.map { it.wikipedia.wikipediaSearchEnabled }.distinctUntilChanged()
 
     fun setEnabled(enabled: Boolean) {
         dataStore.update {
-            it.copy(wikipediaSearchEnabled = enabled)
+            it.copy(wikipedia = it.wikipedia.copy(wikipediaSearchEnabled = enabled))
         }
     }
 
     val customUrl
-        get() = dataStore.data.map { it.wikipediaCustomUrl }.distinctUntilChanged()
+        get() = dataStore.data.map { it.wikipedia.wikipediaCustomUrl }.distinctUntilChanged()
 
     fun setCustomUrl(customUrl: String?) {
         dataStore.update {
-            it.copy(wikipediaCustomUrl = customUrl?.takeIf { it.isNotBlank() })
+            it.copy(wikipedia = it.wikipedia.copy(wikipediaCustomUrl = customUrl?.takeIf { it.isNotBlank() }))
         }
     }
 }

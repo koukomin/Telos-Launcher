@@ -17,6 +17,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,6 +28,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextButton
 import coil.compose.AsyncImage
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.ListPreference
@@ -52,6 +58,11 @@ fun WebAppsSettingsScreen() {
     val trackingParamStrippingEnabled by viewModel.trackingParamStrippingEnabled.collectAsState()
     val topBarAtBottom by viewModel.topBarAtBottom.collectAsState()
     val swipeToSwitchEnabled by viewModel.swipeToSwitchEnabled.collectAsState()
+    val groupsEnabled by viewModel.groupsEnabled.collectAsState()
+    val groups by viewModel.groups.collectAsState()
+
+    var showCreateGroupDialog by remember { mutableStateOf(false) }
+    var groupToRename by remember { mutableStateOf<de.mm20.launcher2.preferences.WebAppGroup?>(null) }
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_web_app_shortcuts),
@@ -73,6 +84,48 @@ fun WebAppsSettingsScreen() {
                         ),
                         value = direction ?: PanelDirection.Right,
                         onValueChanged = { if (it != null) viewModel.setDirection(it) },
+                    )
+                }
+            }
+        }
+        item {
+            PreferenceCategory(title = "Grouping") {
+                SwitchPreference(
+                    title = "Enable Web App Groups",
+                    summary = "Organize web apps into folders and restrict swiping per group",
+                    value = groupsEnabled,
+                    onValueChanged = { viewModel.setGroupsEnabled(it) },
+                )
+            }
+        }
+        if (groupsEnabled) {
+            item {
+                PreferenceCategory(title = "Manage Groups") {
+                    for (group in groups) {
+                        Preference(
+                            title = group.name,
+                            summary = "${group.appKeys.size} apps",
+                            onClick = { groupToRename = group },
+                            controls = {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                        Checkbox(
+                                            checked = group.notificationsEnabled,
+                                            onCheckedChange = { viewModel.toggleGroupNotifications(group.id, it) }
+                                        )
+                                        Text("Notifications", style = MaterialTheme.typography.labelSmall)
+                                    }
+                                    IconButton(onClick = { viewModel.deleteGroup(group.id) }) {
+                                        Icon(painterResource(R.drawable.delete_24px), null)
+                                    }
+                                }
+                            }
+                        )
+                    }
+                    Preference(
+                        icon = R.drawable.add_24px,
+                        title = "Create new group",
+                        onClick = { showCreateGroupDialog = true }
                     )
                 }
             }
@@ -197,8 +250,8 @@ fun WebAppsSettingsScreen() {
     EditWebAppShortcutSheet(
         expanded = createShortcut,
         existing = null,
-        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss ->
-            viewModel.save(null, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss)
+        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId ->
+            viewModel.save(null, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId)
         },
         onDismiss = { viewModel.dismissDialogs() },
         onImportIcon = { uri, sizePx -> viewModel.importIcon(uri, sizePx) },
@@ -208,12 +261,78 @@ fun WebAppsSettingsScreen() {
     EditWebAppShortcutSheet(
         expanded = editShortcut != null,
         existing = editShortcut,
-        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss ->
-            viewModel.save(editShortcut, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss)
+        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId ->
+            viewModel.save(editShortcut, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId)
         },
         onDismiss = { viewModel.dismissDialogs() },
         onImportIcon = { uri, sizePx -> viewModel.importIcon(uri, sizePx) },
         onFindFavicon = { url -> viewModel.findFavicon(url) },
         onExportIconPackIcon = { customIcon, sizePx -> viewModel.exportIconPackIcon(customIcon, sizePx) },
     )
+
+    if (showCreateGroupDialog) {
+        var groupName by remember { mutableStateOf("") }
+        AlertDialog(
+            onDismissRequest = { showCreateGroupDialog = false },
+            title = { Text("Create Group") },
+            text = {
+                OutlinedTextField(
+                    value = groupName,
+                    onValueChange = { groupName = it },
+                    label = { Text("Group Name") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    enabled = groupName.isNotBlank(),
+                    onClick = {
+                        viewModel.createGroup(groupName)
+                        showCreateGroupDialog = false
+                    }
+                ) {
+                    Text("Create")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showCreateGroupDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
+
+    if (groupToRename != null) {
+        var groupName by remember { mutableStateOf(groupToRename!!.name) }
+        AlertDialog(
+            onDismissRequest = { groupToRename = null },
+            title = { Text("Rename Group") },
+            text = {
+                OutlinedTextField(
+                    value = groupName,
+                    onValueChange = { groupName = it },
+                    label = { Text("Group Name") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    enabled = groupName.isNotBlank(),
+                    onClick = {
+                        viewModel.updateGroup(groupToRename!!.copy(name = groupName))
+                        groupToRename = null
+                    }
+                ) {
+                    Text("Rename")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { groupToRename = null }) {
+                    Text("Cancel")
+                }
+            }
+        )
+    }
 }

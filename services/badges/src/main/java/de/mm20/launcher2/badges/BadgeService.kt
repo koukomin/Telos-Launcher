@@ -2,13 +2,13 @@ package de.mm20.launcher2.badges
 
 import android.content.Context
 import de.mm20.launcher2.badges.providers.AppShortcutBadgeProvider
-import de.mm20.launcher2.badges.providers.BadgeProvider
 import de.mm20.launcher2.badges.providers.CloudBadgeProvider
 import de.mm20.launcher2.badges.providers.HiddenItemBadgeProvider
 import de.mm20.launcher2.badges.providers.NotificationBadgeProvider
 import de.mm20.launcher2.badges.providers.PluginBadgeProvider
 import de.mm20.launcher2.badges.providers.SuspendedAppsBadgeProvider
 import de.mm20.launcher2.badges.providers.ProfileBadgeProvider
+import de.mm20.launcher2.appmanagement.FossUpdateBadgeProvider
 import de.mm20.launcher2.preferences.ui.BadgeSettings
 import de.mm20.launcher2.search.Searchable
 import kotlinx.coroutines.CoroutineScope
@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
 interface BadgeService {
     fun getBadge(searchable: Searchable): Flow<Badge?>
@@ -61,6 +62,7 @@ internal class BadgeServiceImpl(
                 if (it.plugins) {
                     providers += PluginBadgeProvider(context)
                 }
+                providers += get<de.mm20.launcher2.appmanagement.FossUpdateBadgeProvider>()
                 badgeProviders.value = providers
             }
         }

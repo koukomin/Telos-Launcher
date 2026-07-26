@@ -27,6 +27,7 @@ internal class LegacyToAdaptiveTransformation(
             is StaticIconLayer -> layer.copy(scale = scale)
             is TintedClockLayer -> layer.copy(scale = scale)
             is TintedIconLayer -> layer.copy(scale = scale)
+            is GridLayer -> layer.copy(layers = layer.layers.map { scale(it, scale) })
             else -> layer
         }
     }
