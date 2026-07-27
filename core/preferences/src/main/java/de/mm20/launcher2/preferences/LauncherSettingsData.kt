@@ -294,6 +294,9 @@ data class SearchBarGroup(
     val searchLaunchOnEnter: Boolean = true,
     val searchBarBottom: Boolean = true,
     val searchBarFixed: Boolean = false,
+    /** If true, the drawer/search results list keeps its scroll position when closed and
+     * reopened, instead of always resetting to the top. */
+    val searchRememberScrollPosition: Boolean = false,
 )
 
 @Serializable

@@ -82,6 +82,7 @@ fun HomescreenSettingsScreen() {
     val searchBarStyle by viewModel.searchBarStyle.collectAsStateWithLifecycle(null)
     val searchBarColor by viewModel.searchBarColor.collectAsStateWithLifecycle(null)
     val searchBarColorDrawer by viewModel.searchBarColorDrawer.collectAsStateWithLifecycle(null)
+    val rememberScrollPosition by viewModel.rememberScrollPosition.collectAsStateWithLifecycle(null)
     val bottomSearchBar by viewModel.bottomSearchBar.collectAsStateWithLifecycle(null)
     val fixedSearchBar by viewModel.fixedSearchBar.collectAsStateWithLifecycle(null)
     val lightStatusBar by viewModel.statusBarIcons.collectAsStateWithLifecycle(null)
@@ -265,6 +266,14 @@ fun HomescreenSettingsScreen() {
                     value = fixedSearchBar == true,
                     onValueChanged = {
                         viewModel.setFixedSearchBar(it)
+                    },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_remember_scroll_position),
+                    summary = stringResource(R.string.preference_search_remember_scroll_position_summary),
+                    value = rememberScrollPosition == true,
+                    onValueChanged = {
+                        viewModel.setRememberScrollPosition(it)
                     },
                 )
             }

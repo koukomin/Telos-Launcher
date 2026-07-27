@@ -419,6 +419,17 @@ class UiSettings internal constructor(
         }
     }
 
+    val rememberScrollPosition
+        get() = launcherDataStore.data.map {
+            it.searchBar.searchRememberScrollPosition
+        }.distinctUntilChanged()
+
+    fun setRememberScrollPosition(remember: Boolean) {
+        launcherDataStore.update {
+            it.copy(searchBar = it.searchBar.copy(searchRememberScrollPosition = remember))
+        }
+    }
+
     val openKeyboardOnSearch
         get() = launcherDataStore.data.map {
             it.searchBar.searchBarKeyboard

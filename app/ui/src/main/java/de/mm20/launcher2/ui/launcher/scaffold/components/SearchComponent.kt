@@ -56,6 +56,7 @@ internal class SearchComponent(
         val drawerBackgroundEnabled by uiSettings.drawerBackgroundEnabled.collectAsState(false)
         val drawerBackgroundColor by uiSettings.drawerBackgroundColor.collectAsState(null)
         val drawerBackgroundOpacity by uiSettings.drawerBackgroundOpacity.collectAsState(0.9f)
+        val rememberScrollPosition by uiSettings.rememberScrollPosition.collectAsState(false)
 
         val searchVM = viewModel<SearchVM>()
         val lazyListState = rememberLazyListState()
@@ -63,12 +64,16 @@ internal class SearchComponent(
         LaunchedEffect(isActive) {
             if (!isActive) {
                 searchVM.reset()
-                lazyListState.scrollToItem(0, 0)
+                if (!rememberScrollPosition) {
+                    lazyListState.scrollToItem(0, 0)
+                }
             }
         }
 
         LaunchedEffect(searchVM.searchQuery.value, searchVM.filters.value) {
-            lazyListState.requestScrollToItem(0, 0)
+            if (searchVM.searchQuery.value.isNotEmpty() || !rememberScrollPosition) {
+                lazyListState.requestScrollToItem(0, 0)
+            }
         }
 
         LaunchedEffect(lazyListState.canScrollForward, lazyListState.canScrollBackward) {

@@ -80,6 +80,13 @@ class HomescreenSettingsScreenVM(
         uiSettings.setSearchBarColorDrawer(color)
     }
 
+    val rememberScrollPosition = uiSettings.rememberScrollPosition
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setRememberScrollPosition(remember: Boolean) {
+        uiSettings.setRememberScrollPosition(remember)
+    }
+
     val searchBarStyle = uiSettings.searchBarStyle
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 

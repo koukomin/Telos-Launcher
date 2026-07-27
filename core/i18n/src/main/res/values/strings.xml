@@ -1337,6 +1337,8 @@
     <string name="preference_performance_bounce_physics">Bounce physics</string>
     <string name="preference_search_bar_colors_drawer_override">Different colors in drawer</string>
     <string name="preference_search_bar_colors_drawer_override_summary">Use a separate search bar color scheme while the drawer/search overlay is open</string>
+    <string name="preference_search_remember_scroll_position">Remember scroll position</string>
+    <string name="preference_search_remember_scroll_position_summary">Keep the drawer\'s scroll position when closed and reopened, instead of resetting to the top</string>
     <string name="preference_performance_category_search">Search</string>
     <string name="preference_performance_search_debounce">Search delay</string>
     <string name="preference_performance_search_debounce_summary">Waits this long after you stop typing before searching. Higher values do less work while typing fast, at the cost of feeling less instant.</string>
