@@ -18,6 +18,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.FavoritesTagSelector
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
+import de.mm20.launcher2.ui.launcher.search.recommendations.RecommendedTabContent
 import de.mm20.launcher2.ui.layout.BottomReversed
 import de.mm20.launcher2.ui.theme.transparency.transparency
 
@@ -31,6 +32,10 @@ fun LazyListScope.SearchFavorites(
     onSelectTag: (String?) -> Unit,
     editButton: Boolean,
     reverse: Boolean,
+    showRecommendedChip: Boolean = false,
+    recommendedTabSelected: Boolean = false,
+    onSelectRecommendedTab: () -> Unit = {},
+    onHideRecommendedTab: () -> Unit = {},
 ) {
     item(
         key = "favorites",
@@ -51,7 +56,9 @@ fun LazyListScope.SearchFavorites(
                     .padding(vertical = 4.dp),
                 verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
             ) {
-                if (favorites.isNotEmpty()) {
+                if (recommendedTabSelected) {
+                    RecommendedTabContent(onHideTab = onHideRecommendedTab)
+                } else if (favorites.isNotEmpty()) {
                     SearchResultGrid(favorites, transitionKey = selectedTag, reverse = reverse)
                 } else {
                     Banner(
@@ -62,7 +69,7 @@ fun LazyListScope.SearchFavorites(
                         icon = if (selectedTag == null) R.drawable.star_24px else R.drawable.tag_24px,
                     )
                 }
-                if (pinnedTags.isNotEmpty() || editButton) {
+                if (pinnedTags.isNotEmpty() || editButton || showRecommendedChip) {
                     FavoritesTagSelector(
                         tags = pinnedTags,
                         selectedTag = selectedTag,
@@ -73,7 +80,10 @@ fun LazyListScope.SearchFavorites(
                         expanded = tagsExpanded,
                         compact = compactTags,
                         onExpand = onExpandTags,
-                        showFavorites = true
+                        showFavorites = true,
+                        showRecommendedChip = showRecommendedChip,
+                        recommendedSelected = recommendedTabSelected,
+                        onSelectRecommended = onSelectRecommendedTab,
                     )
                 }
             }

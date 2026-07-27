@@ -521,6 +521,7 @@ class SettingsActivity : BaseActivity() {
             ROUTE_FLOATING_LAUNCHER -> FloatingLauncherSettingsRoute
             ROUTE_WALLPAPER -> WallpaperSettingsRoute
             ROUTE_WEB_APPS -> WebAppsSettingsRoute
+            ROUTE_APP_RECOMMENDATIONS -> SearchSettingsRoute
             ROUTE_INTRUDER_PHOTOS -> IntruderPhotosRoute
             ROUTE_CRASH_REPORT if (intent.hasExtra(EXTRA_CRASH_REPORT_PATH)) -> {
                 CrashReportRoute(intent.getStringExtra(EXTRA_CRASH_REPORT_PATH)!!)
@@ -538,6 +539,7 @@ class SettingsActivity : BaseActivity() {
         const val ROUTE_FLOATING_LAUNCHER = "settings/floatinglauncher"
         const val ROUTE_WALLPAPER = "settings/wallpaper"
         const val ROUTE_WEB_APPS = "settings/webapps"
+        const val ROUTE_APP_RECOMMENDATIONS = "settings/search/recommendations"
         const val ROUTE_INTRUDER_PHOTOS = SettingsDeepLinkContract.ROUTE_INTRUDER_PHOTOS
         const val ROUTE_CRASH_REPORT = "settings/debug/crashreport"
         const val EXTRA_CRASH_REPORT_PATH = "crash_report_path"

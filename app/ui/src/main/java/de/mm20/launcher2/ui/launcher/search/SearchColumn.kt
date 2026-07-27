@@ -20,7 +20,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -149,6 +151,8 @@ fun SearchColumn(
     val favoritesEditButton by favoritesVM.showEditButton.collectAsState(false)
     val favoritesTagsExpanded by favoritesVM.tagsExpanded.collectAsState(false)
 
+    var recommendedTabSelected by rememberSaveable { mutableStateOf(false) }
+
     val expandedCategory: SearchCategory? by viewModel.expandedCategory
 
     var selectedAppProfileIndex by viewModel.selectedAppProfileIndex
@@ -225,7 +229,24 @@ fun SearchColumn(
                             favoritesVM.setTagsExpanded(it)
                         },
                         compactTags = compactTags,
-                        editButton = favoritesEditButton
+                        editButton = favoritesEditButton,
+                        showRecommendedChip = showAppRecommendations,
+                        recommendedTabSelected = recommendedTabSelected && showAppRecommendations,
+                        onSelectRecommendedTab = { recommendedTabSelected = !recommendedTabSelected },
+                        onHideRecommendedTab = {
+                            recommendedTabSelected = false
+                            context.startActivity(
+                                android.content.Intent(
+                                    context,
+                                    de.mm20.launcher2.ui.settings.SettingsActivity::class.java
+                                ).apply {
+                                    putExtra(
+                                        de.mm20.launcher2.ui.settings.SettingsActivity.EXTRA_ROUTE,
+                                        de.mm20.launcher2.ui.settings.SettingsActivity.ROUTE_APP_RECOMMENDATIONS
+                                    )
+                                }
+                            )
+                        },
                     )
                 } else {
                     // Empty item to maintain scroll position

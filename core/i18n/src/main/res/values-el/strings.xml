@@ -234,6 +234,10 @@
     <string name="preference_search_bar_colors_drawer_override_summary">Χρήση ξεχωριστού συνδυασμού χρωμάτων για τη γραμμή αναζήτησης όσο είναι ανοιχτό το drawer/η αναζήτηση</string>
     <string name="preference_search_remember_scroll_position">Διατήρηση θέσης κύλισης</string>
     <string name="preference_search_remember_scroll_position_summary">Διατήρηση της θέσης κύλισης του drawer όταν κλείνει και ξανανοίγει, αντί για επαναφορά στην αρχή</string>
+    <string name="recommendation_why_am_i_seeing_this">Γιατί το βλέπω αυτό;</string>
+    <string name="recommendation_tab_label">Προτεινόμενες</string>
+    <string name="recommendation_tab_intro">Κατεβάζοντας αυτές τις εφαρμογές στηρίζετε την ανάπτυξη του Telos.</string>
+    <string name="recommendation_tab_hide">Απόκρυψη αυτού του tab</string>
     <string name="preference_screen_performance_summary">Κινήσεις, ταχύτητα αναζήτησης, προσωρινή αποθήκευση</string>
     <string name="preference_search_favorites">Αγαπημένα</string>
     <string name="preference_crash_reporter_summary">Σφάλματα και αποστολή σφαλμάτων</string>

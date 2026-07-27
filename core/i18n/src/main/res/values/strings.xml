@@ -1750,6 +1750,9 @@
     <string name="recommendation_desc_communication">Private, encrypted messaging</string>
     <string name="recommendation_card_label">Recommended</string>
     <string name="recommendation_why_am_i_seeing_this">Why am I seeing this?</string>
+    <string name="recommendation_tab_label">Recommended</string>
+    <string name="recommendation_tab_intro">Downloading these apps supports Telos\'s development.</string>
+    <string name="recommendation_tab_hide">Hide this tab</string>
     <string name="recommendation_info_title">About this recommendation</string>
     <string name="recommendation_info_body">Telos occasionally shows one editorial app suggestion in the drawer or in search results that match a category like VPN or password managers. These are separate from your search results and installed apps - Telos doesn\'t currently have any affiliate or advertising relationship with the apps shown. You can turn these suggestions off entirely in Search settings.</string>
     <string name="preference_show_app_recommendations">Show app recommendations</string>
