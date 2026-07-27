@@ -144,15 +144,19 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                 } else {
                     val pagerState = rememberPagerState(initialPage = defaultPage.coerceIn(0, dockPages.size - 1)) { dockPages.size }
 
-                    Column(
+                    // Box, not Column: the background plate and the pager need to OVERLAP (plate
+                    // behind, pager on top), not stack as separate vertical siblings - a Column
+                    // here would give the plate its own vertical slot above the pager instead of
+                    // sitting behind it.
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight()
                     ) {
                         if (dockBackgroundEnabled) {
-                            val color = dockBackgroundColor?.let { Color(it) } 
+                            val color = dockBackgroundColor?.let { Color(it) }
                                 ?: if (de.mm20.launcher2.ui.locals.LocalDarkTheme.current) Color.Black else Color.White
-                            
+
                             Box(
                                 modifier = Modifier
                                     .padding(horizontal = 8.dp)
