@@ -104,9 +104,10 @@ internal class ClockAndWidgetsHomeComponent(
                 ) {
                     val delta = scrollState.value - previousScroll.intValue
                     previousScroll.intValue = scrollState.value
-                    if (!editMode) {
-                        state.onComponentScroll(delta.toFloat())
-                    }
+                    // Scroll drives the search bar off/on screen the same way in edit mode as in
+                    // normal browsing - it should never be force-hidden (unreachable), only
+                    // scrolled out of the way so it doesn't sit on top of the widgets.
+                    state.onComponentScroll(delta.toFloat())
                 }
 
                 CompositionLocalProvider(LocalGridSettings provides gridSettings) {
@@ -138,7 +139,7 @@ internal class ClockAndWidgetsHomeComponent(
                                 .padding(top = 16.dp),
                             editMode = editMode,
                             onEditModeChange = {
-                                scope.launch { state.lock(hideSearchBar = true) }
+                                scope.launch { state.lock() }
                                 editMode = it
                             },
                             parentId = target.id.toString(),
