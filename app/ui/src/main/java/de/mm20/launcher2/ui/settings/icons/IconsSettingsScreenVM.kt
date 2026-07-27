@@ -67,6 +67,16 @@ class IconsSettingsScreenVM(
 
     fun setGridLabelColor(color: Int?) = uiSettings.setGridLabelColor(color)
 
+    val drawerBackgroundEnabled = uiSettings.drawerBackgroundEnabled
+    val drawerBackgroundColor = uiSettings.drawerBackgroundColor
+    val drawerBackgroundOpacity = uiSettings.drawerBackgroundOpacity
+    fun setDrawerBackgroundEnabled(enabled: Boolean) = uiSettings.setDrawerBackgroundEnabled(enabled)
+    fun setDrawerBackgroundColor(color: Int?) = uiSettings.setDrawerBackgroundColor(color)
+    fun setDrawerBackgroundOpacity(opacity: Float) = uiSettings.setDrawerBackgroundOpacity(opacity)
+
+    val folderBackgroundColor = uiSettings.folderBackgroundColor
+    fun setFolderBackgroundColor(color: Int?) = uiSettings.setFolderBackgroundColor(color)
+
     fun setShowLabels(showLabels: Boolean) {
         uiSettings.setGridShowLabels(showLabels)
     }

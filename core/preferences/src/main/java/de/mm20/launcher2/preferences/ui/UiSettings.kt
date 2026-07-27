@@ -207,6 +207,34 @@ class UiSettings internal constructor(
         launcherDataStore.update { it.copy(grid = it.grid.copy(dockBackgroundShadow = elevation)) }
     }
 
+    val drawerBackgroundEnabled
+        get() = launcherDataStore.data.map { it.grid.drawerBackgroundEnabled }.distinctUntilChanged()
+
+    fun setDrawerBackgroundEnabled(enabled: Boolean) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(drawerBackgroundEnabled = enabled)) }
+    }
+
+    val drawerBackgroundColor
+        get() = launcherDataStore.data.map { it.grid.drawerBackgroundColor }.distinctUntilChanged()
+
+    fun setDrawerBackgroundColor(color: Int?) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(drawerBackgroundColor = color)) }
+    }
+
+    val drawerBackgroundOpacity
+        get() = launcherDataStore.data.map { it.grid.drawerBackgroundOpacity }.distinctUntilChanged()
+
+    fun setDrawerBackgroundOpacity(opacity: Float) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(drawerBackgroundOpacity = opacity)) }
+    }
+
+    val folderBackgroundColor
+        get() = launcherDataStore.data.map { it.grid.folderBackgroundColor }.distinctUntilChanged()
+
+    fun setFolderBackgroundColor(color: Int?) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(folderBackgroundColor = color)) }
+    }
+
     fun setGridShowList(showList: Boolean) {
         launcherDataStore.update {
             it.copy(grid = it.grid.copy(gridList = showList))

@@ -923,6 +923,10 @@
     <string name="preference_category_grid_home">Home screen grid</string>
     <string name="preference_category_grid_drawer">Search drawer grid</string>
     <string name="preference_category_grid_dock">Dock grid</string>
+    <string name="preference_category_grid_folders">Folders</string>
+    <string name="preference_drawer_background">Drawer background</string>
+    <string name="preference_drawer_background_summary">Show a background behind the app drawer</string>
+    <string name="preference_folder_background_color">Folder background color</string>
     <string name="preference_grid_label_size">Label size</string>
     <string name="preference_grid_label_max_lines">Label max lines</string>
     <string name="preference_grid_label_shadow">Label shadow</string>

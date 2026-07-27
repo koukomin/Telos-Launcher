@@ -370,6 +370,10 @@
     <string name="preference_category_grid_home">Πλέγμα αρχικής οθόνης</string>
     <string name="preference_category_grid_drawer">Πλέγμα αναζήτησης</string>
     <string name="preference_category_grid_dock">Πλέγμα dock</string>
+    <string name="preference_category_grid_folders">Φάκελοι</string>
+    <string name="preference_drawer_background">Φόντο drawer</string>
+    <string name="preference_drawer_background_summary">Εμφάνιση φόντου πίσω από το drawer εφαρμογών</string>
+    <string name="preference_folder_background_color">Χρώμα φόντου φακέλου</string>
     <string name="preference_grid_label_size">Μέγεθος ετικέτας</string>
     <string name="preference_grid_label_max_lines">Μέγιστες γραμμές ετικέτας</string>
     <string name="preference_grid_label_shadow">Σκιά ετικέτας</string>

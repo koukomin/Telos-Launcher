@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -52,6 +53,9 @@ internal class SearchComponent(
     ) {
         val uiSettings: UiSettings = koinInject()
         val gridSettings by uiSettings.drawerGridSettings.collectAsState(GridSettings())
+        val drawerBackgroundEnabled by uiSettings.drawerBackgroundEnabled.collectAsState(false)
+        val drawerBackgroundColor by uiSettings.drawerBackgroundColor.collectAsState(null)
+        val drawerBackgroundOpacity by uiSettings.drawerBackgroundOpacity.collectAsState(0.9f)
 
         val searchVM = viewModel<SearchVM>()
         val lazyListState = rememberLazyListState()
@@ -94,7 +98,13 @@ internal class SearchComponent(
 
         CompositionLocalProvider(LocalGridSettings provides gridSettings) {
             Box(
-                modifier = modifier,
+                modifier = if (drawerBackgroundEnabled) {
+                    val color = drawerBackgroundColor?.let { androidx.compose.ui.graphics.Color(it) }
+                        ?: if (de.mm20.launcher2.ui.locals.LocalDarkTheme.current) androidx.compose.ui.graphics.Color.Black else androidx.compose.ui.graphics.Color.White
+                    modifier.background(color.copy(alpha = drawerBackgroundOpacity))
+                } else {
+                    modifier
+                },
                 contentAlignment = Alignment.Center
             ) {
 

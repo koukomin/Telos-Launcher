@@ -80,6 +80,11 @@ fun IconsSettingsScreen() {
     val drawerGrid by viewModel.drawerGrid.collectAsStateWithLifecycle(GridSettings())
     val dockGrid by viewModel.dockGrid.collectAsStateWithLifecycle(GridSettings())
 
+    val drawerBackgroundEnabled by viewModel.drawerBackgroundEnabled.collectAsStateWithLifecycle(false)
+    val drawerBackgroundColor by viewModel.drawerBackgroundColor.collectAsStateWithLifecycle(null)
+    val drawerBackgroundOpacity by viewModel.drawerBackgroundOpacity.collectAsStateWithLifecycle(0.9f)
+    val folderBackgroundColor by viewModel.folderBackgroundColor.collectAsStateWithLifecycle(null)
+
     val icons by viewModel.icons.collectAsStateWithLifecycle(null)
     val density = LocalDensity.current
     val iconShape by viewModel.iconShape.collectAsStateWithLifecycle(IconShape.PlatformDefault)
@@ -263,6 +268,37 @@ fun IconsSettingsScreen() {
                         )
                     }
                 }
+                SwitchPreference(
+                    title = stringResource(R.string.preference_drawer_background),
+                    summary = stringResource(R.string.preference_drawer_background_summary),
+                    value = drawerBackgroundEnabled,
+                    onValueChanged = { viewModel.setDrawerBackgroundEnabled(it) }
+                )
+                AnimatedVisibility(drawerBackgroundEnabled) {
+                    Column {
+                        ColorPreference(
+                            title = stringResource(R.string.preference_dock_background_color),
+                            value = drawerBackgroundColor?.let { Color(it) },
+                            onValueChanged = { viewModel.setDrawerBackgroundColor(it?.toArgb()) }
+                        )
+                        SliderPreference(
+                            title = stringResource(R.string.preference_dock_background_opacity),
+                            value = (drawerBackgroundOpacity * 100).toInt(),
+                            min = 0,
+                            max = 100,
+                            onValueChanged = { viewModel.setDrawerBackgroundOpacity(it / 100f) }
+                        )
+                    }
+                }
+            }
+        }
+        item {
+            PreferenceCategory(title = stringResource(R.string.preference_category_grid_folders)) {
+                ColorPreference(
+                    title = stringResource(R.string.preference_folder_background_color),
+                    value = folderBackgroundColor?.let { Color(it) },
+                    onValueChanged = { viewModel.setFolderBackgroundColor(it?.toArgb()) }
+                )
             }
         }
         item {

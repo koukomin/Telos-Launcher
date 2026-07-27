@@ -28,8 +28,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.applications.FolderImpl
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.search.Folder
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
@@ -47,6 +49,8 @@ fun FolderGridPopup(
     val viewModel: SearchableItemVM = listItemViewModel(key = "folder-${folder.key}")
     val items by viewModel.children.collectAsStateWithLifecycle(emptyList())
     val searchableRepository: SavableSearchableRepository = koinInject()
+    val uiSettings: UiSettings = koinInject()
+    val folderBackgroundColor by uiSettings.folderBackgroundColor.collectAsState(null)
 
     var showPicker by remember { mutableStateOf(false) }
     var showRenameDialog by remember { mutableStateOf(false) }
@@ -70,7 +74,11 @@ fun FolderGridPopup(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
-                .background(MaterialTheme.colorScheme.surfaceContainerHigh, MaterialTheme.shapes.large)
+                .background(
+                    folderBackgroundColor?.let { androidx.compose.ui.graphics.Color(it) }
+                        ?: MaterialTheme.colorScheme.surfaceContainerHigh,
+                    MaterialTheme.shapes.large
+                )
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
