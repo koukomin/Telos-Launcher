@@ -260,7 +260,7 @@ enum class Gesture(val orientation: Orientation?) {
 }
 
 internal class LauncherScaffoldState(
-    private val config: ScaffoldConfiguration,
+    initialConfig: ScaffoldConfiguration,
     val size: Size,
     private val touchSlop: Float,
     /**
@@ -280,6 +280,16 @@ internal class LauncherScaffoldState(
     initialIsLocked: Boolean = false,
     initialIsSearchBarHidden: Boolean = false,
 ) {
+    /**
+     * Mutable rather than constructor-fixed so the caller can push config updates (e.g. a
+     * settings toggle like "widgets on home screen" swapping [ScaffoldConfiguration.homeComponent])
+     * into an existing, stable state instance instead of forcing this whole class - and every
+     * gesture/animation/search-bar-offset field it holds - to be torn down and recreated. That
+     * full recreation was the cause of the home screen/wallpaper glitch on such toggles: the
+     * entire scaffold (including the home component) briefly remounted from scratch.
+     */
+    var config: ScaffoldConfiguration by mutableStateOf(initialConfig)
+
     private val rubberbandAnimationController = RubberbandScaffoldAnimationController(
         rubberbandThreshold = rubberbandThreshold,
         velocityThreshold = velocityThreshold,
@@ -1055,7 +1065,7 @@ internal fun LauncherScaffold(
 
         val state =
             rememberSaveable(
-                widthPx, heightPx, touchSlop, rubberbandThreshold, minFlingVelocity, config, bounceDampingRatio,
+                widthPx, heightPx, touchSlop, rubberbandThreshold, minFlingVelocity, bounceDampingRatio,
                 saver = listSaver(
                     save = {
                         listOf(
@@ -1066,7 +1076,7 @@ internal fun LauncherScaffold(
                     },
                     restore = {
                         LauncherScaffoldState(
-                            config = config,
+                            initialConfig = config,
                             size = Size(widthPx, heightPx),
                             touchSlop = touchSlop,
                             rubberbandThreshold = rubberbandThreshold,
@@ -1084,7 +1094,7 @@ internal fun LauncherScaffold(
                 )
             ) {
                 LauncherScaffoldState(
-                    config = config,
+                    initialConfig = config,
                     size = Size(widthPx, heightPx),
                     touchSlop = touchSlop,
                     rubberbandThreshold = rubberbandThreshold,
@@ -1096,6 +1106,10 @@ internal fun LauncherScaffold(
                     }
                 )
             }
+        // config is mutable on LauncherScaffoldState precisely so a settings change (e.g.
+        // "widgets on home screen") can update it in place on this stable, already-created state
+        // instead of forcing a full LauncherScaffoldState re-creation - see the property's doc.
+        state.config = config
 
         // Feeds the scaffold's own drag offset - the same value that drives every gesture
         // destination (WebAppsPanel, Widgets, Feed, ...) - into the system wallpaper offset API,
