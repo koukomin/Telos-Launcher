@@ -191,6 +191,13 @@ class UiSettings internal constructor(
         launcherDataStore.update { it.copy(grid = it.grid.copy(dockBackgroundBlur = radius)) }
     }
 
+    val dockBackgroundShadow
+        get() = launcherDataStore.data.map { it.grid.dockBackgroundShadow }.distinctUntilChanged()
+
+    fun setDockBackgroundShadow(elevation: Int) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(dockBackgroundShadow = elevation)) }
+    }
+
     fun setGridShowList(showList: Boolean) {
         launcherDataStore.update {
             it.copy(grid = it.grid.copy(gridList = showList))

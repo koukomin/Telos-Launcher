@@ -266,6 +266,7 @@ data class GridGroup(
     val dockBackgroundColor: Int? = null,
     val dockBackgroundOpacity: Float = 0.3f,
     val dockBackgroundBlur: Int = 0,
+    val dockBackgroundShadow: Int = 0,
 )
 
 @Serializable

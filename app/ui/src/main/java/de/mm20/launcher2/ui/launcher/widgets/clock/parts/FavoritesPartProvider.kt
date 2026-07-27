@@ -38,6 +38,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.DockItem
 import de.mm20.launcher2.preferences.ui.GridSettings
@@ -87,6 +88,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
         val dockBackgroundEnabled by uiSettings.dockBackgroundEnabled.collectAsState(false)
         val dockBackgroundColor by uiSettings.dockBackgroundColor.collectAsState(null)
         val dockBackgroundOpacity by uiSettings.dockBackgroundOpacity.collectAsState(0.3f)
+        val dockBackgroundShadow by uiSettings.dockBackgroundShadow.collectAsState(0)
 
         var showSlotMenuForSlot by remember { mutableStateOf<Pair<Int, Int>?>(null) }
         var showSearchablePickerForSlot by remember { mutableStateOf<Pair<Int, Int>?>(null) }
@@ -162,6 +164,13 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                                     .padding(horizontal = 8.dp)
                                     .fillMaxWidth()
                                     .height(gridSettings.iconSize.dp * dockRows + 16.dp)
+                                    .let {
+                                        if (dockBackgroundShadow > 0) {
+                                            it.shadow(dockBackgroundShadow.dp, MaterialTheme.shapes.large)
+                                        } else {
+                                            it
+                                        }
+                                    }
                                     .clip(MaterialTheme.shapes.large)
                                     .background(color.copy(alpha = dockBackgroundOpacity))
                             )

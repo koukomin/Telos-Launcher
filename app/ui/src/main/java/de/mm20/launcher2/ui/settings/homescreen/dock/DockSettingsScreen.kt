@@ -62,6 +62,7 @@ fun DockSettingsScreen() {
     val dockBackgroundEnabled by viewModel.dockBackgroundEnabled.collectAsStateWithLifecycle()
     val dockBackgroundColor by viewModel.dockBackgroundColor.collectAsStateWithLifecycle()
     val dockBackgroundOpacity by viewModel.dockBackgroundOpacity.collectAsStateWithLifecycle()
+    val dockBackgroundShadow by viewModel.dockBackgroundShadow.collectAsStateWithLifecycle()
 
     val shutterSettings = koinInject<ShutterSettings>()
     val shuttersEnabled by shutterSettings.enabled.collectAsStateWithLifecycle(true)
@@ -111,6 +112,13 @@ fun DockSettingsScreen() {
                             min = 0,
                             max = 100,
                             onValueChanged = { viewModel.setDockBackgroundOpacity(it / 100f) }
+                        )
+                        SliderPreference(
+                            title = stringResource(R.string.preference_dock_background_shadow),
+                            value = dockBackgroundShadow,
+                            min = 0,
+                            max = 16,
+                            onValueChanged = { viewModel.setDockBackgroundShadow(it) }
                         )
                     }
                 }

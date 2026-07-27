@@ -53,6 +53,11 @@ class DockSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setDockBackgroundOpacity(opacity: Float) = uiSettings.setDockBackgroundOpacity(opacity)
 
+    val dockBackgroundShadow = uiSettings.dockBackgroundShadow
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
+
+    fun setDockBackgroundShadow(elevation: Int) = uiSettings.setDockBackgroundShadow(elevation)
+
     var pendingItemPos by mutableStateOf<Triple<Int, Int, Int>?>(null) // page, row, col
 
     fun setDockPages(pages: List<List<DockItem>>) {
