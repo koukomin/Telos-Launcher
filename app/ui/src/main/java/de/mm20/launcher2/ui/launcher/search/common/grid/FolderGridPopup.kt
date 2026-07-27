@@ -25,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.dp
@@ -51,12 +52,42 @@ fun FolderGridPopup(
     val searchableRepository: SavableSearchableRepository = koinInject()
     val uiSettings: UiSettings = koinInject()
     val folderBackgroundColor by uiSettings.folderBackgroundColor.collectAsState(null)
+    val folderCoverEnabled by uiSettings.folderCoverEnabled.collectAsState(true)
 
     var showPicker by remember { mutableStateOf(false) }
     var showRenameDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(folder) {
         viewModel.init(folder, 48)
+    }
+
+    if (folderCoverEnabled && show.targetState) {
+        val firstItem = items.firstOrNull()
+        if (firstItem != null) {
+            androidx.compose.foundation.layout.Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .graphicsLayer {
+                        alpha = (1f - animationProgress).coerceIn(0f, 1f)
+                        val scale = 1f + animationProgress * 0.3f
+                        scaleX = scale
+                        scaleY = scale
+                    },
+                contentAlignment = Alignment.Center,
+            ) {
+                androidx.compose.runtime.CompositionLocalProvider(
+                    de.mm20.launcher2.ui.locals.LocalGridSettings provides de.mm20.launcher2.preferences.ui.GridSettings(
+                        iconSize = 96,
+                    )
+                ) {
+                    GridItem(
+                        item = firstItem,
+                        showLabels = false,
+                    )
+                }
+            }
+        }
     }
 
     AnimatedVisibility(

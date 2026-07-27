@@ -378,6 +378,8 @@
     <string name="preference_drawer_background">Φόντο drawer</string>
     <string name="preference_drawer_background_summary">Εμφάνιση φόντου πίσω από το drawer εφαρμογών</string>
     <string name="preference_folder_background_color">Χρώμα φόντου φακέλου</string>
+    <string name="preference_folder_cover">Καλύμματα φακέλων</string>
+    <string name="preference_folder_cover_summary">Εμφάνιση του πρώτου εικονιδίου του φακέλου ως σταδιακά εξαφανιζόμενο κάλυμμα κατά το άνοιγμα/κλείσιμο</string>
     <string name="preference_grid_label_size">Μέγεθος ετικέτας</string>
     <string name="preference_grid_label_max_lines">Μέγιστες γραμμές ετικέτας</string>
     <string name="preference_grid_label_shadow">Σκιά ετικέτας</string>

@@ -278,6 +278,9 @@ data class GridGroup(
     val dockPageIndicatorEnabled: Boolean = true,
     @Serializable(with = ColorIntAsHexSerializer::class)
     val dockPageIndicatorColor: Int? = null,
+    /** Shows the folder's first item's icon as a fading "cover" overlay while the folder
+     * popup is opening/closing, mimicking a lid that lifts away to reveal the folder's contents. */
+    val folderCoverEnabled: Boolean = true,
 )
 
 @Serializable

@@ -77,6 +77,9 @@ class IconsSettingsScreenVM(
     val folderBackgroundColor = uiSettings.folderBackgroundColor
     fun setFolderBackgroundColor(color: Int?) = uiSettings.setFolderBackgroundColor(color)
 
+    val folderCoverEnabled = uiSettings.folderCoverEnabled
+    fun setFolderCoverEnabled(enabled: Boolean) = uiSettings.setFolderCoverEnabled(enabled)
+
     fun setShowLabels(showLabels: Boolean) {
         uiSettings.setGridShowLabels(showLabels)
     }

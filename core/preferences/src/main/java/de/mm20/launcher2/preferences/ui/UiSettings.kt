@@ -249,6 +249,13 @@ class UiSettings internal constructor(
         launcherDataStore.update { it.copy(grid = it.grid.copy(dockPageIndicatorColor = color)) }
     }
 
+    val folderCoverEnabled
+        get() = launcherDataStore.data.map { it.grid.folderCoverEnabled }.distinctUntilChanged()
+
+    fun setFolderCoverEnabled(enabled: Boolean) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(folderCoverEnabled = enabled)) }
+    }
+
     fun setGridShowList(showList: Boolean) {
         launcherDataStore.update {
             it.copy(grid = it.grid.copy(gridList = showList))

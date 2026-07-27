@@ -927,6 +927,8 @@
     <string name="preference_drawer_background">Drawer background</string>
     <string name="preference_drawer_background_summary">Show a background behind the app drawer</string>
     <string name="preference_folder_background_color">Folder background color</string>
+    <string name="preference_folder_cover">Folder covers</string>
+    <string name="preference_folder_cover_summary">Show the folder\'s first icon as a fading cover while it opens and closes</string>
     <string name="preference_grid_label_size">Label size</string>
     <string name="preference_grid_label_max_lines">Label max lines</string>
     <string name="preference_grid_label_shadow">Label shadow</string>

@@ -84,6 +84,7 @@ fun IconsSettingsScreen() {
     val drawerBackgroundColor by viewModel.drawerBackgroundColor.collectAsStateWithLifecycle(null)
     val drawerBackgroundOpacity by viewModel.drawerBackgroundOpacity.collectAsStateWithLifecycle(0.9f)
     val folderBackgroundColor by viewModel.folderBackgroundColor.collectAsStateWithLifecycle(null)
+    val folderCoverEnabled by viewModel.folderCoverEnabled.collectAsStateWithLifecycle(true)
 
     val icons by viewModel.icons.collectAsStateWithLifecycle(null)
     val density = LocalDensity.current
@@ -298,6 +299,12 @@ fun IconsSettingsScreen() {
                     title = stringResource(R.string.preference_folder_background_color),
                     value = folderBackgroundColor?.let { Color(it) },
                     onValueChanged = { viewModel.setFolderBackgroundColor(it?.toArgb()) }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_folder_cover),
+                    summary = stringResource(R.string.preference_folder_cover_summary),
+                    value = folderCoverEnabled,
+                    onValueChanged = { viewModel.setFolderCoverEnabled(it) }
                 )
             }
         }
