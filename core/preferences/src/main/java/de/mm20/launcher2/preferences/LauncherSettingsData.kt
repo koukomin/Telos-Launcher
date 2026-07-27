@@ -252,6 +252,8 @@ data class GridGroup(
     val gridLabelSize: Float = 12f,
     val gridLabelMaxLines: Int = 1,
     val gridLabelShadow: Boolean = false,
+    @Serializable(with = ColorIntAsHexSerializer::class)
+    val gridLabelColor: Int? = null,
     val gridList: Boolean = false,
     val gridListIcons: Boolean = true,
     val homeGridColumnCount: Int? = null,

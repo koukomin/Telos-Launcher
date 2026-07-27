@@ -926,6 +926,7 @@
     <string name="preference_grid_label_size">Label size</string>
     <string name="preference_grid_label_max_lines">Label max lines</string>
     <string name="preference_grid_label_shadow">Label shadow</string>
+    <string name="preference_grid_label_color">Label color</string>
     <string name="preference_desktop_lock">Lock desktop</string>
     <string name="preference_desktop_lock_summary">Prevent moving or removing items on the home screen</string>
     <string name="preference_dock_background">Dock background</string>

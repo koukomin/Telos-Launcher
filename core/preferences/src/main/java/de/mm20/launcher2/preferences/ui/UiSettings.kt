@@ -25,6 +25,7 @@ data class GridSettings(
     val labelSize: Float = 12f,
     val labelMaxLines: Int = 1,
     val labelShadow: Boolean = false,
+    val labelColor: Int? = null,
     val showList: Boolean = false,
     val showListIcons: Boolean = true,
 )
@@ -53,6 +54,7 @@ class UiSettings internal constructor(
                 labelSize = it.grid.gridLabelSize,
                 labelMaxLines = it.grid.gridLabelMaxLines,
                 labelShadow = it.grid.gridLabelShadow,
+                labelColor = it.grid.gridLabelColor,
                 showList = it.grid.gridList,
                 showListIcons = it.grid.gridListIcons,
                 iconSize = it.grid.gridIconSize,
@@ -85,6 +87,7 @@ class UiSettings internal constructor(
                 labelSize = it.grid.gridLabelSize,
                 labelMaxLines = it.grid.gridLabelMaxLines,
                 labelShadow = it.grid.gridLabelShadow,
+                labelColor = it.grid.gridLabelColor,
                 showList = it.grid.gridList,
                 showListIcons = it.grid.gridListIcons,
                 iconSize = it.grid.homeGridIconSize ?: it.grid.gridIconSize,
@@ -107,6 +110,7 @@ class UiSettings internal constructor(
                 labelSize = it.grid.gridLabelSize,
                 labelMaxLines = it.grid.gridLabelMaxLines,
                 labelShadow = it.grid.gridLabelShadow,
+                labelColor = it.grid.gridLabelColor,
                 showList = it.grid.gridList,
                 showListIcons = it.grid.gridListIcons,
                 iconSize = it.grid.drawerGridIconSize ?: it.grid.gridIconSize,
@@ -129,6 +133,7 @@ class UiSettings internal constructor(
                 labelSize = it.grid.gridLabelSize,
                 labelMaxLines = it.grid.gridLabelMaxLines,
                 labelShadow = it.grid.gridLabelShadow,
+                labelColor = it.grid.gridLabelColor,
                 showList = it.grid.gridList,
                 showListIcons = it.grid.gridListIcons,
                 iconSize = it.grid.dockGridIconSize ?: it.grid.gridIconSize,
@@ -154,6 +159,10 @@ class UiSettings internal constructor(
 
     fun setGridLabelShadow(enabled: Boolean) {
         launcherDataStore.update { it.copy(grid = it.grid.copy(gridLabelShadow = enabled)) }
+    }
+
+    fun setGridLabelColor(color: Int?) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(gridLabelColor = color)) }
     }
 
     val desktopLocked

@@ -151,6 +151,11 @@ fun IconsSettingsScreen() {
                             value = grid.labelShadow,
                             onValueChanged = { viewModel.setGridLabelShadow(it) }
                         )
+                        ColorPreference(
+                            title = stringResource(R.string.preference_grid_label_color),
+                            value = grid.labelColor?.let { Color(it) },
+                            onValueChanged = { viewModel.setGridLabelColor(it?.toArgb()) }
+                        )
                     }
                 }
                 SwitchPreference(

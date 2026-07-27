@@ -65,6 +65,8 @@ class IconsSettingsScreenVM(
     fun setGridLabelMaxLines(lines: Int) = uiSettings.setGridLabelMaxLines(lines)
     fun setGridLabelShadow(enabled: Boolean) = uiSettings.setGridLabelShadow(enabled)
 
+    fun setGridLabelColor(color: Int?) = uiSettings.setGridLabelColor(color)
+
     fun setShowLabels(showLabels: Boolean) {
         uiSettings.setGridShowLabels(showLabels)
     }

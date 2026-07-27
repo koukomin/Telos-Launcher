@@ -354,7 +354,8 @@ fun GridItem(
                 ),
                 maxLines = gridSettings.labelMaxLines,
                 overflow = TextOverflow.Ellipsis,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = gridSettings.labelColor?.let { androidx.compose.ui.graphics.Color(it) }
+                    ?: MaterialTheme.colorScheme.onBackground,
             )
         }
     }
