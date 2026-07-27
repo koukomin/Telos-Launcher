@@ -31,8 +31,10 @@ import de.mm20.launcher2.preferences.ui.WallpaperSettings
 import de.mm20.launcher2.preferences.ui.VideoWallpaperTransforms
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -122,11 +124,20 @@ class VideoWallpaperService : WallpaperService() {
             }
             scope.launch {
                 settings.videoTransforms.collect {
-                    val changed = transforms != it
+                    // Zoom, position, and parallax strength are read live every frame by the
+                    // installed MatrixTransformation (see buildEffects), so changing them alone
+                    // never needs a rebuild. Only scaling mode/brightness (baked into their
+                    // effect objects at construction) or crossing the default/non-default
+                    // boundary (which changes whether any effects are installed at all - see
+                    // hasDefaultTransforms) requires tearing down and recreating the player.
+                    // Rebuilding on every emission here was the root cause of the zoom-slider
+                    // crash: a drag fires dozens of rapid updates, each releasing and rebuilding
+                    // the ExoPlayer/MediaCodec/Surface pipeline back to back.
+                    val rebuildNeeded = transforms.scalingMode != it.scalingMode ||
+                            transforms.brightness != it.brightness ||
+                            hasDefaultTransforms(transforms) != hasDefaultTransforms(it)
                     transforms = it
-                    // Effects can only be installed before prepare(), so transform changes
-                    // rebuild the player. Parallax scroll offsets don't go through here.
-                    if (changed) recreatePlayer()
+                    if (rebuildNeeded) recreatePlayerDebounced()
                 }
             }
             scope.launch {
@@ -271,6 +282,18 @@ class VideoWallpaperService : WallpaperService() {
             updatePlayback()
         }
 
+        private var recreateJob: Job? = null
+
+        /** Coalesces rapid successive rebuild requests (e.g. a slider still mid-drag) into one,
+         * so a burst of settings changes only tears down and rebuilds the player once. */
+        private fun recreatePlayerDebounced() {
+            recreateJob?.cancel()
+            recreateJob = scope?.launch {
+                delay(150)
+                recreatePlayer()
+            }
+        }
+
         @OptIn(UnstableApi::class)
         private fun createPlayer() {
             val dir = WallpapersService.getVideoDir(this@VideoWallpaperService)
@@ -283,7 +306,13 @@ class VideoWallpaperService : WallpaperService() {
 
             val p = ExoPlayer.Builder(this@VideoWallpaperService).build()
             try {
-                p.setVideoSurface(surfaceHolder.surface)
+                // setVideoSurfaceHolder (not setVideoSurface) is required here: a bare Surface
+                // carries no size information, and once effects are installed the
+                // VideoFrameProcessor needs that size to configure its output - otherwise it
+                // silently drops every frame ("Output surface and size not set"), leaving the
+                // wallpaper solid black the moment any non-default transform (zoom, brightness,
+                // non-Fill scaling, parallax) is applied.
+                p.setVideoSurfaceHolder(surfaceHolder)
                 p.repeatMode = Player.REPEAT_MODE_ALL
 
                 val mediaItems = allFiles.map { MediaItem.fromUri(it.absolutePath) }
@@ -315,13 +344,13 @@ class VideoWallpaperService : WallpaperService() {
             }
         }
 
-        private fun hasDefaultTransforms(): Boolean {
-            return transforms.scalingMode == de.mm20.launcher2.preferences.VideoWallpaperScalingMode.Fill &&
-                    transforms.zoom == 1f &&
-                    transforms.positionX == 0f &&
-                    transforms.positionY == 0f &&
-                    transforms.brightness == 1f &&
-                    !transforms.parallax
+        private fun hasDefaultTransforms(t: VideoWallpaperTransforms = transforms): Boolean {
+            return t.scalingMode == de.mm20.launcher2.preferences.VideoWallpaperScalingMode.Fill &&
+                    t.zoom == 1f &&
+                    t.positionX == 0f &&
+                    t.positionY == 0f &&
+                    t.brightness == 1f &&
+                    !t.parallax
         }
 
         @OptIn(UnstableApi::class)
