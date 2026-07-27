@@ -38,6 +38,21 @@ class DockSettingsScreenVM : ViewModel(), KoinComponent {
     val defaultPage = uiSettings.dockDefaultPage.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
     val gridSettings = uiSettings.gridSettings.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+    val dockBackgroundEnabled = uiSettings.dockBackgroundEnabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+    fun setDockBackgroundEnabled(enabled: Boolean) = uiSettings.setDockBackgroundEnabled(enabled)
+
+    val dockBackgroundColor = uiSettings.dockBackgroundColor
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setDockBackgroundColor(color: Int?) = uiSettings.setDockBackgroundColor(color)
+
+    val dockBackgroundOpacity = uiSettings.dockBackgroundOpacity
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0.3f)
+
+    fun setDockBackgroundOpacity(opacity: Float) = uiSettings.setDockBackgroundOpacity(opacity)
+
     var pendingItemPos by mutableStateOf<Triple<Int, Int, Int>?>(null) // page, row, col
 
     fun setDockPages(pages: List<List<DockItem>>) {

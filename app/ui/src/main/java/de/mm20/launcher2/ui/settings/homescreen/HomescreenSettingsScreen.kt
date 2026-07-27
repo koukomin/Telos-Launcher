@@ -90,9 +90,6 @@ fun HomescreenSettingsScreen() {
     val chargingAnimation by viewModel.chargingAnimation.collectAsStateWithLifecycle(null)
     val homeScreenPageCount by viewModel.homeScreenPageCount.collectAsStateWithLifecycle(null)
     val desktopLocked by viewModel.desktopLocked.collectAsStateWithLifecycle(false)
-    val dockBackgroundEnabled by viewModel.dockBackgroundEnabled.collectAsStateWithLifecycle(false)
-    val dockBackgroundColor by viewModel.dockBackgroundColor.collectAsStateWithLifecycle(null)
-    val dockBackgroundOpacity by viewModel.dockBackgroundOpacity.collectAsStateWithLifecycle(0.3f)
 
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_homescreen)) {
         item {
@@ -154,32 +151,6 @@ fun HomescreenSettingsScreen() {
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                             text = stringResource(R.string.preference_home_screen_page_count_warning),
                             icon = R.drawable.info_24px,
-                        )
-                    }
-                }
-            }
-        }
-        item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_grid_dock)) {
-                SwitchPreference(
-                    title = stringResource(R.string.preference_dock_background),
-                    summary = stringResource(R.string.preference_dock_background_summary),
-                    value = dockBackgroundEnabled,
-                    onValueChanged = { viewModel.setDockBackgroundEnabled(it) }
-                )
-                AnimatedVisibility(dockBackgroundEnabled) {
-                    Column {
-                        ColorPreference(
-                            title = stringResource(R.string.preference_dock_background_color),
-                            value = dockBackgroundColor?.let { Color(it) },
-                            onValueChanged = { viewModel.setDockBackgroundColor(it?.toArgb()) }
-                        )
-                        SliderPreference(
-                            title = stringResource(R.string.preference_dock_background_opacity),
-                            value = (dockBackgroundOpacity * 100).toInt(),
-                            min = 0,
-                            max = 100,
-                            onValueChanged = { viewModel.setDockBackgroundOpacity(it / 100f) }
                         )
                     }
                 }

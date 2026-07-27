@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -58,6 +59,9 @@ fun DockSettingsScreen() {
     val rows by viewModel.dockRows.collectAsStateWithLifecycle()
     val columns by viewModel.dockColumns.collectAsStateWithLifecycle()
     val defaultPage by viewModel.defaultPage.collectAsStateWithLifecycle()
+    val dockBackgroundEnabled by viewModel.dockBackgroundEnabled.collectAsStateWithLifecycle()
+    val dockBackgroundColor by viewModel.dockBackgroundColor.collectAsStateWithLifecycle()
+    val dockBackgroundOpacity by viewModel.dockBackgroundOpacity.collectAsStateWithLifecycle()
 
     val shutterSettings = koinInject<ShutterSettings>()
     val shuttersEnabled by shutterSettings.enabled.collectAsStateWithLifecycle(true)
@@ -83,6 +87,33 @@ fun DockSettingsScreen() {
                     max = 10,
                     onValueChanged = { viewModel.setColumns(it) }
                 )
+            }
+        }
+
+        item {
+            PreferenceCategory(title = stringResource(R.string.preference_category_grid_dock)) {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_dock_background),
+                    summary = stringResource(R.string.preference_dock_background_summary),
+                    value = dockBackgroundEnabled,
+                    onValueChanged = { viewModel.setDockBackgroundEnabled(it) }
+                )
+                AnimatedVisibility(dockBackgroundEnabled) {
+                    Column {
+                        ColorPreference(
+                            title = stringResource(R.string.preference_dock_background_color),
+                            value = dockBackgroundColor?.let { Color(it) },
+                            onValueChanged = { viewModel.setDockBackgroundColor(it?.toArgb()) }
+                        )
+                        SliderPreference(
+                            title = stringResource(R.string.preference_dock_background_opacity),
+                            value = (dockBackgroundOpacity * 100).toInt(),
+                            min = 0,
+                            max = 100,
+                            onValueChanged = { viewModel.setDockBackgroundOpacity(it / 100f) }
+                        )
+                    }
+                }
             }
         }
 
