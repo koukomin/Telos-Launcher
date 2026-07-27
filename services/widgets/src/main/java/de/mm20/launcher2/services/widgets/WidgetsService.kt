@@ -76,10 +76,10 @@ class WidgetsService(
                 type = RemindersWidget.Type,
                 label = context.getString(R.string.widget_name_reminders),
             ),
-            BuiltInWidgetInfo(
-                type = AppsWidget.Type,
-                label = context.getString(R.string.widget_name_apps),
-            ),
+            // AppsWidget ("Favorites") is intentionally not offered here - favorites are meant
+            // to live only in the app grid/drawer's own Favorites section, not duplicated onto
+            // the home screen as a widget. Not removed from the Widget sealed class/database
+            // schema, just no longer pickable.
             BuiltInWidgetInfo(
                 type = NotesWidget.Type,
                 label = context.getString(R.string.widget_name_notes),

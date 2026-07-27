@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import de.mm20.launcher2.preferences.ui.UiSettings
+import de.mm20.launcher2.widgets.AppsWidget
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetRepository
 import de.mm20.launcher2.widgets.withStackId
@@ -26,7 +27,11 @@ class WidgetsVM(
     val editButton = uiSettings.widgetEditButton
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+    // The "Favorites" widget duplicates the app grid/drawer's own Favorites section onto the
+    // home screen, which favorites are meant to stay out of - filtered here (not deleted) so any
+    // already-placed instance disappears without losing the underlying stored widget row.
     val widgets = widgetRepository.get(parent = parentId)
+        .map { list -> list.filterNot { it is AppsWidget } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     /**
