@@ -230,6 +230,8 @@
     <string name="preference_screen_search">Αναζήτηση</string>
     <string name="preference_screen_performance">Απόδοση</string>
     <string name="preference_performance_bounce_physics">Φυσική αναπήδησης</string>
+    <string name="preference_search_bar_colors_drawer_override">Διαφορετικά χρώματα στο drawer</string>
+    <string name="preference_search_bar_colors_drawer_override_summary">Χρήση ξεχωριστού συνδυασμού χρωμάτων για τη γραμμή αναζήτησης όσο είναι ανοιχτό το drawer/η αναζήτηση</string>
     <string name="preference_screen_performance_summary">Κινήσεις, ταχύτητα αναζήτησης, προσωρινή αποθήκευση</string>
     <string name="preference_search_favorites">Αγαπημένα</string>
     <string name="preference_crash_reporter_summary">Σφάλματα και αποστολή σφαλμάτων</string>

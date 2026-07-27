@@ -154,6 +154,7 @@ abstract class SharedLauncherActivity(
                         val gestures by viewModel.gestureState.collectAsState()
                         val searchBarStyle by viewModel.searchBarStyle.collectAsState()
                         val searchBarColor by viewModel.searchBarColor.collectAsState()
+                        val searchBarColorDrawer by viewModel.searchBarColorDrawer.collectAsState()
                         val searchBarAutofocus by viewModel.autoFocusSearch.collectAsState(false)
                         val widgetsOnHomeScreen by viewModel.widgetsOnHomeScreen.collectAsState()
                         val activeContextProfile by viewModel.activeContextProfile.collectAsState()
@@ -186,6 +187,9 @@ abstract class SharedLauncherActivity(
                         val darkTheme = LocalDarkTheme.current
                         val darkSearchBar = LocalPreferDarkContentOverWallpaper.current
                                 && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark
+                        val darkSearchBarDrawer = searchBarColorDrawer?.let {
+                            LocalPreferDarkContentOverWallpaper.current && it == SearchBarColors.Auto || it == SearchBarColors.Dark
+                        }
 
                         /*LaunchedEffect(dimBackground && darkTheme) {
                             if (dimBackground && darkTheme) {
@@ -461,6 +465,7 @@ abstract class SharedLauncherActivity(
                                         showStatusBar = !hideStatus,
                                         showNavBar = !hideNav,
                                         darkSearchBar = darkSearchBar,
+                                        darkSearchBarDrawer = darkSearchBarDrawer,
                                         wallpaperBlurRadius = if (wallpaperBlur) wallpaperBlurRadius.dp else 0.dp,
                                     )
 

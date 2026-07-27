@@ -73,6 +73,13 @@ class HomescreenSettingsScreenVM(
         uiSettings.setSearchBarColor(color)
     }
 
+    val searchBarColorDrawer = uiSettings.searchBarColorDrawer
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setSearchBarColorDrawer(color: SearchBarColors?) {
+        uiSettings.setSearchBarColorDrawer(color)
+    }
+
     val searchBarStyle = uiSettings.searchBarStyle
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 

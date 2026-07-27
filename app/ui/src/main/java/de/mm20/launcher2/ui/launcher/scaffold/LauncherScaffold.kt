@@ -195,6 +195,7 @@ internal data class ScaffoldConfiguration(
      */
     val finishOnBack: Boolean = false,
     val darkSearchBar: Boolean = false,
+    val darkSearchBarDrawer: Boolean? = null,
 ) {
     val searchBarTap = ScaffoldGesture(
         component = searchComponent,
@@ -1406,6 +1407,9 @@ internal fun LauncherScaffold(
                     .asPaddingValues(),
             )
 
+            val isSearchOpen = state.currentComponent is SearchComponent && state.isSettledOnSecondaryPage ||
+                    config.homeComponent is SearchComponent && !state.isSettledOnSecondaryPage
+
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -1441,9 +1445,8 @@ internal fun LauncherScaffold(
                         { searchVM.launchBestMatchOrAction(activity) }
                     } else null,
                     highlightedAction = highlightedResult as? SearchAction,
-                    darkColors = config.darkSearchBar,
-                    isSearchOpen = state.currentComponent is SearchComponent && state.isSettledOnSecondaryPage ||
-                            config.homeComponent is SearchComponent && !state.isSettledOnSecondaryPage,
+                    darkColors = if (isSearchOpen) config.darkSearchBarDrawer ?: config.darkSearchBar else config.darkSearchBar,
+                    isSearchOpen = isSearchOpen,
                 )
             }
             if (isFilterBarVisible) {

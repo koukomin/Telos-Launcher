@@ -281,6 +281,9 @@ data class GridGroup(
 data class SearchBarGroup(
     val searchBarStyle: SearchBarStyle = SearchBarStyle.Transparent,
     val searchBarColors: SearchBarColors = SearchBarColors.Auto,
+    /** Override for searchBarColors while the drawer/search overlay is open. Null = use
+     * searchBarColors for both the dock (home screen) and drawer contexts, same as before. */
+    val searchBarColorsDrawer: SearchBarColors? = null,
     val searchBarKeyboard: Boolean = true,
     /** Applies IME_FLAG_NO_PERSONALIZED_LEARNING to text fields across the launcher (search,
      * web app shortcut editing, etc.) so the keyboard doesn't learn from or store typed text. */

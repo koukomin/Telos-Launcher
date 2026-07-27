@@ -375,6 +375,17 @@ class UiSettings internal constructor(
         }
     }
 
+    val searchBarColorDrawer
+        get() = launcherDataStore.data.map {
+            it.searchBar.searchBarColorsDrawer
+        }.distinctUntilChanged()
+
+    fun setSearchBarColorDrawer(color: SearchBarColors?) {
+        launcherDataStore.update {
+            it.copy(searchBar = it.searchBar.copy(searchBarColorsDrawer = color))
+        }
+    }
+
     val bottomSearchBar
         get() = launcherDataStore.data.map {
             it.searchBar.searchBarBottom

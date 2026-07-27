@@ -81,6 +81,7 @@ fun HomescreenSettingsScreen() {
     val editButton by viewModel.widgetEditButton.collectAsStateWithLifecycle(null)
     val searchBarStyle by viewModel.searchBarStyle.collectAsStateWithLifecycle(null)
     val searchBarColor by viewModel.searchBarColor.collectAsStateWithLifecycle(null)
+    val searchBarColorDrawer by viewModel.searchBarColorDrawer.collectAsStateWithLifecycle(null)
     val bottomSearchBar by viewModel.bottomSearchBar.collectAsStateWithLifecycle(null)
     val fixedSearchBar by viewModel.fixedSearchBar.collectAsStateWithLifecycle(null)
     val lightStatusBar by viewModel.statusBarIcons.collectAsStateWithLifecycle(null)
@@ -205,6 +206,47 @@ fun HomescreenSettingsScreen() {
                         viewModel.setSearchBarColor(it)
                     }
                 )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_bar_colors_drawer_override),
+                    summary = stringResource(R.string.preference_search_bar_colors_drawer_override_summary),
+                    value = searchBarColorDrawer != null,
+                    onValueChanged = {
+                        viewModel.setSearchBarColorDrawer(if (it) SearchBarColors.Auto else null)
+                    }
+                )
+                AnimatedVisibility(searchBarColorDrawer != null) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(ButtonGroupDefaults.ConnectedSpaceBetween)
+                    ) {
+                        ToggleButton(
+                            modifier = Modifier.weight(1f),
+                            checked = searchBarColorDrawer == SearchBarColors.Auto,
+                            onCheckedChange = { viewModel.setSearchBarColorDrawer(SearchBarColors.Auto) },
+                            shapes = ButtonGroupDefaults.connectedLeadingButtonShapes(),
+                        ) {
+                            Icon(painterResource(R.drawable.auto_awesome_20dp), contentDescription = null)
+                        }
+                        ToggleButton(
+                            modifier = Modifier.weight(1f),
+                            checked = searchBarColorDrawer == SearchBarColors.Light,
+                            onCheckedChange = { viewModel.setSearchBarColorDrawer(SearchBarColors.Light) },
+                            shapes = ButtonGroupDefaults.connectedMiddleButtonShapes(),
+                        ) {
+                            Icon(painterResource(R.drawable.light_mode_24px), contentDescription = null)
+                        }
+                        ToggleButton(
+                            modifier = Modifier.weight(1f),
+                            checked = searchBarColorDrawer == SearchBarColors.Dark,
+                            onCheckedChange = { viewModel.setSearchBarColorDrawer(SearchBarColors.Dark) },
+                            shapes = ButtonGroupDefaults.connectedTrailingButtonShapes(),
+                        ) {
+                            Icon(painterResource(R.drawable.dark_mode_24px), contentDescription = null)
+                        }
+                    }
+                }
 
                 ListPreference(
                     title = stringResource(R.string.preference_layout_search_bar_position),

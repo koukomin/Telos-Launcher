@@ -109,6 +109,8 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
     val searchBarColor = uiSettings.searchBarColor
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), SearchBarColors.Auto)
+    val searchBarColorDrawer = uiSettings.searchBarColorDrawer
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val searchBarStyle = uiSettings.searchBarStyle
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), SearchBarStyle.Transparent)
 
