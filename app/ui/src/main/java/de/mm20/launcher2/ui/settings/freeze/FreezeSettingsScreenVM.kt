@@ -102,6 +102,10 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
+    /** Live OS-level frozen state, regardless of source - reflects apps frozen by Icebox,
+     * Island, adb, or anything else, not just this app's own auto-freeze candidates. */
+    fun isFrozen(packageName: String): Boolean = freezeManager.isFrozen(packageName)
+
     private fun isSystemApp(packageName: String): Boolean {
         return try {
             context.packageManager.getApplicationInfo(packageName, 0)

@@ -281,22 +281,33 @@ fun FreezeSettingsScreen() {
             val icon by viewModel.getIcon(app, 32.dp.value.toInt()).collectAsStateWithLifecycle(null)
             val state = appFreezeState(app.componentName.packageName, candidates, neverFreezeApps)
             val method = appFreezeMethod(app.componentName.packageName, freezeMethods)
+            // Live OS state, independent of the candidate config below - an app can be frozen
+            // right now by Icebox, Island, adb, or anything else, regardless of whether this
+            // app's own auto-freeze considers it a candidate.
+            val isFrozenNow = remember(app.componentName.packageName, apps) {
+                viewModel.isFrozen(app.componentName.packageName)
+            }
             var showMenu by remember { mutableStateOf(false) }
+            val candidateSummary = stringResource(
+                when (state) {
+                    AppFreezeState.None -> R.string.freeze_app_state_none
+                    AppFreezeState.Candidate -> {
+                        if (method == FreezeMethod.Disable) R.string.freeze_app_state_candidate_disable
+                        else R.string.freeze_app_state_candidate_suspend
+                    }
+                    AppFreezeState.NeverFreeze -> R.string.freeze_app_state_never
+                }
+            )
             Preference(
                 title = app.label,
                 icon = {
                     ShapedLauncherIcon(size = 32.dp, icon = { icon })
                 },
-                summary = stringResource(
-                    when (state) {
-                        AppFreezeState.None -> R.string.freeze_app_state_none
-                        AppFreezeState.Candidate -> {
-                            if (method == FreezeMethod.Disable) R.string.freeze_app_state_candidate_disable
-                            else R.string.freeze_app_state_candidate_suspend
-                        }
-                        AppFreezeState.NeverFreeze -> R.string.freeze_app_state_never
-                    }
-                ),
+                summary = if (isFrozenNow) {
+                    stringResource(R.string.freeze_dashboard_currently_frozen) + " · " + candidateSummary
+                } else {
+                    candidateSummary
+                },
                 onClick = { showMenu = true },
             )
             DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
