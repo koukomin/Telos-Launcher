@@ -381,6 +381,9 @@ data class PerformanceGroup(
     /** 0 = no debounce (search fires on every keystroke, the historical behavior). */
     val performanceSearchDebounceMs: Int = 0,
     val performanceIconCacheSize: Int = 200,
+    /** Spring dampingRatio for gesture release/back animations. 1f = no bounce (default,
+     * matches Compose's Spring.DampingRatioNoBouncy), lower values overshoot before settling. */
+    val performanceBouncePhysics: Float = 1f,
 )
 
 @Serializable

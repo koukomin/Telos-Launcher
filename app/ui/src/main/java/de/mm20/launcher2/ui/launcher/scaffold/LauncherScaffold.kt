@@ -11,6 +11,8 @@ import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.VectorConverter
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateIntAsState
+import androidx.compose.animation.core.Spring
+import org.koin.compose.koinInject
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -270,6 +272,7 @@ internal class LauncherScaffoldState(
      */
     private val velocityThreshold: Float,
     private val maxSearchBarOffset: Float,
+    private val bounceDampingRatio: Float = Spring.DampingRatioNoBouncy,
     private val onHapticFeedback: (HapticFeedbackType) -> Unit,
     initialGesture: Gesture? = null,
     initialIsLocked: Boolean = false,
@@ -478,7 +481,7 @@ internal class LauncherScaffoldState(
     private suspend fun animateOffset3DTo(
         target: Offset3D,
         initialVelocity: Offset3D = Offset3D.Zero,
-        animationSpec: AnimationSpec<Offset3D> = spring(),
+        animationSpec: AnimationSpec<Offset3D> = spring(dampingRatio = bounceDampingRatio),
     ) {
         offsetAnimatable.snapTo(currentOffset3D)
         offsetAnimatable.animateTo(
@@ -813,7 +816,7 @@ internal class LauncherScaffoldState(
             } else {
                 animateOffset3DTo(
                     Offset3D.Zero,
-                    animationSpec = if (fast) tween(150) else spring(),
+                    animationSpec = if (fast) tween(150) else spring(dampingRatio = bounceDampingRatio),
                 )
             }
         }
@@ -1009,6 +1012,9 @@ internal fun LauncherScaffold(
 
     val wallpaperManager = remember(activity) { WallpaperManager.getInstance(activity) }
 
+    val performanceSettings = koinInject<de.mm20.launcher2.preferences.ui.PerformanceSettings>()
+    val bounceDampingRatio by performanceSettings.bouncePhysics.collectAsState(Spring.DampingRatioNoBouncy)
+
     val density = LocalDensity.current
     val systemBarInsets = WindowInsets.displayCutout
         .union(WindowInsets.waterfall)
@@ -1047,7 +1053,7 @@ internal fun LauncherScaffold(
 
         val state =
             rememberSaveable(
-                widthPx, heightPx, touchSlop, rubberbandThreshold, minFlingVelocity, config,
+                widthPx, heightPx, touchSlop, rubberbandThreshold, minFlingVelocity, config, bounceDampingRatio,
                 saver = listSaver(
                     save = {
                         listOf(
@@ -1064,6 +1070,7 @@ internal fun LauncherScaffold(
                             rubberbandThreshold = rubberbandThreshold,
                             velocityThreshold = minFlingVelocity,
                             maxSearchBarOffset = maxSearchBarOffset,
+                            bounceDampingRatio = bounceDampingRatio,
                             onHapticFeedback = {
                                 hapticFeedback.performHapticFeedback(it)
                             },
@@ -1081,6 +1088,7 @@ internal fun LauncherScaffold(
                     rubberbandThreshold = rubberbandThreshold,
                     velocityThreshold = minFlingVelocity,
                     maxSearchBarOffset = maxSearchBarOffset,
+                    bounceDampingRatio = bounceDampingRatio,
                     onHapticFeedback = {
                         hapticFeedback.performHapticFeedback(it)
                     }

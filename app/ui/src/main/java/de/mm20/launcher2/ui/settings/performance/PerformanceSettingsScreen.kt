@@ -39,6 +39,7 @@ fun PerformanceSettingsScreen() {
     val animationSpeed by viewModel.animationSpeed.collectAsStateWithLifecycle()
     val searchDebounceMs by viewModel.searchDebounceMs.collectAsStateWithLifecycle()
     val iconCacheSize by viewModel.iconCacheSize.collectAsStateWithLifecycle()
+    val bouncePhysics by viewModel.bouncePhysics.collectAsStateWithLifecycle()
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_performance)) {
         item {
@@ -50,15 +51,26 @@ fun PerformanceSettingsScreen() {
                     onValueChanged = { viewModel.setReduceAnimations(it) },
                 )
                 AnimatedVisibility(reduceAnimations == false) {
-                    SliderPreference(
-                        title = stringResource(R.string.preference_performance_animation_speed),
-                        value = animationSpeed ?: 1f,
-                        min = 0.5f,
-                        max = 2f,
-                        step = 0.25f,
-                        onValueChanged = { viewModel.setAnimationSpeed(it) },
-                        label = { Text("${it}x") }
-                    )
+                    androidx.compose.foundation.layout.Column {
+                        SliderPreference(
+                            title = stringResource(R.string.preference_performance_animation_speed),
+                            value = animationSpeed ?: 1f,
+                            min = 0.5f,
+                            max = 2f,
+                            step = 0.25f,
+                            onValueChanged = { viewModel.setAnimationSpeed(it) },
+                            label = { Text("${it}x") }
+                        )
+                        SliderPreference(
+                            title = stringResource(R.string.preference_performance_bounce_physics),
+                            value = (((1f - (bouncePhysics ?: 1f)) / 0.7f) * 100).toInt(),
+                            min = 0,
+                            max = 100,
+                            step = 10,
+                            onValueChanged = { viewModel.setBouncePhysics(1f - (it / 100f) * 0.7f) },
+                            label = { Text("$it%") }
+                        )
+                    }
                 }
             }
         }

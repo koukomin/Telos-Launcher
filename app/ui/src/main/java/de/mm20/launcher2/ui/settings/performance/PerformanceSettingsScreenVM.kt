@@ -20,8 +20,15 @@ class PerformanceSettingsScreenVM : ViewModel(), KoinComponent {
     val iconCacheSize = settings.iconCacheSize
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+    // Exposed as a 0-100 "bounciness" percentage (0 = no bounce, 100 = max bounce), converted
+    // to/from the underlying Spring dampingRatio (1f = no bounce, 0.3f = max bounce we allow).
+    val bouncePhysics = settings.bouncePhysics
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setReduceAnimations(reduce: Boolean) = settings.setReduceAnimations(reduce)
     fun setAnimationSpeed(speed: Float) = settings.setAnimationSpeed(speed)
     fun setSearchDebounceMs(ms: Int) = settings.setSearchDebounceMs(ms)
     fun setIconCacheSize(size: Int) = settings.setIconCacheSize(size)
+
+    fun setBouncePhysics(dampingRatio: Float) = settings.setBouncePhysics(dampingRatio)
 }

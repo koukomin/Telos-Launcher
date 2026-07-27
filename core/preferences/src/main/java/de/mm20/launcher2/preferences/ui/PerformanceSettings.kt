@@ -21,6 +21,15 @@ class PerformanceSettings internal constructor(
         dataStore.update { it.copy(performance = it.performance.copy(performanceAnimationSpeed = speed)) }
     }
 
+    /** Spring dampingRatio for gesture release/back animations. 1f = no bounce (default),
+     * lower values overshoot before settling. */
+    val bouncePhysics
+        get() = dataStore.data.map { it.performance.performanceBouncePhysics }.distinctUntilChanged()
+
+    fun setBouncePhysics(dampingRatio: Float) {
+        dataStore.update { it.copy(performance = it.performance.copy(performanceBouncePhysics = dampingRatio)) }
+    }
+
     val searchDebounceMs
         get() = dataStore.data.map { it.performance.performanceSearchDebounceMs }.distinctUntilChanged()
 
