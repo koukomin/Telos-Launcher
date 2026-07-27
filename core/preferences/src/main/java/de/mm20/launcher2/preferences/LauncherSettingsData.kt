@@ -280,7 +280,7 @@ data class SearchBarGroup(
      * search results. See AppRecommendations - no affiliate relationship, editorial picks only. */
     val showAppRecommendations: Boolean = true,
     val searchLaunchOnEnter: Boolean = true,
-    val searchBarBottom: Boolean = false,
+    val searchBarBottom: Boolean = true,
     val searchBarFixed: Boolean = false,
 )
 
