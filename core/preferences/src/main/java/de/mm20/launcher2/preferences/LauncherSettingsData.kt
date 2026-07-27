@@ -275,6 +275,9 @@ data class GridGroup(
     val drawerBackgroundOpacity: Float = 0.9f,
     @Serializable(with = ColorIntAsHexSerializer::class)
     val folderBackgroundColor: Int? = null,
+    val dockPageIndicatorEnabled: Boolean = true,
+    @Serializable(with = ColorIntAsHexSerializer::class)
+    val dockPageIndicatorColor: Int? = null,
 )
 
 @Serializable

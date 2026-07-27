@@ -58,6 +58,16 @@ class DockSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setDockBackgroundShadow(elevation: Int) = uiSettings.setDockBackgroundShadow(elevation)
 
+    val dockPageIndicatorEnabled = uiSettings.dockPageIndicatorEnabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+
+    fun setDockPageIndicatorEnabled(enabled: Boolean) = uiSettings.setDockPageIndicatorEnabled(enabled)
+
+    val dockPageIndicatorColor = uiSettings.dockPageIndicatorColor
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setDockPageIndicatorColor(color: Int?) = uiSettings.setDockPageIndicatorColor(color)
+
     var pendingItemPos by mutableStateOf<Triple<Int, Int, Int>?>(null) // page, row, col
 
     fun setDockPages(pages: List<List<DockItem>>) {

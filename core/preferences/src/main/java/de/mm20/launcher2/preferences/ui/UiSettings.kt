@@ -235,6 +235,20 @@ class UiSettings internal constructor(
         launcherDataStore.update { it.copy(grid = it.grid.copy(folderBackgroundColor = color)) }
     }
 
+    val dockPageIndicatorEnabled
+        get() = launcherDataStore.data.map { it.grid.dockPageIndicatorEnabled }.distinctUntilChanged()
+
+    fun setDockPageIndicatorEnabled(enabled: Boolean) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(dockPageIndicatorEnabled = enabled)) }
+    }
+
+    val dockPageIndicatorColor
+        get() = launcherDataStore.data.map { it.grid.dockPageIndicatorColor }.distinctUntilChanged()
+
+    fun setDockPageIndicatorColor(color: Int?) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(dockPageIndicatorColor = color)) }
+    }
+
     fun setGridShowList(showList: Boolean) {
         launcherDataStore.update {
             it.copy(grid = it.grid.copy(gridList = showList))

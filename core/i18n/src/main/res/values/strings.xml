@@ -939,6 +939,9 @@
     <string name="preference_dock_background_opacity">Background opacity</string>
     <string name="preference_dock_background_blur">Background blur</string>
     <string name="preference_dock_background_shadow">Background shadow</string>
+    <string name="preference_dock_page_indicator">Page indicator</string>
+    <string name="preference_dock_page_indicator_summary">Show dots for the current dock page when there is more than one</string>
+    <string name="preference_dock_page_indicator_color">Page indicator color</string>
     <string name="preference_grid_list_style">Show apps in a list</string>
     <string name="preference_grid_list_icons">Show app icons in list</string>
     <string name="preference_grid_labels">Show labels</string>

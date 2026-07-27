@@ -89,6 +89,8 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
         val dockBackgroundColor by uiSettings.dockBackgroundColor.collectAsState(null)
         val dockBackgroundOpacity by uiSettings.dockBackgroundOpacity.collectAsState(0.3f)
         val dockBackgroundShadow by uiSettings.dockBackgroundShadow.collectAsState(0)
+        val dockPageIndicatorEnabled by uiSettings.dockPageIndicatorEnabled.collectAsState(true)
+        val dockPageIndicatorColor by uiSettings.dockPageIndicatorColor.collectAsState(null)
 
         var showSlotMenuForSlot by remember { mutableStateOf<Pair<Int, Int>?>(null) }
         var showSearchablePickerForSlot by remember { mutableStateOf<Pair<Int, Int>?>(null) }
@@ -141,11 +143,23 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                                     centerRows = true,
                                 )
                             }
+                            if (dockPageIndicatorEnabled && pageCount > 1) {
+                                DockPageIndicator(
+                                    pageCount = pageCount,
+                                    currentPage = pagerState.currentPage,
+                                    color = dockPageIndicatorColor?.let { Color(it) },
+                                )
+                            }
                         }
                     }
                 } else {
                     val pagerState = rememberPagerState(initialPage = defaultPage.coerceIn(0, dockPages.size - 1)) { dockPages.size }
 
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                    ) {
                     // Box, not Column: the background plate and the pager need to OVERLAP (plate
                     // behind, pager on top), not stack as separate vertical siblings - a Column
                     // here would give the plate its own vertical slot above the pager instead of
@@ -281,6 +295,14 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                                 }
                             }
                         }
+                    }
+                    if (dockPageIndicatorEnabled && dockPages.size > 1) {
+                        DockPageIndicator(
+                            pageCount = dockPages.size,
+                            currentPage = pagerState.currentPage,
+                            color = dockPageIndicatorColor?.let { Color(it) },
+                        )
+                    }
                     }
                 }
             }
@@ -419,6 +441,31 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                     }
                     showWidgetPickerForSlot = null
                 }
+            )
+        }
+    }
+}
+
+@Composable
+private fun DockPageIndicator(
+    pageCount: Int,
+    currentPage: Int,
+    color: Color?,
+) {
+    val dotColor = color ?: MaterialTheme.colorScheme.onSurfaceVariant
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        for (i in 0 until pageCount) {
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 3.dp)
+                    .size(if (i == currentPage) 8.dp else 6.dp)
+                    .clip(androidx.compose.foundation.shape.CircleShape)
+                    .background(dotColor.copy(alpha = if (i == currentPage) 0.9f else 0.4f))
             )
         }
     }

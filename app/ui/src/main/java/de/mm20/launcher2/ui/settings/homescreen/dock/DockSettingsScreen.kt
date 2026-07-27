@@ -63,6 +63,8 @@ fun DockSettingsScreen() {
     val dockBackgroundColor by viewModel.dockBackgroundColor.collectAsStateWithLifecycle()
     val dockBackgroundOpacity by viewModel.dockBackgroundOpacity.collectAsStateWithLifecycle()
     val dockBackgroundShadow by viewModel.dockBackgroundShadow.collectAsStateWithLifecycle()
+    val dockPageIndicatorEnabled by viewModel.dockPageIndicatorEnabled.collectAsStateWithLifecycle()
+    val dockPageIndicatorColor by viewModel.dockPageIndicatorColor.collectAsStateWithLifecycle()
 
     val shutterSettings = koinInject<ShutterSettings>()
     val shuttersEnabled by shutterSettings.enabled.collectAsStateWithLifecycle(true)
@@ -121,6 +123,19 @@ fun DockSettingsScreen() {
                             onValueChanged = { viewModel.setDockBackgroundShadow(it) }
                         )
                     }
+                }
+                SwitchPreference(
+                    title = stringResource(R.string.preference_dock_page_indicator),
+                    summary = stringResource(R.string.preference_dock_page_indicator_summary),
+                    value = dockPageIndicatorEnabled,
+                    onValueChanged = { viewModel.setDockPageIndicatorEnabled(it) }
+                )
+                AnimatedVisibility(dockPageIndicatorEnabled) {
+                    ColorPreference(
+                        title = stringResource(R.string.preference_dock_page_indicator_color),
+                        value = dockPageIndicatorColor?.let { Color(it) },
+                        onValueChanged = { viewModel.setDockPageIndicatorColor(it?.toArgb()) }
+                    )
                 }
             }
         }
