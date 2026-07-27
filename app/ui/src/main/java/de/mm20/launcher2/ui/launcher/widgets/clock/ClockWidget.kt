@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -150,6 +151,7 @@ fun ClockWidget(
                 ConfigureClockWidgetSheet(expanded = configure, onDismiss = { configure = false })
             }
         } else {
+            var configure by remember { mutableStateOf(false) }
             Column(modifier = modifier) {
                 Box(
                     modifier = Modifier
@@ -170,10 +172,11 @@ fun ClockWidget(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
                                 Box(
-                                    modifier = Modifier.clickable(
+                                    modifier = Modifier.combinedClickable(
                                         enabled = clockStyle !is ClockWidgetStyle.Empty,
                                         indication = null,
-                                        interactionSource = remember { MutableInteractionSource() }
+                                        interactionSource = remember { MutableInteractionSource() },
+                                        onLongClick = { configure = true },
                                     ) {
                                         viewModel.launchClockApp(context)
                                     }
@@ -217,10 +220,11 @@ fun ClockWidget(
                                     )
                                 }
                                 Box(
-                                    modifier = Modifier.clickable(
+                                    modifier = Modifier.combinedClickable(
                                         enabled = clockStyle !is ClockWidgetStyle.Empty,
                                         indication = null,
-                                        interactionSource = remember { MutableInteractionSource() }
+                                        interactionSource = remember { MutableInteractionSource() },
+                                        onLongClick = { configure = true },
                                     ) {
                                         viewModel.launchClockApp(context)
                                     }
@@ -242,6 +246,7 @@ fun ClockWidget(
                     }
                 }
             }
+            ConfigureClockWidgetSheet(expanded = configure, onDismiss = { configure = false })
         }
     }
 }
@@ -648,6 +653,15 @@ fun ConfigureClockWidgetSheet(
                             value = parts?.date == true,
                             onValueChanged = {
                                 viewModel.setDatePart(it)
+                            }
+                        )
+                        SwitchPreference(
+                            title = stringResource(R.string.preference_clockwidget_weather_part),
+                            summary = stringResource(R.string.preference_clockwidget_weather_part_summary),
+                            icon = R.drawable.light_mode_24px,
+                            value = parts?.weather == true,
+                            onValueChanged = {
+                                viewModel.setWeatherPart(it)
                             }
                         )
                         SwitchPreference(

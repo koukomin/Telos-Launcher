@@ -89,6 +89,10 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setDatePart(datePart)
     }
 
+    fun setWeatherPart(weatherPart: Boolean) {
+        settings.setWeatherPart(weatherPart)
+    }
+
     fun setBatteryPart(batteryPart: BatteryStatusVisibility) {
         settings.setBatteryPart(batteryPart)
     }

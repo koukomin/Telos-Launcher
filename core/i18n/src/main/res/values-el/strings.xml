@@ -215,6 +215,7 @@
     <string name="preference_clockwidget_layout_vertical">Προεπιλογή</string>
     <string name="preference_clockwidget_layout_horizontal">Συμπαγής</string>
     <string name="preference_clockwidget_date_part">Ημερομηνία</string>
+    <string name="preference_clockwidget_weather_part">Καιρός</string>
     <string name="preference_clockwidget_favorites_part">Αγαπημένα</string>
     <string name="preference_clockwidget_favorites_part_summary">Εμφάνιση της πρώτης σειράς καρφιτσωμένων στοιχείων</string>
     <string name="preference_clockwidget_dock_rows">Σειρές Dock</string>
@@ -394,6 +395,7 @@
     <string name="backup_complete">Το αντίγραφο ασφαλείας έχει ολοκληρωθεί.</string>
     <string name="preference_summary_not_logged_in">Αυτή την στιγμή δεν έχετε συνδεθεί</string>
     <string name="preference_clockwidget_date_part_summary">Εμφάνιση τωρινής ημερομηνίας</string>
+    <string name="preference_clockwidget_weather_part_summary">Εμφάνιση τρέχοντος καιρού μαζί με την ώρα</string>
     <string name="preference_search_files_summary">Αναζήτηση τοπικών αρχείων και αρχείων cloud</string>
     <string name="preference_blur_wallpaper_summary">Χρήση εφέ θαμπώματος στην ταπετσαρία</string>
     <string name="preference_clockwidget_music_part_summary">Εμφάνιση ελέγχου πολυμέσων όταν υπάρχει ενεργή περίοδος λειτουργίας</string>
