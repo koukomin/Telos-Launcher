@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -50,7 +51,20 @@ class FreezeDashboardScreenVM : ViewModel(), KoinComponent {
     private val usageStatsProvider: AppUsageStatsProvider by inject()
     private val permissionsManager: PermissionsManager by inject()
 
-    private val allApps = appRepository.findMany()
+    // This dashboard is read-only (just reporting state, not changing what gets frozen), so
+    // unlike FreezeSettingsScreen's app list there's no risk in always including iconless
+    // framework/system components here - no extra toggle needed to see them.
+    private val iconlessApps = MutableStateFlow<List<Application>>(emptyList())
+
+    init {
+        viewModelScope.launch {
+            iconlessApps.value = appRepository.findIconlessApps()
+        }
+    }
+
+    private val allApps = combine(
+        appRepository.findMany(), iconlessApps,
+    ) { apps, iconless -> apps + iconless }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), persistentListOf())
 
     val rows = combine(freezeManager.stats, allApps) { stats, apps ->

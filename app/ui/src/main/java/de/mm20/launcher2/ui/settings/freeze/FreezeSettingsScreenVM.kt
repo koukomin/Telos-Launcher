@@ -91,9 +91,14 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
         sortedApps, _showSystemApps, _showIconlessApps, _iconlessApps,
     ) { apps, showSystem, showIconless, iconlessApps ->
         withContext(Dispatchers.Default) {
-            val combined = if (showIconless) (apps + iconlessApps).sorted() else apps
-            if (showSystem) combined
-            else combined.filterNot { isSystemApp(it.componentName.packageName) }
+            // Apps without a launchable icon are almost always system/framework components by
+            // definition, so gating them behind the separate (and separately-scary) "show system
+            // apps" toggle made "show apps without an icon" silently produce an empty list on
+            // its own - toggling it looked broken. Showing them is already an explicit opt-in via
+            // its own toggle, so they bypass the system-app filter entirely; only the regular app
+            // list still respects it.
+            val filteredApps = if (showSystem) apps else apps.filterNot { isSystemApp(it.componentName.packageName) }
+            if (showIconless) (filteredApps + iconlessApps).sorted() else filteredApps
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
