@@ -55,6 +55,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.launcher.scaffold.components.EXTRA_HOME_SCREENS_ENABLED
 import de.mm20.launcher2.ui.launcher.widgets.clock.ConfigureClockWidgetSheet
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
@@ -135,21 +136,26 @@ fun HomescreenSettingsScreen() {
                         viewModel.setFixedRotation(it)
                     },
                 )
-                SliderPreference(
-                    title = stringResource(R.string.preference_home_screen_page_count),
-                    value = homeScreenPageCount ?: 1,
-                    min = 1,
-                    max = 9,
-                    onValueChanged = {
-                        viewModel.setHomeScreenPageCount(it)
-                    },
-                )
-                AnimatedVisibility((homeScreenPageCount ?: 1) > 1) {
-                    Banner(
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                        text = stringResource(R.string.preference_home_screen_page_count_warning),
-                        icon = R.drawable.info_24px,
+                // Extra home screens feature is disabled for this build (see
+                // EXTRA_HOME_SCREENS_ENABLED in HomeScreenPager.kt) - hidden here so there's no
+                // way to turn it on, rather than left visible but non-functional.
+                if (EXTRA_HOME_SCREENS_ENABLED) {
+                    SliderPreference(
+                        title = stringResource(R.string.preference_home_screen_page_count),
+                        value = homeScreenPageCount ?: 1,
+                        min = 1,
+                        max = 9,
+                        onValueChanged = {
+                            viewModel.setHomeScreenPageCount(it)
+                        },
                     )
+                    AnimatedVisibility((homeScreenPageCount ?: 1) > 1) {
+                        Banner(
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                            text = stringResource(R.string.preference_home_screen_page_count_warning),
+                            icon = R.drawable.info_24px,
+                        )
+                    }
                 }
             }
         }

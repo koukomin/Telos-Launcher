@@ -31,6 +31,16 @@ import org.koin.compose.koinInject
 import java.util.UUID
 
 /**
+ * Kill switch for the "extra home screens" feature (multiple swipeable home pages beyond the
+ * first). Disabled for this build - see [HomeScreenPager] and
+ * [de.mm20.launcher2.ui.settings.homescreen.HomescreenSettingsScreen] for the two places this
+ * gates. The underlying implementation (this file, [WidgetsComponent], [UiSettings.homeScreenPageCount]
+ * itself) is left completely intact for future reconsideration; only the paths that would let a
+ * user turn it on, or that would render more than the first page, are gated off.
+ */
+internal const val EXTRA_HOME_SCREENS_ENABLED = false
+
+/**
  * Wraps a home component's content as page 1 of a [HorizontalPager], with extra swipeable pages
  * to the right (up to 9 total, see [UiSettings.homeScreenPageCount]) - each an independent widget
  * area reusing [WidgetsComponent] as-is, so add/move/resize/stack all work identically to the
@@ -55,7 +65,11 @@ internal fun HomeScreenPager(
     firstPage: @Composable (Modifier, PaddingValues) -> Unit,
 ) {
     val uiSettings = koinInject<UiSettings>()
-    val pageCount by uiSettings.homeScreenPageCount.collectAsStateWithLifecycle(1)
+    val storedPageCount by uiSettings.homeScreenPageCount.collectAsStateWithLifecycle(1)
+    // Graceful fallback for anyone who already had extra pages configured before this feature
+    // was disabled: ignore the stored count entirely rather than trying to render pages whose
+    // entry points (the settings slider, etc.) are no longer reachable.
+    val pageCount = if (EXTRA_HOME_SCREENS_ENABLED) storedPageCount else 1
 
     if (pageCount <= 1) {
         // No pager showing, so there's only ever the one (default) home page - keep the shared
