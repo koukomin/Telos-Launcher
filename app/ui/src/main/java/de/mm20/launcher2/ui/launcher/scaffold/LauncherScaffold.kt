@@ -64,6 +64,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -1095,6 +1096,21 @@ internal fun LauncherScaffold(
                     }
                 )
             }
+
+        // Feeds the scaffold's own drag offset - the same value that drives every gesture
+        // destination (WebAppsPanel, Widgets, Feed, ...) - into the system wallpaper offset API,
+        // so a live/video wallpaper's parallax effect tracks whatever horizontal swipe is
+        // currently in progress. There is no separate multi-page home screen concept active in
+        // this build (see EXTRA_HOME_SCREENS_ENABLED), so this is the one continuous swipe
+        // signal that actually exists to drive it.
+        LaunchedEffect(state, widthPx) {
+            snapshotFlow { state.currentOffset.x }.collect { offsetX ->
+                val fraction = (0.5f - (offsetX / widthPx) * 0.5f).coerceIn(0f, 1f)
+                view.windowToken?.let { token ->
+                    wallpaperManager.setWallpaperOffsets(token, fraction, 0.5f)
+                }
+            }
+        }
 
         LaunchedEffect(state.isAtTop, state.isAtBottom) {
             if (state.currentProgress > 0f && state.currentProgress < 1f) {
