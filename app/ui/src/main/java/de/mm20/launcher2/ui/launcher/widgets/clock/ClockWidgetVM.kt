@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.preferences.ClockWidgetAlignment
+import de.mm20.launcher2.preferences.ClockWidgetColors
+import de.mm20.launcher2.preferences.ClockWidgetStyle
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.AlarmPartProvider
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.BatteryPartProvider
@@ -60,16 +63,21 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
         }
     }
 
+    // Seeded with the same defaults LauncherSettingsData itself uses (rather than null) so the
+    // clock renders its real, final layout from the very first frame - a null initial value here
+    // previously meant neither the compact/vertical branch in ClockWidget's `when` matched on
+    // first composition, and the eventual real value could differ (wrong style/alignment) from
+    // whatever null-driven branch briefly showed, reading as a startup glitch.
     val compactLayout = settings.compact
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
     val clockStyle = settings.clockStyle
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ClockWidgetStyle.Digital1())
 
     val color = settings.color
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ClockWidgetColors.Auto)
 
     val alignment = settings.alignment
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), ClockWidgetAlignment.Bottom)
 
     val dockProvider = settings.dock
         .map { if (it) FavoritesPartProvider() else null }
