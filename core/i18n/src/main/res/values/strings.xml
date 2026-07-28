@@ -926,6 +926,12 @@
     <string name="preference_category_grid_folders">Folders</string>
     <string name="preference_drawer_background">Drawer background</string>
     <string name="preference_drawer_background_summary">Show a background behind the app drawer</string>
+    <string name="preference_screen_create_folder">Create folder</string>
+    <string name="preference_create_folder_summary">Group multiple apps into a new folder in one step</string>
+    <string name="create_folder_name_label">Folder name</string>
+    <string name="create_folder_pick_apps_hint">Select at least 2 apps to include</string>
+    <string name="create_folder_action">Create</string>
+    <string name="create_folder_success">Created folder \"%1$s\" in the dock</string>
     <string name="preference_folder_background_color">Folder background color</string>
     <string name="preference_folder_cover">Folder covers</string>
     <string name="preference_folder_cover_summary">Show the folder\'s first icon as a fading cover while it opens and closes</string>

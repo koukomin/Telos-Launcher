@@ -401,6 +401,12 @@
     <string name="preference_category_grid_folders">Φάκελοι</string>
     <string name="preference_drawer_background">Φόντο drawer</string>
     <string name="preference_drawer_background_summary">Εμφάνιση φόντου πίσω από το drawer εφαρμογών</string>
+    <string name="preference_screen_create_folder">Δημιουργία φακέλου</string>
+    <string name="preference_create_folder_summary">Ομαδοποίηση πολλών εφαρμογών σε νέο φάκελο με ένα βήμα</string>
+    <string name="create_folder_name_label">Όνομα φακέλου</string>
+    <string name="create_folder_pick_apps_hint">Επίλεξε τουλάχιστον 2 εφαρμογές</string>
+    <string name="create_folder_action">Δημιουργία</string>
+    <string name="create_folder_success">Δημιουργήθηκε ο φάκελος \"%1$s\" στο dock</string>
     <string name="preference_folder_background_color">Χρώμα φόντου φακέλου</string>
     <string name="preference_folder_cover">Καλύμματα φακέλων</string>
     <string name="preference_folder_cover_summary">Εμφάνιση του πρώτου εικονιδίου του φακέλου ως σταδιακά εξαφανιζόμενο κάλυμμα κατά το άνοιγμα/κλείσιμο</string>

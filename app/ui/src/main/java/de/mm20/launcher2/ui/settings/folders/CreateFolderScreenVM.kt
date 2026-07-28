@@ -1,0 +1,72 @@
+package de.mm20.launcher2.ui.settings.folders
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.applications.AppRepository
+import de.mm20.launcher2.applications.FolderImpl
+import de.mm20.launcher2.icons.IconService
+import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.preferences.DockItem
+import de.mm20.launcher2.preferences.ui.UiSettings
+import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.searchable.SavableSearchableRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import java.util.UUID
+
+class CreateFolderScreenVM : ViewModel(), KoinComponent {
+    private val appRepository: AppRepository by inject()
+    private val searchableRepository: SavableSearchableRepository by inject()
+    private val iconService: IconService by inject()
+    private val uiSettings: UiSettings by inject()
+
+    val apps: Flow<List<Application>> = appRepository.findMany()
+
+    fun getIcon(app: Application, size: Int): Flow<LauncherIcon?> {
+        return iconService.getIcon(app, size)
+    }
+
+    /**
+     * Creates a folder pre-populated with [selectedKeys] in one step - unlike the Dock's "Add
+     * folder" menu, which always starts empty. Drops it into the first empty dock slot,
+     * extending the dock with a new page if every existing slot is already taken.
+     */
+    fun createFolder(name: String, selectedKeys: Set<String>) {
+        viewModelScope.launch {
+            val folder = FolderImpl(
+                id = UUID.randomUUID().toString(),
+                label = name,
+                itemKeys = selectedKeys.toList(),
+                isCover = true,
+            )
+            searchableRepository.insert(folder)
+
+            val dockPages = uiSettings.dockPages.first().toMutableList()
+            if (dockPages.isEmpty()) {
+                dockPages.add(mutableListOf())
+            }
+            var placed = false
+            for (page in dockPages.indices) {
+                val items = dockPages[page].toMutableList()
+                val emptyIndex = items.indexOfFirst {
+                    it is DockItem.Searchable && it.key.isEmpty()
+                }
+                if (emptyIndex >= 0) {
+                    items[emptyIndex] = DockItem.Searchable(folder.key)
+                    dockPages[page] = items
+                    placed = true
+                    break
+                }
+            }
+            if (!placed) {
+                val lastPage = dockPages.last().toMutableList()
+                lastPage.add(DockItem.Searchable(folder.key))
+                dockPages[dockPages.lastIndex] = lastPage
+            }
+            uiSettings.setDockPages(dockPages)
+        }
+    }
+}

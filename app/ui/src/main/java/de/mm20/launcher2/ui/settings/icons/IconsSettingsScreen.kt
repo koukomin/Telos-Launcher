@@ -54,6 +54,8 @@ import de.mm20.launcher2.preferences.NotificationBadgeStyle
 import de.mm20.launcher2.preferences.ui.GridSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DismissableBottomSheet
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.folders.CreateFolderRoute
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.getShape
 import de.mm20.launcher2.ui.component.preferences.ColorPreference
@@ -74,6 +76,7 @@ data object IconsSettingsRoute : NavKey
 fun IconsSettingsScreen() {
     val viewModel: IconsSettingsScreenVM = viewModel(factory = IconsSettingsScreenVM.Factory)
     val context = LocalContext.current
+    val backStack = LocalBackStack.current
 
     val grid by viewModel.grid.collectAsStateWithLifecycle(GridSettings())
     val homeGrid by viewModel.homeGrid.collectAsStateWithLifecycle(GridSettings())
@@ -295,6 +298,11 @@ fun IconsSettingsScreen() {
         }
         item {
             PreferenceCategory(title = stringResource(R.string.preference_category_grid_folders)) {
+                Preference(
+                    title = stringResource(R.string.preference_screen_create_folder),
+                    summary = stringResource(R.string.preference_create_folder_summary),
+                    onClick = { backStack.add(CreateFolderRoute) },
+                )
                 ColorPreference(
                     title = stringResource(R.string.preference_folder_background_color),
                     value = folderBackgroundColor?.let { Color(it) },
