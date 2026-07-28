@@ -7,7 +7,12 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -26,7 +31,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -70,12 +74,25 @@ fun WallpaperSettingsScreen() {
         ).show()
     }
 
-    var pendingStaticTarget by remember { mutableStateOf(StaticWallpaperTarget.Both) }
-    val imagePicker = rememberLauncherForActivityResult(
+    fun activateVideoIfNeeded(ok: Boolean) {
+        if (ok && !viewModel.isVideoWallpaperActive) {
+            context.tryStartActivity(viewModel.getActivationIntent())
+        } else {
+            setResultToast(ok)
+        }
+    }
+
+    var pendingImageUri by remember { mutableStateOf<Uri?>(null) }
+    val wallpaperPicker = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri ->
         if (uri != null) {
-            viewModel.setStaticWallpaper(uri, pendingStaticTarget, setResultToast)
+            val mimeType = context.contentResolver.getType(uri)
+            if (mimeType?.startsWith("video/") == true) {
+                viewModel.setVideoWallpaper(uri, false, ::activateVideoIfNeeded)
+            } else {
+                pendingImageUri = uri
+            }
         }
     }
 
@@ -84,39 +101,62 @@ fun WallpaperSettingsScreen() {
         ActivityResultContracts.PickVisualMedia()
     ) { uri ->
         if (uri != null) {
-            viewModel.setVideoWallpaper(uri, appendToPlaylist) { ok ->
-                if (ok && !viewModel.isVideoWallpaperActive) {
-                    context.tryStartActivity(viewModel.getActivationIntent())
-                } else {
-                    setResultToast(ok)
-                }
-            }
+            viewModel.setVideoWallpaper(uri, appendToPlaylist, ::activateVideoIfNeeded)
         }
+    }
+
+    pendingImageUri?.let { uri ->
+        AlertDialog(
+            onDismissRequest = { pendingImageUri = null },
+            title = { Text(stringResource(R.string.wallpaper_target_dialog_title)) },
+            text = {
+                Column {
+                    TextButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = {
+                            viewModel.setStaticWallpaper(uri, StaticWallpaperTarget.Home, setResultToast)
+                            pendingImageUri = null
+                        },
+                    ) {
+                        Text(stringResource(R.string.preference_wallpaper_set_home))
+                    }
+                    TextButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = {
+                            viewModel.setStaticWallpaper(uri, StaticWallpaperTarget.Lock, setResultToast)
+                            pendingImageUri = null
+                        },
+                    ) {
+                        Text(stringResource(R.string.preference_wallpaper_set_lock))
+                    }
+                    TextButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = {
+                            viewModel.setStaticWallpaper(uri, StaticWallpaperTarget.Both, setResultToast)
+                            pendingImageUri = null
+                        },
+                    ) {
+                        Text(stringResource(R.string.preference_wallpaper_set_both))
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { pendingImageUri = null }) {
+                    Text(stringResource(android.R.string.cancel))
+                }
+            },
+        )
     }
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_wallpaper)) {
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_wallpaper_category_static)) {
+            PreferenceCategory(title = stringResource(R.string.preference_category_wallpaper)) {
                 Preference(
                     icon = R.drawable.wallpaper_24px,
-                    title = stringResource(R.string.preference_wallpaper_set_home),
+                    title = stringResource(R.string.preference_wallpaper_change),
+                    summary = stringResource(R.string.preference_wallpaper_change_summary),
                     onClick = {
-                        pendingStaticTarget = StaticWallpaperTarget.Home
-                        imagePicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-                    }
-                )
-                Preference(
-                    title = stringResource(R.string.preference_wallpaper_set_lock),
-                    onClick = {
-                        pendingStaticTarget = StaticWallpaperTarget.Lock
-                        imagePicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
-                    }
-                )
-                Preference(
-                    title = stringResource(R.string.preference_wallpaper_set_both),
-                    onClick = {
-                        pendingStaticTarget = StaticWallpaperTarget.Both
-                        imagePicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                        wallpaperPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
                     }
                 )
                 Preference(
@@ -126,10 +166,6 @@ fun WallpaperSettingsScreen() {
                         context.tryStartActivity(Intent.createChooser(Intent(Intent.ACTION_SET_WALLPAPER), null))
                     }
                 )
-            }
-        }
-        item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_wallpaper)) {
                 SwitchPreference(
                     title = stringResource(R.string.preference_dim_wallpaper),
                     summary = stringResource(R.string.preference_dim_wallpaper_summary),
@@ -159,25 +195,16 @@ fun WallpaperSettingsScreen() {
                 }
             }
         }
-        item {
-            PreferenceCategory(title = stringResource(R.string.preference_wallpaper_category_video)) {
-                Preference(
-                    icon = R.drawable.wallpaper_24px,
-                    title = stringResource(R.string.preference_wallpaper_choose_video),
-                    summary = stringResource(R.string.preference_wallpaper_choose_video_summary),
-                    onClick = {
-                        appendToPlaylist = false
-                        videoPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly))
-                    }
-                )
-                Preference(
-                    title = stringResource(R.string.preference_wallpaper_add_video),
-                    onClick = {
-                        appendToPlaylist = true
-                        videoPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly))
-                    }
-                )
-                if (viewModel.hasVideoWallpaper) {
+        if (viewModel.hasVideoWallpaper) {
+            item {
+                PreferenceCategory(title = stringResource(R.string.preference_wallpaper_category_video)) {
+                    Preference(
+                        title = stringResource(R.string.preference_wallpaper_add_video),
+                        onClick = {
+                            appendToPlaylist = true
+                            videoPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly))
+                        }
+                    )
                     Preference(
                         title = stringResource(R.string.preference_wallpaper_clear_playlist),
                         onClick = { viewModel.clearVideoPlaylist() }
@@ -190,25 +217,25 @@ fun WallpaperSettingsScreen() {
                         enabled = !viewModel.isVideoWallpaperActive,
                         onClick = { context.tryStartActivity(viewModel.getActivationIntent()) }
                     )
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_wallpaper_pause_battery_saver),
+                        summary = stringResource(R.string.preference_wallpaper_pause_battery_saver_summary),
+                        value = pauseOnBatterySaver == true,
+                        onValueChanged = { viewModel.setPauseOnBatterySaver(it) }
+                    )
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_wallpaper_pause_thermal),
+                        summary = stringResource(R.string.preference_wallpaper_pause_thermal_summary),
+                        value = pauseOnThermal == true,
+                        onValueChanged = { viewModel.setPauseOnThermal(it) }
+                    )
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_wallpaper_pause_desktop_mode),
+                        summary = stringResource(R.string.preference_wallpaper_pause_desktop_mode_summary),
+                        value = pauseOnDesktopMode == true,
+                        onValueChanged = { viewModel.setPauseOnDesktopMode(it) }
+                    )
                 }
-                SwitchPreference(
-                    title = stringResource(R.string.preference_wallpaper_pause_battery_saver),
-                    summary = stringResource(R.string.preference_wallpaper_pause_battery_saver_summary),
-                    value = pauseOnBatterySaver == true,
-                    onValueChanged = { viewModel.setPauseOnBatterySaver(it) }
-                )
-                SwitchPreference(
-                    title = stringResource(R.string.preference_wallpaper_pause_thermal),
-                    summary = stringResource(R.string.preference_wallpaper_pause_thermal_summary),
-                    value = pauseOnThermal == true,
-                    onValueChanged = { viewModel.setPauseOnThermal(it) }
-                )
-                SwitchPreference(
-                    title = stringResource(R.string.preference_wallpaper_pause_desktop_mode),
-                    summary = stringResource(R.string.preference_wallpaper_pause_desktop_mode_summary),
-                    value = pauseOnDesktopMode == true,
-                    onValueChanged = { viewModel.setPauseOnDesktopMode(it) }
-                )
             }
         }
         if (viewModel.hasVideoWallpaper && videoTransforms != null) {

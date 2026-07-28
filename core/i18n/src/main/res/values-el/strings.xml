@@ -449,6 +449,15 @@
     <string name="restore_complete">Έγινε επαναφορά του αντιγράφου ασφαλείας.</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
     <string name="preference_wallpaper_summary">Επιλογή ταπετσαρίας</string>
+    <string name="preference_wallpaper_change">Αλλαγή ταπετσαρίας</string>
+    <string name="preference_wallpaper_change_summary">Επιλέξτε φωτογραφία ή βίντεο</string>
+    <string name="wallpaper_target_dialog_title">Ορισμός ταπετσαρίας για</string>
+    <string name="preference_wallpaper_set_home">Αρχική οθόνη</string>
+    <string name="preference_wallpaper_set_lock">Οθόνη κλειδώματος</string>
+    <string name="preference_wallpaper_set_both">Και τις δύο</string>
+    <string name="preference_wallpaper_system_picker">Επιλογέας ταπετσαρίας συστήματος</string>
+    <string name="preference_wallpaper_system_picker_summary">Άνοιγμα του επιλογέα ταπετσαρίας του συστήματος</string>
+    <string name="preference_wallpaper_category_video">Ρυθμίσεις ταπετσαρίας βίντεο</string>
     <string name="preference_clockwidget_alarm_part_summary">Εμφάνιση ξυπνητηριών που θα χτυπήσουν μέσα στα επόμενα 15 λεπτά</string>
     <string name="preference_search_contacts_summary">Αναζήτηση επαφών σε αυτή τη συσκευή</string>
     <string name="icon_picker_search_icon">Αναζήτηση σε πακέτα εικονιδίων</string>
