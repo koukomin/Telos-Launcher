@@ -172,6 +172,30 @@ fun DockSettingsScreen() {
             }
         }
 
+        if (dockPages.isNotEmpty()) {
+            item {
+                PreferenceCategory(title = stringResource(R.string.preference_dock_multiple)) {
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_dock_multiple_enable),
+                        summary = stringResource(R.string.preference_dock_multiple_enable_summary),
+                        value = dockPages.size > 1,
+                        onValueChanged = { enabled ->
+                            viewModel.setDockCount(if (enabled) 2 else 1)
+                        }
+                    )
+                    AnimatedVisibility(dockPages.size > 1) {
+                        SliderPreference(
+                            title = stringResource(R.string.preference_dock_count),
+                            value = dockPages.size,
+                            min = 2,
+                            max = DockSettingsScreenVM.MAX_DOCKS,
+                            onValueChanged = { viewModel.setDockCount(it) }
+                        )
+                    }
+                }
+            }
+        }
+
         item {
             PreferenceCategory(title = stringResource(R.string.preference_category_grid_dock)) {
                 SwitchPreference(
@@ -219,30 +243,6 @@ fun DockSettingsScreen() {
             }
         }
 
-        if (dockPages.isNotEmpty()) {
-            item {
-                PreferenceCategory(title = stringResource(R.string.preference_dock_multiple)) {
-                    SwitchPreference(
-                        title = stringResource(R.string.preference_dock_multiple_enable),
-                        summary = stringResource(R.string.preference_dock_multiple_enable_summary),
-                        value = dockPages.size > 1,
-                        onValueChanged = { enabled ->
-                            viewModel.setDockCount(if (enabled) 2 else 1)
-                        }
-                    )
-                    AnimatedVisibility(dockPages.size > 1) {
-                        SliderPreference(
-                            title = stringResource(R.string.preference_dock_count),
-                            value = dockPages.size,
-                            min = 2,
-                            max = DockSettingsScreenVM.MAX_DOCKS,
-                            onValueChanged = { viewModel.setDockCount(it) }
-                        )
-                    }
-                }
-            }
-        }
-        
         if (dockPages.isNotEmpty()) {
             item {
                 Preference(
