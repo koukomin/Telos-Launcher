@@ -819,8 +819,6 @@
     <string name="preference_dock_multiple_enable">Enable multiple docks</string>
     <string name="preference_dock_multiple_enable_summary">Swipe on the dock to switch between docks. Extra docks start empty - place apps in them yourself.</string>
     <string name="preference_dock_count">Number of docks</string>
-    <string name="preference_dock_reset">Reset to auto-populated dock</string>
-    <string name="preference_dock_reset_summary">Clear all custom docks and use frequent apps instead</string>
     <string name="web_app_open_externally">Open in browser</string>
     <string name="web_app_download_started">Downloading %1$s</string>
     <string name="web_app_go_back">Back</string>

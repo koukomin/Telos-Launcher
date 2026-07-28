@@ -243,16 +243,6 @@ fun DockSettingsScreen() {
             }
         }
 
-        if (dockPages.isNotEmpty()) {
-            item {
-                Preference(
-                    title = stringResource(R.string.preference_dock_reset),
-                    summary = stringResource(R.string.preference_dock_reset_summary),
-                    onClick = { viewModel.setRows(1); viewModel.setColumns(5); viewModel.setDockPages(emptyList<List<DockItem>>()) }
-                )
-            }
-        }
-
         item {
             PreferenceCategory(
                 title = stringResource(R.string.preference_category_shutters),

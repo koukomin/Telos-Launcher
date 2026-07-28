@@ -425,8 +425,6 @@
     <string name="preference_dock_page_indicator">Δείκτης σελίδας</string>
     <string name="preference_dock_page_indicator_summary">Εμφάνιση κουκκίδων για την τρέχουσα σελίδα dock όταν υπάρχει περισσότερη από μία</string>
     <string name="preference_dock_page_indicator_color">Χρώμα δείκτη σελίδας</string>
-    <string name="preference_dock_reset">Επαναφορά σε αυτόματο dock</string>
-    <string name="preference_dock_reset_summary">Διαγραφή όλων των προσαρμοσμένων dock και χρήση συχνά χρησιμοποιούμενων εφαρμογών</string>
     <string name="preference_icon_pack_summary_empty">Δεν έχουν εγκατασταθεί πακέτα εικονιδίων</string>
     <string name="preference_grid_labels_summary">Εμφάνιση του ονόματος της εφαρμογής κάτω από το εικονίδιο</string>
     <string name="preference_status_bar_icons">Εικονίδια γραμμής κατάστασης</string>
