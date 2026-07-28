@@ -93,6 +93,8 @@ import de.mm20.launcher2.ui.settings.freeze.FreezeDashboardRoute
 import de.mm20.launcher2.ui.settings.freeze.FreezeDashboardScreen
 import de.mm20.launcher2.ui.settings.freeze.FreezeSettingsRoute
 import de.mm20.launcher2.ui.settings.freeze.FreezeSettingsScreen
+import de.mm20.launcher2.ui.settings.freeze.DeviceOwnerSetupRoute
+import de.mm20.launcher2.ui.settings.freeze.DeviceOwnerSetupScreen
 import de.mm20.launcher2.ui.settings.contextprofiles.ContextProfilesSettingsRoute
 import de.mm20.launcher2.ui.settings.contextprofiles.ContextProfilesSettingsScreen
 import de.mm20.launcher2.ui.settings.desktopmode.DesktopModeSettingsRoute
@@ -402,6 +404,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<FreezeDashboardRoute> {
                 FreezeDashboardScreen()
+            }
+            entry<DeviceOwnerSetupRoute> {
+                DeviceOwnerSetupScreen()
             }
             entry<StringNormalizerTestRoute> {
                 StringNormalizerTestScreen()

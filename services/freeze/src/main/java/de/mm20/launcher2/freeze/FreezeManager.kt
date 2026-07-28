@@ -9,6 +9,8 @@ import android.util.Log
 import de.mm20.launcher2.freeze.providers.RootProvider
 import de.mm20.launcher2.freeze.providers.ShizukuProvider
 import de.mm20.launcher2.freeze.providers.IslandProvider
+import de.mm20.launcher2.freeze.providers.DeviceOwnerProvider
+import de.mm20.launcher2.freeze.providers.DeviceOwnerAdminReceiver
 import de.mm20.launcher2.preferences.FreezeBackendPreference
 import de.mm20.launcher2.preferences.FreezeMethod
 import de.mm20.launcher2.preferences.freeze.FreezeSettings
@@ -24,6 +26,7 @@ class FreezeManager internal constructor(
     private val shizukuProvider = ShizukuProvider()
     private val rootProvider = RootProvider()
     private val islandProvider = IslandProvider(context)
+    private val deviceOwnerProvider = DeviceOwnerProvider(context)
 
     private val _activeBackend = MutableStateFlow<FreezeBackendType?>(null)
     val activeBackend: StateFlow<FreezeBackendType?> = _activeBackend.asStateFlow()
@@ -40,9 +43,13 @@ class FreezeManager internal constructor(
             FreezeBackendPreference.Island ->
                 FreezeBackendType.Island.takeIf { islandProvider.isAvailable() }
 
+            FreezeBackendPreference.DeviceOwnerOnly ->
+                FreezeBackendType.DeviceOwner.takeIf { deviceOwnerProvider.isAvailable() }
+
             FreezeBackendPreference.Auto -> when {
                 shizukuProvider.isAvailable() -> FreezeBackendType.Shizuku
                 rootProvider.isAvailable() -> FreezeBackendType.Root
+                deviceOwnerProvider.isAvailable() -> FreezeBackendType.DeviceOwner
                 islandProvider.isAvailable() -> FreezeBackendType.Island
                 else -> null
             }
@@ -53,6 +60,7 @@ class FreezeManager internal constructor(
         FreezeBackendType.Shizuku -> shizukuProvider.hasPermission()
         FreezeBackendType.Root -> rootProvider.hasPermission()
         FreezeBackendType.Island -> true // Intent based, no runtime permission for us
+        FreezeBackendType.DeviceOwner -> deviceOwnerProvider.hasPermission()
         null -> false
     }
 
@@ -61,6 +69,7 @@ class FreezeManager internal constructor(
         FreezeBackendType.Shizuku -> shizukuProvider.requestPermission()
         FreezeBackendType.Root -> rootProvider.requestPermission()
         FreezeBackendType.Island -> true
+        FreezeBackendType.DeviceOwner -> deviceOwnerProvider.requestPermission()
         null -> false
     }
 
@@ -146,6 +155,23 @@ class FreezeManager internal constructor(
                     emptySet()
                 }
             }
+
+            FreezeBackendType.DeviceOwner -> {
+                // DeviceOwnerProvider has no separate suspend-vs-disable distinction to honor -
+                // setPackagesEnabled(enabled=false) IS its disable method (setApplicationHidden),
+                // so route everything through setPackagesSuspended/setPackagesEnabled the same
+                // way Shizuku/Root do, respecting the user's configured per-app method.
+                if (suspended) {
+                    val toDisable = packageNames.filter { methods[it] == FreezeMethod.Disable }
+                    val toSuspend = packageNames.filter { methods[it] != FreezeMethod.Disable }
+                    deviceOwnerProvider.setPackagesSuspended(toSuspend, true) +
+                            deviceOwnerProvider.setPackagesEnabled(toDisable, false)
+                } else {
+                    val unsuspended = deviceOwnerProvider.setPackagesSuspended(packageNames, false)
+                    val enabled = deviceOwnerProvider.setPackagesEnabled(packageNames, true)
+                    unsuspended + enabled
+                }
+            }
         }
 
         val now = System.currentTimeMillis()
@@ -226,6 +252,15 @@ class FreezeManager internal constructor(
             }
         }
     }
+
+    /** Whether this app currently holds device owner status - only ever true after the user has
+     * run the `adb shell dpm set-device-owner` command from the guided setup screen. */
+    suspend fun isDeviceOwner(): Boolean = deviceOwnerProvider.isAvailable()
+
+    /** Fully-qualified admin component, for the `adb dpm set-device-owner`/`remove-active-admin`
+     * commands shown in the guided setup screen. */
+    val deviceOwnerAdminComponent: String
+        get() = ComponentName(context, DeviceOwnerAdminReceiver::class.java).flattenToString()
 
     val autoFreezeEnabled = settings.autoFreezeEnabled
     val autoFreezeCandidates = settings.candidates

@@ -4,4 +4,5 @@ enum class FreezeBackendType {
     Shizuku,
     Root,
     Island,
+    DeviceOwner,
 }

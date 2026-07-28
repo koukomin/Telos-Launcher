@@ -101,6 +101,7 @@ fun FreezeSettingsScreen() {
                         stringResource(R.string.freeze_backend_shizuku) to FreezeBackendPreference.ShizukuOnly,
                         stringResource(R.string.freeze_backend_root) to FreezeBackendPreference.RootOnly,
                         stringResource(R.string.freeze_backend_island) to FreezeBackendPreference.Island,
+                        stringResource(R.string.freeze_backend_device_owner) to FreezeBackendPreference.DeviceOwnerOnly,
                     ),
                     value = backend,
                     onValueChanged = { viewModel.setBackend(it) }
@@ -118,6 +119,7 @@ fun FreezeSettingsScreen() {
                                 FreezeBackendType.Shizuku -> R.string.freeze_backend_shizuku
                                 FreezeBackendType.Root -> R.string.freeze_backend_root
                                 FreezeBackendType.Island -> R.string.freeze_backend_island
+                                FreezeBackendType.DeviceOwner -> R.string.freeze_backend_device_owner
                                 null -> R.string.freeze_backend_none
                             }
                         ),
@@ -130,6 +132,11 @@ fun FreezeSettingsScreen() {
                         }
                     )
                 }
+                Preference(
+                    icon = R.drawable.lock_24px,
+                    title = stringResource(R.string.freeze_device_owner_setup_title),
+                    onClick = { backStack.add(DeviceOwnerSetupRoute) },
+                )
             }
         }
         item {

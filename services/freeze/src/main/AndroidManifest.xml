@@ -26,5 +26,25 @@
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+
+        <!--
+            Optional Device Owner freeze backend (see DeviceOwnerProvider). Registering this
+            receiver only makes the app a plain device admin, which grants none of the app-suspend
+            capabilities by itself - those additionally require device owner status, established
+            out-of-band via `adb shell dpm set-device-owner` (see the guided setup screen).
+        -->
+        <receiver
+            android:name=".providers.DeviceOwnerAdminReceiver"
+            android:label="@string/freeze_backend_device_owner"
+            android:description="@string/freeze_device_owner_admin_description"
+            android:permission="android.permission.BIND_DEVICE_ADMIN"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_owner_admin_receiver" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

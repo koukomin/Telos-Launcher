@@ -947,6 +947,7 @@ enum class FreezeBackendPreference {
     @SerialName("shizuku") ShizukuOnly,
     @SerialName("root") RootOnly,
     @SerialName("island") Island,
+    @SerialName("device_owner") DeviceOwnerOnly,
 }
 
 /**
