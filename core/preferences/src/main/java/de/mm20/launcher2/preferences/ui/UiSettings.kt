@@ -636,4 +636,27 @@ class UiSettings internal constructor(
     fun setDockPages(pages: List<List<de.mm20.launcher2.preferences.DockItem>>) {
         launcherDataStore.update { it.copy(home = it.home.copy(homeScreenDockPages = pages)) }
     }
+
+    val dockAutoPopulated
+        get() = launcherDataStore.data.map { it.home.homeScreenDockAutoPopulated }.distinctUntilChanged()
+
+    fun setDockAutoPopulated(populated: Boolean) {
+        launcherDataStore.update { it.copy(home = it.home.copy(homeScreenDockAutoPopulated = populated)) }
+    }
+
+    /** Seeds the dock and marks it auto-populated in one update, so the two fields can't land as
+     * two separate fire-and-forget writes that race and clobber one another. Also flips the
+     * dock's own visibility toggle on: a first-launch seed is pointless if the dock stays hidden
+     * until the user separately discovers and enables it in settings. */
+    fun setDockPagesAndMarkAutoPopulated(pages: List<List<de.mm20.launcher2.preferences.DockItem>>) {
+        launcherDataStore.update {
+            it.copy(
+                home = it.home.copy(
+                    homeScreenDock = true,
+                    homeScreenDockPages = pages,
+                    homeScreenDockAutoPopulated = true,
+                )
+            )
+        }
+    }
 }

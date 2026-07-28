@@ -1,9 +1,6 @@
 package de.mm20.launcher2.ui.settings.homescreen.dock
 
 import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Process
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -16,9 +13,9 @@ import de.mm20.launcher2.preferences.DockItem
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.searchable.SavableSearchableRepository
+import de.mm20.launcher2.ui.common.resolveDefaultSystemApps
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -91,41 +88,10 @@ class DockSettingsScreenVM : ViewModel(), KoinComponent {
     fun enableCustomDock() {
         viewModelScope.launch {
             if (dockPages.value.isNotEmpty()) return@launch
-            uiSettings.setDockPages(listOf(resolveDefaultApps()))
+            uiSettings.setDockPages(
+                listOf(resolveDefaultSystemApps(context, appRepository, searchableRepository, dockColumns.value))
+            )
         }
-    }
-
-    private suspend fun resolveDefaultApps(): List<DockItem> {
-        val intents = listOf(
-            Intent(Intent.ACTION_DIAL), // Dialer
-            Intent(Intent.ACTION_SENDTO, android.net.Uri.parse("smsto:")), // SMS
-            Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_BROWSER), // Browser
-            Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_GALLERY), // Image Viewer
-            Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_MUSIC) // Media Player
-        )
-        
-        val pm = context.packageManager
-        val items = mutableListOf<DockItem>()
-        val columns = dockColumns.value
-        
-        for (intent in intents) {
-            val resolveInfo = pm.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
-            if (resolveInfo != null) {
-                val pkg = resolveInfo.activityInfo.packageName
-                val activity = resolveInfo.activityInfo.name
-                val key = "app://$pkg:$activity"
-                
-                // Try to find the searchable object and upsert it to ensure it's in DB
-                appRepository.findOne(pkg, Process.myUserHandle()).first()?.let {
-                    searchableRepository.upsert(it)
-                }
-                
-                items.add(DockItem.Searchable(key))
-            }
-            if (items.size >= columns) break
-        }
-        
-        return items
     }
 
     /** Grows or shrinks the number of docks. New docks are always added EMPTY - default apps

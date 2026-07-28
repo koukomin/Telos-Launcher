@@ -1,8 +1,10 @@
 package de.mm20.launcher2.ui.launcher
 
+import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.applications.AppRepository
 import de.mm20.launcher2.contextprofiles.ContextProfileEffectsApplier
 import de.mm20.launcher2.contextprofiles.ContextProfileManager
 import de.mm20.launcher2.searchable.SavableSearchableRepository
@@ -15,6 +17,7 @@ import de.mm20.launcher2.preferences.ui.GestureSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.preferences.ui.WallpaperSettings
 import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.ui.common.resolveDefaultSystemApps
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -28,16 +31,34 @@ import org.koin.core.component.inject
 
 class LauncherScaffoldVM : ViewModel(), KoinComponent {
 
+    private val context: Context by inject()
     private val uiSettings: UiSettings by inject()
     private val wallpaperSettings: WallpaperSettings by inject()
     private val gestureSettings: GestureSettings by inject()
     private val searchableRepository: SavableSearchableRepository by inject()
+    private val appRepository: AppRepository by inject()
     private val contextProfileManager: ContextProfileManager by inject()
     private val contextProfileEffectsApplier: ContextProfileEffectsApplier by inject()
 
     init {
         viewModelScope.launch {
             contextProfileEffectsApplier.start()
+        }
+        viewModelScope.launch {
+            // Android has no API to read another launcher's saved home screen layout, so a fresh
+            // install can't inherit the user's previous dock - seed it once with the device's
+            // default apps (dialer, SMS, browser, ...) instead of leaving it empty. Runs only
+            // once ever, tracked separately from dockPages so a dock the user later empties out
+            // on purpose doesn't get silently repopulated.
+            if (uiSettings.dockPages.first().isEmpty() && !uiSettings.dockAutoPopulated.first()) {
+                val columns = uiSettings.dockColumns.first()
+                val apps = resolveDefaultSystemApps(context, appRepository, searchableRepository, columns)
+                if (apps.isNotEmpty()) {
+                    uiSettings.setDockPagesAndMarkAutoPopulated(listOf(apps))
+                } else {
+                    uiSettings.setDockAutoPopulated(true)
+                }
+            }
         }
     }
 

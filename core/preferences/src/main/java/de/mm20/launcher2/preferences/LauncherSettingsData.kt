@@ -159,6 +159,10 @@ data class HomeGroup(
      * enables extra swipeable pages to the right, each an independent widget area. */
     val homeScreenPageCount: Int = 1,
     val homeScreenDockPages: List<List<DockItem>> = emptyList(),
+    /** Whether the dock has already been auto-seeded with default system apps on first launch.
+     * Set once and never reset, so a dock the user deliberately emptied out afterwards isn't
+     * re-populated against their wishes. */
+    val homeScreenDockAutoPopulated: Boolean = false,
 )
 
 @Serializable
