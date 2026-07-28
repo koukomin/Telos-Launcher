@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -355,6 +356,7 @@ fun ConfigureClockWidgetSheet(
     onDismiss: () -> Unit,
 ) {
     DismissableBottomSheet(expanded = expanded, onDismissRequest = onDismiss) {
+        val context = LocalContext.current
         val viewModel: ClockWidgetSettingsScreenVM = viewModel()
         val compact by viewModel.compact.collectAsState()
         val color by viewModel.color.collectAsState()
@@ -661,7 +663,10 @@ fun ConfigureClockWidgetSheet(
                             icon = R.drawable.light_mode_24px,
                             value = parts?.weather == true,
                             onValueChanged = {
-                                viewModel.setWeatherPart(it)
+                                val activity = context as? AppCompatActivity
+                                if (activity != null) {
+                                    viewModel.setWeatherPart(it, activity)
+                                }
                             }
                         )
                         SwitchPreference(

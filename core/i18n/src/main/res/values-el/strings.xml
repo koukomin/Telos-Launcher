@@ -442,6 +442,7 @@
     <string name="preference_summary_not_logged_in">Αυτή την στιγμή δεν έχετε συνδεθεί</string>
     <string name="preference_clockwidget_date_part_summary">Εμφάνιση τωρινής ημερομηνίας</string>
     <string name="preference_clockwidget_weather_part_summary">Εμφάνιση τρέχοντος καιρού μαζί με την ώρα</string>
+    <string name="clockwidget_weather_part_grant_location">Πατήστε για να ενεργοποιήσετε την τοποθεσία για τον καιρό</string>
     <string name="preference_search_files_summary">Αναζήτηση τοπικών αρχείων και αρχείων cloud</string>
     <string name="preference_blur_wallpaper_summary">Χρήση εφέ θαμπώματος στην ταπετσαρία</string>
     <string name="preference_clockwidget_music_part_summary">Εμφάνιση ελέγχου πολυμέσων όταν υπάρχει ενεργή περίοδος λειτουργίας</string>

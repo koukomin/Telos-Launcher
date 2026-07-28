@@ -1,7 +1,10 @@
 package de.mm20.launcher2.ui.settings.clockwidget
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.permissions.PermissionGroup
+import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.BatteryStatusVisibility
 import de.mm20.launcher2.preferences.ClockWidgetAlignment
 import de.mm20.launcher2.preferences.ClockWidgetColors
@@ -18,6 +21,7 @@ import org.koin.core.component.inject
 class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
     private val settings: ClockWidgetSettings by inject()
     private val uiSettings: UiSettings by inject()
+    private val permissionsManager: PermissionsManager by inject()
 
     val compact = settings.compact
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
@@ -89,8 +93,13 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setDatePart(datePart)
     }
 
-    fun setWeatherPart(weatherPart: Boolean) {
+    fun setWeatherPart(weatherPart: Boolean, activity: AppCompatActivity) {
         settings.setWeatherPart(weatherPart)
+        if (weatherPart) {
+            // Nothing else in this flow ever asks for location - without this, turning the
+            // part on just leaves the clock's weather row with no data to show, forever.
+            permissionsManager.requestPermission(activity, PermissionGroup.Location)
+        }
     }
 
     fun setBatteryPart(batteryPart: BatteryStatusVisibility) {
