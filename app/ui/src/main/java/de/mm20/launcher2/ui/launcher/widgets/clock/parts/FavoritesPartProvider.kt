@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Icon
@@ -202,7 +201,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                             ) {
                                 for (row in 0 until dockRows) {
                                     Row(
-                                        modifier = Modifier.wrapContentWidth(),
+                                        modifier = Modifier.fillMaxWidth(),
                                         horizontalArrangement = Arrangement.Center
                                     ) {
                                         for (col in 0 until columns) {
@@ -210,7 +209,8 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                                             val dockItem = pageItems.getOrNull(itemIndex)
                                             Box(
                                                 modifier = Modifier
-                                                    .size(gridSettings.iconSize.dp + 16.dp)
+                                                    .weight(1f)
+                                                    .aspectRatio(1f)
                                                     .combinedClickable(
                                                         onClick = {
                                                             // Handle click if needed
@@ -220,9 +220,13 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                                                                 showSlotMenuForSlot = pageIndex to itemIndex
                                                             }
                                                         }
-                                                    ), 
+                                                    ),
                                                 contentAlignment = Alignment.Center
                                             ) {
+                                              Box(
+                                                modifier = Modifier.size(gridSettings.iconSize.dp + 16.dp),
+                                                contentAlignment = Alignment.Center
+                                              ) {
                                                 if (dockItem != null) {
                                                     when (dockItem) {
                                                         is DockItem.Searchable -> {
@@ -289,6 +293,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                                                         }
                                                     }
                                                 }
+                                              }
                                             }
                                         }
                                     }
