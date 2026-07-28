@@ -3,7 +3,6 @@ package de.mm20.launcher2.ui.settings.homescreen.dock
 import android.appwidget.AppWidgetManager
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -75,6 +74,86 @@ fun DockSettingsScreen() {
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_dock)) {
         item {
+            PreferenceCategory(title = stringResource(R.string.preference_dock_pages)) {
+                if (dockPages.isEmpty()) {
+                    Preference(
+                        title = stringResource(R.string.preference_dock_custom_enable),
+                        summary = stringResource(R.string.preference_dock_custom_enable_summary),
+                        onClick = {
+                            viewModel.enableCustomDock()
+                        }
+                    )
+                } else {
+                    val pagerState = rememberPagerState { dockPages.size }
+
+                    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+                        HorizontalPager(
+                            state = pagerState,
+                            modifier = Modifier.fillMaxWidth().height(200.dp)
+                        ) { pageIndex ->
+                            val pageItems = dockPages[pageIndex]
+                            val gridState = rememberLazyGridState()
+                            val dragAndDropState = rememberLazyDragAndDropGridState(
+                                gridState = gridState,
+                                onItemMove = { from, to ->
+                                    viewModel.moveItem(pageIndex, from.index, to.index)
+                                }
+                            )
+
+                            LazyVerticalDragAndDropGrid(
+                                state = dragAndDropState,
+                                columns = GridCells.Fixed(columns),
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(8.dp),
+                                verticalArrangement = Arrangement.Center,
+                                userScrollEnabled = false
+                            ) {
+                                items(rows * columns, key = { it }) { index ->
+                                    val item = pageItems.getOrNull(index)
+                                    DraggableItem(state = dragAndDropState, key = index) { isDragged ->
+                                        DockSlot(
+                                            item = item,
+                                            viewModel = viewModel,
+                                            isDragged = isDragged,
+                                            onClick = {
+                                                viewModel.pendingItemPos = Triple(pageIndex, index / columns, index % columns)
+                                                showChoiceDialog = true
+                                            }
+                                        )
+                                    }
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .horizontalScroll(rememberScrollState()),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "${pagerState.currentPage + 1} / ${dockPages.size}",
+                                style = MaterialTheme.typography.labelMedium,
+                            )
+
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                RadioButton(
+                                    selected = defaultPage == pagerState.currentPage,
+                                    onClick = { viewModel.setDefaultPage(pagerState.currentPage) }
+                                )
+                                Text(stringResource(R.string.preference_dock_page_default), style = MaterialTheme.typography.labelMedium)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        item {
             PreferenceCategory {
                 SliderPreference(
                     title = stringResource(R.string.preference_clockwidget_dock_rows),
@@ -136,87 +215,6 @@ fun DockSettingsScreen() {
                         value = dockPageIndicatorColor?.let { Color(it) },
                         onValueChanged = { viewModel.setDockPageIndicatorColor(it?.toArgb()) }
                     )
-                }
-            }
-        }
-
-        item {
-            PreferenceCategory(title = stringResource(R.string.preference_dock_pages)) {
-                if (dockPages.isEmpty()) {
-                    Preference(
-                        title = stringResource(R.string.preference_dock_custom_enable),
-                        summary = stringResource(R.string.preference_dock_custom_enable_summary),
-                        onClick = {
-                            viewModel.enableCustomDock()
-                        }
-                    )
-                } else {
-                    val pagerState = rememberPagerState { dockPages.size }
-                    
-                    Column(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                        HorizontalPager(
-                            state = pagerState,
-                            modifier = Modifier.fillMaxWidth().height(200.dp)
-                        ) { pageIndex ->
-                            val pageItems = dockPages[pageIndex]
-                            val gridState = rememberLazyGridState()
-                            val dragAndDropState = rememberLazyDragAndDropGridState(
-                                gridState = gridState,
-                                onItemMove = { from, to ->
-                                    viewModel.moveItem(pageIndex, from.index, to.index)
-                                }
-                            )
-                            
-                            LazyVerticalDragAndDropGrid(
-                                state = dragAndDropState,
-                                columns = GridCells.Fixed(columns),
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .border(1.dp, MaterialTheme.colorScheme.outline, MaterialTheme.shapes.medium)
-                                    .padding(8.dp),
-                                verticalArrangement = Arrangement.Center,
-                                userScrollEnabled = false
-                            ) {
-                                items(rows * columns, key = { it }) { index ->
-                                    val item = pageItems.getOrNull(index)
-                                    DraggableItem(state = dragAndDropState, key = index) { isDragged ->
-                                        DockSlot(
-                                            item = item,
-                                            viewModel = viewModel,
-                                            isDragged = isDragged,
-                                            onClick = {
-                                                viewModel.pendingItemPos = Triple(pageIndex, index / columns, index % columns)
-                                                showChoiceDialog = true
-                                            }
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                        
-                        Spacer(modifier = Modifier.height(16.dp))
-
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .horizontalScroll(rememberScrollState()),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "${pagerState.currentPage + 1} / ${dockPages.size}",
-                                style = MaterialTheme.typography.labelMedium,
-                            )
-
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                RadioButton(
-                                    selected = defaultPage == pagerState.currentPage,
-                                    onClick = { viewModel.setDefaultPage(pagerState.currentPage) }
-                                )
-                                Text(stringResource(R.string.preference_dock_page_default), style = MaterialTheme.typography.labelMedium)
-                            }
-                        }
-                    }
                 }
             }
         }
