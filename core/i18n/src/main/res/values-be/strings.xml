@@ -377,8 +377,8 @@
     <string name="preference_clockwidget_date_part">Дата</string>
     <string name="preference_clockwidget_dynamic_zone">Дынамічная зона</string>
     <string name="preference_clockwidget_date_part_summary">Адлюстроўвае дату</string>
-    <string name="preference_clockwidget_favorites_part">Док-панэль</string>
-    <string name="preference_clockwidget_favorites_part_summary">Адлюстроўвае замацаваныя ярлыкі ў доке</string>
+    <string name="preference_screen_dock">Док-панэль</string>
+    <string name="preference_screen_dock_summary">Адлюстроўвае замацаваныя ярлыкі ў доке</string>
     <string name="preference_about_telegram">Група ў Telegram</string>
     <string name="preference_about_fdroid">Рэпазіторый F-Droid</string>
     <string name="preference_category_license">Ліцэнзія</string>

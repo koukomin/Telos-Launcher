@@ -171,7 +171,7 @@
     <string name="preference_clockwidget_layout_horizontal">Poziomy</string>
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Pokaż aktualną datę</string>
-    <string name="preference_clockwidget_favorites_part">Główny dock</string>
+    <string name="preference_screen_dock">Główny dock</string>
     <string name="preference_screen_search_summary">Wyszukiwanie, tagi, ukryte elementy</string>
     <string name="preference_clockwidget_alarm_part">Alarmy</string>
     <string name="preference_search_files">Pliki</string>
@@ -225,7 +225,7 @@
     <string name="close">Zamknij</string>
     <string name="weather_condition_heavysleetshowersandthunder">Ciężkie przelotne opady śniegu z deszczem i piorunami</string>
     <string name="edit_favorites_dialog_unpinned">Nie przypięte - często używane</string>
-    <string name="preference_clockwidget_favorites_part_summary">Pokaż pierwszy rząd przypiętych rzeczy</string>
+    <string name="preference_screen_dock_summary">Pokaż pierwszy rząd przypiętych rzeczy</string>
     <string name="weather_condition_snowandthunder">Śnieg z piorunami</string>
     <string name="owncloud_login_2fa_hint">Jeśli posiadasz uwierzytelnianie dwuskładowe, musisz podać hasło aplikacji tutaj.</string>
     <string name="preference_clockwidget_music_part">Media</string>

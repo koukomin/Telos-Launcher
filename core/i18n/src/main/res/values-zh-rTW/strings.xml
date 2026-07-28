@@ -322,8 +322,8 @@
     <string name="preference_clock_widget_fill_height">全螢幕高度</string>
     <string name="preference_clockwidget_date_part">日期</string>
     <string name="preference_clockwidget_date_part_summary">顯示目前的日期</string>
-    <string name="preference_clockwidget_favorites_part">Dock</string>
-    <string name="preference_clockwidget_favorites_part_summary">在 Dock 中顯示釘選的項目</string>
+    <string name="preference_screen_dock">Dock</string>
+    <string name="preference_screen_dock_summary">在 Dock 中顯示釘選的項目</string>
     <string name="preference_clockwidget_music_part">媒體</string>
     <string name="preference_clockwidget_music_part_summary">在有活動媒體會話時顯示媒體控制元件</string>
     <string name="preference_clockwidget_battery_part">電池</string>

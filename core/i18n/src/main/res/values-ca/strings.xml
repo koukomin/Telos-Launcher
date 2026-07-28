@@ -274,8 +274,8 @@
     <string name="preference_clock_widget_fill_height">Omplir l\'alçada de la pantalla</string>
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Mostra la data actual</string>
-    <string name="preference_clockwidget_favorites_part">Dock</string>
-    <string name="preference_clockwidget_favorites_part_summary">Mostra la primera fila d\'elements fixats</string>
+    <string name="preference_screen_dock">Dock</string>
+    <string name="preference_screen_dock_summary">Mostra la primera fila d\'elements fixats</string>
     <string name="preference_clockwidget_music_part">Media</string>
     <string name="preference_clockwidget_music_part_summary">Mostra els controls multimèdia quan hi ha una sessió multimèdia activa</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>

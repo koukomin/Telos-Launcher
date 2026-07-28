@@ -206,8 +206,8 @@
     <string name="preference_clock_widget_alignment_bottom">Alla</string>
     <string name="preference_clockwidget_dynamic_zone">Dünaamiline tsoon</string>
     <string name="preference_clockwidget_date_part">Kuupäev</string>
-    <string name="preference_clockwidget_favorites_part">Dokk</string>
-    <string name="preference_clockwidget_favorites_part_summary">Näita kinnitatud rakenduste esimest rida</string>
+    <string name="preference_screen_dock">Dokk</string>
+    <string name="preference_screen_dock_summary">Näita kinnitatud rakenduste esimest rida</string>
     <string name="preference_clockwidget_music_part">Meedia</string>
     <string name="preference_clockwidget_alarm_part">Äratused</string>
     <string name="preference_screen_backup">Varukoopiad ja taastamine</string>

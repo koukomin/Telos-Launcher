@@ -337,8 +337,8 @@
     <string name="weather_location_search_no_result">Posizione non trovata</string>
     <string name="preference_font">Carattere</string>
     <string name="restore_complete">Il backup è stato ripristinato.</string>
-    <string name="preference_clockwidget_favorites_part">Dock</string>
-    <string name="preference_clockwidget_favorites_part_summary">Mostra elementi appuntati nel dock</string>
+    <string name="preference_screen_dock">Dock</string>
+    <string name="preference_screen_dock_summary">Mostra elementi appuntati nel dock</string>
     <string name="preference_backup_summary">Esporta preferenze e dati del launcher</string>
     <string name="preference_search_currencyconverter_summary">Scarica periodicamente i tassi di cambio per convertire le valute</string>
     <string name="menu_customize">Personalizza</string>

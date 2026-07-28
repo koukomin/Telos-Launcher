@@ -73,7 +73,7 @@ fun DockSettingsScreen() {
     var showWidgetPicker by remember { mutableStateOf(false) }
     var showChoiceDialog by remember { mutableStateOf(false) }
 
-    PreferenceScreen(title = stringResource(R.string.preference_clockwidget_favorites_part)) {
+    PreferenceScreen(title = stringResource(R.string.preference_screen_dock)) {
         item {
             PreferenceCategory {
                 SliderPreference(

@@ -655,8 +655,8 @@
     <string name="preference_clock_widget_alignment_bottom">پایین</string>
     <string name="preference_clockwidget_dynamic_zone">ناجیه پویا</string>
     <string name="preference_clockwidget_date_part_summary">نمایش تاریخ کنونی</string>
-    <string name="preference_clockwidget_favorites_part">نوار ابزار</string>
-    <string name="preference_clockwidget_favorites_part_summary">نمایش اولین ردیف موارد دلخواه</string>
+    <string name="preference_screen_dock">نوار ابزار</string>
+    <string name="preference_screen_dock_summary">نمایش اولین ردیف موارد دلخواه</string>
     <string name="preference_restore_summary">وارد کردن یک پشتیبان ایجاد شده قبلی</string>
     <string name="preference_backup_summary">صادرات تنظیمات و داده‌های راه‌انداز</string>
     <string name="preference_search_currencyconverter_summary">به شیوه دوره‌ای نرخ ارزها را برای تبدیل واحد پولی دریافت کنید</string>

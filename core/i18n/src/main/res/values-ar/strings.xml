@@ -540,7 +540,7 @@
     <string name="preference_screen_clockwidget">الساعة</string>
     <string name="preference_clock_widget_show_seconds">إظهار الثواني</string>
     <string name="preference_clockwidget_date_part_summary">إظهار التاريخ الحالي</string>
-    <string name="preference_clockwidget_favorites_part">قاعدة التثبيت</string>
+    <string name="preference_screen_dock">قاعدة التثبيت</string>
     <string name="preference_restore">استعادة</string>
     <string name="preference_restore_summary">استيراد نسخة احتياطية تم إنشاؤها مسبقًا</string>
     <string name="preference_logs">السجلات</string>
@@ -592,7 +592,7 @@
     <string name="preference_clock_widget_alignment_top">أعلى</string>
     <string name="preference_clock_widget_alignment_center">وسط</string>
     <string name="preference_clock_widget_alignment_bottom">أسفل</string>
-    <string name="preference_clockwidget_favorites_part_summary">عرض العناصر المثبتة في الشريط الجانبي</string>
+    <string name="preference_screen_dock_summary">عرض العناصر المثبتة في الشريط الجانبي</string>
     <string name="preference_clockwidget_music_part">الوسائط</string>
     <string name="preference_clockwidget_music_part_summary">إظهار عناصر التحكم في الوسائط عندما تكون هناك جلسة وسائط نشطة</string>
     <string name="preference_clockwidget_battery_part">البطارية</string>

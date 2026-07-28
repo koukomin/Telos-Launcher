@@ -166,7 +166,7 @@
     <string name="preference_clock_widget_alignment_bottom">Bunn</string>
     <string name="preference_clockwidget_dynamic_zone">Dynamisk sone</string>
     <string name="preference_clockwidget_date_part">Dato</string>
-    <string name="preference_clockwidget_favorites_part">Dokk</string>
+    <string name="preference_screen_dock">Dokk</string>
     <string name="preference_clockwidget_music_part">Media</string>
     <string name="preference_clockwidget_music_part_summary">Vis mediakontroller når der er en aktiv mediaøkt</string>
     <string name="preference_clockwidget_battery_part">Batteri</string>
@@ -206,7 +206,7 @@
     <string name="edit_favorites_dialog_unpinned">Ikke festet – ofte brukt</string>
     <string name="nextcloud_server_url">Nextcloud-server-URL</string>
     <string name="preference_clockwidget_layout_vertical">Standard</string>
-    <string name="preference_clockwidget_favorites_part_summary">Vis den første raden med festede enheter</string>
+    <string name="preference_screen_dock_summary">Vis den første raden med festede enheter</string>
     <string name="missing_permission_calendar_widget_settings">Denne widgeten krever kalendertilgang</string>
     <string name="menu_contacts_open_externally">Åpne i kontakt-app</string>
     <string name="file_meta_size">Størrelse: %1$s</string>

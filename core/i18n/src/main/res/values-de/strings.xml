@@ -215,8 +215,8 @@
     <string name="preference_clockwidget_layout_vertical">Standard</string>
     <string name="preference_clockwidget_layout_horizontal">Kompakt</string>
     <string name="preference_clockwidget_date_part">Datum</string>
-    <string name="preference_clockwidget_favorites_part">Favoriten</string>
-    <string name="preference_clockwidget_favorites_part_summary">Zeigt die erste Zeile der angehefteten Elemente an</string>
+    <string name="preference_screen_dock">Favoriten</string>
+    <string name="preference_screen_dock_summary">Zeigt die erste Zeile der angehefteten Elemente an</string>
     <string name="preference_clockwidget_dock_rows">Dock-Zeilen</string>
     <string name="preference_clockwidget_music_part">Medien</string>
     <string name="preference_clockwidget_battery_part">Batterie</string>

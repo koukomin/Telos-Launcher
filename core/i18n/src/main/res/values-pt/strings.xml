@@ -304,7 +304,7 @@
     <string name="preference_clockwidget_date_part_summary">Mostrar data atual</string>
     <string name="preference_clock_widget_alignment_bottom">Baixo</string>
     <string name="preference_clockwidget_dynamic_zone">Área dinâmica</string>
-    <string name="preference_clockwidget_favorites_part">Doca</string>
+    <string name="preference_screen_dock">Doca</string>
     <string name="preference_clockwidget_music_part">Multimédia</string>
     <string name="preference_clockwidget_alarm_part">Alarmes</string>
     <string name="preference_backup">Backup</string>
@@ -351,7 +351,7 @@
     <string name="preference_clock_widget_alignment">Alinhamento</string>
     <string name="preference_clock_widget_alignment_top">Cima</string>
     <string name="preference_clock_widget_alignment_center">Centro</string>
-    <string name="preference_clockwidget_favorites_part_summary">Mostrar, na doca, os itens afixados</string>
+    <string name="preference_screen_dock_summary">Mostrar, na doca, os itens afixados</string>
     <string name="preference_clockwidget_music_part_summary">Mostrar controlos multimédia se existir uma sessão ativa</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostrar alarmes que serão ativados nas próximas 8 horas</string>
     <string name="preference_screen_backup">Backup e restauro</string>

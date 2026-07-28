@@ -352,8 +352,8 @@
     <string name="preference_clockwidget_dynamic_zone">אזור דינמי</string>
     <string name="preference_clockwidget_music_part">מדיה</string>
     <string name="preference_clockwidget_music_part_summary">הצגת בקרות המדיה כאשר מופעלת מדיה</string>
-    <string name="preference_clockwidget_favorites_part">עגינה</string>
-    <string name="preference_clockwidget_favorites_part_summary">הצגת הפריטים הנעוצים בעגינה</string>
+    <string name="preference_screen_dock">עגינה</string>
+    <string name="preference_screen_dock_summary">הצגת הפריטים הנעוצים בעגינה</string>
     <string name="preference_clockwidget_alarm_part">שעונים מעוררים</string>
     <string name="preference_clockwidget_alarm_part_summary">הצגת שעונים מעוררים שיצלצלו ב-8 השעות הקרובות</string>
     <string name="preference_restore">שחזור</string>

@@ -128,7 +128,7 @@
     <string name="preference_category_icons">Ícones</string>
     <string name="preference_cards_opacity">Opacidade</string>
     <string name="preference_icon_shape_square">Quadrado</string>
-    <string name="preference_clockwidget_favorites_part">Gaveta de aplicativos</string>
+    <string name="preference_screen_dock">Gaveta de aplicativos</string>
     <string name="preference_clockwidget_dock_rows">Linhas da gaveta de aplicativos</string>
     <string name="preference_clockwidget_music_part">Mídia</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
@@ -333,7 +333,7 @@
     <string name="preference_grid_labels">Mostrar rótulos</string>
     <string name="preference_grid_labels_summary">Mostrar o nome do aplicativo abaixo do ícone</string>
     <string name="preference_clock_widget_fill_height">Preencher altura da tela</string>
-    <string name="preference_clockwidget_favorites_part_summary">Mostra a primeira linha de itens fixados</string>
+    <string name="preference_screen_dock_summary">Mostra a primeira linha de itens fixados</string>
     <string name="preference_clockwidget_music_part_summary">Mostra controles de mídia quando houver uma sessão de mídia ativa</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostra alarmes que tocarão nas próximas 8 horas</string>
     <string name="preference_screen_backup">Backup e Restauração</string>

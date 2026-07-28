@@ -819,7 +819,7 @@
     <string name="preference_dock_multiple_enable">Enable multiple docks</string>
     <string name="preference_dock_multiple_enable_summary">Swipe on the dock to switch between docks. Extra docks start empty - place apps in them yourself.</string>
     <string name="preference_dock_count">Number of docks</string>
-    <string name="preference_dock_reset">Reset to auto-favorites</string>
+    <string name="preference_dock_reset">Reset to auto-populated dock</string>
     <string name="preference_dock_reset_summary">Clear all custom docks and use frequent apps instead</string>
     <string name="web_app_open_externally">Open in browser</string>
     <string name="web_app_download_started">Downloading %1$s</string>
@@ -982,8 +982,8 @@
     <string name="preference_clockwidget_date_part_summary">Show the current date</string>
     <string name="preference_clockwidget_weather_part">Weather</string>
     <string name="preference_clockwidget_weather_part_summary">Show the current weather alongside the time</string>
-    <string name="preference_clockwidget_favorites_part">Dock</string>
-    <string name="preference_clockwidget_favorites_part_summary">Show pinned items in dock</string>
+    <string name="preference_screen_dock">Dock</string>
+    <string name="preference_screen_dock_summary">Show pinned items in dock</string>
     <string name="preference_clockwidget_dock_rows">Dock rows</string>
     <string name="preference_clockwidget_music_part">Media</string>
     <string name="preference_clockwidget_music_part_summary">Show media controls when there is an active media session</string>

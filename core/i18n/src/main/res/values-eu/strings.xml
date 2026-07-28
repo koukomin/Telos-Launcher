@@ -246,8 +246,8 @@
     <string name="preference_clock_widget_fill_height">Pantailaren garaiera bete</string>
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Erakutsi uneko data</string>
-    <string name="preference_clockwidget_favorites_part">Aplikazio-barra</string>
-    <string name="preference_clockwidget_favorites_part_summary">Erakutsi ainguratutako elementuak aplikazio-barran</string>
+    <string name="preference_screen_dock">Aplikazio-barra</string>
+    <string name="preference_screen_dock_summary">Erakutsi ainguratutako elementuak aplikazio-barran</string>
     <string name="preference_clockwidget_battery_part">Bateria</string>
     <string name="preference_clockwidget_alarm_part">Alarmak</string>
     <string name="preference_clockwidget_alarm_part_summary">Erakutsi hurrengo 8 orduetan joko duten alarmak</string>

@@ -343,7 +343,7 @@
     <string name="preference_search_appshortcuts">Raccourcis d\'applications</string>
     <string name="preference_search_appshortcuts_summary">Rechercher les raccourcis d\'applications</string>
     <string name="restore_different_minor_version">Cette sauvegarde a été créée depuis une version différente de %1$s. Certaines données pourraient ne pas être restaurées correctement.</string>
-    <string name="preference_clockwidget_favorites_part_summary">Afficher les éléments épinglés sur le dock</string>
+    <string name="preference_screen_dock_summary">Afficher les éléments épinglés sur le dock</string>
     <string name="restore_invalid_file">Le fichier sélectionné semble ne pas être un fichier de sauvegarde. Êtes-vous sûr d\'avoir sélectionné le bon fichier ?</string>
     <string name="restore_incompatible_file">Cette sauvegarde a été créée avec une version différente de %1$s et ne peut donc pas être restaurée sur cette version.</string>
     <string name="restore_complete">La sauvegarde a bien été restaurée.</string>
@@ -358,7 +358,7 @@
     <string name="restore_meta">Créée le %1$s sur %2$s depuis %3$s.</string>
     <string name="calendar_widget_next_events">Événement suivant</string>
     <string name="preference_grid_icon_size">Taille d\'icône</string>
-    <string name="preference_clockwidget_favorites_part">Dock</string>
+    <string name="preference_screen_dock">Dock</string>
     <string name="action_undo">Annuler</string>
     <string name="preference_restore_summary">Importer une ancienne sauvegarde</string>
     <string name="preference_backup">Sauvegarder</string>

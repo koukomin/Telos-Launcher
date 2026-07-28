@@ -114,8 +114,8 @@ fun HomescreenSettingsScreen() {
                 )
                 Preference(
                     icon = R.drawable.today_24px,
-                    title = stringResource(R.string.preference_clockwidget_favorites_part),
-                    summary = stringResource(R.string.preference_clockwidget_favorites_part_summary),
+                    title = stringResource(R.string.preference_screen_dock),
+                    summary = stringResource(R.string.preference_screen_dock_summary),
                     onClick = {
                         backStack.add(DockSettingsRoute)
                     }

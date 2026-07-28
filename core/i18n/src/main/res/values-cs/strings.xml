@@ -293,8 +293,8 @@
     <string name="preference_clockwidget_layout_vertical">Vertikální</string>
     <string name="preference_clockwidget_layout_horizontal">Horizontální</string>
     <string name="preference_clockwidget_date_part">Datum</string>
-    <string name="preference_clockwidget_favorites_part">Dok</string>
-    <string name="preference_clockwidget_favorites_part_summary">Zobrazit připnuté položky v doku</string>
+    <string name="preference_screen_dock">Dok</string>
+    <string name="preference_screen_dock_summary">Zobrazit připnuté položky v doku</string>
     <string name="preference_clockwidget_music_part">Média</string>
     <string name="preference_clockwidget_music_part_summary">Zobrazit ovládání médií, když je aktivní jejich přehrávání</string>
     <string name="preference_clockwidget_battery_part">Baterie</string>

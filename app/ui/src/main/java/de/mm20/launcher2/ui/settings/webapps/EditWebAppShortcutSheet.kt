@@ -259,7 +259,7 @@ fun EditWebAppShortcutSheet(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = stringResource(R.string.preference_clockwidget_favorites_part),
+                    text = stringResource(R.string.preference_screen_dock),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.weight(1f),
                 )

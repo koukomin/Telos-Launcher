@@ -249,7 +249,7 @@
     <string name="preference_screen_colors">Колірна схема</string>
     <string name="missing_permission_files_search">Для пошуку локальних файлів потрібен доступ</string>
     <string name="missing_permission_appshortcuts_search">Встановіть %1$s як застосунок головного екрана, щоби шукати застосунки.</string>
-    <string name="preference_clockwidget_favorites_part">Док-панель</string>
+    <string name="preference_screen_dock">Док-панель</string>
     <string name="wind_west_north_west">Західно-північно-західний</string>
     <string name="missing_permission_tasks_search_settings">Для пошуку завдань у Tasks потрібен дозвіл</string>
     <string name="missing_permission_calendar_widget">Для відображення майбутніх подій потрібен доступ до календаря</string>
@@ -259,7 +259,7 @@
     <string name="missing_permission_calendar_search">Для пошуку в календарі потрібен дозвіл</string>
     <string name="preference_category_favorites_frequently_used">Часто використовувані</string>
     <string name="preference_favorites_frequently_used_summary">Показувати часто використовувані значки в улюблених</string>
-    <string name="preference_clockwidget_favorites_part_summary">Показувати перший рядок закріплених значків</string>
+    <string name="preference_screen_dock_summary">Показувати перший рядок закріплених значків</string>
     <string name="preference_edit_favorites_summary">Змінити порядок закріплених значків</string>
     <string name="missing_permission_calendar_search_settings">Для пошуку в календарі потрібен дозвіл</string>
     <string name="wind_south_south_west">Південно-південно-західний</string>

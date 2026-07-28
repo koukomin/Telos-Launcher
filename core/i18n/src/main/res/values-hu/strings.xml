@@ -483,8 +483,8 @@
     <string name="preference_clockwidget_dynamic_zone">Dinamikus zóna</string>
     <string name="preference_clockwidget_date_part">Dátum</string>
     <string name="preference_clockwidget_date_part_summary">Jelenlegi dátum megjelenítése</string>
-    <string name="preference_clockwidget_favorites_part">Dokk</string>
-    <string name="preference_clockwidget_favorites_part_summary">Kitűzött elemek megjelenítése a dokkon</string>
+    <string name="preference_screen_dock">Dokk</string>
+    <string name="preference_screen_dock_summary">Kitűzött elemek megjelenítése a dokkon</string>
     <string name="preference_clockwidget_music_part">Média</string>
     <string name="preference_clockwidget_battery_part">Akkumulátor</string>
     <string name="preference_clockwidget_alarm_part">Riasztások</string>

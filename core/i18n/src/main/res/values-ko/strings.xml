@@ -190,7 +190,7 @@
     <string name="preference_grid_labels">라벨 표시</string>
     <string name="preference_grid_labels_summary">아이콘 밑에 앱 이름 표시</string>
     <string name="preference_category_widgets">위젯</string>
-    <string name="preference_clockwidget_favorites_part_summary">고정된 항목의 첫째 줄 표시</string>
+    <string name="preference_screen_dock_summary">고정된 항목의 첫째 줄 표시</string>
     <string name="preference_clockwidget_music_part">미디어</string>
     <string name="preference_screen_appearance">외관</string>
     <string name="preference_cards_summary">카드 외관 사용자 정의</string>
@@ -200,7 +200,7 @@
     <string name="preference_category_grid">격자</string>
     <string name="preference_grid_icon_size">아이콘 크기</string>
     <string name="preference_clockwidget_date_part_summary">오늘 날짜 표시</string>
-    <string name="preference_clockwidget_favorites_part">즐겨찾기</string>
+    <string name="preference_screen_dock">즐겨찾기</string>
     <string name="preference_screen_backup_summary">런처 데이터 내보내기 및 가져오기</string>
     <string name="preference_logs">로그</string>
     <string name="preference_system_bar_icons_light">밝게</string>

@@ -216,8 +216,8 @@
     <string name="preference_clockwidget_layout_horizontal">Συμπαγής</string>
     <string name="preference_clockwidget_date_part">Ημερομηνία</string>
     <string name="preference_clockwidget_weather_part">Καιρός</string>
-    <string name="preference_clockwidget_favorites_part">Αγαπημένα</string>
-    <string name="preference_clockwidget_favorites_part_summary">Εμφάνιση της πρώτης σειράς καρφιτσωμένων στοιχείων</string>
+    <string name="preference_screen_dock">Dock</string>
+    <string name="preference_screen_dock_summary">Εμφάνιση καρφιτσωμένων στοιχείων στο dock</string>
     <string name="preference_clockwidget_dock_rows">Σειρές Dock</string>
     <string name="preference_clockwidget_music_part">Πολυμέσα</string>
     <string name="preference_clockwidget_battery_part">Μπαταρία</string>
@@ -425,6 +425,8 @@
     <string name="preference_dock_page_indicator">Δείκτης σελίδας</string>
     <string name="preference_dock_page_indicator_summary">Εμφάνιση κουκκίδων για την τρέχουσα σελίδα dock όταν υπάρχει περισσότερη από μία</string>
     <string name="preference_dock_page_indicator_color">Χρώμα δείκτη σελίδας</string>
+    <string name="preference_dock_reset">Επαναφορά σε αυτόματο dock</string>
+    <string name="preference_dock_reset_summary">Διαγραφή όλων των προσαρμοσμένων dock και χρήση συχνά χρησιμοποιούμενων εφαρμογών</string>
     <string name="preference_icon_pack_summary_empty">Δεν έχουν εγκατασταθεί πακέτα εικονιδίων</string>
     <string name="preference_grid_labels_summary">Εμφάνιση του ονόματος της εφαρμογής κάτω από το εικονίδιο</string>
     <string name="preference_status_bar_icons">Εικονίδια γραμμής κατάστασης</string>
