@@ -1451,6 +1451,7 @@
     <string name="preference_web_app_tracking_param_stripping">Strip tracking parameters from links</string>
     <string name="preference_web_app_tracking_param_stripping_summary">Removes utm_, fbclid, gclid and similar tracking parameters from URLs. Applies to web apps opened in the built-in browser, not ones opened in an external browser</string>
     <string name="web_apps_panel_items">Web apps in panel</string>
+    <string name="web_apps_panel_ungrouped">Ungrouped</string>
     <string name="web_apps_panel_add_existing">Add existing web app shortcut</string>
     <string name="web_apps_panel_empty_hint">No web apps on this panel yet. Tap the edit button in the top right corner to add some.</string>
     <string name="gesture_action_home_screen_menu">Home screen menu</string>

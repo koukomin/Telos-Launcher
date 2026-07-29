@@ -710,6 +710,7 @@
     <string name="web_apps_panel_edit">Επεξεργασία πίνακα Web Apps</string>
     <string name="web_apps_panel_empty_hint">Δεν υπάρχουν ακόμα web apps σε αυτόν τον πίνακα. Πατήστε το κουμπί επεξεργασίας πάνω δεξιά για να προσθέσετε.</string>
     <string name="web_apps_panel_items">Web apps στον πίνακα</string>
+    <string name="web_apps_panel_ungrouped">Χωρίς ομάδα</string>
 
     <!-- App Lock -->
     <string name="app_lock_detection_mode_accessibility">Μόνο υπηρεσία προσβασιμότητας</string>

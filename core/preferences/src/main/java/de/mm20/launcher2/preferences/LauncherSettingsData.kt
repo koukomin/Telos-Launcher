@@ -361,7 +361,9 @@ data class WidgetsGroup(
 data class GesturesGroup(
     val gesturesSwipeDown: GestureAction = GestureAction.Search,
     val gesturesSwipeLeft: GestureAction = GestureAction.NoAction,
-    val gesturesSwipeRight: GestureAction = GestureAction.NoAction,
+    // Swipe right reaches the Web Apps Panel by default - the panel is otherwise undiscoverable,
+    // since there's no separate enabled/direction preference (see WebAppsPanelGroup).
+    val gesturesSwipeRight: GestureAction = GestureAction.WebAppsPanel,
     val gesturesSwipeUp: GestureAction = GestureAction.Widgets(),
     val gesturesDoubleTap: GestureAction = GestureAction.ScreenLock,
     val gesturesLongPress: GestureAction = GestureAction.HomeScreenMenu,

@@ -80,6 +80,7 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
     ) {
         val viewModel: WebAppsPanelVM = viewModel()
         val items by viewModel.items.collectAsStateWithLifecycle()
+        val sections by viewModel.sections.collectAsStateWithLifecycle()
         val availableToAdd by viewModel.availableToAdd.collectAsStateWithLifecycle()
         var editMode by rememberSaveable { mutableStateOf(false) }
         var showCreateSheet by remember { mutableStateOf(false) }
@@ -104,28 +105,59 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(top = if (editMode) 104.dp else 8.dp, bottom = 8.dp),
             ) {
-                items(
-                    items.size,
-                    key = { items[it].key },
-                ) { i ->
-                    val shortcut = items[i]
-                    DraggableItem(state = gridState, key = shortcut.key) { _ ->
-                        Box {
+                // Group section headers only make sense for the plain browsing grid - edit mode's
+                // drag-and-drop reorder operates on flat panel order, so it always uses the flat
+                // list regardless of grouping (matches setOrder's own flat-index contract).
+                val gridSections = sections
+                if (!editMode && gridSections != null) {
+                    for (section in gridSections) {
+                        item(
+                            key = "group-${section.group?.id ?: "ungrouped"}",
+                            span = { GridItemSpan(maxLineSpan) },
+                        ) {
+                            Text(
+                                text = section.group?.name
+                                    ?: stringResource(R.string.web_apps_panel_ungrouped),
+                                style = MaterialTheme.typography.titleSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                            )
+                        }
+                        items(
+                            section.items.size,
+                            key = { section.items[it].key },
+                        ) { i ->
+                            val shortcut = section.items[i]
                             GridItem(
                                 item = shortcut,
                                 showLabels = true,
                             )
-                            if (editMode) {
-                                IconButton(
-                                    onClick = { viewModel.remove(shortcut) },
-                                    modifier = Modifier
-                                        .align(Alignment.TopEnd)
-                                        .size(28.dp),
-                                ) {
-                                    Icon(
-                                        painterResource(R.drawable.close_24px),
-                                        contentDescription = stringResource(R.string.widget_action_remove),
-                                    )
+                        }
+                    }
+                } else {
+                    items(
+                        items.size,
+                        key = { items[it].key },
+                    ) { i ->
+                        val shortcut = items[i]
+                        DraggableItem(state = gridState, key = shortcut.key) { _ ->
+                            Box {
+                                GridItem(
+                                    item = shortcut,
+                                    showLabels = true,
+                                )
+                                if (editMode) {
+                                    IconButton(
+                                        onClick = { viewModel.remove(shortcut) },
+                                        modifier = Modifier
+                                            .align(Alignment.TopEnd)
+                                            .size(28.dp),
+                                    ) {
+                                        Icon(
+                                            painterResource(R.drawable.close_24px),
+                                            contentDescription = stringResource(R.string.widget_action_remove),
+                                        )
+                                    }
                                 }
                             }
                         }
