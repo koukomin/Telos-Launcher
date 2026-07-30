@@ -42,7 +42,6 @@ class IconsSettingsScreenVM(
     val grid = uiSettings.gridSettings
     val homeGrid = uiSettings.homeGridSettings
     val drawerGrid = uiSettings.drawerGridSettings
-    val dockGrid = uiSettings.dockGridSettings
 
     fun setColumnCount(columnCount: Int) {
         uiSettings.setGridColumnCount(columnCount)
@@ -57,9 +56,6 @@ class IconsSettingsScreenVM(
 
     fun setDrawerGridColumnCount(columnCount: Int?) = uiSettings.setDrawerGridColumnCount(columnCount)
     fun setDrawerGridIconSize(iconSize: Int?) = uiSettings.setDrawerGridIconSize(iconSize)
-
-    fun setDockGridColumnCount(columnCount: Int?) = uiSettings.setDockGridColumnCount(columnCount)
-    fun setDockGridIconSize(iconSize: Int?) = uiSettings.setDockGridIconSize(iconSize)
 
     fun setGridLabelSize(size: Float) = uiSettings.setGridLabelSize(size)
     fun setGridLabelMaxLines(lines: Int) = uiSettings.setGridLabelMaxLines(lines)

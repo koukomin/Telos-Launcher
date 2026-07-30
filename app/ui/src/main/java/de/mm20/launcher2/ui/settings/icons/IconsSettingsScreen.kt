@@ -81,7 +81,6 @@ fun IconsSettingsScreen() {
     val grid by viewModel.grid.collectAsStateWithLifecycle(GridSettings())
     val homeGrid by viewModel.homeGrid.collectAsStateWithLifecycle(GridSettings())
     val drawerGrid by viewModel.drawerGrid.collectAsStateWithLifecycle(GridSettings())
-    val dockGrid by viewModel.dockGrid.collectAsStateWithLifecycle(GridSettings())
 
     val drawerBackgroundEnabled by viewModel.drawerBackgroundEnabled.collectAsStateWithLifecycle(false)
     val drawerBackgroundColor by viewModel.drawerBackgroundColor.collectAsStateWithLifecycle(null)
@@ -314,44 +313,6 @@ fun IconsSettingsScreen() {
                     value = folderCoverEnabled,
                     onValueChanged = { viewModel.setFolderCoverEnabled(it) }
                 )
-            }
-        }
-        item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_grid_dock)) {
-                var override by remember { mutableStateOf(false) }
-                LaunchedEffect(dockGrid) {
-                    override = dockGrid.columnCount != grid.columnCount || dockGrid.iconSize != grid.iconSize
-                }
-                SwitchPreference(
-                    title = "Override Dock Grid",
-                    value = override,
-                    onValueChanged = {
-                        override = it
-                        if (!it) {
-                            viewModel.setDockGridColumnCount(null)
-                            viewModel.setDockGridIconSize(null)
-                        }
-                    }
-                )
-                AnimatedVisibility(override) {
-                    Column {
-                        SliderPreference(
-                            title = stringResource(R.string.preference_grid_column_count),
-                            value = dockGrid.columnCount,
-                            min = 3,
-                            max = 12,
-                            onValueChanged = { viewModel.setDockGridColumnCount(it) }
-                        )
-                        SliderPreference(
-                            title = stringResource(R.string.preference_grid_icon_size),
-                            value = dockGrid.iconSize,
-                            step = 8,
-                            min = 32,
-                            max = 64,
-                            onValueChanged = { viewModel.setDockGridIconSize(it) }
-                        )
-                    }
-                }
             }
         }
         item {

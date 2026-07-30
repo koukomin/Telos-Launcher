@@ -938,6 +938,7 @@
     <string name="preference_category_grid_home">Home screen grid</string>
     <string name="preference_category_grid_drawer">Search drawer grid</string>
     <string name="preference_category_grid_dock">Dock grid</string>
+    <string name="preference_dock_grid_override">Override dock grid</string>
     <string name="preference_category_grid_folders">Folders</string>
     <string name="preference_drawer_background">Drawer background</string>
     <string name="preference_drawer_background_summary">Show a background behind the app drawer</string>

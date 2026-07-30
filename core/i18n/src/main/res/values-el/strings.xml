@@ -398,6 +398,7 @@
     <string name="preference_category_grid_home">Πλέγμα αρχικής οθόνης</string>
     <string name="preference_category_grid_drawer">Πλέγμα αναζήτησης</string>
     <string name="preference_category_grid_dock">Πλέγμα dock</string>
+    <string name="preference_dock_grid_override">Παράκαμψη πλέγματος dock</string>
     <string name="preference_category_grid_folders">Φάκελοι</string>
     <string name="preference_drawer_background">Φόντο drawer</string>
     <string name="preference_drawer_background_summary">Εμφάνιση φόντου πίσω από το drawer εφαρμογών</string>

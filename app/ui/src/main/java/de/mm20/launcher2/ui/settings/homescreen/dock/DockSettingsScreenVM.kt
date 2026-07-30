@@ -34,6 +34,10 @@ class DockSettingsScreenVM : ViewModel(), KoinComponent {
     val dockColumns = uiSettings.dockColumns.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 5)
     val defaultPage = uiSettings.dockDefaultPage.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
     val gridSettings = uiSettings.gridSettings.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    val dockGrid = uiSettings.dockGridSettings.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setDockGridColumnCount(columnCount: Int?) = uiSettings.setDockGridColumnCount(columnCount)
+    fun setDockGridIconSize(iconSize: Int?) = uiSettings.setDockGridIconSize(iconSize)
 
     val dockBackgroundEnabled = uiSettings.dockBackgroundEnabled
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
