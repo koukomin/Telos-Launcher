@@ -95,9 +95,10 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setWeatherPart(weatherPart: Boolean, activity: AppCompatActivity) {
         settings.setWeatherPart(weatherPart)
-        if (weatherPart) {
-            // Nothing else in this flow ever asks for location - without this, turning the
-            // part on just leaves the clock's weather row with no data to show, forever.
+        // Checked explicitly every time the toggle turns on (not just once) - the user may have
+        // revoked location after a previous grant, or turned this off and back on. Nothing else
+        // in this flow ever asks for location, so without this the weather row just stays empty.
+        if (weatherPart && !permissionsManager.checkPermissionOnce(PermissionGroup.Location)) {
             permissionsManager.requestPermission(activity, PermissionGroup.Location)
         }
     }
