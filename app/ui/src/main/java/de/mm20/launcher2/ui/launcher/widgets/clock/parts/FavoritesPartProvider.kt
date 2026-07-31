@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -167,10 +168,18 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                     // behind, pager on top), not stack as separate vertical siblings - a Column
                     // here would give the plate its own vertical slot above the pager instead of
                     // sitting behind it.
+                    //
+                    // Both the plate and the pager get the SAME explicit height below, rather
+                    // than letting the pager wrapContentHeight - HorizontalPager doesn't reliably
+                    // shrink to its content's intrinsic height, so a plate sized off the pager's
+                    // measured size (or off a height the pager itself ignores) drifts out of sync
+                    // and the icons end up hugging one edge instead of sitting centered in it.
+                    val dockContentHeight = gridSettings.iconSize.dp * dockRows + 16.dp
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .wrapContentHeight()
+                            .height(dockContentHeight),
+                        contentAlignment = Alignment.Center,
                     ) {
                         if (dockBackgroundEnabled) {
                             val color = dockBackgroundColor?.let { Color(it) }
@@ -180,7 +189,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                                 modifier = Modifier
                                     .padding(horizontal = 8.dp)
                                     .fillMaxWidth()
-                                    .height(gridSettings.iconSize.dp * dockRows + 16.dp)
+                                    .fillMaxHeight()
                                     .let {
                                         if (dockBackgroundShadow > 0) {
                                             it.shadow(dockBackgroundShadow.dp, MaterialTheme.shapes.large)
@@ -195,14 +204,16 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
 
                         HorizontalPager(
                             state = pagerState,
-                            modifier = Modifier.fillMaxWidth().wrapContentHeight()
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight()
                         ) { pageIndex ->
                             val pageItems = dockPages[pageIndex]
                             
                             Column(
-                                modifier = Modifier.fillMaxWidth(),
+                                modifier = Modifier.fillMaxSize(),
                                 horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
                             ) {
                                 for (row in 0 until dockRows) {
                                     Row(
