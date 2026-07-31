@@ -128,26 +128,31 @@ fun DockSettingsScreen() {
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(16.dp))
+                        // Page number + default-page picker only make sense with more than one
+                        // dock page - with a single page it's always page 1/1 and always default,
+                        // so showing it is just dead chrome taking up vertical space.
+                        if (dockPages.size > 1) {
+                            Spacer(modifier = Modifier.height(8.dp))
 
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .horizontalScroll(rememberScrollState()),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = "${pagerState.currentPage + 1} / ${dockPages.size}",
-                                style = MaterialTheme.typography.labelMedium,
-                            )
-
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                RadioButton(
-                                    selected = defaultPage == pagerState.currentPage,
-                                    onClick = { viewModel.setDefaultPage(pagerState.currentPage) }
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .horizontalScroll(rememberScrollState()),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "${pagerState.currentPage + 1} / ${dockPages.size}",
+                                    style = MaterialTheme.typography.labelMedium,
                                 )
-                                Text(stringResource(R.string.preference_dock_page_default), style = MaterialTheme.typography.labelMedium)
+
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    RadioButton(
+                                        selected = defaultPage == pagerState.currentPage,
+                                        onClick = { viewModel.setDefaultPage(pagerState.currentPage) }
+                                    )
+                                    Text(stringResource(R.string.preference_dock_page_default), style = MaterialTheme.typography.labelMedium)
+                                }
                             }
                         }
                     }
