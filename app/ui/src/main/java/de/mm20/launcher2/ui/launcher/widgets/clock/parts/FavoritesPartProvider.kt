@@ -31,12 +31,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import de.mm20.launcher2.ui.component.LocalIconShape
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.DockItem
@@ -99,7 +101,9 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
 
         if (columns == 0) return
 
-        CompositionLocalProvider(LocalGridSettings provides gridSettings) {
+        // Dock icons are always circular regardless of the global icon shape setting - the
+        // dock's own background plate and spacing are designed around a circular silhouette.
+        CompositionLocalProvider(LocalGridSettings provides gridSettings, LocalIconShape provides CircleShape) {
             Box(modifier = Modifier.fillMaxWidth().wrapContentHeight()) {
                 if (dockPages.isEmpty()) {
                     // Legacy / Auto-favorites mode
@@ -197,12 +201,13 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                             
                             Column(
                                 modifier = Modifier.fillMaxWidth(),
-                                horizontalAlignment = Alignment.CenterHorizontally
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.spacedBy(8.dp),
                             ) {
                                 for (row in 0 until dockRows) {
                                     Row(
                                         modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.Center
+                                        horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
                                     ) {
                                         for (col in 0 until columns) {
                                             val itemIndex = row * columns + col
