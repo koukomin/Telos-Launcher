@@ -14,6 +14,7 @@ data class FavoritesWidgetConfig(
     val compactTags: Boolean = false,
     val tagList: List<String> = emptyList(),
     val height: Int? = null,
+    val skipRows: Int = 0,
 )
 
 data class AppsWidget(
