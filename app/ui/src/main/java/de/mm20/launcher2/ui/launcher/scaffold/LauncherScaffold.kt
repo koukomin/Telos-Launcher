@@ -44,6 +44,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.systemGestures
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.waterfall
 import androidx.compose.foundation.layout.widthIn
@@ -1380,19 +1381,31 @@ internal fun LauncherScaffold(
                 bottom = filterBarHeight
             )
 
+            val systemGestureBottomInset =
+                WindowInsets.systemGestures.getBottom(LocalDensity.current)
+
             CompositionLocalProvider(
                 LocalScaffoldPage provides ScaffoldPage.Home,
             ) {
                 config.homeComponent.Component(
                     Modifier
                         .fillMaxSize()
-                        .pointerInput(wallpaperManager, config.doubleTap) {
+                        .pointerInput(
+                            wallpaperManager,
+                            config.doubleTap,
+                            config.longPress,
+                            systemGestureBottomInset,
+                        ) {
                             detectTapGestures(
                                 onDoubleTap = config.doubleTap?.let {
                                     { scope.launch { state.onDoubleTap() } }
                                 },
                                 onLongPress = config.longPress?.let {
-                                    { scope.launch { state.onLongPress() } }
+                                    { offset ->
+                                        if (offset.y < (size.height - systemGestureBottomInset).toFloat()) {
+                                            scope.launch { state.onLongPress() }
+                                        }
+                                    }
                                 },
                                 onTap = {
                                     wallpaperManager.sendWallpaperCommand(
