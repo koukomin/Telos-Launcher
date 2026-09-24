@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -35,6 +36,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -105,19 +111,26 @@ internal class WidgetsComponent(
         val scope = rememberCoroutineScope()
         val topPadding by animateDpAsState(if (editMode) 64.dp else 0.dp)
 
-        val previousScroll = remember { mutableIntStateOf(scrollState.value) }
-
-        LaunchedEffect(scrollState.value, scrollState.canScrollForward, scrollState.canScrollBackward) {
-            val delta = scrollState.value - previousScroll.intValue
-            previousScroll.intValue = scrollState.value
-            // Scroll drives the search bar off/on screen the same way in edit mode as in normal
-            // browsing - it should never be force-hidden (unreachable), only scrolled out of the
-            // way so it doesn't sit on top of the widgets.
-            state.onComponentScroll(delta.toFloat())
+        val scrollConnection = remember(state) {
+            object: NestedScrollConnection {
+                override fun onPostScroll(
+                    consumed: Offset,
+                    available: Offset,
+                    source: NestedScrollSource
+                ): Offset {
+                    val delta = consumed.y
+                    // Scroll drives the search bar off/on screen the same way in edit mode as in normal
+                    // browsing - it should never be force-hidden (unreachable), only scrolled out of the
+                    // way so it doesn't sit on top of the widgets.
+                    state.onComponentScroll(-delta)
+                    return super.onPostScroll(consumed, available, source)
+                }
+            }
         }
 
         Column(
             modifier = modifier
+                .nestedScroll(scrollConnection)
                 .verticalScroll(scrollState)
                 .padding(horizontal = 8.dp)
                 .padding(top = topPadding)

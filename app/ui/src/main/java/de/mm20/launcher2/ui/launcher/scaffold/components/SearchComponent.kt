@@ -5,12 +5,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,9 +40,15 @@ internal class SearchComponent(
     private val openKeyboard: Boolean = true,
 ) : ScaffoldComponent() {
 
-    override val isAtTop: MutableState<Boolean?> = mutableStateOf(true)
+    private val lazyListState = LazyListState()
 
-    override val isAtBottom: MutableState<Boolean?> = mutableStateOf(true)
+    override val isAtTop: State<Boolean?> = derivedStateOf {
+        reverse && !lazyListState.canScrollForward || !reverse && !lazyListState.canScrollBackward
+    }
+
+    override val isAtBottom: State<Boolean?> = derivedStateOf {
+        !reverse && !lazyListState.canScrollForward || reverse && !lazyListState.canScrollBackward
+    }
 
     override val reverseScrolling: Boolean = reverse
 
@@ -59,9 +69,8 @@ internal class SearchComponent(
         val rememberScrollPosition by uiSettings.rememberScrollPosition.collectAsState(false)
 
         val searchVM = viewModel<SearchVM>()
-        val lazyListState = rememberLazyListState()
 
-        LaunchedEffect(isActive) {
+        SideEffect(isActive) {
             if (!isActive) {
                 searchVM.reset()
                 if (!rememberScrollPosition) {
@@ -70,17 +79,10 @@ internal class SearchComponent(
             }
         }
 
-        LaunchedEffect(searchVM.searchQuery.value, searchVM.filters.value) {
+        SideEffect(searchVM.searchQuery.value, searchVM.filters.value) {
             if (searchVM.searchQuery.value.isNotEmpty() || !rememberScrollPosition) {
                 lazyListState.requestScrollToItem(0, 0)
             }
-        }
-
-        LaunchedEffect(lazyListState.canScrollForward, lazyListState.canScrollBackward) {
-            isAtBottom.value =
-                !lazyListState.canScrollForward && !reverse || !lazyListState.canScrollBackward && reverse
-            isAtTop.value =
-                !lazyListState.canScrollForward && reverse || !lazyListState.canScrollBackward && !reverse
         }
 
 
@@ -129,6 +131,7 @@ internal class SearchComponent(
 
     override suspend fun onDismiss(state: LauncherScaffoldState) {
         super.onDismiss(state)
+        lazyListState.scrollToItem(0, 0)
     }
 
     override fun onPreActivate(state: LauncherScaffoldState) {
