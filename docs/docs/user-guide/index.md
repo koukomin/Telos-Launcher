@@ -4,11 +4,11 @@ sidebar_position: 0
 
 # Get Started
 
-Kvaesitso is available for Android devices running Android 8.0 or higher.
+Telos is available for Android devices running Android 8.0 or higher.
 
 ## Installation
 
-The latest APK can be downloaded from [GitHub](https://github.com/MM2-0/Kvaesitso/releases).
+The latest APK can be downloaded from [GitHub](https://github.com/koukomin/Telos-Launcher/releases).
 
 To make sure that you get always notified about the latest updates, it's recommended that you add my F-Droid repo:
 https://fdroid.mm20.de

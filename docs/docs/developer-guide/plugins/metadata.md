@@ -1,6 +1,6 @@
 # Metadata
 
-You can customize how your plugin appears in Kvaesitso's UI.
+You can customize how your plugin appears in Telos's UI.
 
 ## Plugin package
 

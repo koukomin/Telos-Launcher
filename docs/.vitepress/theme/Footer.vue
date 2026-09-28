@@ -16,7 +16,7 @@
         </div>
         <div class="column">
           <h4>Links</h4>
-          <a href="https://github.com/MM2-0/Kvaesitso" target="_blank"
+          <a href="https://github.com/koukomin/Telos-Launcher" target="_blank"
             >Github</a
           >
           <a href="https://t.me/Kvaesitso" target="_blank">Telegram</a>

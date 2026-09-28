@@ -4,11 +4,11 @@ This policy explains what data we collect, how we use it, and the measures we ta
 
 ## 1. Data Collection
 
-Kvaesitso collects and processes data to deliver essential features and improve your experience.
+Telos collects and processes data to deliver essential features and improve your experience.
 Unless otherwise specified, all data is stored locally on your device and is inaccessible to other
 apps or users.
 
-#### **Data Collected by Kvaesitso**
+#### **Data Collected by Telos**
 
 - **Installed apps:** Names of apps installed on your device.
 - **App usage:** Frequency of app launches.
@@ -46,12 +46,12 @@ We take measures to ensure your data is secure:
 
 ## 4. Built-In Integrations
 
-Kvaesitso includes built-in integrations that may connect to external services. These are optional
+Telos includes built-in integrations that may connect to external services. These are optional
 and can be enabled or disabled in the app settings.
 
 ### Weather Providers
 
-Kvaesitso integrates with several weather providers:
+Telos integrates with several weather providers:
 
 - **OpenWeatherMap, MET Norway, HERE, Bright Sky (Deutscher Wetterdienst):** Location data (current
   or manually set) is transmitted periodically to these services to provide accurate weather
@@ -65,8 +65,8 @@ privacy policy applies.
 
 ## 5. Plugins
 
-Kvaesitso supports plugins that extend the app's functionality. These plugins can be first-party (
-developed by Kvaesitso developers) or third-party (developed by external developers). Plugins are
+Telos supports plugins that extend the app's functionality. These plugins can be first-party (
+developed by Telos developers) or third-party (developed by external developers). Plugins are
 optional and can be enabled or disabled in the app settings.
 
 ### Data Shared with Plugins
@@ -81,9 +81,9 @@ functionality:
   plugin), your current location may be shared with that plugin (only if you have granted location
   permissions).
 
-### Data Stored by Kvaesitso
+### Data Stored by Telos
 
-Kvaesitso may store copies of the data it receives from plugins locally in its own local storage
+Telos may store copies of the data it receives from plugins locally in its own local storage
 directory. This data is used to enhance performance and provide offline access.
 
 ### Plugin Policies
@@ -126,8 +126,8 @@ The Google Plugin enables integrations with Google Drive, Calendar, and Tasks.
 #### How the Data is Used
 
 The data accessed by the plugin is used to provide search results from your Google Drive, Calendar,
-and Tasks within the Kvaesitso app. This allows you to quickly search for and access your files,
-events, and tasks directly from the app. Kvaesitso may store copies of this data locally, in
+and Tasks within the Telos app. This allows you to quickly search for and access your files,
+events, and tasks directly from the app. Telos may store copies of this data locally, in
 accordance with its own privacy policy. The plugin may also cache data locally for performance
 reasons.
 

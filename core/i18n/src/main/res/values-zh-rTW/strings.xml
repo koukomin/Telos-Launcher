@@ -827,7 +827,7 @@
     <plurals name="calendar_widget_running_tasks">
         <item quantity="other">%1$d 個未完成任務</item>
     </plurals>
-    <string name="missing_permission_tasks_integration">需要 Tasks 權限以與 Kvaesitso 啟動器整合</string>
+    <string name="missing_permission_tasks_integration">需要 Tasks 權限以與 Telos 啟動器整合</string>
     <string name="missing_permission_tasks_search_settings">需要 Tasks 權限以搜尋任務</string>
     <string name="preference_tasks_integration_description">Tasks 是一個開源待辦事項與備忘錄應用程式。若已安裝，%1$s 可以顯示並從 Tasks 應用程式中搜尋任務。</string>
     <string name="preference_tasks_integration_ready">已將 Tasks 整合並可供使用。</string>

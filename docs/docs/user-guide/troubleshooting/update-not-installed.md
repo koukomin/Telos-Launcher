@@ -4,9 +4,9 @@ If you are trying to update the launcher, but the installation fails, you are mo
 to crossgrade from the F-Droid version to the GitHub version or vice versa. Both versions use
 different signing keys, so you cannot update one with the other.
 
-## Kvaesitso versions
+## Telos versions
 
-There are two different release versions of Kvaesitso:
+There are two different release versions of Telos:
 
 - **GitHub version**: This is the version that is released on GitHub. It includes all features and
   is also available on

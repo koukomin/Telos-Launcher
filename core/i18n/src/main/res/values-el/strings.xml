@@ -11,6 +11,11 @@
     <string name="menu_open_file">Άνοιγμα</string>
     <string name="menu_share_apk_file">Αρχείο εφαρμογής</string>
     <string name="action_undo">Αναίρεση</string>
+    <string name="action_done">Τέλος</string>
+    <string name="action_more_actions">Περισσότερες ενέργειες</string>
+    <string name="action_clear">Καθαρισμός</string>
+    <string name="action_install">Εγκατάσταση</string>
+    <string name="action_quit">Έξοδος</string>
     <string name="menu_delete">Διαγραφή</string>
     <string name="menu_remove">Αφαίρεση</string>
     <string name="menu_contacts_open_externally">Άνοιγμα στις επαφές</string>
@@ -88,7 +93,7 @@
         <item quantity="one">Πλήρες σε %1$s λεπτό</item>
         <item quantity="other">Πλήρες σε %1$s λεπτά</item>
     </plurals>
-    <string name="calendar_event_allday">ολοήμερη</string>
+    <string name="calendar_event_allday">Όλη την ημέρα</string>
     <string name="music_widget_default_title">Το %1$s αναπαράγει πολυμέσα</string>
     <string name="music_widget_no_data">Δεν έχει αναπαραχθεί ακόμα κανένα μέσο</string>
     <string name="weather_condition_sleetshowers">Χιονόνερο</string>
@@ -337,9 +342,16 @@
     <string name="file_type_source_code">Αρχείο πηγαίου κώδικα</string>
     <string name="file_type_spreadsheet">Υπολογιστικό φύλλο</string>
     <plurals name="calendar_widget_running_events">
-        <item quantity="one">%1$d εκτελούμενη εκδήλωση από προηγούμενες ημέρες</item>
-        <item quantity="other">%1$d εκτελούμενες εκδηλώσεις από προηγούμενες ημέρες</item>
+        <item quantity="one">+%1$d συμβάν σε εξέλιξη από προηγούμενες ημέρες</item>
+        <item quantity="other">+%1$d συμβάντα σε εξέλιξη από προηγούμενες ημέρες</item>
     </plurals>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d ημιτελής εργασία</item>
+        <item quantity="other">+%1$d ημιτελείς εργασίες</item>
+    </plurals>
+    <string name="task_due_time">Λήξη στις %1$s</string>
+    <string name="task_due_date">Λήξη την %1$s</string>
+    <string name="task_due_today">Λήξη σήμερα</string>
     <string name="menu_share_store_link">%1$s σύνδεσμος</string>
     <string name="file_type_drawing">Ζωγραφιά</string>
     <string name="weather_condition_lightrainshowersandthunder">Ασθενείς βροχές και κεραυνοί</string>
@@ -842,7 +854,7 @@
     <string name="missing_permission_context_profile_brightness">Η παράκαμψη της φωτεινότητας οθόνης απαιτεί την άδεια τροποποίησης ρυθμίσεων συστήματος.</string>
     <string name="missing_permission_context_profile_dnd">Η παράκαμψη του Μην ενοχλείτε απαιτεί πρόσβαση πολιτικής ειδοποιήσεων.</string>
     <string name="missing_permission_context_profile_wifi">Η ανάγνωση του ονόματος του συνδεδεμένου δικτύου WiFi απαιτεί πρόσβαση τοποθεσίας. Αυτός ο launcher το χρησιμοποιεί μόνο για τον έλεγχο του ονόματος δικτύου για αυτή την ενεργοποίηση.</string>
-    <string name="missing_permission_manage_profiles">Η παύση ή συνέχιση του προφίλ εργασίας απαιτεί τον ορισμό του Kvaesitso ως προεπιλεγμένη εφαρμογή αρχικής οθόνης.</string>
+    <string name="missing_permission_manage_profiles">Η παύση ή συνέχιση του προφίλ εργασίας απαιτεί τον ορισμό του Telos ως προεπιλεγμένη εφαρμογή αρχικής οθόνης.</string>
     <string name="preference_category_context_profiles">Προφίλ</string>
     <string name="preference_context_profiles_enabled_summary">Οι ενεργοποιήσεις ελέγχονται μόνο όσο ο launcher είναι ανοιχτός, όχι στο παρασκήνιο</string>
     <string name="profile_private_profile_action_lock">Κλείδωμα ιδιωτικού χώρου</string>
@@ -988,6 +1000,10 @@
     <string name="freeze_ready_notification_channel">Έτοιμο για πάγωμα</string>
     <string name="freeze_ready_notification_text">Πατήστε για άμεσο πάγωμα, χωρίς αναμονή για το σβήσιμο της οθόνης</string>
     <string name="freeze_system_apps_warning">Η απενεργοποίηση ή ο αναγκαστικός τερματισμός μιας εφαρμογής συστήματος μπορεί να χαλάσει βασικές λειτουργίες του τηλεφώνου και, στη χειρότερη περίπτωση, να αφήσει τη συσκευή σας ανίκανη να εκκινήσει. Αλλάξτε την κατάσταση μιας εφαρμογής συστήματος μόνο αν ξέρετε ακριβώς τι κάνει.</string>
+    <plurals name="freeze_ready_notification_title">
+        <item quantity="one">%1$d εφαρμογή έτοιμη για πάγωμα</item>
+        <item quantity="other">%1$d εφαρμογές έτοιμες για πάγωμα</item>
+    </plurals>
     <string name="freeze_widget_candidates_summary">%1$d εφαρμογές επιλεγμένες</string>
     <string name="freeze_widget_freeze_now">Πάγωμα τώρα</string>
     <string name="freeze_widget_frozen_now">Παγωμένες %1$d από %2$d</string>
@@ -1088,5 +1104,201 @@
     <string name="settings_locked_unlock">Ξεκλείδωμα</string>
 
     <!-- Home screen: animations category (used alongside Grid and icons context) -->
+    <string name="add_font_style">Προσθήκη στυλ γραμματοσειράς</string>
+    <string name="app_widget_loading_failed">Αποτυχία φόρτωσης widget</string>
+    <string name="at_a_glance_battery_charging">Φορτίζει</string>
+    <string name="at_a_glance_battery_low">Χαμηλή μπαταρία</string>
+    <string name="at_a_glance_event_now">Τώρα</string>
+    <string name="at_a_glance_no_data">Τίποτα προς εμφάνιση</string>
+    <string name="bad_configuration_title">Συγχαρητήρια, κλειδωθήκατε έξω!</string>
+    <string name="bad_configuration_summary">Ανακαλύψατε έναν συνδυασμό ρυθμίσεων που καθιστά αδύνατη την πρόσβαση στην αναζήτηση και τις ρυθμίσεις.</string>
+    <string name="battery_widget_not_charging">Δε φορτίζει</string>
+
+    <plurals name="tag_selected_items">
+        <item quantity="one">%1$d στοιχείο επιλεγμένο</item>
+        <item quantity="other">%1$d στοιχεία επιλεγμένα</item>
+    </plurals>
+    <plurals name="app_lock_apps_locked_count">
+        <item quantity="one">%1$d εφαρμογή κλειδωμένη</item>
+        <item quantity="other">%1$d εφαρμογές κλειδωμένες</item>
+    </plurals>
+    <plurals name="app_lock_web_apps_locked_count">
+        <item quantity="one">%1$d web app κλειδωμένο</item>
+        <item quantity="other">%1$d web apps κλειδωμένα</item>
+    </plurals>
+    <plurals name="intruder_photo_count">
+        <item quantity="one">%1$d φωτογραφία</item>
+        <item quantity="other">%1$d φωτογραφίες</item>
+    </plurals>
+    <plurals name="contact_phone_numbers">
+        <item quantity="one">%1$s τηλεφωνικός αριθμός</item>
+        <item quantity="other">%1$s τηλεφωνικοί αριθμοί</item>
+    </plurals>
+    <plurals name="contact_email_addresses">
+        <item quantity="one">%1$s διεύθυνση email</item>
+        <item quantity="other">%1$s διευθύνσεις email</item>
+    </plurals>
+    <plurals name="contact_postal_addresses">
+        <item quantity="one">%1$s ταχυδρομική διεύθυνση</item>
+        <item quantity="other">%1$s ταχυδρομικές διευθύνσεις</item>
+    </plurals>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s ειδοποίηση</item>
+        <item quantity="other">%1$s ειδοποιήσεις</item>
+    </plurals>
+    <plurals name="calendar_search_enabled_lists">
+        <item quantity="one">%1$s λίστα επιλεγμένη</item>
+        <item quantity="other">%1$s λίστες επιλεγμένες</item>
+    </plurals>
+    <plurals name="departure_time_in">
+        <item quantity="one">σε ένα λεπτό</item>
+        <item quantity="other">σε %1$d λεπτά</item>
+    </plurals>
+
+    <string name="desktop_mode_display_connected">Συνδεδεμένη</string>
+    <string name="desktop_mode_display_not_connected">Μη συνδεδεμένη</string>
+    <string name="desktop_mode_display_status">Εξωτερική οθόνη</string>
+    <string name="dynamic_island_call">Κλήση σε εξέλιξη</string>
+    <string name="dynamic_island_charging_percent">Φόρτιση %1$d%%</string>
+    <string name="dynamic_island_media_playing">Αναπαραγωγή</string>
+    <string name="dynamic_island_notification_channel">Dynamic Island</string>
+    <string name="dynamic_island_notification_text">Πατήστε για αλλαγή ρυθμίσεων</string>
+    <string name="dynamic_island_notification_title">Το Dynamic Island είναι ενεργό</string>
+    <string name="preference_screen_routines">Τρόποι λειτουργίας και Ρουτίνες</string>
+    <string name="preference_routines_enabled">Ενεργοποίηση ρουτινών</string>
+    <string name="preference_routines_enabled_summary">Αυτοματοποιήστε τη συσκευή σας βάσει συνθηκών</string>
+    <string name="preference_category_routines">Ρουτίνες</string>
+    <string name="new_theme_name">(χωρίς τίτλο)</string>
+    <string name="no_feed_providers">Δεν υπάρχουν πάροχοι ροής</string>
+    <string name="no_selection">Καμία επιλογή</string>
+    <string name="select_tag">Επιλογή ετικέτας</string>
+    <string name="create_tag_title">Νέα ετικέτα</string>
+    <string name="edit_tag_title">Επεξεργασία ετικέτας</string>
+
+    <string name="desktop_mode_tray_battery">Μπαταρία</string>
+    <string name="desktop_mode_tray_network">Δίκτυο</string>
+    <string name="desktop_mode_tray_notifications">Ειδοποιήσεις</string>
+    <string name="desktop_mode_tray_notifications_empty">Καμία ειδοποίηση</string>
+    <string name="desktop_mode_tray_volume">Ένταση ήχου</string>
+    <string name="desktop_mode_unsupported">Δεν υποστηρίζεται σε αυτή τη συσκευή</string>
+    <string name="desktop_mode_unsupported_summary">Αυτή η συσκευή δεν υποστηρίζει την εκκίνηση εφαρμογών σε δευτερεύουσα οθόνη</string>
+    <string name="desktop_mode_wallpaper_category">Ταπετσαρία</string>
+    <string name="desktop_mode_wallpaper_choose_image">Επιλογή εικόνας</string>
+    <string name="desktop_mode_wallpaper_image_set">Η εικόνα ορίστηκε</string>
+    <string name="desktop_mode_wallpaper_mode">Ταπετσαρία επιφάνειας εργασίας</string>
+    <string name="desktop_mode_wallpaper_mode_solid_color">Απλό χρώμα</string>
+    <string name="desktop_mode_wallpaper_mode_static_image">Στατική εικόνα</string>
+    <string name="desktop_mode_window_management_category">Διαχείριση παραθύρων</string>
+    <string name="dialog_discard_unsaved">Έξοδος χωρίς αποθήκευση;</string>
+    <string name="experimental_feature">Πειραματικό</string>
+    <string name="filter_settings_network_warning">Το τρέχον φίλτρο ενεργοποιεί διαδικτυακά αποτελέσματα από προεπιλογή. Τα ερωτήματα αναζήτησής σας ενδέχεται να σταλούν ακούσια σε εξωτερικές υπηρεσίες ιστού.</string>
+
+    <string name="excluded_folders_add">Προσθήκη φακέλου</string>
+    <string name="excluded_folders_empty">Δεν υπάρχουν εξαιρούμενοι φάκελοι</string>
+    <string name="excluded_folders_unsupported">Αυτός ο φάκελος δεν μπορεί να εξαιρεθεί (μη υποστηριζόμενη τοποθεσία αποθήκευσης)</string>
+    <string name="floating_launcher_all_apps">Όλες οι εφαρμογές</string>
+    <string name="floating_launcher_cancel">Ακύρωση</string>
+    <string name="floating_launcher_create">Δημιουργία</string>
+    <string name="floating_launcher_delete_folder">Διαγραφή φακέλου</string>
+    <string name="floating_launcher_edit_done">Τέλος επεξεργασίας</string>
+    <string name="floating_launcher_edit_start">Επεξεργασία εικονιδίων</string>
+    <string name="floating_launcher_file_dock">Dock αρχείων</string>
+    <string name="floating_launcher_file_dock_copied">Αντιγράφηκε</string>
+    <string name="floating_launcher_file_dock_empty">Σύρετε κείμενο, εικόνες ή αρχεία πάνω σε ένα tab για να τα κρατήσετε εδώ προσωρινά.</string>
+
+    <string name="floating_launcher_folder_name">Όνομα φακέλου</string>
+    <string name="floating_launcher_folder_select_apps">Επιλέξτε τουλάχιστον 2 εφαρμογές</string>
+    <string name="floating_launcher_new_folder">Νέος φάκελος</string>
+    <string name="floating_launcher_notification_channel">Πλωτός εκκινητής</string>
+    <string name="floating_launcher_notification_text">Πατήστε για αλλαγή ρυθμίσεων</string>
+    <string name="floating_launcher_notification_title">Ο πλωτός εκκινητής είναι ενεργός</string>
+    <string name="floating_launcher_open_folder">Άνοιγμα φακέλου</string>
+    <string name="floating_launcher_panel_empty">Δεν έχουν οριστεί εφαρμογές σε αυτή τη ζώνη.</string>
+    <string name="floating_launcher_panel_settings">Ρυθμίσεις πλωτού εκκινητή</string>
+    <string name="floating_launcher_remove_app">Αφαίρεση από αυτή τη ζώνη</string>
+    <string name="floating_launcher_rename_folder">Μετονομασία φακέλου</string>
+    <string name="floating_launcher_save">Αποθήκευση</string>
+    <string name="font_category_device_default">Προεπιλογή συσκευής</string>
+    <string name="font_category_generic">Γενικό</string>
+    <string name="font_name_device_body">Γραμματοσειρά κειμένου συσκευής</string>
+    <string name="font_name_device_headline">Γραμματοσειρά τίτλων συσκευής</string>
+    <string name="import_theme_apply">Εφαρμογή θέματος</string>
+    <string name="import_theme_contents">Περιεχόμενα</string>
+    <string name="import_theme_error">Το επιλεγμένο αρχείο δεν μπόρεσε να διαβαστεί.</string>
+    <string name="import_theme_exists">Το θέμα υπάρχει ήδη και θα ενημερωθεί</string>
+    <string name="launcher_locked_message">Ο launcher είναι κλειδωμένος. Πιστοποιηθείτε για να συνεχίσετε.</string>
+    <string name="launcher_lock_prompt_title">Ξεκλείδωμα launcher</string>
+    <string name="missing_permission_call_contacts_settings">Απαιτείται άδεια τηλεφώνου για την πραγματοποίηση κλήσεων</string>
+    <string name="missing_permission_dynamic_island">Η εμφάνιση του Dynamic Island πάνω από άλλες εφαρμογές απαιτεί την άδεια εμφάνισης πάνω από άλλες εφαρμογές.</string>
+    <string name="missing_permission_dynamic_island_calls">Ο εντοπισμός μιας ενεργής κλήσης απαιτεί την άδεια κατάστασης τηλεφώνου.</string>
+    <string name="missing_permission_floating_launcher">Η εμφάνιση πάνω από άλλες εφαρμογές απαιτείται για τον πλωτό εκκινητή</string>
+    <string name="missing_permission_reminders_widget">Απαιτείται άδεια Tasks για την εμφάνιση υπενθυμίσεων εδώ</string>
+    <string name="missing_permission_tasks_integration">Απαιτείται άδεια Tasks για τη χρήση της ενσωμάτωσης Tasks</string>
+
+    <string name="hint_drag_and_drop_reorder">Πατήστε παρατεταμένα και σύρετε στοιχεία για να τα αναδιατάξετε</string>
+    <string name="imperial">Αγγλικό σύστημα</string>
+    <string name="length_unit">Μονάδα μήκους</string>
+    <string name="location_closed">Κλειστά</string>
+    <string name="location_closes">κλείνει στις %1$s</string>
+    <string name="location_closes_other_day">κλείνει %1$s, %2$s</string>
+    <string name="location_open">Ανοιχτά</string>
+    <string name="location_open_24_7">Ανοιχτά όλο το 24ωρο</string>
+    <string name="location_opens">ανοίγει στις %1$s</string>
+    <string name="location_opens_other_day">ανοίγει %1$s, %2$s</string>
+    <string name="menu_bugreport">Αναφορά σφάλματος</string>
+    <string name="menu_dial">Κλήση</string>
+    <string name="menu_hide_filters">Απόκρυψη φίλτρων</string>
+    <string name="menu_map">Προβολή στον χάρτη</string>
+    <string name="menu_navigation">Πλοήγηση</string>
+    <string name="menu_show_filters">Εμφάνιση φίλτρων</string>
+    <string name="menu_website">Άνοιγμα ιστότοπου</string>
+    <string name="metric">Μετρικό</string>
+    <string name="music_widget_interactive_progress_bar">Διαδραστική γραμμή προόδου</string>
+    <string name="music_widget_next_track">Επόμενο κομμάτι</string>
+    <string name="music_widget_open_player">Άνοιγμα παίκτη</string>
+    <string name="music_widget_pause">Παύση</string>
+    <string name="music_widget_play">Αναπαραγωγή</string>
+    <string name="music_widget_previous_track">Προηγούμενο κομμάτι</string>
+    <string name="network_widget_cellular">Δεδομένα κινητής</string>
+    <string name="network_widget_connected">Συνδεδεμένο</string>
+    <string name="network_widget_disconnected">Χωρίς σύνδεση</string>
+    <string name="network_widget_ethernet">Ethernet</string>
+    <string name="network_widget_wifi">Wi-Fi</string>
+    <string name="menu_shutter_change">Αλλαγή shutter</string>
+    <string name="menu_shutter_remove">Αφαίρεση shutter</string>
+    <string name="menu_shutter_set">Ορισμός shutter</string>
+    <string name="item_visibility_app_default">Πλέγμα εφαρμογών &amp; αποτελέσματα αναζήτησης</string>
+    <string name="item_visibility_calendar_default">Widget ημερολογίου &amp; αποτελέσματα αναζήτησης</string>
+    <string name="item_visibility_hidden">Ποτέ</string>
+
+    <string name="poi_category_restaurant">Εστιατόριο</string>
+    <string name="poi_category_fast_food">Γρήγορο φαγητό</string>
+    <string name="poi_category_bar">Μπαρ</string>
+    <string name="poi_category_cafe">Καφετέρια</string>
+    <string name="poi_category_hotel">Ξενοδοχείο</string>
+    <string name="poi_category_supermarket">Σούπερ μάρκετ</string>
+    <string name="poi_category_school">Σχολείο</string>
+    <string name="poi_category_parking">Πάρκινγκ</string>
+    <string name="poi_category_fuel">Βενζινάδικο</string>
+    <string name="poi_category_pharmacy">Φαρμακείο</string>
+    <string name="poi_category_hospital">Νοσοκομείο</string>
+    <string name="poi_category_bank">Τράπεζα</string>
+    <string name="poi_category_atm">ATM</string>
+    <string name="poi_category_museum">Μουσείο</string>
+    <string name="poi_category_park">Πάρκο</string>
+    <string name="preference_add_currency">Προσθήκη νομίσματος</string>
+    <string name="preference_calendar_hide_completed">Απόκρυψη ολοκληρωμένων εργασιών</string>
+    <string name="preference_clock_widget_show_seconds">Εμφάνιση δευτερολέπτων</string>
+    <string name="preference_clock_widget_monospaced">Ψηφία σταθερού πλάτους</string>
+    <string name="preference_clockwidget_smartspacer">Διαχείριση από το Smartspacer</string>
+    <string name="preference_customize_filter_bar">Προσαρμογή γραμμής φίλτρων</string>
+    <string name="preference_customize_filter_bar_summary">Προσαρμόστε ποια στοιχεία περιλαμβάνονται στη γραμμή φίλτρων</string>
+    <string name="preference_default_filter">Προεπιλεγμένο φίλτρο</string>
+    <string name="preference_default_filter_summary">Προσαρμόστε το προεπιλεγμένο φίλτρο για τις αναζητήσεις</string>
+    <string name="preference_filter_bar">Εμφάνιση γραμμής φίλτρων</string>
+    <string name="preference_filter_bar_summary">Εμφάνιση γρήγορων φίλτρων πάνω από το πληκτρολόγιο</string>
+    <string name="preference_show_app_recommendations">Εμφάνιση προτάσεων εφαρμογών</string>
+    <string name="preference_show_app_recommendations_summary">Περιστασιακή πρόταση μιας εφαρμογής σε κατηγορίες όπως VPN ή διαχειριστές κωδικών</string>
+
     <string name="preference_category_animations">Κινούμενες εικόνες</string>
 </resources>

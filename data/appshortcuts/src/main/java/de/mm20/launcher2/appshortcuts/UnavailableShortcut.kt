@@ -15,7 +15,7 @@ import de.mm20.launcher2.search.SearchableSerializer
 
 /**
  * Shortcut class that is used when a [LauncherShortcut] is not available, e.g. missing permissions
- * when Kvaesitso is not set as default launcher.
+ * when Telos is not set as default launcher.
  */
 internal class UnavailableShortcut(
     override val label: String,

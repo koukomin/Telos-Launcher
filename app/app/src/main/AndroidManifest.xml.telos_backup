@@ -32,13 +32,6 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="org.tasks.permission.READ_TASKS" />
 
-    <!-- === TELOS_PENDING_REVIEW_START: smart_freeze_permissions === -->
-    <uses-permission android:name="dev.rikka.shizuku.permission.API_V23" />
-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
-    <!-- === TELOS_PENDING_REVIEW_END: smart_freeze_permissions === -->
-
     <application
         android:name=".LauncherApplication"
         android:allowBackup="true"
@@ -76,13 +69,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
-        <!-- === TELOS_PENDING_REVIEW_START: smart_freeze_permissions === -->
-        <service
-            android:name="de.mm20.launcher2.freeze.SmartFreezeService"
-            android:exported="false"
-            android:foregroundServiceType="specialUse" />
-        <!-- === TELOS_PENDING_REVIEW_END: smart_freeze_permissions === -->
     </application>
 
 </manifest>

@@ -1101,7 +1101,7 @@
     <string name="preference_weather_integration">Weather</string>
     <string name="preference_media_integration">Media control</string>
     <string name="preference_tasks_integration">Tasks</string>
-    <!-- %1$s: app name (Kvaesitso) -->
+    <!-- %1$s: app name (Telos) -->
     <string name="preference_tasks_integration_description">Tasks is a free and open source to-do list and reminders app. If installed, %1$s can display and search your tasks from the Tasks app.</string>
     <string name="preference_tasks_integration_ready">Tasks integration is fully set up and ready to use.</string>
     <string name="preference_launch_tasks_app">Open Tasks app</string>
@@ -1293,12 +1293,12 @@
     <string name="work_profile_status_active">Active</string>
     <string name="work_profile_status_paused">Paused</string>
     <string name="work_profile_setup_button">Set up work profile</string>
-    <string name="work_profile_setup_description">Kvaesitso can\'t create a work profile itself - opens system Settings, where you can set one up under System → Multiple users.</string>
+    <string name="work_profile_setup_description">Telos can\'t create a work profile itself - opens system Settings, where you can set one up under System → Multiple users.</string>
     <string name="work_profile_manage_button">Manage in system settings</string>
     <string name="work_profile_manage_description">Opens system Settings, where you can remove the work profile or manage its accounts under System → Multiple users.</string>
     <string name="preference_work_profile_pause">Pause work profile</string>
     <string name="preference_work_profile_pause_summary">Temporarily disable work apps and their notifications</string>
-    <string name="missing_permission_manage_profiles">Pausing or resuming the work profile requires setting Kvaesitso as your default home app.</string>
+    <string name="missing_permission_manage_profiles">Pausing or resuming the work profile requires setting Telos as your default home app.</string>
     <string name="preference_category_intruder_photo">Intruder photo</string>
     <string name="preference_intruder_photo_enabled">Capture intruder photo</string>
     <string name="preference_intruder_photo_enabled_summary">Silently take a front-camera photo on a failed App Lock attempt. Stored on this device only, never uploaded.</string>

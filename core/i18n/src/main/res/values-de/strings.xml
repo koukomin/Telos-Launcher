@@ -11,6 +11,11 @@
     <string name="menu_open_file">Öffnen</string>
     <string name="menu_share_apk_file">App-Datei</string>
     <string name="action_undo">Rückgängig</string>
+    <string name="action_done">Fertig</string>
+    <string name="action_more_actions">Weitere Aktionen</string>
+    <string name="action_clear">Leeren</string>
+    <string name="action_install">Installieren</string>
+    <string name="action_quit">Beenden</string>
     <string name="menu_delete">Löschen</string>
     <string name="menu_remove">Entfernen</string>
     <string name="menu_contacts_open_externally">In Kontakte öffnen</string>
@@ -670,4 +675,207 @@
     <string name="preference_search_bar_launch_on_enter_summary">Das erste Ergebnis starten, wenn die Enter-Taste gedrückt wird</string>
     <string name="preference_private_keyboard">Private Tastatur</string>
     <string name="preference_private_keyboard_summary">Fordert die Tastatur auf, getippten Text nicht zu lernen oder zu speichern</string>
+
+    <string name="add_font_style">Schriftstil hinzufügen</string>
+    <string name="app_widget_loading_failed">Widget konnte nicht geladen werden</string>
+    <string name="at_a_glance_battery_charging">Lädt</string>
+    <string name="at_a_glance_battery_low">Akku fast leer</string>
+    <string name="at_a_glance_event_now">Jetzt</string>
+    <string name="at_a_glance_no_data">Derzeit nichts anzuzeigen</string>
+    <string name="bad_configuration_title">Herzlichen Glückwunsch, Sie haben sich ausgesperrt!</string>
+    <string name="bad_configuration_summary">Sie haben eine Kombination von Einstellungen entdeckt, die sowohl die Suche als auch die Einstellungen unzugänglich macht.</string>
+    <string name="battery_widget_not_charging">Lädt nicht</string>
+    <string name="calendar_widget_create_event">Termin erstellen</string>
+    <string name="calendar_widget_next_day">Nächster Tag</string>
+    <string name="calendar_widget_open_calendar">Kalender-App öffnen</string>
+    <string name="calendar_widget_previous_day">Vorheriger Tag</string>
+    <string name="charging_type_ac">Netzteil</string>
+    <string name="charging_type_any">Beliebiges Ladegerät</string>
+    <string name="charging_type_usb">USB</string>
+    <string name="charging_type_wireless">Kabellos</string>
+    <string name="clock_style_analog">Zeiger</string>
+    <string name="clock_style_binary">Binär</string>
+    <string name="clock_style_custom">Benutzerdefiniertes Widget</string>
+    <string name="clock_style_digital1">Fett</string>
+    <string name="clock_style_digital2">Einfach</string>
+    <string name="clock_style_empty">Keine Uhr</string>
+    <string name="clock_style_orbit">Orbit</string>
+    <string name="clock_style_segment">7-Segment</string>
+    <string name="clock_variant_analog_ticks">Markierungen (Ticks)</string>
+    <string name="clock_variant_outlined">Umrandet</string>
+
+    <plurals name="freeze_ready_notification_title">
+        <item quantity="one">%1$d App bereit zum Einfrieren</item>
+        <item quantity="other">%1$d Apps bereit zum Einfrieren</item>
+    </plurals>
+    <plurals name="calendar_widget_running_tasks">
+        <item quantity="one">+%1$d unerledigte Aufgabe</item>
+        <item quantity="other">+%1$d unerledigte Aufgaben</item>
+    </plurals>
+    <plurals name="tag_selected_items">
+        <item quantity="one">%1$d Element ausgewählt</item>
+        <item quantity="other">%1$d Elemente ausgewählt</item>
+    </plurals>
+    <plurals name="app_lock_apps_locked_count">
+        <item quantity="one">%1$d App gesperrt</item>
+        <item quantity="other">%1$d Apps gesperrt</item>
+    </plurals>
+    <plurals name="app_lock_web_apps_locked_count">
+        <item quantity="one">%1$d Web-App gesperrt</item>
+        <item quantity="other">%1$d Web-Apps gesperrt</item>
+    </plurals>
+    <plurals name="intruder_photo_count">
+        <item quantity="one">%1$d Foto</item>
+        <item quantity="other">%1$d Fotos</item>
+    </plurals>
+    <plurals name="contact_phone_numbers">
+        <item quantity="one">%1$s Telefonnummer</item>
+        <item quantity="other">%1$s Telefonnummern</item>
+    </plurals>
+    <plurals name="contact_email_addresses">
+        <item quantity="one">%1$s E-Mail-Adresse</item>
+        <item quantity="other">%1$s E-Mail-Adressen</item>
+    </plurals>
+    <plurals name="contact_postal_addresses">
+        <item quantity="one">%1$s Postanschrift</item>
+        <item quantity="other">%1$s Postanschriften</item>
+    </plurals>
+    <plurals name="app_info_notifications">
+        <item quantity="one">%1$s Benachrichtigung</item>
+        <item quantity="other">%1$s Benachrichtigungen</item>
+    </plurals>
+    <plurals name="calendar_search_enabled_lists">
+        <item quantity="one">%1$s Liste ausgewählt</item>
+        <item quantity="other">%1$s Listen ausgewählt</item>
+    </plurals>
+    <plurals name="departure_time_in">
+        <item quantity="one">in einer Minute</item>
+        <item quantity="other">in %1$d Minuten</item>
+    </plurals>
+
+    <string name="desktop_mode_tray_battery">Akku</string>
+    <string name="desktop_mode_tray_network">Netzwerk</string>
+    <string name="desktop_mode_tray_notifications">Benachrichtigungen</string>
+    <string name="desktop_mode_tray_notifications_empty">Keine Benachrichtigungen</string>
+    <string name="desktop_mode_tray_volume">Lautstärke</string>
+    <string name="desktop_mode_unsupported">Auf diesem Gerät nicht unterstützt</string>
+    <string name="desktop_mode_unsupported_summary">Dieses Gerät unterstützt das Starten von Apps auf einem sekundären Display nicht</string>
+    <string name="desktop_mode_wallpaper_category">Hintergrundbild</string>
+    <string name="desktop_mode_wallpaper_choose_image">Bild auswählen</string>
+    <string name="desktop_mode_wallpaper_image_set">Bild gesetzt</string>
+    <string name="desktop_mode_wallpaper_mode">Desktop-Hintergrundbild</string>
+    <string name="desktop_mode_wallpaper_mode_solid_color">Einfarbige Füllung</string>
+    <string name="desktop_mode_wallpaper_mode_static_image">Statisches Bild</string>
+    <string name="desktop_mode_window_management_category">Fensterverwaltung</string>
+    <string name="dialog_discard_unsaved">Ohne Speichern beenden?</string>
+    <string name="filter_settings_network_warning">Der aktuelle Filter aktiviert standardmäßig Online-Ergebnisse. Ihre Suchanfragen könnten unbeabsichtigt an externe Webdienste gesendet werden.</string>
+    <string name="excluded_folders_add">Ordner hinzufügen</string>
+    <string name="excluded_folders_empty">Keine ausgeschlossenen Ordner</string>
+    <string name="excluded_folders_unsupported">Dieser Ordner kann nicht ausgeschlossen werden (nicht unterstützter Speicherort)</string>
+    <string name="floating_launcher_all_apps">Alle Apps</string>
+    <string name="floating_launcher_cancel">Abbrechen</string>
+    <string name="floating_launcher_create">Erstellen</string>
+    <string name="floating_launcher_delete_folder">Ordner löschen</string>
+    <string name="floating_launcher_edit_done">Bearbeiten beendet</string>
+    <string name="floating_launcher_edit_start">Icons bearbeiten</string>
+    <string name="floating_launcher_file_dock">Datei-Dock</string>
+    <string name="floating_launcher_file_dock_copied">Kopiert</string>
+    <string name="floating_launcher_file_dock_empty">Ziehen Sie Text, Bilder oder Dateien auf einen Tab, um sie hier vorübergehend abzulegen.</string>
+
+    <string name="floating_launcher_folder_name">Ordnername</string>
+    <string name="floating_launcher_folder_select_apps">Wähle mindestens 2 Apps aus</string>
+    <string name="floating_launcher_new_folder">Neuer Ordner</string>
+    <string name="floating_launcher_notification_channel">Floating Launcher</string>
+    <string name="floating_launcher_notification_text">Tippen, um Einstellungen zu ändern</string>
+    <string name="floating_launcher_notification_title">Floating Launcher ist aktiv</string>
+    <string name="floating_launcher_open_folder">Ordner öffnen</string>
+    <string name="floating_launcher_panel_empty">Dieser Zone wurden noch keine Apps zugewiesen.</string>
+    <string name="floating_launcher_panel_settings">Floating Launcher Einstellungen</string>
+    <string name="floating_launcher_remove_app">Aus dieser Zone entfernen</string>
+    <string name="floating_launcher_rename_folder">Ordner umbenennen</string>
+    <string name="floating_launcher_save">Speichern</string>
+    <string name="font_category_device_default">Standard des Geräts</string>
+    <string name="font_category_generic">Generisch</string>
+    <string name="font_name_device_body">Standard-Textschriftart des Geräts</string>
+    <string name="font_name_device_headline">Standard-Überschriftenschriftart des Geräts</string>
+    <string name="import_theme_apply">Design anwenden</string>
+    <string name="import_theme_contents">Inhalte</string>
+    <string name="import_theme_error">Die ausgewählte Datei konnte nicht gelesen werden.</string>
+    <string name="import_theme_exists">Das Design existiert bereits und wird aktualisiert</string>
+    <string name="launcher_locked_message">Der Launcher ist gesperrt. Authentifizieren Sie sich, um fortzufahren.</string>
+    <string name="launcher_lock_prompt_title">Launcher entsperren</string>
+    <string name="missing_permission_call_contacts_settings">Telefon-Berechtigung ist erforderlich, um Anrufe zu starten</string>
+    <string name="missing_permission_dynamic_island">Das Anzeigen des Dynamic Island über anderen Apps erfordert die Berechtigung, über anderen Apps eingeblendet zu werden.</string>
+    <string name="missing_permission_dynamic_island_calls">Das Erkennen eines aktiven Anrufs erfordert die Telefonstatus-Berechtigung.</string>
+    <string name="missing_permission_floating_launcher">Das Einblenden über anderen Apps ist für den Floating Launcher erforderlich</string>
+    <string name="missing_permission_reminders_widget">Aufgaben-Berechtigung ist erforderlich, um hier Erinnerungen anzuzeigen</string>
+    <string name="missing_permission_tasks_integration">Aufgaben-Berechtigung ist erforderlich, um die Aufgaben-Integration zu nutzen</string>
+
+    <string name="hint_drag_and_drop_reorder">Elemente gedrückt halten und ziehen, um sie neu anzuordnen</string>
+    <string name="imperial">Imperial</string>
+    <string name="length_unit">Längeneinheit</string>
+    <string name="location_closed">Geschlossen</string>
+    <string name="location_closes">schließt um %1$s</string>
+    <string name="location_closes_other_day">schließt %1$s, %2$s</string>
+    <string name="location_open">Geöffnet</string>
+    <string name="location_open_24_7">Rund um die Uhr geöffnet</string>
+    <string name="location_opens">öffnet um %1$s</string>
+    <string name="location_opens_other_day">öffnet %1$s, %2$s</string>
+    <string name="menu_bugreport">Fehlerbericht</string>
+    <string name="menu_dial">Anrufen</string>
+    <string name="menu_hide_filters">Filter ausblenden</string>
+    <string name="menu_map">Auf Karte ansehen</string>
+    <string name="menu_navigation">Navigation</string>
+    <string name="menu_show_filters">Filter anzeigen</string>
+    <string name="menu_website">Webseite öffnen</string>
+    <string name="metric">Metrisch</string>
+    <string name="music_widget_interactive_progress_bar">Interaktiver Fortschrittsbalken</string>
+    <string name="music_widget_next_track">Nächster Titel</string>
+    <string name="music_widget_open_player">Player öffnen</string>
+    <string name="music_widget_pause">Pause</string>
+    <string name="music_widget_play">Wiedergabe</string>
+    <string name="music_widget_previous_track">Vorheriger Titel</string>
+    <string name="network_widget_cellular">Mobile Daten</string>
+    <string name="network_widget_connected">Verbunden</string>
+    <string name="network_widget_disconnected">Keine Verbindung</string>
+    <string name="network_widget_ethernet">Ethernet</string>
+    <string name="network_widget_wifi">WLAN</string>
+    <string name="menu_shutter_change">Shutter ändern</string>
+    <string name="menu_shutter_remove">Shutter entfernen</string>
+    <string name="menu_shutter_set">Shutter festlegen</string>
+    <string name="item_visibility_app_default">App-Raster &amp; Suchergebnisse</string>
+    <string name="item_visibility_calendar_default">Kalender-Widget &amp; Suchergebnisse</string>
+    <string name="item_visibility_hidden">Nie</string>
+
+    <string name="poi_category_restaurant">Restaurant</string>
+    <string name="poi_category_fast_food">Fast Food</string>
+    <string name="poi_category_bar">Bar</string>
+    <string name="poi_category_cafe">Café</string>
+    <string name="poi_category_hotel">Hotel</string>
+    <string name="poi_category_supermarket">Supermarkt</string>
+    <string name="poi_category_school">Schule</string>
+    <string name="poi_category_parking">Parkplatz</string>
+    <string name="poi_category_fuel">Tankstelle</string>
+    <string name="poi_category_pharmacy">Apotheke</string>
+    <string name="poi_category_hospital">Krankenhaus</string>
+    <string name="poi_category_bank">Bank</string>
+    <string name="poi_category_atm">Geldautomat</string>
+    <string name="poi_category_museum">Museum</string>
+    <string name="poi_category_park">Park</string>
+    <string name="preference_add_currency">Währung hinzufügen</string>
+    <string name="preference_calendar_hide_completed">Erledigte Termine ausblenden</string>
+    <string name="preference_clock_widget_show_seconds">Sekunden anzeigen</string>
+    <string name="preference_clock_widget_monospaced">Feste Ziffernbreite</string>
+    <string name="preference_clockwidget_smartspacer">Von Smartspacer verwaltet</string>
+    <string name="preference_create_folder_summary">Gruppiere mehrere Apps in einem Schritt in einen neuen Ordner</string>
+    <string name="preference_customize_filter_bar">Filterleiste anpassen</string>
+    <string name="preference_customize_filter_bar_summary">Anpassen, welche Elemente in der Filterleiste enthalten sind</string>
+    <string name="preference_default_filter">Standardfilter</string>
+    <string name="preference_default_filter_summary">Passen Sie den Standardfilter für Suchen an</string>
+    <string name="preference_filter_bar">Filterleiste anzeigen</string>
+    <string name="preference_filter_bar_summary">Schnellfilter über der Tastatur anzeigen</string>
+    <string name="preference_show_app_recommendations">App-Empfehlungen anzeigen</string>
+    <string name="preference_show_app_recommendations_summary">Gelegentlich eine App in einer Kategorie wie VPN oder Passwort-Manager vorschlagen</string>
+
+    <string name="preference_category_animations">Animationen</string>
 </resources>

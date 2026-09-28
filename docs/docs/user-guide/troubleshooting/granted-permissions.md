@@ -11,5 +11,5 @@ longer receive notifications and asks for the permission again.
 
 The steps to fix that are different for each OEM but it usually involves disabling battery
 optimization
-for Kvaesitso. This website has a list of guides for different OEMs:
+for Telos. This website has a list of guides for different OEMs:
 https://dontkillmyapp.com/

@@ -1,38 +1,33 @@
-# Walkthrough - Advanced Power-User Features (Step 1)
+# Walkthrough - Systematic Translation Update
 
-In this first step, we have established the core system-level integration layer for Telos Launcher.
+We have performed a comprehensive translation of all launcher strings into Greek and German, ensuring full support for all newly implemented features and existing settings.
 
 ## Changes Made
 
-### 1. New Module: `:services:app-management`
-We created a dedicated module to handle privileged operations and FOSS update tracking. This keeps the core launcher code clean and modular.
-- [build.gradle.kts](file:///home/koukos/Projects/Telos-Launcher/services/app-management/build.gradle.kts)
-- [AndroidManifest.xml](file:///home/koukos/Projects/Telos-Launcher/services/app-management/src/main/AndroidManifest.xml)
+### 1. Localization Update: Greek
+- **Complete Sweep**: Translated over 200 missing keys in `values-el/strings.xml`.
+- **Key Categories Covered**:
+    - **General UI**: Actions (Clear, Done, Install, Quit), hint texts, and error messages.
+    - **Advanced Customization**: Independent grid controls (Home, Search, Dock), folder creation, covers, and management.
+    - **Interface styling**: Dock background, opacity, blur, and label customizations (size, shadow, multi-line).
+    - **Core Features**: App Lock (including intruder photos), Freeze Manager (system/iconless apps), and Work Profile.
+    - **Modern Android**: Dynamic Island, Desktop Mode (including freeform windows), and Context Profiles (Routines).
+    - **Widgets**: Detailed translations for At a Glance, Weather, and Calendar widgets.
+- **Plurals Support**: Added Greek plural forms for all relevant strings (e.g., locked apps count, time remaining).
 
-### 2. Shizuku Integration
-The `ShizukuManager` class provides a high-level API to interact with system services via Shizuku's binder bridge.
-- **Permission Management**: Unified flow for checking and requesting Shizuku authorization.
-- **Force Stop**: Uses `IActivityManager` to stop any app package immediately.
-- **Freeze/Disable**: Uses `IPackageManager` to disable apps (using `DISABLED_USER` state for standard adb-shizuku compatibility).
-- [ShizukuManager.kt](file:///home/koukos/Projects/Telos-Launcher/services/app-management/src/main/java/de/mm20/launcher2/appmanagement/ShizukuManager.kt)
-
-### 3. FOSS Update Tracker Backend
-We implemented the `ObtainiumUpdateReceiver` to listen for broadcasts from the Obtainium app.
-- **Action**: `com.itachi1706.obtainium.ACTION_UPDATE_AVAILABLE`
-- [ObtainiumUpdateReceiver.kt](file:///home/koukos/Projects/Telos-Launcher/services/app-management/src/main/java/de/mm20/launcher2/appmanagement/ObtainiumUpdateReceiver.kt)
+### 2. Localization Update: German
+- **Complete Sweep**: Performed an identical update for `values-de/strings.xml` to ensure feature parity with the English and Greek versions.
+- **Term Consistency**: Used standard Android terminology for consistent user experience (e.g., "Desktop sperren" for Desktop Lock, "App-Sperre" for App Lock).
 
 ## Verification Results
 
 ### Build
-- The project was successfully built with the new module and dependencies:
-  `./gradlew :app:app:assembleDebug` - **PASSED**
+- Module builds successfully: `./gradlew :core:i18n:assembleDebug` - **PASSED**
 
-### Manual Verification (via ADB)
-You can verify the Obtainium receiver by running:
-```bash
-adb shell am broadcast -a com.itachi1706.obtainium.ACTION_UPDATE_AVAILABLE --es package_name "com.itachi1706.obtainium"
-```
-Check logcat for: `ObtainiumReceiver: Update available for: com.itachi1706.obtainium`
+### Quality Check
+- Verified XML validity across all modified files.
+- Ensured no duplicate keys exist.
+- Confirmed that plural forms are correctly implemented for both languages.
 
-## Next Steps
-In **Step 2**, we will implement the **Custom App Info UI** (Bottom Sheet) and hook up the "Force Stop" and "Freeze" buttons to the `ShizukuManager`.
+## Conclusion
+Telos Launcher is now fully localized for Greek and German users, providing a professional and accessible experience for all its advanced features.

@@ -336,7 +336,7 @@
     <string name="gesture_action_open_search">Keresés / alkalmazásfiók</string>
     <string name="gesture_action_launch_app">Alkalmazásindítás</string>
     <string name="preference_layout_fixed_rotation_summary">Képernyő elforgatásának zárolása portré módban</string>
-    <string name="missing_permission_accessibility_gesture_settings">Ehhez a művelethez engedélyezni kell az Kvaesitso kisegítő lehetőségek szolgáltatását.</string>
+    <string name="missing_permission_accessibility_gesture_settings">Ehhez a művelethez engedélyezni kell a Telos kisegítő lehetőségek szolgáltatását.</string>
     <string name="preference_search_result_ordering_weight_factor_default">Kiegyensúlyozott</string>
     <string name="note_widget_action_unlink_file">Leválasztás</string>
     <string name="note_widget_conflict_keep_selected">Maradjon kiválasztva</string>
@@ -556,7 +556,7 @@
     <string name="gesture_action_notifications">Értesítések</string>
     <string name="gesture_action_lock_screen">Képernyő kikapcsolása</string>
     <string name="gesture_action_quick_settings">Gyorsbeállítások</string>
-    <string name="missing_permission_accessibility_gesture_failed">A művelet végrehajtásához engedélyezni kell a Kvaesitso kisegítő lehetőségek szolgáltatását.</string>
+    <string name="missing_permission_accessibility_gesture_failed">A művelet végrehajtásához engedélyezni kell a Telos kisegítő lehetőségek szolgáltatását.</string>
     <string name="preference_search_result_ordering_weight_factor">Rugalmasság a rangsorolásban</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stabil</string>
     <string name="preference_mdy_color_source_system">Rendszer</string>

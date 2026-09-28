@@ -1,7 +1,7 @@
 # Restricted Settings on Android 13+
 
 Starting with Android 13, some settings are restricted for sideloaded apps and extra steps are required to enable them.
-For Kvaesitso, this affects the notification access permission and the accessibility service.
+For Telos, this affects the notification access permission and the accessibility service.
 
 ## Notification Access
 
@@ -36,7 +36,7 @@ The notification access permission is used to display notification badges, and t
 
 The accessibility service is used to perform certain gesture actions, like turning the screen off, or opening the notification shade.
 
-1. Try to enable the accessibility service as you would normally do. If you sideloaded the APK, you will find that Kvaesitso is disabled:
+1. Try to enable the accessibility service as you would normally do. If you sideloaded the APK, you will find that Telos is disabled:
 
 <img src="/img/accessibility-service-1.png" width="300"/>
 
@@ -46,7 +46,7 @@ The accessibility service is used to perform certain gesture actions, like turni
 
 3. Tap “OK” to close the dialog.
 
-4. Navigate to the app info screen (system settings > apps > Kvaesitso).
+4. Navigate to the app info screen (system settings > apps > Telos).
 
 <img src="/img/notification-access-3.png" width="300"/>
 
@@ -59,4 +59,4 @@ The accessibility service is used to perform certain gesture actions, like turni
 
 <img src="/img/notification-access-4.png" width="300"/>
 
-7. Go back to the accessibility screen. Kvaesitso is no longer disabled, and you can enable it.
+7. Go back to the accessibility screen. Telos is no longer disabled, and you can enable it.

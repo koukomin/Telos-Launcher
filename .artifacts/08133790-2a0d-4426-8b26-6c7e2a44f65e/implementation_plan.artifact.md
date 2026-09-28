@@ -1,46 +1,32 @@
-# Implementation Plan - Advanced Power-User Features (Step 1)
+# Implementation Plan - Systematic Translation Update
 
-This plan outlines the first step in implementing advanced features for Telos Launcher: Shizuku integration and the foundation for FOSS update tracking.
+This plan aims to provide complete Greek and German translations for all strings in the Telos Launcher, specifically focusing on the new customization features and any gaps in existing settings.
 
 ## User Review Required
 
-> [!IMPORTANT]
-> This plan involves system-level interactions using Shizuku and Hidden API access. It assumes the user has Shizuku installed and configured on their device.
-
 > [!NOTE]
-> For Obtainium integration, we are assuming a broadcast action `com.itachi1706.obtainium.ACTION_UPDATE_AVAILABLE`. We will need to verify if this is the correct action supported by the user's version of Obtainium.
+> I will translate all missing keys in `values-el/strings.xml` and `values-de/strings.xml`. If a translation seems ambiguous, I will use common Android terminology.
 
 ## Proposed Changes
 
-### 1. Dependencies
-We will add the necessary Shizuku and HiddenApiBypass dependencies to the new `services:app-management` module. These are already defined in `libs.versions.toml`.
+### 1. Localization Update: Greek
+- **[MODIFY] [strings.xml](file:///home/koukos/Projects/Telos-Launcher/core/i18n/src/main/res/values-el/strings.xml)**:
+    - Add missing translations for all features:
+        - Independent Grids (Home, Search, Dock).
+        - Home Screen Folders (Creation, Covers, Management).
+        - Desktop Lock.
+        - Advanced Icon Labels (Size, Lines, Shadow).
+        - Dock Styling (Background plate, Color, Opacity, Blur).
+        - Web App UI Refinements.
+        - At a Glance, Dynamic Island, Desktop Mode, Context Profiles, etc.
 
-### 2. Shizuku Integration
-We will implement `ShizukuManager` to handle:
-- **Authorization**: Checking if Shizuku is available and if the launcher has permission.
-- **Force Stop**: Programmatically force-stopping apps via `IActivityManager`.
-- **Freeze/Disable**: Toggling the app state between `ENABLED` and `DISABLED_USER` via `IPackageManager`.
-
-### 3. FOSS Update Tracker (Foundation)
-We will implement a `BroadcastReceiver` to listen for Obtainium update events.
-- **Action**: `com.itachi1706.obtainium.ACTION_UPDATE_AVAILABLE`
-- **Logic**: Extract package name and version info from the intent and prepare it for the launcher backend.
-
-## Proposed Files
-
-#### [NEW] [services/app-management/build.gradle.kts](file:///home/koukos/Projects/Telos-Launcher/services/app-management/build.gradle.kts)
-#### [NEW] [ShizukuManager.kt](file:///home/koukos/Projects/Telos-Launcher/services/app-management/src/main/java/de/mm20/launcher2/appmanagement/ShizukuManager.kt)
-#### [NEW] [ObtainiumUpdateReceiver.kt](file:///home/koukos/Projects/Telos-Launcher/services/app-management/src/main/java/de/mm20/launcher2/appmanagement/ObtainiumUpdateReceiver.kt)
+### 2. Localization Update: German
+- **[MODIFY] [strings.xml](file:///home/koukos/Projects/Telos-Launcher/core/i18n/src/main/res/values-de/strings.xml)**:
+    - Perform the same updates as for Greek to ensure parity.
 
 ## Verification Plan
 
-### Automated Tests
-- We will add unit tests for `ShizukuManager` where possible (mocking the binder).
-- We will add unit tests for `ObtainiumUpdateReceiver` by sending mock intents.
-
 ### Manual Verification
-1.  **Shizuku Authorization**: Open the launcher settings (to be implemented in Step 2) and verify that Shizuku permission can be requested and granted.
-2.  **Force Stop**: Manually trigger a force stop for a test app and verify it is killed.
-3.  **Freeze/Disable**: Manually trigger a freeze for a test app and verify it disappears from the system (or is disabled).
-4.  **Obtainium**: Send a manual broadcast via ADB to verify the receiver works:
-    `adb shell am broadcast -a com.itachi1706.obtainium.ACTION_UPDATE_AVAILABLE --es package_name "com.example.app"`
+1.  **Switch Language**: Change device language to Greek and verify all settings screens.
+2.  **Switch Language**: Change device language to German and verify all settings screens.
+3.  **UI Check**: Ensure translated strings fit within their UI components (no clipping).

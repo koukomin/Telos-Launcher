@@ -675,7 +675,7 @@
     <string name="preference_weather_integration">Hava Durumu</string>
     <string name="preference_media_integration">Medya kontrolü</string>
     <string name="preference_tasks_integration">Görevler</string>
-    <!-- %1$s: app name (Kvaesitso) -->
+    <!-- %1$s: app name (Telos) -->
     <string name="preference_tasks_integration_description">Tasks, ücretsiz ve açık kaynaklı bir yapılacaklar listesi ve hatırlatıcı uygulamasıdır. Yüklüyse, %1$s görevlerinizi Tasks uygulamasından görüntüleyebilir ve arayabilir.</string>
     <string name="preference_tasks_integration_ready">Görevler entegrasyonu tamamen kuruldu ve kullanıma hazır.</string>
     <string name="preference_launch_tasks_app">Tasks uygulamasını aç</string>

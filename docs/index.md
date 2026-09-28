@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: 'Kvaesitso'
+  name: 'Telos'
   tagline: A search-focused, free and open source launcher for Android
   image: /icon.png
   actions:

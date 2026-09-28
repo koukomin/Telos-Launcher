@@ -1,15 +1,18 @@
-# Tasks - Step 1: App Management & Shizuku Integration
+# Tasks - Systematic Translation Update
 
-- `[x]` Create `services:app-management` module
-    - `[x]` Add `build.gradle.kts` with dependencies
-    - `[x]` Register module in `settings.gradle.kts`
-- `[x]` Implement `ShizukuManager`
-    - `[x]` Permission handling logic
-    - `[x]` Force stop implementation (ActivityManager)
-    - `[x]` Freeze/Disable implementation (PackageManager)
-- `[x]` Implement `ObtainiumUpdateReceiver`
-    - `[x]` Broadcast logic
-    - `[x]` Register in `AndroidManifest.xml`
-- `[x]` Verification
-    - `[x]` Build the project
-    - `[ ]` Manual test commands
+- `[x]` Greek Translation Update
+    - `[x]` Actions & General UI
+    - `[x]` Grids, Icons & Labels
+    - `[x]` Folders & Dock Styling
+    - `[x]` Search & Advanced Settings
+    - `[x]` Freeze, App Lock & Work Profile
+    - `[x]` Desktop Mode, Dynamic Island & Routines
+    - `[x]` Widgets (At a Glance, Weather, Calendar)
+- `[x]` German Translation Update
+    - `[x]` Actions & General UI
+    - `[x]` Grids, Icons & Labels
+    - `[x]` Folders & Dock Styling
+    - `[x]` Search & Advanced Settings
+    - `[x]` Freeze, App Lock & Work Profile
+    - `[x]` Desktop Mode, Dynamic Island & Routines
+    - `[x]` Widgets (At a Glance, Weather, Calendar)

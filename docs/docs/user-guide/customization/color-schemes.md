@@ -22,7 +22,7 @@ selecting <span class="material-symbols-rounded">more_vert</span> > <span class=
 
 You can then edit a color scheme by selecting <span class="material-symbols-rounded">more_vert</span> > <span class="material-symbols-rounded">edit</span> **Edit**.
 
-Kvaesitso uses the Material Design 3 system for its user interface. The color schemes are therefore
+Telos uses the Material Design 3 system for its user interface. The color schemes are therefore
 based on the Material Design 3 color system.
 
 > [!INFO]
@@ -67,7 +67,7 @@ components.
 To learn how the different scheme colors are used in components, refer to the
 [Material 3 Design docs](https://m3.material.io/styles/color/the-color-system/color-roles).
 Examples are shown in the color scheme editor. Keep in mind, that not all scheme colors are currently
-used by Kvaesitso.
+used by Telos.
 
 > [!TIP]
 > Long press a color to display its name.

@@ -19,6 +19,6 @@
 
 # Open settings page
 
-Scan this code to view the linked settings page in Kvaesitso.
+Scan this code to view the linked settings page in Telos.
 
 <img :src="qrcode">

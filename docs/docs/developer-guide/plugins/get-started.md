@@ -2,7 +2,7 @@
 
 ## Get the plugin SDK
 
-Kvaesitso comes with a plugin SDK that abstracts away the low level details of inter-app
+Telos comes with a plugin SDK that abstracts away the low level details of inter-app
 communication and streamlines the process of creating plugins.
 
 Add the following dependency to your project:
@@ -48,7 +48,7 @@ provider in the `AndroidManifest.xml`:
   app's package name and add a unique suffix.
   > [!WARNING]
   > You must not change this later or things will break.
-- The `<intent-filter />` lets Kvaesitso know that this content provider is a plugin.
+- The `<intent-filter />` lets Telos know that this content provider is a plugin.
 
 ## Next steps
 

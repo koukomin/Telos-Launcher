@@ -29,7 +29,7 @@ import kotlinx.serialization.Serializable
 data object WorkProfileSettingsRoute : NavKey
 
 /**
- * Kvaesitso isn't a device policy controller, so it can't create or remove a work profile
+ * Telos isn't a device policy controller, so it can't create or remove a work profile
  * itself - the setup/remove actions just deep-link into the system's own flow for that. What we
  * do own here is exposing the pause/resume state and its optional lock, previously buried inside
  * App Lock settings.

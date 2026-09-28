@@ -4,7 +4,7 @@ outline: deep
 
 # Icon Packs
 
-Kvaesitso has built-in support for the ADW launcher icon pack format (the format that is nowadays
+Telos has built-in support for the ADW launcher icon pack format (the format that is nowadays
 used by virtually all icon packs and supported by all major custom launchers).
 
 ## Get started
@@ -66,7 +66,7 @@ The file lives in `res/xml/drawable.xml`, and looks like this:
 
 Every icon that should be available for manual icon picking must be listed in this file. You can
 optionally group icons by adding `<category>` elements, but these categories aren't used by
-Kvaesitso.
+Telos.
 
 ## Static icons
 
@@ -117,7 +117,7 @@ The launcher will then randomly pick one of the variants for each icon.
 
 ### Calendar icons
 
-Kvaesitso supports Nova
+Telos supports Nova
 launcher's [dynamic calendar icon standard](https://github.com/teslacoil/Example_NovaTheme/blob/master/DynamicCalendarIconAPI.md):
 
 To your `appfilter.xml` file, add the following:
