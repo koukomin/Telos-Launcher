@@ -33,13 +33,16 @@ import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.locals.LocalGridSettings
-import org.koin.compose.koinInject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import kotlinx.coroutines.flow.first
 
 internal class SearchComponent(
     private val reverse: Boolean = false,
     private val openKeyboard: Boolean = true,
-) : ScaffoldComponent() {
+) : ScaffoldComponent(), KoinComponent {
 
+    private val uiSettings: UiSettings by inject()
     private val lazyListState = LazyListState()
 
     override val isAtTop: State<Boolean?> = derivedStateOf {
@@ -54,14 +57,12 @@ internal class SearchComponent(
 
     override val hasIme: Boolean = true
 
-
     @Composable
     override fun Component(
         modifier: Modifier,
         insets: PaddingValues,
         state: LauncherScaffoldState
     ) {
-        val uiSettings: UiSettings = koinInject()
         val gridSettings by uiSettings.drawerGridSettings.collectAsState(GridSettings())
         val drawerBackgroundEnabled by uiSettings.drawerBackgroundEnabled.collectAsState(false)
         val drawerBackgroundColor by uiSettings.drawerBackgroundColor.collectAsState(null)
@@ -74,7 +75,7 @@ internal class SearchComponent(
             if (!isActive) {
                 searchVM.reset()
                 if (!rememberScrollPosition) {
-                    lazyListState.scrollToItem(0, 0)
+                    lazyListState.requestScrollToItem(0, 0)
                 }
             }
         }
@@ -131,7 +132,10 @@ internal class SearchComponent(
 
     override suspend fun onDismiss(state: LauncherScaffoldState) {
         super.onDismiss(state)
-        lazyListState.scrollToItem(0, 0)
+        val rememberScrollPosition = uiSettings.rememberScrollPosition.first()
+        if (!rememberScrollPosition) {
+            lazyListState.scrollToItem(0, 0)
+        }
     }
 
     override fun onPreActivate(state: LauncherScaffoldState) {
