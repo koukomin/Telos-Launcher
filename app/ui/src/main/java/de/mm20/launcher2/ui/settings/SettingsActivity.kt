@@ -47,6 +47,8 @@ import de.mm20.launcher2.ui.settings.about.AboutSettingsRoute
 import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
 import de.mm20.launcher2.ui.settings.advanced.AdvancedSettingsRoute
 import de.mm20.launcher2.ui.settings.advanced.AdvancedSettingsScreen
+import de.mm20.launcher2.ui.settings.freeze.SmartFreezeDashboardRoute
+import de.mm20.launcher2.ui.settings.freeze.SmartFreezeDashboardScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsRoute
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.ExportThemeSettingsRoute
@@ -213,6 +215,9 @@ class SettingsActivity : BaseActivity() {
         val entryProvider = entryProvider {
             entry<MainRoute> {
                 MainSettingsScreen()
+            }
+            entry<SmartFreezeDashboardRoute> {
+                SmartFreezeDashboardScreen()
             }
             entry<AdvancedSettingsRoute> {
                 AdvancedSettingsScreen()

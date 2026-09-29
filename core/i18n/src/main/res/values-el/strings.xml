@@ -782,6 +782,12 @@
     <string name="preference_advanced_search_user_shortcuts">Συντομεύσεις χρήστη</string>
     <string name="preference_advanced_search_user_shortcuts_summary">Ορισμός προσαρμοσμένων λέξεων-κλειδιών για ενέργειες</string>
     <string name="preference_category_advanced">Σύνθετες</string>
+
+    <!-- === TELOS_PENDING_REVIEW_START: smart_freeze_ui_and_actions === -->
+    <string name="telos_freeze_app">Πάγωμα εφαρμογής</string>
+    <string name="telos_unfreeze_app">Ξεπάγωμα εφαρμογής</string>
+    <!-- === TELOS_PENDING_REVIEW_END: smart_freeze_ui_and_actions === -->
+
     <string name="preference_category_advanced_search_features">Λειτουργίες</string>
     <string name="preference_freeze_advanced_features">Σύνθετες λειτουργίες</string>
     <string name="preference_freeze_advanced_features_summary">Ξεκλειδώνει τις ενέργειες Πάγωμα, Αναγκαστικός τερματισμός και Εκκαθάριση προσωρινής μνήμης στα μενού εφαρμογών (Απαιτεί Shizuku ή Root)</string>

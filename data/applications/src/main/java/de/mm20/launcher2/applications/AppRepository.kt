@@ -359,7 +359,8 @@ internal class AppRepositoryImpl(
                 if (query.isEmpty()) {
                     appResults.addAll(apps)
                 } else {
-                    appResults.addAll(apps.mapNotNull { app ->
+                    // === TELOS_PENDING_REVIEW_START: perf_optimizations ===
+                    apps.mapNotNullTo(appResults) { app ->
                         val cachedLabel = app.cachedNormalizerResult
                         val score = ResultScore.from(
                             query = normalizedQuery,
@@ -373,11 +374,12 @@ internal class AppRepositoryImpl(
                                 }
                             ),
                         )
-                        if (score.score < 0.8f) return@mapNotNull null
+                        if (score.score < 0.8f) return@mapNotNullTo null
                         app.copy(
                             score = score
                         )
-                    })
+                    }
+                    // === TELOS_PENDING_REVIEW_END: perf_optimizations ===
 
                     val componentName = ComponentName.unflattenFromString(query)
                     getActivityByComponentName(componentName)?.let { appResults.add(it) }

@@ -41,6 +41,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -119,6 +120,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         if (searchable !is Application) flowOf(false)
         else appRepository.findOne(searchable.componentName.packageName, searchable.user)
             .map { it?.isSuspended == true }
+            .distinctUntilChanged()
     }.stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     val children = searchable.flatMapLatest {

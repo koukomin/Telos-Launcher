@@ -1814,4 +1814,9 @@
     <string name="preference_app_lock_relock_on_screen_off_summary">Immediately lock all apps when screen is turned off</string>
     <string name="preference_app_lock_relock_only_on_screen_off">Stay unlocked until screen off</string>
     <string name="preference_app_lock_relock_only_on_screen_off_summary">Apps remain unlocked as long as the screen is on</string>
+
+    <!-- === TELOS_PENDING_REVIEW_START: smart_freeze_ui_and_actions === -->
+    <string name="telos_freeze_app">Freeze app</string>
+    <string name="telos_unfreeze_app">Unfreeze app</string>
+    <!-- === TELOS_PENDING_REVIEW_END: smart_freeze_ui_and_actions === -->
 </resources>

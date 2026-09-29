@@ -19,6 +19,7 @@ import de.mm20.launcher2.ui.settings.search.SearchSettingsRoute
 import de.mm20.launcher2.ui.settings.advanced.AdvancedSettingsRoute
 import de.mm20.launcher2.ui.settings.webapps.WebAppsSettingsRoute
 import de.mm20.launcher2.ui.settings.dynamicisland.DynamicIslandSettingsRoute
+import de.mm20.launcher2.ui.settings.freeze.SmartFreezeDashboardRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -112,6 +113,16 @@ fun MainSettingsScreen() {
                         backStack.add(AdvancedSettingsRoute)
                     }
                 )
+                // === TELOS_PENDING_REVIEW_START: smart_freeze_ui_and_actions ===
+                Preference(
+                    icon = R.drawable.ac_unit_24px,
+                    title = "Smart Freeze Dashboard",
+                    summary = "Manage frozen apps and Shizuku status",
+                    onClick = {
+                        backStack.add(SmartFreezeDashboardRoute)
+                    }
+                )
+                // === TELOS_PENDING_REVIEW_END: smart_freeze_ui_and_actions ===
                 Preference(
                     icon = R.drawable.info_24px,
                     title = stringResource(id = R.string.preference_screen_about),

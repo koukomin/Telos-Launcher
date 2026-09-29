@@ -282,8 +282,10 @@ fun GridItem(
         val isSuspended by viewModel.isSuspended.collectAsStateWithLifecycle()
 
 
+        // === TELOS_PENDING_REVIEW_START: perf_optimizations ===
         val windowSize = LocalWindowSize.current
-
+        val iconSizeDp = LocalGridSettings.current.iconSize.dp
+        
         if (item is Application) {
             HandleEnterHomeTransition {
                 val cn = item.componentName
@@ -296,27 +298,29 @@ fun GridItem(
                         bounds
                     ) { _, _ ->
                         ShapedLauncherIcon(
-                            size = LocalGridSettings.current.iconSize.dp,
+                            size = iconSizeDp,
                             icon = { icon })
                     }
                 }
                 return@HandleEnterHomeTransition null
             }
         }
+        // === TELOS_PENDING_REVIEW_END: perf_optimizations ===
 
         val iconShape = LocalIconShape.current
-
+        // === TELOS_PENDING_REVIEW_START: perf_optimizations ===
+        val semanticsModifier = remember(showLabels, item.label) {
+            if (showLabels) Modifier else Modifier.semantics {
+                contentDescription = item.label
+            }
+        }
+        val highlightBg = MaterialTheme.colorScheme.surfaceVariant
+        val highlightFg = MaterialTheme.colorScheme.surface
+        
         Box(
             modifier = if (highlight) {
-                Modifier
-                    .background(
-                        MaterialTheme.colorScheme.surfaceVariant,
-                        iconShape
-                    )
-            } else Modifier then if (showLabels) Modifier else Modifier
-                .semantics {
-                    contentDescription = item.label
-                },
+                Modifier.background(highlightBg, iconShape)
+            } else semanticsModifier,
         ) {
             ShapedLauncherIcon(
                 modifier = Modifier
@@ -326,15 +330,13 @@ fun GridItem(
                             .boundsInWindow()
                             .roundToIntRect()
                     } then
-                        if (highlight) Modifier.background(
-                            MaterialTheme.colorScheme.surface,
-                            iconShape
-                        )
+                        if (highlight) Modifier.background(highlightFg, iconShape)
                         else Modifier,
-                size = LocalGridSettings.current.iconSize.dp,
+                size = iconSizeDp,
                 badge = { badge },
                 icon = { icon },
                 grayscale = isSuspended,
+        // === TELOS_PENDING_REVIEW_END: perf_optimizations ===
             )
         }
         if (showLabels) {

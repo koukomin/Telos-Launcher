@@ -532,6 +532,20 @@ fun AppItem(
                         }
                     }
 
+                    // === TELOS_PENDING_REVIEW_START: smart_freeze_ui_and_actions ===
+                    toolbarActions.add(
+                        DefaultToolbarAction(
+                            label = stringResource(
+                                if (isSuspended) R.string.telos_unfreeze_app else R.string.telos_freeze_app
+                            ),
+                            icon = if (isSuspended) R.drawable.play_arrow_24px else R.drawable.ac_unit_24px,
+                            action = {
+                                if (isSuspended) viewModel.unfreeze() else viewModel.freeze()
+                            }
+                        )
+                    )
+                    // === TELOS_PENDING_REVIEW_END: smart_freeze_ui_and_actions ===
+
                     if (advancedFeaturesEnabled) {
                         toolbarActions.add(
                             DefaultToolbarAction(

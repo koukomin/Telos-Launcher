@@ -7,6 +7,11 @@ import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import java.text.Collator
 
+import androidx.compose.runtime.Stable
+
+// === TELOS_PENDING_REVIEW_START: perf_optimizations ===
+@Stable
+// === TELOS_PENDING_REVIEW_END: perf_optimizations ===
 interface SavableSearchable : Searchable, Comparable<SavableSearchable>  {
     val key: String
 
