@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher.search.common
 
 import android.content.Context
+import android.os.UserHandle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,7 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
+import de.mm20.launcher2.sandbox.AppCloner
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.Folder
@@ -286,12 +288,14 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
      * auto-freeze triggers (screen off, idle, battery saver - whichever the user has enabled)
      * keep freezing it going forward instead of this being a one-off action.
      */
+    // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
     fun freeze() {
         val searchable = searchable.value
         if (searchable is Application) {
             val packageName = searchable.componentName.packageName
+            val userId = searchable.user.hashCode()
             viewModelScope.launch {
-                freezeManager.freeze(packageName)
+                freezeManager.freeze(packageName, userId)
             }
             freezeManager.setAutoFreezeCandidate(packageName, true)
         }
@@ -300,8 +304,10 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     fun unfreeze() {
         val searchable = searchable.value
         if (searchable is Application) {
+            val packageName = searchable.componentName.packageName
+            val userId = searchable.user.hashCode()
             viewModelScope.launch {
-                freezeManager.unfreeze(searchable.componentName.packageName)
+                freezeManager.unfreeze(packageName, userId)
             }
         }
     }
@@ -309,8 +315,10 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     fun forceStop() {
         val searchable = searchable.value
         if (searchable is Application) {
+            val packageName = searchable.componentName.packageName
+            val userId = searchable.user.hashCode()
             viewModelScope.launch {
-                freezeManager.forceStop(searchable.componentName.packageName)
+                freezeManager.forceStop(packageName, userId)
             }
         }
     }
@@ -318,11 +326,30 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     fun clearCache() {
         val searchable = searchable.value
         if (searchable is Application) {
+            val packageName = searchable.componentName.packageName
+            val userId = searchable.user.hashCode()
             viewModelScope.launch {
-                freezeManager.clearCache(searchable.componentName.packageName)
+                freezeManager.clearCache(packageName, userId)
             }
         }
     }
+    // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
+
+    // === TELOS_PENDING_REVIEW_START: sandbox_cloning_and_bridge ===
+    fun cloneToSandbox(context: Context, workProfileUser: UserHandle) {
+        val searchable = searchable.value
+        if (searchable is Application) {
+            viewModelScope.launch {
+                val success = AppCloner.cloneAppToWorkProfile(context, searchable, workProfileUser)
+                if (success) {
+                    Log.d("SmartFreeze", "Cloned successfully")
+                } else {
+                    Log.e("SmartFreeze", "Cloning failed")
+                }
+            }
+        }
+    }
+    // === TELOS_PENDING_REVIEW_END: sandbox_cloning_and_bridge ===
 
     fun delete(context: Context) {
         val searchable = searchable.value ?: return

@@ -19,6 +19,7 @@ import android.net.NetworkCapabilities
 import android.net.TrafficStats
 import android.os.Build
 import android.os.IBinder
+import android.os.Process
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import rikka.shizuku.Shizuku
@@ -89,7 +90,8 @@ class SmartFreezeService : Service() {
             val packagesToFreeze = getPackagesToFreeze()
             for (pkg in packagesToFreeze) {
                 if (canFreezePackage(pkg)) {
-                    freezePackage(pkg)
+                    // For auto-freeze, we default to user 0 (current user)
+                    freezePackage(pkg, Process.myUserHandle().hashCode())
                 }
             }
         }
@@ -180,18 +182,33 @@ class SmartFreezeService : Service() {
         return false
     }
 
-    private fun freezePackage(packageName: String) {
+    // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
+    private fun freezePackage(packageName: String, userId: Int) {
         val isShizukuAvailable = (Shizuku.pingBinder() && 
             (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED))
 
         if (isShizukuAvailable) {
-            Log.d("SmartFreeze", "Freezing $packageName via Shizuku")
-            executeShellCommandViaShizuku("cmd package suspend $packageName")
+            Log.d("SmartFreeze", "Freezing $packageName for user $userId via Shizuku")
+            executeShellCommandViaShizuku("cmd package suspend --user $userId $packageName")
         } else {
-            Log.d("SmartFreeze", "Shizuku not available, falling back to root for $packageName")
-            executeShellCommandViaRoot("pm suspend $packageName")
+            Log.d("SmartFreeze", "Shizuku not available, falling back to root for $packageName user $userId")
+            executeShellCommandViaRoot("pm suspend --user $userId $packageName")
         }
     }
+
+    private fun unfreezePackage(packageName: String, userId: Int) {
+        val isShizukuAvailable = (Shizuku.pingBinder() && 
+            (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED))
+
+        if (isShizukuAvailable) {
+            Log.d("SmartFreeze", "Unfreezing $packageName for user $userId via Shizuku")
+            executeShellCommandViaShizuku("cmd package unsuspend --user $userId $packageName")
+        } else {
+            Log.d("SmartFreeze", "Shizuku not available, falling back to root for $packageName user $userId")
+            executeShellCommandViaRoot("pm unsuspend --user $userId $packageName")
+        }
+    }
+    // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
     private fun executeShellCommandViaShizuku(command: String) {
         try {

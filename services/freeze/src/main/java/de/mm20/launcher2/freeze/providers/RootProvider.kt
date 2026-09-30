@@ -28,24 +28,26 @@ internal class RootProvider : PrivilegedAccessProvider {
 
     override suspend fun requestPermission(): Boolean = isAvailable()
 
-    override suspend fun setPackagesSuspended(packageNames: List<String>, suspended: Boolean): Set<String> {
+    // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
+    override suspend fun setPackagesSuspended(packageNames: List<String>, suspended: Boolean, userId: Int): Set<String> {
         val action = if (suspended) "suspend" else "unsuspend"
         return packageNames.filterTo(mutableSetOf()) { pkg -> runAsRoot("pm $action --user $userId $pkg") }
     }
 
-    override suspend fun setPackagesEnabled(packageNames: List<String>, enabled: Boolean): Set<String> {
+    override suspend fun setPackagesEnabled(packageNames: List<String>, enabled: Boolean, userId: Int): Set<String> {
         val action = if (enabled) "enable" else "disable-user"
         return packageNames.filterTo(mutableSetOf()) { pkg -> runAsRoot("pm $action --user $userId $pkg") }
     }
 
-    override suspend fun forceStopPackage(packageName: String): Boolean {
+    override suspend fun forceStopPackage(packageName: String, userId: Int): Boolean {
         return runAsRoot("am force-stop --user $userId $packageName")
     }
 
-    override suspend fun clearCache(packageName: String): Boolean {
+    override suspend fun clearCache(packageName: String, userId: Int): Boolean {
         // Clearing only cache to avoid data loss
         return runAsRoot("rm -rf /data/user/$userId/$packageName/cache/*")
     }
+    // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
     private suspend fun runAsRoot(command: String): Boolean = withContext(Dispatchers.IO) {
         try {

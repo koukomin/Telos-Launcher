@@ -70,6 +70,8 @@ import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalShowAppDetails
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import de.mm20.launcher2.profiles.Profile
+import de.mm20.launcher2.profiles.ProfileManager
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
@@ -558,6 +560,23 @@ fun AppItem(
                                 }
                             )
                         )
+                        
+                        // === TELOS_PENDING_REVIEW_START: sandbox_cloning_and_bridge ===
+                        val profileManager: ProfileManager = koinInject()
+                        val workProfile = profileManager.getProfile(Profile.Type.Work)
+                        if (workProfile != null && app.user != workProfile.userHandle) {
+                            toolbarActions.add(
+                                DefaultToolbarAction(
+                                    label = stringResource(R.string.telos_clone_app),
+                                    icon = R.drawable.content_copy_24px,
+                                    action = {
+                                        viewModel.cloneToSandbox(context, workProfile.userHandle)
+                                    }
+                                )
+                            )
+                        }
+                        // === TELOS_PENDING_REVIEW_END: sandbox_cloning_and_bridge ===
+
                         toolbarActions.add(
                             DefaultToolbarAction(
                                 label = stringResource(R.string.menu_force_stop),

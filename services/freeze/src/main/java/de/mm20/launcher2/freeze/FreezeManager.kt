@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.os.Process
 import android.util.Log
 import de.mm20.launcher2.freeze.providers.RootProvider
 import de.mm20.launcher2.freeze.providers.ShizukuProvider
@@ -73,19 +74,20 @@ class FreezeManager internal constructor(
         null -> false
     }
 
-    suspend fun freeze(packageName: String): Set<String> {
+    // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
+    suspend fun freeze(packageName: String, userId: Int = Process.myUid() / 100000): Set<String> {
         if (_activeBackend.value == null) refreshBackendState()
-        return setSuspended(listOf(packageName), true)
+        return setSuspended(listOf(packageName), true, userId)
     }
 
-    suspend fun unfreeze(packageName: String): Set<String> {
+    suspend fun unfreeze(packageName: String, userId: Int = Process.myUid() / 100000): Set<String> {
         if (_activeBackend.value == null) refreshBackendState()
-        return setSuspended(listOf(packageName), false)
+        return setSuspended(listOf(packageName), false, userId)
     }
 
-    suspend fun freeze(packageNames: List<String>): Set<String> {
+    suspend fun freeze(packageNames: List<String>, userId: Int = Process.myUid() / 100000): Set<String> {
         if (_activeBackend.value == null) refreshBackendState()
-        return setSuspended(packageNames, true)
+        return setSuspended(packageNames, true, userId)
     }
 
     /**
@@ -97,26 +99,26 @@ class FreezeManager internal constructor(
      * restriction. Shizuku/Root go through the same binder/shell path as [freeze] - no background
      * restriction applies to them, so they freeze immediately as normal.
      */
-    suspend fun freezeInBackground(packageNames: List<String>) {
+    suspend fun freezeInBackground(packageNames: List<String>, userId: Int = Process.myUid() / 100000) {
         if (packageNames.isEmpty()) return
         if (_activeBackend.value == FreezeBackendType.Island) {
             islandProvider.postFreezeNotification(packageNames)
         } else {
-            freeze(packageNames)
+            freeze(packageNames, userId)
         }
     }
 
     /** @return the subset of [packageNames] that were actually toggled successfully. */
-    private suspend fun setSuspended(packageNames: List<String>, suspended: Boolean): Set<String> {
+    private suspend fun setSuspended(packageNames: List<String>, suspended: Boolean, userId: Int = Process.myUid() / 100000): Set<String> {
         if (packageNames.isEmpty()) return emptySet()
 
         val backend = _activeBackend.value
         if (backend == null) {
-            Log.w(TAG, "setSuspended($packageNames, $suspended): no active backend")
+            Log.w(TAG, "setSuspended($packageNames, $suspended, user $userId): no active backend")
             return emptySet()
         }
         if (!hasPermission()) {
-            Log.w(TAG, "setSuspended($packageNames, $suspended): $backend has no permission")
+            Log.w(TAG, "setSuspended($packageNames, $suspended, user $userId): $backend has no permission")
             return emptySet()
         }
         val methods = settings.freezeMethods.first()
@@ -126,11 +128,11 @@ class FreezeManager internal constructor(
                 if (suspended) {
                     val toDisable = packageNames.filter { methods[it] == FreezeMethod.Disable }
                     val toSuspend = packageNames.filter { methods[it] != FreezeMethod.Disable }
-                    shizukuProvider.setPackagesSuspended(toSuspend, true) +
-                            shizukuProvider.setPackagesEnabled(toDisable, false)
+                    shizukuProvider.setPackagesSuspended(toSuspend, true, userId) +
+                            shizukuProvider.setPackagesEnabled(toDisable, false, userId)
                 } else {
-                    val unsuspended = shizukuProvider.setPackagesSuspended(packageNames, false)
-                    val enabled = shizukuProvider.setPackagesEnabled(packageNames, true)
+                    val unsuspended = shizukuProvider.setPackagesSuspended(packageNames, false, userId)
+                    val enabled = shizukuProvider.setPackagesEnabled(packageNames, true, userId)
                     unsuspended + enabled
                 }
             }
@@ -139,17 +141,17 @@ class FreezeManager internal constructor(
                 if (suspended) {
                     val toDisable = packageNames.filter { methods[it] == FreezeMethod.Disable }
                     val toSuspend = packageNames.filter { methods[it] != FreezeMethod.Disable }
-                    rootProvider.setPackagesSuspended(toSuspend, true) +
-                            rootProvider.setPackagesEnabled(toDisable, false)
+                    rootProvider.setPackagesSuspended(toSuspend, true, userId) +
+                            rootProvider.setPackagesEnabled(toDisable, false, userId)
                 } else {
-                    val unsuspended = rootProvider.setPackagesSuspended(packageNames, false)
-                    val enabled = rootProvider.setPackagesEnabled(packageNames, true)
+                    val unsuspended = rootProvider.setPackagesSuspended(packageNames, false, userId)
+                    val enabled = rootProvider.setPackagesEnabled(packageNames, true, userId)
                     unsuspended + enabled
                 }
             }
 
             FreezeBackendType.Island -> {
-                if (islandProvider.setPackagesSuspended(packageNames, suspended)) {
+                if (islandProvider.setPackagesSuspended(packageNames, suspended, userId)) {
                     packageNames.toSet()
                 } else {
                     emptySet()
@@ -157,18 +159,14 @@ class FreezeManager internal constructor(
             }
 
             FreezeBackendType.DeviceOwner -> {
-                // DeviceOwnerProvider has no separate suspend-vs-disable distinction to honor -
-                // setPackagesEnabled(enabled=false) IS its disable method (setApplicationHidden),
-                // so route everything through setPackagesSuspended/setPackagesEnabled the same
-                // way Shizuku/Root do, respecting the user's configured per-app method.
                 if (suspended) {
                     val toDisable = packageNames.filter { methods[it] == FreezeMethod.Disable }
                     val toSuspend = packageNames.filter { methods[it] != FreezeMethod.Disable }
-                    deviceOwnerProvider.setPackagesSuspended(toSuspend, true) +
-                            deviceOwnerProvider.setPackagesEnabled(toDisable, false)
+                    deviceOwnerProvider.setPackagesSuspended(toSuspend, true, userId) +
+                            deviceOwnerProvider.setPackagesEnabled(toDisable, false, userId)
                 } else {
-                    val unsuspended = deviceOwnerProvider.setPackagesSuspended(packageNames, false)
-                    val enabled = deviceOwnerProvider.setPackagesEnabled(packageNames, true)
+                    val unsuspended = deviceOwnerProvider.setPackagesSuspended(packageNames, false, userId)
+                    val enabled = deviceOwnerProvider.setPackagesEnabled(packageNames, true, userId)
                     unsuspended + enabled
                 }
             }
@@ -181,21 +179,22 @@ class FreezeManager internal constructor(
         return succeeded
     }
 
-    suspend fun forceStop(packageName: String): Boolean {
+    suspend fun forceStop(packageName: String, userId: Int = Process.myUid() / 100000): Boolean {
         return when (_activeBackend.value) {
-            FreezeBackendType.Shizuku -> shizukuProvider.forceStopPackage(packageName)
-            FreezeBackendType.Root -> rootProvider.forceStopPackage(packageName)
+            FreezeBackendType.Shizuku -> shizukuProvider.forceStopPackage(packageName, userId)
+            FreezeBackendType.Root -> rootProvider.forceStopPackage(packageName, userId)
             else -> false
         }
     }
 
-    suspend fun clearCache(packageName: String): Boolean {
+    suspend fun clearCache(packageName: String, userId: Int = Process.myUid() / 100000): Boolean {
         return when (_activeBackend.value) {
-            FreezeBackendType.Shizuku -> shizukuProvider.clearCache(packageName)
-            FreezeBackendType.Root -> rootProvider.clearCache(packageName)
+            FreezeBackendType.Shizuku -> shizukuProvider.clearCache(packageName, userId)
+            FreezeBackendType.Root -> rootProvider.clearCache(packageName, userId)
             else -> false
         }
     }
+    // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
     /** Live read of the OS-level frozen state (suspended OR disabled). */
     fun isFrozen(packageName: String): Boolean {

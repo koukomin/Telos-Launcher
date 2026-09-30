@@ -1818,5 +1818,6 @@
     <!-- === TELOS_PENDING_REVIEW_START: smart_freeze_ui_and_actions === -->
     <string name="telos_freeze_app">Freeze app</string>
     <string name="telos_unfreeze_app">Unfreeze app</string>
+    <string name="telos_clone_app">Clone to Sandbox</string>
     <!-- === TELOS_PENDING_REVIEW_END: smart_freeze_ui_and_actions === -->
 </resources>

@@ -64,6 +64,9 @@ android {
         compose = true
         viewBinding = true
         buildConfig = true
+        // === TELOS_PENDING_REVIEW_START: sandbox_cloning_and_bridge ===
+        aidl = true
+        // === TELOS_PENDING_REVIEW_END: sandbox_cloning_and_bridge ===
     }
 
     lint {

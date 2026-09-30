@@ -41,9 +41,11 @@ internal class DeviceOwnerProvider(private val context: Context) : PrivilegedAcc
     // inside the app. Just reports whether it's already held.
     override suspend fun requestPermission(): Boolean = isAvailable()
 
+    // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
     override suspend fun setPackagesSuspended(
         packageNames: List<String>,
         suspended: Boolean,
+        userId: Int,
     ): Set<String> {
         if (packageNames.isEmpty()) return emptySet()
         val manager = dpm ?: return emptySet()
@@ -56,17 +58,17 @@ internal class DeviceOwnerProvider(private val context: Context) : PrivilegedAcc
         }
     }
 
-    // DevicePolicyManager has no per-app "enable" API distinct from setApplicationHidden; hiding
-    // an app is the device-owner-accessible equivalent of disabling it here.
     override suspend fun setPackagesEnabled(
         packageNames: List<String>,
         enabled: Boolean,
+        userId: Int,
     ): Set<String> {
         if (packageNames.isEmpty()) return emptySet()
         val manager = dpm ?: return emptySet()
         return packageNames.filterTo(mutableSetOf()) { pkg ->
             try {
                 manager.setApplicationHidden(admin, pkg, !enabled)
+                true
             } catch (e: Throwable) {
                 Log.e(TAG, "setApplicationHidden($pkg) failed", e)
                 false
@@ -74,12 +76,10 @@ internal class DeviceOwnerProvider(private val context: Context) : PrivilegedAcc
         }
     }
 
-    // No device-owner-accessible equivalent of ActivityManager.forceStopPackage; it remains a
-    // FORCE_STOP_PACKAGES signature permission even for device owners.
-    override suspend fun forceStopPackage(packageName: String): Boolean = false
+    override suspend fun forceStopPackage(packageName: String, userId: Int): Boolean = false
 
-    // No device-owner-accessible equivalent of PackageManager.deleteApplicationCacheFiles either.
-    override suspend fun clearCache(packageName: String): Boolean = false
+    override suspend fun clearCache(packageName: String, userId: Int): Boolean = false
+    // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
     companion object {
         private const val TAG = "DeviceOwnerProvider"

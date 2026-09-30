@@ -786,6 +786,7 @@
     <!-- === TELOS_PENDING_REVIEW_START: smart_freeze_ui_and_actions === -->
     <string name="telos_freeze_app">Πάγωμα εφαρμογής</string>
     <string name="telos_unfreeze_app">Ξεπάγωμα εφαρμογής</string>
+    <string name="telos_clone_app">Κλωνοποίηση στο Sandbox</string>
     <!-- === TELOS_PENDING_REVIEW_END: smart_freeze_ui_and_actions === -->
 
     <string name="preference_category_advanced_search_features">Λειτουργίες</string>

@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Process
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -45,7 +46,8 @@ internal class IslandProvider(private val context: Context) {
         }
     }
 
-    fun setPackagesSuspended(packageNames: List<String>, suspended: Boolean): Boolean {
+    // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
+    fun setPackagesSuspended(packageNames: List<String>, suspended: Boolean, userId: Int = Process.myUid() / 100000): Boolean {
         if (packageNames.isEmpty()) return true
         val intent = buildFreezeIntent(packageNames, suspended) ?: return false
         return try {
@@ -56,6 +58,7 @@ internal class IslandProvider(private val context: Context) {
             false
         }
     }
+    // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
     /**
      * Posts a notification that freezes [packageNames] via Island when tapped - the only way to

@@ -83,6 +83,13 @@
             android:exported="false"
             android:foregroundServiceType="specialUse" />
         <!-- === TELOS_PENDING_REVIEW_END: smart_freeze_permissions === -->
+
+        <!-- === TELOS_PENDING_REVIEW_START: sandbox_cloning_and_bridge === -->
+        <service
+            android:name="de.mm20.launcher2.sandbox.SandboxBridgeService"
+            android:exported="true"
+            android:permission="android.permission.INTERACT_ACROSS_PROFILES" />
+        <!-- === TELOS_PENDING_REVIEW_END: sandbox_cloning_and_bridge === -->
     </application>
 
 </manifest>

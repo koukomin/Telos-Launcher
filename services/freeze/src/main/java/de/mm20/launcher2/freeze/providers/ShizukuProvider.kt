@@ -86,16 +86,18 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
         }
     }
 
+    // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
     override suspend fun setPackagesSuspended(
         packageNames: List<String>,
         suspended: Boolean,
+        userId: Int,
     ): Set<String> = withContext(Dispatchers.IO) {
         if (!hasPermission()) return@withContext emptySet()
         val pm = packageManager() ?: return@withContext emptySet()
         // setPackagesSuspendedAsUser returns the packages it could NOT toggle, so anything not in
         // the failure list succeeded. Call per-package to isolate individual failures.
         packageNames.filterTo(mutableSetOf()) { pkg ->
-            runCatching { setSuspended(pm, pkg, suspended) }
+            runCatching { setSuspended(pm, pkg, suspended, userId) }
                 .onFailure { Log.e(TAG, "setPackagesSuspended($pkg) failed", it) }
                 .getOrDefault(false)
         }
@@ -104,11 +106,12 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
     override suspend fun setPackagesEnabled(
         packageNames: List<String>,
         enabled: Boolean,
+        userId: Int,
     ): Set<String> = withContext(Dispatchers.IO) {
         if (!hasPermission()) return@withContext emptySet()
         val pm = packageManager() ?: return@withContext emptySet()
         packageNames.filterTo(mutableSetOf()) { pkg ->
-            runCatching { setEnabled(pm, pkg, enabled) }
+            runCatching { setEnabled(pm, pkg, enabled, userId) }
                 .onFailure { Log.e(TAG, "setPackagesEnabled($pkg) failed", it) }
                 .getOrDefault(false)
         }
@@ -118,7 +121,7 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
      * Toggles the app's enabled setting. When disabling from adb-backed Shizuku we use
      * DISABLED_USER (the shell uid can't fully disable), matching Hail's behavior.
      */
-    private fun setEnabled(pm: Any, packageName: String, enabled: Boolean): Boolean {
+    private fun setEnabled(pm: Any, packageName: String, enabled: Boolean, userId: Int): Boolean {
         val newState = when {
             enabled -> PackageManager.COMPONENT_ENABLED_STATE_ENABLED
             isRoot -> PackageManager.COMPONENT_ENABLED_STATE_DISABLED
@@ -138,6 +141,7 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
         }
         return true
     }
+    // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
     private fun packageManager(): Any? {
         return runCatching {
@@ -152,7 +156,8 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
     }
 
     /** @return true if the package ended up in the requested state. */
-    private fun setSuspended(pm: Any, packageName: String, suspended: Boolean): Boolean {
+    // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
+    private fun setSuspended(pm: Any, packageName: String, suspended: Boolean, userId: Int): Boolean {
         val pkgs = arrayOf(packageName)
         val failed = when {
             isAtLeastApiLevel(Build.VERSION_CODES.UPSIDE_DOWN_CAKE) -> HiddenApiBypass.invoke(
@@ -178,7 +183,7 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
         return (failed as? Array<*>)?.isEmpty() ?: false
     }
 
-    override suspend fun forceStopPackage(packageName: String): Boolean = withContext(Dispatchers.IO) {
+    override suspend fun forceStopPackage(packageName: String, userId: Int): Boolean = withContext(Dispatchers.IO) {
         if (!hasPermission()) return@withContext false
         runCatching {
             val binder = ShizukuBinderWrapper(SystemServiceHelper.getSystemService("activity"))
@@ -198,7 +203,7 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
         }.getOrDefault(false)
     }
 
-    override suspend fun clearCache(packageName: String): Boolean = withContext(Dispatchers.IO) {
+    override suspend fun clearCache(packageName: String, userId: Int): Boolean = withContext(Dispatchers.IO) {
         if (!hasPermission()) return@withContext false
         val pm = packageManager() ?: return@withContext false
         runCatching {
@@ -211,4 +216,5 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
             true
         }.getOrDefault(false)
     }
+    // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 }
