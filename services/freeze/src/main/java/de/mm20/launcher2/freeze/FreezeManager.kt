@@ -12,6 +12,7 @@ import de.mm20.launcher2.freeze.providers.ShizukuProvider
 import de.mm20.launcher2.freeze.providers.IslandProvider
 import de.mm20.launcher2.freeze.providers.DeviceOwnerProvider
 import de.mm20.launcher2.freeze.providers.DeviceOwnerAdminReceiver
+import de.mm20.launcher2.freeze.providers.DhizukuProvider
 import de.mm20.launcher2.preferences.FreezeBackendPreference
 import de.mm20.launcher2.preferences.FreezeMethod
 import de.mm20.launcher2.preferences.freeze.FreezeSettings
@@ -24,6 +25,22 @@ class FreezeManager internal constructor(
     private val context: Context,
     private val settings: FreezeSettings,
 ) {
+    // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
+    private val dhizukuProvider = DhizukuProvider(context)
+    
+    // Critical system packages to protect from freezing
+    private val PROTECTED_PACKAGES = setOf(
+        "android",
+        "com.android.systemui",
+        "com.android.settings",
+        "com.android.keyguard",
+        "com.android.server.telecom",
+        "com.google.android.gms",
+        "com.android.vending",
+        context.packageName
+    )
+    // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
+
     private val shizukuProvider = ShizukuProvider()
     private val rootProvider = RootProvider()
     private val islandProvider = IslandProvider(context)
@@ -38,6 +55,11 @@ class FreezeManager internal constructor(
             FreezeBackendPreference.ShizukuOnly ->
                 FreezeBackendType.Shizuku.takeIf { shizukuProvider.isAvailable() }
 
+            // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
+            FreezeBackendPreference.DhizukuOnly ->
+                FreezeBackendType.Dhizuku.takeIf { dhizukuProvider.isAvailable() }
+            // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
+
             FreezeBackendPreference.RootOnly ->
                 FreezeBackendType.Root.takeIf { rootProvider.isAvailable() }
 
@@ -49,6 +71,7 @@ class FreezeManager internal constructor(
 
             FreezeBackendPreference.Auto -> when {
                 shizukuProvider.isAvailable() -> FreezeBackendType.Shizuku
+                dhizukuProvider.isAvailable() -> FreezeBackendType.Dhizuku
                 rootProvider.isAvailable() -> FreezeBackendType.Root
                 deviceOwnerProvider.isAvailable() -> FreezeBackendType.DeviceOwner
                 islandProvider.isAvailable() -> FreezeBackendType.Island
@@ -59,6 +82,7 @@ class FreezeManager internal constructor(
 
     suspend fun hasPermission(): Boolean = when (_activeBackend.value) {
         FreezeBackendType.Shizuku -> shizukuProvider.hasPermission()
+        FreezeBackendType.Dhizuku -> dhizukuProvider.hasPermission()
         FreezeBackendType.Root -> rootProvider.hasPermission()
         FreezeBackendType.Island -> true // Intent based, no runtime permission for us
         FreezeBackendType.DeviceOwner -> deviceOwnerProvider.hasPermission()
@@ -68,6 +92,7 @@ class FreezeManager internal constructor(
     /** Prompts for permission on the active backend, if any. Suspends until the user responds. */
     suspend fun requestPermission(): Boolean = when (_activeBackend.value) {
         FreezeBackendType.Shizuku -> shizukuProvider.requestPermission()
+        FreezeBackendType.Dhizuku -> dhizukuProvider.requestPermission()
         FreezeBackendType.Root -> rootProvider.requestPermission()
         FreezeBackendType.Island -> true
         FreezeBackendType.DeviceOwner -> deviceOwnerProvider.requestPermission()
@@ -112,13 +137,22 @@ class FreezeManager internal constructor(
     private suspend fun setSuspended(packageNames: List<String>, suspended: Boolean, userId: Int = Process.myUid() / 100000): Set<String> {
         if (packageNames.isEmpty()) return emptySet()
 
+        // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
+        val safePackages = packageNames.filterNot { PROTECTED_PACKAGES.contains(it) }
+        if (safePackages.isEmpty()) {
+            Log.w(TAG, "All targeted packages are protected system packages. Aborting freeze.")
+            return emptySet()
+        }
+        val targetPackages = safePackages
+        // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
+
         val backend = _activeBackend.value
         if (backend == null) {
-            Log.w(TAG, "setSuspended($packageNames, $suspended, user $userId): no active backend")
+            Log.w(TAG, "setSuspended($targetPackages, $suspended, user $userId): no active backend")
             return emptySet()
         }
         if (!hasPermission()) {
-            Log.w(TAG, "setSuspended($packageNames, $suspended, user $userId): $backend has no permission")
+            Log.w(TAG, "setSuspended($targetPackages, $suspended, user $userId): $backend has no permission")
             return emptySet()
         }
         val methods = settings.freezeMethods.first()
@@ -126,33 +160,48 @@ class FreezeManager internal constructor(
         val succeeded = when (backend) {
             FreezeBackendType.Shizuku -> {
                 if (suspended) {
-                    val toDisable = packageNames.filter { methods[it] == FreezeMethod.Disable }
-                    val toSuspend = packageNames.filter { methods[it] != FreezeMethod.Disable }
+                    val toDisable = targetPackages.filter { methods[it] == FreezeMethod.Disable }
+                    val toSuspend = targetPackages.filter { methods[it] != FreezeMethod.Disable }
                     shizukuProvider.setPackagesSuspended(toSuspend, true, userId) +
                             shizukuProvider.setPackagesEnabled(toDisable, false, userId)
                 } else {
-                    val unsuspended = shizukuProvider.setPackagesSuspended(packageNames, false, userId)
-                    val enabled = shizukuProvider.setPackagesEnabled(packageNames, true, userId)
+                    val unsuspended = shizukuProvider.setPackagesSuspended(targetPackages, false, userId)
+                    val enabled = shizukuProvider.setPackagesEnabled(targetPackages, true, userId)
                     unsuspended + enabled
                 }
             }
+            
+            // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
+            FreezeBackendType.Dhizuku -> {
+                if (suspended) {
+                    val toDisable = targetPackages.filter { methods[it] == FreezeMethod.Disable }
+                    val toSuspend = targetPackages.filter { methods[it] != FreezeMethod.Disable }
+                    dhizukuProvider.setPackagesSuspended(toSuspend, true, userId) +
+                            dhizukuProvider.setPackagesEnabled(toDisable, false, userId)
+                } else {
+                    val unsuspended = dhizukuProvider.setPackagesSuspended(targetPackages, false, userId)
+                    val enabled = dhizukuProvider.setPackagesEnabled(targetPackages, true, userId)
+                    unsuspended + enabled
+                }
+            }
+            // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
 
             FreezeBackendType.Root -> {
                 if (suspended) {
-                    val toDisable = packageNames.filter { methods[it] == FreezeMethod.Disable }
-                    val toSuspend = packageNames.filter { methods[it] != FreezeMethod.Disable }
+                    val toDisable = targetPackages.filter { methods[it] == FreezeMethod.Disable }
+                    val toSuspend = targetPackages.filter { methods[it] != FreezeMethod.Disable }
                     rootProvider.setPackagesSuspended(toSuspend, true, userId) +
                             rootProvider.setPackagesEnabled(toDisable, false, userId)
                 } else {
-                    val unsuspended = rootProvider.setPackagesSuspended(packageNames, false, userId)
-                    val enabled = rootProvider.setPackagesEnabled(packageNames, true, userId)
+                    val unsuspended = rootProvider.setPackagesSuspended(targetPackages, false, userId)
+                    val enabled = rootProvider.setPackagesEnabled(targetPackages, true, userId)
                     unsuspended + enabled
                 }
             }
 
             FreezeBackendType.Island -> {
-                if (islandProvider.setPackagesSuspended(packageNames, suspended, userId)) {
-                    packageNames.toSet()
+                if (islandProvider.setPackagesSuspended(targetPackages, suspended, userId)) {
+                    targetPackages.toSet()
                 } else {
                     emptySet()
                 }
@@ -160,13 +209,13 @@ class FreezeManager internal constructor(
 
             FreezeBackendType.DeviceOwner -> {
                 if (suspended) {
-                    val toDisable = packageNames.filter { methods[it] == FreezeMethod.Disable }
-                    val toSuspend = packageNames.filter { methods[it] != FreezeMethod.Disable }
+                    val toDisable = targetPackages.filter { methods[it] == FreezeMethod.Disable }
+                    val toSuspend = targetPackages.filter { methods[it] != FreezeMethod.Disable }
                     deviceOwnerProvider.setPackagesSuspended(toSuspend, true, userId) +
                             deviceOwnerProvider.setPackagesEnabled(toDisable, false, userId)
                 } else {
-                    val unsuspended = deviceOwnerProvider.setPackagesSuspended(packageNames, false, userId)
-                    val enabled = deviceOwnerProvider.setPackagesEnabled(packageNames, true, userId)
+                    val unsuspended = deviceOwnerProvider.setPackagesSuspended(targetPackages, false, userId)
+                    val enabled = deviceOwnerProvider.setPackagesEnabled(targetPackages, true, userId)
                     unsuspended + enabled
                 }
             }
@@ -180,16 +229,28 @@ class FreezeManager internal constructor(
     }
 
     suspend fun forceStop(packageName: String, userId: Int = Process.myUid() / 100000): Boolean {
+        // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
+        if (PROTECTED_PACKAGES.contains(packageName)) return false
+        // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
         return when (_activeBackend.value) {
             FreezeBackendType.Shizuku -> shizukuProvider.forceStopPackage(packageName, userId)
+            // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
+            FreezeBackendType.Dhizuku -> dhizukuProvider.forceStopPackage(packageName, userId)
+            // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
             FreezeBackendType.Root -> rootProvider.forceStopPackage(packageName, userId)
             else -> false
         }
     }
 
     suspend fun clearCache(packageName: String, userId: Int = Process.myUid() / 100000): Boolean {
+        // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
+        if (PROTECTED_PACKAGES.contains(packageName)) return false
+        // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
         return when (_activeBackend.value) {
             FreezeBackendType.Shizuku -> shizukuProvider.clearCache(packageName, userId)
+            // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
+            FreezeBackendType.Dhizuku -> dhizukuProvider.clearCache(packageName, userId)
+            // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
             FreezeBackendType.Root -> rootProvider.clearCache(packageName, userId)
             else -> false
         }

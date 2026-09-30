@@ -1825,4 +1825,8 @@
     <string name="telos_setup_sandbox_title">Initialize Telos Sandbox</string>
     <string name="telos_setup_sandbox_summary">Create an isolated work profile to safely isolate and clone apps</string>
     <!-- === TELOS_PENDING_REVIEW_END: sandbox_provisioning === -->
+
+    <!-- === TELOS_PENDING_REVIEW_START: thor_freezer_features === -->
+    <string name="telos_freeze_backend_dhizuku">Dhizuku</string>
+    <!-- === TELOS_PENDING_REVIEW_END: thor_freezer_features === -->
 </resources>

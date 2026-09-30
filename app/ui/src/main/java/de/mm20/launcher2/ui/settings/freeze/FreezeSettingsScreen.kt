@@ -117,6 +117,9 @@ fun FreezeSettingsScreen() {
                         title = stringResource(
                             when (activeBackend) {
                                 FreezeBackendType.Shizuku -> R.string.freeze_backend_shizuku
+                                // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
+                                FreezeBackendType.Dhizuku -> R.string.telos_freeze_backend_dhizuku
+                                // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
                                 FreezeBackendType.Root -> R.string.freeze_backend_root
                                 FreezeBackendType.Island -> R.string.freeze_backend_island
                                 FreezeBackendType.DeviceOwner -> R.string.freeze_backend_device_owner

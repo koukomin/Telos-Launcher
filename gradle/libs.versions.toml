@@ -50,6 +50,7 @@ espressoCore = "3.6.1"
 osmOpeningHours = "0.4.0"
 
 shizuku = "13.1.5"
+dhizuku = "2.5.3"
 
 [libraries]
 mustache-compiler = { module = "com.github.spullara.mustache.java:compiler", version.ref = "mustache" }
@@ -144,6 +145,7 @@ smartspacer = { group = "com.kieronquinn.smartspacer", name = "sdk-client", vers
 
 shizuku-api = { group = "dev.rikka.shizuku", name = "api", version.ref = "shizuku" }
 shizuku-provider = { group = "dev.rikka.shizuku", name = "provider", version.ref = "shizuku" }
+dhizuku-api = { group = "io.github.iamr0s", name = "Dhizuku-API", version.ref = "dhizuku" }
 hiddenapibypass = { group = "org.lsposed.hiddenapibypass", name = "hiddenapibypass", version = "4.3" }
 
 [bundles]

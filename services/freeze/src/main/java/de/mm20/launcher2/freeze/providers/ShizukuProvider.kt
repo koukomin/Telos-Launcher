@@ -87,6 +87,7 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
     }
 
     // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
+    // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
     override suspend fun setPackagesSuspended(
         packageNames: List<String>,
         suspended: Boolean,
@@ -94,12 +95,28 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
     ): Set<String> = withContext(Dispatchers.IO) {
         if (!hasPermission()) return@withContext emptySet()
         val pm = packageManager() ?: return@withContext emptySet()
-        // setPackagesSuspendedAsUser returns the packages it could NOT toggle, so anything not in
-        // the failure list succeeded. Call per-package to isolate individual failures.
         packageNames.filterTo(mutableSetOf()) { pkg ->
-            runCatching { setSuspended(pm, pkg, suspended, userId) }
+            var success = runCatching { setSuspended(pm, pkg, suspended, userId) }
                 .onFailure { Log.e(TAG, "setPackagesSuspended($pkg) failed", it) }
                 .getOrDefault(false)
+
+            // OEM Fallback: If suspend fails, try uninstall/install-existing
+            if (!success) {
+                success = runCatching {
+                    val method = Shizuku::class.java.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)
+                    method.isAccessible = true
+                    if (suspended) {
+                        Log.i(TAG, "Suspend failed for $pkg. Falling back to uninstall -k")
+                        val process = method.invoke(null, arrayOf("sh", "-c", "pm uninstall -k --user $userId $pkg"), null, null)
+                        process::class.java.getMethod("waitFor").invoke(process) == 0
+                    } else {
+                        Log.i(TAG, "Unsuspend failed for $pkg. Falling back to install-existing")
+                        val process = method.invoke(null, arrayOf("sh", "-c", "cmd package install-existing --user $userId $pkg"), null, null)
+                        process::class.java.getMethod("waitFor").invoke(process) == 0
+                    }
+                }.getOrDefault(false)
+            }
+            success
         }
     }
 
@@ -111,11 +128,30 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
         if (!hasPermission()) return@withContext emptySet()
         val pm = packageManager() ?: return@withContext emptySet()
         packageNames.filterTo(mutableSetOf()) { pkg ->
-            runCatching { setEnabled(pm, pkg, enabled, userId) }
+            var success = runCatching { setEnabled(pm, pkg, enabled, userId) }
                 .onFailure { Log.e(TAG, "setPackagesEnabled($pkg) failed", it) }
                 .getOrDefault(false)
+                
+            // OEM Fallback: If disable fails, try uninstall/install-existing
+            if (!success) {
+                success = runCatching {
+                    val method = Shizuku::class.java.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)
+                    method.isAccessible = true
+                    if (!enabled) {
+                        Log.i(TAG, "Disable failed for $pkg. Falling back to uninstall -k")
+                        val process = method.invoke(null, arrayOf("sh", "-c", "pm uninstall -k --user $userId $pkg"), null, null)
+                        process::class.java.getMethod("waitFor").invoke(process) == 0
+                    } else {
+                        Log.i(TAG, "Enable failed for $pkg. Falling back to install-existing")
+                        val process = method.invoke(null, arrayOf("sh", "-c", "cmd package install-existing --user $userId $pkg"), null, null)
+                        process::class.java.getMethod("waitFor").invoke(process) == 0
+                    }
+                }.getOrDefault(false)
+            }
+            success
         }
     }
+    // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
 
     /**
      * Toggles the app's enabled setting. When disabling from adb-backed Shizuku we use

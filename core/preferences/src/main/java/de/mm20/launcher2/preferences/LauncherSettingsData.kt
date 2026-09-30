@@ -947,6 +947,9 @@ enum class BatteryStatusVisibility {
 enum class FreezeBackendPreference {
     @SerialName("auto") Auto,
     @SerialName("shizuku") ShizukuOnly,
+    // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
+    @SerialName("dhizuku") DhizukuOnly,
+    // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
     @SerialName("root") RootOnly,
     @SerialName("island") Island,
     @SerialName("device_owner") DeviceOwnerOnly,

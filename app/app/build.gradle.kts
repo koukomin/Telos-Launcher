@@ -180,6 +180,10 @@ dependencies {
     implementation(libs.shizuku.provider)
     // === TELOS_PENDING_REVIEW_END: smart_freeze_dependencies ===
 
+    // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
+    implementation(libs.dhizuku.api)
+    // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
+
     // Uncomment this if you want annoying notifications in your debug builds
     //debugImplementation(libs.leakcanary)
 }

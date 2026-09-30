@@ -794,6 +794,10 @@
     <string name="telos_setup_sandbox_summary">Δημιουργήστε ένα απομονωμένο προφίλ εργασίας για την ασφαλή απομόνωση και κλωνοποίηση εφαρμογών</string>
     <!-- === TELOS_PENDING_REVIEW_END: sandbox_provisioning === -->
 
+    <!-- === TELOS_PENDING_REVIEW_START: thor_freezer_features === -->
+    <string name="telos_freeze_backend_dhizuku">Dhizuku</string>
+    <!-- === TELOS_PENDING_REVIEW_END: thor_freezer_features === -->
+
     <string name="preference_category_advanced_search_features">Λειτουργίες</string>
     <string name="preference_freeze_advanced_features">Σύνθετες λειτουργίες</string>
     <string name="preference_freeze_advanced_features_summary">Ξεκλειδώνει τις ενέργειες Πάγωμα, Αναγκαστικός τερματισμός και Εκκαθάριση προσωρινής μνήμης στα μενού εφαρμογών (Απαιτεί Shizuku ή Root)</string>
