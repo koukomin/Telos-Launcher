@@ -32,6 +32,10 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="org.tasks.permission.READ_TASKS" />
 
+    <!-- === TELOS_PENDING_REVIEW_START: desktop_taskbar_running_apps === -->
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+    <!-- === TELOS_PENDING_REVIEW_END: desktop_taskbar_running_apps === -->
+
     <!-- === TELOS_PENDING_REVIEW_START: smart_freeze_permissions === -->
     <uses-permission android:name="dev.rikka.shizuku.permission.API_V23" />
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
