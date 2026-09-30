@@ -1820,4 +1820,9 @@
     <string name="telos_unfreeze_app">Unfreeze app</string>
     <string name="telos_clone_app">Clone to Sandbox</string>
     <!-- === TELOS_PENDING_REVIEW_END: smart_freeze_ui_and_actions === -->
+
+    <!-- === TELOS_PENDING_REVIEW_START: sandbox_provisioning === -->
+    <string name="telos_setup_sandbox_title">Initialize Telos Sandbox</string>
+    <string name="telos_setup_sandbox_summary">Create an isolated work profile to safely isolate and clone apps</string>
+    <!-- === TELOS_PENDING_REVIEW_END: sandbox_provisioning === -->
 </resources>

@@ -24,6 +24,8 @@ import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.settings.protection.authenticateSettings
 import de.mm20.launcher2.ui.settings.protection.canAuthenticateSettings
 import kotlinx.serialization.Serializable
+import de.mm20.launcher2.sandbox.SandboxProvisioner
+import android.app.Activity
 
 @Serializable
 data object WorkProfileSettingsRoute : NavKey
@@ -92,6 +94,21 @@ fun WorkProfileSettingsScreen() {
                     ),
                     onClick = { openSystemUserSettings() },
                 )
+                // === TELOS_PENDING_REVIEW_START: sandbox_provisioning ===
+                if (workProfile == null) {
+                    Preference(
+                        icon = R.drawable.add_24px,
+                        title = stringResource(R.string.telos_setup_sandbox_title),
+                        summary = stringResource(R.string.telos_setup_sandbox_summary),
+                        onClick = {
+                            val activity = context as? Activity
+                            if (activity != null) {
+                                SandboxProvisioner.startProvisioning(activity, 1001)
+                            }
+                        }
+                    )
+                }
+                // === TELOS_PENDING_REVIEW_END: sandbox_provisioning ===
             }
         }
         if (workProfile != null) {

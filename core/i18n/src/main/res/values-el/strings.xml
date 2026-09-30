@@ -789,6 +789,11 @@
     <string name="telos_clone_app">Κλωνοποίηση στο Sandbox</string>
     <!-- === TELOS_PENDING_REVIEW_END: smart_freeze_ui_and_actions === -->
 
+    <!-- === TELOS_PENDING_REVIEW_START: sandbox_provisioning === -->
+    <string name="telos_setup_sandbox_title">Εκκίνηση Telos Sandbox</string>
+    <string name="telos_setup_sandbox_summary">Δημιουργήστε ένα απομονωμένο προφίλ εργασίας για την ασφαλή απομόνωση και κλωνοποίηση εφαρμογών</string>
+    <!-- === TELOS_PENDING_REVIEW_END: sandbox_provisioning === -->
+
     <string name="preference_category_advanced_search_features">Λειτουργίες</string>
     <string name="preference_freeze_advanced_features">Σύνθετες λειτουργίες</string>
     <string name="preference_freeze_advanced_features_summary">Ξεκλειδώνει τις ενέργειες Πάγωμα, Αναγκαστικός τερματισμός και Εκκαθάριση προσωρινής μνήμης στα μενού εφαρμογών (Απαιτεί Shizuku ή Root)</string>
