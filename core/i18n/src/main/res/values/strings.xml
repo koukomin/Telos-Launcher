@@ -1835,4 +1835,11 @@
     <string name="telos_change_wallpaper">Change Wallpaper</string>
     <string name="telos_add_shortcut">Add Shortcut</string>
     <!-- === TELOS_PENDING_REVIEW_END: desktop_grid_and_context_menu === -->
+
+    <!-- === TELOS_PENDING_REVIEW_START: desktop_window_snapping === -->
+    <string name="telos_snap_left">Snap Left</string>
+    <string name="telos_snap_right">Snap Right</string>
+    <string name="telos_maximize">Maximize</string>
+    <string name="telos_close_window">Close Window</string>
+    <!-- === TELOS_PENDING_REVIEW_END: desktop_window_snapping === -->
 </resources>

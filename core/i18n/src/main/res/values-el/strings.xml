@@ -804,6 +804,13 @@
     <string name="telos_add_shortcut">Προσθήκη συντόμευσης</string>
     <!-- === TELOS_PENDING_REVIEW_END: desktop_grid_and_context_menu === -->
 
+    <!-- === TELOS_PENDING_REVIEW_START: desktop_window_snapping === -->
+    <string name="telos_snap_left">Κούμπωμα αριστερά</string>
+    <string name="telos_snap_right">Κούμπωμα δεξιά</string>
+    <string name="telos_maximize">Μεγιστοποίηση</string>
+    <string name="telos_close_window">Κλείσιμο</string>
+    <!-- === TELOS_PENDING_REVIEW_END: desktop_window_snapping === -->
+
     <string name="preference_category_advanced_search_features">Λειτουργίες</string>
     <string name="preference_freeze_advanced_features">Σύνθετες λειτουργίες</string>
     <string name="preference_freeze_advanced_features_summary">Ξεκλειδώνει τις ενέργειες Πάγωμα, Αναγκαστικός τερματισμός και Εκκαθάριση προσωρινής μνήμης στα μενού εφαρμογών (Απαιτεί Shizuku ή Root)</string>
