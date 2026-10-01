@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="websearch_dialog_url_error">Korvattava termi \'${1}\' puuttuu osoitteesta</string>
     <string name="widget_action_replace">Korvaa</string>
@@ -558,7 +558,7 @@
     <string name="location_closed">Suljettu</string>
     <string name="location_open">Avoinna</string>
     <string name="menu_map">Näytä kartalla</string>
-    <!-- Freeze Manager -->
+    
     <string name="preference_freeze_backend">Freeze backend</string>
     <string name="freeze_backend_icebox">Ice Box</string>
     <string name="freeze_backend_hail">Hail</string>
@@ -596,4 +596,4 @@
     <string name="web_app_shortcut_icon_source_website">Website icon</string>
     <string name="web_app_shortcut_icon_source_system">System icon</string>
     <string name="web_app_shortcut_icon_source_custom">Custom icon</string>
-</resources>
+<string name="preference_wallpaper_select_image">Select Image</string><string name="preference_wallpaper_select_image_summary">Choose a static image from your photos</string><string name="preference_wallpaper_select_video">Select Video</string><string name="preference_wallpaper_select_video_summary">Choose a live video wallpaper</string><string name="preference_wallpaper_select_file">Browse File System</string><string name="preference_wallpaper_select_file_summary">Select any media file from your storage</string></resources>

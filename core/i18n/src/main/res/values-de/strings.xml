@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="preference_search_bar_auto_focus_summary">Tastatur beim Öffnen des App-Menüs automatisch anzeigen</string>
     <string name="menu_uninstall">Deinstallieren</string>
@@ -878,4 +878,4 @@
     <string name="preference_show_app_recommendations_summary">Gelegentlich eine App in einer Kategorie wie VPN oder Passwort-Manager vorschlagen</string>
 
     <string name="preference_category_animations">Animationen</string>
-</resources>
+<string name="preference_wallpaper_select_image">Select Image</string><string name="preference_wallpaper_select_image_summary">Choose a static image from your photos</string><string name="preference_wallpaper_select_video">Select Video</string><string name="preference_wallpaper_select_video_summary">Choose a live video wallpaper</string><string name="preference_wallpaper_select_file">Browse File System</string><string name="preference_wallpaper_select_file_summary">Select any media file from your storage</string></resources>

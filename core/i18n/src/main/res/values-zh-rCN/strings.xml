@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="preference_dim_wallpaper_summary">在深色主题中，使壁纸变暗</string>
     <string name="preference_nextcloud">Nextcloud</string>
@@ -919,7 +919,7 @@
     <string name="preference_category_donate">支持开发</string>
     <string name="preference_search_apps_show_details">显示应用信息</string>
     <string name="preference_search_apps_show_details_summary">在上下文菜单中显示应用的版本与包名</string>
-    <!-- Freeze Manager -->
+    
     <string name="preference_freeze_backend">Freeze backend</string>
     <string name="freeze_backend_icebox">Ice Box</string>
     <string name="freeze_backend_hail">Hail</string>
@@ -957,4 +957,4 @@
     <string name="web_app_shortcut_icon_source_website">Website icon</string>
     <string name="web_app_shortcut_icon_source_system">System icon</string>
     <string name="web_app_shortcut_icon_source_custom">Custom icon</string>
-</resources>
+<string name="preference_wallpaper_select_image">Select Image</string><string name="preference_wallpaper_select_image_summary">Choose a static image from your photos</string><string name="preference_wallpaper_select_video">Select Video</string><string name="preference_wallpaper_select_video_summary">Choose a live video wallpaper</string><string name="preference_wallpaper_select_file">Browse File System</string><string name="preference_wallpaper_select_file_summary">Select any media file from your storage</string></resources>

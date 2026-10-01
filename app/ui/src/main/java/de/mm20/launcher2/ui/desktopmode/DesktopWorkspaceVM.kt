@@ -18,10 +18,13 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
+import de.mm20.launcher2.wallpapers.WallpapersService
+
 internal class DesktopWorkspaceVM : ViewModel(), KoinComponent {
     private val favoritesService: FavoritesService by inject()
     private val iconService: IconService by inject()
     private val desktopModeSettings: DesktopModeSettings by inject()
+    private val wallpapersService: WallpapersService by inject()
 
     // Using favorites list as the primary desktop pinned apps source for now
     val pinnedApps = favoritesService.getFavorites()
@@ -34,8 +37,11 @@ internal class DesktopWorkspaceVM : ViewModel(), KoinComponent {
 
     fun setDesktopWallpaper(uri: Uri) {
         viewModelScope.launch {
-            desktopModeSettings.setWallpaperImageUri(uri.toString())
-            desktopModeSettings.setWallpaperMode(DesktopWallpaperMode.StaticImage)
+            val copiedUriStr = wallpapersService.setDesktopWallpaper(uri)
+            if (copiedUriStr != null) {
+                desktopModeSettings.setWallpaperImageUri("file://$copiedUriStr")
+                desktopModeSettings.setWallpaperMode(DesktopWallpaperMode.StaticImage)
+            }
         }
     }
 

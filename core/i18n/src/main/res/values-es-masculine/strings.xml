@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="confirmation_delete_color_scheme">¿Estás seguro de que quieres eliminar el esquema de colores %1$s?</string>
     <string name="confirmation_delete_shapes_scheme">¿Estás seguro de que quieres eliminar el esquema de forma %1$s?</string>
     <string name="confirmation_delete_typography_scheme">¿Estás seguro de que quieres eliminar el esquema de tipografía %1$s?</string>
     <string name="confirmation_delete_transparencies_scheme">¿Estás seguro de que quieres eliminar el esquema de transparencia %1$s?</string>
-    <!-- Freeze Manager -->
+    
     <string name="preference_freeze_backend">Motor de congelación</string>
     <string name="freeze_backend_icebox">Ice Box</string>
     <string name="freeze_backend_hail">Hail</string>
@@ -42,4 +42,4 @@
     <string name="web_app_shortcut_icon_source_website">Website icon</string>
     <string name="web_app_shortcut_icon_source_system">System icon</string>
     <string name="web_app_shortcut_icon_source_custom">Custom icon</string>
-</resources>
+<string name="preference_wallpaper_select_image">Select Image</string><string name="preference_wallpaper_select_image_summary">Choose a static image from your photos</string><string name="preference_wallpaper_select_video">Select Video</string><string name="preference_wallpaper_select_video_summary">Choose a live video wallpaper</string><string name="preference_wallpaper_select_file">Browse File System</string><string name="preference_wallpaper_select_file_summary">Select any media file from your storage</string></resources>

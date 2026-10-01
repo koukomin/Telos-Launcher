@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="menu_share">Partekatu</string>
     <string name="menu_uninstall">Desinstalatu</string>
@@ -299,7 +299,7 @@
     <string name="weather_condition_lightsnow">Elur arina</string>
     <string name="weather_condition_lightsnowshowers">Elur-zaparrada arinak</string>
     <string name="weather_condition_lightrainandthunder">Euri arina eta trumoiak</string>
-    <string name="weather_condition_heavysleetshowersandthunder"/>
+    <string name="weather_condition_heavysleetshowersandthunder" />
     <string name="weather_condition_lightssleetshowersandthunder">Elurbusti-zaparrada arinak eta trumoiak</string>
     <string name="weather_condition_lightssnowshowersandthunder">Elur-zaparrada arinak eta trumoiak</string>
     <string name="weather_condition_lightsleet">Elurbusti arina</string>
@@ -850,7 +850,7 @@
     <string name="preference_transliteration_auto">Automatikoa</string>
     <string name="preference_value_disabled">Ezgaitua</string>
     <string name="select_tag">Etiketa hautatu</string>
-    <!-- Freeze Manager -->
+    
     <string name="preference_freeze_backend">Freeze backend</string>
     <string name="freeze_backend_icebox">Ice Box</string>
     <string name="freeze_backend_hail">Hail</string>
@@ -888,4 +888,4 @@
     <string name="web_app_shortcut_icon_source_website">Website icon</string>
     <string name="web_app_shortcut_icon_source_system">System icon</string>
     <string name="web_app_shortcut_icon_source_custom">Custom icon</string>
-</resources>
+<string name="preference_wallpaper_select_image">Select Image</string><string name="preference_wallpaper_select_image_summary">Choose a static image from your photos</string><string name="preference_wallpaper_select_video">Select Video</string><string name="preference_wallpaper_select_video_summary">Choose a live video wallpaper</string><string name="preference_wallpaper_select_file">Browse File System</string><string name="preference_wallpaper_select_file_summary">Select any media file from your storage</string></resources>

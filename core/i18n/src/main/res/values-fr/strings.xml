@@ -1,55 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="fr">
-    <!-- Shown in the search bar when the search field is empty -->
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:ns0="http://schemas.android.com/tools" ns0:locale="fr">
+    
     <string name="search_bar_placeholder">Rechercher</string>
-    <!-- Shown in the app detail share menu if the application was installed from an app store -->
+    
     <string name="menu_share_store_link">Lien %1$s</string>
-    <!-- Share app menu when both, link and apk share are available-->
+    
     <string name="menu_share_apk_file">Fichier APK</string>
-    <!-- Uninstall an application -->
+    
     <string name="menu_uninstall">Désinstaller</string>
-    <!-- Share something -->
+    
     <string name="menu_share">Partager</string>
     <string name="app_info_version">Version %1$s</string>
-    <!-- Menu entry for launcher settings -->
+    
     <string name="settings">Paramètres</string>
-    <!-- Set the device's wallpaper -->
+    
     <string name="wallpaper">Fond d\'écran</string>
-    <!-- Calendar events that last the entire day -->
+    
     <string name="calendar_event_allday">Journée entière</string>
-    <!-- Wind direction, used in weather widget -->
+    
     <string name="wind_north">Nord</string>
-    <!-- Wind direction, used in weather widget -->
+    
     <string name="wind_north_east">Nord-Est</string>
-    <!-- Wind direction, used in weather widget -->
+    
     <string name="wind_north_north_east">Nord-Nord-Est</string>
-    <!-- Wind direction, used in weather widget -->
+    
     <string name="wind_east_north_east">Est-Nord-Est</string>
-    <!-- Wind direction, used in weather widget -->
+    
     <string name="wind_east">Est</string>
-    <!-- Wind direction, used in weather widget -->
+    
     <string name="wind_east_south_east">Est-Sud-Est</string>
-    <!-- Wind direction, used in weather widget -->
+    
     <string name="wind_south_east">Sud-Est</string>
-    <!-- Wind direction, used in weather widget -->
+    
     <string name="wind_south_south_east">Sud-Sud-Est</string>
-    <!-- Wind direction, used in weather widget -->
+    
     <string name="wind_south">Sud</string>
-    <!-- Wind direction, used in weather widget -->
+    
     <string name="wind_south_south_west">Sud-Sud-Ouest</string>
-    <!-- Wind direction, used in weather widget -->
+    
     <string name="wind_south_west">Sud-Ouest</string>
-    <!-- Wind direction, used in weather widget -->
+    
     <string name="wind_west_south_west">Ouest-Sud-Ouest</string>
-    <!-- Wind direction, used in weather widget -->
+    
     <string name="wind_west">Ouest</string>
-    <!-- Wind direction, used in weather widget -->
+    
     <string name="wind_west_north_west">Ouest-Nord-Ouest</string>
-    <!-- Wind direction, used in weather widget -->
+    
     <string name="wind_north_west">Nord-Ouest</string>
-    <!-- Wind direction, used in weather widget -->
+    
     <string name="wind_north_north_west">Nord-Nord-Ouest</string>
-    <!-- Appearance preference title -->
+    
     <string name="preference_screen_appearance">Apparence</string>
     <string name="preference_theme">Thème</string>
     <string name="preference_theme_light">Clair</string>
@@ -61,7 +61,7 @@
     <string name="preference_version">Version</string>
     <string name="preference_category_links">Liens</string>
     <string name="preference_category_licenses">Licences open-source</string>
-    <!-- Open website of an open source library -->
+    
     <string name="open_webpage">Ouvrir le site Internet</string>
     <string name="preference_screen_about_summary">Informations sur l\'application et la licence</string>
     <string name="preference_screen_appearance_summary">Modifier l\'apparence</string>
@@ -72,7 +72,7 @@
     <string name="preference_imperial_units_summary">Utiliser les degrés Fahrenheit et les miles par heure</string>
     <string name="preference_imperial_units">Système impérial</string>
     <string name="preference_category_debug">Débogage</string>
-    <!-- Wikipedia url prefix -->
+    
     <string name="wikipedia_url">https://fr.wikipedia.org</string>
     <string name="wikipedia_source">Depuis Wikipédia</string>
     <string name="preference_category_icons">Icônes</string>
@@ -213,7 +213,7 @@
         <item quantity="many">+%1$d évènements ont eu lieu ces derniers jours</item>
         <item quantity="other">+%1$d évènements ont eu lieu ces derniers jours</item>
     </plurals>
-    <!-- Weather widget -->
+    
     <string name="weather_condition_sleetshowers">Averses de grésil</string>
     <string name="weather_condition_heavysleet">Fort grésil</string>
     <string name="weather_condition_lightrainshowersandthunder">Légères averses de pluie et orage</string>
@@ -847,7 +847,7 @@
     <string name="profile_work_profile_action_lock">Mettre en pause les applications professionnelles</string>
     <plurals name="calendar_widget_running_tasks">
         <item quantity="one">+%1$d tâche non terminée</item>
-        <item quantity="many"/>
+        <item quantity="many" />
         <item quantity="other">+%1$d tâches non terminées</item>
     </plurals>
     <string name="preference_grid_list_style_summary">Afficher les applications en tant que liste plutôt que grille</string>
@@ -967,7 +967,7 @@
     <string name="gesture_action_widgets_new">Nouvelle page de widgets</string>
     <string name="gesture_action_widgets_empty">Vide</string>
     <string name="gesture_action_launch_select_app">Sélectionner une appli ou un raccourci</string>
-    <!-- Freeze Manager -->
+    
     <string name="preference_freeze_backend">Backend de gel</string>
     <string name="freeze_backend_icebox">Ice Box</string>
     <string name="freeze_backend_hail">Hail</string>
@@ -1016,4 +1016,4 @@
     <string name="preference_dock_count">Nombre de docks</string>
     <string name="preference_dock_reset">Réinitialiser aux favoris auto</string>
     <string name="preference_dock_reset_summary">Supprimer tous les docks personnalisés et utiliser les applis fréquentes à la place</string>
-</resources>
+<string name="preference_wallpaper_select_image">Select Image</string><string name="preference_wallpaper_select_image_summary">Choose a static image from your photos</string><string name="preference_wallpaper_select_video">Select Video</string><string name="preference_wallpaper_select_video_summary">Choose a live video wallpaper</string><string name="preference_wallpaper_select_file">Browse File System</string><string name="preference_wallpaper_select_file_summary">Select any media file from your storage</string></resources>

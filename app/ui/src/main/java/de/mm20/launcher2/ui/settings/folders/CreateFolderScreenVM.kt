@@ -10,8 +10,10 @@ import de.mm20.launcher2.preferences.DockItem
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.searchable.SavableSearchableRepository
+import de.mm20.launcher2.searchable.VisibilityLevel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -23,7 +25,11 @@ class CreateFolderScreenVM : ViewModel(), KoinComponent {
     private val iconService: IconService by inject()
     private val uiSettings: UiSettings by inject()
 
-    val apps: Flow<List<Application>> = appRepository.findMany()
+    // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
+    val apps: Flow<List<Application>> = appRepository.findMany().map { appList ->
+        appList.sortedBy { it.labelOverride ?: it.label }
+    }
+    // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
 
     fun getIcon(app: Application, size: Int): Flow<LauncherIcon?> {
         return iconService.getIcon(app, size)
@@ -42,7 +48,13 @@ class CreateFolderScreenVM : ViewModel(), KoinComponent {
                 itemKeys = selectedKeys.toList(),
                 isCover = true,
             )
-            searchableRepository.insert(folder)
+            // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
+            searchableRepository.upsert(
+                folder,
+                visibility = VisibilityLevel.Default,
+                pinned = true
+            )
+            // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
 
             val dockPages = uiSettings.dockPages.first().toMutableList()
             if (dockPages.isEmpty()) {

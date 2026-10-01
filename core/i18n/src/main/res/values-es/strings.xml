@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
     <string name="menu_open_file">Abrir</string>
@@ -939,7 +939,7 @@
     <string name="typo_preview_medium2">Vista previa</string>
     <string name="typo_preview_long">José compró en Perú una vieja zampoña.\nExcusándose, Sofía tiró su whisky al desagüe de la banqueta. 1234790</string>
     <string name="preference_category_donate">Apoya el desarrollo</string>
-    <!-- Freeze Manager -->
+    
     <string name="preference_freeze_backend">Motor de congelación</string>
     <string name="freeze_backend_icebox">Ice Box</string>
     <string name="freeze_backend_hail">Hail</string>
@@ -988,4 +988,4 @@
     <string name="preference_dock_count">Número de barras</string>
     <string name="preference_dock_reset">Restablecer a favoritos auto</string>
     <string name="preference_dock_reset_summary">Eliminar todas las barras personalizadas y usar apps frecuentes en su lugar</string>
-</resources>
+<string name="preference_wallpaper_select_image">Select Image</string><string name="preference_wallpaper_select_image_summary">Choose a static image from your photos</string><string name="preference_wallpaper_select_video">Select Video</string><string name="preference_wallpaper_select_video_summary">Choose a live video wallpaper</string><string name="preference_wallpaper_select_file">Browse File System</string><string name="preference_wallpaper_select_file_summary">Select any media file from your storage</string></resources>

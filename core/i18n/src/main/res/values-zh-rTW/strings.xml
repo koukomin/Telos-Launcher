@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="help">說明</string>
     <string name="file_meta_year">年份：%1$s</string>
@@ -894,8 +894,8 @@
     <string name="preference_create_transparency">新透明度設定</string>
     <string name="create_search_action_title">新快速操作</string>
     <string name="edit_search_action_title">編輯快速操作</string>
-    <string name="typo_preview_extra_short"/>
-    <string name="typo_preview_short1"/>
+    <string name="typo_preview_extra_short" />
+    <string name="typo_preview_short1" />
     <string name="gesture_action_widgets_indexed">小工具（第 %1$d 頁）</string>
     <string name="preference_calendar_system">曆制</string>
     <string name="preference_calendar_system_primary">主曆制</string>
@@ -913,7 +913,7 @@
     <string name="gesture_action_launch_select_app">選擇應用程式或捷徑</string>
     <string name="preference_search_apps_show_details">顯示應用程式資訊</string>
     <string name="preference_search_apps_show_details_summary">顯示應用程式的版本與套件名稱</string>
-    <!-- Freeze Manager -->
+    
     <string name="preference_freeze_backend">Freeze backend</string>
     <string name="freeze_backend_icebox">Ice Box</string>
     <string name="freeze_backend_hail">Hail</string>
@@ -951,4 +951,4 @@
     <string name="web_app_shortcut_icon_source_website">Website icon</string>
     <string name="web_app_shortcut_icon_source_system">System icon</string>
     <string name="web_app_shortcut_icon_source_custom">Custom icon</string>
-</resources>
+<string name="preference_wallpaper_select_image">Select Image</string><string name="preference_wallpaper_select_image_summary">Choose a static image from your photos</string><string name="preference_wallpaper_select_video">Select Video</string><string name="preference_wallpaper_select_video_summary">Choose a live video wallpaper</string><string name="preference_wallpaper_select_file">Browse File System</string><string name="preference_wallpaper_select_file_summary">Select any media file from your storage</string></resources>

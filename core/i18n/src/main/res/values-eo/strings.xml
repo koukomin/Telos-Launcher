@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="menu_open_file">Aperti</string>
     <string name="settings">Agordoj</string>
@@ -10,7 +10,7 @@
     <string name="experimental_feature">Eksperimenta</string>
     <string name="date_today">Hodiaŭ</string>
     <string name="wind_west">Okcidento</string>
-    <string name="wind_north_east"/>
+    <string name="wind_north_east" />
     <string name="wind_east">Oriento</string>
     <string name="wind_south">Sudo</string>
     <string name="help">Helpo</string>
@@ -35,9 +35,9 @@
     <string name="owncloud_password">Pasvorto</string>
     <string name="date_tomorrow">Morgaŭo</string>
     <string name="weather_condition_unknown">Nekonata</string>
-    <string name="preference_search_apps_show_details_summary"></string>
-    <string name="preference_search_files"></string>
-    <!-- Freeze Manager -->
+    <string name="preference_search_apps_show_details_summary" />
+    <string name="preference_search_files" />
+    
     <string name="preference_freeze_backend">Freeze backend</string>
     <string name="freeze_backend_icebox">Ice Box</string>
     <string name="freeze_backend_hail">Hail</string>
@@ -75,4 +75,4 @@
     <string name="web_app_shortcut_icon_source_website">Website icon</string>
     <string name="web_app_shortcut_icon_source_system">System icon</string>
     <string name="web_app_shortcut_icon_source_custom">Custom icon</string>
-</resources>
+<string name="preference_wallpaper_select_image">Select Image</string><string name="preference_wallpaper_select_image_summary">Choose a static image from your photos</string><string name="preference_wallpaper_select_video">Select Video</string><string name="preference_wallpaper_select_video_summary">Choose a live video wallpaper</string><string name="preference_wallpaper_select_file">Browse File System</string><string name="preference_wallpaper_select_file_summary">Select any media file from your storage</string></resources>

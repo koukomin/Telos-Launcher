@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="menu_share">Compartilhar</string>
     <string name="menu_back">Voltar</string>
@@ -931,7 +931,7 @@
     <string name="create_search_action_title">Nova ação rápida</string>
     <string name="preference_transliteration">Transliteração preferida</string>
     <string name="tag_icon_emoji">Emoji</string>
-    <!-- Freeze Manager -->
+    
     <string name="preference_freeze_backend">Backend de congelamento</string>
     <string name="freeze_backend_icebox">Ice Box</string>
     <string name="freeze_backend_hail">Hail</string>
@@ -969,4 +969,4 @@
     <string name="web_app_shortcut_icon_source_website">Ícone do site</string>
     <string name="web_app_shortcut_icon_source_system">Ícone do sistema</string>
     <string name="web_app_shortcut_icon_source_custom">Ícone personalizado</string>
-</resources>
+<string name="preference_wallpaper_select_image">Select Image</string><string name="preference_wallpaper_select_image_summary">Choose a static image from your photos</string><string name="preference_wallpaper_select_video">Select Video</string><string name="preference_wallpaper_select_video_summary">Choose a live video wallpaper</string><string name="preference_wallpaper_select_file">Browse File System</string><string name="preference_wallpaper_select_file_summary">Select any media file from your storage</string></resources>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="menu_favorites_pin">Adaugă la favorite</string>
     <string name="menu_app_info">Info Aplicație</string>
@@ -281,7 +281,7 @@
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">Încărcat în %1$s minute</item>
         <item quantity="few">Încărcat în %1$s minute</item>
-        <item quantity="other"/>
+        <item quantity="other" />
     </plurals>
     <string name="websearch_dialog_url_error">Substituentul \'${1}\' lipsește din această adresă URL</string>
     <string name="weather_condition_heavysnowshowersandthunder">Averse abundente de zăpadă și tunete</string>
@@ -533,7 +533,7 @@
     <string name="preference_search_local_calendar_summary">Căutați calendare pe acest dispozitiv</string>
     <string name="gesture_action_launch_app">Lansează aplicație</string>
     <string name="gesture_action_notifications">Deschide panoul de notificări</string>
-    <!-- Freeze Manager -->
+    
     <string name="preference_freeze_backend">Freeze backend</string>
     <string name="freeze_backend_icebox">Ice Box</string>
     <string name="freeze_backend_hail">Hail</string>
@@ -571,4 +571,4 @@
     <string name="web_app_shortcut_icon_source_website">Website icon</string>
     <string name="web_app_shortcut_icon_source_system">System icon</string>
     <string name="web_app_shortcut_icon_source_custom">Custom icon</string>
-</resources>
+<string name="preference_wallpaper_select_image">Select Image</string><string name="preference_wallpaper_select_image_summary">Choose a static image from your photos</string><string name="preference_wallpaper_select_video">Select Video</string><string name="preference_wallpaper_select_video_summary">Choose a live video wallpaper</string><string name="preference_wallpaper_select_file">Browse File System</string><string name="preference_wallpaper_select_file_summary">Select any media file from your storage</string></resources>

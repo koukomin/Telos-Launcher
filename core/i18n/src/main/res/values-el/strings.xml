@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="preference_search_bar_auto_focus_summary">Αυτόματη εμφάνιση του πληκτρολογίου κατά το άνοιγμα του μενού εφαρμογών</string>
     <string name="menu_uninstall">Απεγκατάσταση</string>
@@ -638,7 +638,7 @@
     <string name="preference_private_keyboard">Ιδιωτικό πληκτρολόγιο</string>
     <string name="preference_private_keyboard_summary">Αίτημα από το πληκτρολόγιο να μην μαθαίνει ή αποθηκεύει κείμενο που πληκτρολογείται στην αναζήτηση</string>
 
-    <!-- Widgets: reset tutorial -->
+    
     <string name="preference_reset_widgets_tutorial">Επαναφορά οδηγού χρήσης</string>
     <string name="preference_reset_widgets_tutorial_summary">Εμφάνιση ξανά του οδηγού χρήσης widget την επόμενη φορά που θα ανοίξετε την οθόνη widget</string>
     <string name="widgets_tutorial_add_text">Πατήστε \'Επεξεργασία widget\' παρακάτω, μετά \'Προσθήκη widget\', για να τοποθετήσετε ένα νέο widget εδώ.</string>
@@ -653,27 +653,27 @@
     <string name="widgets_tutorial_stack_text">Σε λειτουργία επεξεργασίας, πατήστε το εικονίδιο + σε ένα widget για να το συνδυάσετε με ένα άλλο στην ίδια θέση. Σύρετε αριστερά ή δεξιά σε μια στοίβα για εναλλαγή μεταξύ τους.</string>
     <string name="widgets_tutorial_stack_title">Στοίβαξη widget</string>
 
-    <!-- Search bar position/style -->
+    
     <string name="preference_search_bar_style_hidden">Κρυφή</string>
     <string name="preference_search_bar_style_solid">Συμπαγής</string>
     <string name="preference_search_bar_style_transparent">Διαφανής</string>
     <string name="search_bar_position_bottom">Κάτω</string>
     <string name="search_bar_position_top">Πάνω</string>
 
-    <!-- Grid and icons -->
+    
     <string name="preference_grid_list_icons">Εμφάνιση εικονιδίων εφαρμογών στη λίστα</string>
     <string name="preference_grid_list_icons_summary">Εμφάνιση εικονιδίων στην προβολή λίστας</string>
     <string name="preference_grid_list_style">Εμφάνιση εφαρμογών σε λίστα</string>
     <string name="preference_grid_list_style_summary">Εμφάνιση εφαρμογών σε λίστα αντί για πλέγμα</string>
 
-    <!-- Folder color picker -->
+    
     <string name="reset">Επαναφορά</string>
 
-    <!-- Language and region -->
+    
     <string name="preference_screen_locale">Γλώσσα και περιοχή</string>
     <string name="preference_screen_locale_summary">Γλώσσα, μονάδες, μορφή ώρας</string>
 
-    <!-- Gestures -->
+    
     <string name="gesture_action_category_apps">Εφαρμογές και συντομεύσεις</string>
     <string name="gesture_action_category_launcher">Σελίδες του launcher</string>
     <string name="gesture_action_category_plugins">Ενέργειες plugin</string>
@@ -694,7 +694,7 @@
     <string name="preference_gesture_two_finger_swipe_up">Σύρσιμο προς τα πάνω με δύο δάχτυλα</string>
     <string name="preference_screen_gestures_summary">Χειρονομίες και ενέργειες χειρονομιών</string>
 
-    <!-- Web Apps section -->
+    
     <string name="preference_category_web_app_browsing">Περιήγηση</string>
     <string name="preference_screen_web_apps_panel">Πίνακας Web Apps</string>
     <string name="preference_screen_web_apps_panel_summary">Ένας ειδικός πίνακας στην αρχική οθόνη για συντομεύσεις web apps, προσβάσιμος με σύρσιμο</string>
@@ -725,7 +725,7 @@
     <string name="web_apps_panel_items">Web apps στον πίνακα</string>
     <string name="web_apps_panel_ungrouped">Χωρίς ομάδα</string>
 
-    <!-- App Lock -->
+    
     <string name="app_lock_detection_mode_accessibility">Μόνο υπηρεσία προσβασιμότητας</string>
     <string name="app_lock_detection_mode_hybrid">Και τα δύο (προτείνεται)</string>
     <string name="app_lock_detection_mode_hybrid_summary">Χρησιμοποιεί την υπηρεσία προσβασιμότητας για άμεση ανίχνευση όταν είναι ενεργοποιημένη, και καταφεύγει σε περιοδικό έλεγχο πρόσβασης χρήσης όταν δεν είναι.</string>
@@ -764,7 +764,7 @@
     <string name="preference_screen_app_lock">Κλείδωμα εφαρμογών</string>
     <string name="preference_screen_app_lock_summary">Απαίτηση πιστοποίησης για το άνοιγμα συγκεκριμένων εφαρμογών</string>
 
-    <!-- Advanced settings + advanced search subcategory -->
+    
     <string name="preference_advanced_search_app_shortcuts">Συντομεύσεις εφαρμογών</string>
     <string name="preference_advanced_search_app_shortcuts_summary">Εμφάνιση δυναμικών ενεργειών από τις εφαρμογές σας</string>
     <string name="preference_advanced_search_contact_actions">Γρήγορες ενέργειες επαφών</string>
@@ -783,33 +783,33 @@
     <string name="preference_advanced_search_user_shortcuts_summary">Ορισμός προσαρμοσμένων λέξεων-κλειδιών για ενέργειες</string>
     <string name="preference_category_advanced">Σύνθετες</string>
 
-    <!-- === TELOS_PENDING_REVIEW_START: smart_freeze_ui_and_actions === -->
+    
     <string name="telos_freeze_app">Πάγωμα εφαρμογής</string>
     <string name="telos_unfreeze_app">Ξεπάγωμα εφαρμογής</string>
     <string name="telos_clone_app">Κλωνοποίηση στο Sandbox</string>
-    <!-- === TELOS_PENDING_REVIEW_END: smart_freeze_ui_and_actions === -->
+    
 
-    <!-- === TELOS_PENDING_REVIEW_START: sandbox_provisioning === -->
+    
     <string name="telos_setup_sandbox_title">Εκκίνηση Telos Sandbox</string>
     <string name="telos_setup_sandbox_summary">Δημιουργήστε ένα απομονωμένο προφίλ εργασίας για την ασφαλή απομόνωση και κλωνοποίηση εφαρμογών</string>
-    <!-- === TELOS_PENDING_REVIEW_END: sandbox_provisioning === -->
+    
 
-    <!-- === TELOS_PENDING_REVIEW_START: thor_freezer_features === -->
+    
     <string name="telos_freeze_backend_dhizuku">Dhizuku</string>
-    <!-- === TELOS_PENDING_REVIEW_END: thor_freezer_features === -->
+    
 
-    <!-- === TELOS_PENDING_REVIEW_START: desktop_grid_and_context_menu === -->
+    
     <string name="telos_desktop_settings">Ρυθμίσεις επιφάνειας εργασίας</string>
     <string name="telos_change_wallpaper">Αλλαγή ταπετσαρίας</string>
     <string name="telos_add_shortcut">Προσθήκη συντόμευσης</string>
-    <!-- === TELOS_PENDING_REVIEW_END: desktop_grid_and_context_menu === -->
+    
 
-    <!-- === TELOS_PENDING_REVIEW_START: desktop_window_snapping === -->
+    
     <string name="telos_snap_left">Κούμπωμα αριστερά</string>
     <string name="telos_snap_right">Κούμπωμα δεξιά</string>
     <string name="telos_maximize">Μεγιστοποίηση</string>
     <string name="telos_close_window">Κλείσιμο</string>
-    <!-- === TELOS_PENDING_REVIEW_END: desktop_window_snapping === -->
+    
 
     <string name="preference_category_advanced_search_features">Λειτουργίες</string>
     <string name="preference_freeze_advanced_features">Σύνθετες λειτουργίες</string>
@@ -818,7 +818,7 @@
     <string name="preference_screen_advanced_search">Προηγμένη αναζήτηση</string>
     <string name="preference_screen_advanced_summary">Απόδοση, προφίλ, plugins και εργαλεία</string>
 
-    <!-- Advanced settings: Performance subcategory -->
+    
     <string name="preference_performance_animation_speed">Ταχύτητα κινούμενων εικόνων</string>
     <string name="preference_performance_background_note">Οι ενημερώσεις παρασκηνίου (ισοτιμίες νομισμάτων, καιρός) περιμένουν ήδη για σύνδεση δικτύου, και οι ενημερώσεις νομισμάτων περιμένουν επίσης μέχρι η μπαταρία να μην είναι χαμηλή.</string>
     <string name="preference_performance_category_animations">Κινούμενες εικόνες</string>
@@ -832,7 +832,7 @@
     <string name="preference_performance_search_debounce">Καθυστέρηση αναζήτησης</string>
     <string name="preference_performance_search_debounce_summary">Περιμένει τόση ώρα αφού σταματήσετε να πληκτρολογείτε πριν αναζητήσει. Υψηλότερες τιμές κάνουν λιγότερη δουλειά ενώ πληκτρολογείτε γρήγορα, με κόστος να αισθάνεται λιγότερο άμεσο.</string>
 
-    <!-- Advanced settings: Plugins subcategory -->
+    
     <string name="plugin_action_setup">Ρύθμιση</string>
     <string name="plugin_state_error">Αυτό το plugin δεν λειτουργεί σωστά</string>
     <string name="plugin_state_setup_required">Πρέπει πρώτα να ρυθμίσετε αυτό το plugin</string>
@@ -848,7 +848,7 @@
     <string name="preference_plugin_enable">Ενεργοποίηση plugin</string>
     <string name="widget_plugin_empty">Δεν υπάρχουν δεδομένα</string>
 
-    <!-- Advanced settings: Context Profiles subcategory -->
+    
     <string name="app_label_locked_profile">Κλειδωμένο</string>
     <string name="apps_profile_private">Ιδιωτικό</string>
     <string name="context_profile_activate_now">Ενεργό τώρα</string>
@@ -884,7 +884,7 @@
     <string name="missing_permission_context_profile_dnd">Η παράκαμψη του Μην ενοχλείτε απαιτεί πρόσβαση πολιτικής ειδοποιήσεων.</string>
     <string name="missing_permission_context_profile_wifi">Η ανάγνωση του ονόματος του συνδεδεμένου δικτύου WiFi απαιτεί πρόσβαση τοποθεσίας. Αυτός ο launcher το χρησιμοποιεί μόνο για τον έλεγχο του ονόματος δικτύου για αυτή την ενεργοποίηση.</string>
     <string name="missing_permission_manage_profiles">Η παύση ή συνέχιση του προφίλ εργασίας απαιτεί τον ορισμό του Telos ως προεπιλεγμένη εφαρμογή αρχικής οθόνης.</string>
-    <!-- === TELOS_PENDING_REVIEW_START: work_profile_quiet_mode_toggle === -->
+    
     <string name="work_profile_status_paused">Σε παύση</string>
     <string name="work_profile_setup_button">Ρύθμιση προφίλ εργασίας</string>
     <string name="work_profile_setup_description">Ο Telos δεν μπορεί να δημιουργήσει προφίλ εργασίας από μόνος του - ανοίγει τις Ρυθμίσεις συστήματος, όπου μπορείτε να ρυθμίσετε ένα από Σύστημα → Πολλοί χρήστες.</string>
@@ -892,14 +892,14 @@
     <string name="work_profile_manage_description">Ανοίγει τις Ρυθμίσεις συστήματος, όπου μπορείτε να καταργήσετε το προφίλ εργασίας ή να διαχειριστείτε τους λογαριασμούς του από Σύστημα → Πολλοί χρήστες.</string>
     <string name="preference_work_profile_pause">Λειτουργία εργασίας</string>
     <string name="preference_work_profile_pause_summary">Ενεργοποιήστε ή κάντε παύση στις εφαρμογές εργασίας σας</string>
-    <!-- === TELOS_PENDING_REVIEW_END: work_profile_quiet_mode_toggle === -->
+    
     <string name="preference_category_context_profiles">Προφίλ</string>
     <string name="preference_context_profiles_enabled_summary">Οι ενεργοποιήσεις ελέγχονται μόνο όσο ο launcher είναι ανοιχτός, όχι στο παρασκήνιο</string>
     <string name="profile_private_profile_action_lock">Κλείδωμα ιδιωτικού χώρου</string>
     <string name="profile_private_profile_action_unlock">Ξεκλείδωμα</string>
     <string name="profile_private_profile_state_locked">Ο ιδιωτικός χώρος είναι κλειδωμένος</string>
 
-    <!-- Search: quick actions, filters, results, and search-related settings -->
+    
     <string name="create_search_action_pick_app">Επιλέξτε μια εφαρμογή για αναζήτηση:</string>
     <string name="create_search_action_title">Νέα γρήγορη ενέργεια</string>
     <string name="create_search_action_type_app">Αναζήτηση σε εφαρμογή</string>
@@ -965,7 +965,7 @@
     <string name="search_query_private_space">Ιδιωτικός χώρος</string>
     <string name="unavailable_searchable">Αυτό το στοιχείο δεν υπάρχει πλέον</string>
 
-    <!-- Freeze Manager -->
+    
     <string name="freeze_app_state_candidate">Υποψήφιο για αυτόματο πάγωμα</string>
     <string name="freeze_app_state_candidate_disable">Αυτόματο πάγωμα (Απενεργοποίηση)</string>
     <string name="freeze_app_state_candidate_suspend">Αυτόματο πάγωμα (Αναστολή)</string>
@@ -1083,7 +1083,7 @@
     <string name="preference_screen_freeze_summary">Πάγωμα εφαρμογών για εξοικονόμηση μπαταρίας</string>
     <string name="widget_name_freeze">Πάγωμα</string>
 
-    <!-- Language and region: remaining screen strings -->
+    
     <string name="preference_calendar_system">Ημερολογιακό σύστημα</string>
     <string name="preference_clock_widget_time_format">Μορφή ώρας</string>
     <string name="preference_clock_widget_time_format_12h">12ωρη</string>
@@ -1103,7 +1103,7 @@
     <string name="preference_value_disabled">Απενεργοποιημένο</string>
     <string name="preference_value_system_default">Προεπιλογή συστήματος</string>
 
-    <!-- App Lock: intruder photo + lock method (missed by the app_lock_ prefix sweep) -->
+    
     <string name="intruder_photo_storage_use_default">Χρήση προεπιλογής</string>
     <string name="missing_permission_camera">Η λήψη φωτογραφίας εισβολέα απαιτεί πρόσβαση στην κάμερα.</string>
     <string name="preference_category_intruder_photo">Φωτογραφία εισβολέα</string>
@@ -1120,7 +1120,7 @@
     <string name="settings_lock_method_biometrics_only">Μόνο βιομετρικά</string>
     <string name="settings_lock_method_device_credential">Κλείδωμα συσκευής (βιομετρικά, PIN ή μοτίβο)</string>
 
-    <!-- Grid and icons (missed: real key is preference_screen_icons, not preference_screen_grid) -->
+    
     <string name="preference_badge_color">Χρώμα σήματος</string>
     <string name="preference_badge_color_summary">Ισχύει για όλα τα σήματα, όχι μόνο τις ειδοποιήσεις</string>
     <string name="preference_badge_style_count">Αριθμός</string>
@@ -1128,7 +1128,7 @@
     <string name="preference_notification_badge_style">Στυλ σήματος</string>
     <string name="preference_screen_icons">Πλέγμα και εικονίδια</string>
 
-    <!-- App Lock: remaining intruder photo strings -->
+    
     <string name="intruder_photo_delete">Διαγραφή φωτογραφίας</string>
     <string name="intruder_photo_retention_1y">1 έτος</string>
     <string name="intruder_photo_retention_2y">2 έτη</string>
@@ -1141,7 +1141,7 @@
     <string name="settings_locked_no_authenticator">Αυτές οι ρυθμίσεις είναι προστατευμένες, αλλά δεν έχει ρυθμιστεί κάποιο χρησιμοποιήσιμο κλείδωμα οθόνης ή βιομετρικά σε αυτή τη συσκευή. Ρυθμίστε ένα στις ρυθμίσεις συστήματος για ξεκλείδωμα.</string>
     <string name="settings_locked_unlock">Ξεκλείδωμα</string>
 
-    <!-- Home screen: animations category (used alongside Grid and icons context) -->
+    
     <string name="add_font_style">Προσθήκη στυλ γραμματοσειράς</string>
     <string name="app_widget_loading_failed">Αποτυχία φόρτωσης widget</string>
     <string name="at_a_glance_battery_charging">Φορτίζει</string>
@@ -1339,4 +1339,4 @@
     <string name="preference_show_app_recommendations_summary">Περιστασιακή πρόταση μιας εφαρμογής σε κατηγορίες όπως VPN ή διαχειριστές κωδικών</string>
 
     <string name="preference_category_animations">Κινούμενες εικόνες</string>
-</resources>
+<string name="preference_wallpaper_select_image">Επιλογή Εικόνας</string><string name="preference_wallpaper_select_image_summary">Επιλέξτε μια στατική εικόνα από τις φωτογραφίες σας</string><string name="preference_wallpaper_select_video">Επιλογή Βίντεο</string><string name="preference_wallpaper_select_video_summary">Επιλέξτε ένα ζωντανό βίντεο για ταπετσαρία</string><string name="preference_wallpaper_select_file">Περιήγηση Αρχείων</string><string name="preference_wallpaper_select_file_summary">Επιλέξτε οποιοδήποτε αρχείο πολυμέσων από τον αποθηκευτικό χώρο</string></resources>

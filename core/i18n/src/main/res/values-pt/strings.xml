@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="menu_share_store_link">Ligação a %1$s</string>
     <string name="menu_uninstall">Desinstalar</string>
@@ -139,13 +139,13 @@
     <string name="music_widget_default_title">%1$s está a reproduzir</string>
     <string name="music_widget_no_data">Ainda nada foi reproduzido</string>
     <string name="weather_condition_lightrainshowersandthunder">Aguaceiros ligeiros e trovoada</string>
-    <string name="weather_condition_sleetshowers"/>
-    <string name="weather_condition_heavysleet"/>
+    <string name="weather_condition_sleetshowers" />
+    <string name="weather_condition_heavysleet" />
     <string name="weather_condition_lightrain">Chuva ligeira</string>
     <string name="weather_condition_lightrainshowers">Aguaceiros ligeiros</string>
     <string name="weather_condition_lightsnow">Neve ligeira</string>
     <string name="weather_condition_snowandthunder">Neve e trovoada</string>
-    <string name="weather_condition_heavysleetshowersandthunder"/>
+    <string name="weather_condition_heavysleetshowersandthunder" />
     <string name="weather_condition_heavysnow">Neve intensa</string>
     <string name="weather_condition_cloudy">Nublado</string>
     <string name="weather_condition_snow">Neve</string>
@@ -286,7 +286,7 @@
     <string name="preference_force_themed_icons">Impor ícones coloridos</string>
     <string name="preference_charging_animation_summary">Mostrar bolha quando o dispositivo está a ser carregado</string>
     <string name="missing_permission_calendar_widget">Requer acesso ao calendário para mostrar os eventos e os lembretes</string>
-    <string name="weather_condition_lightsnowshowers"/>
+    <string name="weather_condition_lightsnowshowers" />
     <string name="location_open">Aberto</string>
     <string name="location_closed">Fechado</string>
     <string name="menu_map">Ver no mapa</string>
@@ -879,7 +879,7 @@
     <string name="preference_transliteration_auto">Automática</string>
     <string name="preference_value_disabled">Inativa</string>
     <string name="select_tag">Selecione a etiqueta</string>
-    <!-- Freeze Manager -->
+    
     <string name="preference_freeze_backend">Backend de congelamento</string>
     <string name="freeze_backend_icebox">Ice Box</string>
     <string name="freeze_backend_hail">Hail</string>
@@ -917,4 +917,4 @@
     <string name="web_app_shortcut_icon_source_website">Ícone do site</string>
     <string name="web_app_shortcut_icon_source_system">Ícone do sistema</string>
     <string name="web_app_shortcut_icon_source_custom">Ícone personalizado</string>
-</resources>
+<string name="preference_wallpaper_select_image">Select Image</string><string name="preference_wallpaper_select_image_summary">Choose a static image from your photos</string><string name="preference_wallpaper_select_video">Select Video</string><string name="preference_wallpaper_select_video_summary">Choose a live video wallpaper</string><string name="preference_wallpaper_select_file">Browse File System</string><string name="preference_wallpaper_select_file_summary">Select any media file from your storage</string></resources>
