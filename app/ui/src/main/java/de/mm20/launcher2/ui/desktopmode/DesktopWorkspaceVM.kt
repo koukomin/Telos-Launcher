@@ -1,22 +1,27 @@
 // === TELOS_PENDING_REVIEW_START: desktop_grid_and_context_menu ===
 package de.mm20.launcher2.ui.desktopmode
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.preferences.DesktopWallpaperMode
+import de.mm20.launcher2.preferences.ui.DesktopModeSettings
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 internal class DesktopWorkspaceVM : ViewModel(), KoinComponent {
     private val favoritesService: FavoritesService by inject()
     private val iconService: IconService by inject()
+    private val desktopModeSettings: DesktopModeSettings by inject()
 
     // Using favorites list as the primary desktop pinned apps source for now
     val pinnedApps = favoritesService.getFavorites()
@@ -25,6 +30,17 @@ internal class DesktopWorkspaceVM : ViewModel(), KoinComponent {
 
     fun getIcon(app: Application, size: Int): Flow<LauncherIcon?> {
         return iconService.getIcon(app, size)
+    }
+
+    fun setDesktopWallpaper(uri: Uri) {
+        viewModelScope.launch {
+            desktopModeSettings.setWallpaperImageUri(uri.toString())
+            desktopModeSettings.setWallpaperMode(DesktopWallpaperMode.StaticImage)
+        }
+    }
+
+    fun pinApp(app: Application) {
+        favoritesService.pinItem(app)
     }
 
     fun unpin(app: Application) {

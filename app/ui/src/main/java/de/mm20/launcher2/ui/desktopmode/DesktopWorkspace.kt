@@ -3,10 +3,14 @@ package de.mm20.launcher2.ui.desktopmode
 
 import android.app.ActivityOptions
 import android.content.Context
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Build
 import android.view.Display
 import android.view.WindowManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
@@ -36,7 +40,10 @@ import de.mm20.launcher2.desktopmode.DesktopModeManager
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
+import de.mm20.launcher2.ui.common.SearchablePicker
+import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.settings.SettingsActivity
 import kotlinx.coroutines.flow.emptyFlow
 import org.koin.compose.koinInject
 
@@ -51,6 +58,17 @@ internal fun DesktopWorkspace(modifier: Modifier = Modifier) {
 
     var showContextMenu by remember { mutableStateOf(false) }
     var contextMenuOffset by remember { mutableStateOf(IntOffset.Zero) }
+
+    // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
+    var showAddShortcutPicker by remember { mutableStateOf(false) }
+
+    val wallpaperPicker = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        if (uri != null) {
+            context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            viewModel.setDesktopWallpaper(uri)
+        }
+    }
+    // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
 
     Box(
         modifier = modifier
@@ -161,7 +179,9 @@ internal fun DesktopWorkspace(modifier: Modifier = Modifier) {
                         text = { Text(stringResource(R.string.telos_change_wallpaper)) },
                         onClick = {
                             showContextMenu = false
-                            // Handled by Launcher Application Intent or a deep link.
+                            // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
+                            wallpaperPicker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                            // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
                         },
                         leadingIcon = { Icon(painterResource(R.drawable.image_search_24px), null) }
                     )
@@ -169,7 +189,15 @@ internal fun DesktopWorkspace(modifier: Modifier = Modifier) {
                         text = { Text(stringResource(R.string.telos_desktop_settings)) },
                         onClick = {
                             showContextMenu = false
-                            // Handled by Launcher Application Intent or a deep link.
+                            // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
+                            val intent = Intent(context, SettingsActivity::class.java).apply {
+                                putExtra("de.mm20.launcher2.settings.ROUTE", "settings/desktopmode")
+                            }
+                            val options = ActivityOptions.makeBasic().apply {
+                                launchDisplayId = context.displayIdCompat()
+                            }
+                            context.startActivity(intent, options.toBundle())
+                            // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
                         },
                         leadingIcon = { Icon(painterResource(R.drawable.settings_24px), null) }
                     )
@@ -177,7 +205,9 @@ internal fun DesktopWorkspace(modifier: Modifier = Modifier) {
                         text = { Text(stringResource(R.string.telos_add_shortcut)) },
                         onClick = {
                             showContextMenu = false
-                            // Opens SearchablePicker sheet in standard flow
+                            // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
+                            showAddShortcutPicker = true
+                            // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
                         },
                         leadingIcon = { Icon(painterResource(R.drawable.add_24px), null) }
                     )
@@ -185,6 +215,26 @@ internal fun DesktopWorkspace(modifier: Modifier = Modifier) {
             }
         }
     }
+    
+    // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
+    if (showAddShortcutPicker) {
+        DismissableBottomSheet(
+            expanded = true,
+            onDismissRequest = { showAddShortcutPicker = false }
+        ) {
+            SearchablePicker(
+                modifier = Modifier.fillMaxWidth().height(400.dp),
+                value = null,
+                onValueChanged = { searchable ->
+                    if (searchable is Application) {
+                        viewModel.pinApp(searchable)
+                    }
+                    showAddShortcutPicker = false
+                }
+            )
+        }
+    }
+    // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
 }
 
 private var freeformLaunchCount = 0

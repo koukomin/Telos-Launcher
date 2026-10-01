@@ -530,6 +530,9 @@ class SettingsActivity : BaseActivity() {
         }
         return when(routeName) {
             ROUTE_WEATHER_INTEGRATION -> WeatherIntegrationSettingsRoute
+            // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
+            ROUTE_DESKTOP_MODE -> DesktopModeSettingsRoute
+            // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
             ROUTE_MEDIA_INTEGRATION -> MediaIntegrationSettingsRoute
             ROUTE_SEARCH_ACTIONS -> SearchActionsSettingsRoute
             ROUTE_HIDDEN_ITEMS -> HiddenItemsSettingsRoute
@@ -555,6 +558,9 @@ class SettingsActivity : BaseActivity() {
         const val ROUTE_WALLPAPER = "settings/wallpaper"
         const val ROUTE_WEB_APPS = "settings/webapps"
         const val ROUTE_APP_RECOMMENDATIONS = "settings/search/recommendations"
+        // === TELOS_PENDING_REVIEW_START: desktop_context_menu_actions ===
+        const val ROUTE_DESKTOP_MODE = "settings/desktopmode"
+        // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
         const val ROUTE_INTRUDER_PHOTOS = SettingsDeepLinkContract.ROUTE_INTRUDER_PHOTOS
         const val ROUTE_CRASH_REPORT = "settings/debug/crashreport"
         const val EXTRA_CRASH_REPORT_PATH = "crash_report_path"
