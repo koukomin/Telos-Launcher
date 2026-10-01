@@ -140,6 +140,10 @@ import de.mm20.launcher2.ui.settings.folders.CreateFolderRoute
 import de.mm20.launcher2.ui.settings.folders.CreateFolderScreen
 import de.mm20.launcher2.ui.settings.icons.IconsSettingsRoute
 import de.mm20.launcher2.ui.settings.icons.IconsSettingsScreen
+import de.mm20.launcher2.ui.store.AppDetailsRoute
+import de.mm20.launcher2.ui.store.AppDetailsScreen
+import de.mm20.launcher2.ui.store.StoreDashboardRoute
+import de.mm20.launcher2.ui.store.StoreDashboardScreen
 import de.mm20.launcher2.ui.settings.integrations.IntegrationsSettingsRoute
 import de.mm20.launcher2.ui.settings.integrations.IntegrationsSettingsScreen
 import de.mm20.launcher2.ui.settings.license.LicenseRoute
@@ -236,6 +240,12 @@ class SettingsActivity : BaseActivity() {
             }
             entry<IconsSettingsRoute> {
                 IconsSettingsScreen()
+            }
+            entry<StoreDashboardRoute> {
+                StoreDashboardScreen()
+            }
+            entry<AppDetailsRoute> {
+                AppDetailsScreen(it.itemId)
             }
             entry<CreateFolderRoute> {
                 CreateFolderScreen()

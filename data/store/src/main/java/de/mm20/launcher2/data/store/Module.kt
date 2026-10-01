@@ -8,6 +8,7 @@ import de.mm20.launcher2.data.store.worker.StoreUpdateScheduler
 import de.mm20.launcher2.store.fetcher.StoreFetcherRegistry
 import de.mm20.launcher2.store.installer.AppInstaller
 import de.mm20.launcher2.store.installer.Downloader
+import de.mm20.launcher2.store.repository.StoreRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
@@ -29,6 +30,7 @@ val dataStoreModule = module {
 
     single<AppInstaller> { TelosPackageInstaller(context = androidContext()) }
     single<Downloader> { KtorDownloader(context = androidContext(), httpClient = get()) }
+    single<StoreRepository> { StoreRepositoryImpl(context = androidContext()) }
 
     single { StoreUpdateScheduler(context = androidContext()) }
 }

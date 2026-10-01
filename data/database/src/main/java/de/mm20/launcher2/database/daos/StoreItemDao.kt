@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import de.mm20.launcher2.database.entities.StoreItemEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface StoreItemDao {
@@ -16,11 +17,19 @@ interface StoreItemDao {
     @Query("SELECT * FROM StoreItem WHERE id = :id")
     suspend fun get(id: String): StoreItemEntity?
 
+    /** Reactive variant of [get], for the Store UI (`:app:ui`) to observe a single item by id. */
+    @Query("SELECT * FROM StoreItem WHERE id = :id")
+    fun observe(id: String): Flow<StoreItemEntity?>
+
     @Query("SELECT * FROM StoreItem WHERE packageName = :packageName")
     suspend fun getByPackageName(packageName: String): StoreItemEntity?
 
     @Query("SELECT * FROM StoreItem")
     suspend fun getAll(): List<StoreItemEntity>
+
+    /** Reactive variant of [getAll], for the Store UI (`:app:ui`) to observe the full list. */
+    @Query("SELECT * FROM StoreItem")
+    fun observeAll(): Flow<List<StoreItemEntity>>
 
     @Query("UPDATE StoreItem SET installedVersionCode = :versionCode WHERE packageName = :packageName")
     suspend fun updateInstalledVersion(packageName: String, versionCode: Long?)

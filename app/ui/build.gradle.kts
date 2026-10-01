@@ -170,6 +170,7 @@ dependencies {
     implementation(project(":services:desktop-mode"))
     implementation(project(":services:applock"))
     implementation(project(":services:app-management"))
+    implementation(project(":services:store"))
 
     implementation(libs.androidx.biometric)
     implementation(project(":core:devicepose"))
