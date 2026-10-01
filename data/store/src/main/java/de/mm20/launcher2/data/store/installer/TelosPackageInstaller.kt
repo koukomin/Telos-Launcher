@@ -2,6 +2,7 @@ package de.mm20.launcher2.data.store.installer
 
 import android.content.Context
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.store.installer.AppInstaller
 import de.mm20.launcher2.store.installer.InstallResult
 import java.io.File
@@ -13,7 +14,7 @@ import java.io.InputStream
  * API ([SessionApiInstallBackend]) when neither privileged backend is authorized. This mirrors
  * `FreezeManager`'s Shizuku-then-root backend selection in `:services:freeze`.
  */
-class TelosPackageInstaller(context: Context) : AppInstaller {
+class TelosPackageInstaller(private val context: Context) : AppInstaller {
 
     private val shizuku = ShizukuInstallBackend()
     private val root = RootInstallBackend()
@@ -31,7 +32,15 @@ class TelosPackageInstaller(context: Context) : AppInstaller {
         for (backend in privilegedBackends) {
             if (!backend.isAvailable() || !backend.hasPermission()) continue
             return when (val result = backend.install(apk, packageName)) {
-                is BackendInstallResult.Success -> InstallResult.Success
+                is BackendInstallResult.Success -> {
+                    // Shizuku/root installs finish synchronously (unlike the session API path,
+                    // whose result arrives later via InstallResultReceiver) - persist the new
+                    // installedVersionCode to Room right here so the UI unsticks immediately.
+                    val versionCode = resolveInstalledVersionCode(context, packageName)
+                    AppDatabase.getInstance(context).storeItemDao()
+                        .updateInstalledVersion(packageName, versionCode)
+                    InstallResult.Success
+                }
                 is BackendInstallResult.Failed -> {
                     // A privileged backend being available but still failing (e.g. OEM-specific
                     // `pm install` quirk) isn't worth falling through for - it already bypassed

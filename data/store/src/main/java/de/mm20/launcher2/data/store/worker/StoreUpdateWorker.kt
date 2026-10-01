@@ -6,6 +6,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.data.store.StoreItemMapper
+import de.mm20.launcher2.data.store.fetcher.FDroidFetcher
 import de.mm20.launcher2.data.store.fetcher.GitHubFetcher
 import de.mm20.launcher2.data.store.fetcher.StoreFetcherRegistryImpl
 import de.mm20.launcher2.database.AppDatabase
@@ -24,7 +25,7 @@ import de.mm20.launcher2.store.fetcher.StoreFetcherRegistry
 class StoreUpdateWorker(
     private val context: Context,
     params: WorkerParameters,
-    private val fetcherRegistry: StoreFetcherRegistry = StoreFetcherRegistryImpl(GitHubFetcher()),
+    private val fetcherRegistry: StoreFetcherRegistry = StoreFetcherRegistryImpl(GitHubFetcher(), FDroidFetcher()),
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {

@@ -551,6 +551,7 @@ class SettingsActivity : BaseActivity() {
             ROUTE_WEB_APPS -> WebAppsSettingsRoute
             ROUTE_APP_RECOMMENDATIONS -> SearchSettingsRoute
             ROUTE_INTRUDER_PHOTOS -> IntruderPhotosRoute
+            ROUTE_STORE -> StoreDashboardRoute
             ROUTE_CRASH_REPORT if (intent.hasExtra(EXTRA_CRASH_REPORT_PATH)) -> {
                 CrashReportRoute(intent.getStringExtra(EXTRA_CRASH_REPORT_PATH)!!)
             }
@@ -572,6 +573,7 @@ class SettingsActivity : BaseActivity() {
         const val ROUTE_DESKTOP_MODE = "settings/desktopmode"
         // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
         const val ROUTE_INTRUDER_PHOTOS = SettingsDeepLinkContract.ROUTE_INTRUDER_PHOTOS
+        const val ROUTE_STORE = SettingsDeepLinkContract.ROUTE_STORE
         const val ROUTE_CRASH_REPORT = "settings/debug/crashreport"
         const val EXTRA_CRASH_REPORT_PATH = "crash_report_path"
     }

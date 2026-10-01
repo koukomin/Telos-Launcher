@@ -21,6 +21,7 @@ import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.SearchableRepository
 import de.mm20.launcher2.search.StringNormalizer
+import de.mm20.launcher2.search.VirtualAppProvider
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
@@ -60,6 +61,7 @@ internal class AppRepositoryImpl(
     private val profileManager: ProfileManager,
     private val stringNormalizer: StringNormalizer,
     private val freezeSettings: FreezeSettings,
+    private val virtualAppProviders: List<VirtualAppProvider> = emptyList(),
 ) : AppRepository {
     private val scope = CoroutineScope(Dispatchers.Default + Job())
 
@@ -315,7 +317,8 @@ internal class AppRepositoryImpl(
     }
 
     override fun findMany(): Flow<ImmutableList<Application>> {
-        return installedApps.map { it.toImmutableList() }
+        val virtualApps = virtualAppProviders.flatMap { it.getVirtualApps() }
+        return installedApps.map { (virtualApps + it).toImmutableList() }
     }
 
     override suspend fun findIconlessApps(): List<Application> = withContext(Dispatchers.Default) {

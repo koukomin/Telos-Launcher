@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -24,9 +24,11 @@ enum class StoreInstallUiState {
     /**
      * Either a privileged (Shizuku/root) install is running silently, or the standard
      * [android.content.pm.PackageInstaller] session has been handed off to the system's install
-     * confirmation UI. The latter case has no further callback wired up yet - the state simply
-     * stays `Installing` until the item list itself refreshes (e.g. after the user returns to
-     * Telos and `installedVersionCode` catches up), rather than guessing at an outcome.
+     * confirmation UI. In both cases the real completion signal is Room's `installedVersionCode`
+     * catching up (written synchronously for Shizuku/root, or asynchronously by
+     * `InstallResultReceiver` for the session API) - [StoreViewModel.installStates] drops this
+     * state for an item as soon as Room shows it installed and current, rather than this enum
+     * value itself ever being cleared by a direct callback.
      */
     Installing,
     Installed,
@@ -48,7 +50,25 @@ class StoreViewModel : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     private val _installStates = MutableStateFlow<Map<String, StoreInstallUiState>>(emptyMap())
-    val installStates: StateFlow<Map<String, StoreInstallUiState>> = _installStates.asStateFlow()
+
+    /**
+     * [_installStates] filtered against [items]: once Room shows an item installed and with no
+     * update pending, any lingering `Installing`/`Downloading` entry for it is dropped rather than
+     * leaving the button stuck - this is what "unsticks" the UI after
+     * [de.mm20.launcher2.data.store.installer.InstallResultReceiver] (or a synchronous
+     * Shizuku/root install) writes the result to Room.
+     */
+    val installStates: StateFlow<Map<String, StoreInstallUiState>> =
+        combine(items, _installStates) { items, states ->
+            val itemsById = items.associateBy { it.id }
+            states.filterKeys { id ->
+                val item = itemsById[id] ?: return@filterKeys true
+                val state = states.getValue(id)
+                val isTransient = state == StoreInstallUiState.Downloading || state == StoreInstallUiState.Installing
+                val resolved = item.installedVersionCode != null && !item.hasUpdate
+                !(isTransient && resolved)
+            }
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
 
     fun item(id: String): Flow<StoreItem?> = repository.observeItem(id)
 

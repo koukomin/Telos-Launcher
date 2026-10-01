@@ -1,15 +1,12 @@
 package de.mm20.launcher2.data.store.installer
 
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageInstaller
 import android.os.Build
 import android.util.Log
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import kotlinx.coroutines.suspendCancellableCoroutine
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
@@ -85,60 +82,35 @@ internal class SessionApiInstallBackend(private val context: Context) : InstallB
     }
 
     /**
-     * Commits the session and suspends until the system reports success/failure via the
-     * broadcast receiver registered on [SESSION_ACTION] - [PackageInstaller.Session.commit]
-     * itself is fire-and-forget, the actual result only arrives through that intent.
+     * Commits the session and returns as soon as the commit call itself succeeds - this does
+     * NOT wait for the actual install to finish. [PackageInstaller.Session.commit] is
+     * fire-and-forget; the system reports the real outcome later via [InstallResultReceiver],
+     * a manifest-registered receiver that writes the result straight to Room rather than
+     * resolving some particular caller's suspended coroutine. That decouples the result from
+     * whichever screen/process happened to start the install - it's still correct even if the
+     * app was killed while the user was looking at the system's install confirmation UI.
      */
-    private suspend fun commitSession(
+    private fun commitSession(
         session: PackageInstaller.Session,
         sessionId: Int,
         packageName: String,
-    ): BackendInstallResult = suspendCancellableCoroutine { cont ->
-        val action = "$SESSION_ACTION.$sessionId"
-        val receiver = object : BroadcastReceiver() {
-            override fun onReceive(ctx: Context, intent: Intent) {
-                if (intent.action != action) return
-                context.unregisterReceiver(this)
-                val status = intent.getIntExtra(
-                    PackageInstaller.EXTRA_STATUS,
-                    PackageInstaller.STATUS_FAILURE,
-                )
-                val message = intent.getStringExtra(PackageInstaller.EXTRA_STATUS_MESSAGE)
-                val result = if (status == PackageInstaller.STATUS_SUCCESS) {
-                    BackendInstallResult.Success
-                } else {
-                    BackendInstallResult.Failed(message ?: "Install failed with status $status")
-                }
-                if (cont.isActive) cont.resumeWith(Result.success(result))
-            }
-        }
-        val filter = IntentFilter(action)
-        if (isAtLeastApiLevel(Build.VERSION_CODES.TIRAMISU)) {
-            context.registerReceiver(receiver, filter, Context.RECEIVER_NOT_EXPORTED)
-        } else {
-            @Suppress("UnspecifiedRegisterReceiverFlag")
-            context.registerReceiver(receiver, filter)
-        }
-        cont.invokeOnCancellation {
-            try {
-                context.unregisterReceiver(receiver)
-            } catch (e: IllegalArgumentException) {
-                // Already unregistered by onReceive - fine.
-            }
-        }
-
+    ): BackendInstallResult {
         val flags = if (isAtLeastApiLevel(Build.VERSION_CODES.S)) {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
         } else {
             PendingIntent.FLAG_UPDATE_CURRENT
         }
-        val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            sessionId,
-            Intent(action).setPackage(context.packageName),
-            flags,
-        )
-        session.commit(pendingIntent.intentSender)
+        val intent = Intent(context, InstallResultReceiver::class.java).apply {
+            action = InstallResultReceiver.ACTION_INSTALL_STATUS
+            putExtra(InstallResultReceiver.EXTRA_PACKAGE_NAME, packageName)
+        }
+        val pendingIntent = PendingIntent.getBroadcast(context, sessionId, intent, flags)
+        return try {
+            session.commit(pendingIntent.intentSender)
+            BackendInstallResult.Success
+        } catch (e: Exception) {
+            BackendInstallResult.Failed("Could not commit install session: ${e.message}", e)
+        }
     }
 
     // Monotonic per-call name suffix so concurrent installs don't collide on the same session
@@ -148,6 +120,5 @@ internal class SessionApiInstallBackend(private val context: Context) : InstallB
 
     companion object {
         private const val TAG = "SessionApiInstallBackend"
-        private const val SESSION_ACTION = "de.mm20.launcher2.store.INSTALL_SESSION_STATUS"
     }
 }

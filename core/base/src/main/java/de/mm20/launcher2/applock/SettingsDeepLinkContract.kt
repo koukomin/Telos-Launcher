@@ -7,4 +7,6 @@ object SettingsDeepLinkContract {
     const val ACTIVITY_CLASS_NAME = "de.mm20.launcher2.ui.settings.SettingsActivity"
     const val EXTRA_ROUTE = "de.mm20.launcher2.settings.ROUTE"
     const val ROUTE_INTRUDER_PHOTOS = "settings/applock/intruderphotos"
+    /** Opens the Store dashboard directly - used by the virtual "Telos Store" app drawer entry. */
+    const val ROUTE_STORE = "settings/store"
 }
