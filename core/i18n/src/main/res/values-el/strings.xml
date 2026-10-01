@@ -798,6 +798,12 @@
     <string name="telos_freeze_backend_dhizuku">Dhizuku</string>
     <!-- === TELOS_PENDING_REVIEW_END: thor_freezer_features === -->
 
+    <!-- === TELOS_PENDING_REVIEW_START: desktop_grid_and_context_menu === -->
+    <string name="telos_desktop_settings">Ρυθμίσεις επιφάνειας εργασίας</string>
+    <string name="telos_change_wallpaper">Αλλαγή ταπετσαρίας</string>
+    <string name="telos_add_shortcut">Προσθήκη συντόμευσης</string>
+    <!-- === TELOS_PENDING_REVIEW_END: desktop_grid_and_context_menu === -->
+
     <string name="preference_category_advanced_search_features">Λειτουργίες</string>
     <string name="preference_freeze_advanced_features">Σύνθετες λειτουργίες</string>
     <string name="preference_freeze_advanced_features_summary">Ξεκλειδώνει τις ενέργειες Πάγωμα, Αναγκαστικός τερματισμός και Εκκαθάριση προσωρινής μνήμης στα μενού εφαρμογών (Απαιτεί Shizuku ή Root)</string>

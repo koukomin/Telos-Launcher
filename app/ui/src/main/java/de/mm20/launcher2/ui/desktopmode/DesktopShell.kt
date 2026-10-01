@@ -12,6 +12,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.foundation.layout.padding
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import de.mm20.launcher2.preferences.DesktopWallpaperMode
@@ -50,6 +51,11 @@ fun DesktopShell() {
                 modifier = Modifier.fillMaxSize(),
             )
         }
+
+        // === TELOS_PENDING_REVIEW_START: desktop_grid_and_context_menu ===
+        DesktopWorkspace(modifier = Modifier.fillMaxSize().padding(bottom = DesktopTaskbarHeight))
+        // === TELOS_PENDING_REVIEW_END: desktop_grid_and_context_menu ===
+
         DesktopTaskbar(
             modifier = Modifier.align(Alignment.BottomStart),
             startMenuOpen = showStartMenu,

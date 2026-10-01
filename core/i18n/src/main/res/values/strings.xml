@@ -1829,4 +1829,10 @@
     <!-- === TELOS_PENDING_REVIEW_START: thor_freezer_features === -->
     <string name="telos_freeze_backend_dhizuku">Dhizuku</string>
     <!-- === TELOS_PENDING_REVIEW_END: thor_freezer_features === -->
+
+    <!-- === TELOS_PENDING_REVIEW_START: desktop_grid_and_context_menu === -->
+    <string name="telos_desktop_settings">Desktop Settings</string>
+    <string name="telos_change_wallpaper">Change Wallpaper</string>
+    <string name="telos_add_shortcut">Add Shortcut</string>
+    <!-- === TELOS_PENDING_REVIEW_END: desktop_grid_and_context_menu === -->
 </resources>
