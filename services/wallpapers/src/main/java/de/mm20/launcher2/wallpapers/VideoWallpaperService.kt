@@ -37,6 +37,8 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -82,6 +84,11 @@ class VideoWallpaperService : WallpaperService() {
 
         private var xOffset = 0.5f
         private var cachedColors: WallpaperColors? = null
+        
+        // === TELOS_PENDING_REVIEW_START: undead_wallpaper_sync ===
+        private val playerMutex = Mutex()
+        private var isDoubleTapPaused = false
+        // === TELOS_PENDING_REVIEW_END: undead_wallpaper_sync ===
 
         private val powerSaveReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
@@ -252,13 +259,16 @@ class VideoWallpaperService : WallpaperService() {
         }
 
         private fun shouldPlay(): Boolean {
+            // === TELOS_PENDING_REVIEW_START: undead_wallpaper_sync ===
+            if (isDesktopModeActive) return false
             if (!isSurfaceReady || !isEngineVisible) return false
             if (pauseOnBatterySaver && isPowerSaveActive) return false
+            if (isDoubleTapPaused) return false
             if (pauseOnThermal && isAtLeastApiLevel(29) &&
                 thermalStatus >= PowerManager.THERMAL_STATUS_SEVERE
             ) return false
-            if (pauseOnDesktopMode && isDesktopModeActive) return false
             return true
+            // === TELOS_PENDING_REVIEW_END: undead_wallpaper_sync ===
         }
 
         /**
@@ -268,18 +278,28 @@ class VideoWallpaperService : WallpaperService() {
          * resumes near the previous position when conditions clear.
          */
         private fun updatePlayback() {
-            if (shouldPlay()) {
-                if (player == null) createPlayer()
-                else player?.play()
-            } else {
-                releasePlayer()
+            scope?.launch {
+                playerMutex.withLock {
+                    if (shouldPlay()) {
+                        if (player == null) createPlayerLocked()
+                        else player?.play()
+                    } else {
+                        releasePlayerLocked()
+                    }
+                }
             }
         }
 
         /** Called when visual transform settings change; effects must be set before prepare. */
         private fun recreatePlayer() {
-            releasePlayer()
-            updatePlayback()
+            scope?.launch {
+                playerMutex.withLock {
+                    releasePlayerLocked()
+                    if (shouldPlay()) {
+                        createPlayerLocked()
+                    }
+                }
+            }
         }
 
         private var recreateJob: Job? = null
@@ -295,7 +315,7 @@ class VideoWallpaperService : WallpaperService() {
         }
 
         @OptIn(UnstableApi::class)
-        private fun createPlayer() {
+        private fun createPlayerLocked() {
             val dir = WallpapersService.getVideoDir(this@VideoWallpaperService)
             val files = dir.listFiles()?.filter { !it.name.endsWith(".tmp") }?.sortedBy { it.name }
 
@@ -390,7 +410,7 @@ class VideoWallpaperService : WallpaperService() {
             return effects
         }
 
-        private fun releasePlayer() {
+        private fun releasePlayerLocked() {
             val p = player ?: return
             player = null
             try {
@@ -398,6 +418,14 @@ class VideoWallpaperService : WallpaperService() {
             } catch (e: Exception) {
             }
             p.release()
+        }
+
+        private fun releasePlayer() {
+            scope?.launch {
+                playerMutex.withLock {
+                    releasePlayerLocked()
+                }
+            }
         }
 
         private fun extractColors() {
