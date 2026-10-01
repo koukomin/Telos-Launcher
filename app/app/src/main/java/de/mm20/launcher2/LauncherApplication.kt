@@ -43,6 +43,7 @@ import de.mm20.launcher2.feed.feedModule
 import de.mm20.launcher2.freeze.freezeModule
 import de.mm20.launcher2.appmanagement.appManagementModule
 import de.mm20.launcher2.data.store.dataStoreModule
+import de.mm20.launcher2.data.store.worker.StoreUpdateScheduler
 import de.mm20.launcher2.store.storeModule
 import de.mm20.launcher2.applock.appLockModule
 import de.mm20.launcher2.preferences.applock.AppLockSettings
@@ -209,6 +210,10 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                 }
             }
         }
+
+        // enqueueUniquePeriodicWork + KEEP is idempotent, so it's safe to call this on every
+        // process start rather than gating it behind a one-time setup step.
+        get<StoreUpdateScheduler>().enable()
     }
 
     override fun newImageLoader(): ImageLoader {
