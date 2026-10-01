@@ -1297,8 +1297,10 @@
     <string name="work_profile_setup_description">Telos can\'t create a work profile itself - opens system Settings, where you can set one up under System → Multiple users.</string>
     <string name="work_profile_manage_button">Manage in system settings</string>
     <string name="work_profile_manage_description">Opens system Settings, where you can remove the work profile or manage its accounts under System → Multiple users.</string>
-    <string name="preference_work_profile_pause">Pause work profile</string>
-    <string name="preference_work_profile_pause_summary">Temporarily disable work apps and their notifications</string>
+    <!-- === TELOS_PENDING_REVIEW_START: work_profile_quiet_mode_toggle === -->
+    <string name="preference_work_profile_pause">Work Mode</string>
+    <string name="preference_work_profile_pause_summary">Toggle to enable or pause work applications</string>
+    <!-- === TELOS_PENDING_REVIEW_END: work_profile_quiet_mode_toggle === -->
     <string name="missing_permission_manage_profiles">Pausing or resuming the work profile requires setting Telos as your default home app.</string>
     <string name="preference_category_intruder_photo">Intruder photo</string>
     <string name="preference_intruder_photo_enabled">Capture intruder photo</string>

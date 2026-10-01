@@ -54,4 +54,8 @@ dependencies {
     implementation(project(":core:base"))
     implementation(project(":core:ktx"))
     implementation(project(":core:permissions"))
+
+    // === TELOS_PENDING_REVIEW_START: work_profile_quiet_mode_toggle ===
+    implementation(libs.shizuku.api)
+    // === TELOS_PENDING_REVIEW_END: work_profile_quiet_mode_toggle ===
 }

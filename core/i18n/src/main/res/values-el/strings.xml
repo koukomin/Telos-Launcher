@@ -884,6 +884,15 @@
     <string name="missing_permission_context_profile_dnd">Η παράκαμψη του Μην ενοχλείτε απαιτεί πρόσβαση πολιτικής ειδοποιήσεων.</string>
     <string name="missing_permission_context_profile_wifi">Η ανάγνωση του ονόματος του συνδεδεμένου δικτύου WiFi απαιτεί πρόσβαση τοποθεσίας. Αυτός ο launcher το χρησιμοποιεί μόνο για τον έλεγχο του ονόματος δικτύου για αυτή την ενεργοποίηση.</string>
     <string name="missing_permission_manage_profiles">Η παύση ή συνέχιση του προφίλ εργασίας απαιτεί τον ορισμό του Telos ως προεπιλεγμένη εφαρμογή αρχικής οθόνης.</string>
+    <!-- === TELOS_PENDING_REVIEW_START: work_profile_quiet_mode_toggle === -->
+    <string name="work_profile_status_paused">Σε παύση</string>
+    <string name="work_profile_setup_button">Ρύθμιση προφίλ εργασίας</string>
+    <string name="work_profile_setup_description">Ο Telos δεν μπορεί να δημιουργήσει προφίλ εργασίας από μόνος του - ανοίγει τις Ρυθμίσεις συστήματος, όπου μπορείτε να ρυθμίσετε ένα από Σύστημα → Πολλοί χρήστες.</string>
+    <string name="work_profile_manage_button">Διαχείριση στις ρυθμίσεις συστήματος</string>
+    <string name="work_profile_manage_description">Ανοίγει τις Ρυθμίσεις συστήματος, όπου μπορείτε να καταργήσετε το προφίλ εργασίας ή να διαχειριστείτε τους λογαριασμούς του από Σύστημα → Πολλοί χρήστες.</string>
+    <string name="preference_work_profile_pause">Λειτουργία εργασίας</string>
+    <string name="preference_work_profile_pause_summary">Ενεργοποιήστε ή κάντε παύση στις εφαρμογές εργασίας σας</string>
+    <!-- === TELOS_PENDING_REVIEW_END: work_profile_quiet_mode_toggle === -->
     <string name="preference_category_context_profiles">Προφίλ</string>
     <string name="preference_context_profiles_enabled_summary">Οι ενεργοποιήσεις ελέγχονται μόνο όσο ο launcher είναι ανοιχτός, όχι στο παρασκήνιο</string>
     <string name="profile_private_profile_action_lock">Κλείδωμα ιδιωτικού χώρου</string>

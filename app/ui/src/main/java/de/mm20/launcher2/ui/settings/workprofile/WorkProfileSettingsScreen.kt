@@ -123,13 +123,15 @@ fun WorkProfileSettingsScreen() {
                             }
                         },
                     ) {
+                        // === TELOS_PENDING_REVIEW_START: work_profile_quiet_mode_toggle ===
                         SwitchPreference(
                             title = stringResource(R.string.preference_work_profile_pause),
                             summary = stringResource(R.string.preference_work_profile_pause_summary),
                             enabled = hasManageProfilesPermission == true,
-                            value = workProfileState?.locked == true,
-                            onValueChanged = { setPaused(it) },
+                            value = workProfileState?.locked != true,
+                            onValueChanged = { setPaused(!it) },
                         )
+                        // === TELOS_PENDING_REVIEW_END: work_profile_quiet_mode_toggle ===
                         SwitchPreference(
                             title = stringResource(R.string.preference_app_lock_work_profile_toggle),
                             summary = stringResource(R.string.preference_app_lock_work_profile_toggle_summary),
