@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.comms.model.DialerContact
 import de.mm20.launcher2.comms.repository.ContactDirectoryRepository
 import de.mm20.launcher2.comms.t9.T9SearchEngine
+import de.mm20.launcher2.comms.AuthManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -21,9 +22,16 @@ class DialpadViewModel : ViewModel(), KoinComponent {
 
     private val contactDirectory: ContactDirectoryRepository by inject()
     private val t9SearchEngine: T9SearchEngine by inject()
+    private val authManager = AuthManager()
 
     private val _input = MutableStateFlow("")
     val input: StateFlow<String> = _input
+
+    private val _isVaultUnlocked = MutableStateFlow(false)
+    val isVaultUnlocked: StateFlow<Boolean> = _isVaultUnlocked
+
+    private val _vaultAuthRequested = MutableStateFlow(false)
+    val vaultAuthRequested: StateFlow<Boolean> = _vaultAuthRequested
 
     private val contacts = contactDirectory.observeContacts()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
@@ -33,7 +41,29 @@ class DialpadViewModel : ViewModel(), KoinComponent {
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun onKeyPressed(key: Char) {
-        _input.value += key
+        val newInput = _input.value + key
+        _input.value = newInput
+        checkVaultTrigger(newInput)
+    }
+
+    private fun checkVaultTrigger(currentInput: String) {
+        val vaultPattern = Regex("^#\\d{4,6}#$")
+        if (vaultPattern.matches(currentInput)) {
+            _input.value = ""
+            // To be secure, the actual PIN validation happens via AuthManager
+            val pin = currentInput.removeSurrounding("#")
+            if (authManager.hasCustomPin() && authManager.authenticateCustom(pin)) {
+                _isVaultUnlocked.value = true
+            } else if (!authManager.hasCustomPin()) {
+                // Initial setup or native auth request
+                _vaultAuthRequested.value = true
+            }
+        }
+    }
+
+    fun onVaultAuthSuccess() {
+        _isVaultUnlocked.value = true
+        _vaultAuthRequested.value = false
     }
 
     fun onBackspace() {

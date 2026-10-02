@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -53,4 +54,9 @@ dependencies {
     implementation(project(":core:crashreporter"))
     implementation(project(":core:permissions"))
     implementation(project(":services:comms"))
+
+    implementation(libs.androidx.room)
+    implementation(libs.androidx.roomruntime)
+    ksp(libs.androidx.roomcompiler)
+    implementation(libs.sqlcipher.android)
 }

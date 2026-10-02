@@ -52,7 +52,10 @@ osmOpeningHours = "0.4.0"
 shizuku = "13.1.5"
 dhizuku = "2.5.3"
 
+sqlcipher = "4.5.4"
+
 [libraries]
+sqlcipher-android = { group = "net.zetetic", name = "android-database-sqlcipher", version.ref = "sqlcipher" }
 mustache-compiler = { module = "com.github.spullara.mustache.java:compiler", version.ref = "mustache" }
 
 jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jacksonCore" }
