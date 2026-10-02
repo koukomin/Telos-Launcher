@@ -23,11 +23,16 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -37,6 +42,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.comms.model.DialerContact
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.comms.intent.SocialIntentHelper
+import de.mm20.launcher2.ktx.tryStartActivity
 
 private val DIALPAD_KEYS = listOf(
     Triple("1", "", ""),
@@ -155,17 +162,61 @@ private fun DialpadKey(digit: String, sublabel: String, onClick: () -> Unit) {
 @Composable
 private fun T9ResultRow(contact: DialerContact, onClick: (String) -> Unit) {
     val primaryNumber = contact.phoneNumbers.firstOrNull() ?: return
-    ListItem(
-        headlineContent = {
-            Text(contact.displayName, maxLines = 1, overflow = TextOverflow.Ellipsis)
-        },
-        supportingContent = {
-            Text(primaryNumber, maxLines = 1, overflow = TextOverflow.Ellipsis)
-        },
-        modifier = Modifier.combinedClickable(
-            interactionSource = remember { MutableInteractionSource() },
-            indication = null,
-            onClick = { onClick(primaryNumber) },
-        ),
-    )
+    var showMenu by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
+    Box {
+        ListItem(
+            headlineContent = {
+                Text(contact.displayName, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            },
+            supportingContent = {
+                Text(primaryNumber, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            },
+            modifier = Modifier.combinedClickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = { onClick(primaryNumber) },
+                onLongClick = { showMenu = true }
+            ),
+            trailingContent = {
+                IconButton(onClick = { showMenu = true }) {
+                    Icon(painterResource(R.drawable.more_vert_24px), contentDescription = "More")
+                }
+            }
+        )
+        DropdownMenu(
+            expanded = showMenu,
+            onDismissRequest = { showMenu = false }
+        ) {
+            DropdownMenuItem(
+                text = { Text("WhatsApp") },
+                onClick = { 
+                    showMenu = false
+                    context.tryStartActivity(SocialIntentHelper.whatsApp(primaryNumber))
+                }
+            )
+            DropdownMenuItem(
+                text = { Text("Telegram") },
+                onClick = { 
+                    showMenu = false
+                    context.tryStartActivity(SocialIntentHelper.telegram(primaryNumber))
+                }
+            )
+            DropdownMenuItem(
+                text = { Text("Signal") },
+                onClick = { 
+                    showMenu = false
+                    context.tryStartActivity(SocialIntentHelper.signal(primaryNumber))
+                }
+            )
+            DropdownMenuItem(
+                text = { Text("Viber") },
+                onClick = { 
+                    showMenu = false
+                    context.tryStartActivity(SocialIntentHelper.viber(primaryNumber))
+                }
+            )
+        }
+    }
 }
