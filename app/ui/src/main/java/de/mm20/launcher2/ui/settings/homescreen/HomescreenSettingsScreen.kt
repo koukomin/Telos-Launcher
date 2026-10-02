@@ -96,14 +96,9 @@ fun HomescreenSettingsScreen() {
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_homescreen)) {
         item {
             PreferenceCategory {
-                Preference(
-                    icon = R.drawable.wallpaper_24px,
-                    title = stringResource(id = R.string.wallpaper),
-                    summary = stringResource(id = R.string.preference_wallpaper_summary),
-                    onClick = {
-                        backStack.add(WallpaperSettingsRoute)
-                    }
-                )
+                // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
+                // Wallpaper removed from here, moved to AppearanceSettingsScreen
+                // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
                 Preference(
                     icon = R.drawable.splitscreen_right_20px,
                     title = stringResource(id = R.string.preference_screen_desktop_mode),

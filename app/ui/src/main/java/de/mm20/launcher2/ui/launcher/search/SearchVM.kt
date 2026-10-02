@@ -275,27 +275,43 @@ class SearchVM : ViewModel(), KoinComponent {
                 allApps
                     .combine(hiddenItemKeys) { results, hiddenKeys -> results to hiddenKeys }
                     .combine(freezeSettings.hideFromLauncher) { (results, hiddenKeys), hideFrozen -> Triple(results, hiddenKeys, hideFrozen) }
-                    .collectLatest { (results, hiddenKeys, hideFrozen) ->
+                    // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
+                    .combine(searchUiSettings.moveFrozenAppsToEnd) { (results, hiddenKeys, hideFrozen), moveFrozenToEnd -> 
+                        Triple(results, hiddenKeys, Pair(hideFrozen, moveFrozenToEnd)) 
+                    }
+                    .collectLatest { (results, hiddenKeys, freezeFlags) ->
+                        val hideFrozen = freezeFlags.first
+                        val moveFrozenToEnd = freezeFlags.second
                         val hiddenItems = mutableListOf<SavableSearchable>()
 
                         // Frozen apps are dropped outright when hideFrozen is on, not routed into
                         // hiddenItems - that bucket is for the user's own hidden-items list (with
                         // its own "N hidden results" reveal UI), a different concept from "don't
                         // show this at all right now because it's frozen".
-                        val (hiddenApps, apps) = results.standardProfileApps
+                        var (hiddenApps, apps) = results.standardProfileApps
                             .filterNot { hideFrozen && it.isSuspended }
                             .partition { hiddenKeys.contains(it.key) }
+                        if (moveFrozenToEnd) {
+                            apps = apps.sortedBy { it.isSuspended }
+                        }
                         hiddenItems += hiddenApps
 
-                        val (hiddenWorkApps, workApps) = results.workProfileApps
+                        var (hiddenWorkApps, workApps) = results.workProfileApps
                             .filterNot { hideFrozen && it.isSuspended }
                             .partition { hiddenKeys.contains(it.key) }
+                        if (moveFrozenToEnd) {
+                            workApps = workApps.sortedBy { it.isSuspended }
+                        }
                         hiddenItems += hiddenWorkApps
 
-                        val (hiddenPrivateApps, privateApps) = results.privateSpaceApps
+                        var (hiddenPrivateApps, privateApps) = results.privateSpaceApps
                             .filterNot { hideFrozen && it.isSuspended }
                             .partition { hiddenKeys.contains(it.key) }
+                        if (moveFrozenToEnd) {
+                            privateApps = privateApps.sortedBy { it.isSuspended }
+                        }
                         hiddenItems += hiddenPrivateApps
+                        // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
                         previousResults = SearchResults(apps = apps)
 
                         searchActionResults.clear()

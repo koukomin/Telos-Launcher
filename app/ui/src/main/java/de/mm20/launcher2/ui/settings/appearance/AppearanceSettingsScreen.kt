@@ -45,6 +45,7 @@ import de.mm20.launcher2.ui.settings.colorscheme.ColorSchemesSettingsRoute
 import de.mm20.launcher2.ui.settings.shapes.ShapeSchemesSettingsRoute
 import de.mm20.launcher2.ui.settings.transparencies.TransparencySchemesSettingsRoute
 import de.mm20.launcher2.ui.settings.typography.TypographiesSettingsRoute
+import de.mm20.launcher2.ui.settings.homescreen.wallpaper.WallpaperSettingsRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -70,6 +71,17 @@ fun AppearanceSettingsScreen() {
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
         item {
             PreferenceCategory {
+                // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
+                Preference(
+                    icon = R.drawable.wallpaper_24px,
+                    title = stringResource(id = R.string.wallpaper),
+                    summary = stringResource(id = R.string.preference_wallpaper_summary),
+                    onClick = {
+                        backStack.add(WallpaperSettingsRoute)
+                    }
+                )
+                // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
+                
                 val theme by viewModel.colorScheme.collectAsState()
                 ListPreference(
                     title = stringResource(id = R.string.preference_theme),

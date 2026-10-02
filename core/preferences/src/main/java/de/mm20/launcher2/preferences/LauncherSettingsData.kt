@@ -178,6 +178,9 @@ data class FavoritesGroup(
 data class AppSearchGroup(
     val searchAllApps: Boolean = true,
     val appsShowDetails: Boolean = true,
+    // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
+    val moveFrozenAppsToEnd: Boolean = false,
+    // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
 )
 
 @Serializable
@@ -324,6 +327,9 @@ data class IconsGroup(
     val iconsThemed: Boolean = false,
     val iconsForceThemed: Boolean = false,
     val iconsPack: String? = null,
+    // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
+    val fallbackIconPacks: List<String> = emptyList(),
+    // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
     @Deprecated("Use iconsThemed instead")
     val iconsPackThemed: Boolean = false,
 )

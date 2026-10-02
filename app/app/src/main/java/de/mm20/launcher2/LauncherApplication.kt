@@ -42,6 +42,8 @@ import de.mm20.launcher2.devicepose.devicePoseModule
 import de.mm20.launcher2.feed.feedModule
 import de.mm20.launcher2.freeze.freezeModule
 import de.mm20.launcher2.appmanagement.appManagementModule
+import de.mm20.launcher2.comms.commsModule
+import de.mm20.launcher2.data.comms.dataCommsModule
 import de.mm20.launcher2.data.store.dataStoreModule
 import de.mm20.launcher2.data.store.worker.StoreUpdateScheduler
 import de.mm20.launcher2.store.storeModule
@@ -137,6 +139,8 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     appManagementModule,
                     storeModule,
                     dataStoreModule,
+                    commsModule,
+                    dataCommsModule,
                 )
             )
         }

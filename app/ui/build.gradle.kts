@@ -171,6 +171,7 @@ dependencies {
     implementation(project(":services:applock"))
     implementation(project(":services:app-management"))
     implementation(project(":services:store"))
+    implementation(project(":services:comms"))
 
     implementation(libs.androidx.biometric)
     implementation(project(":core:devicepose"))

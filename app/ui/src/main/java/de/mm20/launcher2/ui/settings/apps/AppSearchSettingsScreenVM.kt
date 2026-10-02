@@ -41,4 +41,13 @@ class AppSearchSettingsScreenVM: ViewModel(), KoinComponent {
     fun setShowListIcons(showIcons: Boolean) {
         uiSettings.setGridShowListIcons(showIcons)
     }
+
+    // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
+    val moveFrozenAppsToEnd = searchUiSettings.moveFrozenAppsToEnd
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setMoveFrozenAppsToEnd(move: Boolean) {
+        searchUiSettings.setMoveFrozenAppsToEnd(move)
+    }
+    // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
 }

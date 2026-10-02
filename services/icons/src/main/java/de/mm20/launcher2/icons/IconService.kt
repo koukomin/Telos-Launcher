@@ -133,6 +133,25 @@ class IconService(
                             Log.w("MM20", "Icon pack ${settings.iconPack} not found")
                         }
                     }
+
+                    // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
+                    for (fallbackPkg in settings.fallbackIconPacks) {
+                        if (fallbackPkg.isNotBlank()) {
+                            val pack = iconPackManager.getIconPack(fallbackPkg)
+                            if (pack != null) {
+                                providers.add(
+                                    IconPackIconProvider(
+                                        context,
+                                        pack,
+                                        iconPackManager,
+                                        settings.themedIcons,
+                                    )
+                                )
+                            }
+                        }
+                    }
+                    // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
+
                     providers.add(DynamicClockIconProvider(context, settings.themedIcons))
                     providers.add(FolderIconProvider(context, searchableRepository, this@IconService, settings.themedIcons))
                     providers.add(CalendarIconProvider(context, settings.themedIcons))

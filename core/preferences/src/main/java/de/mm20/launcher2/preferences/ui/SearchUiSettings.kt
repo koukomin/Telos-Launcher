@@ -16,6 +16,17 @@ class SearchUiSettings internal constructor(
         }
     }
 
+    // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
+    val moveFrozenAppsToEnd
+        get() = launcherDataStore.data.map { it.appSearch.moveFrozenAppsToEnd }.distinctUntilChanged()
+
+    fun setMoveFrozenAppsToEnd(move: Boolean) {
+        launcherDataStore.update {
+            it.copy(appSearch = it.appSearch.copy(moveFrozenAppsToEnd = move))
+        }
+    }
+    // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
+
     val hiddenItemsButton
         get() = launcherDataStore.data.map { it.searchResults.hiddenItemsShowButton }.distinctUntilChanged()
 

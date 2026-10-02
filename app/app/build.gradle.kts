@@ -176,6 +176,8 @@ dependencies {
     implementation(project(":services:app-management"))
     implementation(project(":services:store"))
     implementation(project(":data:store"))
+    implementation(project(":services:comms"))
+    implementation(project(":data:comms"))
 
     // === TELOS_PENDING_REVIEW_START: smart_freeze_dependencies ===
     implementation(libs.shizuku.api)

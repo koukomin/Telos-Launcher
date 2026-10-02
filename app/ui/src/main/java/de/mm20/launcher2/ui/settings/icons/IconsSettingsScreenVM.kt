@@ -121,6 +121,12 @@ class IconsSettingsScreenVM(
         iconSettings.setIconPack(iconPack?.takeIf { it.isNotBlank() })
     }
 
+    // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
+    fun setFallbackIconPacks(fallbackPacks: List<String>) {
+        iconSettings.setFallbackIconPacks(fallbackPacks)
+    }
+    // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
+
     val hasNotificationsPermission = permissionsManager.hasPermission(PermissionGroup.Notifications)
     val hasAttemptedNotificationsPermissionRequest =
         permissionsManager.hasAttemptedRequest(PermissionGroup.Notifications)
