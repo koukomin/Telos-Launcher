@@ -54,4 +54,10 @@ dependencies {
     implementation(project(":core:crashreporter"))
     implementation(project(":core:preferences"))
     implementation(libs.androidx.biometric)
+    
+    // === TELOS_PENDING_REVIEW_START: sms_and_radio_engine ===
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.session)
+    implementation(libs.androidx.media3.common)
+    // === TELOS_PENDING_REVIEW_END: sms_and_radio_engine ===
 }

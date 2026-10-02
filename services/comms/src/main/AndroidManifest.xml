@@ -2,8 +2,19 @@
     <!-- === TELOS_PENDING_REVIEW_START: telephony_encryption_suite === -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- === TELOS_PENDING_REVIEW_END: telephony_encryption_suite === -->
+
+    <!-- === TELOS_PENDING_REVIEW_START: sms_and_radio_engine === -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- === TELOS_PENDING_REVIEW_END: sms_and_radio_engine === -->
 
     <application>
+        <!-- === TELOS_PENDING_REVIEW_START: telephony_encryption_suite === -->
         <service
             android:name=".telephony.TelosCallScreeningService"
             android:permission="android.permission.BIND_SCREENING_SERVICE"
@@ -12,6 +23,27 @@
                 <action android:name="android.telecom.CallScreeningService" />
             </intent-filter>
         </service>
+        <!-- === TELOS_PENDING_REVIEW_END: telephony_encryption_suite === -->
+
+        <!-- === TELOS_PENDING_REVIEW_START: sms_and_radio_engine === -->
+        <receiver
+            android:name=".sms.TelosSmsReceiver"
+            android:permission="android.permission.BROADCAST_SMS"
+            android:exported="true">
+            <intent-filter android:priority="2147483647">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+                <action android:name="android.provider.Telephony.SMS_DELIVER" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".radio.RadioPlayerService"
+            android:exported="true"
+            android:foregroundServiceType="mediaPlayback">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaSessionService" />
+            </intent-filter>
+        </service>
+        <!-- === TELOS_PENDING_REVIEW_END: sms_and_radio_engine === -->
     </application>
-    <!-- === TELOS_PENDING_REVIEW_END: telephony_encryption_suite === -->
 </manifest>
