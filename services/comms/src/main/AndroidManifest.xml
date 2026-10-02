@@ -1,3 +1,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- === TELOS_PENDING_REVIEW_START: telephony_encryption_suite === -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
+    <application>
+        <service
+            android:name=".telephony.TelosCallScreeningService"
+            android:permission="android.permission.BIND_SCREENING_SERVICE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.telecom.CallScreeningService" />
+            </intent-filter>
+        </service>
+    </application>
+    <!-- === TELOS_PENDING_REVIEW_END: telephony_encryption_suite === -->
 </manifest>
