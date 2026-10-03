@@ -250,7 +250,9 @@ class SettingsActivity : BaseActivity() {
                 AppDetailsScreen(it.itemId)
             }
             entry<CommsDashboardRoute> {
-                CommsDashboardScreen()
+                // === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
+                CommsDashboardScreen(it.initialTab)
+                // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
             }
             entry<CreateFolderRoute> {
                 CreateFolderScreen()
@@ -557,6 +559,12 @@ class SettingsActivity : BaseActivity() {
             ROUTE_APP_RECOMMENDATIONS -> SearchSettingsRoute
             ROUTE_INTRUDER_PHOTOS -> IntruderPhotosRoute
             ROUTE_STORE -> StoreDashboardRoute
+            // === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
+            ROUTE_COMMS -> {
+                val tab = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB) ?: "dialpad"
+                CommsDashboardRoute(initialTab = tab)
+            }
+            // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
             ROUTE_CRASH_REPORT if (intent.hasExtra(EXTRA_CRASH_REPORT_PATH)) -> {
                 CrashReportRoute(intent.getStringExtra(EXTRA_CRASH_REPORT_PATH)!!)
             }
@@ -579,6 +587,9 @@ class SettingsActivity : BaseActivity() {
         // === TELOS_PENDING_REVIEW_END: desktop_context_menu_actions ===
         const val ROUTE_INTRUDER_PHOTOS = SettingsDeepLinkContract.ROUTE_INTRUDER_PHOTOS
         const val ROUTE_STORE = SettingsDeepLinkContract.ROUTE_STORE
+        // === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
+        const val ROUTE_COMMS = SettingsDeepLinkContract.ROUTE_COMMS
+        // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
         const val ROUTE_CRASH_REPORT = "settings/debug/crashreport"
         const val EXTRA_CRASH_REPORT_PATH = "crash_report_path"
     }

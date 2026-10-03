@@ -20,8 +20,10 @@ import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import kotlinx.serialization.Serializable
 
+// === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
 @Serializable
-data object CommsDashboardRoute : NavKey
+data class CommsDashboardRoute(val initialTab: String = "dialpad") : NavKey
+// === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
 
 private enum class CommsTab(val label: String) {
     Recents("Recents"),
@@ -31,8 +33,16 @@ private enum class CommsTab(val label: String) {
 }
 
 @Composable
-fun CommsDashboardScreen() {
-    var selectedTab by remember { mutableStateOf(CommsTab.Dialpad) }
+fun CommsDashboardScreen(initialTab: String = "dialpad") {
+    // === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
+    val defaultTab = when (initialTab.lowercase()) {
+        "recents" -> CommsTab.Recents
+        "messages" -> CommsTab.Messages
+        "contacts" -> CommsTab.Contacts
+        else -> CommsTab.Dialpad
+    }
+    var selectedTab by remember(initialTab) { mutableStateOf(defaultTab) }
+    // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
 
     Scaffold(
         topBar = {

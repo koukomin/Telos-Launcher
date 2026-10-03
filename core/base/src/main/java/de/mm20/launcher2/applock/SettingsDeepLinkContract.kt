@@ -9,4 +9,8 @@ object SettingsDeepLinkContract {
     const val ROUTE_INTRUDER_PHOTOS = "settings/applock/intruderphotos"
     /** Opens the Store dashboard directly - used by the virtual "Telos Store" app drawer entry. */
     const val ROUTE_STORE = "settings/store"
+    // === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
+    const val ROUTE_COMMS = "settings/comms"
+    const val EXTRA_COMMS_TAB = "de.mm20.launcher2.settings.COMMS_TAB"
+    // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
 }
