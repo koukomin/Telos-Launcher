@@ -228,8 +228,7 @@ internal class AppRepositoryImpl(
         if (packageName == context.packageName && !context.packageName.endsWith(".debug")) return emptyList()
 
         val apps = mutableListOf<LauncherApp>()
-        val seenComponents = mutableSetOf<String>()
-        val foundPackages = mutableSetOf<String>()
+        val seenPackages = mutableSetOf<String>()
 
         // 1. Query LauncherApps directly for the specific profile/userHandle.
         // This is multi-user and profile aware (Dual Apps, Work Profiles, Private Space).
@@ -240,15 +239,14 @@ internal class AppRepositoryImpl(
         }
 
         for (info in activityList) {
-            if (info.applicationInfo.packageName == context.packageName && !context.packageName.endsWith(".debug")) continue
+            val pkg = info.applicationInfo.packageName
+            if (pkg == context.packageName && !context.packageName.endsWith(".debug")) continue
 
-            val compKey = info.componentName.flattenToString()
-            if (compKey in seenComponents) continue
+            if (pkg in seenPackages) continue
 
             val app = LauncherApp(context, info)
             apps.add(app)
-            seenComponents.add(compKey)
-            foundPackages.add(info.applicationInfo.packageName)
+            seenPackages.add(pkg)
         }
 
         // 2. Only for the primary user, query PackageManager for disabled/frozen components
@@ -278,13 +276,11 @@ internal class AppRepositoryImpl(
             for (resolveInfo in allActivities) {
                 val activityInfo = resolveInfo.activityInfo ?: continue
                 val pkg = activityInfo.packageName
-                if (pkg in foundPackages) continue
+                
+                if (pkg in seenPackages) continue
                 if (pkg == context.packageName && !context.packageName.endsWith(".debug")) continue
 
                 val compName = ComponentName(pkg, activityInfo.name)
-                val compKey = compName.flattenToString()
-                if (compKey in seenComponents) continue
-
                 val label = resolveInfo.loadLabel(pm).toString()
                 if (label.isEmpty()) continue
                 if (!includeIconless && resolveInfo.iconResource == 0 && activityInfo.applicationInfo.icon == 0) continue
@@ -306,7 +302,7 @@ internal class AppRepositoryImpl(
                         disabledActivityInfo = activityInfo,
                     )
                 )
-                seenComponents.add(compKey)
+                seenPackages.add(pkg)
             }
         }
 
@@ -376,15 +372,21 @@ internal class AppRepositoryImpl(
         }
     }
 
-    override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<LauncherApp>> {
+    override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<Application>> {
         val normalizedQuery = stringNormalizer.normalize(query)
 
         return installedApps.map { apps ->
             withContext(Dispatchers.Default) {
                 val normalizerId = stringNormalizer.id
-                val appResults = mutableListOf<LauncherApp>()
+                val appResults = mutableListOf<Application>()
+                
+                // === TELOS_PENDING_REVIEW_START: virtual_app_koin_fix ===
+                val virtualApps = virtualAppProviders.flatMap { it.getVirtualApps() }
+                // === TELOS_PENDING_REVIEW_END: virtual_app_koin_fix ===
+
                 if (query.isEmpty()) {
                     appResults.addAll(apps)
+                    appResults.addAll(virtualApps)
                 } else {
                     // === TELOS_PENDING_REVIEW_START: perf_optimizations ===
                     apps.mapNotNullTo(appResults) { app ->
@@ -410,8 +412,19 @@ internal class AppRepositoryImpl(
 
                     val componentName = ComponentName.unflattenFromString(query)
                     getActivityByComponentName(componentName)?.let { appResults.add(it) }
+
+                    // Also search virtual apps
+                    virtualApps.forEach { vApp ->
+                        val score = ResultScore.from(
+                            query = normalizedQuery,
+                            primaryFields = listOf(stringNormalizer.normalize(vApp.label))
+                        )
+                        if (score.score >= 0.8f) {
+                            appResults.add(vApp)
+                        }
+                    }
                 }
-                appResults.sort()
+                appResults.sortByDescending { it.score.score }
                 appResults.toImmutableList()
             }
         }
