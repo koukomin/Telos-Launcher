@@ -229,6 +229,7 @@ internal class AppRepositoryImpl(
 
         val apps = mutableListOf<LauncherApp>()
         val seenComponents = mutableSetOf<String>()
+        val foundPackages = mutableSetOf<String>()
 
         // 1. Query LauncherApps directly for the specific profile/userHandle.
         // This is multi-user and profile aware (Dual Apps, Work Profiles, Private Space).
@@ -247,6 +248,7 @@ internal class AppRepositoryImpl(
             val app = LauncherApp(context, info)
             apps.add(app)
             seenComponents.add(compKey)
+            foundPackages.add(info.applicationInfo.packageName)
         }
 
         // 2. Only for the primary user, query PackageManager for disabled/frozen components
@@ -276,6 +278,7 @@ internal class AppRepositoryImpl(
             for (resolveInfo in allActivities) {
                 val activityInfo = resolveInfo.activityInfo ?: continue
                 val pkg = activityInfo.packageName
+                if (pkg in foundPackages) continue
                 if (pkg == context.packageName && !context.packageName.endsWith(".debug")) continue
 
                 val compName = ComponentName(pkg, activityInfo.name)
@@ -354,8 +357,12 @@ internal class AppRepositoryImpl(
                 val label = appInfo.loadLabel(pm).toString()
                 if (label.isEmpty()) return@mapNotNull null
 
+                // === TELOS_PENDING_REVIEW_START: iconless_apps_iconpack_fix ===
+                val launchClassName = pm.getLaunchIntentForPackage(appInfo.packageName)?.component?.className ?: ""
+                // === TELOS_PENDING_REVIEW_END: iconless_apps_iconpack_fix ===
+
                 LauncherApp(
-                    componentName = ComponentName(appInfo.packageName, ""),
+                    componentName = ComponentName(appInfo.packageName, launchClassName),
                     label = label,
                     user = profile.userHandle,
                     launcherActivityInfo = null,
