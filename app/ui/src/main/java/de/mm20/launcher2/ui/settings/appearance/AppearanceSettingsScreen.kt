@@ -248,7 +248,16 @@ private fun FontScalePreview(fontScale: Float) {
                     .size(48.dp)
                     .clip(CircleShape)
                     .background(MaterialTheme.colorScheme.primary),
-            )
+                contentAlignment = Alignment.Center
+            ) {
+                // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
+                androidx.compose.material3.Icon(
+                    painter = androidx.compose.ui.res.painterResource(de.mm20.launcher2.ui.R.drawable.photo_24px), // Fallback icon
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+                // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
+            }
             CompositionLocalProvider(
                 LocalDensity provides Density(baseDensity.density, baseDensity.fontScale * fontScale),
             ) {

@@ -304,14 +304,15 @@ fun DockSettingsScreen() {
     if (showChoiceDialog) {
         AlertDialog(
             onDismissRequest = { showChoiceDialog = false },
-            title = { Text("Pick item type") },
-            text = { Text("What would you like to place in this slot?") },
+            // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
+            title = { Text(stringResource(R.string.dock_pick_item_type)) },
+            text = { Text(stringResource(R.string.dock_pick_item_message)) },
             confirmButton = {
                 TextButton(onClick = {
                     showChoiceDialog = false
                     showSearchablePicker = true
                 }) {
-                    Text("App")
+                    Text(stringResource(R.string.dock_item_app))
                 }
             },
             dismissButton = {
@@ -319,9 +320,10 @@ fun DockSettingsScreen() {
                     showChoiceDialog = false
                     showWidgetPicker = true
                 }) {
-                    Text("Widget")
+                    Text(stringResource(R.string.dock_item_widget))
                 }
             }
+            // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
         )
     }
 

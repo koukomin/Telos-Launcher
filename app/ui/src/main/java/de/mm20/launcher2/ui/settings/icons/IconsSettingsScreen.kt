@@ -203,10 +203,12 @@ fun IconsSettingsScreen() {
                 LaunchedEffect(homeGrid) {
                     override = homeGrid.columnCount != grid.columnCount || homeGrid.iconSize != grid.iconSize
                 }
+                // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
                 SwitchPreference(
-                    title = "Override Home Grid",
+                    title = stringResource(R.string.preference_override_home_grid),
                     value = override,
                     onValueChanged = {
+                // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
                         override = it
                         if (!it) {
                             viewModel.setHomeGridColumnCount(null)
@@ -241,10 +243,12 @@ fun IconsSettingsScreen() {
                 LaunchedEffect(drawerGrid) {
                     override = drawerGrid.columnCount != grid.columnCount || drawerGrid.iconSize != grid.iconSize
                 }
+                // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
                 SwitchPreference(
-                    title = "Override Search Grid",
+                    title = stringResource(R.string.preference_override_search_grid),
                     value = override,
                     onValueChanged = {
+                // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
                         override = it
                         if (!it) {
                             viewModel.setDrawerGridColumnCount(null)
