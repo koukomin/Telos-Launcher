@@ -219,80 +219,97 @@ internal class AppRepositoryImpl(
         }
     }
 
+    // === TELOS_PENDING_REVIEW_START: dual_apps_and_multi_user_fix ===
     private suspend fun getApplications(
         packageName: String?,
         userHandle: UserHandle,
         includeIconless: Boolean = false,
     ): List<LauncherApp> {
-        if (packageName == context.packageName) return emptyList()
-
-        val pm = context.packageManager
-        val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
-        if (packageName != null) intent.`package` = packageName
-
-        val flags = PackageManager.MATCH_DISABLED_COMPONENTS or
-                PackageManager.MATCH_DIRECT_BOOT_AWARE or
-                PackageManager.MATCH_DIRECT_BOOT_UNAWARE
-
-        val allActivities = if (isAtLeastApiLevel(33)) {
-            pm.queryIntentActivities(
-                intent,
-                PackageManager.ResolveInfoFlags.of(flags.toLong())
-            )
-        } else {
-            pm.queryIntentActivities(intent, flags)
-        }
+        if (packageName == context.packageName && !context.packageName.endsWith(".debug")) return emptyList()
 
         val apps = mutableListOf<LauncherApp>()
-        val seenPackages = mutableSetOf<String>()
+        val seenComponents = mutableSetOf<String>()
 
-        for (info in allActivities) {
-            val activityInfo = info.activityInfo ?: continue
-            val pkg = activityInfo.packageName
-            if (pkg == context.packageName) continue
-            // If we've already seen this package and it was enabled, don't add a disabled variant.
-            // Usually we only want one launcher activity per app unless it's a multi-launcher app.
-            if (pkg in seenPackages) continue
+        // 1. Query LauncherApps directly for the specific profile/userHandle.
+        // This is multi-user and profile aware (Dual Apps, Work Profiles, Private Space).
+        val activityList = try {
+            launcherApps.getActivityList(packageName, userHandle)
+        } catch (e: Exception) {
+            emptyList()
+        }
 
-            val label = info.loadLabel(pm).toString()
-            if (label.isEmpty()) continue
-            if (!includeIconless && info.iconResource == 0 && activityInfo.applicationInfo.icon == 0) continue
+        for (info in activityList) {
+            if (info.applicationInfo.packageName == context.packageName && !context.packageName.endsWith(".debug")) continue
 
-            val isAppEnabled = activityInfo.applicationInfo.enabled
-            val isActivityEnabled = activityInfo.enabled
-            val isSuspended = (activityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SUSPENDED) != 0
+            val compKey = info.componentName.flattenToString()
+            if (compKey in seenComponents) continue
 
-            // If it's disabled but NOT a freeze candidate and NOT explicitly enabled,
-            // it might be one of those OEM-disabled components we want to avoid.
-            // HOWEVER, the user wants "frozen state from ANY source".
-            // So if it has a label and icon, we show it as frozen.
-            
-            val launcherActivityInfo = try {
-                launcherApps.getActivityList(pkg, userHandle).find { 
-                    it.componentName.className == activityInfo.name 
+            val app = LauncherApp(context, info)
+            apps.add(app)
+            seenComponents.add(compKey)
+        }
+
+        // 2. Only for the primary user, query PackageManager for disabled/frozen components
+        // whose LauncherActivityInfo is null because they were disabled via pm disable.
+        if (userHandle == Process.myUserHandle()) {
+            val pm = context.packageManager
+            val intent = Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER)
+            if (packageName != null) intent.`package` = packageName
+
+            val flags = PackageManager.MATCH_DISABLED_COMPONENTS or
+                    PackageManager.MATCH_DIRECT_BOOT_AWARE or
+                    PackageManager.MATCH_DIRECT_BOOT_UNAWARE
+
+            val allActivities = try {
+                if (isAtLeastApiLevel(33)) {
+                    pm.queryIntentActivities(
+                        intent,
+                        PackageManager.ResolveInfoFlags.of(flags.toLong())
+                    )
+                } else {
+                    pm.queryIntentActivities(intent, flags)
                 }
-            } catch (e: SecurityException) {
-                null
+            } catch (e: Exception) {
+                emptyList()
             }
 
-            apps.add(
-                LauncherApp(
-                    componentName = ComponentName(pkg, activityInfo.name),
-                    label = label,
-                    user = userHandle,
-                    launcherActivityInfo = launcherActivityInfo,
-                    applicationInfo = activityInfo.applicationInfo,
-                    versionName = LauncherApp.getPackageVersionName(context, pkg),
-                    isSuspended = isSuspended || !isAppEnabled || !isActivityEnabled,
-                    userSerialNumber = userHandle.getSerialNumber(context),
-                    disabledActivityInfo = if (launcherActivityInfo == null) activityInfo else null,
+            for (resolveInfo in allActivities) {
+                val activityInfo = resolveInfo.activityInfo ?: continue
+                val pkg = activityInfo.packageName
+                if (pkg == context.packageName && !context.packageName.endsWith(".debug")) continue
+
+                val compName = ComponentName(pkg, activityInfo.name)
+                val compKey = compName.flattenToString()
+                if (compKey in seenComponents) continue
+
+                val label = resolveInfo.loadLabel(pm).toString()
+                if (label.isEmpty()) continue
+                if (!includeIconless && resolveInfo.iconResource == 0 && activityInfo.applicationInfo.icon == 0) continue
+
+                val isAppEnabled = activityInfo.applicationInfo.enabled
+                val isActivityEnabled = activityInfo.enabled
+                val isSuspended = (activityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SUSPENDED) != 0
+
+                apps.add(
+                    LauncherApp(
+                        componentName = compName,
+                        label = label,
+                        user = userHandle,
+                        launcherActivityInfo = null,
+                        applicationInfo = activityInfo.applicationInfo,
+                        versionName = LauncherApp.getPackageVersionName(context, pkg),
+                        isSuspended = isSuspended || !isAppEnabled || !isActivityEnabled,
+                        userSerialNumber = userHandle.getSerialNumber(context),
+                        disabledActivityInfo = activityInfo,
+                    )
                 )
-            )
-            seenPackages.add(pkg)
+                seenComponents.add(compKey)
+            }
         }
 
         return apps
     }
+    // === TELOS_PENDING_REVIEW_END: dual_apps_and_multi_user_fix ===
 
 
     private fun getApplication(

@@ -98,7 +98,7 @@ internal data class LauncherApp(
     override val key: String
         // For backwards compatibility, user serial number is not included in main profile
         get() = if (isMainProfile) "${domain}://${componentName.packageName}:${componentName.className}"
-        else "${domain}://${componentName.packageName}:${componentName.className}:${userSerialNumber}"
+        else "${domain}://${componentName.packageName}:${componentName.className}:${userSerialNumber}_${user.hashCode()}"
 
 
     override suspend fun loadIcon(
@@ -107,7 +107,8 @@ internal data class LauncherApp(
         themed: Boolean,
     ): LauncherIcon? {
         try {
-            val icon =
+            // === TELOS_PENDING_REVIEW_START: dual_apps_and_multi_user_fix ===
+            var icon =
                 withContext(Dispatchers.IO) {
                     if (launcherActivityInfo != null) {
                         launcherActivityInfo.getIcon(0)
@@ -119,6 +120,12 @@ internal data class LauncherApp(
                         applicationInfo.loadIcon(context.packageManager)
                     }
                 } ?: return null
+
+            if (!isMainProfile) {
+                icon = context.packageManager.getUserBadgedIcon(icon, user)
+            }
+            // === TELOS_PENDING_REVIEW_END: dual_apps_and_multi_user_fix ===
+
             if (icon is AdaptiveIconDrawable) {
                 if (themed && isAtLeastApiLevel(33) && icon.monochrome != null) {
                     return StaticLauncherIcon(
@@ -301,16 +308,25 @@ internal data class LauncherApp(
             }
         }
 
-        fun isSuspended(context: Context, packageName: String): Boolean {
+        // === TELOS_PENDING_REVIEW_START: dual_apps_and_multi_user_fix ===
+        fun isSuspended(context: Context, packageName: String, user: UserHandle = Process.myUserHandle()): Boolean {
             return try {
+                val launcherApps = context.getSystemService<LauncherApps>()
+                if (launcherApps != null) {
+                    val infoList = launcherApps.getActivityList(packageName, user)
+                    if (infoList.isNotEmpty()) {
+                        return (infoList[0].applicationInfo.flags and ApplicationInfo.FLAG_SUSPENDED) != 0
+                    }
+                }
                 context.packageManager.getApplicationInfo(
                     packageName,
                     0
                 ).flags and ApplicationInfo.FLAG_SUSPENDED != 0
-            } catch (e: PackageManager.NameNotFoundException) {
+            } catch (e: Exception) {
                 false
             }
         }
+        // === TELOS_PENDING_REVIEW_END: dual_apps_and_multi_user_fix ===
 
         const val Domain = "app"
     }
