@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
@@ -73,6 +74,11 @@ fun CommsDashboardScreen() {
                 CommsTab.Messages -> MessagesScreen()
                 CommsTab.Contacts -> ContactsScreen()
             }
+            // === TELOS_PENDING_REVIEW_START: radio_mini_player ===
+            RadioMiniPlayer(
+                modifier = Modifier.align(Alignment.BottomCenter)
+            )
+            // === TELOS_PENDING_REVIEW_END: radio_mini_player ===
         }
     }
 }
