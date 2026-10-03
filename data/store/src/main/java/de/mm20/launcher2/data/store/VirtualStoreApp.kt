@@ -13,6 +13,10 @@ import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.VirtualAppProvider
+import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.icons.StaticLauncherIcon
+import de.mm20.launcher2.icons.StaticIconLayer
+import de.mm20.launcher2.icons.TransparentLayer
 
 /**
  * A synthetic "app" entry for the Store, so it shows up in the app drawer/app list like any
@@ -57,6 +61,14 @@ internal class VirtualStoreApp(context: Context) : Application {
         } catch (e: Exception) {
             false
         }
+    }
+
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): de.mm20.launcher2.icons.LauncherIcon? {
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.android_24px) ?: return null
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(drawable, 1f),
+            backgroundLayer = TransparentLayer
+        )
     }
 
     override fun getSerializer(): SearchableSerializer = NullSerializer()
