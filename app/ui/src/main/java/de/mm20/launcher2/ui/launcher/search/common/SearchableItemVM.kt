@@ -74,6 +74,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     val isUpToDate = MutableStateFlow(true)
 
     val devicePoseProvider: DevicePoseProvider by inject()
+    val frozenAppStyle = freezeSettings.frozenAppStyle
 
     val searchable = MutableStateFlow<SavableSearchable?>(null)
     private val iconSize = MutableStateFlow(0)

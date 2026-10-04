@@ -535,6 +535,9 @@ data class FreezeGroup(
      * remain fully manageable (freeze/unfreeze) from the Freeze Manager itself. Default off:
      * frozen apps stay visible (grayed out), matching prior behavior. */
     val freezeHideFromLauncher: Boolean = false,
+    // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
+    val frozenAppStyle: FrozenAppStyle = FrozenAppStyle.SnowflakeBadge,
+    // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
 )
 
 @Serializable
@@ -1137,6 +1140,14 @@ enum class FreezeExclusionStrictness {
     @SerialName("strict") Strict,
     @SerialName("relaxed") Relaxed,
 }
+
+// === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
+@Serializable
+enum class FrozenAppStyle {
+    @SerialName("grayscale") Grayscale,
+    @SerialName("snowflake_badge") SnowflakeBadge,
+}
+// === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
 
 @Serializable
 enum class FreezeMethod {

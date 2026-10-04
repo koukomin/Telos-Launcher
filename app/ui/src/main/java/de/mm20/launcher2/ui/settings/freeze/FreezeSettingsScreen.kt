@@ -25,6 +25,7 @@ import de.mm20.launcher2.preferences.FreezeBackendPreference
 import de.mm20.launcher2.preferences.FreezeExclusionStrictness
 import de.mm20.launcher2.preferences.FreezeMethod
 import de.mm20.launcher2.preferences.FreezeProfile
+import de.mm20.launcher2.preferences.FrozenAppStyle
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
@@ -69,6 +70,9 @@ fun FreezeSettingsScreen() {
     val freezeMethods by viewModel.freezeMethods.collectAsStateWithLifecycle()
     val advancedFeaturesEnabled by viewModel.advancedFeaturesEnabled.collectAsStateWithLifecycle()
     val hideFromLauncher by viewModel.hideFromLauncher.collectAsStateWithLifecycle()
+    // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
+    val frozenAppStyle by viewModel.frozenAppStyle.collectAsStateWithLifecycle(FrozenAppStyle.SnowflakeBadge)
+    // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
 
     val usageAccessGranted by viewModel.usageAccessGranted.collectAsStateWithLifecycle()
 
@@ -285,6 +289,17 @@ fun FreezeSettingsScreen() {
                     value = hideFromLauncher,
                     onValueChanged = { viewModel.setHideFromLauncher(it) }
                 )
+                // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
+                ListPreference(
+                    title = stringResource(R.string.preference_frozen_app_style),
+                    items = listOf(
+                        stringResource(R.string.preference_frozen_app_style_grayscale) to FrozenAppStyle.Grayscale,
+                        stringResource(R.string.preference_frozen_app_style_snowflake) to FrozenAppStyle.SnowflakeBadge
+                    ),
+                    value = frozenAppStyle,
+                    onValueChanged = { if (it != null) viewModel.setFrozenAppStyle(it) }
+                )
+                // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
             }
         }
         itemsIndexed(apps, key = { _, it -> it.key }) { _, app ->

@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import de.mm20.launcher2.preferences.FrozenAppStyle
 
 class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     private val context: Context by inject()
@@ -53,6 +54,15 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
 
     val backend = freezeSettings.backend
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), FreezeBackendPreference.Auto)
+
+    // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
+    val frozenAppStyle = freezeSettings.frozenAppStyle
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setFrozenAppStyle(style: FrozenAppStyle) {
+        freezeSettings.setFrozenAppStyle(style)
+    }
+    // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
 
     fun setBackend(backend: FreezeBackendPreference) {
         freezeSettings.setBackend(backend)

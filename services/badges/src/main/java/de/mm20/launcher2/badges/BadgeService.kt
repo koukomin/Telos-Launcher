@@ -57,7 +57,9 @@ internal class BadgeServiceImpl(
                     providers += AppShortcutBadgeProvider(context)
                 }
                 if (it.suspendedApps) {
-                    providers += SuspendedAppsBadgeProvider()
+                    // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
+                    providers += SuspendedAppsBadgeProvider(context)
+                    // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
                 }
                 if (it.plugins) {
                     providers += PluginBadgeProvider(context)

@@ -176,7 +176,9 @@ fun AppItem(
                                 .padding(16.dp),
                             badge = { badge },
                             icon = { icon },
-                            grayscale = isSuspended,
+                            // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
+                            grayscale = isSuspended && (de.mm20.launcher2.preferences.FrozenAppStyle.Grayscale == viewModel.frozenAppStyle.collectAsStateWithLifecycle(de.mm20.launcher2.preferences.FrozenAppStyle.SnowflakeBadge).value),
+                            // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
                         )
                     }
                     val notifications by viewModel.notifications.collectAsState(emptyList())
@@ -644,7 +646,9 @@ fun AppItem(
                                 .padding(end = 16.dp),
                             badge = { badge },
                             icon = { icon },
-                            grayscale = isSuspended,
+                            // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
+                            grayscale = isSuspended && (de.mm20.launcher2.preferences.FrozenAppStyle.Grayscale == viewModel.frozenAppStyle.collectAsStateWithLifecycle(de.mm20.launcher2.preferences.FrozenAppStyle.SnowflakeBadge).value),
+                            // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
                         )
                     }
                     Text(

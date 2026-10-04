@@ -298,4 +298,4 @@ fabric.properties
 # Claude Code local settings temp files
 .claude/settings.local.json.tmp.*
 
-.kotlin
+.kotlin*.telos_backup

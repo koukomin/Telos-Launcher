@@ -6,11 +6,21 @@ import de.mm20.launcher2.preferences.FreezeExclusionStrictness
 import de.mm20.launcher2.preferences.FreezeMethod
 import de.mm20.launcher2.preferences.FreezeProfile
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.FrozenAppStyle
 import kotlinx.coroutines.flow.map
 
 class FreezeSettings internal constructor(
     private val dataStore: LauncherDataStore,
 ) {
+    // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
+    val frozenAppStyle
+        get() = dataStore.data.map { it.freeze.frozenAppStyle }
+    
+    fun setFrozenAppStyle(style: FrozenAppStyle) {
+        dataStore.update { it.copy(freeze = it.freeze.copy(frozenAppStyle = style)) }
+    }
+    // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
+
     val backend
         get() = dataStore.data.map { it.freeze.freezeBackend }
 
