@@ -16,6 +16,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.ExperimentalFoundationApi
+import de.mm20.launcher2.ui.comms.ContactDetailsRoute
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -39,6 +45,7 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.ui.R
 import org.koin.compose.koinInject
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ContactsScreen() {
     val viewModel: ContactsViewModel = viewModel()
@@ -56,13 +63,30 @@ fun ContactsScreen() {
     }
 
     if (contacts.isEmpty()) {
-        EmptyCommsTab(title = "No contacts", message = "Contacts with a phone number will show up here.")
+        EmptyCommsTab(title = androidx.compose.ui.res.stringResource(R.string.contacts_empty_title), message = androidx.compose.ui.res.stringResource(R.string.contacts_empty_msg))
         return
     }
 
+    val backStack = LocalBackStack.current
+    val grouped = remember(contacts) {
+        contacts.groupBy { it.displayName.firstOrNull()?.uppercaseChar() ?: '#' }.toSortedMap()
+    }
     LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(contacts, key = { it.id }) { contact ->
-            ContactRow(contact = contact)
+        grouped.forEach { (initial, contactsForInitial) ->
+            stickyHeader {
+                Text(
+                    text = initial.toString(),
+                    style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
+                    color = androidx.compose.material3.MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(androidx.compose.material3.MaterialTheme.colorScheme.surface.copy(alpha = 0.9f))
+                        .padding(horizontal = 16.dp, vertical = 8.dp)
+                )
+            }
+            items(contactsForInitial, key = { it.id }) { contact ->
+                ContactRow(contact = contact, onClick = { backStack.add(ContactDetailsRoute(contact.id)) })
+            }
         }
     }
 }
@@ -83,7 +107,7 @@ private fun ContactsPermissionRequest(onRequest: () -> Unit) {
 }
 
 @Composable
-private fun ContactRow(contact: DialerContact) {
+private fun ContactRow(contact: DialerContact, onClick: () -> Unit) {
     val context = LocalContext.current
     val primaryNumber = contact.phoneNumbers.firstOrNull()
 
@@ -106,7 +130,7 @@ private fun ContactRow(contact: DialerContact) {
             Modifier.combinedClickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
-                onClick = { safeStartActivity(context, Intent(Intent.ACTION_DIAL, Uri.parse("tel:${Uri.encode(number)}"))) },
+                onClick = onClick,
             )
         } ?: Modifier,
     )

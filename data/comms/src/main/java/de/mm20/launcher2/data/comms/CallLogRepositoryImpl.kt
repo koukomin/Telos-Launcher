@@ -75,12 +75,14 @@ internal class CallLogRepositoryImpl(
                 null,
                 "${CallLog.Calls.DATE} DESC LIMIT 100"
             )?.use { cursor ->
-                val idCol = cursor.getColumnIndexOrThrow(CallLog.Calls._ID)
-                val numberCol = cursor.getColumnIndexOrThrow(CallLog.Calls.NUMBER)
-                val nameCol = cursor.getColumnIndexOrThrow(CallLog.Calls.CACHED_NAME)
-                val typeCol = cursor.getColumnIndexOrThrow(CallLog.Calls.TYPE)
-                val dateCol = cursor.getColumnIndexOrThrow(CallLog.Calls.DATE)
-                val durationCol = cursor.getColumnIndexOrThrow(CallLog.Calls.DURATION)
+                val idCol = cursor.getColumnIndex(CallLog.Calls._ID)
+                val numberCol = cursor.getColumnIndex(CallLog.Calls.NUMBER)
+                val nameCol = cursor.getColumnIndex(CallLog.Calls.CACHED_NAME)
+                val typeCol = cursor.getColumnIndex(CallLog.Calls.TYPE)
+                val dateCol = cursor.getColumnIndex(CallLog.Calls.DATE)
+                val durationCol = cursor.getColumnIndex(CallLog.Calls.DURATION)
+                
+                if (idCol < 0 || numberCol < 0) return@withContext emptyList()
 
                 while (cursor.moveToNext()) {
                     val typeInt = cursor.getInt(typeCol)

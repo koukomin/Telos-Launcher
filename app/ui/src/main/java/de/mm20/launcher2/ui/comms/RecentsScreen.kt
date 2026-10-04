@@ -9,6 +9,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import androidx.compose.foundation.lazy.LazyRow
+import de.mm20.launcher2.comms.model.CallType
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -40,6 +44,11 @@ fun RecentsScreen() {
     val recents by viewModel.recents.collectAsStateWithLifecycle()
     val hasCallLogPermission by viewModel.hasCallLogPermission.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val backStack = LocalBackStack.current
+    var currentFilter by remember { mutableStateOf("All") }
+    val filteredRecents = remember(recents, currentFilter) {
+        if (currentFilter == "Missed") recents.filter { it.type == CallType.Missed } else recents
+    }
 
     if (!hasCallLogPermission) {
         Column(
@@ -144,6 +153,7 @@ fun RecentsScreen() {
                         call = call,
                         expanded = expanded,
                         onClick = { expanded = !expanded },
+                        onContactClick = { call.displayName?.let { backStack.add(de.mm20.launcher2.ui.comms.ContactDetailsRoute(call.id)) } },
                         onDial = { viewModel.dial(context, call.phoneNumber) }
                     )
                 }
@@ -156,7 +166,7 @@ fun RecentsScreen() {
 private fun RecentCallCard(
     call: CallLogEntry,
     expanded: Boolean,
-    onClick: () -> Unit,
+    onClick: () -> Unit, onContactClick: () -> Unit,
     onDial: () -> Unit
 ) {
     val context = LocalContext.current
@@ -176,7 +186,8 @@ private fun RecentCallCard(
                     modifier = Modifier
                         .size(48.dp)
                         .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.secondaryContainer),
+                        .background(MaterialTheme.colorScheme.secondaryContainer)
+                        .clickable(onClick = onContactClick),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -265,24 +276,3 @@ private fun formatDate(timestamp: Long): String {
     return formatter.format(Date(timestamp))
 }
 
-@Composable
-internal fun EmptyCommsTab(title: String, message: String) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Spacer(Modifier.weight(1f))
-        Text(title, style = MaterialTheme.typography.titleMedium)
-        Spacer(Modifier.height(4.dp))
-        Text(
-            text = message,
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center,
-        )
-        Spacer(Modifier.weight(1f))
-    }
-}
-// === TELOS_PENDING_REVIEW_END: right_dialer_ui ===

@@ -145,6 +145,8 @@ import de.mm20.launcher2.ui.comms.CommsDashboardScreen
 import de.mm20.launcher2.ui.settings.comms.CommsSettingsRoute
 import de.mm20.launcher2.ui.settings.comms.CommsSettingsScreen
 import de.mm20.launcher2.ui.store.AppDetailsRoute
+import de.mm20.launcher2.ui.comms.ContactDetailsRoute
+import de.mm20.launcher2.ui.comms.ContactDetailsScreen
 import de.mm20.launcher2.ui.store.AppDetailsScreen
 import de.mm20.launcher2.ui.store.StoreDashboardRoute
 import de.mm20.launcher2.ui.store.StoreDashboardScreen
@@ -247,6 +249,9 @@ class SettingsActivity : BaseActivity() {
             }
             entry<StoreDashboardRoute> {
                 StoreDashboardScreen()
+            }
+            entry<ContactDetailsRoute> {
+                ContactDetailsScreen(it.contactId)
             }
             entry<AppDetailsRoute> {
                 AppDetailsScreen(it.itemId)

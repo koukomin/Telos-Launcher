@@ -10,7 +10,10 @@ import de.mm20.launcher2.comms.repository.ContactDirectoryRepository
 import de.mm20.launcher2.comms.t9.T9SearchEngine
 import de.mm20.launcher2.comms.AuthManager
 import de.mm20.launcher2.preferences.comms.CommsSettings
+import android.telephony.PhoneNumberUtils
+import java.util.Locale
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -30,7 +33,9 @@ class DialpadViewModel : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
 
     private val _input = MutableStateFlow("")
-    val input: StateFlow<String> = _input
+    val input: StateFlow<String> = _input.map { 
+        PhoneNumberUtils.formatNumber(it, Locale.getDefault().country) ?: it 
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
 
     private val _isVaultUnlocked = MutableStateFlow(false)
     val isVaultUnlocked: StateFlow<Boolean> = _isVaultUnlocked
@@ -85,8 +90,9 @@ class DialpadViewModel : ViewModel(), KoinComponent {
      * runtime `CALL_PHONE` permission handling) - the user still confirms the call themselves.
      */
     fun dial(context: Context, phoneNumber: String = _input.value) {
+        val dialNumber = if (phoneNumber == input.value) _input.value else phoneNumber
         if (phoneNumber.isEmpty()) return
-        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${Uri.encode(phoneNumber)}"))
+        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${Uri.encode(dialNumber)}"))
         context.startActivity(intent)
     }
 }
