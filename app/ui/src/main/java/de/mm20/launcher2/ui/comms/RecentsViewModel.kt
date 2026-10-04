@@ -19,6 +19,7 @@ import org.koin.core.component.inject
 class RecentsViewModel : ViewModel(), KoinComponent {
 
     private val callLogRepository: CallLogRepository by inject()
+    private val commsSettings: de.mm20.launcher2.preferences.comms.CommsSettings by inject()
     private val permissionsManager: PermissionsManager by inject()
 
     val recents: StateFlow<List<CallLogEntry>> = callLogRepository.observeRecents()
@@ -31,9 +32,15 @@ class RecentsViewModel : ViewModel(), KoinComponent {
         permissionsManager.requestPermission(activity, PermissionGroup.CallLog)
     }
 
+    val clirPrefix = commsSettings.clirPrefix.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
+
     fun dial(context: Context, phoneNumber: String) {
         if (phoneNumber.isEmpty()) return
-        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${Uri.encode(phoneNumber)}"))
+        val prefix = clirPrefix.value
+        val finalNumber = if (prefix.isNotEmpty() && !android.telephony.PhoneNumberUtils.isEmergencyNumber(phoneNumber)) {
+            "$prefix$phoneNumber"
+        } else phoneNumber
+        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${Uri.encode(finalNumber)}"))
         context.startActivity(intent)
     }
 }

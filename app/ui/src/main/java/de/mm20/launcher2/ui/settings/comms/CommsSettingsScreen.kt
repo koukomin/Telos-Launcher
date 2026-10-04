@@ -36,6 +36,8 @@ fun CommsSettingsScreen() {
     val dialpadVibration by viewModel.dialpadVibration.collectAsStateWithLifecycle()
     val vibrateOnAnswer by viewModel.vibrateOnAnswer.collectAsStateWithLifecycle()
     val vibrateOnHangup by viewModel.vibrateOnHangup.collectAsStateWithLifecycle()
+    val clirPrefix by viewModel.clirPrefix.collectAsStateWithLifecycle()
+    val enableSpamBlocking by viewModel.enableSpamBlocking.collectAsStateWithLifecycle()
     
     val context = LocalContext.current
 
@@ -83,6 +85,48 @@ fun CommsSettingsScreen() {
                     value = vibrateOnHangup,
                     onValueChanged = { viewModel.setVibrateOnHangup(it) }
                 )
+            }
+        }
+
+        item {
+            PreferenceCategory(title = "Privacy & Spam") {
+                SwitchPreference(
+                    title = "Offline Spam Screening",
+                    summary = "Silently block incoming calls from known spam numbers using TelosCallScreeningService",
+                    value = enableSpamBlocking,
+                    onValueChanged = { viewModel.setEnableSpamBlocking(it) }
+                )
+                var editClir by remember { mutableStateOf(false) }
+                Preference(
+                    title = "CLIR Masking Prefix",
+                    summary = if (clirPrefix.isEmpty()) "Not set" else "Prefix: $clirPrefix",
+                    onClick = { editClir = true }
+                )
+                if (editClir) {
+                    var input by remember { mutableStateOf(clirPrefix) }
+                    AlertDialog(
+                        onDismissRequest = { editClir = false },
+                        title = { Text("Set CLIR Prefix (e.g. #31#)") },
+                        text = {
+                            OutlinedTextField(
+                                value = input,
+                                onValueChange = { input = it },
+                                label = { Text("Prefix") },
+                                singleLine = true,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        },
+                        confirmButton = {
+                            TextButton(onClick = {
+                                viewModel.setClirPrefix(input.trim())
+                                editClir = false
+                            }) { Text("Save") }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { editClir = false }) { Text("Cancel") }
+                        }
+                    )
+                }
             }
         }
 

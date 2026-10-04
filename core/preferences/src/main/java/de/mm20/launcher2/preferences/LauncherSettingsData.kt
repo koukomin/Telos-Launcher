@@ -1175,6 +1175,8 @@ data class CommsGroup(
     val dialpadSounds: Boolean = false,
     val dialpadVibration: Boolean = true,
     val vibrateOnAnswer: Boolean = false,
-    val vibrateOnHangup: Boolean = false
+    val vibrateOnHangup: Boolean = false,
+    val clirPrefix: String = "",
+    val enableSpamBlocking: Boolean = false
 )
 // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===

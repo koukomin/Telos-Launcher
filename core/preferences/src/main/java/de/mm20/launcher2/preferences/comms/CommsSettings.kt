@@ -59,5 +59,17 @@ class CommsSettings internal constructor(
     fun setVibrateOnHangup(enabled: Boolean) {
         dataStore.update { it.copy(comms = it.comms.copy(vibrateOnHangup = enabled)) }
     }
+
+    val clirPrefix
+        get() = dataStore.data.map { it.comms.clirPrefix }
+    fun setClirPrefix(prefix: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(clirPrefix = prefix)) }
+    }
+
+    val enableSpamBlocking
+        get() = dataStore.data.map { it.comms.enableSpamBlocking }
+    fun setEnableSpamBlocking(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(enableSpamBlocking = enabled)) }
+    }
 }
 // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===

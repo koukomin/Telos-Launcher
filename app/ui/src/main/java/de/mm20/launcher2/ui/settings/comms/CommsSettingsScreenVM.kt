@@ -57,5 +57,17 @@ class CommsSettingsScreenVM : ViewModel(), KoinComponent {
     fun setVibrateOnHangup(enabled: Boolean) {
         commsSettings.setVibrateOnHangup(enabled)
     }
+
+    val clirPrefix = commsSettings.clirPrefix
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
+    fun setClirPrefix(prefix: String) {
+        commsSettings.setClirPrefix(prefix)
+    }
+
+    val enableSpamBlocking = commsSettings.enableSpamBlocking
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    fun setEnableSpamBlocking(enabled: Boolean) {
+        commsSettings.setEnableSpamBlocking(enabled)
+    }
 }
 // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===

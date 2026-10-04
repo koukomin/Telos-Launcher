@@ -42,6 +42,8 @@ data class ContactDetailsRoute(val contactId: Long) : NavKey
 
 class ContactDetailsViewModel : ViewModel(), KoinComponent {
     private val contactDir: ContactDirectoryRepository by inject()
+    private val commsSettings: de.mm20.launcher2.preferences.comms.CommsSettings by inject()
+    val clirPrefix = commsSettings.clirPrefix.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
     
     fun getContact(id: Long): StateFlow<DialerContact?> {
         return contactDir.observeContacts()
@@ -51,7 +53,11 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
 
     fun dial(context: android.content.Context, number: String) {
         if (number.isEmpty()) return
-        val intent = android.content.Intent(android.content.Intent.ACTION_DIAL, android.net.Uri.parse("tel:${android.net.Uri.encode(number)}"))
+        val prefix = clirPrefix.value
+        val finalNumber = if (prefix.isNotEmpty() && !android.telephony.PhoneNumberUtils.isEmergencyNumber(number)) {
+            "$prefix$number"
+        } else number
+        val intent = android.content.Intent(android.content.Intent.ACTION_DIAL, android.net.Uri.parse("tel:${android.net.Uri.encode(finalNumber)}"))
         context.startActivity(intent)
     }
 }

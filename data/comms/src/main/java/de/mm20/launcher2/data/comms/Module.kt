@@ -18,6 +18,7 @@ val dataCommsModule = module {
     single<ContactDirectoryRepository> { ContactDirectoryRepositoryImpl(androidContext(), get()) }
     single<CallLogRepository> { CallLogRepositoryImpl(androidContext(), get()) }
     single<MessageRepository> { MessageRepositoryImpl() }
+    single<de.mm20.launcher2.comms.repository.SpamRepository> { SpamRepositoryImpl(androidContext()) }
 
     single {
         HttpClient {
