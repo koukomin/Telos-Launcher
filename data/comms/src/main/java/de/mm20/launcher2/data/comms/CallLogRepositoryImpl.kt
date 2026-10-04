@@ -57,35 +57,39 @@ internal class CallLogRepositoryImpl(
     }
 
     private suspend fun queryCallLog(): List<CallLogEntry> = withContext(Dispatchers.IO) {
-        val calls = mutableListOf<CallLogEntry>()
-        val projection = arrayOf(
-            CallLog.Calls._ID,
-            CallLog.Calls.NUMBER,
-            CallLog.Calls.CACHED_NAME,
-            CallLog.Calls.TYPE,
-            CallLog.Calls.DATE,
-            CallLog.Calls.DURATION
-        )
-
         try {
-            context.contentResolver.query(
+            val calls = mutableListOf<CallLogEntry>()
+            val projection = arrayOf(
+                CallLog.Calls._ID,
+                CallLog.Calls.NUMBER,
+                CallLog.Calls.CACHED_NAME,
+                CallLog.Calls.TYPE,
+                CallLog.Calls.DATE,
+                CallLog.Calls.DURATION
+            )
+
+            val cursor = context.contentResolver.query(
                 CallLog.Calls.CONTENT_URI,
                 projection,
                 null,
                 null,
                 "${CallLog.Calls.DATE} DESC LIMIT 100"
-            )?.also { if (it.count < 0) return@withContext emptyList() }?.use { cursor ->
-                val idCol = cursor.getColumnIndex(CallLog.Calls._ID)
-                val numberCol = cursor.getColumnIndex(CallLog.Calls.NUMBER)
-                val nameCol = cursor.getColumnIndex(CallLog.Calls.CACHED_NAME)
-                val typeCol = cursor.getColumnIndex(CallLog.Calls.TYPE)
-                val dateCol = cursor.getColumnIndex(CallLog.Calls.DATE)
-                val durationCol = cursor.getColumnIndex(CallLog.Calls.DURATION)
+            )
+
+            if (cursor == null) return@withContext emptyList()
+
+            cursor.use { c ->
+                val idCol = c.getColumnIndex(CallLog.Calls._ID)
+                val numberCol = c.getColumnIndex(CallLog.Calls.NUMBER)
+                val nameCol = c.getColumnIndex(CallLog.Calls.CACHED_NAME)
+                val typeCol = c.getColumnIndex(CallLog.Calls.TYPE)
+                val dateCol = c.getColumnIndex(CallLog.Calls.DATE)
+                val durationCol = c.getColumnIndex(CallLog.Calls.DURATION)
                 
                 if (idCol < 0 || numberCol < 0) return@withContext emptyList()
 
-                while (cursor.moveToNext()) {
-                    val typeInt = cursor.getInt(typeCol)
+                while (c.moveToNext()) {
+                    val typeInt = c.getInt(typeCol)
                     val callType = when (typeInt) {
                         CallLog.Calls.INCOMING_TYPE -> CallType.Incoming
                         CallLog.Calls.OUTGOING_TYPE -> CallType.Outgoing
@@ -97,20 +101,19 @@ internal class CallLogRepositoryImpl(
 
                     calls.add(
                         CallLogEntry(
-                            id = cursor.getLong(idCol),
-                            phoneNumber = cursor.getString(numberCol) ?: "",
-                            displayName = cursor.getString(nameCol),
+                            id = c.getLong(idCol),
+                            phoneNumber = c.getString(numberCol) ?: "",
+                            displayName = c.getString(nameCol),
                             type = callType,
-                            timestamp = cursor.getLong(dateCol),
-                            durationSeconds = cursor.getLong(durationCol)
+                            timestamp = c.getLong(dateCol),
+                            durationSeconds = c.getLong(durationCol)
                         )
                     )
                 }
             }
+            calls
         } catch (e: Exception) {
-            return@withContext emptyList()
+            emptyList()
         }
-        
-        calls
     }
 }
