@@ -142,6 +142,8 @@ import de.mm20.launcher2.ui.settings.icons.IconsSettingsRoute
 import de.mm20.launcher2.ui.settings.icons.IconsSettingsScreen
 import de.mm20.launcher2.ui.comms.CommsDashboardRoute
 import de.mm20.launcher2.ui.comms.CommsDashboardScreen
+import de.mm20.launcher2.ui.settings.comms.CommsSettingsRoute
+import de.mm20.launcher2.ui.settings.comms.CommsSettingsScreen
 import de.mm20.launcher2.ui.store.AppDetailsRoute
 import de.mm20.launcher2.ui.store.AppDetailsScreen
 import de.mm20.launcher2.ui.store.StoreDashboardRoute
@@ -253,6 +255,9 @@ class SettingsActivity : BaseActivity() {
                 // === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
                 CommsDashboardScreen(it.initialTab)
                 // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
+            }
+            entry<CommsSettingsRoute> {
+                CommsSettingsScreen()
             }
             entry<CreateFolderRoute> {
                 CreateFolderScreen()

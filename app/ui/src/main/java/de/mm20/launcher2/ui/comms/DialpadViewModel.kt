@@ -9,6 +9,7 @@ import de.mm20.launcher2.comms.model.DialerContact
 import de.mm20.launcher2.comms.repository.ContactDirectoryRepository
 import de.mm20.launcher2.comms.t9.T9SearchEngine
 import de.mm20.launcher2.comms.AuthManager
+import de.mm20.launcher2.preferences.comms.CommsSettings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -22,7 +23,11 @@ class DialpadViewModel : ViewModel(), KoinComponent {
 
     private val contactDirectory: ContactDirectoryRepository by inject()
     private val t9SearchEngine: T9SearchEngine by inject()
+    private val commsSettings: CommsSettings by inject()
     private val authManager = AuthManager()
+
+    val speedDials = commsSettings.speedDials
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
 
     private val _input = MutableStateFlow("")
     val input: StateFlow<String> = _input

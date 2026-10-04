@@ -22,6 +22,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.alpha
+import de.mm20.launcher2.ui.settings.comms.CommsSettingsRoute
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
@@ -60,6 +62,10 @@ fun DialpadScreen() {
 
     val input by viewModel.input.collectAsStateWithLifecycle()
     val t9Results by viewModel.t9Results.collectAsStateWithLifecycle()
+    // === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
+    val speedDials by viewModel.speedDials.collectAsStateWithLifecycle()
+    val backStack = de.mm20.launcher2.ui.locals.LocalBackStack.current
+    // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Top T9 Search Match Header
@@ -92,6 +98,13 @@ fun DialpadScreen() {
                 .padding(horizontal = 16.dp, vertical = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            // === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                IconButton(onClick = { backStack.add(CommsSettingsRoute) }) {
+                    Icon(painterResource(R.drawable.settings_24px), contentDescription = "Settings", tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+            // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===
             Text(
                 text = input.ifEmpty { " " },
                 style = MaterialTheme.typography.displayMedium,
@@ -128,8 +141,14 @@ fun DialpadScreen() {
                                 if (digit == "0") {
                                     viewModel.onKeyPressed('+')
                                 } else if (digit.first().isDigit()) {
-                                    // Speed dial placeholder
-                                    viewModel.dial(context, digit)
+                                    // === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
+                                    val number = speedDials[digit.toInt()]
+                                    if (number != null) {
+                                        viewModel.dial(context, number)
+                                    } else {
+                                        android.widget.Toast.makeText(context, "Speed dial not assigned", android.widget.Toast.LENGTH_SHORT).show()
+                                    }
+                                    // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===
                                 }
                             }
                         )
@@ -148,66 +167,73 @@ fun DialpadScreen() {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 // Add to contacts
-                IconButton(
-                    onClick = {
-                        val intent = Intent(Intent.ACTION_INSERT).apply {
-                            type = ContactsContract.RawContacts.CONTENT_TYPE
-                            putExtra(ContactsContract.Intents.Insert.PHONE, input)
-                        }
-                        context.tryStartActivity(intent)
-                    },
-                    modifier = Modifier.size(56.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.person_add_24px),
-                        contentDescription = "Add to contacts",
-                        tint = if (input.isNotEmpty()) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
-                    )
+                Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                    IconButton(
+                        onClick = {
+                            val intent = Intent(Intent.ACTION_INSERT).apply {
+                                type = ContactsContract.RawContacts.CONTENT_TYPE
+                                putExtra(ContactsContract.Intents.Insert.PHONE, input)
+                            }
+                            context.tryStartActivity(intent)
+                        },
+                        modifier = Modifier.size(56.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.person_add_24px),
+                            contentDescription = "Add to contacts",
+                            tint = if (input.isNotEmpty()) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                        )
+                    }
                 }
 
                 // Call Button
-                FloatingActionButton(
-                    onClick = { viewModel.dial(context) },
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                    modifier = Modifier.size(72.dp),
-                    shape = CircleShape
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.call_24px),
-                        contentDescription = "Call",
-                        modifier = Modifier.size(32.dp)
-                    )
+                Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                    FloatingActionButton(
+                        onClick = { viewModel.dial(context) },
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                        modifier = Modifier.size(72.dp),
+                        shape = CircleShape
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.call_24px),
+                            contentDescription = "Call",
+                            modifier = Modifier.size(32.dp)
+                        )
+                    }
                 }
 
                 // Backspace
-                Box(modifier = Modifier.size(56.dp), contentAlignment = Alignment.Center) {
-                    if (input.isNotEmpty()) {
-                        Surface(
-                            shape = CircleShape,
-                            color = androidx.compose.ui.graphics.Color.Transparent,
-                            modifier = Modifier
-                                .size(56.dp)
-                                .combinedClickable(
-                                    interactionSource = remember { MutableInteractionSource() },
-                                    indication = null,
-                                    onClick = { 
+                Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                    Surface(
+                        shape = CircleShape,
+                        color = androidx.compose.ui.graphics.Color.Transparent,
+                        modifier = Modifier
+                            .size(56.dp)
+                            .alpha(if (input.isNotEmpty()) 1f else 0f)
+                            .combinedClickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null,
+                                onClick = { 
+                                    if (input.isNotEmpty()) {
                                         haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                                         viewModel.onBackspace() 
-                                    },
-                                    onLongClick = { 
+                                    }
+                                },
+                                onLongClick = { 
+                                    if (input.isNotEmpty()) {
                                         haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                                         viewModel.onClear() 
                                     }
-                                )
-                        ) {
-                            Box(contentAlignment = Alignment.Center) {
-                                Icon(
-                                    painter = painterResource(R.drawable.close_24px),
-                                    contentDescription = "Backspace",
-                                    tint = MaterialTheme.colorScheme.onSurface
-                                )
-                            }
+                                }
+                            )
+                    ) {
+                        Box(contentAlignment = Alignment.Center) {
+                            Icon(
+                                painter = painterResource(R.drawable.close_24px),
+                                contentDescription = "Backspace",
+                                tint = MaterialTheme.colorScheme.onSurface
+                            )
                         }
                     }
                 }

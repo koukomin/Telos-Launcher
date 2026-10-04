@@ -26,6 +26,7 @@ import de.mm20.launcher2.preferences.ui.DynamicIslandSettings
 import de.mm20.launcher2.preferences.ui.WebAppBrowsingSettings
 import de.mm20.launcher2.preferences.ui.WebAppsPanelSettings
 import de.mm20.launcher2.preferences.ui.FloatingLauncherSettings
+import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.preferences.ui.GestureSettings
 import de.mm20.launcher2.preferences.ui.IconSettings
 import de.mm20.launcher2.preferences.ui.LocaleSettings
@@ -78,4 +79,5 @@ val preferencesModule = module {
     factory { DynamicIslandSettings(get()) }
     factory { WebAppsPanelSettings(get()) }
     factory { WebAppBrowsingSettings(get()) }
+    factory { CommsSettings(get()) }
 }

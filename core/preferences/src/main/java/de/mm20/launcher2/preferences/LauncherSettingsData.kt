@@ -73,6 +73,9 @@ data class LauncherSettingsData internal constructor(
     val webAppBrowsing: WebAppBrowsingGroup = WebAppBrowsingGroup(),
     val contextProfiles: ContextProfilesGroup = ContextProfilesGroup(),
     val desktopMode: DesktopModeGroup = DesktopModeGroup(),
+    // === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
+    val comms: CommsGroup = CommsGroup(),
+    // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===
 ) {
     constructor(
         context: Context,
@@ -1162,3 +1165,12 @@ data class FreezeAppStats(
     val lastFrozenAt: Long? = null,
     val lastUnfrozenAt: Long? = null,
 )
+
+// === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
+@Serializable
+data class CommsGroup(
+    val speedDials: Map<Int, String> = emptyMap(),
+    val t9Alphabet: String = "latin",
+    val defaultSim: String = "ask"
+)
+// === TELOS_PENDING_REVIEW_END: comms_settings_engine ===
