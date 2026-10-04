@@ -156,7 +156,7 @@ internal class VirtualRadioApp(context: Context) : Application {
             val intent = Intent().apply {
                 setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
                 putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_COMMS)
-                // Just opening the dashboard brings up the radio mini-player anyway
+                putExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB, "radio")
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
             context.startActivity(intent, options)

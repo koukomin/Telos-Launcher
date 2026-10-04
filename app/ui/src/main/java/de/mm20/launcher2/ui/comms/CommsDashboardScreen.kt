@@ -20,6 +20,8 @@ import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import kotlinx.serialization.Serializable
 
+import de.mm20.launcher2.ui.comms.radio.RadioDashboardScreen
+
 // === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
 @Serializable
 data class CommsDashboardRoute(val initialTab: String = "dialpad") : NavKey
@@ -30,6 +32,7 @@ private enum class CommsTab(val label: String) {
     Dialpad("Dialpad"),
     Messages("Messages"),
     Contacts("Contacts"),
+    Radio("Radio"),
 }
 
 @Composable
@@ -39,6 +42,7 @@ fun CommsDashboardScreen(initialTab: String = "dialpad") {
         "recents" -> CommsTab.Recents
         "messages" -> CommsTab.Messages
         "contacts" -> CommsTab.Contacts
+        "radio" -> CommsTab.Radio
         else -> CommsTab.Dialpad
     }
     var selectedTab by remember(initialTab) { mutableStateOf(defaultTab) }
@@ -74,6 +78,12 @@ fun CommsDashboardScreen(initialTab: String = "dialpad") {
                     icon = { Icon(painterResource(R.drawable.person_24px), contentDescription = null) },
                     label = { Text(CommsTab.Contacts.label) },
                 )
+                NavigationBarItem(
+                    selected = selectedTab == CommsTab.Radio,
+                    onClick = { selectedTab = CommsTab.Radio },
+                    icon = { Icon(painterResource(R.drawable.music_note_24px), contentDescription = null) },
+                    label = { Text(CommsTab.Radio.label) },
+                )
             }
         },
     ) { contentPadding ->
@@ -83,11 +93,14 @@ fun CommsDashboardScreen(initialTab: String = "dialpad") {
                 CommsTab.Dialpad -> DialpadScreen()
                 CommsTab.Messages -> MessagesScreen()
                 CommsTab.Contacts -> ContactsScreen()
+                CommsTab.Radio -> RadioDashboardScreen()
             }
             // === TELOS_PENDING_REVIEW_START: radio_mini_player ===
-            RadioMiniPlayer(
-                modifier = Modifier.align(Alignment.BottomCenter)
-            )
+            if (selectedTab != CommsTab.Radio) {
+                RadioMiniPlayer(
+                    modifier = Modifier.align(Alignment.BottomCenter)
+                )
+            }
             // === TELOS_PENDING_REVIEW_END: radio_mini_player ===
         }
     }
