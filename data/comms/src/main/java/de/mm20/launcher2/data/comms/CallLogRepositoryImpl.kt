@@ -74,7 +74,7 @@ internal class CallLogRepositoryImpl(
                 null,
                 null,
                 "${CallLog.Calls.DATE} DESC LIMIT 100"
-            )?.use { cursor ->
+            )?.also { if (it.count < 0) return@withContext emptyList() }?.use { cursor ->
                 val idCol = cursor.getColumnIndex(CallLog.Calls._ID)
                 val numberCol = cursor.getColumnIndex(CallLog.Calls.NUMBER)
                 val nameCol = cursor.getColumnIndex(CallLog.Calls.CACHED_NAME)
@@ -107,8 +107,8 @@ internal class CallLogRepositoryImpl(
                     )
                 }
             }
-        } catch (e: SecurityException) {
-            // Permission might have been revoked mid-query
+        } catch (e: Exception) {
+            return@withContext emptyList()
         }
         
         calls

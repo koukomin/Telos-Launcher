@@ -32,12 +32,13 @@ internal class ContactDirectoryRepositoryImpl(
     }
 
     private suspend fun queryContacts(): List<DialerContact> = withContext(Dispatchers.IO) {
-        val numbersById = LinkedHashMap<Long, Pair<String, MutableList<String>>>()
+        val numbersById = LinkedHashMap<Long, Triple<String, String?, MutableList<String>>>()
 
         val projection = arrayOf(
             ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
             ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY,
             ContactsContract.CommonDataKinds.Phone.NUMBER,
+            ContactsContract.CommonDataKinds.Phone.PHOTO_THUMBNAIL_URI
         )
         context.contentResolver.query(
             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -46,23 +47,25 @@ internal class ContactDirectoryRepositoryImpl(
             null,
             "${ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY} ASC",
         )?.use { cursor ->
-            val idCol = cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)
-            val nameCol = cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY)
-            val numberCol = cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER)
+            val idCol = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)
+            val nameCol = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY)
+            val numberCol = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+            val photoCol = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_THUMBNAIL_URI)
+            if (idCol < 0) return@withContext emptyList()
 
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idCol)
                 val name = cursor.getString(nameCol) ?: continue
                 val number = cursor.getString(numberCol) ?: continue
 
-                val entry = numbersById.getOrPut(id) { name to mutableListOf() }
-                if (number !in entry.second) entry.second += number
+                val photoUri = if (photoCol >= 0) cursor.getString(photoCol) else null
+                val entry = numbersById.getOrPut(id) { Triple(name, photoUri, mutableListOf()) }
+                if (number !in entry.third) entry.third += number
             }
         }
 
-        numbersById.map { (id, nameAndNumbers) ->
-            val (name, numbers) = nameAndNumbers
-            DialerContact(id = id, displayName = name, phoneNumbers = numbers)
+        numbersById.map { (id, data) ->
+            DialerContact(id = id, displayName = data.first, phoneNumbers = data.third, photoUri = data.second)
         }
     }
 }
