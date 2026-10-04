@@ -7,4 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface StoreRepository {
     fun observeItems(): Flow<List<StoreItem>>
     fun observeItem(id: String): Flow<StoreItem?>
+    // === TELOS_PENDING_REVIEW_START: telos_store_ui ===
+    suspend fun insertItem(item: StoreItem)
+    // === TELOS_PENDING_REVIEW_END: telos_store_ui ===
 }

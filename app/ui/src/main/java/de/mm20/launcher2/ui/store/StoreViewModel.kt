@@ -16,6 +16,10 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import de.mm20.launcher2.store.parser.StoreUrlParser
+import de.mm20.launcher2.store.fetcher.StoreFetcherRegistry
+import de.mm20.launcher2.store.model.AppSource
+import java.util.UUID
 
 /** Per-item state of an in-progress/finished [StoreViewModel.onAppActionClicked] call. */
 enum class StoreInstallUiState {
@@ -45,6 +49,9 @@ class StoreViewModel : ViewModel(), KoinComponent {
     private val context: Context by inject()
     private val repository: StoreRepository by inject()
     private val actionHandler: StoreActionHandler by inject()
+    // === TELOS_PENDING_REVIEW_START: telos_store_ui ===
+    private val fetcherRegistry: StoreFetcherRegistry by inject()
+    // === TELOS_PENDING_REVIEW_END: telos_store_ui ===
 
     val items: StateFlow<List<StoreItem>> = repository.observeItems()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
@@ -73,6 +80,40 @@ class StoreViewModel : ViewModel(), KoinComponent {
     fun item(id: String): Flow<StoreItem?> = repository.observeItem(id)
 
     fun installState(id: String): StoreInstallUiState = installStates.value[id] ?: StoreInstallUiState.Idle
+
+    // === TELOS_PENDING_REVIEW_START: telos_store_ui ===
+    fun addAppFromUrl(url: String) {
+        viewModelScope.launch {
+            val source = StoreUrlParser.parseUrl(url) ?: return@launch
+            
+            // Try to fetch latest release to grab metadata and verify it's valid
+            val release = fetcherRegistry.fetchLatestRelease(source) ?: return@launch
+            
+            val packageName = when (source) {
+                is AppSource.FDroid -> source.packageName
+                is AppSource.AffiliatePlayStore -> source.packageName
+                else -> "unknown.package"
+            }
+            
+            val displayName = when (source) {
+                is AppSource.GitHub -> "${source.owner}/${source.repo}"
+                is AppSource.FDroid -> source.packageName
+                else -> "New App"
+            }
+            
+            val item = StoreItem(
+                id = UUID.randomUUID().toString(),
+                packageName = packageName,
+                displayName = displayName,
+                source = source,
+                latestRelease = release,
+                lastCheckedAt = System.currentTimeMillis()
+            )
+            
+            repository.insertItem(item)
+        }
+    }
+    // === TELOS_PENDING_REVIEW_END: telos_store_ui ===
 
     /**
      * Installs/updates [item], or - if it's already installed and up to date - launches it

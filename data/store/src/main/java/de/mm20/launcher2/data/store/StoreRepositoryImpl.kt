@@ -16,4 +16,10 @@ class StoreRepositoryImpl(context: Context) : StoreRepository {
 
     override fun observeItem(id: String): Flow<StoreItem?> =
         dao.observe(id).map { entity -> entity?.let(StoreItemMapper::toDomain) }
+
+    // === TELOS_PENDING_REVIEW_START: telos_store_ui ===
+    override suspend fun insertItem(item: StoreItem) {
+        dao.insert(StoreItemMapper.toEntity(item))
+    }
+    // === TELOS_PENDING_REVIEW_END: telos_store_ui ===
 }

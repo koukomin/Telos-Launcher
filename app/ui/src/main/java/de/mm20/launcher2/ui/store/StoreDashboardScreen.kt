@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,10 +18,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.AlertDialog
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -46,19 +56,67 @@ fun StoreDashboardScreen() {
     val items by viewModel.items.collectAsStateWithLifecycle()
     val installStates by viewModel.installStates.collectAsStateWithLifecycle()
 
-    PreferenceScreen(title = "Store") {
-        if (items.isEmpty()) {
-            item { EmptyStoreMessage() }
+    var showAddDialog by remember { mutableStateOf(false) }
+
+    // Use Box to overlay the FAB on top of the PreferenceScreen
+    Box(modifier = Modifier.fillMaxSize()) {
+        PreferenceScreen(title = { Text("Store") }) {
+            if (items.isEmpty()) {
+                item { EmptyStoreMessage() }
+            }
+            items(items.size, key = { items[it].id }) { index ->
+                val item = items[index]
+                StoreItemRow(
+                    item = item,
+                    installState = installStates[item.id] ?: StoreInstallUiState.Idle,
+                    onClick = { backStack.add(AppDetailsRoute(itemId = item.id)) },
+                    onActionClick = { viewModel.onAppActionClicked(item) },
+                )
+            }
         }
-        items(items.size, key = { items[it].id }) { index ->
-            val item = items[index]
-            StoreItemRow(
-                item = item,
-                installState = installStates[item.id] ?: StoreInstallUiState.Idle,
-                onClick = { backStack.add(AppDetailsRoute(itemId = item.id)) },
-                onActionClick = { viewModel.onAppActionClicked(item) },
-            )
+        
+        FloatingActionButton(
+            onClick = { showAddDialog = true },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(24.dp)
+        ) {
+            Icon(painterResource(de.mm20.launcher2.ui.R.drawable.add_24px), contentDescription = "Add App")
         }
+    }
+
+    if (showAddDialog) {
+        var url by remember { mutableStateOf("") }
+        AlertDialog(
+            onDismissRequest = { showAddDialog = false },
+            title = { Text("Add App via URL") },
+            text = {
+                OutlinedTextField(
+                    value = url,
+                    onValueChange = { url = it },
+                    label = { Text("GitHub or F-Droid URL") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        if (url.isNotBlank()) {
+                            viewModel.addAppFromUrl(url)
+                            showAddDialog = false
+                        }
+                    }
+                ) {
+                    Text("Add")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showAddDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
     }
 }
 
