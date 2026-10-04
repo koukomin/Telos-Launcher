@@ -82,6 +82,7 @@ enum class PermissionGroup {
     Accessibility,
     ManageProfiles,
     Call,
+    CallLog,
     UsageAccess,
     OverlayWindow,
     Bluetooth,
@@ -122,6 +123,9 @@ internal class PermissionsManagerImpl(
     )
     private val callPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.Call)
+    )
+    private val callLogPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.CallLog)
     )
     private val usageAccessPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.UsageAccess)
@@ -311,6 +315,13 @@ internal class PermissionsManagerImpl(
                     permissionGroup.ordinal
                 )
             }
+            PermissionGroup.CallLog -> {
+                ActivityCompat.requestPermissions(
+                    context,
+                    arrayOf(android.Manifest.permission.READ_CALL_LOG),
+                    permissionGroup.ordinal
+                )
+            }
         }
     }
 
@@ -396,6 +407,10 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Camera -> {
                 cameraPermissions.all { context.checkPermission(it) }
             }
+            PermissionGroup.CallLog -> ActivityCompat.checkSelfPermission(
+                context,
+                android.Manifest.permission.READ_CALL_LOG
+            ) == PackageManager.PERMISSION_GRANTED
         }
     }
 
@@ -411,6 +426,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Accessibility -> accessibilityPermissionState
             PermissionGroup.ManageProfiles -> manageProfilesPermissionState
             PermissionGroup.Call -> callPermissionState
+            PermissionGroup.CallLog -> callLogPermissionState
             PermissionGroup.UsageAccess -> usageAccessPermissionState
             PermissionGroup.OverlayWindow -> overlayWindowPermissionState
             PermissionGroup.Bluetooth -> bluetoothPermissionState
@@ -446,7 +462,8 @@ internal class PermissionsManagerImpl(
             PermissionGroup.AppShortcuts -> appShortcutsPermissionState.value = granted
             PermissionGroup.Accessibility -> accessibilityPermissionState.value = granted
             PermissionGroup.ManageProfiles -> manageProfilesPermissionState.value = granted
-            PermissionGroup.Call -> callPermissionState.value = granted
+            PermissionGroup.Call -> callPermissionState
+            PermissionGroup.CallLog -> callLogPermissionState.value = granted
             PermissionGroup.UsageAccess -> usageAccessPermissionState.value = granted
             PermissionGroup.OverlayWindow -> overlayWindowPermissionState.value = granted
             PermissionGroup.Bluetooth -> bluetoothPermissionState.value = granted

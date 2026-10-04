@@ -38,9 +38,33 @@ import java.util.*
 fun RecentsScreen() {
     val viewModel: RecentsViewModel = viewModel()
     val recents by viewModel.recents.collectAsStateWithLifecycle()
+    val hasCallLogPermission by viewModel.hasCallLogPermission.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
-    if (recents.isEmpty()) {
+    if (!hasCallLogPermission) {
+        Column(
+            modifier = Modifier.fillMaxSize().padding(32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text("Call Log Permission Required", style = MaterialTheme.typography.titleMedium)
+            Spacer(Modifier.height(8.dp))
+            Text(
+                "Telos needs access to your call history to show recent calls.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center
+            )
+            Spacer(Modifier.height(16.dp))
+            Button(onClick = { 
+                (context as? androidx.appcompat.app.AppCompatActivity)?.let { 
+                    viewModel.requestCallLogPermission(it) 
+                }
+            }) {
+                Text("Grant Permission")
+            }
+        }
+    } else if (recents.isEmpty()) {
         EmptyCommsTab(
             title = "No recent calls",
             message = "Your call history will appear here.",

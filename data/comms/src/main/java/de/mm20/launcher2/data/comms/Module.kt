@@ -16,7 +16,7 @@ import org.koin.dsl.module
 
 val dataCommsModule = module {
     single<ContactDirectoryRepository> { ContactDirectoryRepositoryImpl(androidContext(), get()) }
-    single<CallLogRepository> { CallLogRepositoryImpl() }
+    single<CallLogRepository> { CallLogRepositoryImpl(androidContext(), get()) }
     single<MessageRepository> { MessageRepositoryImpl() }
 
     single {

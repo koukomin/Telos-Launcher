@@ -35,5 +35,29 @@ class CommsSettings internal constructor(
     fun setDefaultSim(sim: String) {
         dataStore.update { it.copy(comms = it.comms.copy(defaultSim = sim)) }
     }
+
+    val dialpadSounds
+        get() = dataStore.data.map { it.comms.dialpadSounds }
+    fun setDialpadSounds(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(dialpadSounds = enabled)) }
+    }
+
+    val dialpadVibration
+        get() = dataStore.data.map { it.comms.dialpadVibration }
+    fun setDialpadVibration(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(dialpadVibration = enabled)) }
+    }
+
+    val vibrateOnAnswer
+        get() = dataStore.data.map { it.comms.vibrateOnAnswer }
+    fun setVibrateOnAnswer(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(vibrateOnAnswer = enabled)) }
+    }
+
+    val vibrateOnHangup
+        get() = dataStore.data.map { it.comms.vibrateOnHangup }
+    fun setVibrateOnHangup(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(vibrateOnHangup = enabled)) }
+    }
 }
 // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===

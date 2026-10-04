@@ -33,5 +33,29 @@ class CommsSettingsScreenVM : ViewModel(), KoinComponent {
     fun setDefaultSim(sim: String) {
         commsSettings.setDefaultSim(sim)
     }
+
+    val dialpadSounds = commsSettings.dialpadSounds
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    fun setDialpadSounds(enabled: Boolean) {
+        commsSettings.setDialpadSounds(enabled)
+    }
+
+    val dialpadVibration = commsSettings.dialpadVibration
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    fun setDialpadVibration(enabled: Boolean) {
+        commsSettings.setDialpadVibration(enabled)
+    }
+
+    val vibrateOnAnswer = commsSettings.vibrateOnAnswer
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    fun setVibrateOnAnswer(enabled: Boolean) {
+        commsSettings.setVibrateOnAnswer(enabled)
+    }
+
+    val vibrateOnHangup = commsSettings.vibrateOnHangup
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    fun setVibrateOnHangup(enabled: Boolean) {
+        commsSettings.setVibrateOnHangup(enabled)
+    }
 }
 // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===

@@ -1171,6 +1171,10 @@ data class FreezeAppStats(
 data class CommsGroup(
     val speedDials: Map<Int, String> = emptyMap(),
     val t9Alphabet: String = "latin",
-    val defaultSim: String = "ask"
+    val defaultSim: String = "ask",
+    val dialpadSounds: Boolean = false,
+    val dialpadVibration: Boolean = true,
+    val vibrateOnAnswer: Boolean = false,
+    val vibrateOnHangup: Boolean = false
 )
 // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===
