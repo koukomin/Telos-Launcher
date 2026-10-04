@@ -32,7 +32,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.comms.intent.SocialIntentHelper
+import de.mm20.launcher2.comms.intent.MessengerIntentUtils
 import de.mm20.launcher2.comms.model.DialerContact
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -97,7 +97,7 @@ private fun ContactRow(contact: DialerContact) {
                         safeStartActivity(context, Intent(Intent.ACTION_DIAL, Uri.parse("tel:${Uri.encode(it)}")))
                     }
                     SocialActionButton(R.drawable.sms_24px, "WhatsApp") {
-                        safeStartActivity(context, SocialIntentHelper.whatsApp(it))
+                        safeStartActivity(context, MessengerIntentUtils.whatsApp(it))
                     }
                 }
             }
