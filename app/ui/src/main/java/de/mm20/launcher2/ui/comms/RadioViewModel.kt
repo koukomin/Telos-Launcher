@@ -75,6 +75,27 @@ class RadioViewModel : ViewModel(), KoinComponent {
         _isVisible.value = false
     }
 
+    // === TELOS_PENDING_REVIEW_START: radio_browser_ktor ===
+    fun playStation(station: de.mm20.launcher2.comms.model.RadioStation) {
+        val controller = mediaController ?: return
+        val metadata = androidx.media3.common.MediaMetadata.Builder()
+            .setTitle(station.name)
+            .setSubtitle(station.streamUrl)
+            .setArtworkUri(android.net.Uri.parse(station.faviconUrl))
+            .build()
+            
+        val item = MediaItem.Builder()
+            .setUri(station.streamUrl)
+            .setMediaId(station.id)
+            .setMediaMetadata(metadata)
+            .build()
+            
+        controller.setMediaItem(item)
+        controller.prepare()
+        controller.play()
+    }
+    // === TELOS_PENDING_REVIEW_END: radio_browser_ktor ===
+
     override fun onCleared() {
         super.onCleared()
         mediaController?.release()
