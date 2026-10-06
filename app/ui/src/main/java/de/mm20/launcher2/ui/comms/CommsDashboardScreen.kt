@@ -2,6 +2,14 @@ package de.mm20.launcher2.ui.comms
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,8 +26,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -52,6 +58,7 @@ data class CommsDashboardRoute(
 ) : NavKey
 
 private enum class CommsTab(val label: String) {
+    Favorites("Favorites"),
     Recents("Recents"),
     Contacts("Contacts"),
     Keypad("Keypad"),
@@ -63,13 +70,14 @@ private enum class CommsTab(val label: String) {
 fun CommsDashboardScreen(initialTab: String = "recents", initialNumber: String = "") {
     val defaultTab = when (initialTab.lowercase()) {
         "messages" -> CommsTab.Messages
-        "favorites", "contacts" -> CommsTab.Contacts
+        "favorites" -> CommsTab.Favorites
+        "contacts" -> CommsTab.Contacts
         "keypad", "dialpad", "dial" -> CommsTab.Keypad
         else -> CommsTab.Recents
     }
     var selectedTab by remember(initialTab) { mutableStateOf(defaultTab) }
     var searchQuery by remember { mutableStateOf("") }
-    var searchOpen by remember { mutableStateOf(false) }
+    var menuOpen by remember { mutableStateOf(false) }
     val commsSettings: CommsSettings = koinInject()
     val autoOpenDialpad by commsSettings.autoOpenDialpad.collectAsStateWithLifecycle(false)
     val phoneAppLock by commsSettings.phoneAppLock.collectAsStateWithLifecycle(false)
@@ -100,150 +108,124 @@ fun CommsDashboardScreen(initialTab: String = "recents", initialNumber: String =
         if (autoOpenDialpad || initialNumber.isNotEmpty()) selectedTab = CommsTab.Keypad
     }
 
-    if (searchOpen) {
-        BackHandler {
-            searchQuery = ""
-            searchOpen = false
-        }
+    if (selectedTab == CommsTab.Keypad || selectedTab == CommsTab.Messages) {
+        BackHandler { selectedTab = CommsTab.Recents }
     }
 
-    val searching = searchOpen && searchQuery.isNotBlank()
+    val inSubScreen = selectedTab == CommsTab.Keypad || selectedTab == CommsTab.Messages
 
     Scaffold(
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
-                title = {
-                    if (searchOpen && selectedTab != CommsTab.Messages && selectedTab != CommsTab.Keypad) {
-                        TextField(
-                            value = searchQuery,
-                            onValueChange = { searchQuery = it },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clip(RoundedCornerShape(28.dp)),
-                            placeholder = { Text(stringResource(R.string.comms_search_contacts)) },
-                            singleLine = true,
-                            shape = RoundedCornerShape(28.dp),
-                            colors = TextFieldDefaults.colors(
-                                focusedIndicatorColor = Color.Transparent,
-                                unfocusedIndicatorColor = Color.Transparent,
-                                disabledIndicatorColor = Color.Transparent,
-                                focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                                unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                            ),
-                        )
-                    } else {
-                        Text(
-                            text = selectedTab.label,
-                            style = MaterialTheme.typography.headlineSmall,
-                        )
+            Column(Modifier.statusBarsPadding()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp)
+                        .padding(start = if (inSubScreen) 4.dp else 20.dp, end = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    if (inSubScreen) {
+                        IconButton(onClick = { selectedTab = CommsTab.Recents }) {
+                            Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = null)
+                        }
                     }
-                },
-                navigationIcon = {
-                    if (searchOpen && selectedTab != CommsTab.Keypad) {
-                        IconButton(onClick = {
-                            searchQuery = ""
-                            searchOpen = false
-                        }) {
-                            Icon(
-                                painterResource(R.drawable.arrow_back_24px),
-                                contentDescription = null,
+                    Text(
+                        text = if (inSubScreen) selectedTab.label else "Dialer",
+                        style = MaterialTheme.typography.titleLarge,
+                        modifier = Modifier.weight(1f).padding(start = if (inSubScreen) 8.dp else 0.dp),
+                    )
+                    Box {
+                        IconButton(onClick = { menuOpen = true }) {
+                            Icon(painterResource(R.drawable.more_vert_24px), contentDescription = null)
+                        }
+                        DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                            DropdownMenuItem(
+                                text = { Text("Messages") },
+                                onClick = { menuOpen = false; selectedTab = CommsTab.Messages },
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Settings") },
+                                onClick = { menuOpen = false; backStack.add(CommsSettingsRoute) },
                             )
                         }
                     }
-                },
-                actions = {
-                    if (selectedTab != CommsTab.Messages && selectedTab != CommsTab.Keypad && !searchOpen) {
-                        IconButton(onClick = { searchOpen = true }) {
-                            Icon(
-                                painterResource(R.drawable.search_24px),
-                                contentDescription = stringResource(R.string.comms_search_contacts),
-                            )
-                        }
-                    }
-                    IconButton(onClick = { backStack.add(CommsSettingsRoute) }) {
-                        Icon(
-                            painterResource(R.drawable.settings_24px),
-                            contentDescription = "Settings",
-                        )
-                    }
-                },
-            )
+                }
+                if (!inSubScreen) {
+                    TextField(
+                        value = searchQuery,
+                        onValueChange = { searchQuery = it },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .heightIn(min = 48.dp),
+                        placeholder = { Text("Search") },
+                        leadingIcon = {
+                            Icon(painterResource(R.drawable.search_24px), contentDescription = null)
+                        },
+                        singleLine = true,
+                        shape = RoundedCornerShape(14.dp),
+                        colors = TextFieldDefaults.colors(
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor = Color.Transparent,
+                            focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                        ),
+                    )
+                }
+            }
         },
         bottomBar = {
-            NavigationBar(
-                containerColor = MaterialTheme.colorScheme.surfaceContainer,
-                tonalElevation = 0.dp,
-            ) {
-                NavigationBarItem(
-                    selected = selectedTab == CommsTab.Recents && !searching,
-                    onClick = {
-                        selectedTab = CommsTab.Recents
-                        searchOpen = false
-                        searchQuery = ""
-                    },
-                    icon = {
-                        Icon(
-                            painterResource(R.drawable.rd_ic_call_received_vector),
-                            contentDescription = null,
+            if (!inSubScreen) {
+                NavigationBar(
+                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                    tonalElevation = 0.dp,
+                ) {
+                    listOf(
+                        Triple(CommsTab.Favorites, R.drawable.star_24px, "Favorites"),
+                        Triple(CommsTab.Recents, R.drawable.schedule_24px, "Recents"),
+                        Triple(CommsTab.Contacts, R.drawable.person_24px_filled, "Contacts"),
+                    ).forEach { (tab, icon, label) ->
+                        NavigationBarItem(
+                            selected = selectedTab == tab,
+                            onClick = { selectedTab = tab },
+                            icon = { Icon(painterResource(icon), contentDescription = null) },
+                            label = { Text(label) },
                         )
-                    },
-                    label = { Text(CommsTab.Recents.label) },
-                )
-                NavigationBarItem(
-                    selected = selectedTab == CommsTab.Contacts || searching,
-                    onClick = {
-                        selectedTab = CommsTab.Contacts
-                        searchOpen = false
-                        searchQuery = ""
-                    },
-                    icon = {
-                        Icon(painterResource(R.drawable.person_24px), contentDescription = null)
-                    },
-                    label = { Text(CommsTab.Contacts.label) },
-                )
-                NavigationBarItem(
-                    selected = selectedTab == CommsTab.Keypad,
-                    onClick = {
-                        selectedTab = CommsTab.Keypad
-                        searchOpen = false
-                        searchQuery = ""
-                    },
-                    icon = {
-                        Icon(painterResource(R.drawable.dialpad_24px), contentDescription = null)
-                    },
-                    label = { Text(CommsTab.Keypad.label) },
-                )
-                NavigationBarItem(
-                    selected = selectedTab == CommsTab.Messages,
-                    onClick = {
-                        selectedTab = CommsTab.Messages
-                        searchOpen = false
-                        searchQuery = ""
-                    },
-                    icon = {
-                        Icon(painterResource(R.drawable.rd_ic_messages), contentDescription = null)
-                    },
-                    label = { Text(CommsTab.Messages.label) },
-                )
+                    }
+                }
+            }
+        },
+        floatingActionButton = {
+            if (!inSubScreen) {
+                FloatingActionButton(
+                    onClick = { selectedTab = CommsTab.Keypad },
+                    shape = CircleShape,
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                ) {
+                    Icon(painterResource(R.drawable.dialpad_24px), contentDescription = "Dialpad")
+                }
             }
         },
     ) { contentPadding ->
         Box(modifier = Modifier.padding(contentPadding).fillMaxSize()) {
-            when {
-                searching -> ContactsScreen(
+            when (selectedTab) {
+                CommsTab.Favorites -> ContactsScreen(
+                    searchQuery = searchQuery,
+                    starredOnly = true,
+                    showLocalSearch = false,
+                    showAddFab = false,
+                )
+                CommsTab.Recents -> RecentsScreen(searchQuery = searchQuery)
+                CommsTab.Contacts -> ContactsScreen(
                     searchQuery = searchQuery,
                     showLocalSearch = false,
                     showAddFab = false,
                 )
-                selectedTab == CommsTab.Recents -> RecentsScreen(searchQuery = searchQuery)
-                selectedTab == CommsTab.Contacts -> ContactsScreen(
-                    searchQuery = searchQuery,
-                    showLocalSearch = false,
-                )
-                selectedTab == CommsTab.Keypad -> DialpadScreen(initialNumber = initialNumber)
-                selectedTab == CommsTab.Messages -> MessagesScreen()
+                CommsTab.Keypad -> DialpadScreen(initialNumber = initialNumber)
+                CommsTab.Messages -> MessagesScreen()
             }
         }
     }

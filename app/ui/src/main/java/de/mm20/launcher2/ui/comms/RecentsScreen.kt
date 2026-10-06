@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -24,6 +25,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -130,9 +132,6 @@ fun RecentsScreen(searchQuery: String = "") {
         }
     }
     val collapsed = remember(filtered) { collapseRecents(filtered) }
-    val grouped = remember(collapsed) {
-        collapsed.groupBy { dayKey(it.call.timestamp) }
-    }
 
     Column(Modifier.fillMaxSize()) {
         Row(
@@ -215,41 +214,27 @@ fun RecentsScreen(searchQuery: String = "") {
             )
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                grouped.forEach { (day, calls) ->
-                    stickyHeader {
-                        Text(
-                            text = formatDayHeader(day),
-                            style = MaterialTheme.typography.titleSmall,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(MaterialTheme.colorScheme.surface)
-                                .padding(horizontal = 16.dp, vertical = 10.dp),
-                        )
-                    }
-                    items(calls, key = { it.call.id }) { group ->
-                        RecentCallRow(
-                            call = group.call,
-                            count = group.count,
-                            showNumber = showNumbers,
-                            onCall = {
-                                if (!tapToCall) {
-                                    backStack.add(ContactDetailsRoute(phoneNumber = group.call.phoneNumber))
-                                } else if (confirmBeforeCall) {
-                                    pendingCall = group.call.phoneNumber
-                                } else {
-                                    viewModel.dial(context, group.call.phoneNumber)
-                                }
-                            },
-                            onSms = { context.tryStartActivity(MessengerIntentUtils.sms(group.call.phoneNumber)) },
-                            onDelete = { viewModel.delete(group.call) },
-                            onDetails = {
+                items(collapsed, key = { it.call.id }) { group ->
+                    RecentCallRow(
+                        call = group.call,
+                        count = group.count,
+                        showNumber = showNumbers,
+                        onCall = {
+                            if (!tapToCall) {
                                 backStack.add(ContactDetailsRoute(phoneNumber = group.call.phoneNumber))
-                            },
-                            onLongPress = { cabCall = group.call },
-                        )
-                    }
+                            } else if (confirmBeforeCall) {
+                                pendingCall = group.call.phoneNumber
+                            } else {
+                                viewModel.dial(context, group.call.phoneNumber)
+                            }
+                        },
+                        onSms = { context.tryStartActivity(MessengerIntentUtils.sms(group.call.phoneNumber)) },
+                        onDelete = { viewModel.delete(group.call) },
+                        onDetails = {
+                            backStack.add(ContactDetailsRoute(phoneNumber = group.call.phoneNumber))
+                        },
+                        onLongPress = { cabCall = group.call },
+                    )
                 }
             }
         }
@@ -366,11 +351,10 @@ internal fun RecentCallRow(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 12.dp, vertical = 3.dp)
-                .clip(CommsRowShape)
-                .background(MaterialTheme.colorScheme.surfaceContainerLow)
+                .background(MaterialTheme.colorScheme.background)
                 .combinedClickable(onClick = onCall, onLongClick = onLongPress)
-                .padding(start = 12.dp, end = 4.dp, top = 10.dp, bottom = 10.dp),
+                .heightIn(min = 64.dp)
+                .padding(start = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             CommsAvatar(
@@ -380,57 +364,63 @@ internal fun RecentCallRow(
                 modifier = Modifier.clickable(onClick = onDetails),
             )
             Spacer(Modifier.width(12.dp))
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = buildString {
-                        append(call.displayName?.ifBlank { null } ?: call.phoneNumber)
-                        if (count > 1) append(" ($count)")
-                    },
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.Medium,
-                    color = nameColor,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-                Spacer(Modifier.height(2.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        painter = painterResource(typeIcon),
-                        contentDescription = null,
-                        tint = typeTint,
-                        modifier = Modifier.size(14.dp),
-                    )
-                    if (call.durationSeconds > 0) {
-                        Spacer(Modifier.width(6.dp))
-                        Text(
-                            text = formatCallDuration(call.durationSeconds),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
-                    Spacer(Modifier.width(8.dp))
+            Box(Modifier.weight(1f)) {
+                Column(
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp),
+                ) {
                     Text(
-                        text = listOfNotNull(
-                            call.phoneNumber.takeIf { showNumber },
-                            call.simLabel?.let { "SIM $it" },
-                        ).joinToString(" · "),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        text = buildString {
+                            append(call.displayName?.ifBlank { null } ?: call.phoneNumber)
+                            if (count > 1) append(" ($count)")
+                        },
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = nameColor,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
+                    Spacer(Modifier.height(4.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            painter = painterResource(typeIcon),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                            modifier = Modifier.size(16.dp),
+                        )
+                        val secondary = listOfNotNull(
+                            call.simLabel?.let { "SIM $it" },
+                            call.durationSeconds.takeIf { it > 0 }?.let { formatCallDuration(it) },
+                            call.phoneNumber.takeIf { showNumber && call.displayName != null },
+                        ).joinToString("  ")
+                        if (secondary.isNotEmpty()) {
+                            Spacer(Modifier.width(8.dp))
+                            Text(
+                                text = secondary,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        }
+                    }
                 }
+                HorizontalDivider(
+                    modifier = Modifier.align(Alignment.BottomStart).fillMaxWidth(),
+                    thickness = 0.5.dp,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f),
+                )
             }
             Text(
-                text = formatTime(call.timestamp),
+                text = formatRowDate(call.timestamp),
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                maxLines = 1,
+                modifier = Modifier.padding(start = 8.dp),
             )
-            IconButton(onClick = onDetails) {
+            IconButton(onClick = onDetails, modifier = Modifier.padding(end = 8.dp).size(42.dp)) {
                 Icon(
                     painterResource(R.drawable.info_24px),
                     contentDescription = stringResource(R.string.contact_details_title),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    tint = MaterialTheme.colorScheme.primary,
                 )
             }
         }
@@ -473,6 +463,7 @@ private fun formatDayHeader(day: Long): String {
     }
 }
 
-private fun formatTime(timestamp: Long): String {
-    return SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(timestamp))
+private fun formatRowDate(timestamp: Long): String {
+    val pattern = if (dayKey(timestamp) == dayKey(System.currentTimeMillis())) "HH:mm" else "dd.MM"
+    return SimpleDateFormat(pattern, Locale.getDefault()).format(Date(timestamp))
 }
