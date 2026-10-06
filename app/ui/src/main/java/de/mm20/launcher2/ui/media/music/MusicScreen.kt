@@ -113,7 +113,13 @@ fun MusicScreen() {
             .sortedBy { it.title.lowercase() }
     }
 
-    de.mm20.launcher2.ui.media.MediaFrame("Music", askNotifications = true) {
+    var showScrobble by remember { mutableStateOf(false) }
+    de.mm20.launcher2.ui.media.MediaFrame("Music", askNotifications = true, actions = {
+        IconButton(onClick = { showScrobble = true }) {
+            Icon(painterResource(R.drawable.settings_24px), contentDescription = "Scrobbling")
+        }
+    }) {
+    if (showScrobble) ScrobbleDialog { showScrobble = false }
     Box(Modifier.fillMaxSize()) {
         Column(Modifier.fillMaxSize()) {
             if (!hasPermission) {

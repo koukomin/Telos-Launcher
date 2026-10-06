@@ -56,6 +56,10 @@ android {
 }
 
 dependencies {
+    // Torrent streaming (MIT): Java API and the native libraries for 64 and 32 bit ARM
+    implementation(libs.libtorrent4j)
+    implementation(libs.libtorrent4j.arm64)
+    implementation(libs.libtorrent4j.arm)
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)

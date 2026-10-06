@@ -29,6 +29,7 @@ class RadioBrowserClient(private val httpClient: HttpClient) {
         "fi1.api.radio-browser.info",
         "nl1.api.radio-browser.info",
         "at1.api.radio-browser.info",
+        "all.api.radio-browser.info",
     )
     private var discovered: List<String>? = null
 
@@ -50,7 +51,7 @@ class RadioBrowserClient(private val httpClient: HttpClient) {
 
     /** Throws when no server could be reached, so that the screen can tell the reason. */
     suspend fun searchStations(query: String): List<RadioStation> {
-        var lastError: Exception? = null
+        val errors = ArrayList<String>()
         for (server in servers()) {
             try {
                 val response: List<RadioBrowserStation> = httpClient.get("https://$server/json/stations/search") {
@@ -81,10 +82,10 @@ class RadioBrowserClient(private val httpClient: HttpClient) {
             } catch (e: kotlinx.coroutines.CancellationException) {
                 throw e
             } catch (e: Exception) {
-                lastError = e
+                errors += server.substringBefore('.') + ": " + (e.message ?: e.javaClass.simpleName).take(60)
             }
         }
-        throw java.io.IOException(lastError?.message ?: "no server reachable")
+        throw java.io.IOException(errors.joinToString("; ").ifBlank { "no server reachable" })
     }
 
     /** Counts a play for the station, as radio-browser.info asks apps to do */

@@ -351,6 +351,30 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(batterySaverLte = enabled)) }
     }
 
+    fun setVideoServices(
+        tmdbKeyEnc: String,
+        subtitleKeyEnc: String,
+        subtitleUser: String,
+        subtitlePasswordEnc: String,
+        languages: String,
+        autoDownload: Boolean,
+        torrentWifiOnly: Boolean,
+    ) {
+        dataStore.update {
+            it.copy(
+                comms = it.comms.copy(
+                    tmdbApiKeyEnc = tmdbKeyEnc,
+                    subtitleApiKeyEnc = subtitleKeyEnc,
+                    subtitleUser = subtitleUser.trim(),
+                    subtitlePasswordEnc = subtitlePasswordEnc,
+                    subtitleLanguages = languages.replace(" ", ""),
+                    subtitleAutoDownload = autoDownload,
+                    torrentWifiOnly = torrentWifiOnly,
+                )
+            )
+        }
+    }
+
     val sipEnabled
         get() = dataStore.data.map { it.comms.sipEnabled }
     val sipOutgoing

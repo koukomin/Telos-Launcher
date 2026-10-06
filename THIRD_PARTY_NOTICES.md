@@ -87,3 +87,55 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
+
+
+## libtorrent4j and libtorrent (torrent streaming in Telos Video)
+
+libtorrent4j, https://github.com/aldenml/libtorrent4j (MIT), used unchanged as a Maven dependency.
+
+```
+Copyright (c) 2018-2025 Alden Torres
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+libtorrent, https://www.libtorrent.org (BSD-3-Clause), bundled in the native libraries of libtorrent4j:
+Copyright (c) 2003-2020, Arvid Norberg. All rights reserved.
+
+## TMDB and OpenSubtitles (Telos Video online services)
+
+This product uses the TMDB API but is not endorsed or certified by TMDB (https://www.themoviedb.org).
+Subtitles are searched and downloaded through the OpenSubtitles API (https://www.opensubtitles.com).
+Both services are used with the user's own API key.
+
+
+## NextLib (FFmpeg decoders in Telos Video)
+
+NextLib, https://github.com/anilbeesetti/nextlib (GPL-3.0), used unchanged as a Maven dependency. It
+bundles FFmpeg (LGPL-2.1+, https://ffmpeg.org) and dav1d (BSD-2-Clause, https://code.videolan.org/videolan/dav1d).
+
+## Next Player
+
+The gestures, speed control and track choice of the Telos Video player follow the feature set of
+Next Player, https://github.com/anilbeesetti/nextplayer (GPL-3.0). No code was copied.
+
+## Trakt.tv
+
+Telos Video uses the Trakt API (https://trakt.docs.apiary.io) with the user's own application
+credentials. Telos is not endorsed or certified by Trakt.

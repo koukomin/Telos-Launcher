@@ -21,7 +21,10 @@ val dataCommsModule = module {
     single<de.mm20.launcher2.comms.repository.SpamRepository> { SpamRepositoryImpl(androidContext()) }
 
     single {
-        HttpClient {
+        HttpClient(io.ktor.client.engine.okhttp.OkHttp) {
+            engine {
+                config { dns(de.mm20.launcher2.data.comms.radio.FallbackDns) }
+            }
             install(io.ktor.client.plugins.HttpTimeout)
             install(ContentNegotiation) {
                 json(Json { ignoreUnknownKeys = true })
