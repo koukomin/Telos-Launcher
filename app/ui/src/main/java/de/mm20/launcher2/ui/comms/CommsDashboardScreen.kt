@@ -47,6 +47,7 @@ import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.settings.comms.CommsSettingsRoute
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import org.koin.compose.koinInject
@@ -85,6 +86,17 @@ fun CommsDashboardScreen(initialTab: String = "recents", initialNumber: String =
     val context = LocalContext.current
     val backStack = LocalBackStack.current
     val scope = rememberCoroutineScope()
+    LaunchedEffect(Unit) {
+        val snap = commsSettings.snapshot.first()
+        val stale = System.currentTimeMillis() - de.mm20.launcher2.comms.remote.RemotePhonebook.lastSyncMillis > 6 * 3600_000L
+        if (snap.remotePhonebookEnabled && snap.remotePhonebookUser.isNotBlank() && stale) {
+            de.mm20.launcher2.comms.remote.RemotePhonebook.sync(
+                snap.remotePhonebookHost,
+                snap.remotePhonebookUser,
+                de.mm20.launcher2.comms.remote.SecretBox.decrypt(snap.remotePhonebookPasswordEnc),
+            )
+        }
+    }
     if (phoneAppLock && !phoneUnlocked) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {

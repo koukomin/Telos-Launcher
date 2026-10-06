@@ -33,8 +33,14 @@ class RecentsViewModel : ViewModel(), KoinComponent {
         commsSettings.hideFromRecents,
         PrivacySession.hiderUnlocked,
     ) { list, hidden, hide, unlocked ->
-        if (!hide || unlocked) list
+        val visible = if (!hide || unlocked) list
         else list.filter { !HiddenContacts.matches(it.phoneNumber, hidden) }
+        visible.map { call ->
+            if (call.displayName.isNullOrBlank()) {
+                val remote = de.mm20.launcher2.comms.remote.RemotePhonebook.lookup(call.phoneNumber)
+                if (remote != null) call.copy(displayName = remote) else call
+            } else call
+        }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val hasCallLogPermission: StateFlow<Boolean> = permissionsManager.hasPermission(PermissionGroup.CallLog)

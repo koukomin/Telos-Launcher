@@ -1202,6 +1202,11 @@ data class CommsGroup(
     val pocketMode: Boolean = false,
     /** buttons | swipe */
     val answerStyle: String = "buttons",
+    val remotePhonebookEnabled: Boolean = false,
+    val remotePhonebookHost: String = "fritz.box",
+    val remotePhonebookUser: String = "",
+    /** Encrypted with the Android Keystore, never stored in plain text */
+    val remotePhonebookPasswordEnc: String = "",
     /** Blocks screenshots and recents thumbnails on the call screen */
     val secureCallScreen: Boolean = false,
     /** 0 = keep forever */

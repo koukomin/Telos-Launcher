@@ -351,6 +351,27 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(batterySaverLte = enabled)) }
     }
 
+    val remotePhonebookEnabled
+        get() = dataStore.data.map { it.comms.remotePhonebookEnabled }
+    val remotePhonebookHost
+        get() = dataStore.data.map { it.comms.remotePhonebookHost }
+    val remotePhonebookUser
+        get() = dataStore.data.map { it.comms.remotePhonebookUser }
+    val remotePhonebookPasswordEnc
+        get() = dataStore.data.map { it.comms.remotePhonebookPasswordEnc }
+    fun setRemotePhonebook(enabled: Boolean, host: String, user: String, passwordEnc: String) {
+        dataStore.update {
+            it.copy(
+                comms = it.comms.copy(
+                    remotePhonebookEnabled = enabled,
+                    remotePhonebookHost = host.trim(),
+                    remotePhonebookUser = user.trim(),
+                    remotePhonebookPasswordEnc = passwordEnc,
+                )
+            )
+        }
+    }
+
     val answerStyle
         get() = dataStore.data.map { it.comms.answerStyle }
     fun setAnswerStyle(style: String) {

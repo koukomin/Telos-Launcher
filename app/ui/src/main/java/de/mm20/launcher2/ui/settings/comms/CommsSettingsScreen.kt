@@ -346,6 +346,10 @@ fun CommsSettingsScreen() {
         }
 
         item {
+            RemotePhonebookSettings()
+        }
+
+        item {
             PreferenceCategory(title = "Privacy") {
                 SwitchPreference(
                     title = "Lock Phone app",
