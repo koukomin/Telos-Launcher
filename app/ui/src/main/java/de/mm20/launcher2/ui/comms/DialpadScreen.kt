@@ -97,6 +97,12 @@ fun DialpadScreen(initialNumber: String = "") {
     val vaultUnlocked by viewModel.isVaultUnlocked.collectAsStateWithLifecycle()
     val vaultAuthRequested by viewModel.vaultAuthRequested.collectAsStateWithLifecycle()
     val sims = remember { de.mm20.launcher2.comms.telephony.TelosDialer.callCapableSims(context) }
+    val sipSettings: de.mm20.launcher2.preferences.comms.CommsSettings = org.koin.compose.koinInject()
+    val sipEnabled by sipSettings.sipEnabled.collectAsStateWithLifecycle(false)
+    val sipMode by sipSettings.sipOutgoing.collectAsStateWithLifecycle("choose")
+    val sipRegistration by de.mm20.launcher2.comms.sip.SipEngine.registration.collectAsStateWithLifecycle()
+    val sipOffered = sipEnabled && sipMode != "off" &&
+        sipRegistration == de.mm20.launcher2.comms.sip.SipRegistration.Registered
 
     LaunchedEffect(vaultUnlocked) {
         if (vaultUnlocked) backStack.add(HiddenContactsRoute)
@@ -317,6 +323,24 @@ fun DialpadScreen(initialNumber: String = "") {
                                 contentDescription = stringResource(R.string.search_action_call),
                                 modifier = Modifier.size(28.dp),
                             )
+                        }
+                    }
+                }
+                if (sipOffered) {
+                    Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                        FloatingActionButton(
+                            onClick = {
+                                viewModel.dialSip(
+                                    context,
+                                    input.filter { it.isDigit() || it == '+' || it == '*' || it == '#' },
+                                )
+                            },
+                            containerColor = MaterialTheme.colorScheme.tertiary,
+                            contentColor = MaterialTheme.colorScheme.onTertiary,
+                            modifier = Modifier.size(56.dp),
+                            shape = CircleShape,
+                        ) {
+                            Text("SIP", style = MaterialTheme.typography.labelSmall)
                         }
                     }
                 }

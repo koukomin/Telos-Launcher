@@ -188,7 +188,7 @@ class MusicViewModel : ViewModel() {
                         .setTitle(track.title)
                         .setArtist(track.artist)
                         .setAlbumTitle(track.album)
-                        .setArtworkUri(track.albumArtUri)
+                        .setArtworkUri(track.uri) // the notification loads the cover of the file (see AlbumArtBitmapLoader)
                         .build()
                 )
                 .build()

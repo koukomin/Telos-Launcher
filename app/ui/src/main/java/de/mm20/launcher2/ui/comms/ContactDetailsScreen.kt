@@ -183,6 +183,14 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    fun dialSip(context: Context, number: String) {
+        if (number.isEmpty()) return
+        viewModelScope.launch {
+            val ok = de.mm20.launcher2.comms.privacy.CallGuard.placeSip(context, number)
+            if (!ok) android.widget.Toast.makeText(context, de.mm20.launcher2.comms.sip.SipDialer.lastFailure.ifBlank { "SIP account is not connected" }, android.widget.Toast.LENGTH_SHORT).show()
+        }
+    }
+
     fun setStarred(context: Context, contactId: Long, starred: Boolean) {
         runCatching {
             val values = android.content.ContentValues().apply {
@@ -599,6 +607,23 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                                     }
                                 }
                             }
+                        }
+                    }
+                }
+                item {
+                    val sipSettings: de.mm20.launcher2.preferences.comms.CommsSettings = org.koin.compose.koinInject()
+                    val sipEnabled by sipSettings.sipEnabled.collectAsStateWithLifecycle(false)
+                    val sipMode by sipSettings.sipOutgoing.collectAsStateWithLifecycle("choose")
+                    val sipRegistration by de.mm20.launcher2.comms.sip.SipEngine.registration.collectAsStateWithLifecycle()
+                    if (sipEnabled && sipMode != "off" &&
+                        sipRegistration == de.mm20.launcher2.comms.sip.SipRegistration.Registered
+                    ) {
+                        CommsDetailCard(onClick = { viewModel.dialSip(context, primary) }) {
+                            Text(
+                                text = "Call over SIP",
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.primary,
+                            )
                         }
                     }
                 }

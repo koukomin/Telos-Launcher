@@ -44,7 +44,11 @@ class PhotoEditorActivity : BaseActivity() {
         val uri = intent.data ?: run { finish(); return }
         setContent {
             ProvideCompositionLocals {
-                LauncherTheme { PhotoEditor(uri, onClose = { finish() }) }
+                LauncherTheme {
+                    androidx.compose.material3.Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface) {
+                        PhotoEditor(uri, onClose = { finish() })
+                    }
+                }
             }
         }
     }
@@ -159,7 +163,7 @@ private fun PhotoEditor(uri: Uri, onClose: () -> Unit) {
     fun adjust() = Adjust(rotation, flipH, brightness, contrast, saturation, filter, aspects[aspectIndex].second)
     val bmp = source
 
-    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface)) {
+    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface).navigationBarsPadding()) {
         Row(Modifier.fillMaxWidth().statusBarsPadding().padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
             TextButton(onClick = onClose) { Text("Cancel") }
             Spacer(Modifier.weight(1f))

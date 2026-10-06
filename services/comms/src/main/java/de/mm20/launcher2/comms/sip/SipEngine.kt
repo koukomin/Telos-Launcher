@@ -52,34 +52,70 @@ object SipEngine : BaresipService.Listener {
     @Volatile private var running = false
     @Volatile private var pendingAccount: SipAccount? = null
     @Volatile private var uap = 0L
+    @Volatile private var addresses = ""
+    @Volatile private var nameservers = ""
+    @Volatile private var restartWith: Pair<Context, SipAccount>? = null
 
-    /** Starts baresip and registers [account] as soon as the engine is up. */
-    fun start(context: Context, account: SipAccount) {
-        if (!available || running) return
+    /** True once the account is registered and calls can be placed */
+    val isReady: Boolean get() = _registration.value == SipRegistration.Registered
+
+    /**
+     * Starts baresip and registers [account] as soon as the engine is up. [linkAddresses] is the list
+     * of local addresses as "ip;interface;ip;interface" and [dns] a comma separated list of name
+     * servers, because Android does not let baresip discover them itself.
+     */
+    fun start(context: Context, account: SipAccount, linkAddresses: String = "", dns: String = "") {
+        if (!available) return
+        if (running) {
+            // A different account (or none) is already running: restart once it has stopped
+            restartWith = context to account
+            addresses = linkAddresses
+            nameservers = dns
+            service.baresipStop(false)
+            return
+        }
         running = true
         pendingAccount = account
+        addresses = linkAddresses
+        nameservers = dns
         _registration.value = SipRegistration.Registering
         val dir = File(context.filesDir, "sip").apply { mkdirs() }
         File(dir, "config").writeText(config())
         File(dir, "accounts").writeText("")
         File(dir, "contacts").writeText("")
         thread(name = "baresip", isDaemon = true) {
-            runCatching { service.baresipStart(dir.absolutePath, "", 2, "Telos Phone") }
-                .onFailure { Log.e(TAG, "baresip failed", it) }
-            running = false
+            runCatching { service.baresipStart(dir.absolutePath, addresses, 2, "Telos Phone") }
+                .onFailure {
+                    Log.e(TAG, "baresip failed", it)
+                    running = false
+                    _registration.value = SipRegistration.Failed
+                }
         }
     }
 
     fun stop() {
+        restartWith = null
         if (!running) return
         service.baresipStop(false)
     }
 
-    /** Places a call to a number or SIP address; plain numbers are called on the registered domain. */
-    fun dial(target: String): Boolean {
-        val account = pendingAccount ?: return false
+    /** Called when the network changed: new local addresses, name servers and a new registration */
+    fun networkChanged(oldAddresses: List<String>, linkAddresses: String, dns: String) {
+        if (!running || uap == 0L) return
+        addresses = linkAddresses
+        nameservers = dns
+        for (ip in oldAddresses) Api.net_rm_address(ip)
+        val parts = linkAddresses.split(";").filter { it.isNotEmpty() }
+        for (i in 0 until parts.size / 2) Api.net_add_address_ifname(parts[i * 2], parts[i * 2 + 1])
+        if (dns.isNotEmpty()) Api.net_use_nameserver(dns)
+        Api.uag_reset_transp(true, true)
+    }
+
+    /** Places a call to a full SIP address (see SipUri.target). */
+    fun dial(uri: String): Boolean {
         if (uap == 0L || _registration.value != SipRegistration.Registered) return false
-        val uri = if (target.startsWith("sip:")) target else "sip:${target.replace(" ", "")}@${account.domain}"
+        if (_call.value.state != SipCallState.None) return false
+        val target = uri
         val callp = Api.ua_call_alloc(uap, 0, Api.VIDMODE_OFF)
         if (callp == 0L) return false
         if (Api.call_connect(callp, uri) != 0) return false
@@ -104,33 +140,68 @@ object SipEngine : BaresipService.Listener {
         if (c.callp != 0L) Api.call_send_digit(c.callp, digit)
     }
 
-    private fun config() = """
-        audio_player aaudio,default
-        audio_source aaudio,default
-        audio_alert aaudio,default
-        call_local_timeout 120
-        sip_verify_server no
-        module opus.so
-        module g711.so
-        module aaudio.so
-        module stun.so
-        module turn.so
-        module ice.so
-        module account.so
-        module natpmp.so
-        module srtp.so
-        module dtls_srtp.so
-        module uuid.so
-        opus_bitrate 28000
-    """.trimIndent() + "\n"
+    /** Base configuration, following the static config of baresip-studio. */
+    private fun config(): String {
+        val dnsLines = nameservers.split(",").filter { it.isNotBlank() }.joinToString("") {
+            if (it.contains(':')) "dns_server [$it]:53\n" else "dns_server $it:53\n"
+        }
+        return """
+            poll_method epoll
+            call_local_timeout 60
+            call_max_calls 4
+            call_hold_other_calls yes
+            filter_registrar udp,tcp,tls,ws,wss
+            audio_player aaudio,default
+            audio_source aaudio,default
+            audio_alert aaudio,default
+            audio_level no
+            ausrc_format s16
+            auplay_format s16
+            auenc_format s16
+            audec_format s16
+            audio_buffer 20-160
+            audio_silence -35.0
+            audio_telev_pt 101
+            audio_jitter_buffer_type adaptive
+            audio_jitter_buffer_ms 100-200
+            audio_jitter_buffer_size 50
+            rtp_stats no
+            rtp_timeout 60
+            rtp_rxmode thread
+            sip_verify_server no
+            log_level 2
+            module aaudio.so
+            module stun.so
+            module turn.so
+            module ice.so
+            module srtp.so
+            module dtls_srtp.so
+            module uuid.so
+            module opus.so
+            module g711.so
+            module_app account.so
+            module_app debug_cmd.so
+            opus_samplerate 16000
+            opus_stereo no
+            opus_sprop_stereo no
+            opus_cbr no
+            opus_inbandfec yes
+            opus_application voip
+            opus_bitrate 28000
+            dtls_srtp_use_ec prime256v1
+        """.trimIndent() + "\n" + dnsLines
+    }
 
     // ---- BaresipService.Listener (called from the baresip thread) ----
 
     override fun onStarted() {
         val account = pendingAccount ?: return
-        val user = account.user
-        val name = if (account.displayName.isNotBlank()) "\"${account.displayName}\" " else ""
-        val line = "${name}<sip:$user@${account.domain}>;auth_pass=${account.password};regint=300;answermode=manual"
+        if (nameservers.isNotEmpty()) Api.net_use_nameserver(nameservers)
+        val user = android.net.Uri.encode(account.user)
+        val name = if (account.displayName.isNotBlank()) "\"${account.displayName.replace("\"", "")}\" " else ""
+        // the password is quoted so that characters such as ; or > cannot break the account line
+        val pass = account.password.replace("\\", "\\\\").replace("\"", "\\\"")
+        val line = "${name}<sip:$user@${account.domain}>;auth_pass=\"$pass\";regint=300;answermode=manual"
         uap = Api.ua_alloc(line)
         if (uap != 0L) Api.ua_register(uap) else {
             _registration.value = SipRegistration.Failed
@@ -144,6 +215,10 @@ object SipEngine : BaresipService.Listener {
         _registration.value = SipRegistration.Offline
         _call.value = SipCall()
         if (error.isNotEmpty()) _lastError.value = error
+        restartWith?.let { (context, account) ->
+            restartWith = null
+            start(context, account, addresses, nameservers)
+        }
     }
 
     override fun onUaEvent(event: String, uap: Long, callp: Long) {

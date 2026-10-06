@@ -3,32 +3,62 @@ package de.mm20.launcher2.data.comms.radio
 import de.mm20.launcher2.comms.model.RadioStation
 import io.ktor.client.*
 import io.ktor.client.call.*
+import io.ktor.client.plugins.timeout
 import io.ktor.client.request.*
 import io.ktor.http.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class RadioBrowserStation(
     val stationuuid: String,
-    val name: String,
-    val url_resolved: String,
-    val favicon: String
+    val name: String = "",
+    val url_resolved: String = "",
+    val url: String = "",
+    val favicon: String? = ""
 )
 
 class RadioBrowserClient(private val httpClient: HttpClient) {
 
-    // radio-browser.info runs several mirrors; try the next one when a server does not answer
-    private val servers = listOf(
+    // radio-browser.info runs several mirrors: the names behind its DNS round robin are looked up,
+    // with fixed names as a fallback
+    private val fallbackServers = listOf(
         "de1.api.radio-browser.info",
+        "de2.api.radio-browser.info",
+        "fi1.api.radio-browser.info",
         "nl1.api.radio-browser.info",
         "at1.api.radio-browser.info",
     )
+    private var discovered: List<String>? = null
 
+    private suspend fun servers(): List<String> {
+        val cached = discovered
+        if (cached != null) return cached
+        val found = withContext(Dispatchers.IO) {
+            runCatching {
+                java.net.InetAddress.getAllByName("all.api.radio-browser.info")
+                    .mapNotNull { it.canonicalHostName?.takeIf { name -> name.endsWith("radio-browser.info") } }
+                    .distinct()
+                    .shuffled()
+            }.getOrDefault(emptyList())
+        }
+        val list = (found + fallbackServers).distinct()
+        if (found.isNotEmpty()) discovered = list
+        return list
+    }
+
+    /** Throws when no server could be reached, so that the screen can tell the reason. */
     suspend fun searchStations(query: String): List<RadioStation> {
-        for (server in servers) {
+        var lastError: Exception? = null
+        for (server in servers()) {
             try {
                 val response: List<RadioBrowserStation> = httpClient.get("https://$server/json/stations/search") {
                     header("User-Agent", "Telos Radio")
+                    timeout {
+                        requestTimeoutMillis = 15_000
+                        connectTimeoutMillis = 6_000
+                    }
                     url {
                         parameters.append("name", query)
                         parameters.append("limit", "50")
@@ -38,24 +68,28 @@ class RadioBrowserClient(private val httpClient: HttpClient) {
                     }
                 }.body()
 
-                return response.map {
-                    RadioStation(
-                        id = it.stationuuid,
-                        name = it.name.trim(),
-                        streamUrl = it.url_resolved,
-                        faviconUrl = it.favicon
-                    )
-                }
+                return response
+                    .filter { it.url_resolved.isNotBlank() || it.url.isNotBlank() }
+                    .map {
+                        RadioStation(
+                            id = it.stationuuid,
+                            name = it.name.trim(),
+                            streamUrl = it.url_resolved.ifBlank { it.url },
+                            faviconUrl = it.favicon.orEmpty()
+                        )
+                    }
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
             } catch (e: Exception) {
-                // try the next mirror
+                lastError = e
             }
         }
-        return emptyList()
+        throw java.io.IOException(lastError?.message ?: "no server reachable")
     }
 
     /** Counts a play for the station, as radio-browser.info asks apps to do */
     suspend fun countClick(stationUuid: String) {
-        for (server in servers) {
+        for (server in servers()) {
             try {
                 httpClient.get("https://$server/json/url/$stationUuid") { header("User-Agent", "Telos Radio") }
                 return

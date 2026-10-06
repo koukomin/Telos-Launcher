@@ -365,6 +365,10 @@ fun CommsSettingsScreen() {
         }
 
         item {
+            SipSettings()
+        }
+
+        item {
             RemotePhonebookSettings()
         }
 

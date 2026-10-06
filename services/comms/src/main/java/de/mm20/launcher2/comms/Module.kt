@@ -10,6 +10,7 @@ import org.koin.dsl.module
 
 val commsModule = module {
     single(createdAtStart = true) { de.mm20.launcher2.comms.remote.RemotePhonebook.also { it.init(androidContext()) } }
+    single(createdAtStart = true) { de.mm20.launcher2.comms.sip.SipController(androidContext(), get()) }
     single { T9SearchEngine() }
     single { CommsBackupManager(get(), get()) }
     single<VaultSmsRouter> { VaultSmsRouterImpl(get()) }

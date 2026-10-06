@@ -45,6 +45,9 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
     private val _message = MutableStateFlow<String?>(null)
     val message: StateFlow<String?> = _message
 
+    private val _searchError = MutableStateFlow<String?>(null)
+    val searchError: StateFlow<String?> = _searchError
+
     private var searchJob: Job? = null
 
     fun consumeMessage() {
@@ -57,6 +60,7 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
 
         if (query.isBlank()) {
             _searchResults.value = emptyList()
+            _searchError.value = null
             _isSearching.value = false
             return
         }
@@ -64,8 +68,15 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
         searchJob = viewModelScope.launch {
             _isSearching.value = true
             delay(500) // Debounce
-            val results = repository.searchStations(query)
-            _searchResults.value = results
+            try {
+                _searchResults.value = repository.searchStations(query)
+                _searchError.value = null
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                _searchResults.value = emptyList()
+                _searchError.value = "Search failed: " + (e.message ?: e.javaClass.simpleName)
+            }
             _isSearching.value = false
         }
     }

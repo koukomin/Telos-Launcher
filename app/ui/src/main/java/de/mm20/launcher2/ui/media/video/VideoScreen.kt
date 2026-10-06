@@ -107,6 +107,7 @@ fun VideoScreen() {
             .sortedBy { it.title.lowercase() }
     }
 
+    de.mm20.launcher2.ui.media.MediaFrame("Videos") {
     Column(Modifier.fillMaxSize()) {
         if (!hasPermission) {
             Column(
@@ -122,14 +123,7 @@ fun VideoScreen() {
             return@Column
         }
 
-        OutlinedTextField(
-            value = query,
-            onValueChange = { query = it },
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-            placeholder = { Text("Search videos") },
-            singleLine = true,
-            leadingIcon = { Icon(painterResource(R.drawable.search_24px), contentDescription = null) },
-        )
+        de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, "Search videos")
 
         val current = group
         if (current != null) {
@@ -175,6 +169,7 @@ fun VideoScreen() {
             tab == 1 -> GroupList(series, "No series recognised. Name files like Show.S01E02.mkv") { group = it }
             else -> GroupList(folders, "") { group = it }
         }
+    }
     }
 }
 

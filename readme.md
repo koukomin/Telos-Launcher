@@ -60,6 +60,11 @@ plugin SDK for third-party search/weather/calendar providers. See the
   metadata with a track history; next / previous buttons switch stations; sleep timer; station discovery through
   [Radio-Browser](https://www.radio-browser.info/) with mirror fallback
 - Settings page in the Right Dialer style (accent section captions, rounded cards)
+- **SIP / VoIP (experimental):** a SIP account (for example a FRITZ!Box IP telephone) on top of
+  [baresip](https://github.com/baresip/baresip), kept registered in the background only while it is
+  switched on; incoming SIP calls with a call screen, notification and call log entries; the account
+  can be used for outgoing calls as a separate SIP button, as the default, or not at all so that it
+  only receives calls
 - Cellular network mode switcher with Quick Settings tile and screen-off / battery-saver automation
 - Home screen widgets (recents, direct call) and an encrypted backup of all phone settings
 - **Remote phonebook:** caller names from an AVM FRITZ!Box telephone book (TR-064), cached locally
@@ -100,8 +105,8 @@ plugin SDK for third-party search/weather/calendar providers. See the
 
 ### Planned
 
-- SIP / VoIP calling on top of [baresip](https://github.com/baresip/baresip), including
-  registration with a FRITZ!Box as an IP telephone
+- SIP: text messages, video and Bluetooth routing, and Android Telecom integration (SIP calls are
+  handled by their own call screen for now)
 
 ## Calendar search
 
@@ -138,7 +143,7 @@ adapted, the original license is respected.
 | [Transistor](https://codeberg.org/y20k/transistor) | MIT | Radio player behaviour |
 | [Radio-Browser](https://www.radio-browser.info/) | public API | Radio station directory |
 | [Shizuku](https://github.com/RikkaApps/Shizuku) and [Dhizuku](https://github.com/iamr0s/Dhizuku) | see project | Privileged operations (freeze, recording, install, network mode) |
-| [baresip](https://github.com/baresip/baresip) and [baresip-studio](https://github.com/juha-h/baresip-studio) | BSD-3-Clause | Planned SIP engine |
+| [baresip](https://github.com/baresip/baresip) and [baresip-studio](https://github.com/juha-h/baresip-studio) | BSD-3-Clause | SIP engine and its JNI bridge |
 | [LRCLIB](https://lrclib.net) | open API | Song lyrics for Telos Music |
 | [TagLib wrapper (Kyant0/taglib)](https://github.com/Kyant0/taglib) | Apache-2.0 | Reading and writing audio tags; it bundles [TagLib](https://taglib.org/) (LGPL-2.1 / MPL-1.1 upstream) |
 | AVM FRITZ!Box [TR-064](https://avm.de/service/schnittstellen/) | specification | Remote phonebook |
