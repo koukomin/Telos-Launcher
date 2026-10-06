@@ -12,7 +12,7 @@ and open source launcher for Android. On top of the Kvaesitso launcher it adds a
 Every successful build of the development branch is published automatically as a debug-signed
 pre-release (testing only):
 
-- [Latest dev build (APK)](https://github.com/koukomin/Telos-Launcher/releases/tag/telos-dev-build)
+- [Latest dev builds (APK)](https://github.com/koukomin/Telos-Launcher/releases)
 
 ## Features
 

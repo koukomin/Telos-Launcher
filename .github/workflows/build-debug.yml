@@ -43,19 +43,24 @@ jobs:
           path: app/app/build/outputs/apk/default/debug/*.apk
 
       # The steps below only run when the build above succeeded
-      - name: Publish rolling pre-release
+      - name: Publish pre-release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           APK=$(ls app/app/build/outputs/apk/default/debug/*.apk | head -n 1)
           SHORT_SHA=$(echo "$GITHUB_SHA" | cut -c1-7)
-          gh release delete telos-dev-build --cleanup-tag --yes || true
+          TAG="dev-$GITHUB_RUN_NUMBER"
+          echo "TAG=$TAG" >> "$GITHUB_ENV"
           cp "$APK" "$RUNNER_TEMP/telos-debug.apk"
-          gh release create telos-dev-build "$RUNNER_TEMP/telos-debug.apk" \
+          gh release create "$TAG" "$RUNNER_TEMP/telos-debug.apk" \
             --prerelease \
             --target "$GITHUB_SHA" \
-            --title "Telos dev build ($SHORT_SHA)" \
+            --title "Telos dev build #$GITHUB_RUN_NUMBER ($SHORT_SHA)" \
             --notes "Automatic debug build of branch \`$GITHUB_REF_NAME\` at commit $SHORT_SHA. Debug-signed, for testing only."
+          # keep only the three newest dev builds
+          gh release list --limit 100 --json tagName --jq '.[].tagName' \
+            | grep '^dev-' | sort -t- -k2 -n -r | tail -n +4 \
+            | while read -r OLD; do gh release delete "$OLD" --cleanup-tag --yes || true; done
       - name: Update pull request comment
         env:
           GH_TOKEN: ${{ github.token }}
@@ -65,6 +70,6 @@ jobs:
             SHORT_SHA=$(echo "$GITHUB_SHA" | cut -c1-7)
             gh pr comment "$PR" --edit-last --create-if-none --body "Build passed for \`$SHORT_SHA\`
 
-          Download the APK: https://github.com/$GITHUB_REPOSITORY/releases/download/telos-dev-build/telos-debug.apk
+          Download the APK: https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/telos-debug.apk
           Workflow run: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
           fi
