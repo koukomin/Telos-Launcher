@@ -114,7 +114,7 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 Text("Posters and descriptions", style = MaterialTheme.typography.titleSmall)
                 Text(
-                    "Free API key from themoviedb.org (Settings, API). This product uses the TMDB API but is not endorsed or certified by TMDB.",
+                    "Posters work without a key (from Wikipedia). A free TMDB API key (themoviedb.org, Settings, API) finds more and adds ratings. This product uses the TMDB API but is not endorsed or certified by TMDB.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

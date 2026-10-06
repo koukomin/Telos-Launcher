@@ -13,6 +13,7 @@ import androidx.media3.session.MediaSessionService
 class MusicPlayerService : MediaSessionService() {
 
     private var mediaSession: MediaSession? = null
+    private var scrobbler: de.mm20.launcher2.comms.scrobble.ScrobbleTracker? = null
     private val handler = Handler(Looper.getMainLooper())
 
     // Nothing keeps the service (and the decoder) alive after music has been paused for a while
@@ -41,12 +42,15 @@ class MusicPlayerService : MediaSessionService() {
             .setBitmapLoader(AlbumArtBitmapLoader(this))
             .build()
         MusicSleepTimer.onExpire = { player.pause() }
+        scrobbler = de.mm20.launcher2.comms.scrobble.ScrobbleTracker(this, player).also { it.attach() }
     }
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? = mediaSession
 
     override fun onDestroy() {
         handler.removeCallbacks(idleStop)
+        scrobbler?.release()
+        scrobbler = null
         MusicSleepTimer.onExpire = null
         mediaSession?.run {
             player.release()

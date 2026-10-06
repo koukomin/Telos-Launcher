@@ -133,8 +133,9 @@ fun VideoScreen() {
             val k = metaKey(g)
             if (metas.containsKey(k)) continue
             val vm = de.mm20.launcher2.comms.media.video.VideoMetadata
-            if (vm.known(context, g.series, g.title, g.year)) {
-                metas[k] = vm.cached(context, g.series, g.title, g.year)
+            val tmdb = cfg.tmdbKey.isNotBlank()
+            if (vm.known(context, g.series, g.title, g.year, tmdb)) {
+                metas[k] = vm.cached(context, g.series, g.title, g.year, tmdb)
                 continue
             }
             metas[k] = vm.lookup(context, cfg.tmdbKey, g.series, g.title, g.year, language)

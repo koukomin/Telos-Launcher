@@ -74,7 +74,9 @@ plugin SDK for third-party search/weather/calendar providers. See the
 
 - Telos Music: local music library by songs, albums and artists, accent-insensitive search (also for
   Greek), play queue with shuffle and repeat, notification and lock screen controls, synchronized
-  lyrics from [LRCLIB](https://lrclib.net), tag editor for MP3, FLAC, M4A and OGG files (title, artist,
+  lyrics from [LRCLIB](https://lrclib.net), scrobbling to [Last.fm](https://www.last.fm),
+  [Libre.fm](https://libre.fm) and [ListenBrainz](https://listenbrainz.org) (with a queue for when you are
+  offline), tag editor for MP3, FLAC, M4A and OGG files (title, artist,
   album, genre, year, track number, cover art), sleep timer
 - Telos Video: video library with movies, series (recognised from file names such as
   `Show.S01E02.mkv`) and folders, continue watching, full screen player with subtitle selection,
@@ -82,7 +84,8 @@ plugin SDK for third-party search/weather/calendar providers. See the
 - Telos Video also plays web streams (HLS, DASH, RTSP and plain video links) and torrents (magnet
   links, .torrent addresses and files): the video downloads in order while it plays, through a
   local-only address, on Wi-Fi only by default, and everything is deleted when the player closes.
-  Movie and series posters with descriptions come from [TMDB](https://www.themoviedb.org), subtitles
+  Movie and series posters with descriptions come from [Wikipedia](https://www.wikipedia.org), or from
+  [TMDB](https://www.themoviedb.org) with your own free key, subtitles
   can be searched, downloaded or fetched automatically from [OpenSubtitles](https://www.opensubtitles.com),
   also for torrents (both with your own API key). Only play content you are allowed to watch.
 - Telos Photos: photo gallery by folder, full screen viewer with pinch zoom, EXIF viewer and editor,
@@ -151,6 +154,7 @@ adapted, the original license is respected.
 | [Shizuku](https://github.com/RikkaApps/Shizuku) and [Dhizuku](https://github.com/iamr0s/Dhizuku) | see project | Privileged operations (freeze, recording, install, network mode) |
 | [baresip](https://github.com/baresip/baresip) and [baresip-studio](https://github.com/juha-h/baresip-studio) | BSD-3-Clause | SIP engine and its JNI bridge |
 | [LRCLIB](https://lrclib.net) | open API | Song lyrics for Telos Music |
+| [Last.fm](https://www.last.fm/api), [Libre.fm](https://libre.fm) and [ListenBrainz](https://listenbrainz.org) | open APIs | Scrobbling in Telos Music |
 | [libtorrent4j](https://github.com/aldenml/libtorrent4j) and [libtorrent](https://www.libtorrent.org) | MIT / BSD-3-Clause | Torrent streaming in Telos Video |
 | [TMDB](https://www.themoviedb.org) | API terms | Posters and descriptions in Telos Video (not endorsed or certified by TMDB) |
 | [OpenSubtitles](https://www.opensubtitles.com) | API terms | Subtitle search and download in Telos Video |

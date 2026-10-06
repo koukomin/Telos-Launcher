@@ -31,8 +31,9 @@ object VideoMetadata {
 
     private fun cacheFile(context: Context) = File(context.filesDir, "video_metadata.json")
 
-    private fun key(series: Boolean, title: String, year: Int?) =
-        (if (series) "tv:" else "movie:") + title.lowercase().trim() + (year?.let { ":$it" } ?: "")
+    /** Answers from TMDB and from Wikipedia are kept apart, so adding a TMDB key later gets real posters */
+    private fun key(series: Boolean, title: String, year: Int?, tmdb: Boolean) =
+        (if (tmdb) "tmdb:" else "wiki:") + (if (series) "tv:" else "movie:") + title.lowercase().trim() + (year?.let { ":$it" } ?: "")
 
     @Synchronized
     private fun loadDisk(context: Context): JSONObject =
@@ -64,8 +65,8 @@ object VideoMetadata {
 
     /** Cached answer, or null when nothing is known (yet) */
     @Synchronized
-    fun cached(context: Context, series: Boolean, title: String, year: Int?): VideoMeta? {
-        val k = key(series, title, year)
+    fun cached(context: Context, series: Boolean, title: String, year: Int?, tmdb: Boolean): VideoMeta? {
+        val k = key(series, title, year, tmdb)
         if (memory.containsKey(k)) return memory[k]
         val o = loadDisk(context).optJSONObject(k) ?: return null
         val meta = if (o.has("none")) null else fromJson(o)
@@ -75,8 +76,8 @@ object VideoMetadata {
 
     /** True when this title was already looked up (even if nothing was found) */
     @Synchronized
-    fun known(context: Context, series: Boolean, title: String, year: Int?): Boolean {
-        val k = key(series, title, year)
+    fun known(context: Context, series: Boolean, title: String, year: Int?, tmdb: Boolean): Boolean {
+        val k = key(series, title, year, tmdb)
         return memory.containsKey(k) || loadDisk(context).has(k)
     }
 
@@ -88,10 +89,17 @@ object VideoMetadata {
         year: Int?,
         language: String = "en",
     ): VideoMeta? = withContext(Dispatchers.IO) {
-        if (apiKey.isBlank() || title.isBlank()) return@withContext null
-        if (known(context, series, title, year)) return@withContext cached(context, series, title, year)
-        val k = key(series, title, year)
+        if (title.isBlank()) return@withContext null
+        val tmdb = apiKey.isNotBlank()
+        if (known(context, series, title, year, tmdb)) return@withContext cached(context, series, title, year, tmdb)
+        val k = key(series, title, year, tmdb)
         try {
+            if (!tmdb) {
+                val meta = wikipedia(series, title, year)
+                synchronized(this@VideoMetadata) { memory[k] = meta }
+                saveDisk(context, k, meta)
+                return@withContext meta
+            }
             val kind = if (series) "tv" else "movie"
             val yearParam = when {
                 year == null -> ""
@@ -123,11 +131,44 @@ object VideoMetadata {
         }
     }
 
+    /**
+     * Without a TMDB key the lead image and the first paragraph of the Wikipedia article are used:
+     * no account is needed. The article is only taken when its title contains the searched title.
+     */
+    private fun wikipedia(series: Boolean, title: String, year: Int?): VideoMeta? {
+        val search = when {
+            series -> "$title television series"
+            year != null -> "$title $year film"
+            else -> "$title film"
+        }
+        val url = "https://en.wikipedia.org/w/api.php?action=query&format=json&generator=search" +
+            "&gsrlimit=3&gsrsearch=${URLEncoder.encode(search, "UTF-8")}&prop=pageimages%7Cextracts" +
+            "&piprop=thumbnail&pithumbsize=342&exintro=1&explaintext=1&exsentences=3&exlimit=3"
+        val pages = JSONObject(get(url)).optJSONObject("query")?.optJSONObject("pages") ?: return null
+        val wanted = title.lowercase().replace(Regex("[^\\p{L}\\p{N}]+"), " ").trim()
+        val candidates = pages.keys().asSequence().map { pages.getJSONObject(it) }
+            .sortedBy { it.optInt("index", 99) }
+            .filter { page ->
+                page.optString("title").lowercase().replace(Regex("[^\\p{L}\\p{N}]+"), " ").contains(wanted)
+            }
+            .toList()
+        val page = candidates.firstOrNull { it.has("thumbnail") } ?: candidates.firstOrNull() ?: return null
+        return VideoMeta(
+            tmdbId = 0,
+            isSeries = series,
+            title = page.optString("title").substringBefore(" ("),
+            overview = page.optString("extract"),
+            posterUrl = page.optJSONObject("thumbnail")?.optString("source")?.ifBlank { null },
+            year = year?.toString().orEmpty(),
+            rating = 0.0,
+        )
+    }
+
     private fun get(url: String): String {
         val c = URL(url).openConnection() as HttpURLConnection
         c.connectTimeout = 8000
         c.readTimeout = 10000
-        c.setRequestProperty("User-Agent", "Telos Video")
+        c.setRequestProperty("User-Agent", "Telos Video/1.0 (https://github.com/koukomin/Telos-Launcher)")
         try {
             if (c.responseCode !in 200..299) error("TMDB answered ${c.responseCode}")
             return c.inputStream.bufferedReader().use { it.readText() }

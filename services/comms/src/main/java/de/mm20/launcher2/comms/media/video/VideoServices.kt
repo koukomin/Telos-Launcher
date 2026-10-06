@@ -16,7 +16,8 @@ data class VideoServicesConfig(
     val autoDownload: Boolean,
     val torrentWifiOnly: Boolean,
 ) {
-    val postersEnabled: Boolean get() = tmdbKey.isNotBlank()
+    /** Posters work without a key (Wikipedia); a TMDB key gives better results */
+    val postersEnabled: Boolean get() = true
     val subtitlesEnabled: Boolean get() = subtitleKey.isNotBlank()
     fun subtitleSearch() = SubtitleSearch(subtitleKey, subtitleUser, subtitlePassword)
 }
