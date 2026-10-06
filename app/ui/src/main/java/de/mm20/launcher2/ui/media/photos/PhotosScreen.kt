@@ -13,9 +13,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.*
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -89,6 +95,32 @@ internal fun openViewer(context: Context, list: List<PhotoItem>, index: Int) {
     )
 }
 
+private data class Album(val name: String, val items: List<PhotoItem>)
+
+private fun dayLabel(millis: Long): String {
+    val now = java.util.Calendar.getInstance()
+    val then = java.util.Calendar.getInstance().apply { timeInMillis = millis }
+    val sameYear = now.get(java.util.Calendar.YEAR) == then.get(java.util.Calendar.YEAR)
+    val dayDiff = now.get(java.util.Calendar.DAY_OF_YEAR) - then.get(java.util.Calendar.DAY_OF_YEAR)
+    return when {
+        sameYear && dayDiff == 0 -> "Today"
+        sameYear && dayDiff == 1 -> "Yesterday"
+        else -> java.text.SimpleDateFormat(if (sameYear) "EEE, d MMM" else "d MMM yyyy", java.util.Locale.getDefault())
+            .format(java.util.Date(millis))
+    }
+}
+
+@Composable
+private fun Thumb(item: PhotoItem, modifier: Modifier) {
+    val context = LocalContext.current
+    AsyncImage(
+        model = coil.request.ImageRequest.Builder(context).data(item.uri).size(320).crossfade(true).build(),
+        contentDescription = item.name,
+        contentScale = ContentScale.Crop,
+        modifier = modifier,
+    )
+}
+
 @Composable
 fun PhotosScreen() {
     val viewModel: PhotosViewModel = viewModel()
@@ -106,49 +138,119 @@ fun PhotosScreen() {
     }
     LaunchedEffect(Unit) { if (hasPermission) viewModel.load(context) }
 
-    var folder by remember { mutableStateOf<String?>(null) }
-    val folders = remember(items) { items.map { it.folder }.distinct().sorted() }
-    val shown = remember(items, folder) { if (folder == null) items else items.filter { it.folder == folder } }
+    var tab by remember { mutableStateOf(0) }
+    var album by remember { mutableStateOf<Album?>(null) }
+    androidx.activity.compose.BackHandler(enabled = album != null) { album = null }
 
-    if (!hasPermission) {
-        Column(
-            Modifier.fillMaxSize().padding(32.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Text("Allow access to your photos", style = MaterialTheme.typography.titleMedium)
-            Button(onClick = { launcher.launch(permission) }, modifier = Modifier.padding(top = 16.dp)) { Text("Allow") }
-        }
-        return
+    val albums = remember(items) {
+        items.groupBy { it.folder }.map { (name, list) -> Album(name.ifBlank { "Other" }, list) }
+            .sortedByDescending { it.items.size }
     }
+    val shown = album?.items ?: items
+    val byDay = remember(shown) { shown.groupBy { dayLabel(it.taken) } }
 
-    Column(Modifier.fillMaxSize()) {
-        androidx.compose.foundation.lazy.LazyRow(
-            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            item { FilterChip(selected = folder == null, onClick = { folder = null }, label = { Text("All") }) }
-            items(folders.size) { i ->
-                FilterChip(
-                    selected = folder == folders[i],
-                    onClick = { folder = folders[i] },
-                    label = { Text(folders[i]) },
-                )
+    androidx.compose.material3.Scaffold(
+        containerColor = MaterialTheme.colorScheme.surface,
+        contentColor = MaterialTheme.colorScheme.onSurface,
+        bottomBar = {
+            if (album == null) {
+                NavigationBar(containerColor = MaterialTheme.colorScheme.surfaceContainer) {
+                    NavigationBarItem(
+                        selected = tab == 0, onClick = { tab = 0 },
+                        icon = { Icon(painterResource(R.drawable.photo_24px), contentDescription = null) },
+                        label = { Text("Photos") },
+                    )
+                    NavigationBarItem(
+                        selected = tab == 1, onClick = { tab = 1 },
+                        icon = { Icon(painterResource(R.drawable.crop_square_24px), contentDescription = null) },
+                        label = { Text("Albums") },
+                    )
+                }
             }
-        }
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(104.dp),
-            modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.spacedBy(2.dp),
-            verticalArrangement = Arrangement.spacedBy(2.dp),
-        ) {
-            items(shown.size) { i ->
-                AsyncImage(
-                    model = shown[i].uri,
-                    contentDescription = shown[i].name,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.aspectRatio(1f).clickable { openViewer(context, shown, i) },
-                )
+        },
+    ) { padding ->
+        Column(Modifier.fillMaxSize().padding(padding)) {
+            Row(
+                Modifier.fillMaxWidth().statusBarsPadding().padding(start = 20.dp, end = 12.dp, top = 12.dp, bottom = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                if (album != null) {
+                    IconButton(onClick = { album = null }) {
+                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back")
+                    }
+                }
+                Column {
+                    Text(
+                        album?.name ?: "Photos",
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.SemiBold,
+                    )
+                    Text(
+                        "${shown.size} items",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+
+            if (!hasPermission) {
+                Column(
+                    Modifier.fillMaxSize().padding(32.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Text("Allow access to your photos", style = MaterialTheme.typography.titleMedium)
+                    Button(onClick = { launcher.launch(permission) }, modifier = Modifier.padding(top = 16.dp)) { Text("Allow") }
+                }
+            } else if (tab == 1 && album == null) {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    contentPadding = PaddingValues(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    items(albums.size) { i ->
+                        val a = albums[i]
+                        Column(Modifier.clickable { album = a }) {
+                            Thumb(
+                                a.items.first(),
+                                Modifier.fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(20.dp)),
+                            )
+                            Text(a.name, style = MaterialTheme.typography.bodyLarge, maxLines = 1, modifier = Modifier.padding(top = 6.dp, start = 4.dp))
+                            Text(
+                                "${a.items.size}",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.padding(start = 4.dp),
+                            )
+                        }
+                    }
+                }
+            } else {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(4),
+                    horizontalArrangement = Arrangement.spacedBy(2.dp),
+                    verticalArrangement = Arrangement.spacedBy(2.dp),
+                    modifier = Modifier.fillMaxSize(),
+                ) {
+                    byDay.forEach { (day, list) ->
+                        item(span = { GridItemSpan(maxLineSpan) }) {
+                            Text(
+                                day,
+                                style = MaterialTheme.typography.titleSmall,
+                                fontWeight = FontWeight.SemiBold,
+                                modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 6.dp),
+                            )
+                        }
+                        items(list.size) { i ->
+                            Thumb(
+                                list[i],
+                                Modifier.aspectRatio(1f).clickable { openViewer(context, shown, shown.indexOf(list[i])) },
+                            )
+                        }
+                    }
+                }
             }
         }
     }

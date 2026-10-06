@@ -37,7 +37,9 @@ class MusicPlayerService : MediaSessionService() {
             }
         })
         handler.postDelayed(idleStop, IDLE_STOP_MS)
-        mediaSession = MediaSession.Builder(this, player).build()
+        mediaSession = MediaSession.Builder(this, player)
+            .setBitmapLoader(AlbumArtBitmapLoader(this))
+            .build()
         MusicSleepTimer.onExpire = { player.pause() }
     }
 

@@ -47,6 +47,7 @@ fun RadioDashboardScreen() {
     val searchResults by viewModel.searchResults.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
     val isSearching by viewModel.isSearching.collectAsStateWithLifecycle()
+    val searchError by viewModel.searchError.collectAsStateWithLifecycle()
     val message by viewModel.message.collectAsStateWithLifecycle()
     val sleepEndsAt by playerViewModel.sleepEndsAt.collectAsStateWithLifecycle()
 
@@ -78,62 +79,55 @@ fun RadioDashboardScreen() {
         if (uri != null) viewModel.restoreBackup(context, uri)
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Spacer(Modifier.weight(1f))
-            IconButton(onClick = { showAdd = true }) {
-                Icon(painterResource(R.drawable.add_24px), contentDescription = "Add station")
+    de.mm20.launcher2.ui.media.MediaFrame("Radio", askNotifications = true, actions = {
+        IconButton(onClick = { showAdd = true }) {
+            Icon(painterResource(R.drawable.add_24px), contentDescription = "Add station")
+        }
+        IconButton(onClick = { showSleep = true }) {
+            Icon(
+                painterResource(R.drawable.timer_24px),
+                contentDescription = "Sleep timer",
+                tint = if (sleepEndsAt > 0) MaterialTheme.colorScheme.primary
+                else MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        Box {
+            IconButton(onClick = { menuOpen = true }) {
+                Icon(painterResource(R.drawable.more_vert_24px), contentDescription = null)
             }
-            IconButton(onClick = { showSleep = true }) {
-                Icon(
-                    painterResource(R.drawable.timer_24px),
-                    contentDescription = "Sleep timer",
-                    tint = if (sleepEndsAt > 0) MaterialTheme.colorScheme.primary
-                    else MaterialTheme.colorScheme.onSurfaceVariant,
+            DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                DropdownMenuItem(
+                    text = { Text("Import playlist (M3U / PLS)") },
+                    onClick = {
+                        menuOpen = false
+                        importLauncher.launch(arrayOf("*/*"))
+                    },
+                )
+                DropdownMenuItem(
+                    text = { Text("Export playlist (M3U)") },
+                    onClick = {
+                        menuOpen = false
+                        exportM3uLauncher.launch("telos-radio.m3u")
+                    },
+                )
+                DropdownMenuItem(
+                    text = { Text("Back up collection") },
+                    onClick = {
+                        menuOpen = false
+                        backupLauncher.launch("telos-radio-backup.json")
+                    },
+                )
+                DropdownMenuItem(
+                    text = { Text("Restore backup") },
+                    onClick = {
+                        menuOpen = false
+                        restoreLauncher.launch(arrayOf("*/*"))
+                    },
                 )
             }
-            Box {
-                IconButton(onClick = { menuOpen = true }) {
-                    Icon(painterResource(R.drawable.more_vert_24px), contentDescription = null)
-                }
-                DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
-                    DropdownMenuItem(
-                        text = { Text("Import playlist (M3U / PLS)") },
-                        onClick = {
-                            menuOpen = false
-                            importLauncher.launch(arrayOf("*/*"))
-                        },
-                    )
-                    DropdownMenuItem(
-                        text = { Text("Export playlist (M3U)") },
-                        onClick = {
-                            menuOpen = false
-                            exportM3uLauncher.launch("telos-radio.m3u")
-                        },
-                    )
-                    DropdownMenuItem(
-                        text = { Text("Back up collection") },
-                        onClick = {
-                            menuOpen = false
-                            backupLauncher.launch("telos-radio-backup.json")
-                        },
-                    )
-                    DropdownMenuItem(
-                        text = { Text("Restore backup") },
-                        onClick = {
-                            menuOpen = false
-                            restoreLauncher.launch(arrayOf("*/*"))
-                        },
-                    )
-                }
-            }
         }
-
+    }) {
+    Column(modifier = Modifier.fillMaxSize()) {
         TabRow(selectedTabIndex = selectedTabIndex) {
             tabs.forEachIndexed { index, title ->
                 Tab(
@@ -175,32 +169,35 @@ fun RadioDashboardScreen() {
 
             1 -> {
                 Column(modifier = Modifier.fillMaxSize()) {
-                    OutlinedTextField(
-                        value = searchQuery,
-                        onValueChange = { viewModel.updateSearchQuery(it) },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        placeholder = { Text("Search by station name...") },
-                        singleLine = true,
-                        leadingIcon = { Icon(painterResource(R.drawable.search_24px), contentDescription = null) },
-                        trailingIcon = {
-                            if (isSearching) {
-                                CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
-                            } else if (searchQuery.isNotEmpty()) {
-                                IconButton(onClick = { viewModel.updateSearchQuery("") }) {
-                                    Icon(painterResource(R.drawable.close_24px), contentDescription = "Clear")
-                                }
-                            }
-                        }
+                    de.mm20.launcher2.ui.media.MediaSearchBar(
+                        searchQuery, { viewModel.updateSearchQuery(it) }, "Search by station name"
                     )
+                    if (isSearching) {
+                        androidx.compose.material3.LinearProgressIndicator(Modifier.fillMaxWidth().padding(horizontal = 16.dp))
+                    }
+                    searchError?.let {
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.error,
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        )
+                    }
+                    if (!isSearching && searchError == null && searchQuery.isNotBlank() && searchResults.isEmpty()) {
+                        Text(
+                            text = "No stations found",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                        )
+                    }
 
                     LazyColumn(
                         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        items(searchResults, key = { it.id }) { station ->
+                        items(searchResults.distinctBy { it.id }, key = { it.id }) { station ->
                             val isFavorite = favorites.any { it.id == station.id }
                             StationRow(
                                 station = station,
@@ -254,6 +251,7 @@ fun RadioDashboardScreen() {
                 }
             }
         }
+    }
     }
 
     if (showAdd) {

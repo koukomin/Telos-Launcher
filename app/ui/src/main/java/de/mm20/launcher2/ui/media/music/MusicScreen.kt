@@ -113,6 +113,7 @@ fun MusicScreen() {
             .sortedBy { it.title.lowercase() }
     }
 
+    de.mm20.launcher2.ui.media.MediaFrame("Music", askNotifications = true) {
     Box(Modifier.fillMaxSize()) {
         Column(Modifier.fillMaxSize()) {
             if (!hasPermission) {
@@ -128,14 +129,7 @@ fun MusicScreen() {
                     ) { Text("Allow") }
                 }
             } else {
-                OutlinedTextField(
-                    value = query,
-                    onValueChange = { query = it },
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-                    placeholder = { Text("Search music") },
-                    singleLine = true,
-                    leadingIcon = { Icon(painterResource(R.drawable.search_24px), contentDescription = null) },
-                )
+                de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, "Search music")
                 val current = group
                 if (current != null) {
                     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
@@ -228,6 +222,7 @@ fun MusicScreen() {
         ) {
             NowPlayingScreen(viewModel, onClose = { showNowPlaying = false })
         }
+    }
     }
 }
 

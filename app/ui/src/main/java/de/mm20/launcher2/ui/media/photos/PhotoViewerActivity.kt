@@ -12,6 +12,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.*
@@ -135,27 +136,35 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
         }
         if (chrome) {
             Row(
-                Modifier.fillMaxWidth().background(Color(0x99000000)).statusBarsPadding().padding(4.dp),
+                Modifier.fillMaxWidth().background(Color(0x66000000)).statusBarsPadding().padding(4.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(onClick = onClose) {
                     Icon(painterResource(R.drawable.arrow_back_24px), "Back", tint = Color.White)
                 }
                 Spacer(Modifier.weight(1f))
-                IconButton(onClick = { showInfo = true }) {
-                    Icon(painterResource(R.drawable.info_24px), "Details", tint = Color.White)
-                }
-                IconButton(onClick = {
+                Text(
+                    "${pager.currentPage + 1} / ${uris.size}",
+                    color = Color.White,
+                    style = MaterialTheme.typography.labelLarge,
+                    modifier = Modifier.padding(end = 16.dp),
+                )
+            }
+            Row(
+                Modifier.align(Alignment.BottomCenter).fillMaxWidth().background(Color(0x99000000))
+                    .navigationBarsPadding().padding(vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+            ) {
+                ViewerAction(R.drawable.share_24px, "Share") { share(current) }
+                ViewerAction(R.drawable.tune_24px, "Edit") {
                     context.startActivity(Intent(context, PhotoEditorActivity::class.java).setData(current))
-                }) { Icon(painterResource(R.drawable.tune_24px), "Edit", tint = Color.White) }
-                IconButton(onClick = { share(current) }) {
-                    Icon(painterResource(R.drawable.share_24px), "Share", tint = Color.White)
                 }
+                ViewerAction(R.drawable.info_24px, "Details") { showInfo = true }
                 if (Build.VERSION.SDK_INT >= 30 && current.authority == MediaStore.AUTHORITY) {
-                    IconButton(onClick = {
+                    ViewerAction(R.drawable.delete_24px, "Delete") {
                         val sender = MediaStore.createDeleteRequest(context.contentResolver, listOf(current)).intentSender
                         deleteLauncher.launch(IntentSenderRequest.Builder(sender).build())
-                    }) { Icon(painterResource(R.drawable.delete_24px), "Delete", tint = Color.White) }
+                    }
                 }
             }
         }
@@ -175,6 +184,17 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
                 }
             },
         )
+    }
+}
+
+@Composable
+private fun ViewerAction(icon: Int, label: String, onClick: () -> Unit) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.clickable(onClick = onClick).padding(horizontal = 16.dp, vertical = 4.dp),
+    ) {
+        Icon(painterResource(icon), contentDescription = label, tint = Color.White)
+        Text(label, color = Color.White, style = MaterialTheme.typography.labelSmall)
     }
 }
 
