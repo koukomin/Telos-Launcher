@@ -69,6 +69,8 @@ internal class CallLogRepositoryImpl(
                 CallLog.Calls.DURATION,
                 CallLog.Calls.CACHED_PHOTO_URI,
                 CallLog.Calls.PHONE_ACCOUNT_ID,
+                CallLog.Calls.CACHED_NUMBER_TYPE,
+                CallLog.Calls.CACHED_NUMBER_LABEL,
             )
 
             val cursor = context.contentResolver.query(
@@ -90,6 +92,8 @@ internal class CallLogRepositoryImpl(
                 val durationCol = c.getColumnIndex(CallLog.Calls.DURATION)
                 val photoCol = c.getColumnIndex(CallLog.Calls.CACHED_PHOTO_URI)
                 val simCol = c.getColumnIndex(CallLog.Calls.PHONE_ACCOUNT_ID)
+                val numTypeCol = c.getColumnIndex(CallLog.Calls.CACHED_NUMBER_TYPE)
+                val numLabelCol = c.getColumnIndex(CallLog.Calls.CACHED_NUMBER_LABEL)
                 
                 if (idCol < 0 || numberCol < 0) return@withContext emptyList()
 
@@ -114,6 +118,13 @@ internal class CallLogRepositoryImpl(
                             durationSeconds = c.getLong(durationCol),
                             photoUri = if (photoCol >= 0) c.getString(photoCol) else null,
                             simAccountId = if (simCol >= 0) c.getString(simCol)?.takeIf { it.isNotBlank() } else null,
+                            numberLabel = if (numTypeCol >= 0 && c.getInt(numTypeCol) > 0) {
+                                android.provider.ContactsContract.CommonDataKinds.Phone.getTypeLabel(
+                                    context.resources,
+                                    c.getInt(numTypeCol),
+                                    if (numLabelCol >= 0) c.getString(numLabelCol) else null,
+                                ).toString()
+                            } else null,
                             simLabel = if (simCol >= 0) c.getString(simCol)?.takeLast(4)?.takeIf { it.isNotBlank() } else null,
                         )
                     )

@@ -79,6 +79,7 @@ fun CommsDashboardScreen(initialTab: String = "recents", initialNumber: String =
     var selectedTab by remember(initialTab) { mutableStateOf(defaultTab) }
     var searchQuery by remember { mutableStateOf("") }
     var menuOpen by remember { mutableStateOf(false) }
+    var showFilters by remember { mutableStateOf(false) }
     val commsSettings: CommsSettings = koinInject()
     val autoOpenDialpad by commsSettings.autoOpenDialpad.collectAsStateWithLifecycle(false)
     val phoneAppLock by commsSettings.phoneAppLock.collectAsStateWithLifecycle(false)
@@ -175,6 +176,18 @@ fun CommsDashboardScreen(initialTab: String = "recents", initialNumber: String =
                         leadingIcon = {
                             Icon(painterResource(R.drawable.search_24px), contentDescription = null)
                         },
+                        trailingIcon = if (selectedTab == CommsTab.Recents) {
+                            {
+                                IconButton(onClick = { showFilters = !showFilters }) {
+                                    Icon(
+                                        painterResource(R.drawable.filter_alt_24px),
+                                        contentDescription = "Filter",
+                                        tint = if (showFilters) MaterialTheme.colorScheme.primary
+                                        else MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                            }
+                        } else null,
                         singleLine = true,
                         shape = RoundedCornerShape(14.dp),
                         colors = TextFieldDefaults.colors(
@@ -230,7 +243,7 @@ fun CommsDashboardScreen(initialTab: String = "recents", initialNumber: String =
                     showLocalSearch = false,
                     showAddFab = false,
                 )
-                CommsTab.Recents -> RecentsScreen(searchQuery = searchQuery)
+                CommsTab.Recents -> RecentsScreen(searchQuery = searchQuery, showFilters = showFilters)
                 CommsTab.Contacts -> ContactsScreen(
                     searchQuery = searchQuery,
                     showLocalSearch = false,

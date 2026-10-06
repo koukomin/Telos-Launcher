@@ -19,4 +19,5 @@ data class CallLogEntry(
     val photoUri: String? = null,
     val simLabel: String? = null,
     val simAccountId: String? = null,
+    val numberLabel: String? = null,
 )

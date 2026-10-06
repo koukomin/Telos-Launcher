@@ -35,6 +35,8 @@ plugin SDK for third-party search/weather/calendar providers. See the
 - Contacts and favorites with A-Z index, contact groups, duplicate finder, vCard import and export,
   QR code sharing, per-contact default number and default SIM
 - Dual-SIM routing: per-call SIM choice, per-number default SIM, last-used SIM
+- SIM badges in call history with configurable colors for SIM 1 and SIM 2, number type labels
+  (Mobile, Home, Work), favorites toggle on the contact page, filters shown on demand
 - Outgoing caller ID masking (CLIR) with emergency-number bypass
 - Offline call screening: block hidden, unknown or international numbers and a personal block list
 - Call recording with Shizuku, root or microphone backends, quality presets, auto-record and

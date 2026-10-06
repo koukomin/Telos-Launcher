@@ -70,6 +70,8 @@ fun CommsSettingsScreen() {
     val autoOpenDialpad by viewModel.autoOpenDialpad.collectAsStateWithLifecycle()
     val rejectSmsTemplate by viewModel.rejectSmsTemplate.collectAsStateWithLifecycle()
     val secureCallScreen by viewModel.secureCallScreen.collectAsStateWithLifecycle()
+    val sim1Color by viewModel.sim1Color.collectAsStateWithLifecycle()
+    val sim2Color by viewModel.sim2Color.collectAsStateWithLifecycle()
     val answerStyle by viewModel.answerStyle.collectAsStateWithLifecycle()
     val recordingAutoDeleteDays by viewModel.recordingAutoDeleteDays.collectAsStateWithLifecycle()
     val pocketMode by viewModel.pocketMode.collectAsStateWithLifecycle()
@@ -221,6 +223,24 @@ fun CommsSettingsScreen() {
                     ),
                     value = answerStyle,
                     onValueChanged = { viewModel.setAnswerStyle(it) }
+                )
+                ListPreference(
+                    title = "SIM 1 color",
+                    items = listOf(
+                        "Green" to "green", "Blue" to "blue", "Orange" to "orange", "Red" to "red",
+                        "Purple" to "purple", "Pink" to "pink", "Teal" to "teal",
+                    ),
+                    value = sim1Color,
+                    onValueChanged = { viewModel.setSim1Color(it) }
+                )
+                ListPreference(
+                    title = "SIM 2 color",
+                    items = listOf(
+                        "Green" to "green", "Blue" to "blue", "Orange" to "orange", "Red" to "red",
+                        "Purple" to "purple", "Pink" to "pink", "Teal" to "teal",
+                    ),
+                    value = sim2Color,
+                    onValueChanged = { viewModel.setSim2Color(it) }
                 )
                 SwitchPreference(
                     title = "Secure call screen",

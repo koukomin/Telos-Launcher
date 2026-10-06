@@ -372,6 +372,17 @@ class CommsSettings internal constructor(
         }
     }
 
+    val sim1Color
+        get() = dataStore.data.map { it.comms.sim1Color }
+    fun setSim1Color(color: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(sim1Color = color)) }
+    }
+    val sim2Color
+        get() = dataStore.data.map { it.comms.sim2Color }
+    fun setSim2Color(color: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(sim2Color = color)) }
+    }
+
     val answerStyle
         get() = dataStore.data.map { it.comms.answerStyle }
     fun setAnswerStyle(style: String) {

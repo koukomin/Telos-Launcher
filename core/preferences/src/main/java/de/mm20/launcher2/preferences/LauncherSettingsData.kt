@@ -1202,6 +1202,8 @@ data class CommsGroup(
     val pocketMode: Boolean = false,
     /** buttons | swipe */
     val answerStyle: String = "buttons",
+    val sim1Color: String = "green",
+    val sim2Color: String = "blue",
     val remotePhonebookEnabled: Boolean = false,
     val remotePhonebookHost: String = "fritz.box",
     val remotePhonebookUser: String = "",

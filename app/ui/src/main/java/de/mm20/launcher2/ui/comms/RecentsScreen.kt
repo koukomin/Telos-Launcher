@@ -71,7 +71,7 @@ private enum class RecentsFilter {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun RecentsScreen(searchQuery: String = "") {
+fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
     val viewModel: RecentsViewModel = viewModel()
     val recents by viewModel.recents.collectAsStateWithLifecycle()
     val hasCallLogPermission by viewModel.hasCallLogPermission.collectAsStateWithLifecycle()
@@ -83,6 +83,10 @@ fun RecentsScreen(searchQuery: String = "") {
     val tapToCall by viewModel.tapToCall.collectAsStateWithLifecycle()
     val confirmBeforeCall by viewModel.confirmBeforeCall.collectAsStateWithLifecycle()
     val showNumbers by viewModel.showNumbers.collectAsStateWithLifecycle()
+    val commsSettings: de.mm20.launcher2.preferences.comms.CommsSettings = org.koin.compose.koinInject()
+    val sim1Key by commsSettings.sim1Color.collectAsStateWithLifecycle("green")
+    val sim2Key by commsSettings.sim2Color.collectAsStateWithLifecycle("blue")
+    val sims = remember { de.mm20.launcher2.comms.telephony.TelosDialer.callCapableSims(context) }
 
     if (!hasCallLogPermission) {
         Box(Modifier.fillMaxSize()) {
@@ -134,7 +138,7 @@ fun RecentsScreen(searchQuery: String = "") {
     val collapsed = remember(filtered) { collapseRecents(filtered) }
 
     Column(Modifier.fillMaxSize()) {
-        Row(
+        if (showFilters || filter != RecentsFilter.All) Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
             horizontalArrangement = Arrangement.End,
         ) {
@@ -142,7 +146,7 @@ fun RecentsScreen(searchQuery: String = "") {
                 Icon(painterResource(R.drawable.share_24px), contentDescription = "Export")
             }
         }
-        LazyRow(
+        if (showFilters || filter != RecentsFilter.All) LazyRow(
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
@@ -219,6 +223,12 @@ fun RecentsScreen(searchQuery: String = "") {
                         call = group.call,
                         count = group.count,
                         showNumber = showNumbers,
+                        simSlot = if (sims.size >= 2) {
+                            sims.indexOfFirst { it.handle.id == group.call.simAccountId }.takeIf { it >= 0 }
+                        } else null,
+                        simColor = simAccentColor(
+                            if (sims.indexOfFirst { it.handle.id == group.call.simAccountId } == 1) sim2Key else sim1Key
+                        ),
                         onCall = {
                             if (!tapToCall) {
                                 backStack.add(ContactDetailsRoute(phoneNumber = group.call.phoneNumber))
@@ -283,6 +293,8 @@ internal fun RecentCallRow(
     call: CallLogEntry,
     count: Int = 1,
     showNumber: Boolean = true,
+    simSlot: Int? = null,
+    simColor: Color = Color.Unspecified,
     onCall: () -> Unit,
     onSms: () -> Unit,
     onDelete: () -> Unit,
@@ -386,10 +398,14 @@ internal fun RecentCallRow(
                             tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                             modifier = Modifier.size(16.dp),
                         )
+                        if (simSlot != null) {
+                            Spacer(Modifier.width(6.dp))
+                            SimBadge(slot = simSlot, color = simColor)
+                        }
                         val secondary = listOfNotNull(
-                            call.simLabel?.let { "SIM $it" },
                             call.durationSeconds.takeIf { it > 0 }?.let { formatCallDuration(it) },
-                            call.phoneNumber.takeIf { showNumber && call.displayName != null },
+                            call.numberLabel
+                                ?: call.phoneNumber.takeIf { showNumber && call.displayName != null },
                         ).joinToString("  ")
                         if (secondary.isNotEmpty()) {
                             Spacer(Modifier.width(8.dp))

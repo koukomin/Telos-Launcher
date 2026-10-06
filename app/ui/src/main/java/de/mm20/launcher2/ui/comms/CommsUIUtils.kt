@@ -43,6 +43,34 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+internal fun simAccentColor(key: String): Color = when (key) {
+    "blue" -> Color(0xFF3A76F0)
+    "orange" -> Color(0xFFFF9500)
+    "red" -> Color(0xFFFF3B30)
+    "purple" -> Color(0xFFAF52DE)
+    "pink" -> Color(0xFFFF2D55)
+    "teal" -> Color(0xFF30B0C7)
+    else -> Color(0xFF1AB467)
+}
+
+@Composable
+internal fun SimBadge(slot: Int, color: Color, modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .size(16.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .background(color),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = (slot + 1).toString(),
+            color = Color.White,
+            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.labelSmall,
+        )
+    }
+}
+
 internal val CommsCardShape = RoundedCornerShape(24.dp)
 internal val CommsRowShape = RoundedCornerShape(20.dp)
 internal val RdGreenCall = Color(0xFF34C759)

@@ -173,6 +173,23 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    fun setStarred(context: Context, contactId: Long, starred: Boolean) {
+        runCatching {
+            val values = android.content.ContentValues().apply {
+                put(android.provider.ContactsContract.Contacts.STARRED, if (starred) 1 else 0)
+            }
+            context.contentResolver.update(
+                android.content.ContentUris.withAppendedId(
+                    android.provider.ContactsContract.Contacts.CONTENT_URI,
+                    contactId,
+                ),
+                values,
+                null,
+                null,
+            )
+        }
+    }
+
     fun setHidden(number: String, hidden: Boolean) {
         commsSettings.setHiddenNumber(number, hidden)
     }
@@ -231,6 +248,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
     var confirmDelete by remember { mutableStateOf(false) }
     var blockedOverride by remember { mutableStateOf<Boolean?>(null) }
     var editingNote by remember { mutableStateOf(false) }
+    var starOverride by remember { mutableStateOf<Boolean?>(null) }
 
     val contact = ui.contact
     val blocked = blockedOverride ?: ui.blocked
@@ -257,6 +275,24 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     )
                 }
                 Spacer(Modifier.weight(1f))
+                val starred = starOverride ?: (contact?.starred == true)
+                IconButton(
+                    onClick = {
+                        contact?.let {
+                            starOverride = !starred
+                            viewModel.setStarred(context, it.id, !starred)
+                        }
+                    },
+                    enabled = contact != null,
+                ) {
+                    Icon(
+                        painterResource(
+                            if (starred) R.drawable.star_24px_filled else R.drawable.star_24px_outlined
+                        ),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                    )
+                }
                 IconButton(
                     onClick = { contact?.let { viewModel.share(context, it) } },
                     enabled = contact != null,

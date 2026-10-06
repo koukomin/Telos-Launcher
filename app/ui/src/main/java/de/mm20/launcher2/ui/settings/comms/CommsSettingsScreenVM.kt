@@ -149,6 +149,10 @@ class CommsSettingsScreenVM : ViewModel(), KoinComponent {
 
     val secureCallScreen = commsSettings.secureCallScreen.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
     fun setSecureCallScreen(enabled: Boolean) = commsSettings.setSecureCallScreen(enabled)
+    val sim1Color = commsSettings.sim1Color.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "green")
+    fun setSim1Color(color: String) = commsSettings.setSim1Color(color)
+    val sim2Color = commsSettings.sim2Color.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "blue")
+    fun setSim2Color(color: String) = commsSettings.setSim2Color(color)
     val answerStyle = commsSettings.answerStyle.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "buttons")
     fun setAnswerStyle(style: String) = commsSettings.setAnswerStyle(style)
     val recordingAutoDeleteDays = commsSettings.recordingAutoDeleteDays.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
