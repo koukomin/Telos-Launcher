@@ -15,6 +15,9 @@ concurrency:
   group: build-sip-libs-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+
 jobs:
   libs:
     runs-on: ubuntu-latest
@@ -37,3 +40,10 @@ jobs:
         with:
           name: sip-native-distribution
           path: sip-native/distribution
+      - name: Publish libraries as release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tar -czf "$RUNNER_TEMP/sip-libs.tar.gz" -C sip-native distribution
+          gh release view sip-libs >/dev/null 2>&1 || gh release create sip-libs --prerelease --title "SIP native libraries" --notes "Static baresip/re/openssl/opus libraries used by the app build. Updated by the Build SIP native libraries workflow." --target "$GITHUB_SHA"
+          gh release upload sip-libs "$RUNNER_TEMP/sip-libs.tar.gz" --clobber
