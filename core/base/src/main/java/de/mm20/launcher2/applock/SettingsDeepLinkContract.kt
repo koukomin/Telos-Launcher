@@ -14,5 +14,6 @@ object SettingsDeepLinkContract {
     const val EXTRA_COMMS_TAB = "de.mm20.launcher2.settings.COMMS_TAB"
     const val EXTRA_DIAL_NUMBER = "de.mm20.launcher2.settings.DIAL_NUMBER"
     const val ROUTE_RADIO = "settings/radio"
+    const val ROUTE_MUSIC = "settings/music"
     // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
 }

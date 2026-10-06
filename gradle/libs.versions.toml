@@ -54,8 +54,10 @@ shizuku = "13.1.5"
 dhizuku = "2.5.3"
 
 sqlcipher = "4.5.4"
+taglib = "1.0.6"
 
 [libraries]
+taglib = { group = "io.github.kyant0", name = "taglib", version.ref = "taglib" }
 sqlcipher-android = { group = "net.zetetic", name = "android-database-sqlcipher", version.ref = "sqlcipher" }
 mustache-compiler = { module = "com.github.spullara.mustache.java:compiler", version.ref = "mustache" }
 

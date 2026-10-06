@@ -62,6 +62,14 @@ plugin SDK for third-party search/weather/calendar providers. See the
 - **Remote phonebook:** caller names from an AVM FRITZ!Box telephone book (TR-064), cached locally
   and used for incoming calls and recents; the password is kept in the Android Keystore
 
+**Media (`:services:comms`, `:app:ui`)**
+
+- Telos Music: local music library by songs, albums and artists, accent-insensitive search (also for
+  Greek), play queue with shuffle and repeat, notification and lock screen controls, synchronized
+  lyrics from [LRCLIB](https://lrclib.net), tag editor for MP3, FLAC, M4A and OGG files (title, artist,
+  album, genre, year, track number, cover art), sleep timer
+- Telos Radio: see the radio entry above
+
 **Apps and system (`:services:freeze`, `:services:app-management`, `:services:store`)**
 
 - Smart Freeze: freeze or hide apps through Shizuku, Dhizuku or device owner, with protection for
@@ -124,6 +132,8 @@ adapted, the original license is respected.
 | [Radio-Browser](https://www.radio-browser.info/) | public API | Radio station directory |
 | [Shizuku](https://github.com/RikkaApps/Shizuku) and [Dhizuku](https://github.com/iamr0s/Dhizuku) | see project | Privileged operations (freeze, recording, install, network mode) |
 | [baresip](https://github.com/baresip/baresip) and [baresip-studio](https://github.com/juha-h/baresip-studio) | BSD-3-Clause | Planned SIP engine |
+| [LRCLIB](https://lrclib.net) | open API | Song lyrics for Telos Music |
+| [TagLib wrapper (Kyant0/taglib)](https://github.com/Kyant0/taglib) | Apache-2.0 | Reading and writing audio tags; it bundles [TagLib](https://taglib.org/) (LGPL-2.1 / MPL-1.1 upstream) |
 | AVM FRITZ!Box [TR-064](https://avm.de/service/schnittstellen/) | specification | Remote phonebook |
 
 The copyright notices of these projects are kept in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

@@ -55,6 +55,7 @@ dependencies {
     implementation(project(":core:preferences"))
     implementation(libs.androidx.biometric)
     implementation(libs.shizuku.api)
+    implementation(libs.taglib)
     
     // === TELOS_PENDING_REVIEW_START: sms_and_radio_engine ===
     implementation(libs.androidx.media3.exoplayer)
