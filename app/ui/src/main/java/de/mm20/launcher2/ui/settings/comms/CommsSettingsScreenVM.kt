@@ -147,6 +147,10 @@ class CommsSettingsScreenVM : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "I'll call you back")
     fun setRejectSmsTemplate(text: String) = commsSettings.setRejectSmsTemplate(text)
 
+    val answerStyle = commsSettings.answerStyle.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "buttons")
+    fun setAnswerStyle(style: String) = commsSettings.setAnswerStyle(style)
+    val recordingAutoDeleteDays = commsSettings.recordingAutoDeleteDays.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
+    fun setRecordingAutoDeleteDays(days: Int) = commsSettings.setRecordingAutoDeleteDays(days)
     val pocketMode = commsSettings.pocketMode.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
     fun setPocketMode(enabled: Boolean) = commsSettings.setPocketMode(enabled)
     val proximitySpeaker = commsSettings.proximitySpeaker.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)

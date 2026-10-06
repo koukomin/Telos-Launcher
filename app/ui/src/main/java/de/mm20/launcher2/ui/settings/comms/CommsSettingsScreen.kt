@@ -69,6 +69,8 @@ fun CommsSettingsScreen() {
     val autoRedial by viewModel.autoRedial.collectAsStateWithLifecycle()
     val autoOpenDialpad by viewModel.autoOpenDialpad.collectAsStateWithLifecycle()
     val rejectSmsTemplate by viewModel.rejectSmsTemplate.collectAsStateWithLifecycle()
+    val answerStyle by viewModel.answerStyle.collectAsStateWithLifecycle()
+    val recordingAutoDeleteDays by viewModel.recordingAutoDeleteDays.collectAsStateWithLifecycle()
     val pocketMode by viewModel.pocketMode.collectAsStateWithLifecycle()
     val proximitySpeaker by viewModel.proximitySpeaker.collectAsStateWithLifecycle()
     val showNumbersInRecents by viewModel.showNumbersInRecents.collectAsStateWithLifecycle()
@@ -204,6 +206,20 @@ fun CommsSettingsScreen() {
                     ),
                     value = t9Alphabet,
                     onValueChanged = { viewModel.setT9Alphabet(it) }
+                )
+            }
+        }
+
+        item {
+            PreferenceCategory(title = "Incoming call") {
+                ListPreference(
+                    title = "Answer style",
+                    items = listOf(
+                        "Buttons" to "buttons",
+                        "Swipe" to "swipe",
+                    ),
+                    value = answerStyle,
+                    onValueChanged = { viewModel.setAnswerStyle(it) }
                 )
             }
         }
@@ -502,6 +518,17 @@ fun CommsSettingsScreen() {
                         if (enabled) micPermission.launch(Manifest.permission.RECORD_AUDIO)
                         else viewModel.setAutoRecordCalls(false)
                     }
+                )
+                ListPreference(
+                    title = "Delete old recordings",
+                    items = listOf(
+                        "Never" to 0,
+                        "After 7 days" to 7,
+                        "After 30 days" to 30,
+                        "After 90 days" to 90,
+                    ),
+                    value = recordingAutoDeleteDays,
+                    onValueChanged = { viewModel.setRecordingAutoDeleteDays(it) }
                 )
                 ListPreference(
                     title = "Recording backend",

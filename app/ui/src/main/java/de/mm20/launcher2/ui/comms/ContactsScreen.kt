@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -181,7 +182,7 @@ fun ContactsScreen(
                 }
             }
 
-            if (query.isBlank() && !starredFilter) {
+            if (showLocalSearch && query.isBlank() && !starredFilter) {
                 val starred = remember(contacts) { contacts.filter { it.starred } }
                 if (starred.isNotEmpty()) {
                     LazyRow(
@@ -210,7 +211,7 @@ fun ContactsScreen(
                     }
                 }
             }
-            Row(
+            if (showLocalSearch) Row(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
                 horizontalArrangement = Arrangement.End,
             ) {
@@ -277,8 +278,8 @@ fun ContactsScreen(
                                         color = MaterialTheme.colorScheme.primary,
                                         modifier = Modifier
                                             .fillMaxWidth()
-                                            .background(MaterialTheme.colorScheme.surface)
-                                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                                            .background(MaterialTheme.colorScheme.background)
+                                            .padding(horizontal = 16.dp, vertical = 6.dp),
                                     )
                                 }
                                 is ContactListItem.Person -> {
@@ -460,11 +461,10 @@ private fun ContactRow(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 12.dp, vertical = 3.dp)
-                .clip(CommsRowShape)
-                .background(MaterialTheme.colorScheme.surfaceContainerLow)
+                .background(MaterialTheme.colorScheme.background)
                 .combinedClickable(onClick = onOpen, onLongClick = onLongPress)
-                .padding(start = 12.dp, end = 4.dp, top = 10.dp, bottom = 10.dp),
+                .heightIn(min = 64.dp)
+                .padding(start = 16.dp, end = 4.dp, top = 8.dp, bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             CommsAvatar(
@@ -472,7 +472,7 @@ private fun ContactRow(
                 photoUri = contact.photoUri,
                 size = 48.dp,
             )
-            Spacer(Modifier.width(14.dp))
+            Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
@@ -481,8 +481,7 @@ private fun ContactRow(
                             query,
                             MaterialTheme.colorScheme.primary,
                         ),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold,
+                        style = MaterialTheme.typography.bodyLarge,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.weight(1f, fill = false),
@@ -501,8 +500,8 @@ private fun ContactRow(
                 }
                 Text(
                     text = contact.phoneNumbers.firstOrNull().orEmpty(),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )

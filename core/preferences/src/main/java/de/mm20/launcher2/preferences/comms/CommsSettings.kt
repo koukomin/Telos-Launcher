@@ -351,6 +351,18 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(batterySaverLte = enabled)) }
     }
 
+    val answerStyle
+        get() = dataStore.data.map { it.comms.answerStyle }
+    fun setAnswerStyle(style: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(answerStyle = style)) }
+    }
+
+    val recordingAutoDeleteDays
+        get() = dataStore.data.map { it.comms.recordingAutoDeleteDays }
+    fun setRecordingAutoDeleteDays(days: Int) {
+        dataStore.update { it.copy(comms = it.comms.copy(recordingAutoDeleteDays = days)) }
+    }
+
     val snapshot
         get() = dataStore.data.map { it.comms }
 

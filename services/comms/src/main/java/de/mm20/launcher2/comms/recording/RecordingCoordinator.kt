@@ -33,12 +33,23 @@ object RecordingCoordinator : KoinComponent {
     private val _backend = MutableStateFlow("none")
     val activeBackend = _backend.asStateFlow()
 
+    /** Deletes recordings older than the configured retention (0 = keep forever). */
+    suspend fun purgeOld(context: Context) {
+        val days = commsSettings.recordingAutoDeleteDays.first()
+        if (days <= 0) return
+        val cutoff = System.currentTimeMillis() - days * 24L * 60 * 60 * 1000
+        for (rec in CallAudioRecorder.list(context)) {
+            if (rec.file.lastModified() in 1 until cutoff) CallAudioRecorder.delete(rec.file)
+        }
+    }
+
     suspend fun start(
         context: Context,
         phoneNumber: String,
         quality: RecordingQuality,
     ): Boolean {
         if (CallAudioRecorder.isRecording.value) return true
+        purgeOld(context)
         val pref = commsSettings.recordingBackend.first()
         val order = when (pref) {
             "unprivileged" -> listOf("unprivileged")
