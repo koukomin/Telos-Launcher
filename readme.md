@@ -59,6 +59,7 @@ plugin SDK for third-party search/weather/calendar providers. See the
   playlist links resolved to the real stream with fallback streams; current track from the stream
   metadata with a track history; sleep timer; station discovery through
   [Radio-Browser](https://www.radio-browser.info/) with mirror fallback
+- Settings page in the Right Dialer style (accent section captions, rounded cards)
 - Cellular network mode switcher with Quick Settings tile and screen-off / battery-saver automation
 - Home screen widgets (recents, direct call) and an encrypted backup of all phone settings
 - **Remote phonebook:** caller names from an AVM FRITZ!Box telephone book (TR-064), cached locally

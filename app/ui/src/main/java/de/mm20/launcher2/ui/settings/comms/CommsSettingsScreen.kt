@@ -22,7 +22,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
-import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import android.Manifest
 import de.mm20.launcher2.ui.comms.CallRecordingsRoute
 import de.mm20.launcher2.ui.comms.CallerNotesRoute
@@ -197,7 +196,7 @@ fun CommsSettingsScreen() {
         )
     }
 
-    PreferenceScreen(title = { Text("Communications Settings") }) {
+    PreferenceScreen(title = { Text("Settings") }) {
         item {
             PreferenceCategory(title = "T9 Search Settings") {
                 ListPreference(

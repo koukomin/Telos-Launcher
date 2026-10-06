@@ -19,7 +19,6 @@ import de.mm20.launcher2.comms.remote.RemotePhonebook
 import de.mm20.launcher2.comms.remote.SecretBox
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.ui.component.preferences.Preference
-import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
