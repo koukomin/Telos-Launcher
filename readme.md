@@ -52,7 +52,11 @@ plugin SDK for third-party search/weather/calendar providers. See the
 - Auto redial, fake incoming calls (scheduled), missed-call and post-call popups, Dynamic Island
   call state
 - SMS engine: quick replies, scheduled SMS, routing of hidden-contact messages to the vault
-- Radio player with station discovery through [Radio-Browser](https://www.radio-browser.info/)
+- Radio (behaviour and logic taken from [Transistor](https://codeberg.org/y20k/transistor)): station
+  collection with add by address, rename and remove; M3U / PLS import, M3U export and JSON backup;
+  playlist links resolved to the real stream with fallback streams; current track from the stream
+  metadata with a track history; sleep timer; station discovery through
+  [Radio-Browser](https://www.radio-browser.info/) with mirror fallback
 - Cellular network mode switcher with Quick Settings tile and screen-off / battery-saver automation
 - Home screen widgets (recents, direct call) and an encrypted backup of all phone settings
 - **Remote phonebook:** caller names from an AVM FRITZ!Box telephone book (TR-064), cached locally

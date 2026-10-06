@@ -31,6 +31,15 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
     val isPlaying by viewModel.isPlaying.collectAsStateWithLifecycle()
     val stationName by viewModel.stationName.collectAsStateWithLifecycle()
     val nowPlaying by viewModel.nowPlayingMetadata.collectAsStateWithLifecycle()
+    val error by viewModel.error.collectAsStateWithLifecycle()
+    val sleepEndsAt by viewModel.sleepEndsAt.collectAsStateWithLifecycle()
+    var now by remember { mutableStateOf(System.currentTimeMillis()) }
+    LaunchedEffect(sleepEndsAt) {
+        while (sleepEndsAt > 0L) {
+            now = System.currentTimeMillis()
+            kotlinx.coroutines.delay(1000)
+        }
+    }
 
     LaunchedEffect(Unit) {
         viewModel.initialize(context)
@@ -85,10 +94,15 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
+                    val sleepSuffix = if (sleepEndsAt > 0L) {
+                        val minutes = ((sleepEndsAt - now).coerceAtLeast(0L) / 60_000L) + 1
+                        "  ·  Sleep in $minutes min"
+                    } else ""
                     Text(
-                        text = nowPlaying.ifEmpty { "Streaming live..." },
+                        text = (error ?: nowPlaying.ifEmpty { "Streaming live..." }) + sleepSuffix,
                         style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = if (error != null) MaterialTheme.colorScheme.error
+                        else MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
