@@ -211,6 +211,7 @@ object TelosCallSession {
         val state = stateOf(current)
         val number = current.details.handle?.schemeSpecificPart.orEmpty()
         val name = current.details.callerDisplayName?.ifBlank { null }
+            ?: de.mm20.launcher2.comms.remote.RemotePhonebook.lookup(number)
         val wasActive = _ui.value.active
         val connectedAt = when {
             state == Call.STATE_ACTIVE && _ui.value.connectedAtEpochMs != null -> _ui.value.connectedAtEpochMs
@@ -232,7 +233,8 @@ object TelosCallSession {
             photoUri = _ui.value.photoUri,
             connectedAtEpochMs = connectedAt,
             secondNumber = other?.details?.handle?.schemeSpecificPart.orEmpty(),
-            secondName = other?.details?.callerDisplayName?.ifBlank { null },
+            secondName = other?.details?.callerDisplayName?.ifBlank { null }
+                ?: other?.details?.handle?.schemeSpecificPart?.let { de.mm20.launcher2.comms.remote.RemotePhonebook.lookup(it) },
             canMerge = current.conferenceableCalls.isNotEmpty() ||
                 (current.details.callCapabilities and Call.Details.CAPABILITY_MERGE_CONFERENCE) != 0,
             canSwap = other != null,

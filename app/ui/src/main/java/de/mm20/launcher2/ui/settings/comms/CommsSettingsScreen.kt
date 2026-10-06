@@ -22,7 +22,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
-import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import android.Manifest
 import de.mm20.launcher2.ui.comms.CallRecordingsRoute
 import de.mm20.launcher2.ui.comms.CallerNotesRoute
@@ -69,6 +68,11 @@ fun CommsSettingsScreen() {
     val autoRedial by viewModel.autoRedial.collectAsStateWithLifecycle()
     val autoOpenDialpad by viewModel.autoOpenDialpad.collectAsStateWithLifecycle()
     val rejectSmsTemplate by viewModel.rejectSmsTemplate.collectAsStateWithLifecycle()
+    val secureCallScreen by viewModel.secureCallScreen.collectAsStateWithLifecycle()
+    val sim1Color by viewModel.sim1Color.collectAsStateWithLifecycle()
+    val sim2Color by viewModel.sim2Color.collectAsStateWithLifecycle()
+    val answerStyle by viewModel.answerStyle.collectAsStateWithLifecycle()
+    val recordingAutoDeleteDays by viewModel.recordingAutoDeleteDays.collectAsStateWithLifecycle()
     val pocketMode by viewModel.pocketMode.collectAsStateWithLifecycle()
     val proximitySpeaker by viewModel.proximitySpeaker.collectAsStateWithLifecycle()
     val showNumbersInRecents by viewModel.showNumbersInRecents.collectAsStateWithLifecycle()
@@ -192,7 +196,7 @@ fun CommsSettingsScreen() {
         )
     }
 
-    PreferenceScreen(title = { Text("Communications Settings") }) {
+    PreferenceScreen(title = { Text("Settings") }) {
         item {
             PreferenceCategory(title = "T9 Search Settings") {
                 ListPreference(
@@ -204,6 +208,44 @@ fun CommsSettingsScreen() {
                     ),
                     value = t9Alphabet,
                     onValueChanged = { viewModel.setT9Alphabet(it) }
+                )
+            }
+        }
+
+        item {
+            PreferenceCategory(title = "Incoming call") {
+                ListPreference(
+                    title = "Answer style",
+                    items = listOf(
+                        "Buttons" to "buttons",
+                        "Swipe" to "swipe",
+                    ),
+                    value = answerStyle,
+                    onValueChanged = { viewModel.setAnswerStyle(it) }
+                )
+                ListPreference(
+                    title = "SIM 1 color",
+                    items = listOf(
+                        "Green" to "green", "Blue" to "blue", "Orange" to "orange", "Red" to "red",
+                        "Purple" to "purple", "Pink" to "pink", "Teal" to "teal",
+                    ),
+                    value = sim1Color,
+                    onValueChanged = { viewModel.setSim1Color(it) }
+                )
+                ListPreference(
+                    title = "SIM 2 color",
+                    items = listOf(
+                        "Green" to "green", "Blue" to "blue", "Orange" to "orange", "Red" to "red",
+                        "Purple" to "purple", "Pink" to "pink", "Teal" to "teal",
+                    ),
+                    value = sim2Color,
+                    onValueChanged = { viewModel.setSim2Color(it) }
+                )
+                SwitchPreference(
+                    title = "Secure call screen",
+                    summary = "Block screenshots and hide the call screen in the recent apps overview",
+                    value = secureCallScreen,
+                    onValueChanged = { viewModel.setSecureCallScreen(it) }
                 )
             }
         }
@@ -320,6 +362,10 @@ fun CommsSettingsScreen() {
                     onClick = { backStack.add(CallerNotesRoute) },
                 )
             }
+        }
+
+        item {
+            RemotePhonebookSettings()
         }
 
         item {
@@ -502,6 +548,17 @@ fun CommsSettingsScreen() {
                         if (enabled) micPermission.launch(Manifest.permission.RECORD_AUDIO)
                         else viewModel.setAutoRecordCalls(false)
                     }
+                )
+                ListPreference(
+                    title = "Delete old recordings",
+                    items = listOf(
+                        "Never" to 0,
+                        "After 7 days" to 7,
+                        "After 30 days" to 30,
+                        "After 90 days" to 90,
+                    ),
+                    value = recordingAutoDeleteDays,
+                    onValueChanged = { viewModel.setRecordingAutoDeleteDays(it) }
                 )
                 ListPreference(
                     title = "Recording backend",

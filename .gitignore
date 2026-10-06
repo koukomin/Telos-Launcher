@@ -299,3 +299,7 @@ fabric.properties
 .claude/settings.local.json.tmp.*
 
 .kotlin*.telos_backup
+
+# Native SIP libraries (downloaded by CI or built with sip-native/Makefile)
+sip-native/distribution/
+sip-native/*/

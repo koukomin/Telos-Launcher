@@ -61,6 +61,8 @@ object TelosDialer {
     fun withClir(number: String, enabled: Boolean, prefix: String): String {
         if (!enabled || number.isEmpty()) return number
         if (android.telephony.PhoneNumberUtils.isEmergencyNumber(number)) return number
+        // MMI / USSD / secret codes (*#06#, *21*...#) must reach the network untouched
+        if (number.startsWith("*") || number.startsWith("#")) return number
         val p = prefix.ifBlank { "#31#" }
         return if (number.startsWith(p)) number else p + number
     }

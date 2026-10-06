@@ -3,20 +3,31 @@ package de.mm20.launcher2.ui.comms
 
 import android.content.ComponentName
 import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
+import androidx.media3.common.MimeTypes
+import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
+import com.google.common.util.concurrent.MoreExecutors
+import de.mm20.launcher2.comms.model.RadioStation
 import de.mm20.launcher2.comms.radio.RadioPlayerService
+import de.mm20.launcher2.comms.radio.RadioSleepTimer
+import de.mm20.launcher2.comms.radio.StreamResolver
+import de.mm20.launcher2.comms.repository.RadioRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
-import com.google.common.util.concurrent.MoreExecutors
+import org.koin.core.component.inject
 
 class RadioViewModel : ViewModel(), KoinComponent {
+
+    private val repository: RadioRepository by inject()
 
     private var mediaController: MediaController? = null
 
@@ -26,39 +37,67 @@ class RadioViewModel : ViewModel(), KoinComponent {
     private val _stationName = MutableStateFlow("")
     val stationName: StateFlow<String> = _stationName
 
+    /** Current track announced by the stream (ICY metadata), empty when the stream sends none */
     private val _nowPlayingMetadata = MutableStateFlow("")
     val nowPlayingMetadata: StateFlow<String> = _nowPlayingMetadata
 
     private val _isVisible = MutableStateFlow(false)
     val isVisible: StateFlow<Boolean> = _isVisible
 
+    private val _error = MutableStateFlow<String?>(null)
+    val error: StateFlow<String?> = _error
+
+    val sleepEndsAt: StateFlow<Long> = RadioSleepTimer.endsAt
+
+    private var currentStation: RadioStation? = null
+    private var streamQueue: List<String> = emptyList()
+    private var streamIndex = 0
+
     fun initialize(context: Context) {
+        if (mediaController != null) return
         val sessionToken = SessionToken(context, ComponentName(context, RadioPlayerService::class.java))
         val controllerFuture = MediaController.Builder(context, sessionToken).buildAsync()
 
         controllerFuture.addListener({
-            mediaController = controllerFuture.get()
-            mediaController?.addListener(object : Player.Listener {
+            val controller = controllerFuture.get()
+            mediaController = controller
+            controller.addListener(object : Player.Listener {
                 override fun onIsPlayingChanged(isPlaying: Boolean) {
                     _isPlaying.value = isPlaying
+                    if (isPlaying) _error.value = null
                 }
 
                 override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
-                    _stationName.value = mediaItem?.mediaMetadata?.title?.toString() ?: "Unknown Station"
-                    _nowPlayingMetadata.value = mediaItem?.mediaMetadata?.subtitle?.toString() ?: ""
-                    _isVisible.value = mediaItem != null
+                    refreshMetadata()
+                }
+
+                override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
+                    refreshMetadata()
+                }
+
+                override fun onPlayerError(error: PlaybackException) {
+                    tryNextStream()
                 }
             })
-            
+
             // Sync initial state
-            mediaController?.let {
-                _isPlaying.value = it.isPlaying
-                val currentItem = it.currentMediaItem
-                _stationName.value = currentItem?.mediaMetadata?.title?.toString() ?: "Unknown Station"
-                _nowPlayingMetadata.value = currentItem?.mediaMetadata?.subtitle?.toString() ?: ""
-                _isVisible.value = currentItem != null
-            }
+            _isPlaying.value = controller.isPlaying
+            refreshMetadata()
         }, MoreExecutors.directExecutor())
+    }
+
+    /**
+     * Streams that announce the current track replace the title of the media item with it, so the
+     * station name always comes from the item and the track from the player.
+     */
+    private fun refreshMetadata() {
+        val controller = mediaController ?: return
+        val item = controller.currentMediaItem
+        val station = item?.mediaMetadata?.title?.toString().orEmpty()
+        val track = controller.mediaMetadata.title?.toString()?.trim().orEmpty()
+        _stationName.value = station.ifEmpty { "Unknown Station" }
+        _nowPlayingMetadata.value = if (track.isNotEmpty() && track != station) track else ""
+        _isVisible.value = item != null
     }
 
     fun togglePlayPause() {
@@ -73,26 +112,57 @@ class RadioViewModel : ViewModel(), KoinComponent {
     fun stop() {
         mediaController?.stop()
         _isVisible.value = false
+        RadioSleepTimer.cancel()
     }
 
+    fun setSleepTimer(minutes: Int) = RadioSleepTimer.start(minutes)
+
+    fun cancelSleepTimer() = RadioSleepTimer.cancel()
+
     // === TELOS_PENDING_REVIEW_START: radio_browser_ktor ===
-    fun playStation(station: de.mm20.launcher2.comms.model.RadioStation) {
+    fun playStation(station: RadioStation) {
+        currentStation = station
+        _error.value = null
+        viewModelScope.launch {
+            // playlist links (.pls, .m3u) are opened to find the real stream first
+            val resolved = StreamResolver.resolve(station.streamUrl)
+            streamQueue = (resolved.urls + station.alternateStreams).distinct()
+                .ifEmpty { listOf(station.streamUrl) }
+            streamIndex = 0
+            startCurrentStream()
+            runCatching { repository.countClick(station.id) }
+        }
+    }
+
+    private fun startCurrentStream() {
         val controller = mediaController ?: return
-        val metadata = androidx.media3.common.MediaMetadata.Builder()
+        val station = currentStation ?: return
+        val url = streamQueue.getOrNull(streamIndex) ?: return
+
+        val metadata = MediaMetadata.Builder()
             .setTitle(station.name)
-            .setSubtitle(station.streamUrl)
-            .setArtworkUri(android.net.Uri.parse(station.faviconUrl))
+            .setArtworkUri(station.faviconUrl.takeIf { it.isNotBlank() }?.let { Uri.parse(it) })
             .build()
-            
-        val item = MediaItem.Builder()
-            .setUri(station.streamUrl)
+
+        val builder = MediaItem.Builder()
+            .setUri(url)
             .setMediaId(station.id)
             .setMediaMetadata(metadata)
-            .build()
-            
-        controller.setMediaItem(item)
+        if (url.contains(".m3u8", ignoreCase = true)) builder.setMimeType(MimeTypes.APPLICATION_M3U8)
+
+        controller.setMediaItem(builder.build())
         controller.prepare()
         controller.play()
+    }
+
+    /** The stream failed: try the next stream of the station, or report that none works */
+    private fun tryNextStream() {
+        if (streamIndex + 1 < streamQueue.size) {
+            streamIndex++
+            startCurrentStream()
+        } else {
+            _error.value = "This station cannot be played right now"
+        }
     }
     // === TELOS_PENDING_REVIEW_END: radio_browser_ktor ===
 

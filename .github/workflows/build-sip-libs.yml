@@ -1,0 +1,49 @@
+name: Build SIP native libraries
+
+# Builds the static baresip / re / openssl / opus libraries used by the SIP module.
+# Runs only when the native build description changes, or on demand.
+on:
+  push:
+    branches:
+      - 'claude/**'
+    paths:
+      - 'sip-native/**'
+      - '.github/workflows/build-sip-libs.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: build-sip-libs-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  libs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build tools
+        run: sudo apt-get update && sudo apt-get install -y cmake make libtool m4 automake autoconf pkg-config unzip patch
+      - name: Locate Android NDK
+        run: |
+          echo "ANDROID_NDK_ROOT=${ANDROID_NDK_ROOT:-$(ls -d $ANDROID_HOME/ndk/* | sort -V | tail -n 1)}" >> "$GITHUB_ENV"
+      - name: Download sources
+        working-directory: sip-native
+        run: make download-sources
+      - name: Build libraries
+        working-directory: sip-native
+        run: make all
+      - name: Upload libraries
+        uses: actions/upload-artifact@v4
+        with:
+          name: sip-native-distribution
+          path: sip-native/distribution
+      - name: Publish libraries as release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tar -czf "$RUNNER_TEMP/sip-libs.tar.gz" -C sip-native distribution
+          gh release view sip-libs >/dev/null 2>&1 || gh release create sip-libs --prerelease --title "SIP native libraries" --notes "Static baresip/re/openssl/opus libraries used by the app build. Updated by the Build SIP native libraries workflow." --target "$GITHUB_SHA"
+          gh release upload sip-libs "$RUNNER_TEMP/sip-libs.tar.gz" --clobber

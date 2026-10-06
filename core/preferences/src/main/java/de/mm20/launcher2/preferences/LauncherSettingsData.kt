@@ -1200,6 +1200,19 @@ data class CommsGroup(
     val rejectSmsTemplate: String = "I'll call you back",
     val lastUsedSim: String = "",
     val pocketMode: Boolean = false,
+    /** buttons | swipe */
+    val answerStyle: String = "buttons",
+    val sim1Color: String = "green",
+    val sim2Color: String = "blue",
+    val remotePhonebookEnabled: Boolean = false,
+    val remotePhonebookHost: String = "fritz.box",
+    val remotePhonebookUser: String = "",
+    /** Encrypted with the Android Keystore, never stored in plain text */
+    val remotePhonebookPasswordEnc: String = "",
+    /** Blocks screenshots and recents thumbnails on the call screen */
+    val secureCallScreen: Boolean = false,
+    /** 0 = keep forever */
+    val recordingAutoDeleteDays: Int = 0,
     val proximitySpeaker: Boolean = false,
     val showNumbersInRecents: Boolean = true,
     val missedCallPopup: Boolean = true,

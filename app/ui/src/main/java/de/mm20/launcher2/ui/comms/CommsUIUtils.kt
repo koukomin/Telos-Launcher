@@ -36,6 +36,7 @@ import androidx.compose.ui.text.withStyle
 import de.mm20.launcher2.comms.search.GreekText
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import de.mm20.launcher2.comms.model.CallLogEntry
 import de.mm20.launcher2.comms.model.CallType
@@ -43,9 +44,39 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+internal fun simAccentColor(key: String): Color = when (key) {
+    "blue" -> Color(0xFF3A76F0)
+    "orange" -> Color(0xFFFF9500)
+    "red" -> Color(0xFFFF3B30)
+    "purple" -> Color(0xFFAF52DE)
+    "pink" -> Color(0xFFFF2D55)
+    "teal" -> Color(0xFF30B0C7)
+    else -> Color(0xFF1AB467)
+}
+
+@Composable
+internal fun SimBadge(slot: Int, color: Color, modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .size(16.dp)
+            .clip(RoundedCornerShape(4.dp))
+            .background(color),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = (slot + 1).toString(),
+            color = Color.White,
+            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.labelSmall,
+        )
+    }
+}
+
 internal val CommsCardShape = RoundedCornerShape(24.dp)
+internal val CommsDetailShape = RoundedCornerShape(16.dp)
 internal val CommsRowShape = RoundedCornerShape(20.dp)
 internal val RdGreenCall = Color(0xFF34C759)
+internal val RdCallGreen = Color(0xFF1AB467)
 internal val RdRedCall = Color(0xFFFF3B30)
 internal val RdSwipePurple = Color(0xFF5E5CE6)
 
@@ -174,9 +205,9 @@ internal fun CommsActionCard(
     val tint = MaterialTheme.colorScheme.primary.copy(alpha = if (enabled) 1f else 0.4f)
     Card(
         modifier = modifier
-            .clip(CommsCardShape)
+            .clip(CommsDetailShape)
             .clickable(enabled = enabled, onClick = onClick),
-        shape = CommsCardShape,
+        shape = CommsDetailShape,
         colors = CardDefaults.cardColors(containerColor = container),
     ) {
         Column(
@@ -195,9 +226,11 @@ internal fun CommsActionCard(
             Text(
                 text = label,
                 style = MaterialTheme.typography.labelSmall,
+                fontSize = 10.sp,
                 color = tint,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+                softWrap = false,
+                overflow = TextOverflow.Clip,
             )
         }
     }
@@ -213,7 +246,7 @@ internal fun CommsDetailCard(
         modifier = modifier
             .fillMaxWidth()
             .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier),
-        shape = CommsCardShape,
+        shape = CommsDetailShape,
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
     ) {
         Column(modifier = Modifier.padding(16.dp), content = content)
@@ -238,26 +271,23 @@ internal fun CommsHistoryRow(call: CallLogEntry) {
             .padding(vertical = 6.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = typeLabel,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Medium,
-                color = color,
-            )
-            Text(
-                text = formatCallTimestamp(call.timestamp),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-        if (call.durationSeconds > 0) {
-            Text(
-                text = formatCallDuration(call.durationSeconds),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
+        Text(
+            text = formatCallTimestamp(call.timestamp),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier.weight(1.1f),
+        )
+        Text(
+            text = typeLabel,
+            style = MaterialTheme.typography.bodyMedium,
+            color = if (missed) color else MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.weight(1f),
+        )
+        Text(
+            text = if (call.durationSeconds > 0) formatCallDuration(call.durationSeconds) else "",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
     }
 }
 

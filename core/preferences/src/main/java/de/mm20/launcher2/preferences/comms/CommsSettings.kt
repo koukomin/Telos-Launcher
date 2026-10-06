@@ -351,6 +351,56 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(batterySaverLte = enabled)) }
     }
 
+    val remotePhonebookEnabled
+        get() = dataStore.data.map { it.comms.remotePhonebookEnabled }
+    val remotePhonebookHost
+        get() = dataStore.data.map { it.comms.remotePhonebookHost }
+    val remotePhonebookUser
+        get() = dataStore.data.map { it.comms.remotePhonebookUser }
+    val remotePhonebookPasswordEnc
+        get() = dataStore.data.map { it.comms.remotePhonebookPasswordEnc }
+    fun setRemotePhonebook(enabled: Boolean, host: String, user: String, passwordEnc: String) {
+        dataStore.update {
+            it.copy(
+                comms = it.comms.copy(
+                    remotePhonebookEnabled = enabled,
+                    remotePhonebookHost = host.trim(),
+                    remotePhonebookUser = user.trim(),
+                    remotePhonebookPasswordEnc = passwordEnc,
+                )
+            )
+        }
+    }
+
+    val sim1Color
+        get() = dataStore.data.map { it.comms.sim1Color }
+    fun setSim1Color(color: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(sim1Color = color)) }
+    }
+    val sim2Color
+        get() = dataStore.data.map { it.comms.sim2Color }
+    fun setSim2Color(color: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(sim2Color = color)) }
+    }
+
+    val answerStyle
+        get() = dataStore.data.map { it.comms.answerStyle }
+    fun setAnswerStyle(style: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(answerStyle = style)) }
+    }
+
+    val secureCallScreen
+        get() = dataStore.data.map { it.comms.secureCallScreen }
+    fun setSecureCallScreen(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(secureCallScreen = enabled)) }
+    }
+
+    val recordingAutoDeleteDays
+        get() = dataStore.data.map { it.comms.recordingAutoDeleteDays }
+    fun setRecordingAutoDeleteDays(days: Int) {
+        dataStore.update { it.copy(comms = it.comms.copy(recordingAutoDeleteDays = days)) }
+    }
+
     val snapshot
         get() = dataStore.data.map { it.comms }
 

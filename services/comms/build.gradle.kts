@@ -17,6 +17,20 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        // The native SIP engine is only built when the baresip static libraries are present
+        // (downloaded by CI from the "sip-libs" release, or built locally with sip-native/Makefile).
+        if (rootProject.file("sip-native/distribution/baresip").exists()) {
+            ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
+            // The static libraries and the AAudio calls need API 28; older devices fall back to no SIP
+            externalNativeBuild { cmake { arguments += "-DANDROID_PLATFORM=android-28" } }
+        }
+    }
+
+    if (rootProject.file("sip-native/distribution/baresip").exists()) {
+        externalNativeBuild {
+            cmake { path = file("src/main/cpp/CMakeLists.txt") }
+        }
     }
 
     buildTypes {
@@ -55,6 +69,7 @@ dependencies {
     implementation(project(":core:preferences"))
     implementation(libs.androidx.biometric)
     implementation(libs.shizuku.api)
+    implementation(libs.taglib)
     
     // === TELOS_PENDING_REVIEW_START: sms_and_radio_engine ===
     implementation(libs.androidx.media3.exoplayer)

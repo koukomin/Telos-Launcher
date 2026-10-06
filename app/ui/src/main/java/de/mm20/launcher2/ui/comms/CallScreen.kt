@@ -1,5 +1,11 @@
 package de.mm20.launcher2.ui.comms
 
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.draw.blur
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.gestures.draggable
 import android.Manifest
 import android.content.pm.PackageManager
 import android.provider.ContactsContract
@@ -122,6 +128,7 @@ fun CallScreen(onFinished: () -> Unit) {
         }
     }
 
+    val answerStyle by commsSettings.answerStyle.collectAsStateWithLifecycle("buttons")
     val hiddenMap by commsSettings.hiddenNumbers.collectAsStateWithLifecycle(emptyMap())
     val maskHidden by commsSettings.maskHiddenIncoming.collectAsStateWithLifecycle(true)
     val hiddenIncoming = state.incoming && maskHidden &&
@@ -141,7 +148,7 @@ fun CallScreen(onFinished: () -> Unit) {
             AsyncImage(
                 model = state.photoUri,
                 contentDescription = null,
-                modifier = Modifier.fillMaxSize().alpha(0.22f),
+                modifier = Modifier.fillMaxSize().blur(32.dp).alpha(0.35f),
                 contentScale = ContentScale.Crop,
             )
         }
@@ -152,12 +159,12 @@ fun CallScreen(onFinished: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(Modifier.height(48.dp))
-        CommsAvatar(name = displayName, photoUri = state.photoUri, size = 120.dp)
+        CommsAvatar(name = displayName, photoUri = state.photoUri, size = 100.dp)
         Spacer(Modifier.height(20.dp))
         Text(
             text = displayName,
-            style = MaterialTheme.typography.headlineSmall,
-            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.headlineSmall.copy(fontSize = 26.sp),
+            fontWeight = FontWeight.Normal,
             color = MaterialTheme.colorScheme.onSurface,
         )
         if (!hiddenIncoming && !state.name.isNullOrBlank() && state.number.isNotBlank()) {
@@ -170,8 +177,8 @@ fun CallScreen(onFinished: () -> Unit) {
         Spacer(Modifier.height(8.dp))
         Text(
             text = status,
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.primary,
+            style = MaterialTheme.typography.titleMedium.copy(fontSize = 18.sp),
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
         )
 
         Spacer(Modifier.weight(1f))
@@ -308,6 +315,38 @@ fun CallScreen(onFinished: () -> Unit) {
                 modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+            var remindOpen by remember { mutableStateOf(false) }
+            Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
+                Text(
+                    text = "Remind me",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.clickable { remindOpen = true }.padding(8.dp),
+                )
+            }
+            if (remindOpen) {
+                AlertDialog(
+                    onDismissRequest = { remindOpen = false },
+                    title = { Text("Remind me to call back") },
+                    text = {
+                        Column {
+                            listOf(5, 15, 30, 60).forEach { minutes ->
+                                TextButton(onClick = {
+                                    de.mm20.launcher2.comms.reminder.CallbackReminder.schedule(
+                                        context, state.number, state.name, minutes,
+                                    )
+                                    remindOpen = false
+                                    TelosCallSession.reject()
+                                }) { Text("In $minutes min") }
+                            }
+                        }
+                    },
+                    confirmButton = {},
+                    dismissButton = {
+                        TextButton(onClick = { remindOpen = false }) { Text("Cancel") }
+                    },
+                )
+            }
             if (rejectSms.isNotBlank()) {
                 Text(
                     text = "Reject + SMS",
@@ -322,35 +361,48 @@ fun CallScreen(onFinished: () -> Unit) {
                         .padding(8.dp),
                 )
             }
-            Row(
+            if (answerStyle == "swipe") {
+                SwipeAnswer(
+                    onAnswer = { TelosCallSession.answer() },
+                    onReject = { TelosCallSession.reject() },
+                )
+            } else Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
-                FloatingActionButton(
-                    onClick = { TelosCallSession.reject() },
-                    containerColor = MaterialTheme.colorScheme.error,
-                    contentColor = MaterialTheme.colorScheme.onError,
-                    modifier = Modifier.size(72.dp),
-                    shape = CircleShape,
-                ) {
-                    Icon(painterResource(R.drawable.rd_ic_call_end), contentDescription = stringResource(R.string.comms_reject))
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    FloatingActionButton(
+                        onClick = { TelosCallSession.reject() },
+                        containerColor = RdRedCall,
+                        contentColor = Color.White,
+                        modifier = Modifier.size(72.dp),
+                        shape = CircleShape,
+                    ) {
+                        Icon(painterResource(R.drawable.rd_ic_call_end), contentDescription = stringResource(R.string.comms_reject))
+                    }
+                    Spacer(Modifier.height(8.dp))
+                    Text(stringResource(R.string.comms_reject), style = MaterialTheme.typography.bodyMedium)
                 }
-                FloatingActionButton(
-                    onClick = { TelosCallSession.answer() },
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier.size(72.dp),
-                    shape = CircleShape,
-                ) {
-                    Icon(painterResource(R.drawable.rd_ic_call_accept), contentDescription = stringResource(R.string.comms_answer))
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    FloatingActionButton(
+                        onClick = { TelosCallSession.answer() },
+                        containerColor = RdCallGreen,
+                        contentColor = Color.White,
+                        modifier = Modifier.size(72.dp),
+                        shape = CircleShape,
+                    ) {
+                        Icon(painterResource(R.drawable.rd_ic_call_accept), contentDescription = stringResource(R.string.comms_answer))
+                    }
+                    Spacer(Modifier.height(8.dp))
+                    Text(stringResource(R.string.comms_answer), style = MaterialTheme.typography.bodyMedium)
                 }
             }
             }
         } else {
             FloatingActionButton(
                 onClick = { TelosCallSession.hangup() },
-                containerColor = MaterialTheme.colorScheme.error,
-                contentColor = MaterialTheme.colorScheme.onError,
+                containerColor = RdRedCall,
+                contentColor = Color.White,
                 modifier = Modifier
                     .size(76.dp)
                     .padding(bottom = 8.dp),
@@ -416,4 +468,55 @@ private fun formatElapsed(seconds: Long): String {
     val m = seconds / 60
     val s = seconds % 60
     return "%d:%02d".format(m, s)
+}
+
+@Composable
+private fun SwipeAnswer(onAnswer: () -> Unit, onReject: () -> Unit) {
+    val thumb = 64.dp
+    val density = androidx.compose.ui.platform.LocalDensity.current
+    var offsetX by remember { mutableStateOf(0f) }
+    androidx.compose.foundation.layout.BoxWithConstraints(
+        modifier = Modifier
+            .fillMaxWidth(0.85f)
+            .height(72.dp)
+            .clip(CircleShape)
+            .background(Color.White.copy(alpha = 0.18f)),
+        contentAlignment = Alignment.Center,
+    ) {
+        val maxPx = with(density) { ((maxWidth - thumb) / 2).toPx() }
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text("<", color = RdRedCall, style = MaterialTheme.typography.headlineSmall)
+            Text(">", color = RdCallGreen, style = MaterialTheme.typography.headlineSmall)
+        }
+        Box(
+            modifier = Modifier
+                .offset { androidx.compose.ui.unit.IntOffset(offsetX.toInt(), 0) }
+                .size(thumb)
+                .clip(CircleShape)
+                .background(Color.White)
+                .draggable(
+                    orientation = androidx.compose.foundation.gestures.Orientation.Horizontal,
+                    state = androidx.compose.foundation.gestures.rememberDraggableState { delta ->
+                        offsetX = (offsetX + delta).coerceIn(-maxPx, maxPx)
+                    },
+                    onDragStopped = {
+                        when {
+                            offsetX > maxPx * 0.7f -> onAnswer()
+                            offsetX < -maxPx * 0.7f -> onReject()
+                        }
+                        offsetX = 0f
+                    },
+                ),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                painterResource(R.drawable.rd_ic_call_accept),
+                contentDescription = null,
+                tint = RdCallGreen,
+            )
+        }
+    }
 }

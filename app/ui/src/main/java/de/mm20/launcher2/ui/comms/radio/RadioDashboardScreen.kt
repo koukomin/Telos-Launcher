@@ -1,31 +1,37 @@
 // === TELOS_PENDING_REVIEW_START: radio_browser_ktor ===
 package de.mm20.launcher2.ui.comms.radio
 
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
 import de.mm20.launcher2.comms.model.RadioStation
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.comms.RadioViewModel
 import de.mm20.launcher2.ui.component.LauncherCard
-import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
+import java.text.DateFormat
+import java.util.Date
 
 @Serializable
 data object RadioDashboardRoute : NavKey
@@ -34,16 +40,100 @@ data object RadioDashboardRoute : NavKey
 fun RadioDashboardScreen() {
     val viewModel: RadioDashboardScreenVM = viewModel()
     val playerViewModel: RadioViewModel = viewModel()
+    val context = LocalContext.current
 
     val favorites by viewModel.favorites.collectAsStateWithLifecycle()
+    val history by viewModel.history.collectAsStateWithLifecycle()
     val searchResults by viewModel.searchResults.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
     val isSearching by viewModel.isSearching.collectAsStateWithLifecycle()
+    val message by viewModel.message.collectAsStateWithLifecycle()
+    val sleepEndsAt by playerViewModel.sleepEndsAt.collectAsStateWithLifecycle()
 
     var selectedTabIndex by remember { mutableStateOf(0) }
-    val tabs = listOf("Favorites", "Search")
+    val tabs = listOf("Collection", "Search", "History")
+
+    var menuOpen by remember { mutableStateOf(false) }
+    var showAdd by remember { mutableStateOf(false) }
+    var showSleep by remember { mutableStateOf(false) }
+    var editTarget by remember { mutableStateOf<RadioStation?>(null) }
+
+    LaunchedEffect(message) {
+        message?.let {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            viewModel.consumeMessage()
+        }
+    }
+
+    val importLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if (uri != null) viewModel.importPlaylist(context, uri)
+    }
+    val exportM3uLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("audio/x-mpegurl")
+    ) { uri -> if (uri != null) viewModel.exportM3u(context, uri) }
+    val backupLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("application/json")
+    ) { uri -> if (uri != null) viewModel.exportBackup(context, uri) }
+    val restoreLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if (uri != null) viewModel.restoreBackup(context, uri)
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Spacer(Modifier.weight(1f))
+            IconButton(onClick = { showAdd = true }) {
+                Icon(painterResource(R.drawable.add_24px), contentDescription = "Add station")
+            }
+            IconButton(onClick = { showSleep = true }) {
+                Icon(
+                    painterResource(R.drawable.timer_24px),
+                    contentDescription = "Sleep timer",
+                    tint = if (sleepEndsAt > 0) MaterialTheme.colorScheme.primary
+                    else MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            Box {
+                IconButton(onClick = { menuOpen = true }) {
+                    Icon(painterResource(R.drawable.more_vert_24px), contentDescription = null)
+                }
+                DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                    DropdownMenuItem(
+                        text = { Text("Import playlist (M3U / PLS)") },
+                        onClick = {
+                            menuOpen = false
+                            importLauncher.launch(arrayOf("*/*"))
+                        },
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Export playlist (M3U)") },
+                        onClick = {
+                            menuOpen = false
+                            exportM3uLauncher.launch("telos-radio.m3u")
+                        },
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Back up collection") },
+                        onClick = {
+                            menuOpen = false
+                            backupLauncher.launch("telos-radio-backup.json")
+                        },
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Restore backup") },
+                        onClick = {
+                            menuOpen = false
+                            restoreLauncher.launch(arrayOf("*/*"))
+                        },
+                    )
+                }
+            }
+        }
+
         TabRow(selectedTabIndex = selectedTabIndex) {
             tabs.forEachIndexed { index, title ->
                 Tab(
@@ -54,86 +144,232 @@ fun RadioDashboardScreen() {
             }
         }
 
-        if (selectedTabIndex == 0) {
-            // Favorites Tab
-            LazyColumn(
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.fillMaxSize()
-            ) {
-                if (favorites.isEmpty()) {
-                    item {
-                        Text(
-                            text = "No favorite stations yet.",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(16.dp)
-                        )
-                    }
-                }
-                items(favorites, key = { it.id }) { station ->
-                    StationRow(
-                        station = station,
-                        isFavorite = true,
-                        onFavoriteClick = { viewModel.toggleFavorite(station) },
-                        onClick = { playerViewModel.playStation(station) }
-                    )
-                }
-            }
-        } else {
-            // Search Tab
-            Column(modifier = Modifier.fillMaxSize()) {
-                OutlinedTextField(
-                    value = searchQuery,
-                    onValueChange = { viewModel.updateSearchQuery(it) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    placeholder = { Text("Search by station name...") },
-                    singleLine = true,
-                    leadingIcon = { Icon(painterResource(R.drawable.search_24px), contentDescription = null) },
-                    trailingIcon = {
-                        if (isSearching) {
-                            CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
-                        } else if (searchQuery.isNotEmpty()) {
-                            IconButton(onClick = { viewModel.updateSearchQuery("") }) {
-                                Icon(painterResource(R.drawable.close_24px), contentDescription = "Clear")
-                            }
-                        }
-                    }
-                )
-
+        when (selectedTabIndex) {
+            0 -> {
                 LazyColumn(
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                    contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    items(searchResults, key = { it.id }) { station ->
-                        val isFavorite = favorites.any { it.id == station.id }
+                    if (favorites.isEmpty()) {
+                        item {
+                            Text(
+                                text = "No stations yet. Search for a station, add one with its address, or import a playlist.",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.padding(16.dp)
+                            )
+                        }
+                    }
+                    items(favorites, key = { it.id }) { station ->
                         StationRow(
                             station = station,
-                            isFavorite = isFavorite,
+                            isFavorite = true,
                             onFavoriteClick = { viewModel.toggleFavorite(station) },
-                            onClick = { playerViewModel.playStation(station) }
+                            onClick = { playerViewModel.playStation(station) },
+                            onLongClick = { editTarget = station },
                         )
+                    }
+                }
+            }
+
+            1 -> {
+                Column(modifier = Modifier.fillMaxSize()) {
+                    OutlinedTextField(
+                        value = searchQuery,
+                        onValueChange = { viewModel.updateSearchQuery(it) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        placeholder = { Text("Search by station name...") },
+                        singleLine = true,
+                        leadingIcon = { Icon(painterResource(R.drawable.search_24px), contentDescription = null) },
+                        trailingIcon = {
+                            if (isSearching) {
+                                CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
+                            } else if (searchQuery.isNotEmpty()) {
+                                IconButton(onClick = { viewModel.updateSearchQuery("") }) {
+                                    Icon(painterResource(R.drawable.close_24px), contentDescription = "Clear")
+                                }
+                            }
+                        }
+                    )
+
+                    LazyColumn(
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        items(searchResults, key = { it.id }) { station ->
+                            val isFavorite = favorites.any { it.id == station.id }
+                            StationRow(
+                                station = station,
+                                isFavorite = isFavorite,
+                                onFavoriteClick = { viewModel.toggleFavorite(station) },
+                                onClick = { playerViewModel.playStation(station) }
+                            )
+                        }
+                    }
+                }
+            }
+
+            else -> {
+                LazyColumn(
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    if (history.isEmpty()) {
+                        item {
+                            Text(
+                                text = "Tracks announced by the stations you listen to appear here.",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.padding(16.dp)
+                            )
+                        }
+                    } else {
+                        item {
+                            TextButton(onClick = { viewModel.clearHistory() }) { Text("Clear history") }
+                        }
+                    }
+                    items(history, key = { it.id }) { entry ->
+                        Column(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
+                            Text(
+                                text = entry.title,
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontWeight = FontWeight.Medium,
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                            Text(
+                                text = entry.stationName + " · " +
+                                    DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
+                                        .format(Date(entry.playedAt)),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
                     }
                 }
             }
         }
     }
+
+    if (showAdd) {
+        var name by remember { mutableStateOf("") }
+        var address by remember { mutableStateOf("") }
+        AlertDialog(
+            onDismissRequest = { showAdd = false },
+            title = { Text("Add station") },
+            text = {
+                Column {
+                    OutlinedTextField(
+                        value = address,
+                        onValueChange = { address = it },
+                        label = { Text("Stream or playlist address") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                    OutlinedTextField(
+                        value = name,
+                        onValueChange = { name = it },
+                        label = { Text("Name (optional)") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.addStation(name, address)
+                    showAdd = false
+                }) { Text("Add") }
+            },
+            dismissButton = { TextButton(onClick = { showAdd = false }) { Text("Cancel") } },
+        )
+    }
+
+    if (showSleep) {
+        AlertDialog(
+            onDismissRequest = { showSleep = false },
+            title = { Text("Sleep timer") },
+            text = {
+                Column {
+                    listOf(15, 30, 45, 60, 90).forEach { minutes ->
+                        TextButton(onClick = {
+                            playerViewModel.setSleepTimer(minutes)
+                            showSleep = false
+                        }) { Text("Stop playback in $minutes minutes") }
+                    }
+                    if (sleepEndsAt > 0) {
+                        TextButton(onClick = {
+                            playerViewModel.cancelSleepTimer()
+                            showSleep = false
+                        }) { Text("Turn timer off") }
+                    }
+                }
+            },
+            confirmButton = {},
+            dismissButton = { TextButton(onClick = { showSleep = false }) { Text("Close") } },
+        )
+    }
+
+    editTarget?.let { station ->
+        var renaming by remember(station.id) { mutableStateOf(false) }
+        var newName by remember(station.id) { mutableStateOf(station.name) }
+        if (!renaming) {
+            AlertDialog(
+                onDismissRequest = { editTarget = null },
+                title = { Text(station.name) },
+                text = { Text(station.streamUrl) },
+                confirmButton = {
+                    TextButton(onClick = { renaming = true }) { Text("Rename") }
+                },
+                dismissButton = {
+                    TextButton(onClick = {
+                        viewModel.deleteStation(station.id)
+                        editTarget = null
+                    }) { Text("Remove") }
+                },
+            )
+        } else {
+            AlertDialog(
+                onDismissRequest = { editTarget = null },
+                title = { Text("Rename station") },
+                text = {
+                    OutlinedTextField(
+                        value = newName,
+                        onValueChange = { newName = it },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                },
+                confirmButton = {
+                    TextButton(onClick = {
+                        viewModel.renameStation(station.id, newName)
+                        editTarget = null
+                    }) { Text("Save") }
+                },
+                dismissButton = { TextButton(onClick = { editTarget = null }) { Text("Cancel") } },
+            )
+        }
+    }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun StationRow(
     station: RadioStation,
     isFavorite: Boolean,
     onFavoriteClick: () -> Unit,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onLongClick: (() -> Unit)? = null,
 ) {
     LauncherCard(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
     ) {
         Row(
             modifier = Modifier

@@ -1,6 +1,9 @@
 package de.mm20.launcher2.ui.comms
 
 import android.content.Context
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.draw.clip
+import androidx.compose.runtime.produceState
 import android.content.Intent
 import android.net.Uri
 import android.telephony.PhoneNumberUtils
@@ -89,6 +92,13 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
     private val spam: SpamRepository by inject()
     private val commsSettings: CommsSettings by inject()
 
+    val sim1Color = commsSettings.sim1Color.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "green")
+    val sim2Color = commsSettings.sim2Color.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "blue")
+
+    fun setSpeedDial(digit: Int, number: String) {
+        commsSettings.setSpeedDial(digit, number)
+    }
+
     val clirPrefix = commsSettings.clirPrefix.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(),
@@ -173,6 +183,23 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    fun setStarred(context: Context, contactId: Long, starred: Boolean) {
+        runCatching {
+            val values = android.content.ContentValues().apply {
+                put(android.provider.ContactsContract.Contacts.STARRED, if (starred) 1 else 0)
+            }
+            context.contentResolver.update(
+                android.content.ContentUris.withAppendedId(
+                    android.provider.ContactsContract.Contacts.CONTENT_URI,
+                    contactId,
+                ),
+                values,
+                null,
+                null,
+            )
+        }
+    }
+
     fun setHidden(number: String, hidden: Boolean) {
         commsSettings.setHiddenNumber(number, hidden)
     }
@@ -231,10 +258,27 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
     var confirmDelete by remember { mutableStateOf(false) }
     var blockedOverride by remember { mutableStateOf<Boolean?>(null) }
     var editingNote by remember { mutableStateOf(false) }
+    var starOverride by remember { mutableStateOf<Boolean?>(null) }
+    var showReminder by remember { mutableStateOf(false) }
+    var showQr by remember { mutableStateOf(false) }
+    var showSpeedDial by remember { mutableStateOf(false) }
 
     val contact = ui.contact
     val blocked = blockedOverride ?: ui.blocked
     val primary = contact?.phoneNumbers?.firstOrNull().orEmpty()
+    val ringtoneLauncher = androidx.activity.compose.rememberLauncherForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val data = result.data
+        if (result.resultCode == android.app.Activity.RESULT_OK && data != null) {
+            val picked = androidx.core.content.IntentCompat.getParcelableExtra(
+                data,
+                android.media.RingtoneManager.EXTRA_RINGTONE_PICKED_URI,
+                Uri::class.java,
+            )
+            contact?.let { ContactActions.setRingtone(context, it.id, picked) }
+        }
+    }
     val hasEmail = !contact?.emails.isNullOrEmpty()
 
     Scaffold(
@@ -253,10 +297,28 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     Icon(
                         painterResource(R.drawable.arrow_back_24px),
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurface,
+                        tint = MaterialTheme.colorScheme.primary,
                     )
                 }
                 Spacer(Modifier.weight(1f))
+                val starred = starOverride ?: (contact?.starred == true)
+                IconButton(
+                    onClick = {
+                        contact?.let {
+                            starOverride = !starred
+                            viewModel.setStarred(context, it.id, !starred)
+                        }
+                    },
+                    enabled = contact != null,
+                ) {
+                    Icon(
+                        painterResource(
+                            if (starred) R.drawable.star_24px_filled else R.drawable.star_24px_outlined
+                        ),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                    )
+                }
                 IconButton(
                     onClick = { contact?.let { viewModel.share(context, it) } },
                     enabled = contact != null,
@@ -309,13 +371,13 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     CommsAvatar(
                         name = contact.displayName,
                         photoUri = contact.photoUri,
-                        size = 120.dp,
+                        size = 88.dp,
                     )
-                    Spacer(Modifier.height(16.dp))
+                    Spacer(Modifier.height(12.dp))
                     Text(
                         text = contact.displayName,
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Normal,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     if (!contact.company.isNullOrBlank()) {
@@ -343,37 +405,39 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     Spacer(Modifier.height(20.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        CommsRoundAction(
-                            icon = R.drawable.rd_ic_phone_green_vector,
-                            label = stringResource(R.string.search_action_call),
-                            enabled = primary.isNotEmpty(),
-                            onClick = { viewModel.dial(context, primary) },
-                            containerColor = RdGreenCall,
-                            contentColor = Color.White,
-                        )
-                        CommsRoundAction(
+                        CommsActionCard(
                             icon = R.drawable.rd_ic_messages,
-                            label = stringResource(R.string.search_action_message),
+                            label = stringResource(R.string.search_action_message).uppercase(),
                             enabled = primary.isNotEmpty(),
                             onClick = { context.tryStartActivity(MessengerIntentUtils.sms(primary)) },
+                            modifier = Modifier.weight(1f),
                         )
-                        CommsRoundAction(
+                        CommsActionCard(
+                            icon = R.drawable.rd_ic_phone_green_vector,
+                            label = stringResource(R.string.search_action_call).uppercase(),
+                            enabled = primary.isNotEmpty(),
+                            onClick = { viewModel.dial(context, primary) },
+                            modifier = Modifier.weight(1f),
+                        )
+                        CommsActionCard(
                             icon = R.drawable.videocam_24px,
-                            label = stringResource(R.string.comms_action_video),
-                            enabled = false,
-                            onClick = {},
+                            label = stringResource(R.string.comms_action_video).uppercase(),
+                            enabled = primary.isNotEmpty(),
+                            onClick = { context.tryStartActivity(MessengerIntentUtils.whatsApp(primary)) },
+                            modifier = Modifier.weight(1f),
                         )
-                        CommsRoundAction(
+                        CommsActionCard(
                             icon = R.drawable.mail_24px,
-                            label = stringResource(R.string.search_action_email),
+                            label = stringResource(R.string.search_action_email).uppercase(),
                             enabled = hasEmail,
                             onClick = {
                                 contact.emails.firstOrNull()?.let {
                                     context.tryStartActivity(MessengerIntentUtils.email(it))
                                 }
                             },
+                            modifier = Modifier.weight(1f),
                         )
                     }
                 }
@@ -404,9 +468,14 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
                             Text(
+                                text = "Mobile",
+                                style = MaterialTheme.typography.bodyLarge,
+                            )
+                            Text(
                                 text = number,
                                 style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.SemiBold,
+                                fontWeight = FontWeight.Normal,
+                                color = MaterialTheme.colorScheme.primary,
                             )
                             if (contact.phoneNumbers.size > 1) {
                                 TextButton(onClick = { viewModel.setDefaultNumber(contact.id, number) }) {
@@ -426,63 +495,56 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
             }
 
             if (primary.isNotEmpty()) {
+                // Messenger apps: chat, plus voice and video calls where the app adds them to the contact
                 item {
-                    val note = notes[primary]
-                    CommsDetailCard(onClick = { editingNote = true }) {
-                        Text(
-                            text = if (note.isNullOrBlank()) "Add notes" else note,
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = if (note.isNullOrBlank()) MaterialTheme.colorScheme.onSurfaceVariant
-                            else MaterialTheme.colorScheme.onSurface,
-                        )
-                    }
-                }
-                item {
-                    val sims = remember { de.mm20.launcher2.comms.telephony.TelosDialer.callCapableSims(context) }
-                    if (sims.size >= 2) {
-                        CommsDetailCard {
-                            Text("Always use this SIM", style = MaterialTheme.typography.labelLarge)
-                            Spacer(Modifier.height(8.dp))
-                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                FilterChip(
-                                    selected = numberSims[primary] == null,
-                                    onClick = { viewModel.setDefaultSim(primary, null) },
-                                    label = { Text("Ask") },
-                                )
-                                sims.forEach { sim ->
-                                    FilterChip(
-                                        selected = numberSims[primary] == sim.label,
-                                        onClick = { viewModel.setDefaultSim(primary, sim.label) },
-                                        label = { Text(sim.label.take(8)) },
-                                    )
-                                }
-                            }
+                    val actions by produceState(initialValue = emptyMap<String, DataAction?>(), contact.id) {
+                        value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                            mapOf(
+                                "wa_call" to ContactActions.find(context, contact.id, ContactActions.whatsAppCall),
+                                "wa_video" to ContactActions.find(context, contact.id, ContactActions.whatsAppVideo),
+                                "tg_call" to ContactActions.find(context, contact.id, ContactActions.telegramCall),
+                                "sg_call" to ContactActions.find(context, contact.id, ContactActions.signalCall),
+                                "vb_call" to ContactActions.find(context, contact.id, ContactActions.viberCall),
+                            )
                         }
                     }
-                }
-            }
-
-            if (primary.isNotEmpty()) {
-                item {
+                    fun launcher(action: DataAction?): (() -> Unit)? =
+                        if (action == null) null else ({ context.tryStartActivity(action.intent()); Unit })
                     CommsDetailCard {
                         Text(
                             text = stringResource(R.string.comms_integrations),
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
-                        Spacer(Modifier.height(8.dp))
-                        MessengerChip(stringResource(R.string.action_whatsapp), R.drawable.rd_ic_whatsapp_vector) {
-                            context.tryStartActivity(MessengerIntentUtils.whatsApp(primary))
-                        }
-                        MessengerChip(stringResource(R.string.action_telegram), R.drawable.rd_ic_telegram_vector) {
-                            context.tryStartActivity(MessengerIntentUtils.telegram(primary))
-                        }
-                        MessengerChip(stringResource(R.string.action_signal), R.drawable.rd_ic_signal_vector) {
-                            context.tryStartActivity(MessengerIntentUtils.signal(primary))
-                        }
-                        MessengerChip(stringResource(R.string.action_viber), R.drawable.rd_ic_viber_vector) {
-                            context.tryStartActivity(MessengerIntentUtils.viber(primary))
-                        }
+                        Spacer(Modifier.height(4.dp))
+                        MessengerRow(
+                            label = stringResource(R.string.action_whatsapp),
+                            icon = R.drawable.rd_ic_whatsapp_vector,
+                            onChat = { context.tryStartActivity(MessengerIntentUtils.whatsApp(primary)) },
+                            onCall = launcher(actions["wa_call"]),
+                            onVideo = launcher(actions["wa_video"]),
+                        )
+                        MessengerRow(
+                            label = stringResource(R.string.action_telegram),
+                            icon = R.drawable.rd_ic_telegram_vector,
+                            onChat = { context.tryStartActivity(MessengerIntentUtils.telegram(primary)) },
+                            onCall = launcher(actions["tg_call"]),
+                            onVideo = null,
+                        )
+                        MessengerRow(
+                            label = stringResource(R.string.action_signal),
+                            icon = R.drawable.rd_ic_signal_vector,
+                            onChat = { context.tryStartActivity(MessengerIntentUtils.signal(primary)) },
+                            onCall = launcher(actions["sg_call"]),
+                            onVideo = null,
+                        )
+                        MessengerRow(
+                            label = stringResource(R.string.action_viber),
+                            icon = R.drawable.rd_ic_viber_vector,
+                            onChat = { context.tryStartActivity(MessengerIntentUtils.viber(primary)) },
+                            onCall = launcher(actions["vb_call"]),
+                            onVideo = null,
+                        )
                     }
                 }
             }
@@ -500,6 +562,115 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
             }
 
             if (primary.isNotEmpty()) {
+                item {
+                    val sims = remember { de.mm20.launcher2.comms.telephony.TelosDialer.callCapableSims(context) }
+                    if (sims.size >= 2) {
+                        val sim1Key by viewModel.sim1Color.collectAsStateWithLifecycle()
+                        val sim2Key by viewModel.sim2Color.collectAsStateWithLifecycle()
+                        CommsDetailCard {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    text = "Always use this SIM for this number",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    modifier = Modifier.weight(1f),
+                                )
+                                sims.take(2).forEachIndexed { index, sim ->
+                                    val selected = numberSims[primary] == sim.label
+                                    val accent = simAccentColor(if (index == 1) sim2Key else sim1Key)
+                                    Box(
+                                        modifier = Modifier
+                                            .padding(start = 8.dp)
+                                            .size(40.dp)
+                                            .clip(androidx.compose.foundation.shape.CircleShape)
+                                            .background(
+                                                if (selected) accent
+                                                else MaterialTheme.colorScheme.surfaceContainerHighest
+                                            )
+                                            .clickable {
+                                                viewModel.setDefaultSim(primary, if (selected) null else sim.label)
+                                            },
+                                        contentAlignment = Alignment.Center,
+                                    ) {
+                                        Text(
+                                            text = (index + 1).toString(),
+                                            fontWeight = FontWeight.Bold,
+                                            color = if (selected) Color.White else MaterialTheme.colorScheme.onSurface,
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                item {
+                    val note = notes[primary]
+                    CommsDetailCard(onClick = { editingNote = true }) {
+                        Text(
+                            text = if (note.isNullOrBlank()) "Add notes" else note,
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = if (note.isNullOrBlank()) MaterialTheme.colorScheme.onSurfaceVariant
+                            else MaterialTheme.colorScheme.onSurface,
+                        )
+                    }
+                }
+                item {
+                    CommsDetailCard {
+                        Text(
+                            text = "More",
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        androidx.compose.foundation.lazy.LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            item {
+                                androidx.compose.material3.AssistChip(
+                                    onClick = {
+                                        val clipboard = context.getSystemService(android.content.ClipboardManager::class.java)
+                                        clipboard?.setPrimaryClip(android.content.ClipData.newPlainText("number", primary))
+                                        android.widget.Toast.makeText(context, "Copied", android.widget.Toast.LENGTH_SHORT).show()
+                                    },
+                                    label = { Text("Copy number") },
+                                )
+                            }
+                            item {
+                                androidx.compose.material3.AssistChip(
+                                    onClick = { showReminder = true },
+                                    label = { Text("Remind me") },
+                                )
+                            }
+                            item {
+                                androidx.compose.material3.AssistChip(
+                                    onClick = { showQr = true },
+                                    label = { Text("QR code") },
+                                )
+                            }
+                            item {
+                                androidx.compose.material3.AssistChip(
+                                    onClick = { showSpeedDial = true },
+                                    label = { Text("Speed dial") },
+                                )
+                            }
+                            item {
+                                androidx.compose.material3.AssistChip(
+                                    onClick = {
+                                        ringtoneLauncher.launch(
+                                            Intent(android.media.RingtoneManager.ACTION_RINGTONE_PICKER)
+                                                .putExtra(
+                                                    android.media.RingtoneManager.EXTRA_RINGTONE_TYPE,
+                                                    android.media.RingtoneManager.TYPE_RINGTONE,
+                                                )
+                                                .putExtra(
+                                                    android.media.RingtoneManager.EXTRA_RINGTONE_TITLE,
+                                                    contact.displayName,
+                                                )
+                                        )
+                                    },
+                                    label = { Text("Ringtone") },
+                                )
+                            }
+                        }
+                    }
+                }
                 item {
                     val hidden = de.mm20.launcher2.comms.privacy.HiddenContacts.matches(primary, hiddenNumbers)
                     CommsDetailCard(onClick = { viewModel.setHidden(primary, !hidden) }) {
@@ -540,6 +711,70 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                 }
             }
         }
+    }
+
+    if (showReminder && contact != null) {
+        AlertDialog(
+            onDismissRequest = { showReminder = false },
+            title = { Text("Remind me to call back") },
+            text = {
+                Column {
+                    listOf(5, 15, 30, 60, 180).forEach { minutes ->
+                        TextButton(onClick = {
+                            de.mm20.launcher2.comms.reminder.CallbackReminder.schedule(
+                                context, primary, contact.displayName, minutes,
+                            )
+                            showReminder = false
+                        }) { Text(if (minutes < 60) "In $minutes min" else "In ${minutes / 60} h") }
+                    }
+                }
+            },
+            confirmButton = {},
+            dismissButton = { TextButton(onClick = { showReminder = false }) { Text("Cancel") } },
+        )
+    }
+
+    if (showQr && contact != null) {
+        AlertDialog(
+            onDismissRequest = { showQr = false },
+            title = { Text(contact.displayName) },
+            text = {
+                ContactQrImage(
+                    payload = contactVcard(contact.displayName, contact.phoneNumbers, contact.emails),
+                    modifier = Modifier.size(240.dp),
+                )
+            },
+            confirmButton = { TextButton(onClick = { showQr = false }) { Text("Close") } },
+        )
+    }
+
+    if (showSpeedDial && contact != null) {
+        AlertDialog(
+            onDismissRequest = { showSpeedDial = false },
+            title = { Text("Assign to speed dial") },
+            text = {
+                Column {
+                    Text("Long-press the digit on the dialpad to call ${contact.displayName}.")
+                    Row(
+                        modifier = Modifier.padding(top = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
+                        (2..9).forEach { digit ->
+                            TextButton(
+                                onClick = {
+                                    viewModel.setSpeedDial(digit, primary)
+                                    showSpeedDial = false
+                                },
+                                contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp),
+                                modifier = Modifier.size(36.dp),
+                            ) { Text(digit.toString()) }
+                        }
+                    }
+                }
+            },
+            confirmButton = {},
+            dismissButton = { TextButton(onClick = { showSpeedDial = false }) { Text("Cancel") } },
+        )
     }
 
     if (editingNote && contact != null && primary.isNotEmpty()) {
@@ -589,25 +824,53 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
 }
 
 @Composable
-private fun MessengerChip(label: String, icon: Int, onClick: () -> Unit) {
+private fun MessengerRow(
+    label: String,
+    icon: Int,
+    onChat: () -> Unit,
+    onCall: (() -> Unit)?,
+    onVideo: (() -> Unit)?,
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(vertical = 8.dp),
+            .padding(vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             painterResource(icon),
             contentDescription = null,
-            modifier = Modifier.size(20.dp),
+            modifier = Modifier.size(28.dp),
             tint = Color.Unspecified,
         )
         Spacer(Modifier.width(12.dp))
         Text(
             text = label,
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.weight(1f),
+        )
+        if (onVideo != null) MessengerButton(R.drawable.videocam_24px, "Video call", onVideo)
+        if (onCall != null) MessengerButton(R.drawable.call_24px, "Call", onCall)
+        MessengerButton(R.drawable.rd_ic_messages, "Message", onChat)
+    }
+}
+
+@Composable
+private fun MessengerButton(icon: Int, description: String, onClick: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .padding(start = 8.dp)
+            .size(40.dp)
+            .clip(androidx.compose.foundation.shape.CircleShape)
+            .background(MaterialTheme.colorScheme.surfaceContainerHighest)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(
+            painterResource(icon),
+            contentDescription = description,
+            modifier = Modifier.size(20.dp),
+            tint = MaterialTheme.colorScheme.primary,
         )
     }
 }
