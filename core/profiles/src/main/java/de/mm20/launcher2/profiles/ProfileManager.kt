@@ -28,7 +28,6 @@ import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import rikka.shizuku.Shizuku
 
 internal data class ProfileWithState(
     val profile: Profile,
@@ -207,9 +206,6 @@ class ProfileManager(
             userManager.requestQuietModeEnabled(false, profile.userHandle)
         } catch (e: Exception) {
             Log.w(TAG, "Unable to unlock profile ${profile.serial}", e)
-            // === TELOS_PENDING_REVIEW_START: work_profile_quiet_mode_toggle ===
-            tryFallbackQuietMode(profile.userHandle, false)
-            // === TELOS_PENDING_REVIEW_END: work_profile_quiet_mode_toggle ===
         }
     }
 
@@ -219,34 +215,6 @@ class ProfileManager(
             userManager.requestQuietModeEnabled(true, profile.userHandle)
         } catch (e: Exception) {
             Log.w(TAG, "Unable to lock profile ${profile.serial}", e)
-            // === TELOS_PENDING_REVIEW_START: work_profile_quiet_mode_toggle ===
-            tryFallbackQuietMode(profile.userHandle, true)
-            // === TELOS_PENDING_REVIEW_END: work_profile_quiet_mode_toggle ===
         }
     }
-
-    // === TELOS_PENDING_REVIEW_START: work_profile_quiet_mode_toggle ===
-    private fun tryFallbackQuietMode(userHandle: UserHandle, quietMode: Boolean) {
-        val userId = userHandle.hashCode()
-        scope.launch(Dispatchers.IO) {
-            try {
-                val isShizukuAvailable = Shizuku.pingBinder() && Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED
-                val command = if (quietMode) "am stop-user -f $userId" else "am start-user $userId"
-                if (isShizukuAvailable) {
-                    Log.d(TAG, "Falling back to Shizuku for quiet mode: $command")
-                    val method = Shizuku::class.java.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)
-                    method.isAccessible = true
-                    val process = method.invoke(null, arrayOf("sh", "-c", command), null, null)
-                    process::class.java.getMethod("waitFor").invoke(process)
-                } else {
-                    Log.d(TAG, "Falling back to su for quiet mode: $command")
-                    val process = Runtime.getRuntime().exec(arrayOf("su", "-c", command))
-                    process.waitFor()
-                }
-            } catch (e: Exception) {
-                Log.e(TAG, "Fallback quiet mode toggle failed", e)
-            }
-        }
-    }
-    // === TELOS_PENDING_REVIEW_END: work_profile_quiet_mode_toggle ===
 }
