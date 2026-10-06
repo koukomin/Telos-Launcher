@@ -13,5 +13,5 @@ val commsModule = module {
     single { T9SearchEngine() }
     single { CommsBackupManager(get(), get()) }
     single<VaultSmsRouter> { VaultSmsRouterImpl(get()) }
-    single(createdAtStart = true) { NetworkAutomationWatcher(androidContext()) }
+    single(createdAtStart = true) { NetworkAutomationWatcher(androidContext(), get()) }
 }

@@ -2,6 +2,8 @@
 package de.mm20.launcher2.comms.radio
 
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.ForwardingPlayer
 import androidx.media3.common.MimeTypes
@@ -34,6 +36,12 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
     private var player: ExoPlayer? = null
     private var mediaSession: MediaSession? = null
     private var lastRecordedTitle = ""
+    private val handler = Handler(Looper.getMainLooper())
+
+    // Nothing keeps the service (and the decoder) alive after the radio has been paused for a while
+    private val idleStop = Runnable {
+        if (player?.isPlaying != true) pauseAllPlayersAndStopSelf()
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -62,9 +70,15 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                 lastRecordedTitle = ""
             }
+
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                handler.removeCallbacks(idleStop)
+                if (!isPlaying) handler.postDelayed(idleStop, IDLE_STOP_MS)
+            }
         })
 
         RadioSleepTimer.onExpire = { player?.pause() }
+        handler.postDelayed(idleStop, IDLE_STOP_MS)
 
         mediaSession = MediaSession.Builder(this, stationSwitchingPlayer(exo)).build()
     }
@@ -142,9 +156,11 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
     // seamlessly on Android 14+ through the Media3 framework.
     companion object {
         const val USER_AGENT = "Telos Radio"
+        private const val IDLE_STOP_MS = 5 * 60 * 1000L
     }
 
     override fun onDestroy() {
+        handler.removeCallbacks(idleStop)
         RadioSleepTimer.onExpire = null
         scope.cancel()
         mediaSession?.run {
