@@ -156,6 +156,15 @@ class DialpadViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    fun dialSip(context: Context, phoneNumber: String? = null) {
+        val number = phoneNumber ?: _input.value
+        if (number.isEmpty()) return
+        viewModelScope.launch {
+            val ok = de.mm20.launcher2.comms.privacy.CallGuard.placeSip(context, number)
+            if (!ok) android.widget.Toast.makeText(context, "SIP account is not connected", android.widget.Toast.LENGTH_SHORT).show()
+        }
+    }
+
     fun deleteRecent(call: CallLogEntry) {
         viewModelScope.launch { callLogRepository.deleteById(call.id) }
     }

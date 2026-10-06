@@ -351,6 +351,29 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(batterySaverLte = enabled)) }
     }
 
+    val sipEnabled
+        get() = dataStore.data.map { it.comms.sipEnabled }
+    val sipOutgoing
+        get() = dataStore.data.map { it.comms.sipOutgoing }
+    fun setSipEnabled(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(sipEnabled = enabled)) }
+    }
+    fun setSipOutgoing(mode: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(sipOutgoing = mode)) }
+    }
+    fun setSipAccount(user: String, domain: String, displayName: String, passwordEnc: String) {
+        dataStore.update {
+            it.copy(
+                comms = it.comms.copy(
+                    sipUser = user.trim(),
+                    sipDomain = domain.trim(),
+                    sipDisplayName = displayName.trim(),
+                    sipPasswordEnc = passwordEnc,
+                )
+            )
+        }
+    }
+
     val remotePhonebookEnabled
         get() = dataStore.data.map { it.comms.remotePhonebookEnabled }
     val remotePhonebookHost

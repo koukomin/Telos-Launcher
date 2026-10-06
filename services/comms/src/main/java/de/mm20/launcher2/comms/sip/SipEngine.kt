@@ -52,34 +52,70 @@ object SipEngine : BaresipService.Listener {
     @Volatile private var running = false
     @Volatile private var pendingAccount: SipAccount? = null
     @Volatile private var uap = 0L
+    @Volatile private var addresses = ""
+    @Volatile private var nameservers = ""
+    @Volatile private var restartWith: Pair<Context, SipAccount>? = null
 
-    /** Starts baresip and registers [account] as soon as the engine is up. */
-    fun start(context: Context, account: SipAccount) {
-        if (!available || running) return
+    /** True once the account is registered and calls can be placed */
+    val isReady: Boolean get() = _registration.value == SipRegistration.Registered
+
+    /**
+     * Starts baresip and registers [account] as soon as the engine is up. [linkAddresses] is the list
+     * of local addresses as "ip;interface;ip;interface" and [dns] a comma separated list of name
+     * servers, because Android does not let baresip discover them itself.
+     */
+    fun start(context: Context, account: SipAccount, linkAddresses: String = "", dns: String = "") {
+        if (!available) return
+        if (running) {
+            // A different account (or none) is already running: restart once it has stopped
+            restartWith = context to account
+            addresses = linkAddresses
+            nameservers = dns
+            service.baresipStop(false)
+            return
+        }
         running = true
         pendingAccount = account
+        addresses = linkAddresses
+        nameservers = dns
         _registration.value = SipRegistration.Registering
         val dir = File(context.filesDir, "sip").apply { mkdirs() }
         File(dir, "config").writeText(config())
         File(dir, "accounts").writeText("")
         File(dir, "contacts").writeText("")
         thread(name = "baresip", isDaemon = true) {
-            runCatching { service.baresipStart(dir.absolutePath, "", 2, "Telos Phone") }
-                .onFailure { Log.e(TAG, "baresip failed", it) }
-            running = false
+            runCatching { service.baresipStart(dir.absolutePath, addresses, 2, "Telos Phone") }
+                .onFailure {
+                    Log.e(TAG, "baresip failed", it)
+                    running = false
+                    _registration.value = SipRegistration.Failed
+                }
         }
     }
 
     fun stop() {
+        restartWith = null
         if (!running) return
         service.baresipStop(false)
     }
 
-    /** Places a call to a number or SIP address; plain numbers are called on the registered domain. */
-    fun dial(target: String): Boolean {
-        val account = pendingAccount ?: return false
+    /** Called when the network changed: new local addresses, name servers and a new registration */
+    fun networkChanged(oldAddresses: List<String>, linkAddresses: String, dns: String) {
+        if (!running || uap == 0L) return
+        addresses = linkAddresses
+        nameservers = dns
+        for (ip in oldAddresses) Api.net_rm_address(ip)
+        val parts = linkAddresses.split(";").filter { it.isNotEmpty() }
+        for (i in 0 until parts.size / 2) Api.net_add_address_ifname(parts[i * 2], parts[i * 2 + 1])
+        if (dns.isNotEmpty()) Api.net_use_nameserver(dns)
+        Api.uag_reset_transp(true, true)
+    }
+
+    /** Places a call to a full SIP address (see SipUri.target). */
+    fun dial(uri: String): Boolean {
         if (uap == 0L || _registration.value != SipRegistration.Registered) return false
-        val uri = if (target.startsWith("sip:")) target else "sip:${target.replace(" ", "")}@${account.domain}"
+        if (_call.value.state != SipCallState.None) return false
+        val target = uri
         val callp = Api.ua_call_alloc(uap, 0, Api.VIDMODE_OFF)
         if (callp == 0L) return false
         if (Api.call_connect(callp, uri) != 0) return false
@@ -128,6 +164,7 @@ object SipEngine : BaresipService.Listener {
 
     override fun onStarted() {
         val account = pendingAccount ?: return
+        if (nameservers.isNotEmpty()) Api.net_use_nameserver(nameservers)
         val user = account.user
         val name = if (account.displayName.isNotBlank()) "\"${account.displayName}\" " else ""
         val line = "${name}<sip:$user@${account.domain}>;auth_pass=${account.password};regint=300;answermode=manual"
@@ -144,6 +181,10 @@ object SipEngine : BaresipService.Listener {
         _registration.value = SipRegistration.Offline
         _call.value = SipCall()
         if (error.isNotEmpty()) _lastError.value = error
+        restartWith?.let { (context, account) ->
+            restartWith = null
+            start(context, account, addresses, nameservers)
+        }
     }
 
     override fun onUaEvent(event: String, uap: Long, callp: Long) {

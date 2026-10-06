@@ -1204,6 +1204,16 @@ data class CommsGroup(
     val answerStyle: String = "buttons",
     val sim1Color: String = "green",
     val sim2Color: String = "blue",
+    /** SIP account switched on: registered in the background so that calls can be received */
+    val sipEnabled: Boolean = false,
+    val sipUser: String = "",
+    /** Registrar, for a FRITZ!Box usually fritz.box */
+    val sipDomain: String = "fritz.box",
+    val sipDisplayName: String = "",
+    /** Encrypted with the Android Keystore, never stored in plain text */
+    val sipPasswordEnc: String = "",
+    /** off = receive only | choose = extra SIP button when calling | default = SIP preferred */
+    val sipOutgoing: String = "choose",
     val remotePhonebookEnabled: Boolean = false,
     val remotePhonebookHost: String = "fritz.box",
     val remotePhonebookUser: String = "",

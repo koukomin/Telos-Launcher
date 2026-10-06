@@ -23,7 +23,22 @@ object CallGuard : KoinComponent {
             val activity = context as? FragmentActivity ?: return
             if (!authManager.authenticateNative(activity, "Confirm call")) return
         }
+        // Calls without an explicit SIM go over SIP when the account is set to be preferred
+        if (handle == null && de.mm20.launcher2.comms.sip.SipDialer.isDefault() &&
+            de.mm20.launcher2.comms.sip.SipDialer.place(context, number)
+        ) return
         SimRouter.place(context, clirNumber, handle)
+    }
+
+    /** Places the call over the SIP account. Returns false when SIP cannot be used right now. */
+    suspend fun placeSip(context: Context, number: String): Boolean {
+        if (number.isEmpty()) return false
+        val snap = commsSettings.snapshot.first()
+        if (requiresAuth(number, snap.callProtectMode, snap.protectedCallNumbers)) {
+            val activity = context as? FragmentActivity ?: return false
+            if (!authManager.authenticateNative(activity, "Confirm call")) return false
+        }
+        return de.mm20.launcher2.comms.sip.SipDialer.place(context, number)
     }
 
     private fun requiresAuth(
