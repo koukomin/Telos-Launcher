@@ -38,6 +38,7 @@ class CallActivity : BaseActivity(), SensorEventListener {
                 WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
         )
         val snap = runBlocking { commsSettings.snapshot.first() }
+        if (snap.secureCallScreen) window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         pocketMode = snap.pocketMode
         proximitySpeaker = snap.proximitySpeaker
         if (snap.raiseToAnswer || snap.flipToDecline || snap.rainMode) {

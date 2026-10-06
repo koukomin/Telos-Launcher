@@ -6,6 +6,10 @@ on:
       - 'claude/**'
   workflow_dispatch:
 
+concurrency:
+  group: build-debug-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest

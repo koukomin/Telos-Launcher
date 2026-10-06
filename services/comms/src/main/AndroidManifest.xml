@@ -45,6 +45,9 @@
         <receiver
             android:name=".fakecall.FakeCallReceiver"
             android:exported="false" />
+        <receiver
+            android:name=".reminder.CallbackReminderReceiver"
+            android:exported="false" />
         <!-- === TELOS_PENDING_REVIEW_END: telephony_encryption_suite === -->
 
         <!-- === TELOS_PENDING_REVIEW_START: sms_and_radio_engine === -->

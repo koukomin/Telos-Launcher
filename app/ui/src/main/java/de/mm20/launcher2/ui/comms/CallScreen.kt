@@ -315,6 +315,38 @@ fun CallScreen(onFinished: () -> Unit) {
                 modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+            var remindOpen by remember { mutableStateOf(false) }
+            Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
+                Text(
+                    text = "Remind me",
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.clickable { remindOpen = true }.padding(8.dp),
+                )
+            }
+            if (remindOpen) {
+                AlertDialog(
+                    onDismissRequest = { remindOpen = false },
+                    title = { Text("Remind me to call back") },
+                    text = {
+                        Column {
+                            listOf(5, 15, 30, 60).forEach { minutes ->
+                                TextButton(onClick = {
+                                    de.mm20.launcher2.comms.reminder.CallbackReminder.schedule(
+                                        context, state.number, state.name, minutes,
+                                    )
+                                    remindOpen = false
+                                    TelosCallSession.reject()
+                                }) { Text("In $minutes min") }
+                            }
+                        }
+                    },
+                    confirmButton = {},
+                    dismissButton = {
+                        TextButton(onClick = { remindOpen = false }) { Text("Cancel") }
+                    },
+                )
+            }
             if (rejectSms.isNotBlank()) {
                 Text(
                     text = "Reject + SMS",

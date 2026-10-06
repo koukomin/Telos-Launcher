@@ -147,6 +147,8 @@ class CommsSettingsScreenVM : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "I'll call you back")
     fun setRejectSmsTemplate(text: String) = commsSettings.setRejectSmsTemplate(text)
 
+    val secureCallScreen = commsSettings.secureCallScreen.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    fun setSecureCallScreen(enabled: Boolean) = commsSettings.setSecureCallScreen(enabled)
     val answerStyle = commsSettings.answerStyle.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "buttons")
     fun setAnswerStyle(style: String) = commsSettings.setAnswerStyle(style)
     val recordingAutoDeleteDays = commsSettings.recordingAutoDeleteDays.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)

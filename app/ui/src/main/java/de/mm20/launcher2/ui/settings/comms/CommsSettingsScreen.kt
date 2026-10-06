@@ -69,6 +69,7 @@ fun CommsSettingsScreen() {
     val autoRedial by viewModel.autoRedial.collectAsStateWithLifecycle()
     val autoOpenDialpad by viewModel.autoOpenDialpad.collectAsStateWithLifecycle()
     val rejectSmsTemplate by viewModel.rejectSmsTemplate.collectAsStateWithLifecycle()
+    val secureCallScreen by viewModel.secureCallScreen.collectAsStateWithLifecycle()
     val answerStyle by viewModel.answerStyle.collectAsStateWithLifecycle()
     val recordingAutoDeleteDays by viewModel.recordingAutoDeleteDays.collectAsStateWithLifecycle()
     val pocketMode by viewModel.pocketMode.collectAsStateWithLifecycle()
@@ -220,6 +221,12 @@ fun CommsSettingsScreen() {
                     ),
                     value = answerStyle,
                     onValueChanged = { viewModel.setAnswerStyle(it) }
+                )
+                SwitchPreference(
+                    title = "Secure call screen",
+                    summary = "Block screenshots and hide the call screen in the recent apps overview",
+                    value = secureCallScreen,
+                    onValueChanged = { viewModel.setSecureCallScreen(it) }
                 )
             }
         }

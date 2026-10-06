@@ -1202,6 +1202,8 @@ data class CommsGroup(
     val pocketMode: Boolean = false,
     /** buttons | swipe */
     val answerStyle: String = "buttons",
+    /** Blocks screenshots and recents thumbnails on the call screen */
+    val secureCallScreen: Boolean = false,
     /** 0 = keep forever */
     val recordingAutoDeleteDays: Int = 0,
     val proximitySpeaker: Boolean = false,

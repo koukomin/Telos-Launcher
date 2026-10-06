@@ -357,6 +357,12 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(answerStyle = style)) }
     }
 
+    val secureCallScreen
+        get() = dataStore.data.map { it.comms.secureCallScreen }
+    fun setSecureCallScreen(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(secureCallScreen = enabled)) }
+    }
+
     val recordingAutoDeleteDays
         get() = dataStore.data.map { it.comms.recordingAutoDeleteDays }
     fun setRecordingAutoDeleteDays(days: Int) {

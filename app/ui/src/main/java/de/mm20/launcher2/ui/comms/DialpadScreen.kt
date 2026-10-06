@@ -168,7 +168,18 @@ fun DialpadScreen(initialNumber: String = "") {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 56.dp)
-                .heightIn(min = 56.dp),
+                .heightIn(min = 56.dp)
+                .combinedClickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = {},
+                    onLongClick = {
+                        val clip = context.getSystemService(android.content.ClipboardManager::class.java)
+                            ?.primaryClip?.getItemAt(0)?.text?.toString().orEmpty()
+                        clip.filter { it.isDigit() || it == '+' || it == '*' || it == '#' }
+                            .forEach { viewModel.onKeyPressed(it) }
+                    },
+                ),
         )
         if (input.isNotBlank()) {
             Text(
