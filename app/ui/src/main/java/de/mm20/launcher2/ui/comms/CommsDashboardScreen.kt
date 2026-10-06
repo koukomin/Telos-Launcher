@@ -131,7 +131,7 @@ fun CommsDashboardScreen(initialTab: String = "recents", initialNumber: String =
                         }
                     }
                     Text(
-                        text = if (inSubScreen) selectedTab.label else "Dialer",
+                        text = if (selectedTab == CommsTab.Keypad) "" else if (inSubScreen) selectedTab.label else "Dialer",
                         style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.weight(1f).padding(start = if (inSubScreen) 8.dp else 0.dp),
                     )

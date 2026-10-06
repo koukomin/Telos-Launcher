@@ -18,6 +18,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -153,6 +157,38 @@ fun DialpadScreen(initialNumber: String = "") {
     }
 
     Column(Modifier.fillMaxSize()) {
+        Text(
+            text = input.ifEmpty { " " },
+            style = MaterialTheme.typography.headlineMedium.copy(fontSize = 36.sp),
+            fontWeight = FontWeight.Normal,
+            color = MaterialTheme.colorScheme.onSurface,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 56.dp)
+                .heightIn(min = 56.dp),
+        )
+        if (input.isNotBlank()) {
+            Text(
+                text = stringResource(R.string.search_action_contact),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .clip(RoundedCornerShape(12.dp))
+                    .clickable {
+                        val intent = Intent(Intent.ACTION_INSERT).apply {
+                            type = ContactsContract.RawContacts.CONTENT_TYPE
+                            putExtra(ContactsContract.Intents.Insert.PHONE, input)
+                        }
+                        context.tryStartActivity(intent)
+                    }
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
+            )
+        }
         Box(Modifier.weight(1f).fillMaxWidth()) {
             if (input.isBlank()) {
                 if (recents.isEmpty()) {
@@ -176,25 +212,17 @@ fun DialpadScreen(initialNumber: String = "") {
                     }
                 }
             } else {
+                if (t9Results.isEmpty()) {
+                    Text(
+                        text = "No contacts found",
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+                    )
+                }
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    item {
-                        Text(
-                            text = stringResource(R.string.search_action_contact),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    val intent = Intent(Intent.ACTION_INSERT).apply {
-                                        type = ContactsContract.RawContacts.CONTENT_TYPE
-                                        putExtra(ContactsContract.Intents.Insert.PHONE, input)
-                                    }
-                                    context.tryStartActivity(intent)
-                                }
-                                .padding(horizontal = 16.dp, vertical = 12.dp),
-                            textAlign = TextAlign.Center,
-                        )
-                    }
                     items(t9Results, key = { it.id }) { contact ->
                         T9ContactRow(
                             contact = contact,
@@ -213,34 +241,8 @@ fun DialpadScreen(initialNumber: String = "") {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(androidx.compose.foundation.shape.RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp))
-                .background(MaterialTheme.colorScheme.surfaceContainerLow)
-                .padding(horizontal = 12.dp, vertical = 12.dp),
+                .padding(horizontal = 12.dp, vertical = 8.dp),
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Spacer(Modifier.width(48.dp))
-                Text(
-                    text = input.ifEmpty { " " },
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Light,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.weight(1f),
-                )
-                IconButton(onClick = { backStack.add(CommsSettingsRoute) }) {
-                    Icon(
-                        painterResource(R.drawable.settings_24px),
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-            }
-
             for (row in DIALPAD_KEYS.chunked(3)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -269,27 +271,7 @@ fun DialpadScreen(initialNumber: String = "") {
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                    IconButton(
-                        onClick = {
-                            val intent = Intent(Intent.ACTION_INSERT).apply {
-                                type = ContactsContract.RawContacts.CONTENT_TYPE
-                                putExtra(ContactsContract.Intents.Insert.PHONE, input)
-                            }
-                            context.tryStartActivity(intent)
-                        },
-                        enabled = input.isNotBlank(),
-                        modifier = Modifier.size(56.dp),
-                    ) {
-                        Icon(
-                            painterResource(R.drawable.person_add_24px),
-                            contentDescription = stringResource(R.string.search_action_contact),
-                            tint = MaterialTheme.colorScheme.onSurface.copy(
-                                alpha = if (input.isNotBlank()) 1f else 0.3f
-                            ),
-                        )
-                    }
-                }
+                Box(Modifier.weight(1f))
                 if (sims.size >= 2) {
                     sims.take(2).forEach { sim ->
                         Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
@@ -314,8 +296,8 @@ fun DialpadScreen(initialNumber: String = "") {
                     Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
                         FloatingActionButton(
                             onClick = { viewModel.dial(context) },
-                            containerColor = MaterialTheme.colorScheme.primary,
-                            contentColor = MaterialTheme.colorScheme.onPrimary,
+                            containerColor = RdCallGreen,
+                            contentColor = Color.White,
                             modifier = Modifier.size(68.dp),
                             shape = CircleShape,
                         ) {
@@ -377,11 +359,9 @@ private fun DialpadKey(
 ) {
     Box(
         modifier = Modifier
-            .size(76.dp)
-            .background(MaterialTheme.colorScheme.surfaceContainerHighest, CircleShape)
+            .size(78.dp)
+            .clip(CircleShape)
             .combinedClickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null,
                 onClick = onClick,
                 onLongClick = onLongClick,
             ),
@@ -390,18 +370,18 @@ private fun DialpadKey(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = digit,
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Medium,
+                fontSize = 36.sp,
+                fontWeight = FontWeight.Normal,
+                lineHeight = 38.sp,
                 color = MaterialTheme.colorScheme.onSurface,
             )
-            if (sublabel.isNotEmpty()) {
-                Text(
-                    text = sublabel,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center,
-                )
-            }
+            Text(
+                text = sublabel.ifEmpty { " " },
+                fontSize = 12.sp,
+                lineHeight = 12.sp,
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
+                textAlign = TextAlign.Center,
+            )
         }
     }
 }
@@ -415,11 +395,9 @@ private fun T9ContactRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 3.dp)
-            .clip(CommsRowShape)
-            .background(MaterialTheme.colorScheme.surfaceContainerLow)
             .clickable(onClick = onDetails)
-            .padding(horizontal = 12.dp, vertical = 10.dp),
+            .heightIn(min = 64.dp)
+            .padding(start = 16.dp, end = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CommsAvatar(
@@ -427,12 +405,11 @@ private fun T9ContactRow(
             photoUri = contact.photoUri,
             size = 48.dp,
         )
-        Spacer(Modifier.width(14.dp))
+        Spacer(Modifier.width(12.dp))
         Column(Modifier.weight(1f)) {
             Text(
                 text = contact.displayName,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold,
+                style = MaterialTheme.typography.bodyLarge,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )

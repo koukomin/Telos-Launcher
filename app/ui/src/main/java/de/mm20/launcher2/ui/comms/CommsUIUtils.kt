@@ -46,6 +46,7 @@ import java.util.Locale
 internal val CommsCardShape = RoundedCornerShape(24.dp)
 internal val CommsRowShape = RoundedCornerShape(20.dp)
 internal val RdGreenCall = Color(0xFF34C759)
+internal val RdCallGreen = Color(0xFF1AB467)
 internal val RdRedCall = Color(0xFFFF3B30)
 internal val RdSwipePurple = Color(0xFF5E5CE6)
 
