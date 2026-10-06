@@ -140,34 +140,68 @@ object SipEngine : BaresipService.Listener {
         if (c.callp != 0L) Api.call_send_digit(c.callp, digit)
     }
 
-    private fun config() = """
-        audio_player aaudio,default
-        audio_source aaudio,default
-        audio_alert aaudio,default
-        call_local_timeout 120
-        sip_verify_server no
-        module opus.so
-        module g711.so
-        module aaudio.so
-        module stun.so
-        module turn.so
-        module ice.so
-        module account.so
-        module natpmp.so
-        module srtp.so
-        module dtls_srtp.so
-        module uuid.so
-        opus_bitrate 28000
-    """.trimIndent() + "\n"
+    /** Base configuration, following the static config of baresip-studio. */
+    private fun config(): String {
+        val dnsLines = nameservers.split(",").filter { it.isNotBlank() }.joinToString("") {
+            if (it.contains(':')) "dns_server [$it]:53\n" else "dns_server $it:53\n"
+        }
+        return """
+            poll_method epoll
+            call_local_timeout 60
+            call_max_calls 4
+            call_hold_other_calls yes
+            filter_registrar udp,tcp,tls,ws,wss
+            audio_player aaudio,default
+            audio_source aaudio,default
+            audio_alert aaudio,default
+            audio_level no
+            ausrc_format s16
+            auplay_format s16
+            auenc_format s16
+            audec_format s16
+            audio_buffer 20-160
+            audio_silence -35.0
+            audio_telev_pt 101
+            audio_jitter_buffer_type adaptive
+            audio_jitter_buffer_ms 100-200
+            audio_jitter_buffer_size 50
+            rtp_stats no
+            rtp_timeout 60
+            rtp_rxmode thread
+            sip_verify_server no
+            log_level 2
+            module aaudio.so
+            module stun.so
+            module turn.so
+            module ice.so
+            module srtp.so
+            module dtls_srtp.so
+            module uuid.so
+            module opus.so
+            module g711.so
+            module_app account.so
+            module_app debug_cmd.so
+            opus_samplerate 16000
+            opus_stereo no
+            opus_sprop_stereo no
+            opus_cbr no
+            opus_inbandfec yes
+            opus_application voip
+            opus_bitrate 28000
+            dtls_srtp_use_ec prime256v1
+        """.trimIndent() + "\n" + dnsLines
+    }
 
     // ---- BaresipService.Listener (called from the baresip thread) ----
 
     override fun onStarted() {
         val account = pendingAccount ?: return
         if (nameservers.isNotEmpty()) Api.net_use_nameserver(nameservers)
-        val user = account.user
-        val name = if (account.displayName.isNotBlank()) "\"${account.displayName}\" " else ""
-        val line = "${name}<sip:$user@${account.domain}>;auth_pass=${account.password};regint=300;answermode=manual"
+        val user = android.net.Uri.encode(account.user)
+        val name = if (account.displayName.isNotBlank()) "\"${account.displayName.replace("\"", "")}\" " else ""
+        // the password is quoted so that characters such as ; or > cannot break the account line
+        val pass = account.password.replace("\\", "\\\\").replace("\"", "\\\"")
+        val line = "${name}<sip:$user@${account.domain}>;auth_pass=\"$pass\";regint=300;answermode=manual"
         uap = Api.ua_alloc(line)
         if (uap != 0L) Api.ua_register(uap) else {
             _registration.value = SipRegistration.Failed
