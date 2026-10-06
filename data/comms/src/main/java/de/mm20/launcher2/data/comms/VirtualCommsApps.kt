@@ -236,12 +236,66 @@ internal class VirtualMusicApp(context: Context) : Application {
     }
 }
 
+internal class VirtualVideoApp(context: Context) : Application {
+
+    override val key: String = "$Domain://video"
+    override val label: String = "Telos Video"
+    override val labelOverride: String? = null
+    override val domain: String = Domain
+    override val score: ResultScore = ResultScore.Unspecified
+
+    override val componentName: ComponentName = ComponentName(
+        context.packageName,
+        "de.mm20.launcher2.comms.VirtualVideoApp",
+    )
+    override val isSuspended: Boolean = false
+    override val user: UserHandle = Process.myUserHandle()
+    override val versionName: String? = null
+
+    override val canUninstall: Boolean = false
+    override fun uninstall(context: Context) {}
+    override fun openAppDetails(context: Context) {}
+
+    override val canShareApk: Boolean = false
+
+    override fun overrideLabel(label: String): SavableSearchable = this
+
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return try {
+            val intent = Intent().apply {
+                setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_VIDEO)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent, options)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.play_circle_24px) ?: return null
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(drawable, 1f),
+            backgroundLayer = TransparentLayer
+        )
+    }
+
+    override fun getSerializer(): SearchableSerializer = NullSerializer()
+
+    companion object {
+        const val Domain = "telos_video_app"
+    }
+}
+
 internal class CommsVirtualAppProvider(private val context: Context) : VirtualAppProvider {
     override fun getVirtualApps(): List<Application> = listOf(
         VirtualPhoneApp(context),
         VirtualMessagesApp(context),
         VirtualRadioApp(context),
         VirtualMusicApp(context),
+        VirtualVideoApp(context),
     )
 }
 // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===

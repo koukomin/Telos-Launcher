@@ -180,6 +180,7 @@ dependencies {
     // === TELOS_PENDING_REVIEW_START: radio_mini_player ===
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.session)
+    implementation(libs.androidx.media3.ui)
     implementation(libs.androidx.media3.common)
     implementation("com.google.guava:guava:31.1-android")
     // === TELOS_PENDING_REVIEW_END: radio_mini_player ===

@@ -32,6 +32,8 @@ plugin SDK for third-party search/weather/calendar providers. See the
 - MMI / USSD / secret codes (`*#06#`, `*21*...#`) are passed to the network unchanged
 - Recents with swipe to call or message, filters (missed, incoming, outgoing, rejected, talk time),
   grouping of repeated calls, call log export
+- Contact page with call history, per-app chat, voice and video buttons (WhatsApp, Telegram, Signal,
+  Viber), SIM choice, notes, copy number, call reminder, QR code, speed dial and ringtone per contact
 - Contacts and favorites with A-Z index, contact groups, duplicate finder, vCard import and export,
   QR code sharing, per-contact default number and default SIM
 - Dual-SIM routing: per-call SIM choice, per-number default SIM, last-used SIM
@@ -68,6 +70,9 @@ plugin SDK for third-party search/weather/calendar providers. See the
   Greek), play queue with shuffle and repeat, notification and lock screen controls, synchronized
   lyrics from [LRCLIB](https://lrclib.net), tag editor for MP3, FLAC, M4A and OGG files (title, artist,
   album, genre, year, track number, cover art), sleep timer
+- Telos Video: video library with movies, series (recognised from file names such as
+  `Show.S01E02.mkv`) and folders, continue watching, full screen player with subtitle selection,
+  external subtitle files, picture in picture, also used when another app opens a video
 - Telos Radio: see the radio entry above
 
 **Apps and system (`:services:freeze`, `:services:app-management`, `:services:store`)**
