@@ -17,6 +17,18 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        // The native SIP engine is only built when the baresip static libraries are present
+        // (downloaded by CI from the "sip-libs" release, or built locally with sip-native/Makefile).
+        if (rootProject.file("sip-native/distribution/baresip").exists()) {
+            ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
+        }
+    }
+
+    if (rootProject.file("sip-native/distribution/baresip").exists()) {
+        externalNativeBuild {
+            cmake { path = file("src/main/cpp/CMakeLists.txt") }
+        }
     }
 
     buildTypes {

@@ -34,6 +34,15 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+      - name: Download SIP native libraries
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release download sip-libs --pattern sip-libs.tar.gz --dir "$RUNNER_TEMP"; then
+            tar -xzf "$RUNNER_TEMP/sip-libs.tar.gz" -C sip-native
+          else
+            echo "No SIP libraries released yet, building without the SIP engine"
+          fi
       - name: Build debug APK
         run: ./gradlew assembleDefaultDebug --stacktrace
       - name: Upload APK
