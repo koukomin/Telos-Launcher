@@ -10,6 +10,10 @@ concurrency:
   group: build-debug-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,3 +35,29 @@ jobs:
         with:
           name: telos-default-debug-apk
           path: app/app/build/outputs/apk/default/debug/*.apk
+
+      # The steps below only run when the build above succeeded
+      - name: Publish rolling pre-release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          APK=$(ls app/app/build/outputs/apk/default/debug/*.apk | head -n 1)
+          SHORT_SHA=$(echo "$GITHUB_SHA" | cut -c1-7)
+          gh release delete telos-dev-build --cleanup-tag --yes || true
+          gh release create telos-dev-build "$APK#telos-debug.apk" \
+            --prerelease \
+            --target "$GITHUB_SHA" \
+            --title "Telos dev build ($SHORT_SHA)" \
+            --notes "Automatic debug build of branch \`$GITHUB_REF_NAME\` at commit $SHORT_SHA. Debug-signed, for testing only."
+      - name: Update pull request comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PR=$(gh pr list --head "$GITHUB_REF_NAME" --state open --json number --jq '.[0].number')
+          if [ -n "$PR" ]; then
+            SHORT_SHA=$(echo "$GITHUB_SHA" | cut -c1-7)
+            gh pr comment "$PR" --edit-last --create-if-none --body "Build passed for \`$SHORT_SHA\`
+
+          Download the APK: https://github.com/$GITHUB_REPOSITORY/releases/download/telos-dev-build/telos-debug.apk
+          Workflow run: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          fi
