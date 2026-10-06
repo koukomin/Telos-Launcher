@@ -253,7 +253,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     Icon(
                         painterResource(R.drawable.arrow_back_24px),
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurface,
+                        tint = MaterialTheme.colorScheme.primary,
                     )
                 }
                 Spacer(Modifier.weight(1f))
@@ -309,13 +309,13 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     CommsAvatar(
                         name = contact.displayName,
                         photoUri = contact.photoUri,
-                        size = 120.dp,
+                        size = 88.dp,
                     )
-                    Spacer(Modifier.height(16.dp))
+                    Spacer(Modifier.height(12.dp))
                     Text(
                         text = contact.displayName,
-                        style = MaterialTheme.typography.headlineMedium,
-                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Normal,
                         color = MaterialTheme.colorScheme.onSurface,
                     )
                     if (!contact.company.isNullOrBlank()) {
@@ -343,37 +343,39 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     Spacer(Modifier.height(20.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
-                        CommsRoundAction(
-                            icon = R.drawable.rd_ic_phone_green_vector,
-                            label = stringResource(R.string.search_action_call),
-                            enabled = primary.isNotEmpty(),
-                            onClick = { viewModel.dial(context, primary) },
-                            containerColor = RdGreenCall,
-                            contentColor = Color.White,
-                        )
-                        CommsRoundAction(
+                        CommsActionCard(
                             icon = R.drawable.rd_ic_messages,
-                            label = stringResource(R.string.search_action_message),
+                            label = stringResource(R.string.search_action_message).uppercase(),
                             enabled = primary.isNotEmpty(),
                             onClick = { context.tryStartActivity(MessengerIntentUtils.sms(primary)) },
+                            modifier = Modifier.weight(1f),
                         )
-                        CommsRoundAction(
+                        CommsActionCard(
+                            icon = R.drawable.rd_ic_phone_green_vector,
+                            label = stringResource(R.string.search_action_call).uppercase(),
+                            enabled = primary.isNotEmpty(),
+                            onClick = { viewModel.dial(context, primary) },
+                            modifier = Modifier.weight(1f),
+                        )
+                        CommsActionCard(
                             icon = R.drawable.videocam_24px,
-                            label = stringResource(R.string.comms_action_video),
-                            enabled = false,
-                            onClick = {},
+                            label = stringResource(R.string.comms_action_video).uppercase(),
+                            enabled = primary.isNotEmpty(),
+                            onClick = { context.tryStartActivity(MessengerIntentUtils.whatsApp(primary)) },
+                            modifier = Modifier.weight(1f),
                         )
-                        CommsRoundAction(
+                        CommsActionCard(
                             icon = R.drawable.mail_24px,
-                            label = stringResource(R.string.search_action_email),
+                            label = stringResource(R.string.search_action_email).uppercase(),
                             enabled = hasEmail,
                             onClick = {
                                 contact.emails.firstOrNull()?.let {
                                     context.tryStartActivity(MessengerIntentUtils.email(it))
                                 }
                             },
+                            modifier = Modifier.weight(1f),
                         )
                     }
                 }
@@ -404,9 +406,14 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
                             Text(
+                                text = "Mobile",
+                                style = MaterialTheme.typography.bodyLarge,
+                            )
+                            Text(
                                 text = number,
                                 style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.SemiBold,
+                                fontWeight = FontWeight.Normal,
+                                color = MaterialTheme.colorScheme.primary,
                             )
                             if (contact.phoneNumbers.size > 1) {
                                 TextButton(onClick = { viewModel.setDefaultNumber(contact.id, number) }) {
