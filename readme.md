@@ -111,7 +111,7 @@ adapted, the original license is respected.
 | [Thor](https://github.com/trinadhthatakula/Thor) | GPL-3.0 | Freeze backends (Shizuku, Dhizuku) and OEM suspend fallbacks |
 | [Undead Wallpaper](https://github.com/maocide/UndeadWallpaper) | GPL-3.0 | Video live wallpaper engine |
 | [Obtainium](https://github.com/ImranR98/Obtainium) | GPL-3.0 | Store behaviour: source URL parsing, update flow, update broadcasts |
-| [Transistor](https://zff.dev/y20k/transistor) | MIT | Radio player behaviour |
+| [Transistor](https://github.com/y20k/transistor) | MIT | Radio player behaviour |
 | [Radio-Browser](https://www.radio-browser.info/) | public API | Radio station directory |
 | [Shizuku](https://github.com/RikkaApps/Shizuku) and [Dhizuku](https://github.com/iamr0s/Dhizuku) | see project | Privileged operations (freeze, recording, install, network mode) |
 | [baresip](https://github.com/baresip/baresip) and [baresip-studio](https://github.com/juha-h/baresip-studio) | BSD-3-Clause | Planned SIP engine |
