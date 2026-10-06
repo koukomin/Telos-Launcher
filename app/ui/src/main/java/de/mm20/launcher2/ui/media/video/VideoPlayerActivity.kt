@@ -13,6 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import de.mm20.launcher2.comms.media.video.torrent.TorrentStreamer
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCompositionLocals
 import de.mm20.launcher2.ui.theme.LauncherTheme
@@ -35,8 +36,26 @@ class VideoPlayerActivity : BaseActivity() {
         val uris: List<Uri>
         val titles: List<String>
         val startIndex: Int
+        var torrentSource: String? = null
         val extraUris = intent.getStringArrayListExtra(EXTRA_URIS)
-        if (extraUris != null && extraUris.isNotEmpty()) {
+        val typed = intent.getStringExtra(EXTRA_SOURCE)
+        val viewed = intent.data?.toString()
+        val torrentCandidate = typed ?: viewed
+        if (torrentCandidate != null &&
+            (TorrentStreamer.isTorrent(torrentCandidate) || intent.type == "application/x-bittorrent" ||
+                intent.getBooleanExtra(EXTRA_IS_TORRENT, false))
+        ) {
+            torrentSource = torrentCandidate
+            uris = emptyList()
+            titles = emptyList()
+            startIndex = 0
+        } else if (typed != null) {
+            // a web address typed or pasted by the user
+            val uri = Uri.parse(typed)
+            uris = listOf(uri)
+            titles = listOf(uri.lastPathSegment?.substringBeforeLast('.') ?: typed)
+            startIndex = 0
+        } else if (extraUris != null && extraUris.isNotEmpty()) {
             uris = extraUris.map { Uri.parse(it) }
             titles = intent.getStringArrayListExtra(EXTRA_TITLES) ?: uris.map { it.lastPathSegment.orEmpty() }
             startIndex = intent.getIntExtra(EXTRA_INDEX, 0).coerceIn(0, uris.size - 1)
@@ -58,6 +77,7 @@ class VideoPlayerActivity : BaseActivity() {
                         uris = uris,
                         titles = titles,
                         startIndex = startIndex,
+                        torrentSource = torrentSource,
                         onClose = { finish() },
                         onPlayingChanged = { isPlayingState = it },
                         inPictureInPicture = inPictureInPicture,
@@ -65,6 +85,12 @@ class VideoPlayerActivity : BaseActivity() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        // stops a running torrent and deletes what it downloaded
+        TorrentStreamer.close()
+        super.onDestroy()
     }
 
     override fun onUserLeaveHint() {
@@ -87,5 +113,8 @@ class VideoPlayerActivity : BaseActivity() {
         const val EXTRA_URIS = "de.mm20.launcher2.video.URIS"
         const val EXTRA_TITLES = "de.mm20.launcher2.video.TITLES"
         const val EXTRA_INDEX = "de.mm20.launcher2.video.INDEX"
+        /** A web address, magnet link or .torrent address typed by the user */
+        const val EXTRA_SOURCE = "de.mm20.launcher2.video.SOURCE"
+        const val EXTRA_IS_TORRENT = "de.mm20.launcher2.video.IS_TORRENT"
     }
 }

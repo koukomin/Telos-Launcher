@@ -1204,6 +1204,16 @@ data class CommsGroup(
     val answerStyle: String = "buttons",
     val sim1Color: String = "green",
     val sim2Color: String = "blue",
+    /** Telos Video: online services. Keys and passwords are encrypted with the Android Keystore. */
+    val tmdbApiKeyEnc: String = "",
+    val subtitleApiKeyEnc: String = "",
+    val subtitleUser: String = "",
+    val subtitlePasswordEnc: String = "",
+    /** Comma separated language codes, most wanted first */
+    val subtitleLanguages: String = "en",
+    val subtitleAutoDownload: Boolean = false,
+    /** Torrent streaming only on Wi-Fi (or other unmetered networks) */
+    val torrentWifiOnly: Boolean = true,
     /** SIP account switched on: registered in the background so that calls can be received */
     val sipEnabled: Boolean = false,
     val sipUser: String = "",

@@ -45,7 +45,15 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object VideoRoute : NavKey
 
-private data class VideoGroup(val title: String, val subtitle: String, val items: List<VideoItem>)
+private data class VideoGroup(
+    val title: String,
+    val subtitle: String,
+    val items: List<VideoItem>,
+    val series: Boolean = false,
+    val year: Int? = null,
+)
+
+private fun metaKey(g: VideoGroup) = (if (g.series) "tv:" else "movie:") + g.title.lowercase() + ":" + g.year
 
 internal fun openPlayer(context: Context, list: List<VideoItem>, index: Int) {
     context.startActivity(
@@ -98,8 +106,40 @@ fun VideoScreen() {
         }.groupBy { it.first }.values.map { list ->
             val name = list.first().second.title
             val episodes = list.sortedWith(compareBy({ it.second.season }, { it.second.episode })).map { it.third }
-            VideoGroup(name, "${episodes.size} episodes", episodes)
+            VideoGroup(name, "${episodes.size} episodes", episodes, series = true)
         }.sortedBy { it.title.lowercase() }
+    }
+    val movies = remember(filtered) {
+        filtered.mapNotNull { item ->
+            val parsed = EpisodeParser.parse(item.fileName)
+            if (parsed.isEpisode) null else Triple(parsed.title.lowercase() + "|" + parsed.year, parsed, item)
+        }.groupBy { it.first }.values.map { list ->
+            val parsed = list.first().second
+            VideoGroup(parsed.title, parsed.year?.toString() ?: "${list.size} file(s)", list.map { it.third }, series = false, year = parsed.year)
+        }.sortedBy { it.title.lowercase() }
+    }
+    var showOpen by remember { mutableStateOf(false) }
+    var showServices by remember { mutableStateOf(false) }
+    var servicesVersion by remember { mutableStateOf(0) }
+    val services by produceState<de.mm20.launcher2.comms.media.video.VideoServicesConfig?>(null, servicesVersion) {
+        value = de.mm20.launcher2.comms.media.video.VideoServices.config()
+    }
+    val metas = remember { mutableStateMapOf<String, de.mm20.launcher2.comms.media.video.VideoMeta?>() }
+    LaunchedEffect(services, series, movies) {
+        val cfg = services ?: return@LaunchedEffect
+        if (!cfg.postersEnabled) return@LaunchedEffect
+        val language = cfg.languages.substringBefore(',').ifBlank { "en" }
+        for (g in series + movies) {
+            val k = metaKey(g)
+            if (metas.containsKey(k)) continue
+            val vm = de.mm20.launcher2.comms.media.video.VideoMetadata
+            if (vm.known(context, g.series, g.title, g.year)) {
+                metas[k] = vm.cached(context, g.series, g.title, g.year)
+                continue
+            }
+            metas[k] = vm.lookup(context, cfg.tmdbKey, g.series, g.title, g.year, language)
+            kotlinx.coroutines.delay(150)
+        }
     }
     val folders = remember(filtered) {
         filtered.groupBy { it.folder }
@@ -107,7 +147,16 @@ fun VideoScreen() {
             .sortedBy { it.title.lowercase() }
     }
 
-    de.mm20.launcher2.ui.media.MediaFrame("Videos") {
+    de.mm20.launcher2.ui.media.MediaFrame("Videos", actions = {
+        IconButton(onClick = { showOpen = true }) {
+            Icon(painterResource(R.drawable.link_24px), contentDescription = "Play from the web")
+        }
+        IconButton(onClick = { showServices = true }) {
+            Icon(painterResource(R.drawable.settings_24px), contentDescription = "Video services")
+        }
+    }) {
+    if (showOpen) OpenSourceDialog { showOpen = false }
+    if (showServices) VideoServicesDialog { showServices = false; servicesVersion++ }
     Column(Modifier.fillMaxSize()) {
         if (!hasPermission) {
             Column(
@@ -127,13 +176,25 @@ fun VideoScreen() {
 
         val current = group
         if (current != null) {
+            val meta = metas[metaKey(current)]
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
                 IconButton(onClick = { group = null }) {
                     Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back")
                 }
-                Column {
-                    Text(current.title, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    Text(current.subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                if (meta?.posterUrl != null) {
+                    Poster(meta.posterUrl, Modifier.width(60.dp).height(90.dp).clip(RoundedCornerShape(8.dp)))
+                    Spacer(Modifier.width(12.dp))
+                }
+                Column(Modifier.weight(1f)) {
+                    Text(meta?.title?.ifBlank { null } ?: current.title, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                    Text(
+                        listOfNotNull(meta?.year?.ifBlank { null }, meta?.rating?.takeIf { it > 0 }?.let { "★ %.1f".format(it) }, current.subtitle).joinToString(" · "),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    if (!meta?.overview.isNullOrBlank()) {
+                        Text(meta!!.overview, style = MaterialTheme.typography.bodySmall, maxLines = 4, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 4.dp))
+                    }
                 }
             }
             VideoList(current.items) { index -> openPlayer(context, current.items, index) }
@@ -141,7 +202,7 @@ fun VideoScreen() {
         }
 
         TabRow(selectedTabIndex = tab) {
-            listOf("Library", "Series", "Folders").forEachIndexed { i, title ->
+            listOf("Library", "Movies", "Series", "Folders").forEachIndexed { i, title ->
                 Tab(selected = tab == i, onClick = { tab = i }, text = { Text(title) })
             }
         }
@@ -166,7 +227,8 @@ fun VideoScreen() {
                     VideoRow(video) { openPlayer(context, filtered, filtered.indexOf(video)) }
                 }
             }
-            tab == 1 -> GroupList(series, "No series recognised. Name files like Show.S01E02.mkv") { group = it }
+            tab == 1 -> PosterGrid(movies, metas, "No movies found") { group = it }
+            tab == 2 -> PosterGrid(series, metas, "No series recognised. Name files like Show.S01E02.mkv") { group = it }
             else -> GroupList(folders, "") { group = it }
         }
     }
@@ -261,4 +323,58 @@ private fun formatDuration(ms: Long): String {
     val m = (total % 3600) / 60
     val s = total % 60
     return if (h > 0) "%d:%02d:%02d".format(h, m, s) else "%d:%02d".format(m, s)
+}
+
+@Composable
+internal fun Poster(url: String?, modifier: Modifier) {
+    Box(modifier.background(MaterialTheme.colorScheme.secondaryContainer), contentAlignment = Alignment.Center) {
+        if (url == null) {
+            Icon(painterResource(R.drawable.movie_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onSecondaryContainer)
+        } else {
+            coil.compose.AsyncImage(model = url, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
+        }
+    }
+}
+
+@Composable
+private fun PosterGrid(
+    groups: List<VideoGroup>,
+    metas: Map<String, de.mm20.launcher2.comms.media.video.VideoMeta?>,
+    emptyText: String,
+    onOpen: (VideoGroup) -> Unit,
+) {
+    if (groups.isEmpty()) {
+        Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
+            Text(emptyText, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        return
+    }
+    androidx.compose.foundation.lazy.grid.LazyVerticalGrid(
+        columns = androidx.compose.foundation.lazy.grid.GridCells.Adaptive(110.dp),
+        contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 24.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        items(groups.size) { i ->
+            val g = groups[i]
+            val meta = metas[metaKey(g)]
+            Column(Modifier.clickable { onOpen(g) }) {
+                if (meta?.posterUrl != null) {
+                    Poster(meta.posterUrl, Modifier.fillMaxWidth().aspectRatio(2f / 3f).clip(RoundedCornerShape(12.dp)))
+                } else {
+                    VideoThumb(g.items.first(), Modifier.fillMaxWidth().aspectRatio(2f / 3f).clip(RoundedCornerShape(12.dp)))
+                }
+                Text(
+                    meta?.title?.ifBlank { null } ?: g.title,
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Medium,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(top = 6.dp),
+                )
+                Text(g.subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
+            }
+        }
+    }
 }
