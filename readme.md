@@ -117,6 +117,8 @@ adapted, the original license is respected.
 | [baresip](https://github.com/baresip/baresip) and [baresip-studio](https://github.com/juha-h/baresip-studio) | BSD-3-Clause | Planned SIP engine |
 | AVM FRITZ!Box [TR-064](https://avm.de/service/schnittstellen/) | specification | Remote phonebook |
 
+The copyright notices of these projects are kept in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
 Other libraries are listed in `gradle/libs.versions.toml`, for example Jetpack Compose, Koin, Room,
 SQLCipher, Ktor, Coil, Media3 and ZXing.
 

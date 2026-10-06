@@ -61,5 +61,6 @@ you port, adapt or take design from another project, update `readme.md` **in the
 
 - add the feature to the matching list under "Features" (move it out of "Planned" if it was there);
 - add or update the project in the "Projects Telos is based on" table with its link and license
-  (check the license is GPL-3.0 compatible before copying code, and keep original notices);
+  (check the license is GPL-3.0 compatible before copying code) and keep its copyright notice in
+  `THIRD_PARTY_NOTICES.md`;
 - do not describe anything that is not implemented.
