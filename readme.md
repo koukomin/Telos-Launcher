@@ -73,6 +73,10 @@ plugin SDK for third-party search/weather/calendar providers. See the
 - Telos Video: video library with movies, series (recognised from file names such as
   `Show.S01E02.mkv`) and folders, continue watching, full screen player with subtitle selection,
   external subtitle files, picture in picture, also used when another app opens a video
+- Telos Photos: photo gallery by folder, full screen viewer with pinch zoom, EXIF viewer and editor,
+  removal of the location or of all metadata, sharing without metadata, and an editor (rotate, flip,
+  crop ratios, brightness, contrast, saturation, filters) that saves a copy; also opens images from
+  other apps
 - Telos Radio: see the radio entry above
 
 **Apps and system (`:services:freeze`, `:services:app-management`, `:services:store`)**
@@ -94,9 +98,6 @@ plugin SDK for third-party search/weather/calendar providers. See the
 - Greek and German translations in addition to the Kvaesitso locales
 
 ### Planned
-
-- Telos Media: music, video, radio and photo viewer/editor in one app, see
-  [the proposal](docs/proposals/telos-media.md)
 
 - SIP / VoIP calling on top of [baresip](https://github.com/baresip/baresip), including
   registration with a FRITZ!Box as an IP telephone

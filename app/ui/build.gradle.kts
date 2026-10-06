@@ -182,6 +182,7 @@ dependencies {
     implementation(libs.androidx.media3.session)
     implementation(libs.androidx.media3.ui)
     implementation(libs.androidx.media3.common)
+    implementation(libs.androidx.exifinterface)
     implementation("com.google.guava:guava:31.1-android")
     // === TELOS_PENDING_REVIEW_END: radio_mini_player ===
 

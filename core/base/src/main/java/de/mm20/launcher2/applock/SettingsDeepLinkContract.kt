@@ -16,5 +16,6 @@ object SettingsDeepLinkContract {
     const val ROUTE_RADIO = "settings/radio"
     const val ROUTE_MUSIC = "settings/music"
     const val ROUTE_VIDEO = "settings/video"
+    const val ROUTE_PHOTOS = "settings/photos"
     // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
 }
