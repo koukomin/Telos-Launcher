@@ -24,6 +24,11 @@ import de.mm20.launcher2.comms.model.RadioStation
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.comms.RadioViewModel
 import de.mm20.launcher2.ui.component.LauncherCard
+import androidx.navigation3.runtime.NavKey
+import kotlinx.serialization.Serializable
+
+@Serializable
+data object RadioDashboardRoute : NavKey
 
 @Composable
 fun RadioDashboardScreen() {

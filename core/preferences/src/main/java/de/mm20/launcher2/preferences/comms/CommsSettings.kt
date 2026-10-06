@@ -1,6 +1,7 @@
 // === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
 package de.mm20.launcher2.preferences.comms
 
+import de.mm20.launcher2.preferences.CommsGroup
 import de.mm20.launcher2.preferences.LauncherDataStore
 import kotlinx.coroutines.flow.map
 
@@ -70,6 +71,291 @@ class CommsSettings internal constructor(
         get() = dataStore.data.map { it.comms.enableSpamBlocking }
     fun setEnableSpamBlocking(enabled: Boolean) {
         dataStore.update { it.copy(comms = it.comms.copy(enableSpamBlocking = enabled)) }
+    }
+
+    val hideDialpadLetters
+        get() = dataStore.data.map { it.comms.hideDialpadLetters }
+    fun setHideDialpadLetters(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(hideDialpadLetters = enabled)) }
+    }
+
+    val callerNotes
+        get() = dataStore.data.map { it.comms.callerNotes }
+    fun setCallerNote(number: String, note: String?) {
+        dataStore.update { data ->
+            val map = data.comms.callerNotes.toMutableMap()
+            if (note.isNullOrBlank()) map.remove(number) else map[number] = note
+            data.copy(comms = data.comms.copy(callerNotes = map))
+        }
+    }
+
+    val numberDefaultSim
+        get() = dataStore.data.map { it.comms.numberDefaultSim }
+    fun setNumberDefaultSim(number: String, sim: String?) {
+        dataStore.update { data ->
+            val map = data.comms.numberDefaultSim.toMutableMap()
+            if (sim.isNullOrBlank() || sim == "ask") map.remove(number) else map[number] = sim
+            data.copy(comms = data.comms.copy(numberDefaultSim = map))
+        }
+    }
+
+    val blockHiddenNumbers
+        get() = dataStore.data.map { it.comms.blockHiddenNumbers }
+    fun setBlockHiddenNumbers(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(blockHiddenNumbers = enabled)) }
+    }
+
+    val blockUnknownNumbers
+        get() = dataStore.data.map { it.comms.blockUnknownNumbers }
+    fun setBlockUnknownNumbers(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(blockUnknownNumbers = enabled)) }
+    }
+
+    val blockInternational
+        get() = dataStore.data.map { it.comms.blockInternational }
+    fun setBlockInternational(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(blockInternational = enabled)) }
+    }
+
+    val clirEnabled
+        get() = dataStore.data.map { it.comms.clirEnabled }
+    fun setClirEnabled(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(clirEnabled = enabled)) }
+    }
+
+    val autoRecordCalls
+        get() = dataStore.data.map { it.comms.autoRecordCalls }
+    fun setAutoRecordCalls(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(autoRecordCalls = enabled)) }
+    }
+
+    val recordingQuality
+        get() = dataStore.data.map { it.comms.recordingQuality }
+    fun setRecordingQuality(quality: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(recordingQuality = quality)) }
+    }
+
+    val recordingBackend
+        get() = dataStore.data.map { it.comms.recordingBackend }
+    fun setRecordingBackend(backend: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(recordingBackend = backend)) }
+    }
+
+    val rememberDialpad
+        get() = dataStore.data.map { it.comms.rememberDialpad }
+    fun setRememberDialpad(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(rememberDialpad = enabled)) }
+    }
+
+    val lastDialpadDigits
+        get() = dataStore.data.map { it.comms.lastDialpadDigits }
+    fun setLastDialpadDigits(digits: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(lastDialpadDigits = digits.take(32))) }
+    }
+
+    val confirmBeforeCall
+        get() = dataStore.data.map { it.comms.confirmBeforeCall }
+    fun setConfirmBeforeCall(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(confirmBeforeCall = enabled)) }
+    }
+
+    val tapToCall
+        get() = dataStore.data.map { it.comms.tapToCall }
+    fun setTapToCall(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(tapToCall = enabled)) }
+    }
+
+    val autoRedial
+        get() = dataStore.data.map { it.comms.autoRedial }
+    fun setAutoRedial(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(autoRedial = enabled)) }
+    }
+
+    val autoRedialAttempts
+        get() = dataStore.data.map { it.comms.autoRedialAttempts }
+    fun setAutoRedialAttempts(count: Int) {
+        dataStore.update { it.copy(comms = it.comms.copy(autoRedialAttempts = count.coerceIn(1, 10))) }
+    }
+
+    val autoRedialDelaySec
+        get() = dataStore.data.map { it.comms.autoRedialDelaySec }
+    fun setAutoRedialDelaySec(sec: Int) {
+        dataStore.update { it.copy(comms = it.comms.copy(autoRedialDelaySec = sec.coerceIn(3, 60))) }
+    }
+
+    val autoOpenDialpad
+        get() = dataStore.data.map { it.comms.autoOpenDialpad }
+    fun setAutoOpenDialpad(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(autoOpenDialpad = enabled)) }
+    }
+
+    val rejectSmsTemplate
+        get() = dataStore.data.map { it.comms.rejectSmsTemplate }
+    fun setRejectSmsTemplate(text: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(rejectSmsTemplate = text.take(160))) }
+    }
+
+    val lastUsedSim
+        get() = dataStore.data.map { it.comms.lastUsedSim }
+    fun setLastUsedSim(id: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(lastUsedSim = id)) }
+    }
+
+    val pocketMode
+        get() = dataStore.data.map { it.comms.pocketMode }
+    fun setPocketMode(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(pocketMode = enabled)) }
+    }
+
+    val proximitySpeaker
+        get() = dataStore.data.map { it.comms.proximitySpeaker }
+    fun setProximitySpeaker(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(proximitySpeaker = enabled)) }
+    }
+
+    val showNumbersInRecents
+        get() = dataStore.data.map { it.comms.showNumbersInRecents }
+    fun setShowNumbersInRecents(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(showNumbersInRecents = enabled)) }
+    }
+
+    val missedCallPopup
+        get() = dataStore.data.map { it.comms.missedCallPopup }
+    fun setMissedCallPopup(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(missedCallPopup = enabled)) }
+    }
+
+    val postCallPopup
+        get() = dataStore.data.map { it.comms.postCallPopup }
+    fun setPostCallPopup(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(postCallPopup = enabled)) }
+    }
+
+    val inCallNotes
+        get() = dataStore.data.map { it.comms.inCallNotes }
+    fun setInCallNotes(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(inCallNotes = enabled)) }
+    }
+
+    val contactDefaultNumbers
+        get() = dataStore.data.map { it.comms.contactDefaultNumbers }
+    fun setContactDefaultNumber(contactId: String, number: String?) {
+        dataStore.update { data ->
+            val map = data.comms.contactDefaultNumbers.toMutableMap()
+            if (number.isNullOrBlank()) map.remove(contactId) else map[contactId] = number
+            data.copy(comms = data.comms.copy(contactDefaultNumbers = map))
+        }
+    }
+
+    val hiddenNumbers
+        get() = dataStore.data.map { it.comms.hiddenNumbers }
+    fun setHiddenNumber(number: String, hidden: Boolean) {
+        dataStore.update { data ->
+            val map = data.comms.hiddenNumbers.toMutableMap()
+            val key = number.filter { it.isDigit() || it == '+' }
+            if (!hidden || key.isBlank()) map.remove(key) else map[key] = "1"
+            data.copy(comms = data.comms.copy(hiddenNumbers = map))
+        }
+    }
+
+    val hideFromContacts
+        get() = dataStore.data.map { it.comms.hideFromContacts }
+    fun setHideFromContacts(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(hideFromContacts = enabled)) }
+    }
+
+    val hideFromRecents
+        get() = dataStore.data.map { it.comms.hideFromRecents }
+    fun setHideFromRecents(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(hideFromRecents = enabled)) }
+    }
+
+    val maskHiddenIncoming
+        get() = dataStore.data.map { it.comms.maskHiddenIncoming }
+    fun setMaskHiddenIncoming(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(maskHiddenIncoming = enabled)) }
+    }
+
+    val stealthHiderMenu
+        get() = dataStore.data.map { it.comms.stealthHiderMenu }
+    fun setStealthHiderMenu(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(stealthHiderMenu = enabled)) }
+    }
+
+    val phoneAppLock
+        get() = dataStore.data.map { it.comms.phoneAppLock }
+    fun setPhoneAppLock(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(phoneAppLock = enabled)) }
+    }
+
+    val callProtectMode
+        get() = dataStore.data.map { it.comms.callProtectMode }
+    fun setCallProtectMode(mode: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(callProtectMode = mode)) }
+    }
+
+    val protectedCallNumbers
+        get() = dataStore.data.map { it.comms.protectedCallNumbers }
+    fun setProtectedCallNumber(number: String, protected: Boolean) {
+        dataStore.update { data ->
+            val map = data.comms.protectedCallNumbers.toMutableMap()
+            val key = number.filter { it.isDigit() || it == '+' }
+            if (!protected || key.isBlank()) map.remove(key) else map[key] = "1"
+            data.copy(comms = data.comms.copy(protectedCallNumbers = map))
+        }
+    }
+
+    val raiseToAnswer
+        get() = dataStore.data.map { it.comms.raiseToAnswer }
+    fun setRaiseToAnswer(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(raiseToAnswer = enabled)) }
+    }
+    val flipToDecline
+        get() = dataStore.data.map { it.comms.flipToDecline }
+    fun setFlipToDecline(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(flipToDecline = enabled)) }
+    }
+    val rainMode
+        get() = dataStore.data.map { it.comms.rainMode }
+    fun setRainMode(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(rainMode = enabled)) }
+    }
+    val volumeDnd
+        get() = dataStore.data.map { it.comms.volumeDnd }
+    fun setVolumeDnd(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(volumeDnd = enabled)) }
+    }
+    val volumeDndLockOnly
+        get() = dataStore.data.map { it.comms.volumeDndLockOnly }
+    fun setVolumeDndLockOnly(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(volumeDndLockOnly = enabled)) }
+    }
+    val preferredNetworkMode
+        get() = dataStore.data.map { it.comms.preferredNetworkMode }
+    fun setPreferredNetworkMode(mode: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(preferredNetworkMode = mode)) }
+    }
+    val networkBackend
+        get() = dataStore.data.map { it.comms.networkBackend }
+    fun setNetworkBackend(backend: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(networkBackend = backend)) }
+    }
+    val screenOffLte
+        get() = dataStore.data.map { it.comms.screenOffLte }
+    fun setScreenOffLte(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(screenOffLte = enabled)) }
+    }
+    val batterySaverLte
+        get() = dataStore.data.map { it.comms.batterySaverLte }
+    fun setBatterySaverLte(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(batterySaverLte = enabled)) }
+    }
+
+    val snapshot
+        get() = dataStore.data.map { it.comms }
+
+    fun replaceFromBackup(group: CommsGroup) {
+        dataStore.update { it.copy(comms = group) }
     }
 }
 // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===

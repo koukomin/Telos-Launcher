@@ -16,4 +16,7 @@ data class CallLogEntry(
     val type: CallType,
     val timestamp: Long,
     val durationSeconds: Long,
+    val photoUri: String? = null,
+    val simLabel: String? = null,
+    val simAccountId: String? = null,
 )

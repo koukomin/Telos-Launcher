@@ -118,6 +118,7 @@ dependencies {
 
     implementation(libs.coil.core)
     implementation(libs.coil.compose)
+    implementation(libs.zxing.core)
 
     implementation(libs.smartspacer) {
         exclude(group = "com.github.skydoves", module = "balloon")

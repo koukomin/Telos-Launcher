@@ -48,7 +48,7 @@ internal class VirtualPhoneApp(context: Context) : Application {
             val intent = Intent().apply {
                 setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
                 putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_COMMS)
-                putExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB, "dialpad")
+                putExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB, "recents")
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
             context.startActivity(intent, options)
@@ -59,10 +59,13 @@ internal class VirtualPhoneApp(context: Context) : Application {
     }
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.call_24px) ?: return null
+        val drawable = androidx.core.content.ContextCompat.getDrawable(
+            context,
+            de.mm20.launcher2.base.R.drawable.ic_telos_phone,
+        ) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = TransparentLayer
+            backgroundLayer = TransparentLayer,
         )
     }
 
@@ -155,8 +158,7 @@ internal class VirtualRadioApp(context: Context) : Application {
         return try {
             val intent = Intent().apply {
                 setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
-                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_COMMS)
-                putExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB, "radio")
+                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_RADIO)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
             context.startActivity(intent, options)

@@ -81,6 +81,7 @@ internal object LauncherSettingsDataKSerializer : KSerializer<LauncherSettingsDa
             mergeGroup(value.webAppBrowsing, WebAppBrowsingGroup.serializer())
             mergeGroup(value.contextProfiles, ContextProfilesGroup.serializer())
             mergeGroup(value.desktopMode, DesktopModeGroup.serializer())
+            mergeGroup(value.comms, CommsGroup.serializer())
         }
         jsonEncoder.encodeJsonElement(merged)
     }
@@ -137,6 +138,7 @@ internal object LauncherSettingsDataKSerializer : KSerializer<LauncherSettingsDa
             webAppBrowsing = json.decodeFromJsonElement(WebAppBrowsingGroup.serializer(), obj),
             contextProfiles = json.decodeFromJsonElement(ContextProfilesGroup.serializer(), obj),
             desktopMode = json.decodeFromJsonElement(DesktopModeGroup.serializer(), obj),
+            comms = json.decodeFromJsonElement(CommsGroup.serializer(), obj),
         )
     }
 }

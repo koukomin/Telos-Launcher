@@ -1,173 +1,275 @@
-// === TELOS_PENDING_REVIEW_START: right_dialer_ui ===
 package de.mm20.launcher2.ui.comms
 
 import android.content.Intent
+import android.media.AudioManager
+import android.media.ToneGenerator
 import android.provider.ContactsContract
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkVertically
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.alpha
-import de.mm20.launcher2.ui.settings.comms.CommsSettingsRoute
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.comms.intent.MessengerIntentUtils
 import de.mm20.launcher2.comms.model.DialerContact
-import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.comms.CommsSettingsRoute
+
+private data class DialpadKeySpec(val digit: String, val latin: String, val greek: String, val cyrillic: String)
 
 private val DIALPAD_KEYS = listOf(
-    Triple("1", "oo", ""),
-    Triple("2", "ABC", "ΑΒΓ"),
-    Triple("3", "DEF", "ΔΕΖ"),
-    Triple("4", "GHI", "ΗΘΙ"),
-    Triple("5", "JKL", "ΚΛΜ"),
-    Triple("6", "MNO", "ΝΞΟ"),
-    Triple("7", "PQRS", "ΠΡΣ"),
-    Triple("8", "TUV", "ΤΥΦ"),
-    Triple("9", "WXYZ", "ΧΨΩ"),
-    Triple("*", "", ""),
-    Triple("0", "+", ""),
-    Triple("#", "", ""),
+    DialpadKeySpec("1", "", "", ""),
+    DialpadKeySpec("2", "ABC", "ΑΒΓ", "АБВГ"),
+    DialpadKeySpec("3", "DEF", "ΔΕΖ", "ДЕЖЗ"),
+    DialpadKeySpec("4", "GHI", "ΗΘΙ", "ИЙКЛ"),
+    DialpadKeySpec("5", "JKL", "ΚΛΜ", "МНОП"),
+    DialpadKeySpec("6", "MNO", "ΝΞΟ", "РСТУ"),
+    DialpadKeySpec("7", "PQRS", "ΠΡΣ", "ФХЦЧ"),
+    DialpadKeySpec("8", "TUV", "ΤΥΦ", "ШЩЪЫ"),
+    DialpadKeySpec("9", "WXYZ", "ΧΨΩ", "ЬЭЮЯ"),
+    DialpadKeySpec("*", "", "", ""),
+    DialpadKeySpec("0", "+", "+", "+"),
+    DialpadKeySpec("#", "", "", ""),
 )
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun DialpadScreen() {
+fun DialpadScreen(initialNumber: String = "") {
     val viewModel: DialpadViewModel = viewModel()
     val context = LocalContext.current
+    LaunchedEffect(initialNumber) { viewModel.seedInput(initialNumber) }
     val haptic = LocalHapticFeedback.current
+    val backStack = LocalBackStack.current
 
     val input by viewModel.input.collectAsStateWithLifecycle()
     val t9Results by viewModel.t9Results.collectAsStateWithLifecycle()
-    // === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
+    val recents by viewModel.recents.collectAsStateWithLifecycle()
     val speedDials by viewModel.speedDials.collectAsStateWithLifecycle()
-    val backStack = de.mm20.launcher2.ui.locals.LocalBackStack.current
-    // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===
+    val alphabet by viewModel.t9Alphabet.collectAsStateWithLifecycle()
+    val sounds by viewModel.dialpadSounds.collectAsStateWithLifecycle()
+    val vibrate by viewModel.dialpadVibration.collectAsStateWithLifecycle()
+    val hideLetters by viewModel.hideDialpadLetters.collectAsStateWithLifecycle()
+    val vaultUnlocked by viewModel.isVaultUnlocked.collectAsStateWithLifecycle()
+    val vaultAuthRequested by viewModel.vaultAuthRequested.collectAsStateWithLifecycle()
+    val sims = remember { de.mm20.launcher2.comms.telephony.TelosDialer.callCapableSims(context) }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        // Top T9 Search Match Header
-        AnimatedVisibility(
-            visible = t9Results.isNotEmpty(),
-            enter = expandVertically(),
-            exit = shrinkVertically()
+    LaunchedEffect(vaultUnlocked) {
+        if (vaultUnlocked) backStack.add(HiddenContactsRoute)
+    }
+    LaunchedEffect(vaultAuthRequested) {
+        if (!vaultAuthRequested) return@LaunchedEffect
+        val activity = context as? androidx.fragment.app.FragmentActivity ?: return@LaunchedEffect
+        val ok = de.mm20.launcher2.comms.AuthManager().authenticateNative(activity, "Hidden contacts")
+        if (ok) viewModel.onVaultAuthSuccess()
+    }
+
+    val toneGenerator = remember {
+        runCatching { ToneGenerator(AudioManager.STREAM_DTMF, 80) }.getOrNull()
+    }
+    DisposableEffect(toneGenerator) {
+        onDispose { toneGenerator?.release() }
+    }
+
+    fun playTone(digit: Char) {
+        if (!sounds) return
+        val tone = when (digit) {
+            '0' -> ToneGenerator.TONE_DTMF_0
+            '1' -> ToneGenerator.TONE_DTMF_1
+            '2' -> ToneGenerator.TONE_DTMF_2
+            '3' -> ToneGenerator.TONE_DTMF_3
+            '4' -> ToneGenerator.TONE_DTMF_4
+            '5' -> ToneGenerator.TONE_DTMF_5
+            '6' -> ToneGenerator.TONE_DTMF_6
+            '7' -> ToneGenerator.TONE_DTMF_7
+            '8' -> ToneGenerator.TONE_DTMF_8
+            '9' -> ToneGenerator.TONE_DTMF_9
+            '*' -> ToneGenerator.TONE_DTMF_S
+            '#' -> ToneGenerator.TONE_DTMF_P
+            else -> return
+        }
+        toneGenerator?.startTone(tone, 150)
+    }
+
+    fun onDigit(digit: String, long: Boolean) {
+        if (vibrate) haptic.performHapticFeedback(
+            if (long) HapticFeedbackType.LongPress else HapticFeedbackType.TextHandleMove
+        )
+        if (long) {
+            if (digit == "0") {
+                playTone('0')
+                viewModel.onKeyPressed('+')
+            } else if (digit == "1" && speedDials[1].isNullOrEmpty()) {
+                viewModel.dialVoicemail(context)
+            } else if (digit.first().isDigit()) {
+                val number = speedDials[digit.toInt()]
+                if (number != null) viewModel.dial(context, number)
+                else Toast.makeText(context, "Speed dial not assigned", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            playTone(digit.first())
+            viewModel.onKeyPressed(digit.first())
+        }
+    }
+
+    Column(Modifier.fillMaxSize()) {
+        Box(Modifier.weight(1f).fillMaxWidth()) {
+            if (input.isBlank()) {
+                if (recents.isEmpty()) {
+                    EmptyCommsTab(
+                        title = stringResource(R.string.recents_empty_title),
+                        message = stringResource(R.string.recents_empty_msg),
+                    )
+                } else {
+                    LazyColumn(modifier = Modifier.fillMaxSize()) {
+                        items(recents, key = { it.id }) { call ->
+                            RecentCallRow(
+                                call = call,
+                                onCall = { viewModel.dial(context, call.phoneNumber) },
+                                onSms = { context.tryStartActivity(MessengerIntentUtils.sms(call.phoneNumber)) },
+                                onDelete = { viewModel.deleteRecent(call) },
+                                onDetails = {
+                                    backStack.add(ContactDetailsRoute(phoneNumber = call.phoneNumber))
+                                },
+                            )
+                        }
+                    }
+                }
+            } else {
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    item {
+                        Text(
+                            text = stringResource(R.string.search_action_contact),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    val intent = Intent(Intent.ACTION_INSERT).apply {
+                                        type = ContactsContract.RawContacts.CONTENT_TYPE
+                                        putExtra(ContactsContract.Intents.Insert.PHONE, input)
+                                    }
+                                    context.tryStartActivity(intent)
+                                }
+                                .padding(horizontal = 16.dp, vertical = 12.dp),
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+                    items(t9Results, key = { it.id }) { contact ->
+                        T9ContactRow(
+                            contact = contact,
+                            onCall = {
+                                contact.phoneNumbers.firstOrNull()?.let { viewModel.dial(context, it) }
+                            },
+                            onDetails = {
+                                backStack.add(ContactDetailsRoute(contactId = contact.id))
+                            },
+                        )
+                    }
+                }
+            }
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(androidx.compose.foundation.shape.RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp))
+                .background(MaterialTheme.colorScheme.surfaceContainerLow)
+                .padding(horizontal = 12.dp, vertical = 12.dp),
         ) {
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                items(t9Results, key = { it.id }) { contact ->
-                    T9ResultCard(
-                        contact = contact,
-                        onClick = { number -> viewModel.dial(context, number) }
+                Spacer(Modifier.width(48.dp))
+                Text(
+                    text = input.ifEmpty { " " },
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Light,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.weight(1f),
+                )
+                IconButton(onClick = { backStack.add(CommsSettingsRoute) }) {
+                    Icon(
+                        painterResource(R.drawable.settings_24px),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             }
-        }
 
-        Spacer(Modifier.weight(1f))
-
-        // Input Display Area
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            // === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                IconButton(onClick = { backStack.add(CommsSettingsRoute) }) {
-                    Icon(painterResource(R.drawable.settings_24px), contentDescription = "Settings", tint = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-            }
-            // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===
-            Text(
-                text = input.ifEmpty { " " },
-                style = MaterialTheme.typography.displayMedium,
-                fontWeight = FontWeight.Light,
-                color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        }
-
-        // Keypad Area
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 32.dp, vertical = 8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
             for (row in DIALPAD_KEYS.chunked(3)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    horizontalArrangement = Arrangement.SpaceEvenly,
                 ) {
-                    for ((digit, latin, greek) in row) {
+                    for (key in row) {
+                        val letters = when (alphabet) {
+                            "greek" -> key.greek
+                            "cyrillic" -> key.cyrillic
+                            else -> key.latin
+                        }.ifEmpty { if (key.digit == "0") "+" else "" }
                         DialpadKey(
-                            digit = digit,
-                            sublabel = listOf(latin, greek).filter { it.isNotEmpty() }.joinToString(" "),
-                            onClick = { 
-                                haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                                viewModel.onKeyPressed(digit.first()) 
-                            },
-                            onLongClick = {
-                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                if (digit == "0") {
-                                    viewModel.onKeyPressed('+')
-                                } else if (digit.first().isDigit()) {
-                                    // === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
-                                    val number = speedDials[digit.toInt()]
-                                    if (number != null) {
-                                        viewModel.dial(context, number)
-                                    } else {
-                                        android.widget.Toast.makeText(context, "Speed dial not assigned", android.widget.Toast.LENGTH_SHORT).show()
-                                    }
-                                    // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===
-                                }
-                            }
+                            digit = key.digit,
+                            sublabel = if (hideLetters) "" else letters,
+                            onClick = { onDigit(key.digit, long = false) },
+                            onLongClick = { onDigit(key.digit, long = true) },
                         )
                     }
                 }
             }
 
-            Spacer(Modifier.height(8.dp))
-
-            // Bottom Actions Row (Dual-SIM / Quick Call)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp),
+                    .padding(top = 8.dp, bottom = 8.dp),
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                // Add to contacts
-                Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
                     IconButton(
                         onClick = {
                             val intent = Intent(Intent.ACTION_INSERT).apply {
@@ -176,65 +278,88 @@ fun DialpadScreen() {
                             }
                             context.tryStartActivity(intent)
                         },
-                        modifier = Modifier.size(56.dp)
+                        enabled = input.isNotBlank(),
+                        modifier = Modifier.size(56.dp),
                     ) {
                         Icon(
-                            painter = painterResource(R.drawable.person_add_24px),
-                            contentDescription = "Add to contacts",
-                            tint = if (input.isNotEmpty()) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
+                            painterResource(R.drawable.person_add_24px),
+                            contentDescription = stringResource(R.string.search_action_contact),
+                            tint = MaterialTheme.colorScheme.onSurface.copy(
+                                alpha = if (input.isNotBlank()) 1f else 0.3f
+                            ),
                         )
                     }
                 }
-
-                // Call Button
-                Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                    FloatingActionButton(
-                        onClick = { viewModel.dial(context) },
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                        modifier = Modifier.size(72.dp),
-                        shape = CircleShape
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.call_24px),
-                            contentDescription = "Call",
-                            modifier = Modifier.size(32.dp)
-                        )
+                if (sims.size >= 2) {
+                    sims.take(2).forEach { sim ->
+                        Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                            FloatingActionButton(
+                                onClick = {
+                                    viewModel.dialSim(
+                                        context,
+                                        input.filter { it.isDigit() || it == '+' || it == '*' || it == '#' },
+                                        sim.handle,
+                                    )
+                                },
+                                containerColor = MaterialTheme.colorScheme.primary,
+                                contentColor = MaterialTheme.colorScheme.onPrimary,
+                                modifier = Modifier.size(56.dp),
+                                shape = CircleShape,
+                            ) {
+                                Text(sim.label.take(4), style = MaterialTheme.typography.labelSmall)
+                            }
+                        }
+                    }
+                } else {
+                    Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                        FloatingActionButton(
+                            onClick = { viewModel.dial(context) },
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            contentColor = MaterialTheme.colorScheme.onPrimary,
+                            modifier = Modifier.size(68.dp),
+                            shape = CircleShape,
+                        ) {
+                            Icon(
+                                painterResource(R.drawable.rd_ic_phone_green_vector),
+                                contentDescription = stringResource(R.string.search_action_call),
+                                modifier = Modifier.size(28.dp),
+                            )
+                        }
                     }
                 }
-
-                // Backspace
-                Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                    Surface(
-                        shape = CircleShape,
-                        color = androidx.compose.ui.graphics.Color.Transparent,
+                Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                    IconButton(
+                        onClick = {
+                            if (input.isNotEmpty()) {
+                                if (vibrate) haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                                viewModel.onBackspace()
+                            }
+                        },
                         modifier = Modifier
                             .size(56.dp)
                             .alpha(if (input.isNotEmpty()) 1f else 0f)
                             .combinedClickable(
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null,
-                                onClick = { 
+                                onClick = {
                                     if (input.isNotEmpty()) {
-                                        haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                                        viewModel.onBackspace() 
+                                        if (vibrate) haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                                        viewModel.onBackspace()
                                     }
                                 },
-                                onLongClick = { 
+                                onLongClick = {
                                     if (input.isNotEmpty()) {
-                                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                        viewModel.onClear() 
+                                        if (vibrate) haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                        viewModel.onClear()
                                     }
-                                }
-                            )
+                                },
+                            ),
                     ) {
-                        Box(contentAlignment = Alignment.Center) {
-                            Icon(
-                                painter = painterResource(R.drawable.close_24px),
-                                contentDescription = "Backspace",
-                                tint = MaterialTheme.colorScheme.onSurface
-                            )
-                        }
+                        Icon(
+                            painterResource(R.drawable.rd_ic_backspace),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurface,
+                        )
                     }
                 }
             }
@@ -244,35 +369,37 @@ fun DialpadScreen() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun DialpadKey(digit: String, sublabel: String, onClick: () -> Unit, onLongClick: () -> Unit) {
-    Surface(
-        modifier = Modifier.size(76.dp)
+private fun DialpadKey(
+    digit: String,
+    sublabel: String,
+    onClick: () -> Unit,
+    onLongClick: () -> Unit,
+) {
+    Box(
+        modifier = Modifier
+            .size(76.dp)
+            .background(MaterialTheme.colorScheme.surfaceContainerHighest, CircleShape)
             .combinedClickable(
                 interactionSource = remember { MutableInteractionSource() },
                 indication = null,
                 onClick = onClick,
-                onLongClick = onLongClick
+                onLongClick = onLongClick,
             ),
-        shape = CircleShape,
-        color = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.5f),
-        contentColor = MaterialTheme.colorScheme.onSurface,
+        contentAlignment = Alignment.Center,
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-        ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = digit,
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Medium
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.onSurface,
             )
             if (sublabel.isNotEmpty()) {
                 Text(
                     text = sublabel,
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
             }
         }
@@ -280,40 +407,49 @@ private fun DialpadKey(digit: String, sublabel: String, onClick: () -> Unit, onL
 }
 
 @Composable
-private fun T9ResultCard(contact: DialerContact, onClick: (String) -> Unit) {
-    val primaryNumber = contact.phoneNumbers.firstOrNull() ?: return
-    Card(
+private fun T9ContactRow(
+    contact: DialerContact,
+    onCall: () -> Unit,
+    onDetails: () -> Unit,
+) {
+    Row(
         modifier = Modifier
-            .width(140.dp)
-            .height(64.dp)
-            .clip(RoundedCornerShape(16.dp))
-            .clickable { onClick(primaryNumber) },
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.8f)
-        )
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp, vertical = 3.dp)
+            .clip(CommsRowShape)
+            .background(MaterialTheme.colorScheme.surfaceContainerLow)
+            .clickable(onClick = onDetails)
+            .padding(horizontal = 12.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 12.dp),
-            verticalArrangement = Arrangement.Center
-        ) {
+        CommsAvatar(
+            name = contact.displayName,
+            photoUri = contact.photoUri,
+            size = 48.dp,
+        )
+        Spacer(Modifier.width(14.dp))
+        Column(Modifier.weight(1f)) {
             Text(
                 text = contact.displayName,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.labelLarge,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSecondaryContainer
             )
             Text(
-                text = primaryNumber,
+                text = contact.phoneNumbers.firstOrNull().orEmpty(),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.8f)
+            )
+        }
+        IconButton(onClick = onCall) {
+            Icon(
+                painterResource(R.drawable.rd_ic_phone_green_vector),
+                contentDescription = null,
+                tint = RdGreenCall,
             )
         }
     }
 }
-// === TELOS_PENDING_REVIEW_END: right_dialer_ui ===

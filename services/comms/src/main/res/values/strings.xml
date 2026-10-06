@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="volume_dnd_accessibility">Volume keys can toggle Do Not Disturb when Phone is the default dialer.</string>
+</resources>

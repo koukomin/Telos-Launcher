@@ -8,4 +8,17 @@ class SpamRepositoryImpl(private val context: Context) : SpamRepository {
         val db = SpamDatabase.getDatabase(context)
         return db.blockedNumberDao().getBlockedNumber(number) != null
     }
+
+    override suspend fun setBlocked(number: String, blocked: Boolean) {
+        val db = SpamDatabase.getDatabase(context)
+        if (blocked) {
+            db.blockedNumberDao().insert(BlockedNumberEntity(number))
+        } else {
+            db.blockedNumberDao().delete(BlockedNumberEntity(number))
+        }
+    }
+
+    override suspend fun getAllBlocked(): List<String> {
+        return SpamDatabase.getDatabase(context).blockedNumberDao().getAllNumbers()
+    }
 }

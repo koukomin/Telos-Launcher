@@ -7,4 +7,8 @@ import kotlinx.coroutines.flow.Flow
 interface ContactDirectoryRepository {
     /** Empty (not an error) while READ_CONTACTS isn't granted. */
     fun observeContacts(): Flow<List<DialerContact>>
+    suspend fun containsNumber(number: String): Boolean
+    suspend fun findDuplicateGroups(): List<List<DialerContact>>
+    suspend fun deleteContact(id: Long): Boolean
+    suspend fun importVcf(content: String): Int
 }

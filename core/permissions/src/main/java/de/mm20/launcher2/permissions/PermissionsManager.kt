@@ -318,7 +318,10 @@ internal class PermissionsManagerImpl(
             PermissionGroup.CallLog -> {
                 ActivityCompat.requestPermissions(
                     context,
-                    arrayOf(android.Manifest.permission.READ_CALL_LOG),
+                    arrayOf(
+                        android.Manifest.permission.READ_CALL_LOG,
+                        android.Manifest.permission.WRITE_CALL_LOG,
+                    ),
                     permissionGroup.ordinal
                 )
             }
@@ -500,7 +503,10 @@ internal class PermissionsManagerImpl(
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION
         )
-        private val contactPermissions = arrayOf(Manifest.permission.READ_CONTACTS)
+        private val contactPermissions = arrayOf(
+            Manifest.permission.READ_CONTACTS,
+            Manifest.permission.WRITE_CONTACTS,
+        )
         private val externalStoragePermissions = arrayOf(
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE

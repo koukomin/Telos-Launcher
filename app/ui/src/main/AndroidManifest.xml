@@ -69,6 +69,96 @@
         </activity>
 
         <activity
+            android:name=".comms.CallActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:showOnLockScreen="true"
+            android:showWhenLocked="true"
+            android:taskAffinity="${applicationId}.incall"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:turnScreenOn="true" />
+
+        <activity
+            android:name=".comms.MissedCallPopupActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleTop"
+            android:taskAffinity="${applicationId}.missedpopup"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
+
+        <service
+            android:name=".comms.FloatingNotesService"
+            android:exported="false" />
+
+        <receiver
+            android:name=".comms.RecentsWidgetProvider"
+            android:exported="true"
+            android:label="Recent calls">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/recents_widget_info" />
+        </receiver>
+        <receiver
+            android:name=".comms.DirectCallWidgetProvider"
+            android:exported="true"
+            android:label="Dialpad">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/direct_call_widget_info" />
+        </receiver>
+        <service
+            android:name=".comms.NetworkTileService"
+            android:exported="true"
+            android:icon="@android:drawable/stat_sys_data_connected"
+            android:label="Cellular"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".comms.FakeCallActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleTask"
+            android:showOnLockScreen="true"
+            android:showWhenLocked="true"
+            android:taskAffinity="${applicationId}.fakecall"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:turnScreenOn="true" />
+
+        <activity
+            android:name=".comms.DialerHandleActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoDisplay">
+            <intent-filter>
+                <action android:name="android.intent.action.DIAL" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tel" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.DIAL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.CALL" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="tel" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".settings.SettingsActivity"
             android:exported="true"
             android:label="@string/settings"

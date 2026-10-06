@@ -5,7 +5,9 @@ import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.comms.model.CallLogEntry
 import de.mm20.launcher2.comms.model.DialerContact
+import de.mm20.launcher2.comms.repository.CallLogRepository
 import de.mm20.launcher2.comms.repository.ContactDirectoryRepository
 import de.mm20.launcher2.comms.t9.T9SearchEngine
 import de.mm20.launcher2.comms.AuthManager
@@ -17,7 +19,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -25,12 +29,27 @@ import org.koin.core.component.inject
 class DialpadViewModel : ViewModel(), KoinComponent {
 
     private val contactDirectory: ContactDirectoryRepository by inject()
+    private val callLogRepository: CallLogRepository by inject()
     private val t9SearchEngine: T9SearchEngine by inject()
     private val commsSettings: CommsSettings by inject()
     private val authManager = AuthManager()
 
     val speedDials = commsSettings.speedDials
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
+    val t9Alphabet = commsSettings.t9Alphabet
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "latin")
+    val dialpadSounds = commsSettings.dialpadSounds
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    val dialpadVibration = commsSettings.dialpadVibration
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    val hideDialpadLetters = commsSettings.hideDialpadLetters
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    val clirEnabled = commsSettings.clirEnabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    val clirPrefix = commsSettings.clirPrefix
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
+    val recents: StateFlow<List<CallLogEntry>> = callLogRepository.observeRecents()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     private val _input = MutableStateFlow("")
     val input: StateFlow<String> = _input.map { 
@@ -50,9 +69,25 @@ class DialpadViewModel : ViewModel(), KoinComponent {
         t9SearchEngine.search(query, contacts)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    init {
+        viewModelScope.launch {
+            if (commsSettings.rememberDialpad.first() && _input.value.isEmpty()) {
+                val saved = commsSettings.lastDialpadDigits.first()
+                if (saved.isNotEmpty()) _input.value = saved
+            }
+        }
+    }
+
+    fun seedInput(number: String) {
+        if (number.isEmpty()) return
+        _input.value = number.filter { it.isDigit() || it == '+' || it == '*' || it == '#' || it == ';' || it == ',' }
+        persistInput()
+    }
+
     fun onKeyPressed(key: Char) {
         val newInput = _input.value + key
         _input.value = newInput
+        persistInput()
         checkVaultTrigger(newInput)
     }
 
@@ -64,8 +99,8 @@ class DialpadViewModel : ViewModel(), KoinComponent {
             val pin = currentInput.removeSurrounding("#")
             if (authManager.hasCustomPin() && authManager.authenticateCustom(pin)) {
                 _isVaultUnlocked.value = true
+                de.mm20.launcher2.comms.privacy.PrivacySession.unlockHider()
             } else if (!authManager.hasCustomPin()) {
-                // Initial setup or native auth request
                 _vaultAuthRequested.value = true
             }
         }
@@ -74,14 +109,31 @@ class DialpadViewModel : ViewModel(), KoinComponent {
     fun onVaultAuthSuccess() {
         _isVaultUnlocked.value = true
         _vaultAuthRequested.value = false
+        de.mm20.launcher2.comms.privacy.PrivacySession.unlockHider()
     }
 
     fun onBackspace() {
         _input.value = _input.value.dropLast(1)
+        persistInput()
     }
 
     fun onClear() {
         _input.value = ""
+        persistInput()
+    }
+
+    private fun persistInput() {
+        viewModelScope.launch {
+            if (commsSettings.rememberDialpad.first()) {
+                commsSettings.setLastDialpadDigits(_input.value)
+            }
+        }
+    }
+
+    fun dialVoicemail(context: Context) {
+        val tm = context.getSystemService(android.telephony.TelephonyManager::class.java)
+        val number = runCatching { tm?.voiceMailNumber }.getOrNull().orEmpty()
+        if (number.isNotEmpty()) dial(context, number)
     }
 
     /**
@@ -89,10 +141,22 @@ class DialpadViewModel : ViewModel(), KoinComponent {
      * no permission) rather than [Intent.ACTION_CALL] (would place the call directly and needs
      * runtime `CALL_PHONE` permission handling) - the user still confirms the call themselves.
      */
-    fun dial(context: Context, phoneNumber: String = _input.value) {
-        val dialNumber = if (phoneNumber == input.value) _input.value else phoneNumber
+    fun dial(context: Context, phoneNumber: String? = null) {
+        val number = phoneNumber ?: _input.value
+        if (number.isEmpty()) return
+        viewModelScope.launch {
+            de.mm20.launcher2.comms.privacy.CallGuard.place(context, number)
+        }
+    }
+
+    fun dialSim(context: Context, phoneNumber: String, handle: android.telecom.PhoneAccountHandle) {
         if (phoneNumber.isEmpty()) return
-        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${Uri.encode(dialNumber)}"))
-        context.startActivity(intent)
+        viewModelScope.launch {
+            de.mm20.launcher2.comms.privacy.CallGuard.place(context, phoneNumber, handle)
+        }
+    }
+
+    fun deleteRecent(call: CallLogEntry) {
+        viewModelScope.launch { callLogRepository.deleteById(call.id) }
     }
 }

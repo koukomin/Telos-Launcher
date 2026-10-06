@@ -1,0 +1,89 @@
+package de.mm20.launcher2.ui.comms
+
+import android.content.Intent
+import android.widget.Toast
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.core.content.FileProvider
+import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.comms.recording.CallAudioRecorder
+import de.mm20.launcher2.comms.recording.CallRecordingFile
+import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import kotlinx.serialization.Serializable
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
+@Serializable
+data object CallRecordingsRoute : NavKey
+
+@Composable
+fun CallRecordingsScreen() {
+    val context = LocalContext.current
+    var files by remember { mutableStateOf(CallAudioRecorder.list(context)) }
+    PreferenceScreen(title = { Text("Call recordings") }) {
+        if (files.isEmpty()) {
+            item {
+                Text("No recordings yet.", modifier = Modifier.padding(16.dp))
+            }
+        }
+        files.forEach { rec ->
+            item {
+                RecordingRow(rec, onChanged = { files = CallAudioRecorder.list(context) })
+            }
+        }
+    }
+}
+
+@Composable
+private fun RecordingRow(rec: CallRecordingFile, onChanged: () -> Unit) {
+    val context = LocalContext.current
+    val whenStr = SimpleDateFormat("d MMM HH:mm", Locale.getDefault()).format(Date(rec.file.lastModified()))
+    ListItem(
+        headlineContent = { Text(rec.number) },
+        supportingContent = { Text("$whenStr · ${rec.file.length() / 1024} KB") },
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                runCatching {
+                    val uri = FileProvider.getUriForFile(
+                        context,
+                        "${context.packageName}.fileprovider",
+                        rec.file,
+                    )
+                    val intent = Intent(Intent.ACTION_VIEW).apply {
+                        setDataAndType(uri, "audio/mp4")
+                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    }
+                    context.tryStartActivity(intent)
+                }.onFailure {
+                    Toast.makeText(context, "Cannot play recording", Toast.LENGTH_SHORT).show()
+                }
+            },
+        trailingContent = {
+            IconButton(onClick = {
+                CallAudioRecorder.delete(rec.file)
+                onChanged()
+            }) {
+                Icon(painterResource(R.drawable.delete_24px), contentDescription = null)
+            }
+        },
+    )
+}

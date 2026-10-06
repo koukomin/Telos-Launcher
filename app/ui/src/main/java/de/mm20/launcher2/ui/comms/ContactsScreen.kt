@@ -1,188 +1,519 @@
 package de.mm20.launcher2.ui.comms
 
-import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import android.provider.ContactsContract
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.background
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items as gridItems
+import androidx.compose.foundation.lazy.items as lazyRowItems
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.ExperimentalFoundationApi
-import de.mm20.launcher2.ui.comms.ContactDetailsRoute
-import de.mm20.launcher2.ui.locals.LocalBackStack
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.Text
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.ui.draw.clip
-import coil.compose.AsyncImage
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.comms.intent.MessengerIntentUtils
 import de.mm20.launcher2.comms.model.DialerContact
+import de.mm20.launcher2.comms.search.ContactSearch
+import de.mm20.launcher2.comms.search.GreekText
+import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
-@OptIn(ExperimentalFoundationApi::class)
+private sealed class ContactListItem {
+    data class Header(val letter: Char) : ContactListItem()
+    data class Person(val contact: DialerContact) : ContactListItem()
+}
+
 @Composable
-fun ContactsScreen() {
+@OptIn(ExperimentalFoundationApi::class)
+fun ContactsScreen(
+    searchQuery: String = "",
+    starredOnly: Boolean = false,
+    showLocalSearch: Boolean = true,
+    showAddFab: Boolean = true,
+) {
     val viewModel: ContactsViewModel = viewModel()
     val permissionsManager: PermissionsManager = koinInject()
     val context = LocalContext.current
+    val backStack = LocalBackStack.current
 
-    val hasPermission by permissionsManager.hasPermission(PermissionGroup.Contacts).collectAsStateWithLifecycle(false)
+    val hasPermission by permissionsManager.hasPermission(PermissionGroup.Contacts)
+        .collectAsStateWithLifecycle(false)
     val contacts by viewModel.contacts.collectAsStateWithLifecycle()
+    var localQuery by remember { mutableStateOf("") }
+    var localStarred by remember { mutableStateOf(false) }
+    var gridMode by remember { mutableStateOf(false) }
+    var cabContact by remember { mutableStateOf<DialerContact?>(null) }
+    var pendingCall by remember { mutableStateOf<String?>(null) }
+    val tapToCall by viewModel.tapToCall.collectAsStateWithLifecycle()
+    val confirmBeforeCall by viewModel.confirmBeforeCall.collectAsStateWithLifecycle()
+    val query = if (showLocalSearch) localQuery else searchQuery
+    val starredFilter = starredOnly || localStarred
 
     if (!hasPermission) {
-        ContactsPermissionRequest(onRequest = {
-            (context as? AppCompatActivity)?.let { permissionsManager.requestPermission(it, PermissionGroup.Contacts) }
-        })
-        return
-    }
-
-    if (contacts.isEmpty()) {
-        EmptyCommsTab(title = androidx.compose.ui.res.stringResource(R.string.contacts_empty_title), message = androidx.compose.ui.res.stringResource(R.string.contacts_empty_msg))
-        return
-    }
-
-    val backStack = LocalBackStack.current
-    val grouped = remember(contacts) {
-        contacts.groupBy { it.displayName.firstOrNull()?.uppercaseChar() ?: '#' }.toSortedMap()
-    }
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        grouped.forEach { (initial, contactsForInitial) ->
-            stickyHeader {
-                Text(
-                    text = initial.toString(),
-                    style = androidx.compose.material3.MaterialTheme.typography.titleMedium,
-                    color = androidx.compose.material3.MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(androidx.compose.material3.MaterialTheme.colorScheme.surface.copy(alpha = 0.9f))
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                )
-            }
-            items(contactsForInitial, key = { it.id }) { contact ->
-                ContactRow(contact = contact, onClick = { backStack.add(ContactDetailsRoute(contact.id)) })
-            }
-        }
-    }
-}
-
-@Composable
-private fun ContactsPermissionRequest(onRequest: () -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        Text("Telos needs access to your contacts to show them here.")
-        Spacer(Modifier.height(12.dp))
-        Button(onClick = onRequest) { Text("Grant access") }
-    }
-}
-
-@Composable
-private fun ContactRow(contact: DialerContact, onClick: () -> Unit) {
-    val primaryNumber = contact.phoneNumbers.firstOrNull() ?: return
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .combinedClickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null,
-                onClick = onClick,
-            )
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        androidx.compose.foundation.layout.Box(
-            modifier = Modifier
-                .size(40.dp)
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.secondaryContainer),
-            contentAlignment = Alignment.Center
+        Column(
+            modifier = Modifier.fillMaxSize().padding(32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
         ) {
-            if (contact.photoUri != null) {
-                AsyncImage(
-                    model = contact.photoUri,
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = androidx.compose.ui.layout.ContentScale.Crop
-                )
-            } else {
-                Text(
-                    text = contact.displayName.firstOrNull()?.uppercaseChar()?.toString() ?: "?",
-                    style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSecondaryContainer
-                )
-            }
-        }
-        
-        Spacer(modifier = Modifier.width(16.dp))
-        
-        Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = contact.displayName,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = androidx.compose.ui.text.font.FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text(
-                text = primaryNumber,
+                stringResource(R.string.comms_contacts_permission),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+            )
+            Spacer(Modifier.height(12.dp))
+            Button(onClick = {
+                (context as? AppCompatActivity)?.let {
+                    permissionsManager.requestPermission(it, PermissionGroup.Contacts)
+                }
+            }) {
+                Text(stringResource(R.string.permission_grant))
+            }
+        }
+        return
+    }
+
+    val filtered = remember(contacts, query, starredFilter) {
+        val pool = if (starredFilter) contacts.filter { it.starred } else contacts
+        ContactSearch.search(query, pool)
+    }
+    val rows = remember(filtered, query) {
+        val grouped = if (query.isBlank()) {
+            filtered.groupBy {
+                GreekText.fold(it.displayName).firstOrNull()?.uppercaseChar() ?: '#'
+            }.toSortedMap()
+        } else {
+            linkedMapOf(' ' to filtered)
+        }
+        grouped.flatMap { (letter, people) ->
+            listOf(ContactListItem.Header(letter)) + people.map { ContactListItem.Person(it) }
+        }
+    }
+    val letters = remember(rows) {
+        rows.mapNotNull { (it as? ContactListItem.Header)?.letter }
+    }
+    val listState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
+
+    Box(Modifier.fillMaxSize()) {
+        Column(Modifier.fillMaxSize()) {
+            if (showLocalSearch) Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                OutlinedTextField(
+                    value = localQuery,
+                    onValueChange = { localQuery = it },
+                    modifier = Modifier.weight(1f),
+                    placeholder = { Text(stringResource(R.string.comms_search_contacts)) },
+                    leadingIcon = {
+                        Icon(painterResource(R.drawable.search_24px), contentDescription = null)
+                    },
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedContainerColor = MaterialTheme.colorScheme.surface,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                    ),
+                )
+                IconButton(onClick = { localStarred = !localStarred }) {
+                    Icon(
+                        painterResource(
+                            if (localStarred) R.drawable.star_24px_filled else R.drawable.star_24px_outlined
+                        ),
+                        contentDescription = stringResource(R.string.filter_starred),
+                        tint = if (localStarred) MaterialTheme.colorScheme.primary
+                        else MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+
+            if (query.isBlank() && !starredFilter) {
+                val starred = remember(contacts) { contacts.filter { it.starred } }
+                if (starred.isNotEmpty()) {
+                    LazyRow(
+                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    ) {
+                        lazyRowItems(starred, key = { "fav-${it.id}" }) { contact ->
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier
+                                    .width(72.dp)
+                                    .clickable {
+                                        backStack.add(ContactDetailsRoute(contactId = contact.id))
+                                    },
+                            ) {
+                                CommsAvatar(contact.displayName, contact.photoUri, 56.dp)
+                                Spacer(Modifier.height(6.dp))
+                                Text(
+                                    contact.displayName,
+                                    style = MaterialTheme.typography.labelSmall,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+                horizontalArrangement = Arrangement.End,
+            ) {
+                IconButton(onClick = { gridMode = !gridMode }) {
+                    Icon(
+                        painterResource(if (gridMode) R.drawable.person_24px else R.drawable.apps_24px),
+                        contentDescription = null,
+                    )
+                }
+            }
+            if (filtered.isEmpty()) {
+                EmptyCommsTab(
+                    title = stringResource(R.string.contacts_empty_title),
+                    message = stringResource(R.string.contacts_empty_msg),
+                )
+            } else {
+                Box(Modifier.weight(1f)) {
+                    if (gridMode) {
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(3),
+                            contentPadding = PaddingValues(12.dp, 8.dp, 12.dp, 80.dp),
+                            modifier = Modifier.fillMaxSize(),
+                        ) {
+                            gridItems(filtered, key = { it.id }) { contact ->
+                                Column(
+                                    modifier = Modifier
+                                        .padding(8.dp)
+                                        .combinedClickable(
+                                            onClick = {
+                                                backStack.add(ContactDetailsRoute(contactId = contact.id))
+                                            },
+                                            onLongClick = { cabContact = contact },
+                                        ),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                ) {
+                                    CommsAvatar(contact.displayName, contact.photoUri, 72.dp)
+                                    Spacer(Modifier.height(6.dp))
+                                    Text(
+                                        contact.displayName,
+                                        style = MaterialTheme.typography.bodySmall,
+                                        maxLines = 2,
+                                        overflow = TextOverflow.Ellipsis,
+                                    )
+                                }
+                            }
+                        }
+                    } else LazyColumn(
+                        state = listState,
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(end = 20.dp, bottom = 80.dp),
+                    ) {
+                        itemsIndexed(rows, key = { index, item ->
+                            when (item) {
+                                is ContactListItem.Header -> "h-${item.letter}"
+                                is ContactListItem.Person -> "c-${item.contact.id}"
+                            }
+                        }) { _, item ->
+                            when (item) {
+                                is ContactListItem.Header -> if (item.letter != ' ') {
+                                    Text(
+                                        text = item.letter.toString(),
+                                        style = MaterialTheme.typography.titleSmall,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.primary,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .background(MaterialTheme.colorScheme.surface)
+                                            .padding(horizontal = 16.dp, vertical = 8.dp),
+                                    )
+                                }
+                                is ContactListItem.Person -> {
+                                    val number = viewModel.numberFor(item.contact)
+                                    ContactRow(
+                                        contact = item.contact,
+                                        query = query,
+                                        onOpen = {
+                                            backStack.add(ContactDetailsRoute(contactId = item.contact.id))
+                                        },
+                                        onCall = {
+                                            if (!tapToCall) {
+                                                backStack.add(ContactDetailsRoute(contactId = item.contact.id))
+                                            } else if (confirmBeforeCall) {
+                                                pendingCall = number
+                                            } else {
+                                                viewModel.dial(context, number)
+                                            }
+                                        },
+                                        onSms = {
+                                            if (number.isNotEmpty()) {
+                                                context.tryStartActivity(MessengerIntentUtils.sms(number))
+                                            }
+                                        },
+                                        onLongPress = { cabContact = item.contact },
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    if (query.isBlank()) Column(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(end = 2.dp, top = 8.dp, bottom = 8.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        letters.filter { it != ' ' }.forEach { letter ->
+                            Text(
+                                text = letter.toString(),
+                                fontSize = 10.sp,
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier
+                                    .clickable {
+                                        val index = rows.indexOfFirst {
+                                            it is ContactListItem.Header && it.letter == letter
+                                        }
+                                        if (index >= 0) {
+                                            scope.launch { listState.animateScrollToItem(index) }
+                                        }
+                                    }
+                                    .padding(horizontal = 4.dp, vertical = 1.dp),
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        if (showAddFab) FloatingActionButton(
+            onClick = {
+                context.tryStartActivity(Intent(Intent.ACTION_INSERT).apply {
+                    type = ContactsContract.RawContacts.CONTENT_TYPE
+                })
+            },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp),
+            containerColor = RdGreenCall,
+            contentColor = Color.White,
+        ) {
+            Icon(
+                painterResource(R.drawable.person_add_24px),
+                contentDescription = stringResource(R.string.comms_create_contact),
+            )
+        }
+
+        pendingCall?.let { number ->
+            AlertDialog(
+                onDismissRequest = { pendingCall = null },
+                title = { Text("Place call") },
+                text = { Text(number) },
+                confirmButton = {
+                    TextButton(onClick = {
+                        viewModel.dial(context, number)
+                        pendingCall = null
+                    }) { Text(stringResource(R.string.search_action_call)) }
+                },
+                dismissButton = {
+                    TextButton(onClick = { pendingCall = null }) { Text(stringResource(android.R.string.cancel)) }
+                },
+            )
+        }
+        cabContact?.let { selected ->
+            val number = selected.phoneNumbers.firstOrNull().orEmpty()
+            CommsCabSheet(
+                title = selected.displayName,
+                actions = listOf(
+                    CommsCabAction(R.drawable.rd_ic_phone_green_vector, stringResource(R.string.search_action_call)) {
+                        viewModel.dial(context, number)
+                    },
+                    CommsCabAction(R.drawable.rd_ic_messages, stringResource(R.string.search_action_message)) {
+                        if (number.isNotEmpty()) context.tryStartActivity(MessengerIntentUtils.sms(number))
+                    },
+                    CommsCabAction(R.drawable.info_24px, stringResource(R.string.contact_details_title)) {
+                        backStack.add(ContactDetailsRoute(contactId = selected.id))
+                    },
+                    CommsCabAction(R.drawable.share_24px, stringResource(R.string.search_action_share)) {
+                        viewModel.share(context, selected)
+                    },
+                    CommsCabAction(R.drawable.delete_24px, stringResource(R.string.comms_block_number), destructive = true) {
+                        viewModel.block(number)
+                    },
+                ),
+                onDismiss = { cabContact = null },
             )
         }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun SocialActionButton(icon: Int, contentDescription: String, onClick: () -> Unit) {
-    IconButton(onClick = onClick) {
-        Icon(painterResource(icon), contentDescription = contentDescription)
-    }
-}
-
-private fun safeStartActivity(context: Context, intent: Intent) {
-    try {
-        context.startActivity(intent)
-    } catch (e: ActivityNotFoundException) {
-        // The target app (dialer, WhatsApp, ...) isn't installed - nothing to recover into.
+private fun ContactRow(
+    contact: DialerContact,
+    query: String,
+    onOpen: () -> Unit,
+    onCall: () -> Unit,
+    onSms: () -> Unit,
+    onLongPress: () -> Unit,
+) {
+    val dismissState = rememberSwipeToDismissBoxState(
+        confirmValueChange = { value ->
+            when (value) {
+                SwipeToDismissBoxValue.StartToEnd -> {
+                    onSms()
+                    false
+                }
+                SwipeToDismissBoxValue.EndToStart -> {
+                    onCall()
+                    false
+                }
+                else -> false
+            }
+        },
+        positionalThreshold = { it * 0.4f },
+    )
+    SwipeToDismissBox(
+        state = dismissState,
+        backgroundContent = {
+            val color by animateColorAsState(
+                when (dismissState.targetValue) {
+                    SwipeToDismissBoxValue.StartToEnd -> MaterialTheme.colorScheme.tertiaryContainer
+                    SwipeToDismissBoxValue.EndToStart -> MaterialTheme.colorScheme.primaryContainer
+                    else -> Color.Transparent
+                },
+                label = "contact-swipe",
+            )
+            val alignment = when (dismissState.dismissDirection) {
+                SwipeToDismissBoxValue.StartToEnd -> Alignment.CenterStart
+                SwipeToDismissBoxValue.EndToStart -> Alignment.CenterEnd
+                else -> Alignment.Center
+            }
+            val icon = when (dismissState.dismissDirection) {
+                SwipeToDismissBoxValue.StartToEnd -> R.drawable.rd_ic_messages
+                else -> R.drawable.rd_ic_phone_green_vector
+            }
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .background(color)
+                    .padding(horizontal = 24.dp),
+                contentAlignment = alignment,
+            ) {
+                if (dismissState.dismissDirection != SwipeToDismissBoxValue.Settled) {
+                    Icon(painterResource(icon), contentDescription = null)
+                }
+            }
+        },
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp, vertical = 3.dp)
+                .clip(CommsRowShape)
+                .background(MaterialTheme.colorScheme.surfaceContainerLow)
+                .combinedClickable(onClick = onOpen, onLongClick = onLongPress)
+                .padding(start = 12.dp, end = 4.dp, top = 10.dp, bottom = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            CommsAvatar(
+                name = contact.displayName,
+                photoUri = contact.photoUri,
+                size = 48.dp,
+            )
+            Spacer(Modifier.width(14.dp))
+            Column(Modifier.weight(1f)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = highlightedName(
+                            contact.displayName,
+                            query,
+                            MaterialTheme.colorScheme.primary,
+                        ),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f, fill = false),
+                    )
+                    if (contact.starred) {
+                        Icon(
+                            painterResource(R.drawable.rd_ic_star_vector),
+                            contentDescription = null,
+                            tint = Color(0xFFFFCC00),
+                            modifier = Modifier
+                                .padding(start = 6.dp)
+                                .width(14.dp)
+                                .height(14.dp),
+                        )
+                    }
+                }
+                Text(
+                    text = contact.phoneNumbers.firstOrNull().orEmpty(),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
+            IconButton(onClick = onCall) {
+                Icon(
+                    painterResource(R.drawable.rd_ic_phone_green_vector),
+                    contentDescription = stringResource(R.string.search_action_call),
+                    tint = RdGreenCall,
+                )
+            }
+        }
     }
 }

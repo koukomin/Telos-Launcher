@@ -5,6 +5,7 @@ import android.database.ContentObserver
 import android.os.Handler
 import android.os.Looper
 import android.provider.CallLog
+import de.mm20.launcher2.comms.PhoneNumbers
 import de.mm20.launcher2.comms.model.CallLogEntry
 import de.mm20.launcher2.comms.model.CallType
 import de.mm20.launcher2.comms.repository.CallLogRepository
@@ -65,7 +66,9 @@ internal class CallLogRepositoryImpl(
                 CallLog.Calls.CACHED_NAME,
                 CallLog.Calls.TYPE,
                 CallLog.Calls.DATE,
-                CallLog.Calls.DURATION
+                CallLog.Calls.DURATION,
+                CallLog.Calls.CACHED_PHOTO_URI,
+                CallLog.Calls.PHONE_ACCOUNT_ID,
             )
 
             val cursor = context.contentResolver.query(
@@ -85,6 +88,8 @@ internal class CallLogRepositoryImpl(
                 val typeCol = c.getColumnIndex(CallLog.Calls.TYPE)
                 val dateCol = c.getColumnIndex(CallLog.Calls.DATE)
                 val durationCol = c.getColumnIndex(CallLog.Calls.DURATION)
+                val photoCol = c.getColumnIndex(CallLog.Calls.CACHED_PHOTO_URI)
+                val simCol = c.getColumnIndex(CallLog.Calls.PHONE_ACCOUNT_ID)
                 
                 if (idCol < 0 || numberCol < 0) return@withContext emptyList()
 
@@ -106,7 +111,10 @@ internal class CallLogRepositoryImpl(
                             displayName = c.getString(nameCol),
                             type = callType,
                             timestamp = c.getLong(dateCol),
-                            durationSeconds = c.getLong(durationCol)
+                            durationSeconds = c.getLong(durationCol),
+                            photoUri = if (photoCol >= 0) c.getString(photoCol) else null,
+                            simAccountId = if (simCol >= 0) c.getString(simCol)?.takeIf { it.isNotBlank() } else null,
+                            simLabel = if (simCol >= 0) c.getString(simCol)?.takeLast(4)?.takeIf { it.isNotBlank() } else null,
                         )
                     )
                 }
@@ -114,6 +122,43 @@ internal class CallLogRepositoryImpl(
             calls
         } catch (e: Exception) {
             emptyList()
+        }
+    }
+
+    override fun observeForNumbers(numbers: List<String>): Flow<List<CallLogEntry>> {
+        return observeRecents().map { recents ->
+            recents.filter { entry -> numbers.any { PhoneNumbers.match(it, entry.phoneNumber) } }
+        }
+    }
+
+    override suspend fun deleteForNumbers(numbers: List<String>) = withContext(Dispatchers.IO) {
+        if (numbers.isEmpty()) return@withContext
+        try {
+            val recents = queryCallLog()
+            val ids = recents
+                .filter { entry -> numbers.any { PhoneNumbers.match(it, entry.phoneNumber) } }
+                .map { it.id }
+            for (id in ids) {
+                context.contentResolver.delete(
+                    CallLog.Calls.CONTENT_URI,
+                    "${CallLog.Calls._ID}=?",
+                    arrayOf(id.toString()),
+                )
+            }
+        } catch (_: SecurityException) {
+        }
+    }
+
+    override suspend fun deleteById(id: Long) {
+        withContext(Dispatchers.IO) {
+            try {
+                context.contentResolver.delete(
+                    CallLog.Calls.CONTENT_URI,
+                    "${CallLog.Calls._ID}=?",
+                    arrayOf(id.toString()),
+                )
+            } catch (_: SecurityException) {
+            }
         }
     }
 }

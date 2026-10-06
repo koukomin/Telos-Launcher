@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_direct_call_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="8dp"
+    android:background="@android:color/white">
+    <TextView
+        android:id="@+id/widget_direct_call_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dial"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+</LinearLayout>

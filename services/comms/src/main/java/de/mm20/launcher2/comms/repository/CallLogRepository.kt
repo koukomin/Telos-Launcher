@@ -13,4 +13,7 @@ import kotlinx.coroutines.flow.Flow
  */
 interface CallLogRepository {
     fun observeRecents(): Flow<List<CallLogEntry>>
+    fun observeForNumbers(numbers: List<String>): Flow<List<CallLogEntry>>
+    suspend fun deleteForNumbers(numbers: List<String>)
+    suspend fun deleteById(id: Long)
 }

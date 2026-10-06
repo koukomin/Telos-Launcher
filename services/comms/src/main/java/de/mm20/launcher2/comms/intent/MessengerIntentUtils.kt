@@ -27,8 +27,14 @@ object MessengerIntentUtils {
         return Intent(Intent.ACTION_VIEW, Uri.parse("viber://chat?number=$digits"))
     }
 
-    fun sms(phoneNumber: String): Intent {
-        return Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:$phoneNumber"))
+    fun sms(phoneNumber: String, body: String? = null): Intent {
+        return Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:$phoneNumber")).apply {
+            if (!body.isNullOrBlank()) putExtra("sms_body", body)
+        }
+    }
+
+    fun email(address: String): Intent {
+        return Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:${Uri.encode(address)}"))
     }
 
     private fun digitsOnly(phoneNumber: String): String = phoneNumber.filter { it.isDigit() }

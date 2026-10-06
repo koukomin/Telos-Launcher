@@ -64,10 +64,13 @@ internal class VirtualStoreApp(context: Context) : Application {
     }
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): de.mm20.launcher2.icons.LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.android_24px) ?: return null
+        val drawable = androidx.core.content.ContextCompat.getDrawable(
+            context,
+            de.mm20.launcher2.base.R.drawable.ic_telos_store,
+        ) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = TransparentLayer
+            backgroundLayer = TransparentLayer,
         )
     }
 

@@ -2,6 +2,12 @@
     <!-- === TELOS_PENDING_REVIEW_START: telephony_encryption_suite === -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.MANAGE_OWN_CALLS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <!-- === TELOS_PENDING_REVIEW_END: telephony_encryption_suite === -->
 
     <!-- === TELOS_PENDING_REVIEW_START: sms_and_radio_engine === -->
@@ -11,6 +17,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <!-- === TELOS_PENDING_REVIEW_END: sms_and_radio_engine === -->
 
     <application>
@@ -23,6 +31,20 @@
                 <action android:name="android.telecom.CallScreeningService" />
             </intent-filter>
         </service>
+        <service
+            android:name=".telephony.TelosInCallService"
+            android:permission="android.permission.BIND_INCALL_SERVICE"
+            android:exported="true">
+            <meta-data
+                android:name="android.telecom.IN_CALL_SERVICE_UI"
+                android:value="true" />
+            <intent-filter>
+                <action android:name="android.telecom.InCallService" />
+            </intent-filter>
+        </service>
+        <receiver
+            android:name=".fakecall.FakeCallReceiver"
+            android:exported="false" />
         <!-- === TELOS_PENDING_REVIEW_END: telephony_encryption_suite === -->
 
         <!-- === TELOS_PENDING_REVIEW_START: sms_and_radio_engine === -->
@@ -36,6 +58,27 @@
             </intent-filter>
         </receiver>
 
+        <service
+            android:name=".dnd.VolumeDndAccessibilityService"
+            android:exported="true"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/volume_dnd_accessibility_service" />
+        </service>
+        <receiver
+            android:name=".radio.NetworkAutomationReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".sms.ScheduledSmsReceiver"
+            android:exported="false" />
         <service
             android:name=".radio.RadioPlayerService"
             android:exported="true"

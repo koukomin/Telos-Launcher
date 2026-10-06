@@ -1,5 +1,7 @@
 package de.mm20.launcher2.comms.t9
 
+import de.mm20.launcher2.comms.search.GreekText
+
 /**
  * Letter-to-digit mapping for a standard 12-key phone keypad, covering both the Latin alphabet
  * (the usual English T9 layout) and the Greek alphabet (24 letters split evenly into the same
@@ -27,6 +29,15 @@ object T9Keypad {
         mapLetters("ΠΡΣ", '7') // Π Ρ Σ
         mapLetters("ΤΥΦ", '8') // Τ Υ Φ
         mapLetters("ΧΨΩ", '9') // Χ Ψ Ω
+
+        mapLetters("АБВГ", '2')
+        mapLetters("ДЕЁЖЗ", '3')
+        mapLetters("ИЙКЛ", '4')
+        mapLetters("МНОП", '5')
+        mapLetters("РСТУ", '6')
+        mapLetters("ФХЦЧ", '7')
+        mapLetters("ШЩЪЫ", '8')
+        mapLetters("ЬЭЮЯ", '9')
     }
 
     private fun MutableMap<Char, Char>.mapLetters(letters: String, digit: Char) {
@@ -42,8 +53,9 @@ object T9Keypad {
      * compared against the user's dialpad input.
      */
     fun digitsFor(text: String): String {
-        val builder = StringBuilder(text.length)
-        for (char in text) {
+        val folded = GreekText.fold(text)
+        val builder = StringBuilder(folded.length)
+        for (char in folded) {
             digitFor(char)?.let { builder.append(it) }
         }
         return builder.toString()

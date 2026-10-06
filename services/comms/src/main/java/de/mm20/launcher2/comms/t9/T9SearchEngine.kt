@@ -15,15 +15,16 @@ class T9SearchEngine {
      * numeric substring happening to appear in a phone number).
      */
     fun search(query: String, contacts: List<DialerContact>): List<DialerContact> {
-        if (query.isEmpty()) return emptyList()
+        val digits = query.filter { it.isDigit() }
+        if (digits.isEmpty()) return emptyList()
 
         val nameMatches = mutableListOf<DialerContact>()
         val numberMatches = mutableListOf<DialerContact>()
 
         for (contact in contacts) {
             when {
-                matchesName(query, contact.displayName) -> nameMatches += contact
-                matchesAnyNumber(query, contact.phoneNumbers) -> numberMatches += contact
+                matchesName(digits, contact.displayName) -> nameMatches += contact
+                matchesAnyNumber(digits, contact.phoneNumbers) -> numberMatches += contact
             }
         }
 

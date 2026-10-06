@@ -16,4 +16,6 @@
     <color name="deeporange">#F4511E</color>
     <color name="brown">#6D4C41</color>
     <color name="bluegrey">#546E7A</color>
+    <color name="green_call">#FF67CE67</color>
+    <color name="red_call">#FFEB5545</color>
 </resources>

@@ -251,18 +251,42 @@ class SettingsActivity : BaseActivity() {
                 StoreDashboardScreen()
             }
             entry<ContactDetailsRoute> {
-                ContactDetailsScreen(it.contactId)
+                ContactDetailsScreen(it.contactId, it.phoneNumber)
             }
             entry<AppDetailsRoute> {
                 AppDetailsScreen(it.itemId)
             }
             entry<CommsDashboardRoute> {
                 // === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
-                CommsDashboardScreen(it.initialTab)
+                CommsDashboardScreen(it.initialTab, it.initialNumber)
                 // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
+            }
+            entry<de.mm20.launcher2.ui.comms.radio.RadioDashboardRoute> {
+                de.mm20.launcher2.ui.comms.radio.RadioDashboardScreen()
             }
             entry<CommsSettingsRoute> {
                 CommsSettingsScreen()
+            }
+            entry<de.mm20.launcher2.ui.comms.FakeCallSettingsRoute> {
+                de.mm20.launcher2.ui.comms.FakeCallSettingsScreen()
+            }
+            entry<de.mm20.launcher2.ui.comms.DuplicateContactsRoute> {
+                de.mm20.launcher2.ui.comms.DuplicateContactsScreen()
+            }
+            entry<de.mm20.launcher2.ui.comms.CallRecordingsRoute> {
+                de.mm20.launcher2.ui.comms.CallRecordingsScreen()
+            }
+            entry<de.mm20.launcher2.ui.comms.CallerNotesRoute> {
+                de.mm20.launcher2.ui.comms.CallerNotesScreen()
+            }
+            entry<de.mm20.launcher2.ui.comms.HiddenContactsRoute> {
+                de.mm20.launcher2.ui.comms.HiddenContactsScreen()
+            }
+            entry<de.mm20.launcher2.ui.comms.ContactGroupsRoute> {
+                de.mm20.launcher2.ui.comms.ContactGroupsScreen()
+            }
+            entry<de.mm20.launcher2.ui.comms.ScheduledSmsRoute> {
+                de.mm20.launcher2.ui.comms.ScheduledSmsScreen()
             }
             entry<CreateFolderRoute> {
                 CreateFolderScreen()
@@ -571,9 +595,11 @@ class SettingsActivity : BaseActivity() {
             ROUTE_STORE -> StoreDashboardRoute
             // === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
             ROUTE_COMMS -> {
-                val tab = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB) ?: "dialpad"
-                CommsDashboardRoute(initialTab = tab)
+                val tab = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB) ?: "recents"
+                val number = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_DIAL_NUMBER).orEmpty()
+                CommsDashboardRoute(initialTab = tab, initialNumber = number)
             }
+            ROUTE_RADIO -> de.mm20.launcher2.ui.comms.radio.RadioDashboardRoute
             // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
             ROUTE_CRASH_REPORT if (intent.hasExtra(EXTRA_CRASH_REPORT_PATH)) -> {
                 CrashReportRoute(intent.getStringExtra(EXTRA_CRASH_REPORT_PATH)!!)
@@ -599,6 +625,7 @@ class SettingsActivity : BaseActivity() {
         const val ROUTE_STORE = SettingsDeepLinkContract.ROUTE_STORE
         // === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
         const val ROUTE_COMMS = SettingsDeepLinkContract.ROUTE_COMMS
+        const val ROUTE_RADIO = SettingsDeepLinkContract.ROUTE_RADIO
         // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
         const val ROUTE_CRASH_REPORT = "settings/debug/crashreport"
         const val EXTRA_CRASH_REPORT_PATH = "crash_report_path"

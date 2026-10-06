@@ -41,6 +41,7 @@ androidx-emojipicker = "1.6.0"
 accompanist = "0.36.0"
 haze = "1.7.2"
 coil = "2.7.0"
+zxing = "3.5.3"
 koin = "4.2.1"
 ktor = "3.4.3"
 junit = "4.13.2"
@@ -126,6 +127,7 @@ ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serializatio
 coil-core = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 coil-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxing" }
 
 leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary", version = "2.10" }
 suncalc = { group = "org.shredzone.commons", name = "commons-suncalc", version = "3.11" }
