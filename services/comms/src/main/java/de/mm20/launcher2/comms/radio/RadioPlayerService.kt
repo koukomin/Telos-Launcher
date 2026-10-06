@@ -1,7 +1,15 @@
 // === TELOS_PENDING_REVIEW_START: sms_and_radio_engine ===
 package de.mm20.launcher2.comms.radio
 
+import android.net.Uri
 import androidx.media3.common.AudioAttributes
+import androidx.media3.common.ForwardingPlayer
+import androidx.media3.common.MimeTypes
+import androidx.media3.datasource.DefaultDataSource
+import androidx.media3.datasource.DefaultHttpDataSource
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withContext
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
@@ -36,7 +44,11 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
             .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
             .build()
 
+        // Streams are requested with an app specific user agent. Android's default "Dalvik/..."
+        // agent is rejected by some stations (same fix as Transistor 4.3.8, for example Live365).
+        val httpFactory = DefaultHttpDataSource.Factory().setUserAgent(USER_AGENT)
         val exo = ExoPlayer.Builder(this)
+            .setMediaSourceFactory(DefaultMediaSourceFactory(DefaultDataSource.Factory(this, httpFactory)))
             .setAudioAttributes(audioAttributes, true)
             .setHandleAudioBecomingNoisy(true)
             .build()
@@ -54,7 +66,55 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
 
         RadioSleepTimer.onExpire = { player?.pause() }
 
-        mediaSession = MediaSession.Builder(this, exo).build()
+        mediaSession = MediaSession.Builder(this, stationSwitchingPlayer(exo)).build()
+    }
+
+    /**
+     * Next / previous on the notification, lock screen, headset buttons and Android Auto move to the
+     * neighbouring station of the collection (as in Transistor), because only one station is queued.
+     */
+    private fun stationSwitchingPlayer(exo: ExoPlayer): Player = object : ForwardingPlayer(exo) {
+        override fun getAvailableCommands(): Player.Commands = super.getAvailableCommands().buildUpon()
+            .addAll(
+                Player.COMMAND_SEEK_TO_NEXT, Player.COMMAND_SEEK_TO_PREVIOUS,
+                Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM, Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM,
+            ).build()
+
+        override fun isCommandAvailable(command: Int): Boolean = availableCommands.contains(command)
+        override fun hasNextMediaItem(): Boolean = true
+        override fun hasPreviousMediaItem(): Boolean = true
+        override fun seekToNext() = skipStation(1)
+        override fun seekToNextMediaItem() = skipStation(1)
+        override fun seekToPrevious() = skipStation(-1)
+        override fun seekToPreviousMediaItem() = skipStation(-1)
+    }
+
+    private fun skipStation(step: Int) {
+        val exo = player ?: return
+        val currentId = exo.currentMediaItem?.mediaId ?: return
+        scope.launch {
+            val stations = runCatching { repository.observeFavorites().first() }.getOrNull().orEmpty()
+            if (stations.size < 2) return@launch
+            val index = stations.indexOfFirst { it.id == currentId }
+            val target = stations[Math.floorMod(index + step, stations.size)]
+            val url = StreamResolver.resolve(target.streamUrl).urls.firstOrNull() ?: target.streamUrl
+            val item = MediaItem.Builder()
+                .setUri(url)
+                .setMediaId(target.id)
+                .setMediaMetadata(
+                    MediaMetadata.Builder()
+                        .setTitle(target.name)
+                        .setArtworkUri(target.faviconUrl.takeIf { it.isNotBlank() }?.let { Uri.parse(it) })
+                        .build()
+                )
+                .apply { if (url.contains(".m3u8", ignoreCase = true)) setMimeType(MimeTypes.APPLICATION_M3U8) }
+                .build()
+            withContext(Dispatchers.Main) {
+                exo.setMediaItem(item)
+                exo.prepare()
+                exo.play()
+            }
+        }
     }
 
     /**
@@ -80,6 +140,10 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
 
     // MediaSessionService handles Foreground service lifecycle and notification
     // seamlessly on Android 14+ through the Media3 framework.
+    companion object {
+        const val USER_AGENT = "Telos Radio"
+    }
+
     override fun onDestroy() {
         RadioSleepTimer.onExpire = null
         scope.cancel()

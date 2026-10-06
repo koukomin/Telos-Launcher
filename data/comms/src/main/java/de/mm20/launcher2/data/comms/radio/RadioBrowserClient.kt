@@ -28,6 +28,7 @@ class RadioBrowserClient(private val httpClient: HttpClient) {
         for (server in servers) {
             try {
                 val response: List<RadioBrowserStation> = httpClient.get("https://$server/json/stations/search") {
+                    header("User-Agent", "Telos Radio")
                     url {
                         parameters.append("name", query)
                         parameters.append("limit", "50")
@@ -56,7 +57,7 @@ class RadioBrowserClient(private val httpClient: HttpClient) {
     suspend fun countClick(stationUuid: String) {
         for (server in servers) {
             try {
-                httpClient.get("https://$server/json/url/$stationUuid")
+                httpClient.get("https://$server/json/url/$stationUuid") { header("User-Agent", "Telos Radio") }
                 return
             } catch (e: Exception) {
                 // try the next mirror
