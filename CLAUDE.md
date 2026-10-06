@@ -53,3 +53,13 @@ Docs live in `docs/` (a VitePress site, published at https://telos.mm20.de) — 
 - For bug fixes and smaller enhancements, PRs can be sent directly.
 - For bigger new features, an issue should be opened first to discuss design before implementation.
 - All contributed code must be GPL-3.0-or-later licensed (except contributions to `plugins/sdk` / `core/shared`, which are Apache-2.0).
+
+## Keeping the README up to date
+
+`readme.md` is the public face of the project. Whenever you add or change a user-visible feature, or
+you port, adapt or take design from another project, update `readme.md` **in the same commit**:
+
+- add the feature to the matching list under "Features" (move it out of "Planned" if it was there);
+- add or update the project in the "Projects Telos is based on" table with its link and license
+  (check the license is GPL-3.0 compatible before copying code, and keep original notices);
+- do not describe anything that is not implemented.
