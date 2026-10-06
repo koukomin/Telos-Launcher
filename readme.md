@@ -88,6 +88,13 @@ plugin SDK for third-party search/weather/calendar providers. See the
   [TMDB](https://www.themoviedb.org) with your own free key, subtitles
   can be searched, downloaded or fetched automatically from [OpenSubtitles](https://www.opensubtitles.com),
   also for torrents (both with your own API key). Only play content you are allowed to watch.
+- Video player: swipe to seek, brightness (left) and volume (right), double tap to jump 10 seconds,
+  press and hold for double speed, speed presets, picture size (fit, fill, zoom), audio and subtitle
+  track choice, repeat, sleep timer, picture in picture, and FFmpeg software decoders for AC3, E-AC3,
+  DTS, TrueHD and more. Magnet links open in Telos Video from any app or browser, and a magnet link or
+  address on the clipboard is filled in automatically.
+- Trakt.tv: sign in with a device code, scrobbling of movies and episodes, watched marks in the
+  library and adding titles to the watchlist
 - Telos Photos: photo gallery by folder, full screen viewer with pinch zoom, EXIF viewer and editor,
   removal of the location or of all metadata, sharing without metadata, and an editor (rotate, flip,
   crop ratios, brightness, contrast, saturation, filters) that saves a copy; also opens images from
@@ -154,6 +161,9 @@ adapted, the original license is respected.
 | [Shizuku](https://github.com/RikkaApps/Shizuku) and [Dhizuku](https://github.com/iamr0s/Dhizuku) | see project | Privileged operations (freeze, recording, install, network mode) |
 | [baresip](https://github.com/baresip/baresip) and [baresip-studio](https://github.com/juha-h/baresip-studio) | BSD-3-Clause | SIP engine and its JNI bridge |
 | [LRCLIB](https://lrclib.net) | open API | Song lyrics for Telos Music |
+| [Next Player](https://github.com/anilbeesetti/nextplayer) and [NextLib](https://github.com/anilbeesetti/nextlib) | GPL-3.0 | Player gestures and features (design), FFmpeg decoders for Media3 (library, uses FFmpeg under LGPL-2.1) |
+| [mpv-android](https://github.com/mpv-android/mpv-android) and [mpvKt](https://github.com/abdallahmehiz/mpvKt) | MIT / Apache-2.0 | Ideas for gestures, speed presets and sleep timer (no code) |
+| [Trakt.tv](https://trakt.tv) | API terms | Scrobbling and watched marks in Telos Video |
 | [Last.fm](https://www.last.fm/api), [Libre.fm](https://libre.fm) and [ListenBrainz](https://listenbrainz.org) | open APIs | Scrobbling in Telos Music |
 | [libtorrent4j](https://github.com/aldenml/libtorrent4j) and [libtorrent](https://www.libtorrent.org) | MIT / BSD-3-Clause | Torrent streaming in Telos Video |
 | [TMDB](https://www.themoviedb.org) | API terms | Posters and descriptions in Telos Video (not endorsed or certified by TMDB) |

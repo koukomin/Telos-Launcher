@@ -123,3 +123,19 @@ Copyright (c) 2003-2020, Arvid Norberg. All rights reserved.
 This product uses the TMDB API but is not endorsed or certified by TMDB (https://www.themoviedb.org).
 Subtitles are searched and downloaded through the OpenSubtitles API (https://www.opensubtitles.com).
 Both services are used with the user's own API key.
+
+
+## NextLib (FFmpeg decoders in Telos Video)
+
+NextLib, https://github.com/anilbeesetti/nextlib (GPL-3.0), used unchanged as a Maven dependency. It
+bundles FFmpeg (LGPL-2.1+, https://ffmpeg.org) and dav1d (BSD-2-Clause, https://code.videolan.org/videolan/dav1d).
+
+## Next Player
+
+The gestures, speed control and track choice of the Telos Video player follow the feature set of
+Next Player, https://github.com/anilbeesetti/nextplayer (GPL-3.0). No code was copied.
+
+## Trakt.tv
+
+Telos Video uses the Trakt API (https://trakt.docs.apiary.io) with the user's own application
+credentials. Telos is not endorsed or certified by Trakt.

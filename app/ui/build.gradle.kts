@@ -182,6 +182,7 @@ dependencies {
     implementation(libs.androidx.media3.session)
     implementation(libs.androidx.media3.ui)
     implementation(libs.androidx.media3.hls)
+    implementation(libs.nextlib) // FFmpeg software decoders for Telos Video (GPL-3.0)
     implementation(libs.androidx.media3.dash)
     implementation(libs.androidx.media3.rtsp)
     implementation(libs.androidx.media3.common)

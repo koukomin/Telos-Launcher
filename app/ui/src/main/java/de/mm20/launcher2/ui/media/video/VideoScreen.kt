@@ -39,11 +39,15 @@ import de.mm20.launcher2.comms.media.video.VideoItem
 import de.mm20.launcher2.comms.search.GreekText
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 
 @Serializable
 data object VideoRoute : NavKey
+
+/** Raised when the watched marks from Trakt were refreshed, so the rows draw again */
+private val traktVersion = androidx.compose.runtime.mutableIntStateOf(0)
 
 private data class VideoGroup(
     val title: String,
@@ -117,6 +121,10 @@ fun VideoScreen() {
             val parsed = list.first().second
             VideoGroup(parsed.title, parsed.year?.toString() ?: "${list.size} file(s)", list.map { it.third }, series = false, year = parsed.year)
         }.sortedBy { it.title.lowercase() }
+    }
+    LaunchedEffect(Unit) {
+        de.mm20.launcher2.comms.media.video.trakt.Trakt.refreshWatched(context)
+        traktVersion.intValue++
     }
     var showOpen by remember { mutableStateOf(false) }
     var showServices by remember { mutableStateOf(false) }
@@ -193,6 +201,15 @@ fun VideoScreen() {
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
+                    if (de.mm20.launcher2.comms.media.video.trakt.Trakt.login(context).connected) {
+                        val scope = androidx.compose.runtime.rememberCoroutineScope()
+                        TextButton(onClick = {
+                            scope.launch {
+                                val ok = de.mm20.launcher2.comms.media.video.trakt.Trakt.addToWatchlist(context, current.title, current.year, current.series)
+                                toast(context, if (ok) "Added to your Trakt watchlist" else "Could not add to the watchlist")
+                            }
+                        }, contentPadding = PaddingValues(0.dp)) { Text("Add to Trakt watchlist") }
+                    }
                     if (!meta?.overview.isNullOrBlank()) {
                         Text(meta!!.overview, style = MaterialTheme.typography.bodySmall, maxLines = 4, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 4.dp))
                     }
@@ -271,6 +288,9 @@ private fun VideoList(list: List<VideoItem>, onPlay: (Int) -> Unit) {
 private fun VideoRow(video: VideoItem, onClick: () -> Unit) {
     val context = LocalContext.current
     val progress = remember(video.uri) { ResumeStore.progress(context, video.uri) }
+    val watched = remember(video.uri, traktVersion.intValue) {
+        de.mm20.launcher2.comms.media.video.trakt.Trakt.isWatched(context, EpisodeParser.parse(video.fileName))
+    }
     Row(
         modifier = Modifier.fillMaxWidth().clickable(onClick = onClick).padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -285,7 +305,7 @@ private fun VideoRow(video: VideoItem, onClick: () -> Unit) {
             }
         }
         Column(Modifier.weight(1f).padding(start = 12.dp)) {
-            Text(video.title, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium, maxLines = 2, overflow = TextOverflow.Ellipsis)
+            Text((if (watched) "✓ " else "") + video.title, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium, maxLines = 2, overflow = TextOverflow.Ellipsis)
             Text(
                 formatDuration(video.durationMs) + " · " + video.folder,
                 style = MaterialTheme.typography.bodySmall,

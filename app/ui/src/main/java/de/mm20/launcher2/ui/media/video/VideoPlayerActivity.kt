@@ -38,7 +38,13 @@ class VideoPlayerActivity : BaseActivity() {
         val startIndex: Int
         var torrentSource: String? = null
         val extraUris = intent.getStringArrayListExtra(EXTRA_URIS)
-        val typed = intent.getStringExtra(EXTRA_SOURCE)
+        // a magnet link or address shared as text from a browser or another app
+        val shared = if (intent.action == android.content.Intent.ACTION_SEND) {
+            intent.getStringExtra(android.content.Intent.EXTRA_TEXT)?.trim()?.lineSequence()?.firstOrNull { l ->
+                l.startsWith("magnet:", true) || l.startsWith("http", true)
+            }
+        } else null
+        val typed = intent.getStringExtra(EXTRA_SOURCE) ?: shared
         val viewed = intent.data?.toString()
         val torrentCandidate = typed ?: viewed
         if (torrentCandidate != null &&

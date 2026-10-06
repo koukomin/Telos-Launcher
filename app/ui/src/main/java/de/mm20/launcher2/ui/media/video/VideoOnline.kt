@@ -31,6 +31,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.comms.media.video.VideoServices
+import kotlinx.coroutines.launch
 import de.mm20.launcher2.comms.media.video.VideoServicesConfig
 
 /** Opens the player with a web address, a magnet link or a .torrent file. */
@@ -46,7 +47,14 @@ internal fun openSource(context: Context, source: String, torrentFile: Boolean =
 internal fun OpenSourceDialog(onDismiss: () -> Unit) {
     val context = LocalContext.current
     val clipboard = LocalClipboardManager.current
-    var text by remember { mutableStateOf("") }
+    // a magnet link or address on the clipboard is filled in right away
+    var text by remember {
+        mutableStateOf(
+            clipboard.getText()?.text?.trim()?.takeIf {
+                it.startsWith("magnet:", true) || it.startsWith("http://", true) || it.startsWith("https://", true)
+            }.orEmpty()
+        )
+    }
     val torrentPicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
         if (uri != null) {
             openSource(context, uri.toString(), torrentFile = true)
@@ -141,6 +149,8 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
                     Switch(checked = auto, onCheckedChange = { auto = it })
                 }
 
+                TraktSection()
+
                 Text("Torrents", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("Only on Wi-Fi", modifier = Modifier.weight(1f))
@@ -160,4 +170,77 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
 
 internal fun toast(context: Context, text: String) {
     Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+}
+
+/** Trakt.tv sign in with the device code: create an app at trakt.tv/oauth/applications first. */
+@Composable
+private fun TraktSection() {
+    val context = LocalContext.current
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+    var login by remember { mutableStateOf(de.mm20.launcher2.comms.media.video.trakt.Trakt.login(context)) }
+    var clientId by remember { mutableStateOf(login.clientId) }
+    var secret by remember { mutableStateOf(login.clientSecret) }
+    var code by remember { mutableStateOf<de.mm20.launcher2.comms.media.video.trakt.TraktDeviceCode?>(null) }
+    var message by remember { mutableStateOf("") }
+
+    Text("Trakt.tv", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
+    Text(
+        "Scrobbles what you watch, marks watched videos and adds titles to your watchlist. Create an application at trakt.tv/oauth/applications (redirect address urn:ietf:wg:oauth:2.0:oob) and enter its client id and secret.",
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
+    if (login.connected) {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 4.dp)) {
+            Text("Connected, scrobbling", modifier = Modifier.weight(1f))
+            Switch(checked = login.enabled, onCheckedChange = {
+                de.mm20.launcher2.comms.media.video.trakt.Trakt.setEnabled(context, it)
+                login = de.mm20.launcher2.comms.media.video.trakt.Trakt.login(context)
+            })
+        }
+        TextButton(onClick = {
+            de.mm20.launcher2.comms.media.video.trakt.Trakt.signOut(context)
+            login = de.mm20.launcher2.comms.media.video.trakt.Trakt.login(context)
+        }) { Text("Sign out") }
+    } else {
+        OutlinedTextField(clientId, { clientId = it }, label = { Text("Client id") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(
+            secret, { secret = it }, label = { Text("Client secret") }, singleLine = true,
+            visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(),
+        )
+        val pending = code
+        if (pending == null) {
+            TextButton(enabled = clientId.isNotBlank() && secret.isNotBlank(), onClick = {
+                de.mm20.launcher2.comms.media.video.trakt.Trakt.saveApp(context, clientId, secret)
+                message = "Contacting Trakt…"
+                scope.launch {
+                    runCatching { de.mm20.launcher2.comms.media.video.trakt.Trakt.startDeviceLogin(clientId.trim()) }
+                        .onSuccess { c ->
+                            code = c
+                            message = ""
+                            runCatching {
+                                de.mm20.launcher2.comms.media.video.trakt.Trakt.finishDeviceLogin(context, clientId.trim(), secret.trim(), c)
+                            }.onSuccess {
+                                login = de.mm20.launcher2.comms.media.video.trakt.Trakt.login(context)
+                                message = "Connected"
+                            }.onFailure { message = it.message ?: "Sign in failed" }
+                            code = null
+                        }
+                        .onFailure { message = it.message ?: "Could not reach Trakt" }
+                }
+            }) { Text("Connect Trakt") }
+        } else {
+            Text(
+                "Open ${pending.verificationUrl} and enter the code",
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(top = 8.dp),
+            )
+            Text(pending.userCode, style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.primary)
+            TextButton(onClick = {
+                context.startActivity(
+                    Intent(Intent.ACTION_VIEW, android.net.Uri.parse(pending.verificationUrl)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                )
+            }) { Text("Open trakt.tv/activate") }
+        }
+    }
+    if (message.isNotEmpty()) Text(message, style = MaterialTheme.typography.bodySmall)
 }

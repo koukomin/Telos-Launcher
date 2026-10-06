@@ -132,7 +132,10 @@ private fun PlayerContent(
     val startIndex = media.startIndex
 
     val player = remember {
-        ExoPlayer.Builder(context).build().apply {
+        // FFmpeg software decoders (AC3, E-AC3, DTS, TrueHD, ...) take over where the phone has no decoder
+        val renderers = io.github.anilbeesetti.nextlib.media3ext.ffdecoder.NextRenderersFactory(context)
+            .setExtensionRendererMode(androidx.media3.exoplayer.DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
+        ExoPlayer.Builder(context, renderers).build().apply {
             val items = uris.mapIndexed { index, uri ->
                 MediaItem.Builder()
                     .setUri(uri)
@@ -149,6 +152,19 @@ private fun PlayerContent(
         }
     }
 
+    // Trakt.tv: report what is played (only when the user signed in and switched it on)
+    val traktScope = remember { kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.SupervisorJob() + kotlinx.coroutines.Dispatchers.IO) }
+    fun scrobble(action: String, finished: Boolean = false) {
+        val item = player.currentMediaItem ?: return
+        val duration = player.duration
+        if (duration <= 0) return
+        val progress = if (finished) 100f else player.currentPosition * 100f / duration
+        val name = item.mediaMetadata.title?.toString().orEmpty()
+        val parsed = EpisodeParser.parse(cleanTitle(name) + ".x")
+        val appContext = context.applicationContext
+        traktScope.launch { de.mm20.launcher2.comms.media.video.trakt.Trakt.scrobble(appContext, action, parsed, progress) }
+    }
+
     fun saveProgress() {
         val item = player.currentMediaItem ?: return
         val duration = player.duration
@@ -157,7 +173,14 @@ private fun PlayerContent(
 
     DisposableEffect(player) {
         val listener = object : Player.Listener {
-            override fun onIsPlayingChanged(isPlaying: Boolean) = onPlayingChanged(isPlaying)
+            override fun onIsPlayingChanged(isPlaying: Boolean) {
+                onPlayingChanged(isPlaying)
+                scrobble(if (isPlaying) "start" else "pause")
+            }
+
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                if (playbackState == Player.STATE_ENDED) scrobble("stop", finished = true)
+            }
 
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                 if (reason == Player.MEDIA_ITEM_TRANSITION_REASON_AUTO) saveProgress()
@@ -166,6 +189,7 @@ private fun PlayerContent(
         player.addListener(listener)
         onDispose {
             saveProgress()
+            scrobble("stop")
             player.removeListener(listener)
             player.release()
         }
@@ -268,12 +292,38 @@ private fun PlayerContent(
         )
     }
 
+    var playerView by remember { mutableStateOf<PlayerView?>(null) }
+    var gestureHint by remember { mutableStateOf<String?>(null) }
+    var speed by remember { mutableStateOf(1f) }
+    var sleepMinutes by remember { mutableStateOf(0) }
+    var showMenu by remember { mutableStateOf(false) }
+    LaunchedEffect(sleepMinutes) {
+        if (sleepMinutes > 0) {
+            delay(sleepMinutes * 60_000L)
+            player.pause()
+            sleepMinutes = 0
+        }
+    }
+    if (showMenu) {
+        PlaybackMenu(
+            player = player,
+            playerView = playerView,
+            speed = speed,
+            onSpeed = { speed = it; player.setPlaybackSpeed(it) },
+            sleepMinutes = sleepMinutes,
+            onSleep = { sleepMinutes = it },
+            onDismiss = { showMenu = false },
+        )
+    }
+
     Box(Modifier.fillMaxSize().background(Color.Black)) {
         AndroidView(
             modifier = Modifier.fillMaxSize(),
             factory = { ctx ->
                 PlayerView(ctx).apply {
                     this.player = player
+                    playerView = this
+                    attachGestures(this, player, ctx as? android.app.Activity, { speed }, { gestureHint = it })
                     setShowSubtitleButton(true)
                     setShowNextButton(true)
                     setShowPreviousButton(true)
@@ -285,6 +335,14 @@ private fun PlayerContent(
             },
             update = { view -> view.useController = !inPictureInPicture },
         )
+        gestureHint?.let { hint ->
+            Text(
+                text = hint,
+                color = Color.White,
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.align(Alignment.Center).background(Color(0x99000000), androidx.compose.foundation.shape.RoundedCornerShape(12.dp)).padding(horizontal = 20.dp, vertical = 10.dp),
+            )
+        }
         if (isTorrent && !inPictureInPicture && (controlsVisible || torrent.downloadBytesPerSecond < 50_000)) {
             Text(
                 text = "Peers ${torrent.peers} · ${torrent.downloadBytesPerSecond / 1024} KB/s · ${(torrent.progress * 100).toInt()}% downloaded",
@@ -326,6 +384,9 @@ private fun PlayerContent(
                             onClick = { subtitleMenu = false; showOnlineSubtitles = true },
                         )
                     }
+                }
+                IconButton(onClick = { showMenu = true }) {
+                    Icon(painterResource(R.drawable.more_vert_24px), contentDescription = "Playback options", tint = Color.White)
                 }
             }
         }
