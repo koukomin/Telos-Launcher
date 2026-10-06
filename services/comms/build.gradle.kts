@@ -22,6 +22,8 @@ android {
         // (downloaded by CI from the "sip-libs" release, or built locally with sip-native/Makefile).
         if (rootProject.file("sip-native/distribution/baresip").exists()) {
             ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
+            // The static libraries and the AAudio calls need API 28; older devices fall back to no SIP
+            externalNativeBuild { cmake { arguments += "-DANDROID_PLATFORM=android-28" } }
         }
     }
 
