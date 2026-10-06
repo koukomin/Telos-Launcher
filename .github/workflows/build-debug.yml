@@ -47,7 +47,8 @@ jobs:
           APK=$(ls app/app/build/outputs/apk/default/debug/*.apk | head -n 1)
           SHORT_SHA=$(echo "$GITHUB_SHA" | cut -c1-7)
           gh release delete telos-dev-build --cleanup-tag --yes || true
-          gh release create telos-dev-build "$APK#telos-debug.apk" \
+          cp "$APK" "$RUNNER_TEMP/telos-debug.apk"
+          gh release create telos-dev-build "$RUNNER_TEMP/telos-debug.apk" \
             --prerelease \
             --target "$GITHUB_SHA" \
             --title "Telos dev build ($SHORT_SHA)" \
