@@ -116,7 +116,7 @@
         <service
             android:name=".comms.NetworkTileService"
             android:exported="true"
-            android:icon="@android:drawable/stat_sys_data_connected"
+            android:icon="@drawable/signal_cellular_alt_24px"
             android:label="Cellular"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
