@@ -31,6 +31,25 @@ fun SipSettings() {
     val error by SipEngine.lastError.collectAsStateWithLifecycle()
     var showDialog by remember { mutableStateOf(false) }
     val current = snap ?: return
+    val context = androidx.compose.ui.platform.LocalContext.current
+
+    // SIP calls need the microphone, and incoming calls the notification permission (Android 13+)
+    val permissions = androidx.activity.compose.rememberLauncherForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions()
+    ) { result ->
+        if (result[android.Manifest.permission.RECORD_AUDIO] != false) settings.setSipEnabled(true)
+        else android.widget.Toast.makeText(context, "SIP calls need the microphone permission", android.widget.Toast.LENGTH_LONG).show()
+    }
+    fun enable() {
+        val needed = buildList {
+            add(android.Manifest.permission.RECORD_AUDIO)
+            if (android.os.Build.VERSION.SDK_INT >= 33) add(android.Manifest.permission.POST_NOTIFICATIONS)
+        }.filter {
+            androidx.core.content.ContextCompat.checkSelfPermission(context, it) !=
+                android.content.pm.PackageManager.PERMISSION_GRANTED
+        }
+        if (needed.isEmpty()) settings.setSipEnabled(true) else permissions.launch(needed.toTypedArray())
+    }
 
     val status = when {
         !SipEngine.available -> "SIP is not available in this build or on this device (needs Android 9 or newer)"
@@ -47,7 +66,7 @@ fun SipSettings() {
             summary = "Keeps the account registered in the background (shows a small notification) so calls can be received. $status",
             value = current.sipEnabled,
             enabled = SipEngine.available && current.sipUser.isNotBlank(),
-            onValueChanged = { settings.setSipEnabled(it) },
+            onValueChanged = { if (it) enable() else settings.setSipEnabled(false) },
         )
         Preference(
             title = "Account",

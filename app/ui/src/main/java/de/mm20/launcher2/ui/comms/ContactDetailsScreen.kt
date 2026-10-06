@@ -187,7 +187,7 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
         if (number.isEmpty()) return
         viewModelScope.launch {
             val ok = de.mm20.launcher2.comms.privacy.CallGuard.placeSip(context, number)
-            if (!ok) android.widget.Toast.makeText(context, "SIP account is not connected", android.widget.Toast.LENGTH_SHORT).show()
+            if (!ok) android.widget.Toast.makeText(context, de.mm20.launcher2.comms.sip.SipDialer.lastFailure.ifBlank { "SIP account is not connected" }, android.widget.Toast.LENGTH_SHORT).show()
         }
     }
 
