@@ -14,7 +14,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.gestures.detectTransformGestures
+import androidx.compose.foundation.gestures.calculatePan
+import androidx.compose.foundation.gestures.calculateZoom
+import androidx.compose.ui.input.pointer.positionChanged
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -94,9 +96,28 @@ private fun ZoomableImage(uri: Uri, onTap: () -> Unit) {
                 )
             }
             .pointerInput(Unit) {
-                detectTransformGestures { _, pan, zoom, _ ->
-                    scale = (scale * zoom).coerceIn(1f, 8f)
-                    offset = if (scale > 1f) offset + pan * scale else androidx.compose.ui.geometry.Offset.Zero
+                // Only a pinch, or a drag while zoomed in, is taken here. A single finger on a photo
+                // that is not zoomed is left to the pager, so that swiping to the next photo works.
+                androidx.compose.foundation.gestures.awaitEachGesture {
+                    androidx.compose.foundation.gestures.awaitFirstDown(requireUnconsumed = false)
+                    do {
+                        val event = awaitPointerEvent()
+                        if (event.changes.size >= 2 || scale > 1f) {
+                            val zoom = event.calculateZoom()
+                            val pan = event.calculatePan()
+                            scale = (scale * zoom).coerceIn(1f, 8f)
+                            offset = if (scale > 1f) {
+                                // the photo cannot be dragged out of the screen
+                                val maxX = size.width * (scale - 1f) / 2f
+                                val maxY = size.height * (scale - 1f) / 2f
+                                androidx.compose.ui.geometry.Offset(
+                                    (offset.x + pan.x).coerceIn(-maxX, maxX),
+                                    (offset.y + pan.y).coerceIn(-maxY, maxY),
+                                )
+                            } else androidx.compose.ui.geometry.Offset.Zero
+                            event.changes.forEach { if (it.positionChanged()) it.consume() }
+                        }
+                    } while (event.changes.any { it.pressed })
                 }
             }
             .graphicsLayer(scaleX = scale, scaleY = scale, translationX = offset.x, translationY = offset.y),

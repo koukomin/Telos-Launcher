@@ -40,8 +40,14 @@ abstract class BaseSettings<T>(
         }
     }
 
+    /** What goes into a backup. Override to leave out what must not leave the device. */
+    protected open fun forBackup(data: T): T = data
+
+    /** What is stored when a backup is restored, [current] being what the device has now. */
+    protected open fun forRestore(restored: T, current: T): T = restored
+
     override suspend fun backup(toDir: File) {
-        val data = context.dataStore.data.first()
+        val data = forBackup(context.dataStore.data.first())
         val file = File(toDir, fileName)
         file.outputStream().use {
             serializer.writeTo(data, it)
@@ -56,8 +62,8 @@ abstract class BaseSettings<T>(
         try {
             file.inputStream().use {
                 val data = serializer.readFrom(it)
-                context.dataStore.updateData {
-                    data
+                context.dataStore.updateData { current ->
+                    forRestore(data, current)
                 }
             }
         } catch (e: SerializationException) {

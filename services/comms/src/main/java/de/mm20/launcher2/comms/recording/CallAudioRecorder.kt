@@ -147,6 +147,8 @@ object CallAudioRecorder {
                 file?.delete()
                 return null
             }
+            // the recording is not left readable in the app's files
+            RecordingCrypto.encryptInPlace(file)
             return file
         }
     }
@@ -156,6 +158,8 @@ object CallAudioRecorder {
         if (!dir.exists()) return emptyList()
         return dir.listFiles()
             ?.filter { it.extension.equals("m4a", true) && it.length() > 128L }
+            // recordings of an older version are encrypted now (not the one that is being recorded)
+            ?.onEach { if (it != outputFile) RecordingCrypto.encryptInPlace(it) }
             ?.sortedByDescending { it.lastModified() }
             ?.map { file ->
                 val digits = file.nameWithoutExtension.removePrefix("REC_").split("_").firstOrNull().orEmpty()

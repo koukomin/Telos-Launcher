@@ -198,7 +198,14 @@ object SipEngine : BaresipService.Listener {
         val account = pendingAccount ?: return
         if (nameservers.isNotEmpty()) Api.net_use_nameserver(nameservers)
         val user = android.net.Uri.encode(account.user)
-        val name = if (account.displayName.isNotBlank()) "\"${account.displayName.replace("\"", "")}\" " else ""
+        // nothing in the name or the server may end the account line or add parameters to it
+        val cleanName = account.displayName.filter { it.isLetterOrDigit() || it == ' ' || it == '-' || it == '.' || it == '_' }.trim()
+        val name = if (cleanName.isNotBlank()) "\"$cleanName\" " else ""
+        if (!isValidDomain(account.domain)) {
+            _registration.value = SipRegistration.Failed
+            _lastError.value = "The SIP server address is not valid"
+            return
+        }
         // the password is quoted so that characters such as ; or > cannot break the account line
         val pass = account.password.replace("\\", "\\\\").replace("\"", "\\\"")
         val line = "${name}<sip:$user@${account.domain}>;auth_pass=\"$pass\";regint=300;answermode=manual"
@@ -248,4 +255,8 @@ object SipEngine : BaresipService.Listener {
     override fun onMessage(uap: Long, peerUri: String, contentType: String, body: ByteArray) = Unit
 
     override fun onMessageResponse(code: Int, reason: String, time: String) = Unit
+
+    /** A host name or an IP address, optionally with a port */
+    internal fun isValidDomain(domain: String): Boolean =
+        domain.isNotBlank() && domain.length <= 253 && domain.all { it.isLetterOrDigit() || it == '.' || it == '-' || it == ':' || it == '_' }
 }

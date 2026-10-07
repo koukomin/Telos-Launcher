@@ -128,7 +128,7 @@ fun SipSettings() {
                 }
             },
             confirmButton = {
-                TextButton(onClick = {
+                TextButton(enabled = domain.isNotBlank() && domain.all { it.isLetterOrDigit() || it == '.' || it == '-' || it == ':' || it == '_' }, onClick = {
                     settings.setSipAccount(user, domain, name, SecretBox.encrypt(pass))
                     showDialog = false
                 }) { Text("Save") }

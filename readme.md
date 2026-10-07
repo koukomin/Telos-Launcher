@@ -49,6 +49,9 @@ plugin SDK for third-party search/weather/calendar providers. See the
   quick reject with SMS, "remind me" callback reminders
 - Privacy: hidden contacts behind a dialpad passcode, stealth settings menu, biometric phone-app
   lock, biometric protection for chosen numbers, secure call screen (no screenshots)
+- Call recordings are stored encrypted with a key in the Android Keystore; the vault PIN is hashed
+  with PBKDF2 and guesses are slowed down after five wrong ones; settings backups leave out
+  passwords, keys and hidden contacts
 - Smart gestures: raise to answer, flip to decline, rain mode shake gesture, pocket mode,
   proximity speaker, volume-button Do Not Disturb shortcut
 - Auto redial, fake incoming calls (scheduled), missed-call and post-call popups, Dynamic Island
