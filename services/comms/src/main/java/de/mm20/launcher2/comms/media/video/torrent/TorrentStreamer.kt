@@ -60,6 +60,9 @@ object TorrentStreamer {
     private var server: ServerSocket? = null
     private var token = ""
     @Volatile private var closed = true
+    private val lock = Any()
+    /** The screen that opened the current torrent, only it may close it again */
+    private var owner: Any? = null
     private val ioPool by lazy { Executors.newCachedThreadPool() }
 
     /** True when the connection is metered (mobile data) */
@@ -78,9 +81,12 @@ object TorrentStreamer {
      * Opens a magnet link, a .torrent address or a .torrent file and returns its video files.
      * [wifiOnly] refuses to start on mobile data.
      */
-    suspend fun open(context: Context, source: String, wifiOnly: Boolean): TorrentOpened =
+    suspend fun open(context: Context, source: String, wifiOnly: Boolean, owner: Any? = null): TorrentOpened =
         withContext(Dispatchers.IO) {
-            close()
+            synchronized(lock) {
+                close()
+                this@TorrentStreamer.owner = owner
+            }
             if (wifiOnly && onMeteredNetwork(context)) {
                 fail("Torrent streaming is set to Wi-Fi only")
             }
@@ -333,8 +339,19 @@ object TorrentStreamer {
     /** Name of the torrent and its files without the stream address, for subtitle searches */
     fun torrentName(): String = info?.name().orEmpty()
 
+    /**
+     * Closes the torrent that [owner] opened, off the calling thread (stopping the session can
+     * block). Does nothing when another screen has opened a torrent in the meantime.
+     */
+    fun release(owner: Any) {
+        Thread {
+            synchronized(lock) { if (this.owner === owner) close() }
+        }.start()
+    }
+
     /** Stops the download and the local server and deletes the downloaded data. */
     fun close() {
+        owner = null
         closed = true
         runCatching { server?.close() }
         server = null

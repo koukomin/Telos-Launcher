@@ -105,7 +105,7 @@ class VideoPlayerActivity : BaseActivity() {
 
     override fun onDestroy() {
         // stops a running torrent and deletes what it downloaded
-        TorrentStreamer.close()
+        TorrentStreamer.release(this)
         super.onDestroy()
     }
 
