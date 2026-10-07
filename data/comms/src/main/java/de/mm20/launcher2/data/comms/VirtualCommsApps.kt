@@ -18,6 +18,7 @@ import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.StaticIconLayer
 import de.mm20.launcher2.icons.TransparentLayer
+import de.mm20.launcher2.icons.ColorLayer
 
 internal class VirtualPhoneApp(context: Context) : Application {
 
@@ -59,13 +60,10 @@ internal class VirtualPhoneApp(context: Context) : Application {
     }
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(
-            context,
-            de.mm20.launcher2.base.R.drawable.ic_telos_phone,
-        ) ?: return null
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_phone_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = TransparentLayer,
+            backgroundLayer = ColorLayer(0xFF0B1F4B.toInt()),
         )
     }
 
@@ -116,10 +114,10 @@ internal class VirtualMessagesApp(context: Context) : Application {
     }
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.sms_24px) ?: return null
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_messages_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = TransparentLayer
+            backgroundLayer = ColorLayer(0xFF0F6B63.toInt()),
         )
     }
 
@@ -169,10 +167,10 @@ internal class VirtualRadioApp(context: Context) : Application {
     }
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.music_note_24px) ?: return null
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_radio_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = TransparentLayer
+            backgroundLayer = ColorLayer(0xFF1B7F3B.toInt()),
         )
     }
 
@@ -222,10 +220,10 @@ internal class VirtualMusicApp(context: Context) : Application {
     }
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.music_note_24px) ?: return null
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_music_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = TransparentLayer
+            backgroundLayer = ColorLayer(0xFF5B2DB5.toInt()),
         )
     }
 
@@ -275,10 +273,10 @@ internal class VirtualVideoApp(context: Context) : Application {
     }
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.play_circle_24px) ?: return null
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_video_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = TransparentLayer
+            backgroundLayer = ColorLayer(0xFFB3261E.toInt()),
         )
     }
 
@@ -328,10 +326,10 @@ internal class VirtualPhotosApp(context: Context) : Application {
     }
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.photo_24px) ?: return null
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_photos_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = TransparentLayer
+            backgroundLayer = ColorLayer(0xFFB4236A.toInt()),
         )
     }
 
@@ -381,10 +379,10 @@ internal class VirtualFilesApp(context: Context) : Application {
     }
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
-        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.folder_24px) ?: return null
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_files_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = TransparentLayer
+            backgroundLayer = ColorLayer(0xFFB45309.toInt()),
         )
     }
 
