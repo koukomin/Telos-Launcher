@@ -62,7 +62,7 @@ in detail. In short:
 | Feed and Smartspacer integration | Only in debug and nightly builds |
 | Favorites widget | No longer in the widget picker |
 | Fallback icon packs | Supported by the icon service, but no setting in the UI |
-| Floating launcher settings | Page exists, but the settings list does not link to it |
+| Floating launcher settings | Linked from the main settings list ("Floating launcher") |
 | Dynamic Island timer | Slot exists, nothing starts it |
 | Desktop quarter snapping | In the code, not in the taskbar menu |
 | Overlays, desktop mode, App Lock, context profiles | Marked experimental, source comments say they need real-hardware verification |

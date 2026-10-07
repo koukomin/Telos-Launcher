@@ -143,7 +143,7 @@ plugin SDK for third-party search/weather/calendar providers. See the
 
 **Apps and system (`:services:freeze`, `:services:app-management`, `:services:store`)**
 
-- Smart Freeze: freeze or hide apps through Shizuku, root, device owner or Island (a Dhizuku backend exists but is incomplete), with protection for
+- Smart Freeze: freeze or hide apps through Shizuku, root, device owner or Island (Dhizuku is not available yet), with protection for
   critical apps, multi-user targeting and a Work Profile sandbox
 - Telos Store (the features of [Obtainium](https://github.com/ImranR98/Obtainium)):
   - sources: GitHub, GitLab (also self-hosted), Codeberg / Forgejo / Gitea, F-Droid, IzzyOnDroid and

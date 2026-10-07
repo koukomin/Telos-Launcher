@@ -16,6 +16,10 @@ import kotlin.coroutines.resume
 internal class DhizukuProvider(private val context: Context) : PrivilegedAccessProvider {
 
     override suspend fun isAvailable(): Boolean {
+        // The freeze calls below are not implemented yet (they would need a Dhizuku user service). Reporting
+        // the backend as available would make "System default" pick it over a backend that works and claim
+        // success without freezing anything, so it stays unavailable until it can really freeze.
+        if (!IMPLEMENTED) return false
         return try {
             Dhizuku.init(context)
             Dhizuku.getVersionCode() > 0
@@ -59,8 +63,7 @@ internal class DhizukuProvider(private val context: Context) : PrivilegedAccessP
         val successSet = mutableSetOf<String>()
         try {
             // Placeholder: Implementing deep Dhizuku IPC bounds requires Dhizuku UserService binding.
-            // Returning emptySet to signal failure and fallback to Shizuku/Root if configured.
-            successSet.addAll(packageNames)
+            // Nothing is changed, so nothing is reported as done.
         } catch (e: Exception) {
             Log.e("DhizukuProvider", "setPackagesSuspended failed", e)
         }
@@ -76,11 +79,14 @@ internal class DhizukuProvider(private val context: Context) : PrivilegedAccessP
         val successSet = mutableSetOf<String>()
         try {
            // Placeholder: Implementing deep Dhizuku IPC bounds requires Dhizuku UserService binding.
-           successSet.addAll(packageNames)
         } catch (e: Exception) {
            Log.e("DhizukuProvider", "setApplicationHidden failed", e)
         }
         successSet
+    }
+
+    private companion object {
+        const val IMPLEMENTED = false
     }
 
     override suspend fun forceStopPackage(packageName: String, userId: Int): Boolean = false

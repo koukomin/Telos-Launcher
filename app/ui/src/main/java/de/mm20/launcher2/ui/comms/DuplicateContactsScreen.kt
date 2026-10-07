@@ -50,9 +50,29 @@ fun DuplicateContactsScreen() {
     val scope = rememberCoroutineScope()
     var groups by remember { mutableStateOf<List<List<DialerContact>>>(emptyList()) }
     var loaded by remember { mutableStateOf(false) }
+    // what is waiting for the user's confirmation: the groups whose extra contacts would be deleted
+    var pending by remember { mutableStateOf<List<List<DialerContact>>?>(null) }
     LaunchedEffect(Unit) {
         groups = viewModel.load()
         loaded = true
+    }
+    pending?.let { toClean ->
+        val count = toClean.sumOf { it.size - 1 }
+        androidx.compose.material3.AlertDialog(
+            onDismissRequest = { pending = null },
+            title = { Text("Delete $count contact${if (count == 1) "" else "s"}?") },
+            text = { Text("The first contact of each group is kept. The other $count will be permanently deleted from your Android contacts. This cannot be undone.") },
+            confirmButton = {
+                TextButton(onClick = {
+                    pending = null
+                    scope.launch {
+                        toClean.forEach { viewModel.keepFirst(it) }
+                        groups = viewModel.load()
+                    }
+                }) { Text("Delete") }
+            },
+            dismissButton = { TextButton(onClick = { pending = null }) { Text("Cancel") } },
+        )
     }
     PreferenceScreen(title = { Text("Duplicate contacts") }) {
         if (loaded && groups.isEmpty()) {
@@ -75,10 +95,7 @@ fun DuplicateContactsScreen() {
                             backStack.add(ContactDetailsRoute(contactId = group.first().id))
                         }) { Text("Open") }
                         Button(onClick = {
-                            scope.launch {
-                                viewModel.keepFirst(group)
-                                groups = viewModel.load()
-                            }
+                            pending = listOf(group)
                         }) { Text("Keep first, delete extras") }
                     }
                     Spacer(Modifier.height(8.dp))
@@ -89,13 +106,10 @@ fun DuplicateContactsScreen() {
             item {
                 TextButton(
                     onClick = {
-                        scope.launch {
-                            groups.forEach { viewModel.keepFirst(it) }
-                            groups = viewModel.load()
-                        }
+                        pending = groups
                     },
                     modifier = Modifier.fillMaxWidth(),
-                ) { Text("Merge all groups") }
+                ) { Text("Keep first in every group, delete extras") }
             }
         }
     }
