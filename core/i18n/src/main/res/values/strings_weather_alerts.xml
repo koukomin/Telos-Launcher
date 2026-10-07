@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="weather_alert_channel">Severe weather</string>
+    <string name="weather_alert_rain">Rain expected</string>
+    <string name="weather_alert_heavy_rain">Heavy rain expected</string>
+    <string name="weather_alert_snow">Snow expected</string>
+    <string name="weather_alert_thunder">Thunderstorm expected</string>
+    <string name="weather_alert_heat">High temperatures expected</string>
+    <string name="weather_alert_frost">Frost expected</string>
+    <string name="weather_alert_wind">Strong wind expected</string>
+    <string name="weather_alert_uv">High UV index expected</string>
+    <string name="weather_alert_detail_rain">Chance of rain up to %1$d%%</string>
+    <string name="weather_alert_detail_rain_amount">Up to %1$s %2$s per hour</string>
+    <string name="weather_alert_detail_heat">Up to %1$s</string>
+    <string name="weather_alert_detail_frost">Down to %1$s</string>
+    <string name="weather_alert_detail_wind">Wind up to %1$d %2$s</string>
+    <string name="weather_alert_detail_uv">UV index up to %1$d</string>
+    <string name="weather_alert_now">Now</string>
+    <string name="weather_alert_from">From %1$s</string>
+    <string name="weather_alert_test_location">Your location</string>
+    <string name="preference_category_weather_alerts">Severe weather alerts</string>
+    <string name="preference_weather_alerts">Notify about severe weather</string>
+    <string name="preference_weather_alerts_summary">Checks the forecast for the next hours after every weather update and shows a notification. Each kind is shown at most once in 12 hours</string>
+    <string name="preference_weather_alerts_hours">Check the next</string>
+    <string name="preference_weather_alerts_rain">Rain</string>
+    <string name="preference_weather_alerts_rain_probability">Chance of rain from %1$d%%</string>
+    <string name="preference_weather_alerts_heavy_rain">Heavy rain</string>
+    <string name="preference_weather_alerts_snow">Snow and sleet</string>
+    <string name="preference_weather_alerts_thunder">Thunderstorms and hail</string>
+    <string name="preference_weather_alerts_heat">High temperatures</string>
+    <string name="preference_weather_alerts_heat_threshold">From %1$d °C</string>
+    <string name="preference_weather_alerts_frost">Frost</string>
+    <string name="preference_weather_alerts_frost_threshold">At or below %1$d °C</string>
+    <string name="preference_weather_alerts_wind">Strong wind</string>
+    <string name="preference_weather_alerts_wind_threshold">From %1$d km/h</string>
+    <string name="preference_weather_alerts_uv">High UV index</string>
+    <string name="preference_weather_alerts_uv_threshold">From UV index %1$d</string>
+    <string name="preference_weather_alerts_test">Send a test notification</string>
+    <string name="preference_weather_alerts_test_summary">Shows what an alert looks like</string>
+    <string name="preference_weather_alerts_test_failed">The notification could not be shown. Check that notifications are allowed for Telos</string>
+    <string name="preference_weather_alerts_hours_value">%1$d hours</string>
+</resources>

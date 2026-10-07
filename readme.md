@@ -377,6 +377,8 @@ Integrations are under **Settings > Integrations**, plugins under **Settings > A
 | Feed | A content page from another app | A non-release build, a provider app |
 | Cloud and network storage | Dropbox, Google Drive, OneDrive, WebDAV, SFTP, SMB, FTP for Telos Files | Per storage |
 
+**Severe weather alerts** (off by default, Integrations > Weather): a notification when the stored forecast for the next 6 to 72 hours expects rain (chance of rain from a threshold), heavy rain, snow or sleet, thunderstorms or hail, high temperatures, frost, strong wind or a high UV index, with the strongest value, the start time and the place; each kind at most once in 12 hours, temperatures and speeds in your measurement system, a test notification. Forecasts, not official warnings.
+
 **Weather providers:** Open-Meteo (default) and Bright Sky always; OpenWeatherMap and MET Norway only in builds that ship their keys; Breezy Weather when installed; any weather plugin. Automatic or manual location, measurement system (system, metric, UK, US).
 
 **Plugins** are ordinary Android apps that expose a content provider through the plugin SDK. Telos does not run their code, so a plugin cannot crash the launcher. Enabling a plugin triggers a permission dialog where **Allow** stores Telos on the plugin's own allow list; other callers get a `SecurityException`. A plugin may report "Setup required" or an error, and cannot be switched on until it is ready. A check mark marks verified authors.

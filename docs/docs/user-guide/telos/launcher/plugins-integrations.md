@@ -89,6 +89,36 @@ appear when they are available:
 | Breezy Weather | When the Breezy Weather app is installed |
 | Weather plugins | When the plugin is enabled |
 
+### Severe weather alerts
+
+Settings > Integrations > Weather > **Severe weather alerts** (off by default). After every weather update Telos
+checks the stored forecast for the next hours and shows a notification when something you chose is expected. It uses
+the forecast that is already on the phone, so it needs no extra network access. On Android 13 and newer, switching
+it on asks for the notification permission.
+
+| Setting | Default | What it does |
+| --- | --- | --- |
+| Check the next | 24 hours | 6, 12, 24, 48 or 72 hours |
+| Rain | On, from 70 percent | The chance of rain. A provider without a chance of rain is judged by its rain icon |
+| Heavy rain | On | The rain icon for heavy rain, or 4 mm per hour and more |
+| Snow and sleet | On | The snow or sleet icon |
+| Thunderstorms and hail | On | The thunderstorm, thunder or hail icon |
+| High temperatures | On, from 35 °C | The temperature, or the extreme heat icon |
+| Frost | On, at 0 °C and lower | The temperature, or the extreme cold icon |
+| Strong wind | On, from 60 km/h | The wind speed, or the wind icon |
+| High UV index | Off, from 8 | The UV index, when the provider has it |
+
+The notification says what is expected, the strongest value (for example "Chance of rain up to 85%" or "Up to 37 °C"),
+when it starts (**Now** or **From 18:00**, with the weekday if it is not today) and the place. Each kind is shown at most
+once in 12 hours. Temperatures and speeds follow the [measurement system](#weather) (Celsius and km/h, or Fahrenheit and
+mph). **Send a test notification** shows what an alert looks like.
+
+::: info Limits
+The alerts depend on what the provider delivers: a provider without a UV index or a chance of rain cannot trigger
+those alerts. They are forecasts, not official warnings, so a storm warning of a weather service is not the same
+thing. The check runs together with the weather updates (hourly by default), not at a fixed time.
+:::
+
 Telos refreshes weather hourly by default (a plugin can request another minimum interval), and only with
 a network connection. If **Cannot find any locations**, your system geocoder may be missing (common on
 de-Googled systems). Enter the location as `lat lon name`, for example `-90 0 South pole`. See the

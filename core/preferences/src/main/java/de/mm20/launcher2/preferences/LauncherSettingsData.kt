@@ -445,6 +445,29 @@ data class WeatherGroup(
     val weatherLastLocation: LatLon? = null,
     val weatherLastUpdate: Long = 0L,
     val weatherProviderSettings: Map<String, ProviderSettings> = emptyMap(),
+    /** Notifications for severe weather in the next hours, off by default */
+    val weatherAlertsEnabled: Boolean = false,
+    val weatherAlertRain: Boolean = true,
+    /** Chance of rain in percent from which a notification is shown */
+    val weatherAlertRainProbability: Int = 70,
+    val weatherAlertHeavyRain: Boolean = true,
+    val weatherAlertSnow: Boolean = true,
+    val weatherAlertThunder: Boolean = true,
+    val weatherAlertHeat: Boolean = true,
+    /** Temperature in degrees Celsius from which a heat notification is shown */
+    val weatherAlertHeatTemperature: Int = 35,
+    val weatherAlertFrost: Boolean = true,
+    /** Temperature in degrees Celsius at or below which a frost notification is shown */
+    val weatherAlertFrostTemperature: Int = 0,
+    val weatherAlertWind: Boolean = true,
+    /** Wind speed in km/h from which a wind notification is shown */
+    val weatherAlertWindSpeed: Int = 60,
+    val weatherAlertUv: Boolean = false,
+    val weatherAlertUvIndex: Int = 8,
+    /** How many hours ahead the forecast is checked */
+    val weatherAlertHours: Int = 24,
+    /** When each kind of alert was last shown (millis), so that it is not repeated for 12 hours */
+    val weatherAlertLastSent: Map<String, Long> = emptyMap(),
 )
 
 @Serializable

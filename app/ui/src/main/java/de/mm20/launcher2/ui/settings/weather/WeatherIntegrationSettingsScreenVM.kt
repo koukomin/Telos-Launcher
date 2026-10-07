@@ -6,7 +6,10 @@ import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.plugins.PluginService
+import de.mm20.launcher2.preferences.weather.WeatherAlertConfig
 import de.mm20.launcher2.preferences.weather.WeatherSettings
+import de.mm20.launcher2.weather.WeatherAlertManager
+import kotlinx.coroutines.launch
 import de.mm20.launcher2.weather.WeatherRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
@@ -22,7 +25,21 @@ class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
     private val pluginService: PluginService by inject()
     private val permissionsManager: PermissionsManager by inject()
 
+    private val alertManager: WeatherAlertManager by inject()
+
     val availableProviders = repository.getProviders()
+
+    val alerts = weatherSettings.alerts
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), WeatherAlertConfig())
+
+    fun updateAlerts(block: (WeatherAlertConfig) -> WeatherAlertConfig) {
+        weatherSettings.updateAlerts(block)
+    }
+
+    /** Shows a test notification, calls [done] with whether it could be shown */
+    fun sendTestAlert(done: (Boolean) -> Unit) {
+        viewModelScope.launch { done(alertManager.sendTest()) }
+    }
 
     val weatherProvider = weatherSettings.providerId
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
