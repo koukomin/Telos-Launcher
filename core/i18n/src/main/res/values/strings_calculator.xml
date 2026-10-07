@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="calculator_title">Calculator</string>
+    <string name="calculator_history">History</string>
+    <string name="calculator_history_empty">Calculations you finish with = are listed here, with the date and time.</string>
+    <string name="calculator_history_clear">Clear history</string>
+    <string name="calculator_invalid">Invalid expression</string>
+    <string name="calculator_scientific">Scientific calculator</string>
+    <string name="calculator_standard">Standard calculator</string>
+    <string name="calculator_unit_converter">Unit converter</string>
+    <string name="calculator_more">More options</string>
+    <string name="calculator_copy_result">Copy result</string>
+    <string name="calculator_copied">Copied %1$s</string>
+    <string name="calculator_back">Back</string>
+    <string name="calculator_vat">VAT</string>
+    <string name="calculator_vat_rate">VAT rate</string>
+    <string name="calculator_vat_add">Add VAT</string>
+    <string name="calculator_vat_remove">Remove VAT</string>
+    <string name="calculator_vat_amount_net">Amount without VAT</string>
+    <string name="calculator_vat_amount_gross">Amount with VAT</string>
+    <string name="calculator_vat_amount_hint">You can type a calculation, for example 12.5*3</string>
+    <string name="calculator_vat_use_result">Use the result from the calculator</string>
+    <string name="calculator_vat_without">Without VAT</string>
+    <string name="calculator_vat_amount">VAT %1$s%%</string>
+    <string name="calculator_vat_with">With VAT</string>
+    <string name="calculator_vat_tap_copy">Tap an amount to copy it.</string>
+    <string name="calculator_vat_use_net">Use the amount without VAT in the calculator</string>
+    <string name="calculator_vat_use_gross">Use the amount with VAT in the calculator</string>
+    <string name="calculator_chip_add_vat">+ VAT %1$s%%</string>
+    <string name="calculator_chip_remove_vat">− VAT %1$s%%</string>
+    <string name="calculator_cat_currency">Currency</string>
+    <string name="calculator_cat_length">Length</string>
+    <string name="calculator_cat_area">Area</string>
+    <string name="calculator_cat_volume">Volume</string>
+    <string name="calculator_cat_weight">Weight</string>
+    <string name="calculator_cat_temperature">Temperature</string>
+    <string name="calculator_cat_speed">Speed</string>
+    <string name="calculator_cat_pressure">Pressure</string>
+    <string name="calculator_cat_energy">Energy</string>
+    <string name="calculator_cat_numeral">Numeral system</string>
+    <string name="calculator_cat_time">Time</string>
+    <string name="calculator_cat_data">Data</string>
+    <string name="calculator_radix_2">Binary</string>
+    <string name="calculator_radix_8">Octal</string>
+    <string name="calculator_radix_10">Decimal</string>
+    <string name="calculator_radix_16">Hexadecimal</string>
+    <string name="calculator_value">Value</string>
+    <string name="calculator_from">From</string>
+    <string name="calculator_to">To</string>
+    <string name="calculator_result">Result</string>
+    <string name="calculator_swap">Swap units</string>
+    <string name="calculator_currency_missing">Currency rates are not downloaded yet. Turn on Currencies for the unit converter in Settings > Search, then try again.</string>
+    <string name="calculator_degrees">deg</string>
+    <string name="calculator_radians">rad</string>
+    <string name="calculator_tile">Calculator</string>
+</resources>

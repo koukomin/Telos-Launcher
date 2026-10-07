@@ -24,5 +24,9 @@ object SettingsDeepLinkContract {
     const val EXTRA_STORE_URL = "de.mm20.launcher2.settings.STORE_URL"
     const val ROUTE_PHOTOS = "settings/photos"
     const val ROUTE_FILES = "settings/files"
+    const val ROUTE_CALCULATOR = "settings/calculator"
+    const val ROUTE_VOICE_RECORDER = "settings/voice_recorder"
+    const val ROUTE_SCREEN_RECORDER = "settings/screen_recorder"
+    const val ROUTE_SCREENSHOT = "settings/screenshot"
     // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
 }

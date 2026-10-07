@@ -393,6 +393,218 @@ internal class VirtualFilesApp(context: Context) : Application {
     }
 }
 
+internal class VirtualCalculatorApp(context: Context) : Application {
+
+    override val key: String = "$Domain://calculator"
+    override val label: String = "Telos Calculator"
+    override val labelOverride: String? = null
+    override val domain: String = Domain
+    override val score: ResultScore = ResultScore.Unspecified
+
+    override val componentName: ComponentName = ComponentName(
+        context.packageName,
+        "de.mm20.launcher2.comms.VirtualCalculatorApp",
+    )
+    override val isSuspended: Boolean = false
+    override val user: UserHandle = Process.myUserHandle()
+    override val versionName: String? = null
+
+    override val canUninstall: Boolean = false
+    override fun uninstall(context: Context) {}
+    override fun openAppDetails(context: Context) {}
+
+    override val canShareApk: Boolean = false
+
+    override fun overrideLabel(label: String): SavableSearchable = this
+
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return try {
+            val intent = Intent().apply {
+                setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_CALCULATOR)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent, options)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_calculator_fg) ?: return null
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(drawable, 1f),
+            backgroundLayer = ColorLayer(0xFF37474F.toInt()),
+        )
+    }
+
+    override fun getSerializer(): SearchableSerializer = NullSerializer()
+
+    companion object {
+        const val Domain = "telos_calculator_app"
+    }
+}
+
+internal class VirtualVoiceRecorderApp(context: Context) : Application {
+
+    override val key: String = "$Domain://voice_recorder"
+    override val label: String = "Telos Voice Recorder"
+    override val labelOverride: String? = null
+    override val domain: String = Domain
+    override val score: ResultScore = ResultScore.Unspecified
+
+    override val componentName: ComponentName = ComponentName(
+        context.packageName,
+        "de.mm20.launcher2.comms.VirtualVoiceRecorderApp",
+    )
+    override val isSuspended: Boolean = false
+    override val user: UserHandle = Process.myUserHandle()
+    override val versionName: String? = null
+
+    override val canUninstall: Boolean = false
+    override fun uninstall(context: Context) {}
+    override fun openAppDetails(context: Context) {}
+
+    override val canShareApk: Boolean = false
+
+    override fun overrideLabel(label: String): SavableSearchable = this
+
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return try {
+            val intent = Intent().apply {
+                setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_VOICE_RECORDER)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent, options)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_voice_recorder_fg) ?: return null
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(drawable, 1f),
+            backgroundLayer = ColorLayer(0xFF00838F.toInt()),
+        )
+    }
+
+    override fun getSerializer(): SearchableSerializer = NullSerializer()
+
+    companion object {
+        const val Domain = "telos_voice_recorder_app"
+    }
+}
+
+internal class VirtualScreenRecorderApp(context: Context) : Application {
+
+    override val key: String = "$Domain://screen_recorder"
+    override val label: String = "Telos Screen Recorder"
+    override val labelOverride: String? = null
+    override val domain: String = Domain
+    override val score: ResultScore = ResultScore.Unspecified
+
+    override val componentName: ComponentName = ComponentName(
+        context.packageName,
+        "de.mm20.launcher2.comms.VirtualScreenRecorderApp",
+    )
+    override val isSuspended: Boolean = false
+    override val user: UserHandle = Process.myUserHandle()
+    override val versionName: String? = null
+
+    override val canUninstall: Boolean = false
+    override fun uninstall(context: Context) {}
+    override fun openAppDetails(context: Context) {}
+
+    override val canShareApk: Boolean = false
+
+    override fun overrideLabel(label: String): SavableSearchable = this
+
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return try {
+            val intent = Intent().apply {
+                setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_SCREEN_RECORDER)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent, options)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_screen_recorder_fg) ?: return null
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(drawable, 1f),
+            backgroundLayer = ColorLayer(0xFFE53935.toInt()),
+        )
+    }
+
+    override fun getSerializer(): SearchableSerializer = NullSerializer()
+
+    companion object {
+        const val Domain = "telos_screen_recorder_app"
+    }
+}
+
+internal class VirtualScreenshotApp(context: Context) : Application {
+
+    override val key: String = "$Domain://screenshot"
+    override val label: String = "Telos Screenshot"
+    override val labelOverride: String? = null
+    override val domain: String = Domain
+    override val score: ResultScore = ResultScore.Unspecified
+
+    override val componentName: ComponentName = ComponentName(
+        context.packageName,
+        "de.mm20.launcher2.comms.VirtualScreenshotApp",
+    )
+    override val isSuspended: Boolean = false
+    override val user: UserHandle = Process.myUserHandle()
+    override val versionName: String? = null
+
+    override val canUninstall: Boolean = false
+    override fun uninstall(context: Context) {}
+    override fun openAppDetails(context: Context) {}
+
+    override val canShareApk: Boolean = false
+
+    override fun overrideLabel(label: String): SavableSearchable = this
+
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return try {
+            val intent = Intent().apply {
+                setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_SCREENSHOT)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent, options)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_screenshot_fg) ?: return null
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(drawable, 1f),
+            backgroundLayer = ColorLayer(0xFF1A6DFF.toInt()),
+        )
+    }
+
+    override fun getSerializer(): SearchableSerializer = NullSerializer()
+
+    companion object {
+        const val Domain = "telos_screenshot_app"
+    }
+}
+
 internal class CommsVirtualAppProvider(private val context: Context) : VirtualAppProvider {
     override fun getVirtualApps(): List<Application> = listOf(
         VirtualPhoneApp(context),
@@ -402,6 +614,10 @@ internal class CommsVirtualAppProvider(private val context: Context) : VirtualAp
         VirtualVideoApp(context),
         VirtualPhotosApp(context),
         VirtualFilesApp(context),
+        VirtualCalculatorApp(context),
+        VirtualVoiceRecorderApp(context),
+        VirtualScreenRecorderApp(context),
+        VirtualScreenshotApp(context),
     )
 }
 // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===

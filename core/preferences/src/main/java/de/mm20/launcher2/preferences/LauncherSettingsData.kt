@@ -611,11 +611,34 @@ data class FloatingLauncherGroup(
     val floatingLauncherMaxPerColumn: Int = 10,
     val floatingLauncherThickness: Int = 24,
     @Serializable(with = ColorIntAsHexSerializer::class)
-    val floatingLauncherColor: Int = 0xFF6750A4.toInt(),
-    val floatingLauncherAlpha: Float = 0.6f,
+    val floatingLauncherColor: Int = 0xFF9E9E9E.toInt(),
+    val floatingLauncherAlpha: Float = 0.8f,
     val floatingLauncherHideIndicator: Boolean = false,
     val floatingLauncherHapticFeedback: Boolean = true,
     val floatingLauncherAutoHideGaming: Boolean = false,
+    /** Show the app names under the icons (the Smart Sidebar's "Hide labels" turned around) */
+    val floatingLauncherShowLabels: Boolean = true,
+    /** Opacity of the panel card, [0.3f, 1f] */
+    val floatingLauncherPanelAlpha: Float = 0.85f,
+    /** Size of the icons in the panel, in dp */
+    val floatingLauncherIconSize: Int = 48,
+    /** Open tapped apps in a floating window (needs freeform windows, see Desktop mode) */
+    val floatingLauncherFloatingWindows: Boolean = true,
+    /** Not used any more, the tools are items of the sidebar now. Kept so that stored settings stay readable. */
+    val floatingLauncherTools: Boolean = true,
+    /**
+     * What the sidebar shows, in order: app keys, `tool:<id>` for tools and `widget:<uuid>` for
+     * widgets. Replaces the per-zone app lists.
+     */
+    val floatingLauncherItems: List<String> = listOf("tool:screenshot", "tool:recent_files", "tool:flashlight"),
+    /** The edge the handle is on */
+    val floatingLauncherSide: FloatingLauncherEdge = FloatingLauncherEdge.Right,
+    /** Vertical position of the handle, 0 is the top and 1 the bottom */
+    val floatingLauncherHandleY: Float = 0.5f,
+    /** Height of the handle in dp */
+    val floatingLauncherHandleHeight: Int = 72,
+    /** The File Dock (temporary storage for dragged items) */
+    val floatingLauncherFileDock: Boolean = true,
 )
 
 @Serializable

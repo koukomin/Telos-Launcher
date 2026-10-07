@@ -83,53 +83,98 @@ The video wallpaper cannot render on the external display, which is why desktop 
 wallpaper. The phone screen keeps its video wallpaper unless you switch on **Pause video in desktop
 mode**, see [Home screen](./home-screen#wallpaper).
 
-## Floating launcher
+## Floating launcher (Smart Sidebar)
 
 <Badge type="warning" text="experimental" />
 
-A thin tab on the screen edge, even while you use other apps. Drag it toward the middle of the screen to
-open a panel of your favorite apps. It is off by default.
+A thin handle on one screen edge, even while you use other apps. Tap it, or drag it toward the middle of the screen,
+to open a card with your tools, apps and widgets next to it. The layout is modeled on the Smart Sidebar of OxygenOS,
+the colors, shapes and fonts follow the Telos theme. It is off by default.
 
-1. Open the Floating launcher settings (see the warning below, there is no entry for it in the main
-   settings list). Grant **Display over other apps** when asked.
-2. Switch on **Enable floating launcher**.
-3. Under **Trigger zones**, turn on the edge zones you want. There are six: left or right, each in the
-   top, middle or bottom third. Only **Right, top** is on at first.
-4. Open a zone and pick its apps. Each zone has its own list.
-5. Use **Preview** to see the result.
+1. Open Settings > **Floating launcher**. Allow **Display over other apps** when asked.
+2. Switch on **Smart sidebar**.
+3. Choose the **side** and the **position** of the handle, then open **Edit the sidebar** to put things into the card.
+
+### The card
+
+| Part | What it does |
+| --- | --- |
+| **File Dock** (top button) | The text, pictures and files you dragged onto the handle or the card, held until you drop them into another app. The shelf is not saved: it is cleared when the service restarts. Can be switched off |
+| Tiles | Your tools, apps and widgets in the order you chose, in one or two columns. Tap an app to open it, tap a tool to use it |
+| Widgets | Shown full width. The card gets wider when it has one |
+| **All** | The list of every tool |
+| **Edit** | Opens the editor |
+
+Tapping outside the card closes it. The card opens next to the handle it came from.
+
+### Tools
+
+| Tool | What it does |
+| --- | --- |
+| Screenshot, Partial screenshot, Scrolling screenshot | The three modes of [Telos Screenshot](../screenshot/). The card closes first. They need the Telos accessibility service (Settings > Gestures) |
+| Screen recorder | Starts a recording of [Telos Screen Recorder](../screen-recorder/) (Android asks for the capture permission). Runs it again to stop it |
+| Voice recorder | Starts or stops a recording of [Telos Voice Recorder](../voice-recorder/). The microphone permission must have been given in the app once |
+| Recent files | The 30 newest files on the phone with their date, tap one to open it. It reads the system's media index, so it needs the access to files that Telos Files asks for |
+| Flashlight | Turns the flashlight on or off |
+| Quick settings, Notifications | Pull down the quick settings or the notifications |
+| Lock screen | Locks the screen (accessibility service, Android 9+) |
+| Power menu | Opens the power menu (accessibility service) |
+
+### The editor
+
+**Edit** opens the editor, which dims the screen. The left side lists what can be added: **Tools**, **Widgets** and
+**Apps** (every installed app, including the Telos apps), with a search field at the top. Tap an item with a plus to
+add it. The right side shows the sidebar as it is: tap the minus on an item to remove it, drag an item to move it.
+**Done** closes the editor, and the gear opens the settings. The window of the editor takes the keyboard focus (it has
+a search field), which the card itself never does.
+
+**Widgets** are the widgets of the launcher: weather, calendar, music, notes, battery, at a glance, reminders, network,
+system, freeze and favorites. A widget that you add here lives only in the sidebar, not on your home screen. Widgets
+use the same settings as on the home screen, but cannot be configured from the sidebar yet, and widgets of other
+apps (Android app widgets) cannot be added.
+
+### Settings
 
 | Setting | Default | What it does |
 | --- | --- | --- |
-| Tab thickness | 24 | Width of the tab |
-| Tab color and transparency | Purple, 60 percent | Look of the tab |
-| Two columns | On | Two apps per row in the panel |
-| Rows before scrolling | 10 | Panel height before it scrolls |
-| Hide tabs | Off | Make tabs invisible but still tappable |
+| Smart sidebar | Off | Starts and stops the overlay |
+| Edit the sidebar | | Opens the editor over the current screen |
+| Side of the screen | Right | Left or right edge |
+| Position of the handle | 50 percent | Height on the screen |
+| Size of the handle | 72 | Height of the handle |
+| Tab thickness | 24 | Width of the touch area around the handle (the visible handle is a thin pill) |
+| Tab color and transparency | Gray, 80 percent | Look of the handle |
+| Hide tabs | Off | Make the handle invisible but still tappable |
+| Two columns | On | Two tiles per row (one column when off) |
+| Show app names | On | Names under the icons |
+| Panel transparency | 85 percent | How see-through the card is |
+| Icon size | 48 | Size of the icons |
+| Rows before scrolling | 10 | Card height before it scrolls |
+| File Dock | On | The temporary storage button |
+| Open apps in floating windows | On | Tapped apps open as a window on top of the app in front, see below |
 | Haptic feedback | On | A short vibration on tap |
-| Hide during Gaming profile | Off | Hide tabs while a context profile with the Gaming icon is active |
+| Hide during Gaming profile | Off | Hide the handle while a context profile with the Gaming icon is active |
 
-**File dock.** Dragging text, images or files from another app onto a tab holds them temporarily, so you
-can drop them into another app. Media is copied into the launcher's cache when dropped. The shelf is not
-saved: it is cleared whenever the service restarts. Dragging an app icon from the home screen onto a tab
-adds the app to that zone.
+**Floating windows.** With *Open apps in floating windows* on, a tapped app opens as a window on top of the app in
+front. This only works while Android's freeform mode is on (see [Floating windows (freeform)](#floating-windows-freeform));
+without it Android ignores the window size and the app opens normally.
 
-::: tip Where the settings are
-Settings > **Floating launcher** opens the settings page of this overlay. The gear icon inside the floating panel
-opens the same page.
-:::
+**What is not in it.** The Smart Sidebar of OxygenOS also has **AI Summary** and **AI Speak** (OnePlus's own system
+services), a partial **screen recording** and a **Private Tab** shortcut. Telos has none of these. The handle can be on the left or the right edge at
+any height, and there is one sidebar, not one per screen zone as in earlier builds.
 
 ::: warning Known risk and the emergency switch
-An early version of this overlay blocked touch on the whole screen. It was fixed by using one small
-window per tab. If a future bug ever locks the screen, disable the floating launcher from a computer with
-this command, which needs no touch input:
+An early version of this overlay blocked touch on the whole screen. It was fixed by using a small window for the handle
+and a full screen window only while the card is open. If a bug ever locks the screen, disable the floating launcher from
+a computer with this command, which needs no touch input:
 
 `adb shell am broadcast -a de.mm20.launcher2.action.DISABLE_FLOATING_LAUNCHER -p <application id>`
 
-Drag and drop between windows is described in the source as not specifically tested.
+Drag and drop between windows, widgets inside the overlay and the editor have not been verified on a real device.
 :::
 
-The floating launcher deliberately has no search field. A text field would have to steal focus from the
-app in front.
+The card deliberately has no search field. A text field would have to steal focus from the app in front. The editor has
+one, so its window can take the focus while it is open.
 
 ## Dynamic Island
 

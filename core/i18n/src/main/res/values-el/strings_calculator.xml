@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="calculator_title">Αριθμομηχανή</string>
+    <string name="calculator_history">Ιστορικό</string>
+    <string name="calculator_history_empty">Οι πράξεις που ολοκληρώνετε με το = εμφανίζονται εδώ, με ημερομηνία και ώρα.</string>
+    <string name="calculator_history_clear">Εκκαθάριση ιστορικού</string>
+    <string name="calculator_invalid">Μη έγκυρη έκφραση</string>
+    <string name="calculator_scientific">Επιστημονική αριθμομηχανή</string>
+    <string name="calculator_standard">Βασική αριθμομηχανή</string>
+    <string name="calculator_unit_converter">Μετατροπέας μονάδων</string>
+    <string name="calculator_more">Περισσότερες επιλογές</string>
+    <string name="calculator_copy_result">Αντιγραφή αποτελέσματος</string>
+    <string name="calculator_copied">Αντιγράφηκε: %1$s</string>
+    <string name="calculator_back">Πίσω</string>
+    <string name="calculator_vat">ΦΠΑ</string>
+    <string name="calculator_vat_rate">Ποσοστό ΦΠΑ</string>
+    <string name="calculator_vat_add">Προσθήκη ΦΠΑ</string>
+    <string name="calculator_vat_remove">Αφαίρεση ΦΠΑ</string>
+    <string name="calculator_vat_amount_net">Ποσό χωρίς ΦΠΑ</string>
+    <string name="calculator_vat_amount_gross">Ποσό με ΦΠΑ</string>
+    <string name="calculator_vat_amount_hint">Μπορείτε να πληκτρολογήσετε μια πράξη, για παράδειγμα 12.5*3</string>
+    <string name="calculator_vat_use_result">Χρήση του αποτελέσματος της αριθμομηχανής</string>
+    <string name="calculator_vat_without">Χωρίς ΦΠΑ</string>
+    <string name="calculator_vat_amount">ΦΠΑ %1$s%%</string>
+    <string name="calculator_vat_with">Με ΦΠΑ</string>
+    <string name="calculator_vat_tap_copy">Πατήστε ένα ποσό για να το αντιγράψετε.</string>
+    <string name="calculator_vat_use_net">Χρήση του ποσού χωρίς ΦΠΑ στην αριθμομηχανή</string>
+    <string name="calculator_vat_use_gross">Χρήση του ποσού με ΦΠΑ στην αριθμομηχανή</string>
+    <string name="calculator_chip_add_vat">+ ΦΠΑ %1$s%%</string>
+    <string name="calculator_chip_remove_vat">− ΦΠΑ %1$s%%</string>
+    <string name="calculator_cat_currency">Νόμισμα</string>
+    <string name="calculator_cat_length">Μήκος</string>
+    <string name="calculator_cat_area">Εμβαδόν</string>
+    <string name="calculator_cat_volume">Όγκος</string>
+    <string name="calculator_cat_weight">Βάρος</string>
+    <string name="calculator_cat_temperature">Θερμοκρασία</string>
+    <string name="calculator_cat_speed">Ταχύτητα</string>
+    <string name="calculator_cat_pressure">Πίεση</string>
+    <string name="calculator_cat_energy">Ενέργεια</string>
+    <string name="calculator_cat_numeral">Αριθμητικό σύστημα</string>
+    <string name="calculator_cat_time">Χρόνος</string>
+    <string name="calculator_cat_data">Δεδομένα</string>
+    <string name="calculator_radix_2">Δυαδικό</string>
+    <string name="calculator_radix_8">Οκταδικό</string>
+    <string name="calculator_radix_10">Δεκαδικό</string>
+    <string name="calculator_radix_16">Δεκαεξαδικό</string>
+    <string name="calculator_value">Τιμή</string>
+    <string name="calculator_from">Από</string>
+    <string name="calculator_to">Σε</string>
+    <string name="calculator_result">Αποτέλεσμα</string>
+    <string name="calculator_swap">Αντιστροφή μονάδων</string>
+    <string name="calculator_currency_missing">Οι τιμές των νομισμάτων δεν έχουν κατέβει ακόμα. Ενεργοποιήστε τα Νομίσματα του μετατροπέα μονάδων στις Ρυθμίσεις > Αναζήτηση και δοκιμάστε ξανά.</string>
+    <string name="calculator_degrees">deg</string>
+    <string name="calculator_radians">rad</string>
+    <string name="calculator_tile">Αριθμομηχανή</string>
+</resources>

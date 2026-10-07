@@ -64,6 +64,22 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         ],
       },
       {
+        text: 'Calculator',
+        link: '/docs/user-guide/telos/calculator/',
+      },
+      {
+        text: 'Screenshot',
+        link: '/docs/user-guide/telos/screenshot/',
+      },
+      {
+        text: 'Screen Recorder',
+        link: '/docs/user-guide/telos/screen-recorder/',
+      },
+      {
+        text: 'Voice Recorder',
+        link: '/docs/user-guide/telos/voice-recorder/',
+      },
+      {
         text: 'Photos',
         collapsed: true,
         link: '/docs/user-guide/telos/photos/',

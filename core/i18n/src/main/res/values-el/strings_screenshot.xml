@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="screenshot_title">Στιγμιότυπο οθόνης</string>
+    <string name="screenshot_full">Στιγμιότυπο</string>
+    <string name="screenshot_full_summary">Τραβά φωτογραφία ολόκληρης της οθόνης</string>
+    <string name="screenshot_partial">Μερικό στιγμιότυπο</string>
+    <string name="screenshot_partial_summary">Τραβά φωτογραφία και μετά διαλέγετε ορθογώνιο, οβάλ ή ελεύθερο σχήμα</string>
+    <string name="screenshot_scrolling">Στιγμιότυπο κύλισης</string>
+    <string name="screenshot_scrolling_summary">Κυλά την οθόνη και ενώνει τις φωτογραφίες (πειραματικό)</string>
+    <string name="screenshot_scrolling_started">Λήψη στιγμιότυπου κύλισης, μην αγγίζετε την οθόνη</string>
+    <string name="screenshot_needs_accessibility">Ενεργοποιήστε την υπηρεσία προσβασιμότητας του Telos στις Ρυθμίσεις > Χειρονομίες</string>
+    <string name="screenshot_needs_android11">Χρειάζεται Android 11 ή νεότερο και την υπηρεσία προσβασιμότητας του Telos</string>
+    <string name="screenshot_accessibility_banner">Το Telos τραβά στιγμιότυπα μέσω της υπηρεσίας προσβασιμότητάς του. Δεν εκτελείται.</string>
+    <string name="screenshot_open_accessibility">Άνοιγμα ρυθμίσεων προσβασιμότητας</string>
+    <string name="screenshot_saved">Το στιγμιότυπο αποθηκεύτηκε</string>
+    <string name="screenshot_save_failed">Το στιγμιότυπο δεν μπόρεσε να αποθηκευτεί</string>
+    <string name="screenshot_cannot_open">Η εικόνα δεν μπόρεσε να ανοιχτεί</string>
+    <string name="screenshot_notification_channel">Στιγμιότυπα</string>
+    <string name="screenshot_notification_text">Πατήστε για επεξεργασία</string>
+    <string name="screenshot_edit">Επεξεργασία</string>
+    <string name="screenshot_screenshots">Στιγμιότυπα</string>
+    <string name="screenshot_none">Δεν υπάρχουν ακόμα στιγμιότυπα</string>
+    <string name="screenshot_undo">Αναίρεση</string>
+    <string name="screenshot_apply">Εφαρμογή</string>
+    <string name="screenshot_shape_rectangle">Ορθογώνιο</string>
+    <string name="screenshot_shape_oval">Οβάλ</string>
+    <string name="screenshot_shape_freeform">Ελεύθερο σχήμα</string>
+    <string name="screenshot_tool_select">Επιλογή</string>
+    <string name="screenshot_tool_crop">Περικοπή</string>
+    <string name="screenshot_tool_pixelate">Πίξελ</string>
+    <string name="screenshot_tool_blur">Θόλωμα</string>
+    <string name="screenshot_tool_draw">Σχέδιο</string>
+    <string name="screenshot_hint_select">Σύρετε πάνω στο τμήμα του στιγμιότυπου που θέλετε να κρατήσετε και πατήστε Εφαρμογή</string>
+    <string name="screenshot_hint_crop">Σύρετε ένα ορθογώνιο και πατήστε Εφαρμογή για περικοπή</string>
+    <string name="screenshot_hint_obscure">Σύρετε πάνω σε κείμενο, πρόσωπα ή αριθμούς που δεν πρέπει να φαίνονται</string>
+    <string name="screenshot_hint_draw">Ζωγραφίστε με το δάχτυλο, διαλέξτε χρώμα παραπάνω</string>
+    <string name="screenshot_settings_capture">Λήψη</string>
+    <string name="screenshot_format">Μορφή αρχείου</string>
+    <string name="screenshot_delay">Καθυστέρηση πριν τη λήψη</string>
+    <string name="screenshot_delay_none">Καμία</string>
+    <string name="screenshot_notify">Ειδοποίηση μετά τη λήψη</string>
+    <string name="screenshot_notify_summary">Με κοινοποίηση, επεξεργασία και διαγραφή</string>
+    <string name="screenshot_privacy">Τα στιγμιότυπα αποθηκεύονται στο Pictures/Screenshots σε αυτό το τηλέφωνο και δεν φεύγουν από αυτό. Το Telos δεν διαβάζει το κείμενο μέσα τους.</string>
+</resources>

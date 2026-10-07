@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="screenshot_title">Screenshot</string>
+    <string name="screenshot_full">Screenshot</string>
+    <string name="screenshot_full_summary">Takes a picture of the whole screen</string>
+    <string name="screenshot_partial">Partial screenshot</string>
+    <string name="screenshot_partial_summary">Takes a picture, then you choose a rectangle, an oval or a free shape</string>
+    <string name="screenshot_scrolling">Scrolling screenshot</string>
+    <string name="screenshot_scrolling_summary">Scrolls the screen and joins the pictures (experimental)</string>
+    <string name="screenshot_scrolling_started">Taking a scrolling screenshot, do not touch the screen</string>
+    <string name="screenshot_needs_accessibility">Turn on the Telos accessibility service in Settings > Gestures</string>
+    <string name="screenshot_needs_android11">This needs Android 11 or newer and the Telos accessibility service</string>
+    <string name="screenshot_accessibility_banner">Telos takes screenshots through its accessibility service. It is not running.</string>
+    <string name="screenshot_open_accessibility">Open accessibility settings</string>
+    <string name="screenshot_saved">Screenshot saved</string>
+    <string name="screenshot_save_failed">The screenshot could not be saved</string>
+    <string name="screenshot_cannot_open">The picture could not be opened</string>
+    <string name="screenshot_notification_channel">Screenshots</string>
+    <string name="screenshot_notification_text">Tap to edit</string>
+    <string name="screenshot_edit">Edit</string>
+    <string name="screenshot_screenshots">Screenshots</string>
+    <string name="screenshot_none">No screenshots yet</string>
+    <string name="screenshot_undo">Undo</string>
+    <string name="screenshot_apply">Apply</string>
+    <string name="screenshot_shape_rectangle">Rectangle</string>
+    <string name="screenshot_shape_oval">Oval</string>
+    <string name="screenshot_shape_freeform">Free shape</string>
+    <string name="screenshot_tool_select">Select</string>
+    <string name="screenshot_tool_crop">Crop</string>
+    <string name="screenshot_tool_pixelate">Pixelate</string>
+    <string name="screenshot_tool_blur">Blur</string>
+    <string name="screenshot_tool_draw">Draw</string>
+    <string name="screenshot_hint_select">Drag over the part of the screenshot that you want to keep, then tap Apply</string>
+    <string name="screenshot_hint_crop">Drag a rectangle, then tap Apply to crop</string>
+    <string name="screenshot_hint_obscure">Drag over text, faces or numbers that should not be seen</string>
+    <string name="screenshot_hint_draw">Draw with your finger, pick a color above</string>
+    <string name="screenshot_settings_capture">Capture</string>
+    <string name="screenshot_format">File format</string>
+    <string name="screenshot_delay">Delay before a capture</string>
+    <string name="screenshot_delay_none">None</string>
+    <string name="screenshot_notify">Notification after a capture</string>
+    <string name="screenshot_notify_summary">With share, edit and delete</string>
+    <string name="screenshot_privacy">Screenshots are saved in Pictures/Screenshots on this phone and never leave it. Telos does not read the text in them.</string>
+</resources>

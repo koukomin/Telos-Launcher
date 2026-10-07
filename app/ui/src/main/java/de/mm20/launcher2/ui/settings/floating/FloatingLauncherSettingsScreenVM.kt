@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.FloatingLauncherEdge
 import de.mm20.launcher2.preferences.FloatingLauncherZone
 import de.mm20.launcher2.preferences.ui.FloatingLauncherSettings
 import org.koin.core.component.KoinComponent
@@ -52,6 +53,30 @@ class FloatingLauncherSettingsScreenVM(
 
     val autoHideGaming = floatingLauncherSettings.autoHideGaming
     fun setAutoHideGaming(enabled: Boolean) = floatingLauncherSettings.setAutoHideGaming(enabled)
+
+    val showLabels = floatingLauncherSettings.showLabels
+    fun setShowLabels(show: Boolean) = floatingLauncherSettings.setShowLabels(show)
+
+    val panelAlpha = floatingLauncherSettings.panelAlpha
+    fun setPanelAlpha(alpha: Float) = floatingLauncherSettings.setPanelAlpha(alpha)
+
+    val iconSize = floatingLauncherSettings.iconSize
+    fun setIconSize(size: Int) = floatingLauncherSettings.setIconSize(size)
+
+    val floatingWindows = floatingLauncherSettings.floatingWindows
+    fun setFloatingWindows(enabled: Boolean) = floatingLauncherSettings.setFloatingWindows(enabled)
+
+    val side = floatingLauncherSettings.side
+    fun setSide(side: FloatingLauncherEdge) = floatingLauncherSettings.setSide(side)
+
+    val handleY = floatingLauncherSettings.handleY
+    fun setHandleY(y: Float) = floatingLauncherSettings.setHandleY(y)
+
+    val handleHeight = floatingLauncherSettings.handleHeight
+    fun setHandleHeight(height: Int) = floatingLauncherSettings.setHandleHeight(height)
+
+    val fileDock = floatingLauncherSettings.fileDock
+    fun setFileDock(enabled: Boolean) = floatingLauncherSettings.setFileDock(enabled)
 
     companion object : KoinComponent {
         val Factory = viewModelFactory {

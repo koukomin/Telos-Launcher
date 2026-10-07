@@ -1,5 +1,6 @@
 package de.mm20.launcher2.preferences.ui
 
+import de.mm20.launcher2.preferences.FloatingLauncherEdge
 import de.mm20.launcher2.preferences.FloatingLauncherFolder
 import de.mm20.launcher2.preferences.FloatingLauncherZone
 import de.mm20.launcher2.preferences.FloatingLauncherZoneConfig
@@ -104,6 +105,93 @@ class FloatingLauncherSettings internal constructor(
 
     fun setHapticFeedback(enabled: Boolean) {
         dataStore.update { it.copy(floatingLauncher = it.floatingLauncher.copy(floatingLauncherHapticFeedback = enabled)) }
+    }
+
+    val showLabels
+        get() = dataStore.data.map { it.floatingLauncher.floatingLauncherShowLabels }.distinctUntilChanged()
+
+    fun setShowLabels(show: Boolean) {
+        dataStore.update { it.copy(floatingLauncher = it.floatingLauncher.copy(floatingLauncherShowLabels = show)) }
+    }
+
+    /** Opacity of the panel card, [0.3f, 1f]. */
+    val panelAlpha
+        get() = dataStore.data.map { it.floatingLauncher.floatingLauncherPanelAlpha }.distinctUntilChanged()
+
+    fun setPanelAlpha(alpha: Float) {
+        dataStore.update { it.copy(floatingLauncher = it.floatingLauncher.copy(floatingLauncherPanelAlpha = alpha.coerceIn(0.3f, 1f))) }
+    }
+
+    /** Icon size in the panel, in dp. */
+    val iconSize
+        get() = dataStore.data.map { it.floatingLauncher.floatingLauncherIconSize }.distinctUntilChanged()
+
+    fun setIconSize(size: Int) {
+        dataStore.update { it.copy(floatingLauncher = it.floatingLauncher.copy(floatingLauncherIconSize = size.coerceIn(32, 72))) }
+    }
+
+    val floatingWindows
+        get() = dataStore.data.map { it.floatingLauncher.floatingLauncherFloatingWindows }.distinctUntilChanged()
+
+    fun setFloatingWindows(enabled: Boolean) {
+        dataStore.update { it.copy(floatingLauncher = it.floatingLauncher.copy(floatingLauncherFloatingWindows = enabled)) }
+    }
+
+    val tools
+        get() = dataStore.data.map { it.floatingLauncher.floatingLauncherTools }.distinctUntilChanged()
+
+    fun setTools(enabled: Boolean) {
+        dataStore.update { it.copy(floatingLauncher = it.floatingLauncher.copy(floatingLauncherTools = enabled)) }
+    }
+
+    /** What the sidebar shows, in order, see [de.mm20.launcher2.preferences.FloatingLauncherGroup.floatingLauncherItems] */
+    val items
+        get() = dataStore.data.map { it.floatingLauncher.floatingLauncherItems }.distinctUntilChanged()
+
+    fun setItems(items: List<String>) {
+        dataStore.update { it.copy(floatingLauncher = it.floatingLauncher.copy(floatingLauncherItems = items.distinct())) }
+    }
+
+    fun addItem(key: String) {
+        dataStore.update {
+            val current = it.floatingLauncher.floatingLauncherItems
+            if (key in current) it else it.copy(floatingLauncher = it.floatingLauncher.copy(floatingLauncherItems = current + key))
+        }
+    }
+
+    fun removeItem(key: String) {
+        dataStore.update {
+            it.copy(floatingLauncher = it.floatingLauncher.copy(floatingLauncherItems = it.floatingLauncher.floatingLauncherItems - key))
+        }
+    }
+
+    val side
+        get() = dataStore.data.map { it.floatingLauncher.floatingLauncherSide }.distinctUntilChanged()
+
+    fun setSide(side: FloatingLauncherEdge) {
+        dataStore.update { it.copy(floatingLauncher = it.floatingLauncher.copy(floatingLauncherSide = side)) }
+    }
+
+    /** 0 is the top of the screen, 1 the bottom */
+    val handleY
+        get() = dataStore.data.map { it.floatingLauncher.floatingLauncherHandleY }.distinctUntilChanged()
+
+    fun setHandleY(y: Float) {
+        dataStore.update { it.copy(floatingLauncher = it.floatingLauncher.copy(floatingLauncherHandleY = y.coerceIn(0.05f, 0.95f))) }
+    }
+
+    val handleHeight
+        get() = dataStore.data.map { it.floatingLauncher.floatingLauncherHandleHeight }.distinctUntilChanged()
+
+    fun setHandleHeight(height: Int) {
+        dataStore.update { it.copy(floatingLauncher = it.floatingLauncher.copy(floatingLauncherHandleHeight = height.coerceIn(48, 160))) }
+    }
+
+    val fileDock
+        get() = dataStore.data.map { it.floatingLauncher.floatingLauncherFileDock }.distinctUntilChanged()
+
+    fun setFileDock(enabled: Boolean) {
+        dataStore.update { it.copy(floatingLauncher = it.floatingLauncher.copy(floatingLauncherFileDock = enabled)) }
     }
 
     /** Hide every tab while the Gaming context profile is active. */
