@@ -66,7 +66,9 @@ open class VideoPlayerActivity : AppCompatActivity() {
             titles = intent.getStringArrayListExtra(EXTRA_TITLES) ?: uris.map { it.lastPathSegment.orEmpty() }
             startIndex = intent.getIntExtra(EXTRA_INDEX, 0).coerceIn(0, uris.size - 1)
         } else {
-            val data = intent.data
+            // a video shared to Telos Video comes as a stream
+            @Suppress("DEPRECATION")
+            val data = intent.data ?: intent.getParcelableExtra<Uri>(android.content.Intent.EXTRA_STREAM)
             if (data == null) {
                 finish()
                 return

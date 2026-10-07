@@ -56,10 +56,17 @@ plugin SDK for third-party search/weather/calendar providers. See the
   proximity speaker, volume-button Do Not Disturb shortcut
 - Auto redial, fake incoming calls (scheduled), missed-call and post-call popups, Dynamic Island
   call state
-- Messages: the text messages of the phone as conversations with a reply field (no MMS; the system
-  keeps the messages, Telos is not the default SMS app, so replies sent from Telos are shown from a
-  copy kept by Telos); conversations with hidden contacts are only listed while the hidden contacts
-  are unlocked, the system's own messaging app still shows them
+- Messages: text and multimedia (MMS) messages as conversations with a reply field, pictures in
+  the conversation, a button to attach pictures, group messages; Telos can be the phone's default
+  SMS app (the system asks once): it then stores and notifies about received messages, sends from
+  the message field, and answers "reply with a message" from the call screen. Telos can also be
+  chosen from other apps' share menu ("Telos Messages") for a text, picture or video, and opens
+  sms: links. Conversations with hidden contacts are only listed while the hidden contacts are
+  unlocked. Without being the default app Telos only reads messages and replies with text; the
+  system's messaging app still shows everything
+- Share menu entries: Telos Messages (text, pictures, videos, sms: links), Telos Photos (pictures),
+  Telos Video (videos, magnet links, torrent files), Telos Store (obtainium: links) and Telos Phone
+  (tel: links) each appear under their own name and icon, and only while that app is installed
 - SMS engine: quick replies, scheduled SMS (on the exact minute once "Alarms & reminders" is allowed)
 - Radio (behaviour and logic taken from [Transistor](https://codeberg.org/y20k/transistor), compared with 4.3.9): station
   collection with add by address, rename and remove; M3U / PLS import, M3U export and JSON backup;

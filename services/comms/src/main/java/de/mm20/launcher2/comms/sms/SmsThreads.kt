@@ -16,11 +16,15 @@ data class SmsConversation(
     val unread: Int,
 )
 
+data class SmsAttachment(val uri: String, val mimeType: String)
+
 data class SmsMessage(
     val id: String,
     val body: String,
     val date: Long,
     val outgoing: Boolean,
+    val attachments: List<SmsAttachment> = emptyList(),
+    val failed: Boolean = false,
 )
 
 /**
@@ -31,7 +35,39 @@ data class SmsMessage(
 object SmsThreads {
 
     /** One entry per conversation, newest first. Needs the READ_SMS permission. */
-    fun conversations(context: Context): List<SmsConversation> = runCatching {
+    fun conversations(context: Context): List<SmsConversation> {
+        val fromThreads = conversationsFromThreads(context)
+        return fromThreads.ifEmpty { conversationsFromMessages(context) }.let { withSentOnly(context, it) }
+    }
+
+    /** The conversation list of the system, which includes multimedia messages. */
+    private fun conversationsFromThreads(context: Context): List<SmsConversation> = runCatching {
+        val addresses = HashMap<Long, String>()
+        context.contentResolver.query(Uri.parse("content://mms-sms/canonical-addresses"), null, null, null, null)?.use { c ->
+            val id = c.getColumnIndex("_id")
+            val address = c.getColumnIndex("address")
+            while (c.moveToNext()) addresses[c.getLong(id)] = c.getString(address).orEmpty()
+        }
+        val out = mutableListOf<SmsConversation>()
+        val uri = Telephony.Threads.CONTENT_URI.buildUpon().appendQueryParameter("simple", "true").build()
+        context.contentResolver.query(uri, null, null, null, "date DESC")?.use { c ->
+            val id = c.getColumnIndex("_id")
+            val date = c.getColumnIndex("date")
+            val snippet = c.getColumnIndex("snippet")
+            val read = c.getColumnIndex("read")
+            val recipients = c.getColumnIndex("recipient_ids")
+            val attachment = c.getColumnIndex("has_attachment")
+            while (c.moveToNext()) {
+                val numbers = c.getString(recipients).orEmpty().split(' ').mapNotNull { it.toLongOrNull() }.mapNotNull { addresses[it] }
+                if (numbers.isEmpty()) continue
+                val text = c.getString(snippet).orEmpty().ifBlank { if (attachment >= 0 && c.getInt(attachment) > 0) "Attachment" else "" }
+                out += SmsConversation(c.getLong(id), numbers.joinToString(", "), null, text, c.getLong(date), if (c.getInt(read) == 0) 1 else 0)
+            }
+        }
+        out.map { it.copy(name = if (',' in it.address) null else displayName(context, it.address)) }
+    }.getOrDefault(emptyList())
+
+    private fun conversationsFromMessages(context: Context): List<SmsConversation> = runCatching {
         val byThread = LinkedHashMap<Long, SmsConversation>()
         val unread = HashMap<Long, Int>()
         context.contentResolver.query(
@@ -48,19 +84,23 @@ object SmsThreads {
                 }
             }
         }
-        // what was sent from Telos to a number that has no conversation yet (negative ids)
-        var nextId = -1L
-        val known = byThread.values.map { it.address }
-        SentLog.all(context).groupBy { it.first }.forEach { (address, sent) ->
-            if (known.none { de.mm20.launcher2.comms.PhoneNumbers.match(it, address) }) {
-                val last = sent.maxByOrNull { it.second.date }!!.second
-                byThread[nextId] = SmsConversation(nextId, address, null, last.body, last.date, 0)
-                nextId--
-            }
-        }
         byThread.values.map { it.copy(name = displayName(context, it.address), unread = unread[it.threadId] ?: 0) }
             .sortedByDescending { it.date }
     }.getOrDefault(emptyList())
+
+    /** What was sent from Telos (before it was the default SMS app) to a number that has no conversation yet */
+    private fun withSentOnly(context: Context, list: List<SmsConversation>): List<SmsConversation> {
+        var nextId = -1L
+        val result = list.toMutableList()
+        SentLog.all(context).groupBy { it.first }.forEach { (address, sent) ->
+            if (result.none { c -> c.address.split(", ").any { de.mm20.launcher2.comms.PhoneNumbers.match(it, address) } }) {
+                val last = sent.maxByOrNull { it.second.date }!!.second
+                result += SmsConversation(nextId, address, displayName(context, address), last.body, last.date, 0)
+                nextId--
+            }
+        }
+        return result.sortedByDescending { it.date }
+    }
 
     /** The messages of one conversation, oldest first, with what was sent from Telos mixed in. */
     fun messages(context: Context, conversation: SmsConversation): List<SmsMessage> = runCatching {
@@ -78,13 +118,14 @@ object SmsThreads {
                 }
             }
         }
+        if (conversation.threadId >= 0) out += mmsMessages(context, conversation.threadId)
         SentLog.all(context)
             .filter { de.mm20.launcher2.comms.PhoneNumbers.match(it.first, conversation.address) }
             .forEach { out += it.second }
         out.sortedBy { it.date }
     }.getOrDefault(emptyList())
 
-    private fun displayName(context: Context, number: String): String? = runCatching {
+    internal fun displayName(context: Context, number: String): String? = runCatching {
         if (number.isBlank()) return null
         val uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number))
         context.contentResolver.query(uri, arrayOf(ContactsContract.PhoneLookup.DISPLAY_NAME), null, null, null)?.use {
@@ -92,12 +133,39 @@ object SmsThreads {
         }
     }.getOrNull()
 
-    /** Sends a message and remembers it. Returns false when it could not be sent. */
+    /**
+     * Sends a message. As the default SMS app it goes into the system's message store, otherwise a
+     * copy is kept by Telos (the system does not store what another app sends). Returns false when
+     * it could not be sent.
+     */
     fun send(context: Context, address: String, text: String): Boolean {
         if (address.isBlank() || text.isBlank()) return false
-        val sent = SmsRepository(context).sendSms(address, text.trim())
-        if (sent) SentLog.add(context, address, text.trim())
+        val row = SmsStore.insertOutgoing(context, address, text.trim())
+        val sentIntent = row?.let {
+            android.app.PendingIntent.getBroadcast(
+                context, it.hashCode(),
+                android.content.Intent(context, SmsSentReceiver::class.java).setData(it),
+                android.app.PendingIntent.FLAG_UPDATE_CURRENT or
+                    (if (android.os.Build.VERSION.SDK_INT >= 31) android.app.PendingIntent.FLAG_MUTABLE else 0),
+            )
+        }
+        val sent = SmsRepository(context).sendSms(address, text.trim(), sentIntent)
+        if (!sent) row?.let { SmsStore.setType(context, it, Telephony.Sms.MESSAGE_TYPE_FAILED) }
+        if (sent && row == null) SentLog.add(context, address, text.trim())
         return sent
+    }
+
+    /** Sends a multimedia message: [text] and the pictures or videos at [attachments]. Default SMS app only. */
+    fun sendMms(context: Context, addresses: List<String>, text: String, attachments: List<Uri>): Boolean {
+        if (!SmsRole.isDefault(context) || addresses.isEmpty()) return false
+        val parts = mutableListOf<MmsPart>()
+        if (text.isNotBlank()) parts += MmsPart("text/plain", "text.txt", text.trim().toByteArray(Charsets.UTF_8))
+        attachments.forEachIndexed { i, uri -> MmsMedia.read(context, uri, i)?.let { parts += it } }
+        if (parts.isEmpty()) return false
+        val row = MmsStore.insertOutgoing(context, addresses, parts)
+        val ok = MmsTransport.send(context, addresses, parts, row)
+        if (!ok) row?.let { MmsStore.setBox(context, it, Telephony.Mms.MESSAGE_BOX_FAILED) }
+        return ok
     }
 }
 

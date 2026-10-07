@@ -258,7 +258,7 @@ class SettingsActivity : BaseActivity() {
             }
             entry<CommsDashboardRoute> {
                 // === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
-                CommsDashboardScreen(it.initialTab, it.initialNumber)
+                CommsDashboardScreen(it.initialTab, it.initialNumber, it.initialBody, it.initialAttachments)
                 // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
             }
             entry<de.mm20.launcher2.ui.media.photos.PhotosRoute> {
@@ -606,7 +606,12 @@ class SettingsActivity : BaseActivity() {
             ROUTE_COMMS -> {
                 val tab = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB) ?: "recents"
                 val number = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_DIAL_NUMBER).orEmpty()
-                CommsDashboardRoute(initialTab = tab, initialNumber = number)
+                CommsDashboardRoute(
+                    initialTab = tab,
+                    initialNumber = number,
+                    initialBody = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_SMS_BODY).orEmpty(),
+                    initialAttachments = intent.getStringArrayListExtra(SettingsDeepLinkContract.EXTRA_SMS_ATTACHMENTS).orEmpty(),
+                )
             }
             ROUTE_RADIO -> de.mm20.launcher2.ui.comms.radio.RadioDashboardRoute
             ROUTE_MUSIC -> de.mm20.launcher2.ui.media.music.MusicRoute
