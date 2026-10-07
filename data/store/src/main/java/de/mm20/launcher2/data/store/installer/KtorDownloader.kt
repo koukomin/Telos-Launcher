@@ -26,7 +26,7 @@ class KtorDownloader(
     override suspend fun download(url: String, suggestedFileName: String): DownloadResult =
         withContext(Dispatchers.IO) {
             val downloadsDir = File(context.cacheDir, "store_downloads").apply { mkdirs() }
-            val destination = File(downloadsDir, suggestedFileName)
+            val destination = File(downloadsDir, File(suggestedFileName).name.ifBlank { "download.apk" })
             try {
                 val response = httpClient.get { url(url) }
                 if (!response.status.isSuccess()) {
@@ -38,6 +38,7 @@ class KtorDownloader(
                 DownloadResult.Success(destination)
             } catch (e: Exception) {
                 destination.delete()
+                if (e is kotlinx.coroutines.CancellationException) throw e
                 Log.w(TAG, "Download failed for $url", e)
                 DownloadResult.Failed("Download failed: ${e.message}", e)
             }

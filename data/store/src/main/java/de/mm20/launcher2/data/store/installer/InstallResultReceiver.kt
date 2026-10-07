@@ -28,6 +28,17 @@ class InstallResultReceiver : BroadcastReceiver() {
         val packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME) ?: return
         val status = intent.getIntExtra(PackageInstaller.EXTRA_STATUS, PackageInstaller.STATUS_FAILURE)
 
+        if (status == PackageInstaller.STATUS_PENDING_USER_ACTION) {
+            // the system wants the user to confirm: show its dialog
+            @Suppress("DEPRECATION")
+            val confirm = intent.getParcelableExtra<Intent>(Intent.EXTRA_INTENT)
+            if (confirm != null) {
+                runCatching { context.startActivity(confirm.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
+                    .onFailure { Log.w(TAG, "Could not show the install confirmation", it) }
+            }
+            return
+        }
+
         if (status != PackageInstaller.STATUS_SUCCESS) {
             Log.w(
                 TAG,

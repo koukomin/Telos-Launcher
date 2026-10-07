@@ -26,19 +26,29 @@ object VirtualAppGuard {
     private fun prefs(context: Context) =
         context.applicationContext.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
 
+    // The apps on screen, oldest first. Opening the photo viewer from the music app leaves both
+    // open; a crash is blamed on the one that was opened last.
+    private fun stack(p: android.content.SharedPreferences) =
+        p.getString("open", "")!!.split('|').filter { it.isNotBlank() }
+
     /** The app with this key is on screen now */
     @Synchronized
     fun enter(context: Context, key: String) {
-        prefs(context).edit().putString("open", key).putLong("openAt", System.currentTimeMillis()).commit()
+        val p = prefs(context)
+        val keys = stack(p).filter { it != key } + key
+        p.edit().putString("open", keys.joinToString("|")).putLong("openAt", System.currentTimeMillis()).commit()
     }
 
     /** The app is no longer on screen. Used for a while without a crash, it counts as healthy again. */
     @Synchronized
     fun leave(context: Context, key: String) {
         val p = prefs(context)
-        if (p.getString("open", null) != key) return
+        val keys = stack(p)
+        if (key !in keys) return
         val usedFor = System.currentTimeMillis() - p.getLong("openAt", 0)
-        val edit = p.edit().remove("open").remove("openAt")
+        val rest = keys.filter { it != key }
+        val edit = p.edit()
+        if (rest.isEmpty()) edit.remove("open").remove("openAt") else edit.putString("open", rest.joinToString("|"))
         if (usedFor >= HEALTHY_USE) edit.remove("crashes:$key").remove("first:$key")
         edit.commit()
     }
@@ -47,7 +57,7 @@ object VirtualAppGuard {
     @Synchronized
     fun recordCrashIfOpen(context: Context) {
         val p = prefs(context)
-        val key = p.getString("open", null) ?: return
+        val key = stack(p).lastOrNull() ?: return
         count(context, key)
         p.edit().remove("open").remove("openAt").commit()
     }
@@ -73,7 +83,7 @@ object VirtualAppGuard {
     @Synchronized
     fun collectTripped(context: Context, guarded: Collection<String>): List<String> {
         val p = prefs(context)
-        val open = p.getString("open", null)
+        val open = stack(p).lastOrNull()
         if (open != null) {
             // the process ended while the app was open: was it a crash or a hang?
             val openedAt = p.getLong("openAt", 0)

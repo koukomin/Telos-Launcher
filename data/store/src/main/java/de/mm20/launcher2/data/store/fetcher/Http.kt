@@ -31,6 +31,8 @@ internal suspend fun HttpClient.getText(
             bearer?.takeIf { it.isNotBlank() }?.let { header("Authorization", "Bearer $it") }
         }
         return HttpText(response.status.value, response.bodyAsText())
+    } catch (e: kotlinx.coroutines.CancellationException) {
+        throw e
     } catch (e: Exception) {
         throw StoreFetchException("Could not reach ${url.substringAfter("://").substringBefore('/')}: ${e.message ?: e.javaClass.simpleName}", e)
     }
