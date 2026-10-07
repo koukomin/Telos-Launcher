@@ -126,6 +126,8 @@ plugin SDK for third-party search/weather/calendar providers. See the
 - Switched-off Radio, Music, Video and Photos apps have their services and screens disabled, so
   they use no memory or CPU and are not offered in "Open with". The services of these apps stop
   by themselves when nothing is playing; Phone and Messages are never touched
+- Optional separate process for the video player (Video services, "Play in a separate process"),
+  so that a crash of the player does not close the launcher
 - App lock with intruder photos, Work Profile quiet mode toggle
 
 **Desktop and appearance**

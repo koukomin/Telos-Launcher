@@ -11,3 +11,9 @@
     public <init>();
 }
 
+
+# Debug and verbose log calls do nothing useful in a release build and cost time and size
+-assumenosideeffects class android.util.Log {
+    public static int v(...);
+    public static int d(...);
+}

@@ -37,7 +37,7 @@ import de.mm20.launcher2.comms.media.video.VideoServicesConfig
 /** Opens the player with a web address, a magnet link or a .torrent file. */
 internal fun openSource(context: Context, source: String, torrentFile: Boolean = false) {
     context.startActivity(
-        Intent(context, VideoPlayerActivity::class.java)
+        Intent(context, PlayerChoice.playerClass(context))
             .putExtra(VideoPlayerActivity.EXTRA_SOURCE, source.trim())
             .putExtra(VideoPlayerActivity.EXTRA_IS_TORRENT, torrentFile)
     )
@@ -114,6 +114,8 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
     var languages by remember { mutableStateOf(c.languages) }
     var auto by remember { mutableStateOf(c.autoDownload) }
     var wifiOnly by remember { mutableStateOf(c.torrentWifiOnly) }
+    val appContext = androidx.compose.ui.platform.LocalContext.current
+    var isolated by remember { mutableStateOf(PlayerChoice.isolated(appContext)) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -156,10 +158,22 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
                     Text("Only on Wi-Fi", modifier = Modifier.weight(1f))
                     Switch(checked = wifiOnly, onCheckedChange = { wifiOnly = it })
                 }
+
+                Text("Player", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("Play in a separate process", modifier = Modifier.weight(1f))
+                    Switch(checked = isolated, onCheckedChange = { isolated = it })
+                }
+                Text(
+                    "Experimental. A crash of the player then does not close the launcher. Videos opened from other apps always use the normal player.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
             }
         },
         confirmButton = {
             TextButton(onClick = {
+                PlayerChoice.setIsolated(appContext, isolated)
                 VideoServices.save(VideoServicesConfig(tmdb, subKey, subUser, subPass, languages, auto, wifiOnly))
                 onDismiss()
             }) { Text("Save") }

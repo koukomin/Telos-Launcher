@@ -61,7 +61,7 @@ private fun metaKey(g: VideoGroup) = (if (g.series) "tv:" else "movie:") + g.tit
 
 internal fun openPlayer(context: Context, list: List<VideoItem>, index: Int) {
     context.startActivity(
-        Intent(context, VideoPlayerActivity::class.java).apply {
+        Intent(context, PlayerChoice.playerClass(context)).apply {
             putStringArrayListExtra(VideoPlayerActivity.EXTRA_URIS, ArrayList(list.map { it.uri.toString() }))
             putStringArrayListExtra(VideoPlayerActivity.EXTRA_TITLES, ArrayList(list.map { it.title }))
             putExtra(VideoPlayerActivity.EXTRA_INDEX, index)

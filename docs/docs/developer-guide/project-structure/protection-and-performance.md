@@ -51,8 +51,23 @@ Enabling it again restores the components.
   launcher start. A torrent is stopped and its cache deleted when the player closes.
 - The Store checks for updates with WorkManager (a periodic job), not with a service of its own.
 
+## The video player in its own process (experimental)
+
+Settings, Video services, "Play in a separate process" starts videos opened from Telos in
+`IsolatedVideoPlayerActivity`, which the manifest runs in the `:player` process. A crash of a
+decoder or of the torrent engine then ends that process, not the launcher.
+
+- `LauncherApplication.onCreate` returns right away in that process (`ProcessInfo.init`): no Koin,
+  and the settings store is never opened by two processes.
+- The video settings are copied to `files/video_services.json` by the main process (keys and
+  passwords stay encrypted); the player reads that file (`VideoServices.config`).
+- Watch positions and Trakt scrobbles are sent back to the main process with a broadcast
+  (`PlayerBridge`), because it owns the stored data.
+- The player process ends itself when the player is closed, so every start reads fresh data.
+- Videos opened from other apps (`ACTION_VIEW`) always use the normal player. The switch is off by
+  default.
+
 ## Not done yet
 
-Everything above shares one process. Moving the video player, SIP and the photo editor into
-separate processes would isolate them completely, but needs settings to be passed by intent and an
-IPC layer for SIP. It is not implemented.
+SIP and the photo editor still run in the launcher process. SIP would need a service with an
+interface between the processes.
