@@ -70,7 +70,7 @@ class CalculatorViewModel(application: Application) : AndroidViewModel(applicati
         error = false
         val isOperator = token in OPERATORS
         val isPostfix = token == "%" || token == "!"
-        if (justEvaluated && !isOperator && !isPostfix) expression = ""
+        if (justEvaluated && !isOperator && !isPostfix && token != ")") expression = ""
         justEvaluated = false
         when {
             isOperator -> {
@@ -93,6 +93,14 @@ class CalculatorViewModel(application: Application) : AndroidViewModel(applicati
                 val run = expression.takeLastWhile { it.isDigit() || it == '.' }
                 if ('.' in run) return
                 expression += if (run.isEmpty()) "0." else "."
+            }
+            token == ")" -> {
+                val open = expression.count { it == '(' }
+                val close = expression.count { it == ')' }
+                val last = expression.lastOrNull()
+                if (open > close && last != null && (last.isDigit() || last == ')' || last == 'π' || last == 'e' || last == '%' || last == '!')) {
+                    expression += ")"
+                }
             }
             token == "()" -> expression += nextBracket()
             else -> expression += token
@@ -128,6 +136,11 @@ class CalculatorViewModel(application: Application) : AndroidViewModel(applicati
         expression = ""
         error = false
         justEvaluated = false
+    }
+
+    fun chooseDegrees(value: Boolean) {
+        degrees = value
+        prefs.edit().putBoolean("degrees", value).apply()
     }
 
     fun toggleDegrees() {

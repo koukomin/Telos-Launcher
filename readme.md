@@ -669,16 +669,16 @@ A file manager for your phone, network storages and cloud storages. The layout f
 
 ### Telos Calculator
 
-A calculator in the launcher: standard and scientific keys, VAT, unit and currency conversion and a history. No permissions, no account. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calculator/).
+A calculator in the launcher: standard and scientific keypad, VAT, unit and currency conversion and a history. The layout is modeled on the OxygenOS calculator, the look follows the Telos theme. No permissions, no account. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calculator/).
 
-- Standard keys with percent that works like on a pocket calculator (`200 + 10%` is 220), brackets, live result under the expression
-- Scientific keys (sin, cos, tan and inverses, ln, log, root, factorial, powers, π, e) in landscape or with the f(x) button, degrees or radians
+- Round keys: a standard keypad (4 columns, with a `00` key and the decimal separator of your language) and a scientific keypad (5 columns: sin, cos, tan, rad, deg, log, ln, brackets, inv, factorial, power, root, π, e), switched with the top bar button or shown in landscape
+- Percent that works like on a pocket calculator (`200 + 10%` is 220), live result under the expression, `inv` for inverse functions
 - **VAT:** any rate (24 by default, chips for 24, 13, 6, 0), add VAT or remove VAT, shows without VAT, the VAT and with VAT at once, tap to copy; chips `+ VAT` and `− VAT` in the calculator itself
-- **Convert:** length, mass, area, volume, speed, temperature, time, data and currency with the converters of the launcher search (currency needs the currency rates of the unit converter turned on)
-- History with date and time (swipe down on the display), up to 100 entries
-- Quick Settings tile
+- **Unit converter** with a grid of categories: currency, length, area, volume, weight, temperature, speed, pressure, energy, numeral system (binary, octal, decimal, hexadecimal), time and data. Currency needs the currency rates of the unit converter turned on
+- History with date and time (swipe down on the display or from the menu), up to 100 entries
+- Quick Settings tile, texts in English and Greek
 
-**Status and limitations:** no floating window mode, 12 significant digits, the decimal point on the keypad is always a point.
+**Status and limitations:** no floating window mode, 12 significant digits, numeral systems for whole numbers only.
 
 ### Telos Photos
 
