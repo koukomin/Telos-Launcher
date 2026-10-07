@@ -19,10 +19,11 @@ class BackupManager(
 
     /**
      * Create a backup
-     * @return Uri to the created backup archive
+     * @param groups the parts to put into the backup, all of them by default
      */
     suspend fun backup(
-        uri: Uri
+        uri: Uri,
+        groups: Set<BackupGroup> = BackupGroup.entries.toSet(),
     ) {
 
         val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
@@ -32,6 +33,7 @@ class BackupManager(
             timestamp = System.currentTimeMillis(),
             deviceName = Build.MODEL,
             format = BackupFormat,
+            groups = groups,
         )
 
         withContext(Dispatchers.IO) {
@@ -46,7 +48,7 @@ class BackupManager(
             meta.writeToFile(metaFile)
 
             for (component in components) {
-                component.backup(backupDir)
+                if (component.group in groups) component.backup(backupDir)
             }
 
             createArchive(backupDir, outputStream)
@@ -55,8 +57,14 @@ class BackupManager(
         }
     }
 
+    /**
+     * Restores a backup
+     * @param groups the parts to restore, all that the backup contains by default. A part that the
+     * backup does not contain is never touched.
+     */
     suspend fun restore(
         uri: Uri,
+        groups: Set<BackupGroup>? = null,
     ) {
         val job = scope.launch {
             withContext(Dispatchers.IO) {
@@ -69,12 +77,21 @@ class BackupManager(
                 extractArchive(inputStream, restoreDir)
                 inputStream.close()
 
+                // a backup from before the groups only has the launcher part
+                val inBackup = readMetaFromDir(restoreDir)?.groups ?: setOf(BackupGroup.Launcher)
+                val chosen = if (groups == null) inBackup else groups intersect inBackup
                 for (component in components) {
-                    component.restore(restoreDir)
+                    if (component.group in chosen) component.restore(restoreDir)
                 }
             }
         }
         job.join()
+    }
+
+    private suspend fun readMetaFromDir(dir: File): BackupMetadata? {
+        val file = File(dir, "meta")
+        if (!file.exists()) return null
+        return file.inputStream().use { BackupMetadata.fromInputStream(it) }
     }
 
     suspend fun readBackupMeta(uri: Uri): BackupMetadata? {
@@ -145,10 +162,11 @@ class BackupManager(
          * Format changelog:
          * - 1.5: added `weight` to favorites
          * - 1.9: migrate from proto to json data store
+         * - 1.10: backup groups (launcher, notes, calendar), listed in the meta file
          */
 
         private const val BackupFormatMajor = 1
-        private const val BackupFormatMinor = 9
+        private const val BackupFormatMinor = 10
         internal const val BackupFormat = "$BackupFormatMajor.$BackupFormatMinor"
     }
 }
