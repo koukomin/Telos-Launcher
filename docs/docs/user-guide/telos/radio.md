@@ -80,7 +80,7 @@ the radio screen.
 | --- | --- | --- |
 | Playing a station | The station's own server (and a playlist host if the address is a playlist) | When you play |
 | Searching stations | A Radio-Browser mirror (`de1`, `de2` or `all.api.radio-browser.info`, found through DNS) | Only when you type in the Search tab |
-| Playing a station found via search | Radio-Browser | A play is counted for that station, as Radio-Browser asks apps to do |
+| Playing a station that came from Radio-Browser | Radio-Browser | A play is counted for that station, as Radio-Browser asks apps to do. Stations you added by address or imported from a playlist are not reported |
 | Import, export, backup | None | Done locally through the file picker |
 
 The station you play can see your IP address, as with any radio app. The user agent sent is "Telos Radio".
