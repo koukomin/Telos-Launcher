@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="floating_launcher_tool_flashlight">Flashlight</string>
+    <string name="floating_launcher_tool_notifications">Notifications</string>
+    <string name="floating_launcher_tool_lock_screen">Lock screen</string>
+    <string name="floating_launcher_tool_power_menu">Power menu</string>
+    <string name="floating_launcher_flashlight_failed">The flashlight is not available</string>
+    <string name="floating_launcher_search_hint">Search tools, widgets or apps</string>
+    <string name="floating_launcher_section_tools">Tools</string>
+    <string name="floating_launcher_section_widgets">Widgets</string>
+    <string name="floating_launcher_section_apps">Apps</string>
+    <string name="floating_launcher_done">Done</string>
+    <string name="floating_launcher_add">Add</string>
+    <string name="preference_category_floating_bar">Floating bar</string>
+    <string name="preference_category_sidebar_style">Sidebar style</string>
+    <string name="preference_floating_launcher_side">Side of the screen</string>
+    <string name="preference_floating_launcher_side_left">Left</string>
+    <string name="preference_floating_launcher_side_right">Right</string>
+    <string name="preference_floating_launcher_position">Position of the handle</string>
+    <string name="preference_floating_launcher_handle_height">Size of the handle</string>
+    <string name="preference_floating_launcher_edit">Edit the sidebar</string>
+    <string name="preference_floating_launcher_edit_summary">Choose the tools, apps and widgets in the sidebar and their order</string>
+    <string name="preference_floating_launcher_file_dock">File Dock</string>
+    <string name="preference_floating_launcher_file_dock_summary">Hold text, pictures and files that you drag onto the sidebar, to drop them into another app</string>
+    <string name="floating_launcher_edit_in_settings">Turn on the sidebar first</string>
+</resources>

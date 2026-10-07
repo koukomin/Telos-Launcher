@@ -16,6 +16,13 @@ class GlobalActionsService(private val context: Context) {
         LauncherAccessibilityService.getInstance()?.performGlobalAction(AccessibilityService.GLOBAL_ACTION_LOCK_SCREEN)
     }
 
+    /** Locks the screen through the accessibility service (Android 9+). Returns false if that is not possible. */
+    fun lockScreenOrFalse(): Boolean {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.P) return false
+        return LauncherAccessibilityService.getInstance()
+            ?.performGlobalAction(AccessibilityService.GLOBAL_ACTION_LOCK_SCREEN) ?: false
+    }
+
     fun openQuickSettings() {
         try {
             expandQuickSettings()

@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="floating_launcher_tool_flashlight">Φακός</string>
+    <string name="floating_launcher_tool_notifications">Ειδοποιήσεις</string>
+    <string name="floating_launcher_tool_lock_screen">Κλείδωμα οθόνης</string>
+    <string name="floating_launcher_tool_power_menu">Μενού τροφοδοσίας</string>
+    <string name="floating_launcher_flashlight_failed">Ο φακός δεν είναι διαθέσιμος</string>
+    <string name="floating_launcher_search_hint">Αναζήτηση εργαλείων, widgets ή εφαρμογών</string>
+    <string name="floating_launcher_section_tools">Εργαλεία</string>
+    <string name="floating_launcher_section_widgets">Widgets</string>
+    <string name="floating_launcher_section_apps">Εφαρμογές</string>
+    <string name="floating_launcher_done">Τέλος</string>
+    <string name="floating_launcher_add">Προσθήκη</string>
+    <string name="preference_category_floating_bar">Αιωρούμενη γραμμή</string>
+    <string name="preference_category_sidebar_style">Στυλ πλαϊνής γραμμής</string>
+    <string name="preference_floating_launcher_side">Πλευρά της οθόνης</string>
+    <string name="preference_floating_launcher_side_left">Αριστερά</string>
+    <string name="preference_floating_launcher_side_right">Δεξιά</string>
+    <string name="preference_floating_launcher_position">Θέση της λαβής</string>
+    <string name="preference_floating_launcher_handle_height">Μέγεθος της λαβής</string>
+    <string name="preference_floating_launcher_edit">Επεξεργασία της πλαϊνής γραμμής</string>
+    <string name="preference_floating_launcher_edit_summary">Επιλέξτε τα εργαλεία, τις εφαρμογές και τα widgets της πλαϊνής γραμμής και τη σειρά τους</string>
+    <string name="preference_floating_launcher_file_dock">Προσωρινή αποθήκη αρχείων</string>
+    <string name="preference_floating_launcher_file_dock_summary">Κρατήστε προσωρινά κείμενα, εικόνες και αρχεία που σύρετε στην πλαϊνή γραμμή, για να τα αφήσετε σε άλλη εφαρμογή</string>
+    <string name="floating_launcher_edit_in_settings">Ενεργοποιήστε πρώτα την πλαϊνή γραμμή</string>
+</resources>
