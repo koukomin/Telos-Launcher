@@ -1,5 +1,6 @@
 package de.mm20.launcher2.data.store.worker
 
+import de.mm20.launcher2.base.containedScope
 import android.content.Context
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -26,7 +27,7 @@ class StoreUpdateScheduler(private val context: Context, private val options: St
     fun enable() {
         if (started) return
         started = true
-        CoroutineScope(SupervisorJob() + Dispatchers.Default).launch {
+        containedScope(Dispatchers.Default).launch {
             options.global
                 .map { it.checkIntervalHours to it.wifiOnly }
                 .distinctUntilChanged()

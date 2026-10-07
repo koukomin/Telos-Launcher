@@ -39,6 +39,16 @@ import kotlinx.coroutines.withContext
 
 /** Non destructive photo editor: the result is always saved as a new file. */
 class PhotoEditorActivity : BaseActivity() {
+    override fun onStart() {
+        super.onStart()
+        de.mm20.launcher2.base.VirtualAppGuard.enter(this, "telos_photos_app://photos")
+    }
+
+    override fun onStop() {
+        de.mm20.launcher2.base.VirtualAppGuard.leave(this, "telos_photos_app://photos")
+        super.onStop()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val uri = intent.data ?: run { finish(); return }

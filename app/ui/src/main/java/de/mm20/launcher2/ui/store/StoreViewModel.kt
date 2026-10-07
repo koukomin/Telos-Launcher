@@ -339,7 +339,10 @@ class StoreViewModel : ViewModel(), KoinComponent {
     val disabledTelosApps: StateFlow<Set<String>> = settings.disabledVirtualApps
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
 
-    fun setTelosAppEnabled(key: String, enabled: Boolean) = settings.setVirtualAppEnabled(key, enabled)
+    fun setTelosAppEnabled(key: String, enabled: Boolean) {
+        if (enabled) de.mm20.launcher2.base.VirtualAppGuard.reset(context, key)
+        settings.setVirtualAppEnabled(key, enabled)
+    }
 
     // ---- helpers ----
 

@@ -1,6 +1,15 @@
 package de.mm20.launcher2
 
 import android.app.Application
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.ComponentName
+import android.content.pm.PackageManager
+import de.mm20.launcher2.applock.SettingsDeepLinkContract
+import de.mm20.launcher2.base.VirtualAppGuard
+import de.mm20.launcher2.preferences.comms.CommsSettings
 import android.app.ActivityOptions
 import android.content.Intent
 import android.provider.Settings
@@ -85,6 +94,14 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
         super.onCreate()
 
         if (BuildConfig.BUILD_TYPE == "debug") initDebugMode()
+
+        // Crash guard: blame a crash on the media app that was open, so that an app that keeps
+        // crashing gets switched off instead of taking the launcher down again and again.
+        val previousHandler = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            runCatching { VirtualAppGuard.recordCrashIfOpen(this) }
+            previousHandler?.uncaughtException(thread, throwable)
+        }
 
         startKoin {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
@@ -218,6 +235,70 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
         // enqueueUniquePeriodicWork + KEEP is idempotent, so it's safe to call this on every
         // process start rather than gating it behind a one-time setup step.
         get<StoreUpdateScheduler>().enable()
+
+        launch(Dispatchers.Default) { guardVirtualApps() }
+    }
+
+    /**
+     * Switches off media apps that crashed repeatedly, and keeps the components of switched-off
+     * apps disabled so that they cost nothing and don't show up as "Open with" targets. Phone and
+     * Messages are default-role apps and are never touched.
+     */
+    private suspend fun guardVirtualApps() {
+        val settings = get<CommsSettings>()
+        val tripped = runCatching { VirtualAppGuard.collectTripped(this, GUARDED.keys) }.getOrDefault(emptyList())
+        for (key in tripped) settings.setVirtualAppEnabled(key, false)
+        if (tripped.isNotEmpty()) notifyTripped(tripped)
+        settings.disabledVirtualApps.collect { disabled ->
+            for ((key, components) in GUARDED) {
+                val state = if (key in disabled) PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+                else PackageManager.COMPONENT_ENABLED_STATE_DEFAULT
+                for (name in components) runCatching {
+                    val cn = ComponentName(this, name)
+                    if (key in disabled && name.endsWith("Service")) stopService(Intent().setComponent(cn))
+                    packageManager.setComponentEnabledSetting(cn, state, PackageManager.DONT_KILL_APP)
+                }
+            }
+        }
+    }
+
+    private fun notifyTripped(keys: List<String>) = runCatching {
+        val nm = getSystemService(NotificationManager::class.java)
+        nm.createNotificationChannel(NotificationChannel("virtual_app_guard", "Telos apps", NotificationManager.IMPORTANCE_DEFAULT))
+        val names = keys.joinToString { GUARDED_NAMES[it] ?: it }
+        val open = PendingIntent.getActivity(
+            this, 0,
+            Intent(this, de.mm20.launcher2.ui.settings.SettingsActivity::class.java).apply {
+                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_STORE)
+            },
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+        )
+        nm.notify(
+            7301,
+            Notification.Builder(this, "virtual_app_guard")
+                .setSmallIcon(android.R.drawable.stat_notify_error)
+                .setContentTitle("$names switched off")
+                .setContentText("It crashed repeatedly. You can switch it on again in Telos Store.")
+                .setContentIntent(open)
+                .setAutoCancel(true)
+                .build()
+        )
+    }
+
+    private companion object {
+        val GUARDED = mapOf(
+            "telos_radio_app://radio" to listOf("de.mm20.launcher2.comms.radio.RadioPlayerService"),
+            "telos_music_app://music" to listOf("de.mm20.launcher2.comms.media.MusicPlayerService"),
+            "telos_video_app://video" to listOf("de.mm20.launcher2.ui.media.video.VideoPlayerActivity"),
+            "telos_photos_app://photos" to listOf(
+                "de.mm20.launcher2.ui.media.photos.PhotoViewerActivity",
+                "de.mm20.launcher2.ui.media.photos.PhotoEditorActivity",
+            ),
+        )
+        val GUARDED_NAMES = mapOf(
+            "telos_radio_app://radio" to "Telos Radio", "telos_music_app://music" to "Telos Music",
+            "telos_video_app://video" to "Telos Video", "telos_photos_app://photos" to "Telos Photos",
+        )
     }
 
     override fun newImageLoader(): ImageLoader {

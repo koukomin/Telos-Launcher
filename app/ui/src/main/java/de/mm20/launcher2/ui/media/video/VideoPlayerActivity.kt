@@ -93,6 +93,16 @@ class VideoPlayerActivity : BaseActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        de.mm20.launcher2.base.VirtualAppGuard.enter(this, "telos_video_app://video")
+    }
+
+    override fun onStop() {
+        de.mm20.launcher2.base.VirtualAppGuard.leave(this, "telos_video_app://video")
+        super.onStop()
+    }
+
     override fun onDestroy() {
         // stops a running torrent and deletes what it downloaded
         TorrentStreamer.close()

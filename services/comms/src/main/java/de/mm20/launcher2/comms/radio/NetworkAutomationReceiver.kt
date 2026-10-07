@@ -1,5 +1,6 @@
 package de.mm20.launcher2.comms.radio
 
+import de.mm20.launcher2.base.containedScope
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -15,7 +16,7 @@ import org.koin.core.component.inject
 
 class NetworkAutomationReceiver : BroadcastReceiver(), KoinComponent {
     private val commsSettings: CommsSettings by inject()
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    private val scope = containedScope(Dispatchers.Default)
 
     override fun onReceive(context: Context, intent: Intent?) {
         val pending = goAsync()

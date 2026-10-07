@@ -1,5 +1,6 @@
 package de.mm20.launcher2.comms.radio
 
+import de.mm20.launcher2.base.containedScope
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -24,7 +25,7 @@ class NetworkAutomationWatcher(context: Context, settings: CommsSettings) {
     private var registered = false
 
     init {
-        CoroutineScope(SupervisorJob() + Dispatchers.Main).launch {
+        containedScope(Dispatchers.Main).launch {
             combine(settings.screenOffLte, settings.batterySaverLte) { a, b -> a || b }
                 .distinctUntilChanged()
                 .collect { enabled -> if (enabled) register() else unregister() }

@@ -1,5 +1,6 @@
 package de.mm20.launcher2.comms.sip
 
+import de.mm20.launcher2.base.containedScope
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -39,7 +40,7 @@ import org.koin.core.component.inject
 class SipService : Service(), KoinComponent {
 
     private val settings: CommsSettings by inject()
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private val scope = containedScope(Dispatchers.Main)
     private lateinit var audio: SipAudio
     private var ringtone: Ringtone? = null
     private var networkCallback: ConnectivityManager.NetworkCallback? = null

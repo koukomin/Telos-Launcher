@@ -156,7 +156,7 @@ fun VideoScreen() {
             .sortedBy { it.title.lowercase() }
     }
 
-    de.mm20.launcher2.ui.media.MediaFrame("Videos", actions = {
+    de.mm20.launcher2.ui.media.MediaFrame("Videos", guardKey = "telos_video_app://video", actions = {
         IconButton(onClick = { showOpen = true }) {
             Icon(painterResource(R.drawable.link_24px), contentDescription = "Play from the web")
         }

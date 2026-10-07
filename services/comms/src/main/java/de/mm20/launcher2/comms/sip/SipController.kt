@@ -1,5 +1,6 @@
 package de.mm20.launcher2.comms.sip
 
+import de.mm20.launcher2.base.containedScope
 import android.content.Context
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import kotlinx.coroutines.CoroutineScope
@@ -17,7 +18,7 @@ import kotlinx.coroutines.launch
 class SipController(context: Context, settings: CommsSettings) {
     init {
         val appContext = context.applicationContext
-        CoroutineScope(SupervisorJob() + Dispatchers.Main).launch {
+        containedScope(Dispatchers.Main).launch {
             settings.snapshot
                 .map { Triple(it.sipEnabled, it.sipUser to it.sipDomain, it.sipPasswordEnc) }
                 .distinctUntilChanged()

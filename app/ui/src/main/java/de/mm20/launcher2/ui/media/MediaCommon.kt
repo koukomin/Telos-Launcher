@@ -32,10 +32,18 @@ import de.mm20.launcher2.ui.locals.LocalBackStack
 fun MediaFrame(
     title: String,
     askNotifications: Boolean = false,
+    guardKey: String? = null,
     actions: @Composable RowScope.() -> Unit = {},
     content: @Composable () -> Unit,
 ) {
     val backStack = LocalBackStack.current
+    if (guardKey != null) {
+        val context = androidx.compose.ui.platform.LocalContext.current
+        androidx.compose.runtime.DisposableEffect(guardKey) {
+            de.mm20.launcher2.base.VirtualAppGuard.enter(context, guardKey)
+            onDispose { de.mm20.launcher2.base.VirtualAppGuard.leave(context, guardKey) }
+        }
+    }
     if (askNotifications) RequestNotificationPermission()
     Scaffold(
         containerColor = MaterialTheme.colorScheme.surface,

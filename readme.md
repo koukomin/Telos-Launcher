@@ -119,6 +119,13 @@ plugin SDK for third-party search/weather/calendar providers. See the
   - install and uninstall with root or Shizuku backends or the system installer
   - the Telos apps (Phone, Messages, Radio, Music, Video, Photos) are listed with what each one
     does; "installing" one shows its icon in the app grid and in search, "removing" hides it
+- Crash guard for the Telos media apps: an app that crashes (or hangs) twice within a day is
+  switched off automatically, with a notification pointing to the Store; "installing" it again
+  resets the counter. Background tasks of these apps log their failures instead of ending the
+  launcher
+- Switched-off Radio, Music, Video and Photos apps have their services and screens disabled, so
+  they use no memory or CPU and are not offered in "Open with". The services of these apps stop
+  by themselves when nothing is playing; Phone and Messages are never touched
 - App lock with intruder photos, Work Profile quiet mode toggle
 
 **Desktop and appearance**
