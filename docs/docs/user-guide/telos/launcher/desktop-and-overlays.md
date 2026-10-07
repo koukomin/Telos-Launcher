@@ -223,6 +223,5 @@ time triggers only take effect while the launcher process is alive.
 - Desktop mode needs hardware support for a second display.
 - Freeform windows change the whole device and need Shizuku.
 - Overlays depend on the display-over-other-apps permission, which some manufacturers restrict.
-- The Floating launcher settings page is not linked from the settings list.
 - The Dynamic Island timer is not fed by anything yet.
 - Context profile triggers do not run in the background.
