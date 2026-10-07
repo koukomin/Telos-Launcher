@@ -99,157 +99,261 @@ The launcher is built around one idea: **search is the main way to reach things*
 ### Search
 
 One text field finds apps, contacts, events, files, places, articles and more, and it can also calculate,
-convert units and offer quick actions. All search settings are in **Settings > Search**.
+convert units and offer quick actions. All search settings are in **Settings > Search**. Names, titles, tags
+and custom names are matched; file contents, message texts and note bodies are not.
 
-| Source | What it finds | Online? | Default |
-| --- | --- | --- | --- |
-| Apps | Installed apps of every profile, plus the Telos apps that are switched on | No | On |
-| Web apps | Web app shortcuts shown in the grid | No | On |
-| App shortcuts | Shortcuts that apps publish (needs Telos as the default home app) | No | On |
-| Contacts | Android contacts, plus contact plugins | No | On |
-| Calendar | Events of the Android calendar, plus calendar plugins | No | On |
-| Reminders | Tasks from the Tasks app | No | Filter on, source off |
-| Files | Local files, Nextcloud, ownCloud and file plugins | Cloud only | Local on |
-| Places | OpenStreetMap places near you, plus place plugins | Yes | On |
-| Websites | A preview card for a URL you type | Yes | On |
-| Wikipedia | Articles | Yes | On |
-| Calculator | The result of an expression | No | On |
-| Unit converter | Units and currencies | Rates only | On |
-| Quick actions | Call, message, web search and more for what you typed | No | On |
-| Tags and custom names | Items you tagged or renamed | No | Always |
+| Source | What it finds | Min. text | Online? | Default |
+| --- | --- | --- | --- | --- |
+| Apps | Installed apps of every profile (personal, work, private space) | 1 | No | On |
+| Telos apps | Phone, Messages, Radio, Music, Video, Photos, Files, Store, while switched on | 1 | No | On |
+| Web apps | Web app shortcuts shown in the grid | 1 | No | On |
+| Activity by component name | One app entry for a typed `package/class` | 1 | No | On |
+| App shortcuts | Shortcuts that apps publish (needs Telos as default home app) | 3 | No | On |
+| Contacts | Android contacts, plus contact plugins | 2 | No | On |
+| Calendar | Events of the next 730 days, plus calendar plugins | 2 | No | On |
+| Reminders | Tasks.org tasks and tasks from calendar plugins | 2 | No | Filter on, source off |
+| Local files | Files from the Android media database | 2 | No | On |
+| Nextcloud, ownCloud | Files on your own server | 4 | Yes | Off |
+| Places | OpenStreetMap places near you, plus place plugins | 2 | Yes | On |
+| Websites | A preview card for a URL you type | 1 | Yes | On |
+| Wikipedia | One article | 4 | Yes | On |
+| Calculator | The value of an expression | 1 | No | On |
+| Unit converter | Units and currencies | 1 | Rates only | On |
+| Tags and custom names | Saved items whose tag or custom name contains your text | 1 | No | Always |
+| Quick actions | Chips next to the search bar | 1 | No | Nine on |
+
+**Special queries**
+
+| You type | You get |
+| --- | --- |
+| `0xFF`, `0b101`, `017`, `3,5 * 2` | Calculator: hex, binary and octal literals, comma as decimal separator, `;` as argument separator, binary/hex/octal shown for integers, scientific notation above 1e12 or below 1e-5 |
+| `5 km`, `5 km >> mi`, `20 c > f` | Unit converter: `<number> <unit>` lists every unit of the dimension; `>>`, `>` or `-` picks one target |
+| `package/class` | The activity with that component name |
+| `example.org/path` | Website preview card (Online results) and an **Open website** chip |
+| `+49 30 1234567` | **Call**, **Message**, **Add to contacts** chips |
+| `name@example.org` | **Email** and **Add to contacts** chips |
+| `16:39`, `2:20 am` | **Set alarm** chip |
+| `30 s`, `11 min`, `2 h`, `3 d` | **Start timer** chip (24 hours or less); longer spans become a **Schedule event** |
+| A date, or date and time in your phone's format | **Schedule event** chip |
+| `Private space` | **Lock or unlock private space** chip (Android 15+, must be added) |
+| `Work profile` | **Pause or resume work profile** chip (must be added) |
+| Any text | **Web search** chip, plus **Share** if added |
+
+Conversion units: length (m, km, dm, cm, mm, in, ft, yd, mi, nmi), mass (kg, g, t, st, lb, oz, long and short ton), area, volume (L, mL, m3, gallons, pints, fl oz, cup, tbsp, tsp and more), time (ms to years), data (B to TB, kiB to TiB, bits), speed (m/s, km/h, mph, kn), temperature (C, F, K) and ISO 4217 currencies.
 
 <details>
-<summary><b>How search works: ranking, groups, filters, online results</b></summary>
+<summary><b>Quick actions: twelve built-ins, custom web searches and intents</b></summary>
 
-**How a search runs**
+| Action | Shown when | Default |
+| --- | --- | --- |
+| Call | Phone number (opens the dialer) | On |
+| Message | Phone number | On |
+| Email | Email address | On |
+| Add to contacts | Phone number or email | On |
+| Set alarm | Time of day | On |
+| Start timer | Time span up to 24 h | On |
+| Schedule event | Date, date and time, or a span over a day | On |
+| Open website | URL | On |
+| Web search | Always | On |
+| Share | Always | Off |
+| Lock or unlock private space | "Private space" typed, Android 15+ | Off |
+| Pause or resume work profile | "Work profile" typed | Off |
 
-- Every enabled source that matches the active filters is queried in parallel. A slow source never blocks a fast one: results appear as they arrive.
-- Optional **Search delay** (Settings > Performance, 0 to 500 ms, off by default) waits after the last keystroke.
-- Places wait 250 ms and Wikipedia 750 ms before they start, so they do not fire on every letter.
+- Created in **Settings > Search > Quick actions**: add, drag to reorder, edit, delete; everything is part of the backup.
+- **Search on a website:** URL template with `${1}`; the launcher tries to import name, icon and template from the site's OpenSearch description (built-in fallbacks: Google, Bing, Amazon, DuckDuckGo, Yahoo, Ecosia). **YouTube** and **Google Play** come pre-installed.
+- **Search in an app** (experimental): apps that accept the standard search intent.
+- **Custom intent:** action, category, type, data, package, class, extras; the query goes in as data or as a string extra.
+- Quick actions are not affected by filters.
 
-**Ranking**
+</details>
 
-- Most lists are ordered by one number: **0.6 x match score + 0.4 x usage weight**.
-- Match score compares your text with the item name (starts with or contains scores higher, similar-sounding names get partial credit via Jaro-Winkler, matches on a secondary field count 20 percent less).
-- Usage weight grows each time you launch an item and decays for everything else.
-- Apps need a match score of at least 0.8 to appear. Places are sorted by distance from your last known location when one is cached.
-- Text is normalized before comparing; a **transliterator** option (Settings > Language and region) lets accented or non-Latin names match Latin input.
-- Custom names are what is matched and shown. Tags are searched too.
+<details>
+<summary><b>Ranking, groups, filters and the filter bar</b></summary>
 
-**Result groups, top to bottom:** Favorites (hidden while typing), Apps and web apps, App shortcuts, Unit converter, Calculator, Events then reminders, Contacts, Places, Wikipedia then websites, Files (documents, images, video, music), Recommended app. Each group shows five items and a "show all" button. "Arrangement of search results" can put the list bottom-up.
+**How a search runs.** Every enabled source that matches the active filters is queried in parallel; results appear as they arrive. Optional **Search delay** (Settings > Performance, 0 to 500 ms, off by default). Places wait 250 ms and Wikipedia 750 ms. Limits: local files 10 results (scan stops after 500 rows), contacts about 15, Nextcloud 10, five entries per group until **Show all**.
 
-**Filters**
+**Ranking:** `0.6 x match score + 0.4 x usage weight`.
 
-- Type filters: Apps, Contacts, Events, Reminders, Files, Documents, Images, Video, Music, Places, Articles (Wikipedia), Websites, Shortcuts and Tools.
-- **Online results** (off by default) and **Hidden results** are separate switches.
-- The generic *Files* filter and the *Documents / Images / Video / Music* filters are alternatives, so a file never shows in two groups.
-- The filter bar is shown by default, with a customizable, reorderable list of up to 16 entries.
+- Match score: Jaro-Winkler plus prefix and substring bonus, capped at 1; a match on a secondary field counts 20 percent less. Apps need at least 0.8.
+- Usage weight rises with each launch. **Ranking flexibility** sets the step: Stable 0.01, Balanced 0.03 (default), Variable 0.1.
+- Text is lower-cased and accent-stripped; ae, oe and ss are expanded; a **transliterator** (Settings > Language and region) lets non-Latin names match Latin input.
+- Places sort by distance when a location is cached. Quick actions keep their configured order. The empty-search drawer is alphabetical per profile (frozen apps can go last). Duplicates by item key are removed.
 
-**Online results.** Network lookups only run when the Online results filter is on:
+**Group order, top to bottom:** favorites (empty query only), pending store updates, apps, web apps, app shortcuts, unit converter, calculator, events, reminders, contacts, places, Wikipedia, websites, files, documents, images, video, music, recommended app. **Arrangement of search results** can reverse it for a bottom search bar.
+
+**Filters** (funnel button; a dot means one is active):
+
+| Filter | Finds |
+| --- | --- |
+| Online results (switch) | Wikipedia, websites, places, cloud files, online plugin results |
+| Apps, Contacts, Calendar, Reminders, App shortcuts | Their own sources |
+| Files | Local and cloud files as one list |
+| Documents, Images, Video, Music | Files by MIME type, one group each (alternative to Files) |
+| Wikipedia, Websites, Places | Still need Online results |
+| Tools | Calculator and unit converter |
+| Hidden items (switch) | Shows excluded results again |
+
+- With all categories on, tapping one selects only that one; tapping the only one turns all back on. A single active category starts expanded.
+- Clearing the search or closing the drawer returns to your **default filter**.
+- **Filter bar:** chips above the keyboard, on by default, up to 16 entries, drag to reorder, categories first, then a divider, then the two switches.
+
+**Online results.** Network lookups only run with Online results on:
 
 | Source | Sends | Minimum text |
 | --- | --- | --- |
-| Websites | The URL you typed, to that website (3 s timeout) | Any |
+| Websites | The URL you typed, to that site (3 s timeout) | Any |
 | Wikipedia | Your query, to the Wikipedia API | 4 characters |
 | Places | Your query and area, to an Overpass server | 2 characters |
 | Nextcloud, ownCloud | Your query, to your own server | 4 characters |
 | Plugins | Whatever the plugin does | Set by the plugin |
 
-If you switch online results on in the default filter, every query you type is sent to external web services, and Telos warns about that.
+If you switch online results on in the default filter, every query is sent to external web services, and Telos warns about that.
 
 </details>
 
 <details>
-<summary><b>Search sources in detail: apps, files, contacts, places, calculator, quick actions</b></summary>
+<summary><b>Result cards, per-source settings, search bar behavior, hidden results</b></summary>
 
-- **Apps:** show all apps when the field is empty, show app information, apps in a list instead of a grid, move frozen apps to the end, hide frozen apps. With a work profile or private space the grid gets tabs and a lock button (Telos must be the default home app).
-- **Files:** local files (all five types by default), excluded folders, Nextcloud and ownCloud. Local search reads the Android media database, needs storage permission, stops after ten hits or 500 scanned rows, and a query of three characters or fewer matches the start of a file name only.
-- **Contacts:** display, alternative, phonetic name and sort key, about fifteen results, optional tap to call. **Calendar:** any synced calendar account works, including [DAVx5](https://www.davx5.com/) and [Fossify Calendar](https://github.com/FossifyOrg/Calendar); you pick which calendars are searched. **Reminders:** from the Tasks app.
-- **Places:** OpenStreetMap, 1500 m default radius, hide uncategorized places, map preview with theming, own Overpass and tile server URLs.
-- **Wikipedia:** needs online results, URL can point to another language edition or compatible wiki.
-- **Calculator:** normal expressions plus hexadecimal (`0xFF`), binary (`0b101`) and octal (`017`) literals, comma accepted as decimal separator. **Unit converter:** time, length, mass, area, volume, speed, data, temperature and currencies (rates from the European Central Bank daily file, downloaded in the background).
-- **Quick actions:** call, message, email, add contact, set alarm, start timer, schedule event, open website, share and web search, plus Telos' **Lock or unlock the private space** (Android 15+) and **Pause or resume the work profile**. Web search, app search and custom intent actions are created in Settings > Search > Quick actions.
-- **Search bar behavior:** open keyboard, **launch on enter** (picks apps, shortcuts, events, reminders, places, contacts, articles, websites, files, then quick actions), private keyboard.
-- **Excluded results:** hide an item from the grid, from grid and search, or everywhere; a reveal button shows them again.
-- **App recommendations** (experimental): one fixed editorial suggestion labeled "Affiliate - Supports Telos". The code states no affiliate agreement exists yet, so the feature can be switched off in Settings > Search.
+- **Result cards:** apps (notifications, shortcuts, version and package, pin, app info, share link or APK, uninstall, shutter, freeze; with advanced freeze features also Clone to Sandbox, force stop, clear cache), shortcuts, contacts (numbers with call and message, emails, addresses, rows from other apps), events and tasks, files (metadata, open, share, delete for local files), places (map, opening hours, distance, dial, website, navigation, report a bug), websites, Wikipedia articles, calculator (long-press copies the number), unit converter, web apps. **Customize** sets a custom icon, label, tags and visibility.
+- **Apps:** show all apps on empty search, show app information, list instead of grid, move or hide frozen apps, own search grid. With a work profile or private space the grid gets one tab per profile and a lock button (Telos must be the default home app).
+- **Files:** local file types (documents, images, videos, music, other), excluded folders, Nextcloud, ownCloud, file plugins. A query of three characters or fewer matches the start of a file name only. Needs storage permission (all files access on Android 10+).
+- **Contacts:** display, alternative, phonetic name and sort key; optional **tap to call**. **Calendar:** any synced account (including DAVx5 and Fossify Calendar), pick which calendars are searched. **Tasks:** Tasks.org.
+- **Places:** OpenStreetMap, radius 500 m to 10 km (default 1500 m), map preview with theming, hide uncategorized places, own Overpass and tile server URLs, deduplicates places under 100 m apart.
+- **Wikipedia:** URL can point to another language edition or MediaWiki site. **Unit converter:** preferred currencies listed first; rates from the European Central Bank daily file, refreshed hourly in the background.
+- **Search bar behavior:** open keyboard, **launch on enter** (best match order: apps, shortcuts, events, reminders, places, contacts, Wikipedia, websites, files, then quick actions), private keyboard, search bar style transparent, solid or hidden, top or bottom, fixed bar, remember scroll position.
+- **Hidden results:** per item **Show in** is app grid and search, search only, or never. Manage under Settings > Search > Excluded search results, optional reveal button (apps only, empty query only). Wikipedia, website and calculator results cannot be hidden.
+- **Permissions per source:** a missing permission never crashes search; the group shows **Grant** and **Turn off**.
+- **Plugin results:** contacts, files, places and calendar plugins; off until switched on, ranked, hidden, tagged and pinned like built-in results, marked by plugin badges.
+- **App recommendations** (experimental): one fixed editorial suggestion labeled "Affiliate - Supports Telos". The code states no affiliate agreement exists yet; switch it off in Settings > Search.
 
 </details>
+
+**Not available or not honest to promise:** there is **no search history** (queries are never stored, only launch counts), **no hashtag queries** (tags are plain keywords; `#tag` is only how cards display them), no full-text search, the **Wikipedia switch has no effect** (the Online results and Wikipedia filters are the real switches), texts about fuzzy initials, quick settings search and learning ranking have no code behind them, there is no Google Drive source, and the stored "separate work profile in results" setting is not read.
+
+Full catalogue: [Search: complete feature catalogue](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/features/search-catalogue).
 
 ### Home screen
 
-A clock, a search bar, an optional dock and, if you want them, widgets. Settings are in **Settings > Home screen**, **Gestures** and **Grid and icons**.
+A clock, a search bar, an optional dock and, if you want them, widgets. Settings are in **Settings > Home screen**, **Appearance**, **Gestures** and **Grid and icons**.
 
 | Piece | What it is | Default |
 | --- | --- | --- |
-| Clock | Top element with an optional dynamic zone | On, bold digital style |
-| Widgets page | A scrollable list of widgets (up to four pages) | Swipe up |
-| Search / app drawer | Search view with apps and favorites | Swipe down or tap the search bar |
-| Dock | A row of apps or widgets above the search bar | Off |
-| Search bar | Style transparent, solid or hidden; top or bottom | Bottom, transparent |
+| Clock | Top element with a dynamic zone, never removable (style can be "No clock") | On, Bold |
+| Widgets page | Scrollable widget list, up to four pages | Swipe up |
+| Search / app drawer | Search view with apps and favorites | Swipe down or tap the bar |
+| Dock | Row or grid of apps and widgets above the search bar | Seeded once with default apps |
+| Search bar | Transparent, solid or hidden; top or bottom | Bottom, transparent |
 | Web apps panel | A page for web apps | Swipe right |
-
-**Gestures.** Every gesture can be assigned an action: swipe down, up, left, right, double tap, long press, home button, pinch in and out, two-finger swipe up and down. Actions: launcher pages (search, up to four widget pages, web apps panel, home screen menu, feed), system actions (notifications, quick settings, turn off screen, power menu, recent apps), launch an app or shortcut, plugin actions, or nothing. Turn off screen, power menu and recent apps need the launcher's accessibility service.
+| Widgets on home screen | Puts widget page 1 under the clock | Off |
 
 <details>
-<summary><b>Clock, dock, wallpaper and other home screen options</b></summary>
+<summary><b>Clock: layouts, eight styles, colors, dynamic zone</b></summary>
 
-- **Clock:** layout default or compact; styles Bold, Simple, Orbit, Binary, Hands (analog), 7-segment, none or a custom widget; seconds, monospaced digits, theme color, fill screen height. **Dynamic zone** shows one of date, weather, media controls, alarms or battery (or is handed to Smartspacer).
-- **Dock:** off by default; custom dock with apps and widgets in slots, rows and columns (1 x 5 by default), multiple docks, own grid override, background plate, page indicator, and **shutters** (swipe up on a dock app to launch another app, activity or shortcut).
-- **Wallpaper:** pick a photo or video, system wallpaper picker, dim and blur options. **Video wallpaper** (experimental): a playlist of videos with scaling, zoom, position, brightness, speed, start behavior, parallax, theme colors from the video, pause in Battery Saver, pause when the device overheats, pause in desktop mode.
-- **Other:** lock desktop, fixed screen rotation, charging animation, hide status or navigation bar, status bar icon color, edit button, **Create folder** (two or more apps, placed in the dock) and folder covers.
-- **Not available:** extra home screens (up to nine pages) are switched off in this build. Use the four widget pages instead.
+- **Layout:** Default (vertical) or Compact (clock and dynamic zone side by side). Long-press the clock for its sheet; tapping opens the alarm list.
+- **Styles:** Bold (optional outline), Simple, Orbit, Hands (analog, optional ticks), 7-segment, Binary, No clock, Custom widget (any Android widget).
+- **Options:** Auto, Dark or Light content, theme color, seconds, monospaced digits (Bold, Simple, Orbit), fill screen height, alignment top, center or bottom, 12 or 24 hour format.
+- **Dynamic zone** shows one item at a time, the most relevant: Date (primary and optional secondary calendar), Weather, Media controls, Alarms in the next 8 hours, Battery (off, when low or charging, always), or **Smartspacer** targets (non-release builds).
 
 </details>
 
+<details>
+<summary><b>Dock, search bar, wallpapers (including video), system bars</b></summary>
+
+- **Dock:** seeded once on first start with the device's default apps. **Custom dock** slots hold an app or a widget; 1 to 4 rows, 1 to 10 columns (1 x 5 default); **multiple docks** (up to 5, swipe to switch, default dock choice); own grid (3 to 12 columns, 32 to 64 dp icons); background plate (color, opacity default 30 percent, shadow); page indicator; **shutters** (swipe up on a dock icon to launch a second app, activity or shortcut). Dock icons are always circles.
+- **Search bar:** transparent, solid or hidden with live preview, light or dark content, separate colors while the drawer is open, top or bottom, fixed bar, remember scroll position. The menu button offers Wallpaper, Settings, Add widget, Help; with text it clears the field.
+- **Wallpaper** (Appearance): photo or video, system wallpaper picker, dim for dark theme, blur behind the search view (Android 12+, radius 4 to 64, default 32).
+- **Video wallpaper** (experimental): a playlist of videos; scaling Fit, Fill or Stretch; brightness 0 to 2; zoom 0.5 to 5; position; speed 0.25 to 3; start behavior Resume, Restart or Random frame; parallax with strength; stored option for theme colors from the video; pause in Battery Saver (on), on thermal throttling (on) and in desktop mode (off).
+- **Other:** lock desktop, fixed portrait rotation, charging animation (bubbles from the navigation bar), status and navigation bar icon color auto, light or dark, hide status bar, hide navigation bar, **Create folder** (two or more apps) and folder covers, edit button.
+
+</details>
+
+<details>
+<summary><b>Gestures: 11 gestures and every action</b></summary>
+
+| Gesture | Default action |
+| --- | --- |
+| Swipe down | Search / app drawer |
+| Swipe up | Widgets (page 1) |
+| Swipe right | Web Apps Panel |
+| Swipe left, pinch in, pinch out, two-finger swipe up, two-finger swipe down, home button | Do nothing |
+| Double tap | Turn off screen |
+| Long press | Home screen menu (change wallpaper, add widget) |
+
+- **Actions:** do nothing, search / app drawer, widget pages 1 to 4, Feed (non-release builds), Web Apps Panel, home screen menu, notifications, quick settings, turn off screen, power menu, recent apps, launch an app, shortcut or any searchable item, launcher settings, plugin actions.
+- Turn off screen (Android 9+), power menu and recent apps need the launcher's accessibility service; a banner and a "gesture failed" sheet guide you.
+- Only swipes, double tap and long press can be overridden by a context profile. Tapping the search bar always opens search.
+
+</details>
+
+**Honest notes:** extra home screens (the slider for up to nine pages) are **switched off** in this build by a compile-time constant, so there is exactly one home page plus four widget pages. Video wallpaper is experimental. The dock background blur value has no control. Status: [Honest status](#honest-status).
+
+Full catalogue: [Home screen and appearance catalogue](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/features/home-appearance-catalogue).
+
 ### Widgets and feed
 
-Telos has built-in widgets, can host any Android app widget and can show small widgets that a plugin provides.
+Telos has built-in widgets, hosts any Android app widget and shows small widgets that a plugin provides.
 
-| Widget | What it shows |
-| --- | --- |
-| At a Glance | One item: weather, the next calendar event, or the battery state |
-| Weather | Forecast of the selected weather provider |
-| Calendar | Events of the day with previous and next day buttons |
-| Reminders | Tasks from the Tasks app |
-| Media | Playing media with controls |
-| Note | A free text note, optionally linked to an external text file with conflict handling |
-| Battery, Network, System | Charge state, connection type, RAM and storage usage |
-| Freeze | The Smart Freeze candidates with a **Freeze now** button |
-| Android widgets, plugin widgets | Any app widget; rows of title, subtitle and value from a plugin |
+| Widget | What it shows | Options |
+| --- | --- | --- |
+| At a Glance | One item: weather, next calendar event or battery state | none |
+| Weather | Forecast of the selected provider | Compact mode |
+| Calendar | Events of the day, previous and next day buttons | Hide completed tasks, per-calendar choice |
+| Reminders | Tasks from the Tasks app | Hide completed tasks |
+| Media | Playing media with controls | Interactive progress bar |
+| Note | Free text, optionally linked to an external text file with conflict handling | Link to file |
+| Battery | Charge state | none |
+| Network | Connection type | none |
+| System | RAM and storage usage | none |
+| Freeze | Smart Freeze candidates, **Freeze now** button | none |
+| Plugin widgets | Rows of title, subtitle and value from a widget plugin | none |
+| Android widgets | Any app widget | Borderless, background card, theme color, configure, replace |
 
-- **Layout:** widgets live on the widgets page, optionally on the home screen, or in a dock slot. Drag to reorder, drag the bottom edge to resize, **stack** widgets and swipe between them, replace or remove them. Android widgets can be borderless, with a background card or theme color.
-- **Telos Phone** adds widgets of its own (recents and direct call).
-- A **context profile** can switch which widget page the Widgets gesture opens.
-- **Feed** (debug and nightly builds only): a content page from a separate provider app. Not available in release builds.
-- The Favorites widget is no longer offered in the widget picker; widgets added earlier keep working.
+- **Layout:** four widget pages, optionally page 1 on the home screen, or a dock slot (only 1x1-fitting widgets). Edit widgets: add, drag to reorder, resize by height, **stack** (swipe between them, remove from stack), replace, remove.
+- **Telos Phone** adds recent calls and direct call widgets. A **context profile** can switch which widget page the Widgets gesture opens.
+- **Feed** (debug and nightly builds only): a content page from a separate overlay provider app (protocol version 7); **not available in release builds**, and the Google app and Lawnfeed are blocked in release builds.
+- The Favorites widget is no longer offered; widgets added earlier keep working. Calendar widget extras (all-day switch, upcoming counts) and the reminders maximum are stored without a screen.
 
-### Favorites and tags
+### Favorites, tags and hidden items
 
-- **Favorites** have three levels: pinned and manually sorted, pinned and automatically sorted (by usage), and not pinned but frequently used (shown if there is room).
-- Every launch raises an item's **usage weight**, which also feeds search ranking. **Ranking flexibility** (Stable, Balanced, Variable) sets how fast the order reacts.
-- Favorites can show above the app grid, in the dock, in the clock's dynamic zone, and pinned calendar events show in the calendar widget.
-- **Tags** are plain words attached to items. They work as search keywords and, when pinned, as favorite folders. Create them from an item, the favorites editor or Settings > Search > Tags. Tags can have an icon or emoji and can be renamed, merged, duplicated and deleted.
-- **Auto-organize** groups installed apps into tags named after their Android category. It does not run by itself, skips categories with fewer than two apps, and replaces the contents of an existing tag of the same name.
-- **Show in** decides where an item appears: app grid and search, search only, or never. Hidden items are listed under Settings > Search > Excluded search results.
-- Pinned items, usage weights, visibility, custom names and icons and tags are part of the launcher backup. Tags do not nest.
+| Level | How you get it | Effect |
+| --- | --- | --- |
+| Not pinned, frequently used | Launch an item | Shown when there is room (rows 1 to 4) |
+| Pinned, automatically sorted | **Pin to favorites** | Always shown, ordered by usage |
+| Pinned, manually sorted | Drag in **Edit favorites** | Always shown, in your order |
+| Pinned tag | Edit favorites > Tags | Works as a folder |
+
+- Anything saveable can be pinned: apps, contacts, files, events, shortcuts, places, websites, web apps, plugin results. Favorites show above the app grid, in the dock, in the clock's dynamic zone; pinned events show in the calendar widget.
+- Settings: favorites on or off, edit button, frequently used on or off, number of rows, compact tags, **Ranking flexibility** (Stable, Balanced, Variable).
+- **Tags** are plain words attached to items: search keywords and, when pinned, folders. Create, rename, change icon or emoji, duplicate, delete; renaming to an existing name merges. Tags do not nest.
+- **Auto-organize** groups installed apps into tags named after their Android category. It does not run by itself, skips categories with fewer than two apps, and replaces the contents of a tag of the same name.
+- **Hidden items:** **Show in** per item (grid and search, search only, never), listed in Settings > Search > Excluded search results, optional reveal button, **Hidden items** filter.
+- Pinned items, usage weights, visibility, custom names, icons and tags are part of the backup.
+
+Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/features/system-catalogue#favorites).
 
 ### Customization
 
 <details>
-<summary><b>Themes, presets, grid, icons, badges, motion, per-item changes, language</b></summary>
+<summary><b>Themes, presets, fonts, blur, grid, icons, badges, motion, per-item changes, language</b></summary>
 
-- **Theme:** follow system, light, dark or **time of day** (by the clock hours you set), text size multiplier, dynamic color source, import and export of themes as `.kvtheme` files.
-- **Presets:** AMOLED Black, Cyberpunk (colors), Colorful Grid (colors and layout), Classic Grid, Clean Grid, Pixel-style (layout). A preset is applied immediately with no confirmation, and a layout preset overwrites grid and home screen settings.
-- **Schemes you can edit or duplicate:** color scheme (Default, High contrast, Black and white, or your own key colors), shapes (Default, Cut, Extra round, Rectangular), typography (Google Sans, Google Sans Rounded, System default, Serif, Monospace, or your own), transparency (Default, Semi-transparent, or your own layer opacity).
-- **Grid:** columns (5 by default), icon size, labels (size, lines, shadow, color), apps as a list, separate overrides for home grid and search grid, drawer background, folder background and covers. The dock has its own grid.
-- **Icons:** shapes (Platform default, Circle, Square, Rounded square, Squircle, Reuleaux triangle, Hexagon, Pentagon, Teardrop, Pebble), enforce shape, themed icons, icon pack, icon cache size.
-- **Badges:** notification badges (dot or count), cloud badges, suspended apps, shortcut badges, plugin badges, badge color. Frozen apps can be shown grayscale or with a snowflake badge.
-- **Motion:** charging animation, reduce animations, animation speed, bounce physics.
-- **Per-item customization:** long-press any app or result and tap Customize for a new label (the original name still matches), icon, tags, **Show in**, a shutter app, or web app settings.
-- **Language and region:** language (German and Greek come with Telos in addition to the Kvaesitso locales), form of address, transliteration, measurement system, time format, currency order, primary and secondary calendar.
-- **Limitation:** fallback icon packs are supported by the icon service but have no setting yet, so only a single icon pack is usable.
+- **Theme:** system, light, dark or **time of day** (default 20:00 and 07:00 clock hours), text size 80 to 200 percent, dynamic color source, theme import and export as `.kvtheme` files (opening a theme file from another app starts the import).
+- **Color schemes:** Default (Material You on Android 12+), High contrast, Black and white, or your own: six core palette colors with separate light and dark roles.
+- **Fonts (typography):** Default, System, Monospace, Serif, Rounded, or custom with a brand and a plain font and a style per text role.
+- **Shapes:** Default, Extra round, Cut, Rectangular, or custom. **Transparency:** Default, Semi-transparent, or custom opacity of background, surface and elevated surface.
+- **Blur and surfaces:** wallpaper blur (radius 4 to 64), drawer background plate (default 90 percent), dock plate, folder background color.
+- **Presets** (applied at once, no confirmation, no undo): AMOLED Black and Cyberpunk (colors), Colorful Grid (colors and layout), Classic Grid, Clean Grid, Pixel-style (layout). A layout preset overwrites grid, icon shape, dock and search bar settings.
+- **Grid:** 3 to 12 columns (5 default), icon size 32 to 64 dp, labels (size 8 to 24, one or two lines, shadow, color), apps as a list, separate overrides for home and search grids, folders and folder covers.
+- **Icons:** shapes (Platform default, Circle, Square, Rounded square, Squircle, Reuleaux triangle, Hexagon, Pentagon, Teardrop, Pebble), enforce shape, themed icons, enforce themed icons, one **icon pack** (appfilter and grayscale-map formats, live calendar and clock icons), icon cache size 50 to 500.
+- **Badges:** notification badges (dot or count, color), cloud, suspended or frozen apps, shortcut and plugin badges; work profile, hidden item and Store update badges are always on. Frozen apps can be grayscale or carry a snowflake.
+- **Motion:** charging animation, reduce animations, animation speed 0.5 to 2.0, bounce physics.
+- **Per-item customization:** long-press and tap Customize for a new label (the original name still matches), icon (including icon pack, themed or text icon), tags, **Show in**, a shutter app, or web app settings.
+- **Language and region:** about 45 translations (German and Greek come with Telos), per-app language on Android 13+, form of address (French, Spanish), transliteration, time format, measurement system, calendar systems, currency order.
+- **Accessibility and comfort:** text size, high contrast and black and white schemes, reduce animations, label options, fixed rotation.
+- **Limitation:** fallback icon packs are supported by the icon service but have **no setting**, so only a single icon pack is usable. Several other values are stored without a screen (Wikipedia images, dock background blur, legacy surface settings).
 
 </details>
+
+Full catalogue: [Home screen and appearance catalogue](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/features/home-appearance-catalogue#themes-and-colors).
 
 ### Plugins and integrations
 
@@ -257,29 +361,76 @@ Integrations are under **Settings > Integrations**, plugins under **Settings > A
 
 | Integration | Gives you | Needs |
 | --- | --- | --- |
-| Weather | Forecast for the weather widget, clock and At a Glance. Open-Meteo (default) and Bright Sky always; OpenWeatherMap and MET Norway only in builds that ship their keys; Breezy Weather and weather plugins when available | Network, location |
-| Media control | Now playing, play, pause, skip. The Telos Music, Video and Radio players are normal sessions to it | Notification access |
-| Nextcloud, ownCloud | File search in your own cloud, with a cloud badge | Account |
-| Wikipedia | Article results, with a configurable Wikipedia URL | Online results filter |
-| Tasks | Reminders in search and in the reminders widget, from the Tasks app | Tasks app and permission |
-| Breezy Weather | Weather data from Breezy Weather, set up in both apps | Breezy Weather installed |
-| Smartspacer | Smartspacer in the clock's dynamic zone (Android 10+, debug and nightly builds only) | A non-release build |
-| Feed | A content page from another app (debug and nightly builds only) | A provider app |
-| Cloud and network storage | Connections for Telos Files | Per storage |
+| Weather | Forecast for the weather widget, clock and At a Glance | Network, location |
+| Media control | Now playing, play, pause, skip, seek when supported; choose which music apps count. Telos Music, Video and Radio are normal sessions | Notification access |
+| Nextcloud, ownCloud | File search in your own cloud, cloud badge, sign-in and sign-out | Account |
+| Wikipedia | Article results, configurable Wikipedia URL | Online results filter |
+| Tasks | Tasks.org tasks in search and in the reminders widget | Tasks app and permission |
+| Breezy Weather | Weather via the Gadgetbridge broadcast, set up in both apps | Breezy Weather installed |
+| Smartspacer | Smartspacer targets in the clock's dynamic zone (Android 10+) | A non-release build |
+| Feed | A content page from another app | A non-release build, a provider app |
+| Cloud and network storage | Dropbox, Google Drive, OneDrive, WebDAV, SFTP, SMB, FTP for Telos Files | Per storage |
 
-**Plugins** are ordinary Android apps that expose a content provider through the plugin SDK. Telos does not run their code, so a plugin cannot crash the launcher, and a plugin only answers apps on its allow list (created when you tap **Allow**).
+**Weather providers:** Open-Meteo (default) and Bright Sky always; OpenWeatherMap and MET Norway only in builds that ship their keys; Breezy Weather when installed; any weather plugin. Automatic or manual location, measurement system (system, metric, UK, US).
+
+**Plugins** are ordinary Android apps that expose a content provider through the plugin SDK. Telos does not run their code, so a plugin cannot crash the launcher. Enabling a plugin triggers a permission dialog where **Allow** stores Telos on the plugin's own allow list; other callers get a `SecurityException`. A plugin may report "Setup required" or an error, and cannot be switched on until it is ready. A check mark marks verified authors.
 
 | Plugin type | What it adds |
 | --- | --- |
 | Files | Search results from a cloud or other file source |
 | Places | Places and points of interest |
-| Calendar | Events and tasks |
+| Calendar | Events and tasks, with calendar lists |
 | Contacts | Contacts |
-| Weather | A weather provider |
+| Weather | A weather provider ("Set as weather provider") |
 | Gesture action | Named actions for Settings > Gestures |
 | Widget | A small read-only list widget in the widget picker |
 
-Cloud account logins (Nextcloud, ownCloud) are not part of the launcher backup. Developers: see `docs/docs/developer-guide/plugins/`.
+Plugins can store references (must work offline) or copies of saved items. Developers: see `docs/docs/developer-guide/plugins/`.
+
+**Honest notes:** feed and Smartspacer are **not in release builds**; the Wikipedia switch has no effect; Breezy Weather and Smartspacer need their apps; cloud logins and plugin enable state are not part of the backup.
+
+Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/features/system-catalogue#plugins).
+
+### Backup and restore
+
+**Settings > Advanced settings > Backup and restore** writes and reads a plain ZIP archive (not encrypted).
+
+| Included | Not included |
+| --- | --- |
+| Settings, favorites and saved items (usage weights, pin position, visibility), custom icons, labels and tags, widgets, quick actions, custom color, shape, transparency and typography themes | Cloud logins (Nextcloud, ownCloud), plugin enable state, wallpaper, icon packs, intruder photos, passwords and API keys of the Telos apps, hidden and protected call numbers |
+
+- Restore wipes saved favorites first, then imports the file; secrets already on the device are kept. A SIP or phonebook account without a password after restore is switched off.
+- Format `1.9`: same version restores fully, a different minor version restores with a warning, a different major version is refused. Archive entries that would unpack outside the restore folder are ignored.
+
+### Profiles
+
+- **Personal, Work and Private** profiles are recognized (private space on Android 15+; on older versions any other profile counts as work). The Samsung Secure Folder is hidden. Apps get tabs per profile in the empty-search grid, work apps a briefcase badge, private apps a lock badge.
+- **Work profile screen** (Advanced > Work profile): status, a **Work Mode** switch to pause or resume work apps (Telos must be the default home app), optional authentication for the toggle.
+- **Sandbox** (experimental, pending review): **Initialize Telos Sandbox** starts managed profile provisioning with Telos as profile owner; **Clone to Sandbox** copies an app into the work profile. There is **no "clone" profile type**; apps cloned by Android's dual apps feature live in other user handles and show a badged icon.
+- **Context profiles** (experimental) are a different feature: named bundles of overrides (gestures, freeze profile, widget page, Do Not Disturb, brightness, launch an app) triggered manually, by time, WiFi name, Bluetooth device, Battery Saver or charging, checked only while the launcher is open. Details below.
+
+### Permissions, assistant and global actions
+
+| Permission or access | Used for |
+| --- | --- |
+| Calendar, Contacts, Location | Calendar search and widget, contact search, weather location, places distance, WiFi trigger |
+| Tasks | Tasks.org integration |
+| All files access | Local file search |
+| Notification listener | Notification badges, media widget |
+| Default home app role | App shortcuts, work profile pause, private space lock |
+| Accessibility service | Screen off, power menu and recents gestures, App Lock detection (listens to window state only) |
+| Phone, call log, phone state | Telos Phone, Dynamic Island call pill |
+| Usage access | Smart Freeze idle detection, App Lock detection |
+| Display over other apps | Floating launcher, Dynamic Island, App Lock overlay |
+| Bluetooth connect, notification policy, write settings, camera | Context profile triggers and overrides, intruder photo |
+
+- Permissions are asked only when a feature needs them. On Android 13+ accessibility and notification access can be blocked for apps installed outside a store; Telos shows guidance after the first attempt.
+- **Default launcher:** Telos is a home app (`HOME`) and also handles pinned shortcuts, theme files and `obtainium://` links.
+- **Assistant:** set Telos as the digital assistant and the assist gesture opens it in assistant mode.
+- **Global actions** without root: notifications and quick settings (status bar service, accessibility fallback), screen lock, power menu and recents (accessibility). There is no screenshot action.
+- Other: settings deep links, crash reporter and logs under Advanced > Debug (local only, nothing is sent), About with build information and open source libraries.
+
+Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/features/system-catalogue).
 
 ### Desktop mode and overlays
 
@@ -307,6 +458,8 @@ Telos can draw things in other places than the home screen. Much of this is mark
 - Desktop quarter snapping is in the code but not in the taskbar menu.
 
 </details>
+
+Full catalogues: [Dynamic Island, web apps and weather](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/features/home-appearance-catalogue#weather-media-and-web-apps) and [context profiles](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/features/system-catalogue#context-profiles).
 
 ### Privacy and protection
 
