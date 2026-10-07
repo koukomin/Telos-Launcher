@@ -1,7 +1,5 @@
 package de.mm20.launcher2.data.store
 
-import de.mm20.launcher2.data.store.fetcher.FDroidFetcher
-import de.mm20.launcher2.data.store.fetcher.GitHubFetcher
 import de.mm20.launcher2.data.store.fetcher.StoreFetcherRegistryImpl
 import de.mm20.launcher2.data.store.installer.KtorDownloader
 import de.mm20.launcher2.data.store.installer.TelosPackageInstaller
@@ -27,9 +25,10 @@ val dataStoreModule = module {
         }
     }
 
-    single { GitHubFetcher(httpClient = get()) }
-    single { FDroidFetcher(httpClient = get()) }
-    single<StoreFetcherRegistry> { StoreFetcherRegistryImpl(gitHubFetcher = get(), fDroidFetcher = get()) }
+    single<StoreFetcherRegistry> {
+        val options = get<de.mm20.launcher2.store.options.StoreOptions>()
+        StoreFetcherRegistryImpl.create(get()) { options.global.value.githubToken }
+    }
 
     single<AppInstaller> { TelosPackageInstaller(context = androidContext()) }
     single<Downloader> { KtorDownloader(context = androidContext(), httpClient = get()) }
@@ -39,5 +38,19 @@ val dataStoreModule = module {
     factory<VirtualAppProvider>(org.koin.core.qualifier.named("storeVirtualAppProvider")) { StoreVirtualAppProvider(context = androidContext()) }
     // === TELOS_PENDING_REVIEW_END: virtual_app_koin_fix ===
 
-    single { StoreUpdateScheduler(context = androidContext()) }
+    single<de.mm20.launcher2.store.updater.StoreUpdater> {
+        de.mm20.launcher2.data.store.updater.StoreUpdaterImpl(
+            context = androidContext(),
+            registry = get(),
+            repository = get(),
+            options = get(),
+            handler = get(),
+            installer = get(),
+        )
+    }
+    single<de.mm20.launcher2.store.updater.StoreTools> {
+        de.mm20.launcher2.data.store.updater.StoreToolsImpl(registry = get(), repository = get(), options = get())
+    }
+
+    single { StoreUpdateScheduler(context = androidContext(), options = get()) }
 }

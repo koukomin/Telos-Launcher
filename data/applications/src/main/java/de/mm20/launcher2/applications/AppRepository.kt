@@ -61,6 +61,7 @@ internal class AppRepositoryImpl(
     private val profileManager: ProfileManager,
     private val stringNormalizer: StringNormalizer,
     private val freezeSettings: FreezeSettings,
+    private val commsSettings: de.mm20.launcher2.preferences.comms.CommsSettings,
     private val virtualAppProviders: List<VirtualAppProvider> = emptyList(),
 ) : AppRepository {
     private val scope = CoroutineScope(Dispatchers.Default + Job())
@@ -334,7 +335,10 @@ internal class AppRepositoryImpl(
 
     override fun findMany(): Flow<ImmutableList<Application>> {
         val virtualApps = virtualAppProviders.flatMap { it.getVirtualApps() }
-        return installedApps.map { (virtualApps + it).toImmutableList() }
+        // Telos apps that were removed in the Store are left out until they are installed again
+        return kotlinx.coroutines.flow.combine(installedApps, commsSettings.disabledVirtualApps) { apps, disabled ->
+            (virtualApps.filter { it.key !in disabled } + apps).toImmutableList()
+        }
     }
 
     override suspend fun findIconlessApps(): List<Application> = withContext(Dispatchers.Default) {
@@ -375,13 +379,13 @@ internal class AppRepositoryImpl(
     override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<Application>> {
         val normalizedQuery = stringNormalizer.normalize(query)
 
-        return installedApps.map { apps ->
+        return kotlinx.coroutines.flow.combine(installedApps, commsSettings.disabledVirtualApps) { apps, disabled -> apps to disabled }.map { (apps, disabled) ->
             withContext(Dispatchers.Default) {
                 val normalizerId = stringNormalizer.id
                 val appResults = mutableListOf<Application>()
                 
                 // === TELOS_PENDING_REVIEW_START: virtual_app_koin_fix ===
-                val virtualApps = virtualAppProviders.flatMap { it.getVirtualApps() }
+                val virtualApps = virtualAppProviders.flatMap { it.getVirtualApps() }.filter { it.key !in disabled }
                 // === TELOS_PENDING_REVIEW_END: virtual_app_koin_fix ===
 
                 if (query.isEmpty()) {

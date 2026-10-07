@@ -2,7 +2,7 @@ package de.mm20.launcher2.data.comms.radio
 
 import de.mm20.launcher2.comms.model.RadioStation
 import io.ktor.client.*
-import io.ktor.client.call.*
+import io.ktor.client.statement.bodyAsText
 import io.ktor.client.plugins.timeout
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -21,14 +21,13 @@ data class RadioBrowserStation(
 
 class RadioBrowserClient(private val httpClient: HttpClient) {
 
+    private val json = kotlinx.serialization.json.Json { ignoreUnknownKeys = true; isLenient = true }
+
     // radio-browser.info runs several mirrors: the names behind its DNS round robin are looked up,
     // with fixed names as a fallback
     private val fallbackServers = listOf(
         "de1.api.radio-browser.info",
         "de2.api.radio-browser.info",
-        "fi1.api.radio-browser.info",
-        "nl1.api.radio-browser.info",
-        "at1.api.radio-browser.info",
         "all.api.radio-browser.info",
     )
     private var discovered: List<String>? = null
@@ -54,7 +53,7 @@ class RadioBrowserClient(private val httpClient: HttpClient) {
         val errors = ArrayList<String>()
         for (server in servers()) {
             try {
-                val response: List<RadioBrowserStation> = httpClient.get("https://$server/json/stations/search") {
+                val text = httpClient.get("https://$server/json/stations/search") {
                     header("User-Agent", "Telos Radio")
                     timeout {
                         requestTimeoutMillis = 15_000
@@ -67,7 +66,13 @@ class RadioBrowserClient(private val httpClient: HttpClient) {
                         parameters.append("order", "clickcount")
                         parameters.append("reverse", "true")
                     }
-                }.body()
+                }.bodyAsText()
+
+                // Decoded here with the generated serializer: asking Ktor for a List<...> failed on some
+                // devices with "Serializer for class 'List' is not found"
+                val response: List<RadioBrowserStation> = json.decodeFromString(
+                    kotlinx.serialization.builtins.ListSerializer(RadioBrowserStation.serializer()), text
+                )
 
                 return response
                     .filter { it.url_resolved.isNotBlank() || it.url.isNotBlank() }

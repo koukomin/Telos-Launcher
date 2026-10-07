@@ -114,7 +114,7 @@ fun MusicScreen() {
     }
 
     var showScrobble by remember { mutableStateOf(false) }
-    de.mm20.launcher2.ui.media.MediaFrame("Music", askNotifications = true, actions = {
+    de.mm20.launcher2.ui.media.MediaFrame("Music", askNotifications = true, guardKey = "telos_music_app://music", actions = {
         IconButton(onClick = { showScrobble = true }) {
             Icon(painterResource(R.drawable.settings_24px), contentDescription = "Scrobbling")
         }

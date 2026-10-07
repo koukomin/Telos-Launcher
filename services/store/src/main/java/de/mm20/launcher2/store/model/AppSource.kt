@@ -65,4 +65,44 @@ sealed interface AppSource {
         val downloadUrl: String,
         val campaignId: String,
     ) : AppSource
+
+    /** GitLab (gitlab.com or a self-hosted server), via the releases API. [path] is "owner/repo". */
+    @Serializable
+    @SerialName("gitlab")
+    data class GitLab(
+        val host: String = "gitlab.com",
+        val path: String,
+        val assetNameRegex: String? = null,
+        val includePrereleases: Boolean = false,
+    ) : AppSource
+
+    /** Codeberg, Forgejo, Gitea and compatible servers, via the Gitea releases API. */
+    @Serializable
+    @SerialName("gitea")
+    data class Gitea(
+        val host: String = "codeberg.org",
+        val owner: String,
+        val repo: String,
+        val assetNameRegex: String? = null,
+        val includePrereleases: Boolean = false,
+    ) : AppSource
+
+    /** A SourceForge project: the newest .apk in its file list. */
+    @Serializable
+    @SerialName("sourceforge")
+    data class SourceForge(
+        val project: String,
+        val assetNameRegex: String? = null,
+    ) : AppSource
+
+    /**
+     * Any web page that links to APK files (Obtainium's "HTML" source): the page is searched for
+     * links to .apk files, or for links matching [linkRegex], and the one with the highest version wins.
+     */
+    @Serializable
+    @SerialName("html")
+    data class Html(
+        val pageUrl: String,
+        val linkRegex: String? = null,
+    ) : AppSource
 }

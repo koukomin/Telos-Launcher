@@ -1,30 +1,55 @@
 package de.mm20.launcher2.data.store.worker
 
+import de.mm20.launcher2.base.containedScope
 import android.content.Context
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
+import de.mm20.launcher2.store.options.StoreOptions
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
-/** Enqueues/cancels the periodic [StoreUpdateWorker] run. Mirrors `CurrencyRepository`'s worker scheduling in `:data:currencies`. */
-class StoreUpdateScheduler(private val context: Context) {
+/**
+ * Keeps the periodic [StoreUpdateWorker] in line with the Store settings: the interval, Wi-Fi only,
+ * or off. Changing a setting reschedules it right away.
+ */
+class StoreUpdateScheduler(private val context: Context, private val options: StoreOptions) {
+
+    private var started = false
 
     fun enable() {
-        val request = PeriodicWorkRequest.Builder(StoreUpdateWorker::class.java, 6, TimeUnit.HOURS)
+        if (started) return
+        started = true
+        containedScope(Dispatchers.Default).launch {
+            options.global
+                .map { it.checkIntervalHours to it.wifiOnly }
+                .distinctUntilChanged()
+                .collect { (hours, wifiOnly) -> apply(hours, wifiOnly) }
+        }
+    }
+
+    private fun apply(hours: Int, wifiOnly: Boolean) {
+        val work = WorkManager.getInstance(context)
+        if (hours <= 0) {
+            work.cancelUniqueWork(StoreUpdateWorker.WORK_NAME)
+            return
+        }
+        val request = PeriodicWorkRequest.Builder(StoreUpdateWorker::class.java, hours.toLong(), TimeUnit.HOURS)
             .setConstraints(
                 Constraints.Builder()
-                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .setRequiredNetworkType(if (wifiOnly) NetworkType.UNMETERED else NetworkType.CONNECTED)
                     .setRequiresBatteryNotLow(true)
                     .build()
             )
             .build()
-        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-            StoreUpdateWorker.WORK_NAME,
-            ExistingPeriodicWorkPolicy.KEEP,
-            request,
-        )
+        work.enqueueUniquePeriodicWork(StoreUpdateWorker.WORK_NAME, ExistingPeriodicWorkPolicy.UPDATE, request)
     }
 
     fun disable() {

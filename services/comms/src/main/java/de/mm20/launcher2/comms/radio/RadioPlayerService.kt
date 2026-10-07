@@ -1,6 +1,7 @@
 // === TELOS_PENDING_REVIEW_START: sms_and_radio_engine ===
 package de.mm20.launcher2.comms.radio
 
+import de.mm20.launcher2.base.containedScope
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
@@ -31,7 +32,7 @@ import org.koin.core.component.inject
 class RadioPlayerService : MediaSessionService(), KoinComponent {
 
     private val repository: RadioRepository by inject()
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val scope = containedScope(Dispatchers.IO)
 
     private var player: ExoPlayer? = null
     private var mediaSession: MediaSession? = null

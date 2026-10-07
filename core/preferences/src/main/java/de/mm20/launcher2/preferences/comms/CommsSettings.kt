@@ -351,6 +351,20 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(batterySaverLte = enabled)) }
     }
 
+    /** Keys of the Telos virtual apps that are hidden from the app grid and from search */
+    val disabledVirtualApps
+        get() = dataStore.data.map { data ->
+            data.comms.disabledVirtualApps.split(',').filter { it.isNotBlank() }.toSet()
+        }
+
+    fun setVirtualAppEnabled(key: String, enabled: Boolean) {
+        dataStore.update { data ->
+            val current = data.comms.disabledVirtualApps.split(',').filter { it.isNotBlank() }.toMutableSet()
+            if (enabled) current.remove(key) else current.add(key)
+            data.copy(comms = data.comms.copy(disabledVirtualApps = current.joinToString(",")))
+        }
+    }
+
     fun setVideoServices(
         tmdbKeyEnc: String,
         subtitleKeyEnc: String,

@@ -16,6 +16,8 @@ object SettingsDeepLinkContract {
     const val ROUTE_RADIO = "settings/radio"
     const val ROUTE_MUSIC = "settings/music"
     const val ROUTE_VIDEO = "settings/video"
+    /** An address or an obtainium:// link to add in the Store */
+    const val EXTRA_STORE_URL = "de.mm20.launcher2.settings.STORE_URL"
     const val ROUTE_PHOTOS = "settings/photos"
     // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
 }

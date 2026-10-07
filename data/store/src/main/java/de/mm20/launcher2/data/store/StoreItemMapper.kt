@@ -16,7 +16,7 @@ internal object StoreItemMapper {
 
     private val json = Json { ignoreUnknownKeys = true }
 
-    fun toDomain(entity: StoreItemEntity): StoreItem {
+    fun toDomain(entity: StoreItemEntity, installedCode: Long? = entity.installedVersionCode, installedName: String? = null): StoreItem {
         val source = json.decodeFromString(AppSource.serializer(), entity.sourceJson)
         val latestRelease = entity.latestDownloadUrl?.let {
             ReleaseArtifact(
@@ -33,7 +33,8 @@ internal object StoreItemMapper {
             packageName = entity.packageName,
             displayName = entity.displayName,
             source = source,
-            installedVersionCode = entity.installedVersionCode,
+            installedVersionCode = installedCode,
+            installedVersionName = installedName,
             latestRelease = latestRelease,
             lastCheckedAt = entity.lastCheckedAt,
         )
@@ -64,5 +65,9 @@ internal object StoreItemMapper {
         is AppSource.DirectApk -> "direct_apk"
         is AppSource.AffiliatePlayStore -> "affiliate_play_store"
         is AppSource.AffiliateDirect -> "affiliate_direct"
+        is AppSource.GitLab -> "gitlab"
+        is AppSource.Gitea -> "gitea"
+        is AppSource.SourceForge -> "sourceforge"
+        is AppSource.Html -> "html"
     }
 }

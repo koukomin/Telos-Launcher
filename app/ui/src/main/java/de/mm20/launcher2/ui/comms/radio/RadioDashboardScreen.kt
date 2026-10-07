@@ -79,7 +79,7 @@ fun RadioDashboardScreen() {
         if (uri != null) viewModel.restoreBackup(context, uri)
     }
 
-    de.mm20.launcher2.ui.media.MediaFrame("Radio", askNotifications = true, actions = {
+    de.mm20.launcher2.ui.media.MediaFrame("Radio", askNotifications = true, guardKey = "telos_radio_app://radio", actions = {
         IconButton(onClick = { showAdd = true }) {
             Icon(painterResource(R.drawable.add_24px), contentDescription = "Add station")
         }

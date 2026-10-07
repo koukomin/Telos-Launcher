@@ -41,6 +41,16 @@ import de.mm20.launcher2.ui.theme.LauncherTheme
 /** Full screen photo viewer with pinch zoom, EXIF editor and metadata-free sharing. */
 class PhotoViewerActivity : BaseActivity() {
 
+    override fun onStart() {
+        super.onStart()
+        de.mm20.launcher2.base.VirtualAppGuard.enter(this, "telos_photos_app://photos")
+    }
+
+    override fun onStop() {
+        de.mm20.launcher2.base.VirtualAppGuard.leave(this, "telos_photos_app://photos")
+        super.onStop()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val uris = intent.getStringArrayListExtra(EXTRA_URIS)?.map { Uri.parse(it) }

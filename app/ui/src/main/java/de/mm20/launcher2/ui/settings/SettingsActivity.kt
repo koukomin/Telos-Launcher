@@ -248,7 +248,7 @@ class SettingsActivity : BaseActivity() {
                 IconsSettingsScreen()
             }
             entry<StoreDashboardRoute> {
-                StoreDashboardScreen()
+                StoreDashboardScreen(it.addUrl)
             }
             entry<ContactDetailsRoute> {
                 ContactDetailsScreen(it.contactId, it.phoneNumber)
@@ -601,7 +601,7 @@ class SettingsActivity : BaseActivity() {
             ROUTE_WEB_APPS -> WebAppsSettingsRoute
             ROUTE_APP_RECOMMENDATIONS -> SearchSettingsRoute
             ROUTE_INTRUDER_PHOTOS -> IntruderPhotosRoute
-            ROUTE_STORE -> StoreDashboardRoute
+            ROUTE_STORE -> StoreDashboardRoute(addUrl = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_STORE_URL).orEmpty())
             // === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
             ROUTE_COMMS -> {
                 val tab = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB) ?: "recents"

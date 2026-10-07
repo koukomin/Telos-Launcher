@@ -105,8 +105,27 @@ plugin SDK for third-party search/weather/calendar providers. See the
 
 - Smart Freeze: freeze or hide apps through Shizuku, Dhizuku or device owner, with protection for
   critical apps, multi-user targeting and a Work Profile sandbox
-- Telos Store: install and update apps from F-Droid and GitHub releases, root and Shizuku install
-  backends, update notifications from Obtainium
+- Telos Store (the features of [Obtainium](https://github.com/ImranR98/Obtainium)):
+  - sources: GitHub, GitLab (also self-hosted), Codeberg / Forgejo / Gitea, F-Droid, IzzyOnDroid and
+    other F-Droid repositories, SourceForge, direct APK links and any web page that links to APKs; the
+    APK that fits the phone's CPU is chosen, older releases are used when the newest has no APK
+  - per-app settings: track only, stay on this version, skip a version, exclude from background
+    updates, file name filter, pre-releases, category, note, rename
+  - update checks in the background (interval and Wi-Fi only settings, a notification, and silent
+    installs when Shizuku or root allows it), "update all", "check now"
+  - search, filters (updates, installed, not installed, track only) and categories
+  - add the apps that are already installed (found through F-Droid and IzzyOnDroid)
+  - import and export in the Obtainium export format, and `obtainium://` links open in the Store
+  - install and uninstall with root or Shizuku backends or the system installer
+  - the Telos apps (Phone, Messages, Radio, Music, Video, Photos) are listed with what each one
+    does; "installing" one shows its icon in the app grid and in search, "removing" hides it
+- Crash guard for the Telos media apps: an app that crashes (or hangs) twice within a day is
+  switched off automatically, with a notification pointing to the Store; "installing" it again
+  resets the counter. Background tasks of these apps log their failures instead of ending the
+  launcher
+- Switched-off Radio, Music, Video and Photos apps have their services and screens disabled, so
+  they use no memory or CPU and are not offered in "Open with". The services of these apps stop
+  by themselves when nothing is playing; Phone and Messages are never touched
 - App lock with intruder photos, Work Profile quiet mode toggle
 
 **Desktop and appearance**
@@ -155,7 +174,7 @@ adapted, the original license is respected.
 | [Ever Dialer](https://github.com/hari161008/Ever-Dialer) | GPL-3.0 | Power-user features: recording backends and retention, gestures, auto redial, fake calls, network switcher, notes |
 | [Thor](https://github.com/trinadhthatakula/Thor) | GPL-3.0 | Freeze backends (Shizuku, Dhizuku) and OEM suspend fallbacks |
 | [Undead Wallpaper](https://github.com/maocide/UndeadWallpaper) | GPL-3.0 | Video live wallpaper engine |
-| [Obtainium](https://github.com/ImranR98/Obtainium) | GPL-3.0 | Store behaviour: source URL parsing, update flow, update broadcasts |
+| [Obtainium](https://github.com/ImranR98/Obtainium) | GPL-3.0 | Store behaviour and features: sources, per-app settings, update flow, export format, links, update broadcasts (the behaviour is re-implemented, no code was copied) |
 | [Transistor](https://codeberg.org/y20k/transistor) | MIT | Radio player behaviour |
 | [Radio-Browser](https://www.radio-browser.info/) | public API | Radio station directory |
 | [Shizuku](https://github.com/RikkaApps/Shizuku) and [Dhizuku](https://github.com/iamr0s/Dhizuku) | see project | Privileged operations (freeze, recording, install, network mode) |

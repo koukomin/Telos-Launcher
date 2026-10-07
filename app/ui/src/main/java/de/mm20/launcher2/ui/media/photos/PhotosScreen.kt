@@ -124,6 +124,11 @@ private fun Thumb(item: PhotoItem, modifier: Modifier) {
 @Composable
 fun PhotosScreen() {
     val viewModel: PhotosViewModel = viewModel()
+    val guardContext = androidx.compose.ui.platform.LocalContext.current
+    androidx.compose.runtime.DisposableEffect(Unit) {
+        de.mm20.launcher2.base.VirtualAppGuard.enter(guardContext, "telos_photos_app://photos")
+        onDispose { de.mm20.launcher2.base.VirtualAppGuard.leave(guardContext, "telos_photos_app://photos") }
+    }
     val context = LocalContext.current
     val items by viewModel.items.collectAsStateWithLifecycle()
 

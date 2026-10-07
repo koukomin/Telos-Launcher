@@ -80,7 +80,7 @@ class ScrobbleTracker(private val context: Context, private val player: Player) 
         if (!scrobbled && withDuration.durationSeconds >= 30 && playedMs >= threshold) {
             scrobbled = true
             val stamped = withDuration.copy(timestampSeconds = System.currentTimeMillis() / 1000 - playedMs / 1000)
-            network.execute { submit(stamped) }
+            network.execute { de.mm20.launcher2.base.contained("scrobble") { submit(stamped) } }
         }
     }
 
