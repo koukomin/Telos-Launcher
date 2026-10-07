@@ -42,6 +42,10 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
         text: 'Libraries',
         link: '/docs/developer-guide/project-structure/libraries',
       },
+      {
+        text: 'Protection and optimization',
+        link: '/docs/developer-guide/project-structure/protection-and-performance',
+      },
     ],
   },
   {
