@@ -836,6 +836,12 @@
     <string name="preference_floating_launcher_floating_windows_summary">Apps you tap in the panel open as a window on top of the app in front. Needs floating windows (freeform mode) to be switched on in Desktop mode, otherwise apps open normally</string>
     <string name="preference_floating_launcher_tools">Quick tools</string>
     <string name="preference_floating_launcher_tools_summary">Show screenshot, calculator and quick settings buttons in the panel. The screenshot button needs the accessibility service</string>
+    <string name="floating_launcher_title">Smart functions</string>
+    <string name="floating_launcher_edit">Edit</string>
+    <string name="floating_launcher_recent_files">Recent files</string>
+    <string name="floating_launcher_recent_files_empty">No recent files. Telos needs access to files for this, you can allow it when you open Telos Files.</string>
+    <string name="floating_launcher_recent_files_no_app">No app can open this file</string>
+    <string name="floating_launcher_tools_all">All</string>
     <string name="floating_launcher_tool_screenshot">Screenshot</string>
     <string name="floating_launcher_tool_calculator">Calculator</string>
     <string name="floating_launcher_tool_quick_settings">Quick settings</string>

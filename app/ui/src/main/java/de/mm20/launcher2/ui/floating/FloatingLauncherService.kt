@@ -144,6 +144,13 @@ import androidx.compose.ui.unit.Dp
 import de.mm20.launcher2.globalactions.GlobalActionsService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.distinctUntilChanged
+import android.content.ContentUris
+import android.os.Bundle
+import android.provider.MediaStore
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.runtime.produceState
+import androidx.compose.ui.graphics.painter.Painter
 import java.io.File
 import java.util.UUID
 import kotlin.math.roundToInt
@@ -1025,6 +1032,8 @@ private fun ExpandedPanel(
     var showCreateFolder by remember(zone) { mutableStateOf(false) }
     var showAllApps by remember(zone) { mutableStateOf(false) }
     var showFileDock by remember(zone) { mutableStateOf(false) }
+    var showRecentFiles by remember(zone) { mutableStateOf(false) }
+    var showTools by remember(zone) { mutableStateOf(false) }
     val dragState = rememberLazyDragAndDropGridState(
         onItemMove = { from, to ->
             val current = orderedItems.toMutableList()
@@ -1104,19 +1113,33 @@ private fun ExpandedPanel(
             shadowElevation = 8.dp,
         ) {
             Column(modifier = Modifier.padding(vertical = 8.dp)) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp, vertical = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.End,
-                ) {
-                    IconButton(onClick = onDismiss) {
-                        Icon(
-                            painterResource(R.drawable.close_24px),
-                            contentDescription = stringResource(R.string.close),
-                        )
-                    }
+                // grabber and title, like the card of the OxygenOS Smart Sidebar
+                Box(
+                    Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(top = 2.dp, bottom = 10.dp)
+                        .size(width = 36.dp, height = 4.dp)
+                        .clip(RoundedCornerShape(50))
+                        .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.35f))
+                )
+                if (!editMode) {
+                    Text(
+                        text = stringResource(R.string.floating_launcher_title),
+                        style = MaterialTheme.typography.titleLarge,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(horizontal = 16.dp, vertical = 6.dp),
+                    )
+                    SidebarWideButton(
+                        icon = R.drawable.content_copy_24px,
+                        label = R.string.floating_launcher_file_dock,
+                        highlighted = fileDockItems.isNotEmpty(),
+                    ) { showFileDock = true }
+                    SidebarWideButton(
+                        icon = R.drawable.schedule_24px,
+                        label = R.string.floating_launcher_recent_files,
+                    ) { showRecentFiles = true }
+                    HorizontalDivider(Modifier.padding(horizontal = 20.dp, vertical = 8.dp))
                 }
                 if (orderedItems.isEmpty()) {
                     Text(
@@ -1192,36 +1215,55 @@ private fun ExpandedPanel(
                     }
                 }
                 if (style.tools && !editMode) {
+                    // tools tiles: the quick tools and an "All" tile that opens the full list
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                    ) {
+                        SidebarTile(
+                            label = stringResource(R.string.floating_launcher_tool_screenshot),
+                            onClick = { onTool(SidebarTool.Screenshot) },
+                        ) {
+                            SidebarCircleIcon(R.drawable.ic_sidebar_screenshot, Color(0xFF1A6DFF), style.iconSize)
+                        }
+                        SidebarTile(
+                            label = stringResource(R.string.floating_launcher_tools_all),
+                            onClick = { showTools = true },
+                        ) {
+                            SidebarAllToolsIcon(style.iconSize)
+                        }
+                    }
+                }
+                // The Edit button at the bottom, like the Smart Sidebar. Managing the icons does
+                // not require hunting through the main settings tree.
+                Surface(
+                    onClick = { editMode = !editMode },
+                    shape = RoundedCornerShape(50),
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.10f),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                ) {
+                    Text(
+                        text = stringResource(
+                            if (editMode) R.string.floating_launcher_edit_done else R.string.floating_launcher_edit
+                        ),
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier
+                            .padding(vertical = 14.dp)
+                            .fillMaxWidth(),
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                    )
+                }
+                if (editMode) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 12.dp, vertical = 2.dp),
-                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        horizontalArrangement = Arrangement.Center,
                     ) {
-                        SidebarToolButton(R.drawable.ic_sidebar_screenshot, R.string.floating_launcher_tool_screenshot) { onTool(SidebarTool.Screenshot) }
-                        SidebarToolButton(R.drawable.calculate_24px, R.string.floating_launcher_tool_calculator) { onTool(SidebarTool.Calculator) }
-                        SidebarToolButton(R.drawable.tune_24px, R.string.floating_launcher_tool_quick_settings) { onTool(SidebarTool.QuickSettings) }
-                    }
-                }
-                // Bottom toolbar - the OxygenOS Smart Sidebar puts edit access here rather than
-                // at the top, so managing this zone's icons doesn't require hunting through the
-                // main settings tree.
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 12.dp, vertical = 4.dp),
-                    horizontalArrangement = Arrangement.Center,
-                ) {
-                    IconButton(onClick = { editMode = !editMode }) {
-                        Icon(
-                            painterResource(if (editMode) R.drawable.check_24px else R.drawable.edit_24px),
-                            contentDescription = stringResource(
-                                if (editMode) R.string.floating_launcher_edit_done
-                                else R.string.floating_launcher_edit_start
-                            ),
-                        )
-                    }
-                    if (editMode) {
                         IconButton(
                             onClick = { showCreateFolder = true },
                             enabled = orderedItems.count { it is ZoneGridItem.AppEntry } >= 2,
@@ -1231,42 +1273,30 @@ private fun ExpandedPanel(
                                 contentDescription = stringResource(R.string.floating_launcher_new_folder),
                             )
                         }
-                    } else {
                         IconButton(onClick = { showAllApps = true }) {
                             Icon(
                                 painterResource(R.drawable.apps_24px),
                                 contentDescription = stringResource(R.string.floating_launcher_all_apps),
                             )
                         }
-                        IconButton(onClick = { showFileDock = true }) {
+                        IconButton(
+                            onClick = {
+                                onDismiss()
+                                val intent = Intent(context, SettingsActivity::class.java).apply {
+                                    putExtra(
+                                        SettingsActivity.EXTRA_ROUTE,
+                                        SettingsActivity.ROUTE_FLOATING_LAUNCHER,
+                                    )
+                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                }
+                                context.startActivity(intent)
+                            },
+                        ) {
                             Icon(
-                                painterResource(R.drawable.content_copy_24px),
-                                contentDescription = stringResource(R.string.floating_launcher_file_dock),
-                                tint = if (fileDockItems.isNotEmpty()) {
-                                    MaterialTheme.colorScheme.primary
-                                } else {
-                                    LocalContentColor.current
-                                },
+                                painterResource(R.drawable.settings_24px),
+                                contentDescription = stringResource(R.string.floating_launcher_panel_settings),
                             )
                         }
-                    }
-                    IconButton(
-                        onClick = {
-                            onDismiss()
-                            val intent = Intent(context, SettingsActivity::class.java).apply {
-                                putExtra(
-                                    SettingsActivity.EXTRA_ROUTE,
-                                    SettingsActivity.ROUTE_FLOATING_LAUNCHER,
-                                )
-                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            }
-                            context.startActivity(intent)
-                        },
-                    ) {
-                        Icon(
-                            painterResource(R.drawable.settings_24px),
-                            contentDescription = stringResource(R.string.floating_launcher_panel_settings),
-                        )
                     }
                 }
             }
@@ -1313,6 +1343,30 @@ private fun ExpandedPanel(
                 onDismiss = { showFileDock = false },
             )
         }
+
+        if (showRecentFiles) {
+            RecentFilesOverlay(
+                onOpened = {
+                    showRecentFiles = false
+                    onAppLaunched()
+                },
+                onDismiss = { showRecentFiles = false },
+            )
+        }
+
+        if (showTools) {
+            SidebarToolsOverlay(
+                onTool = { tool ->
+                    showTools = false
+                    onTool(tool)
+                },
+                onAllApps = {
+                    showTools = false
+                    showAllApps = true
+                },
+                onDismiss = { showTools = false },
+            )
+        }
     }
 
     if (showCreateFolder) {
@@ -1340,13 +1394,6 @@ private fun ExpandedPanel(
             },
             onDismiss = { editingFolder = null },
         )
-    }
-}
-
-@Composable
-private fun SidebarToolButton(icon: Int, label: Int, onClick: () -> Unit) {
-    IconButton(onClick = onClick) {
-        Icon(painterResource(icon), contentDescription = stringResource(label))
     }
 }
 
@@ -1995,6 +2042,261 @@ private fun RenameOrDeleteFolderDialog(
                     }
                     TextButton(onClick = { onRename(name) }, enabled = name.isNotBlank()) {
                         Text(stringResource(R.string.floating_launcher_save))
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/** A full-width rounded button of the card, like "File Dock" and "Recent files" in the Smart Sidebar */
+@Composable
+private fun SidebarWideButton(icon: Int, label: Int, highlighted: Boolean = false, onClick: () -> Unit) {
+    Surface(
+        onClick = onClick,
+        shape = RoundedCornerShape(20.dp),
+        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.10f),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp, vertical = 4.dp),
+    ) {
+        Row(
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(14.dp),
+        ) {
+            Icon(
+                painterResource(icon),
+                contentDescription = null,
+                tint = if (highlighted) MaterialTheme.colorScheme.primary else Color(0xFF3D8BFF),
+                modifier = Modifier.size(28.dp),
+            )
+            Text(
+                text = stringResource(label),
+                style = MaterialTheme.typography.titleMedium,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+    }
+}
+
+/** An icon with a label under it, the size of one app cell */
+@Composable
+private fun SidebarTile(label: String, onClick: () -> Unit, icon: @Composable () -> Unit) {
+    Column(
+        modifier = Modifier
+            .width(sidebarCell())
+            .clip(RoundedCornerShape(16.dp))
+            .clickable(onClick = onClick)
+            .padding(vertical = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        icon()
+        if (LocalSidebarStyle.current.showLabels) {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelMedium,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                modifier = Modifier.padding(top = 6.dp),
+            )
+        }
+    }
+}
+
+@Composable
+private fun SidebarCircleIcon(icon: Int, color: Color, size: Dp) {
+    Box(
+        Modifier
+            .size(size)
+            .clip(CircleShape)
+            .background(color),
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(
+            painterResource(icon),
+            contentDescription = null,
+            tint = Color.White,
+            modifier = Modifier.size(size * 0.55f),
+        )
+    }
+}
+
+/** The "All" tile: four small round tool icons, like the tools folder of the Smart Sidebar */
+@Composable
+private fun SidebarAllToolsIcon(size: Dp) {
+    val mini = size * 0.38f
+    Box(
+        Modifier
+            .size(size)
+            .clip(RoundedCornerShape(size * 0.3f))
+            .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)),
+        contentAlignment = Alignment.Center,
+    ) {
+        Column(verticalArrangement = Arrangement.spacedBy(size * 0.06f)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(size * 0.06f)) {
+                SidebarCircleIcon(R.drawable.ic_sidebar_screenshot, Color(0xFF1A6DFF), mini)
+                SidebarCircleIcon(R.drawable.calculate_24px, Color(0xFF00897B), mini)
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(size * 0.06f)) {
+                SidebarCircleIcon(R.drawable.tune_24px, Color(0xFFF59E0B), mini)
+                SidebarCircleIcon(R.drawable.apps_24px, Color(0xFF7C4DFF), mini)
+            }
+        }
+    }
+}
+
+/** The list opened by the "All" tile */
+@Composable
+private fun SidebarToolsOverlay(onTool: (SidebarTool) -> Unit, onAllApps: () -> Unit, onDismiss: () -> Unit) {
+    SidebarSheet(title = stringResource(R.string.floating_launcher_tools_all), onDismiss = onDismiss) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+        ) {
+            SidebarTile(stringResource(R.string.floating_launcher_tool_screenshot), { onTool(SidebarTool.Screenshot) }) {
+                SidebarCircleIcon(R.drawable.ic_sidebar_screenshot, Color(0xFF1A6DFF), LocalSidebarStyle.current.iconSize)
+            }
+            SidebarTile(stringResource(R.string.floating_launcher_tool_calculator), { onTool(SidebarTool.Calculator) }) {
+                SidebarCircleIcon(R.drawable.calculate_24px, Color(0xFF00897B), LocalSidebarStyle.current.iconSize)
+            }
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+        ) {
+            SidebarTile(stringResource(R.string.floating_launcher_tool_quick_settings), { onTool(SidebarTool.QuickSettings) }) {
+                SidebarCircleIcon(R.drawable.tune_24px, Color(0xFFF59E0B), LocalSidebarStyle.current.iconSize)
+            }
+            SidebarTile(stringResource(R.string.floating_launcher_all_apps), onAllApps) {
+                SidebarCircleIcon(R.drawable.apps_24px, Color(0xFF7C4DFF), LocalSidebarStyle.current.iconSize)
+            }
+        }
+    }
+}
+
+/** A centered sheet over the scrim, used by the tools list and the recent files list */
+@Composable
+private fun SidebarSheet(title: String, onDismiss: () -> Unit, content: @Composable () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.3f))
+            .pointerInput(Unit) {
+                detectTapGestures(onTap = { onDismiss() })
+            },
+        contentAlignment = Alignment.Center,
+    ) {
+        Surface(
+            modifier = Modifier
+                .padding(24.dp)
+                .widthIn(max = 320.dp)
+                .heightIn(max = 520.dp)
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    onClick = {},
+                ),
+            shape = RoundedCornerShape(24.dp),
+            color = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.95f),
+            shadowElevation = 8.dp,
+        ) {
+            Column(modifier = Modifier.padding(vertical = 8.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(text = title, style = MaterialTheme.typography.titleMedium, modifier = Modifier.weight(1f))
+                    IconButton(onClick = onDismiss) {
+                        Icon(
+                            painterResource(R.drawable.close_24px),
+                            contentDescription = stringResource(R.string.close),
+                        )
+                    }
+                }
+                content()
+            }
+        }
+    }
+}
+
+private data class RecentFile(val uri: Uri, val name: String, val mimeType: String, val modified: Long)
+
+/**
+ * The newest files on the phone, like "Recent files" in the Smart Sidebar. Reads the system's
+ * media index, so it needs the access to files that Telos Files asks for.
+ */
+private fun queryRecentFiles(context: Context): List<RecentFile> {
+    val collection = MediaStore.Files.getContentUri("external")
+    val projection = arrayOf(
+        MediaStore.Files.FileColumns._ID,
+        MediaStore.Files.FileColumns.DISPLAY_NAME,
+        MediaStore.Files.FileColumns.MIME_TYPE,
+        MediaStore.Files.FileColumns.DATE_MODIFIED,
+    )
+    val args = Bundle().apply {
+        putString(android.content.ContentResolver.QUERY_ARG_SQL_SELECTION, "${MediaStore.Files.FileColumns.MIME_TYPE} IS NOT NULL")
+        putStringArray(android.content.ContentResolver.QUERY_ARG_SORT_COLUMNS, arrayOf(MediaStore.Files.FileColumns.DATE_MODIFIED))
+        putInt(android.content.ContentResolver.QUERY_ARG_SORT_DIRECTION, android.content.ContentResolver.QUERY_SORT_DIRECTION_DESCENDING)
+        putInt(android.content.ContentResolver.QUERY_ARG_LIMIT, 30)
+    }
+    val result = mutableListOf<RecentFile>()
+    context.contentResolver.query(collection, projection, args, null)?.use { cursor ->
+        while (cursor.moveToNext()) {
+            val id = cursor.getLong(0)
+            val name = cursor.getString(1) ?: continue
+            val mime = cursor.getString(2) ?: continue
+            result += RecentFile(ContentUris.withAppendedId(collection, id), name, mime, cursor.getLong(3) * 1000)
+        }
+    }
+    return result
+}
+
+@Composable
+private fun RecentFilesOverlay(onOpened: () -> Unit, onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    val files by produceState<List<RecentFile>?>(null) {
+        value = withContext(Dispatchers.IO) { runCatching { queryRecentFiles(context) }.getOrDefault(emptyList()) }
+    }
+    SidebarSheet(title = stringResource(R.string.floating_launcher_recent_files), onDismiss = onDismiss) {
+        val list = files
+        when {
+            list == null -> Unit
+            list.isEmpty() -> Text(
+                text = stringResource(R.string.floating_launcher_recent_files_empty),
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+            )
+            else -> LazyColumn {
+                items(list, key = { it.uri.toString() }) { file ->
+                    Column(
+                        Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                val intent = Intent(Intent.ACTION_VIEW).apply {
+                                    setDataAndType(file.uri, file.mimeType)
+                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                }
+                                try {
+                                    context.startActivity(intent)
+                                    onOpened()
+                                } catch (_: Exception) {
+                                    Toast.makeText(context, R.string.floating_launcher_recent_files_no_app, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                            .padding(horizontal = 16.dp, vertical = 10.dp)
+                    ) {
+                        Text(file.name, style = MaterialTheme.typography.bodyLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(
+                            java.text.DateFormat.getDateTimeInstance(java.text.DateFormat.MEDIUM, java.text.DateFormat.SHORT)
+                                .format(java.util.Date(file.modified)),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
                     }
                 }
             }

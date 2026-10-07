@@ -110,7 +110,7 @@ It is off by default.
 | Rows before scrolling | 10 | Panel height before it scrolls |
 | Hide tabs | Off | Make the handle invisible but still tappable |
 | Open apps in floating windows | On | Tapped apps open as a window on top of the app in front, see below |
-| Quick tools | On | A row with Screenshot, Calculator and Quick settings |
+| Quick tools | On | The Screenshot and All tiles under the apps |
 | Haptic feedback | On | A short vibration on tap |
 | Hide during Gaming profile | Off | Hide tabs while a context profile with the Gaming icon is active |
 
@@ -118,12 +118,25 @@ It is off by default.
 front. This only works while Android's freeform mode is on (see [Floating windows (freeform)](#floating-windows-freeform));
 without it Android ignores the window size and the app opens normally.
 
-**Quick tools.** The row under the apps has three buttons: **Screenshot** closes the card and takes a screenshot (it
-needs the Telos accessibility service, which you can turn on under Settings > Gestures), **Calculator** opens
-[Telos Calculator](../calculator/), and **Quick settings** pulls down the quick settings. There is no screen recorder
-and no partial screenshot.
+**The card.** Top to bottom, the card has a small grabber, the title **Smart functions**, two wide buttons
+(**File Dock** and **Recent files**), your apps and folders in one or two columns, a row of tool tiles
+(**Screenshot** and **All**) and an **Edit** button. Tapping outside the card closes it.
 
-**File dock.** Dragging text, images or files from another app onto a tab holds them temporarily, so you
+| Part | What it does |
+| --- | --- |
+| File Dock | The things you dragged onto the handle or card, see below |
+| Recent files | The 30 newest files on the phone with their date. Tap one to open it in the app that handles it. It reads the system's media index, so it needs the access to files that Telos Files asks for, otherwise the list is empty |
+| Apps and folders | The apps of this zone. Tap to open, or open as a floating window, see above |
+| Screenshot | Closes the card and takes a screenshot. It needs the Telos accessibility service (Settings > Gestures) and Android 9 or newer |
+| All | The list of tools: Screenshot, Calculator ([Telos Calculator](../calculator/)), Quick settings and All apps |
+| Edit | Rearrange apps by dragging, remove them, create folders. In edit mode three buttons appear: New folder, All apps and the settings of the floating launcher |
+
+**What is not in it.** The Smart Sidebar of OxygenOS also has **AI Summary** and **AI Speak**, which are OnePlus's own
+system services, a **screen recorder**, a **partial screenshot** and a **Private Tab** shortcut. Telos has none of
+these. The look (card, grabber, title, wide buttons, round tool icons, Edit button) is modeled on it, and it is not a
+copy: the handle sits in one of six fixed places and cannot be dragged to any height.
+
+**File dock.** Dragging text, images or files from another app onto a handle or onto the open card holds them temporarily, so you
 can drop them into another app. Media is copied into the launcher's cache when dropped. The shelf is not
 saved: it is cleared whenever the service restarts. Dragging an app icon from the home screen onto a tab
 adds the app to that zone.

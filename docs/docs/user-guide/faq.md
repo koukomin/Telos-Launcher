@@ -4,87 +4,82 @@ sidebar_position: 2
 
 # Frequently Asked Questions
 
+## Where do I download Telos?
+
+From the [releases page on GitHub](https://github.com/koukomin/Telos-Launcher/releases). Every successful build is
+published there as a debug-signed pre-release for testing, and the three newest are kept. Telos is not on the
+Play Store or F-Droid. See [Get Started](./).
+
 ## How do I get app icons on the home screen?
 
 There are two options:
 
-1. Enable Settings > Home screen > Dock.
+1. Turn on Settings > Home screen > Dock.
+2. Pin apps as favorites, see [Favorites and tags](./telos/launcher/favorites-tags).
 
-2. Scroll down to the end of the widgets list, select "Edit widgets" > "Add widget" > "Favorites" to
-   add
-   the favorites widget to the home screen.
+## What are the "Personal", "Work" and "Private" tabs above the app grid?
 
-## What are these categories "Personal", "Private", and "Work" above the app grid?
+They are not a feature of Telos. They show Android's profiles, which are separate spaces with their own apps and
+data. **Personal** is the main profile, **Work** is a work profile (you can create one with an app such as
+[Shelter](https://f-droid.org/packages/net.typeblog.shelter/)), and **Private** is the private space of Android 15
+and newer. See [Home screen](./telos/launcher/home-screen) and the work profile section of the
+[system catalogue](./telos/launcher/features/system-catalogue).
 
-These categories aren't a feature of the launcher, but just a representation of Android's different
-profiles. Profiles are isolated spaces on your device that allow you to have separate apps, accounts,
-and data, independent of the main profile.
+## What are the Telos apps and can I switch them off?
 
-**Personal** is the main profile.
+Telos Phone, Messages, Files, Photos, Music, Video, Radio, Calculator and Store are *virtual apps*: they are part
+of the launcher and run inside it, they are not separate APKs. Open Telos Store and **remove** an app to hide its
+icon, **install** it to show it again. A hidden app costs nothing. Telos Store itself cannot be removed. See
+[Telos at a glance](./telos/#how-the-built-in-apps-work).
 
-**Work** is a work profile. Learn more about work
-profiles [here](https://www.android.com/enterprise/work-profile/).
-You can also use an app
-like [Insular](https://f-droid.org/de/packages/com.oasisfeng.island.fdroid/)
-or [Shelter](https://f-droid.org/de/packages/net.typeblog.shelter/) to create and manage a work
-profile.
+## An app disappeared after it crashed
 
-**Private** is the private space profile, available on Android 15 and higher. Learn more about
-private spaces [here](https://support.google.com/android/answer/15341885?hl=en).
+Radio, Music, Video and Photos are switched off automatically when they crash or hang twice within a day, and
+Telos shows a notification that points to Telos Store. Install the app again in Telos Store to reset the counter.
+Phone and Messages are never switched off. See [Privacy and protection](./telos/launcher/privacy-protection#crash-guard).
 
-## Can I remove / customize the clock?
+## Can I remove or change the clock?
 
-Yes, you can customize the clock style by going to Settings > Home screen > Clock and selecting a
-different
-style. There is also an "empty style" that will remove the clock entirely.
+Yes. The clock settings open from the clock itself, see [Home screen](./telos/launcher/home-screen#clock). The clock
+is the first element of the home screen, so you change its look and layout, not whether it exists.
 
-## The toggle to grant notification access or to enable the accessibility service is disabled
+## The toggle to grant notification access or the accessibility service is disabled
 
-Please refer to
-the [Restricted Settings on Android 13+](/docs/user-guide/troubleshooting/restricted-settings) page.
+Android blocks these for apps that were installed from outside a store. Follow
+[Restricted settings on Android 13+](./troubleshooting/restricted-settings).
 
-## The launcher keeps asking for notification access or accessibility service
+## Telos keeps asking for notification access or the accessibility service
 
-Please refer to [this page](/docs/user-guide/troubleshooting/granted-permissions).
+See [Granted permissions](./troubleshooting/granted-permissions).
 
-## I can't update to the latest version
+## I cannot update to the newest build
 
-Please refer to
-the [Launcher Cannot Be Updated](/docs/user-guide/troubleshooting/update-not-installed) page.
+Debug builds can be signed with a different key than the build you have installed, and Android then refuses the
+update. See [Update problems](./troubleshooting/update-not-installed).
 
-## Why is wallpaper blur not supported on my device?
+## The floating launcher does not appear
 
-Wallpaper blur is available if:
+It is off by default. Turn it on in Settings > **Floating launcher** and allow *Display over other apps*, then turn
+on at least one trigger zone. Tap the thin handle on the screen edge, or drag it toward the middle of the screen.
+If the system back gesture takes over, start the drag a little away from the very edge. See
+[Floating launcher](./telos/launcher/desktop-and-overlays#floating-launcher).
 
-- the device runs Android 12 or higher
-- battery saver is not enabled
+## Why is wallpaper blur not available on my device?
 
-Furthermore, the device has to have support for [cross window
-blur](https://source.android.com/docs/core/display/window-blurs). This is a flag that has to
-be enabled by the device manufacturer to indicate that their implementation of the render engine
-supports blur effects and that the GPU is powerful enough to handle them.
+Blur is available when the device runs Android 12 or newer, battery saver is off, and the manufacturer has enabled
+[cross-window blur](https://source.android.com/docs/core/display/window-blurs) for the device.
 
-## How can I set up the nightly version?
+## Does Telos send my data anywhere?
 
-### Using an F-Droid client
+Telos has no analytics or telemetry library. Online sources only run with the Online results filter, and
+calendar, contacts, apps, local files, the calculator and the unit converter never use the network. Currency rates
+download a small public file from the European Central Bank. The crash reporter and the logs under Advanced > Debug
+stay on the device. See [Privacy and protection](./telos/launcher/privacy-protection).
 
-1. Add the MM20 repo to your F-Droid client: `https://fdroid.mm20.de/repo`
-2. After a refresh, you should be able to find Kvaesitso Nightly using the search
+## Is Telos the same as Kvaesitso?
 
-### Using Obtainium
+Telos is based on [Kvaesitso](https://github.com/MM2-0/Kvaesitso). The launcher part (search, home screen, widgets,
+themes, plugins) comes from Kvaesitso and Telos extends it. The built-in apps, the overlays, App Lock, context
+profiles and more are added by Telos. See
+[What Telos adds to Kvaesitso](./telos/launcher/#what-telos-adds-to-kvaesitso).
 
-1. In Obtainium, select "Add an app"
-2. Enter the URL : [https://fdroid.mm20.de/](https://fdroid.mm20.de/)
-3. Change the source as "Third Party F-Droid Repos"
-4. In ID/Name of the app, enter : ```nightly```
-5. Then, click Add !
-
-You can now enjoy the daily update in Obtainium :)
-
-### Manual download
-
-[Here](https://fdroid.mm20.de/app/de.mm20.launcher2.nightly)
-
-## Will Kvaesitso ever be available on the Play Store?
-
-No, probably not. It's not worth the hassle of dealing with Google's policies and restrictions.

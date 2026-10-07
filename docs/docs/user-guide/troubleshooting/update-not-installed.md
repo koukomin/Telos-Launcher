@@ -1,38 +1,35 @@
-# Launcher Cannot Be Updated
+# Update Problems
 
-If you are trying to update the launcher, but the installation fails, you are most likely trying
-to crossgrade from the F-Droid version to the GitHub version or vice versa. Both versions use
-different signing keys, so you cannot update one with the other.
+If installing a new Telos build fails with a message such as "App not installed" or "Package conflicts with an
+existing package", the new APK is signed with a different key than the one that is installed. Android never
+updates an app over one that was signed with another key.
 
-## Telos versions
+## Why this happens
 
-There are two different release versions of Telos:
+The builds on the [releases page](https://github.com/koukomin/Telos-Launcher/releases) are debug-signed test
+builds. A debug build can be signed with a different debug key than an earlier one, for example when it is
+built on a different machine. Telos Store has the same limit for the apps it updates: Android refuses an update that
+is signed with another key, see [Store](../telos/store/).
 
-- **GitHub version**: This is the version that is released on GitHub. It includes all features and
-  is also available on
-  the [MM20 F-Droid repository](https://fdroid.mm20.de/app/de.mm20.launcher2.release) and on
-  the [IzzyOnDroid F-Droid repository](https://apt.izzysoft.de/fdroid/index/apk/de.mm20.launcher2.release).
-- **F-Droid version**: This version is built and signed, and distributed by the F-Droid maintainers.
-  It is available on
-  the [official F-Droid repository](https://f-droid.org/packages/de.mm20.launcher2.release). Some
-  features disabled that depend on external APIs; most notably, there are fewer
-  weather providers available. Furthermore, new versions are usually released with a delay (a few
-  days up to a week).
+## What to do
 
-## Check which version you have installed
+You cannot keep the data of the installed build and switch to a build with another signature in one step. Back up
+first, then reinstall:
 
-Go to Settings > About. If the version number is something like `x.y.z`, you have the GitHub version
-installed. If the version number ends in `-fdroid`, you have the F-Droid version installed.
-
-## Switch between versions
-
-You cannot switch versions without uninstalling the current version first. First, backup your
-data in Settings > Backup & restore. Then, uninstall the current version and install the other
-version. You can then restore your data in Settings > Backup & restore > Restore.
+1. Open Settings > Advanced > **Backup and restore** and create a backup. It is a plain ZIP file with your
+   settings, favorites, hidden items, names, icons, tags, themes, widgets and quick actions. It leaves out cloud
+   logins, intruder photos, and the passwords and API keys of the Telos apps, so note those separately.
+2. Uninstall Telos and install the new APK.
+3. Open Settings > Advanced > **Backup and restore** > **Restore** and pick your backup.
 
 ::: warning
-The backup file format isn't guaranteed to be backward compatible. To ensure that all data is restored
-correctly, it is recommended to install the previous version first, restore the backup, then update to
-the latest version. For example, if you want to upgrade from `1.34.2-fdroid` to `1.35.0` (GitHub), install
-`1.34.2` (GitHub) first, restore the backup, then update to `1.35.0` (GitHub).
+A backup from a different *major* format version cannot be restored, and one from a different *minor* version
+restores with a warning. If a restore is refused, install the build that made the backup first, restore, and
+then update.
 :::
+
+## Before you uninstall
+
+Uninstalling removes everything the backup does not contain. The backup leaves out cloud logins, intruder photos,
+the passwords and API keys of the Telos apps, and the hidden and protected call numbers, so write those down first.
+On restore, secrets that are already on the device are kept.
