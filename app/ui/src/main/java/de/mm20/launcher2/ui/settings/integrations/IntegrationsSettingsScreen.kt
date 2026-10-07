@@ -61,6 +61,14 @@ fun IntegrationsSettingsScreen() {
         item {
             PreferenceCategory {
                 Preference(
+                    title = "Cloud and network storage",
+                    summary = "Dropbox, Google Drive, OneDrive, Nextcloud, WebDAV, SFTP / SSHFS, SMB, FTP for Telos Files",
+                    icon = R.drawable.cloud_20px,
+                    onClick = {
+                        backStack.add(de.mm20.launcher2.ui.files.remote.ConnectionsRoute)
+                    }
+                )
+                Preference(
                     title = stringResource(R.string.preference_nextcloud),
                     icon = R.drawable.nextcloud,
                     onClick = {
