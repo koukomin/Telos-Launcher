@@ -28,6 +28,9 @@ class TelosPackageInstaller(private val context: Context) : AppInstaller {
         return true
     }
 
+    override suspend fun canInstallSilently(): Boolean =
+        privilegedBackends.any { it.isAvailable() && it.hasPermission() }
+
     override suspend fun install(apk: File, packageName: String): InstallResult {
         for (backend in privilegedBackends) {
             if (!backend.isAvailable() || !backend.hasPermission()) continue

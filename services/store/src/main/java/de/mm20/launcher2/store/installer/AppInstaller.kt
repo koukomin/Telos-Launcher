@@ -24,6 +24,12 @@ interface AppInstaller {
      */
     suspend fun isAvailable(): Boolean
 
+    /**
+     * True when updates can be installed without anyone tapping through the system installer:
+     * Shizuku or root is available and allowed. Background installs only happen then.
+     */
+    suspend fun canInstallSilently(): Boolean
+
     /** Installs [apk]. Suspends until the install finishes or is handed off to system UI. */
     suspend fun install(apk: File, packageName: String): InstallResult
 }

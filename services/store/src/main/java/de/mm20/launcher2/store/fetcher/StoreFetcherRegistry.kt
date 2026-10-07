@@ -17,4 +17,9 @@ interface StoreFetcherRegistry {
      * install itself isn't something the launcher downloads or resolves a release for.
      */
     suspend fun fetchLatestRelease(source: AppSource): ReleaseArtifact?
+
+    /** Like [fetchLatestRelease], but a failure carries the reason in words for the user. */
+    suspend fun resolveLatestRelease(source: AppSource): Result<ReleaseArtifact> =
+        fetchLatestRelease(source)?.let { Result.success(it) }
+            ?: Result.failure(IllegalStateException("No release found"))
 }

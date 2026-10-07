@@ -1204,6 +1204,8 @@ data class CommsGroup(
     val answerStyle: String = "buttons",
     val sim1Color: String = "green",
     val sim2Color: String = "blue",
+    /** Keys of Telos virtual apps (Phone, Music, ...) that were removed in the Store, comma separated */
+    val disabledVirtualApps: String = "",
     /** Telos Video: online services. Keys and passwords are encrypted with the Android Keystore. */
     val tmdbApiKeyEnc: String = "",
     val subtitleApiKeyEnc: String = "",

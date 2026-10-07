@@ -58,6 +58,12 @@ interface StoreItemDao {
         checkedAt: Long,
     )
 
+    @Query("DELETE FROM StoreItem WHERE id = :id")
+    suspend fun deleteById(id: String)
+
+    @Query("UPDATE StoreItem SET packageName = :packageName WHERE id = :id")
+    suspend fun updatePackageName(id: String, packageName: String)
+
     @Delete
     suspend fun delete(item: StoreItemEntity)
 }

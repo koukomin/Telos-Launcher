@@ -36,6 +36,7 @@ class StoreActionHandler(
     private val installer: AppInstaller,
     private val downloader: Downloader,
     private val fetcherRegistry: StoreFetcherRegistry,
+    private val repository: de.mm20.launcher2.store.repository.StoreRepository,
 ) {
     suspend fun install(item: StoreItem): StoreAction {
         val source = item.source
@@ -56,7 +57,19 @@ class StoreActionHandler(
             }
         }
 
-        return when (val result = installer.install(apkFile, item.packageName)) {
+        // The APK says which app it is: remember it for apps added from a web address, and refuse a
+        // file that is for another app than the one tracked here
+        val archive = context.packageManager.getPackageArchiveInfo(apkFile.path, 0)
+        val detected = archive?.packageName
+        val known = item.packageName != UNKNOWN_PACKAGE
+        if (detected != null && known && detected != item.packageName) {
+            apkFile.delete()
+            return StoreAction.Failed("This file is for $detected, not for ${item.packageName}")
+        }
+        if (detected != null && !known) repository.updatePackageName(item.id, detected)
+        val packageName = detected ?: item.packageName
+
+        return when (val result = installer.install(apkFile, packageName)) {
             is InstallResult.Success -> StoreAction.Installed
             is InstallResult.Pending -> StoreAction.Installing
             is InstallResult.Failed -> {
@@ -64,6 +77,21 @@ class StoreActionHandler(
                 StoreAction.Failed(result.reason, result.cause)
             }
         }
+    }
+
+    /** Asks Android to uninstall [packageName] (the system shows its confirmation). */
+    fun uninstall(packageName: String) {
+        val intent = Intent(Intent.ACTION_DELETE, Uri.parse("package:$packageName"))
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        try {
+            context.startActivity(intent)
+        } catch (_: ActivityNotFoundException) {
+        }
+    }
+
+    companion object {
+        /** Placeholder package name of an app added by web address, until its first download */
+        const val UNKNOWN_PACKAGE = "unknown.package"
     }
 
     /**

@@ -1,82 +1,82 @@
 package de.mm20.launcher2.data.store.fetcher
 
-import android.util.Log
+import android.os.Build
 import de.mm20.launcher2.store.fetcher.SourceFetcher
 import de.mm20.launcher2.store.model.AppSource
 import de.mm20.launcher2.store.model.ReleaseArtifact
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
-import io.ktor.client.request.get
-import io.ktor.client.request.url
-import io.ktor.http.isSuccess
-import kotlinx.serialization.Serializable
+import org.json.JSONObject
 
 /**
- * Resolves the newest [AppSource.FDroid] release via f-droid.org's per-package REST endpoint
- * (`/api/v1/packages/<packageName>`), rather than downloading the full repo index
- * (`index-v1.json`/`index-v2.json`, tens of MB) just to look up one package.
- *
- * This endpoint is specific to f-droid.org's own site infrastructure, not part of the generic
- * F-Droid repo format every F-Droid-compatible repo serves - so [AppSource.FDroid.repoUrl] is
- * only used here to build the APK download URL (every F-Droid-compatible repo, official or a
- * mirror, serves APKs at `<repoUrl>/<apkName>`), not to choose where metadata comes from. A repo
- * that isn't f-droid.org itself (a private/custom repo) would need the full index-file approach
- * instead - not implemented here.
+ * F-Droid and F-Droid compatible repositories.
+ * - f-droid.org and IzzyOnDroid have a small per-app address that lists the versions and the version
+ *   the repository suggests; their APK files are named `<package>_<versionCode>.apk`.
+ * - Any other repository is read through its `index-v1.json`, which names every APK file and its CPU types.
  */
 class FDroidFetcher(
     private val httpClient: HttpClient = HttpClient(),
 ) : SourceFetcher<AppSource.FDroid> {
 
-    override suspend fun fetchLatestRelease(source: AppSource.FDroid): ReleaseArtifact? {
-        return try {
-            val response = httpClient.get {
-                url("https://f-droid.org/api/v1/packages/${source.packageName}")
-            }
-            if (!response.status.isSuccess()) {
-                Log.w(TAG, "F-Droid lookup for ${source.packageName} failed: ${response.status}")
-                return null
-            }
+    override suspend fun fetchLatestRelease(source: AppSource.FDroid): ReleaseArtifact? =
+        runCatching { fetch(source) }.getOrNull()
 
-            val body = response.body<FDroidPackageResponse>()
-            // packages[] is newest-first in the real API response, but don't rely on response
-            // ordering - pick the highest versionCode explicitly.
-            val latest = body.packages.maxByOrNull { it.versionCode } ?: run {
-                Log.w(TAG, "No packages listed for ${source.packageName} on F-Droid")
-                return null
-            }
-
-            ReleaseArtifact(
-                version = latest.versionName,
-                versionCode = latest.versionCode,
-                size = latest.size,
-                downloadUrl = "${source.repoUrl.trimEnd('/')}/${latest.apkName}",
-                // The per-package API doesn't reliably include release notes/changelog text -
-                // left null rather than fabricated.
-                changelog = null,
-                publishedAt = latest.added,
-            )
-        } catch (e: Exception) {
-            Log.w(TAG, "Failed to fetch latest release for ${source.packageName} from F-Droid", e)
-            null
+    suspend fun fetch(source: AppSource.FDroid): ReleaseArtifact {
+        val repo = source.repoUrl.trimEnd('/')
+        val host = repo.substringAfter("://").substringBefore('/')
+        return when {
+            host == "f-droid.org" -> fromPackageApi("https://f-droid.org/api/v1/packages/${source.packageName}", repo, source.packageName)
+            host == "apt.izzysoft.de" -> fromPackageApi("https://apt.izzysoft.de/fdroid/api/v1/packages/${source.packageName}", repo, source.packageName)
+            else -> fromIndex(repo, source.packageName)
         }
     }
 
-    @Serializable
-    private data class FDroidPackageResponse(
-        val packageName: String,
-        val packages: List<FDroidPackage> = emptyList(),
-    )
+    private suspend fun fromPackageApi(apiUrl: String, repo: String, packageName: String): ReleaseArtifact {
+        val answer = httpClient.getText(apiUrl, accept = "application/json")
+        when {
+            answer.code == 404 -> throw StoreFetchException("$packageName is not in this repository")
+            !answer.ok -> throw StoreFetchException("The repository answered ${answer.code}")
+        }
+        val json = JSONObject(answer.body)
+        val versions = json.optJSONArray("packages") ?: throw StoreFetchException("No versions listed for $packageName")
+        val entries = (0 until versions.length()).map { versions.getJSONObject(it) }
+        if (entries.isEmpty()) throw StoreFetchException("No versions listed for $packageName")
+        // the repository's own suggestion avoids picking a build for another CPU type
+        val suggested = json.optLong("suggestedVersionCode", 0)
+        val chosen = entries.firstOrNull { it.optLong("versionCode") == suggested } ?: entries.maxByOrNull { it.optLong("versionCode") }!!
+        val code = chosen.optLong("versionCode")
+        return ReleaseArtifact(
+            version = chosen.optString("versionName"),
+            versionCode = code,
+            downloadUrl = "$repo/${packageName}_$code.apk",
+        )
+    }
 
-    @Serializable
-    private data class FDroidPackage(
-        val versionName: String,
-        val versionCode: Long,
-        val apkName: String,
-        val size: Long? = null,
-        val added: Long? = null,
-    )
-
-    companion object {
-        private const val TAG = "FDroidFetcher"
+    private suspend fun fromIndex(repo: String, packageName: String): ReleaseArtifact {
+        val answer = httpClient.getText("$repo/index-v1.json", accept = "application/json")
+        if (!answer.ok) throw StoreFetchException("The repository answered ${answer.code}")
+        val root = JSONObject(answer.body)
+        val list = root.optJSONObject("packages")?.optJSONArray(packageName)
+            ?: throw StoreFetchException("$packageName is not in this repository")
+        val abis = Build.SUPPORTED_ABIS.toSet()
+        val builds = (0 until list.length()).map { list.getJSONObject(it) }.filter { b ->
+            val native = b.optJSONArray("nativecode")
+            native == null || native.length() == 0 || (0 until native.length()).any { native.getString(it) in abis }
+        }
+        if (builds.isEmpty()) throw StoreFetchException("No build of $packageName for this phone")
+        var suggested = 0L
+        root.optJSONArray("apps")?.let { apps ->
+            for (i in 0 until apps.length()) {
+                val a = apps.getJSONObject(i)
+                if (a.optString("packageName") == packageName) suggested = a.optLong("suggestedVersionCode", 0)
+            }
+        }
+        val chosen = builds.firstOrNull { it.optLong("versionCode") == suggested } ?: builds.maxByOrNull { it.optLong("versionCode") }!!
+        return ReleaseArtifact(
+            version = chosen.optString("versionName"),
+            versionCode = chosen.optLong("versionCode"),
+            size = chosen.optLong("size").takeIf { it > 0 },
+            downloadUrl = "$repo/${chosen.optString("apkName")}",
+            publishedAt = chosen.optLong("added").takeIf { it > 0 },
+        )
     }
 }

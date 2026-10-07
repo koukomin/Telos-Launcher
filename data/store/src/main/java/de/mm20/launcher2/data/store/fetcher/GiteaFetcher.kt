@@ -9,34 +9,23 @@ import io.ktor.client.HttpClient
 import org.json.JSONArray
 import java.time.Instant
 
-/**
- * Resolves the newest [AppSource.GitHub] release through the GitHub API: the newest release that
- * has an APK for this phone (older releases are looked at when the newest has none, drafts are
- * skipped and pre-releases only count when the app is set to include them).
- * Without a token GitHub allows 60 requests per hour; a token in the Store settings raises that.
- */
-class GitHubFetcher(
-    private val httpClient: HttpClient = HttpClient(),
-    private val token: () -> String = { "" },
-) : SourceFetcher<AppSource.GitHub> {
+/** Codeberg, Forgejo and Gitea servers: their releases API has the same shape as GitHub's. */
+class GiteaFetcher(private val httpClient: HttpClient = HttpClient()) : SourceFetcher<AppSource.Gitea> {
 
-    override suspend fun fetchLatestRelease(source: AppSource.GitHub): ReleaseArtifact? =
+    override suspend fun fetchLatestRelease(source: AppSource.Gitea): ReleaseArtifact? =
         runCatching { fetch(source) }.getOrNull()
 
-    suspend fun fetch(source: AppSource.GitHub): ReleaseArtifact {
+    suspend fun fetch(source: AppSource.Gitea): ReleaseArtifact {
         val answer = httpClient.getText(
-            "https://api.github.com/repos/${source.owner}/${source.repo}/releases?per_page=15",
-            accept = "application/vnd.github+json",
-            bearer = token(),
+            "https://${source.host}/api/v1/repos/${source.owner}/${source.repo}/releases?limit=15",
+            accept = "application/json",
         )
         when {
-            answer.code == 404 -> throw StoreFetchException("${source.owner}/${source.repo} was not found on GitHub")
-            answer.code == 403 || answer.code == 429 ->
-                throw StoreFetchException("GitHub's request limit is reached. Add a token in the Store settings or try later")
-            !answer.ok -> throw StoreFetchException("GitHub answered ${answer.code}")
+            answer.code == 404 -> throw StoreFetchException("${source.owner}/${source.repo} was not found on ${source.host}")
+            !answer.ok -> throw StoreFetchException("${source.host} answered ${answer.code}")
         }
         val releases = JSONArray(answer.body)
-        if (releases.length() == 0) throw StoreFetchException("${source.repo} has no releases on GitHub")
+        if (releases.length() == 0) throw StoreFetchException("${source.repo} has no releases")
         for (i in 0 until releases.length()) {
             val release = releases.getJSONObject(i)
             if (release.optBoolean("draft")) continue

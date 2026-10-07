@@ -11,6 +11,8 @@ val storeModule = module {
             installer = get(),
             downloader = get(),
             fetcherRegistry = get(),
+            repository = get(),
         )
     }
+    single { de.mm20.launcher2.store.options.StoreOptions(androidContext()) }
 }
