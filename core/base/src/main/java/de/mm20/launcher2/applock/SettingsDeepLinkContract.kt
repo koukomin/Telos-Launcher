@@ -23,5 +23,6 @@ object SettingsDeepLinkContract {
     /** An address or an obtainium:// link to add in the Store */
     const val EXTRA_STORE_URL = "de.mm20.launcher2.settings.STORE_URL"
     const val ROUTE_PHOTOS = "settings/photos"
+    const val ROUTE_FILES = "settings/files"
     // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
 }

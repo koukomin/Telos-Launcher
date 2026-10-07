@@ -56,6 +56,17 @@ plugin SDK for third-party search/weather/calendar providers. See the
   proximity speaker, volume-button Do Not Disturb shortcut
 - Auto redial, fake incoming calls (scheduled), missed-call and post-call popups, Dynamic Island
   call state
+- Telos Files, a file manager (the layout follows [Solid Explorer](https://play.google.com/store/apps/details?id=pl.solidexplorer2)
+  and [MiXplorer](https://forum.xda-developers.com/t/app-2-2-mixplorer-v6-x-released-fully-featured-file-manager.1523691/),
+  taken as inspiration only, no code was copied): storage overview with free space, SD cards and
+  USB drives, quick access to the standard folders, breadcrumb path bar, list and grid view with
+  picture thumbnails and type colours, sorting, hidden files, search in a folder, favorites,
+  multi-select, copy / move / paste with progress and cancel, rename, delete, new folder and file,
+  zip and unzip, share, properties with permissions and MD5 / SHA-1 / SHA-256, opens pictures in
+  Telos Photos and videos in Telos Video; optional root explorer (superuser) with a warning before
+  it is switched on, a warning banner and extra confirmation in system folders, changing
+  permissions, and making /system writable. Network, cloud and encrypted storages are not
+  implemented yet
 - Messages: text and multimedia (MMS) messages as conversations with a reply field, pictures in
   the conversation, a button to attach pictures, group messages; Telos can be the phone's default
   SMS app (the system asks once): it then stores and notifies about received messages, sends from

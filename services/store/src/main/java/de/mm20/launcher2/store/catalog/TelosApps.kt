@@ -91,5 +91,16 @@ object TelosApps {
             iconRes = de.mm20.launcher2.base.R.drawable.photo_24px,
             route = SettingsDeepLinkContract.ROUTE_PHOTOS,
         ),
+        TelosApp(
+            key = "telos_files_app://files",
+            name = "Telos Files",
+            description = "A file manager: browse and manage the files on your phone, with an optional root explorer for system files.",
+            features = listOf(
+                "Storage, SD cards and USB", "Copy, move, rename, delete, zip", "Grid and list, sorting, search", "Favorites and properties with checksums",
+                "Root explorer with safety warnings",
+            ),
+            iconRes = de.mm20.launcher2.base.R.drawable.folder_24px,
+            route = SettingsDeepLinkContract.ROUTE_FILES,
+        ),
     )
 }
