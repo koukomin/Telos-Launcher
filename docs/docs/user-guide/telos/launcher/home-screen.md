@@ -12,7 +12,7 @@ Grid and icons**.
 | Clock | The top element of the home screen, with an optional "dynamic zone" | On, bold digital style |
 | Widgets page | A scrollable list of widgets, see [Widgets and feed](./widgets-feed) | A separate page, reached by swiping up |
 | Search / app drawer | The [search](./search) view with your apps and favorites | Reached by swiping down or tapping the search bar |
-| Dock | A row of apps or widgets above the search bar | Off |
+| Dock | A row of apps or widgets above the search bar | On with default apps on first start |
 | Search bar | Always visible, at the bottom | Bottom, transparent |
 | Web apps panel | A page for [web apps](./desktop-and-overlays#web-apps) | Swipe right |
 
@@ -105,7 +105,7 @@ Settings > Home screen > Dock.
 
 | Setting | Default | What it does |
 | --- | --- | --- |
-| Dock | Off | Show a dock above the search bar |
+| Dock | Seeded with your default apps on first start | Shown when enabled or when custom pages exist; icons are always round |
 | Enable custom dock | n/a | Place apps and widgets in slots yourself instead of showing pinned favorites |
 | Dock rows and columns | 1 x 5 | Size of one dock page |
 | Multiple docks | Off | Up to several docks; swipe on the dock to switch. New docks start empty |
@@ -119,7 +119,7 @@ activity or shortcut that you pick (asked on first use, or from the app info men
 
 ## Wallpaper
 
-Settings > Home screen > Wallpaper (also the home screen menu entry **Change wallpaper**).
+Settings > Appearance > Wallpaper (also the home screen menu entry **Change wallpaper**).
 
 | Setting | Default | What it does |
 | --- | --- | --- |
