@@ -27,3 +27,69 @@
     }
   }
 }
+
+/* ---- Telos branding ---- */
+:root {
+  --telos-grad-a: #04327d;
+  --telos-grad-b: #5596ed;
+  --telos-grad-c: #9bcdef;
+  --telos-radius: 14px;
+  --vp-font-family-base: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --vp-home-hero-name-background: linear-gradient(120deg, var(--telos-grad-a), var(--telos-grad-b) 60%, var(--telos-grad-c));
+  --vp-home-hero-image-background-image: linear-gradient(-45deg, #5596ed 40%, #9bcdef 60%);
+  --vp-home-hero-image-filter: blur(60px);
+}
+.dark {
+  --vp-home-hero-name-background: linear-gradient(120deg, #5596ed, #9bcdef 70%, #d5e3ff);
+  --vp-home-hero-image-background-image: linear-gradient(-45deg, #04327d 40%, #5596ed 60%);
+}
+html { scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+.vp-doc h1, .VPHero .name, .VPHero .text { letter-spacing: -0.02em; }
+.vp-doc h1 { font-weight: 800; }
+.vp-doc h2 { border-top: none; padding-top: 16px; letter-spacing: -0.01em; }
+.vp-doc p, .vp-doc li { line-height: 1.75; }
+
+/* hero */
+.VPHome .VPHero { position: relative; }
+.VPHero .name { font-size: clamp(3rem, 8vw, 4.5rem) !important; font-weight: 800; }
+.VPHero .tagline { max-width: 34rem; }
+.VPHero .VPImage { border-radius: 28%; box-shadow: 0 20px 60px -20px rgba(4, 50, 125, 0.5); }
+.VPButton { transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.25s; }
+.VPButton:hover { transform: translateY(-2px); box-shadow: 0 8px 20px -8px rgba(4, 50, 125, 0.5); }
+
+/* feature cards */
+.VPFeature {
+  border-radius: var(--telos-radius) !important;
+  border: 1px solid var(--vp-c-divider) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s;
+}
+.VPFeature:hover {
+  transform: translateY(-3px);
+  border-color: var(--vp-c-brand-2) !important;
+  box-shadow: 0 12px 30px -14px rgba(4, 50, 125, 0.35);
+}
+.VPFeature .icon { border-radius: 12px; font-size: 26px; background: var(--vp-c-brand-soft); }
+.dark .VPFeature .icon { background: rgba(85, 150, 237, 0.18); }
+
+/* containers, code, tables, images */
+.vp-doc .custom-block { border-radius: var(--telos-radius); border-width: 1px; }
+.vp-doc div[class*='language-'] { border-radius: 12px; }
+.vp-doc :not(pre) > code { border-radius: 6px; }
+.vp-doc table { display: table; width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--vp-c-divider); border-radius: 12px; overflow: hidden; }
+.vp-doc th { background: var(--vp-c-brand-soft); color: var(--vp-c-brand-1); font-size: 0.85em; }
+.dark .vp-doc th { background: rgba(85, 150, 237, 0.14); }
+.vp-doc tr { background: transparent; }
+.vp-doc tr:nth-child(2n) { background: var(--vp-c-bg-soft); }
+.vp-doc th, .vp-doc td { border: none; border-bottom: 1px solid var(--vp-c-divider); }
+.vp-doc tr:last-child td { border-bottom: none; }
+.vp-doc img { border-radius: 10px; }
+.vp-doc .VPBadge { border-radius: 999px; padding: 0 9px; font-weight: 600; }
+.VPSidebarItem.level-0 > .item .text { font-weight: 600; }
+.VPNavBar { backdrop-filter: blur(10px); }
+.VPDocAsideOutline .outline-link:hover { color: var(--vp-c-brand-1); }
+::selection { background: var(--vp-c-brand-soft); }
+
+/* home extras */
+.home-screenshots img { box-shadow: 0 16px 40px -18px rgba(0, 0, 0, 0.45); }
+.telos-note { text-align: center; color: var(--vp-c-text-2); font-size: 0.9rem; margin: 3rem auto 0; max-width: 40rem; padding: 0 1.5rem; }
