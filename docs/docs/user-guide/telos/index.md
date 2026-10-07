@@ -17,6 +17,9 @@ gallery, music, video and radio players, an app store and an app freezer.
 <a href="./phone/"><b>📞 Phone</b><span>Dialer, recents, contacts, dual SIM, call recording, screening, SIP</span></a>
 <a href="./messages/"><b>💬 Messages</b><span>SMS and MMS conversations, default SMS app, scheduled messages</span></a>
 <a href="./files/"><b>📁 Files</b><span>File manager with network and cloud storages, archives, Cryptomator</span></a>
+<a href="./screenshot/"><b>📸 Screenshot</b><span>Full, partial and scrolling screenshots with an editor</span></a>
+<a href="./screen-recorder/"><b>🎥 Screen Recorder</b><span>Screen to video with microphone, pause and countdown</span></a>
+<a href="./voice-recorder/"><b>🎙️ Voice Recorder</b><span>Recordings with search, pause and call recordings</span></a>
 <a href="./calculator/"><b>🧮 Calculator</b><span>Scientific calculator, VAT, unit and currency converter, history</span></a>
 <a href="./photos/"><b>🖼️ Photos</b><span>Gallery, EXIF tools, editor and a document viewer</span></a>
 <a href="./music/"><b>🎵 Music</b><span>Local library, lyrics, scrobbling, tag editor</span></a>
@@ -40,6 +43,9 @@ gallery, music, video and radio players, an app store and an app freezer.
 | Telos Phone | Calls, recents, contacts, call recording, call screening, SIP | [Phone](./phone/) |
 | Telos Messages | Text and picture messages | [Messages](./messages/) |
 | Telos Files | Browse and manage files, also on network and cloud storages | [Files](./files/) |
+| Telos Screenshot | Full, partial and scrolling screenshots, editor | [Screenshot](./screenshot/) |
+| Telos Screen Recorder | Records the screen to a video | [Screen Recorder](./screen-recorder/) |
+| Telos Voice Recorder | Voice recordings with a list and search | [Voice Recorder](./voice-recorder/) |
 | Telos Calculator | Standard and scientific calculator, VAT, converters | [Calculator](./calculator/) |
 | Telos Photos | Gallery, photo editor, document viewer | [Photos](./photos/) |
 | Telos Music | Player for the music on the phone | [Music](./music/) |

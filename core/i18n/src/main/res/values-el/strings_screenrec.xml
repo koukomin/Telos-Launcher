@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="screenrec_title">Καταγραφή οθόνης</string>
+    <string name="screenrec_start">Έναρξη εγγραφής</string>
+    <string name="screenrec_starting">Έναρξη εγγραφής</string>
+    <string name="screenrec_countdown">Η εγγραφή ξεκινά σε %1$d</string>
+    <string name="screenrec_recording">Γίνεται εγγραφή της οθόνης</string>
+    <string name="screenrec_paused">Η εγγραφή είναι σε παύση</string>
+    <string name="screenrec_saved">Η εγγραφή αποθηκεύτηκε στο Movies/Telos</string>
+    <string name="screenrec_start_failed">Η εγγραφή οθόνης δεν μπόρεσε να ξεκινήσει</string>
+    <string name="screenrec_notification_channel">Καταγραφή οθόνης</string>
+    <string name="screenrec_recordings">Εγγραφές</string>
+    <string name="screenrec_no_recordings">Δεν υπάρχουν ακόμα εγγραφές οθόνης</string>
+    <string name="screenrec_cannot_open">Καμία εφαρμογή δεν μπορεί να παίξει αυτό το βίντεο</string>
+    <string name="screenrec_settings_video">Βίντεο</string>
+    <string name="screenrec_resolution">Ανάλυση</string>
+    <string name="screenrec_resolution_native">Ανάλυση οθόνης</string>
+    <string name="screenrec_fps">Ρυθμός καρέ</string>
+    <string name="screenrec_settings_audio">Ήχος</string>
+    <string name="screenrec_microphone">Εγγραφή μικροφώνου</string>
+    <string name="screenrec_microphone_summary">Προσθέτει τη φωνή σας στο βίντεο. Ο ήχος που παίζει το τηλέφωνο δεν μπορεί ακόμα να ηχογραφηθεί</string>
+    <string name="screenrec_settings_recording">Εγγραφή</string>
+    <string name="screenrec_show_touches">Εμφάνιση αγγιγμάτων</string>
+    <string name="screenrec_show_touches_summary">Δείχνει μια κουκκίδα εκεί που αγγίζετε την οθόνη κατά την εγγραφή. Χρειάζεται την άδεια αλλαγής των ρυθμίσεων συστήματος</string>
+    <string name="screenrec_countdown_setting">Αντίστροφη μέτρηση</string>
+    <string name="screenrec_countdown_none">Καμία</string>
+    <string name="screenrec_stop_screen_off">Διακοπή όταν σβήνει η οθόνη</string>
+    <string name="screenrec_stop_screen_off_summary">Αποτρέπει την εγγραφή με σβηστή οθόνη</string>
+</resources>

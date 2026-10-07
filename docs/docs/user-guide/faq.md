@@ -27,7 +27,7 @@ and newer. See [Home screen](./telos/launcher/home-screen) and the work profile 
 
 ## What are the Telos apps and can I switch them off?
 
-Telos Phone, Messages, Files, Photos, Music, Video, Radio, Calculator and Store are *virtual apps*: they are part
+Telos Phone, Messages, Files, Photos, Music, Video, Radio, Calculator, Screenshot, Screen Recorder, Voice Recorder and Store are *virtual apps*: they are part
 of the launcher and run inside it, they are not separate APKs. Open Telos Store and **remove** an app to hide its
 icon, **install** it to show it again. A hidden app costs nothing. Telos Store itself cannot be removed. See
 [Telos at a glance](./telos/#how-the-built-in-apps-work).

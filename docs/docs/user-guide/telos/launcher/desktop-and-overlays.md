@@ -111,7 +111,9 @@ Tapping outside the card closes it. The card opens next to the handle it came fr
 
 | Tool | What it does |
 | --- | --- |
-| Screenshot | Closes the card and takes a screenshot. Needs the Telos accessibility service (Settings > Gestures) and Android 9 or newer |
+| Screenshot, Partial screenshot, Scrolling screenshot | The three modes of [Telos Screenshot](../screenshot/). The card closes first. They need the Telos accessibility service (Settings > Gestures) |
+| Screen recorder | Starts a recording of [Telos Screen Recorder](../screen-recorder/) (Android asks for the capture permission). Runs it again to stop it |
+| Voice recorder | Starts or stops a recording of [Telos Voice Recorder](../voice-recorder/). The microphone permission must have been given in the app once |
 | Recent files | The 30 newest files on the phone with their date, tap one to open it. It reads the system's media index, so it needs the access to files that Telos Files asks for |
 | Flashlight | Turns the flashlight on or off |
 | Quick settings, Notifications | Pull down the quick settings or the notifications |
@@ -158,7 +160,7 @@ front. This only works while Android's freeform mode is on (see [Floating window
 without it Android ignores the window size and the app opens normally.
 
 **What is not in it.** The Smart Sidebar of OxygenOS also has **AI Summary** and **AI Speak** (OnePlus's own system
-services) and a **Private Tab** shortcut. Telos has none of these. The handle can be on the left or the right edge at
+services), a partial **screen recording** and a **Private Tab** shortcut. Telos has none of these. The handle can be on the left or the right edge at
 any height, and there is one sidebar, not one per screen zone as in earlier builds.
 
 ::: warning Known risk and the emergency switch

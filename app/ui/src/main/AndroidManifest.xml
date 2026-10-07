@@ -9,6 +9,10 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!--
         Used only to detect an active/ringing call for the Dynamic Island pill. Opt-in
         (Dynamic Island setting), off by default; never used for anything else.
@@ -124,6 +128,27 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/direct_call_widget_info" />
         </receiver>
+        <activity
+            android:name=".screenshot.ScreenshotEditorActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+        <receiver
+            android:name=".screenshot.ScreenshotActionReceiver"
+            android:exported="false" />
+        <service
+            android:name=".screenrec.ScreenRecorderService"
+            android:exported="false"
+            android:foregroundServiceType="mediaProjection" />
+        <activity
+            android:name=".screenrec.ScreenRecorderRequestActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <service
+            android:name=".voice.VoiceRecorderService"
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
         <service
             android:name=".calculator.CalculatorTileService"
             android:exported="true"

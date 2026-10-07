@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="voice_title">Voice recorder</string>
+    <string name="voice_search">Search recordings</string>
+    <string name="voice_more">More options</string>
+    <string name="voice_receiver_mode">Earpiece mode</string>
+    <string name="voice_speaker_mode">Speaker mode</string>
+    <string name="voice_settings">Settings</string>
+    <string name="voice_all_recordings">All recordings</string>
+    <string name="voice_call_recordings">Call recordings</string>
+    <string name="voice_no_recordings">No recordings</string>
+    <string name="voice_permission_needed">Telos Voice Recorder needs the microphone permission to record</string>
+    <string name="voice_start_failed">The recording could not be started</string>
+    <string name="voice_rename">Rename</string>
+    <string name="voice_rename_failed">The name is empty or already used</string>
+    <string name="voice_save">Save</string>
+    <string name="voice_cancel">Cancel</string>
+    <string name="voice_delete_title">Delete this recording?</string>
+    <string name="voice_delete">Delete</string>
+    <string name="voice_share">Share</string>
+    <string name="voice_share_failed">The recording could not be shared</string>
+    <string name="voice_play">Play</string>
+    <string name="voice_pause">Pause</string>
+    <string name="voice_resume">Resume</string>
+    <string name="voice_stop">Stop</string>
+    <string name="voice_discard">Discard</string>
+    <string name="voice_notification_channel">Voice recorder</string>
+    <string name="voice_notification_recording">Recording</string>
+    <string name="voice_notification_paused">Recording paused</string>
+    <string name="voice_settings_sound">Sound</string>
+    <string name="voice_format">Recording file format</string>
+    <string name="voice_mode">Recording mode</string>
+    <string name="voice_mode_standard">Standard</string>
+    <string name="voice_mode_voice">Voice (tuned for speech)</string>
+    <string name="voice_quality">Quality</string>
+    <string name="voice_quality_compact">Compact</string>
+    <string name="voice_quality_balanced">Balanced</string>
+    <string name="voice_quality_high">High</string>
+    <string name="voice_settings_playback">Playback</string>
+    <string name="voice_speaker">Play through the speaker</string>
+    <string name="voice_speaker_summary">Turn off to play through the earpiece, like on a phone call</string>
+    <string name="voice_settings_privacy">Privacy</string>
+    <string name="voice_privacy_text">Recordings stay in the private storage of Telos on this phone. Nothing is uploaded. Call recordings of Telos Phone are listed here too, they stay encrypted.</string>
+</resources>

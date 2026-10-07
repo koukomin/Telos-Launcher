@@ -159,6 +159,15 @@ import android.hardware.camera2.CameraManager
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import kotlinx.coroutines.flow.combine
+import androidx.core.content.ContextCompat
+import de.mm20.launcher2.ui.screenrec.ScreenRecStatus
+import de.mm20.launcher2.ui.screenrec.ScreenRecorderRequestActivity
+import de.mm20.launcher2.ui.screenrec.ScreenRecorderService
+import de.mm20.launcher2.ui.screenrec.ScreenRecorderState
+import de.mm20.launcher2.ui.screenshot.ScreenshotController
+import de.mm20.launcher2.ui.voice.VoiceRecorderEngine
+import de.mm20.launcher2.ui.voice.VoiceRecorderService
+import de.mm20.launcher2.ui.voice.VoiceStatus
 import android.view.KeyEvent
 import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import de.mm20.launcher2.preferences.FloatingLauncherEdge
@@ -380,11 +389,32 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner, ViewModelSto
     private fun runTool(tool: SidebarTool) {
         closePanel()
         when (tool) {
-            SidebarTool.Screenshot -> scope.launch {
-                // let the panel disappear before the picture is taken
-                delay(450)
-                if (!globalActions.takeScreenshot()) {
-                    Toast.makeText(this@FloatingLauncherService, R.string.floating_launcher_tool_needs_accessibility, Toast.LENGTH_LONG).show()
+            // the controller waits for the card to leave the screen before it takes the picture
+            SidebarTool.Screenshot -> ScreenshotController.captureFull(this)
+            SidebarTool.PartialScreenshot -> ScreenshotController.capturePartial(this)
+            SidebarTool.ScrollingScreenshot -> ScreenshotController.captureScrolling(this)
+
+            SidebarTool.ScreenRecorder -> {
+                if (ScreenRecorderState.state.value.status == ScreenRecStatus.Idle) {
+                    ScreenRecorderRequestActivity.launch(this)
+                } else {
+                    ScreenRecorderService.stop(this)
+                }
+            }
+
+            SidebarTool.VoiceRecorder -> {
+                if (VoiceRecorderEngine.state.value.status != VoiceStatus.Idle) {
+                    VoiceRecorderService.stopRecording(this)
+                } else if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO) == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                    VoiceRecorderService.startRecording(this)
+                } else {
+                    // the permission is asked in the app
+                    startActivity(
+                        Intent(this, SettingsActivity::class.java).apply {
+                            putExtra(SettingsActivity.EXTRA_ROUTE, SettingsActivity.ROUTE_VOICE_RECORDER)
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        }
+                    )
                 }
             }
 

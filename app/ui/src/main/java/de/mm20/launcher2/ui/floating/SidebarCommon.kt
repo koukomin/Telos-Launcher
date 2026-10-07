@@ -187,6 +187,10 @@ internal enum class SidebarTool(
     val color: Color,
 ) {
     Screenshot("screenshot", R.string.floating_launcher_tool_screenshot, R.drawable.ic_sidebar_screenshot, Color(0xFF1A6DFF)),
+    PartialScreenshot("partial_screenshot", R.string.floating_launcher_tool_partial_screenshot, R.drawable.ic_sidebar_partial_screenshot, Color(0xFF1A6DFF)),
+    ScrollingScreenshot("scrolling_screenshot", R.string.floating_launcher_tool_scrolling_screenshot, R.drawable.ic_sidebar_scrolling_screenshot, Color(0xFF1A6DFF)),
+    ScreenRecorder("screen_recorder", R.string.floating_launcher_tool_screen_recorder, R.drawable.ic_glyph_screen_recorder, Color(0xFFE53935)),
+    VoiceRecorder("voice_recorder", R.string.floating_launcher_tool_voice_recorder, R.drawable.ic_glyph_voice_recorder, Color(0xFF00838F)),
     RecentFiles("recent_files", R.string.floating_launcher_recent_files, R.drawable.schedule_24px, Color(0xFF3D8BFF)),
     Flashlight("flashlight", R.string.floating_launcher_tool_flashlight, R.drawable.bolt_24px, Color(0xFFF59E0B)),
     QuickSettings("quick_settings", R.string.floating_launcher_tool_quick_settings, R.drawable.tune_24px, Color(0xFF7C4DFF)),
@@ -307,7 +311,7 @@ internal fun SidebarEditIcon(size: Dp) {
 @Composable
 internal fun SidebarAllToolsIcon(size: Dp) {
     val mini = size * 0.38f
-    val tools = listOf(SidebarTool.Screenshot, SidebarTool.RecentFiles, SidebarTool.Flashlight, SidebarTool.QuickSettings)
+    val tools = listOf(SidebarTool.Screenshot, SidebarTool.ScreenRecorder, SidebarTool.PartialScreenshot, SidebarTool.VoiceRecorder)
     Box(
         Modifier.size(size).clip(RoundedCornerShape(size * 0.3f)).background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)),
         contentAlignment = Alignment.Center,

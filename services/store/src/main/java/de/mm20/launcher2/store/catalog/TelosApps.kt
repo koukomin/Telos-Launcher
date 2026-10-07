@@ -113,5 +113,29 @@ object TelosApps {
             iconRes = de.mm20.launcher2.base.R.drawable.ic_glyph_calculator,
             route = SettingsDeepLinkContract.ROUTE_CALCULATOR,
         ),
+        TelosApp(
+            key = "telos_voice_recorder_app://voice_recorder",
+            name = "Telos Voice Recorder",
+            description = "A voice recorder with a list of recordings, search, pause and a recording service that keeps going with the screen off.",
+            features = listOf("AAC and Opus", "Standard and voice mode, three qualities", "Pause and resume", "Rename, share, delete", "Call recordings of Telos Phone"),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_glyph_voice_recorder,
+            route = SettingsDeepLinkContract.ROUTE_VOICE_RECORDER,
+        ),
+        TelosApp(
+            key = "telos_screen_recorder_app://screen_recorder",
+            name = "Telos Screen Recorder",
+            description = "Records the screen to a video, with the microphone if you want, and keeps the recordings in Movies/Telos.",
+            features = listOf("Resolution up to the screen size, 30 or 60 fps", "Microphone", "Pause and resume from the notification", "Countdown, show touches", "Stops when the screen turns off"),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_glyph_screen_recorder,
+            route = SettingsDeepLinkContract.ROUTE_SCREEN_RECORDER,
+        ),
+        TelosApp(
+            key = "telos_screenshot_app://screenshot",
+            name = "Telos Screenshot",
+            description = "Takes full, partial and scrolling screenshots and edits them: crop, hide with pixelate or blur, and draw.",
+            features = listOf("Full, partial (rectangle, oval, free shape) and scrolling screenshots", "Pixelate and blur to hide private parts", "Notification with share, edit and delete", "Delay timer"),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_sidebar_screenshot,
+            route = SettingsDeepLinkContract.ROUTE_SCREENSHOT,
+        ),
     )
 }

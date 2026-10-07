@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="screenrec_title">Screen recorder</string>
+    <string name="screenrec_start">Start recording</string>
+    <string name="screenrec_starting">Starting the recording</string>
+    <string name="screenrec_countdown">Recording starts in %1$d</string>
+    <string name="screenrec_recording">Recording the screen</string>
+    <string name="screenrec_paused">Recording paused</string>
+    <string name="screenrec_saved">Recording saved in Movies/Telos</string>
+    <string name="screenrec_start_failed">The screen recording could not be started</string>
+    <string name="screenrec_notification_channel">Screen recorder</string>
+    <string name="screenrec_recordings">Recordings</string>
+    <string name="screenrec_no_recordings">No screen recordings yet</string>
+    <string name="screenrec_cannot_open">No app can play this video</string>
+    <string name="screenrec_settings_video">Video</string>
+    <string name="screenrec_resolution">Resolution</string>
+    <string name="screenrec_resolution_native">Screen resolution</string>
+    <string name="screenrec_fps">Frame rate</string>
+    <string name="screenrec_settings_audio">Audio</string>
+    <string name="screenrec_microphone">Record the microphone</string>
+    <string name="screenrec_microphone_summary">Adds your voice to the video. Sound that the phone plays cannot be recorded yet</string>
+    <string name="screenrec_settings_recording">Recording</string>
+    <string name="screenrec_show_touches">Show touches</string>
+    <string name="screenrec_show_touches_summary">Shows a dot where the screen is touched while recording. Needs the permission to change system settings</string>
+    <string name="screenrec_countdown_setting">Countdown</string>
+    <string name="screenrec_countdown_none">None</string>
+    <string name="screenrec_stop_screen_off">Stop when the screen turns off</string>
+    <string name="screenrec_stop_screen_off_summary">Keeps the recording from running with the screen off</string>
+</resources>

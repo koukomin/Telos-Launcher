@@ -17,7 +17,7 @@ The documentation site is published via GitHub Pages at <https://koukomin.github
 </div>
 
 > **Note:** The Telos apps use flat Material icons: a white glyph on a dark background of its own
-> (navy for Phone, teal for Messages, amber for Files, slate for Calculator, rose for Photos, purple for Music, red for
+> (navy for Phone, teal for Messages, amber for Files, slate for Calculator, blue for Screenshot, red for Screen Recorder, cyan for Voice Recorder, rose for Photos, purple for Music, red for
 > Video, green for Radio). Telos Store uses the launcher icon. The name and the final branding are
 > still in progress.
 
@@ -48,6 +48,9 @@ from Telos Store.
 | **Telos Phone** | Dialer, recents, contacts, dual SIM, call recording, call screening, SIP | [Phone](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/phone/) |
 | **Telos Messages** | SMS and MMS conversations, default SMS app, scheduled messages | [Messages](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/messages/) |
 | **Telos Files** | File manager with network and cloud storages, archives, Cryptomator vaults | [Files](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/) |
+| **Telos Screenshot** | Full, partial and scrolling screenshots with an editor | [Screenshot](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/screenshot/) |
+| **Telos Screen Recorder** | Screen to video with microphone, pause and countdown | [Screen Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/screen-recorder/) |
+| **Telos Voice Recorder** | Voice recordings with search, pause and call recordings | [Voice Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/voice-recorder/) |
 | **Telos Calculator** | Standard and scientific calculator, VAT, unit and currency converter, history | [Calculator](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calculator/) |
 | **Telos Photos** | Gallery, EXIF tools, editor and a document viewer | [Photos](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
 | **Telos Music** | Local library, lyrics, scrobbling, tag editor | [Music](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/music/) |
@@ -108,7 +111,7 @@ and custom names are matched; file contents, message texts and note bodies are n
 | Source | What it finds | Min. text | Online? | Default |
 | --- | --- | --- | --- | --- |
 | Apps | Installed apps of every profile (personal, work, private space) | 1 | No | On |
-| Telos apps | Phone, Messages, Radio, Music, Video, Photos, Files, Calculator, Store, while switched on | 1 | No | On |
+| Telos apps | Phone, Messages, Radio, Music, Video, Photos, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder, Store, while switched on | 1 | No | On |
 | Web apps | Web app shortcuts shown in the grid | 1 | No | On |
 | Activity by component name | One app entry for a typed `package/class` | 1 | No | On |
 | App shortcuts | Shortcuts that apps publish (needs Telos as default home app) | 3 | No | On |
@@ -421,7 +424,9 @@ Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/doc
 | All files access | Local file search |
 | Notification listener | Notification badges, media widget |
 | Default home app role | App shortcuts, work profile pause, private space lock |
-| Accessibility service | Screen off, power menu and recents gestures, App Lock detection (listens to window state only) |
+| Accessibility service | Screen off, power menu and recents gestures, App Lock detection (listens to window state only), screenshots and the swipes of the scrolling screenshot (Telos Screenshot) |
+| Microphone | Telos Voice Recorder, the microphone of Telos Screen Recorder, call recording |
+| Screen capture (asked every time) | Telos Screen Recorder |
 | Phone, call log, phone state | Telos Phone, Dynamic Island call pill |
 | Usage access | Smart Freeze idle detection, App Lock detection |
 | Display over other apps | Floating launcher, Dynamic Island, App Lock overlay |
@@ -430,7 +435,7 @@ Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/doc
 - Permissions are asked only when a feature needs them. On Android 13+ accessibility and notification access can be blocked for apps installed outside a store; Telos shows guidance after the first attempt.
 - **Default launcher:** Telos is a home app (`HOME`) and also handles pinned shortcuts, theme files and `obtainium://` links.
 - **Assistant:** set Telos as the digital assistant and the assist gesture opens it in assistant mode.
-- **Global actions** without root: notifications and quick settings (status bar service, accessibility fallback), screen lock, power menu and recents (accessibility). The only screenshot action is the Screenshot tool of the floating launcher (accessibility, Android 9+); there is no gesture for it.
+- **Global actions** without root: notifications and quick settings (status bar service, accessibility fallback), screen lock, power menu and recents (accessibility). Telos Screenshot takes screenshots through the accessibility service (Android 11+ for its own pictures, the system action on Android 9 and 10); there is no gesture for it.
 - Other: settings deep links, crash reporter and logs under Advanced > Debug (local only, nothing is sent), About with build information and open source libraries.
 
 Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/features/system-catalogue).
@@ -443,7 +448,7 @@ Telos can draw things in other places than the home screen. Much of this is mark
 | --- | --- | --- |
 | Desktop mode | A connected external display | Desktop shell with a workspace grid, taskbar with a start menu, running-app dots, system tray and clock. Orientation, icon size and wallpaper settings. Switches itself on at the first display |
 | Freeform windows | Whole device, via Shizuku | Snap left, snap right, maximize and close from the taskbar menu. Changes windowing for every app while on |
-| Floating launcher (Smart Sidebar) | Over every app | A thin handle on the left or right edge that opens a card of your tools, apps and widgets, modeled on the Smart Sidebar of OxygenOS: File Dock on top, one or two columns, an All list of tools, an Edit tile that opens an editor with search (tools, widgets, apps, drag to reorder). Tools: screenshot, recent files, flashlight, quick settings, notifications, lock screen, power menu. Widgets of the launcher can be put in it. No AI Summary, AI Speak or Private Tab. Off by default, no search field in the card by design |
+| Floating launcher (Smart Sidebar) | Over every app | A thin handle on the left or right edge that opens a card of your tools, apps and widgets, modeled on the Smart Sidebar of OxygenOS: File Dock on top, one or two columns, an All list of tools, an Edit tile that opens an editor with search (tools, widgets, apps, drag to reorder). Tools: screenshot, partial screenshot, scrolling screenshot, screen recorder, voice recorder, recent files, flashlight, quick settings, notifications, lock screen, power menu. Widgets of the launcher can be put in it. No AI Summary, AI Speak or Private Tab. Off by default, no search field in the card by design |
 | Dynamic Island | Top of the screen | A pill showing the most relevant live item by priority: call, timer, media, charging |
 | Web apps | Home screen and a panel | Websites as app-like shortcuts in an embedded browser (ad and tracker blocking, tracking parameter stripping, custom CSS) or a Custom Tabs browser, with a Web Apps Panel |
 | Assistant mode | The system assistant gesture | Opens Telos in a separate assistant window once Telos is set as the digital assistant |
@@ -680,6 +685,40 @@ A calculator in the launcher: standard and scientific keypad, VAT, unit and curr
 
 **Status and limitations:** no floating window mode, 12 significant digits, numeral systems for whole numbers only.
 
+### Telos Screenshot
+
+Full, partial and scrolling screenshots, taken through the accessibility service so that Telos can edit them. No cloud, nothing is read from the picture. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/screenshot/).
+
+- **Screenshot** (Android 11+ for Telos' own picture, the system screenshot on Android 9 and 10), **partial screenshot** (rectangle, oval or free shape) and **scrolling screenshot** (experimental: swipes and joins up to 12 screens by matching rows)
+- **Editor:** crop, pixelate, blur, draw (six colors, pen width), undo (8 steps); saving makes a new picture and keeps the original
+- Notification with share, edit and delete, a delay of 3, 5 or 10 seconds, PNG or JPEG, a list of the screenshots Telos made (`Pictures/Screenshots`)
+- Also a tool in the floating launcher
+
+**Status and limitations:** no three-finger gestures or button combinations (they belong to the system), no text extraction, translation or AI features, protected content is black, the scrolling screenshot can fail on fixed headers, videos and animations.
+
+### Telos Screen Recorder
+
+Records the screen to a video with MediaProjection. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/screen-recorder/).
+
+- Resolution (screen, 1080p, 720p, 480p), 30 or 60 fps, three qualities, the microphone as an option
+- Countdown (none, 3 or 5 s), show touches (needs the permission to change system settings, the old value is restored), stop when the screen turns off
+- Pause, resume and stop from the notification and from the app, recordings in `Movies/Telos` listed in the app (play, share, delete)
+- Starts from the app or from the floating launcher
+
+**Status and limitations:** Android asks for the capture permission every time, no system sound (only the microphone), protected content is black, no Live Alert or Dynamic Island entry, no editing.
+
+### Telos Voice Recorder
+
+A voice recorder with a list, search and a service that keeps recording with the screen off. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/voice-recorder/).
+
+- Big red record button, pause and resume, a waveform, a notification with pause and stop
+- AAC (.m4a) or Opus (.ogg, Android 10+), standard or voice mode, three qualities
+- List newest first with duration and date, search, rename, share, delete, playback with a seek bar through the speaker or the earpiece
+- The call recordings of Telos Phone in the same list (they stay encrypted)
+- Also a tool in the floating launcher
+
+**Status and limitations:** recordings are in the private storage of Telos and not encrypted (call recordings are), no AI assistant, transcription, markers, trimming or WAV.
+
 ### Telos Photos
 
 A photo gallery, a metadata (EXIF) tool, a simple photo editor and a document viewer in one app. No cloud, no account and no network features of its own. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/).
@@ -813,7 +852,7 @@ An app installer and updater that works like [Obtainium](https://github.com/Imra
 
 **Managing the Telos apps**
 
-- The Telos apps (Phone, Messages, Radio, Music, Video, Photos, Files, Calculator) are listed with what each one does; "installing" one shows its icon in the app grid and in search, "removing" hides it. Telos Store itself cannot be removed.
+- The Telos apps (Phone, Messages, Radio, Music, Video, Photos, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder) are listed with what each one does; "installing" one shows its icon in the app grid and in search, "removing" hides it. Telos Store itself cannot be removed.
 - Crash guard: an app that crashes (or hangs) twice within a day is switched off automatically, with a notification pointing to the Store; "installing" it again resets the counter.
 
 **Status and limitations:** Only the listed sources: APKMirror, Uptodown, Aptoide, APKPure, the Play Store, Huawei, Tencent, RuStore and Telegram entries are skipped when importing. Split APKs and apps that need a login are not supported, direct APK links have no version check, and silent installs need Shizuku or root. Installing APKs from outside an app store means you trust the source.

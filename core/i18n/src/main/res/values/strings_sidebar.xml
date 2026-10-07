@@ -23,4 +23,8 @@
     <string name="preference_floating_launcher_file_dock">File Dock</string>
     <string name="preference_floating_launcher_file_dock_summary">Hold text, pictures and files that you drag onto the sidebar, to drop them into another app</string>
     <string name="floating_launcher_edit_in_settings">Turn on the sidebar first</string>
+    <string name="floating_launcher_tool_partial_screenshot">Partial screenshot</string>
+    <string name="floating_launcher_tool_scrolling_screenshot">Scrolling screenshot</string>
+    <string name="floating_launcher_tool_screen_recorder">Screen recorder</string>
+    <string name="floating_launcher_tool_voice_recorder">Voice recorder</string>
 </resources>

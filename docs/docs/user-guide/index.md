@@ -56,7 +56,7 @@ the Work Mode switch and the private space lock.
    **Settings**, **Add widget** and **Help**. A long press on the home screen opens a smaller menu with
    **Change wallpaper** and **Add widget**.
 3. **Look at the app grid.** Besides your installed apps you find the Telos apps (Phone, Messages, Files, Photos,
-   Music, Video, Radio, Calculator and Store). They run inside the launcher.
+   Music, Video, Radio, Calculator, Screenshot, Screen Recorder, Voice Recorder and Store). They run inside the launcher.
 4. **Open Telos Store** to switch the Telos apps on or off, and to install and update other apps from GitHub,
    F-Droid and similar sources. See [Store](./telos/store/).
 5. **Set up widgets and gestures** in Settings > Home screen and Settings > Gestures. See
@@ -73,7 +73,8 @@ Telos asks for a permission only when a feature needs it, and everything works w
 | Contacts, Calendar | Contact and calendar search, the calendar widget |
 | All files access | Searching local files, and Telos Files |
 | Notification access | Notification badges and the music widget |
-| Accessibility service | The screen-off, power menu and recents gestures, App Lock detection, the screenshot tool of the floating launcher |
+| Accessibility service | The screen-off, power menu and recents gestures, App Lock detection, Telos Screenshot and the screenshot tools of the floating launcher |
+| Microphone | Telos Voice Recorder, the microphone of Telos Screen Recorder, call recording |
 | Display over other apps | Floating launcher, Dynamic Island, App Lock overlay |
 | Phone, call log, phone state | Telos Phone, the call pill of the Dynamic Island |
 | Usage access | Smart Freeze idle detection, App Lock |
@@ -90,6 +91,7 @@ installed from outside a store. Telos shows a hint after the first attempt, and
 | Use your phone through Telos | [Phone](./telos/phone/) and [Messages](./telos/messages/) |
 | Manage files, photos, music and video | [Files](./telos/files/), [Photos](./telos/photos/), [Music](./telos/music/), [Video](./telos/video/) |
 | Calculate, add or remove VAT, convert units | [Calculator](./telos/calculator/) |
+| Take and edit screenshots, record the screen or your voice | [Screenshot](./telos/screenshot/), [Screen Recorder](./telos/screen-recorder/), [Voice Recorder](./telos/voice-recorder/) |
 | Get a quick-access sidebar over other apps | [Floating launcher](./telos/launcher/desktop-and-overlays#floating-launcher) |
 | Protect your data | [Privacy and protection](./telos/launcher/privacy-protection) |
 | Change something and cannot find it | [Where to find a setting](./telos/launcher/#where-to-find-a-setting) |

@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="voice_title">Ηχογράφηση</string>
+    <string name="voice_search">Αναζήτηση ηχογραφήσεων</string>
+    <string name="voice_more">Περισσότερες επιλογές</string>
+    <string name="voice_receiver_mode">Λειτουργία δέκτη</string>
+    <string name="voice_speaker_mode">Λειτουργία ηχείων</string>
+    <string name="voice_settings">Ρυθμίσεις</string>
+    <string name="voice_all_recordings">Όλες οι εγγραφές</string>
+    <string name="voice_call_recordings">Εγγραφές κλήσεων</string>
+    <string name="voice_no_recordings">Χωρίς εγγραφές</string>
+    <string name="voice_permission_needed">Η Ηχογράφηση χρειάζεται την άδεια μικροφώνου για να ηχογραφήσει</string>
+    <string name="voice_start_failed">Η εγγραφή δεν μπόρεσε να ξεκινήσει</string>
+    <string name="voice_rename">Μετονομασία</string>
+    <string name="voice_rename_failed">Το όνομα είναι κενό ή χρησιμοποιείται ήδη</string>
+    <string name="voice_save">Αποθήκευση</string>
+    <string name="voice_cancel">Ακύρωση</string>
+    <string name="voice_delete_title">Διαγραφή αυτής της εγγραφής;</string>
+    <string name="voice_delete">Διαγραφή</string>
+    <string name="voice_share">Κοινοποίηση</string>
+    <string name="voice_share_failed">Η εγγραφή δεν μπόρεσε να κοινοποιηθεί</string>
+    <string name="voice_play">Αναπαραγωγή</string>
+    <string name="voice_pause">Παύση</string>
+    <string name="voice_resume">Συνέχεια</string>
+    <string name="voice_stop">Διακοπή</string>
+    <string name="voice_discard">Απόρριψη</string>
+    <string name="voice_notification_channel">Ηχογράφηση</string>
+    <string name="voice_notification_recording">Γίνεται εγγραφή</string>
+    <string name="voice_notification_paused">Η εγγραφή είναι σε παύση</string>
+    <string name="voice_settings_sound">Ήχος</string>
+    <string name="voice_format">Μορφή αρχείου εγγραφής</string>
+    <string name="voice_mode">Λειτουργία εγγραφής</string>
+    <string name="voice_mode_standard">Τυπική</string>
+    <string name="voice_mode_voice">Φωνή (για ομιλία)</string>
+    <string name="voice_quality">Ποιότητα</string>
+    <string name="voice_quality_compact">Συμπαγής</string>
+    <string name="voice_quality_balanced">Ισορροπημένη</string>
+    <string name="voice_quality_high">Υψηλή</string>
+    <string name="voice_settings_playback">Αναπαραγωγή</string>
+    <string name="voice_speaker">Αναπαραγωγή από το ηχείο</string>
+    <string name="voice_speaker_summary">Απενεργοποιήστε για αναπαραγωγή από τον δέκτη, όπως σε κλήση</string>
+    <string name="voice_settings_privacy">Ιδιωτικότητα</string>
+    <string name="voice_privacy_text">Οι εγγραφές μένουν στον ιδιωτικό χώρο του Telos σε αυτό το τηλέφωνο. Τίποτα δεν ανεβαίνει στο διαδίκτυο. Εδώ εμφανίζονται και οι εγγραφές κλήσεων του Telos Phone, που παραμένουν κρυπτογραφημένες.</string>
+</resources>

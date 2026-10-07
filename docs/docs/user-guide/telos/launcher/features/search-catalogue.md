@@ -24,7 +24,7 @@ source answer. Shorter queries return nothing from that source.
 | Source | Result type | Min. text | Needs | Network | Filter |
 | --- | --- | --- | --- | --- | --- |
 | Apps | Installed apps of all profiles (personal, work, private space) | 1 | Nothing | No | Apps |
-| Telos apps | Phone, Messages, Radio, Music, Video, Photos, Files, Calculator and Store as app results | 1 | The app is not switched off in its own settings | No | Apps |
+| Telos apps | Phone, Messages, Radio, Music, Video, Photos, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder and Store as app results | 1 | The app is not switched off in its own settings | No | Apps |
 | Web apps | [Web app shortcuts](../desktop-and-overlays#web-apps) that are shown in the grid | 1 | Nothing | No | Apps |
 | Activity by component name | One app entry for a typed `package/class` name | 1 | The activity exists | No | Apps |
 | App shortcuts | Launcher shortcuts that apps publish (pinned, dynamic, static, cached) | 3 | Telos is the default home app | No | App shortcuts |

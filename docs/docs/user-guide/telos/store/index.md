@@ -97,7 +97,7 @@ The **Telos apps** tab lists the built-in apps with a description and feature li
 | Store | Cannot be removed, otherwise there would be no way back |
 
 The apps are Telos Store, Telos Phone, Telos Messages, Telos Radio, Telos Music, Telos Video, Telos Photos, Telos
-Files and Telos Calculator. [Smart Freeze](../freeze/) is a launcher feature in Settings, not a Telos app, so it is not listed here.
+Files, Telos Calculator, Telos Screenshot, Telos Screen Recorder and Telos Voice Recorder. [Smart Freeze](../freeze/) is a launcher feature in Settings, not a Telos app, so it is not listed here.
 
 If an app was switched off by the [crash guard](../launcher/privacy-protection#crash-guard), its row says "Switched off
 automatically because it crashed repeatedly." Installing it again resets the counter.

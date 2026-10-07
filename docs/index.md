@@ -36,6 +36,18 @@ features:
     title: Files
     details: Browse local storage, cloud and network shares, and keep private files in a vault.
     link: /docs/user-guide/telos/files/
+  - icon: 📸
+    title: Screenshot
+    details: Full, partial and scrolling screenshots, with crop, pixelate, blur and drawing.
+    link: /docs/user-guide/telos/screenshot/
+  - icon: 🎥
+    title: Screen Recorder
+    details: Record the screen to a video with the microphone, pause and a countdown.
+    link: /docs/user-guide/telos/screen-recorder/
+  - icon: 🎙️
+    title: Voice Recorder
+    details: Voice recordings with a list, search, pause and the call recordings of Telos Phone.
+    link: /docs/user-guide/telos/voice-recorder/
   - icon: 🧮
     title: Calculator
     details: Standard and scientific calculator with VAT, unit and currency conversion and a history.

@@ -23,4 +23,8 @@
     <string name="preference_floating_launcher_file_dock">Προσωρινή αποθήκη αρχείων</string>
     <string name="preference_floating_launcher_file_dock_summary">Κρατήστε προσωρινά κείμενα, εικόνες και αρχεία που σύρετε στην πλαϊνή γραμμή, για να τα αφήσετε σε άλλη εφαρμογή</string>
     <string name="floating_launcher_edit_in_settings">Ενεργοποιήστε πρώτα την πλαϊνή γραμμή</string>
+    <string name="floating_launcher_tool_partial_screenshot">Μερικό στιγμιότυπο</string>
+    <string name="floating_launcher_tool_scrolling_screenshot">Στιγμιότυπο κύλισης</string>
+    <string name="floating_launcher_tool_screen_recorder">Καταγραφή οθόνης</string>
+    <string name="floating_launcher_tool_voice_recorder">Ηχογράφηση</string>
 </resources>
