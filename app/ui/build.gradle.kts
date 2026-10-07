@@ -199,3 +199,9 @@ dependencies {
 
     testImplementation(libs.bundles.tests)
 }
+// Bouncy Castle comes in with several versions (sshj, other libraries); the parts must match or the classes are duplicated
+configurations.all {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.bouncycastle") useVersion("1.85.2")
+    }
+}

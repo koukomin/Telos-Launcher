@@ -28,7 +28,7 @@ from Solid Explorer and MiXplorer (no code was copied).
 | --- | --- |
 | Copy, move, paste | Shows progress and can be cancelled |
 | Rename, delete | Work on a selection |
-| New folder, new file | From the add menu |
+| New folder, new file | |
 | Compress to zip, extract here | See [Archives](#archives) |
 | Share | System share sheet. Folders cannot be shared, compress them first |
 | Open with | Choose another app |

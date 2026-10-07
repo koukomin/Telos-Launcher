@@ -199,3 +199,10 @@ dependencies {
     // Uncomment this if you want annoying notifications in your debug builds
     //debugImplementation(libs.leakcanary)
 }
+
+// Bouncy Castle comes in with several versions (sshj, other libraries); the parts must match or the classes are duplicated
+configurations.all {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.bouncycastle") useVersion("1.85.2")
+    }
+}
