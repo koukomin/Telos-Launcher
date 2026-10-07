@@ -14,6 +14,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.calculatePan
 import androidx.compose.foundation.gestures.calculateZoom
 import androidx.compose.ui.input.pointer.positionChanged
@@ -98,8 +100,8 @@ private fun ZoomableImage(uri: Uri, onTap: () -> Unit) {
             .pointerInput(Unit) {
                 // Only a pinch, or a drag while zoomed in, is taken here. A single finger on a photo
                 // that is not zoomed is left to the pager, so that swiping to the next photo works.
-                androidx.compose.foundation.gestures.awaitEachGesture {
-                    androidx.compose.foundation.gestures.awaitFirstDown(requireUnconsumed = false)
+                awaitEachGesture {
+                    awaitFirstDown(requireUnconsumed = false)
                     do {
                         val event = awaitPointerEvent()
                         if (event.changes.size >= 2 || scale > 1f) {
