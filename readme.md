@@ -30,15 +30,14 @@ plugin SDK for third-party search/weather/calendar providers. See the
 - Dialer with T9 predictive search (Latin, Greek and Cyrillic alphabets, accent-insensitive Greek
   matching), dialpad memory, voicemail key, one-tap speed dial, DTMF tones and haptics
 - MMI / USSD / secret codes (`*#06#`, `*21*...#`) are passed to the network unchanged
-- Recents with swipe to call or message, filters (missed, incoming, outgoing, rejected, talk time),
+- Recents (newest 100 calls) with swipe right to send a text and swipe left to delete an entry, filters (missed, incoming, outgoing, rejected, talk time),
   grouping of repeated calls, call log export
 - Contact page with call history, per-app chat, voice and video buttons (WhatsApp, Telegram, Signal,
   Viber), SIM choice, notes, copy number, call reminder, QR code, speed dial and ringtone per contact
-- Contacts and favorites with A-Z index, contact groups, duplicate finder, vCard import and export,
+- Contacts and favorites with A-Z index, contact groups, duplicate finder, vCard import and sharing as text,
   QR code sharing, per-contact default number and default SIM
 - Dual-SIM routing: per-call SIM choice, per-number default SIM, last-used SIM
-- SIM badges in call history with configurable colors for SIM 1 and SIM 2, number type labels
-  (Mobile, Home, Work), favorites toggle on the contact page, filters shown on demand
+- SIM badges in call history with configurable colors for SIM 1 and SIM 2, favorites toggle on the contact page, filters shown on demand
 - Outgoing caller ID masking (CLIR) with emergency-number bypass
 - Offline call screening: block hidden, unknown or international numbers and a personal block list
 - Call recording with Shizuku, root or microphone backends, quality presets, auto-record and
@@ -50,8 +49,8 @@ plugin SDK for third-party search/weather/calendar providers. See the
 - Privacy: hidden contacts behind a dialpad passcode, stealth settings menu, biometric phone-app
   lock, biometric protection for chosen numbers, secure call screen (no screenshots)
 - Call recordings are stored encrypted with a key in the Android Keystore; the vault PIN is hashed
-  with PBKDF2 and guesses are slowed down after five wrong ones; settings backups leave out
-  passwords, keys and hidden contacts
+  with PBKDF2 and guesses are slowed down after five wrong ones; the launcher-wide settings backup leaves out
+  passwords, keys and hidden contacts (the separate Phone backup is encrypted but contains them)
 - Smart gestures: raise to answer, flip to decline, rain mode shake gesture, pocket mode,
   proximity speaker, volume-button Do Not Disturb shortcut
 - Auto redial, fake incoming calls (scheduled), missed-call and post-call popups, Dynamic Island
@@ -144,7 +143,7 @@ plugin SDK for third-party search/weather/calendar providers. See the
 
 **Apps and system (`:services:freeze`, `:services:app-management`, `:services:store`)**
 
-- Smart Freeze: freeze or hide apps through Shizuku, Dhizuku or device owner, with protection for
+- Smart Freeze: freeze or hide apps through Shizuku, root, device owner or Island (a Dhizuku backend exists but is incomplete), with protection for
   critical apps, multi-user targeting and a Work Profile sandbox
 - Telos Store (the features of [Obtainium](https://github.com/ImranR98/Obtainium)):
   - sources: GitHub, GitLab (also self-hosted), Codeberg / Forgejo / Gitea, F-Droid, IzzyOnDroid and
