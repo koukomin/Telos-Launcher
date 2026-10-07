@@ -471,7 +471,7 @@ connected to anything you can switch on.
 | Search in an app (quick action) | <Badge type="warning" text="experimental" /> Marked experimental in the user guide. Depends on the target app |
 | App recommendations | <Badge type="warning" text="experimental" /> Fixed editorial list, affiliate-style card, off with one switch |
 | "Advanced search" texts (learning ranking, fuzzy initials such as "PS" for Play Store, quick settings search, contact quick actions, user shortcuts, search frozen apps) | <Badge type="danger" text="not available" /> Only text exists. No setting or code uses it. Do not expect these features |
-| Wikipedia switch | The toggle is stored and shown, but the Wikipedia search code does not check it. The **Online results** filter and the *Wikipedia* filter are the effective switches |
+| Wikipedia switch | Settings > Integrations > Wikipedia. When off, Wikipedia is not searched. The **Online results** and *Wikipedia* filters also apply |
 | Google Drive file source | <Badge type="danger" text="not available" /> A stored switch exists, but no screen offers it and there is no Drive code |
 | Separate work profile in results | A stored setting exists. Nothing reads it. The work profile and private space always appear as tabs in the empty-search grid |
 | Wikipedia images, position on map | Stored settings with no switch and no effect |
