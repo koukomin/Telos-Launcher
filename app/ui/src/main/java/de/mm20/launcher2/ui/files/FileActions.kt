@@ -68,6 +68,14 @@ internal object FileActions {
             }
             else -> {
                 val uri = uriFor(context, entry.path, rootMode) ?: run { toast("Cannot open this file"); return }
+                // documents open in Telos Photos
+                if (de.mm20.launcher2.ui.media.docs.DocumentTypes.supports(entry.name)) {
+                    context.startActivity(
+                        Intent(context, de.mm20.launcher2.ui.media.docs.DocumentViewerActivity::class.java)
+                            .setDataAndType(uri, mimeOf(entry.name)).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    )
+                    return
+                }
                 val view = Intent(Intent.ACTION_VIEW).setDataAndType(uri, mimeOf(entry.name))
                     .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 runCatching { context.startActivity(Intent.createChooser(view, entry.name).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
