@@ -186,9 +186,11 @@ object TorrentStreamer {
         val ss = ServerSocket(0, 8, InetAddress.getByName("127.0.0.1"))
         server = ss
         ioPool.execute {
-            while (!closed && !ss.isClosed) {
-                val socket = try { ss.accept() } catch (e: Exception) { break }
-                ioPool.execute { runCatching { serve(socket) } }
+            de.mm20.launcher2.base.contained("torrent server") {
+                while (!closed && !ss.isClosed) {
+                    val socket = try { ss.accept() } catch (e: Exception) { break }
+                    ioPool.execute { runCatching { serve(socket) } }
+                }
             }
         }
         return ss.localPort

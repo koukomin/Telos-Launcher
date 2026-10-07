@@ -1,5 +1,6 @@
 package de.mm20.launcher2.comms.telephony
 
+import de.mm20.launcher2.base.containedScope
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -16,7 +17,7 @@ import org.koin.core.component.inject
 
 object AutoRedial : KoinComponent {
     private val commsSettings: CommsSettings by inject()
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    private val scope = containedScope(Dispatchers.Main.immediate)
     private val handler = Handler(Looper.getMainLooper())
     private var remaining = 0
     private var lastNumber = ""

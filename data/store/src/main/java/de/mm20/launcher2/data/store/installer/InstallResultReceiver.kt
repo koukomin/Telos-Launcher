@@ -1,5 +1,6 @@
 package de.mm20.launcher2.data.store.installer
 
+import de.mm20.launcher2.base.containedScope
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -39,7 +40,7 @@ class InstallResultReceiver : BroadcastReceiver() {
         // receiver (and the process) alive long enough for it to finish.
         val pendingResult = goAsync()
         val appContext = context.applicationContext
-        CoroutineScope(Dispatchers.IO).launch {
+        containedScope(Dispatchers.IO).launch {
             try {
                 val versionCode = resolveInstalledVersionCode(appContext, packageName)
                 AppDatabase.getInstance(appContext).storeItemDao()

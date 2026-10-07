@@ -1,6 +1,7 @@
 // === TELOS_PENDING_REVIEW_START: telephony_encryption_suite ===
 package de.mm20.launcher2.comms.telephony
 
+import de.mm20.launcher2.base.containedScope
 import android.net.Uri
 import android.telecom.Call
 import android.telecom.CallScreeningService
@@ -22,7 +23,7 @@ class TelosCallScreeningService : CallScreeningService(), KoinComponent {
     private val commsSettings: CommsSettings by inject()
     private val spamRepository: SpamRepository by inject()
     private val contacts: ContactDirectoryRepository by inject()
-    private val scope = CoroutineScope(Job() + Dispatchers.IO)
+    private val scope = containedScope(Dispatchers.IO)
 
 
     override fun onScreenCall(callDetails: Call.Details) {
