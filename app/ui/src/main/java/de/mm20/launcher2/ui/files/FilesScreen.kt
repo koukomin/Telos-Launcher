@@ -153,9 +153,12 @@ fun FilesScreen() {
     val onOpenEntry: (FsEntry) -> Unit = { entry ->
         when {
             vm.selection.isNotEmpty() -> vm.toggleSelected(entry)
+            entry.isDir && !RemotePath.isRemote(entry.path) && !ArchivePath.isArchive(entry.path) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(entry.path) &&
+                de.mm20.launcher2.ui.files.vault.VaultPath.isVaultFolder(java.io.File(entry.path)) ->
+                if (de.mm20.launcher2.ui.files.vault.VaultSessions.isUnlocked(entry.path)) vm.open(de.mm20.launcher2.ui.files.vault.VaultPath.build(entry.path, "/")) else dialog = FilesDialog.Unlock(entry)
             entry.isDir -> vm.open(entry.path)
             ArchivePath.canOpen(entry.name) && !RemotePath.isRemote(entry.path) && !ArchivePath.isArchive(entry.path) -> dialog = FilesDialog.Archive(entry)
-            (RemotePath.isRemote(entry.path) || ArchivePath.isArchive(entry.path)) -> vm.download(entry) { file ->
+            (RemotePath.isRemote(entry.path) || ArchivePath.isArchive(entry.path) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(entry.path)) -> vm.download(entry) { file ->
                 FileActions.open(context, FsEntry(file.path, file.name, false, file.length(), file.lastModified()), emptyList(), false)
             }
             else -> FileActions.open(context, entry, vm.entries, vm.rootMode)
@@ -201,7 +204,7 @@ fun FilesScreen() {
                             onClose = { searching = false; vm.clearSearch() },
                         )
                         else -> TopAppBar(
-                            title = { Text(vm.path?.let { vm.connectionName(it)?.takeIf { _ -> RemotePath.isRoot(it) } ?: if (ArchivePath.isRoot(it)) nameOf(ArchivePath.archiveOf(it)) else nameOf(it) } ?: "Telos Files", maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                            title = { Text(vm.path?.let { vm.connectionName(it)?.takeIf { _ -> RemotePath.isRoot(it) } ?: if (ArchivePath.isRoot(it)) nameOf(ArchivePath.archiveOf(it)) else if (de.mm20.launcher2.ui.files.vault.VaultPath.isRoot(it)) nameOf(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(it)) else nameOf(it) } ?: "Telos Files", maxLines = 1, overflow = TextOverflow.Ellipsis) },
                             navigationIcon = {
                                 IconButton(onClick = { scope.launch { drawer.open() } }) {
                                     Icon(painterResource(Icons.storage_24px), contentDescription = "Storage")
@@ -219,6 +222,9 @@ fun FilesScreen() {
                                         DropdownMenuItem(text = { Text(if (vm.grid) "List view" else "Grid view") }, onClick = { menuOpen = false; vm.toggleGrid() })
                                         DropdownMenuItem(text = { Text("Sort by…") }, onClick = { menuOpen = false; dialog = FilesDialog.Sort })
                                         DropdownMenuItem(text = { Text(if (vm.showHidden) "Hide hidden files" else "Show hidden files") }, onClick = { menuOpen = false; vm.toggleHidden() })
+                                        vm.path?.takeIf { de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it) }?.let { vp ->
+                                            DropdownMenuItem(text = { Text("Lock vault") }, onClick = { menuOpen = false; vm.lockVault(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(vp)) })
+                                        }
                                         DropdownMenuItem(text = { Text("Refresh") }, onClick = { menuOpen = false; vm.reload(); vm.refreshVolumes() })
                                         vm.path?.let { p ->
                                             DropdownMenuItem(
@@ -310,6 +316,7 @@ private sealed interface FilesDialog {
     data class Compress(val entries: List<FsEntry>) : FilesDialog
     data class Properties(val entry: FsEntry) : FilesDialog
     data class Archive(val entry: FsEntry) : FilesDialog
+    data class Unlock(val entry: FsEntry) : FilesDialog
 }
 
 @Composable
@@ -356,6 +363,7 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
                 }
             },
         )
+        is FilesDialog.Unlock -> UnlockVaultDialog(vm, dialog.entry, onDismiss)
         is FilesDialog.Properties -> PropertiesDialog(vm, dialog.entry, onDismiss)
     }
 }
@@ -555,14 +563,15 @@ private fun SearchBar(query: String, onQuery: (String) -> Unit, onClose: () -> U
 private fun Breadcrumbs(vm: FilesViewModel, onGo: (String?) -> Unit) {
     val p = vm.path ?: return
     val inArchive = ArchivePath.isArchive(p)
+    val inVault = de.mm20.launcher2.ui.files.vault.VaultPath.isVault(p)
     val remote = RemotePath.isRemote(p)
-    val volume = if (!vm.rootMode && !remote && !inArchive) vm.volumes.firstOrNull { p == it.path || p.startsWith(it.path + "/") } else null
-    val base = if (remote) "rem://" + RemotePath.idOf(p) else if (inArchive) ArchivePath.build(ArchivePath.archiveOf(p), "/").trimEnd('/') else volume?.path ?: "/"
+    val volume = if (!vm.rootMode && !remote && !inArchive && !inVault) vm.volumes.firstOrNull { p == it.path || p.startsWith(it.path + "/") } else null
+    val base = if (remote) "rem://" + RemotePath.idOf(p) else if (inArchive) ArchivePath.build(ArchivePath.archiveOf(p), "/").trimEnd('/') else if (inVault) de.mm20.launcher2.ui.files.vault.VaultPath.build(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(p), "/").trimEnd('/') else volume?.path ?: "/"
     val crumbs = buildList<Pair<String, String?>> {
         add("Home" to null)
-        add((if (remote) vm.connectionName(p) ?: "Storage" else if (inArchive) nameOf(ArchivePath.archiveOf(p)) else volume?.name?.substringBefore(" (") ?: "/") to base)
+        add((if (remote) vm.connectionName(p) ?: "Storage" else if (inArchive) nameOf(ArchivePath.archiveOf(p)) else if (inVault) nameOf(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(p)) else volume?.name?.substringBefore(" (") ?: "/") to base)
         var acc = base
-        val rest = if (remote) RemotePath.innerOf(p) else if (inArchive) ArchivePath.innerOf(p) else p.removePrefix(base)
+        val rest = if (remote) RemotePath.innerOf(p) else if (inArchive) ArchivePath.innerOf(p) else if (inVault) de.mm20.launcher2.ui.files.vault.VaultPath.innerOf(p) else p.removePrefix(base)
         rest.trim('/').split('/').filter { it.isNotEmpty() }.forEach { seg -> acc = joinPath(acc, seg); add(seg to acc) }
     }
     val scroll = rememberScrollState()
@@ -853,7 +862,7 @@ private fun FileRow(e: FsEntry, selected: Boolean, rootMode: Boolean, onClick: (
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        TypeTile(e.kind, if (e.kind == FileKind.Image && e.extension != "svg" && !RemotePath.isRemote(e.path) && !ArchivePath.isArchive(e.path)) e.path else null, selected)
+        TypeTile(e.kind, if (e.kind == FileKind.Image && e.extension != "svg" && !RemotePath.isRemote(e.path) && !ArchivePath.isArchive(e.path) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(e.path)) e.path else null, selected)
         Column(Modifier.padding(start = 14.dp).weight(1f)) {
             Text(e.name, maxLines = 1, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.bodyLarge)
             val detail = listOfNotNull(
@@ -877,8 +886,38 @@ private fun GridCell(e: FsEntry, selected: Boolean, onClick: () -> Unit, onLongC
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(Modifier.fillMaxWidth().aspectRatio(1f), contentAlignment = Alignment.Center) {
-            TypeTile(e.kind, if (e.kind == FileKind.Image && e.extension != "svg" && !RemotePath.isRemote(e.path) && !ArchivePath.isArchive(e.path)) e.path else null, selected, 72.dp)
+            TypeTile(e.kind, if (e.kind == FileKind.Image && e.extension != "svg" && !RemotePath.isRemote(e.path) && !ArchivePath.isArchive(e.path) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(e.path)) e.path else null, selected, 72.dp)
         }
         Text(e.name, maxLines = 2, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(top = 6.dp))
     }
+}
+
+
+@Composable
+private fun UnlockVaultDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () -> Unit) {
+    var password by remember { mutableStateOf("") }
+    var error by remember { mutableStateOf<String?>(null) }
+    var busy by remember { mutableStateOf(false) }
+    AlertDialog(
+        onDismissRequest = { if (!busy) onDismiss() },
+        title = { Text("Unlock vault") },
+        text = {
+            Column {
+                Text("${entry.name} is a Cryptomator vault (read only, experimental). The password is only used to unlock it and is not stored.")
+                OutlinedTextField(
+                    password, { password = it; error = null }, label = { Text("Password") }, singleLine = true,
+                    visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
+                    isError = error != null, supportingText = error?.let { { Text(it) } },
+                    modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(enabled = password.isNotEmpty() && !busy, onClick = {
+                busy = true
+                vm.unlockVault(entry.path, password, onError = { error = it; busy = false }) { busy = false; onDismiss() }
+            }) { Text(if (busy) "Unlocking…" else "Unlock") }
+        },
+        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text("Cancel") } },
+    )
 }

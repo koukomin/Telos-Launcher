@@ -77,6 +77,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     private fun fsFor(p: String): Fs = when {
         RemotePath.isRemote(p) -> RemoteRegistry.fs(context, RemotePath.idOf(p))
         ArchivePath.isArchive(p) -> ArchiveFs.of(ArchivePath.archiveOf(p))
+        de.mm20.launcher2.ui.files.vault.VaultPath.isVault(p) -> de.mm20.launcher2.ui.files.vault.CryptomatorFs.of(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(p))
         rootMode -> root
         else -> local
     }
@@ -156,6 +157,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val parent = when {
             RemotePath.isRemote(current) -> if (RemotePath.isRoot(current)) null else parentOf(current)
             ArchivePath.isArchive(current) -> if (ArchivePath.isRoot(current)) parentOf(ArchivePath.archiveOf(current)) else ArchivePath.build(ArchivePath.archiveOf(current), parentOf(ArchivePath.innerOf(current)) ?: "/")
+            de.mm20.launcher2.ui.files.vault.VaultPath.isVault(current) -> if (de.mm20.launcher2.ui.files.vault.VaultPath.isRoot(current)) parentOf(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(current)) else de.mm20.launcher2.ui.files.vault.VaultPath.build(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(current), parentOf(de.mm20.launcher2.ui.files.vault.VaultPath.innerOf(current)) ?: "/")
             isVolumeRoot -> null
             else -> parentOf(current)
         }
@@ -360,6 +362,23 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         FsOps.copyAcross(src, srcPath, dir, dst, dstPath, cancel, progress)
         if (move) src.delete(srcPath)
         return true
+    }
+
+    /** Unlocks a Cryptomator vault (the key derivation is slow on purpose, so it runs off the main thread) and opens it. */
+    fun unlockVault(vault: String, password: String, onError: (String) -> Unit, onDone: () -> Unit) {
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) { runCatching { de.mm20.launcher2.ui.files.vault.VaultSessions.unlock(vault, password) } }
+            result.onSuccess { onDone(); open(de.mm20.launcher2.ui.files.vault.VaultPath.build(vault, "/")) }.onFailure {
+                onError(if (it is de.mm20.launcher2.ui.files.vault.WrongPasswordException) "Wrong password" else it.message ?: "Could not open the vault")
+            }
+        }
+    }
+
+    /** Forgets the key and removes the decrypted files that were opened from the vault. */
+    fun lockVault(vault: String) {
+        de.mm20.launcher2.ui.files.vault.VaultSessions.lock(vault)
+        File(context.cacheDir, "remote_open").deleteRecursively()
+        open(parentOf(vault))
     }
 
     /** Fetches a file from a remote storage into the cache, then calls [then] on the main thread with the local file. */

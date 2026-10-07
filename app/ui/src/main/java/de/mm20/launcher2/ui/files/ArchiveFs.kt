@@ -36,6 +36,7 @@ private class ArchiveItem(val path: String, val isDir: Boolean, val size: Long, 
 /** An archive file shown as a read-only folder: zip, jar, apk, 7z, tar and compressed tar. */
 class ArchiveFs(private val archive: File) : Fs {
     override val isRoot = false
+    override val isRemote = true // copied by streaming, never as plain files
 
     private val items: List<ArchiveItem> by lazy { index() }
 
