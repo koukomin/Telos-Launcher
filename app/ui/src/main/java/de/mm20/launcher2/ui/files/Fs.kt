@@ -27,6 +27,10 @@ interface Fs {
     fun exists(path: String): Boolean
     /** Size of a file or of everything in a folder */
     fun totalSize(path: String): Long
+    /** True for storages on another device or on the internet */
+    val isRemote: Boolean get() = false
+    fun openRead(path: String): java.io.InputStream = throw UnsupportedOperationException("Reading is not supported here")
+    fun openWrite(path: String): java.io.OutputStream = throw UnsupportedOperationException("Writing is not supported here")
 }
 
 /** A name that does not exist in [dir] yet: "photo.jpg", "photo (1).jpg", ... */
@@ -85,6 +89,8 @@ class LocalFs : Fs {
     override fun chmod(path: String, mode: String) = false
     override fun exists(path: String) = File(path).exists()
     override fun totalSize(path: String): Long = File(path).walkTopDown().filter { it.isFile }.sumOf { it.length() }
+    override fun openRead(path: String): java.io.InputStream = File(path).inputStream()
+    override fun openWrite(path: String): java.io.OutputStream = File(path).outputStream()
 }
 
 class ShellResult(val code: Int, val out: String, val err: String) { val ok get() = code == 0 }
@@ -162,6 +168,14 @@ class RootFs : Fs {
     override fun totalSize(path: String): Long =
         RootShell.run("du -sk ${RootShell.q(path)}").out.trim().substringBefore('\t').substringBefore(' ').toLongOrNull()?.times(1024) ?: -1
 
+    override fun openRead(path: String): java.io.InputStream {
+        // the superuser's cat streams the file without copying it first
+        val process = ProcessBuilder("su", "-c", "cat ${RootShell.q(path)}").start()
+        return object : java.io.FilterInputStream(process.inputStream) {
+            override fun close() { super.close(); process.destroy() }
+        }
+    }
+
     /** Mounts a partition (such as /system) writable or read-only again. Many devices refuse this. */
     fun remount(mountPoint: String, writable: Boolean) =
         ok("mount -o remount,${if (writable) "rw" else "ro"} ${RootShell.q(mountPoint)}")
@@ -192,6 +206,30 @@ object FsOps {
                 }
             }
             dst.setLastModified(src.lastModified())
+        }
+    }
+
+    /** Copies a file or folder from one file system to another, through the phone. */
+    fun copyAcross(src: Fs, srcPath: String, srcIsDir: Boolean, dst: Fs, dstPath: String, cancel: CancelFlag, progress: (Long) -> Unit) {
+        if (cancel.cancelled) throw IOException("Cancelled")
+        if (srcIsDir) {
+            dst.mkdir(parentOf(dstPath) ?: "/", nameOf(dstPath))
+            for (child in src.list(srcPath)) {
+                copyAcross(src, child.path, child.isDir, dst, joinPath(dstPath, child.name), cancel, progress)
+            }
+        } else {
+            src.openRead(srcPath).use { input ->
+                dst.openWrite(dstPath).use { output ->
+                    val buffer = ByteArray(128 * 1024)
+                    while (true) {
+                        if (cancel.cancelled) throw IOException("Cancelled")
+                        val n = input.read(buffer)
+                        if (n < 0) break
+                        output.write(buffer, 0, n)
+                        progress(n.toLong())
+                    }
+                }
+            }
         }
     }
 

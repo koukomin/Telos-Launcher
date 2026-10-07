@@ -261,6 +261,9 @@ class SettingsActivity : BaseActivity() {
                 CommsDashboardScreen(it.initialTab, it.initialNumber, it.initialBody, it.initialAttachments)
                 // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
             }
+            entry<de.mm20.launcher2.ui.files.remote.ConnectionsRoute> {
+                de.mm20.launcher2.ui.files.remote.ConnectionsScreen()
+            }
             entry<de.mm20.launcher2.ui.files.FilesRoute> {
                 de.mm20.launcher2.ui.files.FilesScreen()
             }

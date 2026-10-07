@@ -22,6 +22,10 @@ android {
         resources.excludes.add("META-INF/ASL2.0")
         resources.excludes.add("META-INF/LICENSE.md")
         resources.excludes.add("META-INF/NOTICE.md")
+        resources.excludes.add("META-INF/versions/**")
+        resources.excludes.add("META-INF/INDEX.LIST")
+        resources.excludes.add("META-INF/DEPENDENCIES.txt")
+        resources.excludes.add("META-INF/LICENSE.txt")
     }
 
     compileSdk {

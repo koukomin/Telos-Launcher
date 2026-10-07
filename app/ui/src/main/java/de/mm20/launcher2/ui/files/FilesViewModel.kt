@@ -13,6 +13,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import de.mm20.launcher2.ui.files.remote.ConnectionStore
+import de.mm20.launcher2.ui.files.remote.RemoteConnection
+import de.mm20.launcher2.ui.files.remote.RemotePath
+import de.mm20.launcher2.ui.files.remote.RemoteRegistry
 import java.io.File
 
 /** A storage volume: the phone's own storage, an SD card, a USB drive. */
@@ -70,10 +74,26 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     var volumes by mutableStateOf<List<StorageVolume>>(emptyList())
         private set
 
-    private val fs: Fs get() = if (rootMode) root else local
+    private fun fsFor(p: String): Fs = when {
+        RemotePath.isRemote(p) -> RemoteRegistry.fs(context, RemotePath.idOf(p))
+        rootMode -> root
+        else -> local
+    }
+
+    private val fs: Fs get() = fsFor(path ?: "/")
+
+    /** The saved network and cloud storages */
+    var connections by mutableStateOf<List<RemoteConnection>>(emptyList())
+        private set
+
+    fun reloadConnections() { connections = ConnectionStore(context).all().sortedBy { it.name.lowercase() } }
+
+    fun connectionName(p: String): String? =
+        if (RemotePath.isRemote(p)) connections.firstOrNull { it.id == RemotePath.idOf(p) }?.name else null
 
     init {
         refreshVolumes()
+        reloadConnections()
     }
 
     private fun loadSort(): SortSpec = SortSpec(
@@ -132,7 +152,11 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         if (selection.isNotEmpty()) { selection = emptySet(); return true }
         val current = path ?: return false
         val isVolumeRoot = !rootMode && volumes.any { it.path == current }
-        val parent = if (isVolumeRoot) null else parentOf(current)
+        val parent = when {
+            RemotePath.isRemote(current) -> if (RemotePath.isRoot(current)) null else parentOf(current)
+            isVolumeRoot -> null
+            else -> parentOf(current)
+        }
         open(parent)
         return true
     }
@@ -167,6 +191,11 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         searchJob?.cancel()
         val dir = path
         if (text.isBlank() || dir == null) { searchResults = null; return }
+        if (RemotePath.isRemote(dir)) {
+            // a server cannot be searched quickly: filter what is shown
+            searchResults = entries.filter { it.name.contains(text, ignoreCase = true) }
+            return
+        }
         searchJob = viewModelScope.launch {
             val found = withContext(Dispatchers.IO) {
                 if (rootMode) {
@@ -292,28 +321,71 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     fun paste() {
         val clip = clipboard ?: return
         val dir = path ?: return
-        val useRoot = rootMode || clip.rootMode
-        val target: Fs = if (useRoot) root else local
-        val total = if (useRoot) null else clip.paths.sumOf { FsOps.sizeOf(File(it)) }
+        val dstFs = fsFor(dir)
+        val srcFs = fsFor(clip.paths.first())
+        val bothLocal = !dstFs.isRemote && !srcFs.isRemote && !(rootMode || clip.rootMode)
+        val total = if (bothLocal) clip.paths.sumOf { FsOps.sizeOf(File(it)) } else null
+        val infoByPath = (searchResults ?: entries).associateBy { it.path }
         runTask(if (clip.cut) "Moving" else "Copying", total) { cancel, progress ->
             var failed = 0
             for (src in clip.paths) {
                 if (cancel.cancelled) break
                 if (dir == src || dir.startsWith(src.trimEnd('/') + "/")) { failed++; continue } // not into itself
-                val name = target.freeName(dir, nameOf(src))
+                val name = dstFs.freeName(dir, nameOf(src))
                 val ok = when {
-                    useRoot -> if (clip.cut) target.move(src, dir, name) else target.copy(src, dir, name)
-                    clip.cut && File(src).renameTo(File(dir, name)) -> true
-                    else -> runCatching {
+                    bothLocal -> if (clip.cut && File(src).renameTo(File(dir, name))) true else runCatching {
                         FsOps.copyTree(File(src), File(dir, name), cancel, progress)
                         if (clip.cut) File(src).deleteRecursively()
                         true
                     }.getOrDefault(false)
+                    // the same machine can copy or move by itself
+                    srcFs === dstFs || (srcFs.isRoot && dstFs.isRoot) || (srcFs.isRemote && dstFs.isRemote && RemotePath.idOf(src) == RemotePath.idOf(dir)) -> {
+                        val native = if (clip.cut) dstFs.move(src, dir, name) else dstFs.copy(src, dir, name)
+                        native || runCatching { across(srcFs, src, infoByPath[src]?.isDir, dstFs, joinPath(dir, name), cancel, progress, clip.cut) }.getOrDefault(false)
+                    }
+                    else -> runCatching { across(srcFs, src, infoByPath[src]?.isDir, dstFs, joinPath(dir, name), cancel, progress, clip.cut) }.getOrDefault(false)
                 }
                 if (!ok) failed++
             }
             if (clip.cut) clipboard = null
             if (failed == 0) "Done" else "$failed could not be ${if (clip.cut) "moved" else "copied"}"
+        }
+    }
+
+    /** Copies through the phone, and removes the original for a move. */
+    private fun across(src: Fs, srcPath: String, isDir: Boolean?, dst: Fs, dstPath: String, cancel: CancelFlag, progress: (Long) -> Unit, move: Boolean): Boolean {
+        val dir = isDir ?: runCatching { src.list(srcPath); true }.getOrDefault(false)
+        FsOps.copyAcross(src, srcPath, dir, dst, dstPath, cancel, progress)
+        if (move) src.delete(srcPath)
+        return true
+    }
+
+    /** Fetches a file from a remote storage into the cache, then calls [then] on the main thread with the local file. */
+    fun download(entry: FsEntry, then: (File) -> Unit) {
+        val target = File(File(context.cacheDir, "remote_open").apply { mkdirs() }, entry.name)
+        val cancel = CancelFlag()
+        task = TaskState("Downloading", if (entry.size > 0) 0f else null, cancel)
+        viewModelScope.launch {
+            val done = java.util.concurrent.atomic.AtomicLong()
+            val result = withContext(Dispatchers.IO) {
+                runCatching {
+                    fsFor(entry.path).openRead(entry.path).use { input ->
+                        target.outputStream().use { output ->
+                            val buffer = ByteArray(128 * 1024)
+                            while (true) {
+                                if (cancel.cancelled) throw java.io.IOException("Cancelled")
+                                val n = input.read(buffer)
+                                if (n < 0) break
+                                output.write(buffer, 0, n)
+                                val sum = done.addAndGet(n.toLong())
+                                if (entry.size > 0) task = task?.copy(progress = (sum.toFloat() / entry.size).coerceIn(0f, 1f))
+                            }
+                        }
+                    }
+                }
+            }
+            task = null
+            result.onSuccess { then(target) }.onFailure { message = if (cancel.cancelled) "Cancelled" else it.message ?: "Download failed" }
         }
     }
 

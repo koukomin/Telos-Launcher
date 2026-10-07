@@ -89,6 +89,8 @@ import coil.compose.AsyncImage
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
+import de.mm20.launcher2.ui.files.remote.ConnectionsRoute
+import de.mm20.launcher2.ui.files.remote.RemotePath
 import java.io.File
 
 @Serializable
@@ -114,7 +116,7 @@ fun FilesScreen() {
     val scope = rememberCoroutineScope()
 
     var hasAccess by remember { mutableStateOf(hasAllFilesAccess(context)) }
-    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { hasAccess = hasAllFilesAccess(context); vm.refreshVolumes() }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { hasAccess = hasAllFilesAccess(context); vm.refreshVolumes(); vm.reloadConnections() }
     val legacyPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { hasAccess = hasAllFilesAccess(context) }
 
     if (!hasAccess) {
@@ -153,6 +155,9 @@ fun FilesScreen() {
             vm.selection.isNotEmpty() -> vm.toggleSelected(entry)
             entry.isDir -> vm.open(entry.path)
             entry.kind == FileKind.Archive && entry.extension == "zip" -> dialog = FilesDialog.Archive(entry)
+            RemotePath.isRemote(entry.path) -> vm.download(entry) { file ->
+                FileActions.open(context, FsEntry(file.path, file.name, false, file.length(), file.lastModified()), emptyList(), false)
+            }
             else -> FileActions.open(context, entry, vm.entries, vm.rootMode)
         }
     }
@@ -165,6 +170,7 @@ fun FilesScreen() {
                     vm = vm,
                     onGo = { target -> vm.open(target); scope.launch { drawer.close() } },
                     onRoot = { scope.launch { drawer.close() }; if (vm.rootMode) vm.disableRoot() else dialog = FilesDialog.EnableRoot },
+                    onManage = { scope.launch { drawer.close() }; backStack.add(ConnectionsRoute) },
                 )
             }
         },
@@ -195,7 +201,7 @@ fun FilesScreen() {
                             onClose = { searching = false; vm.clearSearch() },
                         )
                         else -> TopAppBar(
-                            title = { Text(vm.path?.let { nameOf(it) } ?: "Telos Files", maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                            title = { Text(vm.path?.let { vm.connectionName(it)?.takeIf { _ -> RemotePath.isRoot(it) } ?: nameOf(it) } ?: "Telos Files", maxLines = 1, overflow = TextOverflow.Ellipsis) },
                             navigationIcon = {
                                 IconButton(onClick = { scope.launch { drawer.open() } }) {
                                     Icon(painterResource(Icons.storage_24px), contentDescription = "Storage")
@@ -548,13 +554,15 @@ private fun SearchBar(query: String, onQuery: (String) -> Unit, onClose: () -> U
 @Composable
 private fun Breadcrumbs(vm: FilesViewModel, onGo: (String?) -> Unit) {
     val p = vm.path ?: return
-    val volume = if (!vm.rootMode) vm.volumes.firstOrNull { p == it.path || p.startsWith(it.path + "/") } else null
-    val base = volume?.path ?: "/"
+    val remote = RemotePath.isRemote(p)
+    val volume = if (!vm.rootMode && !remote) vm.volumes.firstOrNull { p == it.path || p.startsWith(it.path + "/") } else null
+    val base = if (remote) "rem://" + RemotePath.idOf(p) else volume?.path ?: "/"
     val crumbs = buildList<Pair<String, String?>> {
         add("Home" to null)
-        add((volume?.name?.substringBefore(" (") ?: "/") to base)
+        add((if (remote) vm.connectionName(p) ?: "Storage" else volume?.name?.substringBefore(" (") ?: "/") to base)
         var acc = base
-        p.removePrefix(base).trim('/').split('/').filter { it.isNotEmpty() }.forEach { seg -> acc = joinPath(acc, seg); add(seg to acc) }
+        val rest = if (remote) RemotePath.innerOf(p) else p.removePrefix(base)
+        rest.trim('/').split('/').filter { it.isNotEmpty() }.forEach { seg -> acc = joinPath(acc, seg); add(seg to acc) }
     }
     val scroll = rememberScrollState()
     LaunchedEffect(p) { scroll.animateScrollTo(scroll.maxValue) }
@@ -709,6 +717,23 @@ private fun HomePage(vm: FilesViewModel) {
                 }
             }
         }
+        if (vm.connections.isNotEmpty()) {
+            item { SectionTitle("Network and cloud") }
+            items(vm.connections, key = { "c" + it.id }) { c ->
+                Row(
+                    Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).clickable { vm.open(RemotePath.build(c.id, "/")) }.padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Box(Modifier.size(44.dp).clip(RoundedCornerShape(14.dp)).background(MaterialTheme.colorScheme.tertiaryContainer), contentAlignment = Alignment.Center) {
+                        Icon(painterResource(if (c.type.cloud) Icons.cloud_20px else Icons.storage_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onTertiaryContainer)
+                    }
+                    Column(Modifier.padding(start = 12.dp)) {
+                        Text(c.name, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(c.type.label, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                }
+            }
+        }
         item { SectionTitle("Tools") }
         item {
             Card(
@@ -756,7 +781,7 @@ private fun StorageCard(v: StorageVolume, onClick: () -> Unit) {
 }
 
 @Composable
-private fun StorageDrawer(vm: FilesViewModel, onGo: (String?) -> Unit, onRoot: () -> Unit) {
+private fun StorageDrawer(vm: FilesViewModel, onGo: (String?) -> Unit, onRoot: () -> Unit, onManage: () -> Unit) {
     Column(Modifier.verticalScroll(rememberScrollState()).padding(12.dp)) {
         Text("Telos Files", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 8.dp))
         DrawerItem(Icons.home_24px, "Home", null, vm.path == null) { onGo(null) }
@@ -768,6 +793,11 @@ private fun StorageDrawer(vm: FilesViewModel, onGo: (String?) -> Unit, onRoot: (
             Text("Favorites", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
             vm.bookmarks.forEach { b -> DrawerItem(Icons.star_24px_filled, nameOf(b), null, vm.path == b) { onGo(b) } }
         }
+        Text("Network and cloud", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
+        vm.connections.forEach { c ->
+            DrawerItem(if (c.type.cloud) Icons.cloud_20px else Icons.storage_24px, c.name, c.type.label, vm.path?.startsWith("rem://" + c.id) == true) { onGo(RemotePath.build(c.id, "/")) }
+        }
+        DrawerItem(Icons.add_24px, "Add or manage…", null, false, onManage)
         Text("Tools", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
         DrawerItem(Icons.terminal_24px, if (vm.rootMode) "Root explorer: on" else "Root explorer", if (vm.rootMode) "Tap to turn off" else "Needs a rooted phone", vm.rootMode, onRoot)
         if (vm.rootMode) {
@@ -822,7 +852,7 @@ private fun FileRow(e: FsEntry, selected: Boolean, rootMode: Boolean, onClick: (
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        TypeTile(e.kind, if (e.kind == FileKind.Image && e.extension != "svg") e.path else null, selected)
+        TypeTile(e.kind, if (e.kind == FileKind.Image && e.extension != "svg" && !RemotePath.isRemote(e.path)) e.path else null, selected)
         Column(Modifier.padding(start = 14.dp).weight(1f)) {
             Text(e.name, maxLines = 1, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.bodyLarge)
             val detail = listOfNotNull(
@@ -846,7 +876,7 @@ private fun GridCell(e: FsEntry, selected: Boolean, onClick: () -> Unit, onLongC
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(Modifier.fillMaxWidth().aspectRatio(1f), contentAlignment = Alignment.Center) {
-            TypeTile(e.kind, if (e.kind == FileKind.Image && e.extension != "svg") e.path else null, selected, 72.dp)
+            TypeTile(e.kind, if (e.kind == FileKind.Image && e.extension != "svg" && !RemotePath.isRemote(e.path)) e.path else null, selected, 72.dp)
         }
         Text(e.name, maxLines = 2, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(top = 6.dp))
     }
