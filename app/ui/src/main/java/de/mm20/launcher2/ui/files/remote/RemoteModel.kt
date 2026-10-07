@@ -17,7 +17,7 @@ enum class RemoteType(val label: String, val defaultPort: Int, val cloud: Boolea
     Nextcloud("Nextcloud", 443, false, "Server address, for example cloud.example.com"),
     Owncloud("ownCloud", 443, false, "Server address, for example cloud.example.com"),
     WebDav("WebDAV", 443, false, "Server address of any WebDAV server (also Synology, Box, Yandex, ...)"),
-    Sftp("SFTP (SSH)", 22, false, "Server address of an SSH server"),
+    Sftp("SFTP / SSHFS (SSH)", 22, false, "Server address of an SSH server. SSHFS is SFTP too, so any SSHFS server works. Log in with a password or a private key."),
     Smb("Windows / Samba share (SMB)", 445, false, "Computer name or address, and the name of the shared folder"),
     Ftp("FTP / FTPS", 21, false, "Server address of an FTP server"),
     Dropbox("Dropbox", 0, true, "Needs your own Dropbox app key"),
