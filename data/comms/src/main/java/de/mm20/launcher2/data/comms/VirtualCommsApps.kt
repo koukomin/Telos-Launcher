@@ -541,7 +541,7 @@ internal class VirtualScreenRecorderApp(context: Context) : Application {
         val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_screen_recorder_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = ColorLayer(0xFFE53935.toInt()),
+            backgroundLayer = ColorLayer(0xFFE64A19.toInt()),
         )
     }
 
