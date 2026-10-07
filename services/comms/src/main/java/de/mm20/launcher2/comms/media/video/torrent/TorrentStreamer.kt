@@ -54,10 +54,11 @@ object TorrentStreamer {
     val state: StateFlow<TorrentState> = _state
 
     private var session: SessionManager? = null
-    private var handle: TorrentHandle? = null
-    private var info: TorrentInfo? = null
-    private var saveDir: File? = null
+    @Volatile private var handle: TorrentHandle? = null
+    @Volatile private var info: TorrentInfo? = null
+    @Volatile private var saveDir: File? = null
     private var server: ServerSocket? = null
+    private val sockets = java.util.Collections.synchronizedSet(HashSet<Socket>())
     private var token = ""
     @Volatile private var closed = true
     private val lock = Any()
@@ -204,7 +205,8 @@ object TorrentStreamer {
             de.mm20.launcher2.base.contained("torrent server") {
                 while (!closed && !ss.isClosed) {
                     val socket = try { ss.accept() } catch (e: Exception) { break }
-                    ioPool.execute { runCatching { serve(socket) } }
+                    sockets.add(socket)
+                    ioPool.execute { try { serve(socket) } catch (e: Exception) { /* connection dropped */ } finally { sockets.remove(socket) } }
                 }
             }
         }
@@ -252,11 +254,16 @@ object TorrentStreamer {
             val range = headers["range"]
             if (range != null && range.startsWith("bytes=")) {
                 val (a, b) = range.removePrefix("bytes=").split("-").let { it[0] to it.getOrElse(1) { "" } }
-                if (a.isNotEmpty()) {
-                    start = a.toLong()
-                    if (b.isNotEmpty()) end = minOf(b.toLong(), size - 1)
-                } else if (b.isNotEmpty()) {
-                    start = maxOf(0, size - b.toLong())
+                try {
+                    if (a.isNotEmpty()) {
+                        start = a.toLong()
+                        if (b.isNotEmpty()) end = minOf(b.toLong(), size - 1)
+                    } else if (b.isNotEmpty()) {
+                        start = maxOf(0, size - b.toLong())
+                    }
+                } catch (e: NumberFormatException) {
+                    out.write("HTTP/1.1 400 Bad Request\r\nContent-Length: 0\r\nConnection: close\r\n\r\n".toByteArray())
+                    return
                 }
             }
             if (start >= size || start > end) {
@@ -355,6 +362,7 @@ object TorrentStreamer {
         closed = true
         runCatching { server?.close() }
         server = null
+        synchronized(sockets) { sockets.forEach { runCatching { it.close() } }; sockets.clear() }
         runCatching { session?.stop() }
         session = null
         handle = null

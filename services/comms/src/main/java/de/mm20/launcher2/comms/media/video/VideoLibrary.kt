@@ -112,6 +112,13 @@ object ResumeStore {
     private fun prefs(context: Context) = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
 
     fun save(context: Context, uri: Uri, positionMs: Long, durationMs: Long) {
+        if (de.mm20.launcher2.base.ProcessInfo.isolatedPlayer) {
+            // the main process owns the stored positions
+            PlayerBridge.send(context, PlayerBridge.ACTION_RESUME) {
+                putString("uri", uri.toString()); putLong("pos", positionMs); putLong("dur", durationMs)
+            }
+            return
+        }
         val key = uri.toString()
         prefs(context).edit()
             .putLong("p:$key", positionMs)

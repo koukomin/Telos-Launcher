@@ -92,7 +92,13 @@ object PhotoExif {
 
     /** Creates a copy without any metadata (re-encoded) in the cache and returns it. */
     fun cleanCopy(context: Context, uri: Uri): File? = runCatching {
-        val bitmap = context.contentResolver.openInputStream(uri)!!.use { BitmapFactory.decodeStream(it) }
+        // a big photo is scaled down while it is read: a 50 megapixel bitmap does not fit in memory
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        context.contentResolver.openInputStream(uri)!!.use { BitmapFactory.decodeStream(it, null, bounds) }
+        var sample = 1
+        while (maxOf(bounds.outWidth, bounds.outHeight) / sample > 4096) sample *= 2
+        val options = BitmapFactory.Options().apply { inSampleSize = sample }
+        val bitmap = context.contentResolver.openInputStream(uri)!!.use { BitmapFactory.decodeStream(it, null, options) }
             ?: return null
         val rotated = applyOrientation(context, uri, bitmap)
         val dir = File(context.cacheDir, "photos").apply { mkdirs() }

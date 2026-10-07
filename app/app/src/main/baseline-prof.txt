@@ -1,0 +1,13 @@
+# Hand-written baseline profile: the code that runs when the launcher starts and is drawn for
+# the first time. The libraries (Compose, AndroidX) ship their own profiles that AGP merges in.
+# Generate a measured profile with a Macrobenchmark module on a device to replace this one.
+HSPLde/mm20/launcher2/LauncherApplication;->**(**)**
+Lde/mm20/launcher2/LauncherApplication;
+HSPLde/mm20/launcher2/ui/launcher/**->**(**)**
+Lde/mm20/launcher2/ui/launcher/**;
+HSPLde/mm20/launcher2/ui/theme/**->**(**)**
+Lde/mm20/launcher2/ui/theme/**;
+HSPLde/mm20/launcher2/ui/base/**->**(**)**
+Lde/mm20/launcher2/ui/base/**;
+HSPLde/mm20/launcher2/preferences/**->**(**)**
+Lde/mm20/launcher2/preferences/**;

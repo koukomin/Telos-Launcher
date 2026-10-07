@@ -112,5 +112,8 @@
             </intent-filter>
         </service>
         <!-- === TELOS_PENDING_REVIEW_END: sms_and_radio_engine === -->
+        <receiver
+            android:name=".media.video.PlayerBridgeReceiver"
+            android:exported="false" />
     </application>
 </manifest>

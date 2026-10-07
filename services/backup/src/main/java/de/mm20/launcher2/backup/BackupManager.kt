@@ -117,8 +117,13 @@ class BackupManager(
         var entry = zipStream.nextEntry
         while(entry != null) {
             val file = File(outDir, entry.name)
-            file.outputStream().use {
-                zipStream.copyTo(it)
+            // a crafted backup must not write outside the folder it is unpacked into
+            val inside = file.canonicalPath.startsWith(outDir.canonicalPath + File.separator)
+            if (inside && !entry.isDirectory) {
+                file.parentFile?.mkdirs()
+                file.outputStream().use {
+                    zipStream.copyTo(it)
+                }
             }
             zipStream.closeEntry()
 

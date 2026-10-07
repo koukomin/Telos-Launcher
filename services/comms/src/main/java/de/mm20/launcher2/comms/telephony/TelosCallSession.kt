@@ -70,6 +70,7 @@ object TelosCallSession {
         if (state == Call.STATE_RINGING) {
             ringingStartedAt = System.currentTimeMillis()
             answeredThisCall = false
+            AutoRedial.onIncoming()
         } else if (number.isNotEmpty()) {
             AutoRedial.onOutgoing(number)
         }

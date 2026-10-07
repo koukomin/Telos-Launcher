@@ -36,6 +36,10 @@ android {
         versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2026053100
         versionName = "1.40.2"
         signingConfig = signingConfigs.getByName("debug")
+
+        // One APK for the phones people actually use. Without this the x86 and x86_64 builds of
+        // the FFmpeg decoders (and other libraries) end up in the APK although nothing runs them.
+        ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
     }
 
     signingConfigs {

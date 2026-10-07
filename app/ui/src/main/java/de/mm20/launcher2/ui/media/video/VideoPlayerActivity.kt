@@ -14,12 +14,12 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import de.mm20.launcher2.comms.media.video.torrent.TorrentStreamer
-import de.mm20.launcher2.ui.base.BaseActivity
+import androidx.appcompat.app.AppCompatActivity
 import de.mm20.launcher2.ui.base.ProvideCompositionLocals
 import de.mm20.launcher2.ui.theme.LauncherTheme
 
 /** Full screen video player. Also opens when another app shares or opens a video with Telos. */
-class VideoPlayerActivity : BaseActivity() {
+open class VideoPlayerActivity : AppCompatActivity() {
 
     private var isPlayingState = false
     private var inPictureInPicture by mutableStateOf(false)
@@ -77,8 +77,7 @@ class VideoPlayerActivity : BaseActivity() {
         }
 
         setContent {
-            ProvideCompositionLocals {
-                LauncherTheme {
+            Themed {
                     VideoPlayerScreen(
                         uris = uris,
                         titles = titles,
@@ -88,23 +87,43 @@ class VideoPlayerActivity : BaseActivity() {
                         onPlayingChanged = { isPlayingState = it },
                         inPictureInPicture = inPictureInPicture,
                     )
-                }
             }
         }
     }
 
+    /** True in the activity that runs in the player process, which has no launcher around it */
+    protected open val isolated: Boolean get() = false
+
+    @androidx.compose.runtime.Composable
+    protected open fun Themed(content: @androidx.compose.runtime.Composable () -> Unit) {
+        ProvideCompositionLocals { LauncherTheme { content() } }
+    }
+
     override fun onStart() {
         super.onStart()
-        de.mm20.launcher2.base.VirtualAppGuard.enter(this, "telos_video_app://video")
+        if (!isolated) de.mm20.launcher2.base.VirtualAppGuard.enter(this, "telos_video_app://video")
     }
 
     override fun onStop() {
-        de.mm20.launcher2.base.VirtualAppGuard.leave(this, "telos_video_app://video")
+        if (!isolated) de.mm20.launcher2.base.VirtualAppGuard.leave(this, "telos_video_app://video")
         super.onStop()
     }
 
     override fun onDestroy() {
         // stops a running torrent and deletes what it downloaded
+        if (isolated) {
+            // the process only exists for this player: clean up and end it, so the next start
+            // reads fresh data (and nothing stale stays in memory)
+            val finishing = isFinishing
+            super.onDestroy()
+            if (finishing) {
+                Thread {
+                    runCatching { TorrentStreamer.close() }
+                    android.os.Process.killProcess(android.os.Process.myPid())
+                }.start()
+            }
+            return
+        }
         TorrentStreamer.release(this)
         super.onDestroy()
     }

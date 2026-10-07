@@ -8,6 +8,7 @@ import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.pm.PackageManager
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
+import de.mm20.launcher2.base.ProcessInfo
 import de.mm20.launcher2.base.VirtualAppGuard
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import android.app.ActivityOptions
@@ -92,6 +93,9 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
 
     override fun onCreate() {
         super.onCreate()
+
+        // The video player's own process needs none of the launcher
+        if (ProcessInfo.init(this)) return
 
         if (BuildConfig.BUILD_TYPE == "debug") initDebugMode()
 
@@ -237,6 +241,8 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
         get<StoreUpdateScheduler>().enable()
 
         launch(Dispatchers.Default) { guardVirtualApps() }
+        // the player process reads the video settings from a file, keep it up to date
+        launch(Dispatchers.Default) { runCatching { de.mm20.launcher2.comms.media.video.VideoServices.mirror() } }
     }
 
     /**
@@ -289,7 +295,10 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
         val GUARDED = mapOf(
             "telos_radio_app://radio" to listOf("de.mm20.launcher2.comms.radio.RadioPlayerService"),
             "telos_music_app://music" to listOf("de.mm20.launcher2.comms.media.MusicPlayerService"),
-            "telos_video_app://video" to listOf("de.mm20.launcher2.ui.media.video.VideoPlayerActivity"),
+            "telos_video_app://video" to listOf(
+                "de.mm20.launcher2.ui.media.video.VideoPlayerActivity",
+                "de.mm20.launcher2.ui.media.video.IsolatedVideoPlayerActivity",
+            ),
             "telos_photos_app://photos" to listOf(
                 "de.mm20.launcher2.ui.media.photos.PhotoViewerActivity",
                 "de.mm20.launcher2.ui.media.photos.PhotoEditorActivity",

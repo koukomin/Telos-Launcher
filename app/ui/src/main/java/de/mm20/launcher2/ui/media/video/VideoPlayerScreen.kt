@@ -160,8 +160,16 @@ private fun PlayerContent(
         if (duration <= 0) return
         val progress = if (finished) 100f else player.currentPosition * 100f / duration
         val name = item.mediaMetadata.title?.toString().orEmpty()
-        val parsed = EpisodeParser.parse(cleanTitle(name) + ".x")
+        val parsedName = cleanTitle(name) + ".x"
         val appContext = context.applicationContext
+        if (de.mm20.launcher2.base.ProcessInfo.isolatedPlayer) {
+            // the Trakt login lives in the main process
+            de.mm20.launcher2.comms.media.video.PlayerBridge.send(appContext, de.mm20.launcher2.comms.media.video.PlayerBridge.ACTION_SCROBBLE) {
+                putString("action", action); putString("name", parsedName); putFloat("progress", progress)
+            }
+            return
+        }
+        val parsed = EpisodeParser.parse(parsedName)
         traktScope.launch { de.mm20.launcher2.comms.media.video.trakt.Trakt.scrobble(appContext, action, parsed, progress) }
     }
 

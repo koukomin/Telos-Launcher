@@ -37,26 +37,7 @@ fun MediaFrame(
     content: @Composable () -> Unit,
 ) {
     val backStack = LocalBackStack.current
-    if (guardKey != null) {
-        val context = androidx.compose.ui.platform.LocalContext.current
-        val lifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle
-        androidx.compose.runtime.DisposableEffect(guardKey, lifecycle) {
-            // on screen only while the activity is started, so a launcher that was sent to the
-            // background is not blamed for a later crash
-            val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
-                if (event == androidx.lifecycle.Lifecycle.Event.ON_START) de.mm20.launcher2.base.VirtualAppGuard.enter(context, guardKey)
-                if (event == androidx.lifecycle.Lifecycle.Event.ON_STOP) de.mm20.launcher2.base.VirtualAppGuard.leave(context, guardKey)
-            }
-            if (lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.STARTED)) {
-                de.mm20.launcher2.base.VirtualAppGuard.enter(context, guardKey)
-            }
-            lifecycle.addObserver(observer)
-            onDispose {
-                lifecycle.removeObserver(observer)
-                de.mm20.launcher2.base.VirtualAppGuard.leave(context, guardKey)
-            }
-        }
-    }
+    if (guardKey != null) VirtualAppGuardEffect(guardKey)
     if (askNotifications) RequestNotificationPermission()
     Scaffold(
         containerColor = MaterialTheme.colorScheme.surface,
@@ -126,6 +107,29 @@ private fun RequestNotificationPermission() {
             ) != android.content.pm.PackageManager.PERMISSION_GRANTED
         ) {
             launcher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        }
+    }
+}
+
+/** Marks [key] as the app on screen while the activity is started, for the crash guard */
+@Composable
+fun VirtualAppGuardEffect(guardKey: String) {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val lifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle
+    androidx.compose.runtime.DisposableEffect(guardKey, lifecycle) {
+        // on screen only while the activity is started, so a launcher that was sent to the
+        // background is not blamed for a later crash
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            if (event == androidx.lifecycle.Lifecycle.Event.ON_START) de.mm20.launcher2.base.VirtualAppGuard.enter(context, guardKey)
+            if (event == androidx.lifecycle.Lifecycle.Event.ON_STOP) de.mm20.launcher2.base.VirtualAppGuard.leave(context, guardKey)
+        }
+        if (lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.STARTED)) {
+            de.mm20.launcher2.base.VirtualAppGuard.enter(context, guardKey)
+        }
+        lifecycle.addObserver(observer)
+        onDispose {
+            lifecycle.removeObserver(observer)
+            de.mm20.launcher2.base.VirtualAppGuard.leave(context, guardKey)
         }
     }
 }
