@@ -611,11 +611,21 @@ data class FloatingLauncherGroup(
     val floatingLauncherMaxPerColumn: Int = 10,
     val floatingLauncherThickness: Int = 24,
     @Serializable(with = ColorIntAsHexSerializer::class)
-    val floatingLauncherColor: Int = 0xFF6750A4.toInt(),
-    val floatingLauncherAlpha: Float = 0.6f,
+    val floatingLauncherColor: Int = 0xFF9E9E9E.toInt(),
+    val floatingLauncherAlpha: Float = 0.8f,
     val floatingLauncherHideIndicator: Boolean = false,
     val floatingLauncherHapticFeedback: Boolean = true,
     val floatingLauncherAutoHideGaming: Boolean = false,
+    /** Show the app names under the icons (the Smart Sidebar's "Hide labels" turned around) */
+    val floatingLauncherShowLabels: Boolean = true,
+    /** Opacity of the panel card, [0.3f, 1f] */
+    val floatingLauncherPanelAlpha: Float = 0.85f,
+    /** Size of the icons in the panel, in dp */
+    val floatingLauncherIconSize: Int = 48,
+    /** Open tapped apps in a floating window (needs freeform windows, see Desktop mode) */
+    val floatingLauncherFloatingWindows: Boolean = true,
+    /** Row of quick tools (screenshot, calculator, quick settings) in the panel */
+    val floatingLauncherTools: Boolean = true,
 )
 
 @Serializable

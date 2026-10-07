@@ -17,6 +17,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 <a href="./phone/"><b>📞 Phone</b><span>Dialer, recents, contacts, dual SIM, call recording, screening, SIP</span></a>
 <a href="./messages/"><b>💬 Messages</b><span>SMS and MMS conversations, default SMS app, scheduled messages</span></a>
 <a href="./files/"><b>📁 Files</b><span>File manager with network and cloud storages, archives, Cryptomator</span></a>
+<a href="./calculator/"><b>🧮 Calculator</b><span>Scientific calculator, VAT, unit and currency converter, history</span></a>
 <a href="./photos/"><b>🖼️ Photos</b><span>Gallery, EXIF tools, editor and a document viewer</span></a>
 <a href="./music/"><b>🎵 Music</b><span>Local library, lyrics, scrobbling, tag editor</span></a>
 <a href="./video/"><b>🎬 Video</b><span>Library, player, web streams, torrents, subtitles, Trakt</span></a>
@@ -39,6 +40,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 | Telos Phone | Calls, recents, contacts, call recording, call screening, SIP | [Phone](./phone/) |
 | Telos Messages | Text and picture messages | [Messages](./messages/) |
 | Telos Files | Browse and manage files, also on network and cloud storages | [Files](./files/) |
+| Telos Calculator | Standard and scientific calculator, VAT, converters | [Calculator](./calculator/) |
 | Telos Photos | Gallery, photo editor, document viewer | [Photos](./photos/) |
 | Telos Music | Player for the music on the phone | [Music](./music/) |
 | Telos Video | Video library and player, streams and torrents | [Video](./video/) |

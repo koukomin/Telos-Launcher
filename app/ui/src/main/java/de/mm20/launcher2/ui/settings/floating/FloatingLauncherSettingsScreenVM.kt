@@ -53,6 +53,21 @@ class FloatingLauncherSettingsScreenVM(
     val autoHideGaming = floatingLauncherSettings.autoHideGaming
     fun setAutoHideGaming(enabled: Boolean) = floatingLauncherSettings.setAutoHideGaming(enabled)
 
+    val showLabels = floatingLauncherSettings.showLabels
+    fun setShowLabels(show: Boolean) = floatingLauncherSettings.setShowLabels(show)
+
+    val panelAlpha = floatingLauncherSettings.panelAlpha
+    fun setPanelAlpha(alpha: Float) = floatingLauncherSettings.setPanelAlpha(alpha)
+
+    val iconSize = floatingLauncherSettings.iconSize
+    fun setIconSize(size: Int) = floatingLauncherSettings.setIconSize(size)
+
+    val floatingWindows = floatingLauncherSettings.floatingWindows
+    fun setFloatingWindows(enabled: Boolean) = floatingLauncherSettings.setFloatingWindows(enabled)
+
+    val tools = floatingLauncherSettings.tools
+    fun setTools(enabled: Boolean) = floatingLauncherSettings.setTools(enabled)
+
     companion object : KoinComponent {
         val Factory = viewModelFactory {
             initializer {

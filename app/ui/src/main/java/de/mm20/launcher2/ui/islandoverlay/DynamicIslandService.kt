@@ -142,7 +142,9 @@ class DynamicIslandService : Service(), SavedStateRegistryOwner {
         val wm = getSystemService(WINDOW_SERVICE) as WindowManager
         windowManager = wm
 
-        val view = ComposeView(this).apply {
+        // The icons use theme attributes, which a Service does not have (see FloatingLauncherService)
+        val themed = android.view.ContextThemeWrapper(this, androidx.appcompat.R.style.Theme_AppCompat_DayNight_NoActionBar)
+        val view = ComposeView(themed).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setViewTreeLifecycleOwner(this@DynamicIslandService)
             setViewTreeSavedStateRegistryOwner(this@DynamicIslandService)

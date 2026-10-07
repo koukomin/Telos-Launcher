@@ -125,6 +125,16 @@
                 android:resource="@xml/direct_call_widget_info" />
         </receiver>
         <service
+            android:name=".calculator.CalculatorTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_glyph_calculator"
+            android:label="Calculator"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+        </service>
+        <service
             android:name=".comms.NetworkTileService"
             android:exported="true"
             android:icon="@drawable/signal_cellular_alt_24px"

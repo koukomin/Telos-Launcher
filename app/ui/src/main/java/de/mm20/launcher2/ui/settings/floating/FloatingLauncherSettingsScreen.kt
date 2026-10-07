@@ -62,6 +62,11 @@ fun FloatingLauncherSettingsScreen() {
     val hideIndicator by viewModel.hideIndicator.collectAsStateWithLifecycle(false)
     val hapticFeedback by viewModel.hapticFeedback.collectAsStateWithLifecycle(true)
     val autoHideGaming by viewModel.autoHideGaming.collectAsStateWithLifecycle(false)
+    val showLabels by viewModel.showLabels.collectAsStateWithLifecycle(true)
+    val panelAlpha by viewModel.panelAlpha.collectAsStateWithLifecycle(0.85f)
+    val iconSize by viewModel.iconSize.collectAsStateWithLifecycle(48)
+    val floatingWindows by viewModel.floatingWindows.collectAsStateWithLifecycle(true)
+    val tools by viewModel.tools.collectAsStateWithLifecycle(true)
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_floating_launcher)) {
         item {
@@ -158,6 +163,27 @@ fun FloatingLauncherSettingsScreen() {
                     max = 20,
                     onValueChanged = { viewModel.setMaxPerColumn(it) },
                 )
+                SliderPreference(
+                    title = stringResource(R.string.preference_floating_launcher_panel_alpha),
+                    value = panelAlpha,
+                    min = 0.3f,
+                    max = 1f,
+                    onValueChanged = { viewModel.setPanelAlpha(it) },
+                )
+                SliderPreference(
+                    title = stringResource(R.string.preference_floating_launcher_icon_size),
+                    value = iconSize,
+                    min = 32,
+                    max = 72,
+                    step = 4,
+                    onValueChanged = { viewModel.setIconSize(it) },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_floating_launcher_show_labels),
+                    summary = stringResource(R.string.preference_floating_launcher_show_labels_summary),
+                    value = showLabels,
+                    onValueChanged = { viewModel.setShowLabels(it) },
+                )
                 SwitchPreference(
                     title = stringResource(R.string.preference_floating_launcher_hide_indicator),
                     summary = stringResource(R.string.preference_floating_launcher_hide_indicator_summary),
@@ -168,6 +194,18 @@ fun FloatingLauncherSettingsScreen() {
         }
         item {
             PreferenceCategory(title = stringResource(R.string.preference_category_behavior)) {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_floating_launcher_floating_windows),
+                    summary = stringResource(R.string.preference_floating_launcher_floating_windows_summary),
+                    value = floatingWindows,
+                    onValueChanged = { viewModel.setFloatingWindows(it) },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_floating_launcher_tools),
+                    summary = stringResource(R.string.preference_floating_launcher_tools_summary),
+                    value = tools,
+                    onValueChanged = { viewModel.setTools(it) },
+                )
                 SwitchPreference(
                     title = stringResource(R.string.preference_floating_launcher_haptic_feedback),
                     summary = stringResource(R.string.preference_floating_launcher_haptic_feedback_summary),
@@ -202,8 +240,8 @@ private fun TabPreview(thickness: Int, color: Int, alpha: Float) {
     ) {
         Box(
             modifier = Modifier
-                .size(width = thickness.dp, height = 72.dp)
-                .clip(RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp))
+                .size(width = 6.dp, height = 56.dp)
+                .clip(RoundedCornerShape(50))
                 .background(Color(color).copy(alpha = alpha)),
         )
     }

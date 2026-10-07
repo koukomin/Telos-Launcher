@@ -132,6 +132,18 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import android.app.ActivityOptions
+import android.graphics.Rect
+import android.provider.Settings
+import android.view.ContextThemeWrapper
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.BiasAlignment
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
+import de.mm20.launcher2.globalactions.GlobalActionsService
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.distinctUntilChanged
 import java.io.File
 import java.util.UUID
 import kotlin.math.roundToInt
@@ -200,6 +212,7 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
     private val appRepository: AppRepository by inject()
     private val contextProfileManager: ContextProfileManager by inject()
     private val shutterSettings: ShutterSettings by inject()
+    private val globalActions: GlobalActionsService by inject()
 
     private val lifecycleRegistry = LifecycleRegistry(this)
     private val savedStateRegistryController = SavedStateRegistryController.create(this)
@@ -289,11 +302,32 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
     }
 
     private fun addOverlay() {
-        val wm = getSystemService(WINDOW_SERVICE) as WindowManager
-        windowManager = wm
+        windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
 
-        for (zone in FloatingLauncherZone.entries) {
-            val view = ComposeView(this).apply {
+        // One small window per enabled zone, added and removed as zones are switched on and off,
+        // so a zone that is off costs no window at all.
+        scope.launch {
+            floatingLauncherSettings.zones
+                .map { zones -> zones.filterValues { it.enabled }.keys }
+                .distinctUntilChanged()
+                .collect { enabled -> syncTabs(enabled) }
+        }
+    }
+
+    private fun syncTabs(enabled: Set<FloatingLauncherZone>) {
+        val wm = windowManager ?: return
+        for (zone in zoneTabViews.keys.toList()) {
+            if (zone in enabled) continue
+            zoneTabViews.remove(zone)?.let { view ->
+                try {
+                    wm.removeView(view)
+                } catch (_: Exception) {
+                }
+            }
+        }
+        for (zone in enabled) {
+            if (zone in zoneTabViews) continue
+            val view = ComposeView(themedContext()).apply {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
                 setViewTreeLifecycleOwner(this@FloatingLauncherService)
                 setViewTreeSavedStateRegistryOwner(this@FloatingLauncherService)
@@ -308,16 +342,30 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
                     )
                 }
             }
-            zoneTabViews[zone] = view
-            wm.addView(view, buildTabLayoutParams(zone))
+            try {
+                wm.addView(view, buildTabLayoutParams(zone))
+                zoneTabViews[zone] = view
+            } catch (e: Exception) {
+                // Permission revoked, or no window token available - nothing sensible to do but stop.
+                stopSelf()
+                return
+            }
         }
     }
+
+    /**
+     * The icons of this app use theme attributes (`?attr/colorControlNormal`). A Service has no
+     * theme of its own, so without this wrapper drawing any of them in the overlay throws
+     * "Failed to resolve attribute".
+     */
+    private fun themedContext(): Context =
+        ContextThemeWrapper(this, androidx.appcompat.R.style.Theme_AppCompat_DayNight_NoActionBar)
 
     /** Adds the (single, shared) panel window for [zone], replacing any panel already open. */
     private fun openZone(zone: FloatingLauncherZone) {
         val wm = windowManager ?: return
         closeZone()
-        val view = ComposeView(this).apply {
+        val view = ComposeView(themedContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setViewTreeLifecycleOwner(this@FloatingLauncherService)
             setViewTreeSavedStateRegistryOwner(this@FloatingLauncherService)
@@ -342,11 +390,38 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
                     onDeleteFolder = { folderId -> deleteFolder(zone, folderId) },
                     onExternalContentDropped = { clipData -> handleExternalDrop(clipData) },
                     onRemoveFileDockItem = { id -> removeFileDockItem(id) },
+                    onTool = { tool -> runTool(tool) },
                 )
             }
         }
         panelView = view
         wm.addView(view, buildPanelLayoutParams())
+    }
+
+    private fun runTool(tool: SidebarTool) {
+        closeZone()
+        when (tool) {
+            SidebarTool.Screenshot -> scope.launch {
+                // let the panel disappear before the picture is taken
+                delay(450)
+                if (!globalActions.takeScreenshot()) {
+                    Toast.makeText(
+                        this@FloatingLauncherService,
+                        R.string.floating_launcher_tool_needs_accessibility,
+                        Toast.LENGTH_LONG,
+                    ).show()
+                }
+            }
+
+            SidebarTool.Calculator -> startActivity(
+                Intent(this, SettingsActivity::class.java).apply {
+                    putExtra(SettingsActivity.EXTRA_ROUTE, SettingsActivity.ROUTE_CALCULATOR)
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+            )
+
+            SidebarTool.QuickSettings -> globalActions.openQuickSettings()
+        }
     }
 
     private fun closeZone() {
@@ -458,16 +533,9 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
      * ahead of the tab windows below it) the moment it's added.
      */
     private fun buildPanelLayoutParams(): WindowManager.LayoutParams {
-        var flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+        val flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
             WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        // Blurs whatever's behind the panel, matching the OxygenOS Smart Sidebar's frosted-glass
-        // look. Only meaningful on API 31+, where WindowManager exposes a per-window blur radius -
-        // below that, this flag alone is old and mostly unsupported on modern devices, so the
-        // panel instead relies on its own translucent background color for the effect.
-        if (isAtLeastApiLevel(31)) {
-            flags = flags or WindowManager.LayoutParams.FLAG_BLUR_BEHIND
-        }
         return WindowManager.LayoutParams(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.MATCH_PARENT,
@@ -476,9 +544,6 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
             PixelFormat.TRANSLUCENT,
         ).apply {
             gravity = Gravity.TOP or Gravity.START
-            if (isAtLeastApiLevel(31)) {
-                blurBehindRadius = BLUR_BEHIND_RADIUS_PX
-            }
         }
     }
 
@@ -521,8 +586,7 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner {
     companion object {
         private const val CHANNEL_ID = "floating_launcher"
         private const val NOTIFICATION_ID = 4820
-        private const val BLUR_BEHIND_RADIUS_PX = 60
-        private const val ZONE_TAB_HEIGHT_DP = 72
+        private const val ZONE_TAB_HEIGHT_DP = 96
     }
 }
 
@@ -630,10 +694,23 @@ private fun FloatingLauncherPanelContent(
     onDeleteFolder: (folderId: String) -> Unit,
     onExternalContentDropped: (ClipData) -> Unit,
     onRemoveFileDockItem: (String) -> Unit,
+    onTool: (SidebarTool) -> Unit,
 ) {
     val zones by settings.zones.collectAsState(emptyMap())
     val columns by settings.columns.collectAsState(2)
     val maxPerColumn by settings.maxPerColumn.collectAsState(10)
+    val showLabels by settings.showLabels.collectAsState(true)
+    val panelAlpha by settings.panelAlpha.collectAsState(0.85f)
+    val iconSize by settings.iconSize.collectAsState(48)
+    val floatingWindows by settings.floatingWindows.collectAsState(true)
+    val tools by settings.tools.collectAsState(true)
+    val style = SidebarStyle(
+        iconSize = iconSize.dp,
+        showLabels = showLabels,
+        panelAlpha = panelAlpha,
+        floatingWindows = floatingWindows,
+        tools = tools,
+    )
     val hiddenForGaming = isHiddenForGaming(settings, contextProfileManager)
     val zoneConfig = zones[zone]
     val fileDockItems by fileDockItemsState
@@ -645,6 +722,7 @@ private fun FloatingLauncherPanelContent(
     if (hiddenForGaming || zoneConfig == null) return
 
     MaterialTheme(colorScheme = rememberFloatingLauncherColorScheme()) {
+        CompositionLocalProvider(LocalSidebarStyle provides style) {
         OverlayHost {
             ExpandedPanel(
                 zone = zone,
@@ -667,7 +745,9 @@ private fun FloatingLauncherPanelContent(
                 onExternalContentDropped = onExternalContentDropped,
                 fileDockItems = fileDockItems,
                 onRemoveFileDockItem = onRemoveFileDockItem,
+                onTool = onTool,
             )
+        }
         }
     }
 }
@@ -683,22 +763,29 @@ private fun ZoneTab(
     onExternalContentDropped: (ClipData) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val shape = if (zone.isLeftEdge) {
-        RoundedCornerShape(topEnd = 16.dp, bottomEnd = 16.dp)
-    } else {
-        RoundedCornerShape(topStart = 16.dp, bottomStart = 16.dp)
-    }
     var isDropTarget by remember { mutableStateOf(false) }
     val hapticFeedback = LocalHapticFeedback.current
+    // The visible handle is a thin pill on the screen edge, like the Smart Sidebar's. The window
+    // around it is wider and taller than the pill, so that it is easy to hit and so that a drag
+    // can start a little way in from the edge (swipes that start at the very edge belong to the
+    // system's Back gesture).
     Box(
         modifier = modifier
-            .size(width = thickness.dp, height = 72.dp)
-            .clip(shape)
-            .background(if (isDropTarget) color.copy(alpha = (color.alpha + 0.35f).coerceAtMost(1f)) else color)
-            // Swipe/drag the tab toward the panel side to open it, matching the OxygenOS Smart
-            // Sidebar's tab-drag interaction - a plain tap no longer opens it.
+            .size(width = thickness.dp.coerceAtLeast(28.dp), height = 96.dp)
+            // A tap opens the panel ...
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null,
+                onClick = {
+                    if (hapticFeedbackEnabled) {
+                        hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+                    }
+                    onClick()
+                },
+            )
+            // ... and so does dragging the handle toward the middle of the screen.
             .pointerInput(zone, hapticFeedbackEnabled) {
-                val openThreshold = 32.dp.toPx()
+                val openThreshold = 16.dp.toPx()
                 var totalDrag = 0f
                 var triggered = false
                 detectHorizontalDragGestures(
@@ -755,11 +842,69 @@ private fun ZoneTab(
                     }
                 },
             ),
-    )
+        contentAlignment = if (zone.isLeftEdge) Alignment.CenterStart else Alignment.CenterEnd,
+    ) {
+        Box(
+            Modifier
+                .size(width = if (isDropTarget) 12.dp else 6.dp, height = if (isDropTarget) 72.dp else 56.dp)
+                .clip(RoundedCornerShape(50))
+                .background(if (isDropTarget) color.copy(alpha = (color.alpha + 0.35f).coerceAtMost(1f)) else color)
+        )
+    }
 }
 
-/** Icon cell size in the icons-only grid - matches OxygenOS Smart Sidebar's compact square tiles. */
-private val ICON_CELL_SIZE = 72.dp
+/** How the panel looks and behaves, from the settings. Provided once by [FloatingLauncherPanelContent]. */
+private data class SidebarStyle(
+    val iconSize: Dp = 48.dp,
+    val showLabels: Boolean = true,
+    val panelAlpha: Float = 0.85f,
+    val floatingWindows: Boolean = true,
+    val tools: Boolean = true,
+) {
+    /** Width and height of one cell: the icon plus room for the name */
+    val cell: Dp get() = iconSize + if (showLabels) 36.dp else 24.dp
+}
+
+private val LocalSidebarStyle = compositionLocalOf { SidebarStyle() }
+
+@Composable
+private fun sidebarCell(): Dp = LocalSidebarStyle.current.cell
+
+/** The quick tools row of the panel, like the tools of the OxygenOS Smart Sidebar */
+private enum class SidebarTool { Screenshot, Calculator, QuickSettings }
+
+private var floatingWindowCount = 0
+
+/**
+ * Opens [item]. With "floating windows" on and Android's freeform mode active (Settings > Desktop
+ * mode > Floating windows, or the developer option), the app opens as a window on top of the app in
+ * front; without freeform mode Android ignores the bounds and the app opens normally.
+ */
+private fun launchInSidebar(context: Context, item: SavableSearchable, floatingWindow: Boolean) {
+    val options = if (floatingWindow && isFreeformActive(context)) {
+        ActivityOptions.makeBasic().apply { setLaunchBounds(nextFloatingWindowBounds(context)) }.toBundle()
+    } else {
+        null
+    }
+    item.launch(context, options)
+}
+
+private fun isFreeformActive(context: Context): Boolean = try {
+    Settings.Global.getInt(context.contentResolver, "enable_freeform_support", 0) == 1
+} catch (_: Exception) {
+    false
+}
+
+private fun nextFloatingWindowBounds(context: Context): Rect {
+    val metrics = context.resources.displayMetrics
+    val width = (metrics.widthPixels * 0.78f).toInt()
+    val height = (metrics.heightPixels * 0.6f).toInt()
+    val step = (24 * metrics.density).toInt() * (floatingWindowCount % 5)
+    floatingWindowCount++
+    val left = (metrics.widthPixels - width) / 2 + step
+    val top = (metrics.heightPixels - height) / 3 + step
+    return Rect(left, top, left + width, top + height)
+}
 
 /**
  * ClipData items dragged from this launcher's own app icons (GridItem.kt) carry this as their
@@ -853,8 +998,10 @@ private fun ExpandedPanel(
     onExternalContentDropped: (ClipData) -> Unit,
     fileDockItems: List<FileDockItem>,
     onRemoveFileDockItem: (String) -> Unit,
+    onTool: (SidebarTool) -> Unit,
 ) {
     val context = LocalContext.current
+    val floatingWindows = LocalSidebarStyle.current.floatingWindows
     val coroutineScope = rememberCoroutineScope()
     val apps by remember(config.apps) {
         searchableRepository.getByKeys(config.apps)
@@ -891,25 +1038,28 @@ private fun ExpandedPanel(
         },
     )
 
+    val style = LocalSidebarStyle.current
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.Black.copy(alpha = 0.12f))
             .pointerInput(Unit) {
                 detectTapGestures(onTap = { onDismiss() })
             },
-        contentAlignment = if (zone.isLeftEdge) {
-            Alignment.CenterStart
-        } else {
-            Alignment.CenterEnd
-        },
+        // The card opens next to the handle it came from
+        contentAlignment = BiasAlignment(
+            horizontalBias = if (zone.isLeftEdge) -1f else 1f,
+            verticalBias = zone.verticalFraction * 2f - 1f,
+        ),
     ) {
         // OxygenOS Smart Sidebar look: a semi-transparent rounded card. The window behind it is
         // additionally blurred on API 31+ (toggled by the service hosting this composable) -
         // below that, this translucent color is the whole effect.
         Surface(
             modifier = Modifier
-                .widthIn(max = ICON_CELL_SIZE * columns + 32.dp)
-                .heightIn(max = ICON_CELL_SIZE * maxPerColumn + 112.dp)
+                .padding(8.dp)
+                .widthIn(max = sidebarCell() * columns + 32.dp)
+                .heightIn(max = sidebarCell() * maxPerColumn + 160.dp)
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
@@ -946,15 +1096,11 @@ private fun ExpandedPanel(
                     },
                 ),
             color = if (isDropTarget) {
-                MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.92f)
+                MaterialTheme.colorScheme.secondaryContainer.copy(alpha = (style.panelAlpha + 0.07f).coerceAtMost(1f))
             } else {
-                MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.85f)
+                MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = style.panelAlpha)
             },
-            shape = if (zone.isLeftEdge) {
-                RoundedCornerShape(topEnd = 28.dp, bottomEnd = 28.dp)
-            } else {
-                RoundedCornerShape(topStart = 28.dp, bottomStart = 28.dp)
-            },
+            shape = RoundedCornerShape(28.dp),
             shadowElevation = 8.dp,
         ) {
             Column(modifier = Modifier.padding(vertical = 8.dp)) {
@@ -1023,10 +1169,10 @@ private fun ExpandedPanel(
                                         if (item is Application && freezeManager.isFrozen(item.componentName.packageName)) {
                                             coroutineScope.launch {
                                                 freezeManager.unfreeze(item.componentName.packageName)
-                                                item.launch(context, null)
+                                                launchInSidebar(context, item, floatingWindows)
                                             }
                                         } else {
-                                            item.launch(context, null)
+                                            launchInSidebar(context, item, floatingWindows)
                                         }
                                         onAppLaunched()
                                     },
@@ -1043,6 +1189,18 @@ private fun ExpandedPanel(
                                 )
                             }
                         }
+                    }
+                }
+                if (style.tools && !editMode) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 12.dp, vertical = 2.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                    ) {
+                        SidebarToolButton(R.drawable.ic_sidebar_screenshot, R.string.floating_launcher_tool_screenshot) { onTool(SidebarTool.Screenshot) }
+                        SidebarToolButton(R.drawable.calculate_24px, R.string.floating_launcher_tool_calculator) { onTool(SidebarTool.Calculator) }
+                        SidebarToolButton(R.drawable.tune_24px, R.string.floating_launcher_tool_quick_settings) { onTool(SidebarTool.QuickSettings) }
                     }
                 }
                 // Bottom toolbar - the OxygenOS Smart Sidebar puts edit access here rather than
@@ -1185,6 +1343,13 @@ private fun ExpandedPanel(
     }
 }
 
+@Composable
+private fun SidebarToolButton(icon: Int, label: Int, onClick: () -> Unit) {
+    IconButton(onClick = onClick) {
+        Icon(painterResource(icon), contentDescription = stringResource(label))
+    }
+}
+
 /**
  * A single cell in the panel's grid. Icons-only outside edit mode, matching the default OxygenOS
  * Smart Sidebar look; in edit mode it also shows its label (so a bare icon isn't ambiguous while
@@ -1221,7 +1386,8 @@ private fun FavoriteIcon(
     var showShutter by remember(item.key) { mutableStateOf(false) }
     val hapticFeedback = LocalHapticFeedback.current
 
-    Box(modifier = Modifier.size(ICON_CELL_SIZE)) {
+    val style = LocalSidebarStyle.current
+    Box(modifier = Modifier.size(sidebarCell())) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -1230,11 +1396,11 @@ private fun FavoriteIcon(
             verticalArrangement = Arrangement.Center,
         ) {
             ShapedLauncherIcon(
-                size = if (editMode) 36.dp else 44.dp,
+                size = if (editMode) style.iconSize * 0.75f else style.iconSize,
                 icon = { icon },
                 grayscale = isFrozen,
             )
-            if (editMode) {
+            if (editMode || style.showLabels) {
                 Text(
                     text = item.labelOverride ?: item.label,
                     style = MaterialTheme.typography.labelSmall,
@@ -1293,7 +1459,7 @@ private fun FolderIcon(
         previewKeys.mapNotNull { key -> previewApps.firstOrNull { it.key == key } }
     }
 
-    Box(modifier = Modifier.size(ICON_CELL_SIZE)) {
+    Box(modifier = Modifier.size(sidebarCell())) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -1373,6 +1539,7 @@ private fun FolderContentsOverlay(
     onDismiss: () -> Unit,
 ) {
     val context = LocalContext.current
+    val floatingWindows = LocalSidebarStyle.current.floatingWindows
     val coroutineScope = rememberCoroutineScope()
     val apps by remember(folder.appKeys) {
         searchableRepository.getByKeys(folder.appKeys)
@@ -1393,7 +1560,7 @@ private fun FolderContentsOverlay(
         Surface(
             modifier = Modifier
                 .padding(24.dp)
-                .widthIn(max = ICON_CELL_SIZE * columns + 32.dp)
+                .widthIn(max = sidebarCell() * columns + 32.dp)
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
@@ -1435,10 +1602,10 @@ private fun FolderContentsOverlay(
                                 if (item is Application && freezeManager.isFrozen(item.componentName.packageName)) {
                                     coroutineScope.launch {
                                         freezeManager.unfreeze(item.componentName.packageName)
-                                        item.launch(context, null)
+                                        launchInSidebar(context, item, floatingWindows)
                                     }
                                 } else {
-                                    item.launch(context, null)
+                                    launchInSidebar(context, item, floatingWindows)
                                 }
                                 onAppLaunched()
                             },
@@ -1463,6 +1630,7 @@ private fun AllAppsOverlay(
     onDismiss: () -> Unit,
 ) {
     val context = LocalContext.current
+    val floatingWindows = LocalSidebarStyle.current.floatingWindows
     val coroutineScope = rememberCoroutineScope()
     val apps by remember { appRepository.findMany() }.collectAsState(emptyList())
     val sortedApps = remember(apps) { apps.sortedBy { (it.labelOverride ?: it.label).lowercase() } }
@@ -1479,8 +1647,8 @@ private fun AllAppsOverlay(
         Surface(
             modifier = Modifier
                 .padding(24.dp)
-                .widthIn(max = ICON_CELL_SIZE * columns + 32.dp)
-                .heightIn(max = ICON_CELL_SIZE * 6)
+                .widthIn(max = sidebarCell() * columns + 32.dp)
+                .heightIn(max = sidebarCell() * 6)
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
@@ -1522,10 +1690,10 @@ private fun AllAppsOverlay(
                                 if (freezeManager.isFrozen(item.componentName.packageName)) {
                                     coroutineScope.launch {
                                         freezeManager.unfreeze(item.componentName.packageName)
-                                        item.launch(context, null)
+                                        launchInSidebar(context, item, floatingWindows)
                                     }
                                 } else {
-                                    item.launch(context, null)
+                                    launchInSidebar(context, item, floatingWindows)
                                 }
                                 onAppLaunched()
                             },
@@ -1567,7 +1735,7 @@ private fun FileDockOverlay(
             modifier = Modifier
                 .padding(24.dp)
                 .widthIn(max = 320.dp)
-                .heightIn(max = ICON_CELL_SIZE * 6)
+                .heightIn(max = sidebarCell() * 6)
                 .clickable(
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,

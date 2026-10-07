@@ -102,5 +102,16 @@ object TelosApps {
             iconRes = de.mm20.launcher2.base.R.drawable.ic_glyph_files,
             route = SettingsDeepLinkContract.ROUTE_FILES,
         ),
+        TelosApp(
+            key = "telos_calculator_app://calculator",
+            name = "Telos Calculator",
+            description = "A standard and scientific calculator with VAT, unit and currency conversion and a dated history.",
+            features = listOf(
+                "Standard and scientific mode", "VAT: add or remove, any rate", "Length, mass, area, volume, speed, temperature, currency",
+                "History with date and time", "Quick Settings tile",
+            ),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_glyph_calculator,
+            route = SettingsDeepLinkContract.ROUTE_CALCULATOR,
+        ),
     )
 }

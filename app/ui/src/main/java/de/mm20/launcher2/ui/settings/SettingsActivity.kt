@@ -267,6 +267,9 @@ class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.files.FilesRoute> {
                 de.mm20.launcher2.ui.files.FilesScreen()
             }
+            entry<de.mm20.launcher2.ui.calculator.CalculatorRoute> {
+                de.mm20.launcher2.ui.calculator.CalculatorScreen()
+            }
             entry<de.mm20.launcher2.ui.media.photos.PhotosRoute> {
                 de.mm20.launcher2.ui.media.photos.PhotosScreen()
             }
@@ -624,6 +627,7 @@ class SettingsActivity : BaseActivity() {
             ROUTE_VIDEO -> de.mm20.launcher2.ui.media.video.VideoRoute
             ROUTE_PHOTOS -> de.mm20.launcher2.ui.media.photos.PhotosRoute
             ROUTE_FILES -> de.mm20.launcher2.ui.files.FilesRoute
+            ROUTE_CALCULATOR -> de.mm20.launcher2.ui.calculator.CalculatorRoute
             // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
             ROUTE_CRASH_REPORT if (intent.hasExtra(EXTRA_CRASH_REPORT_PATH)) -> {
                 CrashReportRoute(intent.getStringExtra(EXTRA_CRASH_REPORT_PATH)!!)
@@ -654,6 +658,7 @@ class SettingsActivity : BaseActivity() {
         const val ROUTE_VIDEO = SettingsDeepLinkContract.ROUTE_VIDEO
         const val ROUTE_PHOTOS = SettingsDeepLinkContract.ROUTE_PHOTOS
         const val ROUTE_FILES = SettingsDeepLinkContract.ROUTE_FILES
+        const val ROUTE_CALCULATOR = SettingsDeepLinkContract.ROUTE_CALCULATOR
         // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
         const val ROUTE_CRASH_REPORT = "settings/debug/crashreport"
         const val EXTRA_CRASH_REPORT_PATH = "crash_report_path"

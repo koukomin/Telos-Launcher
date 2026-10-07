@@ -64,6 +64,10 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         ],
       },
       {
+        text: 'Calculator',
+        link: '/docs/user-guide/telos/calculator/',
+      },
+      {
         text: 'Photos',
         collapsed: true,
         link: '/docs/user-guide/telos/photos/',

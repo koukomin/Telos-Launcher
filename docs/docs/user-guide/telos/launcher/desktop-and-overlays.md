@@ -87,8 +87,9 @@ mode**, see [Home screen](./home-screen#wallpaper).
 
 <Badge type="warning" text="experimental" />
 
-A thin tab on the screen edge, even while you use other apps. Drag it toward the middle of the screen to
-open a panel of your favorite apps. It is off by default.
+A thin handle on the screen edge, even while you use other apps. Tap it, or drag it toward the middle of the
+screen, to open a floating card of your favorite apps next to it. The look follows the Smart Sidebar of OxygenOS.
+It is off by default.
 
 1. Open the Floating launcher settings (see the warning below, there is no entry for it in the main
    settings list). Grant **Display over other apps** when asked.
@@ -100,13 +101,27 @@ open a panel of your favorite apps. It is off by default.
 
 | Setting | Default | What it does |
 | --- | --- | --- |
-| Tab thickness | 24 | Width of the tab |
-| Tab color and transparency | Purple, 60 percent | Look of the tab |
-| Two columns | On | Two apps per row in the panel |
+| Tab thickness | 24 | Width of the touch area around the handle (the visible handle is a thin pill) |
+| Tab color and transparency | Gray, 80 percent | Look of the handle |
+| Panel transparency | 85 percent | How see-through the card is |
+| Icon size | 48 | Size of the icons in the card |
+| Show app names | On | Names under the icons. Turn it off for a compact card |
+| Two columns | On | Two apps per row in the panel (one column when off) |
 | Rows before scrolling | 10 | Panel height before it scrolls |
-| Hide tabs | Off | Make tabs invisible but still tappable |
+| Hide tabs | Off | Make the handle invisible but still tappable |
+| Open apps in floating windows | On | Tapped apps open as a window on top of the app in front, see below |
+| Quick tools | On | A row with Screenshot, Calculator and Quick settings |
 | Haptic feedback | On | A short vibration on tap |
 | Hide during Gaming profile | Off | Hide tabs while a context profile with the Gaming icon is active |
+
+**Floating windows.** With *Open apps in floating windows* on, a tapped app opens as a window on top of the app in
+front. This only works while Android's freeform mode is on (see [Floating windows (freeform)](#floating-windows-freeform));
+without it Android ignores the window size and the app opens normally.
+
+**Quick tools.** The row under the apps has three buttons: **Screenshot** closes the card and takes a screenshot (it
+needs the Telos accessibility service, which you can turn on under Settings > Gestures), **Calculator** opens
+[Telos Calculator](../calculator/), and **Quick settings** pulls down the quick settings. There is no screen recorder
+and no partial screenshot.
 
 **File dock.** Dragging text, images or files from another app onto a tab holds them temporarily, so you
 can drop them into another app. Media is copied into the launcher's cache when dropped. The shelf is not

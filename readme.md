@@ -17,7 +17,7 @@ The documentation site is published via GitHub Pages at <https://koukomin.github
 </div>
 
 > **Note:** The Telos apps use flat Material icons: a white glyph on a dark background of its own
-> (navy for Phone, teal for Messages, amber for Files, rose for Photos, purple for Music, red for
+> (navy for Phone, teal for Messages, amber for Files, slate for Calculator, rose for Photos, purple for Music, red for
 > Video, green for Radio). Telos Store uses the launcher icon. The name and the final branding are
 > still in progress.
 
@@ -48,6 +48,7 @@ from Telos Store.
 | **Telos Phone** | Dialer, recents, contacts, dual SIM, call recording, call screening, SIP | [Phone](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/phone/) |
 | **Telos Messages** | SMS and MMS conversations, default SMS app, scheduled messages | [Messages](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/messages/) |
 | **Telos Files** | File manager with network and cloud storages, archives, Cryptomator vaults | [Files](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/) |
+| **Telos Calculator** | Standard and scientific calculator, VAT, unit and currency converter, history | [Calculator](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calculator/) |
 | **Telos Photos** | Gallery, EXIF tools, editor and a document viewer | [Photos](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
 | **Telos Music** | Local library, lyrics, scrobbling, tag editor | [Music](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/music/) |
 | **Telos Video** | Library, player, web streams, torrents, subtitles, Trakt | [Video](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/video/) |
@@ -107,7 +108,7 @@ and custom names are matched; file contents, message texts and note bodies are n
 | Source | What it finds | Min. text | Online? | Default |
 | --- | --- | --- | --- | --- |
 | Apps | Installed apps of every profile (personal, work, private space) | 1 | No | On |
-| Telos apps | Phone, Messages, Radio, Music, Video, Photos, Files, Store, while switched on | 1 | No | On |
+| Telos apps | Phone, Messages, Radio, Music, Video, Photos, Files, Calculator, Store, while switched on | 1 | No | On |
 | Web apps | Web app shortcuts shown in the grid | 1 | No | On |
 | Activity by component name | One app entry for a typed `package/class` | 1 | No | On |
 | App shortcuts | Shortcuts that apps publish (needs Telos as default home app) | 3 | No | On |
@@ -442,7 +443,7 @@ Telos can draw things in other places than the home screen. Much of this is mark
 | --- | --- | --- |
 | Desktop mode | A connected external display | Desktop shell with a workspace grid, taskbar with a start menu, running-app dots, system tray and clock. Orientation, icon size and wallpaper settings. Switches itself on at the first display |
 | Freeform windows | Whole device, via Shizuku | Snap left, snap right, maximize and close from the taskbar menu. Changes windowing for every app while on |
-| Floating launcher | Over every app | A thin edge tab that opens a panel of favorite apps. Six trigger zones, each with its own apps, a file dock for dragged items. Off by default, no search field by design |
+| Floating launcher (Smart Sidebar) | Over every app | A thin handle on the screen edge that opens a floating card of favorite apps, modeled on the Smart Sidebar of OxygenOS: one or two columns, app names that can be hidden, size and transparency, apps that open in floating windows, a quick tools row (screenshot, calculator, quick settings) and a file dock for dragged items. Six trigger zones, each with its own apps. Off by default, no search field by design |
 | Dynamic Island | Top of the screen | A pill showing the most relevant live item by priority: call, timer, media, charging |
 | Web apps | Home screen and a panel | Websites as app-like shortcuts in an embedded browser (ad and tracker blocking, tracking parameter stripping, custom CSS) or a Custom Tabs browser, with a Web Apps Panel |
 | Assistant mode | The system assistant gesture | Opens Telos in a separate assistant window once Telos is set as the digital assistant |
@@ -453,7 +454,7 @@ Telos can draw things in other places than the home screen. Much of this is mark
 
 - **Context profile triggers:** manual, time of day, WiFi network name, Bluetooth device, Battery Saver, charging. Triggers are checked only while the launcher is open (on resume, then about once a minute), so a profile can lag behind the real situation.
 - **A profile can change:** gestures, the freeze profile, which home widget page opens, Do Not Disturb, brightness, and launch an app once. Profile icons: Home, Work, Car, Gaming, Battery saver, Sleep, Custom.
-- **Floating launcher settings:** tab thickness, color and transparency, two columns, rows before scrolling, hide tabs, haptic feedback, hide during a Gaming profile. If a bug ever locks the screen, it can be disabled without touch input with `adb shell am broadcast -a de.mm20.launcher2.action.DISABLE_FLOATING_LAUNCHER -p <application id>`.
+- **Floating launcher settings:** handle width, color and transparency, panel transparency, icon size, show or hide app names, two columns, rows before scrolling, hide the handle, open apps in floating windows (needs freeform mode, see Desktop mode), quick tools, haptic feedback, hide during a Gaming profile. The handle opens with a tap or a drag, and the panel opens next to it. If a bug ever locks the screen, it can be disabled without touch input with `adb shell am broadcast -a de.mm20.launcher2.action.DISABLE_FLOATING_LAUNCHER -p <application id>`.
 - **Dynamic Island:** also shows active calls (needs the phone state permission). The timer slot exists, but nothing in this build starts it.
 - **Web app browsing settings:** block ads and trackers (a built-in host blocklist, not a full filter list engine), pinch to zoom, strip tracking parameters, top bar position, swipe to switch web apps. Web apps can be locked with App Lock and customized per item.
 - **Overlay services** (floating launcher, Dynamic Island, App Lock) are foreground services that only run while switched on and need the display-over-other-apps permission.
@@ -666,6 +667,19 @@ A file manager for your phone, network storages and cloud storages. The layout f
 
 **Status and limitations:** Local files, network and cloud storages and archives are stable. Cryptomator support is experimental and read only, and the root explorer is untested. iCloud, Mega, gocryptfs, EncFS and VeraCrypt are not supported. There is no trash and no undo, no writing into archives or vaults, checksums and zip creation work on local files only, and Telos Files has no settings screen of its own.
 
+### Telos Calculator
+
+A calculator in the launcher: standard and scientific keys, VAT, unit and currency conversion and a history. No permissions, no account. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calculator/).
+
+- Standard keys with percent that works like on a pocket calculator (`200 + 10%` is 220), brackets, live result under the expression
+- Scientific keys (sin, cos, tan and inverses, ln, log, root, factorial, powers, π, e) in landscape or with the f(x) button, degrees or radians
+- **VAT:** any rate (24 by default, chips for 24, 13, 6, 0), add VAT or remove VAT, shows without VAT, the VAT and with VAT at once, tap to copy; chips `+ VAT` and `− VAT` in the calculator itself
+- **Convert:** length, mass, area, volume, speed, temperature, time, data and currency with the converters of the launcher search (currency needs the currency rates of the unit converter turned on)
+- History with date and time (swipe down on the display), up to 100 entries
+- Quick Settings tile
+
+**Status and limitations:** no floating window mode, 12 significant digits, the decimal point on the keypad is always a point.
+
 ### Telos Photos
 
 A photo gallery, a metadata (EXIF) tool, a simple photo editor and a document viewer in one app. No cloud, no account and no network features of its own. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/).
@@ -799,7 +813,7 @@ An app installer and updater that works like [Obtainium](https://github.com/Imra
 
 **Managing the Telos apps**
 
-- The Telos apps (Phone, Messages, Radio, Music, Video, Photos, Files) are listed with what each one does; "installing" one shows its icon in the app grid and in search, "removing" hides it. Telos Store itself cannot be removed.
+- The Telos apps (Phone, Messages, Radio, Music, Video, Photos, Files, Calculator) are listed with what each one does; "installing" one shows its icon in the app grid and in search, "removing" hides it. Telos Store itself cannot be removed.
 - Crash guard: an app that crashes (or hangs) twice within a day is switched off automatically, with a notification pointing to the Store; "installing" it again resets the counter.
 
 **Status and limitations:** Only the listed sources: APKMirror, Uptodown, Aptoide, APKPure, the Play Store, Huawei, Tencent, RuStore and Telegram entries are skipped when importing. Split APKs and apps that need a login are not supported, direct APK links have no version check, and silent installs need Shizuku or root. Installing APKs from outside an app store means you trust the source.

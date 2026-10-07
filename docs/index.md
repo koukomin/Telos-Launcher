@@ -36,6 +36,10 @@ features:
     title: Files
     details: Browse local storage, cloud and network shares, and keep private files in a vault.
     link: /docs/user-guide/telos/files/
+  - icon: 🧮
+    title: Calculator
+    details: Standard and scientific calculator with VAT, unit and currency conversion and a history.
+    link: /docs/user-guide/telos/calculator/
   - icon: 🖼️
     title: Photos
     details: A gallery with viewer, editor and document handling.

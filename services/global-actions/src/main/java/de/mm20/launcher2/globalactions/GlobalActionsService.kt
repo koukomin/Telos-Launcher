@@ -28,6 +28,16 @@ class GlobalActionsService(private val context: Context) {
         LauncherAccessibilityService.getInstance()?.performGlobalAction(AccessibilityService.GLOBAL_ACTION_POWER_DIALOG)
     }
 
+    /**
+     * Takes a screenshot through the accessibility service (Android 9+).
+     * Returns false if the accessibility service is not running or the system refused.
+     */
+    fun takeScreenshot(): Boolean {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.P) return false
+        return LauncherAccessibilityService.getInstance()
+            ?.performGlobalAction(AccessibilityService.GLOBAL_ACTION_TAKE_SCREENSHOT) ?: false
+    }
+
     fun openRecents() {
         LauncherAccessibilityService.getInstance()?.performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS)
     }
