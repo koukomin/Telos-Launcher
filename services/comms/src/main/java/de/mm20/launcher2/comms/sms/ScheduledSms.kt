@@ -56,10 +56,19 @@ object ScheduledSmsStore {
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putString(KEY, arr.toString()).apply()
     }
 
+    /** On Android 12 and later the user has to allow exact alarms (Settings, Alarms & reminders) */
+    fun canScheduleExact(context: Context): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return true
+        return context.getSystemService(AlarmManager::class.java)?.canScheduleExactAlarms() == true
+    }
+
     private fun schedule(context: Context, item: ScheduledSms) {
         val am = context.getSystemService(AlarmManager::class.java) ?: return
         val pi = pending(context, item)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (canScheduleExact(context)) {
+            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, item.atEpochMs, pi)
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // without the "alarms and reminders" permission the system may delay it by minutes
             am.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, item.atEpochMs, pi)
         } else {
             am.set(AlarmManager.RTC_WAKEUP, item.atEpochMs, pi)

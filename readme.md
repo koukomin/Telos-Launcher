@@ -56,7 +56,11 @@ plugin SDK for third-party search/weather/calendar providers. See the
   proximity speaker, volume-button Do Not Disturb shortcut
 - Auto redial, fake incoming calls (scheduled), missed-call and post-call popups, Dynamic Island
   call state
-- SMS engine: quick replies, scheduled SMS
+- Messages: the text messages of the phone as conversations with a reply field (no MMS; the system
+  keeps the messages, Telos is not the default SMS app, so replies sent from Telos are shown from a
+  copy kept by Telos); conversations with hidden contacts are only listed while the hidden contacts
+  are unlocked, the system's own messaging app still shows them
+- SMS engine: quick replies, scheduled SMS (on the exact minute once "Alarms & reminders" is allowed)
 - Radio (behaviour and logic taken from [Transistor](https://codeberg.org/y20k/transistor), compared with 4.3.9): station
   collection with add by address, rename and remove; M3U / PLS import, M3U export and JSON backup;
   playlist links resolved to the real stream with fallback streams; current track from the stream

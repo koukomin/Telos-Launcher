@@ -50,8 +50,8 @@ object TelosApps {
         TelosApp(
             key = "telos_messages_app://messages",
             name = "Telos Messages",
-            description = "SMS and MMS with quick replies and scheduled messages.",
-            features = listOf("Quick replies", "Scheduled messages"),
+            description = "Your text messages: conversations, replies, quick replies and scheduled messages. Conversations with hidden contacts are only shown while the hidden contacts are unlocked.",
+            features = listOf("Conversations and replies", "Quick replies", "Scheduled messages", "Hidden contacts stay out of the list"),
             iconRes = de.mm20.launcher2.base.R.drawable.sms_24px,
             route = SettingsDeepLinkContract.ROUTE_COMMS,
             commsTab = "messages",
