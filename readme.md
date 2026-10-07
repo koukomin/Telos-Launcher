@@ -17,7 +17,7 @@ The documentation site is published via GitHub Pages at <https://koukomin.github
 </div>
 
 > **Note:** The Telos apps use flat Material icons: a white glyph on a dark background of its own
-> (navy for Phone, teal for Messages, amber for Files, slate for Calculator, blue for Screenshot, orange for Screen Recorder, cyan for Voice Recorder, rose for Photos, purple for Music, red for
+> (navy for Phone, teal for Messages, amber for Files, slate for Calculator, blue for Screenshot, orange for Screen Recorder, cyan for Voice Recorder, amber for Notes, blue for Calendar, rose for Photos, purple for Music, red for
 > Video, green for Radio). Telos Store uses the launcher icon. The name and the final branding are
 > still in progress.
 
@@ -50,6 +50,8 @@ from Telos Store.
 | **Telos Files** | File manager with network and cloud storages, archives, Cryptomator vaults | [Files](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/) |
 | **Telos Screenshot** | Full, partial and scrolling screenshots with an editor | [Screenshot](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/screenshot/) |
 | **Telos Screen Recorder** | Screen to video with microphone, pause and countdown | [Screen Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/screen-recorder/) |
+| **Telos Notes** | Notes with labels, sync with a Markdown folder or Nextcloud Notes, Keep and Evernote import | [Notes](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/notes/) |
+| **Telos Calendar** | Month and agenda calendar, local calendar, Google and CalDAV through the system | [Calendar](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calendar/) |
 | **Telos Voice Recorder** | Voice recordings with search, pause and call recordings | [Voice Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/voice-recorder/) |
 | **Telos Calculator** | Standard and scientific calculator, VAT, unit and currency converter, history | [Calculator](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calculator/) |
 | **Telos Photos** | Gallery, EXIF tools, editor and a document viewer | [Photos](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
@@ -111,7 +113,7 @@ and custom names are matched; file contents, message texts and note bodies are n
 | Source | What it finds | Min. text | Online? | Default |
 | --- | --- | --- | --- | --- |
 | Apps | Installed apps of every profile (personal, work, private space) | 1 | No | On |
-| Telos apps | Phone, Messages, Radio, Music, Video, Photos, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder, Store, while switched on | 1 | No | On |
+| Telos apps | Phone, Messages, Radio, Music, Video, Photos, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder, Notes, Calendar, Store, while switched on | 1 | No | On |
 | Web apps | Web app shortcuts shown in the grid | 1 | No | On |
 | Activity by component name | One app entry for a typed `package/class` | 1 | No | On |
 | App shortcuts | Shortcuts that apps publish (needs Telos as default home app) | 3 | No | On |
@@ -403,9 +405,11 @@ Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/doc
 
 **Settings > Advanced settings > Backup and restore** writes and reads a plain ZIP archive (not encrypted).
 
+Backup and restore ask first **what** to include: **Launcher** (settings and the rest of the table), **Notes** and **Calendar** (the local calendars as `.ics`), each with a checkbox and an **All** button. On restore only the parts that the file contains are offered, and unticked parts are not touched.
+
 | Included | Not included |
 | --- | --- |
-| Settings, favorites and saved items (usage weights, pin position, visibility), custom icons, labels and tags, widgets, quick actions, custom color, shape, transparency and typography themes | Cloud logins (Nextcloud, ownCloud), plugin enable state, wallpaper, icon packs, intruder photos, passwords and API keys of the Telos apps, hidden and protected call numbers |
+| Settings, favorites and saved items (usage weights, pin position, visibility), custom icons, labels and tags, widgets, quick actions, custom color, shape, transparency and typography themes, Telos Notes, local calendars of Telos Calendar (their own parts) | Cloud logins (Nextcloud, ownCloud, notes sync), calendars of accounts (the account has them), plugin enable state, wallpaper, icon packs, intruder photos, passwords and API keys of the Telos apps, hidden and protected call numbers |
 
 - Restore wipes saved favorites first, then imports the file; secrets already on the device are kept. A SIP or phonebook account without a password after restore is switched off.
 - Format `1.9`: same version restores fully, a different minor version restores with a warning, a different major version is refused. Archive entries that would unpack outside the restore folder are ignored.
@@ -708,6 +712,28 @@ Records the screen to a video with MediaProjection. [Docs](https://koukomin.gith
 - Starts from the app or from the floating launcher
 
 **Status and limitations:** Android asks for the capture permission every time, no system sound (only the microphone), protected content is black, no Live Alert or Dynamic Island entry, no editing.
+
+### Telos Notes
+
+A notes app with local storage and optional sync. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/notes/).
+
+- Grid of notes with colours, pins, labels, archive, trash, search, share; checklists as Markdown lines
+- Sync with a folder of Markdown files (Obsidian, Logseq, Syncthing or a cloud app's folder) and with Nextcloud Notes (app password), newest change wins
+- Import Google Keep (Takeout json or zip), Evernote (.enex), Markdown and text files and zips of them (Notion and Joplin exports)
+- The **Notes** part of the Telos backup
+
+**Status and limitations:** no direct sync with Google Keep, OneNote, Microsoft Sticky Notes, Apple Notes or Notion (no usable public API for a launcher, import only where an export exists), no background sync, no images, notes are not encrypted.
+
+### Telos Calendar
+
+A calendar on the calendar storage of Android. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calendar/).
+
+- Month view with an agenda of the chosen day, create, edit and delete events (all day, location, description, repeat daily to yearly, one reminder)
+- A local calendar that needs no account, plus every calendar the system has: Google, CalDAV through DAVx5, Exchange. Telos asks the system to sync, the account does the sync
+- Show or hide calendars, import and export `.ics`
+- The local calendars are the **Calendar** part of the Telos backup
+
+**Status and limitations:** month and agenda only (no week or day grid), no guests or tasks, repeating events are edited as a whole series, Telos does not log in to Google or CalDAV itself.
 
 ### Telos Voice Recorder
 

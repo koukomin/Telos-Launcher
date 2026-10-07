@@ -176,6 +176,10 @@ More in [Performance](./performance).
 
 Settings > Advanced > **Backup and restore**: **Backup** writes a file you choose, **Restore** reads one.
 
+Both ask **what** to include first: **Launcher** (settings, favorites, themes, widgets and the rest of the table below),
+**Notes** ([Telos Notes](../notes/)) and **Calendar** (the local calendars of [Telos Calendar](../calendar/)). Tick what you
+want, or tap **All**. On restore only the parts that the file contains are offered, and parts you leave unticked are not touched.
+
 | Part | Included |
 | --- | --- |
 | Launcher settings | Yes, including App Lock lists and the custom PIN hash |
@@ -183,6 +187,8 @@ Settings > Advanced > **Backup and restore**: **Backup** writes a file you choos
 | Custom names, custom icons, tags | Yes |
 | Themes (colors, shapes, typography, transparency) | Yes |
 | Widgets | Yes |
+| Notes | Yes, if the Notes part is ticked |
+| Local calendars and their events | Yes, if the Calendar part is ticked. Calendars of accounts are not included |
 | Quick actions | Yes |
 | Cloud logins (Nextcloud, ownCloud) | No |
 | Intruder photos | No |
@@ -191,7 +197,7 @@ Settings > Advanced > **Backup and restore**: **Backup** writes a file you choos
 
 The backup is a plain ZIP, **not encrypted**. Keep it somewhere private. The file records the app version,
 the device model and the time, and the restore screen shows them. Compatibility is checked by format
-version (currently 1.9): a different major version cannot be restored, a different minor version restores
+version (currently 1.10): a different major version cannot be restored, a different minor version restores
 with a warning that some data may be lost.
 
 On restore, secrets that live on the device (passwords, keys, hidden numbers) are kept from the device,

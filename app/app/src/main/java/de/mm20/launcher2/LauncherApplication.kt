@@ -69,6 +69,8 @@ import de.mm20.launcher2.ui.desktopmode.DesktopModeActivity
 import de.mm20.launcher2.ui.floating.FloatingLauncherService
 import de.mm20.launcher2.ui.islandoverlay.DynamicIslandService
 import de.mm20.launcher2.ui.islandoverlay.islandOverlayModule
+import de.mm20.launcher2.ui.notes.notesModule
+import de.mm20.launcher2.ui.calendar.telosCalendarModule
 import de.mm20.launcher2.ui.webappspanel.webAppsPanelModule
 import de.mm20.launcher2.searchactions.searchActionsModule
 import de.mm20.launcher2.services.favorites.favoritesModule
@@ -155,6 +157,8 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     contextProfilesModule,
                     desktopModeModule,
                     islandOverlayModule,
+                    notesModule,
+                    telosCalendarModule,
                     webAppsPanelModule,
                     appLockModule,
                     appManagementModule,

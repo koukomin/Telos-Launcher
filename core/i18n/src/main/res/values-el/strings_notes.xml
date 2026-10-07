@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="notes_title">Σημειώσεις</string>
+    <string name="notes_new">Νέα σημείωση</string>
+    <string name="notes_search">Αναζήτηση σημειώσεων</string>
+    <string name="notes_archive">Αρχείο</string>
+    <string name="notes_trash">Κάδος</string>
+    <string name="notes_empty">Δεν υπάρχουν σημειώσεις</string>
+    <string name="notes_empty_trash">Άδειασμα κάδου</string>
+    <string name="notes_import">Εισαγωγή σημειώσεων</string>
+    <string name="notes_sync_now">Συγχρονισμός τώρα</string>
+    <string name="notes_sync_settings">Συγχρονισμός</string>
+    <string name="notes_back">Πίσω</string>
+    <string name="notes_pin">Καρφίτσωμα</string>
+    <string name="notes_color">Χρώμα</string>
+    <string name="notes_labels">Ετικέτες</string>
+    <string name="notes_share">Κοινοποίηση</string>
+    <string name="notes_delete">Μετακίνηση στον κάδο</string>
+    <string name="notes_title_hint">Τίτλος</string>
+    <string name="notes_body_hint">Σημείωση</string>
+    <string name="notes_labels_hint">δουλειά, σπίτι</string>
+    <string name="notes_ok">OK</string>
+    <string name="notes_cancel">Άκυρο</string>
+    <string name="notes_imported">Εισήχθησαν %d σημειώσεις</string>
+    <string name="notes_synced">Συγχρονισμός: %1$d στάλθηκαν, %2$d ελήφθησαν</string>
+    <string name="notes_sync_failed">Ο συγχρονισμός απέτυχε: %s</string>
+    <string name="notes_sync_folder">Φάκελος Markdown</string>
+    <string name="notes_sync_folder_desc">Κάθε σημείωση γίνεται αρχείο .md στον φάκελο που θα επιλέξεις. Χρησιμοποίησε vault του Obsidian ή του Logseq, φάκελο Syncthing ή φάκελο εφαρμογής cloud και οι σημειώσεις ακολουθούν.</string>
+    <string name="notes_sync_choose_folder">Επιλογή φακέλου</string>
+    <string name="notes_sync_off">Απενεργοποίηση</string>
+    <string name="notes_sync_not_set">Δεν έχει επιλεγεί φάκελος</string>
+    <string name="notes_sync_nextcloud">Nextcloud Notes</string>
+    <string name="notes_sync_nextcloud_desc">Βάλε τη διεύθυνση του server και έναν κωδικό εφαρμογής (Nextcloud > Ρυθμίσεις > Ασφάλεια).</string>
+    <string name="notes_sync_server">Διεύθυνση server</string>
+    <string name="notes_sync_user">Όνομα χρήστη</string>
+    <string name="notes_sync_password">Κωδικός εφαρμογής</string>
+    <string name="notes_sync_save">Αποθήκευση και συγχρονισμός</string>
+</resources>

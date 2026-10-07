@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="notes_title">Notes</string>
+    <string name="notes_new">New note</string>
+    <string name="notes_search">Search notes</string>
+    <string name="notes_archive">Archive</string>
+    <string name="notes_trash">Trash</string>
+    <string name="notes_empty">No notes</string>
+    <string name="notes_empty_trash">Empty the trash</string>
+    <string name="notes_import">Import notes</string>
+    <string name="notes_sync_now">Sync now</string>
+    <string name="notes_sync_settings">Sync</string>
+    <string name="notes_back">Back</string>
+    <string name="notes_pin">Pin</string>
+    <string name="notes_color">Colour</string>
+    <string name="notes_labels">Labels</string>
+    <string name="notes_share">Share</string>
+    <string name="notes_delete">Move to trash</string>
+    <string name="notes_title_hint">Title</string>
+    <string name="notes_body_hint">Note</string>
+    <string name="notes_labels_hint">work, home</string>
+    <string name="notes_ok">OK</string>
+    <string name="notes_cancel">Cancel</string>
+    <string name="notes_imported">%d notes imported</string>
+    <string name="notes_synced">Synced: %1$d sent, %2$d received</string>
+    <string name="notes_sync_failed">Sync failed: %s</string>
+    <string name="notes_sync_folder">Markdown folder</string>
+    <string name="notes_sync_folder_desc">Every note becomes a .md file in the folder you choose. Use an Obsidian or Logseq vault, a Syncthing folder or the folder of a cloud app, and the notes follow.</string>
+    <string name="notes_sync_choose_folder">Choose folder</string>
+    <string name="notes_sync_off">Turn off</string>
+    <string name="notes_sync_not_set">No folder chosen</string>
+    <string name="notes_sync_nextcloud">Nextcloud Notes</string>
+    <string name="notes_sync_nextcloud_desc">Use the address of your server and an app password (Nextcloud > Settings > Security).</string>
+    <string name="notes_sync_server">Server address</string>
+    <string name="notes_sync_user">User name</string>
+    <string name="notes_sync_password">App password</string>
+    <string name="notes_sync_save">Save and sync</string>
+</resources>

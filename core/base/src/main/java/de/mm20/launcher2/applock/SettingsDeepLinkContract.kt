@@ -28,5 +28,7 @@ object SettingsDeepLinkContract {
     const val ROUTE_VOICE_RECORDER = "settings/voice_recorder"
     const val ROUTE_SCREEN_RECORDER = "settings/screen_recorder"
     const val ROUTE_SCREENSHOT = "settings/screenshot"
+    const val ROUTE_NOTES = "settings/notes"
+    const val ROUTE_CALENDAR = "settings/calendar"
     // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
 }

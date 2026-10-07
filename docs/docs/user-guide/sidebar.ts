@@ -80,6 +80,14 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         link: '/docs/user-guide/telos/voice-recorder/',
       },
       {
+        text: 'Notes',
+        link: '/docs/user-guide/telos/notes/',
+      },
+      {
+        text: 'Calendar',
+        link: '/docs/user-guide/telos/calendar/',
+      },
+      {
         text: 'Photos',
         collapsed: true,
         link: '/docs/user-guide/telos/photos/',
