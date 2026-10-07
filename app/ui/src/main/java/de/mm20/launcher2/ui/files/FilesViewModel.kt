@@ -76,6 +76,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
 
     private fun fsFor(p: String): Fs = when {
         RemotePath.isRemote(p) -> RemoteRegistry.fs(context, RemotePath.idOf(p))
+        ArchivePath.isArchive(p) -> ArchiveFs.of(ArchivePath.archiveOf(p))
         rootMode -> root
         else -> local
     }
@@ -154,6 +155,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val isVolumeRoot = !rootMode && volumes.any { it.path == current }
         val parent = when {
             RemotePath.isRemote(current) -> if (RemotePath.isRoot(current)) null else parentOf(current)
+            ArchivePath.isArchive(current) -> if (ArchivePath.isRoot(current)) parentOf(ArchivePath.archiveOf(current)) else ArchivePath.build(ArchivePath.archiveOf(current), parentOf(ArchivePath.innerOf(current)) ?: "/")
             isVolumeRoot -> null
             else -> parentOf(current)
         }
@@ -404,13 +406,13 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    /** Unpacks an archive into a folder next to it (zip, 7z, tar, ...). */
     fun extract(entry: FsEntry) {
         val dir = path ?: return
-        val file = File(entry.path)
-        val total = runCatching { java.util.zip.ZipFile(file).use { z -> z.entries().asSequence().sumOf { maxOf(it.size, 0L) } } }.getOrDefault(0L)
-        runTask("Extracting", total) { cancel, progress ->
-            val target = File(dir, local.freeName(dir, file.nameWithoutExtension))
-            FsOps.unzip(file, target, cancel, progress)
+        val archiveFs = ArchiveFs(File(entry.path))
+        runTask("Extracting", null) { cancel, progress ->
+            val target = File(dir, local.freeName(dir, entry.name.substringBefore('.')))
+            FsOps.copyAcross(archiveFs, ArchivePath.build(entry.path, "/"), true, local, target.path, cancel, progress)
             "Extracted to ${target.name}"
         }
     }

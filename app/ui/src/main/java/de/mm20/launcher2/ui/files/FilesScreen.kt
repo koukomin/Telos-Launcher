@@ -154,8 +154,8 @@ fun FilesScreen() {
         when {
             vm.selection.isNotEmpty() -> vm.toggleSelected(entry)
             entry.isDir -> vm.open(entry.path)
-            entry.kind == FileKind.Archive && entry.extension == "zip" -> dialog = FilesDialog.Archive(entry)
-            RemotePath.isRemote(entry.path) -> vm.download(entry) { file ->
+            ArchivePath.canOpen(entry.name) && !RemotePath.isRemote(entry.path) && !ArchivePath.isArchive(entry.path) -> dialog = FilesDialog.Archive(entry)
+            (RemotePath.isRemote(entry.path) || ArchivePath.isArchive(entry.path)) -> vm.download(entry) { file ->
                 FileActions.open(context, FsEntry(file.path, file.name, false, file.length(), file.lastModified()), emptyList(), false)
             }
             else -> FileActions.open(context, entry, vm.entries, vm.rootMode)
@@ -201,7 +201,7 @@ fun FilesScreen() {
                             onClose = { searching = false; vm.clearSearch() },
                         )
                         else -> TopAppBar(
-                            title = { Text(vm.path?.let { vm.connectionName(it)?.takeIf { _ -> RemotePath.isRoot(it) } ?: nameOf(it) } ?: "Telos Files", maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                            title = { Text(vm.path?.let { vm.connectionName(it)?.takeIf { _ -> RemotePath.isRoot(it) } ?: if (ArchivePath.isRoot(it)) nameOf(ArchivePath.archiveOf(it)) else nameOf(it) } ?: "Telos Files", maxLines = 1, overflow = TextOverflow.Ellipsis) },
                             navigationIcon = {
                                 IconButton(onClick = { scope.launch { drawer.open() } }) {
                                     Icon(painterResource(Icons.storage_24px), contentDescription = "Storage")
@@ -347,12 +347,12 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
         is FilesDialog.Archive -> AlertDialog(
             onDismissRequest = onDismiss,
             title = { Text(dialog.entry.name) },
-            text = { Text("Extract this archive into a folder next to it?") },
-            confirmButton = { TextButton(onClick = { vm.extract(dialog.entry); onDismiss() }) { Text("Extract here") } },
+            text = { Text("Look inside the archive, or unpack it into a folder next to it?") },
+            confirmButton = { TextButton(onClick = { vm.open(ArchivePath.build(dialog.entry.path, "/")); onDismiss() }) { Text("Browse") } },
             dismissButton = {
                 Row {
+                    TextButton(onClick = { vm.extract(dialog.entry); onDismiss() }) { Text("Extract here") }
                     TextButton(onClick = { FileActions.openWith(context, dialog.entry, vm.rootMode); onDismiss() }) { Text("Open with…") }
-                    TextButton(onClick = onDismiss) { Text("Cancel") }
                 }
             },
         )
@@ -554,14 +554,15 @@ private fun SearchBar(query: String, onQuery: (String) -> Unit, onClose: () -> U
 @Composable
 private fun Breadcrumbs(vm: FilesViewModel, onGo: (String?) -> Unit) {
     val p = vm.path ?: return
+    val inArchive = ArchivePath.isArchive(p)
     val remote = RemotePath.isRemote(p)
-    val volume = if (!vm.rootMode && !remote) vm.volumes.firstOrNull { p == it.path || p.startsWith(it.path + "/") } else null
-    val base = if (remote) "rem://" + RemotePath.idOf(p) else volume?.path ?: "/"
+    val volume = if (!vm.rootMode && !remote && !inArchive) vm.volumes.firstOrNull { p == it.path || p.startsWith(it.path + "/") } else null
+    val base = if (remote) "rem://" + RemotePath.idOf(p) else if (inArchive) ArchivePath.build(ArchivePath.archiveOf(p), "/").trimEnd('/') else volume?.path ?: "/"
     val crumbs = buildList<Pair<String, String?>> {
         add("Home" to null)
-        add((if (remote) vm.connectionName(p) ?: "Storage" else volume?.name?.substringBefore(" (") ?: "/") to base)
+        add((if (remote) vm.connectionName(p) ?: "Storage" else if (inArchive) nameOf(ArchivePath.archiveOf(p)) else volume?.name?.substringBefore(" (") ?: "/") to base)
         var acc = base
-        val rest = if (remote) RemotePath.innerOf(p) else p.removePrefix(base)
+        val rest = if (remote) RemotePath.innerOf(p) else if (inArchive) ArchivePath.innerOf(p) else p.removePrefix(base)
         rest.trim('/').split('/').filter { it.isNotEmpty() }.forEach { seg -> acc = joinPath(acc, seg); add(seg to acc) }
     }
     val scroll = rememberScrollState()
@@ -852,7 +853,7 @@ private fun FileRow(e: FsEntry, selected: Boolean, rootMode: Boolean, onClick: (
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        TypeTile(e.kind, if (e.kind == FileKind.Image && e.extension != "svg" && !RemotePath.isRemote(e.path)) e.path else null, selected)
+        TypeTile(e.kind, if (e.kind == FileKind.Image && e.extension != "svg" && !RemotePath.isRemote(e.path) && !ArchivePath.isArchive(e.path)) e.path else null, selected)
         Column(Modifier.padding(start = 14.dp).weight(1f)) {
             Text(e.name, maxLines = 1, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.bodyLarge)
             val detail = listOfNotNull(
@@ -876,7 +877,7 @@ private fun GridCell(e: FsEntry, selected: Boolean, onClick: () -> Unit, onLongC
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(Modifier.fillMaxWidth().aspectRatio(1f), contentAlignment = Alignment.Center) {
-            TypeTile(e.kind, if (e.kind == FileKind.Image && e.extension != "svg" && !RemotePath.isRemote(e.path)) e.path else null, selected, 72.dp)
+            TypeTile(e.kind, if (e.kind == FileKind.Image && e.extension != "svg" && !RemotePath.isRemote(e.path) && !ArchivePath.isArchive(e.path)) e.path else null, selected, 72.dp)
         }
         Text(e.name, maxLines = 2, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(top = 6.dp))
     }

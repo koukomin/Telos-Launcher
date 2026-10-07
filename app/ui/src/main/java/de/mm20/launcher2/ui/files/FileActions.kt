@@ -99,5 +99,5 @@ internal object FileActions {
 
     /** Folders where a careless change can break the phone, shown only in root mode */
     fun isSystemPath(path: String, rootMode: Boolean): Boolean =
-        rootMode && !path.startsWith("rem://") && !path.startsWith("/storage/") && !path.startsWith("/sdcard") && !path.startsWith("/mnt/sdcard")
+        rootMode && !path.startsWith("rem://") && !path.startsWith("arc://") && !path.startsWith("/storage/") && !path.startsWith("/sdcard") && !path.startsWith("/mnt/sdcard")
 }
