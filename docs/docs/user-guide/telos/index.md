@@ -22,7 +22,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 <a href="./video"><b>🎬 Video</b><span>Library, player, web streams, torrents, subtitles, Trakt</span></a>
 <a href="./radio"><b>📻 Radio</b><span>Internet radio with station search and sleep timer</span></a>
 <a href="./store"><b>🛍️ Store</b><span>Install and update apps from GitHub, F-Droid and more</span></a>
-<a href="./freeze"><b>❄️ Smart Freeze</b><span>Freeze or hide apps through Shizuku, Dhizuku, root and more</span></a>
+<a href="./freeze"><b>❄️ Smart Freeze</b><span>Freeze or hide apps through Shizuku, Dhizuku, root, Island or device owner</span></a>
 
 </div>
 
@@ -46,6 +46,16 @@ gallery, music, video and radio players, an app store and an app freezer.
 | Telos Store | Obtainium-like app installer and updater, manages the Telos apps | [Store](./store) |
 | Smart Freeze | Freeze or hide installed apps | [Smart Freeze](./freeze) |
 
+## Launcher and apps compared
+
+| | The launcher | The Telos apps |
+| --- | --- | --- |
+| Origin | Kvaesitso | Added by Telos |
+| Where it runs | Launcher process | Launcher process (Video can use its own process) |
+| Can be switched off | No | Yes, from the [Store](./store) (except the Store itself) |
+| Guarded by the crash guard | n/a | Radio, Music, Video, Photos |
+| Docs | [The launcher](./launcher) | One page per app |
+
 ## How the built-in apps work
 
 The Telos apps are **virtual apps**. They are not separate APKs: their code is part of the launcher and
@@ -62,8 +72,9 @@ they run inside the launcher process (the video player can optionally run in a s
 - **They appear in the share menu.** Other apps can hand text, pictures, videos, `sms:`, `tel:`,
   `magnet:` and `obtainium:` links to them. Each entry appears under its own name and icon, and only
   while that app is installed.
-- **They are guarded against crashes.** An app that crashes or hangs twice within a day is switched
-  off automatically, with a notification that points to the Store. Installing it again resets the counter.
+- **They are guarded against crashes.** Radio, Music, Video and Photos are switched off automatically
+  when they crash or hang twice within a day, with a notification that points to the Store. Installing
+  the app again resets the counter. Phone and Messages are never switched off, because Android needs them.
 
 | Share target | Accepts |
 | --- | --- |
