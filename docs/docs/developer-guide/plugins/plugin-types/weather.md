@@ -1,7 +1,7 @@
 # Weather Provider
 
 Weather provider plugins need to extend
-the <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-provider/index.html" target="_blank">`WeatherProvider`</a>
+the <a href="/Telos-Launcher/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-provider/index.html" target="_blank">`WeatherProvider`</a>
 class:
 
 ```kt
@@ -12,7 +12,7 @@ class MyWeatherProviderPlugin() : WeatherProvider(
 ```
 
 In the super constructor call, pass
-a <a href="/reference/core/shared/de.mm20.launcher2.plugin.config/-weather-plugin-config/index.html" target="_blank">`WeatherPluginConfig`</a>
+a <a href="/Telos-Launcher/reference/core/shared/de.mm20.launcher2.plugin.config/-weather-plugin-config/index.html" target="_blank">`WeatherPluginConfig`</a>
 object.
 
 ## Plugin config
@@ -41,18 +41,18 @@ The default implementation uses the Android Geocoder, but this API has the limit
 on Google Play Services so you should use your own implementation whenever feasable.
 
 `findLocations` returns a list
-of <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-location/index.html" target="_blank">`WeatherLocation`</a>
+of <a href="/Telos-Launcher/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-location/index.html" target="_blank">`WeatherLocation`</a>
 s. Return an empty list if no location has been found.
 
 ### Location types
 
 There are three types of locations:
 
-- <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-location/-lat-lon/index.html" target="_blank">`WeatherLocation.LatLon`</a>:
+- <a href="/Telos-Launcher/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-location/-lat-lon/index.html" target="_blank">`WeatherLocation.LatLon`</a>:
   use this if your weather service identifies locations by their geo coordinates.
-- <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-location/-id/index.html" target="_blank">`WeatherLocation.Id`</a>:
+- <a href="/Telos-Launcher/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-location/-id/index.html" target="_blank">`WeatherLocation.Id`</a>:
   use this if your weather service has an internal ID system to identify locations.
-- <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-location/-managed/index.html" target="_blank">`WeatherLocation.Managed`</a>:
+- <a href="/Telos-Launcher/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-location/-managed/index.html" target="_blank">`WeatherLocation.Managed`</a>:
   a special location that indicates that the plugin should determine the location itself.
 
 ## Fetch weather data
@@ -77,7 +77,7 @@ location. If you haven't overridden `findLocations`, this will always be a `Weat
 If `managedLocation` is set to `true`, this method is called with `WeatherLocation.Managed`.
 
 Both methods return a list
-of <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-forecast/index.html" target="_blank">`Forecast`</a>
+of <a href="/Telos-Launcher/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-forecast/index.html" target="_blank">`Forecast`</a>
 s. If an error occurs, you can throw an exception or return `null`, in this case the launcher will
 keep the old data and start another attempt at a later time.
 
@@ -92,7 +92,7 @@ a `condition`, an `icon`, a `location` name, and a `provider` name.
 - The `condition` should preferably be localized in the user's language, which is provided by
   the `lang` parameter.
 - To construct
-  a <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-temperature/index.html" target="_blank">`Temperature`</a>,
+  a <a href="/Telos-Launcher/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-temperature/index.html" target="_blank">`Temperature`</a>,
   you can use the `Double.C`, `Double.F`, or `Double.K` helper functions, depending on whether the
   numeric value returned by your weather service API is in degrees celsius, degrees fahrenheit, or
   kelvin:
@@ -112,7 +112,7 @@ a `condition`, an `icon`, a `location` name, and a `provider` name.
   - In fixed location mode, you should read this value from the `location` parameter, to ensure
     that the name in the weather widget matches the name that the user has set in preferences.
   - In auto location mode, if your weather service does not give you a location name, you can use
-    the <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-provider/get-location-name.html" target="_blank">`getLocationName`</a>
+    the <a href="/Telos-Launcher/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-provider/get-location-name.html" target="_blank">`getLocationName`</a>
     method to reverse geocode the location name using Android's Geocoder API.
 
 ## Plugin state

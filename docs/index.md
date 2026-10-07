@@ -67,15 +67,12 @@ features:
 ---
 
 <script setup>
+  import { withBase } from 'vitepress'
   import Footer from '.vitepress/theme/Footer.vue'
+  const shots = [1, 2, 3, 4, 5, 6].map((n) => withBase(`/img/screenshot-${n}.png`))
 </script>
 <div class="home-screenshots">
-  <img src="/img/screenshot-1.png"></img>
-  <img src="/img/screenshot-2.png"></img>
-  <img src="/img/screenshot-3.png"></img>
-  <img src="/img/screenshot-4.png"></img>
-  <img src="/img/screenshot-5.png"></img>
-  <img src="/img/screenshot-6.png"></img>
+  <img v-for="src in shots" :key="src" :src="src" alt="Telos screenshot" />
 
   <div class="credits">Wallpaper by Allec Gomes on <a href="https://unsplash.com/de/fotos/ein-grunes-blatt-das-auf-einem-gewasser-schwimmt-UcWUMqIsld8" target="_blank">Unsplash.com</a></div>
 </div>

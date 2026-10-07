@@ -1,7 +1,7 @@
 # Places Search
 
 Places search provider plugins need to extend
-the <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.locations/-location-provider/index.html" target="_blank">`LocationProvider`</a>
+the <a href="/Telos-Launcher/reference/plugins/sdk/de.mm20.launcher2.sdk.locations/-location-provider/index.html" target="_blank">`LocationProvider`</a>
 class:
 
 ```kt
@@ -12,7 +12,7 @@ class MyplaceSearchPlugin() : LocationProvider(
 ```
 
 In the super constructor call, pass
-a <a href="/reference/core/shared/de.mm20.launcher2.plugin.config/-query-plugin-config/index.html" target="_blank">`QueryPluginConfig`</a>
+a <a href="/Telos-Launcher/reference/core/shared/de.mm20.launcher2.plugin.config/-query-plugin-config/index.html" target="_blank">`QueryPluginConfig`</a>
 object.
 
 ## Plugin config

@@ -6,7 +6,7 @@ If your plugin has such requirements, you can override
 suspend fun getPluginState(): PluginState
 ```
 
-This method can either return <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk/-plugin-state/-ready/index.html" target="_blank">`PluginState.Ready`</a>, or <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk/-plugin-state/-setup-required/index.html" target="_blank">`PluginState.SetupRequired`</a>.
+This method can either return <a href="/Telos-Launcher/reference/plugins/sdk/de.mm20.launcher2.sdk/-plugin-state/-ready/index.html" target="_blank">`PluginState.Ready`</a>, or <a href="/Telos-Launcher/reference/plugins/sdk/de.mm20.launcher2.sdk/-plugin-state/-setup-required/index.html" target="_blank">`PluginState.SetupRequired`</a>.
 
 - `PluginState.Ready` can have a status `text` to describe what the plugin does in its current configuration. For example _"Search {username}'s files on {service}_". This overrides the plugin's [description](/docs/developer-guide/plugins/metadata.html#description-1).
 - `PluginState.SetupRequired` needs to have a `setupActivity` Intent that starts the setup. You can also provide a `message` to describe what kind of setup needs to be performed. For example _"Sign in with {service} to search files on {service}"_
