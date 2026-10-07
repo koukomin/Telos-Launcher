@@ -86,6 +86,8 @@ class ScrobbleTracker(private val context: Context, private val player: Player) 
 
     override fun onIsPlayingChanged(isPlaying: Boolean) {
         accumulate()
+        // the threshold may have been reached since the last tick
+        if (!isPlaying) check()
         handler.removeCallbacks(tick)
         if (isPlaying) {
             lastTick = System.currentTimeMillis()
@@ -95,6 +97,7 @@ class ScrobbleTracker(private val context: Context, private val player: Player) 
 
     override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
         accumulate()
+        check()
         loadTrack(mediaItem)
         if (player.isPlaying) {
             lastTick = System.currentTimeMillis()
@@ -145,7 +148,7 @@ class ScrobbleTracker(private val context: Context, private val player: Player) 
         for (i in 0 until old.length()) {
             val o = old.getJSONObject(i)
             val s = list.firstOrNull { it.name == o.optString("s") }
-            if (s == null) continue
+            if (s == null) { keep.put(o); continue } // service switched off: keep it for later
             val past = ScrobbleTrack(o.optString("a"), o.optString("t"), o.optString("b"), o.optInt("l"), o.optLong("ts"))
             if (runCatching { s.scrobble(past) }.isFailure) keep.put(o)
         }

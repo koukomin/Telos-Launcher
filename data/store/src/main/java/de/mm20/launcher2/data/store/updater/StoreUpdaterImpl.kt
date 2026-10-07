@@ -102,9 +102,11 @@ class StoreUpdaterImpl(
         // only announce versions the user has not been told about yet
         val fresh = updates.filter { prefs.getString(it.id, null) != it.latestRelease?.version }
         if (fresh.isEmpty() && installed.isEmpty()) return
-        fresh.forEach { prefs.edit().putString(it.id, it.latestRelease?.version).apply() }
 
         val nm = context.getSystemService(NotificationManager::class.java) ?: return
+        // not allowed to show notifications: don't count these versions as announced
+        if (!nm.areNotificationsEnabled()) return
+        fresh.forEach { prefs.edit().putString(it.id, it.latestRelease?.version).apply() }
         if (Build.VERSION.SDK_INT >= 26) {
             nm.createNotificationChannel(NotificationChannel(CHANNEL, "App updates", NotificationManager.IMPORTANCE_DEFAULT))
         }

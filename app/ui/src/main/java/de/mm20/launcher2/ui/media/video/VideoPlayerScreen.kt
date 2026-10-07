@@ -65,7 +65,7 @@ fun VideoPlayerScreen(
     if (torrentSource != null) {
         LaunchedEffect(torrentSource) {
             val config = VideoServices.config()
-            runCatching { TorrentStreamer.open(context, torrentSource, config.torrentWifiOnly) }
+            runCatching { TorrentStreamer.open(context, torrentSource, config.torrentWifiOnly, context.findActivity()) }
                 .onSuccess { opened ->
                     val name = TorrentStreamer.torrentName()
                     resolved = ResolvedMedia(
@@ -459,4 +459,14 @@ private fun OnlineSubtitleDialog(rawTitle: String, onDismiss: () -> Unit, onFile
         },
         confirmButton = { TextButton(onClick = onDismiss) { Text("Close") } },
     )
+}
+
+/** The activity behind a context, which may be wrapped */
+private fun android.content.Context.findActivity(): android.app.Activity? {
+    var c: android.content.Context? = this
+    while (c is android.content.ContextWrapper) {
+        if (c is android.app.Activity) return c
+        c = c.baseContext
+    }
+    return null
 }
