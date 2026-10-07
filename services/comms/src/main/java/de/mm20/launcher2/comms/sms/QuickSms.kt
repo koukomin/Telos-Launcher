@@ -9,18 +9,19 @@ import de.mm20.launcher2.comms.intent.MessengerIntentUtils
 import de.mm20.launcher2.ktx.tryStartActivity
 
 object QuickSms {
-    fun send(context: Context, number: String, body: String) {
-        if (number.isBlank() || body.isBlank()) return
+    /** True when the message was handed to the phone's SMS service */
+    fun send(context: Context, number: String, body: String): Boolean {
+        if (number.isBlank() || body.isBlank()) return false
         val granted = ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS) ==
             PackageManager.PERMISSION_GRANTED
         if (granted) {
-            runCatching {
+            return runCatching {
                 @Suppress("DEPRECATION")
                 val sms = context.getSystemService(SmsManager::class.java) ?: SmsManager.getDefault()
                 sms.sendTextMessage(number, null, body, null, null)
-            }
-            return
+            }.isSuccess
         }
         context.tryStartActivity(MessengerIntentUtils.sms(number, body))
+        return false
     }
 }

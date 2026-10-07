@@ -50,18 +50,42 @@ class AuthManager : KoinComponent {
 
     fun setCustomPin(pin: String) {
         val salt = generateSalt()
-        val hash = hashPin(pin, salt)
         sharedPrefs.edit()
             .putString("vault_pin_salt", salt)
-            .putString("vault_pin_hash", hash)
+            .putString("vault_pin_hash", pbkdf2(pin, salt))
+            .putInt("vault_pin_iterations", ITERATIONS)
+            .putInt("vault_pin_failures", 0)
             .apply()
     }
 
+    /** Seconds until another guess is allowed, 0 when it is allowed now */
+    fun lockedForSeconds(): Long {
+        val until = sharedPrefs.getLong("vault_pin_locked_until", 0L)
+        return ((until - System.currentTimeMillis()) / 1000).coerceAtLeast(0)
+    }
+
     fun authenticateCustom(pin: String): Boolean {
+        // a short PIN has few combinations: guesses are slowed down, not just hashed slowly
+        if (lockedForSeconds() > 0) return false
         val salt = sharedPrefs.getString("vault_pin_salt", null) ?: return false
         val storedHash = sharedPrefs.getString("vault_pin_hash", null) ?: return false
-        val computedHash = hashPin(pin, salt)
-        return computedHash == storedHash
+        val legacy = !sharedPrefs.contains("vault_pin_iterations")
+        val computed = if (legacy) legacyHash(pin, salt) else pbkdf2(pin, salt)
+        val ok = MessageDigest.isEqual(computed.toByteArray(), storedHash.toByteArray())
+        if (ok) {
+            sharedPrefs.edit().putInt("vault_pin_failures", 0).remove("vault_pin_locked_until").apply()
+            if (legacy) setCustomPin(pin) // move an old PIN to the stronger hash
+        } else {
+            val failures = sharedPrefs.getInt("vault_pin_failures", 0) + 1
+            val edit = sharedPrefs.edit().putInt("vault_pin_failures", failures)
+            if (failures >= FREE_ATTEMPTS) {
+                // 30 s after the 5th wrong PIN, then twice as long for every further one, at most an hour
+                val seconds = (30L shl (failures - FREE_ATTEMPTS).coerceAtMost(7)).coerceAtMost(3600L)
+                edit.putLong("vault_pin_locked_until", System.currentTimeMillis() + seconds * 1000)
+            }
+            edit.apply()
+        }
+        return ok
     }
 
     private fun generateSalt(): String {
@@ -71,10 +95,21 @@ class AuthManager : KoinComponent {
         return saltBytes.joinToString("") { "%02x".format(it) }
     }
 
-    private fun hashPin(pin: String, salt: String): String {
+    private fun pbkdf2(pin: String, salt: String): String {
+        val spec = javax.crypto.spec.PBEKeySpec(pin.toCharArray(), salt.toByteArray(), ITERATIONS, 256)
+        val bytes = javax.crypto.SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256").generateSecret(spec).encoded
+        return bytes.joinToString("") { "%02x".format(it) }
+    }
+
+    private fun legacyHash(pin: String, salt: String): String {
         val digest = MessageDigest.getInstance("SHA-256")
         digest.update(salt.toByteArray())
         val hashBytes = digest.digest(pin.toByteArray())
         return hashBytes.joinToString("") { "%02x".format(it) }
+    }
+
+    private companion object {
+        const val ITERATIONS = 200_000
+        const val FREE_ATTEMPTS = 5
     }
 }

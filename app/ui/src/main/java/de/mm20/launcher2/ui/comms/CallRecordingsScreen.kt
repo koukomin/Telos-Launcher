@@ -23,6 +23,7 @@ import androidx.core.content.FileProvider
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.comms.recording.CallAudioRecorder
 import de.mm20.launcher2.comms.recording.CallRecordingFile
+import de.mm20.launcher2.comms.recording.RecordingCrypto
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
@@ -38,6 +39,7 @@ data object CallRecordingsRoute : NavKey
 fun CallRecordingsScreen() {
     val context = LocalContext.current
     var files by remember { mutableStateOf(CallAudioRecorder.list(context)) }
+    androidx.compose.runtime.LaunchedEffect(Unit) { RecordingCrypto.clearSharedCopies(context) }
     PreferenceScreen(title = { Text("Call recordings") }) {
         if (files.isEmpty()) {
             item {
@@ -63,10 +65,12 @@ private fun RecordingRow(rec: CallRecordingFile, onChanged: () -> Unit) {
             .fillMaxWidth()
             .clickable {
                 runCatching {
+                    // the player gets a temporary readable copy, removed later
+                    val readable = RecordingCrypto.readableCopy(context, rec.file)!!
                     val uri = FileProvider.getUriForFile(
                         context,
                         "${context.packageName}.fileprovider",
-                        rec.file,
+                        readable,
                     )
                     val intent = Intent(Intent.ACTION_VIEW).apply {
                         setDataAndType(uri, "audio/mp4")

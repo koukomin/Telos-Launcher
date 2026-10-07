@@ -22,6 +22,10 @@ android {
         resources.excludes.add("META-INF/ASL2.0")
         resources.excludes.add("META-INF/LICENSE.md")
         resources.excludes.add("META-INF/NOTICE.md")
+        resources.excludes.add("META-INF/versions/**")
+        resources.excludes.add("META-INF/INDEX.LIST")
+        resources.excludes.add("META-INF/DEPENDENCIES.txt")
+        resources.excludes.add("META-INF/LICENSE.txt")
     }
 
     compileSdk {
@@ -194,4 +198,11 @@ dependencies {
 
     // Uncomment this if you want annoying notifications in your debug builds
     //debugImplementation(libs.leakcanary)
+}
+
+// Bouncy Castle comes in with several versions (sshj, other libraries); the parts must match or the classes are duplicated
+configurations.all {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.bouncycastle") useVersion("1.84")
+    }
 }

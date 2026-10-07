@@ -35,7 +35,31 @@ fun ScheduledSmsScreen() {
     var number by remember { mutableStateOf("") }
     var body by remember { mutableStateOf("") }
     val fmt = remember { SimpleDateFormat("d MMM HH:mm", Locale.getDefault()) }
+    var exact by remember { mutableStateOf(ScheduledSmsStore.canScheduleExact(context)) }
+    androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+        exact = ScheduledSmsStore.canScheduleExact(context)
+    }
     PreferenceScreen(title = { Text("Scheduled SMS") }) {
+        if (!exact) {
+            item {
+                ListItem(
+                    headlineContent = { Text("Exact time") },
+                    supportingContent = { Text("Without this permission a message may go out a few minutes late. Allow \"Alarms & reminders\" for Telos to send it on time.") },
+                    trailingContent = {
+                        TextButton(onClick = {
+                            runCatching {
+                                context.startActivity(
+                                    android.content.Intent(
+                                        android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM,
+                                        android.net.Uri.parse("package:${context.packageName}"),
+                                    )
+                                )
+                            }
+                        }) { Text("Allow") }
+                    },
+                )
+            }
+        }
         item {
             OutlinedTextField(
                 value = number,

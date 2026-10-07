@@ -50,8 +50,8 @@ object TelosApps {
         TelosApp(
             key = "telos_messages_app://messages",
             name = "Telos Messages",
-            description = "SMS and MMS with quick replies and scheduled messages.",
-            features = listOf("Quick replies", "Scheduled messages"),
+            description = "Your text and picture messages (MMS): conversations, replies, quick replies and scheduled messages. Can be the default SMS app. Conversations with hidden contacts are only shown while the hidden contacts are unlocked.",
+            features = listOf("SMS and MMS", "Default SMS app", "Quick replies", "Scheduled messages", "Hidden contacts stay out of the list"),
             iconRes = de.mm20.launcher2.base.R.drawable.sms_24px,
             route = SettingsDeepLinkContract.ROUTE_COMMS,
             commsTab = "messages",
@@ -90,6 +90,17 @@ object TelosApps {
             features = listOf("Albums and a date timeline", "EXIF viewer, editor and remover", "Share without metadata", "Crop, rotate, filters"),
             iconRes = de.mm20.launcher2.base.R.drawable.photo_24px,
             route = SettingsDeepLinkContract.ROUTE_PHOTOS,
+        ),
+        TelosApp(
+            key = "telos_files_app://files",
+            name = "Telos Files",
+            description = "A file manager: browse and manage the files on your phone, with an optional root explorer for system files.",
+            features = listOf(
+                "Storage, SD cards and USB", "Copy, move, rename, delete, zip", "Grid and list, sorting, search", "Favorites and properties with checksums",
+                "Root explorer with safety warnings",
+            ),
+            iconRes = de.mm20.launcher2.base.R.drawable.folder_24px,
+            route = SettingsDeepLinkContract.ROUTE_FILES,
         ),
     )
 }

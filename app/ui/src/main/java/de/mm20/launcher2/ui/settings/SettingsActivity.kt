@@ -258,8 +258,14 @@ class SettingsActivity : BaseActivity() {
             }
             entry<CommsDashboardRoute> {
                 // === TELOS_PENDING_REVIEW_START: comms_virtual_apps ===
-                CommsDashboardScreen(it.initialTab, it.initialNumber)
+                CommsDashboardScreen(it.initialTab, it.initialNumber, it.initialBody, it.initialAttachments)
                 // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
+            }
+            entry<de.mm20.launcher2.ui.files.remote.ConnectionsRoute> {
+                de.mm20.launcher2.ui.files.remote.ConnectionsScreen()
+            }
+            entry<de.mm20.launcher2.ui.files.FilesRoute> {
+                de.mm20.launcher2.ui.files.FilesScreen()
             }
             entry<de.mm20.launcher2.ui.media.photos.PhotosRoute> {
                 de.mm20.launcher2.ui.media.photos.PhotosScreen()
@@ -606,12 +612,18 @@ class SettingsActivity : BaseActivity() {
             ROUTE_COMMS -> {
                 val tab = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB) ?: "recents"
                 val number = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_DIAL_NUMBER).orEmpty()
-                CommsDashboardRoute(initialTab = tab, initialNumber = number)
+                CommsDashboardRoute(
+                    initialTab = tab,
+                    initialNumber = number,
+                    initialBody = intent.getStringExtra(SettingsDeepLinkContract.EXTRA_SMS_BODY).orEmpty(),
+                    initialAttachments = intent.getStringArrayListExtra(SettingsDeepLinkContract.EXTRA_SMS_ATTACHMENTS).orEmpty(),
+                )
             }
             ROUTE_RADIO -> de.mm20.launcher2.ui.comms.radio.RadioDashboardRoute
             ROUTE_MUSIC -> de.mm20.launcher2.ui.media.music.MusicRoute
             ROUTE_VIDEO -> de.mm20.launcher2.ui.media.video.VideoRoute
             ROUTE_PHOTOS -> de.mm20.launcher2.ui.media.photos.PhotosRoute
+            ROUTE_FILES -> de.mm20.launcher2.ui.files.FilesRoute
             // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
             ROUTE_CRASH_REPORT if (intent.hasExtra(EXTRA_CRASH_REPORT_PATH)) -> {
                 CrashReportRoute(intent.getStringExtra(EXTRA_CRASH_REPORT_PATH)!!)
@@ -641,6 +653,7 @@ class SettingsActivity : BaseActivity() {
         const val ROUTE_MUSIC = SettingsDeepLinkContract.ROUTE_MUSIC
         const val ROUTE_VIDEO = SettingsDeepLinkContract.ROUTE_VIDEO
         const val ROUTE_PHOTOS = SettingsDeepLinkContract.ROUTE_PHOTOS
+        const val ROUTE_FILES = SettingsDeepLinkContract.ROUTE_FILES
         // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
         const val ROUTE_CRASH_REPORT = "settings/debug/crashreport"
         const val EXTRA_CRASH_REPORT_PATH = "crash_report_path"

@@ -56,6 +56,8 @@ import org.koin.compose.koinInject
 data class CommsDashboardRoute(
     val initialTab: String = "recents",
     val initialNumber: String = "",
+    val initialBody: String = "",
+    val initialAttachments: List<String> = emptyList(),
 ) : NavKey
 
 private enum class CommsTab(val label: String) {
@@ -68,7 +70,12 @@ private enum class CommsTab(val label: String) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CommsDashboardScreen(initialTab: String = "recents", initialNumber: String = "") {
+fun CommsDashboardScreen(
+    initialTab: String = "recents",
+    initialNumber: String = "",
+    initialBody: String = "",
+    initialAttachments: List<String> = emptyList(),
+) {
     val defaultTab = when (initialTab.lowercase()) {
         "messages" -> CommsTab.Messages
         "favorites" -> CommsTab.Favorites
@@ -118,7 +125,8 @@ fun CommsDashboardScreen(initialTab: String = "recents", initialNumber: String =
         return
     }
     LaunchedEffect(autoOpenDialpad, initialNumber) {
-        if (autoOpenDialpad || initialNumber.isNotEmpty()) selectedTab = CommsTab.Keypad
+        // a number given to the messages tab is the one to write to, not one to dial
+        if (initialTab.lowercase() != "messages" && (autoOpenDialpad || initialNumber.isNotEmpty())) selectedTab = CommsTab.Keypad
     }
 
     if (selectedTab == CommsTab.Keypad || selectedTab == CommsTab.Messages) {
@@ -250,7 +258,11 @@ fun CommsDashboardScreen(initialTab: String = "recents", initialNumber: String =
                     showAddFab = false,
                 )
                 CommsTab.Keypad -> DialpadScreen(initialNumber = initialNumber)
-                CommsTab.Messages -> MessagesScreen()
+                CommsTab.Messages -> MessagesScreen(
+                    initialNumber = if (initialTab.lowercase() == "messages") initialNumber else "",
+                    initialBody = initialBody,
+                    initialAttachments = initialAttachments,
+                )
             }
         }
     }

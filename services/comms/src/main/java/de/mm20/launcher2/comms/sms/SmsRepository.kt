@@ -7,7 +7,7 @@ import android.util.Log
 
 class SmsRepository(private val context: Context) {
 
-    fun sendSms(destinationAddress: String, text: String): Boolean {
+    fun sendSms(destinationAddress: String, text: String, sentIntent: android.app.PendingIntent? = null): Boolean {
         try {
             val smsManager: SmsManager = context.getSystemService(SmsManager::class.java)
                 ?: return false
@@ -15,9 +15,9 @@ class SmsRepository(private val context: Context) {
             // We divide the message if it's too long
             val parts = smsManager.divideMessage(text)
             if (parts.size > 1) {
-                smsManager.sendMultipartTextMessage(destinationAddress, null, parts, null, null)
+                smsManager.sendMultipartTextMessage(destinationAddress, null, parts, sentIntent?.let { ArrayList(List(parts.size) { _ -> it }) }, null)
             } else {
-                smsManager.sendTextMessage(destinationAddress, null, text, null, null)
+                smsManager.sendTextMessage(destinationAddress, null, text, sentIntent, null)
             }
             return true
         } catch (e: Exception) {

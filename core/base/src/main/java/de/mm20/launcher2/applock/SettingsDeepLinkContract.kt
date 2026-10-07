@@ -13,11 +13,16 @@ object SettingsDeepLinkContract {
     const val ROUTE_COMMS = "settings/comms"
     const val EXTRA_COMMS_TAB = "de.mm20.launcher2.settings.COMMS_TAB"
     const val EXTRA_DIAL_NUMBER = "de.mm20.launcher2.settings.DIAL_NUMBER"
+    /** Text to put in the message field of Telos Messages */
+    const val EXTRA_SMS_BODY = "de.mm20.launcher2.settings.SMS_BODY"
+    /** Pictures or videos (content addresses) to attach to a message in Telos Messages */
+    const val EXTRA_SMS_ATTACHMENTS = "de.mm20.launcher2.settings.SMS_ATTACHMENTS"
     const val ROUTE_RADIO = "settings/radio"
     const val ROUTE_MUSIC = "settings/music"
     const val ROUTE_VIDEO = "settings/video"
     /** An address or an obtainium:// link to add in the Store */
     const val EXTRA_STORE_URL = "de.mm20.launcher2.settings.STORE_URL"
     const val ROUTE_PHOTOS = "settings/photos"
+    const val ROUTE_FILES = "settings/files"
     // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
 }

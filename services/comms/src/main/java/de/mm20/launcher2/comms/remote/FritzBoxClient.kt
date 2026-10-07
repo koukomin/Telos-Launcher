@@ -31,6 +31,10 @@ class FritzBoxClient(
             val resp = soap(base, "GetPhonebook", "<NewPhonebookID>$id</NewPhonebookID>")
             val url = tag(resp, "NewPhonebookURL")
             if (url.isBlank()) continue
+            // the box names the address to fetch the phonebook from; it only gets the login if that
+            // address is the box itself
+            val urlHost = runCatching { java.net.URI(url).host }.getOrNull()
+            if (!urlHost.equals(host.trim(), ignoreCase = true)) continue
             out += parsePhonebook(request("GET", url, null, emptyMap()))
         }
         out

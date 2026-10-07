@@ -49,11 +49,52 @@ plugin SDK for third-party search/weather/calendar providers. See the
   quick reject with SMS, "remind me" callback reminders
 - Privacy: hidden contacts behind a dialpad passcode, stealth settings menu, biometric phone-app
   lock, biometric protection for chosen numbers, secure call screen (no screenshots)
+- Call recordings are stored encrypted with a key in the Android Keystore; the vault PIN is hashed
+  with PBKDF2 and guesses are slowed down after five wrong ones; settings backups leave out
+  passwords, keys and hidden contacts
 - Smart gestures: raise to answer, flip to decline, rain mode shake gesture, pocket mode,
   proximity speaker, volume-button Do Not Disturb shortcut
 - Auto redial, fake incoming calls (scheduled), missed-call and post-call popups, Dynamic Island
   call state
-- SMS engine: quick replies, scheduled SMS
+- Telos Files, a file manager (the layout follows [Solid Explorer](https://play.google.com/store/apps/details?id=pl.solidexplorer2)
+  and [MiXplorer](https://forum.xda-developers.com/t/app-2-2-mixplorer-v6-x-released-fully-featured-file-manager.1523691/),
+  taken as inspiration only, no code was copied): storage overview with free space, SD cards and
+  USB drives, quick access to the standard folders, breadcrumb path bar, list and grid view with
+  picture thumbnails and type colours, sorting, hidden files, search in a folder, favorites,
+  multi-select, copy / move / paste with progress and cancel, rename, delete, new folder and file,
+  zip and unzip, share, properties with permissions and MD5 / SHA-1 / SHA-256, opens pictures in
+  Telos Photos and videos in Telos Video; optional root explorer (superuser) with a warning before
+  it is switched on, a warning banner and extra confirmation in system folders, changing
+  permissions, and making /system writable
+- Telos Files network and cloud storages: WebDAV, Nextcloud, ownCloud, SFTP / SSHFS (over SSH, with
+  password or key and a host key check on first use), SMB / CIFS (Windows shares, NAS), FTP and FTPS,
+  and Dropbox, Google Drive and OneDrive. Cloud sign-in uses OAuth with PKCE and **your own client
+  ID** (and for Google a client secret) that you register with the provider; the redirect address is
+  `http://localhost:53682/` (Dropbox, OneDrive) or `http://127.0.0.1:53682/` (Google). Passwords and
+  tokens are stored encrypted with a key in the Android Keystore. Files can be browsed, opened,
+  downloaded, uploaded, copied between any two storages, renamed, moved and deleted. iCloud is not
+  supported (Apple has no public API) and neither is Mega (its own encryption protocol is not
+  implemented). Settings > Integrations > "Cloud and network storage" manages the connections
+- Telos Files archives and vaults: zip, jar, apk, 7z, tar (also gz, bz2, xz), epub and Office files
+  open like folders, extract here; [Cryptomator](https://cryptomator.org) vaults (format 7 and 8)
+  can be unlocked and read (read only, experimental, decrypted files opened from a vault are removed
+  when it is locked). gocryptfs, EncFS and VeraCrypt are not supported
+- Telos Photos as a document viewer: PDF (page by page with zoom), plain text and code (editable,
+  saved back to the file), Word (.docx), Excel (.xlsx), PowerPoint (.pptx), OpenDocument, RTF and
+  EPUB. Office and OpenDocument files are shown as extracted text and tables, the page layout is not
+  reproduced; old binary .doc, .xls and .ppt files cannot be opened
+- Messages: text and multimedia (MMS) messages as conversations with a reply field, pictures in
+  the conversation, a button to attach pictures, group messages; Telos can be the phone's default
+  SMS app (the system asks once): it then stores and notifies about received messages, sends from
+  the message field, and answers "reply with a message" from the call screen. Telos can also be
+  chosen from other apps' share menu ("Telos Messages") for a text, picture or video, and opens
+  sms: links. Conversations with hidden contacts are only listed while the hidden contacts are
+  unlocked. Without being the default app Telos only reads messages and replies with text; the
+  system's messaging app still shows everything
+- Share menu entries: Telos Messages (text, pictures, videos, sms: links), Telos Photos (pictures),
+  Telos Video (videos, magnet links, torrent files), Telos Store (obtainium: links) and Telos Phone
+  (tel: links) each appear under their own name and icon, and only while that app is installed
+- SMS engine: quick replies, scheduled SMS (on the exact minute once "Alarms & reminders" is allowed)
 - Radio (behaviour and logic taken from [Transistor](https://codeberg.org/y20k/transistor), compared with 4.3.9): station
   collection with add by address, rename and remove; M3U / PLS import, M3U export and JSON backup;
   playlist links resolved to the real stream with fallback streams; current track from the stream
@@ -190,6 +231,9 @@ adapted, the original license is respected.
 | [TMDB](https://www.themoviedb.org) | API terms | Posters and descriptions in Telos Video (not endorsed or certified by TMDB) |
 | [OpenSubtitles](https://www.opensubtitles.com) | API terms | Subtitle search and download in Telos Video |
 | [TagLib wrapper (Kyant0/taglib)](https://github.com/Kyant0/taglib) | Apache-2.0 | Reading and writing audio tags; it bundles [TagLib](https://taglib.org/) (LGPL-2.1 / MPL-1.1 upstream) |
+| [Solid Explorer](https://play.google.com/store/apps/details?id=pl.solidexplorer2) and [MiXplorer](https://forum.xda-developers.com/t/app-2-2-mixplorer-v6-x-released-fully-featured-file-manager.1523691/) | proprietary / freeware | Layout and feature ideas for Telos Files (no code) |
+| [sshj](https://github.com/hierynomus/sshj), [smbj](https://github.com/hierynomus/smbj), [Apache Commons Net](https://commons.apache.org/proper/commons-net/), [Apache Commons Compress](https://commons.apache.org/proper/commons-compress/), [OkHttp](https://square.github.io/okhttp/), [Bouncy Castle](https://www.bouncycastle.org/) | Apache-2.0 / MIT | SFTP, SMB, FTP, archives, WebDAV and cloud HTTP, cryptography (libraries) |
+| [Cryptomator](https://cryptomator.org) vault format | specification (GPL-3.0 reference code, none used) | Reading Cryptomator vaults, implemented from the published format description |
 | AVM FRITZ!Box [TR-064](https://avm.de/service/schnittstellen/) | specification | Remote phonebook |
 
 The copyright notices of these projects are kept in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

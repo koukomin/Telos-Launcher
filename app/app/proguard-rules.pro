@@ -17,3 +17,18 @@
     public static int v(...);
     public static int d(...);
 }
+
+# Telos Files: SSH, SMB and FTP clients use reflection and optional libraries that Android does not have
+-keep class net.schmizz.** { *; }
+-keep class com.hierynomus.** { *; }
+-keep class org.bouncycastle.** { *; }
+-dontwarn net.schmizz.**
+-dontwarn com.hierynomus.**
+-dontwarn org.bouncycastle.**
+-dontwarn net.i2p.crypto.**
+-dontwarn org.slf4j.**
+-dontwarn org.ietf.jgss.**
+-dontwarn javax.el.**
+-dontwarn javax.security.auth.**
+-dontwarn java.lang.management.**
+-dontwarn org.apache.commons.compress.**

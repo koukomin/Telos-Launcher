@@ -652,6 +652,11 @@ JNIEXPORT void JNICALL Java_com_tutpro_baresip_BaresipService_baresipStop(
 {
     (void)env;
     (void)obj;
+    if (!mq) {
+        // not started yet, or already stopped: there is nothing to tell to stop
+        LOGD("baresipStop ignored, baresip is not running");
+        return;
+    }
     LOGD("ua_stop_all upon baresipStop");
     mqueue_push(mq, ID_UA_STOP_ALL, (void *)((long)force));
 }

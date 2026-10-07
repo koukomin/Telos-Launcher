@@ -124,8 +124,10 @@ class DialpadViewModel : ViewModel(), KoinComponent {
 
     private fun persistInput() {
         viewModelScope.launch {
+            // "#1234": a vault PIN being typed must not be written to disk
+            val typed = _input.value.takeUnless { it.startsWith("#") }.orEmpty()
             if (commsSettings.rememberDialpad.first()) {
-                commsSettings.setLastDialpadDigits(_input.value)
+                commsSettings.setLastDialpadDigits(typed)
             }
         }
     }

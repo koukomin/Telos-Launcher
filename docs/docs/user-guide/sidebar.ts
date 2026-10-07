@@ -10,6 +10,22 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
     link: '/docs/user-guide/faq',
   },
   {
+    text: 'Telos',
+    items: [
+      { text: 'Telos at a glance', link: '/docs/user-guide/telos/' },
+      { text: 'The launcher', link: '/docs/user-guide/telos/launcher' },
+      { text: 'Phone', link: '/docs/user-guide/telos/phone' },
+      { text: 'Messages', link: '/docs/user-guide/telos/messages' },
+      { text: 'Files', link: '/docs/user-guide/telos/files' },
+      { text: 'Photos', link: '/docs/user-guide/telos/photos' },
+      { text: 'Music', link: '/docs/user-guide/telos/music' },
+      { text: 'Video', link: '/docs/user-guide/telos/video' },
+      { text: 'Radio', link: '/docs/user-guide/telos/radio' },
+      { text: 'Store', link: '/docs/user-guide/telos/store' },
+      { text: 'Smart Freeze', link: '/docs/user-guide/telos/freeze' },
+    ],
+  },
+  {
     text: 'Concepts',
     items: [
       {

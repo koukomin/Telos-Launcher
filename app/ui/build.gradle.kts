@@ -117,6 +117,13 @@ dependencies {
     implementation(libs.koin.androidxcompose)
 
     implementation(libs.coil.core)
+    // Telos Files: network and cloud storages, archives
+    implementation(libs.okhttp)
+    implementation(libs.sshj)
+    implementation(libs.smbj)
+    implementation(libs.commons.net)
+    implementation(libs.commons.compress)
+    implementation(libs.bouncycastle)
     implementation(libs.coil.compose)
     implementation(libs.zxing.core)
 
@@ -191,4 +198,10 @@ dependencies {
     // === TELOS_PENDING_REVIEW_END: radio_mini_player ===
 
     testImplementation(libs.bundles.tests)
+}
+// Bouncy Castle comes in with several versions (sshj, other libraries); the parts must match or the classes are duplicated
+configurations.all {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "org.bouncycastle") useVersion("1.84")
+    }
 }

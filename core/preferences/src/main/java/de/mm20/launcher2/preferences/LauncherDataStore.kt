@@ -53,6 +53,43 @@ internal class LauncherDataStore(
     }
 ) {
 
+    // Backups are plain files that can end up anywhere. Passwords and keys are encrypted with a key
+    // that exists only on this device (useless elsewhere), and the hidden contacts are private.
+    override fun forBackup(data: LauncherSettingsData): LauncherSettingsData = data.copy(
+        comms = data.comms.copy(
+            tmdbApiKeyEnc = "",
+            subtitleApiKeyEnc = "",
+            subtitlePasswordEnc = "",
+            sipPasswordEnc = "",
+            remotePhonebookPasswordEnc = "",
+            hiddenNumbers = emptyMap(),
+            protectedCallNumbers = emptyMap(),
+            lastDialpadDigits = "",
+        )
+    )
+
+    override fun forRestore(restored: LauncherSettingsData, current: LauncherSettingsData): LauncherSettingsData {
+        // keep what this device already has: its passwords and its hidden contacts
+        val c = current.comms
+        val comms = restored.comms.copy(
+            tmdbApiKeyEnc = c.tmdbApiKeyEnc,
+            subtitleApiKeyEnc = c.subtitleApiKeyEnc,
+            subtitlePasswordEnc = c.subtitlePasswordEnc,
+            sipPasswordEnc = c.sipPasswordEnc,
+            remotePhonebookPasswordEnc = c.remotePhonebookPasswordEnc,
+            hiddenNumbers = c.hiddenNumbers,
+            protectedCallNumbers = c.protectedCallNumbers,
+            lastDialpadDigits = "",
+        )
+        // no account without its password: it would only fail to register
+        return restored.copy(
+            comms = comms.copy(
+                sipEnabled = comms.sipEnabled && comms.sipPasswordEnc.isNotBlank(),
+                remotePhonebookEnabled = comms.remotePhonebookEnabled && comms.remotePhonebookPasswordEnc.isNotBlank(),
+            )
+        )
+    }
+
     val data
         get() = context.dataStore.data
 
