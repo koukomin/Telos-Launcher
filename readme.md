@@ -228,7 +228,7 @@ If you switch online results on in the default filter, every query is sent to ex
 
 </details>
 
-**Not available or not honest to promise:** there is **no search history** (queries are never stored, only launch counts), **no hashtag queries** (tags are plain keywords; `#tag` is only how cards display them), no full-text search, the **Wikipedia switch has no effect** (the Online results and Wikipedia filters are the real switches), texts about fuzzy initials, quick settings search and learning ranking have no code behind them, there is no Google Drive source, and the stored "separate work profile in results" setting is not read.
+**Not available or not honest to promise:** there is **no search history** (queries are never stored, only launch counts), **no hashtag queries** (tags are plain keywords; `#tag` is only how cards display them), no full-text search, texts about fuzzy initials, quick settings search and learning ranking have no code behind them, there is no Google Drive source, and the stored "separate work profile in results" setting is not read.
 
 Full catalogue: [Search: complete feature catalogue](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/features/search-catalogue).
 
@@ -387,7 +387,7 @@ Integrations are under **Settings > Integrations**, plugins under **Settings > A
 
 Plugins can store references (must work offline) or copies of saved items. Developers: see `docs/docs/developer-guide/plugins/`.
 
-**Honest notes:** feed and Smartspacer are **not in release builds**; the Wikipedia switch has no effect; Breezy Weather and Smartspacer need their apps; cloud logins and plugin enable state are not part of the backup.
+**Honest notes:** feed and Smartspacer are **not in release builds**; Breezy Weather and Smartspacer need their apps; cloud logins and plugin enable state are not part of the backup.
 
 Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/features/system-catalogue#plugins).
 

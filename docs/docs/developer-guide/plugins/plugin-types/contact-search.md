@@ -1,7 +1,7 @@
 # Contact Search
 
 Contact search provider plugins need to extend
-the <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.contacts/-contact-provider/index.html" target="_blank">`ContactProvider`</a>
+the <a href="/Telos-Launcher/reference/plugins/sdk/de.mm20.launcher2.sdk.contacts/-contact-provider/index.html" target="_blank">`ContactProvider`</a>
 class:
 
 ```kt
@@ -12,7 +12,7 @@ class MyContactSearchPlugin() : ContactProvider(
 ```
 
 In the super constructor call, pass
-a <a href="/reference/core/shared/de.mm20.launcher2.plugin.config/-query-plugin-config/index.html" target="_blank">`QueryPluginConfig`</a>
+a <a href="/Telos-Launcher/reference/core/shared/de.mm20.launcher2.plugin.config/-query-plugin-config/index.html" target="_blank">`QueryPluginConfig`</a>
 object.
 
 ## Plugin config

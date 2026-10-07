@@ -25,7 +25,8 @@ internal class WikipediaRepository(
         return combineTransform(settings.enabled, settings.customUrl) { enabled, url ->
             emit(persistentListOf())
 
-            if (query.isBlank()) return@combineTransform
+            // the switch in Settings > Integrations > Wikipedia
+            if (!enabled || query.isBlank()) return@combineTransform
 
             val baseUrl =
                 url.takeIf { !it.isNullOrBlank() } ?: context.getString(R.string.wikipedia_url)

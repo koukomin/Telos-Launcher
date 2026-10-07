@@ -5,7 +5,7 @@ gesture (swipe up/down/left/right, double tap, long press, etc.) from Settings >
 alongside the built-in gesture targets (open search, show widgets, launch an app, ...).
 
 Gesture action plugins need to extend the
-<a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.gestures/-gesture-action-provider/index.html" target="_blank">`GestureActionProvider`</a>
+<a href="/Telos-Launcher/reference/plugins/sdk/de.mm20.launcher2.sdk.gestures/-gesture-action-provider/index.html" target="_blank">`GestureActionProvider`</a>
 class:
 
 ```kt

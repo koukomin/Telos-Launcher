@@ -5,6 +5,8 @@ import { ContributorGuideSidebar } from '../docs/contributor-guide/sidebar.ts'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  // published at https://koukomin.github.io/Telos-Launcher/ (GitHub Pages project site)
+  base: '/Telos-Launcher/',
   title: 'Telos',
   description:
     'Telos is a search-focused, free and open source Android launcher with a suite of privacy-minded apps. A fork of Kvaesitso.',

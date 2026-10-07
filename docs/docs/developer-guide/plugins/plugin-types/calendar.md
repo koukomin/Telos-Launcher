@@ -1,7 +1,7 @@
 # Calendar Provider
 
 Calendar provider plugins need to extend
-the <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.calendar/-calendar-provider/index.html" target="_blank">
+the <a href="/Telos-Launcher/reference/plugins/sdk/de.mm20.launcher2.sdk.calendar/-calendar-provider/index.html" target="_blank">
 `CalendarProvider`</a>
 class:
 
@@ -12,7 +12,7 @@ class MyCalendarPlugin() : CalendarProvider(
 ```
 
 In the super constructor call, pass
-a <a href="/reference/core/shared/de.mm20.launcher2.plugin.config/-query-plugin-config/index.html" target="_blank">
+a <a href="/Telos-Launcher/reference/core/shared/de.mm20.launcher2.plugin.config/-query-plugin-config/index.html" target="_blank">
 `QueryPluginConfig`</a>
 object.
 
@@ -31,7 +31,7 @@ suspend fun getCalendarLists(): List<CalendarList>
 ```
 
 This method should return a list
-of <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.calendar/-calendar-list/index.html">
+of <a href="/Telos-Launcher/reference/plugins/sdk/de.mm20.launcher2.sdk.calendar/-calendar-list/index.html">
 `CalendarList`s</a>. At least one list should be returned.
 
 ### The `CalendarList` object
@@ -41,7 +41,7 @@ The `CalendarEvent` has the following properties:
 - `id`: A unique ID for this list.
 - `name`: A human-readable name for this list.
 - `contentTypes`: A list
-  of <a href="/reference/core/shared/de.mm20.launcher2.search.calendar/-calendar-list-type/index.html">
+  of <a href="/Telos-Launcher/reference/core/shared/de.mm20.launcher2.search.calendar/-calendar-list-type/index.html">
   `CalendarListType`s</a> (`Calendar`, `Tasks`) that this list includes.
 - `accountName` (optional): The name of the account this list belongs to. Lists that belong to the
   same account are grouped together in the launcher UI.

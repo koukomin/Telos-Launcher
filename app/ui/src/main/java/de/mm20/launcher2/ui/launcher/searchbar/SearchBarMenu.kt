@@ -200,7 +200,7 @@ fun RowScope.SearchBarMenu(
                             .build()
                             .launchUrl(
                                 context,
-                                Uri.parse("https://kvaesitso.mm20.de/docs/user-guide")
+                                Uri.parse("https://github.com/koukomin/Telos-Launcher#readme")
                             )
                         showOverflowMenu = false
                     },

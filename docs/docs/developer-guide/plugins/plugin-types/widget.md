@@ -12,7 +12,7 @@ surface a handful of at-a-glance values (a status, a count, a "next thing" remin
 maintaining a full `RemoteViews`-based widget.
 
 Widget plugins need to extend the
-<a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.widget/-widget-provider/index.html" target="_blank">`WidgetProvider`</a>
+<a href="/Telos-Launcher/reference/plugins/sdk/de.mm20.launcher2.sdk.widget/-widget-provider/index.html" target="_blank">`WidgetProvider`</a>
 class:
 
 ```kt
