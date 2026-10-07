@@ -39,14 +39,14 @@ Tap a picture to open the viewer.
 
 - Swipe left and right to move to the next or previous picture. The counter shows "3 / 120".
 - **Pinch** to zoom (up to 8 times). Double tap zooms in and out. Drag while zoomed to pan.
-- Tap once to show or hide the controls.
+- Tap once on the picture to toggle the on-screen controls.
 
 | Button | Action |
 | --- | --- |
 | Share | Sends the picture to another app |
 | Edit | Opens the editor |
 | Details | Shows and edits metadata |
-| Delete | Moves the picture to the system's delete prompt, you confirm in an Android dialog |
+| Delete | Asks Android to delete the picture, and you confirm in a system dialog |
 
 ## Metadata (EXIF)
 
@@ -132,7 +132,7 @@ Switching the app off in the [Store](./store) disables its screens.
 | Network | None. The gallery, editor and document viewer run on the device |
 | Metadata | Removing it is done locally. Sharing sends only the clean copy you chose |
 | Documents | Opened files are copied into the app's private cache for reading |
-| App lock | The gallery and editor are guarded together with other Telos apps when App Lock is used |
+| App lock | The editor registers with the launcher's app lock for Telos apps, so it follows your App Lock settings |
 
 ## Supported formats
 
@@ -149,7 +149,7 @@ Switching the app off in the [Store](./store) disables its screens.
 - Office and OpenDocument files are text extraction only, with no layout.
 - No search inside documents, and no annotations on PDFs.
 - No cloud albums, face recognition or slideshows.
-- The editor has no free-form cropping and always saves JPEG copies.
+- The editor always saves JPEG copies and has no per-pixel crop tool, only the listed crop ratios.
 - Metadata removal cleans the known EXIF fields. It does not guarantee that every kind of embedded data is gone.
 
 ## Troubleshooting

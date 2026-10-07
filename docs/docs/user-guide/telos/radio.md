@@ -62,11 +62,24 @@ Use the three-dot menu in the top bar.
   new track to the **History** tab. "Clear history" empties it.
 - **Next and previous** (notification, lock screen, headset, Android Auto) switch between the stations of
   your collection.
-- **Sleep timer.** The moon or timer icon offers 15, 30, 45, 60 or 90 minutes. When it ends, playback is paused.
+- **Sleep timer.** The sleep timer icon in the top bar offers 15, 30, 45, 60 or 90 minutes. When it ends, playback is paused.
 
 ::: tip
 Which track information you see depends entirely on what the station sends. Stations without metadata
 only show the station name or "Streaming live...".
+:::
+
+## A typical session
+
+1. Open the **Search** tab and type a name, for example the station you know from home.
+2. Tap a result to play it, and tap the heart to keep it in your **Collection**.
+3. Leave the app. Playback continues and you control it from the notification.
+4. Set the sleep timer if you listen at night.
+5. Later, open **History** to see which tracks were announced.
+
+::: details Moving your collection to a new phone
+Use **Back up collection** to create a JSON file, copy it to the new phone, and use **Restore backup**.
+M3U export is better for sharing with other radio apps, because it only holds names and addresses.
 :::
 
 ## Settings
