@@ -230,8 +230,18 @@ private fun load(context: android.content.Context, uri: Uri, name: String): DocS
             else DocState.Blocks(flatten(blocks))
         }
         else -> {
-            val bytes = file.inputStream().use { it.readNBytes(2 * 1024 * 1024 + 1) }
-            DocState.Text(String(bytes, 0, minOf(bytes.size, 2 * 1024 * 1024), Charsets.UTF_8), bytes.size > 2 * 1024 * 1024)
+            val limit = 2 * 1024 * 1024
+            val buffer = java.io.ByteArrayOutputStream()
+            file.inputStream().use { input ->
+                val chunk = ByteArray(64 * 1024)
+                while (buffer.size() <= limit) {
+                    val n = input.read(chunk)
+                    if (n < 0) break
+                    buffer.write(chunk, 0, n)
+                }
+            }
+            val bytes = buffer.toByteArray()
+            DocState.Text(String(bytes, 0, minOf(bytes.size, limit), Charsets.UTF_8), bytes.size > limit)
         }
     }
 }.getOrElse {
