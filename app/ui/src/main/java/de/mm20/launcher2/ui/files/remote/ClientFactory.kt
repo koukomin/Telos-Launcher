@@ -5,6 +5,9 @@ import java.io.IOException
 
 /** Creates the client for a saved connection. */
 object ClientFactory {
+    private fun tokens(context: Context, c: RemoteConnection) =
+        AccessTokens(c) { updated -> ConnectionStore(context).save(updated) }
+
     fun create(context: Context, c: RemoteConnection): RemoteClient {
         val scheme = if (c.tls) "https" else "http"
         val authority = c.host.trim().removePrefix("https://").removePrefix("http://").trimEnd('/') +
@@ -19,7 +22,9 @@ object ClientFactory {
             RemoteType.Sftp -> SftpRemoteClient(c) { fingerprint -> ConnectionStore(context).save(c.copy(fingerprint = fingerprint)) }
             RemoteType.Smb -> SmbRemoteClient(c)
             RemoteType.Ftp -> FtpRemoteClient(c)
-            RemoteType.Dropbox, RemoteType.GoogleDrive, RemoteType.OneDrive -> throw IOException("Not available yet")
+            RemoteType.Dropbox -> DropboxClient(tokens(context, c), context.cacheDir)
+            RemoteType.GoogleDrive -> GoogleDriveClient(tokens(context, c), context.cacheDir)
+            RemoteType.OneDrive -> OneDriveClient(tokens(context, c), context.cacheDir)
         }
     }
 }
