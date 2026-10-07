@@ -417,6 +417,15 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
                             Text(if (installed) "Installed" else "Not installed", style = MaterialTheme.typography.labelMedium, color = if (installed) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
+                    val context = androidx.compose.ui.platform.LocalContext.current
+                    if (!installed && de.mm20.launcher2.base.VirtualAppGuard.isTripped(context, app.key)) {
+                        Text(
+                            "Switched off automatically because it crashed repeatedly.",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.error,
+                            modifier = Modifier.padding(top = 10.dp),
+                        )
+                    }
                     Text(app.description, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 10.dp))
                     Text(
                         app.features.joinToString(" · "),

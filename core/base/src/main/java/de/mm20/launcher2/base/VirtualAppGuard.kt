@@ -73,8 +73,11 @@ object VirtualAppGuard {
     /** The user installed the app again: start counting from zero */
     @Synchronized
     fun reset(context: Context, key: String) {
-        prefs(context).edit().remove("crashes:$key").remove("first:$key").commit()
+        prefs(context).edit().remove("crashes:$key").remove("first:$key").remove("tripped:$key").commit()
     }
+
+    /** True while the app is switched off because it crashed, so the Store can say why */
+    fun isTripped(context: Context, key: String): Boolean = prefs(context).getBoolean("tripped:$key", false)
 
     /**
      * Call once when the process starts. Looks for a native crash or hang that the crash handler
@@ -91,7 +94,10 @@ object VirtualAppGuard {
             p.edit().remove("open").remove("openAt").commit()
         }
         val tripped = guarded.filter { p.getInt("crashes:$it", 0) >= CRASH_LIMIT }
-        for (key in tripped) reset(context, key)
+        for (key in tripped) {
+            reset(context, key)
+            p.edit().putBoolean("tripped:$key", true).commit()
+        }
         if (tripped.isNotEmpty()) Log.w("VirtualAppGuard", "Switching off after repeated crashes: $tripped")
         return tripped
     }
