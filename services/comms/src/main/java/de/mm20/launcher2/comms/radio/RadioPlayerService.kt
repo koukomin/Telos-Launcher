@@ -41,7 +41,7 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
 
     // Nothing keeps the service (and the decoder) alive after the radio has been paused for a while
     private val idleStop = Runnable {
-        if (player?.isPlaying != true) pauseAllPlayersAndStopSelf()
+        if (player?.isPlaying != true && player?.playWhenReady != true) pauseAllPlayersAndStopSelf()
     }
 
     override fun onCreate() {

@@ -1,5 +1,6 @@
 package de.mm20.launcher2.comms.recording
 
+import de.mm20.launcher2.base.containedScope
 import android.content.Context
 import android.media.MediaRecorder
 import android.os.Build
@@ -45,7 +46,7 @@ object CallAudioRecorder {
     private var mediaRecorder: MediaRecorder? = null
     private var outputFile: File? = null
     private var timerJob: Job? = null
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private val scope = containedScope(Dispatchers.Main)
     private val stopping = AtomicBoolean(false)
 
     fun start(

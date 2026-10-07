@@ -1,6 +1,7 @@
 // === TELOS_PENDING_REVIEW_START: sms_and_radio_engine ===
 package de.mm20.launcher2.comms.sms
 
+import de.mm20.launcher2.base.containedScope
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -33,7 +34,7 @@ class TelosSmsReceiver : BroadcastReceiver(), KoinComponent {
             if (router != null) {
                 // We use goAsync() to keep the receiver alive while coroutine evaluates vault status
                 val pendingResult = goAsync()
-                CoroutineScope(Dispatchers.IO).launch {
+                containedScope(Dispatchers.IO).launch {
                     try {
                         val isHidden = router.isHiddenContact(originatingAddress)
                         if (isHidden) {

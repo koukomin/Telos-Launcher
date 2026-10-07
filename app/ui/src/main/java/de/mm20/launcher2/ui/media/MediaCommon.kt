@@ -39,9 +39,22 @@ fun MediaFrame(
     val backStack = LocalBackStack.current
     if (guardKey != null) {
         val context = androidx.compose.ui.platform.LocalContext.current
-        androidx.compose.runtime.DisposableEffect(guardKey) {
-            de.mm20.launcher2.base.VirtualAppGuard.enter(context, guardKey)
-            onDispose { de.mm20.launcher2.base.VirtualAppGuard.leave(context, guardKey) }
+        val lifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle
+        androidx.compose.runtime.DisposableEffect(guardKey, lifecycle) {
+            // on screen only while the activity is started, so a launcher that was sent to the
+            // background is not blamed for a later crash
+            val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+                if (event == androidx.lifecycle.Lifecycle.Event.ON_START) de.mm20.launcher2.base.VirtualAppGuard.enter(context, guardKey)
+                if (event == androidx.lifecycle.Lifecycle.Event.ON_STOP) de.mm20.launcher2.base.VirtualAppGuard.leave(context, guardKey)
+            }
+            if (lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.STARTED)) {
+                de.mm20.launcher2.base.VirtualAppGuard.enter(context, guardKey)
+            }
+            lifecycle.addObserver(observer)
+            onDispose {
+                lifecycle.removeObserver(observer)
+                de.mm20.launcher2.base.VirtualAppGuard.leave(context, guardKey)
+            }
         }
     }
     if (askNotifications) RequestNotificationPermission()

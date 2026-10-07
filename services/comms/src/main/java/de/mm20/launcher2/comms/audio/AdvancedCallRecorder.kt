@@ -1,6 +1,7 @@
 // === TELOS_PENDING_REVIEW_START: telephony_encryption_suite ===
 package de.mm20.launcher2.comms.audio
 
+import de.mm20.launcher2.base.containedScope
 import android.content.Context
 import android.media.AudioFormat
 import android.media.AudioRecord
@@ -95,7 +96,7 @@ class AdvancedCallRecorder(private val context: Context) {
             isRecording = true
             audioRecord?.startRecording()
 
-            recordingJob = CoroutineScope(Dispatchers.IO).launch {
+            recordingJob = containedScope(Dispatchers.IO).launch {
                 FileOutputStream(outputFile).use { fos ->
                     // Prepend IV to the file for decryption later
                     fos.write(iv)

@@ -18,7 +18,7 @@ class FDroidFetcher(
 ) : SourceFetcher<AppSource.FDroid> {
 
     override suspend fun fetchLatestRelease(source: AppSource.FDroid): ReleaseArtifact? =
-        runCatching { fetch(source) }.getOrNull()
+        try { fetch(source) } catch (e: kotlinx.coroutines.CancellationException) { throw e } catch (e: Exception) { null }
 
     suspend fun fetch(source: AppSource.FDroid): ReleaseArtifact {
         val repo = source.repoUrl.trimEnd('/')

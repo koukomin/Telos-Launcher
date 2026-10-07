@@ -86,7 +86,9 @@ object TorrentStreamer {
             }
             closed = false
             _state.value = TorrentState(TorrentState.Stage.FindingPeers, message = "Finding peers…")
-            val dir = File(context.cacheDir, "torrent").apply { deleteRecursively(); mkdirs() }
+            // a new folder for every open: the cleanup of the previous one runs on another thread
+            File(context.cacheDir, "torrent").listFiles()?.forEach { it.deleteRecursively() }
+            val dir = File(context.cacheDir, "torrent/${System.nanoTime()}").apply { mkdirs() }
             saveDir = dir
             try {
                 val sm = SessionManager(false)
@@ -99,7 +101,14 @@ object TorrentStreamer {
                             ?: fail("No answer from peers, the link may be dead")
                     source.startsWith("content:") || source.startsWith("file:") ->
                         context.contentResolver.openInputStream(Uri.parse(source))!!.use { it.readBytes() }
-                    else -> URL(source).openStream().use { it.readBytes() }
+                    else -> (URL(source).openConnection() as java.net.HttpURLConnection).run {
+                        connectTimeout = 15_000
+                        readTimeout = 30_000
+                        try {
+                            if (contentLengthLong > 8_000_000) fail("The torrent file is too large")
+                            inputStream.use { it.readBytes() }
+                        } finally { disconnect() }
+                    }
                 }
                 val ti = TorrentInfo.bdecode(data)
                 info = ti
@@ -186,9 +195,11 @@ object TorrentStreamer {
         val ss = ServerSocket(0, 8, InetAddress.getByName("127.0.0.1"))
         server = ss
         ioPool.execute {
-            while (!closed && !ss.isClosed) {
-                val socket = try { ss.accept() } catch (e: Exception) { break }
-                ioPool.execute { runCatching { serve(socket) } }
+            de.mm20.launcher2.base.contained("torrent server") {
+                while (!closed && !ss.isClosed) {
+                    val socket = try { ss.accept() } catch (e: Exception) { break }
+                    ioPool.execute { runCatching { serve(socket) } }
+                }
             }
         }
         return ss.localPort

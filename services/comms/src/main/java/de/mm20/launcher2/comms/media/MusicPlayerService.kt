@@ -18,7 +18,8 @@ class MusicPlayerService : MediaSessionService() {
 
     // Nothing keeps the service (and the decoder) alive after music has been paused for a while
     private val idleStop = Runnable {
-        if (mediaSession?.player?.isPlaying != true) pauseAllPlayersAndStopSelf()
+        val p = mediaSession?.player
+        if (p?.isPlaying != true && p?.playWhenReady != true) pauseAllPlayersAndStopSelf()
     }
 
     override fun onCreate() {

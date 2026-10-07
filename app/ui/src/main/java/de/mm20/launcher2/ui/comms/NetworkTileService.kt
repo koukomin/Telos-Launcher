@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.comms
 
+import de.mm20.launcher2.base.containedScope
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import de.mm20.launcher2.comms.radio.CellularRadio
@@ -13,7 +14,7 @@ import org.koin.android.ext.android.inject
 
 class NetworkTileService : TileService() {
     private val commsSettings: CommsSettings by inject()
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    private val scope = containedScope(Dispatchers.Default)
 
     override fun onStartListening() {
         qsTile?.state = Tile.STATE_ACTIVE

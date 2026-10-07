@@ -26,10 +26,10 @@ Code: `core/base/.../base/VirtualAppGuard.kt`, wired up in `LauncherApplication`
 Code: `core/base/.../base/SafeCoroutines.kt`.
 
 An exception that nobody catches in a coroutine ends the process. Background scopes of the Telos
-apps (SIP, Radio service, network automation, Store update scheduler) are created with
+apps (SIP, Radio service, network automation, Store update scheduler, call recording, call
+screening, auto redial, SMS receiver, install receiver, network tile) are created with
 `containedScope(dispatcher)`, a supervisor scope with a handler that logs the failure. The
-scrobbler's network executor wraps its tasks in `contained(...)`. Not every scope has been
-converted yet (for example call recording, call screening and the torrent engine).
+scrobbler's network executor and the torrent server loop wrap their work in `contained(...)`.
 
 ## Nothing runs for apps that are switched off
 
