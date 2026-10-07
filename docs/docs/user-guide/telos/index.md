@@ -6,7 +6,7 @@ set of **built-in apps** that run inside the launcher: a phone app, messages, a 
 gallery, music, video and radio players, an app store and an app freezer.
 
 ::: tip Two parts
-- [**The launcher**](./launcher) is search, home screen, widgets, icons and themes (inherited from Kvaesitso).
+- [**The launcher**](./launcher/) is search, home screen, widgets, icons and themes (inherited from Kvaesitso).
 - **The Telos apps** are added on top. Each one has its own page below.
 :::
 
@@ -54,7 +54,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 | Where it runs | Launcher process | Launcher process (Video can use its own process) |
 | Can be switched off | No | Yes, from the [Store](./store) (except the Store itself) |
 | Guarded by the crash guard | n/a | Radio, Music, Video, Photos |
-| Docs | [The launcher](./launcher) | One page per app |
+| Docs | [The launcher](./launcher/) | One page per app |
 
 ## How the built-in apps work
 

@@ -45,7 +45,7 @@ them or clear their cache.
 - Show or hide system apps and apps without an icon in the list. Hide frozen apps entirely, or show them
   grayscale or with a snowflake badge.
 - Dashboard with frozen apps, history, counters, and per-app state (normal, suspended, disabled, hidden).
-- Frozen apps can be driven by a [context profile](./launcher#context-profiles), which can override the freeze profile.
+- Frozen apps can be driven by a [context profile](./launcher/desktop-and-overlays#context-profiles), which can override the freeze profile.
 
 ## Automatic freezing
 

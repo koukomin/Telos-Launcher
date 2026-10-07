@@ -14,7 +14,7 @@ hero:
       link: /docs/user-guide/telos/
     - theme: alt
       text: Launcher features
-      link: /docs/user-guide/telos/launcher
+      link: /docs/user-guide/telos/launcher/
     - theme: alt
       text: User guide
       link: /docs/user-guide/
@@ -23,7 +23,7 @@ features:
   - icon: 🔎
     title: Search-first launcher
     details: Apps, contacts, files, calendar, calculator, unit converter, web and more in one fast, customizable search.
-    link: /docs/user-guide/telos/launcher
+    link: /docs/user-guide/telos/launcher/
   - icon: 📞
     title: Telos Phone
     details: A clean dialer and call experience that fits the launcher.

@@ -59,4 +59,4 @@ refreshes access tokens from the stored refresh token.
 `CryptomatorFs` and `CryptomatorCrypto` read vault formats 7 and 8, implemented from the published format
 description. Read only. Decrypted temporary files are removed when the vault is locked.
 
-For user-facing behavior see [Telos Files](../../user-guide/telos/files).
+For user-facing behavior see [Telos Files](../../user-guide/telos/files/).

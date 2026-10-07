@@ -85,7 +85,7 @@ The **Telos apps** section lists the built-in apps with a description of each on
 | Remove | Hides it. The code stays in Telos, so hidden apps cost nothing |
 | Store | Cannot be removed, otherwise there would be no way back |
 
-If an app was switched off by the [crash guard](./launcher#protection-and-crash-guard), installing it again
+If an app was switched off by the [crash guard](./launcher/privacy-protection#crash-guard), installing it again
 resets the counter.
 
 ::: warning
