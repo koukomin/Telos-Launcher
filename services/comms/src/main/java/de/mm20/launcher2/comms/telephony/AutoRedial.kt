@@ -21,9 +21,24 @@ object AutoRedial : KoinComponent {
     private val handler = Handler(Looper.getMainLooper())
     private var remaining = 0
     private var lastNumber = ""
+    private var redialing = false
+
+    /** An incoming call is not a call to redial, forget the last outgoing one */
+    fun onIncoming() {
+        remaining = 0
+        lastNumber = ""
+        redialing = false
+        handler.removeCallbacksAndMessages(null)
+    }
 
     fun onOutgoing(number: String) {
         lastNumber = number
+        if (redialing) {
+            // this is the redial itself: keep counting down instead of starting over
+            redialing = false
+            return
+        }
+        handler.removeCallbacksAndMessages(null)
         remaining = 0
         scope.launch {
             if (commsSettings.autoRedial.first()) {
@@ -39,6 +54,7 @@ object AutoRedial : KoinComponent {
 
     fun onDisconnected(context: Context, call: Call) {
         val cause = call.details?.disconnectCause?.code ?: return
+        if (cause == DisconnectCause.LOCAL) remaining = 0 // the user hung up
         val retryable = cause == DisconnectCause.BUSY ||
             cause == DisconnectCause.MISSED ||
             cause == DisconnectCause.REJECTED
@@ -47,6 +63,7 @@ object AutoRedial : KoinComponent {
         scope.launch {
             val delayMs = commsSettings.autoRedialDelaySec.first().coerceIn(3, 60) * 1000L
             handler.postDelayed({
+                redialing = true
                 SimRouter.place(context, lastNumber)
             }, delayMs)
         }

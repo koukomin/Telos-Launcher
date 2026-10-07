@@ -42,11 +42,8 @@ class TelosSmsReceiver : BroadcastReceiver(), KoinComponent {
                             // Type 1 = Inbox
                             router.saveSecretSms(originatingAddress, fullBody, System.currentTimeMillis(), 1)
                             
-                            // If Telos is the Default SMS App, SMS_DELIVER is sent and we can abort
-                            // the standard broadcast so other apps don't see it
-                            if (intent.action == Telephony.Sms.Intents.SMS_DELIVER_ACTION) {
-                                abortBroadcast()
-                            }
+                            // The message is not dropped: nothing stores it in the vault yet, so
+                            // aborting the broadcast would lose it
                         } else {
                             // Let the system handle it normally (or write to standard Telephony DB if default SMS app)
                         }

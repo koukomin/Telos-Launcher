@@ -53,7 +53,7 @@ plugin SDK for third-party search/weather/calendar providers. See the
   proximity speaker, volume-button Do Not Disturb shortcut
 - Auto redial, fake incoming calls (scheduled), missed-call and post-call popups, Dynamic Island
   call state
-- SMS engine: quick replies, scheduled SMS, routing of hidden-contact messages to the vault
+- SMS engine: quick replies, scheduled SMS
 - Radio (behaviour and logic taken from [Transistor](https://codeberg.org/y20k/transistor), compared with 4.3.9): station
   collection with add by address, rename and remove; M3U / PLS import, M3U export and JSON backup;
   playlist links resolved to the real stream with fallback streams; current track from the stream
