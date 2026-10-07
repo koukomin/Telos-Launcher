@@ -139,3 +139,20 @@ Next Player, https://github.com/anilbeesetti/nextplayer (GPL-3.0). No code was c
 
 Telos Video uses the Trakt API (https://trakt.docs.apiary.io) with the user's own application
 credentials. Telos is not endorsed or certified by Trakt.
+
+
+## Libraries used by Telos Files
+
+sshj and smbj (Apache-2.0, Copyright Jeroen van Erp and contributors), Apache Commons Net and Apache
+Commons Compress (Apache-2.0, Copyright The Apache Software Foundation), OkHttp (Apache-2.0,
+Copyright Square, Inc.), Bouncy Castle (MIT-style license, Copyright The Legion of the Bouncy Castle
+Inc.). All are used unchanged as Maven dependencies.
+
+## Cryptomator vault format
+
+Reading Cryptomator vaults (https://cryptomator.org) is implemented from the published security
+architecture and vault format description. No Cryptomator code was copied.
+
+## Solid Explorer and MiXplorer
+
+The layout and feature set of Telos Files are inspired by these file managers. No code was copied.
