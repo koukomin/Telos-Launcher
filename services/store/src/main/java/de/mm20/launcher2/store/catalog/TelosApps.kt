@@ -31,7 +31,7 @@ object TelosApps {
             name = "Telos Store",
             description = "Installs and updates apps from GitHub, GitLab, Codeberg, F-Droid, IzzyOnDroid, SourceForge and web pages, checks for updates in the background and manages the Telos apps.",
             features = listOf("Update notifications", "Silent updates with Shizuku or root", "Import and export (Obtainium format)"),
-            iconRes = de.mm20.launcher2.base.R.drawable.ic_glyph_launcher,
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_launcher_monochrome,
             route = SettingsDeepLinkContract.ROUTE_STORE,
             removable = false,
         ),

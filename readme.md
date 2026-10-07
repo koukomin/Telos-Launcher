@@ -16,10 +16,10 @@ The documentation site is published via GitHub Pages at <https://koukomin.github
 
 </div>
 
-> **Note:** The launcher and the Telos apps use flat Material icons: a white glyph on a dark
-> background of its own (navy for Phone, teal for Messages, amber for Files, rose for Photos,
-> purple for Music, red for Video, green for Radio). Telos Store uses the launcher icon (indigo,
-> magnifier). The name and the final branding are still in progress.
+> **Note:** The Telos apps use flat Material icons: a white glyph on a dark background of its own
+> (navy for Phone, teal for Messages, amber for Files, rose for Photos, purple for Music, red for
+> Video, green for Radio). Telos Store uses the launcher icon. The name and the final branding are
+> still in progress.
 
 ## Contents
 
