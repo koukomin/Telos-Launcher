@@ -111,8 +111,8 @@ which limits how much R8 can remove.
 2. Use a photo wallpaper (or none), turn off **Blur wallpaper**.
 3. Switch off search sources and widgets you do not use, and keep **Online results** off by default.
 4. Leave the floating launcher, Dynamic Island and App Lock off unless you need them.
-5. Switch off Telos apps you do not use in the [Store](../store). Their components are then disabled.
-6. Use [Smart Freeze](../freeze) for apps you rarely open.
+5. Switch off Telos apps you do not use in the [Store](../store/). Their components are then disabled.
+6. Use [Smart Freeze](../freeze/) for apps you rarely open.
 
 ## Limitations
 

@@ -37,7 +37,7 @@ pages, see [Telos at a glance](../).
 | Weather, media, Nextcloud, Tasks and similar | Integrations |
 | Language, units, time format | Language and region |
 | Performance, context profiles, plugins, App Lock, work profile, backup, debug | Advanced settings |
-| Smart Freeze | Freeze Manager, see [Smart Freeze](../freeze) |
+| Smart Freeze | Freeze Manager, see [Smart Freeze](../freeze/) |
 
 ## What Telos adds to Kvaesitso
 

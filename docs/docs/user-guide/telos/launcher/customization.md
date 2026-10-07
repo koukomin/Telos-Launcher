@@ -116,7 +116,7 @@ Badges are small marks on an icon. Settings > Grid and icons > Badges.
 | Plugin badges | On | Which plugin produced a search result |
 | Badge color | Theme tertiary | One color for all badges |
 
-[Frozen apps](../freeze) can also be shown grayscale or with a snowflake badge (Freeze Manager).
+[Frozen apps](../freeze/) can also be shown grayscale or with a snowflake badge (Freeze Manager).
 
 ## Animations and motion
 

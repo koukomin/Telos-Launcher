@@ -128,6 +128,15 @@ crash guard because Android needs a working phone app.
 | Encrypted settings backup | Settings > Encrypted backup | no | stable |
 | Home screen widgets | Widget picker | no | stable |
 
+## Home screen widgets and tile
+
+| Item | Where | What it does |
+| --- | --- | --- |
+| **Recent calls** widget | Widget picker | Shows the names (or numbers) of your last 4 calls as text. Tapping it opens the Recents tab. It needs the call log permission and says "Grant call log permission" without it |
+| **Dialpad** widget (direct call) | Widget picker | A button that opens the keypad |
+| **Cellular** Quick Settings tile | Android's Quick Settings editor | Cycles the preferred network mode, see [Calls](./calls#cellular-network-mode) |
+| Dynamic Island | Launcher settings | Shows the state of a running call |
+
 ## Limitations
 
 - Most call features need Telos to be the default phone app.

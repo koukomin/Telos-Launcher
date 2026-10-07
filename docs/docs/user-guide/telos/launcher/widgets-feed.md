@@ -47,11 +47,11 @@ Android widgets have extra options: **Borderless**, **Background card** and **Us
 | Battery | Charge level and charging state | Nothing | None |
 | Network | Wi-Fi, mobile data, Ethernet, or no connection | Nothing | None |
 | System | RAM and storage usage | Nothing | None |
-| Freeze | The [Smart Freeze](../freeze) candidates, with a **Freeze now** button | Freeze set up | None |
+| Freeze | The [Smart Freeze](../freeze/) candidates, with a **Freeze now** button | Freeze set up | None |
 | Android widgets | Any app widget installed on the phone | The app | Per widget |
 | Plugin widgets | Rows of title, subtitle and value from a plugin | A widget plugin | None |
 
-The [Telos Phone](../phone) app adds widgets of its own (recents and direct call).
+The [Telos Phone](../phone/) app adds widgets of its own (recents and direct call).
 
 ::: warning The Favorites widget is not offered
 The picker no longer lists the **Favorites (Apps)** widget. Favorites are meant to stay in the app grid
@@ -88,8 +88,8 @@ and shows "No reminders" when empty. Tasks setup is in
 ### Media widget
 
 The media widget lists sessions of music apps. By default only music apps are recognized. Choose more apps
-in Settings > Integrations > Media control. The Telos [Music](../music), [Video](../video) and
-[Radio](../radio) players show up like any other player. See
+in Settings > Integrations > Media control. The Telos [Music](../music/), [Video](../video/) and
+[Radio](../radio/) players show up like any other player. See
 [Plugins and integrations](./plugins-integrations#media-control).
 
 ## Feed

@@ -104,8 +104,8 @@ Settings > Integrations > Media control.
 - By default only "music apps" are recognized. Add or remove apps in **Media apps** (there are an allow
   list and a deny list).
 - It powers the media widget, the clock's media part, and the [Dynamic
-  Island](./desktop-and-overlays#dynamic-island). The Telos [Music](../music), [Video](../video) and
-  [Radio](../radio) players are normal sessions to it.
+  Island](./desktop-and-overlays#dynamic-island). The Telos [Music](../music/), [Video](../video/) and
+  [Radio](../radio/) players are normal sessions to it.
 
 On Android 13 and newer, see [restricted settings](../../troubleshooting/restricted-settings) if you
 cannot grant notification access. Original page: [Media Control](../../integrations/mediacontrol).
@@ -169,7 +169,7 @@ zone** of the clock.
 
 ## Cloud and network storage
 
-This entry configures connections used by [Telos Files](../files): Dropbox, Google Drive, OneDrive,
+This entry configures connections used by [Telos Files](../files/): Dropbox, Google Drive, OneDrive,
 Nextcloud, WebDAV, SFTP, SMB and FTP. It is separate from the search integrations above. Searching
 Nextcloud or ownCloud files from the launcher search uses the accounts on their own pages.
 

@@ -210,7 +210,7 @@ Advanced > Context profiles. Turn on **Enable context profiles** first.
 | A profile can change | Details |
 | --- | --- |
 | Gestures | Swipe down, left, right, up, double tap and long press |
-| Freeze profile | Battery Saver, Balanced, Aggressive or Ultra Aggressive, see [Smart Freeze](../freeze) |
+| Freeze profile | Battery Saver, Balanced, Aggressive or Ultra Aggressive, see [Smart Freeze](../freeze/) |
 | Home widgets | Which widget page opens |
 | Do Not Disturb | Turn on or off. Needs notification policy access |
 | Brightness | A percentage. Needs the modify system settings permission |

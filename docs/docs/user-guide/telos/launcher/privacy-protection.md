@@ -138,7 +138,7 @@ one could take the launcher down. The crash guard handles that.
 | What is watched | Radio, Music, Video and Photos. Phone and Messages are not guarded because they are default-role apps that must stay reachable |
 | How a crash is counted | A marker is written when the app opens and removed when you leave. An uncaught exception while the marker is set counts against that app |
 | Native crashes and hangs | Found on the next start through Android's exit reasons (Android 11 and newer) |
-| Limit | Two crashes within 24 hours switch the app off, with a notification pointing to the [Store](../store) |
+| Limit | Two crashes within 24 hours switch the app off, with a notification pointing to the [Store](../store/) |
 | Reset | Two minutes of use without a crash, or installing the app again from the Store |
 
 ### Exception containment
@@ -167,7 +167,7 @@ Apps that are on cost nothing while idle:
 - The Store checks updates through one periodic WorkManager job.
 - Switched-off apps have their manifest components disabled, so they use no memory or CPU and do not
   appear in "Open with".
-- [Smart Freeze](../freeze) idle timeouts (5, 15 or 30 minutes depending on profile) are separate from
+- [Smart Freeze](../freeze/) idle timeouts (5, 15 or 30 minutes depending on profile) are separate from
   this and apply to other apps you opt in.
 
 More in [Performance](./performance).

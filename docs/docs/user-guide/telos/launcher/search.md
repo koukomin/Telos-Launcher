@@ -64,7 +64,7 @@ ordered by one number: **0.6 x match score + 0.4 x usage weight**.
 
 ## Result groups, top to bottom
 
-When the search field is empty you see the favorites, pending updates from the [Store](../store) (if any),
+When the search field is empty you see the favorites, pending updates from the [Store](../store/) (if any),
 the app grid and your web apps. Once you type, these groups can appear, in this order:
 
 | Order | Group | Notes |
@@ -135,7 +135,7 @@ files and tools never use the network.
 | Apps | Settings > Search > Apps | On | Show all apps when the search field is empty |
 | Show app information | Settings > Search > Apps | On | Version and package name in the app menu |
 | Show apps in a list | Settings > Search > Apps | Off | A list instead of a grid, with optional icons |
-| Move frozen apps to the end | Settings > Search > Apps | Off | Group [frozen](../freeze) apps at the bottom of the drawer |
+| Move frozen apps to the end | Settings > Search > Apps | Off | Group [frozen](../freeze/) apps at the bottom of the drawer |
 | Hide frozen apps | Settings > Freeze Manager | Off | Remove frozen apps from home, drawer and search |
 
 With a work profile or a private space, the app grid gets tabs. A lock button pauses or unlocks the
@@ -166,7 +166,7 @@ three characters or fewer matches the **start** of a file name only, longer quer
 | Tasks | Calendar | Off | Search the Tasks app, see [Tasks](./plugins-integrations#tasks) |
 
 Contact matching checks the display name, the alternative name, the phonetic name and the sort key, and
-returns at most about fifteen contacts. The [Telos Phone](../phone) contacts are the same Android
+returns at most about fifteen contacts. The [Telos Phone](../phone/) contacts are the same Android
 contacts.
 
 ### Places

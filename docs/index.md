@@ -27,39 +27,39 @@ features:
   - icon: 📞
     title: Telos Phone
     details: A clean dialer and call experience that fits the launcher.
-    link: /docs/user-guide/telos/phone
+    link: /docs/user-guide/telos/phone/
   - icon: 💬
     title: Messages
     details: Read and send messages from a simple, focused app.
-    link: /docs/user-guide/telos/messages
+    link: /docs/user-guide/telos/messages/
   - icon: 📁
     title: Files
     details: Browse local storage, cloud and network shares, and keep private files in a vault.
-    link: /docs/user-guide/telos/files
+    link: /docs/user-guide/telos/files/
   - icon: 🖼️
     title: Photos
     details: A gallery with viewer, editor and document handling.
-    link: /docs/user-guide/telos/photos
+    link: /docs/user-guide/telos/photos/
   - icon: 🎵
     title: Music
     details: Play your own library with a lightweight music player.
-    link: /docs/user-guide/telos/music
+    link: /docs/user-guide/telos/music/
   - icon: 🎬
     title: Video
     details: A straightforward video player for your local media.
-    link: /docs/user-guide/telos/video
+    link: /docs/user-guide/telos/video/
   - icon: 📻
     title: Radio
     details: Tune in to internet radio stations.
-    link: /docs/user-guide/telos/radio
+    link: /docs/user-guide/telos/radio/
   - icon: 🛍️
     title: Store
     details: Discover and manage apps from the Telos Store.
-    link: /docs/user-guide/telos/store
+    link: /docs/user-guide/telos/store/
   - icon: ❄️
     title: Smart Freeze
     details: Freeze rarely used apps to save battery and keep them out of the way.
-    link: /docs/user-guide/telos/freeze
+    link: /docs/user-guide/telos/freeze/
   - icon: 🛡️
     title: Privacy and crash guard
     details: No tracking by default, and a crash guard that keeps the launcher usable if something goes wrong.

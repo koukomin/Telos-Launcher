@@ -4,9 +4,9 @@ The tag editor, synchronized lyrics from LRCLIB, and scrobbling to Last.fm, Libr
 parts of Telos Music that write files or use the network. The library and the player are on
 [Library and playback](./library-playback).
 
-## Tag editor <Badge type="warning" text="changes your files" />
+## Tag editor
 
-Tap **Edit** in the full player to change the tags of the **current song**.
+<Badge type="warning" text="changes your files" /> Tap **Edit** in the full player to change the tags of the **current song**.
 
 | Field | Stored as | Notes |
 | --- | --- | --- |

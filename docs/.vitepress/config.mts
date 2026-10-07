@@ -15,7 +15,7 @@ export default defineConfig({
     nav: [
       { text: 'User Guide', link: '/docs/user-guide/' },
       { text: 'Telos Apps', link: '/docs/user-guide/telos/' },
-      { text: 'Launcher', link: '/docs/user-guide/telos/launcher' },
+      { text: 'Launcher', link: '/docs/user-guide/telos/launcher/' },
       { text: 'Developer Guide', link: '/docs/developer-guide/' },
       { text: 'Contributor Guide', link: '/docs/contributor-guide/' },
     ],
