@@ -9,6 +9,15 @@ settings screens and the string resources, and it says so when something is swit
 untested in the current build. The built-in Telos apps (Phone, Messages, Files and so on) have their own
 pages, see [Telos at a glance](../).
 
+## Complete feature catalogues
+
+The pages above explain how the launcher works. These three list every feature and setting, one table row each
+(setting, where it is, default, what it does), checked against the code:
+
+- [Search: complete feature catalogue](./features/search-catalogue)
+- [Home screen and appearance: complete feature catalogue](./features/home-appearance-catalogue)
+- [System, plugins and integrations: complete feature catalogue](./features/system-catalogue)
+
 ## Map of this section
 
 | Page | What it covers | Read it when you want to |
@@ -62,7 +71,7 @@ in detail. In short:
 | Feed and Smartspacer integration | Only in debug and nightly builds |
 | Favorites widget | No longer in the widget picker |
 | Fallback icon packs | Supported by the icon service, but no setting in the UI |
-| Floating launcher settings | Page exists, but the settings list does not link to it |
+| Floating launcher settings | Linked from the main settings list ("Floating launcher") |
 | Dynamic Island timer | Slot exists, nothing starts it |
 | Desktop quarter snapping | In the code, not in the taskbar menu |
 | Overlays, desktop mode, App Lock, context profiles | Marked experimental, source comments say they need real-hardware verification |

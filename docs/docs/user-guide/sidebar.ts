@@ -27,6 +27,9 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
           { text: 'Desktop mode and overlays', link: '/docs/user-guide/telos/launcher/desktop-and-overlays' },
           { text: 'Privacy and protection', link: '/docs/user-guide/telos/launcher/privacy-protection' },
           { text: 'Performance', link: '/docs/user-guide/telos/launcher/performance' },
+          { text: 'Catalogue: search', link: '/docs/user-guide/telos/launcher/features/search-catalogue' },
+          { text: 'Catalogue: home and appearance', link: '/docs/user-guide/telos/launcher/features/home-appearance-catalogue' },
+          { text: 'Catalogue: system and plugins', link: '/docs/user-guide/telos/launcher/features/system-catalogue' },
         ],
       },
       {

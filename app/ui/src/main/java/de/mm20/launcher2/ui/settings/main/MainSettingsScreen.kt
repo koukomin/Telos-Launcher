@@ -20,6 +20,7 @@ import de.mm20.launcher2.ui.settings.advanced.AdvancedSettingsRoute
 import de.mm20.launcher2.ui.settings.webapps.WebAppsSettingsRoute
 import de.mm20.launcher2.ui.settings.dynamicisland.DynamicIslandSettingsRoute
 import de.mm20.launcher2.ui.settings.freeze.SmartFreezeDashboardRoute
+import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsRoute
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -111,6 +112,14 @@ fun MainSettingsScreen() {
                     summary = stringResource(id = R.string.preference_screen_advanced_summary),
                     onClick = {
                         backStack.add(AdvancedSettingsRoute)
+                    }
+                )
+                Preference(
+                    icon = R.drawable.apps_24px,
+                    title = "Floating launcher",
+                    summary = "Floating panel with quick access to your apps",
+                    onClick = {
+                        backStack.add(FloatingLauncherSettingsRoute)
                     }
                 )
                 // === TELOS_PENDING_REVIEW_START: smart_freeze_ui_and_actions ===

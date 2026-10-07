@@ -50,8 +50,7 @@ object AppCloner {
 
     private suspend fun bindToSandboxBridge(context: Context, userHandle: UserHandle): ISandboxBridge? = suspendCancellableCoroutine { cont ->
         val intent = Intent().apply {
-            component = ComponentName("com.dimitris.telos", "de.mm20.launcher2.sandbox.SandboxBridgeService")
-            // Or component = ComponentName(context, "de.mm20.launcher2.sandbox.SandboxBridgeService")
+            component = ComponentName(context.packageName, "de.mm20.launcher2.sandbox.SandboxBridgeService")
         }
         intent.setPackage(context.packageName)
 

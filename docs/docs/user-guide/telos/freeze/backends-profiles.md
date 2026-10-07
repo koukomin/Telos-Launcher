@@ -34,7 +34,7 @@ System default and no Shizuku is available. Read the [Dhizuku note](#dhizuku) fi
 | Backend | Suspend | Disable | Force stop and cache | Notes |
 | --- | --- | --- | --- | --- |
 | Shizuku | Calls the package manager's suspend function directly, as the shell or root user | Sets the app's enabled state to disabled (disabled-by-user when Shizuku runs through adb) | Calls the activity manager, and clears the app cache | Works for other users (work profile) |
-| Dhizuku | **Placeholder in the current code**: it reports success without changing the app | Same placeholder | Not possible, always reports failure | Do not rely on it |
+| Dhizuku | Not available (placeholder code, never selected automatically) | Not available | Not possible | Do not rely on it |
 | Root | `pm suspend` | `pm disable-user` | `am force-stop`, and removes the cache folder only | Works for other users |
 | Device owner | The device policy manager | Hides the app (a hidden app cannot run) | Not possible, always reports failure | Current user only |
 | Island | An intent to Island | An intent to Island | Not possible | Only for apps already inside Island |
@@ -49,11 +49,9 @@ Root availability is checked once per process; if you grant root later, restart 
 
 ### Dhizuku
 
-<Badge type="warning" text="incomplete" /> The code of the Dhizuku backend is a placeholder: when the Dhizuku app is installed and the permission is granted,
-Telos reports every freeze and unfreeze as successful **without actually changing the app**, and force stop and clear
-cache always fail. Because System default prefers Dhizuku over root, device owner and Island when Shizuku is not
-running, it can hide a working backend. If you have Dhizuku installed and freezing seems to do nothing, uninstall or
-stop Dhizuku, or pick root, Island or device owner by hand in the backend picker.
+<Badge type="warning" text="not available" /> The Dhizuku backend is not finished: the freeze calls are placeholders.
+To avoid reporting a freeze that never happened, Telos treats Dhizuku as **unavailable**. System default skips it and
+the manual backend picker offers it, but it does nothing until the missing part is written.
 
 ### Setting up root
 

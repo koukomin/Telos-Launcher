@@ -107,11 +107,12 @@ Under **Phone settings > Tools**.
 ### Duplicate contacts
 
 The finder groups contacts by shared number. For each group you can **Open** a contact, choose **Keep first,
-delete extras**, or use **Merge all groups** at the bottom.
+delete extras**, or use **Keep first in every group, delete extras** at the bottom. Both ask you to confirm and say
+how many contacts will be deleted.
 
 ::: danger Deleting is permanent
-"Keep first, delete extras" and "Merge all groups" **delete the other Android contacts** with all their data. They
-are not merged field by field. Telos does not ask again and has no undo. Back up your contacts (export a `.vcf`
+Both buttons **delete the other Android contacts** with all their data. They are not merged field by field. Telos
+asks once to confirm and has no undo. Back up your contacts (export a `.vcf`
 in your contacts app) first.
 :::
 

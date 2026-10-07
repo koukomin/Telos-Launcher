@@ -113,15 +113,9 @@ can drop them into another app. Media is copied into the launcher's cache when d
 saved: it is cleared whenever the service restarts. Dragging an app icon from the home screen onto a tab
 adds the app to that zone.
 
-::: warning No settings entry in this build
-The Floating launcher settings page exists, but the main settings list does not link to it. The only
-link is the gear icon inside the floating panel, which needs the launcher to be on already. To reach the
-page the first time, start the settings activity with the route extra, for example:
-
-`adb shell am start -n <application id>/de.mm20.launcher2.ui.settings.SettingsActivity --es de.mm20.launcher2.settings.ROUTE settings/floatinglauncher`
-
-The application id is `com.dimitris.telos`, plus `.debug`, `.release` or `.nightly` depending on the
-build. This looks like an oversight and is listed under limitations.
+::: tip Where the settings are
+Settings > **Floating launcher** opens the settings page of this overlay. The gear icon inside the floating panel
+opens the same page.
 :::
 
 ::: warning Known risk and the emergency switch
@@ -229,6 +223,5 @@ time triggers only take effect while the launcher process is alive.
 - Desktop mode needs hardware support for a second display.
 - Freeform windows change the whole device and need Shizuku.
 - Overlays depend on the display-over-other-apps permission, which some manufacturers restrict.
-- The Floating launcher settings page is not linked from the settings list.
 - The Dynamic Island timer is not fed by anything yet.
 - Context profile triggers do not run in the background.

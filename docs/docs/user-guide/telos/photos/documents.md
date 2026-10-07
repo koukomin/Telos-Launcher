@@ -63,9 +63,9 @@ and `.ppt` cannot be opened**. Use **Open with** to send the file to another app
 3. If the file cannot be written back, Android's **Save as** dialog appears so you can save it as a new file.
 4. **Cancel** leaves editing without saving.
 
-::: danger Do not edit files longer than 2 MB
-Text files are read only up to **2 MB**. If a file is longer, the editor works on the shortened text, and **Save
-writes only that part** back over the original. Open long files in another app to edit them.
+::: tip Long files are read only
+Text files are read only up to **2 MB**. If a file is longer, the **Edit** button is not shown, so the shortened
+text can never be written back over the original. Open long files in another app to edit them.
 :::
 
 ## Limits and behavior

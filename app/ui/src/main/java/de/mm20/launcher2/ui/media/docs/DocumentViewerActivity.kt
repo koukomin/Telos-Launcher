@@ -171,7 +171,8 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
                 navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(de.mm20.launcher2.base.R.drawable.arrow_back_24px), contentDescription = "Back") } },
                 actions = {
                     if (state is DocState.Text) {
-                        if (!editing) TextButton(onClick = { editText = (state as DocState.Text).text; editing = true }) { Text("Edit") }
+                        // a longer file is only partly loaded, saving it would cut the original
+                        if (!editing) { if (!(state as DocState.Text).truncated) TextButton(onClick = { editText = (state as DocState.Text).text; editing = true }) { Text("Edit") } }
                         else {
                             TextButton(onClick = {
                                 scope.launch(Dispatchers.IO) {
@@ -318,7 +319,7 @@ private fun TextView(s: DocState.Text) {
             items(lines.size) { i ->
                 Text(lines[i].ifEmpty { " " }, fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 18.sp)
             }
-            if (s.truncated) item { Text("The file is longer, only the first 2 MB are shown.", Modifier.padding(top = 12.dp), color = MaterialTheme.colorScheme.error) }
+            if (s.truncated) item { Text("The file is longer, only the first 2 MB are shown. It cannot be edited here, so nothing is overwritten.", Modifier.padding(top = 12.dp), color = MaterialTheme.colorScheme.error) }
         }
     }
 }
