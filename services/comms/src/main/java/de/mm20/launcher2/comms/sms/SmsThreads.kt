@@ -125,6 +125,39 @@ object SmsThreads {
         out.sortedBy { it.date }
     }.getOrDefault(emptyList())
 
+    private fun mmsMessages(context: Context, threadId: Long): List<SmsMessage> = runCatching {
+        val out = mutableListOf<SmsMessage>()
+        context.contentResolver.query(
+            Telephony.Mms.CONTENT_URI,
+            arrayOf(Telephony.Mms._ID, Telephony.Mms.DATE, Telephony.Mms.MESSAGE_BOX),
+            "${Telephony.Mms.THREAD_ID} = ?", arrayOf(threadId.toString()), "${Telephony.Mms.DATE} DESC LIMIT 200",
+        )?.use { c ->
+            while (c.moveToNext()) {
+                val id = c.getLong(0)
+                val box = c.getInt(2)
+                var text = ""
+                val attachments = mutableListOf<SmsAttachment>()
+                context.contentResolver.query(
+                    Uri.parse("content://mms/part"), arrayOf("_id", "ct", "text"), "mid = ?", arrayOf(id.toString()), null,
+                )?.use { p ->
+                    while (p.moveToNext()) {
+                        val type = p.getString(1).orEmpty()
+                        when {
+                            type == "text/plain" -> text += p.getString(2).orEmpty()
+                            type.startsWith("image/") || type.startsWith("video/") || type.startsWith("audio/") ->
+                                attachments += SmsAttachment("content://mms/part/${p.getLong(0)}", type)
+                        }
+                    }
+                }
+                out += SmsMessage(
+                    "m$id", text, c.getLong(1) * 1000, box != Telephony.Mms.MESSAGE_BOX_INBOX, attachments,
+                    failed = box == Telephony.Mms.MESSAGE_BOX_FAILED,
+                )
+            }
+        }
+        out
+    }.getOrDefault(emptyList())
+
     internal fun displayName(context: Context, number: String): String? = runCatching {
         if (number.isBlank()) return null
         val uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number))
