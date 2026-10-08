@@ -23,6 +23,7 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
           { text: 'Widgets and feed', link: '/docs/user-guide/telos/launcher/widgets-feed' },
           { text: 'Favorites and tags', link: '/docs/user-guide/telos/launcher/favorites-tags' },
           { text: 'Customization', link: '/docs/user-guide/telos/launcher/customization' },
+          { text: 'Languages', link: '/docs/user-guide/telos/launcher/languages' },
           { text: 'Plugins and integrations', link: '/docs/user-guide/telos/launcher/plugins-integrations' },
           { text: 'Desktop mode and overlays', link: '/docs/user-guide/telos/launcher/desktop-and-overlays' },
           { text: 'Privacy and protection', link: '/docs/user-guide/telos/launcher/privacy-protection' },

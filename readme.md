@@ -27,6 +27,7 @@ The documentation site is published via GitHub Pages at <https://koukomin.github
 - [Download](#download)
 - [The launcher](#the-launcher)
 - [The built-in apps](#the-built-in-apps)
+- [Languages](#languages)
 - [Honest status](#honest-status)
 - [Planned](#planned)
 - [Build](#build)
@@ -356,7 +357,7 @@ Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/doc
 - **Badges:** notification badges (dot or count, color), cloud, suspended or frozen apps, shortcut and plugin badges; work profile, hidden item and Store update badges are always on. Frozen apps can be grayscale or carry a snowflake.
 - **Motion:** charging animation, reduce animations, animation speed 0.5 to 2.0, bounce physics.
 - **Per-item customization:** long-press and tap Customize for a new label (the original name still matches), icon (including icon pack, themed or text icon), tags, **Show in**, a shutter app, or web app settings.
-- **Language and region:** about 45 translations (German and Greek come with Telos), per-app language on Android 13+, form of address (French, Spanish), transliteration, time format, measurement system, calendar systems, currency order.
+- **Language and region:** 35 languages (see [Languages](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/languages)), per-app language on Android 13+, form of address (French, Spanish), transliteration, time format, measurement system, calendar systems, currency order.
 - **Accessibility and comfort:** text size, high contrast and black and white schemes, reduce animations, label options, fixed rotation.
 - **Limitation:** fallback icon packs are supported by the icon service but have **no setting**, so only a single icon pack is usable. Several other values are stored without a screen (Wikipedia images, dock background blur, legacy surface settings).
 
@@ -924,6 +925,15 @@ Freeze or hide apps you do not need right now. It is a launcher feature in Setti
 **Status and limitations:** Which backend works depends on the device and Android version. Root and device owner are untested on many devices. **Dhizuku is not available.** Island cannot confirm that an app was frozen. Work Mode and Clone to Sandbox are experimental. Freezing system apps can break core phone functions. The foreground-app check needs Usage access.
 
 ---
+
+## Languages
+
+Telos is translated into Greek (first), German, French, Italian, Spanish, Portuguese (Portugal and Brazil), Dutch, Polish, Czech, Slovak,
+Slovenian, Croatian, Bulgarian, Romanian, Hungarian, Danish, Swedish, Finnish, Estonian, Latvian, Lithuanian, Irish, Maltese
+(all official languages of the European Union), Russian, Ukrainian, Turkish, Norwegian, Chinese (Simplified and Traditional), Japanese, Korean,
+Arabic, Hindi and Bengali, plus the languages that came with the original launcher. The texts that Telos added were translated by machine and are
+not checked by native speakers, a missing string falls back to English, and the documentation is in English only.
+New strings are translated into all of these languages in the same change. Details: [Languages](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/languages).
 
 ## Honest status
 
