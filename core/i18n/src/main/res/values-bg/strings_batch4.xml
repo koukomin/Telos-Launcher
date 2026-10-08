@@ -205,7 +205,7 @@
     <string name="dl_t_set_lsd">Локално откриване на пиъри</string>
     <string name="dl_t_set_lsd_s">Намиране на пиъри в същата мрежа</string>
     <string name="dl_t_set_utp">uTP</string>
-    <string name="dl_t_set_utp_s">Връзки през UDP, които ототстъпват място на друг трафик</string>
+    <string name="dl_t_set_utp_s">Връзки през UDP, които отстъпват място на друг трафик</string>
     <string name="dl_t_set_enc">Криптиране</string>
     <string name="dl_t_enc_prefer">Предпочитане на криптирани</string>
     <string name="dl_t_enc_require">Изискване на криптирани</string>
