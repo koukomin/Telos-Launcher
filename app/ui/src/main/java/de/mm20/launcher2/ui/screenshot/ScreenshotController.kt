@@ -46,7 +46,7 @@ object ScreenshotController {
                 if (!actions().takeScreenshot()) toast(app, R.string.screenshot_needs_accessibility)
                 return@launch
             }
-            saveAndNotify(app, bitmap)
+            saveOffMainThread(app, bitmap)
         }
     }
 
@@ -105,10 +105,17 @@ object ScreenshotController {
                     previous = next
                 }
                 if (frames.size == 1) {
-                    saveAndNotify(app, first)
+                    saveOffMainThread(app, first)
                 } else {
-                    val stitched = withContext(Dispatchers.Default) { stitch(frames, top, bottom) }
-                    saveAndNotify(app, stitched)
+                    val stitched = try {
+                        withContext(Dispatchers.Default) { stitch(frames, top, bottom) }
+                    } catch (e: OutOfMemoryError) {
+                        // a very long page: keep at least the first screen instead of crashing the app
+                        first
+                    }
+                    saveOffMainThread(app, stitched)
+                    if (stitched !== first) stitched.recycle()
+                    frames.forEach { if (it !== stitched && !it.isRecycled) it.recycle() }
                 }
             } finally {
                 scrolling = false
@@ -124,8 +131,15 @@ object ScreenshotController {
 
     private suspend fun grab(): Bitmap? = suspendCancellableCoroutine { c -> actions().takeScreenshotBitmap { c.resume(it) } }
 
-    fun saveAndNotify(context: Context, bitmap: Bitmap) {
-        val uri = ScreenshotStore.save(context, bitmap)
+    /** Compressing a full screen PNG takes hundreds of milliseconds: not on the main thread */
+    private suspend fun saveOffMainThread(context: Context, bitmap: Bitmap) {
+        val uri = withContext(Dispatchers.IO) { ScreenshotStore.save(context, bitmap) }
+        afterSave(context, uri, bitmap)
+    }
+
+    fun saveAndNotify(context: Context, bitmap: Bitmap) = afterSave(context, ScreenshotStore.save(context, bitmap), bitmap)
+
+    private fun afterSave(context: Context, uri: Uri?, bitmap: Bitmap) {
         if (uri == null) {
             toast(context, R.string.screenshot_save_failed)
             return
@@ -228,9 +242,11 @@ object ScreenshotController {
             val combined = Bitmap.createBitmap(width, result.height + addHeight, Bitmap.Config.ARGB_8888)
             val canvas = android.graphics.Canvas(combined)
             canvas.drawBitmap(result, 0f, 0f, null)
-            canvas.drawBitmap(
-                Bitmap.createBitmap(next, 0, newTop, width, addHeight), 0f, result.height.toFloat(), null,
-            )
+            val strip = Bitmap.createBitmap(next, 0, newTop, width, addHeight)
+            canvas.drawBitmap(strip, 0f, result.height.toFloat(), null)
+            if (strip !== next) strip.recycle()
+            // the previous result is garbage now (frames are owned by the caller)
+            if (frames.none { it === result }) result.recycle()
             result = combined
         }
         return result

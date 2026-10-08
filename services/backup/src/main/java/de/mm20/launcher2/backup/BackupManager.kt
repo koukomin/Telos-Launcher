@@ -15,7 +15,7 @@ class BackupManager(
     private val context: Context,
     private val components: List<Backupable>,
 ) {
-    private val scope = CoroutineScope(Dispatchers.Default + Job())
+    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     /**
      * Create a backup
@@ -37,7 +37,8 @@ class BackupManager(
         )
 
         withContext(Dispatchers.IO) {
-            val outputStream = context.contentResolver.openOutputStream(uri) ?: return@withContext null
+            // "wt": truncate, or an overwritten longer file keeps its old tail and is a corrupt zip
+            val outputStream = context.contentResolver.openOutputStream(uri, "wt") ?: return@withContext null
             val backupDir = File(context.cacheDir, "backup")
             if (backupDir.exists()) {
                 backupDir.deleteRecursively()
@@ -51,9 +52,11 @@ class BackupManager(
                 if (component.group in groups) component.backup(backupDir)
             }
 
-            createArchive(backupDir, outputStream)
-            outputStream.close()
-
+            try {
+                outputStream.use { createArchive(backupDir, it) }
+            } finally {
+                backupDir.deleteRecursively()
+            }
         }
     }
 
@@ -66,16 +69,18 @@ class BackupManager(
         uri: Uri,
         groups: Set<BackupGroup>? = null,
     ) {
-        val job = scope.launch {
+        // async + await (instead of launch): a failure reaches the caller rather than crashing the
+        // app through the uncaught exception handler
+        val job = scope.async {
             withContext(Dispatchers.IO) {
-                val inputStream = context.contentResolver.openInputStream(uri) ?: return@withContext
                 val restoreDir = File(context.cacheDir, "restore")
+                try {
+                val inputStream = context.contentResolver.openInputStream(uri) ?: return@withContext
                 if (restoreDir.exists()) {
                     restoreDir.deleteRecursively()
                 }
                 restoreDir.mkdirs()
-                extractArchive(inputStream, restoreDir)
-                inputStream.close()
+                inputStream.use { extractArchive(it, restoreDir) }
 
                 // a backup from before the groups only has the launcher part
                 val inBackup = readMetaFromDir(restoreDir)?.groups ?: setOf(BackupGroup.Launcher)
@@ -83,9 +88,12 @@ class BackupManager(
                 for (component in components) {
                     if (component.group in chosen) component.restore(restoreDir)
                 }
+                } finally {
+                    restoreDir.deleteRecursively()
+                }
             }
         }
-        job.join()
+        job.await()
     }
 
     private suspend fun readMetaFromDir(dir: File): BackupMetadata? {
@@ -97,20 +105,22 @@ class BackupManager(
     suspend fun readBackupMeta(uri: Uri): BackupMetadata? {
         return withContext(Dispatchers.IO) {
             val inputStream = context.contentResolver.openInputStream(uri) ?: return@withContext null
-            val zipStream = ZipInputStream(inputStream)
-            var entry = zipStream.nextEntry
-            while(entry != null) {
-                if (entry.name == "meta") {
-                    val metadata = BackupMetadata.fromInputStream(zipStream)
-                    zipStream.close()
-                    return@withContext metadata
+            try {
+                ZipInputStream(inputStream).use { zipStream ->
+                    var entry = zipStream.nextEntry
+                    while (entry != null) {
+                        if (entry.name == "meta") {
+                            return@withContext BackupMetadata.fromInputStream(zipStream)
+                        }
+                        zipStream.closeEntry()
+                        entry = zipStream.nextEntry
+                    }
+                    null
                 }
-
-                zipStream.closeEntry()
-
-                entry = zipStream.nextEntry
+            } catch (e: java.io.IOException) {
+                // not a zip file at all, or truncated
+                null
             }
-            return@withContext null
         }
     }
 

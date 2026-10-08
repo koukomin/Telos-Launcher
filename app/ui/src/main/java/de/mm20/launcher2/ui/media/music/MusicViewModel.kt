@@ -100,6 +100,9 @@ class MusicViewModel : ViewModel() {
     val repeatMode: StateFlow<Int> = _repeatMode
 
     private var connecting = false
+    private var cleared = false
+    private var future: com.google.common.util.concurrent.ListenableFuture<MediaController>? = null
+    private var positionJob: Job? = null
     private var pendingPlay: Pair<List<MusicTrack>, Int>? = null
 
     fun connect(context: Context) {
@@ -108,9 +111,15 @@ class MusicViewModel : ViewModel() {
         appContext = context.applicationContext
         val token = SessionToken(context, ComponentName(context, MusicPlayerService::class.java))
         val future = MediaController.Builder(context, token).buildAsync()
+        this.future = future
         future.addListener({
             connecting = false
             val c = runCatching { future.get() }.getOrNull() ?: return@addListener
+            if (cleared) {
+                // the screen was left while connecting: nobody else would release this controller
+                c.release()
+                return@addListener
+            }
             controller = c
             c.addListener(object : Player.Listener {
                 override fun onIsPlayingChanged(isPlaying: Boolean) {
@@ -135,10 +144,12 @@ class MusicViewModel : ViewModel() {
             pendingPlay?.let { (l, i) -> pendingPlay = null; play(l, i) }
         }, MoreExecutors.directExecutor())
 
-        viewModelScope.launch {
+        // one loop for the whole life of the screen (connect() runs again after a failed connection),
+        // and slow while nothing plays: a seek or a new track updates the position by itself
+        if (positionJob == null) positionJob = viewModelScope.launch {
             while (true) {
                 controller?.let { _positionMs.value = it.currentPosition.coerceAtLeast(0L) }
-                delay(500)
+                delay(if (_isPlaying.value) 500 else 2000)
             }
         }
     }
@@ -151,6 +162,7 @@ class MusicViewModel : ViewModel() {
             return
         }
         val md = c.mediaMetadata
+        _positionMs.value = c.currentPosition.coerceAtLeast(0L)
         val playing = NowPlaying(
             uri = item.localConfiguration?.uri,
             title = md.title?.toString().orEmpty(),
@@ -245,6 +257,9 @@ class MusicViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
+        cleared = true
         controller?.release()
+        controller = null
+        if (connecting) future?.let { MediaController.releaseFuture(it) }
     }
 }

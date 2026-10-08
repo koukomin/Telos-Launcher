@@ -60,10 +60,15 @@ internal class SessionApiInstallBackend(private val context: Context) : InstallB
             val session = packageInstaller.openSession(sessionId)
             session.use { s ->
                 writeApkIntoSession(s, apkStream, sizeBytes)
-                commitSession(s, sessionId, packageName)
+                commitSession(s, sessionId, packageName).also {
+                    // a failed commit leaves the session (and its copy of the APK) behind otherwise
+                    if (it is BackendInstallResult.Failed) {
+                        runCatching { packageInstaller.abandonSession(sessionId) }
+                    }
+                }
             }
         } catch (e: Exception) {
-            packageInstaller.abandonSession(sessionId)
+            runCatching { packageInstaller.abandonSession(sessionId) }
             Log.w(TAG, "Session install failed for $packageName", e)
             BackendInstallResult.Failed("Install session failed: ${e.message}", e)
         }

@@ -46,7 +46,7 @@ class SuspendedAppsBadgeProvider(private val context: Context) : BadgeProvider, 
                 }
             } else if (candidates.contains(packageName)) {
                 // Faint Snowflake
-                val drawable = ContextCompat.getDrawable(context, R.drawable.ac_unit_24px)?.apply {
+                val drawable = ContextCompat.getDrawable(context, R.drawable.ac_unit_24px)?.mutate()?.apply {
                     alpha = (0.4f * 255).toInt()
                 }
                 if (drawable != null) {

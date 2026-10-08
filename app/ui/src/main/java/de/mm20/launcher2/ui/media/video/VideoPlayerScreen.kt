@@ -143,6 +143,15 @@ private fun PlayerContent(
         ExoPlayer.Builder(context, renderers)
             // addresses of network storages (rem://) are read through Telos Files
             .setMediaSourceFactory(androidx.media3.exoplayer.source.DefaultMediaSourceFactory(RemoteRoutingDataSource.factory(context)))
+            // audio focus (other apps pause or duck) and pausing when the headphones are unplugged
+            .setAudioAttributes(
+                androidx.media3.common.AudioAttributes.Builder()
+                    .setUsage(C.USAGE_MEDIA)
+                    .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
+                    .build(),
+                true,
+            )
+            .setHandleAudioBecomingNoisy(true)
             .build().apply {
             setVideoChangeFrameRateStrategy(
                 if (VideoPrefs.matchFrameRate(context)) C.VIDEO_CHANGE_FRAME_RATE_STRATEGY_ONLY_IF_SEAMLESS
@@ -185,10 +194,18 @@ private fun PlayerContent(
         traktScope.launch { de.mm20.launcher2.comms.media.video.trakt.Trakt.scrobble(appContext, action, parsed, progress) }
     }
 
+    // the item that was saved last: when the player moves on by itself, this one has been played to the end
+    var lastSavedId by remember { mutableStateOf<String?>(null) }
+    var lastSavedDuration by remember { mutableStateOf(0L) }
+
     fun saveProgress() {
         val item = player.currentMediaItem ?: return
         val duration = player.duration
-        if (duration > 0) ResumeStore.save(context, Uri.parse(item.mediaId), player.currentPosition, duration)
+        if (duration > 0) {
+            ResumeStore.save(context, Uri.parse(item.mediaId), player.currentPosition, duration)
+            lastSavedId = item.mediaId
+            lastSavedDuration = duration
+        }
     }
 
     DisposableEffect(player) {
@@ -203,7 +220,11 @@ private fun PlayerContent(
             }
 
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
-                if (reason == Player.MEDIA_ITEM_TRANSITION_REASON_AUTO) saveProgress()
+                if (reason == Player.MEDIA_ITEM_TRANSITION_REASON_AUTO) {
+                    // player.currentMediaItem is the next one now: the episode that ended counts as watched
+                    lastSavedId?.let { id -> if (id != mediaItem?.mediaId) ResumeStore.save(context, Uri.parse(id), lastSavedDuration, lastSavedDuration) }
+                    saveProgress()
+                }
             }
         }
         player.addListener(listener)
@@ -306,8 +327,13 @@ private fun PlayerContent(
     var subtitleMenu by remember { mutableStateOf(false) }
     var showOnlineSubtitles by remember { mutableStateOf(false) }
     DisposableEffect(player) {
+        var shownId = player.currentMediaItem?.mediaId
         val l = object : Player.Listener {
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+                // putting a subtitle into the item (replaceMediaItem) reports a transition to the same video:
+                // the subtitle file and its delay must survive that
+                if (mediaItem?.mediaId == shownId) return
+                shownId = mediaItem?.mediaId
                 currentFileName = mediaItem?.mediaMetadata?.title?.toString().orEmpty()
                 subFile = null
                 subDelay = 0L

@@ -9,6 +9,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,10 +37,14 @@ fun PluginWidget(widget: PluginWidget) {
     val context = LocalContext.current
     var items by remember(widget.config.authority) { mutableStateOf<List<PluginWidgetItem>?>(null) }
 
-    LaunchedEffect(widget.config.authority) {
-        while (true) {
-            items = queryPluginWidgetItems(context, widget.config.authority)
-            delay(5.minutes)
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    LaunchedEffect(widget.config.authority, lifecycle) {
+        // Refresh on every return to the launcher and every 5 minutes while it is visible
+        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            while (true) {
+                items = queryPluginWidgetItems(context, widget.config.authority)
+                delay(5.minutes)
+            }
         }
     }
 

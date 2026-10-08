@@ -35,6 +35,18 @@ internal class ContactDirectoryRepositoryImpl(
 
     override suspend fun containsNumber(number: String): Boolean {
         if (number.isBlank()) return false
+        // a single lookup instead of loading the whole address book for every incoming call
+        val found = withContext(Dispatchers.IO) {
+            runCatching {
+                val uri = android.net.Uri.withAppendedPath(
+                    ContactsContract.PhoneLookup.CONTENT_FILTER_URI,
+                    android.net.Uri.encode(number),
+                )
+                context.contentResolver.query(uri, arrayOf(ContactsContract.PhoneLookup._ID), null, null, null)
+                    ?.use { it.count > 0 }
+            }.getOrNull()
+        }
+        if (found != null) return found
         return queryContacts().any { contact ->
             contact.phoneNumbers.any { PhoneNumbers.match(it, number) }
         }

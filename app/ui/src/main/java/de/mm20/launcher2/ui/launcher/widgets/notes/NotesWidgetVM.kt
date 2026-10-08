@@ -157,8 +157,10 @@ class NotesWidgetVM(
                 linkedFileSavingState.value = LinkedFileSavingState.Error
                 CrashReporter.logException(e)
                 return@withContext false
+            } finally {
+                // Must be released on failure as well, otherwise every later save blocks forever
+                writeSemaphore.release()
             }
-            writeSemaphore.release()
             return@withContext true
         }
     }

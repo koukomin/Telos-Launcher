@@ -177,11 +177,14 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
         // is alive.
         launch {
             val floatingLauncherSettings = get<FloatingLauncherSettings>()
-            if (floatingLauncherSettings.enabled.first() && Settings.canDrawOverlays(this@LauncherApplication)) {
-                ContextCompat.startForegroundService(
-                    this@LauncherApplication,
-                    Intent(this@LauncherApplication, FloatingLauncherService::class.java),
-                )
+            if (runCatching { floatingLauncherSettings.enabled.first() }.getOrDefault(false) && Settings.canDrawOverlays(this@LauncherApplication)) {
+                // Android 12+ refuses this when the process was started in the background
+                runCatching {
+                    ContextCompat.startForegroundService(
+                        this@LauncherApplication,
+                        Intent(this@LauncherApplication, FloatingLauncherService::class.java),
+                    )
+                }
             }
         }
 
@@ -189,11 +192,14 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
         // after a process restart.
         launch {
             val dynamicIslandSettings = get<DynamicIslandSettings>()
-            if (dynamicIslandSettings.enabled.first() && Settings.canDrawOverlays(this@LauncherApplication)) {
-                ContextCompat.startForegroundService(
-                    this@LauncherApplication,
-                    Intent(this@LauncherApplication, DynamicIslandService::class.java),
-                )
+            if (runCatching { dynamicIslandSettings.enabled.first() }.getOrDefault(false) && Settings.canDrawOverlays(this@LauncherApplication)) {
+                // Android 12+ refuses this when the process was started in the background
+                runCatching {
+                    ContextCompat.startForegroundService(
+                        this@LauncherApplication,
+                        Intent(this@LauncherApplication, DynamicIslandService::class.java),
+                    )
+                }
             }
         }
 
@@ -201,11 +207,14 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
         // after a process restart.
         launch {
             val appLockSettings = get<AppLockSettings>()
-            if (appLockSettings.enabled.first() && Settings.canDrawOverlays(this@LauncherApplication)) {
-                ContextCompat.startForegroundService(
-                    this@LauncherApplication,
-                    Intent(this@LauncherApplication, AppLockOverlayService::class.java),
-                )
+            if (runCatching { appLockSettings.enabled.first() }.getOrDefault(false) && Settings.canDrawOverlays(this@LauncherApplication)) {
+                // Android 12+ refuses this when the process was started in the background
+                runCatching {
+                    ContextCompat.startForegroundService(
+                        this@LauncherApplication,
+                        Intent(this@LauncherApplication, AppLockOverlayService::class.java),
+                    )
+                }
             }
         }
 
@@ -244,7 +253,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
 
         // enqueueUniquePeriodicWork + KEEP is idempotent, so it's safe to call this on every
         // process start rather than gating it behind a one-time setup step.
-        get<StoreUpdateScheduler>().enable()
+        launch(Dispatchers.Default) { runCatching { get<StoreUpdateScheduler>().enable() } }
 
         launch(Dispatchers.Default) { guardVirtualApps() }
         // Telos Downloads: queue the downloads that were running when the process ended

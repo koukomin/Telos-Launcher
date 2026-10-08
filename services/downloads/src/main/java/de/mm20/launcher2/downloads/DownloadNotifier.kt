@@ -179,7 +179,7 @@ class DownloadNotifier(private val context: Context, private val settings: Downl
                 .setContentText(context.getString(I18nR.string.dl_notification_failed, task.error.orEmpty()))
                 .setAutoCancel(true)
                 .setContentIntent(openApp())
-                .addAction(0, context.getString(I18nR.string.dl_retry), serviceAction(DownloadService.ACTION_RESUME, task.id, 300))
+                .addAction(0, context.getString(I18nR.string.dl_retry), serviceAction(DownloadService.ACTION_RESUME, task.id, notificationId(task.id) + RESULT_OFFSET))
                 .build()
         )
     }

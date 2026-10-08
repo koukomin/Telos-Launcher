@@ -205,8 +205,11 @@ object BlockLists {
 
     private suspend fun updateList(id: String): Boolean = withContext(Dispatchers.IO) {
         val list = _state.value.lists.firstOrNull { it.id == id } ?: return@withContext true
-        if (id in _updating.value) return@withContext true
-        _updating.value = _updating.value + id
+        // check and mark in one step: the worker and a tap on "update now" may arrive together
+        val started = synchronized(lock) {
+            if (id in _updating.value) false else { _updating.value = _updating.value + id; true }
+        }
+        if (!started) return@withContext true
         var conn: HttpURLConnection? = null
         try {
             conn = (URL(list.sourceUrl).openConnection() as HttpURLConnection).apply {
@@ -256,7 +259,7 @@ object BlockLists {
         val reader = BlockListParser.openText(input, MAX_TEXT_BYTES) { gzDate = it }
         var date = 0L
         val data: LongArray = when (kind) {
-            BlockListKind.WEB -> DomainSet.of(BlockListParser.parseDomains(reader)).toArray()
+            BlockListKind.WEB -> DomainSet.fromHashes(BlockListParser.parseDomainHashes(reader)).toArray()
             BlockListKind.TORRENT_IP -> {
                 val r = BlockListParser.parseIpRangesInfo(reader, BlockListPresets.byId(id)?.skipReserved == true)
                 date = r.dataDate.takeIf { it > 0 } ?: gzDate
@@ -284,6 +287,8 @@ object BlockLists {
         if (!f.exists()) null else DataInputStream(f.inputStream().buffered()).use { input ->
             if (input.readInt() != MAGIC) return null
             val n = input.readInt()
+            // a damaged file must not ask for gigabytes of memory
+            if (n < 0 || n.toLong() * 8 > f.length()) return null
             LongArray(n) { input.readLong() }
         }
     } catch (e: Exception) {
@@ -383,7 +388,7 @@ object BlockLists {
 
 class BlockListWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
     override suspend fun doWork(): Result {
-        BlockLists.updateAllEnabled(applicationContext)
-        return Result.success()
+        // retry (with the backoff set in reschedule) when a download failed, e.g. no connectivity
+        return if (BlockLists.updateAllEnabled(applicationContext)) Result.success() else Result.retry()
     }
 }

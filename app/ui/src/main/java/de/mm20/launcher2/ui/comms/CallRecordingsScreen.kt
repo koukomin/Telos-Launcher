@@ -27,6 +27,7 @@ import de.mm20.launcher2.comms.recording.CallRecordingFile
 import de.mm20.launcher2.comms.recording.RecordingCrypto
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
+import kotlinx.coroutines.launch
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import kotlinx.serialization.Serializable
 import java.text.SimpleDateFormat
@@ -39,8 +40,16 @@ data object CallRecordingsRoute : NavKey
 @Composable
 fun CallRecordingsScreen() {
     val context = LocalContext.current
-    var files by remember { mutableStateOf(CallAudioRecorder.list(context)) }
-    androidx.compose.runtime.LaunchedEffect(Unit) { RecordingCrypto.clearSharedCopies(context) }
+    var files by remember { mutableStateOf(emptyList<CallRecordingFile>()) }
+    val loadScope = androidx.compose.runtime.rememberCoroutineScope()
+    // listing also encrypts recordings of older versions: not on the main thread
+    val reload: () -> Unit = {
+        loadScope.launch { files = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { CallAudioRecorder.list(context) } }
+    }
+    androidx.compose.runtime.LaunchedEffect(Unit) {
+        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { RecordingCrypto.clearSharedCopies(context) }
+        files = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { CallAudioRecorder.list(context) }
+    }
     PreferenceScreen(title = { Text(stringResource(R.string.hc_call_recordings)) }) {
         if (files.isEmpty()) {
             item {
@@ -49,7 +58,7 @@ fun CallRecordingsScreen() {
         }
         files.forEach { rec ->
             item {
-                RecordingRow(rec, onChanged = { files = CallAudioRecorder.list(context) })
+                RecordingRow(rec, onChanged = reload)
             }
         }
     }

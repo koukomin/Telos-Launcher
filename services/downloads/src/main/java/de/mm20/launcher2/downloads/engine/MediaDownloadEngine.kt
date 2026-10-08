@@ -71,7 +71,7 @@ class MediaDownloadEngine(
         val tail = ArrayDeque<String>()
         val latest = AtomicReference<MediaProgressTracker.Snapshot?>(null)
 
-        val result = coroutineScope {
+        val result = try { coroutineScope {
             val ticker = launch {
                 var shown: MediaProgressTracker.Snapshot? = null
                 while (isActive) {
@@ -106,6 +106,9 @@ class MediaDownloadEngine(
             } finally {
                 ticker.cancel()
             }
+        } } finally {
+            // the staging copy of the cookies must not stay around (a failed task keeps its staging folder)
+            cookies?.let { runCatching { File(it).delete() } }
         }
 
         if (result.exitCode != 0) {

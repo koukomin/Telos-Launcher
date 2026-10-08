@@ -33,6 +33,10 @@ interface Fs {
     fun openWrite(path: String): java.io.OutputStream = throw UnsupportedOperationException("Writing is not supported here")
 }
 
+/** A name handed out by a server, an archive or a vault must be one plain file name, never a path that leaves the folder */
+fun isPlainName(name: String): Boolean =
+    name.isNotEmpty() && name != "." && name != ".." && '/' !in name && '\u0000' !in name
+
 /** A name that does not exist in [dir] yet: "photo.jpg", "photo (1).jpg", ... */
 fun Fs.freeName(dir: String, wanted: String): String {
     if (!exists(joinPath(dir, wanted))) return wanted
@@ -73,7 +77,10 @@ class LocalFs : Fs {
     override fun createFile(parent: String, name: String) = runCatching { File(parent, name).createNewFile() }.getOrDefault(false)
     override fun rename(path: String, newName: String): Boolean {
         val f = File(path)
-        return f.renameTo(File(f.parentFile, newName))
+        val to = File(f.parentFile, newName)
+        // renameTo replaces an existing file silently; only a change of upper/lower case may "exist" already
+        if (to.exists() && !f.name.equals(newName, ignoreCase = true)) return false
+        return f.renameTo(to)
     }
     override fun delete(path: String) = File(path).deleteRecursively()
     override fun copy(src: String, dstDir: String, newName: String): Boolean = runCatching {
@@ -82,6 +89,7 @@ class LocalFs : Fs {
     override fun move(src: String, dstDir: String, newName: String): Boolean {
         val from = File(src)
         val to = File(dstDir, newName)
+        if (to.exists()) return false // never replace what is there
         if (from.renameTo(to)) return true
         // another volume: copy, then remove the original
         return runCatching { from.copyRecursively(to, overwrite = false) && from.deleteRecursively() }.getOrDefault(false)
@@ -215,6 +223,7 @@ object FsOps {
         if (srcIsDir) {
             dst.mkdir(parentOf(dstPath) ?: "/", nameOf(dstPath))
             for (child in src.list(srcPath)) {
+                if (!isPlainName(child.name)) continue // a server could list "../../x" to write outside the target
                 copyAcross(src, child.path, child.isDir, dst, joinPath(dstPath, child.name), cancel, progress)
             }
         } else {

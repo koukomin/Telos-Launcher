@@ -59,6 +59,7 @@ import de.mm20.launcher2.comms.sms.SmsStore
 import de.mm20.launcher2.comms.sms.SmsThreads
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.compose.koinInject
 import java.text.DateFormat
@@ -212,6 +213,7 @@ private fun ThreadView(
         messages = withContext(Dispatchers.IO) { SmsThreads.messages(context, conversation) }
     }
     var failed by remember { mutableStateOf(false) }
+    val sendScope = androidx.compose.runtime.rememberCoroutineScope()
     val listState = rememberLazyListState()
     LaunchedEffect(messages.size) { if (messages.isNotEmpty()) listState.scrollToItem(messages.lastIndex) }
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) { picked ->
@@ -269,10 +271,17 @@ private fun ThreadView(
                 enabled = body.isNotBlank() || attachments.isNotEmpty(),
                 onClick = {
                     val asMms = attachments.isNotEmpty() || addresses.size > 1
-                    val ok = if (asMms) SmsThreads.sendMms(context, addresses, body, attachments)
-                    else SmsThreads.send(context, addresses.firstOrNull().orEmpty(), body)
-                    failed = !ok
-                    if (ok) { onBody(""); onAttachments(emptyList()); version++ }
+                    val text = body
+                    val picked = attachments
+                    // message store, attachment reading and the carrier hand-over are not main thread work
+                    sendScope.launch {
+                        val ok = withContext(Dispatchers.IO) {
+                            if (asMms) SmsThreads.sendMms(context, addresses, text, picked)
+                            else SmsThreads.send(context, addresses.firstOrNull().orEmpty(), text)
+                        }
+                        failed = !ok
+                        if (ok) { onBody(""); onAttachments(emptyList()); version++ }
+                    }
                 },
             ) { Text(stringResource(R.string.hc_send)) }
         }

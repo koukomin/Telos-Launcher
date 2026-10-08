@@ -72,9 +72,10 @@ internal class WebAppShortcutRepositoryImpl(
     private val httpClient by lazy {
         HttpClient {
             install(HttpTimeout) {
-                connectTimeoutMillis = 200
-                requestTimeoutMillis = 3000
-                socketTimeoutMillis = 1000
+                // 200 ms for connecting (and 1 s per read incl. the TLS handshake) failed on most mobile connections
+                connectTimeoutMillis = 2000
+                requestTimeoutMillis = 6000
+                socketTimeoutMillis = 3000
             }
         }
     }
@@ -159,17 +160,11 @@ internal class WebAppShortcutRepositoryImpl(
         savableSearchableRepository.delete(shortcut)
     }
 
-    private fun normalizeUrl(url: String): String {
-        return if (!url.startsWith("https://") && !url.startsWith("http://")) "https://$url"
-        else url
-    }
+    private fun normalizeUrl(url: String): String = normalizeWebUrl(url)
 
     override suspend fun findFavicon(url: String): String? {
         return withContext(Dispatchers.IO) {
-            var normalizedUrl = url
-            if (!url.startsWith("https://") && !url.startsWith("http://")) {
-                normalizedUrl = "https://$url"
-            }
+            val normalizedUrl = normalizeWebUrl(url)
             if (!URLUtil.isValidUrl(normalizedUrl)) return@withContext null
             try {
                 val response = httpClient.get {
@@ -206,4 +201,10 @@ internal class WebAppShortcutRepositoryImpl(
             ""
         }
     }
+}
+
+/** Adds https:// when the scheme is missing. The scheme check ignores case ("HTTPS://x" is a complete address). */
+internal fun normalizeWebUrl(url: String): String {
+    val u = url.trim()
+    return if (u.startsWith("https://", ignoreCase = true) || u.startsWith("http://", ignoreCase = true)) u else "https://$u"
 }

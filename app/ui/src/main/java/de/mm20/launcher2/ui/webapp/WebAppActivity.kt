@@ -313,7 +313,10 @@ private fun WebAppScreen(
 
     DisposableEffect(Unit) {
         onDispose {
-            webViewEntries.values.forEach { it.destroy() }
+            webViewEntries.values.forEach {
+                (it.parent as? ViewGroup)?.removeView(it)
+                it.destroy()
+            }
             webViewEntries.clear()
         }
     }
@@ -484,6 +487,8 @@ private fun WebAppScreen(
                             settings.setSupportZoom(zoomControlsEnabled)
                             settings.builtInZoomControls = zoomControlsEnabled
                             settings.displayZoomControls = false
+                            settings.allowFileAccess = false
+                            settings.allowContentAccess = false
 
                             if (keyNotificationsEnabled) {
                                 val bridgeKey = if (key == initialKey) shortcutKey else key
@@ -526,7 +531,7 @@ private fun WebAppScreen(
                                     view: WebView,
                                     request: WebResourceRequest,
                                 ): Boolean {
-                                    if (trackingParamStrippingEnabledState.value && request.isForMainFrame) {
+                                    if (trackingParamStrippingEnabledState.value && request.isForMainFrame && request.method == "GET") {
                                         val original = request.url.toString()
                                         val stripped = TrackingParamStripper.strip(original)
                                         if (stripped != original) {
@@ -538,21 +543,27 @@ private fun WebAppScreen(
                                 }
                             }
                             setDownloadListener { downloadUrl, userAgent, contentDisposition, mimeType, _ ->
-                                val fileName = URLUtil.guessFileName(downloadUrl, contentDisposition, mimeType)
-                                val request = DownloadManager.Request(downloadUrl.toUri())
-                                    .setMimeType(mimeType)
-                                    .addRequestHeader("cookie", CookieManager.getInstance().getCookie(downloadUrl))
-                                    .addRequestHeader("User-Agent", userAgent)
-                                    .setDescription(fileName)
-                                    .setTitle(fileName)
-                                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
-                                context.getSystemService<DownloadManager>()?.enqueue(request)
-                                Toast.makeText(
-                                    context,
-                                    context.getString(R.string.web_app_download_started, fileName),
-                                    Toast.LENGTH_SHORT,
-                                ).show()
+                                try {
+                                    val fileName = URLUtil.guessFileName(downloadUrl, contentDisposition, mimeType)
+                                    val request = DownloadManager.Request(downloadUrl.toUri())
+                                        .setMimeType(mimeType)
+                                        .addRequestHeader("User-Agent", userAgent)
+                                        .setDescription(fileName)
+                                        .setTitle(fileName)
+                                        .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                                        .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
+                                    // getCookie() is null without cookies and addRequestHeader() throws on null
+                                    CookieManager.getInstance().getCookie(downloadUrl)?.let { request.addRequestHeader("cookie", it) }
+                                    context.getSystemService<DownloadManager>()?.enqueue(request)
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.web_app_download_started, fileName),
+                                        Toast.LENGTH_SHORT,
+                                    ).show()
+                                } catch (e: Exception) {
+                                    // blob:/data: URLs and other non-HTTP schemes cannot be handled by DownloadManager
+                                    android.util.Log.w("WebAppActivity", "Download failed", e)
+                                }
                             }
                             val targetUrl = if (key == initialKey) {
                                 url

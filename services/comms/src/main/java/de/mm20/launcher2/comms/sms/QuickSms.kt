@@ -18,7 +18,10 @@ object QuickSms {
             return runCatching {
                 @Suppress("DEPRECATION")
                 val sms = context.getSystemService(SmsManager::class.java) ?: SmsManager.getDefault()
-                sms.sendTextMessage(number, null, body, null, null)
+                // a long text has to be divided, a single send fails above the length of one message
+                val parts = sms.divideMessage(body)
+                if (parts.size > 1) sms.sendMultipartTextMessage(number, null, parts, null, null)
+                else sms.sendTextMessage(number, null, body, null, null)
             }.isSuccess
         }
         context.tryStartActivity(MessengerIntentUtils.sms(number, body))

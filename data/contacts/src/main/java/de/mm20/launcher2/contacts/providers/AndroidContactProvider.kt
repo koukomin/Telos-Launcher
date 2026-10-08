@@ -46,7 +46,7 @@ internal class AndroidContactProvider(
             ContactsContract.RawContacts._ID
         )
         val sel =
-            "${ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY} LIKE ? OR ${ContactsContract.RawContacts.DISPLAY_NAME_ALTERNATIVE} LIKE ? OR ${ContactsContract.RawContacts.PHONETIC_NAME} LIKE ? OR ${ContactsContract.RawContacts.SORT_KEY_PRIMARY} LIKE ?"
+            "(${ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY} LIKE ? OR ${ContactsContract.RawContacts.DISPLAY_NAME_ALTERNATIVE} LIKE ? OR ${ContactsContract.RawContacts.PHONETIC_NAME} LIKE ? OR ${ContactsContract.RawContacts.SORT_KEY_PRIMARY} LIKE ?) AND ${ContactsContract.RawContacts.DELETED} = 0"
         val selArgs = arrayOf("%$query%", "%$query%", "%$query%", "%$query%")
         val cursor = context.contentResolver.query(
             ContactsContract.RawContacts.CONTENT_URI, proj, sel, selArgs, null
@@ -61,10 +61,8 @@ internal class AndroidContactProvider(
         return contactMap
     }
 
-    private class NameRow(val contactId: Long, val rawId: Long, val names: List<String>)
-
-    @Volatile
-    private var nameCache: Pair<Long, List<NameRow>>? = null
+    /** [foldedNames] are already run through [GreekFold.fold], so a keystroke only does string searches. */
+    private class NameRow(val contactId: Long, val rawId: Long, val foldedNames: List<String>)
 
     /**
      * LIKE cannot match accents, final sigma or greeklish, so load id + name columns only
@@ -74,38 +72,49 @@ internal class AndroidContactProvider(
         val q = GreekFold.fold(query.trim())
         if (q.isEmpty()) return emptyMap()
         val now = System.currentTimeMillis()
-        val rows = nameCache?.takeIf { now - it.first < 30_000L }?.second ?: run {
-            val proj = arrayOf(
-                ContactsContract.RawContacts.CONTACT_ID,
-                ContactsContract.RawContacts._ID,
-                ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY,
-                ContactsContract.RawContacts.DISPLAY_NAME_ALTERNATIVE,
-                ContactsContract.RawContacts.PHONETIC_NAME,
-            )
-            val list = mutableListOf<NameRow>()
-            context.contentResolver.query(
-                ContactsContract.RawContacts.CONTENT_URI, proj,
-                "${ContactsContract.RawContacts.DELETED} = 0", null, null
-            )?.use {
-                while (it.moveToNext() && list.size < 20_000) {
-                    list.add(
-                        NameRow(
-                            it.getLong(0), it.getLong(1),
-                            listOfNotNull(it.getStringOrNull(2), it.getStringOrNull(3), it.getStringOrNull(4))
-                        )
-                    )
-                }
-            }
-            nameCache = now to list
-            list
+        val cached = nameCache?.takeIf { now - it.first < 30_000L }
+        var result = matchRows(cached?.second ?: loadRows(), q)
+        // A contact that was added after the cache was built: retry once with fresh data
+        if (result.isEmpty() && cached != null && now - cached.first > 5_000L) {
+            result = matchRows(loadRows(), q)
         }
+        return result
+    }
+
+    private fun matchRows(rows: List<NameRow>, q: String): Map<Long, MutableSet<Long>> {
         val contactMap = linkedMapOf<Long, MutableSet<Long>>()
         for (row in rows) {
-            if (row.names.any { GreekFold.matches(it, q) }) {
+            if (row.foldedNames.any { it.contains(q) }) {
                 contactMap.getOrPut(row.contactId) { mutableSetOf() }.add(row.rawId)
             }
         }
         return contactMap
+    }
+
+    private fun loadRows(): List<NameRow> {
+        val proj = arrayOf(
+            ContactsContract.RawContacts.CONTACT_ID,
+            ContactsContract.RawContacts._ID,
+            ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY,
+            ContactsContract.RawContacts.DISPLAY_NAME_ALTERNATIVE,
+            ContactsContract.RawContacts.PHONETIC_NAME,
+        )
+        val list = ArrayList<NameRow>()
+        context.contentResolver.query(
+            ContactsContract.RawContacts.CONTENT_URI, proj,
+            "${ContactsContract.RawContacts.DELETED} = 0", null, null
+        )?.use {
+            while (it.moveToNext() && list.size < 20_000) {
+                val names = listOfNotNull(it.getStringOrNull(2), it.getStringOrNull(3), it.getStringOrNull(4))
+                    .filter { n -> n.isNotEmpty() }
+                    .map { n -> GreekFold.fold(n) }
+                    .distinct()
+                if (names.isEmpty()) continue
+                list.add(NameRow(it.getLong(0), it.getLong(1), names))
+            }
+        }
+        nameCache = System.currentTimeMillis() to list
+        return list
     }
 
     /**
@@ -272,5 +281,16 @@ internal class AndroidContactProvider(
             return@withContext null
         }
         return@withContext getWithRawIds(id, rawContacts)
+    }
+
+    companion object {
+        // The provider is created for every search, so the cache has to live outside of the instance.
+        @Volatile
+        private var nameCache: Pair<Long, List<NameRow>>? = null
+
+        /** Drops the cached contact names, e.g. when the contacts permission is gone. */
+        fun clearCache() {
+            nameCache = null
+        }
     }
 }

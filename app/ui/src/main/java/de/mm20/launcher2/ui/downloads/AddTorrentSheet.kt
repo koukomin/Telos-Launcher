@@ -103,20 +103,27 @@ internal fun AddTorrentSheet(initialText: String, manager: DownloadManager, onDi
         else text.trim().takeIf { TorrentSources.classify(it) == TorrentSourceKind.TorrentFile }?.let { listOf(it) } ?: emptyList()
     }
 
+    // only the newest request counts: an older one that finishes later must not replace the preview
+    var fetchJob by remember { mutableStateOf<kotlinx.coroutines.Job?>(null) }
+
     fun fetch(source: String) {
+        fetchJob?.cancel()
         loading = true
         error = null
         preview = null
-        scope.launch {
+        fetchJob = scope.launch {
+            val me = kotlinx.coroutines.currentCoroutineContext()[kotlinx.coroutines.Job]
             try {
                 val p = TorrentMetadata.load(context, source)
                 preview = p
                 previewSource = source
                 files = p.files
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
             } catch (e: Exception) {
                 error = e.message ?: e.javaClass.simpleName
             } finally {
-                loading = false
+                if (fetchJob === me) loading = false
             }
         }
     }

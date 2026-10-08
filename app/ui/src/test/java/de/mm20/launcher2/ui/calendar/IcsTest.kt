@@ -59,4 +59,10 @@ class IcsTest {
         assertEquals(10, Ics.triggerMinutes("TRIGGER", "-PT10M")); assertEquals(0, Ics.triggerMinutes("TRIGGER", "PT0S"))
         assertEquals(null, Ics.triggerMinutes("TRIGGER", "PT5M")); assertEquals(1440, Ics.triggerMinutes("TRIGGER", "-P1D"))
     }
+
+    @Test
+    fun foldingKeepsEmojiIntact() {
+        val title = "x".repeat(72) + "\uD83D\uDE00".repeat(40)
+        assertEquals(title, Ics.read(Ics.write("x", listOf(IcsEvent(title, start = 0, end = 1000))))[0].title)
+    }
 }

@@ -12,15 +12,16 @@ object ContactSearch {
     fun search(query: String, contacts: List<DialerContact>): List<DialerContact> {
         val q = query.trim()
         if (q.isEmpty()) return contacts
+        val qFold = GreekFold.fold(q)
         return contacts.mapNotNull { contact ->
-            rank(q, contact)?.let { contact to it }
+            rank(q, qFold, contact)?.let { contact to it }
         }.sortedWith(
             compareBy({ it.second.rank }, { if (it.second.prefix) 0 else 1 }, { it.first.displayName.lowercase() })
         ).map { it.first }
     }
 
-    private fun rank(query: String, contact: DialerContact): Rank? {
-        nameRank(query, contact.displayName)?.let { return it }
+    private fun rank(query: String, qFold: String, contact: DialerContact): Rank? {
+        nameRank(query, qFold, contact.displayName)?.let { return it }
         if (contact.phoneNumbers.any { it.contains(query.filter { ch -> ch.isDigit() || ch == '+' }) && query.any(Char::isDigit) } ||
             contact.phoneNumbers.any { it.contains(query, ignoreCase = true) }
         ) {
@@ -32,8 +33,7 @@ object ContactSearch {
         return null
     }
 
-    private fun nameRank(query: String, name: String): Rank? {
-        val qFold = GreekFold.fold(query.trim())
+    private fun nameRank(query: String, qFold: String, name: String): Rank? {
         val nFold = GreekFold.fold(name)
         if (qFold.isEmpty() || nFold.isEmpty()) return null
         // fold word by word so that a word prefix is judged on the folded word

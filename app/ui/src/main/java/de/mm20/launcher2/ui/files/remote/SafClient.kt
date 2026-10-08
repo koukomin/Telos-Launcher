@@ -41,10 +41,32 @@ class SafClient(private val context: Context, treeUri: String) : RemoteClient {
 
     private fun segments(path: String) = path.trim('/').split('/').filter { it.isNotEmpty() }
 
+    /**
+     * Paths already resolved to document ids. Without it every call walks from the root and lists each
+     * folder on the way again, which is a round trip to the cloud app per level. Mutations clear it, and
+     * a failed call makes RemoteFs create a fresh client (and so a fresh cache).
+     */
+    private val ids = java.util.concurrent.ConcurrentHashMap<String, String>()
+
+    private fun remember(parentPath: String, kids: List<Child>) {
+        val first = LinkedHashMap<String, String>()
+        for (k in kids) first.putIfAbsent(parentPath + "/" + k.name, k.id) // the first of equal names, as before
+        ids.putAll(first)
+    }
+
     /** The document id of [path], or null when there is nothing with that name */
     private fun resolve(path: String): String? {
         var id = rootId
-        for (s in segments(path)) id = children(id).firstOrNull { it.name == s }?.id ?: return null
+        var built = ""
+        for (s in segments(path)) {
+            val parent = built
+            built = "$built/$s"
+            val known = ids[built]
+            if (known != null) { id = known; continue }
+            val kids = children(id)
+            remember(parent, kids)
+            id = ids[built] ?: return null
+        }
         return id
     }
 
@@ -54,29 +76,43 @@ class SafClient(private val context: Context, treeUri: String) : RemoteClient {
     override fun list(path: String): List<RemoteEntry> {
         val id = resolve(path) ?: throw IOException("This folder does not exist")
         val base = "/" + segments(path).joinToString("/")
-        return children(id).map { RemoteEntry(it.name, (if (base == "/") "" else base) + "/" + it.name, it.isDir, it.size, it.modified) }
+        val kids = children(id)
+        remember(if (base == "/") "" else base, kids)
+        return kids.map { RemoteEntry(it.name, (if (base == "/") "" else base) + "/" + it.name, it.isDir, it.size, it.modified) }
     }
 
     override fun mkdir(path: String): Boolean {
         val parent = resolve(parentOf(path)) ?: return false
-        return DocumentsContract.createDocument(cr, docUri(parent), DocumentsContract.Document.MIME_TYPE_DIR, nameOf(path)) != null
+        try {
+            return DocumentsContract.createDocument(cr, docUri(parent), DocumentsContract.Document.MIME_TYPE_DIR, nameOf(path)) != null
+        } finally {
+            ids.clear()
+        }
     }
 
     override fun delete(path: String): Boolean {
         val id = resolve(path) ?: return false
-        return DocumentsContract.deleteDocument(cr, docUri(id))
+        try {
+            return DocumentsContract.deleteDocument(cr, docUri(id))
+        } finally {
+            ids.clear()
+        }
     }
 
     override fun rename(from: String, to: String): Boolean {
         val id = resolve(from) ?: return false
-        var current = docUri(id)
-        if (parentOf(from) != parentOf(to)) {
-            val srcParent = resolve(parentOf(from)) ?: return false
-            val dstParent = resolve(parentOf(to)) ?: return false
-            current = DocumentsContract.moveDocument(cr, current, docUri(srcParent), docUri(dstParent)) ?: return false
+        try {
+            var current = docUri(id)
+            if (parentOf(from) != parentOf(to)) {
+                val srcParent = resolve(parentOf(from)) ?: return false
+                val dstParent = resolve(parentOf(to)) ?: return false
+                current = DocumentsContract.moveDocument(cr, current, docUri(srcParent), docUri(dstParent)) ?: return false
+            }
+            if (nameOf(from) != nameOf(to)) return DocumentsContract.renameDocument(cr, current, nameOf(to)) != null
+            return true
+        } finally {
+            ids.clear()
         }
-        if (nameOf(from) != nameOf(to)) return DocumentsContract.renameDocument(cr, current, nameOf(to)) != null
-        return true
     }
 
     override fun openRead(path: String): InputStream {
@@ -90,7 +126,11 @@ class SafClient(private val context: Context, treeUri: String) : RemoteClient {
             val parent = resolve(parentOf(path)) ?: throw IOException("The folder does not exist")
             val name = nameOf(path)
             val mime = android.webkit.MimeTypeMap.getSingleton().getMimeTypeFromExtension(name.substringAfterLast('.', "").lowercase()) ?: "application/octet-stream"
-            DocumentsContract.createDocument(cr, docUri(parent), mime, name) ?: throw IOException("The file could not be created")
+            try {
+                DocumentsContract.createDocument(cr, docUri(parent), mime, name) ?: throw IOException("The file could not be created")
+            } finally {
+                ids.clear()
+            }
         }
         return cr.openOutputStream(uri, "wt") ?: throw IOException("The file could not be opened for writing")
     }
@@ -99,7 +139,11 @@ class SafClient(private val context: Context, treeUri: String) : RemoteClient {
         if (nameOf(from) != nameOf(to)) return false
         val id = resolve(from) ?: return false
         val dst = resolve(parentOf(to)) ?: return false
-        DocumentsContract.copyDocument(cr, docUri(id), docUri(dst)) != null
+        try {
+            DocumentsContract.copyDocument(cr, docUri(id), docUri(dst)) != null
+        } finally {
+            ids.clear()
+        }
     }.getOrDefault(false)
 
     override fun close() {}

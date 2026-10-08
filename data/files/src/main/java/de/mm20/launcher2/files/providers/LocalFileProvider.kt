@@ -21,6 +21,8 @@ internal class LocalFileProvider(
 ): FileProvider {
     override suspend fun search(query: String, allowNetwork: Boolean): List<File> = withContext(Dispatchers.IO) {
         if (!permissionsManager.checkPermissionOnce(PermissionGroup.ExternalStorage)) {
+            // Permission revoked: do not keep the (possibly large) name index in memory
+            nameCache = null
             return@withContext emptyList()
         }
         if (query.length < 2 || query.isBlank()) return@withContext emptyList()
@@ -56,13 +58,14 @@ internal class LocalFileProvider(
             null
         } ?: return@withContext results
         var scannedRows = 0
+        cursor.use {
         while (cursor.moveToNext()) {
             // Type/folder filters are applied per row, so cap the scan instead of the query.
             if (results.size >= 10 || scannedRows >= 500) {
                 break
             }
             scannedRows++
-            val path = cursor.getString(3)
+            val path = cursor.getStringOrNull(3) ?: continue
             if (isExcluded(path, excludedFolders)) continue
             if (!java.io.File(path).exists()) continue
             val directory = java.io.File(path).isDirectory
@@ -83,14 +86,13 @@ internal class LocalFileProvider(
             )
             results.add(file)
         }
-        cursor.close()
+        }
         return@withContext results
     }
 
-    private class NameIndex(val ids: LongArray, val names: Array<String>)
+    /** [foldedNames] are already run through [GreekFold.fold] (without extension), so a keystroke only does string searches. */
+    private class NameIndex(val ids: LongArray, val foldedNames: Array<String>)
 
-    @Volatile
-    private var nameCache: Pair<Long, NameIndex>? = null
 
     /**
      * MediaStore LIKE cannot match accents or greeklish. Load only ids and names (cached for a minute)
@@ -99,7 +101,25 @@ internal class LocalFileProvider(
     private fun matchingIdsFolded(uri: android.net.Uri, foldedQuery: String): List<Long> {
         if (foldedQuery.isEmpty()) return emptyList()
         val now = System.currentTimeMillis()
-        val index = nameCache?.takeIf { now - it.first < 60_000L }?.second ?: run {
+        var rebuilt = false
+        val cached = nameCache?.takeIf { now - it.first < 60_000L }
+        val result = lookupFolded(uri, foldedQuery, cached, now) { rebuilt = true }
+        // New files are not in a cached index yet: if nothing matched, retry once with a fresh index
+        if (result.isEmpty() && !rebuilt && cached != null && now - cached.first > 5_000L) {
+            return lookupFolded(uri, foldedQuery, null, now) { }
+        }
+        return result
+    }
+
+    private fun lookupFolded(
+        uri: android.net.Uri,
+        foldedQuery: String,
+        cached: Pair<Long, NameIndex>?,
+        now: Long,
+        onRebuild: () -> Unit,
+    ): List<Long> {
+        val index = cached?.second ?: run {
+            onRebuild()
             val ids = ArrayList<Long>()
             val names = ArrayList<String>()
             try {
@@ -111,19 +131,19 @@ internal class LocalFileProvider(
                     while (it.moveToNext() && ids.size < 200_000) {
                         val name = it.getStringOrNull(1) ?: continue
                         ids.add(it.getLong(0))
-                        names.add(name)
+                        names.add(GreekFold.fold(name.substringBeforeLast('.')))
                     }
                 }
             } catch (e: IllegalArgumentException) {
                 CrashReporter.logException(e)
             }
-            NameIndex(ids.toLongArray(), names.toTypedArray()).also { nameCache = now to it }
+            NameIndex(ids.toLongArray(), names.toTypedArray()).also { nameCache = System.currentTimeMillis() to it }
         }
         val matches = ArrayList<Long>()
         // Prefix matches of the name come first, then other matches
         val others = ArrayList<Long>()
         for (i in index.ids.indices) {
-            val folded = GreekFold.fold(index.names[i].substringBeforeLast('.'))
+            val folded = index.foldedNames[i]
             if (folded.startsWith(foldedQuery)) matches.add(index.ids[i])
             else if (folded.contains(foldedQuery)) others.add(index.ids[i])
             if (matches.size >= 300) break
@@ -138,6 +158,10 @@ internal class LocalFileProvider(
     }
 
     companion object {
+        // The provider is created for every search, so the cache has to live outside of the instance.
+        @Volatile
+        private var nameCache: Pair<Long, NameIndex>? = null
+
         private val documentMimePrefixes = listOf(
             "text/",
             "application/pdf",

@@ -56,21 +56,28 @@ class DownloadStore(context: Context) {
         requestSave()
     }
 
-    /** Changes the task with [id]; returns the new task or null if it does not exist (any more) */
-    fun update(id: String, transform: (DownloadTask) -> DownloadTask): DownloadTask? {
+    /**
+     * Changes the task with [id]; returns the new task or null if it does not exist (any more).
+     * [save] false: the change is only live progress that the next regular save picks up.
+     */
+    fun update(id: String, save: Boolean = true, transform: (DownloadTask) -> DownloadTask): DownloadTask? {
         var result: DownloadTask? = null
+        var changed = false
         _tasks.update { list ->
             val i = list.indexOfFirst { it.id == id }
             if (i < 0) {
                 result = null
+                changed = false
                 list
             } else {
-                val n = transform(list[i])
+                val old = list[i]
+                val n = transform(old)
                 result = n
-                list.toMutableList().also { it[i] = n }
+                changed = n != old
+                if (!changed) list else list.toMutableList().also { it[i] = n }
             }
         }
-        if (result != null) requestSave()
+        if (changed && save) requestSave()
         return result
     }
 

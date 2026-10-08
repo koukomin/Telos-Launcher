@@ -60,6 +60,7 @@ class DownloadManager(
     private val kicks = MutableSharedFlow<Unit>(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
     private var started = false
     private var wakeAt = 0L
+    private var lastServiceStart = 0L
     private var wakeJob: Job? = null
 
     val tasks: StateFlow<List<DownloadTask>> = store.tasks
@@ -87,6 +88,8 @@ class DownloadManager(
         started = true
         val interrupted = store.tasks.value.filter { it.state.isActive }
         for (t in interrupted) store.update(t.id) { it.copy(state = DownloadState.Queued, speedBps = 0) }
+        // an extraction that was running when the process died is not running any more
+        for (t in store.tasks.value.filter { it.extractState == "running" }) store.update(t.id) { it.copy(extractState = "") }
         if (store.tasks.value.any { !it.state.isFinished }) monitor.start()
         scope.launch {
             merge(
@@ -162,9 +165,10 @@ class DownloadManager(
     fun pause(id: String) {
         val t = store.get(id) ?: return
         if (t.state == DownloadState.Completed || t.state == DownloadState.Failed) return
-        stopTargets[id] = DownloadState.Paused
+        val job = jobs[id]
+        if (job != null) stopTargets[id] = DownloadState.Paused
         store.update(id) { it.copy(state = DownloadState.Paused, speedBps = 0) }
-        jobs[id]?.cancel()
+        job?.cancel()
     }
 
     /** Resume a paused task, or retry a failed one (from the start of what is still valid) */
@@ -216,6 +220,8 @@ class DownloadManager(
      */
     fun remove(id: String, deleteFile: Boolean) {
         val t = store.get(id) ?: return
+        // out of the queue right away: the scheduler must not start it while it is being removed
+        store.update(id) { if (it.state == DownloadState.Completed || it.state == DownloadState.Failed) it else it.copy(state = DownloadState.Paused, speedBps = 0) }
         scope.launch {
             val job = jobs[id]
             stopTargets[id] = DownloadState.Paused
@@ -281,6 +287,11 @@ class DownloadManager(
         val wanted = running || soon
         if (wanted && !_serviceWanted.value) {
             _serviceWanted.value = true
+            lastServiceStart = now
+            DownloadService.start(context)
+        } else if (wanted && !DownloadService.running && now - lastServiceStart > 5_000L) {
+            // Android refused to start the service (app in the background): try again, it works once the app is visible
+            lastServiceStart = now
             DownloadService.start(context)
         } else if (!wanted && _serviceWanted.value) {
             _serviceWanted.value = false
@@ -310,11 +321,17 @@ class DownloadManager(
 
     private fun startTask(picked: DownloadTask) {
         val engine = engines.first { it.supports(picked) }
+        // a job that was just paused or cancelled may still be shutting down (closing its file, killing its process):
+        // the new one starts when it is gone, its completion looks at the queue again
+        if (jobs[picked.id]?.isActive == true) return
         // counts against the free slots right away
         store.update(picked.id) { it.copy(state = DownloadState.Connecting, speedBps = 0) }
         val job = scope.launch(Dispatchers.IO) { runTask(picked.id, engine) }
         jobs[picked.id] = job
-        job.invokeOnCompletion { jobs.remove(picked.id, job) }
+        job.invokeOnCompletion {
+            jobs.remove(picked.id, job)
+            kicks.tryEmit(Unit)
+        }
     }
 
     private suspend fun runTask(id: String, engine: DownloadEngine) {
@@ -377,7 +394,7 @@ class DownloadManager(
         override val files: DownloadFiles get() = this@DownloadManager.files
 
         override suspend fun update(transform: (DownloadTask) -> DownloadTask): DownloadTask =
-            store.update(id, transform) ?: throw CancellationException("The download was removed")
+            store.update(id, transform = transform) ?: throw CancellationException("The download was removed")
 
         override suspend fun markCompleted() {
             val done = store.update(id) {
@@ -391,7 +408,8 @@ class DownloadManager(
         }
 
         override fun progress(downloadedBytes: Long, speedBps: Long, segments: List<SegmentState>) {
-            store.update(id) {
+            // not saved on its own: the engines store their state regularly through update()
+            store.update(id, save = false) {
                 if (it.state.isActive) it.copy(downloadedBytes = downloadedBytes, speedBps = speedBps, segments = segments) else it
             }
         }

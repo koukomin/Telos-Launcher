@@ -264,8 +264,8 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner, ViewModelSto
     override fun onDestroy() {
         val wm = windowManager
         if (wm != null) {
-            handleView?.let { runCatching { wm.removeView(it) } }
-            panelView?.let { runCatching { wm.removeView(it) } }
+            handleView?.let { runCatching { wm.removeView(it) }; it.disposeComposition() }
+            panelView?.let { runCatching { wm.removeView(it) }; it.disposeComposition() }
         }
         handleView = null
         panelView = null
@@ -292,7 +292,8 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner, ViewModelSto
     private fun showHandle(layout: HandleLayout) {
         val wm = windowManager ?: return
         lastLayout = layout
-        handleView?.let { runCatching { wm.removeView(it) } }
+        // DisposeOnViewTreeLifecycleDestroyed keeps a removed view's composition alive until the service ends: dispose it explicitly
+        handleView?.let { runCatching { wm.removeView(it) }; it.disposeComposition() }
         val view = ComposeView(themedContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setViewTreeLifecycleOwner(this@FloatingLauncherService)
@@ -373,6 +374,7 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner, ViewModelSto
             wm.removeView(view)
         } catch (_: Exception) {
         }
+        view.disposeComposition()
         panelView = null
     }
 

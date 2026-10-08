@@ -33,7 +33,7 @@ internal class IntruderPhotoStorage(
 ) {
     suspend fun write(bytes: ByteArray): Uri? = withContext(Dispatchers.IO) {
         val treeUri = customTreeUri()
-        val name = "${fileNameFormat.format(Date())}.jpg"
+        val name = "${SimpleDateFormat(FILE_NAME_PATTERN, Locale.US).format(Date())}.jpg"
         if (treeUri != null) writeToTree(treeUri, name, bytes) else writeToInternal(name, bytes)
     }
 
@@ -262,6 +262,7 @@ internal class IntruderPhotoStorage(
         private const val NOMEDIA_NAME = ".nomedia"
         private const val URI_FLAGS =
             Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-        private val fileNameFormat = SimpleDateFormat("yyyy-MM-dd_HH-mm-ss-SSS", Locale.US)
+        // SimpleDateFormat is not thread safe, so each write builds its own
+        private const val FILE_NAME_PATTERN = "yyyy-MM-dd_HH-mm-ss-SSS"
     }
 }

@@ -37,7 +37,16 @@ class DownloadFiles(private val context: Context) {
     private val resolver get() = context.contentResolver
 
     /** Creates the empty file for a download. A taken name gets a number. */
-    fun create(treeUri: String?, name: String, mimeType: String?): CreatedFile {
+    fun create(treeUri: String?, name: String, mimeType: String?): CreatedFile = try {
+        createUnchecked(treeUri, name, mimeType)
+    } catch (e: DownloadException) {
+        throw e
+    } catch (e: Exception) {
+        // a revoked folder permission, a full or missing volume: trying again does not help
+        throw DownloadException(ErrorKind.Storage, "Can not create the file: ${e.message}", false, e)
+    }
+
+    private fun createUnchecked(treeUri: String?, name: String, mimeType: String?): CreatedFile {
         val safeName = FileNames.sanitize(name).ifBlank { "download" }
         val mime = mimeType?.substringBefore(';')?.trim()?.ifBlank { null } ?: "application/octet-stream"
         if (treeUri != null) {
@@ -95,7 +104,14 @@ class DownloadFiles(private val context: Context) {
         }
     }
 
-    fun exists(uri: String): Boolean = length(uri) >= 0
+    fun exists(uri: String): Boolean {
+        val u = Uri.parse(uri)
+        return try {
+            if (u.scheme == "file") File(u.path!!).exists() else resolver.openFileDescriptor(u, "r")?.use { true } ?: false
+        } catch (e: Exception) {
+            false
+        }
+    }
 
     /** Size of the file, -1 if it does not exist */
     fun length(uri: String): Long {

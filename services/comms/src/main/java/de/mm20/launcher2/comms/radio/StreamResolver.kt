@@ -57,7 +57,8 @@ object StreamResolver {
             connection.connectTimeout = 8000
             connection.readTimeout = 8000
             connection.setRequestProperty("User-Agent", "Telos Radio")
-            val code = connection.responseCode
+            // a stream that answers with something HttpURLConnection does not parse ("ICY 200 OK") throws here
+            val code = try { connection.responseCode } catch (e: Exception) { connection.disconnect(); throw e }
             if (code in 300..399) {
                 val location = connection.getHeaderField("Location") ?: return connection
                 current = URL(URL(current), location).toString()

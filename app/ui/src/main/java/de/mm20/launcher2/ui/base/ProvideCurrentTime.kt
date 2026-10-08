@@ -53,7 +53,8 @@ fun ProvideCurrentTime(content: @Composable () -> Unit) {
             handler.post(runnable)
             try {
                 awaitCancellation()
-            } catch (e: CancellationException) {
+            } finally {
+                // Do not swallow the CancellationException
                 handler.removeCallbacks(runnable)
             }
         }

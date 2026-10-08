@@ -100,4 +100,39 @@ class MiscLogicTest {
         assertEquals(10L, t.etaSeconds)
         assertNull(t.copy(speedBps = 0).etaSeconds)
     }
+
+    @Test fun credentialsStayOnTheirHost() {
+        assertTrue(HttpRanges.mayForwardCredentials("a.com", true, "a.com", true))
+        assertTrue(HttpRanges.mayForwardCredentials("A.com", false, "a.com", true))
+        assertFalse(HttpRanges.mayForwardCredentials("a.com", true, "cdn.b.com", true))
+        // https to http on the same host would send them in the clear
+        assertFalse(HttpRanges.mayForwardCredentials("a.com", true, "a.com", false))
+        assertTrue(HttpRanges.mayForwardCredentials("a.com", false, "a.com", false))
+    }
+
+    @Test fun checksumComputeCanBeAborted() {
+        val data = ByteArray(300_000)
+        var calls = 0
+        try {
+            Checksums.compute("SHA-256", ByteArrayInputStream(data)) { calls++; if (calls == 2) throw IllegalStateException("stop") }
+            fail("not aborted")
+        } catch (e: IllegalStateException) {
+            assertEquals(2, calls)
+        }
+    }
+
+    @Test fun rateLimiterIsFairBetweenCallers() {
+        var now = 0L
+        val l = RateLimiter { now }
+        l.bytesPerSecond = 1000
+        // two connections asking at the same moment are served one after the other, not both at once
+        val w1 = l.reserve(500)
+        val w2 = l.reserve(500)
+        assertEquals(0L, w1)
+        assertEquals(500_000_000L, w2)
+        // after a long pause nothing is banked
+        now = 60_000_000_000L
+        assertEquals(0L, l.reserve(500))
+        assertEquals(500_000_000L, l.reserve(500))
+    }
 }

@@ -10,6 +10,7 @@ import de.mm20.launcher2.downloads.logic.TorrentPaths
 import de.mm20.launcher2.downloads.logic.TorrentSourceKind
 import de.mm20.launcher2.downloads.logic.TorrentSources
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runInterruptible
 import kotlinx.coroutines.withContext
 import org.libtorrent4j.TorrentInfo
 import java.io.File
@@ -38,12 +39,13 @@ object TorrentMetadata {
      * (this needs peers, DHT or trackers and can take up to [timeoutSeconds]).
      */
     suspend fun load(context: Context, source: String, timeoutSeconds: Int = 75): TorrentPreview = withContext(Dispatchers.IO) {
-        val bytes = when (TorrentSources.classify(source)) {
+        // interruptible: closing the sheet ends the wait for the swarm instead of holding the session for the full timeout
+        val bytes = runInterruptible { when (TorrentSources.classify(source)) {
             TorrentSourceKind.Magnet -> fetchMagnet(context, source.trim(), timeoutSeconds)
             TorrentSourceKind.TorrentUrl -> download(source.trim())
             TorrentSourceKind.TorrentFile -> read(context, source.trim())
             TorrentSourceKind.None -> throw DownloadException(ErrorKind.Validation, "This is not a magnet link or a .torrent address", false)
-        }
+        } }
         parse(bytes)
     }
 

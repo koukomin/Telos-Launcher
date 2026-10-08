@@ -22,7 +22,7 @@ class LauncherSettingsDataForwardCompatTest {
         val data = json.decodeFromString<LauncherSettingsData>(
             """{"schemaVersion":10,"gesturesSwipeLeft":{"type":"some_future_action","someArg":42}}"""
         )
-        assertEquals(GestureAction.NoAction, data.gesturesSwipeLeft)
+        assertEquals(GestureAction.NoAction, data.gestures.gesturesSwipeLeft)
     }
 
     @Test
@@ -30,7 +30,7 @@ class LauncherSettingsDataForwardCompatTest {
         val data = json.decodeFromString<LauncherSettingsData>(
             """{"schemaVersion":10,"clockWidgetStyle":{"type":"holographic"}}"""
         )
-        assertTrue(data._clockWidgetStyle is ClockWidgetStyle.Digital1)
+        assertTrue(data.clock._clockWidgetStyle is ClockWidgetStyle.Digital1)
     }
 
     @Test
@@ -43,7 +43,7 @@ class LauncherSettingsDataForwardCompatTest {
         )
         assertEquals(
             ContextProfileTrigger.Manual,
-            data.contextProfiles.single().trigger,
+            data.contextProfiles.contextProfiles.single().trigger,
         )
     }
 
@@ -53,7 +53,7 @@ class LauncherSettingsDataForwardCompatTest {
         val data = json.decodeFromString<LauncherSettingsData>(
             """{"schemaVersion":10,"freezeBackend":"icebox"}"""
         )
-        assertEquals(FreezeBackendPreference.Auto, data.freezeBackend)
+        assertEquals(FreezeBackendPreference.Auto, data.freeze.freezeBackend)
     }
 
     @Test
@@ -61,7 +61,7 @@ class LauncherSettingsDataForwardCompatTest {
         val data = json.decodeFromString<LauncherSettingsData>(
             """{"schemaVersion":10,"someFieldFromTheFuture":{"a":[1,2,3]},"uiColorSchemeNightStart":21}"""
         )
-        assertEquals(21, data.uiColorSchemeNightStart)
+        assertEquals(21, data.ui.uiColorSchemeNightStart)
     }
 
     /**
@@ -80,9 +80,11 @@ class LauncherSettingsDataForwardCompatTest {
     @Test
     fun `full default settings round-trip through the production Json config`() {
         val original = LauncherSettingsData(
-            gesturesSwipeLeft = GestureAction.WebAppsPanel,
-            gesturesLongPress = GestureAction.HomeScreenMenu,
-            _clockWidgetStyle = ClockWidgetStyle.Analog(showTicks = true),
+            gestures = GesturesGroup(
+                gesturesSwipeLeft = GestureAction.WebAppsPanel,
+                gesturesLongPress = GestureAction.HomeScreenMenu,
+            ),
+            clock = ClockGroup(_clockWidgetStyle = ClockWidgetStyle.Analog(showTicks = true)),
         )
         val stripped = stripJvmUndecodableFields(json.encodeToString(original))
         val decoded = json.decodeFromString<LauncherSettingsData>(
@@ -96,7 +98,7 @@ class LauncherSettingsDataForwardCompatTest {
         // The poisoned-file scenario reproduced on a device: one unknown value must not cost the
         // rest of the file anything.
         val encoded = json.encodeToString(
-            LauncherSettingsData(uiColorSchemeNightStart = 22, wallpaperDim = true)
+            LauncherSettingsData(ui = UiGroup(uiColorSchemeNightStart = 22), wallpaper = WallpaperGroup(wallpaperDim = true))
         )
         val poisoned = stripJvmUndecodableFields(encoded).apply {
             put(
@@ -107,8 +109,20 @@ class LauncherSettingsDataForwardCompatTest {
         val decoded = json.decodeFromString<LauncherSettingsData>(
             Json.encodeToString(kotlinx.serialization.json.JsonObject(poisoned))
         )
-        assertEquals(22, decoded.uiColorSchemeNightStart)
-        assertEquals(true, decoded.wallpaperDim)
-        assertEquals(GestureAction.NoAction, decoded.gesturesDoubleTap)
+        assertEquals(22, decoded.ui.uiColorSchemeNightStart)
+        assertEquals(true, decoded.wallpaper.wallpaperDim)
+        assertEquals(GestureAction.NoAction, decoded.gestures.gesturesDoubleTap)
+    }
+
+    @Test
+    fun `telos app and page gestures round-trip and survive a missing key`() {
+        val data = json.decodeFromString<LauncherSettingsData>(
+            """{"schemaVersion":10,"gesturesSwipeLeft":{"type":"telos_app","key":"notes"},
+            "gesturesSwipeRight":{"type":"telos_page","key":"calendar"},
+            "gesturesSwipeUp":{"type":"telos_app"}}"""
+        )
+        assertEquals(GestureAction.TelosApp("notes"), data.gestures.gesturesSwipeLeft)
+        assertEquals(GestureAction.TelosPage("calendar"), data.gestures.gesturesSwipeRight)
+        assertEquals(GestureAction.TelosApp(""), data.gestures.gesturesSwipeUp)
     }
 }

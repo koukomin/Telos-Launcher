@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.provider.DocumentsContract
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import okhttp3.Credentials
 import okhttp3.MediaType.Companion.toMediaType
@@ -34,6 +35,8 @@ class NotesSyncSettings(context: Context) {
     val nextcloudReady get() = ncUrl.isNotBlank() && ncUser.isNotBlank() && ncPassword.isNotBlank()
 }
 
+private const val MAX_DOC_BYTES = 8 * 1024 * 1024
+
 data class SyncResult(val uploaded: Int, val downloaded: Int, val error: String? = null, val skippedDeletes: Int = 0)
 
 /**
@@ -45,8 +48,15 @@ class NotesSync(private val context: Context, private val store: NotesStore) {
 
     val settings = NotesSyncSettings(context)
     private val http = OkHttpClient()
+    private val syncMutex = kotlinx.coroutines.sync.Mutex()
 
-    suspend fun syncAll(): SyncResult = withContext(Dispatchers.IO) {
+    /** Reads a document, null if it is larger than [MAX_DOC_BYTES] (a huge file must not take the app down with an OutOfMemoryError). */
+    private fun readDoc(uri: Uri): String? =
+        context.contentResolver.openInputStream(uri)?.use { NotesImport.readLimited(it, MAX_DOC_BYTES) }?.toString(Charsets.UTF_8)
+
+    suspend fun syncAll(): SyncResult = syncMutex.withLock { doSyncAll() }
+
+    private suspend fun doSyncAll(): SyncResult = withContext(Dispatchers.IO) {
         var up = 0; var down = 0; var skipped = 0; var err: String? = null
         settings.folderUri?.let {
             try { syncFolder(Uri.parse(it)).also { r -> up += r.uploaded; down += r.downloaded; skipped += r.skippedDeletes } } catch (e: Exception) { err = e.message ?: "folder" }
@@ -116,7 +126,7 @@ class NotesSync(private val context: Context, private val store: NotesStore) {
             if (rf != null) {
                 seen += rf.docId
                 if (rf.modified > n.modifiedAt + 1000) {
-                    val text = cr.openInputStream(DocumentsContract.buildDocumentUriUsingTree(tree, rf.docId))?.use { it.readBytes().toString(Charsets.UTF_8) } ?: continue
+                    val text = readDoc(DocumentsContract.buildDocumentUriUsingTree(tree, rf.docId)) ?: continue
                     val parsed = NotesImport.parseMarkdown(rf.name.removeSuffix(".md"), text)
                     store.update(n.id, expected = n.modifiedAt) { it.copy(title = parsed.title, body = parsed.body, labels = parsed.labels, pinned = parsed.pinned, modifiedAt = rf.modified) }
                     down++
@@ -140,7 +150,7 @@ class NotesSync(private val context: Context, private val store: NotesStore) {
         val known = store.notes.value.mapNotNull { it.remoteId }.toSet()
         for (rf in files.values) {
             if (rf.docId in known || rf.docId in seen) continue
-            val text = cr.openInputStream(DocumentsContract.buildDocumentUriUsingTree(tree, rf.docId))?.use { it.readBytes().toString(Charsets.UTF_8) } ?: continue
+            val text = readDoc(DocumentsContract.buildDocumentUriUsingTree(tree, rf.docId)) ?: continue
             val p = NotesImport.parseMarkdown(rf.name.removeSuffix(".md"), text)
             store.save(p.copy(remoteId = rf.docId, modifiedAt = rf.modified, createdAt = rf.modified), touch = false)
             down++

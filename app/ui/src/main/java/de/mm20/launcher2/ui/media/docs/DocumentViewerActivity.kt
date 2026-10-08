@@ -140,6 +140,8 @@ private class PdfDoc(file: File) {
         }
     }
 
+    // waits for a page that is being drawn: closing the renderer under it crashes
+    @Synchronized
     fun close() { runCatching { renderer.close() }; runCatching { fd.close() } }
 }
 

@@ -201,9 +201,9 @@ object CalcEngine {
             val arg = operandOfFunction()
             val rad = if (degrees) Math.toRadians(arg) else arg
             return when (name) {
-                "sin" -> sin(rad)
-                "cos" -> cos(rad)
-                "tan" -> tan(rad)
+                "sin" -> snapZero(sin(rad))
+                "cos" -> snapZero(cos(rad))
+                "tan" -> snapZero(tan(rad))
                 "asin" -> asin(arg).let { if (degrees) Math.toDegrees(it) else it }
                 "acos" -> acos(arg).let { if (degrees) Math.toDegrees(it) else it }
                 "atan" -> atan(arg).let { if (degrees) Math.toDegrees(it) else it }
@@ -220,6 +220,9 @@ object CalcEngine {
                 else -> throw CalcException("Unknown function $name")
             }
         }
+
+        /** sin(180°) is 1.2E-16 in floating point, but 0 for the user */
+        private fun snapZero(v: Double) = if (abs(v) < 1e-14) 0.0 else v
 
         private fun factorial(x: Double): Double {
             if (x < 0 || x != Math.floor(x) || x > 170) throw CalcException("Factorial")

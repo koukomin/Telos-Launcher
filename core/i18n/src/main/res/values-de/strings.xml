@@ -626,8 +626,8 @@
     <string name="freeze_dashboard_running_now">Läuft jetzt</string>
     <string name="freeze_dashboard_not_used_today">Heute nicht verwendet</string>
     <string name="freeze_dashboard_runtime_today">%1$s heute</string>
-    <string name="freeze_dashboard_runtime_hours_minutes">%1$h %2$m</string>
-    <string name="freeze_dashboard_runtime_minutes">%1$m</string>
+    <string name="freeze_dashboard_runtime_hours_minutes">%1$d h %2$d m</string>
+    <string name="freeze_dashboard_runtime_minutes">%1$d m</string>
     <string name="freeze_dashboard_runtime_under_a_minute">Weniger als 1m</string>
     <string name="freeze_dashboard_refresh">Aktualisieren</string>
     <string name="freeze_dashboard_no_apps_in_category">Keine Apps in dieser Kategorie</string>

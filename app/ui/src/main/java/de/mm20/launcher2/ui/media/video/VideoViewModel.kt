@@ -20,7 +20,10 @@ class VideoViewModel : ViewModel() {
     fun load(context: Context) {
         viewModelScope.launch {
             _loading.value = true
-            _items.value = VideoLibrary.load(context) + RemoteVideo.cached(context)
+            // the cached list of the network videos is a file read and a JSON parse: not on the main thread
+            val local = VideoLibrary.load(context)
+            val remote = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { RemoteVideo.cached(context) }
+            _items.value = local + remote
             _loading.value = false
         }
     }

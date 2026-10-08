@@ -76,7 +76,17 @@ class ScreenRecorderService : Service() {
             }
             ACTION_TOGGLE_PAUSE -> togglePause()
             ACTION_START -> {
-                if (ScreenRecorderState.state.value.status != ScreenRecStatus.Idle) return START_NOT_STICKY
+                val current = ScreenRecorderState.state.value.status
+                if (current != ScreenRecStatus.Idle) {
+                    // started with startForegroundService(): startForeground() is mandatory within a few seconds, or the app crashes
+                    startInForeground()
+                    when (current) {
+                        ScreenRecStatus.Recording -> notify(buildNotification(getString(R.string.screenrec_recording), chronometer = true, paused = false))
+                        ScreenRecStatus.Paused -> notify(buildNotification(getString(R.string.screenrec_paused), chronometer = false, paused = true))
+                        else -> {}
+                    }
+                    return START_NOT_STICKY
+                }
                 val resultCode = intent.getIntExtra(EXTRA_RESULT_CODE, 0)
                 val data: Intent? = if (Build.VERSION.SDK_INT >= 33) intent.getParcelableExtra(EXTRA_DATA, Intent::class.java) else @Suppress("DEPRECATION") intent.getParcelableExtra(EXTRA_DATA)
                 startInForeground()

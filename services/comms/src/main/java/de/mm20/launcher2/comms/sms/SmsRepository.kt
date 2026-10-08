@@ -21,7 +21,7 @@ class SmsRepository(private val context: Context) {
             }
             return true
         } catch (e: Exception) {
-            Log.e("SmsRepository", "Failed to send SMS to $destinationAddress", e)
+            Log.e("SmsRepository", "Failed to send SMS", e)
             return false
         }
     }

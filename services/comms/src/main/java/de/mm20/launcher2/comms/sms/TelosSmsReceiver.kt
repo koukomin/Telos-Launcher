@@ -28,7 +28,6 @@ class TelosSmsReceiver : BroadcastReceiver(), KoinComponent {
             val originatingAddress = messages[0].originatingAddress ?: return
             val fullBody = messages.joinToString("") { it.messageBody }
 
-            Log.i("TelosSmsReceiver", "Received SMS from: $originatingAddress")
 
             val router = vaultRouter
             if (router != null) {

@@ -80,7 +80,8 @@ internal fun AddDownloadSheet(initialText: String, manager: DownloadManager, onD
     var startPaused by remember { mutableStateOf(false) }
     var clip by remember { mutableStateOf<String?>(null) }
 
-    LaunchedEffect(Unit) { clip = clipboardLink(context) }
+    // the clipboard is only read on its own when the user switched "detect links in the clipboard" on; the paste button always works
+    LaunchedEffect(settings.detectClipboard) { clip = if (settings.detectClipboard) clipboardLink(context) else null }
     // magnet links and .torrent addresses go to the torrent sheet, where the files can be chosen
     LaunchedEffect(text) {
         if (TorrentSources.containsTorrent(text)) onTorrent(text)

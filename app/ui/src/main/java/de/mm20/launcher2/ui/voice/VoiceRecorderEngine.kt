@@ -13,6 +13,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.io.File
@@ -159,13 +160,16 @@ object VoiceRecorderEngine {
     }
 
     private fun tick() {
-        val current = _state.value
-        if (current.status != VoiceStatus.Recording) return
+        if (_state.value.status != VoiceStatus.Recording) return
         val amplitude = runCatching { recorder?.maxAmplitude ?: 0 }.getOrDefault(0)
-        _state.value = current.copy(
-            elapsedMs = accumulated + (System.currentTimeMillis() - segmentStart),
-            amplitudes = (current.amplitudes + amplitude).takeLast(MAX_AMPLITUDES),
-        )
+        // atomic: a stop() on another thread must not be overwritten with a stale "recording" state
+        _state.update { current ->
+            if (current.status != VoiceStatus.Recording) current
+            else current.copy(
+                elapsedMs = accumulated + (System.currentTimeMillis() - segmentStart),
+                amplitudes = (current.amplitudes + amplitude).takeLast(MAX_AMPLITUDES),
+            )
+        }
     }
 
     @Synchronized

@@ -95,6 +95,14 @@ class BindAndConfigureAppWidgetActivity : Activity() {
         appWidgetHost = AppWidgetHost(this, 44203)
         appWidgetManager = AppWidgetManager.getInstance(this)
 
+        if (savedInstanceState != null) {
+            // Recreated (e.g. rotation) while the bind / configure screen was open: the result of
+            // that screen is still delivered to onActivityResult. Starting over here would
+            // allocate a second widget id and open a second bind / configure screen.
+            appWidgetId = savedInstanceState.getInt("appWidgetId", -1).takeIf { it != -1 }
+            return
+        }
+
         val appWidgetProviderInfo = intent.getParcelableExtra<AppWidgetProviderInfo>(
             ExtraAppWidgetProviderInfo
         )
@@ -135,6 +143,11 @@ class BindAndConfigureAppWidgetActivity : Activity() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        appWidgetId?.let { outState.putInt("appWidgetId", it) }
+    }
+
     private fun configureAppWidget(widget: AppWidgetProviderInfo, appWidgetId: Int) {
         if (widget.configure != null) {
             appWidgetHost.startAppWidgetConfigureActivityForResult(
@@ -171,7 +184,12 @@ class BindAndConfigureAppWidgetActivity : Activity() {
                     return
                 }
                 if (resultCode == RESULT_OK) {
-                    val widget = appWidgetManager.getAppWidgetInfo(appWidgetId)
+                    val widget: AppWidgetProviderInfo? = appWidgetManager.getAppWidgetInfo(appWidgetId)
+                    if (widget == null) {
+                        appWidgetHost.deleteAppWidgetId(appWidgetId)
+                        cancel()
+                        return
+                    }
                     configureAppWidget(widget, appWidgetId)
                 } else {
                     Log.w("MM20", "Widget binding was canceled, widget will not be added")

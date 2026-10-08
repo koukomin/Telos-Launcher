@@ -36,6 +36,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
+import de.mm20.launcher2.comms.media.windowAround
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -87,7 +88,9 @@ class PhotosViewModel : ViewModel() {
     }
 }
 
-internal fun openViewer(context: Context, list: List<PhotoItem>, index: Int) {
+internal fun openViewer(context: Context, fullList: List<PhotoItem>, fullIndex: Int) {
+    // thousands of pictures do not fit through an Intent (Binder limit): the viewer gets the ones around the chosen picture
+    val (list, index) = fullList.windowAround(fullIndex)
     context.startActivity(
         Intent(context, PhotoViewerActivity::class.java).apply {
             putStringArrayListExtra(PhotoViewerActivity.EXTRA_URIS, ArrayList(list.map { it.uri.toString() }))

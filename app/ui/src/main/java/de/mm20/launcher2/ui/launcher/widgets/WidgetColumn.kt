@@ -136,7 +136,7 @@ fun WidgetColumn(
                                 duration = SnackbarDuration.Short,
                             )
                             if (result == SnackbarResult.ActionPerformed) {
-                                viewModel.addWidget(widget, i)
+                                viewModel.addWidgetAtSlot(widget, i)
                             } else {
                                 if (widget is AppWidget) {
                                     widgetHost.deleteAppWidgetId(widget.config.widgetId)
@@ -151,7 +151,7 @@ fun WidgetColumn(
                             widget = widget,
                             editMode = editMode,
                             onWidgetAdd = { added, offset ->
-                                viewModel.addWidget(added, i + offset)
+                                viewModel.addWidgetAtSlot(added, i + offset)
                             },
                             onWidgetRemove = { onWidgetRemove(widget) },
                             onWidgetUpdate = {
@@ -167,7 +167,7 @@ fun WidgetColumn(
                             widgets = slot,
                             editMode = editMode,
                             onWidgetAdd = { added, offset ->
-                                viewModel.addWidget(added, i + offset)
+                                viewModel.addWidgetAtSlot(added, i + offset)
                             },
                             onWidgetUpdate = {
                                 viewModel.updateWidget(it)

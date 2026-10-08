@@ -47,11 +47,11 @@ class AppLockManager(
     private val ownPackageName = context.packageName
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
-    @Volatile
-    private var unlockedPackages = mutableSetOf<String>()
+    // touched from the main thread (screen off receiver, gate callbacks) and from Default-dispatcher
+    // coroutines, so they must be thread safe (a plain HashSet threw ConcurrentModificationException)
+    private val unlockedPackages: MutableSet<String> = java.util.concurrent.ConcurrentHashMap.newKeySet()
 
-    @Volatile
-    private var lastLeftAt = mutableMapOf<String, Long>()
+    private val lastLeftAt = java.util.concurrent.ConcurrentHashMap<String, Long>()
 
     private val _pendingLock = MutableStateFlow<String?>(null)
 
@@ -77,6 +77,15 @@ class AppLockManager(
                     return@collectLatest
                 }
                 monitor.foregroundPackageChanges().collectLatest { packageName ->
+                    // Start the grace clock of every unlocked app that is no longer in front. This has to
+                    // happen for EVERY change, also when the launcher itself (home) or another already
+                    // unlocked app comes to the front; otherwise an unlocked app that was left that way
+                    // never got a "left at" time and stayed unlocked forever.
+                    val now = System.currentTimeMillis()
+                    unlockedPackages.forEach { pkg ->
+                        if (pkg != packageName) lastLeftAt.putIfAbsent(pkg, now)
+                    }
+
                     if (packageName == ownPackageName) return@collectLatest
 
                     val isRelockOnlyOnScreenOff = settings.relockOnlyOnScreenOff.first()
@@ -100,13 +109,6 @@ class AppLockManager(
                             lastLeftAt.remove(packageName)
                         }
                         return@collectLatest
-                    }
-
-                    // Record leaving time for other unlocked packages
-                    unlockedPackages.forEach { pkg ->
-                        if (pkg != packageName && !lastLeftAt.containsKey(pkg)) {
-                            lastLeftAt[pkg] = System.currentTimeMillis()
-                        }
                     }
 
                     gateIfLocked(packageName)

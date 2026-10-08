@@ -12,7 +12,7 @@ import java.io.ByteArrayInputStream
  * list and rationale. Block lists the user switched on (see BlockLists) are checked in addition.
  */
 class WebAdBlocker(context: Context) {
-    private val blockedHosts: Set<String> by lazy { loadHosts(context) }
+    private val blockedHosts: de.mm20.launcher2.comms.blocklist.DomainSet by lazy { loadHosts(context) }
 
     init {
         // load the user's downloaded block lists off the main thread
@@ -21,25 +21,27 @@ class WebAdBlocker(context: Context) {
 
     fun shouldBlock(host: String?): Boolean {
         if (host.isNullOrEmpty()) return false
-        val lower = host.lowercase()
-        if (blockedHosts.any { lower == it || lower.endsWith(".$it") }) return true
-        return de.mm20.launcher2.comms.blocklist.BlockLists.isWebBlocked(lower)
+        // DomainSet lowercases and walks the parent domains with hash lookups (no per-entry scan)
+        if (blockedHosts.matches(host)) return true
+        return de.mm20.launcher2.comms.blocklist.BlockLists.isWebBlocked(host)
     }
 
     /** An empty 200 response - blocks the request without surfacing a network error to the page. */
     fun blockedResponse(): WebResourceResponse =
         WebResourceResponse("text/plain", "utf-8", ByteArrayInputStream(ByteArray(0)))
 
-    private fun loadHosts(context: Context): Set<String> = try {
+    private fun loadHosts(context: Context): de.mm20.launcher2.comms.blocklist.DomainSet = try {
         context.resources.openRawResource(R.raw.web_app_blocklist).bufferedReader().useLines { lines ->
-            lines
-                .map { it.substringBefore('#').trim() }
-                .filter { it.isNotEmpty() }
-                .toSet()
+            de.mm20.launcher2.comms.blocklist.DomainSet.of(
+                lines
+                    .map { it.substringBefore('#').trim().lowercase() }
+                    .filter { it.isNotEmpty() }
+                    .toList()
+            )
         }
     } catch (e: Exception) {
         Log.w(TAG, "Failed to load web app ad block list", e)
-        emptySet()
+        de.mm20.launcher2.comms.blocklist.DomainSet.EMPTY
     }
 
     private companion object {

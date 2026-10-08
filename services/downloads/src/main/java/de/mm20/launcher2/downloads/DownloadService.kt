@@ -36,9 +36,18 @@ class DownloadService : Service(), KoinComponent {
 
     override fun onBind(intent: Intent?): IBinder? = null
 
+    override fun onCreate() {
+        super.onCreate()
+        running = true
+    }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         // must be called within a few seconds of startForegroundService, whatever the intent says
-        startInForeground()
+        if (!startInForeground()) {
+            // Android 12+ refuses this when the app is not allowed to start a foreground service right now
+            stopSelf()
+            return START_NOT_STICKY
+        }
         manager.start()
         when (intent?.action) {
             ACTION_PAUSE -> intent.getStringExtra(EXTRA_TASK_ID)?.let(manager::pause)
@@ -64,19 +73,24 @@ class DownloadService : Service(), KoinComponent {
                             }
                         }
                     } else idleSince = 0L
+                    // progress changes several times per second; Android drops notification updates that come too often
+                    delay(NOTIFY_INTERVAL_MS)
                 }
             }
         }
         return START_NOT_STICKY
     }
 
-    private fun startInForeground() {
+    private fun startInForeground(): Boolean = try {
         val notification = notifier.summary(manager.tasks.value, manager.blockReason.value)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ServiceCompat.startForeground(this, DownloadNotifier.SUMMARY_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
         } else {
             startForeground(DownloadNotifier.SUMMARY_ID, notification)
         }
+        true
+    } catch (e: Exception) {
+        false
     }
 
     private fun acquireWakeLock() {
@@ -98,6 +112,7 @@ class DownloadService : Service(), KoinComponent {
     }
 
     override fun onDestroy() {
+        running = false
         observer?.cancel()
         scope.cancel()
         runCatching { wakeLock?.takeIf { it.isHeld }?.release() }
@@ -114,6 +129,12 @@ class DownloadService : Service(), KoinComponent {
         const val ACTION_PAUSE_ALL = "de.mm20.launcher2.downloads.PAUSE_ALL"
         const val ACTION_RESUME_ALL = "de.mm20.launcher2.downloads.RESUME_ALL"
         private const val IDLE_STOP_MS = 4_000L
+        private const val NOTIFY_INTERVAL_MS = 500L
+
+        /** True while an instance of the service exists */
+        @Volatile
+        var running = false
+            private set
         private const val WAKE_LOCK_MS = 6L * 60 * 60 * 1000
 
         /** Starts the service; Android refuses this when the app is in the background, then the downloads still run while the process lives */

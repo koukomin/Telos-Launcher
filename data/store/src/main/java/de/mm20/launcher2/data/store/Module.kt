@@ -19,6 +19,12 @@ import org.koin.dsl.module
 val dataStoreModule = module {
     single {
         HttpClient {
+            // without these a stalled server hangs the update check (and the worker) forever.
+            // No overall request timeout: release APKs can be large, the socket timeout catches stalls.
+            install(io.ktor.client.plugins.HttpTimeout) {
+                connectTimeoutMillis = 20_000
+                socketTimeoutMillis = 60_000
+            }
             install(ContentNegotiation) {
                 json(Json { ignoreUnknownKeys = true })
             }

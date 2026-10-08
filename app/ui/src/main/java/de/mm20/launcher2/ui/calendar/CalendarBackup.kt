@@ -39,7 +39,7 @@ class CalendarBackup(private val context: Context) : Backupable {
             for (i in 0 until list.length()) {
                 val o = list.getJSONObject(i)
                 val id = existing.firstOrNull { it.name == o.getString("name") }?.id ?: repo.createLocalCalendar(o.getString("name"), o.optInt("color", 0xFF1E88E5.toInt()))
-                val events = Ics.read(File(dir, o.getString("file")).readText())
+                val events = Ics.read(File(dir, File(o.getString("file")).name).readText())
                 repo.importEvents(id, events)
             }
         } catch (e: SecurityException) { /* no calendar permission */ }

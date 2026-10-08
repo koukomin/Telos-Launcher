@@ -374,11 +374,14 @@ private fun EmptyState(title: Int, text: Int) {
 
 @Composable
 private fun SwipeableTaskCard(task: DownloadTask, manager: DownloadManager, onOpenDetails: () -> Unit, onDelete: () -> Unit) {
+    // the state outlives recompositions and keeps the lambda it was created with: read the current task and callback
+    val currentTask by androidx.compose.runtime.rememberUpdatedState(task)
+    val currentDelete by androidx.compose.runtime.rememberUpdatedState(onDelete)
     val state = rememberSwipeToDismissBoxState(
         confirmValueChange = { value ->
             when (value) {
-                SwipeToDismissBoxValue.EndToStart -> onDelete()
-                SwipeToDismissBoxValue.StartToEnd -> togglePause(manager, task)
+                SwipeToDismissBoxValue.EndToStart -> currentDelete()
+                SwipeToDismissBoxValue.StartToEnd -> togglePause(manager, currentTask)
                 else -> {}
             }
             false // the card springs back, the action decides what changes

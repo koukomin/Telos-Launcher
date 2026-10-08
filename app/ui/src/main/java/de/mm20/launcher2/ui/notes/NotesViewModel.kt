@@ -60,9 +60,9 @@ class NotesViewModel(app: Application) : AndroidViewModel(app), KoinComponent {
     }
 
     fun syncNow() = viewModelScope.launch {
+        if (syncing.value) return@launch
         syncing.value = true
-        val r = sync.syncAll()
-        syncing.value = false
+        val r = try { sync.syncAll() } finally { syncing.value = false }
         message.value = if (r.error != null) "error:${r.error}" else "sync:${r.uploaded}:${r.downloaded}:${r.skippedDeletes}"
     }
 }

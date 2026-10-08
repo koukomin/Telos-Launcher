@@ -36,7 +36,10 @@ internal class ContactRepository(
         return hasPermission.combineTransform(settings.enabledProviders) { perm, providerIds ->
             val providers = providerIds.mapNotNull {
                 when (it) {
-                    "local" -> if (perm) AndroidContactProvider(context) else null
+                    "local" -> if (perm) AndroidContactProvider(context) else {
+                        AndroidContactProvider.clearCache()
+                        null
+                    }
                     else -> PluginContactProvider(context, it)
                 }
             }

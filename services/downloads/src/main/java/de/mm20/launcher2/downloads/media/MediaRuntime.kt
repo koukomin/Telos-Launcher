@@ -9,6 +9,8 @@ import de.mm20.launcher2.downloads.logic.MediaInfo
 import de.mm20.launcher2.downloads.logic.MediaInfoParser
 import de.mm20.launcher2.downloads.logic.YtDlpErrors
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import java.io.File
 
@@ -54,7 +56,17 @@ class MediaRuntime(private val context: Context) {
     suspend fun analyze(url: String, useCookies: Boolean, proxy: String?): MediaInfo = withContext(Dispatchers.IO) {
         val b = backend ?: throw DownloadException(ErrorKind.Validation, "The video downloader is not part of this build", false)
         val cookies = if (useCookies && hasCookies) cookiesFile.absolutePath else null
-        val r = b.run(MediaFormats.analyzeArgs(url, cookies, proxy), "analyze-${System.nanoTime()}") {}
+        val pid = "analyze-${System.nanoTime()}"
+        // the blocking run does not notice a cancelled coroutine: stop the process, or it would go on for a whole playlist
+        val r = coroutineScope {
+            val run = async(Dispatchers.IO) { b.run(MediaFormats.analyzeArgs(url, cookies, proxy), pid) {} }
+            try {
+                run.await()
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                b.cancel(pid)
+                throw e
+            }
+        }
         val info = MediaInfoParser.parse(r.out)
         if (info == null) {
             val text = r.err + "\n" + r.out

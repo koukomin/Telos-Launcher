@@ -177,14 +177,20 @@ internal class RemoteVideoDataSource(private val context: Context) : BaseDataSou
             RemoteRegistry.reset(id)
             RemoteRegistry.client(context, id).openRead(inner)
         }
-        var left = dataSpec.position
-        while (left > 0) {
-            val n = s.skip(left)
-            if (n > 0) left -= n
-            else {
-                if (s.read() < 0) { s.close(); throw DataSourceException(PlaybackException.ERROR_CODE_IO_READ_POSITION_OUT_OF_RANGE) }
-                left--
+        try {
+            var left = dataSpec.position
+            while (left > 0) {
+                val n = s.skip(left)
+                if (n > 0) left -= n
+                else {
+                    if (s.read() < 0) throw DataSourceException(PlaybackException.ERROR_CODE_IO_READ_POSITION_OUT_OF_RANGE)
+                    left--
+                }
             }
+        } catch (e: Throwable) {
+            // a failed skip must not leave the connection (FTP, SFTP, SMB sessions) open
+            runCatching { s.close() }
+            throw e
         }
         stream = s
         remaining = when {

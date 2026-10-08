@@ -63,6 +63,8 @@ object TorrentStreamer {
     /** The screen that opened the current torrent, only it may close it again */
     private var owner: Any? = null
     private val ioPool by lazy { Executors.newCachedThreadPool() }
+    /** Counts the closes: an [open] that finds a newer number was closed (or replaced) while it waited for peers */
+    private val generation = java.util.concurrent.atomic.AtomicInteger()
 
     /** True when the connection is metered (mobile data) */
     fun onMeteredNetwork(context: Context): Boolean {
@@ -82,10 +84,13 @@ object TorrentStreamer {
      */
     suspend fun open(context: Context, source: String, wifiOnly: Boolean, owner: Any? = null): TorrentOpened =
         withContext(Dispatchers.IO) {
+            val myGeneration: Int
             synchronized(lock) {
                 close()
                 this@TorrentStreamer.owner = owner
+                myGeneration = generation.get()
             }
+            fun alive() = generation.get() == myGeneration
             if (wifiOnly && onMeteredNetwork(context)) {
                 fail("Torrent streaming is set to Wi-Fi only")
             }
@@ -97,6 +102,7 @@ object TorrentStreamer {
             saveDir = dir
             try {
                 // the one session of Telos, shared with the torrent downloads of Telos Downloads
+                if (!alive()) throw kotlinx.coroutines.CancellationException("The torrent was closed")
                 val sm = TorrentSession.acquire(context, this@TorrentStreamer)
 
                 val data: ByteArray = when {
@@ -104,16 +110,18 @@ object TorrentStreamer {
                         sm.fetchMagnet(source, 90, File(dir, "meta").apply { mkdirs() })
                             ?: fail("No answer from peers, the link may be dead")
                     source.startsWith("content:") || source.startsWith("file:") ->
-                        context.contentResolver.openInputStream(Uri.parse(source))!!.use { it.readBytes() }
+                        context.contentResolver.openInputStream(Uri.parse(source))!!.use { readLimited(it) }
                     else -> (URL(source).openConnection() as java.net.HttpURLConnection).run {
                         connectTimeout = 15_000
                         readTimeout = 30_000
                         try {
-                            if (contentLengthLong > 8_000_000) fail("The torrent file is too large")
-                            inputStream.use { it.readBytes() }
+                            if (contentLengthLong > MAX_TORRENT_FILE) fail("The torrent file is too large")
+                            inputStream.use { readLimited(it) }
                         } finally { disconnect() }
                     }
                 }
+                // closed while waiting for peers (the player was left): nothing may be started any more
+                if (!alive()) throw kotlinx.coroutines.CancellationException("The torrent was closed")
                 val ti = TorrentInfo.bdecode(data)
                 info = ti
                 val fs = ti.files()
@@ -153,12 +161,30 @@ object TorrentStreamer {
                 }
                 TorrentOpened(list, list.indexOfFirst { it.index == biggest }.coerceAtLeast(0))
             } catch (e: Exception) {
-                val message = e.message ?: "Torrent could not be opened"
-                close()
-                _state.value = TorrentState(TorrentState.Stage.Failed, message = message)
+                // a newer open (or a close) owns the state now: leave it alone
+                if (alive()) {
+                    val message = e.message ?: "Torrent could not be opened"
+                    close()
+                    _state.value = TorrentState(TorrentState.Stage.Failed, message = message)
+                }
                 throw e
             }
         }
+
+    private const val MAX_TORRENT_FILE = 8_000_000
+
+    /** A .torrent file is small; a stream of unknown length must not fill the memory */
+    private fun readLimited(input: java.io.InputStream): ByteArray {
+        val out = java.io.ByteArrayOutputStream()
+        val buf = ByteArray(16 * 1024)
+        while (true) {
+            val n = input.read(buf)
+            if (n < 0) break
+            out.write(buf, 0, n)
+            if (out.size() > MAX_TORRENT_FILE) fail("The torrent file is too large")
+        }
+        return out.toByteArray()
+    }
 
     /** Re-applies the peer block lists to the running session, called after a list changed. */
     fun reapplyBlockList() = TorrentSession.reapplyBlockList()
@@ -361,6 +387,7 @@ object TorrentStreamer {
 
     /** Stops the download and the local server and deletes the downloaded data. */
     fun close() {
+        generation.incrementAndGet()
         owner = null
         closed = true
         runCatching { server?.close() }

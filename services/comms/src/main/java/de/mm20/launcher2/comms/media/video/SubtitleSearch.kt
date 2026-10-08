@@ -50,7 +50,28 @@ interface SubtitleProvider {
 }
 
 internal object Http {
+    /**
+     * Addresses come out of answers of the sources: only http(s) addresses of the public internet are
+     * followed, never ones of this phone or of the local network.
+     */
+    fun isPublicWeb(url: String): Boolean {
+        val u = runCatching { java.net.URI(url) }.getOrNull() ?: return false
+        if (u.scheme?.lowercase() !in setOf("http", "https")) return false
+        val host = (u.host ?: return false).lowercase()
+        if (host == "localhost" || host.endsWith(".localhost") || host.endsWith(".local") || host.endsWith(".internal")) return false
+        if (host.contains(':')) {
+            val h = host.trim('[', ']')
+            return !(h == "::1" || h == "::" || h.startsWith("fe80") || h.startsWith("fc") || h.startsWith("fd") || h.startsWith("::ffff:"))
+        }
+        val m = Regex("""^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$""").matchEntire(host) ?: return true
+        val a = m.groupValues[1].toInt()
+        val b = m.groupValues[2].toInt()
+        return !(a == 0 || a == 10 || a == 127 || (a == 169 && b == 254) || (a == 172 && b in 16..31) ||
+            (a == 192 && b == 168) || (a == 100 && b in 64..127))
+    }
+
     fun open(url: String, userAgent: String, accept: String = "application/json"): HttpURLConnection {
+        if (!isPublicWeb(url)) throw java.io.IOException("This address is not allowed")
         val c = URL(url).openConnection() as HttpURLConnection
         c.connectTimeout = 8000
         c.readTimeout = 20000
