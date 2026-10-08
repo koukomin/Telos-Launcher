@@ -540,6 +540,10 @@ Telos stays light by doing little at startup and by disabling what you do not us
 Each app below is a virtual app. Full pages with troubleshooting tables are in the
 [documentation](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/).
 
+### Search inside the Telos apps
+
+Every Telos app has the same modern search bar (a rounded field with a clear button and room for filters), and each search is limited to what the app is about: Phone searches contacts, call history or messages, Video only videos, Music songs, albums and artists, Radio stations, Photos pictures, Files the files of the folder you are in, Store apps, Network its apps, DNS providers, rules and logs, and so on. Matching understands Greek with and without accents and the final sigma, and Greeklish in both directions (`giorgos`, `yiorgos` and `Γιώργος` find each other). Phone numbers match without spaces or dashes. The matching is deliberately loose, so occasional extra results are possible.
+
 ### Telos Phone
 
 A complete phone app inside the launcher. Its layout follows [Right Dialer](https://github.com/Goodwy/Dialer); privacy and power-user ideas come from [Secure Dialer](https://github.com/Secure-Phone-apps/Secure-Dialer) and [Ever Dialer](https://github.com/hari161008/Ever-Dialer). [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/phone/). Most call features need Telos to be the default phone app (Settings > Default phone app).
