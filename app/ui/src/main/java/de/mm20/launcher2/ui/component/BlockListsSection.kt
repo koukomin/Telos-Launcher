@@ -69,6 +69,17 @@ fun BlockListsSection(kind: BlockListKind, modifier: Modifier = Modifier) {
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(bottom = 8.dp),
         )
+        if (kind == BlockListKind.TORRENT_IP) {
+            // what the torrent session filters right now
+            val enabled = lists.filter { it.enabled && it.entryCount > 0 }
+            Text(
+                if (enabled.isEmpty()) stringResource(R.string.blocklists_torrent_none_active)
+                else stringResource(R.string.blocklists_torrent_active, enabled.sumOf { it.entryCount }, enabled.size),
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(bottom = 8.dp),
+            )
+        }
         for (list in lists) {
             BlockListRow(list, list.id in updating)
         }
@@ -123,6 +134,9 @@ private fun BlockListRow(list: BlockList, updating: Boolean) {
                     Text(stringResource(R.string.blocklists_imported), style = MaterialTheme.typography.bodySmall, color = subtle)
                 }
                 if (preset != null) {
+                    if (preset.description.isNotEmpty()) {
+                        Text(preset.description, style = MaterialTheme.typography.bodySmall, color = subtle)
+                    }
                     Text(
                         stringResource(R.string.blocklists_license, preset.license),
                         style = MaterialTheme.typography.bodySmall, color = subtle,
@@ -138,6 +152,16 @@ private fun BlockListRow(list: BlockList, updating: Boolean) {
                         else -> stringResource(R.string.blocklists_never)
                     }
                     Text(status, style = MaterialTheme.typography.bodySmall, color = subtle)
+                    if (list.dataDate > 0) {
+                        // the date the list itself carries: tells whether the list is still being maintained
+                        Text(
+                            stringResource(
+                                R.string.blocklists_data_date,
+                                DateUtils.formatDateTime(context, list.dataDate, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_ABBREV_MONTH),
+                            ),
+                            style = MaterialTheme.typography.bodySmall, color = subtle,
+                        )
+                    }
                     list.lastError?.let {
                         Text(
                             stringResource(R.string.blocklists_error, it),

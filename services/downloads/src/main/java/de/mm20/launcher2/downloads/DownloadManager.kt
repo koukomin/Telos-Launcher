@@ -8,6 +8,8 @@ import de.mm20.launcher2.downloads.logic.BlockReason
 import de.mm20.launcher2.downloads.logic.QueueRules
 import de.mm20.launcher2.downloads.logic.RetryPolicy
 import de.mm20.launcher2.downloads.logic.SegmentPlanner
+import de.mm20.launcher2.downloads.logic.TorrentSourceKind
+import de.mm20.launcher2.downloads.logic.TorrentSources
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -98,12 +100,37 @@ class DownloadManager(
     fun add(request: DownloadRequest): DownloadTask {
         start()
         monitor.start()
+        val url = request.url.trim()
+        val type = if (request.type == DownloadType.Http && TorrentSources.classify(url) == TorrentSourceKind.Magnet) DownloadType.Torrent else request.type
+        val id = UUID.randomUUID().toString()
+        var torrentData: TorrentData? = null
+        var torrentName = request.name.trim()
+        if (type == DownloadType.Torrent) {
+            val t = request.torrent ?: TorrentRequest()
+            val hash = t.infoHash.ifBlank { TorrentSources.magnetInfoHash(url).orEmpty() }
+            if (hash.isNotEmpty()) {
+                // the same torrent twice would drive one libtorrent torrent from two tasks
+                store.tasks.value.firstOrNull { it.torrent?.infoHash.equals(hash, ignoreCase = true) }?.let { return it }
+            }
+            if (t.torrentFile != null) {
+                runCatching { java.io.File(files.torrentMetaDir(id), "meta.torrent").writeBytes(t.torrentFile) }
+            }
+            torrentData = TorrentData(
+                infoHash = hash.lowercase(), magnet = if (TorrentSources.classify(url) == TorrentSourceKind.Magnet) url else "",
+                files = t.files, sequential = t.sequential, seedRatioX100 = t.seedRatioX100, seedMinutes = t.seedMinutes,
+                stopAtDone = t.stopAtDone, pieceLength = t.pieceLength, numPieces = t.numPieces, isPrivate = t.isPrivate,
+                rootFolder = t.rootFolder,
+            )
+            if (torrentName.isEmpty()) torrentName = TorrentSources.magnetName(url).orEmpty()
+        }
         val task = DownloadTask(
-            id = UUID.randomUUID().toString(),
-            type = request.type,
-            url = request.url.trim(),
+            id = id,
+            type = type,
+            torrent = torrentData,
+            totalBytes = torrentData?.takeIf { it.files.isNotEmpty() }?.wantedBytes ?: -1,
+            url = url,
             mirrors = request.mirrors.map { it.trim() }.filter { it.isNotEmpty() },
-            name = request.name.trim(),
+            name = torrentName,
             treeUri = request.treeUri,
             state = if (request.startPaused) DownloadState.Paused else DownloadState.Queued,
             category = request.category,
@@ -168,10 +195,13 @@ class DownloadManager(
             stopTargets[id] = DownloadState.Paused
             job?.cancel()
             job?.join()
+            val latest = store.get(id) ?: t
+            engines.firstOrNull { it.supports(latest) }?.let { runCatching { it.cleanup(latest, deleteFile) } }
             store.remove(id)
             stopTargets.remove(id)
             val uri = t.fileUri
-            if (uri != null && (deleteFile || t.state != DownloadState.Completed)) files.delete(uri)
+            // torrents delete their files in TorrentDownloadEngine.cleanup
+            if (t.type != DownloadType.Torrent && uri != null && (deleteFile || t.state != DownloadState.Completed)) files.delete(uri)
         }
     }
 
@@ -237,13 +267,15 @@ class DownloadManager(
         try {
             val task = store.get(id) ?: return
             engine.execute(task, SessionImpl(id))
+            // a torrent reports completion itself at 100 % and then seeds; its job ends when seeding ends
+            val alreadyReported = task.type == DownloadType.Torrent && (store.get(id)?.completedAt ?: 0L) > 0L
             val done = store.update(id) {
                 it.copy(
                     state = DownloadState.Completed, completedAt = System.currentTimeMillis(), error = null,
                     errorKind = ErrorKind.None, retryCount = 0, speedBps = 0, downloadedBytes = if (it.totalBytes >= 0) it.totalBytes else it.downloadedBytes,
                 )
             }
-            if (done != null) {
+            if (done != null && !alreadyReported) {
                 notifier.notifyCompleted(done)
                 _events.tryEmit(DownloadEvent.Completed(done))
             }
@@ -291,6 +323,17 @@ class DownloadManager(
 
         override suspend fun update(transform: (DownloadTask) -> DownloadTask): DownloadTask =
             store.update(id, transform) ?: throw CancellationException("The download was removed")
+
+        override suspend fun markCompleted() {
+            val done = store.update(id) {
+                it.copy(
+                    completedAt = System.currentTimeMillis(), error = null, errorKind = ErrorKind.None, retryCount = 0,
+                    downloadedBytes = if (it.totalBytes >= 0) it.totalBytes else it.downloadedBytes,
+                )
+            } ?: return
+            notifier.notifyCompleted(done)
+            _events.tryEmit(DownloadEvent.Completed(done))
+        }
 
         override fun progress(downloadedBytes: Long, speedBps: Long, segments: List<SegmentState>) {
             store.update(id) {

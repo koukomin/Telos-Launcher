@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import android.provider.OpenableColumns
 import de.mm20.launcher2.downloads.logic.FileNames
 import java.io.Closeable
+import java.io.IOException
 import java.io.File
 import java.io.InputStream
 import java.io.RandomAccessFile
@@ -146,6 +147,132 @@ class DownloadFiles(private val context: Context) {
             }
         } catch (_: Exception) {
         }
+    }
+
+    // ---- torrents: libtorrent writes real files, so they live in a staging folder first
+
+    /**
+     * The folder libtorrent writes the data of a torrent into. It is in the storage of the app (not
+     * reachable with the Storage Access Framework or MediaStore, which libtorrent can not use); the finished
+     * files are copied to the folder the user chose by [copyTorrentFile].
+     */
+    fun torrentStagingDir(taskId: String): File {
+        val base = context.getExternalFilesDir("torrents") ?: File(context.filesDir, "torrents")
+        return File(base, taskId).also { it.mkdirs() }
+    }
+
+    /** resume data and the .torrent file of a task; private to the app and part of nothing else */
+    fun torrentMetaDir(taskId: String): File = File(File(context.filesDir, "downloads"), "torrents/$taskId").also { it.mkdirs() }
+
+    /** Free bytes of the volume of the staging folder */
+    fun stagingFreeBytes(): Long = try {
+        (context.getExternalFilesDir("torrents") ?: context.filesDir).usableSpace
+    } catch (e: Exception) {
+        Long.MAX_VALUE
+    }
+
+    /**
+     * Copies a finished file of a torrent into the chosen folder, keeping the folder structure of the torrent
+     * ([segments], last one is the file name). A folder chosen with the Storage Access Framework gets sub folders
+     * made with DocumentsContract; the Downloads collection gets Download/Telos/<folders> (Android 10 and newer);
+     * below Android 10 the app's own Downloads/Telos folder is used.
+     * [cancelled] is checked while copying, [progress] gets the bytes copied.
+     */
+    fun copyTorrentFile(
+        treeUri: String?, segments: List<String>, source: File, mimeType: String?,
+        cancelled: () -> Boolean, progress: (Long) -> Unit,
+    ): CreatedFile {
+        if (segments.isEmpty()) throw DownloadException(ErrorKind.Storage, "Empty file name", false)
+        val mime = mimeType ?: "application/octet-stream"
+        val dirs = segments.dropLast(1)
+        val name = segments.last()
+        try {
+            if (treeUri != null) {
+                val tree = Uri.parse(treeUri)
+                var parent = DocumentsContract.buildDocumentUriUsingTree(tree, DocumentsContract.getTreeDocumentId(tree))
+                for (d in dirs) parent = childDirectory(tree, parent, d)
+                val doc = DocumentsContract.createDocument(resolver, parent, mime, name)
+                    ?: throw DownloadException(ErrorKind.Storage, "The folder can not be written", false)
+                try {
+                    resolver.openOutputStream(doc, "w")!!.use { out -> copyStream(source, out, cancelled, progress) }
+                } catch (e: Exception) {
+                    delete(doc.toString())
+                    throw e
+                }
+                return CreatedFile(doc.toString(), displayName(doc.toString()) ?: name)
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                val relative = (listOf(Environment.DIRECTORY_DOWNLOADS, "Telos") + dirs).joinToString("/")
+                val values = ContentValues().apply {
+                    put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+                    put(MediaStore.MediaColumns.MIME_TYPE, mime)
+                    put(MediaStore.MediaColumns.RELATIVE_PATH, relative)
+                    put(MediaStore.MediaColumns.IS_PENDING, 1)
+                }
+                val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values)
+                    ?: throw DownloadException(ErrorKind.Storage, "Can not create the file in Downloads", false)
+                try {
+                    resolver.openOutputStream(uri, "w")!!.use { out -> copyStream(source, out, cancelled, progress) }
+                } catch (e: Exception) {
+                    delete(uri.toString())
+                    throw e
+                }
+                finish(uri.toString())
+                return CreatedFile(uri.toString(), displayName(uri.toString()) ?: name)
+            }
+            var dir = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS) ?: context.filesDir, "Telos")
+            for (d in dirs) dir = File(dir, d)
+            dir.mkdirs()
+            val unique = FileNames.unique(name) { File(dir, it).exists() }
+            val target = File(dir, unique)
+            try {
+                target.outputStream().use { out -> copyStream(source, out, cancelled, progress) }
+            } catch (e: Exception) {
+                target.delete()
+                throw e
+            }
+            return CreatedFile(Uri.fromFile(target).toString(), unique)
+        } catch (e: DownloadException) {
+            throw e
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            throw DownloadException(ErrorKind.Storage, "Can not copy ${source.name}: ${e.message}", false, e)
+        }
+    }
+
+    private fun copyStream(source: File, out: java.io.OutputStream, cancelled: () -> Boolean, progress: (Long) -> Unit) {
+        source.inputStream().use { input ->
+            val buffer = ByteArray(256 * 1024)
+            var total = 0L
+            while (true) {
+                if (cancelled()) throw kotlinx.coroutines.CancellationException("Stopped while copying")
+                val n = input.read(buffer)
+                if (n < 0) break
+                out.write(buffer, 0, n)
+                total += n
+                progress(total)
+            }
+        }
+    }
+
+    /** The sub folder [name] of [parent] in a tree, created when it is not there */
+    private fun childDirectory(tree: Uri, parent: Uri, name: String): Uri {
+        val parentId = DocumentsContract.getDocumentId(parent)
+        val children = DocumentsContract.buildChildDocumentsUriUsingTree(tree, parentId)
+        resolver.query(
+            children,
+            arrayOf(DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_DISPLAY_NAME, DocumentsContract.Document.COLUMN_MIME_TYPE),
+            null, null, null,
+        )?.use { c ->
+            while (c.moveToNext()) {
+                if (c.getString(2) == DocumentsContract.Document.MIME_TYPE_DIR && c.getString(1) == name) {
+                    return DocumentsContract.buildDocumentUriUsingTree(tree, c.getString(0))
+                }
+            }
+        }
+        return DocumentsContract.createDocument(resolver, parent, DocumentsContract.Document.MIME_TYPE_DIR, name)
+            ?: throw IOException("Can not create the folder $name")
     }
 
     private class ChannelSink(private val channel: FileChannel, private val raf: RandomAccessFile?) : DownloadSink {

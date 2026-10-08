@@ -109,3 +109,24 @@ n/s = not stated on the project page.
 Phase 2 (torrents and block lists): add `TorrentDownloadEngine` (`type = Torrent`, `supports` magnet and `.torrent`), based on the libtorrent4j session of Telos Video; fill the Torrents tab (file selection list, peers, seeding limits stored as extra fields or a side object in the task); take the block lists from Telos Video; `.torrent` and magnet intent filters must be coordinated with Telos Video (it owns them today); `DownloadFiles` needs a directory based sink (torrents write many files), the HTTP sink is single-file.
 
 Phase 3 (media): `MediaDownloadEngine` over yt-dlp (decision about the runtime size first), format picker in the add sheet, cookie import from a WebView, capture from the browser/clipboard, extras: schedule, categories folders, auto extraction, backup group for the task list.
+
+## 6. Phase 2: torrents (implemented 2026-10-08, not run on a device)
+
+- **One session.** `TorrentSession` (services/comms, package `...comms.media.video.torrent`) owns the single libtorrent4j `SessionManager`.
+  Owners call `acquire(context, owner)` / `release(owner)`; the session starts with the first owner and is stopped on a background
+  thread with the last. `TorrentStreamer` (Telos Video) and `TorrentDownloadEngine` / `TorrentMetadata` (Telos Downloads) are owners. Settings
+  (`TorrentConfig`: DHT, PEX, LSD, uTP, encryption, port, UPnP, NAT-PMP, limits, queue sizes, seeding defaults) are stored by `TorrentSession`
+  and applied to the running session; the IP filter is applied by `BlockLists.applyToSession` at start and after list changes.
+  The streamer's torrent is unmanaged (`AUTO_MANAGED` cleared), so queue limits do not stall it.
+- **Engine.** `TorrentDownloadEngine.execute` adds the torrent (resume data, else the stored `.torrent`, else the magnet), polls the status every
+  second, writes progress with `EngineSession.update` (guarded by `state.isActive`, so a pause is never overwritten), saves resume data every 30 s
+  (alert listener for `SAVE_RESUME_DATA`), and ends when seeding ends. At 100 % it copies the wanted files from the staging folder with
+  `DownloadFiles.copyTorrentFile` (SAF tree with sub folders, MediaStore `Download/Telos/...`, or the app folder), calls `EngineSession.markCompleted()`
+  (new; the manager does not send the completion twice), and seeds from the staging folder. `DownloadEngine.cleanup` (new) deletes staging and
+  resume data when a task is removed. `DownloadState.Seeding` is active but takes no download slot (`QueueRules`).
+- **Controller.** `TorrentController` gives the UI peers, trackers, piece map, recheck, reannounce, add tracker, file priorities and sequential switch for running
+  torrents (through the handle) and stores the same choices for torrents that do not run.
+- **Pure logic with tests** (`TorrentLogic.kt`): source classification and magnet parsing, file selection mapping, seeding rules and ratio, piece map cells, peer flag
+  letters, safe torrent paths. Block list parsing and data dates: `BlockListParser`, `DataDates` in services/comms.
+- **For phase 3:** a media (yt-dlp) engine fits the same interface; reuse `markCompleted`, `cleanup`, `copyTorrentFile` (staging, then copy) for tools that
+  need real files; the task list is still not in the backup.

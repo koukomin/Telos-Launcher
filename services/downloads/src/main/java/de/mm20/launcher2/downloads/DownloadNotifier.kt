@@ -110,7 +110,10 @@ class DownloadNotifier(private val context: Context, private val settings: Downl
             val id = notificationId(t.id)
             ids.add(id)
             val eta = t.etaSeconds?.let { " · " + Formatting.duration(it) }.orEmpty()
-            val text = if (t.totalBytes > 0) {
+            val seeding = t.state == DownloadState.Seeding && t.torrent != null
+            val text = if (seeding) {
+                context.getString(I18nR.string.dl_t_notification_seeding, de.mm20.launcher2.downloads.logic.SeedRules.formatRatio(t.torrent!!.ratio), Formatting.speed(t.torrent.uploadBps))
+            } else if (t.totalBytes > 0) {
                 "${Formatting.size(t.downloadedBytes)} / ${Formatting.size(t.totalBytes)}" + (if (t.speedBps > 0) " · " + Formatting.speed(t.speedBps) else "") + eta
             } else Formatting.size(t.downloadedBytes)
             val b = NotificationCompat.Builder(context, CHANNEL_PROGRESS)
@@ -125,7 +128,8 @@ class DownloadNotifier(private val context: Context, private val settings: Downl
                 .setCategory(NotificationCompat.CATEGORY_PROGRESS)
                 .addAction(0, context.getString(I18nR.string.dl_pause), serviceAction(DownloadService.ACTION_PAUSE, t.id, 100 + i))
                 .addAction(0, context.getString(I18nR.string.dl_cancel), serviceAction(DownloadService.ACTION_CANCEL, t.id, 200 + i))
-            if (t.totalBytes > 0) b.setProgress(1000, (t.downloadedBytes * 1000 / t.totalBytes).toInt().coerceIn(0, 1000), false)
+            if (seeding) b.setProgress(0, 0, false)
+            else if (t.totalBytes > 0) b.setProgress(1000, (t.downloadedBytes * 1000 / t.totalBytes).toInt().coerceIn(0, 1000), false)
             else b.setProgress(0, 0, true)
             nm.notify(id, b.build())
         }
@@ -149,7 +153,7 @@ class DownloadNotifier(private val context: Context, private val settings: Downl
             .setContentText(context.getString(I18nR.string.dl_notification_done, Formatting.size(task.totalBytes)))
             .setAutoCancel(true)
             .setContentIntent(openApp())
-        if (uri != null && uri.scheme == "content") {
+        if (uri != null && uri.scheme == "content" && task.torrent == null) {
             val mime = task.mimeType ?: "*/*"
             val view = Intent(Intent.ACTION_VIEW).setDataAndType(uri, mime).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
             val send = Intent.createChooser(

@@ -11,7 +11,7 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
-import de.mm20.launcher2.comms.media.video.torrent.TorrentStreamer
+import de.mm20.launcher2.comms.media.video.torrent.TorrentSession
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -114,7 +114,7 @@ object BlockLists {
         if (!enabled && list.sourceUrl.isNotEmpty()) {
             // downloaded data is removed again when a list is switched off
             dataFile(id).delete()
-            modifyList(id) { it.copy(entryCount = 0, lastUpdate = 0, etag = null, lastModified = null, lastError = null) }
+            modifyList(id) { it.copy(entryCount = 0, lastUpdate = 0, dataDate = 0, etag = null, lastModified = null, lastError = null) }
         }
         changed(list.kind)
         if (enabled && list.sourceUrl.isNotEmpty()) updateNow(context, id)
@@ -141,13 +141,14 @@ object BlockLists {
         val id = "file-" + UUID.randomUUID().toString().take(8)
         return withContext(Dispatchers.IO) {
             try {
-                val count = context.contentResolver.openInputStream(uri)!!.use { storeStream(id, kind, it) }
+                val stored = context.contentResolver.openInputStream(uri)!!.use { storeStream(id, kind, it) }
+                val count = stored.count
                 if (count == 0) {
                     dataFile(id).delete()
                     return@withContext "empty"
                 }
                 val list = BlockList(id, name.trim().ifEmpty { "Imported list" }, kind, "", enabled = true,
-                    lastUpdate = System.currentTimeMillis(), entryCount = count)
+                    lastUpdate = System.currentTimeMillis(), dataDate = stored.dataDate, entryCount = count)
                 modify { it.copy(lists = it.lists + list) }
                 changed(kind)
                 null
@@ -225,12 +226,14 @@ object BlockLists {
                 return@withContext true
             }
             if (code != 200) throw java.io.IOException("HTTP $code")
-            val count = conn.inputStream.use { storeStream(id, list.kind, it) }
-            if (count == 0) throw java.io.IOException("No entries found")
+            val stored = conn.inputStream.use { storeStream(id, list.kind, it) }
+            if (stored.count == 0) throw java.io.IOException("No entries found")
             val etag = conn.getHeaderField("ETag")
             val modified = conn.getHeaderField("Last-Modified")
+            // the date written in the list wins over the server's Last-Modified (which for files in a repository is the fetch time)
+            val dataDate = stored.dataDate.takeIf { it > 0 } ?: conn.lastModified.takeIf { it > 0 } ?: 0L
             modifyList(id) {
-                it.copy(lastUpdate = now, etag = etag, lastModified = modified, entryCount = count, lastError = null)
+                it.copy(lastUpdate = now, dataDate = dataDate, etag = etag, lastModified = modified, entryCount = stored.count, lastError = null)
             }
             changed(list.kind)
             true
@@ -245,15 +248,23 @@ object BlockLists {
         }
     }
 
-    /** Parses [input] and replaces the stored list atomically. @return the number of entries */
-    private fun storeStream(id: String, kind: BlockListKind, input: java.io.InputStream): Int {
-        val reader = BlockListParser.openText(input, MAX_TEXT_BYTES)
+    private class Stored(val count: Int, val dataDate: Long)
+
+    /** Parses [input] and replaces the stored list atomically. */
+    private fun storeStream(id: String, kind: BlockListKind, input: java.io.InputStream): Stored {
+        var gzDate = 0L
+        val reader = BlockListParser.openText(input, MAX_TEXT_BYTES) { gzDate = it }
+        var date = 0L
         val data: LongArray = when (kind) {
             BlockListKind.WEB -> DomainSet.of(BlockListParser.parseDomains(reader)).toArray()
-            BlockListKind.TORRENT_IP -> BlockListParser.parseIpRanges(reader)
+            BlockListKind.TORRENT_IP -> {
+                val r = BlockListParser.parseIpRangesInfo(reader, BlockListPresets.byId(id)?.skipReserved == true)
+                date = r.dataDate.takeIf { it > 0 } ?: gzDate
+                r.ranges
+            }
         }
         val count = if (kind == BlockListKind.WEB) data.size else data.size / 2
-        if (count == 0) return 0
+        if (count == 0) return Stored(0, 0)
         val target = dataFile(id)
         val tmp = File(target.parentFile, target.name + ".tmp")
         DataOutputStream(tmp.outputStream().buffered()).use { out ->
@@ -265,7 +276,7 @@ object BlockLists {
             target.delete()
             if (!tmp.renameTo(target)) throw java.io.IOException("Could not store the list")
         }
-        return count
+        return Stored(count, date)
     }
 
     private fun readData(id: String): LongArray? = try {
@@ -285,7 +296,7 @@ object BlockLists {
     private fun changed(kind: BlockListKind) {
         reschedule()
         scope.launch {
-            if (kind == BlockListKind.WEB) reloadWeb() else TorrentStreamer.reapplyBlockList()
+            if (kind == BlockListKind.WEB) reloadWeb() else TorrentSession.reapplyBlockList()
         }
     }
 

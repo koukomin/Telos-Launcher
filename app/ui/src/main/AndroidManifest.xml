@@ -306,7 +306,7 @@
             </intent-filter>
         </activity>
 
-        <!-- Telos Downloads: share a link to it, or open a link to a file with it. Magnet and .torrent stay with Telos Video. -->
+        <!-- Telos Downloads: share a link to it, or open a link to a file with it. Magnet links and .torrent files are offered here and in Telos Video (Video streams while it downloads, Downloads keeps and seeds). -->
         <activity
             android:name=".downloads.DownloadShareActivity"
             android:exported="true"
@@ -334,6 +334,23 @@
                 <data android:mimeType="application/vnd.rar" />
                 <data android:mimeType="application/gzip" />
                 <data android:mimeType="application/x-iso9660-image" />
+                <data android:mimeType="application/x-bittorrent" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="magnet" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/x-bittorrent" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/x-bittorrent" />
             </intent-filter>
         </activity>
 

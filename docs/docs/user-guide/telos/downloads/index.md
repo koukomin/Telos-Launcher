@@ -4,7 +4,8 @@ A download manager for links: several connections per file, resume, a queue and 
 
 ::: tip At a glance
 Paste or share a link, Telos downloads it with up to 16 connections at once, keeps going after a restart or a lost
-network, and puts the file in the folder you choose or in `Downloads/Telos`. HTTP and HTTPS in this version.
+network, and puts the file in the folder you choose or in `Downloads/Telos`. HTTP and HTTPS links, and torrents and magnet links
+with file selection, seeding and IP block lists ([Torrents](torrents.md)).
 :::
 
 ## What it is
@@ -18,7 +19,7 @@ the private storage of Telos. Switching it off in [Telos Store](../store/) hides
 | --- | --- |
 | In the app | The **Add** button. Paste one or more links (one per line). A link in the clipboard is offered as a chip |
 | From another app | **Share** a link or text to **Telos Downloads**. The add sheet opens with the links, nothing starts before you confirm |
-| Open with | Links to files that the browser hands over as zip, apk, 7z, rar, gz, iso or binary can be opened with Telos Downloads |
+| Open with | Links to files that the browser hands over as zip, apk, 7z, rar, gz, iso or binary can be opened with Telos Downloads. Magnet links, `.torrent` addresses and `.torrent` files are offered too, next to [Telos Video](../video/streams-torrents-subtitles.md): you choose |
 
 The add sheet also asks for the **folder** (any folder you pick, or `Downloads/Telos`), the **category** (automatic, or Video, Audio,
 Documents, Archives, Programs, Other) and the number of **connections** (default from the settings). **More options**: file name
@@ -26,12 +27,15 @@ Documents, Archives, Programs, Other) and the number of **connections** (default
 download is done), a speed limit for this download, and adding it paused.
 
 ::: info Magnet links and .torrent files
-They still open in [Telos Video](../video/). The **Torrents** tab of Downloads is a placeholder.
+Paste a magnet link or a `.torrent` address into **Add** (or use the **Torrents** tab) and the torrent sheet opens, where you
+see the files and choose which to download. Details on the [Torrents page](torrents.md). When you open a magnet link from
+another app, Android may ask whether to use Telos Video (streams while it downloads, deletes everything afterwards) or Telos
+Downloads (keeps the files and can seed). The **Video** dialog "Play from the web" also has **Download in Telos Downloads**.
 :::
 
 ## The list
 
-- Filters: **All**, **Active**, **Queued** (waiting and paused), **Completed**, **Failed**, and **Torrents** (not available yet). The magnifier searches names and links.
+- Filters: **All**, **Active**, **Queued** (waiting and paused), **Completed**, **Failed**, and **Torrents** (cards with ratio, peers, up and down speed; see [Torrents](torrents.md)). The magnifier searches names and links.
 - Each card shows the file type, name, state, size, speed and remaining time, with a progress ring and bar. The ring button pauses and resumes.
 - Swipe a card to the right to pause or resume, to the left to remove it. The menu has pause, resume, retry, open, share, copy link, details and remove.
 - **Remove** a finished download keeps the file or deletes it, your choice. A download that is not finished loses its partial file.
@@ -62,6 +66,7 @@ Menu > **Settings**.
 | User agent | Empty means a browser-like default |
 | Proxy | HTTP or SOCKS host and port |
 | Show notifications | Progress with **Pause** and **Cancel**, and the result |
+| Torrents | A section with the torrent settings, limits, seeding defaults and the peer block lists, see [Torrents](torrents.md#settings) |
 
 When downloads are waiting because of the network, Wi-Fi only or the battery, a banner on the list says so.
 
@@ -82,7 +87,7 @@ to about six hours a day; when it ends the running downloads are paused and you 
 
 ## Status and limitations
 
-- **Implemented:** HTTP and HTTPS downloads as described above.
-- **Planned:** torrents and magnet links with block lists (next update), then downloads from video sites, capture from the browser and more.
-- **Not there:** FTP, schedules by time of day, extracting archives, a backup of the download list, downloads on behalf of other apps (it is not the system download manager).
+- **Implemented:** HTTP and HTTPS downloads as described above, and torrents ([Torrents](torrents.md)).
+- **Planned:** downloads from video sites, capture from the browser or the clipboard, a backup of the list, schedules and extracting archives.
+- **Not there:** FTP, schedules by time of day, extracting archives, a backup of the download list, downloads on behalf of other apps (it is not the system download manager), and nothing was tested on a device yet for torrents (see the Torrents page).
 - Downloads need the app process. If the system ends the process, downloads continue when Telos starts again (after a boot, when the launcher starts).

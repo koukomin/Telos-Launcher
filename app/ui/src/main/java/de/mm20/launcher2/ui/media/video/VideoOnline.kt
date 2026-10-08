@@ -82,6 +82,21 @@ internal fun OpenSourceDialog(onDismiss: () -> Unit) {
                     TextButton(onClick = { clipboard.getText()?.text?.let { text = it } }) { Text(stringResource(R.string.hc_paste)) }
                     TextButton(onClick = { torrentPicker.launch(arrayOf("*/*")) }) { Text(stringResource(R.string.hc_choose_torrent_file)) }
                 }
+                // magnet links and .torrent addresses can also be kept and seeded by Telos Downloads
+                if (de.mm20.launcher2.downloads.logic.TorrentSources.containsTorrent(text)) {
+                    TextButton(onClick = {
+                        context.startActivity(
+                            Intent().setClassName(context.packageName, de.mm20.launcher2.applock.SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                                .putExtra(de.mm20.launcher2.applock.SettingsDeepLinkContract.EXTRA_ROUTE, de.mm20.launcher2.applock.SettingsDeepLinkContract.ROUTE_DOWNLOADS)
+                                .putStringArrayListExtra(
+                                    de.mm20.launcher2.applock.SettingsDeepLinkContract.EXTRA_DOWNLOAD_URLS,
+                                    ArrayList(de.mm20.launcher2.downloads.logic.TorrentSources.extract(text)),
+                                )
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        )
+                        onDismiss()
+                    }) { Text(stringResource(R.string.dl_t_download_in_downloads)) }
+                }
                 Text(
                     stringResource(R.string.hc_torrents_are_downloaded_while_they_play),
                     style = MaterialTheme.typography.bodySmall,

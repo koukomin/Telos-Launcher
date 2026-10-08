@@ -2,7 +2,7 @@ package de.mm20.launcher2.downloads
 
 import kotlinx.serialization.Serializable
 
-/** Which engine runs a task. Only [Http] exists in phase 1; the others are reserved for the next phases. */
+/** Which engine runs a task: [Http] (phase 1), [Torrent] (phase 2); [Media] is reserved for phase 3. */
 @Serializable
 enum class DownloadType { Http, Torrent, Media }
 
@@ -13,11 +13,14 @@ enum class DownloadState {
     Connecting,
     Downloading,
     Verifying,
+
+    /** A finished torrent that is shared with other peers until its seeding limit is reached */
+    Seeding,
     Paused,
     Completed,
     Failed;
 
-    val isActive: Boolean get() = this == Connecting || this == Downloading || this == Verifying
+    val isActive: Boolean get() = this == Connecting || this == Downloading || this == Verifying || this == Seeding
     val isFinished: Boolean get() = this == Completed || this == Failed
 }
 
@@ -37,6 +40,58 @@ data class SegmentState(
 ) {
     val length: Long get() = if (end < 0) -1 else end - start + 1
     val isComplete: Boolean get() = end >= 0 && downloaded >= length
+}
+
+/** One file of a torrent. [priority] is 0 (skip) to 7; 4 is the normal one. */
+@Serializable
+data class TorrentFile(
+    val index: Int,
+    /** Path inside the torrent, with "/" */
+    val path: String,
+    val size: Long,
+    val priority: Int = 4,
+    val done: Long = 0,
+    /** Where the finished file was put (content:// or file://), null until then */
+    val uri: String? = null,
+) {
+    val wanted: Boolean get() = priority > 0
+}
+
+/** Everything that is only there for torrents */
+@Serializable
+data class TorrentData(
+    val infoHash: String = "",
+    val magnet: String = "",
+    val files: List<TorrentFile> = emptyList(),
+    val sequential: Boolean = false,
+    /** Stop seeding at this ratio, in hundredths (100 = 1.0), 0: no ratio limit */
+    val seedRatioX100: Int = 100,
+    /** Stop seeding after this many minutes, 0: no time limit */
+    val seedMinutes: Int = 0,
+    val stopAtDone: Boolean = false,
+    val uploadedBytes: Long = 0,
+    /** Everything received, also what was thrown away; the ratio is uploaded divided by this */
+    val receivedBytes: Long = 0,
+    val uploadBps: Long = 0,
+    val seeds: Int = 0,
+    val peers: Int = 0,
+    val seedingSeconds: Long = 0,
+    val pieceLength: Int = 0,
+    val numPieces: Int = 0,
+    val isPrivate: Boolean = false,
+    /** Folder of the torrent data inside the app storage (staging) */
+    val stagingPath: String? = null,
+    /** The finished files were copied to the chosen folder */
+    val moved: Boolean = false,
+    /** Name of the top folder of a multi-file torrent, blank for a single file */
+    val rootFolder: String = "",
+    /** Waiting in the queue of the torrent session (more torrents than "max active torrents") */
+    val inQueue: Boolean = false,
+    /** The finished files are being copied to the chosen folder */
+    val moving: Boolean = false,
+) {
+    val ratio: Double get() = if (receivedBytes > 0) uploadedBytes.toDouble() / receivedBytes else 0.0
+    val wantedBytes: Long get() = files.filter { it.wanted }.sumOf { it.size }
 }
 
 /**
@@ -90,6 +145,8 @@ data class DownloadTask(
     val nextRetryAt: Long = 0,
     /** Higher runs first */
     val priority: Int = 0,
+    /** Set for [DownloadType.Torrent] */
+    val torrent: TorrentData? = null,
 ) {
     val progress: Float
         get() = if (totalBytes > 0) (downloadedBytes.toFloat() / totalBytes).coerceIn(0f, 1f) else 0f
@@ -119,6 +176,23 @@ data class DownloadRequest(
     val checksum: String? = null,
     val speedLimitBps: Long = 0,
     val startPaused: Boolean = false,
+    /** Set for [DownloadType.Torrent]: what the user chose in the add sheet */
+    val torrent: TorrentRequest? = null,
+)
+
+/** The choices made before a torrent is added; [torrentFile] is the metadata read in the add sheet (optional for magnet links) */
+class TorrentRequest(
+    val torrentFile: ByteArray? = null,
+    val files: List<TorrentFile> = emptyList(),
+    val sequential: Boolean = false,
+    val seedRatioX100: Int = 100,
+    val seedMinutes: Int = 0,
+    val stopAtDone: Boolean = false,
+    val infoHash: String = "",
+    val pieceLength: Int = 0,
+    val numPieces: Int = 0,
+    val isPrivate: Boolean = false,
+    val rootFolder: String = "",
 )
 
 /** Thrown by engines: [retryable] failures (network, server busy) are tried again with a backoff */

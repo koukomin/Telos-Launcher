@@ -45,6 +45,7 @@ internal fun stateLabel(t: DownloadTask): String = when (t.state) {
     DownloadState.Connecting -> stringResource(R.string.dl_state_connecting)
     DownloadState.Downloading -> stringResource(R.string.dl_state_downloading)
     DownloadState.Verifying -> stringResource(R.string.dl_state_verifying)
+    DownloadState.Seeding -> stringResource(R.string.dl_t_state_seeding)
     DownloadState.Paused -> stringResource(R.string.dl_state_paused)
     DownloadState.Completed -> stringResource(R.string.dl_state_completed)
     DownloadState.Failed -> stringResource(R.string.dl_state_failed)

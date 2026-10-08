@@ -41,7 +41,7 @@ Tap the **link** icon in the top bar ("Play from the web").
 How the address is treated: it is a **torrent** when it starts with `magnet:` or ends in `.torrent` (query string
 ignored). Everything else is handed to the player as a stream.
 
-Other apps and browsers can also open `magnet:` links, `.torrent` links and `.torrent` files in Telos Video directly.
+Other apps and browsers can also open `magnet:` links, `.torrent` links and `.torrent` files in Telos Video directly. [Telos Downloads](../downloads/torrents.md) is offered for the same links, and Android asks which to use: Video streams while it downloads and deletes everything afterwards, Downloads keeps the files and can seed.
 
 ## Torrents
 
@@ -72,17 +72,22 @@ address to other peers, and while a torrent runs you also share the pieces you h
 In the **Video services** dialog, under Torrents, **Peer block lists** can make the torrent session refuse
 connections to listed IP address ranges (IPv4). Nothing is downloaded until you switch a list on.
 
-- **Offered list:** Naunter BT_BlockLists (Unlicense), `github.com/Naunter/BT_BlockLists`. The project says it is no
-  longer actively maintained, although its automatic workflow still runs.
+- **Offered lists** (all off until you switch them on; the list is shown with its licence or terms, what it is, and the date written in the list):
+  **Spamhaus DROP** (free of charge with credit to Spamhaus; networks of cybercrime operations, about 1,670 ranges),
+  **FireHOL level 1** (attack and malware networks, a combination of sources that keep their own terms, about 4,600 ranges) and
+  **Naunter BT_BlockLists** (a large p2p list, Unlicense; its author says it is **no longer actively maintained**, although an automatic workflow still
+  regenerates the file; its entries come from other lists whose terms were not checked). Spamhaus DROP and FireHOL level 1 are security lists
+  that were updated on the day they were checked (2026-10-08), but they are not classic "anti-snooper" p2p lists. Which other lists were
+  checked and why they are not offered is in the table on the [Torrents page of Telos Downloads](../downloads/torrents.md#peer-block-lists).
 - **Your own lists:** **Add list by address** (https only) or **Import from a file**. Accepted formats are PeerGuardian
   p2p (`name:1.2.3.4-1.2.3.5`), eMule `ipfilter.dat`, CIDR (`1.2.3.0/24`), `a-b` ranges and single addresses, plain or
-  as gzip or zip. IPv6 entries are skipped.
+  as gzip or zip. Comments after `#` or `;` are ignored, tab separated ranges (DShield) work. IPv6 entries are skipped.
 - **Which server is contacted:** only the address shown under the list, directly from your phone. Updates ask with
   `If-None-Match` / `If-Modified-Since`, so an unchanged list is not downloaded again. A list may not exceed 160 MB of text.
 - **Automatic update:** Off, Daily or Weekly (default weekly once a list is on), by default only on Wi-Fi and not when
   the battery is low. The setting is shared with the web app block lists. **Update now** ignores the Wi-Fi setting.
 - If an update fails, the previous list stays in use and the error is shown under the list.
-- The filter is applied when a torrent starts and again after a list changes while a torrent runs.
+- The filter is applied when the torrent session starts and again after a list changes while it runs. **Telos Video and Telos Downloads use the same session** and so the same filter, the same settings (DHT, encryption, port, limits) and the same port; see [Torrents in Telos Downloads](../downloads/torrents.md).
 - Switching a downloaded list off deletes its data. Imported lists keep their data until you remove them.
 - A block list reduces connections to unwanted peers. It does not hide your IP address from other peers.
 
@@ -199,7 +204,7 @@ refreshed automatically and stored encrypted.
 
 - OpenSubtitles needs your own key and account, TMDB needs your own key.
 - Torrent streaming depends on healthy peers. Many torrents never start.
-- A torrent's data is deleted at the end. Nothing is kept or seeded afterwards.
+- A torrent's data is deleted at the end. Nothing is kept or seeded afterwards. To keep the files and seed, use [Telos Downloads](../downloads/torrents.md): the **Play from the web** dialog has **Download in Telos Downloads**, and Android lets you choose between the two when you open a magnet link.
 - Subtitle search relies on file names. Wrong names give wrong results.
 - Trakt matching uses titles, not ids, so ambiguous names may match the wrong show.
 - No catalog or search for streams. You must provide the address.

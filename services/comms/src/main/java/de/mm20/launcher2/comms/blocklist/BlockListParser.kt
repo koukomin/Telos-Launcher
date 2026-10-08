@@ -68,27 +68,75 @@ object BlockListParser {
         return d
     }
 
+    /** Merged ranges plus the date the list says it was generated on (0 when its header has none) */
+    class IpParseResult(val ranges: LongArray, val dataDate: Long) {
+        val count: Int get() = ranges.size / 2
+    }
+
     /**
      * IPv4 ranges from PeerGuardian p2p ("name:1.2.3.4-1.2.3.5"), eMule ipfilter.dat
-     * ("1.2.3.4 - 1.2.3.5 , 000 , name"), CIDR ("1.2.3.0/24"), "a-b" and single addresses.
+     * ("1.2.3.4 - 1.2.3.5 , 000 , name"), CIDR netsets with comments ("1.2.3.0/24 ; SBL1"),
+     * tab separated "start end" (DShield), "a-b" and single addresses. IPv6 lines are skipped.
      * Result: sorted, merged [start, end] pairs as unsigned 32 bit values in a flat array.
      */
-    fun parseIpRanges(reader: BufferedReader, maxRanges: Int = 3_000_000): LongArray {
+    fun parseIpRanges(reader: BufferedReader, maxRanges: Int = 3_000_000): LongArray =
+        parseIpRangesInfo(reader, false, maxRanges).ranges
+
+    /**
+     * Like [parseIpRanges], and reads the date from the header comments of the list (FireHOL, Spamhaus,
+     * abuse.ch, DShield formats). With [skipReserved] private, loopback and link local ranges are cut out,
+     * so that lists which contain bogons do not block devices on the local network.
+     */
+    fun parseIpRangesInfo(reader: BufferedReader, skipReserved: Boolean, maxRanges: Int = 3_000_000): IpParseResult {
         var starts = LongArray(1024)
         var ends = LongArray(1024)
         var n = 0
+        var date = 0L
+        var lineNo = 0
         while (n < maxRanges) {
             val line = reader.readLine() ?: break
+            lineNo++
+            if (date == 0L && lineNo <= HEADER_LINES) date = DataDates.parseHeaderLine(line) ?: 0L
             val r = parseIpLine(line) ?: continue
-            if (n == starts.size) {
-                starts = starts.copyOf(n * 2)
-                ends = ends.copyOf(n * 2)
+            val parts = if (skipReserved) subtractReserved(r.first, r.second) else listOf(r)
+            for (part in parts) {
+                if (n == starts.size) {
+                    starts = starts.copyOf(n * 2)
+                    ends = ends.copyOf(n * 2)
+                }
+                starts[n] = part.first
+                ends[n] = part.second
+                n++
             }
-            starts[n] = r.first
-            ends[n] = r.second
-            n++
         }
-        return mergeRanges(starts, ends, n)
+        return IpParseResult(mergeRanges(starts, ends, n), date)
+    }
+
+    private const val HEADER_LINES = 80
+
+    /** Private, loopback, link local and carrier grade NAT ranges, sorted */
+    private val RESERVED = listOf(
+        0x0A000000L to 0x0AFFFFFFL, // 10.0.0.0/8
+        0x64400000L to 0x647FFFFFL, // 100.64.0.0/10
+        0x7F000000L to 0x7FFFFFFFL, // 127.0.0.0/8
+        0xA9FE0000L to 0xA9FEFFFFL, // 169.254.0.0/16
+        0xAC100000L to 0xAC1FFFFFL, // 172.16.0.0/12
+        0xC0A80000L to 0xC0A8FFFFL, // 192.168.0.0/16
+    )
+
+    /** [start, end] without the reserved ranges, as zero to several pieces */
+    fun subtractReserved(start: Long, end: Long): List<Pair<Long, Long>> {
+        var pieces = listOf(start to end)
+        for ((rs, re) in RESERVED) {
+            val next = ArrayList<Pair<Long, Long>>(pieces.size + 1)
+            for ((a, b) in pieces) {
+                if (b < rs || a > re) { next.add(a to b); continue }
+                if (a < rs) next.add(a to rs - 1)
+                if (b > re) next.add(re + 1 to b)
+            }
+            pieces = next
+        }
+        return pieces
     }
 
     fun mergeRanges(starts: LongArray, ends: LongArray, n: Int): LongArray {
@@ -118,7 +166,16 @@ object BlockListParser {
             // ipfilter.dat: range, level, name
             line.substringBefore(',')
         } else line
-        val text = rangeText.trim()
+        // trailing comments of netsets: "1.2.3.0/24 ; SBL123" or "1.2.3.4 # note"
+        val text = rangeText.substringBefore(';').substringBefore('#').trim()
+        if ('\t' in text) {
+            // DShield: start <tab> end <tab> ...
+            val f = text.split('\t').map { it.trim() }.filter { it.isNotEmpty() }
+            val a = f.getOrNull(0)?.let(::parseIpv4)
+            val b = f.getOrNull(1)?.let(::parseIpv4)
+            if (a != null && b != null) return if (a <= b) a to b else b to a
+            return f.getOrNull(0)?.let { first -> parseIpLine(first) }
+        }
         if (text.contains('/')) {
             val ip = parseIpv4(text.substringBefore('/').trim()) ?: return null
             val bits = text.substringAfter('/').trim().toIntOrNull() ?: return null
@@ -158,12 +215,20 @@ object BlockListParser {
      * Opens a downloaded or imported stream as text: gzip and zip (first file) are unpacked,
      * anything else is read as it is. Decompressed output is capped at [maxBytes].
      */
-    fun openText(input: InputStream, maxBytes: Long): BufferedReader {
+    fun openText(input: InputStream, maxBytes: Long, onGzipDate: ((Long) -> Unit)? = null): BufferedReader {
         val buffered = java.io.BufferedInputStream(input)
-        buffered.mark(4)
-        val b0 = buffered.read()
-        val b1 = buffered.read()
+        buffered.mark(16)
+        val head = ByteArray(8)
+        var got = 0
+        while (got < head.size) {
+            val r = buffered.read(head, got, head.size - got)
+            if (r <= 0) break
+            got += r
+        }
         buffered.reset()
+        val b0 = if (got > 0) head[0].toInt() and 0xff else -1
+        val b1 = if (got > 1) head[1].toInt() and 0xff else -1
+        if (b0 == 0x1f && b1 == 0x8b && got >= 8) onGzipDate?.invoke(gzipDate(head))
         val stream: InputStream = when {
             b0 == 0x1f && b1 == 0x8b -> java.util.zip.GZIPInputStream(buffered)
             b0 == 'P'.code && b1 == 'K'.code -> java.util.zip.ZipInputStream(buffered).also { zip ->
@@ -174,6 +239,14 @@ object BlockListParser {
             else -> buffered
         }
         return LimitedInputStream(stream, maxBytes).bufferedReader(Charsets.UTF_8)
+    }
+
+    /** The modification time in the gzip header (seconds since 1970, little endian at byte 4) in milliseconds, 0 if not set */
+    fun gzipDate(head: ByteArray): Long {
+        if (head.size < 8) return 0
+        val secs = (head[4].toLong() and 0xff) or ((head[5].toLong() and 0xff) shl 8) or
+            ((head[6].toLong() and 0xff) shl 16) or ((head[7].toLong() and 0xff) shl 24)
+        return secs * 1000
     }
 
     private class LimitedInputStream(private val inner: InputStream, private var left: Long) : InputStream() {
@@ -192,5 +265,35 @@ object BlockListParser {
         }
 
         override fun close() = inner.close()
+    }
+}
+
+/** Reads the "generated on" date of a list from its header comments. */
+object DataDates {
+    private val label = Regex("""^[#;]\s*(?:this file date|last-modified|last updated|updated)\s*:\s*(.+)$""", RegexOption.IGNORE_CASE)
+    private val formats = listOf(
+        "EEE MMM d HH:mm:ss zzz yyyy", // FireHOL: Thu Oct  8 04:41:57 UTC 2026
+        "EEE, dd MMM yyyy HH:mm:ss zzz", // Spamhaus: Wed, 07 Oct 2026 17:01:40 GMT
+        "yyyy-MM-dd HH:mm:ss zzz", // abuse.ch: 2026-03-04 14:28:39 UTC
+        "yyyy-MM-dd'T'HH:mm:ss", // DShield: 2026-10-08T11:15:59.445859
+    )
+
+    /** Epoch milliseconds, null when the line is no date comment */
+    fun parseHeaderLine(line: String): Long? {
+        val m = label.find(line.trim()) ?: return null
+        return parse(m.groupValues[1])
+    }
+
+    fun parse(value: String): Long? {
+        val v = value.trim().replace(Regex("\\s+"), " ").replace(Regex("(\\d{2}:\\d{2}:\\d{2})\\.\\d+"), "$1")
+        for (f in formats) {
+            val fmt = java.text.SimpleDateFormat(f, java.util.Locale.US)
+            fmt.timeZone = java.util.TimeZone.getTimeZone("UTC")
+            fmt.isLenient = false
+            val pos = java.text.ParsePosition(0)
+            val d = fmt.parse(v, pos)
+            if (d != null && pos.index == v.length) return d.time
+        }
+        return null
     }
 }

@@ -135,6 +135,7 @@ fun DownloadsSettingsScreen() {
                 )
             }
         }
+        torrentSettingsItems()
         item {
             PreferenceCategory(title = stringResource(R.string.dl_settings_notifications)) {
                 SwitchPreference(

@@ -298,7 +298,8 @@ fabric.properties
 # Claude Code local settings temp files
 .claude/settings.local.json.tmp.*
 
-.kotlin*.telos_backup
+.kotlin
+*.telos_backup
 
 # Native SIP libraries (downloaded by CI or built with sip-native/Makefile)
 sip-native/distribution/

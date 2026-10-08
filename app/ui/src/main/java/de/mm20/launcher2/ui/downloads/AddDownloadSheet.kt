@@ -47,6 +47,7 @@ import de.mm20.launcher2.downloads.DownloadManager
 import de.mm20.launcher2.downloads.DownloadRequest
 import de.mm20.launcher2.downloads.logic.Checksums
 import de.mm20.launcher2.downloads.logic.LinkParser
+import de.mm20.launcher2.downloads.logic.TorrentSources
 import de.mm20.launcher2.ui.R
 import kotlin.math.roundToInt
 
@@ -58,7 +59,7 @@ internal fun parseHeaders(text: String): Map<String, String> =
     }.filter { it.first.isNotEmpty() }.toMap()
 
 @Composable
-internal fun AddDownloadSheet(initialText: String, manager: DownloadManager, onDismiss: () -> Unit) {
+internal fun AddDownloadSheet(initialText: String, manager: DownloadManager, onDismiss: () -> Unit, onTorrent: (String) -> Unit = {}) {
     val context = LocalContext.current
     val settings by manager.settings.values.collectAsState()
     var text by remember { mutableStateOf(initialText) }
@@ -78,6 +79,10 @@ internal fun AddDownloadSheet(initialText: String, manager: DownloadManager, onD
     var clip by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) { clip = clipboardLink(context) }
+    // magnet links and .torrent addresses go to the torrent sheet, where the files can be chosen
+    LaunchedEffect(text) {
+        if (TorrentSources.containsTorrent(text)) onTorrent(text)
+    }
 
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri: Uri? ->
         if (uri != null) {

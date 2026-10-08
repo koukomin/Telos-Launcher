@@ -43,7 +43,8 @@ object QueueRules {
         canRun: (DownloadTask) -> Boolean = { true },
     ): List<DownloadTask> {
         if (blockReason(conditions, settings) != null) return emptyList()
-        val running = tasks.count { it.state.isActive }
+        // a torrent that only seeds does not take a download slot
+        val running = tasks.count { it.state.isActive && it.state != DownloadState.Seeding }
         val free = (settings.maxParallel.coerceAtLeast(1) - running).coerceAtLeast(0)
         if (free == 0) return emptyList()
         return tasks.asSequence()

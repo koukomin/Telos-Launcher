@@ -60,6 +60,9 @@ import de.mm20.launcher2.downloads.DownloadEvent
 import de.mm20.launcher2.downloads.DownloadManager
 import de.mm20.launcher2.downloads.DownloadState
 import de.mm20.launcher2.downloads.DownloadTask
+import de.mm20.launcher2.downloads.DownloadType
+import de.mm20.launcher2.downloads.engine.TorrentController
+import de.mm20.launcher2.downloads.logic.TorrentSources
 import de.mm20.launcher2.downloads.logic.BlockReason
 import de.mm20.launcher2.downloads.logic.Formatting
 import de.mm20.launcher2.search.GreekFold
@@ -77,13 +80,14 @@ private fun Filter.matches(t: DownloadTask) = when (this) {
     Filter.Queued -> t.state == DownloadState.Queued || t.state == DownloadState.Paused
     Filter.Completed -> t.state == DownloadState.Completed
     Filter.Failed -> t.state == DownloadState.Failed
-    Filter.Torrents -> false
+    Filter.Torrents -> t.type == DownloadType.Torrent
 }
 
 @Composable
 fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
     val context = LocalContext.current
     val manager: DownloadManager = koinInject()
+    val torrentController: TorrentController = koinInject()
     val backStack = LocalBackStack.current
     val tasks by manager.tasks.collectAsState()
     val settings by manager.settings.values.collectAsState()
@@ -92,7 +96,9 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
     var filter by rememberSaveable { mutableStateOf(Filter.All) }
     var query by rememberSaveable { mutableStateOf("") }
     var searching by rememberSaveable { mutableStateOf(false) }
-    var showAdd by rememberSaveable { mutableStateOf(initialUrls.isNotEmpty()) }
+    val initialIsTorrent = initialUrls.isNotEmpty() && initialUrls.any { TorrentSources.containsTorrent(it) || it.startsWith("file:") }
+    var showAdd by rememberSaveable { mutableStateOf(initialUrls.isNotEmpty() && !initialIsTorrent) }
+    var showAddTorrent by rememberSaveable { mutableStateOf(initialIsTorrent) }
     var addUrls by rememberSaveable { mutableStateOf(initialUrls.joinToString("\n")) }
     var detailId by rememberSaveable { mutableStateOf<String?>(null) }
     var deleting by remember { mutableStateOf<DownloadTask?>(null) }
@@ -102,7 +108,7 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
     LaunchedEffect(initialUrls) {
         if (initialUrls.isNotEmpty()) {
             addUrls = initialUrls.joinToString("\n")
-            showAdd = true
+            if (initialIsTorrent) showAddTorrent = true else showAdd = true
         }
     }
 
@@ -176,14 +182,15 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                         FilterChip(
                             selected = filter == f,
                             onClick = { filter = f },
-                            label = { Text(stringResource(label) + if (f != Filter.Torrents && (counts[f] ?: 0) > 0) " ${counts[f]}" else "") },
+                            label = { Text(stringResource(label) + if ((counts[f] ?: 0) > 0) " ${counts[f]}" else "") },
                         )
                     }
                 }
                 if (blocked != null) BlockBanner(blocked!!)
                 SpeedHeader(tasks)
-                if (filter == Filter.Torrents) {
-                    EmptyState(R.string.dl_torrents_title, R.string.dl_torrents_text)
+                if (filter == Filter.Torrents) TorrentSpeedHeader(tasks)
+                if (filter == Filter.Torrents && visible.isEmpty()) {
+                    EmptyState(R.string.dl_t_empty_title, R.string.dl_t_empty_text)
                 } else if (visible.isEmpty()) {
                     if (tasks.isEmpty()) EmptyState(R.string.dl_empty_title, R.string.dl_empty_text)
                     else EmptyState(R.string.dl_empty_filter_title, R.string.dl_empty_filter_text)
@@ -193,7 +200,9 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                         verticalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
                         items(visible, key = { it.id }) { t ->
-                            SwipeableTaskCard(
+                            if (t.type == DownloadType.Torrent && filter == Filter.Torrents) {
+                                TorrentCard(t, manager, onOpenDetails = { detailId = t.id }, onDelete = { deleting = t })
+                            } else SwipeableTaskCard(
                                 task = t,
                                 manager = manager,
                                 onOpenDetails = { detailId = t.id },
@@ -204,7 +213,7 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                 }
             }
             ExtendedFloatingActionButton(
-                onClick = { addUrls = ""; showAdd = true },
+                onClick = { addUrls = ""; if (filter == Filter.Torrents) showAddTorrent = true else showAdd = true },
                 modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
                 icon = { Icon(painterResource(R.drawable.add_24px), null) },
                 text = { Text(stringResource(R.string.dl_add)) },
@@ -217,11 +226,17 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
             initialText = addUrls,
             manager = manager,
             onDismiss = { showAdd = false },
+            onTorrent = { text -> showAdd = false; addUrls = text; showAddTorrent = true },
         )
+    }
+    if (showAddTorrent) {
+        AddTorrentSheet(initialText = addUrls, manager = manager, onDismiss = { showAddTorrent = false })
     }
     detailId?.let { id ->
         val t = tasks.firstOrNull { it.id == id }
-        if (t == null) detailId = null else TaskDetailSheet(t, manager, onDismiss = { detailId = null }, onDelete = { deleting = t })
+        if (t == null) detailId = null
+        else if (t.type == DownloadType.Torrent) TorrentDetailSheet(t, manager, torrentController, onDismiss = { detailId = null }, onDelete = { deleting = t })
+        else TaskDetailSheet(t, manager, onDismiss = { detailId = null }, onDelete = { deleting = t })
     }
     deleting?.let { t ->
         DeleteDialog(t, onDismiss = { deleting = null }) { withFile ->
@@ -429,7 +444,7 @@ private fun TaskCard(task: DownloadTask, manager: DownloadManager, onOpenDetails
 
 @Composable
 private fun DeleteDialog(task: DownloadTask, onDismiss: () -> Unit, onConfirm: (deleteFile: Boolean) -> Unit) {
-    val done = task.state == DownloadState.Completed
+    val done = task.state == DownloadState.Completed || (task.torrent != null && task.completedAt > 0)
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.dl_delete_title)) },

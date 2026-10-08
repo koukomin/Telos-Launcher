@@ -90,7 +90,11 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
       },
       {
         text: 'Downloads',
+        collapsed: true,
         link: '/docs/user-guide/telos/downloads/',
+        items: [
+          { text: 'Torrents', link: '/docs/user-guide/telos/downloads/torrents' },
+        ],
       },
       {
         text: 'Photos',

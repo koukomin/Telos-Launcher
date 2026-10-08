@@ -16,6 +16,7 @@ based on" table in `readme.md`.
 | [Obtainium](https://github.com/ImranR98/Obtainium) | GPL-3.0 | The Obtainium authors |
 | [Gopeed](https://github.com/GopeedLab/gopeed) | GPL-3.0 | Design ideas only for Telos Downloads, no code copied (copyright: the Gopeed authors) |
 | [Ketch](https://github.com/linroid/Ketch) | Apache-2.0 | Design ideas only for Telos Downloads, no code copied (copyright: the Ketch authors) |
+| [LibreTorrent](https://github.com/proninyaroslav/libretorrent) | GPL-3.0-or-later | Design ideas only for the torrent part of Telos Downloads (feature set and screens), no code copied (copyright: the LibreTorrent authors) |
 | [Transistor](https://codeberg.org/y20k/transistor) | MIT | Copyright (c) 2015-22 - Y20K.org (full notice below) |
 | [TagLib wrapper (Kyant0/taglib)](https://github.com/Kyant0/taglib) | Apache-2.0 | Copyright 2025 Kyant. Bundles TagLib (LGPL-2.1 / MPL-1.1 upstream) |
 | [baresip](https://github.com/baresip/baresip), [baresip-studio](https://github.com/juha-h/baresip-studio) | BSD-3-Clause | Planned, not yet included |
@@ -104,9 +105,16 @@ address below. The lists belong to their authors.
 | OISD small | https://small.oisd.nl/domainswild | GPL-3.0 |
 | EasyList | https://easylist.to/easylist/easylist.txt | GPL-3.0 or CC BY-SA 3.0 |
 | URLhaus host file | https://urlhaus.abuse.ch/downloads/hostfile/ | abuse.ch terms of use, https://urlhaus.abuse.ch/api/ |
-| Naunter BT_BlockLists | https://github.com/Naunter/BT_BlockLists/raw/master/bt_blocklists.gz | Unlicense |
+| Naunter BT_BlockLists | https://raw.githubusercontent.com/Naunter/BT_BlockLists/master/bt_blocklists.gz | Unlicense for the project (its LICENSE file). The README says it is not actively maintained (notice 2024-10-22) while an automatic workflow regenerates the list. The entries come from other lists (for example iBlocklist, the Transmission lists of codebucket.de and others); their terms were not checked |
+| Spamhaus DROP | https://www.spamhaus.org/drop/drop.txt | Free of charge (https://www.spamhaus.org/drop/): when used in a product, credit must be given to The Spamhaus Project, and the date and copyright text must stay with the file and data. Do not fetch automatically more than once an hour (Telos at most daily) |
+| FireHOL level 1 | https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level1.netset | A combination of DShield (CC BY-NC-SA 2.5, see the header of the DShield file), Feodo Tracker (CC0), Spamhaus DROP (terms above) and bogons. FireHOL (its scripts GPL v2) says that some lists may have special licences and that the source site must be checked before use (https://iplists.firehol.org). The list is fetched by the user's phone from FireHOL's repository; Telos does not redistribute it |
 
-## libtorrent4j and libtorrent (torrent streaming in Telos Video)
+Lists that were looked at on 2026-10-08 and are **not** offered: the Transmission list of codebucket.de (last modified 2025-01-17),
+abuse.ch Feodo Tracker IP blocklist (CC0; last updated 2026-03-04 with 5 entries), DShield block list (CC BY-NC-SA 2.5; also part of
+FireHOL level 1), FireHOL level 2 and level 3, Emerging Threats compromised IPs, CINS Army, blocklist.de and Bluetack/iBlocklist (terms not
+verified), Tor exit lists (informational only). Details: docs/docs/user-guide/telos/downloads/torrents.md.
+
+## libtorrent4j and libtorrent (torrent streaming in Telos Video, torrent downloads in Telos Downloads)
 
 libtorrent4j, https://github.com/aldenml/libtorrent4j (MIT), used unchanged as a Maven dependency.
 
