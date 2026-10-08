@@ -86,6 +86,7 @@ fun NotesScreen() {
         val e = editing
         if (e != null) {
             NoteEditor(e, labels, onChange = { editing = it }, onClose = { vm.save(e); editing = null },
+                onArchive = { vm.save(e.copy(archived = !e.archived)); editing = null },
                 onTrash = { vm.trash(e); editing = null })
         } else Scaffold(
             containerColor = Color.Transparent,
@@ -161,7 +162,7 @@ private fun NoteCard(n: Note, onClick: () -> Unit, onLong: () -> Unit, trash: Bo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun NoteEditor(note: Note, labels: List<String>, onChange: (Note) -> Unit, onClose: () -> Unit, onTrash: () -> Unit) {
+private fun NoteEditor(note: Note, labels: List<String>, onChange: (Note) -> Unit, onClose: () -> Unit, onArchive: () -> Unit, onTrash: () -> Unit) {
     val bg = noteColor(note.color, MaterialTheme.colorScheme.surface)
     val fg = if (note.color == 0) MaterialTheme.colorScheme.onSurface else Color.Black
     var colors by remember { mutableStateOf(false) }
@@ -176,7 +177,7 @@ private fun NoteEditor(note: Note, labels: List<String>, onChange: (Note) -> Uni
             }
             IconButton(onClick = { colors = !colors }) { Icon(painterResource(R.drawable.palette_24px), stringResource(R.string.notes_color), tint = fg) }
             IconButton(onClick = { labelDialog = true }) { Icon(painterResource(R.drawable.label_24px), stringResource(R.string.notes_labels), tint = fg) }
-            IconButton(onClick = { onChange(note.copy(archived = !note.archived)); onClose() }) { Icon(painterResource(R.drawable.archive_24px), stringResource(R.string.notes_archive), tint = fg) }
+            IconButton(onClick = onArchive) { Icon(painterResource(R.drawable.archive_24px), stringResource(R.string.notes_archive), tint = fg) }
             IconButton(onClick = {
                 context.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
                     type = "text/plain"; putExtra(Intent.EXTRA_SUBJECT, note.title); putExtra(Intent.EXTRA_TEXT, note.body)
