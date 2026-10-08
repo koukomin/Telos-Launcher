@@ -300,11 +300,11 @@ class TelosVpnService : VpnService(), KoinComponent {
         val b = Builder()
             .setSession("Telos Network")
             .setMtu(r.mtu)
-        b.setConfigureIntent(
-            packageManager.getLaunchIntentForPackage(packageName)?.let {
+        packageManager.getLaunchIntentForPackage(packageName)?.let {
+            b.setConfigureIntent(
                 PendingIntent.getActivity(this, 0, it, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
-            }
-        )
+            )
+        }
         underlyingNetworks(snapshot)?.let { b.setUnderlyingNetworks(it) }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) b.setMetered(s.vpnMetered)
         if (s.allowBypass) b.allowBypass()
