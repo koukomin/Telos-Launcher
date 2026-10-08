@@ -136,6 +136,9 @@ class SearchVM : ViewModel(), KoinComponent {
     val websiteResults = mutableStateListOf<Website>()
     val webAppShortcutResults = mutableStateListOf<WebAppShortcut>()
     val calculatorResults = mutableStateListOf<Calculator>()
+    /** Telos Notes that match the query. They come straight from the notes store, not from the search service. */
+    val noteResults = mutableStateListOf<de.mm20.launcher2.ui.notes.Note>()
+    private val notesStore: de.mm20.launcher2.ui.notes.NotesStore by inject()
     val unitConverterResults = mutableStateListOf<UnitConverter>()
     val searchActionResults = mutableStateListOf<SearchAction>()
     val locationResults = mutableStateListOf<Location>()
@@ -228,6 +231,13 @@ class SearchVM : ViewModel(), KoinComponent {
         }
         searchQuery.value = query
         isSearchEmpty.value = query.isEmpty()
+        noteResults.clear()
+        if (query.length >= 2 && this.filters.value.tools) {
+            notesStore.load()
+            noteResults.addAll(notesStore.notes.value.filter {
+                !it.trashed && (it.title.contains(query, true) || it.body.contains(query, true) || it.labels.any { l -> l.contains(query, true) })
+            }.take(5))
+        }
 
         val filters = filters.value
 
