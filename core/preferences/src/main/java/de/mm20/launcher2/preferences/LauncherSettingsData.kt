@@ -911,6 +911,11 @@ sealed interface GestureAction {
     @SerialName("feed")
     data object Feed : GestureAction
 
+    /** Opens one of the built-in Telos apps (Phone, Messages, Notes, Calendar, ...) with the virtual app [key] */
+    @Serializable
+    @SerialName("telos_app")
+    data class TelosApp(val key: String) : GestureAction
+
     @Serializable
     @SerialName("launcher_settings")
     data object LauncherSettings : GestureAction

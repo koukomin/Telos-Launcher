@@ -5,6 +5,13 @@ them, widgets. Everything else is one gesture away. This page describes each pie
 configure it. The settings live in **Settings > Home screen**, **Settings > Gestures** and **Settings >
 Grid and icons**.
 
+## Telos apps on a gesture
+
+In Settings > Gestures, every gesture (swipe up, down, left, right, double tap, long press, pinch and so on) can open a built-in
+Telos app directly: choose the gesture, then **Telos apps** and pick Phone, Messages, Notes, Calendar, Calculator and the others.
+The app opens with the same zoom or push animation as the other launch gestures. This works even though the Telos apps are
+virtual apps that cannot be saved as a normal shortcut. Switching an app off in Telos Store makes its gesture do nothing.
+
 ## How the pieces fit
 
 | Piece | What it is | Default |

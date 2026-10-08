@@ -289,7 +289,7 @@ A clock, a search bar, an optional dock and, if you want them, widgets. Settings
 | Double tap | Turn off screen |
 | Long press | Home screen menu (change wallpaper, add widget) |
 
-- **Actions:** do nothing, search / app drawer, widget pages 1 to 4, Feed (non-release builds), Web Apps Panel, home screen menu, notifications, quick settings, turn off screen, power menu, recent apps, launch an app, shortcut or any searchable item, launcher settings, plugin actions.
+- **Actions:** open any built-in Telos app (Phone, Messages, Notes, Calendar, ...) directly from a gesture, do nothing, search / app drawer, widget pages 1 to 4, Feed (non-release builds), Web Apps Panel, home screen menu, notifications, quick settings, turn off screen, power menu, recent apps, launch an app, shortcut or any searchable item, launcher settings, plugin actions.
 - Turn off screen (Android 9+), power menu and recent apps need the launcher's accessibility service; a banner and a "gesture failed" sheet guide you.
 - Only swipes, double tap and long press can be overridden by a context profile. Tapping the search bar always opens search.
 

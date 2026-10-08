@@ -371,6 +371,17 @@ abstract class SharedLauncherActivity(
                                                 animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
                                             )
 
+                                            is GestureAction.TelosApp -> org.koin.mp.KoinPlatform.getKoin()
+                                                .getAll<de.mm20.launcher2.search.VirtualAppProvider>()
+                                                .flatMap { it.getVirtualApps() }
+                                                .firstOrNull { it.key == action.key }
+                                                ?.let { app ->
+                                                    ScaffoldGesture(
+                                                        component = LaunchComponent(this@SharedLauncherActivity, app),
+                                                        animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
+                                                    )
+                                                }
+
                                             is GestureAction.LauncherSettings -> ScaffoldGesture(
                                                 component = LauncherSettingsComponent(this@SharedLauncherActivity),
                                                 animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
