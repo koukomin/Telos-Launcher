@@ -71,11 +71,14 @@ object Ics {
         }
         val out = mutableListOf<IcsEvent>()
         var cur: MutableMap<String, Pair<Map<String, String>, String>>? = null
+        var nested = 0 // depth inside a component of the event (VALARM), whose properties are not the event's
         for (l in lines) {
             when {
-                l.equals("BEGIN:VEVENT", true) -> cur = mutableMapOf()
+                l.equals("BEGIN:VEVENT", true) -> { cur = mutableMapOf(); nested = 0 }
                 l.equals("END:VEVENT", true) -> { cur?.let { toEvent(it)?.let(out::add) }; cur = null }
-                cur != null && l.contains(':') -> {
+                cur != null && l.startsWith("BEGIN:", true) -> nested++
+                cur != null && l.startsWith("END:", true) -> if (nested > 0) nested--
+                cur != null && nested == 0 && l.contains(':') -> {
                     val head = l.substringBefore(':'); val value = l.substringAfter(':')
                     val parts = head.split(';')
                     val params = parts.drop(1).associate { it.substringBefore('=').uppercase() to it.substringAfter('=', "") }

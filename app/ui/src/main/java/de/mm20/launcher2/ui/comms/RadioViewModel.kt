@@ -53,14 +53,17 @@ class RadioViewModel : ViewModel(), KoinComponent {
     private var streamQueue: List<String> = emptyList()
     private var streamIndex = 0
     private var startWhenConnected = false
+    private var connecting = false
 
     fun initialize(context: Context) {
-        if (mediaController != null) return
+        if (mediaController != null || connecting) return
+        connecting = true
         val sessionToken = SessionToken(context, ComponentName(context, RadioPlayerService::class.java))
         val controllerFuture = MediaController.Builder(context, sessionToken).buildAsync()
 
         controllerFuture.addListener({
-            val controller = controllerFuture.get()
+            connecting = false
+            val controller = runCatching { controllerFuture.get() }.getOrNull() ?: return@addListener
             mediaController = controller
             if (startWhenConnected) { startWhenConnected = false; startCurrentStream() }
             controller.addListener(object : Player.Listener {

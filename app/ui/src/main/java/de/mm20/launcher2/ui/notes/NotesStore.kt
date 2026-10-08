@@ -92,6 +92,24 @@ class NotesStore(private val context: Context) : Backupable {
         _notes.value = (_notes.value.filter { it.id != n.id } + n).sortedByDescending { it.modifiedAt }
     }
 
+    /**
+     * Saves a note that was edited on a copy that may be older than the stored note: the links to the
+     * sync targets are taken from the stored note, a sync may have created them while the note was open.
+     */
+    fun saveEdited(note: Note, touch: Boolean = true) = synchronized(lock) {
+        loadLocked()
+        val cur = _notes.value.firstOrNull { it.id == note.id }
+        save(note.copy(remoteId = cur?.remoteId ?: note.remoteId, ncId = cur?.ncId ?: note.ncId), touch)
+    }
+
+    /** Changes the stored note with [f], but only if it still has the modification time [expected] (it was not edited meanwhile). */
+    fun update(id: String, expected: Long? = null, f: (Note) -> Note) = synchronized(lock) {
+        loadLocked()
+        val cur = _notes.value.firstOrNull { it.id == id } ?: return@synchronized
+        if (expected != null && cur.modifiedAt != expected) return@synchronized
+        save(f(cur), touch = false)
+    }
+
     fun deleteForever(id: String) = synchronized(lock) {
         loadLocked()
         File(dir, "$id.json").delete()
@@ -115,8 +133,12 @@ class NotesStore(private val context: Context) : Backupable {
         val src = File(fromDir, "notes")
         src.listFiles { f -> f.extension == "json" }.orEmpty().forEach { f ->
             val n = try { Note.fromJson(JSONObject(f.readText())) } catch (e: Exception) { return@forEach }
+            // the id becomes a file name
+            if (!Regex("[A-Za-z0-9_-]+").matches(n.id)) return@forEach
             val existing = get(n.id)
-            if (existing == null || existing.modifiedAt < n.modifiedAt) save(n, touch = false)
+            // links to the sync targets of the other phone mean nothing here: the sync would treat the note as deleted there
+            if (existing == null) save(n.copy(remoteId = null, ncId = null), touch = false)
+            else if (existing.modifiedAt < n.modifiedAt) save(n.copy(remoteId = existing.remoteId, ncId = existing.ncId), touch = false)
         }
     }
 

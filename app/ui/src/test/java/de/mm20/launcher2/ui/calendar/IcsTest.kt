@@ -26,4 +26,12 @@ class IcsTest {
         val long = "x".repeat(200)
         assertEquals(long, Ics.read(Ics.write("x", listOf(IcsEvent(long, start = 0, end = 1000))))[0].title)
     }
+
+    @Test
+    fun alarmDoesNotReplaceTheEventDescription() {
+        val ics = "BEGIN:VCALENDAR\r\nBEGIN:VEVENT\r\nDTSTART:20240101T100000Z\r\nDTEND:20240101T110000Z\r\nSUMMARY:Meet\r\n" +
+            "DESCRIPTION:Real\r\nBEGIN:VALARM\r\nACTION:DISPLAY\r\nDESCRIPTION:Reminder\r\nTRIGGER:-PT10M\r\nEND:VALARM\r\nLOCATION:Room\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n"
+        val e = Ics.read(ics).single()
+        assertEquals("Real", e.description); assertEquals("Room", e.location); assertEquals("Meet", e.title)
+    }
 }

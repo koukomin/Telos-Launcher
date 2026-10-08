@@ -89,6 +89,7 @@ class NotesSync(private val context: Context, private val store: NotesStore) {
         val files = listFolder(tree).associateBy { it.docId }
         var up = 0; var down = 0
         val seen = mutableSetOf<String>()
+        val createdIds = mutableSetOf<String>() // documents created by this run, they are not in [files]
         // Notes that were written to the folder before are matched by the document id.
         for (n in store.notes.value.filter { !it.trashed }) {
             val rf = n.remoteId?.let { files[it] }
@@ -97,16 +98,21 @@ class NotesSync(private val context: Context, private val store: NotesStore) {
                 if (rf.modified > n.modifiedAt + 1000) {
                     val text = cr.openInputStream(DocumentsContract.buildDocumentUriUsingTree(tree, rf.docId))?.use { it.readBytes().toString(Charsets.UTF_8) } ?: continue
                     val parsed = NotesImport.parseMarkdown(rf.name.removeSuffix(".md"), text)
-                    store.save(n.copy(title = parsed.title, body = parsed.body, labels = parsed.labels, pinned = parsed.pinned, modifiedAt = rf.modified), touch = false)
+                    store.update(n.id, expected = n.modifiedAt) { it.copy(title = parsed.title, body = parsed.body, labels = parsed.labels, pinned = parsed.pinned, modifiedAt = rf.modified) }
                     down++
                 } else if (n.modifiedAt > rf.modified + 1000) {
                     write(tree, DocumentsContract.buildDocumentUriUsingTree(tree, rf.docId), n); up++
+                    // writing sets the modification time of the file to now: without this the next sync would read the file back
+                    store.update(n.id, expected = n.modifiedAt) { it.copy(modifiedAt = maxOf(it.modifiedAt, System.currentTimeMillis())) }
                 }
-            } else {
+            } else if (n.remoteId == null) {
+                // (a note whose document is gone was deleted in the folder, that is handled below)
                 val parentUri = DocumentsContract.buildDocumentUriUsingTree(tree, DocumentsContract.getTreeDocumentId(tree))
                 val created = DocumentsContract.createDocument(cr, parentUri, "text/markdown", fileName(n)) ?: continue
                 write(tree, created, n)
-                store.save(n.copy(remoteId = DocumentsContract.getDocumentId(created)), touch = false)
+                val docId = DocumentsContract.getDocumentId(created)
+                createdIds += docId
+                store.update(n.id, expected = n.modifiedAt) { it.copy(remoteId = docId, modifiedAt = maxOf(it.modifiedAt, System.currentTimeMillis())) }
                 up++
             }
         }
@@ -121,8 +127,8 @@ class NotesSync(private val context: Context, private val store: NotesStore) {
         }
         // Notes that were deleted in the folder go to the trash here
         for (n in store.notes.value) {
-            if (n.remoteId != null && n.remoteId !in files && !n.trashed) {
-                store.save(n.copy(trashed = true, remoteId = null), touch = false)
+            if (n.remoteId != null && n.remoteId !in files && n.remoteId !in createdIds && !n.trashed) {
+                store.update(n.id) { it.copy(trashed = true, remoteId = null) }
             }
         }
         return SyncResult(up, down)
@@ -156,13 +162,15 @@ class NotesSync(private val context: Context, private val store: NotesStore) {
             }.toString().toRequestBody(json)
             if (r == null) {
                 if (tag != null) { // deleted on the server
-                    store.save(n.copy(trashed = true, ncId = null), touch = false); continue
+                    store.update(n.id) { it.copy(trashed = true, ncId = null) }; continue
                 }
                 if (n.trashed) continue
                 http.newCall(ncRequest(ncBase()).post(body).build()).execute().use { resp ->
                     if (resp.isSuccessful) {
-                        val id = JSONObject(resp.body!!.string()).getLong("id")
-                        store.save(n.copy(ncId = id.toString()), touch = false); up++
+                        val created = JSONObject(resp.body!!.string())
+                        val id = created.getLong("id").toString()
+                        // the server sets the modification time: take it over, or the next sync reads the note back
+                        store.update(n.id, expected = n.modifiedAt) { it.copy(ncId = id, modifiedAt = maxOf(it.modifiedAt, created.optLong("modified") * 1000)) }; up++
                     }
                 }
             } else {
@@ -171,11 +179,22 @@ class NotesSync(private val context: Context, private val store: NotesStore) {
                     http.newCall(ncRequest("${ncBase()}/$tag").delete().build()).execute().close()
                     store.deleteForever(n.id)
                 } else if (rm > n.modifiedAt + 1000) {
-                    store.save(n.copy(title = r.optString("title"), body = r.optString("content"), pinned = r.optBoolean("favorite"),
-                        labels = r.optString("category").let { if (it.isBlank()) emptyList() else listOf(it) }, modifiedAt = rm), touch = false)
+                    val category = r.optString("category")
+                    store.update(n.id, expected = n.modifiedAt) {
+                        it.copy(title = r.optString("title"), body = r.optString("content"), pinned = r.optBoolean("favorite"),
+                            // Nextcloud has one category per note: the other labels of the note stay when it is still the first
+                            labels = if (category.isBlank()) emptyList() else if (it.labels.firstOrNull() == category) it.labels else listOf(category),
+                            modifiedAt = rm)
+                    }
                     down++
                 } else if (n.modifiedAt > rm + 1000) {
-                    http.newCall(ncRequest("${ncBase()}/$tag").put(body).build()).execute().close(); up++
+                    http.newCall(ncRequest("${ncBase()}/$tag").put(body).build()).execute().use { resp ->
+                        if (resp.isSuccessful) {
+                            val newMod = runCatching { JSONObject(resp.body!!.string()).optLong("modified") * 1000 }.getOrDefault(0)
+                            store.update(n.id, expected = n.modifiedAt) { it.copy(modifiedAt = maxOf(it.modifiedAt, newMod)) }
+                            up++
+                        }
+                    }
                 }
             }
         }

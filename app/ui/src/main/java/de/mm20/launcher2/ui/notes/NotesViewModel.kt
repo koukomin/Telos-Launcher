@@ -44,9 +44,9 @@ class NotesViewModel(app: Application) : AndroidViewModel(app), KoinComponent {
             .sortedWith(compareByDescending<Note> { it.pinned }.thenByDescending { it.modifiedAt })
     }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
-    fun save(n: Note) = viewModelScope.launch(Dispatchers.IO) { if (n.isEmpty) store.deleteForever(n.id) else store.save(n) }
-    fun trash(n: Note) = viewModelScope.launch(Dispatchers.IO) { store.save(n.copy(trashed = true, pinned = false)) }
-    fun restore(n: Note) = viewModelScope.launch(Dispatchers.IO) { store.save(n.copy(trashed = false)) }
+    fun save(n: Note) = viewModelScope.launch(Dispatchers.IO) { if (n.isEmpty) store.deleteForever(n.id) else store.saveEdited(n) }
+    fun trash(n: Note) = viewModelScope.launch(Dispatchers.IO) { store.saveEdited(n.copy(trashed = true, pinned = false)) }
+    fun restore(n: Note) = viewModelScope.launch(Dispatchers.IO) { store.saveEdited(n.copy(trashed = false)) }
     fun delete(n: Note) = viewModelScope.launch(Dispatchers.IO) { store.deleteForever(n.id) }
     fun emptyTrash() = viewModelScope.launch(Dispatchers.IO) { store.emptyTrash() }
 

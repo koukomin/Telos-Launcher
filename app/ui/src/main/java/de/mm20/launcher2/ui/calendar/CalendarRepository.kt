@@ -102,6 +102,9 @@ class CalendarRepository(private val context: Context) {
         id: Long?, calendarId: Long, title: String, description: String, location: String,
         start: Long, end: Long, allDay: Boolean, rrule: String?, reminderMinutes: Int?,
     ): Long {
+        // The editor shows one reminder. If it is unchanged, the reminders of the event (several, or the calendar's default) stay as they are.
+        val existingReminders = if (id != null) remindersOf(id) else emptyList()
+        val keepReminders = id != null && existingReminders.firstOrNull { it >= 0 } == reminderMinutes
         val v = ContentValues().apply {
             put(Events.CALENDAR_ID, calendarId); put(Events.TITLE, title); put(Events.DESCRIPTION, description)
             put(Events.EVENT_LOCATION, location); put(Events.ALL_DAY, if (allDay) 1 else 0)
@@ -114,16 +117,23 @@ class CalendarRepository(private val context: Context) {
                 val secs = (end - start) / 1000
                 put(Events.DURATION, if (allDay) "P${maxOf(1, secs / 86400)}D" else "PT${maxOf(secs, 0)}S")
             }
-            put(Events.HAS_ALARM, if (reminderMinutes != null) 1 else 0)
+            put(Events.HAS_ALARM, if (!keepReminders && reminderMinutes != null || keepReminders && existingReminders.isNotEmpty()) 1 else 0)
         }
         val eventId = if (id == null) ContentUris.parseId(cr.insert(Events.CONTENT_URI, v)!!)
         else { cr.update(ContentUris.withAppendedId(Events.CONTENT_URI, id), v, null, null); id }
-        cr.delete(Reminders.CONTENT_URI, "${Reminders.EVENT_ID}=?", arrayOf(eventId.toString()))
-        if (reminderMinutes != null) cr.insert(Reminders.CONTENT_URI, ContentValues().apply {
+        if (!keepReminders) cr.delete(Reminders.CONTENT_URI, "${Reminders.EVENT_ID}=?", arrayOf(eventId.toString()))
+        if (!keepReminders && reminderMinutes != null) cr.insert(Reminders.CONTENT_URI, ContentValues().apply {
             put(Reminders.EVENT_ID, eventId); put(Reminders.MINUTES, reminderMinutes); put(Reminders.METHOD, Reminders.METHOD_ALERT)
         })
         return eventId
     }
+
+    private fun remindersOf(eventId: Long): List<Int> = cr.query(Reminders.CONTENT_URI, arrayOf(Reminders.MINUTES), "${Reminders.EVENT_ID}=?", arrayOf(eventId.toString()), null)
+        ?.use { c -> generateSequence { if (c.moveToNext()) c.getInt(0) else null }.toList() }.orEmpty()
+
+    /** The start of the event itself (of the first occurrence for repeating events), as stored. */
+    fun seriesStart(eventId: Long): Long? = cr.query(ContentUris.withAppendedId(Events.CONTENT_URI, eventId), arrayOf(Events.DTSTART), null, null, null)
+        ?.use { if (it.moveToFirst()) it.getLong(0) else null }
 
     fun reminderOf(eventId: Long): Int? = cr.query(Reminders.CONTENT_URI, arrayOf(Reminders.MINUTES), "${Reminders.EVENT_ID}=?", arrayOf(eventId.toString()), null)
         ?.use { if (it.moveToFirst()) it.getInt(0).takeIf { m -> m >= 0 } else null }

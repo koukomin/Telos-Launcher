@@ -117,10 +117,11 @@ class BackupManager(
     private suspend fun createArchive(dir: File, outputStream: OutputStream) = withContext(Dispatchers.IO){
         val zipStream = ZipOutputStream(outputStream)
 
-        val fileList = dir.listFiles()
+        // components may write sub folders (notes/, calendar/), those go into the archive with their path
+        val fileList = dir.walkTopDown().filter { it.isFile }.toList()
 
         for (file in fileList) {
-            zipStream.putNextEntry(ZipEntry(file.name))
+            zipStream.putNextEntry(ZipEntry(file.relativeTo(dir).invariantSeparatorsPath))
             file.inputStream().use {
                 it.copyTo(zipStream)
             }

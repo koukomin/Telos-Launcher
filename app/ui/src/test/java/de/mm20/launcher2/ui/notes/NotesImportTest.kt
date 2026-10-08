@@ -22,4 +22,10 @@ class NotesImportTest {
         val n = NotesImport.readFile("a.enex", x)[0]
         assertEquals("T", n.title); assertEquals("one\ntwo & three", n.body); assertEquals(listOf("w"), n.labels)
     }
+
+    @Test
+    fun emptyFrontMatterDoesNotCrash() {
+        val n = NotesImport.parseMarkdown("f", "---\n---\ntext\n")
+        assertEquals("f", n.title); assertEquals("text\n", n.body)
+    }
 }

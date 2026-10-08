@@ -51,9 +51,9 @@ object NotesImport {
         var pinned = false
         val labels = mutableListOf<String>()
         if (body.startsWith("---\n")) {
-            val end = body.indexOf("\n---", 4)
+            val end = body.indexOf("\n---", 3)
             if (end > 0) {
-                body.substring(4, end).lines().forEach { l ->
+                body.substring(minOf(4, end), end).lines().forEach { l ->
                     val k = l.substringBefore(':').trim()
                     val v = l.substringAfter(':', "").trim()
                     when (k) {

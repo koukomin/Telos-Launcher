@@ -92,9 +92,13 @@ private fun hasPermission(c: android.content.Context) =
 private data class Draft(
     val id: Long? = null, val calendarId: Long, val title: String = "", val description: String = "", val location: String = "",
     val start: LocalDateTime, val end: LocalDateTime, val allDay: Boolean = false, val repeat: Int = 0, val reminder: Int? = 10,
+    /** The rule of the edited event and the start of the edited occurrence, so that editing one occurrence does not move or simplify the series. */
+    val rrule: String? = null, val instanceStart: Long = 0,
 )
 
 private val repeatRules = listOf(null, "FREQ=DAILY", "FREQ=WEEKLY", "FREQ=MONTHLY", "FREQ=YEARLY")
+
+private fun repeatIndex(rrule: String?) = repeatRules.indexOf(rrule?.split(';')?.firstOrNull { it.startsWith("FREQ") }).coerceAtLeast(0)
 
 @Composable
 fun CalendarScreen() {
@@ -164,7 +168,14 @@ private fun CalendarContent(vm: CalendarViewModel) {
                     val zone = ZoneId.systemDefault()
                     val s = if (it.allDay) it.start.toLocalDate().atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli() else it.start.atZone(zone).toInstant().toEpochMilli()
                     val en = if (it.allDay) it.end.toLocalDate().plusDays(1).atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli() else it.end.atZone(zone).toInstant().toEpochMilli()
-                    vm.repo.save(it.id, it.calendarId, it.title, it.description, it.location, s, maxOf(en, s), it.allDay, repeatRules[it.repeat], it.reminder)
+                    // a repeating event keeps its rule (BYDAY, INTERVAL, UNTIL ...) unless the repeat choice was changed
+                    val rule = if (it.id != null && it.rrule != null && it.repeat == repeatIndex(it.rrule)) it.rrule else repeatRules[it.repeat]
+                    var start = s; var end = maxOf(en, s)
+                    if (it.id != null && it.rrule != null) {
+                        // the editor shows one occurrence: move the start of the series by the same amount
+                        vm.repo.seriesStart(it.id)?.let { base -> start = base + (s - it.instanceStart); end = start + (end - s) }
+                    }
+                    vm.repo.save(it.id, it.calendarId, it.title, it.description, it.location, start, end, it.allDay, rule, it.reminder)
                 }
                 draft = null
             },
@@ -237,7 +248,7 @@ private fun CalendarContent(vm: CalendarViewModel) {
                         val s = if (ev.allDay) LocalDateTime.ofInstant(Instant.ofEpochMilli(ev.begin), ZoneOffset.UTC) else LocalDateTime.ofInstant(Instant.ofEpochMilli(ev.begin), zone)
                         val en = if (ev.allDay) LocalDateTime.ofInstant(Instant.ofEpochMilli(ev.end - 1), ZoneOffset.UTC) else LocalDateTime.ofInstant(Instant.ofEpochMilli(ev.end), zone)
                         draft = Draft(ev.id, ev.calendarId, ev.title, ev.description, ev.location, s, maxOf(en, s), ev.allDay,
-                            repeatRules.indexOf(ev.rrule?.split(';')?.firstOrNull { it.startsWith("FREQ") }).coerceAtLeast(0), vm.repo.reminderOf(ev.id))
+                            repeatIndex(ev.rrule), vm.repo.reminderOf(ev.id), ev.rrule, ev.begin)
                     }
                 }
             }
