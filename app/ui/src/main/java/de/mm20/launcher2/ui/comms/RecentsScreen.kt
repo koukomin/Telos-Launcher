@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.comms
 
+import de.mm20.launcher2.search.GreekFold
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -132,7 +133,7 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
                 phoneNumbers = listOf(call.phoneNumber),
             )
             ContactSearch.search(searchQuery, listOf(dummy)).isNotEmpty() ||
-                GreekText.fold(call.displayName.orEmpty()).contains(GreekText.fold(searchQuery))
+                GreekFold.contains(call.displayName.orEmpty(), searchQuery)
         }
     }
     val collapsed = remember(filtered) { collapseRecents(filtered) }

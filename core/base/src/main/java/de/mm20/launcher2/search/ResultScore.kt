@@ -57,6 +57,24 @@ value class ResultScore private constructor(private val packed: Long) : Comparab
             primaryFields: Iterable<String> = emptyList(),
             secondaryFields: Iterable<String> = emptyList(),
         ): ResultScore {
+            if (GreekFold.hasGreek(query) || primaryFields.any { GreekFold.hasGreek(it) } || secondaryFields.any { GreekFold.hasGreek(it) }) {
+                // Greek is involved on either side: compare accent/case/greeklish-insensitive
+                return from(
+                    GreekFold.fold(query),
+                    primaryFields.map { GreekFold.fold(it) },
+                    secondaryFields.map { GreekFold.fold(it) },
+                    folded = true,
+                )
+            }
+            return from(query, primaryFields, secondaryFields, folded = true)
+        }
+
+        private fun from(
+            query: String,
+            primaryFields: Iterable<String>,
+            secondaryFields: Iterable<String>,
+            folded: Boolean,
+        ): ResultScore {
             val jaroWinkler = JaroWinkler()
             val bestPrimaryScore = primaryFields.maxOfOrNull { term ->
                 val sim = jaroWinkler.similarity(query, term).toFloat()

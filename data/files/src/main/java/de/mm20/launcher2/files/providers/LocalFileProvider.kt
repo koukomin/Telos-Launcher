@@ -9,6 +9,7 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.search.FileSearchSettings
 import de.mm20.launcher2.preferences.search.FileTypeFilters
 import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.GreekFold
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
@@ -36,8 +37,15 @@ internal class LocalFileProvider(
             MediaStore.Files.FileColumns.DATA,
             MediaStore.Files.FileColumns.MIME_TYPE
         )
-        val selection = "${MediaStore.Files.FileColumns.TITLE} LIKE ?"
-        val selArgs = if (query.length > 3) arrayOf("%$query%") else arrayOf("$query%")
+        val foldedIds = if (GreekFold.needsFold(query)) matchingIdsFolded(uri, GreekFold.fold(query.trim())) else null
+        if (foldedIds != null && foldedIds.isEmpty()) return@withContext results
+        val selection = if (foldedIds != null) {
+            "${MediaStore.Files.FileColumns._ID} IN (${foldedIds.joinToString(",")})"
+        } else {
+            "${MediaStore.Files.FileColumns.TITLE} LIKE ?"
+        }
+        val selArgs = if (foldedIds != null) null
+        else if (query.length > 3) arrayOf("%$query%") else arrayOf("$query%")
         val sort = "${MediaStore.Files.FileColumns.DISPLAY_NAME} COLLATE NOCASE ASC"
 
 
@@ -77,6 +85,50 @@ internal class LocalFileProvider(
         }
         cursor.close()
         return@withContext results
+    }
+
+    private class NameIndex(val ids: LongArray, val names: Array<String>)
+
+    @Volatile
+    private var nameCache: Pair<Long, NameIndex>? = null
+
+    /**
+     * MediaStore LIKE cannot match accents or greeklish. Load only ids and names (cached for a minute)
+     * and filter with [GreekFold]. Returns at most 300 ids; the caller loads the full rows.
+     */
+    private fun matchingIdsFolded(uri: android.net.Uri, foldedQuery: String): List<Long> {
+        if (foldedQuery.isEmpty()) return emptyList()
+        val now = System.currentTimeMillis()
+        val index = nameCache?.takeIf { now - it.first < 60_000L }?.second ?: run {
+            val ids = ArrayList<Long>()
+            val names = ArrayList<String>()
+            try {
+                context.contentResolver.query(
+                    uri,
+                    arrayOf(MediaStore.Files.FileColumns._ID, MediaStore.Files.FileColumns.DISPLAY_NAME),
+                    null, null, null
+                )?.use {
+                    while (it.moveToNext() && ids.size < 200_000) {
+                        val name = it.getStringOrNull(1) ?: continue
+                        ids.add(it.getLong(0))
+                        names.add(name)
+                    }
+                }
+            } catch (e: IllegalArgumentException) {
+                CrashReporter.logException(e)
+            }
+            NameIndex(ids.toLongArray(), names.toTypedArray()).also { nameCache = now to it }
+        }
+        val matches = ArrayList<Long>()
+        // Prefix matches of the name come first, then other matches
+        val others = ArrayList<Long>()
+        for (i in index.ids.indices) {
+            val folded = GreekFold.fold(index.names[i].substringBeforeLast('.'))
+            if (folded.startsWith(foldedQuery)) matches.add(index.ids[i])
+            else if (folded.contains(foldedQuery)) others.add(index.ids[i])
+            if (matches.size >= 300) break
+        }
+        return (matches + others).take(300)
     }
 
     private fun isExcluded(path: String, excludedFolders: Set<String>): Boolean {

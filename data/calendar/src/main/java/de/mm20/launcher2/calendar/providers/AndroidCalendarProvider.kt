@@ -6,6 +6,7 @@ import android.provider.CalendarContract
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.search.CalendarEvent
+import de.mm20.launcher2.search.GreekFold
 import de.mm20.launcher2.search.calendar.CalendarListType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -41,10 +42,12 @@ class AndroidCalendarProvider(
                 CalendarContract.Instances.CALENDAR_DISPLAY_NAME,
             )
             val selection = mutableListOf<String>()
-            if (query != null) selection.add("${CalendarContract.Instances.TITLE} LIKE ?")
+            // Queries with letters are matched in memory (accent/greeklish insensitive), see below
+            val foldQuery = query?.takeIf { GreekFold.needsFold(it) }?.let { GreekFold.fold(it.trim()) }
+            if (query != null && foldQuery == null) selection.add("${CalendarContract.Instances.TITLE} LIKE ?")
             if (excludedCalendars.isNotEmpty()) selection.add("${CalendarContract.Instances.CALENDAR_ID} NOT IN (${excludedCalendars.joinToString()})")
             if (excludeAllDayEvents) selection.add("${CalendarContract.Instances.ALL_DAY} = 0")
-            val selArgs = if (query != null) arrayOf("%$query%") else null
+            val selArgs = if (query != null && foldQuery == null) arrayOf("%$query%") else null
             val sort = "${CalendarContract.Instances.BEGIN} ASC"
             val cursor = context.contentResolver.query(
                 uri,
@@ -60,6 +63,7 @@ class AndroidCalendarProvider(
             )
             val s = "${CalendarContract.Attendees.ATTENDEE_NAME} COLLATE NOCASE ASC"
             while (cursor.moveToNext()) {
+                if (foldQuery != null && !GreekFold.matches(cursor.getStringOrNull(1), foldQuery)) continue
                 val sel = "${CalendarContract.Attendees.EVENT_ID} = ${cursor.getLong(0)}"
                 val cur = context.contentResolver.query(
                     CalendarContract.Attendees.CONTENT_URI,

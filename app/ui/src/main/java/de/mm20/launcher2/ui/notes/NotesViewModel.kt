@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.notes
 
+import de.mm20.launcher2.search.GreekFold
 import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
@@ -40,7 +41,7 @@ class NotesViewModel(app: Application) : AndroidViewModel(app), KoinComponent {
                 NotesFilter.Trash -> it.trashed
             }
         }.filter { l == null || l in it.labels }
-            .filter { q.isBlank() || it.title.contains(q, true) || it.body.contains(q, true) || it.labels.any { x -> x.contains(q, true) } }
+            .filter { q.isBlank() || GreekFold.contains(it.title, q) || GreekFold.contains(it.body, q) || it.labels.any { x -> GreekFold.contains(x, q) } }
             .sortedWith(compareByDescending<Note> { it.pinned }.thenByDescending { it.modifiedAt })
     }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 

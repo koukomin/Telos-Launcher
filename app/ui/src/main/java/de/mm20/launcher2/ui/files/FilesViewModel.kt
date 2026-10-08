@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.files
 
+import de.mm20.launcher2.search.GreekFold
 import android.app.Application
 import android.content.Context
 import android.os.Environment
@@ -197,7 +198,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         if (text.isBlank() || dir == null) { searchResults = null; return }
         if (RemotePath.isRemote(dir)) {
             // a server cannot be searched quickly: filter what is shown
-            searchResults = entries.filter { it.name.contains(text, ignoreCase = true) }
+            searchResults = entries.filter { GreekFold.contains(it.name, text) }
             return
         }
         searchJob = viewModelScope.launch {
@@ -207,7 +208,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                         .filter { it.isNotBlank() }
                         .map { FsEntry(it, nameOf(it), File(it).isDirectory, -1, 0) }
                 } else {
-                    File(dir).walkTopDown().onEnter { true }.filter { it.name.contains(text, ignoreCase = true) && it.path != dir }.take(300)
+                    File(dir).walkTopDown().onEnter { true }.filter { GreekFold.contains(it.name, text) && it.path != dir }.take(300)
                         .map { FsEntry(it.path, it.name, it.isDirectory, if (it.isDirectory) -1 else it.length(), it.lastModified()) }.toList()
                 }
             }

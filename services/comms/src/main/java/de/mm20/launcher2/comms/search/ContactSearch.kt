@@ -1,6 +1,7 @@
 package de.mm20.launcher2.comms.search
 
 import de.mm20.launcher2.comms.model.DialerContact
+import de.mm20.launcher2.search.GreekFold
 
 object ContactSearch {
     /**
@@ -32,28 +33,21 @@ object ContactSearch {
     }
 
     private fun nameRank(query: String, name: String): Rank? {
-        val qFold = GreekText.fold(query)
-        val nFold = GreekText.fold(name)
+        val qFold = GreekFold.fold(query.trim())
+        val nFold = GreekFold.fold(name)
         if (qFold.isEmpty() || nFold.isEmpty()) return null
-        val words = nFold.split(WHITESPACE).filter { it.isNotEmpty() }
+        // fold word by word so that a word prefix is judged on the folded word
+        val words = name.split(WHITESPACE).filter { it.isNotEmpty() }.map { GreekFold.fold(it) }
 
-        val nativePrefix = nFold.startsWith(qFold) || words.any { it.startsWith(qFold) }
-        val nativeContains = nFold.contains(qFold)
-        if (nativePrefix) return Rank(0, prefix = true)
-        if (nativeContains) return Rank(1, prefix = false)
-
-        val queryLatin = GreekText.looksLatin(query)
-        val nameGreek = GreekText.looksGreek(name)
-        if (queryLatin && nameGreek) {
-            val asGreek = GreekText.latinToGreek(qFold)
-            val prefix = nFold.startsWith(asGreek) || words.any { it.startsWith(asGreek) }
-            if (prefix || nFold.contains(asGreek)) return Rank(3, prefix)
-            val nameAsLatin = GreekText.greekToLatin(nFold)
-            val latinPrefix = nameAsLatin.startsWith(qFold) ||
-                nameAsLatin.split(WHITESPACE).any { it.startsWith(qFold) }
-            if (latinPrefix || nameAsLatin.contains(qFold)) return Rank(3, latinPrefix)
+        val prefix = nFold.startsWith(qFold) || words.any { it.startsWith(qFold) }
+        if (!prefix && !nFold.contains(qFold)) return null
+        // Latin query matching a Greek name (greeklish) ranks below a same-script match
+        val crossScript = GreekText.looksLatin(query) && GreekFold.hasGreek(name) && !GreekFold.hasGreek(query)
+        return when {
+            crossScript -> Rank(3, prefix)
+            prefix -> Rank(0, prefix = true)
+            else -> Rank(1, prefix = false)
         }
-        return null
     }
 
     private data class Rank(val rank: Int, val prefix: Boolean)

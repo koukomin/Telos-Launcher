@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.media.music
 
+import de.mm20.launcher2.search.GreekFold
 import android.Manifest
 import android.app.Activity
 import android.provider.MediaStore
@@ -94,12 +95,7 @@ fun MusicScreen() {
     val filtered = remember(tracks, query) {
         if (query.isBlank()) tracks
         else {
-            val q = GreekText.fold(query)
-            tracks.filter {
-                GreekText.fold(it.title).contains(q) ||
-                    GreekText.fold(it.artist).contains(q) ||
-                    GreekText.fold(it.album).contains(q)
-            }
+            tracks.filter { GreekFold.contains(it.title, query) || GreekFold.contains(it.artist, query) || GreekFold.contains(it.album, query) }
         }
     }
     val albums = remember(filtered) {

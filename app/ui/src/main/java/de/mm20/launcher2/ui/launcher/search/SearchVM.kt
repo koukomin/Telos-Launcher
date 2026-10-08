@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search
 
+import de.mm20.launcher2.search.GreekFold
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableIntStateOf
@@ -235,7 +236,7 @@ class SearchVM : ViewModel(), KoinComponent {
         if (query.length >= 2 && this.filters.value.tools) {
             notesStore.load()
             noteResults.addAll(notesStore.notes.value.filter {
-                !it.trashed && (it.title.contains(query, true) || it.body.contains(query, true) || it.labels.any { l -> l.contains(query, true) })
+                !it.trashed && (GreekFold.contains(it.title, query) || GreekFold.contains(it.body, query) || it.labels.any { l -> GreekFold.contains(l, query) })
             }.take(5))
         }
 
@@ -543,13 +544,13 @@ class SearchVM : ViewModel(), KoinComponent {
             val bWeight = weights[b.key] ?: 0.0
 
             val aScore = if (a.score.isUnspecified) {
-                ResultScore.from(query = query, primaryFields = listOf(a.labelOverride ?: a.label)).score
+                ResultScore.from(query = GreekFold.fold(query), primaryFields = listOf(GreekFold.fold(a.labelOverride ?: a.label))).score
             } else {
                 a.score.score
             }
 
             val bScore = if (b.score.isUnspecified) {
-                ResultScore.from(query = query, primaryFields = listOf(b.labelOverride ?: b.label)).score
+                ResultScore.from(query = GreekFold.fold(query), primaryFields = listOf(GreekFold.fold(b.labelOverride ?: b.label))).score
             } else {
                 b.score.score
             }

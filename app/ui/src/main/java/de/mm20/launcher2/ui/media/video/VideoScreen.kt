@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.media.video
 
+import de.mm20.launcher2.search.GreekFold
 import android.Manifest
 import android.content.Context
 import android.content.Intent
@@ -95,8 +96,7 @@ fun VideoScreen() {
     val filtered = remember(items, query) {
         if (query.isBlank()) items
         else {
-            val q = GreekText.fold(query)
-            items.filter { GreekText.fold(it.title).contains(q) }
+            items.filter { GreekFold.contains(it.title, query) }
         }
     }
     val resumeUris = remember(items) { ResumeStore.continueWatching(context).toSet() }

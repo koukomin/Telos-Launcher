@@ -6,6 +6,7 @@ import android.icu.util.ULocale
 import androidx.annotation.RequiresApi
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.preferences.ui.LocaleSettings
+import de.mm20.launcher2.search.GreekFold
 import de.mm20.launcher2.search.StringNormalizer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +24,7 @@ internal class IcuStringNormalizer(
 ) : StringNormalizer {
 
     override val id: String
-        get() = transliteratorId.value
+        get() = transliteratorId.value + ";greekfold1"
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
@@ -33,7 +34,9 @@ internal class IcuStringNormalizer(
         }
         .stateIn(scope, SharingStarted.Eagerly, DisabledTransliteratorId)
 
-    override fun normalize(input: String): String {
+    override fun normalize(input: String): String = GreekFold.finish(normalizeBase(GreekFold.prepare(input)))
+
+    private fun normalizeBase(input: String): String {
         val id = transliteratorId.value
 
         val transliterator = try {

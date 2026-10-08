@@ -9,6 +9,7 @@ import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.ktx.distinctByEquality
 import de.mm20.launcher2.search.Contact
+import de.mm20.launcher2.search.GreekFold
 import de.mm20.launcher2.search.contact.ContactInfoType
 import de.mm20.launcher2.search.contact.CustomContactAction
 import de.mm20.launcher2.search.contact.EmailAddress
@@ -28,22 +29,7 @@ internal class AndroidContactProvider(
         allowNetwork: Boolean
     ): List<Contact> {
         val results = withContext(Dispatchers.IO) {
-            val proj = arrayOf(
-                ContactsContract.RawContacts.CONTACT_ID,
-                ContactsContract.RawContacts._ID
-            )
-            val sel =
-                "${ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY} LIKE ? OR ${ContactsContract.RawContacts.DISPLAY_NAME_ALTERNATIVE} LIKE ? OR ${ContactsContract.RawContacts.PHONETIC_NAME} LIKE ? OR ${ContactsContract.RawContacts.SORT_KEY_PRIMARY} LIKE ?"
-            val selArgs = arrayOf("%$query%", "%$query%", "%$query%", "%$query%")
-            val cursor = context.contentResolver.query(
-                ContactsContract.RawContacts.CONTENT_URI, proj, sel, selArgs, null
-            ) ?: return@withContext mutableListOf()
-            //Maps raw contact ids to contact ids
-            val contactMap = mutableMapOf<Long, MutableSet<Long>>()
-            while (cursor.moveToNext()) {
-                contactMap.getOrPut(cursor.getLong(0)) { mutableSetOf() }.add(cursor.getLong(1))
-            }
-            cursor.close()
+            val contactMap = if (GreekFold.needsFold(query)) searchFolded(query) else searchLike(query)
             val results = mutableListOf<Contact>()
             for ((id, rawIds) in contactMap) {
                 getWithRawIds(id, rawIds)?.let { results.add(it) }
@@ -52,6 +38,74 @@ internal class AndroidContactProvider(
             results
         }
         return results
+    }
+
+    private fun searchLike(query: String): Map<Long, MutableSet<Long>> {
+        val proj = arrayOf(
+            ContactsContract.RawContacts.CONTACT_ID,
+            ContactsContract.RawContacts._ID
+        )
+        val sel =
+            "${ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY} LIKE ? OR ${ContactsContract.RawContacts.DISPLAY_NAME_ALTERNATIVE} LIKE ? OR ${ContactsContract.RawContacts.PHONETIC_NAME} LIKE ? OR ${ContactsContract.RawContacts.SORT_KEY_PRIMARY} LIKE ?"
+        val selArgs = arrayOf("%$query%", "%$query%", "%$query%", "%$query%")
+        val cursor = context.contentResolver.query(
+            ContactsContract.RawContacts.CONTENT_URI, proj, sel, selArgs, null
+        ) ?: return emptyMap()
+        //Maps raw contact ids to contact ids
+        val contactMap = mutableMapOf<Long, MutableSet<Long>>()
+        cursor.use {
+            while (it.moveToNext()) {
+                contactMap.getOrPut(it.getLong(0)) { mutableSetOf() }.add(it.getLong(1))
+            }
+        }
+        return contactMap
+    }
+
+    private class NameRow(val contactId: Long, val rawId: Long, val names: List<String>)
+
+    @Volatile
+    private var nameCache: Pair<Long, List<NameRow>>? = null
+
+    /**
+     * LIKE cannot match accents, final sigma or greeklish, so load id + name columns only
+     * (cached briefly) and compare with [GreekFold.fold] in memory.
+     */
+    private fun searchFolded(query: String): Map<Long, MutableSet<Long>> {
+        val q = GreekFold.fold(query.trim())
+        if (q.isEmpty()) return emptyMap()
+        val now = System.currentTimeMillis()
+        val rows = nameCache?.takeIf { now - it.first < 30_000L }?.second ?: run {
+            val proj = arrayOf(
+                ContactsContract.RawContacts.CONTACT_ID,
+                ContactsContract.RawContacts._ID,
+                ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY,
+                ContactsContract.RawContacts.DISPLAY_NAME_ALTERNATIVE,
+                ContactsContract.RawContacts.PHONETIC_NAME,
+            )
+            val list = mutableListOf<NameRow>()
+            context.contentResolver.query(
+                ContactsContract.RawContacts.CONTENT_URI, proj,
+                "${ContactsContract.RawContacts.DELETED} = 0", null, null
+            )?.use {
+                while (it.moveToNext() && list.size < 20_000) {
+                    list.add(
+                        NameRow(
+                            it.getLong(0), it.getLong(1),
+                            listOfNotNull(it.getStringOrNull(2), it.getStringOrNull(3), it.getStringOrNull(4))
+                        )
+                    )
+                }
+            }
+            nameCache = now to list
+            list
+        }
+        val contactMap = linkedMapOf<Long, MutableSet<Long>>()
+        for (row in rows) {
+            if (row.names.any { GreekFold.matches(it, q) }) {
+                contactMap.getOrPut(row.contactId) { mutableSetOf() }.add(row.rawId)
+            }
+        }
+        return contactMap
     }
 
     /**
