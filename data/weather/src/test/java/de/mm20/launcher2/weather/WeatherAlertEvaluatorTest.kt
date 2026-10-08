@@ -123,4 +123,15 @@ class WeatherAlertEvaluatorTest {
         assertEquals("Athens", WeatherAlertEvaluator.evaluate(listOf(forecast(2, icon = Forecast.SNOW)), on, now).single().location)
         assertNull(WeatherAlertEvaluator.evaluate(emptyList(), on, now).firstOrNull())
     }
+
+    @Test
+    fun `same day compares the date and not the day of the year`() {
+        val zone = java.time.ZoneId.of("UTC")
+        fun millis(y: Int, m: Int, d: Int) = java.time.LocalDate.of(y, m, d).atTime(12, 0).atZone(zone).toInstant().toEpochMilli()
+        // 31 December 2024 is day 366 and 31 December 2023 is day 365, 1 January is day 1 in both
+        assertTrue(WeatherAlertEvaluator.isSameDay(millis(2024, 5, 3), millis(2024, 5, 3) + hour, zone))
+        assertTrue(!WeatherAlertEvaluator.isSameDay(millis(2024, 12, 31), millis(2025, 1, 1), zone))
+        // the same day of the year, one year apart
+        assertTrue(!WeatherAlertEvaluator.isSameDay(millis(2023, 3, 10), millis(2024, 3, 10), zone))
+    }
 }

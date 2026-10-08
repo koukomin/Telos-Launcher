@@ -73,7 +73,7 @@ class FloatingLauncherSettings internal constructor(
         get() = dataStore.data.map { it.floatingLauncher.floatingLauncherThickness }.distinctUntilChanged()
 
     fun setThickness(thickness: Int) {
-        dataStore.update { it.copy(floatingLauncher = it.floatingLauncher.copy(floatingLauncherThickness = thickness)) }
+        dataStore.update { it.copy(floatingLauncher = it.floatingLauncher.copy(floatingLauncherThickness = thickness.coerceIn(12, 48))) }
     }
 
     val color

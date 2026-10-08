@@ -100,12 +100,12 @@ internal class WeatherRepositoryImpl(
 
     private fun groupForecastsPerDay(forecasts: List<Forecast>): List<DailyForecast> {
         val dailyForecasts = mutableListOf<DailyForecast>()
-        val calendar = Calendar.getInstance()
-        var currentDay = 0
+        val zone = java.time.ZoneId.systemDefault()
+        var currentDay: java.time.LocalDate? = null
         var currentDayForecasts: MutableList<Forecast> = mutableListOf()
         for (fc in forecasts) {
-            calendar.timeInMillis = fc.timestamp
-            if (currentDay != calendar.get(Calendar.DAY_OF_YEAR)) {
+            val day = java.time.Instant.ofEpochMilli(fc.timestamp).atZone(zone).toLocalDate()
+            if (currentDay != day) {
                 if (currentDayForecasts.isNotEmpty()) {
                     dailyForecasts.add(
                         DailyForecast(
@@ -119,7 +119,7 @@ internal class WeatherRepositoryImpl(
                     )
                     currentDayForecasts = mutableListOf()
                 }
-                currentDay = calendar.get(Calendar.DAY_OF_YEAR)
+                currentDay = day
             }
             currentDayForecasts.add(fc)
         }

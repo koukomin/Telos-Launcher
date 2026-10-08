@@ -4,7 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.media.projection.MediaProjectionManager
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 
@@ -23,8 +27,24 @@ class ScreenRecorderRequestActivity : ComponentActivity() {
         finish()
     }
 
+    // The notification permission only decides whether the recording notification is shown,
+    // so the recording starts whatever the answer is.
+    private val notificationPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        launchCapture()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= 33 &&
+            ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+        ) {
+            notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+        } else {
+            launchCapture()
+        }
+    }
+
+    private fun launchCapture() {
         val manager = getSystemService(MediaProjectionManager::class.java)
         request.launch(manager.createScreenCaptureIntent())
     }

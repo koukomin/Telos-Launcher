@@ -16,7 +16,6 @@ import de.mm20.launcher2.preferences.MeasurementSystem
 import de.mm20.launcher2.preferences.weather.WeatherAlertConfig
 import de.mm20.launcher2.preferences.weather.WeatherSettings
 import kotlinx.coroutines.flow.first
-import java.util.Calendar
 import java.util.Locale
 import kotlin.math.roundToInt
 
@@ -62,6 +61,10 @@ object WeatherAlertEvaluator {
 
     @Suppress("DEPRECATION")
     private val windIcons = setOf(Forecast.WIND, Forecast.STORM)
+
+    /** True if both timestamps are on the same calendar date (year included) in the default time zone */
+    internal fun isSameDay(a: Long, b: Long, zone: java.time.ZoneId = java.time.ZoneId.systemDefault()): Boolean =
+        java.time.Instant.ofEpochMilli(a).atZone(zone).toLocalDate() == java.time.Instant.ofEpochMilli(b).atZone(zone).toLocalDate()
 
     fun evaluate(forecasts: List<Forecast>, config: WeatherAlertConfig, now: Long): List<WeatherAlert> {
         if (!config.enabled) return emptyList()
@@ -202,7 +205,7 @@ class WeatherAlertManager(
             WeatherAlertType.Heat -> alert.value?.let { context.getString(R.string.weather_alert_detail_heat, temperature(it, imperial)) }
             WeatherAlertType.Frost -> alert.value?.let { context.getString(R.string.weather_alert_detail_frost, temperature(it, imperial)) }
             WeatherAlertType.Wind -> alert.value?.let {
-                if (imperial) context.getString(R.string.weather_alert_detail_wind, (it * 2.23694).roundToInt(), "mph")
+                if (imperial || system == MeasurementSystem.UnitedKingdom) context.getString(R.string.weather_alert_detail_wind, (it * 2.23694).roundToInt(), "mph")
                 else context.getString(R.string.weather_alert_detail_wind, (it * 3.6).roundToInt(), "km/h")
             }
             WeatherAlertType.Uv -> alert.value?.let { context.getString(R.string.weather_alert_detail_uv, it.roundToInt()) }
@@ -218,8 +221,7 @@ class WeatherAlertManager(
     private fun whenText(time: Long, now: Long): String {
         if (time <= now + 30 * 60_000L) return context.getString(R.string.weather_alert_now)
         val time24 = DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_TIME)
-        val sameDay = Calendar.getInstance().apply { timeInMillis = now }.get(Calendar.DAY_OF_YEAR) ==
-            Calendar.getInstance().apply { timeInMillis = time }.get(Calendar.DAY_OF_YEAR)
+        val sameDay = WeatherAlertEvaluator.isSameDay(now, time)
         val text = if (sameDay) time24 else DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_WEEKDAY or DateUtils.FORMAT_ABBREV_WEEKDAY)
         return context.getString(R.string.weather_alert_from, text)
     }
