@@ -60,7 +60,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.navigation3.runtime.NavKey
+import androidx.compose.runtime.saveable.rememberSaveable
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.SearchEmptyState
+import de.mm20.launcher2.ui.component.TelosSearchBar
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreferenceItem
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -134,6 +137,11 @@ fun ScreenRecorderScreen() {
         value = withContext(Dispatchers.IO) { runCatching { queryRecordings(context) }.getOrDefault(emptyList()) }
     }
     val settings = remember { ScreenRecorderSettings(context) }
+    var recQuery by rememberSaveable { mutableStateOf("") }
+    val shownRecordings = remember(recordings, recQuery) {
+        val df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT)
+        de.mm20.launcher2.comms.search.TelosSearch.filter(recordings, recQuery) { listOf(it.name, df.format(java.util.Date(it.modified))) }
+    }
 
     val micPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
         ScreenRecorderRequestActivity.launch(context)
@@ -210,8 +218,10 @@ fun ScreenRecorderScreen() {
             if (recordings.isEmpty()) {
                 Text(stringResource(R.string.screenrec_no_recordings), color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 20.dp))
             } else {
+                TelosSearchBar(recQuery, { recQuery = it }, stringResource(R.string.tsp_search_recordings))
+                if (shownRecordings.isEmpty() && recQuery.isNotBlank()) SearchEmptyState(recQuery)
                 LazyColumn(Modifier.weight(1f).fillMaxWidth()) {
-                    items(recordings, key = { it.uri.toString() }) { rec ->
+                    items(shownRecordings, key = { it.uri.toString() }) { rec ->
                         RecordingRow(rec, onDelete = { deleting = rec })
                     }
                 }

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsm_search_music">সংগীত খুঁজুন</string>
+    <string name="tsm_search_videos">ভিডিও খুঁজুন</string>
+    <string name="tsm_search_radio_browser">স্টেশনের নাম দিয়ে খুঁজুন</string>
+    <string name="tsm_search_my_stations">আপনার স্টেশনগুলিতে খুঁজুন</string>
+    <string name="tsm_search_photos">ছবি খুঁজুন</string>
+</resources>

@@ -229,7 +229,7 @@ fun VideoScreen() {
             return@Column
         }
 
-        de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, "Search videos")
+        de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(R.string.tsm_search_videos))
 
         val current = group
         if (current != null) {

@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.network.api.AppDirectory
+import de.mm20.launcher2.network.api.Blocklist
 import de.mm20.launcher2.network.api.BlocklistController
 import de.mm20.launcher2.network.api.BlocklistGroup
 import de.mm20.launcher2.network.api.BlocklistUpdateState
@@ -70,6 +71,14 @@ fun NetworkBlocklistsScreen() {
     var addBypass by remember { mutableStateOf(false) }
     var checked by remember { mutableStateOf<Boolean?>(null) }
     val number = remember { NumberFormat.getInstance() }
+    var bq by rememberSaveable { mutableStateOf("") }
+    val groupNames = groups.associate { it.id to groupName(it) }
+    val TS = de.mm20.launcher2.comms.search.TelosSearch
+    fun groupHit(g: BlocklistGroup) = bq.isBlank() || TS.matches(bq, groupNames[g.id], g.name, g.description)
+    fun listHit(g: BlocklistGroup, l: Blocklist) = bq.isBlank() || groupHit(g) || TS.matches(bq, l.name, l.description, l.url)
+    val shownBypass = if (bq.isBlank()) bypass else bypass.filter { b ->
+        TS.matches(bq, b.domain, (b.scope as? RuleScope.App)?.let { directory.labelFor(it.appId) })
+    }
 
     PreferenceScreen(title = { Text(stringResource(R.string.netfw_b_title)) }) {
         item {
@@ -141,6 +150,9 @@ fun NetworkBlocklistsScreen() {
                 }
             }
         }
+        if (installed) item {
+            de.mm20.launcher2.ui.component.TelosSearchBar(bq, { bq = it }, stringResource(R.string.hc_search))
+        }
         if (installed) {
             val sections = listOf(
                 "parentalcontrol" to R.string.netfw_b_sec_parental,
@@ -150,7 +162,7 @@ fun NetworkBlocklistsScreen() {
             val known = sections.map { it.first }.toSet()
             val all = sections + ("" to R.string.netfw_b_sec_other)
             all.forEach { (section, title) ->
-                val inSection = groups.filter { if (section.isEmpty()) it.section !in known else it.section == section }
+                val inSection = groups.filter { (if (section.isEmpty()) it.section !in known else it.section == section) && (groupHit(it) || it.lists.any { l -> listHit(it, l) }) }
                 if (inSection.isEmpty()) return@forEach
                 item(key = "section-$section") {
                     PreferenceCategory(stringResource(title)) {
@@ -159,7 +171,8 @@ fun NetworkBlocklistsScreen() {
                                 group = group,
                                 enabled = enabled,
                                 counts = counts,
-                                expanded = expanded == group.id,
+                                expanded = expanded == group.id || bq.isNotBlank(),
+                                listFilter = { l -> listHit(group, l) },
                                 number = number,
                                 onToggleExpanded = { expanded = if (expanded == group.id) null else group.id },
                                 onGroup = { on -> scope.launch { blocklists.setGroupEnabled(group.id, on) } },
@@ -168,6 +181,9 @@ fun NetworkBlocklistsScreen() {
                         }
                     }
                 }
+            }
+            if (bq.isNotBlank() && groups.none { g -> groupHit(g) || g.lists.any { l -> listHit(g, l) } } && shownBypass.isEmpty()) {
+                item { de.mm20.launcher2.ui.component.SearchEmptyState(bq.trim()) }
             }
             item {
                 PreferenceCategory {
@@ -188,7 +204,7 @@ fun NetworkBlocklistsScreen() {
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                 )
                 Preference(title = stringResource(R.string.netfw_b_bypass_add), icon = IconsNetworkBlocklistsScreen.add_24px, onClick = { addBypass = true })
-                bypass.forEach { b ->
+                shownBypass.forEach { b ->
                     Preference(
                         title = { Text(b.domain) },
                         summary = {
@@ -206,7 +222,7 @@ fun NetworkBlocklistsScreen() {
                         },
                     )
                 }
-                if (bypass.isEmpty()) {
+                if (bypass.isEmpty() && bq.isBlank()) {
                     Text(
                         stringResource(R.string.netfw_b_bypass_empty),
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -244,6 +260,7 @@ private fun GroupRows(
     onToggleExpanded: () -> Unit,
     onGroup: (Boolean) -> Unit,
     onList: (String, Boolean) -> Unit,
+    listFilter: (Blocklist) -> Boolean = { true },
 ) {
     val on = group.lists.count { it.id in enabled }
     val domains = group.lists.sumOf { it.entryCount }
@@ -257,7 +274,7 @@ private fun GroupRows(
         )
         AnimatedVisibility(visible = expanded) {
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                group.lists.forEach { list ->
+                group.lists.filter(listFilter).forEach { list ->
                     val blocked = counts[list.id] ?: 0L
                     SwitchPreference(
                         title = list.name,

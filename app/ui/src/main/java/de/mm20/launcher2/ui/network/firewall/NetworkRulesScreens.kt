@@ -173,6 +173,7 @@ fun NetworkCustomRulesScreen() {
     val context = LocalContext.current
     val ipRules by fw.ipRules.collectAsState()
     val domainRules by fw.domainRules.collectAsState()
+    var cq by remember { mutableStateOf("") }
     var dialog by remember { mutableStateOf<Boolean?>(null) } // true = IP rule, false = domain rule
 
     fun scopeText(scope: RuleScope) = when (scope) {
@@ -182,7 +183,16 @@ fun NetworkCustomRulesScreen() {
 
     fun actionText(a: RuleAction) = context.getString(if (a == RuleAction.Block) R.string.netfw_c_action_block else R.string.netfw_c_action_trust)
 
+    val shownDomains = domainRules.filter { cq.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(cq, it.domain, scopeText(it.scope)) }
+    val shownIps = ipRules.filter { cq.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(cq, it.address, it.port.takeIf { p -> p != 0 }?.toString(), it.protocol?.name, scopeText(it.scope)) }
+
     PreferenceScreen(title = { Text(stringResource(R.string.netfw_c_title)) }) {
+        item {
+            de.mm20.launcher2.ui.component.TelosSearchBar(cq, { cq = it }, stringResource(R.string.hc_search))
+        }
+        if (cq.isNotBlank() && shownDomains.isEmpty() && shownIps.isEmpty()) {
+            item { de.mm20.launcher2.ui.component.SearchEmptyState(cq.trim()) }
+        }
         item {
             Text(
                 stringResource(R.string.netfw_c_trust_info),
@@ -194,7 +204,7 @@ fun NetworkCustomRulesScreen() {
         item {
             PreferenceCategory(stringResource(R.string.netfw_c_domains)) {
                 Preference(title = stringResource(R.string.netfw_c_add_domain), icon = IconsNetworkRulesScreens.add_24px, onClick = { dialog = false })
-                domainRules.forEach { r ->
+                shownDomains.forEach { r ->
                     Preference(
                         title = { Text(r.domain) },
                         summary = { Text("${actionText(r.action)} · ${scopeText(r.scope)}") },
@@ -210,7 +220,7 @@ fun NetworkCustomRulesScreen() {
         item {
             PreferenceCategory(stringResource(R.string.netfw_c_ip)) {
                 Preference(title = stringResource(R.string.netfw_c_add_ip), icon = IconsNetworkRulesScreens.add_24px, onClick = { dialog = true })
-                ipRules.forEach { r ->
+                shownIps.forEach { r ->
                     val where = buildString {
                         append(r.address)
                         if (r.port != 0) append(":").append(r.port)
@@ -321,7 +331,9 @@ internal fun AddRuleDialog(
                 }
                 Box {
                     DropdownMenu(expanded = pickApp, onDismissRequest = { pickApp = false }) {
-                        apps.filter { it.hasInternet }.forEach { app ->
+                        var appQuery by remember { mutableStateOf("") }
+                        de.mm20.launcher2.ui.component.TelosSearchBar(appQuery, { appQuery = it }, stringResource(R.string.hc_search))
+                        apps.filter { it.hasInternet && de.mm20.launcher2.comms.search.TelosSearch.matches(appQuery, it.label, it.packageName) }.forEach { app ->
                             DropdownMenuItem(
                                 text = { Text(app.label) },
                                 leadingIcon = { NetAppIcon(app.packageName, 24.dp) },

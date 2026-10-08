@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsm_search_music">Tìm nhạc</string>
+    <string name="tsm_search_videos">Tìm video</string>
+    <string name="tsm_search_radio_browser">Tìm theo tên đài</string>
+    <string name="tsm_search_my_stations">Tìm trong các đài của bạn</string>
+    <string name="tsm_search_photos">Tìm ảnh</string>
+</resources>

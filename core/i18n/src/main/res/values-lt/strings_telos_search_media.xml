@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsm_search_music">Ieškoti muzikos</string>
+    <string name="tsm_search_videos">Ieškoti vaizdo įrašų</string>
+    <string name="tsm_search_radio_browser">Ieškoti pagal stoties pavadinimą</string>
+    <string name="tsm_search_my_stations">Ieškoti savo stotyse</string>
+    <string name="tsm_search_photos">Ieškoti nuotraukų</string>
+</resources>

@@ -68,6 +68,8 @@ fun ConnectionsScreen() {
     var list by remember { mutableStateOf(store.all().sortedBy { it.name.lowercase() }) }
     var editing by remember { mutableStateOf<RemoteConnection?>(null) }
     var picking by remember { mutableStateOf(false) }
+    var cq by remember { mutableStateOf("") }
+    val shownList = list.filter { de.mm20.launcher2.comms.search.TelosSearch.matches(cq, it.name, it.type.label, it.host, it.user) }
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.surface,
@@ -96,8 +98,11 @@ fun ConnectionsScreen() {
                 Icon(painterResource(Icons.cloud_20px), contentDescription = null, tint = MaterialTheme.colorScheme.outline, modifier = Modifier.size(48.dp))
                 Text(stringResource(R.string.hc_add_a_nextcloud_owncloud_webdav_sftp_smb), Modifier.padding(top = 12.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
-        } else LazyColumn(Modifier.fillMaxSize().padding(padding)) {
-            items(list, key = { it.id }) { c ->
+        } else Column(Modifier.fillMaxSize().padding(padding)) {
+          de.mm20.launcher2.ui.component.TelosSearchBar(cq, { cq = it }, stringResource(R.string.hc_search))
+          if (shownList.isEmpty()) de.mm20.launcher2.ui.component.SearchEmptyState(cq.trim())
+          else LazyColumn(Modifier.fillMaxSize()) {
+            items(shownList, key = { it.id }) { c ->
                 ListItem(
                     headlineContent = { Text(c.name) },
                     supportingContent = { Text(c.type.label + if (c.host.isNotEmpty()) " · ${c.host}" else if (c.user.isNotEmpty()) " · ${c.user}" else "") },
@@ -105,6 +110,7 @@ fun ConnectionsScreen() {
                     modifier = Modifier.clickable { editing = c },
                 )
             }
+          }
         }
     }
 

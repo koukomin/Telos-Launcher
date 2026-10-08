@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsm_search_music">Bilatu musika</string>
+    <string name="tsm_search_videos">Bilatu bideoak</string>
+    <string name="tsm_search_radio_browser">Bilatu estazioaren izenaren arabera</string>
+    <string name="tsm_search_my_stations">Bilatu zure estazioetan</string>
+    <string name="tsm_search_photos">Bilatu argazkiak</string>
+</resources>

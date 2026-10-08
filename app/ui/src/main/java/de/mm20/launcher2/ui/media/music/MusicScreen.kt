@@ -128,7 +128,7 @@ fun MusicScreen() {
                     ) { Text(stringResource(R.string.hc_allow)) }
                 }
             } else {
-                de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, "Search music")
+                de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(R.string.tsm_search_music))
                 val current = group
                 if (current != null) {
                     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {

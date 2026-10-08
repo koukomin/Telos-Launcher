@@ -56,6 +56,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.downloads.AfterFinish
+import de.mm20.launcher2.downloads.DownloadCategory
 import de.mm20.launcher2.downloads.DownloadEvent
 import de.mm20.launcher2.downloads.DownloadManager
 import de.mm20.launcher2.downloads.DownloadState
@@ -144,6 +145,31 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
     }
 
     val counts = remember(tasks) { Filter.entries.associateWith { f -> tasks.count { f.matches(it) } } }
+    val filterLabels = Filter.entries.associateWith { f ->
+        stringResource(
+            when (f) {
+                Filter.All -> R.string.dl_tab_all
+                Filter.Active -> R.string.dl_tab_active
+                Filter.Queued -> R.string.dl_tab_queued
+                Filter.Completed -> R.string.dl_tab_completed
+                Filter.Failed -> R.string.dl_tab_failed
+                Filter.Torrents -> R.string.dl_tab_torrents
+                Filter.Media -> R.string.dl_m_tab
+            }
+        )
+    }
+    val categoryLabels = DownloadCategory.entries.associateWith { c ->
+        stringResource(
+            when (c) {
+                DownloadCategory.Video -> R.string.dl_category_video
+                DownloadCategory.Audio -> R.string.dl_category_audio
+                DownloadCategory.Documents -> R.string.dl_category_documents
+                DownloadCategory.Archives -> R.string.dl_category_archives
+                DownloadCategory.Programs -> R.string.dl_category_programs
+                DownloadCategory.Other -> R.string.dl_category_other
+            }
+        )
+    }
     val visible by remember(tasks, filter, query) {
         derivedStateOf {
             tasks.filter { filter.matches(it) }
@@ -151,7 +177,9 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                     query.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(
                         query, it.displayName, it.name,
                         runCatching { java.net.URI(it.url).host }.getOrNull() ?: it.url,
-                        it.state.name, it.type.name, it.category?.name,
+                        Filter.entries.filter { f -> f != Filter.All && f.matches(it) }
+                            .joinToString(" ") { f -> filterLabels[f].orEmpty() },
+                        it.category?.let { c -> categoryLabels[c] },
                     )
                 }
                 .sortedWith(

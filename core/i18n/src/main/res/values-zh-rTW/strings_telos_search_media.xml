@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsm_search_music">搜尋音樂</string>
+    <string name="tsm_search_videos">搜尋影片</string>
+    <string name="tsm_search_radio_browser">依電台名稱搜尋</string>
+    <string name="tsm_search_my_stations">搜尋你的電台</string>
+    <string name="tsm_search_photos">搜尋相片</string>
+</resources>

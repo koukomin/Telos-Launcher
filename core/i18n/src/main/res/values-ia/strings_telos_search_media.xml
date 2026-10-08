@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsm_search_music">Cercar musica</string>
+    <string name="tsm_search_videos">Cercar videos</string>
+    <string name="tsm_search_radio_browser">Cercar per nomine de station</string>
+    <string name="tsm_search_my_stations">Cercar in tu stationes</string>
+    <string name="tsm_search_photos">Cercar photos</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsm_search_music">Hledat hudbu</string>
+    <string name="tsm_search_videos">Hledat videa</string>
+    <string name="tsm_search_radio_browser">Hledat podle názvu stanice</string>
+    <string name="tsm_search_my_stations">Hledat ve svých stanicích</string>
+    <string name="tsm_search_photos">Hledat fotky</string>
+</resources>

@@ -150,7 +150,7 @@ fun RadioDashboardScreen() {
                 Column(modifier = Modifier.fillMaxSize()) {
                 if (favorites.isNotEmpty()) {
                     de.mm20.launcher2.ui.component.TelosSearchBar(
-                        collectionQuery, { collectionQuery = it }, "Search your stations"
+                        collectionQuery, { collectionQuery = it }, stringResource(R.string.tsm_search_my_stations)
                     )
                 }
                 LazyColumn(
@@ -187,7 +187,7 @@ fun RadioDashboardScreen() {
             1 -> {
                 Column(modifier = Modifier.fillMaxSize()) {
                     de.mm20.launcher2.ui.component.TelosSearchBar(
-                        searchQuery, { viewModel.updateSearchQuery(it) }, "Search by station name"
+                        searchQuery, { viewModel.updateSearchQuery(it) }, stringResource(R.string.tsm_search_radio_browser)
                     )
                     if (isSearching) {
                         androidx.compose.material3.LinearProgressIndicator(Modifier.fillMaxWidth().padding(horizontal = 16.dp))

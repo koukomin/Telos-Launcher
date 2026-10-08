@@ -211,7 +211,7 @@ fun PhotosScreen() {
             }
 
             if (hasPermission && items.isNotEmpty()) {
-                de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, "Search photos")
+                de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(R.string.tsm_search_photos))
             }
             if (hasPermission && query.isNotBlank() && shown.isEmpty()) {
                 de.mm20.launcher2.ui.component.SearchEmptyState(query)

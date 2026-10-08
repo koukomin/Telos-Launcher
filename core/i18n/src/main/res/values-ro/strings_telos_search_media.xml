@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsm_search_music">Caută muzică</string>
+    <string name="tsm_search_videos">Caută videoclipuri</string>
+    <string name="tsm_search_radio_browser">Caută după numele postului</string>
+    <string name="tsm_search_my_stations">Caută în posturile tale</string>
+    <string name="tsm_search_photos">Caută fotografii</string>
+</resources>

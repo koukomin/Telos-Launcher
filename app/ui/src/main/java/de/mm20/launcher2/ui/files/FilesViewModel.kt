@@ -198,7 +198,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         searchJob?.cancel()
         val dir = path
         if (text.isBlank() || dir == null) { searchResults = null; return }
-        if (RemotePath.isRemote(dir)) {
+        if (RemotePath.isRemote(dir) || ArchivePath.isArchive(dir) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(dir)) {
             // a server cannot be searched quickly: filter what is shown
             searchResults = entries.filter { TelosSearch.matches(text, it.name) }
             return

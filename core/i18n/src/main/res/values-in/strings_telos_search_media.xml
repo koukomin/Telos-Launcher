@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsm_search_music">Cari musik</string>
+    <string name="tsm_search_videos">Cari video</string>
+    <string name="tsm_search_radio_browser">Cari berdasarkan nama stasiun</string>
+    <string name="tsm_search_my_stations">Cari di stasiun Anda</string>
+    <string name="tsm_search_photos">Cari foto</string>
+</resources>
