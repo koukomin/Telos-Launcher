@@ -8,8 +8,6 @@
     <string name="dl_tab_completed">Ολοκληρωμένες</string>
     <string name="dl_tab_failed">Αποτυχημένες</string>
     <string name="dl_tab_torrents">Torrents</string>
-    <string name="dl_torrents_title">Τα torrents έρχονται αργότερα</string>
-    <string name="dl_torrents_text">Οι λήψεις torrent έχουν προγραμματιστεί για μελλοντική ενημέρωση. Οι σύνδεσμοι magnet και τα αρχεία .torrent ανοίγουν ακόμη στο Telos Video.</string>
     <string name="dl_empty_title">Καμία λήψη ακόμη</string>
     <string name="dl_empty_text">Πατήστε Προσθήκη και επικολλήστε έναν σύνδεσμο, ή μοιραστείτε έναν σύνδεσμο στο Telos Downloads.</string>
     <string name="dl_empty_filter_title">Τίποτα εδώ</string>

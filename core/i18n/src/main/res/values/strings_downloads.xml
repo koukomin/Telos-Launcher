@@ -8,8 +8,6 @@
     <string name="dl_tab_completed">Completed</string>
     <string name="dl_tab_failed">Failed</string>
     <string name="dl_tab_torrents">Torrents</string>
-    <string name="dl_torrents_title">Torrents come later</string>
-    <string name="dl_torrents_text">Torrent downloads are planned for a later update. Magnet links and .torrent files still open in Telos Video.</string>
     <string name="dl_empty_title">No downloads yet</string>
     <string name="dl_empty_text">Tap Add and paste a link, or share a link to Telos Downloads.</string>
     <string name="dl_empty_filter_title">Nothing here</string>

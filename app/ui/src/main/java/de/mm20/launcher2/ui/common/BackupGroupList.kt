@@ -21,12 +21,14 @@ private fun title(group: BackupGroup) = when (group) {
     BackupGroup.Launcher -> R.string.backup_group_launcher
     BackupGroup.Notes -> R.string.backup_group_notes
     BackupGroup.Calendar -> R.string.backup_group_calendar
+    BackupGroup.Downloads -> R.string.dl_p3_backup_group_downloads
 }
 
 private fun summary(group: BackupGroup) = when (group) {
     BackupGroup.Launcher -> R.string.backup_group_launcher_summary
     BackupGroup.Notes -> R.string.backup_group_notes_summary
     BackupGroup.Calendar -> R.string.backup_group_calendar_summary
+    BackupGroup.Downloads -> R.string.dl_p3_backup_group_downloads_summary
 }
 
 /**

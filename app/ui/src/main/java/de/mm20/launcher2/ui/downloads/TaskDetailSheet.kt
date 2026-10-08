@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.downloads.DownloadManager
 import de.mm20.launcher2.downloads.DownloadState
 import de.mm20.launcher2.downloads.DownloadTask
+import de.mm20.launcher2.downloads.logic.ArchiveLogic
 import de.mm20.launcher2.downloads.logic.Formatting
 import de.mm20.launcher2.ui.R
 import java.util.Date
@@ -62,11 +63,26 @@ internal fun TaskDetailSheet(task: DownloadTask, manager: DownloadManager, onDis
                     DownloadState.Failed -> Button(onClick = { manager.resume(task.id) }) { Text(stringResource(R.string.dl_retry)) }
                     else -> Button(onClick = { manager.pause(task.id) }) { Text(stringResource(R.string.dl_pause)) }
                 }
+                if (task.state == DownloadState.Queued || task.state == DownloadState.Paused) {
+                    OutlinedButton(onClick = { manager.moveToTop(task.id) }) { Text(stringResource(R.string.dl_p3_move_top)) }
+                    OutlinedButton(onClick = { manager.moveToBottom(task.id) }) { Text(stringResource(R.string.dl_p3_move_bottom)) }
+                }
+                if (task.state == DownloadState.Completed && ArchiveLogic.isZip(task.name) && !task.fileMissing && task.extractState != "running") {
+                    OutlinedButton(onClick = { manager.extract(task.id) }) { Text(stringResource(R.string.dl_p3_extract)) }
+                }
                 OutlinedButton(onClick = { copyLink(context, task.url) }) { Text(stringResource(R.string.dl_copy_link)) }
                 OutlinedButton(onClick = onDelete) { Text(stringResource(R.string.dl_delete)) }
             }
 
             val fmt = { t: Long -> DateFormat.getMediumDateFormat(context).format(Date(t)) + " " + DateFormat.getTimeFormat(context).format(Date(t)) }
+            when (task.extractState) {
+                "running" -> Info(R.string.dl_p3_extract, stringResource(R.string.dl_p3_extract_running))
+                "done" -> Info(R.string.dl_p3_extract, stringResource(R.string.dl_p3_extract_done))
+                "failed" -> Info(R.string.dl_p3_extract, stringResource(R.string.dl_p3_extract_failed))
+            }
+            task.media?.let { m ->
+                if (m.uploader.isNotBlank()) Info(R.string.dl_m_tab, m.uploader)
+            }
             Info(R.string.dl_detail_url, task.url)
             task.resolvedUrl?.takeIf { it != task.url }?.let { Info(R.string.dl_detail_final_url, it) }
             if (task.mirrors.isNotEmpty()) Info(R.string.dl_detail_mirrors, task.mirrors.joinToString("\n"))

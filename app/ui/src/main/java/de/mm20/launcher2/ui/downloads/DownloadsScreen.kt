@@ -72,7 +72,7 @@ import de.mm20.launcher2.ui.media.MediaFrame
 import de.mm20.launcher2.ui.media.MediaSearchBar
 import org.koin.compose.koinInject
 
-private enum class Filter { All, Active, Queued, Completed, Failed, Torrents }
+private enum class Filter { All, Active, Queued, Completed, Failed, Torrents, Media }
 
 private fun Filter.matches(t: DownloadTask) = when (this) {
     Filter.All -> true
@@ -81,6 +81,7 @@ private fun Filter.matches(t: DownloadTask) = when (this) {
     Filter.Completed -> t.state == DownloadState.Completed
     Filter.Failed -> t.state == DownloadState.Failed
     Filter.Torrents -> t.type == DownloadType.Torrent
+    Filter.Media -> t.type == DownloadType.Media
 }
 
 @Composable
@@ -100,6 +101,10 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
     var showAdd by rememberSaveable { mutableStateOf(initialUrls.isNotEmpty() && !initialIsTorrent) }
     var showAddTorrent by rememberSaveable { mutableStateOf(initialIsTorrent) }
     var addUrls by rememberSaveable { mutableStateOf(initialUrls.joinToString("\n")) }
+    var showMedia by rememberSaveable { mutableStateOf(false) }
+    var mediaUrl by rememberSaveable { mutableStateOf("") }
+    var clip by remember { mutableStateOf<String?>(null) }
+    var handledClip by rememberSaveable { mutableStateOf("") }
     var detailId by rememberSaveable { mutableStateOf<String?>(null) }
     var deleting by remember { mutableStateOf<DownloadTask?>(null) }
     var menu by remember { mutableStateOf(false) }
@@ -110,6 +115,18 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
             addUrls = initialUrls.joinToString("\n")
             if (initialIsTorrent) showAddTorrent = true else showAdd = true
         }
+    }
+
+    // optional: offer the link in the clipboard whenever the screen comes to the foreground
+    val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
+    androidx.compose.runtime.DisposableEffect(lifecycleOwner, settings.detectClipboard) {
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            if (event == androidx.lifecycle.Lifecycle.Event.ON_RESUME && manager.settings.current.detectClipboard) {
+                clip = clipboardLink(context)?.takeIf { it != handledClip }
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
 
     // after finish: open or share a finished file while this screen is shown
@@ -178,6 +195,7 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                             Filter.Completed -> R.string.dl_tab_completed
                             Filter.Failed -> R.string.dl_tab_failed
                             Filter.Torrents -> R.string.dl_tab_torrents
+                            Filter.Media -> R.string.dl_m_tab
                         }
                         FilterChip(
                             selected = filter == f,
@@ -185,6 +203,17 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                             label = { Text(stringResource(label) + if ((counts[f] ?: 0) > 0) " ${counts[f]}" else "") },
                         )
                     }
+                }
+                clip?.takeIf { settings.detectClipboard }?.let { c ->
+                    ClipboardBanner(c, onAdd = {
+                        handledClip = c; clip = null
+                        when (de.mm20.launcher2.downloads.logic.MediaUrls.classify(c)) {
+                            de.mm20.launcher2.downloads.logic.LinkKind.Magnet -> { addUrls = c; showAddTorrent = true }
+                            de.mm20.launcher2.downloads.logic.LinkKind.Media -> { mediaUrl = c; showMedia = true }
+                            de.mm20.launcher2.downloads.logic.LinkKind.File -> manager.add(de.mm20.launcher2.downloads.DownloadRequest(url = c))
+                            else -> { addUrls = c; showAdd = true }
+                        }
+                    }, onDismiss = { handledClip = c; clip = null })
                 }
                 if (blocked != null) BlockBanner(blocked!!)
                 SpeedHeader(tasks)
@@ -213,7 +242,12 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                 }
             }
             ExtendedFloatingActionButton(
-                onClick = { addUrls = ""; if (filter == Filter.Torrents) showAddTorrent = true else showAdd = true },
+                onClick = {
+                    addUrls = ""
+                    if (filter == Filter.Torrents) showAddTorrent = true
+                    else if (filter == Filter.Media) { mediaUrl = ""; showMedia = true }
+                    else showAdd = true
+                },
                 modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
                 icon = { Icon(painterResource(R.drawable.add_24px), null) },
                 text = { Text(stringResource(R.string.dl_add)) },
@@ -227,7 +261,11 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
             manager = manager,
             onDismiss = { showAdd = false },
             onTorrent = { text -> showAdd = false; addUrls = text; showAddTorrent = true },
+            onMedia = { text -> showAdd = false; mediaUrl = text; showMedia = true },
         )
+    }
+    if (showMedia) {
+        AddMediaSheet(initialUrl = mediaUrl, manager = manager, onDismiss = { showMedia = false })
     }
     if (showAddTorrent) {
         AddTorrentSheet(initialText = addUrls, manager = manager, onDismiss = { showAddTorrent = false })
@@ -253,6 +291,7 @@ private fun BlockBanner(reason: BlockReason) {
         BlockReason.Offline -> R.string.dl_block_offline
         BlockReason.WifiOnly -> R.string.dl_block_wifi
         BlockReason.LowBattery -> R.string.dl_block_battery
+        BlockReason.Schedule -> R.string.dl_p3_block_schedule
     }
     Surface(
         color = MaterialTheme.colorScheme.secondaryContainer,
@@ -264,6 +303,27 @@ private fun BlockBanner(reason: BlockReason) {
             Icon(painterResource(if (reason == BlockReason.Offline) R.drawable.wifi_off_24px else R.drawable.schedule_24px), null, Modifier.size(20.dp))
             Spacer(Modifier.width(12.dp))
             Text(stringResource(text), style = MaterialTheme.typography.bodyMedium)
+        }
+    }
+}
+
+@Composable
+private fun ClipboardBanner(link: String, onAdd: () -> Unit, onDismiss: () -> Unit) {
+    Surface(
+        color = MaterialTheme.colorScheme.tertiaryContainer,
+        contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+        shape = RoundedCornerShape(16.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
+    ) {
+        Row(Modifier.padding(start = 12.dp, top = 4.dp, bottom = 4.dp, end = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+            Icon(painterResource(R.drawable.link_24px), null, Modifier.size(20.dp))
+            Spacer(Modifier.width(10.dp))
+            Text(
+                stringResource(R.string.dl_p3_clip_found, link.take(60)),
+                style = MaterialTheme.typography.bodySmall, maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f),
+            )
+            TextButton(onClick = onAdd) { Text(stringResource(R.string.dl_p3_clip_add)) }
+            IconButton(onClick = onDismiss) { Icon(painterResource(R.drawable.close_24px), stringResource(R.string.dl_cancel)) }
         }
     }
 }
@@ -433,6 +493,13 @@ private fun TaskCard(task: DownloadTask, manager: DownloadManager, onOpenDetails
                     if (task.state == DownloadState.Paused) DropdownMenuItem(text = { Text(stringResource(R.string.dl_resume)) }, onClick = { menu = false; manager.resume(task.id) })
                     if (task.state.isActive || task.state == DownloadState.Queued) DropdownMenuItem(text = { Text(stringResource(R.string.dl_pause)) }, onClick = { menu = false; manager.pause(task.id) })
                     if (failed) DropdownMenuItem(text = { Text(stringResource(R.string.dl_retry)) }, onClick = { menu = false; manager.resume(task.id) })
+                    if (task.state == DownloadState.Queued || task.state == DownloadState.Paused) {
+                        DropdownMenuItem(text = { Text(stringResource(R.string.dl_p3_move_top)) }, onClick = { menu = false; manager.moveToTop(task.id) })
+                        DropdownMenuItem(text = { Text(stringResource(R.string.dl_p3_move_bottom)) }, onClick = { menu = false; manager.moveToBottom(task.id) })
+                    }
+                    if (task.state == DownloadState.Completed && de.mm20.launcher2.downloads.logic.ArchiveLogic.isZip(task.name) && !task.fileMissing) {
+                        DropdownMenuItem(text = { Text(stringResource(R.string.dl_p3_extract)) }, onClick = { menu = false; manager.extract(task.id) })
+                    }
                     DropdownMenuItem(text = { Text(stringResource(R.string.dl_copy_link)) }, onClick = { menu = false; copyLink(context, task.url) })
                     DropdownMenuItem(text = { Text(stringResource(R.string.dl_details)) }, onClick = { menu = false; onOpenDetails() })
                     DropdownMenuItem(text = { Text(stringResource(R.string.dl_delete)) }, onClick = { menu = false; onDelete() })

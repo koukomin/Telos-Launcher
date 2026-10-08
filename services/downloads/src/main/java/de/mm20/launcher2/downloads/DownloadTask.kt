@@ -2,7 +2,7 @@ package de.mm20.launcher2.downloads
 
 import kotlinx.serialization.Serializable
 
-/** Which engine runs a task: [Http] (phase 1), [Torrent] (phase 2); [Media] is reserved for phase 3. */
+/** Which engine runs a task: [Http] (phase 1), [Torrent] (phase 2), [Media] (phase 3, yt-dlp, only in builds with the media runtime). */
 @Serializable
 enum class DownloadType { Http, Torrent, Media }
 
@@ -94,6 +94,40 @@ data class TorrentData(
     val wantedBytes: Long get() = files.filter { it.wanted }.sumOf { it.size }
 }
 
+enum class SubtitleMode { Off, Files, Embed }
+
+/** What the media engine is doing, shown in the task list instead of the plain state */
+@Serializable
+enum class MediaStage { None, Starting, Downloading, Merging, ExtractingAudio, Embedding, Copying }
+
+/** Everything that is only there for video and audio site downloads (yt-dlp) */
+@Serializable
+data class MediaData(
+    val title: String = "",
+    val uploader: String = "",
+    val thumbnail: String = "",
+    val durationSec: Long = 0,
+    /** 0: best quality, else the tallest video height wanted (for example 1080) */
+    val heightCap: Int = 0,
+    val audioOnly: Boolean = false,
+    /** mp3, m4a or opus, used when [audioOnly] */
+    val audioFormat: String = "mp3",
+    /** "", mp4, mkv or webm; "" lets yt-dlp choose */
+    val container: String = "",
+    val subtitles: SubtitleMode = SubtitleMode.Off,
+    val subLangs: String = "en.*",
+    val embedThumbnail: Boolean = false,
+    val embedMetadata: Boolean = false,
+    val sponsorBlock: Boolean = false,
+    /** Use the imported cookies.txt for this download */
+    val useCookies: Boolean = false,
+    /** Size estimate from the analysis, 0 when unknown */
+    val expectedBytes: Long = 0,
+    val stage: MediaStage = MediaStage.None,
+    /** Every file that was copied to the chosen folder (video, subtitles) */
+    val outputUris: List<String> = emptyList(),
+)
+
 /**
  * One download. Everything the engines need to run or resume it is in here, so that a task can be
  * stored as plain JSON ([DownloadStore]) and restored after the process was killed.
@@ -147,6 +181,12 @@ data class DownloadTask(
     val priority: Int = 0,
     /** Set for [DownloadType.Torrent] */
     val torrent: TorrentData? = null,
+    /** Set for [DownloadType.Media] */
+    val media: MediaData? = null,
+    /** "", "running", "done" or "failed" (archive extraction, see ArchiveExtractor) */
+    val extractState: String = "",
+    /** A completed download whose file is not there any more (restored from a backup on another device, or deleted) */
+    val fileMissing: Boolean = false,
 ) {
     val progress: Float
         get() = if (totalBytes > 0) (downloadedBytes.toFloat() / totalBytes).coerceIn(0f, 1f) else 0f
@@ -178,6 +218,8 @@ data class DownloadRequest(
     val startPaused: Boolean = false,
     /** Set for [DownloadType.Torrent]: what the user chose in the add sheet */
     val torrent: TorrentRequest? = null,
+    /** Set for [DownloadType.Media]: what the user chose in the media tab */
+    val media: MediaData? = null,
 )
 
 /** The choices made before a torrent is added; [torrentFile] is the metadata read in the add sheet (optional for magnet links) */

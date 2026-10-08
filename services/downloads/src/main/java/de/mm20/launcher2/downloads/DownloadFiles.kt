@@ -161,6 +161,12 @@ class DownloadFiles(private val context: Context) {
         return File(base, taskId).also { it.mkdirs() }
     }
 
+    /** The folder yt-dlp writes into (partial files stay here, so a paused media download resumes) */
+    fun mediaStagingDir(taskId: String): File {
+        val base = context.getExternalFilesDir("media") ?: File(context.filesDir, "media")
+        return File(base, taskId).also { it.mkdirs() }
+    }
+
     /** resume data and the .torrent file of a task; private to the app and part of nothing else */
     fun torrentMetaDir(taskId: String): File = File(File(context.filesDir, "downloads"), "torrents/$taskId").also { it.mkdirs() }
 

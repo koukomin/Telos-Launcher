@@ -74,6 +74,7 @@ class DownloadNotifier(private val context: Context, private val settings: Downl
             BlockReason.Offline -> context.getString(I18nR.string.dl_block_offline)
             BlockReason.WifiOnly -> context.getString(I18nR.string.dl_block_wifi)
             BlockReason.LowBattery -> context.getString(I18nR.string.dl_block_battery)
+            BlockReason.Schedule -> context.getString(I18nR.string.dl_p3_block_schedule)
             null -> buildString {
                 if (speed > 0) append(Formatting.speed(speed))
                 if (queued > 0) { if (isNotEmpty()) append(" · "); append(context.getString(I18nR.string.dl_notification_queued, queued)) }

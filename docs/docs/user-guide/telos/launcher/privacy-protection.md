@@ -121,6 +121,7 @@ tracking parameters.
 
 - Online sources (Wikipedia, websites, places, cloud files, many plugins) run only when the **Online
   results** filter is on. It is off by default, see [Search](./search#online-results).
+- [Telos Downloads](../downloads/) contacts the servers of the links you download from; for video sites also `github.com` when you update yt-dlp (never automatically). Trackers and peers for torrents, see [Torrents](../downloads/torrents.md).
 - Calendar, contacts, apps, local files, the calculator and unit converter never use the network.
   Currency rates download a small public file from the European Central Bank in the background.
 - Weather needs a network and, for automatic location, the location permission.
@@ -177,7 +178,7 @@ More in [Performance](./performance).
 Settings > Advanced > **Backup and restore**: **Backup** writes a file you choose, **Restore** reads one.
 
 Both ask **what** to include first: **Launcher** (settings, favorites, themes, widgets and the rest of the table below),
-**Notes** ([Telos Notes](../notes/)) and **Calendar** (the local calendars of [Telos Calendar](../calendar/)). Tick what you
+**Notes** ([Telos Notes](../notes/)), **Calendar** (the local calendars of [Telos Calendar](../calendar/)) and **Downloads** (the list and settings of [Telos Downloads](../downloads/)). Tick what you
 want, or tap **All**. On restore only the parts that the file contains are offered, and parts you leave unticked are not touched.
 
 | Part | Included |
@@ -189,6 +190,7 @@ want, or tap **All**. On restore only the parts that the file contains are offer
 | Widgets | Yes |
 | Notes | Yes, if the Notes part is ticked |
 | Local calendars and their events | Yes, if the Calendar part is ticked. Calendars of accounts are not included |
+| Download list and settings of Telos Downloads | Yes, if the Downloads part is ticked. Not the downloaded files, not cookies or `Authorization` headers, not the default folder |
 | Quick actions | Yes |
 | Cloud logins (Nextcloud, ownCloud) | No |
 | Intruder photos | No |
@@ -197,7 +199,7 @@ want, or tap **All**. On restore only the parts that the file contains are offer
 
 The backup is a plain ZIP, **not encrypted**. Keep it somewhere private. The file records the app version,
 the device model and the time, and the restore screen shows them. Compatibility is checked by format
-version (currently 1.10): a different major version cannot be restored, a different minor version restores
+version (currently 1.11): a different major version cannot be restored, a different minor version restores
 with a warning that some data may be lost.
 
 On restore, secrets that live on the device (passwords, keys, hidden numbers) are kept from the device,

@@ -130,3 +130,23 @@ Phase 3 (media): `MediaDownloadEngine` over yt-dlp (decision about the runtime s
   letters, safe torrent paths. Block list parsing and data dates: `BlockListParser`, `DataDates` in services/comms.
 - **For phase 3:** a media (yt-dlp) engine fits the same interface; reuse `markCompleted`, `cleanup`, `copyTorrentFile` (staging, then copy) for tools that
   need real files; the task list is still not in the backup.
+
+## 7. Phase 3: media, capture, backup, schedule, archives (implemented 2026-10-08, not run on a device)
+
+- **yt-dlp runtime decision.** youtubedl-android (`io.github.junkfood02.youtubedl-android:library` and `:ffmpeg`, 0.18.1, resolves from Maven Central,
+  GPL-3.0). Measured on the debug APK (arm64-v8a + armeabi-v7a): 104.1 MB without, 174.5 MB with = +70 MB (aar: arm64 python 14 MB + ffmpeg 36 MB, armeabi-v7a 13 + 30 MB, yt-dlp 3 MB;
+  they are zip files that do not compress further). The library cannot download its runtime on demand (only yt-dlp itself is updated from GitHub). So it is
+  **optional at build time**: Gradle property `telos.media` (default false). `services/downloads/build.gradle.kts` adds the source set `src/mediaOn` (a
+  `YtDlpBackendFactory` that uses the library) or `src/mediaOff` (returns null), and the dependencies; `app/app/build.gradle.kts` sets
+  `jniLibs.useLegacyPackaging = true` when it is on. Everything else (engine, UI, parser, tests) is in the normal source set and compiles in both modes.
+- **Engine.** `MediaDownloadEngine` (type Media): runs yt-dlp (`YtDlpBackend.run`, blocking, in `Dispatchers.IO`) into `mediaStagingDir(task)`, progress through
+  `--progress-template` lines (`[tlsprog] downloaded total estimate speed eta`, parsed by `YtDlpOutput`, summed over video and audio streams by `MediaProgressTracker`),
+  a ticker writes the snapshot every 0.7 s. Pause = coroutine cancel = `destroyProcessById`; the `.part` files stay, `--continue` resumes. At the end the outputs are copied with
+  `DownloadFiles.copyTorrentFile`; `cleanup` removes staging and outputs. One task = one video; playlists create one task per ticked entry. `MediaRuntime`: availability, analysis (`-J --flat-playlist`),
+  cookies.txt, update + date. Pure logic with tests: `logic/MediaLogic.kt`.
+- **Security notes.** The URL is passed after `--` so it can not be an option; the audio format is checked against a list; cookies are copied into the staging folder for the run.
+- **Schedule.** `Schedule`/`ScheduleWindow`/`ClockTime` in `QueueRules.kt`; `BlockReason.Schedule`; the manager wakes up at the next window change.
+- **Archives.** `ArchiveExtractor` (zip, entry by entry through a temp file, zip-slip safe, limits). tar.gz would need commons-compress, which is not in the project.
+- **Backup.** `BackupGroup.Downloads` + `DownloadsBackup` (tasks.json, settings.json); backup format 1.11. Restore never claims files: see `DownloadsBackup.restoreTask`.
+- **Capture.** Setting `detectClipboard`; banner in `DownloadsScreen`; media links in the add sheet go to `AddMediaSheet`; "Download with Telos" in `WebAppActivity`.
+- **Untested:** everything that needs a device (Python/FFmpeg start, real yt-dlp output, update, cookies from `CookieManager`, zip extraction into SAF, clipboard banner, time picker).

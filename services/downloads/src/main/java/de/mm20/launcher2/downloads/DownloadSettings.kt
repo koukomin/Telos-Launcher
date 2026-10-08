@@ -3,6 +3,7 @@ package de.mm20.launcher2.downloads
 import android.content.Context
 import android.content.SharedPreferences
 import de.mm20.launcher2.downloads.logic.QueueSettings
+import de.mm20.launcher2.downloads.logic.ScheduleWindow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -29,9 +30,30 @@ data class DownloadSettingsValues(
     val proxyHost: String = "",
     val proxyPort: Int = 0,
     val afterFinish: AfterFinish = AfterFinish.Nothing,
+    /** Offer links found in the clipboard when the app comes to the foreground (off by default) */
+    val detectClipboard: Boolean = false,
+    /** Only download inside a time window */
+    val scheduleEnabled: Boolean = false,
+    val scheduleStartMinute: Int = 22 * 60,
+    val scheduleEndMinute: Int = 7 * 60,
+    /** bit 0 Monday ... bit 6 Sunday */
+    val scheduleDays: Int = 0b1111111,
+    /** Unpack finished zip archives */
+    val autoExtract: Boolean = false,
 ) {
+    val schedule: ScheduleWindow
+        get() = ScheduleWindow(scheduleEnabled, scheduleStartMinute, scheduleEndMinute, scheduleDays)
+
     val queue: QueueSettings
-        get() = QueueSettings(maxParallel, wifiOnly, pauseOnLowBattery, lowBatteryPercent)
+        get() = QueueSettings(maxParallel, wifiOnly, pauseOnLowBattery, lowBatteryPercent, schedule)
+
+    /** For yt-dlp: `http://host:port` or `socks5://host:port`, null without proxy */
+    val proxyUrl: String?
+        get() = if (proxyHost.isBlank()) null else when (proxyType) {
+            ProxyType.Http -> "http://$proxyHost:$proxyPort"
+            ProxyType.Socks -> "socks5://$proxyHost:$proxyPort"
+            ProxyType.None -> null
+        }
 
     val effectiveUserAgent: String get() = userAgent.ifBlank { DEFAULT_USER_AGENT }
 
@@ -47,6 +69,12 @@ class DownloadSettings(context: Context) {
     val values: StateFlow<DownloadSettingsValues> = _values
 
     val current: DownloadSettingsValues get() = _values.value
+
+    private val KNOWN = setOf(
+        "maxParallel", "connections", "speedLimitKBps", "wifiOnly", "pauseOnLowBattery", "lowBatteryPercent", "notifications",
+        "maxRetries", "userAgent", "proxyType", "proxyHost", "proxyPort", "afterFinish", "detectClipboard", "scheduleEnabled",
+        "scheduleStartMinute", "scheduleEndMinute", "scheduleDays", "autoExtract",
+    )
 
     @Synchronized
     fun update(transform: (DownloadSettingsValues) -> DownloadSettingsValues) {
@@ -66,8 +94,39 @@ class DownloadSettings(context: Context) {
             .putString("proxyHost", v.proxyHost)
             .putInt("proxyPort", v.proxyPort)
             .putString("afterFinish", v.afterFinish.name)
+            .putBoolean("detectClipboard", v.detectClipboard)
+            .putBoolean("scheduleEnabled", v.scheduleEnabled)
+            .putInt("scheduleStartMinute", v.scheduleStartMinute)
+            .putInt("scheduleEndMinute", v.scheduleEndMinute)
+            .putInt("scheduleDays", v.scheduleDays)
+            .putBoolean("autoExtract", v.autoExtract)
             .apply()
         _values.value = v
+    }
+
+    /** All settings except the folder (its permission does not survive a restore) as JSON, for the backup */
+    fun exportJson(): String {
+        val o = org.json.JSONObject()
+        for ((k, v) in prefs.all) if (k != "defaultFolder" && v != null) o.put(k, v)
+        return o.toString()
+    }
+
+    /** Restores the settings written by [exportJson]; unknown keys are ignored */
+    @Synchronized
+    fun importJson(text: String) {
+        val o = org.json.JSONObject(text)
+        val e = prefs.edit()
+        for (k in o.keys()) {
+            if (k == "defaultFolder") continue
+            when (val v = o.get(k)) {
+                is Boolean -> if (k in KNOWN) e.putBoolean(k, v)
+                is Int -> if (k in KNOWN) e.putInt(k, v)
+                is String -> if (k in KNOWN) e.putString(k, v)
+                else -> {}
+            }
+        }
+        e.apply()
+        _values.value = read()
     }
 
     private fun read(): DownloadSettingsValues {
@@ -88,6 +147,12 @@ class DownloadSettings(context: Context) {
                 proxyHost = prefs.getString("proxyHost", "").orEmpty(),
                 proxyPort = prefs.getInt("proxyPort", 0),
                 afterFinish = runCatching { AfterFinish.valueOf(prefs.getString("afterFinish", "Nothing")!!) }.getOrDefault(AfterFinish.Nothing),
+                detectClipboard = prefs.getBoolean("detectClipboard", d.detectClipboard),
+                scheduleEnabled = prefs.getBoolean("scheduleEnabled", d.scheduleEnabled),
+                scheduleStartMinute = prefs.getInt("scheduleStartMinute", d.scheduleStartMinute),
+                scheduleEndMinute = prefs.getInt("scheduleEndMinute", d.scheduleEndMinute),
+                scheduleDays = prefs.getInt("scheduleDays", d.scheduleDays),
+                autoExtract = prefs.getBoolean("autoExtract", d.autoExtract),
             )
         )
     }
@@ -99,5 +164,8 @@ class DownloadSettings(context: Context) {
         lowBatteryPercent = v.lowBatteryPercent.coerceIn(5, 50),
         maxRetries = v.maxRetries.coerceIn(0, 20),
         proxyPort = v.proxyPort.coerceIn(0, 65535),
+        scheduleStartMinute = v.scheduleStartMinute.coerceIn(0, 1439),
+        scheduleEndMinute = v.scheduleEndMinute.coerceIn(0, 1439),
+        scheduleDays = v.scheduleDays and 0b1111111,
     )
 }

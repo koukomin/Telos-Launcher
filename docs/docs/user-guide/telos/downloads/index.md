@@ -5,7 +5,8 @@ A download manager for links: several connections per file, resume, a queue and 
 ::: tip At a glance
 Paste or share a link, Telos downloads it with up to 16 connections at once, keeps going after a restart or a lost
 network, and puts the file in the folder you choose or in `Downloads/Telos`. HTTP and HTTPS links, and torrents and magnet links
-with file selection, seeding and IP block lists ([Torrents](torrents.md)).
+with file selection, seeding and IP block lists ([Torrents](torrents.md)), video and audio from web sites
+([Video and audio sites](media.md), optional in the build), a schedule, a backup of the list and zip extraction.
 :::
 
 ## What it is
@@ -17,7 +18,9 @@ the private storage of Telos. Switching it off in [Telos Store](../store/) hides
 
 | Way | How |
 | --- | --- |
-| In the app | The **Add** button. Paste one or more links (one per line). A link in the clipboard is offered as a chip |
+| In the app | The **Add** button. Paste one or more links (one per line). A link in the clipboard is offered as a chip. A single video site link opens the [media sheet](media.md) |
+| Clipboard | Optional (Settings > **Detect links in the clipboard**, off by default): a link, video site link or magnet link that you copied is offered with an **Add** button when the Downloads screen opens |
+| From a web app | **Download with Telos** in the menu of a [web app](../launcher/desktop-and-overlays.md#web-apps) sends the current address |
 | From another app | **Share** a link or text to **Telos Downloads**. The add sheet opens with the links, nothing starts before you confirm |
 | Open with | Links to files that the browser hands over as zip, apk, 7z, rar, gz, iso or binary can be opened with Telos Downloads. Magnet links, `.torrent` addresses and `.torrent` files are offered too, next to [Telos Video](../video/streams-torrents-subtitles.md): you choose |
 
@@ -35,9 +38,9 @@ Downloads (keeps the files and can seed). The **Video** dialog "Play from the we
 
 ## The list
 
-- Filters: **All**, **Active**, **Queued** (waiting and paused), **Completed**, **Failed**, and **Torrents** (cards with ratio, peers, up and down speed; see [Torrents](torrents.md)). The magnifier searches names and links.
+- Filters: **All**, **Active**, **Queued** (waiting and paused), **Completed**, **Failed**, **Torrents** and **Media** (cards with ratio, peers, up and down speed; see [Torrents](torrents.md)). The magnifier searches names and links.
 - Each card shows the file type, name, state, size, speed and remaining time, with a progress ring and bar. The ring button pauses and resumes.
-- Swipe a card to the right to pause or resume, to the left to remove it. The menu has pause, resume, retry, open, share, copy link, details and remove.
+- Swipe a card to the right to pause or resume, to the left to remove it. The menu has pause, resume, retry, open, share, **move to the top / bottom of the queue** (waiting and paused downloads), **extract here** (finished zip files), copy link, details and remove. A finished download whose file was deleted or not restored shows **File missing**.
 - **Remove** a finished download keeps the file or deletes it, your choice. A download that is not finished loses its partial file.
 - A tap opens the **details**: link, address after redirects, size, folder, whether the server supports resuming, one bar for each connection, headers (cookies and passwords are hidden), errors, retries.
 
@@ -65,6 +68,10 @@ Menu > **Settings**.
 | When a download finishes | Nothing, open or share the file. Works while the Downloads screen is open; the notification always has **Open** and **Share** |
 | User agent | Empty means a browser-like default |
 | Proxy | HTTP or SOCKS host and port |
+| Schedule | Only download between two times of day on the days you tick (also over midnight, for example 22:00 to 07:00; the days are the days the window starts on). Outside the window downloads wait in the queue and a banner says so; they start at the opening time |
+| Extract archives | Unpacks finished **zip** files into a folder named like the file, next to it (the **Extract here** action does it for one download). Limits: 20 000 files and 20 GB per archive, unsafe paths (`..`) are dropped. tar.gz, 7z and rar are not supported |
+| Detect links in the clipboard | Off by default, see above |
+| Video and audio sites | Update yt-dlp, its version and last update, supported sites, cookies, see [Video and audio sites](media.md) |
 | Show notifications | Progress with **Pause** and **Cancel**, and the result |
 | Torrents | A section with the torrent settings, limits, seeding defaults and the peer block lists, see [Torrents](torrents.md#settings) |
 
@@ -85,9 +92,15 @@ to about six hours a day; when it ends the running downloads are paused and you 
 | `Downloads/Telos` | The default on Android 10 and newer, in the public Downloads folder. A file that is not finished is hidden from other apps and is not removed for 60 days |
 | App folder | Below Android 10 the default is the app's own Downloads folder (`Android/data/...`) |
 
+## Backup
+
+[Backup and restore](../launcher/privacy-protection.md#backup-and-restore) has a part **Downloads**: the list of downloads and the settings of
+this app. **Not** included: the downloaded files and partial data, cookies (the imported cookies.txt and the cookie of a download), `Authorization` and `Cookie`
+headers, and the default folder (its permission does not exist on another phone). After a restore finished downloads whose file is not there are marked
+**File missing**; downloads that were not finished come back **paused** and start from the beginning when you resume them.
+
 ## Status and limitations
 
-- **Implemented:** HTTP and HTTPS downloads as described above, and torrents ([Torrents](torrents.md)).
-- **Planned:** downloads from video sites, capture from the browser or the clipboard, a backup of the list, schedules and extracting archives.
-- **Not there:** FTP, schedules by time of day, extracting archives, a backup of the download list, downloads on behalf of other apps (it is not the system download manager), and nothing was tested on a device yet for torrents (see the Torrents page).
+- **Implemented:** HTTP and HTTPS downloads as described above, torrents ([Torrents](torrents.md)), video and audio sites ([Video and audio sites](media.md), optional in the build), clipboard capture (optional), a schedule, zip extraction, the backup part and queue order (move to the top or bottom).
+- **Not there:** FTP, extracting tar.gz, 7z or rar, downloads on behalf of other apps (it is not the system download manager), a browser that finds media on pages, and drag and drop ordering. Nothing of phase 2 and 3 was tested on a device (see the Torrents and media pages).
 - Downloads need the app process. If the system ends the process, downloads continue when Telos starts again (after a boot, when the launcher starts).

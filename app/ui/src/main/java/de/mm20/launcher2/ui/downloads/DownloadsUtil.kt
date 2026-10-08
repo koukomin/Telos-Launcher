@@ -11,6 +11,7 @@ import androidx.core.content.FileProvider
 import de.mm20.launcher2.downloads.DownloadCategory
 import de.mm20.launcher2.downloads.DownloadState
 import de.mm20.launcher2.downloads.DownloadTask
+import de.mm20.launcher2.downloads.MediaStage
 import de.mm20.launcher2.downloads.logic.Formatting
 import de.mm20.launcher2.downloads.logic.LinkParser
 import de.mm20.launcher2.ui.R
@@ -42,14 +43,26 @@ internal fun stateLabel(t: DownloadTask): String = when (t.state) {
     DownloadState.Queued -> if (t.retryCount > 0 && t.nextRetryAt > System.currentTimeMillis()) {
         stringResource(R.string.dl_state_waiting_retry, t.retryCount)
     } else stringResource(R.string.dl_state_queued)
-    DownloadState.Connecting -> stringResource(R.string.dl_state_connecting)
-    DownloadState.Downloading -> stringResource(R.string.dl_state_downloading)
-    DownloadState.Verifying -> stringResource(R.string.dl_state_verifying)
+    DownloadState.Connecting -> mediaStageLabel(t) ?: stringResource(R.string.dl_state_connecting)
+    DownloadState.Downloading -> mediaStageLabel(t) ?: stringResource(R.string.dl_state_downloading)
+    DownloadState.Verifying -> mediaStageLabel(t) ?: stringResource(R.string.dl_state_verifying)
     DownloadState.Seeding -> stringResource(R.string.dl_t_state_seeding)
     DownloadState.Paused -> stringResource(R.string.dl_state_paused)
-    DownloadState.Completed -> stringResource(R.string.dl_state_completed)
+    DownloadState.Completed -> stringResource(R.string.dl_state_completed) + if (t.fileMissing) " · " + stringResource(R.string.dl_p3_file_missing) else ""
     DownloadState.Failed -> stringResource(R.string.dl_state_failed)
 }
+
+/** What the media engine is doing (merging, extracting audio ...) instead of the plain state, null for other tasks */
+@Composable
+private fun mediaStageLabel(t: DownloadTask): String? = when (t.media?.stage) {
+    MediaStage.Starting -> R.string.dl_m_stage_starting
+    MediaStage.Downloading -> R.string.dl_m_stage_downloading
+    MediaStage.Merging -> R.string.dl_m_stage_merging
+    MediaStage.ExtractingAudio -> R.string.dl_m_stage_audio
+    MediaStage.Embedding -> R.string.dl_m_stage_embedding
+    MediaStage.Copying -> R.string.dl_m_stage_copying
+    else -> null
+}?.let { stringResource(it) }
 
 /** "12.3 MB / 40 MB · 2.1 MB/s · 0:12" */
 internal fun progressText(t: DownloadTask): String = buildList {
@@ -62,11 +75,11 @@ internal fun progressText(t: DownloadTask): String = buildList {
     }
 }.joinToString(" · ")
 
-/** The first http(s) link in the clipboard, null if there is none or it can not be read */
+/** The first http(s) or magnet link in the clipboard, null if there is none or it can not be read */
 internal fun clipboardLink(context: Context): String? = try {
     val cm = context.getSystemService(ClipboardManager::class.java)
-    val text = cm.primaryClip?.takeIf { it.itemCount > 0 }?.getItemAt(0)?.coerceToText(context)?.toString().orEmpty()
-    LinkParser.extractHttp(text).firstOrNull()
+    val text = cm.primaryClip?.takeIf { it.itemCount > 0 }?.getItemAt(0)?.coerceToText(context)?.toString().orEmpty().trim()
+    if (text.startsWith("magnet:?", ignoreCase = true) && !text.contains(Regex("\\s"))) text else LinkParser.extractHttp(text).firstOrNull()
 } catch (e: Exception) {
     null
 }
@@ -110,4 +123,14 @@ internal fun copyLink(context: Context, link: String) {
     val cm = context.getSystemService(ClipboardManager::class.java)
     cm.setPrimaryClip(android.content.ClipData.newPlainText("link", link))
     Toast.makeText(context, R.string.dl_link_copied, Toast.LENGTH_SHORT).show()
+}
+
+/** Opens Telos Downloads with the add sheet for [url] (the same way the share target does) */
+fun openInTelosDownloads(context: Context, url: String) {
+    context.startActivity(
+        Intent().setClassName(context.packageName, de.mm20.launcher2.applock.SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+            .putExtra(de.mm20.launcher2.applock.SettingsDeepLinkContract.EXTRA_ROUTE, de.mm20.launcher2.applock.SettingsDeepLinkContract.ROUTE_DOWNLOADS)
+            .putStringArrayListExtra(de.mm20.launcher2.applock.SettingsDeepLinkContract.EXTRA_DOWNLOAD_URLS, arrayListOf(url))
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    )
 }

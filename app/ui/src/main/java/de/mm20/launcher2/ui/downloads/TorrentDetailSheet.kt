@@ -117,7 +117,7 @@ internal fun TorrentDetailSheet(
                 0 -> FilesTab(task, controller, openFile = { f -> openTorrentFile(context, task, f) })
                 1 -> PeersTab(task, controller)
                 2 -> TrackersTab(task, controller, onAdd = { addTracker = true })
-                else -> InfoTab(task, controller)
+                else -> InfoTab(task, controller, manager)
             }
             Spacer(Modifier.size(12.dp))
         }
@@ -234,11 +234,12 @@ private fun AddTrackerDialog(onDismiss: () -> Unit, onAdd: (String) -> Unit) {
 }
 
 @Composable
-private fun InfoTab(task: DownloadTask, controller: TorrentController) {
+private fun InfoTab(task: DownloadTask, controller: TorrentController, manager: de.mm20.launcher2.downloads.DownloadManager) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val d = task.torrent ?: return
     var editSeed by remember { mutableStateOf(false) }
+    var limit by remember(task.id) { mutableStateOf((task.speedLimitBps / 1024).takeIf { it > 0 }?.toString().orEmpty()) }
     Column(Modifier.fillMaxWidth().height(340.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         InfoLine(R.string.dl_detail_size, if (task.totalBytes >= 0) Formatting.size(task.totalBytes) else "?")
         if (d.infoHash.isNotEmpty()) InfoLine(R.string.dl_t_info_hash, d.infoHash, mono = true)
@@ -254,6 +255,10 @@ private fun InfoTab(task: DownloadTask, controller: TorrentController) {
             else stringResource(R.string.dl_t_ratio_limit) + ": " + ratioLabel(d.seedRatioX100) + " · " + stringResource(R.string.dl_t_time_limit) + ": " + minutesLabel(d.seedMinutes),
         )
         TextButton(onClick = { editSeed = true }) { Text(stringResource(R.string.dl_t_seed_edit)) }
+        OutlinedTextField(
+            value = limit, onValueChange = { v -> limit = v.filter(Char::isDigit).take(7); manager.setSpeedLimit(task.id, (limit.toLongOrNull() ?: 0L) * 1024) },
+            singleLine = true, modifier = Modifier.fillMaxWidth(), label = { Text(stringResource(R.string.dl_p3_torrent_limit)) },
+        )
         d.stagingPath?.let { InfoLine(R.string.dl_t_info_staging, it, mono = true) }
         task.fileUri?.let { InfoLine(R.string.dl_detail_saved_to, Uri.decode(it)) }
         if (d.magnet.isNotEmpty()) {

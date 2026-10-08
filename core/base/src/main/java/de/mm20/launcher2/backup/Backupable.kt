@@ -10,7 +10,9 @@ enum class BackupGroup(val key: String) {
     /** Settings, favorites, widgets, themes and everything else of the launcher */
     Launcher("launcher"),
     Notes("notes"),
-    Calendar("calendar");
+    Calendar("calendar"),
+    /** The list and the settings of Telos Downloads (not the downloaded files, not cookies) */
+    Downloads("downloads");
 
     companion object {
         fun fromKey(key: String): BackupGroup? = entries.firstOrNull { it.key == key }

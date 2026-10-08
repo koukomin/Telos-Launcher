@@ -17,6 +17,10 @@ based on" table in `readme.md`.
 | [Gopeed](https://github.com/GopeedLab/gopeed) | GPL-3.0 | Design ideas only for Telos Downloads, no code copied (copyright: the Gopeed authors) |
 | [Ketch](https://github.com/linroid/Ketch) | Apache-2.0 | Design ideas only for Telos Downloads, no code copied (copyright: the Ketch authors) |
 | [LibreTorrent](https://github.com/proninyaroslav/libretorrent) | GPL-3.0-or-later | Design ideas only for the torrent part of Telos Downloads (feature set and screens), no code copied (copyright: the LibreTorrent authors) |
+| [Kite](https://github.com/zenzer0s/kite) | GPL-3.0 | Design ideas only for the video and audio sites part of Telos Downloads, no code copied (copyright: the Kite authors) |
+| [AIO Video Downloader](https://github.com/shibaFoss/AIO-Video-Downloader) | custom licence (text not verified) | Ideas only, **no code used** (copyright: the AIO Video Downloader authors) |
+| [yt-dlp](https://github.com/yt-dlp/yt-dlp) | Unlicense (public domain) | Used unchanged, inside the optional media build (see below) |
+| [youtubedl-android](https://github.com/yausername/youtubedl-android) (fork io.github.junkfood02.youtubedl-android) | GPL-3.0 | Copyright (c) the youtubedl-android authors (yausername, JunkFood02 and contributors), used unchanged as a Maven dependency in the optional media build |
 | [Transistor](https://codeberg.org/y20k/transistor) | MIT | Copyright (c) 2015-22 - Y20K.org (full notice below) |
 | [TagLib wrapper (Kyant0/taglib)](https://github.com/Kyant0/taglib) | Apache-2.0 | Copyright 2025 Kyant. Bundles TagLib (LGPL-2.1 / MPL-1.1 upstream) |
 | [baresip](https://github.com/baresip/baresip), [baresip-studio](https://github.com/juha-h/baresip-studio) | BSD-3-Clause | Planned, not yet included |
@@ -142,6 +146,15 @@ SOFTWARE.
 
 libtorrent, https://www.libtorrent.org (BSD-3-Clause), bundled in the native libraries of libtorrent4j:
 Copyright (c) 2003-2020, Arvid Norberg. All rights reserved.
+
+## yt-dlp, youtubedl-android, FFmpeg and Python (optional media build of Telos Downloads)
+
+Only in builds made with `-Ptelos.media=true`. The default build does not contain any of this.
+
+- yt-dlp, https://github.com/yt-dlp/yt-dlp: Unlicense (public domain dedication), the version that ships in the library and later ones the user downloads from GitHub with "Update the downloader". yt-dlp itself bundles and depends on other Python packages with their own licences (see the yt-dlp repository).
+- youtubedl-android, https://github.com/yausername/youtubedl-android, fork https://github.com/JunkFood02/youtubedl-android (Maven: `io.github.junkfood02.youtubedl-android:library` and `:ffmpeg`, version 0.18.1): GPL-3.0 as stated in its Maven POM.
+- FFmpeg, https://ffmpeg.org, as built in the `ffmpeg` artifact of youtubedl-android: LGPL-2.1+ or GPL, depending on the build options of that artifact (not verified here; the artifact page and the FFmpeg legal notes apply).
+- Python (CPython), https://www.python.org: PSF licence, bundled in the `library` artifact as `libpython`.
 
 ## TMDB and OpenSubtitles (Telos Video online services)
 

@@ -94,6 +94,7 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         link: '/docs/user-guide/telos/downloads/',
         items: [
           { text: 'Torrents', link: '/docs/user-guide/telos/downloads/torrents' },
+          { text: 'Video and audio sites', link: '/docs/user-guide/telos/downloads/media' },
         ],
       },
       {

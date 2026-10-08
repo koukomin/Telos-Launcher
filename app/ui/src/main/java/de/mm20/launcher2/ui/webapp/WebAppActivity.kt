@@ -418,6 +418,13 @@ private fun WebAppScreen(
                                 },
                             )
                             DropdownMenuItem(
+                                text = { Text(stringResource(R.string.dl_p3_download_with_telos)) },
+                                onClick = {
+                                    showMenu = false
+                                    de.mm20.launcher2.ui.downloads.openInTelosDownloads(context, currentUrl)
+                                },
+                            )
+                            DropdownMenuItem(
                                 text = { Text(stringResource(R.string.web_app_settings)) },
                                 onClick = {
                                     showMenu = false

@@ -46,7 +46,9 @@ import de.mm20.launcher2.downloads.DownloadCategory
 import de.mm20.launcher2.downloads.DownloadManager
 import de.mm20.launcher2.downloads.DownloadRequest
 import de.mm20.launcher2.downloads.logic.Checksums
+import de.mm20.launcher2.downloads.logic.LinkKind
 import de.mm20.launcher2.downloads.logic.LinkParser
+import de.mm20.launcher2.downloads.logic.MediaUrls
 import de.mm20.launcher2.downloads.logic.TorrentSources
 import de.mm20.launcher2.ui.R
 import kotlin.math.roundToInt
@@ -59,7 +61,7 @@ internal fun parseHeaders(text: String): Map<String, String> =
     }.filter { it.first.isNotEmpty() }.toMap()
 
 @Composable
-internal fun AddDownloadSheet(initialText: String, manager: DownloadManager, onDismiss: () -> Unit, onTorrent: (String) -> Unit = {}) {
+internal fun AddDownloadSheet(initialText: String, manager: DownloadManager, onDismiss: () -> Unit, onTorrent: (String) -> Unit = {}, onMedia: (String) -> Unit = {}) {
     val context = LocalContext.current
     val settings by manager.settings.values.collectAsState()
     var text by remember { mutableStateOf(initialText) }
@@ -82,6 +84,8 @@ internal fun AddDownloadSheet(initialText: String, manager: DownloadManager, onD
     // magnet links and .torrent addresses go to the torrent sheet, where the files can be chosen
     LaunchedEffect(text) {
         if (TorrentSources.containsTorrent(text)) onTorrent(text)
+        // a single link to a video site goes to the media sheet, where quality and extras can be chosen
+        else if (MediaUrls.classify(text) == LinkKind.Media) onMedia(text.trim())
     }
 
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri: Uri? ->
@@ -131,6 +135,8 @@ internal fun AddDownloadSheet(initialText: String, manager: DownloadManager, onD
                     }) { Icon(painterResource(R.drawable.content_copy_24px), stringResource(R.string.dl_paste)) }
                 },
             )
+
+            TextButton(onClick = { onMedia(links.firstOrNull().orEmpty()) }) { Text(stringResource(R.string.dl_m_open)) }
 
             Text(stringResource(R.string.dl_folder), style = MaterialTheme.typography.labelLarge)
             Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {

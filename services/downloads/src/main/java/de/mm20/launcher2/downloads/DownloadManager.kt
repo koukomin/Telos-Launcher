@@ -142,7 +142,14 @@ class DownloadManager(
             connections = if (request.connections > 0) SegmentPlanner.clampConnections(request.connections) else 0,
             speedLimitBps = request.speedLimitBps.coerceAtLeast(0),
             checksum = request.checksum?.takeIf { it.isNotBlank() },
-        )
+            media = if (type == DownloadType.Media) request.media ?: MediaData() else null,
+        ).let { t ->
+            if (t.media == null) t else t.copy(
+                name = t.name.ifBlank { t.media.title },
+                totalBytes = t.media.expectedBytes.takeIf { it > 0 } ?: -1,
+                category = t.category ?: if (t.media.audioOnly) DownloadCategory.Audio else DownloadCategory.Video,
+            )
+        }
         store.add(task)
         kicks.tryEmit(Unit)
         return task
@@ -184,6 +191,25 @@ class DownloadManager(
         store.update(id) { it.copy(priority = priority) }
     }
 
+    /** Speed limit of one task in bytes per second, 0 = none (a running torrent or media download picks it up) */
+    fun setSpeedLimit(id: String, bytesPerSecond: Long) {
+        store.update(id) { it.copy(speedLimitBps = bytesPerSecond.coerceAtLeast(0)) }
+    }
+
+    /** Runs before everything else that is waiting */
+    fun moveToTop(id: String) {
+        val max = store.tasks.value.filter { it.id != id }.maxOfOrNull { it.priority } ?: 0
+        store.update(id) { if (it.priority > max) it else it.copy(priority = max + 1) }
+        kicks.tryEmit(Unit)
+    }
+
+    /** Runs after everything else that is waiting */
+    fun moveToBottom(id: String) {
+        val min = store.tasks.value.filter { it.id != id }.minOfOrNull { it.priority } ?: 0
+        store.update(id) { if (it.priority < min) it else it.copy(priority = min - 1) }
+        kicks.tryEmit(Unit)
+    }
+
     /**
      * Removes the task. An unfinished download always loses its partial file; the file of a finished one is
      * only deleted when [deleteFile] is true.
@@ -200,8 +226,26 @@ class DownloadManager(
             store.remove(id)
             stopTargets.remove(id)
             val uri = t.fileUri
-            // torrents delete their files in TorrentDownloadEngine.cleanup
-            if (t.type != DownloadType.Torrent && uri != null && (deleteFile || t.state != DownloadState.Completed)) files.delete(uri)
+            // torrents and media downloads delete their files in their engine's cleanup
+            if (t.type == DownloadType.Http && uri != null && (deleteFile || t.state != DownloadState.Completed)) files.delete(uri)
+        }
+    }
+
+    /** Unpacks a finished zip archive next to itself (also done automatically when "extract archives" is on) */
+    fun extract(id: String) {
+        val t = store.get(id) ?: return
+        if (t.state != DownloadState.Completed || t.extractState == "running" || !de.mm20.launcher2.downloads.logic.ArchiveLogic.isZip(t.name)) return
+        store.update(id) { it.copy(extractState = "running") }
+        scope.launch(Dispatchers.IO) {
+            try {
+                ArchiveExtractor(files).extractZip(t, settings.current.defaultFolder)
+                store.update(id) { it.copy(extractState = "done") }
+            } catch (e: CancellationException) {
+                store.update(id) { it.copy(extractState = "") }
+                throw e
+            } catch (e: Exception) {
+                store.update(id) { it.copy(extractState = "failed") }
+            }
         }
     }
 
@@ -218,7 +262,8 @@ class DownloadManager(
         val now = System.currentTimeMillis()
         globalLimiter.bytesPerSecond = s.speedLimitKBps * 1024L
 
-        val reason = QueueRules.blockReason(c, s.queue)
+        val clock = currentClock()
+        val reason = QueueRules.blockReason(c, s.queue, clock)
         _blockReason.value = reason
         if (reason != null) {
             // everything that runs waits until the conditions are good again; this is not a failure
@@ -227,7 +272,7 @@ class DownloadManager(
                 jobs[t.id]?.cancel()
             }
         } else {
-            for (t in QueueRules.pickNext(all, now, c, s.queue) { task -> engines.any { it.supports(task) } }) startTask(t)
+            for (t in QueueRules.pickNext(all, now, c, s.queue, clock) { task -> engines.any { it.supports(task) } }) startTask(t)
         }
 
         val after = store.tasks.value
@@ -241,7 +286,10 @@ class DownloadManager(
             _serviceWanted.value = false
         }
 
-        val wake = QueueRules.nextWakeUp(after, now)
+        // the schedule window opens or closes: look again at that minute
+        val windowChange = de.mm20.launcher2.downloads.logic.Schedule.minutesToChange(s.schedule, clock)
+            ?.let { now + (it * 60L - java.util.Calendar.getInstance().get(java.util.Calendar.SECOND)) * 1000L + 200 }
+        val wake = listOfNotNull(QueueRules.nextWakeUp(after, now), windowChange).minOrNull()
         if (wake == null) {
             wakeJob?.cancel(); wakeJob = null; wakeAt = 0
         } else if (wake != wakeAt) {
@@ -252,6 +300,12 @@ class DownloadManager(
                 kicks.tryEmit(Unit)
             }
         }
+    }
+
+    private fun currentClock(): de.mm20.launcher2.downloads.logic.ClockTime {
+        val cal = java.util.Calendar.getInstance()
+        val dow = (cal.get(java.util.Calendar.DAY_OF_WEEK) + 5) % 7 + 1
+        return de.mm20.launcher2.downloads.logic.ClockTime(dow, cal.get(java.util.Calendar.HOUR_OF_DAY) * 60 + cal.get(java.util.Calendar.MINUTE))
     }
 
     private fun startTask(picked: DownloadTask) {
@@ -278,6 +332,7 @@ class DownloadManager(
             if (done != null && !alreadyReported) {
                 notifier.notifyCompleted(done)
                 _events.tryEmit(DownloadEvent.Completed(done))
+                if (settings.current.autoExtract) extract(id)
             }
         } catch (e: CancellationException) {
             val target = stopTargets.remove(id) ?: DownloadState.Paused

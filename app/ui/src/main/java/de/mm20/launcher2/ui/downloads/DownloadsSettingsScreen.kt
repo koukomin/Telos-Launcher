@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import de.mm20.launcher2.downloads.AfterFinish
 import de.mm20.launcher2.downloads.DownloadSettings
 import de.mm20.launcher2.downloads.ProxyType
+import de.mm20.launcher2.downloads.media.MediaRuntime
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreferenceItem
@@ -32,6 +33,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
@@ -41,6 +43,21 @@ fun DownloadsSettingsScreen() {
     val s by store.values.collectAsState()
     var editUserAgent by remember { mutableStateOf(false) }
     var editProxy by remember { mutableStateOf(false) }
+    val runtime: MediaRuntime = koinInject()
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+    var updating by remember { mutableStateOf(false) }
+    var cookiesVersion by remember { mutableStateOf(0) }
+    var updatedAt by remember { mutableStateOf(runtime.lastUpdate) }
+    var version by remember { mutableStateOf<String?>(null) }
+    androidx.compose.runtime.LaunchedEffect(updatedAt) {
+        version = if (runtime.isAvailable) kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { runtime.version } else null
+    }
+    fun pickTime(minutes: Int, onPicked: (Int) -> Unit) {
+        android.app.TimePickerDialog(context, { _, h, m -> onPicked(h * 60 + m) }, minutes / 60, minutes % 60, android.text.format.DateFormat.is24HourFormat(context)).show()
+    }
+    fun clock(minutes: Int) = android.text.format.DateFormat.getTimeFormat(context).format(
+        java.util.Calendar.getInstance().apply { set(java.util.Calendar.HOUR_OF_DAY, minutes / 60); set(java.util.Calendar.MINUTE, minutes % 60) }.time
+    )
 
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri: Uri? ->
         if (uri != null) {
@@ -93,6 +110,86 @@ fun DownloadsSettingsScreen() {
             }
         }
         item {
+            PreferenceCategory(title = stringResource(R.string.dl_p3_schedule_title)) {
+                SwitchPreference(
+                    title = stringResource(R.string.dl_p3_schedule_enable), summary = stringResource(R.string.dl_p3_schedule_sum),
+                    value = s.scheduleEnabled, onValueChanged = { v -> store.update { it.copy(scheduleEnabled = v) } },
+                )
+                if (s.scheduleEnabled) {
+                    Preference(
+                        title = stringResource(R.string.dl_p3_schedule_from, clock(s.scheduleStartMinute)),
+                        onClick = { pickTime(s.scheduleStartMinute) { m -> store.update { it.copy(scheduleStartMinute = m) } } },
+                    )
+                    Preference(
+                        title = stringResource(R.string.dl_p3_schedule_to, clock(s.scheduleEndMinute)),
+                        onClick = { pickTime(s.scheduleEndMinute) { m -> store.update { it.copy(scheduleEndMinute = m) } } },
+                    )
+                    Text(stringResource(R.string.dl_p3_schedule_days), style = androidx.compose.material3.MaterialTheme.typography.labelLarge, modifier = Modifier.padding(horizontal = 16.dp))
+                    androidx.compose.foundation.layout.FlowRow(Modifier.padding(horizontal = 16.dp)) {
+                        val names = listOf(R.string.dl_p3_day_1, R.string.dl_p3_day_2, R.string.dl_p3_day_3, R.string.dl_p3_day_4, R.string.dl_p3_day_5, R.string.dl_p3_day_6, R.string.dl_p3_day_7)
+                        for (d in 0..6) {
+                            androidx.compose.material3.FilterChip(
+                                selected = (s.scheduleDays shr d) and 1 == 1,
+                                onClick = { store.update { it.copy(scheduleDays = it.scheduleDays xor (1 shl d)) } },
+                                label = { Text(stringResource(names[d])) },
+                                modifier = Modifier.padding(end = 8.dp),
+                            )
+                        }
+                    }
+                }
+            }
+        }
+        item {
+            PreferenceCategory(title = stringResource(R.string.dl_m_settings_title)) {
+                if (!runtime.isAvailable) {
+                    Preference(title = stringResource(R.string.dl_m_settings_unavailable), summary = stringResource(R.string.dl_m_missing_text))
+                } else {
+                    Preference(
+                        title = stringResource(R.string.dl_m_update),
+                        summary = if (updating) stringResource(R.string.dl_m_updating) else stringResource(R.string.dl_m_update_sum),
+                        enabled = !updating,
+                        onClick = {
+                            updating = true
+                            scope.launch {
+                                val msg = try {
+                                    context.getString(R.string.dl_m_updated, runtime.update())
+                                } catch (e: kotlinx.coroutines.CancellationException) {
+                                    throw e
+                                } catch (e: Exception) {
+                                    context.getString(R.string.dl_m_update_failed, e.message.orEmpty())
+                                }
+                                updatedAt = runtime.lastUpdate
+                                updating = false
+                                android.widget.Toast.makeText(context, msg, android.widget.Toast.LENGTH_LONG).show()
+                            }
+                        },
+                    )
+                    Preference(
+                        title = stringResource(R.string.dl_m_version, version ?: "?"),
+                        summary = stringResource(
+                            R.string.dl_m_last_update,
+                            if (updatedAt > 0) android.text.format.DateFormat.getMediumDateFormat(context).format(java.util.Date(updatedAt)) else stringResource(R.string.dl_m_never),
+                        ),
+                    )
+                    Preference(
+                        title = stringResource(R.string.dl_m_sites),
+                        summary = "github.com/yt-dlp/yt-dlp",
+                        onClick = {
+                            runCatching {
+                                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                            }
+                        },
+                    )
+                    val has = remember(cookiesVersion) { runtime.hasCookies }
+                    Preference(title = stringResource(if (has) R.string.dl_m_cookies_present else R.string.dl_m_cookies_absent))
+                    Column(Modifier.padding(horizontal = 16.dp)) {
+                        MediaCookieControls(runtime, null, onChanged = { cookiesVersion++ })
+                    }
+                }
+                Text(stringResource(R.string.dl_m_notice), style = androidx.compose.material3.MaterialTheme.typography.bodySmall, modifier = Modifier.padding(16.dp))
+            }
+        }
+        item {
             PreferenceCategory(title = stringResource(R.string.dl_settings_storage)) {
                 Preference(
                     title = stringResource(R.string.dl_default_folder),
@@ -105,6 +202,14 @@ fun DownloadsSettingsScreen() {
                         onClick = { store.update { it.copy(defaultFolder = "") } },
                     )
                 }
+                SwitchPreference(
+                    title = stringResource(R.string.dl_p3_auto_extract), summary = stringResource(R.string.dl_p3_auto_extract_sum),
+                    value = s.autoExtract, onValueChanged = { v -> store.update { it.copy(autoExtract = v) } },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.dl_p3_detect_clipboard), summary = stringResource(R.string.dl_p3_detect_clipboard_sum),
+                    value = s.detectClipboard, onValueChanged = { v -> store.update { it.copy(detectClipboard = v) } },
+                )
                 ListPreference(
                     title = stringResource(R.string.dl_after_finish),
                     items = listOf(
