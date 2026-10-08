@@ -27,6 +27,11 @@ interface CustomAttrsDao {
     @Query("SELECT DISTINCT `key` FROM CustomAttributes WHERE (type = 'label' OR type = 'tag') AND value LIKE :query")
     fun search(query: String): Flow<List<String>>
 
+    @Query("SELECT `key`, value FROM CustomAttributes WHERE type = 'label' OR type = 'tag'")
+    fun getAllLabelsAndTags(): Flow<List<KeyValue>>
+
+    data class KeyValue(val key: String, val value: String)
+
     @Transaction
     suspend fun setTags(key: String, tags: List<CustomAttributeEntity>) {
         clearCustomAttribute(key, "tag")

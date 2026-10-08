@@ -184,6 +184,7 @@ Conversion units: length (m, km, dm, cm, mm, in, ft, yd, mi, nmi), mass (kg, g, 
 
 - Match score: Jaro-Winkler plus prefix and substring bonus, capped at 1; a match on a secondary field counts 20 percent less. Apps need at least 0.8.
 - Usage weight rises with each launch. **Ranking flexibility** sets the step: Stable 0.01, Balanced 0.03 (default), Variable 0.1.
+- **Greek and Greeklish:** Greek matches with or without accents, in any case, and when typed with Latin letters (`kalimera`, `mpala`, `thelw`, `chartis`). Letters that sound alike are merged, so a few similar English words may match too. It covers apps, contacts, files, calendar, tags, notes and the Telos apps, but not results that a plugin searches itself.
 - Text is lower-cased and accent-stripped; ae, oe and ss are expanded; a **transliterator** (Settings > Language and region) lets non-Latin names match Latin input.
 - Places sort by distance when a location is cached. Quick actions keep their configured order. The empty-search drawer is alphabetical per profile (frozen apps can go last). Duplicates by item key are removed.
 
