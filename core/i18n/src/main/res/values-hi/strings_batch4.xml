@@ -338,4 +338,28 @@
     <string name="dl_p3_backup_group_downloads">डाउनलोड</string>
     <string name="dl_p3_backup_group_downloads_summary">डाउनलोड की सूची और Telos डाउनलोड की सेटिंग (डाउनलोड की गई फ़ाइलें और कुकीज़ नहीं)</string>
     <string name="dl_p3_download_with_telos">Telos से डाउनलोड करें</string>
+    <plurals name="dl_add_count">
+        <item quantity="one">%1$d डाउनलोड जोड़ें</item>
+        <item quantity="other">%1$d डाउनलोड जोड़ें</item>
+    </plurals>
+    <plurals name="dl_links_found">
+        <item quantity="one">%1$d लिंक मिला</item>
+        <item quantity="other">%1$d लिंक मिले</item>
+    </plurals>
+    <plurals name="dl_header_active">
+        <item quantity="one">%1$d सक्रिय डाउनलोड</item>
+        <item quantity="other">%1$d सक्रिय डाउनलोड</item>
+    </plurals>
+    <plurals name="dl_notification_downloading">
+        <item quantity="one">%1$d फ़ाइल डाउनलोड हो रही है</item>
+        <item quantity="other">%1$d फ़ाइलें डाउनलोड हो रही हैं</item>
+    </plurals>
+    <plurals name="dl_t_header_torrents">
+        <item quantity="one">%d सक्रिय टोरेंट</item>
+        <item quantity="other">%d सक्रिय टोरेंट</item>
+    </plurals>
+    <plurals name="dl_t_sources_found">
+        <item quantity="one">%d टोरेंट मिला</item>
+        <item quantity="other">%d टोरेंट मिले</item>
+    </plurals>
 </resources>
