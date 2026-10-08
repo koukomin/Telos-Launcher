@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Categorias sugeridas</string>
+    <string name="web_app_presets_summary">Adicione uma pasta pré-definida com sites populares como aplicações web. Nada é adicionado até a escolher, e cada pasta e aplicação web pode ser editada ou eliminada depois.</string>
+    <string name="web_app_presets_login_note">Inicie sessão no próprio site. As sessões são mantidas pelo navegador incorporado. Isto aplica-se apenas às aplicações web abertas no navegador incorporado; as abertas num navegador externo usam o início de sessão desse navegador.</string>
+    <string name="web_app_preset_category_social">Social</string>
+    <string name="web_app_preset_category_email">E-mail</string>
+    <string name="web_app_preset_category_messaging">Mensagens</string>
+    <string name="web_app_preset_category_video">Vídeo e música</string>
+    <string name="web_app_preset_category_work">Produtividade e trabalho</string>
+    <string name="web_app_preset_add">Adicionar</string>
+    <string name="web_app_preset_dialog_title">Adicionar %1$s</string>
+    <string name="web_app_preset_dialog_summary">Escolha as aplicações web a adicionar. São guardadas como qualquer aplicação web que crie.</string>
+    <string name="web_app_preset_exists">Já existe nas suas aplicações web, será reutilizada</string>
+    <string name="web_app_preset_confirm">Adicionar selecionadas</string>
+    <string name="web_app_preset_added">%1$s adicionado</string>
+    <string name="web_app_groups_title">Pastas</string>
+    <string name="web_app_groups_enable">Ativar pastas de aplicações web</string>
+    <string name="web_app_groups_enable_summary">Organize as aplicações web em pastas e restrinja o deslize por pasta</string>
+    <string name="web_app_groups_manage">Gerir pastas</string>
+    <string name="web_app_group_create">Criar nova pasta</string>
+    <string name="web_app_group_create_title">Criar pasta</string>
+    <string name="web_app_group_rename_title">Mudar o nome da pasta</string>
+    <string name="web_app_group_name">Nome da pasta</string>
+    <string name="web_app_group_create_confirm">Criar</string>
+    <string name="web_app_group_rename_confirm">Mudar nome</string>
+    <string name="web_app_group_apps_count">%1$d aplicações web</string>
+    <string name="web_app_group_notifications">Notificações</string>
+    <string name="web_app_group_label">Pasta</string>
+    <string name="web_app_group_none">Nenhuma</string>
+    <string name="web_app_group_delete_title">Eliminar pasta?</string>
+    <string name="web_app_group_delete_message">A pasta \"%1$s\" será eliminada. As aplicações web no seu interior são mantidas e ficam sem pasta.</string>
+    <string name="web_app_delete_title">Eliminar aplicação web?</string>
+    <string name="web_app_delete_message">\"%1$s\" será removida da pesquisa, do ecrã principal, das pastas e do painel de aplicações web. Esta ação não pode ser anulada.</string>
+    <string name="web_app_shortcut_ad_block">Bloqueador de anúncios</string>
+    <string name="web_app_shortcut_ad_block_global">Usar definição global</string>
+    <string name="web_app_shortcut_ad_block_on">Ativado</string>
+    <string name="web_app_shortcut_ad_block_off">Desativado</string>
+    <string name="web_app_shortcut_ad_block_summary">Aplica-se apenas ao navegador incorporado. Os navegadores externos (Custom Tabs) são controlados pela aplicação do navegador.</string>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Рекомендуемые категории</string>
+    <string name="web_app_presets_summary">Добавьте готовую папку с популярными сайтами в виде веб-приложений. Ничего не добавляется, пока вы не выберете, а каждую папку и веб-приложение потом можно изменить или удалить.</string>
+    <string name="web_app_presets_login_note">Входите на самом сайте. Данные для входа хранятся во встроенном браузере. Это относится только к веб-приложениям, открывающимся во встроенном браузере; веб-приложения во внешнем браузере используют вход этого браузера.</string>
+    <string name="web_app_preset_category_social">Соцсети</string>
+    <string name="web_app_preset_category_email">Почта</string>
+    <string name="web_app_preset_category_messaging">Мессенджеры</string>
+    <string name="web_app_preset_category_video">Видео и музыка</string>
+    <string name="web_app_preset_category_work">Продуктивность и работа</string>
+    <string name="web_app_preset_add">Добавить</string>
+    <string name="web_app_preset_dialog_title">Добавить: %1$s</string>
+    <string name="web_app_preset_dialog_summary">Выберите веб-приложения для добавления. Они сохраняются так же, как и созданные вами веб-приложения.</string>
+    <string name="web_app_preset_exists">Уже есть в ваших веб-приложениях, будет использовано повторно</string>
+    <string name="web_app_preset_confirm">Добавить выбранные</string>
+    <string name="web_app_preset_added">Добавлено: %1$s</string>
+    <string name="web_app_groups_title">Папки</string>
+    <string name="web_app_groups_enable">Включить папки веб-приложений</string>
+    <string name="web_app_groups_enable_summary">Группируйте веб-приложения по папкам и ограничивайте свайп для каждой папки</string>
+    <string name="web_app_groups_manage">Управление папками</string>
+    <string name="web_app_group_create">Создать новую папку</string>
+    <string name="web_app_group_create_title">Создать папку</string>
+    <string name="web_app_group_rename_title">Переименовать папку</string>
+    <string name="web_app_group_name">Название папки</string>
+    <string name="web_app_group_create_confirm">Создать</string>
+    <string name="web_app_group_rename_confirm">Переименовать</string>
+    <string name="web_app_group_apps_count">Веб-приложений: %1$d</string>
+    <string name="web_app_group_notifications">Уведомления</string>
+    <string name="web_app_group_label">Папка</string>
+    <string name="web_app_group_none">Нет</string>
+    <string name="web_app_group_delete_title">Удалить папку?</string>
+    <string name="web_app_group_delete_message">Папка «%1$s» будет удалена. Веб-приложения внутри сохранятся и окажутся вне папок.</string>
+    <string name="web_app_delete_title">Удалить веб-приложение?</string>
+    <string name="web_app_delete_message">«%1$s» будет удалено из поиска, с главного экрана, из папок и панели веб-приложений. Это действие нельзя отменить.</string>
+    <string name="web_app_shortcut_ad_block">Блокировщик рекламы</string>
+    <string name="web_app_shortcut_ad_block_global">Использовать общую настройку</string>
+    <string name="web_app_shortcut_ad_block_on">Вкл.</string>
+    <string name="web_app_shortcut_ad_block_off">Выкл.</string>
+    <string name="web_app_shortcut_ad_block_summary">Действует только во встроенном браузере. Внешними браузерами (Custom Tabs) управляет само приложение браузера.</string>
+</resources>

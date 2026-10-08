@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">প্রস্তাবিত বিভাগ</string>
+    <string name="web_app_presets_summary">জনপ্রিয় ওয়েবসাইট নিয়ে তৈরি একটি ফোল্ডার ওয়েব অ্যাপ হিসেবে যোগ করুন। আপনি বেছে না নেওয়া পর্যন্ত কিছুই যোগ হয় না, এবং প্রতিটি ফোল্ডার ও ওয়েব অ্যাপ পরে সম্পাদনা বা মুছে ফেলা যায়।</string>
+    <string name="web_app_presets_login_note">প্রতিটি ওয়েবসাইটে আলাদাভাবে সাইন ইন করুন। লগইন তথ্য এমবেডেড ব্রাউজারে সংরক্ষিত থাকে। এটি শুধু এমবেডেড ব্রাউজারে খোলা ওয়েব অ্যাপের ক্ষেত্রে প্রযোজ্য; বাহ্যিক ব্রাউজারে খোলা ওয়েব অ্যাপ সেই ব্রাউজারের নিজস্ব সাইন-ইন ব্যবহার করে।</string>
+    <string name="web_app_preset_category_social">সোশ্যাল</string>
+    <string name="web_app_preset_category_email">ইমেইল</string>
+    <string name="web_app_preset_category_messaging">মেসেজিং</string>
+    <string name="web_app_preset_category_video">ভিডিও ও সঙ্গীত</string>
+    <string name="web_app_preset_category_work">প্রোডাক্টিভিটি ও কাজ</string>
+    <string name="web_app_preset_add">যোগ করুন</string>
+    <string name="web_app_preset_dialog_title">%1$s যোগ করুন</string>
+    <string name="web_app_preset_dialog_summary">যে ওয়েব অ্যাপগুলো যোগ করতে চান সেগুলো বেছে নিন। আপনার নিজের তৈরি ওয়েব অ্যাপের মতোই এগুলো সংরক্ষিত হবে।</string>
+    <string name="web_app_preset_exists">আপনার ওয়েব অ্যাপে আগে থেকেই আছে, আবার ব্যবহার করা হবে</string>
+    <string name="web_app_preset_confirm">নির্বাচিতগুলো যোগ করুন</string>
+    <string name="web_app_preset_added">%1$s যোগ করা হয়েছে</string>
+    <string name="web_app_groups_title">ফোল্ডার</string>
+    <string name="web_app_groups_enable">ওয়েব অ্যাপ ফোল্ডার চালু করুন</string>
+    <string name="web_app_groups_enable_summary">ওয়েব অ্যাপগুলো ফোল্ডারে সাজান এবং প্রতিটি ফোল্ডারের জন্য সোয়াইপ সীমিত করুন</string>
+    <string name="web_app_groups_manage">ফোল্ডার পরিচালনা করুন</string>
+    <string name="web_app_group_create">নতুন ফোল্ডার তৈরি করুন</string>
+    <string name="web_app_group_create_title">ফোল্ডার তৈরি করুন</string>
+    <string name="web_app_group_rename_title">ফোল্ডারের নাম পরিবর্তন করুন</string>
+    <string name="web_app_group_name">ফোল্ডারের নাম</string>
+    <string name="web_app_group_create_confirm">তৈরি করুন</string>
+    <string name="web_app_group_rename_confirm">নাম পরিবর্তন করুন</string>
+    <string name="web_app_group_apps_count">%1$dটি ওয়েব অ্যাপ</string>
+    <string name="web_app_group_notifications">বিজ্ঞপ্তি</string>
+    <string name="web_app_group_label">ফোল্ডার</string>
+    <string name="web_app_group_none">কোনোটিই নয়</string>
+    <string name="web_app_group_delete_title">ফোল্ডার মুছবেন?</string>
+    <string name="web_app_group_delete_message">\"%1$s\" ফোল্ডারটি মুছে ফেলা হবে। ভেতরের ওয়েব অ্যাপগুলো থেকে যাবে এবং গ্রুপহীন হয়ে যাবে।</string>
+    <string name="web_app_delete_title">ওয়েব অ্যাপ মুছবেন?</string>
+    <string name="web_app_delete_message">\"%1$s\" অনুসন্ধান, হোম স্ক্রিন, ফোল্ডার এবং ওয়েব অ্যাপ প্যানেল থেকে সরিয়ে ফেলা হবে। এটি ফিরিয়ে আনা যাবে না।</string>
+    <string name="web_app_shortcut_ad_block">বিজ্ঞাপন ব্লকার</string>
+    <string name="web_app_shortcut_ad_block_global">গ্লোবাল সেটিং ব্যবহার করুন</string>
+    <string name="web_app_shortcut_ad_block_on">চালু</string>
+    <string name="web_app_shortcut_ad_block_off">বন্ধ</string>
+    <string name="web_app_shortcut_ad_block_summary">শুধু এমবেডেড ব্রাউজারের ক্ষেত্রে প্রযোজ্য। বাহ্যিক ব্রাউজার (Custom Tabs) ব্রাউজার অ্যাপ নিয়ন্ত্রণ করে।</string>
+</resources>

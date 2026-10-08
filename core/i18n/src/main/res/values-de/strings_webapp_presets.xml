@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Vorgeschlagene Kategorien</string>
+    <string name="web_app_presets_summary">Füge einen vorgefertigten Ordner mit beliebten Websites als Web-Apps hinzu. Es wird nichts hinzugefügt, bevor du es auswählst, und jeder Ordner und jede Web-App kann danach bearbeitet oder gelöscht werden.</string>
+    <string name="web_app_presets_login_note">Melde dich auf der jeweiligen Website selbst an. Anmeldungen werden vom eingebetteten Browser gespeichert. Das gilt nur für Web-Apps, die im eingebetteten Browser geöffnet werden; Web-Apps in einem externen Browser verwenden dessen eigene Anmeldung.</string>
+    <string name="web_app_preset_category_social">Soziale Netzwerke</string>
+    <string name="web_app_preset_category_email">E-Mail</string>
+    <string name="web_app_preset_category_messaging">Messaging</string>
+    <string name="web_app_preset_category_video">Video &amp; Musik</string>
+    <string name="web_app_preset_category_work">Produktivität &amp; Arbeit</string>
+    <string name="web_app_preset_add">Hinzufügen</string>
+    <string name="web_app_preset_dialog_title">%1$s hinzufügen</string>
+    <string name="web_app_preset_dialog_summary">Wähle die Web-Apps aus, die hinzugefügt werden sollen. Sie werden wie jede selbst erstellte Web-App gespeichert.</string>
+    <string name="web_app_preset_exists">Bereits in deinen Web-Apps, wird wiederverwendet</string>
+    <string name="web_app_preset_confirm">Auswahl hinzufügen</string>
+    <string name="web_app_preset_added">%1$s hinzugefügt</string>
+    <string name="web_app_groups_title">Ordner</string>
+    <string name="web_app_groups_enable">Web-App-Ordner aktivieren</string>
+    <string name="web_app_groups_enable_summary">Web-Apps in Ordnern organisieren und das Wischen pro Ordner einschränken</string>
+    <string name="web_app_groups_manage">Ordner verwalten</string>
+    <string name="web_app_group_create">Neuen Ordner erstellen</string>
+    <string name="web_app_group_create_title">Ordner erstellen</string>
+    <string name="web_app_group_rename_title">Ordner umbenennen</string>
+    <string name="web_app_group_name">Ordnername</string>
+    <string name="web_app_group_create_confirm">Erstellen</string>
+    <string name="web_app_group_rename_confirm">Umbenennen</string>
+    <string name="web_app_group_apps_count">%1$d Web-Apps</string>
+    <string name="web_app_group_notifications">Benachrichtigungen</string>
+    <string name="web_app_group_label">Ordner</string>
+    <string name="web_app_group_none">Keiner</string>
+    <string name="web_app_group_delete_title">Ordner löschen?</string>
+    <string name="web_app_group_delete_message">Der Ordner „%1$s“ wird gelöscht. Die enthaltenen Web-Apps bleiben erhalten und sind danach keinem Ordner mehr zugeordnet.</string>
+    <string name="web_app_delete_title">Web-App löschen?</string>
+    <string name="web_app_delete_message">„%1$s“ wird aus der Suche, vom Startbildschirm, aus Ordnern und aus dem Web-App-Bereich entfernt. Das kann nicht rückgängig gemacht werden.</string>
+    <string name="web_app_shortcut_ad_block">Werbeblocker</string>
+    <string name="web_app_shortcut_ad_block_global">Globale Einstellung verwenden</string>
+    <string name="web_app_shortcut_ad_block_on">An</string>
+    <string name="web_app_shortcut_ad_block_off">Aus</string>
+    <string name="web_app_shortcut_ad_block_summary">Gilt nur für den eingebetteten Browser. Externe Browser (Custom Tabs) werden von der Browser-App gesteuert.</string>
+</resources>

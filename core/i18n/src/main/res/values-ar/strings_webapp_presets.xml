@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">فئات مقترحة</string>
+    <string name="web_app_presets_summary">أضف مجلدًا جاهزًا يضم مواقع شائعة كتطبيقات ويب. لن تتم إضافة أي شيء حتى تختاره، ويمكن تعديل أي مجلد أو تطبيق ويب أو حذفه لاحقًا.</string>
+    <string name="web_app_presets_login_note">سجّل الدخول في كل موقع على حدة. يحتفظ المتصفح المضمّن ببيانات تسجيل الدخول. ينطبق هذا فقط على تطبيقات الويب التي تُفتح في المتصفح المضمّن، أما تطبيقات الويب التي تُفتح في متصفح خارجي فتستخدم تسجيل الدخول الخاص بذلك المتصفح.</string>
+    <string name="web_app_preset_category_social">التواصل الاجتماعي</string>
+    <string name="web_app_preset_category_email">البريد الإلكتروني</string>
+    <string name="web_app_preset_category_messaging">المراسلة</string>
+    <string name="web_app_preset_category_video">الفيديو والموسيقى</string>
+    <string name="web_app_preset_category_work">الإنتاجية والعمل</string>
+    <string name="web_app_preset_add">إضافة</string>
+    <string name="web_app_preset_dialog_title">إضافة %1$s</string>
+    <string name="web_app_preset_dialog_summary">اختر تطبيقات الويب التي تريد إضافتها. تُحفظ بالطريقة نفسها التي تُحفظ بها تطبيقات الويب التي تنشئها بنفسك.</string>
+    <string name="web_app_preset_exists">موجود بالفعل في تطبيقات الويب لديك وسيُعاد استخدامه</string>
+    <string name="web_app_preset_confirm">إضافة المحدد</string>
+    <string name="web_app_preset_added">تمت إضافة %1$s</string>
+    <string name="web_app_groups_title">المجلدات</string>
+    <string name="web_app_groups_enable">تفعيل مجلدات تطبيقات الويب</string>
+    <string name="web_app_groups_enable_summary">نظّم تطبيقات الويب في مجلدات وقيّد التمرير لكل مجلد</string>
+    <string name="web_app_groups_manage">إدارة المجلدات</string>
+    <string name="web_app_group_create">إنشاء مجلد جديد</string>
+    <string name="web_app_group_create_title">إنشاء مجلد</string>
+    <string name="web_app_group_rename_title">إعادة تسمية المجلد</string>
+    <string name="web_app_group_name">اسم المجلد</string>
+    <string name="web_app_group_create_confirm">إنشاء</string>
+    <string name="web_app_group_rename_confirm">إعادة التسمية</string>
+    <string name="web_app_group_apps_count">%1$d من تطبيقات الويب</string>
+    <string name="web_app_group_notifications">الإشعارات</string>
+    <string name="web_app_group_label">المجلد</string>
+    <string name="web_app_group_none">بلا</string>
+    <string name="web_app_group_delete_title">حذف المجلد؟</string>
+    <string name="web_app_group_delete_message">سيتم حذف المجلد \"%1$s\". تبقى تطبيقات الويب الموجودة بداخله وتصبح بلا مجموعة.</string>
+    <string name="web_app_delete_title">حذف تطبيق الويب؟</string>
+    <string name="web_app_delete_message">ستتم إزالة \"%1$s\" من البحث والشاشة الرئيسية والمجلدات ولوحة تطبيقات الويب. لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="web_app_shortcut_ad_block">حاجب الإعلانات</string>
+    <string name="web_app_shortcut_ad_block_global">استخدام الإعداد العام</string>
+    <string name="web_app_shortcut_ad_block_on">مفعّل</string>
+    <string name="web_app_shortcut_ad_block_off">متوقف</string>
+    <string name="web_app_shortcut_ad_block_summary">ينطبق على المتصفح المضمّن فقط. أما المتصفحات الخارجية (Custom Tabs) فيتحكم بها تطبيق المتصفح.</string>
+</resources>

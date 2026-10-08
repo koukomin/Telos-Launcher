@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Navrhované kategórie</string>
+    <string name="web_app_presets_summary">Pridajte hotový priečinok s obľúbenými webmi ako webovými aplikáciami. Nič sa nepridá, kým to nevyberiete, a každý priečinok aj webovú aplikáciu možno neskôr upraviť alebo odstrániť.</string>
+    <string name="web_app_presets_login_note">Prihláste sa priamo na každom webe. Prihlásenie si pamätá vstavaný prehliadač. Platí to len pre webové aplikácie otvárané vo vstavanom prehliadači; webové aplikácie otvárané v externom prehliadači používajú jeho vlastné prihlásenie.</string>
+    <string name="web_app_preset_category_social">Sociálne siete</string>
+    <string name="web_app_preset_category_email">E-mail</string>
+    <string name="web_app_preset_category_messaging">Správy</string>
+    <string name="web_app_preset_category_video">Video a hudba</string>
+    <string name="web_app_preset_category_work">Produktivita a práca</string>
+    <string name="web_app_preset_add">Pridať</string>
+    <string name="web_app_preset_dialog_title">Pridať: %1$s</string>
+    <string name="web_app_preset_dialog_summary">Vyberte webové aplikácie, ktoré chcete pridať. Uložia sa rovnako ako webové aplikácie, ktoré vytvoríte sami.</string>
+    <string name="web_app_preset_exists">Už medzi vašimi webovými aplikáciami, bude sa znova používať</string>
+    <string name="web_app_preset_confirm">Pridať vybrané</string>
+    <string name="web_app_preset_added">Pridané: %1$s</string>
+    <string name="web_app_groups_title">Priečinky</string>
+    <string name="web_app_groups_enable">Povoliť priečinky webových aplikácií</string>
+    <string name="web_app_groups_enable_summary">Usporiadajte webové aplikácie do priečinkov a obmedzte potiahnutie pre každý priečinok</string>
+    <string name="web_app_groups_manage">Spravovať priečinky</string>
+    <string name="web_app_group_create">Vytvoriť nový priečinok</string>
+    <string name="web_app_group_create_title">Vytvoriť priečinok</string>
+    <string name="web_app_group_rename_title">Premenovať priečinok</string>
+    <string name="web_app_group_name">Názov priečinka</string>
+    <string name="web_app_group_create_confirm">Vytvoriť</string>
+    <string name="web_app_group_rename_confirm">Premenovať</string>
+    <string name="web_app_group_apps_count">Webové aplikácie: %1$d</string>
+    <string name="web_app_group_notifications">Upozornenia</string>
+    <string name="web_app_group_label">Priečinok</string>
+    <string name="web_app_group_none">Žiadny</string>
+    <string name="web_app_group_delete_title">Odstrániť priečinok?</string>
+    <string name="web_app_group_delete_message">Priečinok „%1$s“ bude odstránený. Webové aplikácie v ňom zostanú zachované a prestanú byť zoskupené.</string>
+    <string name="web_app_delete_title">Odstrániť webovú aplikáciu?</string>
+    <string name="web_app_delete_message">„%1$s“ bude odstránená z vyhľadávania, domovskej obrazovky, priečinkov a panela webových aplikácií. Túto akciu nemožno vrátiť späť.</string>
+    <string name="web_app_shortcut_ad_block">Blokovanie reklám</string>
+    <string name="web_app_shortcut_ad_block_global">Použiť globálne nastavenie</string>
+    <string name="web_app_shortcut_ad_block_on">Zapnuté</string>
+    <string name="web_app_shortcut_ad_block_off">Vypnuté</string>
+    <string name="web_app_shortcut_ad_block_summary">Platí len pre vstavaný prehliadač. Externé prehliadače (Custom Tabs) riadi aplikácia prehliadača.</string>
+</resources>

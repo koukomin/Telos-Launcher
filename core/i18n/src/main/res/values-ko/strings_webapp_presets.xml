@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">추천 카테고리</string>
+    <string name="web_app_presets_summary">인기 웹사이트를 웹 앱으로 담은 폴더를 추가합니다. 직접 선택하기 전에는 아무것도 추가되지 않으며, 모든 폴더와 웹 앱은 나중에 편집하거나 삭제할 수 있습니다.</string>
+    <string name="web_app_presets_login_note">각 웹사이트에서 직접 로그인하세요. 로그인 정보는 내장 브라우저에 유지됩니다. 이 내용은 내장 브라우저에서 열리는 웹 앱에만 적용되며, 외부 브라우저에서 열리는 웹 앱은 해당 브라우저의 로그인 상태를 사용합니다.</string>
+    <string name="web_app_preset_category_social">소셜</string>
+    <string name="web_app_preset_category_email">이메일</string>
+    <string name="web_app_preset_category_messaging">메신저</string>
+    <string name="web_app_preset_category_video">동영상 및 음악</string>
+    <string name="web_app_preset_category_work">생산성 및 업무</string>
+    <string name="web_app_preset_add">추가</string>
+    <string name="web_app_preset_dialog_title">%1$s 추가</string>
+    <string name="web_app_preset_dialog_summary">추가할 웹 앱을 선택하세요. 직접 만든 웹 앱과 동일하게 저장됩니다.</string>
+    <string name="web_app_preset_exists">이미 내 웹 앱에 있어 그대로 사용됩니다</string>
+    <string name="web_app_preset_confirm">선택 항목 추가</string>
+    <string name="web_app_preset_added">%1$s을(를) 추가했습니다</string>
+    <string name="web_app_groups_title">폴더</string>
+    <string name="web_app_groups_enable">웹 앱 폴더 사용</string>
+    <string name="web_app_groups_enable_summary">웹 앱을 폴더로 정리하고 폴더별로 스와이프를 제한합니다</string>
+    <string name="web_app_groups_manage">폴더 관리</string>
+    <string name="web_app_group_create">새 폴더 만들기</string>
+    <string name="web_app_group_create_title">폴더 만들기</string>
+    <string name="web_app_group_rename_title">폴더 이름 바꾸기</string>
+    <string name="web_app_group_name">폴더 이름</string>
+    <string name="web_app_group_create_confirm">만들기</string>
+    <string name="web_app_group_rename_confirm">이름 바꾸기</string>
+    <string name="web_app_group_apps_count">웹 앱 %1$d개</string>
+    <string name="web_app_group_notifications">알림</string>
+    <string name="web_app_group_label">폴더</string>
+    <string name="web_app_group_none">없음</string>
+    <string name="web_app_group_delete_title">폴더를 삭제할까요?</string>
+    <string name="web_app_group_delete_message">\"%1$s\" 폴더가 삭제됩니다. 폴더 안의 웹 앱은 유지되며 그룹 없음 상태가 됩니다.</string>
+    <string name="web_app_delete_title">웹 앱을 삭제할까요?</string>
+    <string name="web_app_delete_message">\"%1$s\"이(가) 검색, 홈 화면, 폴더 및 웹 앱 패널에서 삭제됩니다. 이 작업은 되돌릴 수 없습니다.</string>
+    <string name="web_app_shortcut_ad_block">광고 차단</string>
+    <string name="web_app_shortcut_ad_block_global">전체 설정 사용</string>
+    <string name="web_app_shortcut_ad_block_on">켜짐</string>
+    <string name="web_app_shortcut_ad_block_off">꺼짐</string>
+    <string name="web_app_shortcut_ad_block_summary">내장 브라우저에만 적용됩니다. 외부 브라우저(Custom Tabs)는 브라우저 앱에서 제어합니다.</string>
+</resources>

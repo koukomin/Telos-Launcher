@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">おすすめのカテゴリ</string>
+    <string name="web_app_presets_summary">人気のウェブサイトをウェブアプリとしてまとめたフォルダを追加します。選択するまで何も追加されず、フォルダとウェブアプリはあとから編集や削除ができます。</string>
+    <string name="web_app_presets_login_note">ログインは各ウェブサイト上で行ってください。ログイン情報は内蔵ブラウザに保持されます。これは内蔵ブラウザで開くウェブアプリにのみ適用されます。外部ブラウザで開くウェブアプリには、そのブラウザ自体のログイン状態が使われます。</string>
+    <string name="web_app_preset_category_social">ソーシャル</string>
+    <string name="web_app_preset_category_email">メール</string>
+    <string name="web_app_preset_category_messaging">メッセージ</string>
+    <string name="web_app_preset_category_video">動画・音楽</string>
+    <string name="web_app_preset_category_work">仕事効率化</string>
+    <string name="web_app_preset_add">追加</string>
+    <string name="web_app_preset_dialog_title">%1$sを追加</string>
+    <string name="web_app_preset_dialog_summary">追加するウェブアプリを選択してください。自分で作成したウェブアプリと同じように保存されます。</string>
+    <string name="web_app_preset_exists">すでにウェブアプリにあるため、再利用されます</string>
+    <string name="web_app_preset_confirm">選択したものを追加</string>
+    <string name="web_app_preset_added">%1$sを追加しました</string>
+    <string name="web_app_groups_title">フォルダ</string>
+    <string name="web_app_groups_enable">ウェブアプリのフォルダを有効にする</string>
+    <string name="web_app_groups_enable_summary">ウェブアプリをフォルダで整理し、フォルダごとにスワイプを制限します</string>
+    <string name="web_app_groups_manage">フォルダを管理</string>
+    <string name="web_app_group_create">新しいフォルダを作成</string>
+    <string name="web_app_group_create_title">フォルダを作成</string>
+    <string name="web_app_group_rename_title">フォルダ名を変更</string>
+    <string name="web_app_group_name">フォルダ名</string>
+    <string name="web_app_group_create_confirm">作成</string>
+    <string name="web_app_group_rename_confirm">名前を変更</string>
+    <string name="web_app_group_apps_count">ウェブアプリ %1$d 件</string>
+    <string name="web_app_group_notifications">通知</string>
+    <string name="web_app_group_label">フォルダ</string>
+    <string name="web_app_group_none">なし</string>
+    <string name="web_app_group_delete_title">フォルダを削除しますか？</string>
+    <string name="web_app_group_delete_message">フォルダ「%1$s」を削除します。中のウェブアプリは削除されず、グループなしになります。</string>
+    <string name="web_app_delete_title">ウェブアプリを削除しますか？</string>
+    <string name="web_app_delete_message">「%1$s」は検索、ホーム画面、フォルダ、ウェブアプリパネルから削除されます。この操作は元に戻せません。</string>
+    <string name="web_app_shortcut_ad_block">広告ブロック</string>
+    <string name="web_app_shortcut_ad_block_global">全体設定を使用</string>
+    <string name="web_app_shortcut_ad_block_on">オン</string>
+    <string name="web_app_shortcut_ad_block_off">オフ</string>
+    <string name="web_app_shortcut_ad_block_summary">内蔵ブラウザにのみ適用されます。外部ブラウザ（Custom Tabs）はブラウザアプリ側で制御されます。</string>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Predlagane kategorije</string>
+    <string name="web_app_presets_summary">Dodajte pripravljeno mapo s priljubljenimi spletnimi mesti kot spletnimi aplikacijami. Nič se ne doda, dokler tega ne izberete, vsako mapo in spletno aplikacijo pa lahko pozneje urejate ali izbrišete.</string>
+    <string name="web_app_presets_login_note">Prijavite se na samem spletnem mestu. Prijave si zapomni vgrajeni brskalnik. To velja le za spletne aplikacije, ki se odprejo v vgrajenem brskalniku; spletne aplikacije, odprte v zunanjem brskalniku, uporabljajo njegovo lastno prijavo.</string>
+    <string name="web_app_preset_category_social">Družbena omrežja</string>
+    <string name="web_app_preset_category_email">E-pošta</string>
+    <string name="web_app_preset_category_messaging">Sporočanje</string>
+    <string name="web_app_preset_category_video">Video in glasba</string>
+    <string name="web_app_preset_category_work">Produktivnost in delo</string>
+    <string name="web_app_preset_add">Dodaj</string>
+    <string name="web_app_preset_dialog_title">Dodaj: %1$s</string>
+    <string name="web_app_preset_dialog_summary">Izberite spletne aplikacije za dodajanje. Shranjene bodo enako kot spletne aplikacije, ki jih ustvarite sami.</string>
+    <string name="web_app_preset_exists">Že med vašimi spletnimi aplikacijami, bo ponovno uporabljena</string>
+    <string name="web_app_preset_confirm">Dodaj izbrano</string>
+    <string name="web_app_preset_added">Dodano: %1$s</string>
+    <string name="web_app_groups_title">Mape</string>
+    <string name="web_app_groups_enable">Omogoči mape spletnih aplikacij</string>
+    <string name="web_app_groups_enable_summary">Razvrstite spletne aplikacije v mape in omejite podrsanje za posamezno mapo</string>
+    <string name="web_app_groups_manage">Upravljaj mape</string>
+    <string name="web_app_group_create">Ustvari novo mapo</string>
+    <string name="web_app_group_create_title">Ustvari mapo</string>
+    <string name="web_app_group_rename_title">Preimenuj mapo</string>
+    <string name="web_app_group_name">Ime mape</string>
+    <string name="web_app_group_create_confirm">Ustvari</string>
+    <string name="web_app_group_rename_confirm">Preimenuj</string>
+    <string name="web_app_group_apps_count">Spletne aplikacije: %1$d</string>
+    <string name="web_app_group_notifications">Obvestila</string>
+    <string name="web_app_group_label">Mapa</string>
+    <string name="web_app_group_none">Brez</string>
+    <string name="web_app_group_delete_title">Izbrišem mapo?</string>
+    <string name="web_app_group_delete_message">Mapa »%1$s« bo izbrisana. Spletne aplikacije v njej bodo ohranjene in ne bodo več združene.</string>
+    <string name="web_app_delete_title">Izbrišem spletno aplikacijo?</string>
+    <string name="web_app_delete_message">»%1$s« bo odstranjena iz iskanja, domačega zaslona, map in plošče spletnih aplikacij. Tega ni mogoče razveljaviti.</string>
+    <string name="web_app_shortcut_ad_block">Blokiranje oglasov</string>
+    <string name="web_app_shortcut_ad_block_global">Uporabi splošno nastavitev</string>
+    <string name="web_app_shortcut_ad_block_on">Vklopljeno</string>
+    <string name="web_app_shortcut_ad_block_off">Izklopljeno</string>
+    <string name="web_app_shortcut_ad_block_summary">Velja le za vgrajeni brskalnik. Zunanje brskalnike (Custom Tabs) nadzira aplikacija brskalnika.</string>
+</resources>

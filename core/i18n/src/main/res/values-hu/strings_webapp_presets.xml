@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Javasolt kategóriák</string>
+    <string name="web_app_presets_summary">Adj hozzá egy kész mappát népszerű weboldalakkal webalkalmazásként. Semmi sem kerül hozzáadásra, amíg nem választod ki, és minden mappa és webalkalmazás később szerkeszthető vagy törölhető.</string>
+    <string name="web_app_presets_login_note">Jelentkezz be magán a weboldalon. A bejelentkezéseket a beágyazott böngésző őrzi meg. Ez csak a beágyazott böngészőben megnyíló webalkalmazásokra vonatkozik; a külső böngészőben megnyitott webalkalmazások a böngésző saját bejelentkezését használják.</string>
+    <string name="web_app_preset_category_social">Közösségi</string>
+    <string name="web_app_preset_category_email">E-mail</string>
+    <string name="web_app_preset_category_messaging">Üzenetküldés</string>
+    <string name="web_app_preset_category_video">Videó és zene</string>
+    <string name="web_app_preset_category_work">Termelékenység és munka</string>
+    <string name="web_app_preset_add">Hozzáadás</string>
+    <string name="web_app_preset_dialog_title">%1$s hozzáadása</string>
+    <string name="web_app_preset_dialog_summary">Válaszd ki a hozzáadandó webalkalmazásokat. Ugyanúgy mentődnek, mint a saját magad által létrehozott webalkalmazások.</string>
+    <string name="web_app_preset_exists">Már szerepel a webalkalmazásaid között, újra felhasználjuk</string>
+    <string name="web_app_preset_confirm">Kijelöltek hozzáadása</string>
+    <string name="web_app_preset_added">%1$s hozzáadva</string>
+    <string name="web_app_groups_title">Mappák</string>
+    <string name="web_app_groups_enable">Webalkalmazás-mappák engedélyezése</string>
+    <string name="web_app_groups_enable_summary">Rendezd a webalkalmazásokat mappákba, és korlátozd a húzást mappánként</string>
+    <string name="web_app_groups_manage">Mappák kezelése</string>
+    <string name="web_app_group_create">Új mappa létrehozása</string>
+    <string name="web_app_group_create_title">Mappa létrehozása</string>
+    <string name="web_app_group_rename_title">Mappa átnevezése</string>
+    <string name="web_app_group_name">Mappa neve</string>
+    <string name="web_app_group_create_confirm">Létrehozás</string>
+    <string name="web_app_group_rename_confirm">Átnevezés</string>
+    <string name="web_app_group_apps_count">%1$d webalkalmazás</string>
+    <string name="web_app_group_notifications">Értesítések</string>
+    <string name="web_app_group_label">Mappa</string>
+    <string name="web_app_group_none">Nincs</string>
+    <string name="web_app_group_delete_title">Törlöd a mappát?</string>
+    <string name="web_app_group_delete_message">A(z) „%1$s” mappa törlődik. A benne lévő webalkalmazások megmaradnak, és kikerülnek a csoportosításból.</string>
+    <string name="web_app_delete_title">Törlöd a webalkalmazást?</string>
+    <string name="web_app_delete_message">A(z) „%1$s” el lesz távolítva a keresésből, a kezdőképernyőről, a mappákból és a webalkalmazások paneljéről. Ez nem vonható vissza.</string>
+    <string name="web_app_shortcut_ad_block">Hirdetésblokkoló</string>
+    <string name="web_app_shortcut_ad_block_global">Globális beállítás használata</string>
+    <string name="web_app_shortcut_ad_block_on">Be</string>
+    <string name="web_app_shortcut_ad_block_off">Ki</string>
+    <string name="web_app_shortcut_ad_block_summary">Csak a beágyazott böngészőre vonatkozik. A külső böngészőket (Custom Tabs) a böngészőalkalmazás vezérli.</string>
+</resources>

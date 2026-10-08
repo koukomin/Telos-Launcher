@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">सुझाई गई श्रेणियाँ</string>
+    <string name="web_app_presets_summary">लोकप्रिय वेबसाइटों वाला तैयार फ़ोल्डर वेब ऐप्स के रूप में जोड़ें। जब तक आप चुनते नहीं, कुछ भी नहीं जुड़ता, और हर फ़ोल्डर और वेब ऐप को बाद में बदला या हटाया जा सकता है।</string>
+    <string name="web_app_presets_login_note">हर वेबसाइट पर अलग से साइन इन करें। लॉगिन एम्बेडेड ब्राउज़र में सहेजे जाते हैं। यह केवल उन वेब ऐप्स पर लागू होता है जो एम्बेडेड ब्राउज़र में खुलते हैं; बाहरी ब्राउज़र में खुलने वाले वेब ऐप्स उस ब्राउज़र के अपने साइन-इन का उपयोग करते हैं।</string>
+    <string name="web_app_preset_category_social">सोशल</string>
+    <string name="web_app_preset_category_email">ईमेल</string>
+    <string name="web_app_preset_category_messaging">मैसेजिंग</string>
+    <string name="web_app_preset_category_video">वीडियो और संगीत</string>
+    <string name="web_app_preset_category_work">उत्पादकता और कार्य</string>
+    <string name="web_app_preset_add">जोड़ें</string>
+    <string name="web_app_preset_dialog_title">%1$s जोड़ें</string>
+    <string name="web_app_preset_dialog_summary">जोड़ने के लिए वेब ऐप्स चुनें। वे उसी तरह सहेजे जाते हैं जैसे आपके खुद बनाए वेब ऐप्स।</string>
+    <string name="web_app_preset_exists">आपके वेब ऐप्स में पहले से मौजूद है, दोबारा उपयोग किया जाएगा</string>
+    <string name="web_app_preset_confirm">चुने हुए जोड़ें</string>
+    <string name="web_app_preset_added">%1$s जोड़ा गया</string>
+    <string name="web_app_groups_title">फ़ोल्डर</string>
+    <string name="web_app_groups_enable">वेब ऐप फ़ोल्डर चालू करें</string>
+    <string name="web_app_groups_enable_summary">वेब ऐप्स को फ़ोल्डरों में व्यवस्थित करें और हर फ़ोल्डर के लिए स्वाइप सीमित करें</string>
+    <string name="web_app_groups_manage">फ़ोल्डर प्रबंधित करें</string>
+    <string name="web_app_group_create">नया फ़ोल्डर बनाएँ</string>
+    <string name="web_app_group_create_title">फ़ोल्डर बनाएँ</string>
+    <string name="web_app_group_rename_title">फ़ोल्डर का नाम बदलें</string>
+    <string name="web_app_group_name">फ़ोल्डर का नाम</string>
+    <string name="web_app_group_create_confirm">बनाएँ</string>
+    <string name="web_app_group_rename_confirm">नाम बदलें</string>
+    <string name="web_app_group_apps_count">%1$d वेब ऐप्स</string>
+    <string name="web_app_group_notifications">सूचनाएँ</string>
+    <string name="web_app_group_label">फ़ोल्डर</string>
+    <string name="web_app_group_none">कोई नहीं</string>
+    <string name="web_app_group_delete_title">फ़ोल्डर हटाएँ?</string>
+    <string name="web_app_group_delete_message">फ़ोल्डर \"%1$s\" हटा दिया जाएगा। इसके अंदर के वेब ऐप्स बने रहेंगे और बिना समूह के हो जाएँगे।</string>
+    <string name="web_app_delete_title">वेब ऐप हटाएँ?</string>
+    <string name="web_app_delete_message">\"%1$s\" को खोज, होम स्क्रीन, फ़ोल्डर और वेब ऐप्स पैनल से हटा दिया जाएगा। इसे पहले जैसा नहीं किया जा सकता।</string>
+    <string name="web_app_shortcut_ad_block">विज्ञापन ब्लॉकर</string>
+    <string name="web_app_shortcut_ad_block_global">वैश्विक सेटिंग का उपयोग करें</string>
+    <string name="web_app_shortcut_ad_block_on">चालू</string>
+    <string name="web_app_shortcut_ad_block_off">बंद</string>
+    <string name="web_app_shortcut_ad_block_summary">केवल एम्बेडेड ब्राउज़र पर लागू होता है। बाहरी ब्राउज़र (Custom Tabs) को ब्राउज़र ऐप नियंत्रित करता है।</string>
+</resources>

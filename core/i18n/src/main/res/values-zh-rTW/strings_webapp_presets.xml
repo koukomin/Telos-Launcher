@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">建議分類</string>
+    <string name="web_app_presets_summary">新增包含熱門網站的現成資料夾，網站會以網頁應用程式的形式加入。在您選擇之前不會新增任何內容，之後每個資料夾與網頁應用程式都可以編輯或刪除。</string>
+    <string name="web_app_presets_login_note">請在各網站內登入，登入狀態由內嵌瀏覽器保存。此說明僅適用於在內嵌瀏覽器中開啟的網頁應用程式；在外部瀏覽器中開啟的網頁應用程式會使用該瀏覽器本身的登入狀態。</string>
+    <string name="web_app_preset_category_social">社群</string>
+    <string name="web_app_preset_category_email">電子郵件</string>
+    <string name="web_app_preset_category_messaging">即時通訊</string>
+    <string name="web_app_preset_category_video">影音與音樂</string>
+    <string name="web_app_preset_category_work">生產力與工作</string>
+    <string name="web_app_preset_add">新增</string>
+    <string name="web_app_preset_dialog_title">新增%1$s</string>
+    <string name="web_app_preset_dialog_summary">選擇要新增的網頁應用程式。它們的儲存方式與您自行建立的網頁應用程式相同。</string>
+    <string name="web_app_preset_exists">已在您的網頁應用程式中，將直接重複使用</string>
+    <string name="web_app_preset_confirm">新增所選項目</string>
+    <string name="web_app_preset_added">已新增%1$s</string>
+    <string name="web_app_groups_title">資料夾</string>
+    <string name="web_app_groups_enable">啟用網頁應用程式資料夾</string>
+    <string name="web_app_groups_enable_summary">將網頁應用程式整理到資料夾中，並可依資料夾限制滑動</string>
+    <string name="web_app_groups_manage">管理資料夾</string>
+    <string name="web_app_group_create">建立新資料夾</string>
+    <string name="web_app_group_create_title">建立資料夾</string>
+    <string name="web_app_group_rename_title">重新命名資料夾</string>
+    <string name="web_app_group_name">資料夾名稱</string>
+    <string name="web_app_group_create_confirm">建立</string>
+    <string name="web_app_group_rename_confirm">重新命名</string>
+    <string name="web_app_group_apps_count">%1$d 個網頁應用程式</string>
+    <string name="web_app_group_notifications">通知</string>
+    <string name="web_app_group_label">資料夾</string>
+    <string name="web_app_group_none">無</string>
+    <string name="web_app_group_delete_title">要刪除資料夾嗎？</string>
+    <string name="web_app_group_delete_message">資料夾「%1$s」將被刪除。其中的網頁應用程式會保留，並變為未分組。</string>
+    <string name="web_app_delete_title">要刪除網頁應用程式嗎？</string>
+    <string name="web_app_delete_message">「%1$s」將從搜尋、主畫面、資料夾和網頁應用程式面板中移除。此操作無法復原。</string>
+    <string name="web_app_shortcut_ad_block">廣告封鎖</string>
+    <string name="web_app_shortcut_ad_block_global">使用全域設定</string>
+    <string name="web_app_shortcut_ad_block_on">開啟</string>
+    <string name="web_app_shortcut_ad_block_off">關閉</string>
+    <string name="web_app_shortcut_ad_block_summary">僅適用於內嵌瀏覽器。外部瀏覽器（Custom Tabs）由瀏覽器應用程式自行控制。</string>
+</resources>

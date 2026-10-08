@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Categorii sugerate</string>
+    <string name="web_app_presets_summary">Adaugă un dosar gata făcut cu site-uri populare ca aplicații web. Nu se adaugă nimic până nu alegi tu, iar fiecare dosar și aplicație web poate fi editat sau șters ulterior.</string>
+    <string name="web_app_presets_login_note">Autentifică-te pe fiecare site în parte. Autentificările sunt păstrate de browserul încorporat. Acest lucru se aplică doar aplicațiilor web care se deschid în browserul încorporat; aplicațiile web deschise într-un browser extern folosesc autentificarea proprie a acestuia.</string>
+    <string name="web_app_preset_category_social">Social</string>
+    <string name="web_app_preset_category_email">E-mail</string>
+    <string name="web_app_preset_category_messaging">Mesagerie</string>
+    <string name="web_app_preset_category_video">Video și muzică</string>
+    <string name="web_app_preset_category_work">Productivitate și muncă</string>
+    <string name="web_app_preset_add">Adaugă</string>
+    <string name="web_app_preset_dialog_title">Adaugă %1$s</string>
+    <string name="web_app_preset_dialog_summary">Alege aplicațiile web de adăugat. Sunt salvate ca orice aplicație web creată de tine.</string>
+    <string name="web_app_preset_exists">Deja în aplicațiile tale web, va fi reutilizată</string>
+    <string name="web_app_preset_confirm">Adaugă selecția</string>
+    <string name="web_app_preset_added">%1$s adăugat</string>
+    <string name="web_app_groups_title">Dosare</string>
+    <string name="web_app_groups_enable">Activează dosarele pentru aplicații web</string>
+    <string name="web_app_groups_enable_summary">Organizează aplicațiile web în dosare și restricționează glisarea pentru fiecare dosar</string>
+    <string name="web_app_groups_manage">Gestionează dosarele</string>
+    <string name="web_app_group_create">Creează un dosar nou</string>
+    <string name="web_app_group_create_title">Creează dosar</string>
+    <string name="web_app_group_rename_title">Redenumește dosarul</string>
+    <string name="web_app_group_name">Numele dosarului</string>
+    <string name="web_app_group_create_confirm">Creează</string>
+    <string name="web_app_group_rename_confirm">Redenumește</string>
+    <string name="web_app_group_apps_count">%1$d aplicații web</string>
+    <string name="web_app_group_notifications">Notificări</string>
+    <string name="web_app_group_label">Dosar</string>
+    <string name="web_app_group_none">Niciunul</string>
+    <string name="web_app_group_delete_title">Ștergi dosarul?</string>
+    <string name="web_app_group_delete_message">Dosarul „%1$s” va fi șters. Aplicațiile web din el sunt păstrate și nu vor mai fi grupate.</string>
+    <string name="web_app_delete_title">Ștergi aplicația web?</string>
+    <string name="web_app_delete_message">„%1$s” va fi eliminată din căutare, ecranul de pornire, dosare și panoul de aplicații web. Acțiunea nu poate fi anulată.</string>
+    <string name="web_app_shortcut_ad_block">Blocare reclame</string>
+    <string name="web_app_shortcut_ad_block_global">Folosește setarea globală</string>
+    <string name="web_app_shortcut_ad_block_on">Activat</string>
+    <string name="web_app_shortcut_ad_block_off">Dezactivat</string>
+    <string name="web_app_shortcut_ad_block_summary">Se aplică doar browserului încorporat. Browserele externe (Custom Tabs) sunt controlate de aplicația browserului.</string>
+</resources>
