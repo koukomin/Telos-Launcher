@@ -22,6 +22,7 @@ object ClientFactory {
             RemoteType.Sftp -> SftpRemoteClient(c) { fingerprint -> ConnectionStore(context).save(c.copy(fingerprint = fingerprint)) }
             RemoteType.Smb -> SmbRemoteClient(c)
             RemoteType.Ftp -> FtpRemoteClient(c)
+            RemoteType.System -> SafClient(context, c.host)
             RemoteType.Dropbox -> DropboxClient(tokens(context, c), context.cacheDir)
             RemoteType.GoogleDrive -> GoogleDriveClient(tokens(context, c), context.cacheDir)
             RemoteType.OneDrive -> OneDriveClient(tokens(context, c), context.cacheDir)
