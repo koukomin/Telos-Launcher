@@ -10,7 +10,6 @@
     <string name="custom_lock_dialog_confirm_title">Επιβεβαίωση PIN</string>
     <string name="custom_lock_dialog_title">Εισαγάγετε PIN</string>
     <string name="custom_lock_error_mismatch">Τα PIN δεν ταιριάζουν</string>
-    <string name="customize_item_visibility">Εμφάνιση σε</string>
     <string name="desktop_mode_freeform_enabled">Ενεργοποίηση αιωρούμενων παραθύρων (μέσω Shizuku)</string>
     <string name="desktop_mode_freeform_enabled_summary">Απενεργοποιημένο από προεπιλογή. Απαιτεί το Shizuku για να μεταβεί η συσκευή σε λειτουργία ελεύθερων παραθύρων</string>
     <string name="desktop_mode_freeform_enabled_summary_active">Τα ελεύθερα παράθυρα είναι ενεργά σε όλο το σύστημα</string>
