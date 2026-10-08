@@ -28,6 +28,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 <a href="./music/"><b>🎵 Music</b><span>Local library, lyrics, scrobbling, tag editor</span></a>
 <a href="./video/"><b>🎬 Video</b><span>Library, player, web streams, torrents, subtitles, Trakt</span></a>
 <a href="./radio/"><b>📻 Radio</b><span>Internet radio with station search and sleep timer</span></a>
+<a href="./network/"><b>🛡️ Network</b><span>VPN based firewall and DNS filter: DNS servers, per-app rules, blocklists, WireGuard</span></a>
 <a href="./store/"><b>🛍️ Store</b><span>Install and update apps from GitHub, F-Droid and more</span></a>
 <a href="./freeze/"><b>❄️ Smart Freeze</b><span>Freeze or hide apps through Shizuku, Dhizuku, root, Island or device owner</span></a>
 
@@ -57,6 +58,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 | Telos Music | Player for the music on the phone | [Music](./music/) |
 | Telos Video | Video library and player, streams and torrents | [Video](./video/) |
 | Telos Radio | Internet radio | [Radio](./radio/) |
+| Telos Network | Firewall and DNS filter through the VPN service, blocklists, WireGuard, logs (early version) | [Network](./network/) |
 | Telos Store | Obtainium-like app installer and updater, manages the Telos apps | [Store](./store/) |
 | Smart Freeze | Freeze or hide installed apps | [Smart Freeze](./freeze/) |
 

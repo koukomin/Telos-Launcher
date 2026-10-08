@@ -21,6 +21,9 @@ based on" table in `readme.md`.
 | [AIO Video Downloader](https://github.com/shibaFoss/AIO-Video-Downloader) | custom licence (text not verified) | Ideas only, **no code used** (copyright: the AIO Video Downloader authors) |
 | [yt-dlp](https://github.com/yt-dlp/yt-dlp) | Unlicense (public domain) | Used unchanged, inside the optional media build (see below) |
 | [youtubedl-android](https://github.com/yausername/youtubedl-android) (fork io.github.junkfood02.youtubedl-android) | GPL-3.0 | Copyright (c) the youtubedl-android authors (yausername, JunkFood02 and contributors), used unchanged as a Maven dependency in the optional media build |
+| [RethinkDNS](https://github.com/celzero/rethink-app) | Apache-2.0 | Copyright (c) Celzero / The Rethink DNS Open Source Project (full notice below) |
+| [firestack](https://github.com/celzero/firestack) | MPL-2.0 | Copyright (c) Celzero / The Rethink DNS Open Source Project; used unchanged as a Maven dependency |
+| [WireGuard](https://www.wireguard.com) | see project | Implemented inside firestack; WireGuard is a registered trademark of Jason A. Donenfeld |
 | [Transistor](https://codeberg.org/y20k/transistor) | MIT | Copyright (c) 2015-22 - Y20K.org (full notice below) |
 | [TagLib wrapper (Kyant0/taglib)](https://github.com/Kyant0/taglib) | Apache-2.0 | Copyright 2025 Kyant. Bundles TagLib (LGPL-2.1 / MPL-1.1 upstream) |
 | [PaperKnife+](https://github.com/potatameister/PaperKnifePlus) | GPL-3.0-or-later | Copyright (C) potatameister and PaperKnife+ contributors. PDF tools of Telos Photos (feature set, tool logic) adapted from it |
@@ -32,6 +35,35 @@ based on" table in `readme.md`.
 The name "Thor" and the Thor logo and icon are trademarks of Trinadh Thatakula and are not licensed
 under the GPL (see Thor's `TRADEMARK.md`). Telos does not use them. Thor is only referred to by name
 to say that parts of Telos are based on it. Telos is not affiliated with or endorsed by Thor.
+
+## RethinkDNS and firestack (Telos Network)
+
+Telos Network is based on RethinkDNS, https://github.com/celzero/rethink-app, Copyright (c) Celzero / The Rethink DNS Open Source Project,
+licensed under the Apache License, Version 2.0. Its concept, feature set and structure were adapted; where code was adapted, the
+original copyright notice is kept in the source file. Apache-2.0 is compatible with GPL-3.0. The Apache-2.0 license text:
+http://www.apache.org/licenses/LICENSE-2.0
+
+```
+Copyright (c) Celzero / The Rethink DNS Open Source Project
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
+
+firestack, https://github.com/celzero/firestack (the Go engine, built as `com.celzero:firestack`), is licensed under the Mozilla Public
+License 2.0 (https://www.mozilla.org/MPL/2.0/). Telos uses it unchanged as a Maven dependency and has not modified any of its files.
+Its source is available at the address above. Rethink, RethinkDNS and Celzero are names of their owners; Telos is not affiliated with them.
+
+WireGuard is a registered trademark of Jason A. Donenfeld. The WireGuard protocol is implemented inside firestack.
 
 ## Transistor (MIT License)
 

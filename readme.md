@@ -19,7 +19,7 @@ The documentation site is published via GitHub Pages at <https://koukomin.github
 </div>
 
 > **Note:** The Telos apps use flat Material icons: a white glyph on an intense, saturated background of its own
-> (navy for Phone, teal for Messages, amber for Files, slate for Calculator, blue for Screenshot, orange for Screen Recorder, cyan for Voice Recorder, amber for Notes, blue for Calendar, deep purple for Downloads, rose for Photos, purple for Music, red for
+> (navy for Phone, teal for Messages, amber for Files, slate for Calculator, blue for Screenshot, orange for Screen Recorder, cyan for Voice Recorder, amber for Notes, blue for Calendar, deep purple for Downloads, deep emerald green for Network, rose for Photos, purple for Music, red for
 > Video, green for Radio). Telos Store uses the launcher icon. The name and the final branding are
 > still in progress.
 
@@ -56,6 +56,7 @@ from Telos Store.
 | **Telos Notes** | Notes with labels, sync with a Markdown folder or Nextcloud Notes, Keep and Evernote import | [Notes](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/notes/) |
 | **Telos Calendar** | Month and agenda calendar, local calendar, Google and CalDAV through the system | [Calendar](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calendar/) |
 | **Telos Downloads** | Download manager: several connections per file, resume, queue, retry, folder of your choice, torrents and magnet links with file selection, seeding and IP block lists, video and audio sites through yt-dlp (optional build), schedule, backup | [Downloads](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/downloads/) |
+| **Telos Network** | VPN based firewall and DNS filter on the Rethink engine: DNS servers, firewall per app and connection type, blocklists with exceptions, WireGuard per app, logs. Off until you turn it on, early version | [Network](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/network/) |
 | **Telos Voice Recorder** | Voice recordings with search, pause and call recordings | [Voice Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/voice-recorder/) |
 | **Telos Calculator** | Standard and scientific calculator, VAT, unit and currency converter, history | [Calculator](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calculator/) |
 | **Telos Photos** | Gallery, EXIF tools, editor and a document viewer | [Photos](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
@@ -764,6 +765,22 @@ A download manager for links. [Docs](https://koukomin.github.io/Telos-Launcher/d
 
 **Status and limitations:** downloads run only while the launcher process lives; Android 15 stops the data sync service after about six hours a day (the downloads and seeding are paused). No FTP, no tar.gz, 7z or rar extraction, no browser that finds media on pages. The torrent engine and the media engine have unit tests for their logic but have **not been run on a device yet** (starting Python, yt-dlp and FFmpeg, the real yt-dlp output, the update and the cookie hand-over are untested); while a torrent seeds, its data exists twice (working folder and your folder); the two IP lists offered besides Naunter are security lists, not classic p2p lists.
 
+### Telos Network
+
+A firewall and DNS filter that works through the Android VPN service, built on the engine of [RethinkDNS](https://github.com/celzero/rethink-app) (Rethink's Go engine, firestack, used unchanged as a Maven dependency). [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/network/).
+
+- **Safety first:** it never starts by itself (only after a reboot if you switch on "Start on boot" and the VPN permission was granted before). If the engine fails to start or stops working, the VPN is torn down and the internet works normally again; the stop button always works, also while starting. Telos itself is kept out of the tunnel
+- **On/off hub** with the state (off, starting, on, stopped, permission needed), the active DNS server, the active WireGuard tunnels and the number of blocked DNS queries and connections
+- **DNS:** system DNS, plain DNS, DNS over HTTPS, DNS over TLS, DNSCrypt, Oblivious DoH and local DNS servers, built-in providers (Mullvad is not offered) and your own servers, with a health display
+- **WireGuard:** import `.conf` files or add tunnels by hand, a system default tunnel, a tunnel per app, "only on mobile data", "only on these Wi-Fi networks" and lockdown (block the app while its tunnel is down). The tunnels run inside the engine, no second VPN is needed
+- **Firewall:** rules per app (block everything, Wi-Fi, mobile data, roaming, local network, other VPN, background, screen off, ignore universal rules, bypass the firewall, exclude from the VPN), universal rules for all apps (including metered networks, device locked, new apps, unknown apps, UDP, plain HTTP, own-DNS bypass and default deny), and custom IP and domain rules that block or trust
+- **Blocklists:** downloadable domain lists in groups (ads, trackers, malware and more) that you switch on one by one, counters per list, update on request, and exceptions (trusted domains) for one app or for all
+- **Logs:** connection and DNS logs with search and filters, limited by entry count and days
+- **Settings:** start on boot, IPv4 and/or IPv6, route the local network, exclude Telos, MTU, let apps bypass the VPN, notification detail, log retention, help for Android's always-on VPN and battery optimisation
+- **Not included, on purpose:** no subscription and no RPN, no account and no server of ours, none of the experimental features of RethinkDNS
+
+**Status and limitations:** this is an early version that has **not been run on a device yet**; it was written without a compiler or a test run. Android allows one VPN at a time, so it replaces another VPN while it runs. It cannot look into encrypted connections and does not make you anonymous. Whether an app is in the foreground is not known for other apps, so "background" rules do not block yet. The Android always-on / lockdown setting is yours to choose and is never switched on by Telos.
+
 ### Telos Voice Recorder
 
 A voice recorder with a list, search and a service that keeps recording with the screen off. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/voice-recorder/).
@@ -1034,6 +1051,9 @@ adapted, the original license is respected.
 | [youtubedl-android](https://github.com/yausername/youtubedl-android) (junkfood02 fork) | GPL-3.0 | Library that runs yt-dlp, Python and FFmpeg on Android, used unchanged as a Maven dependency in the optional media build; FFmpeg and Python have their own licences (see `THIRD_PARTY_NOTICES.md`) |
 | [LibreTorrent](https://github.com/proninyaroslav/libretorrent) | GPL-3.0-or-later | Ideas for the torrent part of Telos Downloads: file selection with priorities, sequential download, seeding limits, DHT/PEX/LSD/uTP/encryption/port settings, peers and trackers views, resume data, IP filter (written from scratch on libtorrent4j, no code was copied) |
 | [Obtainium](https://github.com/ImranR98/Obtainium) | GPL-3.0 | Store behaviour and features: sources, per-app settings, update flow, export format, links, update broadcasts (the behaviour is re-implemented, no code was copied) |
+| [RethinkDNS](https://github.com/celzero/rethink-app) | Apache-2.0 | Telos Network: concept, feature set and the way the VPN service, DNS, firewall rules and logs are organised (adapted where noted, copyright notice kept in `THIRD_PARTY_NOTICES.md`) |
+| [firestack](https://github.com/celzero/firestack) | MPL-2.0 | The Go network engine behind Telos Network, used unchanged as a Maven dependency (`com.celzero:firestack`) |
+| [WireGuard](https://www.wireguard.com) | MIT / GPL-2.0 (see project) | The tunnel protocol of Telos Network, implemented inside firestack (WireGuard is a registered trademark of Jason A. Donenfeld; Telos is not affiliated) |
 | [Transistor](https://codeberg.org/y20k/transistor) | MIT | Radio player behaviour |
 | [Radio-Browser](https://www.radio-browser.info/) | public API | Radio station directory |
 | [Shizuku](https://github.com/RikkaApps/Shizuku) and [Dhizuku](https://github.com/iamr0s/Dhizuku) | see project | Privileged operations (freeze, recording, install, network mode) |
