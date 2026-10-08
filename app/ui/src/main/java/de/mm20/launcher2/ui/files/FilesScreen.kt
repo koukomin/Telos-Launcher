@@ -222,21 +222,21 @@ fun FilesScreen() {
                                         Icon(painterResource(Icons.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
                                     }
                                     DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
-                                        DropdownMenuItem(text = { Text(if (vm.grid) "List view" else "Grid view") }, onClick = { menuOpen = false; vm.toggleGrid() })
+                                        DropdownMenuItem(text = { Text(if (vm.grid) stringResource(R.string.hf_files_list_view) else stringResource(R.string.hf_files_grid_view)) }, onClick = { menuOpen = false; vm.toggleGrid() })
                                         DropdownMenuItem(text = { Text(stringResource(R.string.hc_sort_by_2)) }, onClick = { menuOpen = false; dialog = FilesDialog.Sort })
-                                        DropdownMenuItem(text = { Text(if (vm.showHidden) "Hide hidden files" else "Show hidden files") }, onClick = { menuOpen = false; vm.toggleHidden() })
+                                        DropdownMenuItem(text = { Text(if (vm.showHidden) stringResource(R.string.hf_files_hide_hidden) else stringResource(R.string.hf_files_show_hidden)) }, onClick = { menuOpen = false; vm.toggleHidden() })
                                         vm.path?.takeIf { de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it) }?.let { vp ->
                                             DropdownMenuItem(text = { Text(stringResource(R.string.hc_lock_vault)) }, onClick = { menuOpen = false; vm.lockVault(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(vp)) })
                                         }
                                         DropdownMenuItem(text = { Text(stringResource(R.string.hc_refresh)) }, onClick = { menuOpen = false; vm.reload(); vm.refreshVolumes() })
                                         vm.path?.let { p ->
                                             DropdownMenuItem(
-                                                text = { Text(if (vm.isBookmarked(p)) "Remove from favorites" else "Add to favorites") },
+                                                text = { Text(if (vm.isBookmarked(p)) stringResource(R.string.hf_files_remove_favorite) else stringResource(R.string.hc_add_to_favorites)) },
                                                 onClick = { menuOpen = false; vm.toggleBookmark(p) },
                                             )
                                         }
                                         DropdownMenuItem(
-                                            text = { Text(if (vm.rootMode) "Turn root explorer off" else "Root explorer…") },
+                                            text = { Text(if (vm.rootMode) stringResource(R.string.hf_files_root_off) else stringResource(R.string.hf_files_root_menu)) },
                                             onClick = { menuOpen = false; if (vm.rootMode) vm.disableRoot() else dialog = FilesDialog.EnableRoot },
                                         )
                                     }
@@ -279,7 +279,7 @@ fun FilesScreen() {
                     else -> Column(Modifier.fillMaxSize()) {
                         if (FileActions.isSystemPath(current, vm.rootMode)) RootBanner()
                         if (shown.isEmpty() && !vm.loading) {
-                            EmptyPage(if (vm.query.isNotEmpty()) "Nothing found" else "This folder is empty")
+                            EmptyPage(if (vm.query.isNotEmpty()) stringResource(R.string.hf_files_nothing_found) else stringResource(R.string.hf_files_folder_empty))
                         } else if (vm.grid) {
                             LazyVerticalGrid(
                                 columns = GridCells.Adaptive(112.dp),
@@ -327,21 +327,21 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
     val context = LocalContext.current
     when (dialog) {
         null -> {}
-        FilesDialog.NewFolder -> NameDialog("New folder", "", "Create", onDismiss) { vm.newFolder(it); onDismiss() }
-        FilesDialog.NewFile -> NameDialog("New file", "", "Create", onDismiss) { vm.newFile(it); onDismiss() }
-        is FilesDialog.Rename -> NameDialog("Rename", dialog.entry.name, "Rename", onDismiss) { vm.rename(dialog.entry, it); onDismiss() }
-        is FilesDialog.Compress -> NameDialog("Compress to zip", dialog.entries.first().name.substringBeforeLast('.'), "Compress", onDismiss) {
+        FilesDialog.NewFolder -> NameDialog(stringResource(R.string.hc_new_folder), "", stringResource(R.string.hf_files_create), onDismiss) { vm.newFolder(it); onDismiss() }
+        FilesDialog.NewFile -> NameDialog(stringResource(R.string.hc_new_file), "", stringResource(R.string.hf_files_create), onDismiss) { vm.newFile(it); onDismiss() }
+        is FilesDialog.Rename -> NameDialog(stringResource(R.string.hc_rename), dialog.entry.name, stringResource(R.string.hc_rename), onDismiss) { vm.rename(dialog.entry, it); onDismiss() }
+        is FilesDialog.Compress -> NameDialog(stringResource(R.string.hc_compress_to_zip), dialog.entries.first().name.substringBeforeLast('.'), stringResource(R.string.hf_files_compress_action), onDismiss) {
             vm.compress(dialog.entries, it); vm.clearSelection(); onDismiss()
         }
         is FilesDialog.Delete -> {
             val system = dialog.entries.any { FileActions.isSystemPath(it.path, vm.rootMode) }
             AlertDialog(
                 onDismissRequest = onDismiss,
-                title = { Text(if (dialog.entries.size == 1) "Delete \"${dialog.entries.first().name}\"?" else "Delete ${dialog.entries.size} items?") },
+                title = { Text(if (dialog.entries.size == 1) stringResource(R.string.hf_files_delete_named, dialog.entries.first().name) else stringResource(R.string.hf_files_delete_selected, dialog.entries.size)) },
                 text = {
                     Text(
-                        if (system) "This is a system location. Deleting files here can stop apps or the whole phone from working, and it cannot be undone."
-                        else "This cannot be undone."
+                        if (system) stringResource(R.string.hf_files_delete_system_warning)
+                        else stringResource(R.string.hf_files_cannot_undo)
                     )
                 },
                 confirmButton = {
@@ -400,8 +400,8 @@ private fun SortDialog(vm: FilesViewModel, onDismiss: () -> Unit) {
                     }
                 }
                 HorizontalDivider(Modifier.padding(vertical = 8.dp))
-                SwitchRow("Descending", !vm.sort.ascending) { vm.updateSort(vm.sort.copy(ascending = !it)) }
-                SwitchRow("Folders first", vm.sort.foldersFirst) { vm.updateSort(vm.sort.copy(foldersFirst = it)) }
+                SwitchRow(stringResource(R.string.hf_files_sort_descending), !vm.sort.ascending) { vm.updateSort(vm.sort.copy(ascending = !it)) }
+                SwitchRow(stringResource(R.string.hf_files_sort_folders_first), vm.sort.foldersFirst) { vm.updateSort(vm.sort.copy(foldersFirst = it)) }
             }
         },
         confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_done)) } },
@@ -428,7 +428,7 @@ private fun RootWarningDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
                 Text(stringResource(R.string.hc_telos_files_will_ask_for_superuser_acces))
                 Text(
                     stringResource(R.string.hc_careless_changes_here_can_stop_apps_from) +
-                        "Nobody can undo a deletion. Change only what you understand, and keep a backup.",
+                        stringResource(R.string.hf_files_root_warning_tail),
                     color = MaterialTheme.colorScheme.error,
                 )
                 Text(stringResource(R.string.hc_your_root_manager_magisk_kernelsu_will_a))
@@ -460,14 +460,14 @@ private fun PropertiesDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () -
         title = { Text(entry.name, maxLines = 2, overflow = TextOverflow.Ellipsis) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Detail("Type", entry.kind.label + if (entry.extension.isNotEmpty()) " (.${entry.extension})" else "")
-                Detail("Location", parentOf(entry.path) ?: "/")
-                Detail("Size", size?.let { if (it < 0) "Unknown" else formatSize(it) + if (it >= 1024) " ($it bytes)" else "" } ?: "Calculating…")
-                count?.let { if (it >= 0) Detail("Contains", "$it items") }
-                Detail("Modified", formatDate(entry.modified).ifEmpty { "Unknown" })
-                if (entry.permissions.isNotEmpty()) Detail("Permissions", entry.permissions)
-                if (entry.owner.isNotEmpty()) Detail("Owner", entry.owner)
-                entry.linkTarget?.takeIf { it.isNotEmpty() }?.let { Detail("Link to", it) }
+                Detail(stringResource(R.string.hf_files_prop_type), entry.kind.label + if (entry.extension.isNotEmpty()) " (.${entry.extension})" else "")
+                Detail(stringResource(R.string.hf_files_prop_location), parentOf(entry.path) ?: "/")
+                Detail(stringResource(R.string.hf_files_prop_size), size?.let { if (it < 0) stringResource(R.string.hf_files_unknown) else formatSize(it) + if (it >= 1024) " (" + stringResource(R.string.hf_files_bytes_exact, it) + ")" else "" } ?: stringResource(R.string.hf_files_calculating))
+                count?.let { if (it >= 0) Detail(stringResource(R.string.hf_files_prop_contains), "$it") }
+                Detail(stringResource(R.string.hf_files_prop_modified), formatDate(entry.modified).ifEmpty { stringResource(R.string.hf_files_unknown) })
+                if (entry.permissions.isNotEmpty()) Detail(stringResource(R.string.hf_files_prop_permissions), entry.permissions)
+                if (entry.owner.isNotEmpty()) Detail(stringResource(R.string.hf_files_prop_owner), entry.owner)
+                entry.linkTarget?.takeIf { it.isNotEmpty() }?.let { Detail(stringResource(R.string.hf_files_prop_link_to), it) }
                 if (!entry.isDir) {
                     HorizontalDivider()
                     Text(stringResource(R.string.hc_checksums), style = MaterialTheme.typography.labelLarge)
@@ -617,11 +617,11 @@ private fun PasteBar(count: Int, cut: Boolean, onPaste: () -> Unit, onCancel: ()
     Surface(color = MaterialTheme.colorScheme.tertiaryContainer, tonalElevation = 3.dp) {
         Row(Modifier.fillMaxWidth().padding(16.dp, 8.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(
-                "$count item${if (count == 1) "" else "s"} to ${if (cut) "move" else "copy"}", Modifier.weight(1f),
+                if (cut) stringResource(R.string.hf_files_paste_to_move, count) else stringResource(R.string.hf_files_paste_to_copy, count), Modifier.weight(1f),
                 color = MaterialTheme.colorScheme.onTertiaryContainer, style = MaterialTheme.typography.titleSmall,
             )
             TextButton(onClick = onCancel) { Text(stringResource(R.string.hc_cancel)) }
-            Button(onClick = onPaste) { Text(if (cut) "Move here" else "Paste here") }
+            Button(onClick = onPaste) { Text(if (cut) stringResource(R.string.hf_files_move_here) else stringResource(R.string.hf_files_paste_here)) }
         }
     }
 }
@@ -683,18 +683,24 @@ private fun ErrorPage(error: String, rootMode: Boolean, onRoot: () -> Unit) {
 
 @Composable
 private fun HomePage(vm: FilesViewModel) {
-    val shortcuts = remember {
+    val lblDownloads = stringResource(R.string.hf_files_dir_downloads)
+    val lblCamera = stringResource(R.string.hf_files_dir_camera)
+    val lblPictures = stringResource(R.string.hf_files_dir_pictures)
+    val lblMusic = stringResource(R.string.hf_files_dir_music)
+    val lblMovies = stringResource(R.string.hf_files_dir_movies)
+    val lblDocuments = stringResource(R.string.hf_files_dir_documents)
+    val shortcuts = remember(lblDownloads) {
         listOf(
-            "Downloads" to Environment.DIRECTORY_DOWNLOADS, "Camera" to Environment.DIRECTORY_DCIM, "Pictures" to Environment.DIRECTORY_PICTURES,
-            "Music" to Environment.DIRECTORY_MUSIC, "Movies" to Environment.DIRECTORY_MOVIES, "Documents" to Environment.DIRECTORY_DOCUMENTS,
+            lblDownloads to Environment.DIRECTORY_DOWNLOADS, lblCamera to Environment.DIRECTORY_DCIM, lblPictures to Environment.DIRECTORY_PICTURES,
+            lblMusic to Environment.DIRECTORY_MUSIC, lblMovies to Environment.DIRECTORY_MOVIES, lblDocuments to Environment.DIRECTORY_DOCUMENTS,
         ).map { (label, dir) -> label to Environment.getExternalStoragePublicDirectory(dir).path }
     }
     val colors = listOf(FileKind.Archive.color, FileKind.Image.color, FileKind.Video.color, FileKind.Audio.color, FileKind.Document.color, FileKind.Apk.color)
     val icons = listOf(Icons.download_24px, Icons.photo_24px, Icons.photo_24px, Icons.music_note_24px, Icons.videocam_24px, Icons.description_24px)
     LazyColumn(contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 32.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        item { SectionTitle("Storage") }
+        item { SectionTitle(stringResource(R.string.hc_storage)) }
         items(vm.volumes, key = { it.path }) { v -> StorageCard(v) { vm.open(v.path) } }
-        item { SectionTitle("Quick access") }
+        item { SectionTitle(stringResource(R.string.hf_files_quick_access)) }
         item {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 shortcuts.chunked(3).forEachIndexed { row, chunk ->
@@ -715,7 +721,7 @@ private fun HomePage(vm: FilesViewModel) {
             }
         }
         if (vm.bookmarks.isNotEmpty()) {
-            item { SectionTitle("Favorites") }
+            item { SectionTitle(stringResource(R.string.hc_favorites)) }
             items(vm.bookmarks, key = { "b$it" }) { b ->
                 Row(
                     Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).clickable { vm.open(b) }.padding(8.dp),
@@ -731,7 +737,7 @@ private fun HomePage(vm: FilesViewModel) {
             }
         }
         if (vm.connections.isNotEmpty()) {
-            item { SectionTitle("Network and cloud") }
+            item { SectionTitle(stringResource(R.string.hc_network_and_cloud)) }
             items(vm.connections, key = { "c" + it.id }) { c ->
                 Row(
                     Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).clickable { vm.open(RemotePath.build(c.id, "/")) }.padding(8.dp),
@@ -747,7 +753,7 @@ private fun HomePage(vm: FilesViewModel) {
                 }
             }
         }
-        item { SectionTitle("Tools") }
+        item { SectionTitle(stringResource(R.string.hc_tools)) }
         item {
             Card(
                 onClick = { vm.open("/") }, enabled = vm.rootMode,
@@ -758,7 +764,7 @@ private fun HomePage(vm: FilesViewModel) {
                     Column(Modifier.padding(start = 16.dp).weight(1f)) {
                         Text(stringResource(R.string.hc_root_file_system), fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onErrorContainer)
                         Text(
-                            if (vm.rootMode) "Superuser access is on. Open / to browse everything." else "Turn root explorer on in the menu or the storage drawer.",
+                            if (vm.rootMode) stringResource(R.string.hf_files_root_on_hint) else stringResource(R.string.hf_files_root_off_hint),
                             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer,
                         )
                     }
@@ -797,7 +803,7 @@ private fun StorageCard(v: StorageVolume, onClick: () -> Unit) {
 private fun StorageDrawer(vm: FilesViewModel, onGo: (String?) -> Unit, onRoot: () -> Unit, onManage: () -> Unit) {
     Column(Modifier.verticalScroll(rememberScrollState()).padding(12.dp)) {
         Text(stringResource(R.string.hc_telos_files), style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 8.dp))
-        DrawerItem(Icons.home_24px, "Home", null, vm.path == null) { onGo(null) }
+        DrawerItem(Icons.home_24px, stringResource(R.string.hf_files_home), null, vm.path == null) { onGo(null) }
         Text(stringResource(R.string.hc_storage), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
         vm.volumes.forEach { v ->
             DrawerItem(Icons.storage_24px, v.name, "${formatSize(v.free)} free", vm.path?.startsWith(v.path) == true && !vm.rootMode) { onGo(v.path) }
@@ -810,13 +816,13 @@ private fun StorageDrawer(vm: FilesViewModel, onGo: (String?) -> Unit, onRoot: (
         vm.connections.forEach { c ->
             DrawerItem(if (c.type.cloud) Icons.cloud_20px else Icons.storage_24px, c.name, c.type.label, vm.path?.startsWith("rem://" + c.id) == true) { onGo(RemotePath.build(c.id, "/")) }
         }
-        DrawerItem(Icons.add_24px, "Add or manage…", null, false, onManage)
+        DrawerItem(Icons.add_24px, stringResource(R.string.hf_files_add_or_manage), null, false, onManage)
         Text(stringResource(R.string.hc_tools), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
-        DrawerItem(Icons.terminal_24px, if (vm.rootMode) "Root explorer: on" else "Root explorer", if (vm.rootMode) "Tap to turn off" else "Needs a rooted phone", vm.rootMode, onRoot)
+        DrawerItem(Icons.terminal_24px, if (vm.rootMode) stringResource(R.string.hf_files_root_explorer_on) else stringResource(R.string.hc_root_explorer), if (vm.rootMode) stringResource(R.string.hf_files_tap_to_turn_off) else stringResource(R.string.hf_files_needs_root), vm.rootMode, onRoot)
         if (vm.rootMode) {
-            DrawerItem(Icons.folder_24px, "Root file system (/)", "System files", vm.path == "/") { onGo("/") }
-            DrawerItem(Icons.lock_24px, "Make /system writable", "Careful", false) { vm.remount("/system", true) }
-            DrawerItem(Icons.lock_open_20px, "Make /system read-only", null, false) { vm.remount("/system", false) }
+            DrawerItem(Icons.folder_24px, stringResource(R.string.hf_files_root_fs), stringResource(R.string.hf_files_system_files), vm.path == "/") { onGo("/") }
+            DrawerItem(Icons.lock_24px, stringResource(R.string.hf_files_system_writable), stringResource(R.string.hf_files_careful), false) { vm.remount("/system", true) }
+            DrawerItem(Icons.lock_open_20px, stringResource(R.string.hf_files_system_readonly), null, false) { vm.remount("/system", false) }
         }
     }
 }
@@ -906,7 +912,7 @@ private fun UnlockVaultDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () 
         title = { Text(stringResource(R.string.hc_unlock_vault)) },
         text = {
             Column {
-                Text("${entry.name} is a Cryptomator vault (read only, experimental). The password is only used to unlock it and is not stored.")
+                Text(stringResource(R.string.hf_files_vault_info, entry.name))
                 OutlinedTextField(
                     password, { password = it; error = null }, label = { Text(stringResource(R.string.hc_password)) }, singleLine = true,
                     visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
@@ -919,7 +925,7 @@ private fun UnlockVaultDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () 
             TextButton(enabled = password.isNotEmpty() && !busy, onClick = {
                 busy = true
                 vm.unlockVault(entry.path, password, onError = { error = it; busy = false }) { busy = false; onDismiss() }
-            }) { Text(if (busy) "Unlocking…" else "Unlock") }
+            }) { Text(if (busy) stringResource(R.string.hf_files_unlocking) else stringResource(R.string.hc_unlock)) }
         },
         dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
     )

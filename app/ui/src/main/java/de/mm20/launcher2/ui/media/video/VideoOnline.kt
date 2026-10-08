@@ -213,7 +213,7 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
                 Text(stringResource(R.string.vn_network_folders), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
                 TextButton(onClick = { showNetwork = true }) { Text(stringResource(R.string.vn_network_scan_title)) }
 
-                Text("Torrents", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
+                Text(stringResource(R.string.dl_tab_torrents), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(stringResource(R.string.hc_only_on_wi_fi), modifier = Modifier.weight(1f))
                     Switch(checked = wifiOnly, onCheckedChange = { wifiOnly = it })

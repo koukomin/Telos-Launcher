@@ -271,6 +271,9 @@
                 <data android:mimeType="application/vnd.oasis.opendocument.text" />
                 <data android:mimeType="application/vnd.oasis.opendocument.spreadsheet" />
                 <data android:mimeType="application/vnd.oasis.opendocument.presentation" />
+                <data android:mimeType="application/msword" />
+                <data android:mimeType="application/vnd.ms-excel" />
+                <data android:mimeType="application/vnd.ms-powerpoint" />
             </intent-filter>
         </activity>
 

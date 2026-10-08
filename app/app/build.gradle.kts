@@ -16,6 +16,7 @@ android {
 
     packaging {
         resources.excludes.add("META-INF/DEPENDENCIES")
+        resources.excludes.add("META-INF/INDEX.LIST")
         resources.excludes.add("META-INF/LICENSE")
         resources.excludes.add("META-INF/LICENSE.txt")
         resources.excludes.add("META-INF/license.txt")

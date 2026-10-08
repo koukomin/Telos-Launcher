@@ -130,11 +130,11 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (isNew) "New ${type.label} connection" else c.name) },
+        title = { Text(if (isNew) stringResource(R.string.hf_remote_new_connection, type.label) else c.name) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(type.hint, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Field("Name", c.name) { c = c.copy(name = it) }
+                Field(stringResource(R.string.hf_remote_name), c.name) { c = c.copy(name = it) }
                 if (type == RemoteType.System) {
                     val picker = androidx.activity.compose.rememberLauncherForActivityResult(androidx.activity.result.contract.ActivityResultContracts.OpenDocumentTree()) { uri ->
                         if (uri != null) {
@@ -142,25 +142,25 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
                             c = c.copy(host = uri.toString(), name = c.name.ifBlank { Uri.decode(uri.toString()).substringAfterLast(':').substringAfterLast('/').ifBlank { "Cloud" } })
                         }
                     }
-                    Text(if (c.host.isBlank()) "No folder chosen" else Uri.decode(c.host).substringAfter("tree/"), style = MaterialTheme.typography.bodySmall, maxLines = 2)
-                    OutlinedButton(onClick = { picker.launch(null) }) { Text(if (c.host.isBlank()) "Choose a folder" else "Choose another folder") }
+                    Text(if (c.host.isBlank()) stringResource(R.string.hf_remote_no_folder) else Uri.decode(c.host).substringAfter("tree/"), style = MaterialTheme.typography.bodySmall, maxLines = 2)
+                    OutlinedButton(onClick = { picker.launch(null) }) { Text(if (c.host.isBlank()) stringResource(R.string.hf_remote_choose_folder) else stringResource(R.string.hf_remote_choose_other_folder)) }
                 } else if (!type.cloud) {
-                    Field("Server", c.host, "cloud.example.com") { c = c.copy(host = it) }
-                    Field("Port", if (c.port > 0) c.port.toString() else "", type.defaultPort.toString()) { c = c.copy(port = it.filter(Char::isDigit).toIntOrNull() ?: 0) }
-                    Field("User name", c.user) { c = c.copy(user = it) }
-                    Field(if (type == RemoteType.Sftp && c.privateKey.isNotBlank()) "Password for the key (if any)" else "Password", c.password, password = true) { c = c.copy(password = it) }
+                    Field(stringResource(R.string.hc_server), c.host, "cloud.example.com") { c = c.copy(host = it) }
+                    Field(stringResource(R.string.hf_remote_port), if (c.port > 0) c.port.toString() else "", type.defaultPort.toString()) { c = c.copy(port = it.filter(Char::isDigit).toIntOrNull() ?: 0) }
+                    Field(stringResource(R.string.hc_user_name), c.user) { c = c.copy(user = it) }
+                    Field(if (type == RemoteType.Sftp && c.privateKey.isNotBlank()) stringResource(R.string.hf_remote_key_password) else stringResource(R.string.hc_password), c.password, password = true) { c = c.copy(password = it) }
                     Field(
-                        when (type) { RemoteType.Smb -> "Shared folder name"; RemoteType.Sftp, RemoteType.Ftp -> "Start folder (optional)"; else -> "Folder on the server (optional)" },
+                        when (type) { RemoteType.Smb -> stringResource(R.string.hf_remote_share_name); RemoteType.Sftp, RemoteType.Ftp -> stringResource(R.string.hf_remote_start_folder); else -> stringResource(R.string.hf_remote_server_folder) },
                         c.path,
                     ) { c = c.copy(path = it) }
                     if (type != RemoteType.Sftp && type != RemoteType.Smb) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(if (type == RemoteType.Ftp) "Encrypt with TLS (FTPS)" else "Use https", Modifier.weight(1f))
+                            Text(if (type == RemoteType.Ftp) stringResource(R.string.hf_remote_ftps) else stringResource(R.string.hf_remote_use_https), Modifier.weight(1f))
                             Switch(checked = c.tls, onCheckedChange = { c = c.copy(tls = it) })
                         }
                     }
                     if (type == RemoteType.Sftp) {
-                        Field("Private key (optional, paste the key file)", c.privateKey, minLines = 3) { c = c.copy(privateKey = it) }
+                        Field(stringResource(R.string.hf_remote_private_key), c.privateKey, minLines = 3) { c = c.copy(privateKey = it) }
                         if (c.fingerprint.isNotEmpty()) Text(stringResource(R.string.hc_server_key, c.fingerprint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 } else {

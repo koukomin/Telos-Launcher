@@ -37,7 +37,7 @@ internal fun CloudFields(c: RemoteConnection, onChange: (RemoteConnection) -> Un
     Text(provider.consoleHint, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     OutlinedTextField(
         value = c.clientId, onValueChange = { onChange(c.copy(clientId = it.trim())) }, singleLine = true,
-        label = { Text(if (c.type == RemoteType.Dropbox) "App key" else "Client ID") }, modifier = Modifier.fillMaxWidth(),
+        label = { Text(if (c.type == RemoteType.Dropbox) stringResource(R.string.hf_remote_app_key) else stringResource(R.string.hf_remote_client_id)) }, modifier = Modifier.fillMaxWidth(),
     )
     if (provider.needsSecret) {
         OutlinedTextField(
@@ -46,7 +46,7 @@ internal fun CloudFields(c: RemoteConnection, onChange: (RemoteConnection) -> Un
         )
     }
     Row(Modifier.fillMaxWidth().padding(top = 4.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(if (c.refreshToken.isNotEmpty()) "Signed in" else "Not signed in", Modifier.weight(1f))
+        Text(if (c.refreshToken.isNotEmpty()) stringResource(R.string.hf_remote_signed_in) else stringResource(R.string.hf_remote_not_signed_in), Modifier.weight(1f))
         if (c.refreshToken.isNotEmpty()) TextButton(onClick = { onChange(c.copy(refreshToken = "")) }) { Text(stringResource(R.string.hc_sign_out)) }
         Button(
             enabled = c.clientId.isNotBlank() && (!provider.needsSecret || c.clientSecret.isNotBlank()),
@@ -66,6 +66,6 @@ internal fun CloudFields(c: RemoteConnection, onChange: (RemoteConnection) -> Un
                         .onFailure { onStatus("Sign-in failed: ${it.message}") }
                 }
             },
-        ) { Text(if (c.refreshToken.isNotEmpty()) "Sign in again" else "Sign in") }
+        ) { Text(if (c.refreshToken.isNotEmpty()) stringResource(R.string.hf_remote_sign_in_again) else stringResource(R.string.hf_remote_sign_in)) }
     }
 }

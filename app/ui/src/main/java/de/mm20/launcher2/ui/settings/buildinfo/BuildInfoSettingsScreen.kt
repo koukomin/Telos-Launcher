@@ -27,7 +27,7 @@ fun BuildInfoSettingsScreen() {
     PreferenceScreen(title = stringResource(R.string.preference_screen_buildinfo)) {
         item {
             PreferenceCategory {
-                Preference(title = "Build type", summary = BuildConfig.BUILD_TYPE)
+                Preference(title = stringResource(R.string.hf_buildinfo_type), summary = BuildConfig.BUILD_TYPE)
                 var buildSignature by remember { mutableStateOf<String?>(null) }
                 LaunchedEffect(null) {
                     val signature = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -57,11 +57,11 @@ fun BuildInfoSettingsScreen() {
                     } else "null"
                     buildSignature = signatureHash
                 }
-                Preference(title = "Signature hash", summary = buildSignature)
+                Preference(title = stringResource(R.string.hf_buildinfo_signature), summary = buildSignature)
             }
         }
         item {
-            PreferenceCategory(title = "Features") {
+            PreferenceCategory(title = stringResource(R.string.hf_buildinfo_features)) {
                 for (feature in buildFeatures) {
                     Preference(
                         title = feature.key,

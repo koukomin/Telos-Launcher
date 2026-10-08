@@ -15,6 +15,7 @@ android {
 
     packaging {
         resources.excludes.add("META-INF/DEPENDENCIES")
+        resources.excludes.add("META-INF/INDEX.LIST")
     }
 
     defaultConfig {
@@ -124,6 +125,8 @@ dependencies {
     implementation(libs.commons.net)
     implementation(libs.commons.compress)
     implementation(libs.bouncycastle)
+    // Telos PDF tools (adapted from PaperKnife+): PDF editing
+    implementation(libs.pdfbox.android)
     implementation(libs.coil.compose)
     implementation(libs.zxing.core)
 

@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.common.grid
 
+import de.mm20.launcher2.ui.R
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
@@ -134,7 +135,7 @@ fun FolderGridPopup(
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
                 TextButton(onClick = { showPicker = true }) {
-                    Text("Manage Apps")
+                    Text(stringResource(R.string.hf_folder_manage_apps))
                 }
                 TextButton(onClick = onDismiss) {
                     Text(stringResource(android.R.string.ok))
@@ -175,7 +176,7 @@ fun FolderGridPopup(
                 color = MaterialTheme.colorScheme.surfaceContainerHigh
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text("Rename Folder", style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(R.string.hf_folder_rename), style = MaterialTheme.typography.titleMedium)
                     androidx.compose.material3.OutlinedTextField(
                         value = newName,
                         onValueChange = { newName = it },

@@ -86,20 +86,20 @@ fun AppInfoSheet(
                 )
                 ActionButton(
                     icon = R.drawable.ac_unit_24px,
-                    label = "Freeze",
+                    label = stringResource(R.string.hf_appinfo_freeze),
                     enabled = isShizukuAvailable,
                     onClick = { viewModel.freeze() }
                 )
                 ActionButton(
                     icon = R.drawable.info_24px,
-                    label = "System Info",
+                    label = stringResource(R.string.hf_appinfo_system_info),
                     onClick = { currentApp.openAppDetails(context) }
                 )
             }
 
             if (!isShizukuAvailable) {
                 Text(
-                    text = "Shizuku not available. Tap to request permission.",
+                    text = stringResource(R.string.hf_appinfo_shizuku_missing),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.error,
                     modifier = Modifier.padding(top = 8.dp).clickable { viewModel.requestShizukuPermission() }
@@ -110,7 +110,7 @@ fun AppInfoSheet(
 
             // Permissions
             Text(
-                text = "Permissions",
+                text = stringResource(R.string.hf_appinfo_permissions),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.align(Alignment.Start).padding(bottom = 8.dp)
             )

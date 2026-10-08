@@ -50,7 +50,7 @@
     <string name="calculator_result">Αποτέλεσμα</string>
     <string name="calculator_swap">Αντιστροφή μονάδων</string>
     <string name="calculator_currency_missing">Οι τιμές των νομισμάτων δεν έχουν κατέβει ακόμα. Ενεργοποιήστε τα Νομίσματα του μετατροπέα μονάδων στις Ρυθμίσεις > Αναζήτηση και δοκιμάστε ξανά.</string>
-    <string name="calculator_degrees">deg</string>
-    <string name="calculator_radians">rad</string>
+    <string name="calculator_degrees">μοίρες</string>
+    <string name="calculator_radians">ακτίνια</string>
     <string name="calculator_tile">Αριθμομηχανή</string>
 </resources>

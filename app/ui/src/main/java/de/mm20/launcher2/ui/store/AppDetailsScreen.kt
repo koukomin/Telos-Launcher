@@ -83,7 +83,7 @@ fun AppDetailsScreen(itemId: String) {
                     Column(Modifier.weight(1f)) {
                         Text(item.displayName, style = MaterialTheme.typography.titleLarge)
                         Text(
-                            if (item.packageName == "unknown.package") "Package name known after the first install" else item.packageName,
+                            if (item.packageName == "unknown.package") stringResource(R.string.hf_store_package_unknown) else item.packageName,
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -100,12 +100,12 @@ fun AppDetailsScreen(itemId: String) {
                 }
             }
             item {
-                Card("Versions") {
-                    InfoLine("Installed", item.installedVersionName?.let { "v$it" } ?: if (item.installedVersionCode != null) "code ${item.installedVersionCode}" else "Not installed")
-                    InfoLine("Latest", item.latestRelease?.version?.let { "v$it" } ?: "Not checked yet")
-                    item.latestRelease?.size?.let { InfoLine("Size", formatBytes(it)) }
-                    item.latestRelease?.publishedAt?.let { InfoLine("Published", DateFormat.getDateInstance().format(Date(it))) }
-                    item.lastCheckedAt?.let { InfoLine("Last checked", DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(Date(it))) }
+                Card(stringResource(R.string.hf_store_versions)) {
+                    InfoLine(stringResource(R.string.hf_store_installed), item.installedVersionName?.let { "v$it" } ?: if (item.installedVersionCode != null) stringResource(R.string.hf_store_version_code, item.installedVersionCode.toString()) else stringResource(R.string.hf_store_not_installed))
+                    InfoLine(stringResource(R.string.hf_store_latest), item.latestRelease?.version?.let { "v$it" } ?: stringResource(R.string.hf_store_not_checked))
+                    item.latestRelease?.size?.let { InfoLine(stringResource(R.string.hf_store_size), formatBytes(it)) }
+                    item.latestRelease?.publishedAt?.let { InfoLine(stringResource(R.string.hf_store_published), DateFormat.getDateInstance().format(Date(it))) }
+                    item.lastCheckedAt?.let { InfoLine(stringResource(R.string.hf_store_last_checked), DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(Date(it))) }
                     if (row.updateAvailable) {
                         TextButton(onClick = { viewModel.setOptions(item.id) { it.copy(skippedVersion = item.latestRelease?.version) } }, contentPadding = PaddingValues(0.dp)) {
                             Text(stringResource(R.string.hc_skip_this_version))
@@ -119,17 +119,17 @@ fun AppDetailsScreen(itemId: String) {
                 }
             }
             item.latestRelease?.changelog?.takeIf { it.isNotBlank() }?.let { changelog ->
-                item { Card("Changelog") { Text(changelog.take(4000), style = MaterialTheme.typography.bodyMedium) } }
+                item { Card(stringResource(R.string.hf_store_changelog)) { Text(changelog.take(4000), style = MaterialTheme.typography.bodyMedium) } }
             }
             item {
-                Card("Settings of this app") {
-                    SwitchLine("Track only", "Only tell me about new versions, never install them from here", o.trackOnly) { v ->
+                Card(stringResource(R.string.hf_store_app_settings)) {
+                    SwitchLine(stringResource(R.string.hf_store_track_only), stringResource(R.string.hf_store_track_only_desc), o.trackOnly) { v ->
                         viewModel.setOptions(item.id) { it.copy(trackOnly = v) }
                     }
-                    SwitchLine("Stay on this version", "Do not offer updates", o.pinned) { v ->
+                    SwitchLine(stringResource(R.string.hf_store_pin), stringResource(R.string.hf_store_pin_desc), o.pinned) { v ->
                         viewModel.setOptions(item.id) { it.copy(pinned = v) }
                     }
-                    SwitchLine("Exclude from background updates", "Not checked or updated by the background check", o.excludeFromBackground) { v ->
+                    SwitchLine(stringResource(R.string.hf_store_exclude_bg), stringResource(R.string.hf_store_exclude_bg_desc), o.excludeFromBackground) { v ->
                         viewModel.setOptions(item.id) { it.copy(excludeFromBackground = v) }
                     }
                     OutlinedTextField(
@@ -145,19 +145,19 @@ fun AppDetailsScreen(itemId: String) {
             }
             if (hasFilter(item.source)) {
                 item {
-                    Card("Which file to install") {
+                    Card(stringResource(R.string.hf_store_which_file)) {
                         OutlinedTextField(
                             filterText, { filterText = it }, label = { Text(stringResource(R.string.hc_file_name_filter_regular_expression)) }, singleLine = true,
                             supportingText = { Text(stringResource(R.string.hc_for_example_arm64_or_universal_empty_mea)) },
                             modifier = Modifier.fillMaxWidth(),
                         )
-                        if (hasPrerelease(item.source)) SwitchLine("Include pre-releases", null, prerelease) { prerelease = it }
+                        if (hasPrerelease(item.source)) SwitchLine(stringResource(R.string.hf_store_prereleases), null, prerelease) { prerelease = it }
                         Button(onClick = { viewModel.setSourceFilter(item, filterText, prerelease) }, modifier = Modifier.padding(top = 8.dp)) { Text(stringResource(R.string.hc_apply_and_check)) }
                     }
                 }
             }
             item {
-                Card("Source") {
+                Card(stringResource(R.string.hf_store_source)) {
                     Text(StoreUrlParser.toUrl(item.source), style = MaterialTheme.typography.bodyMedium)
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
                         OutlinedButton(onClick = { viewModel.openUrl(StoreUrlParser.toUrl(item.source)) }) { Text(stringResource(R.string.hc_open)) }
@@ -258,7 +258,7 @@ private fun DetailsActionButton(row: StoreRow, state: StoreInstallUiState, onCli
             Button(onClick = {}, enabled = false) {
                 CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp)
                 Spacer(Modifier.width(8.dp))
-                Text(if (state == StoreInstallUiState.Downloading) "Downloading…" else "Installing…")
+                Text(if (state == StoreInstallUiState.Downloading) stringResource(R.string.hf_store_downloading_dots) else stringResource(R.string.hf_store_installing_dots))
             }
         }
         StoreInstallUiState.Failed -> OutlinedButton(onClick = onClick) { Text(stringResource(R.string.hc_failed_try_again)) }

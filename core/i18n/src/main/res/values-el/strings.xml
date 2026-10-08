@@ -244,8 +244,8 @@
     <string name="recommendation_tab_intro">Κατεβάζοντας αυτές τις εφαρμογές στηρίζετε την ανάπτυξη του Telos.</string>
     <string name="recommendation_tab_hide">Απόκρυψη αυτού του tab</string>
     <string name="recommendation_category_vpn">VPN</string>
-    <string name="recommendation_category_browsers">Browser</string>
-    <string name="recommendation_category_mail">Mail</string>
+    <string name="recommendation_category_browsers">Προγράμματα περιήγησης</string>
+    <string name="recommendation_category_mail">Αλληλογραφία</string>
     <string name="recommendation_category_productivity">Παραγωγικότητα</string>
     <string name="recommendation_category_password_managers">Διαχειριστής κωδικών</string>
     <string name="recommendation_category_cloud_storage">Αποθήκευση cloud</string>
@@ -549,7 +549,7 @@
     <string name="preference_search_search_actions_summary">Διαμορφώστε τις γρήγορες ενέργειες και τις συντομεύσεις αναζήτησης</string>
     <string name="create_search_action_website_invalid_url">Ο συγκεκριμένος ιστότοπος δεν μπορεί να εισαχθεί αυτόματα ως αναζήτηση ιστού. Μπορείτε να δοκιμάσετε έναν διαφορετικό ιστότοπο ή να εισαγάγετε τα απαιτούμενα δεδομένα με μη αυτόματο τρόπο στο επόμενο βήμα.</string>
     <string name="search_action_app">Εφαρμογή</string>
-    <string name="create_search_action_website_url">Geben Sie die Webadresse ein:</string>
+    <string name="create_search_action_website_url">Εισαγάγετε τη διεύθυνση του ιστότοπου:</string>
     <string name="search_action_websearch_url_hint">Το πρότυπο URL που χρησιμοποιείται για τη δημιουργία της διεύθυνσης URL αναζήτησης ιστού. Χρησιμοποιήστε το \"${1}\" ως σύμβολο κράτησης θέσης για τον πραγματικό όρο αναζήτησης, π.χ. https://google.com/search?q=${1}.</string>
     <string name="preference_plugin_badges">Σήματα προσθηκών</string>
     <string name="preference_plugin_badges_summary">Υποδείξτε με ποια προσθήκη δημιουργήθηκε ένα αποτέλεσμα αναζήτησης</string>
@@ -683,7 +683,7 @@
     <string name="gesture_action_plugin">Ενέργεια plugin</string>
     <string name="gesture_action_web_apps_panel">Πίνακας Web Apps</string>
     <string name="gesture_action_widgets_empty">Κενό</string>
-    <string name="gesture_action_widgets_indexed">Widgets (%1$d)</string>
+    <string name="gesture_action_widgets_indexed">Γραφικά στοιχεία (%1$d)</string>
     <string name="gesture_action_widgets_new">Νέα σελίδα widget</string>
     <string name="gesture_failed_message">Πραγματοποιήσατε μια χειρονομία \"%1$s\". Αυτή η χειρονομία είναι ρυθμισμένη να ενεργοποιεί την ενέργεια \"%2$s\". Ωστόσο, η ενέργεια δεν μπόρεσε να εκτελεστεί για τον εξής λόγο:</string>
     <string name="missing_permission_accessibility_gesture_failed">Η υπηρεσία προσβασιμότητας του launcher πρέπει να είναι ενεργοποιημένη για να εκτελεστεί αυτή η ενέργεια.</string>
@@ -760,7 +760,7 @@
     <string name="preference_app_lock_work_profile_toggle">Κλείδωμα διακόπτη προφίλ εργασίας</string>
     <string name="preference_app_lock_work_profile_toggle_summary">Απαίτηση πιστοποίησης για παύση ή συνέχιση του προφίλ εργασίας από το συρτάρι εφαρμογών</string>
     <string name="preference_category_app_lock_apps">Κλειδωμένες εφαρμογές</string>
-    <string name="preference_category_app_lock_web_apps">Web apps</string>
+    <string name="preference_category_app_lock_web_apps">Εφαρμογές ιστού</string>
     <string name="preference_screen_app_lock">Κλείδωμα εφαρμογών</string>
     <string name="preference_screen_app_lock_summary">Απαίτηση πιστοποίησης για το άνοιγμα συγκεκριμένων εφαρμογών</string>
 
@@ -1054,7 +1054,7 @@
     <string name="preference_freeze_auto_enabled">Ενεργοποίηση αυτόματου παγώματος</string>
     <string name="preference_freeze_auto_enabled_summary">Αυτόματο πάγωμα των παρακάτω επιλεγμένων εφαρμογών</string>
     <string name="preference_freeze_backend">Backend πάγωσης</string>
-    <string name="preference_freeze_backend_category">Backend</string>
+    <string name="preference_freeze_backend_category">Υποσύστημα</string>
     <string name="preference_freeze_dashboard">Πίνακας ελέγχου</string>
     <string name="preference_freeze_dashboard_summary">Παγωμένες εφαρμογές αυτή τη στιγμή και ιστορικό παγώματος</string>
     <string name="preference_freeze_exclude_music">Εξαίρεση εφαρμογών που παίζουν μουσική</string>
