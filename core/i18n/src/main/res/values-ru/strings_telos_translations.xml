@@ -1139,4 +1139,6 @@
         <item quantity="many">пинт (имперских)</item>
         <item quantity="other">пинты (имперские)</item>
     </plurals>
+    <string name="dl_m_auto_update">Обновлять yt-dlp автоматически</string>
+    <string name="dl_m_auto_update_sum">Раз в сутки загружает свежий yt-dlp по Wi-Fi, чтобы загрузки продолжали работать, когда сайты меняются</string>
 </resources>

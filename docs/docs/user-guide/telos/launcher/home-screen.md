@@ -12,7 +12,7 @@ Telos app directly: choose the gesture, then **Telos apps** and pick Phone, Mess
 The app opens with the same zoom or push animation as the other launch gestures. This works even though the Telos apps are
 virtual apps that cannot be saved as a normal shortcut. Switching an app off in Telos Store makes its gesture do nothing.
 
-For every app except the Store you get a second choice: **"<App> as a page in the launcher"**. Then the app is not started in a
+For every app except the Store you get a second choice: **"&lt;App&gt; as a page in the launcher"**. Then the app is not started in a
 separate screen but shown as a page of the home screen, which slides in with the gesture (push for swipes, zoom for double tap and
 long press) and goes away with the back gesture or by swiping back. Phone, Messages, Notes, Calendar, Calculator, Voice Recorder,
 Screen Recorder, Screenshot, Radio, Music, Video, Photos and Files can be used this way, including their own sub screens

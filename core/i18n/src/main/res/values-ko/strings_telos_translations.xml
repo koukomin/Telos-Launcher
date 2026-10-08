@@ -1566,4 +1566,6 @@
     <plurals name="unit_teaspoon">
         <item quantity="other">작은술(미국)</item>
     </plurals>
+    <string name="dl_m_auto_update">yt-dlp 자동 업데이트</string>
+    <string name="dl_m_auto_update_sum">사이트가 바뀌어도 다운로드가 계속 작동하도록 하루에 한 번 Wi-Fi로 최신 yt-dlp를 받습니다</string>
 </resources>

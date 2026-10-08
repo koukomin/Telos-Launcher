@@ -1050,4 +1050,6 @@
     <plurals name="intruder_photo_count">
         <item quantity="other">%1$d 張照片</item>
     </plurals>
+    <string name="dl_m_auto_update">自動更新 yt-dlp</string>
+    <string name="dl_m_auto_update_sum">每天透過 Wi-Fi 取得一次最新的 yt-dlp，讓網站變更後下載仍可正常運作</string>
 </resources>

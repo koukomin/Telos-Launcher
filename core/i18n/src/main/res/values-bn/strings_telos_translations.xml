@@ -2024,4 +2024,6 @@
         <item quantity="one">চা চামচ (US)</item>
         <item quantity="other">চা চামচ (US)</item>
     </plurals>
+    <string name="dl_m_auto_update">yt-dlp স্বয়ংক্রিয়ভাবে আপডেট করুন</string>
+    <string name="dl_m_auto_update_sum">সাইট বদলালেও ডাউনলোড চালু থাকতে দিনে একবার Wi-Fi-তে সর্বশেষ yt-dlp আনে</string>
 </resources>

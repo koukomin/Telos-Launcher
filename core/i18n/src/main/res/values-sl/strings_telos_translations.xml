@@ -2565,4 +2565,6 @@
         <item quantity="few">čajne žličke (ZDA)</item>
         <item quantity="other">čajnih žličk (ZDA)</item>
     </plurals>
+    <string name="dl_m_auto_update">Samodejno posodobi yt-dlp</string>
+    <string name="dl_m_auto_update_sum">Enkrat na dan prek Wi-Fi prenese najnovejši yt-dlp, da prenosi delujejo tudi ob spremembah strani</string>
 </resources>
