@@ -26,6 +26,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.ui.res.painterResource
+import de.mm20.launcher2.ui.component.SearchEmptyState
+import de.mm20.launcher2.ui.component.TelosSearchBar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -127,7 +132,25 @@ fun MessagesScreen(
     }
 
     fun isHidden(c: SmsConversation) = c.address.split(", ").any { HiddenContacts.matches(it, hidden) }
-    val shown = all?.filter { unlocked || !isHidden(it) }
+    var listQuery by remember { mutableStateOf("") }
+    // message texts per thread, loaded in the background while a search is active
+    val bodies = remember { androidx.compose.runtime.mutableStateMapOf<Long, List<String>>() }
+    LaunchedEffect(listQuery.isNotBlank(), all) {
+        val list = all
+        if (listQuery.isBlank() || list == null) return@LaunchedEffect
+        for (c in list) {
+            if (c.threadId in bodies) continue
+            val texts = withContext(Dispatchers.IO) {
+                runCatching { SmsThreads.messages(context, c).map { it.body } }.getOrDefault(emptyList())
+            }
+            bodies[c.threadId] = texts
+        }
+    }
+    val visibleAll = all?.filter { unlocked || !isHidden(it) }
+    val shown = if (visibleAll == null || listQuery.isBlank()) visibleAll else
+        de.mm20.launcher2.comms.search.TelosSearch.filter(visibleAll, listQuery) { c ->
+            listOf(c.name, c.address, c.snippet) + (bodies[c.threadId] ?: emptyList())
+        }
 
     val current = open
     if (current != null) {
@@ -157,9 +180,17 @@ fun MessagesScreen(
                 }
             }
         }
-        TextButton(onClick = { newMessage = true }, modifier = Modifier.padding(horizontal = 8.dp)) { Text(stringResource(R.string.hc_new_message)) }
+        TelosSearchBar(
+            value = listQuery,
+            onValueChange = { listQuery = it },
+            placeholder = stringResource(R.string.tsp_search_messages),
+            trailing = {
+                TextButton(onClick = { newMessage = true }) { Text(stringResource(R.string.hc_new_message)) }
+            },
+        )
         when {
             shown == null -> Box(Modifier.fillMaxSize())
+            shown.isEmpty() && listQuery.isNotBlank() -> SearchEmptyState(listQuery)
             shown.isEmpty() -> EmptyCommsTab("No conversations", "Your messages appear here.")
             else -> LazyColumn(Modifier.fillMaxSize()) {
                 items(shown, key = { it.threadId.toString() + it.address }) { c ->
@@ -215,7 +246,12 @@ private fun ThreadView(
     var failed by remember { mutableStateOf(false) }
     val sendScope = androidx.compose.runtime.rememberCoroutineScope()
     val listState = rememberLazyListState()
-    LaunchedEffect(messages.size) { if (messages.isNotEmpty()) listState.scrollToItem(messages.lastIndex) }
+    var searching by remember { mutableStateOf(false) }
+    var threadQuery by remember { mutableStateOf("") }
+    val shownMessages = if (threadQuery.isBlank()) messages else messages.filter {
+        de.mm20.launcher2.comms.search.TelosSearch.matches(threadQuery, it.body)
+    }
+    LaunchedEffect(shownMessages.size) { if (shownMessages.isNotEmpty()) listState.scrollToItem(shownMessages.lastIndex) }
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) { picked ->
         if (picked.isNotEmpty()) onAttachments(attachments + picked)
     }
@@ -224,13 +260,26 @@ private fun ThreadView(
     Column(Modifier.fillMaxSize()) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
             TextButton(onClick = onBack) { Text(stringResource(R.string.hc_back)) }
-            Text(conversation.name ?: conversation.address, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(conversation.name ?: conversation.address, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
+            IconButton(onClick = { searching = !searching; if (!searching) threadQuery = "" }) {
+                Icon(
+                    painterResource(if (searching) R.drawable.close_24px else R.drawable.search_24px),
+                    contentDescription = stringResource(R.string.ts_search),
+                )
+            }
         }
-        LazyColumn(
+        if (searching) TelosSearchBar(
+            value = threadQuery,
+            onValueChange = { threadQuery = it },
+            placeholder = stringResource(R.string.tsp_search_in_conversation),
+            autoFocus = true,
+        )
+        if (searching && threadQuery.isNotBlank() && shownMessages.isEmpty()) SearchEmptyState(threadQuery, Modifier.weight(1f))
+        else LazyColumn(
             Modifier.weight(1f).fillMaxWidth(), state = listState,
             verticalArrangement = Arrangement.spacedBy(6.dp), contentPadding = PaddingValues(12.dp),
         ) {
-            items(messages, key = { it.id + it.date }) { m ->
+            items(shownMessages, key = { it.id + it.date }) { m ->
                 Box(Modifier.fillMaxWidth(), contentAlignment = if (m.outgoing) Alignment.CenterEnd else Alignment.CenterStart) {
                     Surface(
                         shape = RoundedCornerShape(16.dp),

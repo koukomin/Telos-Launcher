@@ -41,13 +41,12 @@ class PdfTextSearch(context: Context, private val file: File) {
         for (i in 0 until n) {
             val t = pageText(i)
             if (t.isNotBlank()) any = true
-            var from = 0
-            while (out.size < 300) {
-                val at = t.indexOf(q, from, ignoreCase = true)
-                if (at < 0) break
-                val s = (at - 40).coerceAtLeast(0); val e = (at + q.length + 60).coerceAtMost(t.length)
-                out += PdfHit(i, t.substring(s, e).replace(Regex("\\s+"), " ").trim())
-                from = at + q.length
+            // Greek aware (tonos, Greeklish): every query word has to be on the same line
+            for (line in t.lineSequence()) {
+                if (out.size >= 300) break
+                val clean = line.replace(WS, " ").trim()
+                if (clean.isEmpty() || !de.mm20.launcher2.comms.search.TelosSearch.matches(q, clean)) continue
+                out += PdfHit(i, if (clean.length > 160) clean.substring(0, 160) + "…" else clean)
             }
             if (i % 5 == 0) onProgress(i + 1)
             if (out.size >= 300) break
@@ -55,6 +54,8 @@ class PdfTextSearch(context: Context, private val file: File) {
         hasText = any || out.isNotEmpty()
         return out
     }
+
+    private val WS = Regex("\\s+")
 
     @Synchronized
     fun close() { runCatching { doc?.close() }; doc = null }

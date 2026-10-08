@@ -492,11 +492,11 @@ private fun PdfSearchDialog(searcher: PdfTextSearch, onJump: (Int) -> Unit, onDi
         title = { Text(stringResource(R.string.od_search_pdf)) },
         text = {
             Column {
-                OutlinedTextField(
-                    query, { query = it }, singleLine = true, modifier = Modifier.fillMaxWidth(),
-                    label = { Text(stringResource(R.string.od_search_hint)) },
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                    keyboardActions = KeyboardActions(onSearch = { run() }),
+                de.mm20.launcher2.ui.component.TelosSearchBar(
+                    query, { query = it }, stringResource(R.string.od_search_hint),
+                    modifier = Modifier.padding(horizontal = 0.dp),
+                    autoFocus = true,
+                    onSearch = { run() },
                 )
                 val r = results
                 when {
