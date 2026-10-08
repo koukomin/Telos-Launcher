@@ -916,6 +916,14 @@ sealed interface GestureAction {
     @SerialName("telos_app")
     data class TelosApp(val key: String) : GestureAction
 
+    /**
+     * Shows one of the built-in Telos apps as a page inside the launcher (reached with the gesture)
+     * instead of starting its own screen. [key] is the virtual app key, same as [TelosApp].
+     */
+    @Serializable
+    @SerialName("telos_page")
+    data class TelosPage(val key: String) : GestureAction
+
     @Serializable
     @SerialName("launcher_settings")
     data object LauncherSettings : GestureAction

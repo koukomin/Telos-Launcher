@@ -266,7 +266,7 @@ fun CallScreen(onFinished: () -> Unit) {
                 if (notesEnabled) {
                     CallControl(
                         icon = R.drawable.rd_ic_note,
-                        label = "Note",
+                        label = stringResource(R.string.hc_note),
                         selected = showNotes,
                         onClick = { showNotes = true },
                     )
@@ -290,7 +290,7 @@ fun CallScreen(onFinished: () -> Unit) {
             }
             AlertDialog(
                 onDismissRequest = { showNotes = false },
-                title = { Text("Call note") },
+                title = { Text(stringResource(R.string.hc_call_note)) },
                 text = {
                     OutlinedTextField(
                         value = draft,
@@ -302,10 +302,10 @@ fun CallScreen(onFinished: () -> Unit) {
                     TextButton(onClick = {
                         commsSettings.setCallerNote(state.number, draft)
                         showNotes = false
-                    }) { Text("Save") }
+                    }) { Text(stringResource(R.string.hc_save)) }
                 },
                 dismissButton = {
-                    TextButton(onClick = { showNotes = false }) { Text("Close") }
+                    TextButton(onClick = { showNotes = false }) { Text(stringResource(R.string.hc_close)) }
                 },
             )
         }
@@ -318,7 +318,7 @@ fun CallScreen(onFinished: () -> Unit) {
             var remindOpen by remember { mutableStateOf(false) }
             Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
                 Text(
-                    text = "Remind me",
+                    text = stringResource(R.string.hc_remind_me),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable { remindOpen = true }.padding(8.dp),
@@ -327,7 +327,7 @@ fun CallScreen(onFinished: () -> Unit) {
             if (remindOpen) {
                 AlertDialog(
                     onDismissRequest = { remindOpen = false },
-                    title = { Text("Remind me to call back") },
+                    title = { Text(stringResource(R.string.hc_remind_me_to_call_back)) },
                     text = {
                         Column {
                             listOf(5, 15, 30, 60).forEach { minutes ->
@@ -337,19 +337,19 @@ fun CallScreen(onFinished: () -> Unit) {
                                     )
                                     remindOpen = false
                                     TelosCallSession.reject()
-                                }) { Text("In $minutes min") }
+                                }) { Text(stringResource(R.string.hc_in_minutes, minutes)) }
                             }
                         }
                     },
                     confirmButton = {},
                     dismissButton = {
-                        TextButton(onClick = { remindOpen = false }) { Text("Cancel") }
+                        TextButton(onClick = { remindOpen = false }) { Text(stringResource(R.string.hc_cancel)) }
                     },
                 )
             }
             if (rejectSms.isNotBlank()) {
                 Text(
-                    text = "Reject + SMS",
+                    text = stringResource(R.string.hc_reject_sms),
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier

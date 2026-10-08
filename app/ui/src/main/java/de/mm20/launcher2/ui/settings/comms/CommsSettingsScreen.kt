@@ -1,6 +1,7 @@
 // === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
 package de.mm20.launcher2.ui.settings.comms
 
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.OutlinedTextField
@@ -124,7 +125,7 @@ fun CommsSettingsScreen() {
             context.contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() }
         }.getOrNull()
         if (pendingImportText.isNullOrBlank()) {
-            Toast.makeText(context, "Could not read backup", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.hc_could_not_read_backup), Toast.LENGTH_SHORT).show()
         } else {
             showImportPassword = true
         }
@@ -135,10 +136,10 @@ fun CommsSettingsScreen() {
             context.contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() }
         }.getOrNull()
         if (text.isNullOrBlank()) {
-            Toast.makeText(context, "Could not read file", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.hc_could_not_read_file), Toast.LENGTH_SHORT).show()
         } else {
             viewModel.importVcf(text) { count ->
-                Toast.makeText(context, "Imported $count contacts", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.hc_imported_contacts, count), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -149,7 +150,7 @@ fun CommsSettingsScreen() {
         var pin by remember { mutableStateOf("") }
         AlertDialog(
             onDismissRequest = { showPinDialog = false },
-            title = { Text("Hidden contacts PIN") },
+            title = { Text(stringResource(R.string.hc_hidden_contacts_pin)) },
             text = {
                 OutlinedTextField(
                     value = pin,
@@ -164,10 +165,10 @@ fun CommsSettingsScreen() {
                         viewModel.setPin(pin)
                         showPinDialog = false
                     }
-                }) { Text("Save") }
+                }) { Text(stringResource(R.string.hc_save)) }
             },
             dismissButton = {
-                TextButton(onClick = { showPinDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showPinDialog = false }) { Text(stringResource(R.string.hc_cancel)) }
             },
         )
     }
@@ -175,12 +176,12 @@ fun CommsSettingsScreen() {
         var input by remember { mutableStateOf(rejectSmsTemplate) }
         AlertDialog(
             onDismissRequest = { showRejectSms = false },
-            title = { Text("Reject with SMS") },
+            title = { Text(stringResource(R.string.hc_reject_with_sms)) },
             text = {
                 OutlinedTextField(
                     value = input,
                     onValueChange = { input = it },
-                    label = { Text("Message") },
+                    label = { Text(stringResource(R.string.hc_message)) },
                     modifier = Modifier.fillMaxWidth(),
                 )
             },
@@ -188,19 +189,19 @@ fun CommsSettingsScreen() {
                 TextButton(onClick = {
                     viewModel.setRejectSmsTemplate(input.trim())
                     showRejectSms = false
-                }) { Text("Save") }
+                }) { Text(stringResource(R.string.hc_save)) }
             },
             dismissButton = {
-                TextButton(onClick = { showRejectSms = false }) { Text("Cancel") }
+                TextButton(onClick = { showRejectSms = false }) { Text(stringResource(R.string.hc_cancel)) }
             },
         )
     }
 
-    PreferenceScreen(title = { Text("Settings") }) {
+    PreferenceScreen(title = { Text(stringResource(R.string.hc_settings)) }) {
         item {
-            PreferenceCategory(title = "T9 Search Settings") {
+            PreferenceCategory(title = stringResource(R.string.hc_t9_search_settings)) {
                 ListPreference(
-                    title = "T9 Language Alphabet",
+                    title = stringResource(R.string.hc_t9_language_alphabet),
                     items = listOf(
                         "Latin (English)" to "latin",
                         "Greek" to "greek",
@@ -213,9 +214,9 @@ fun CommsSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = "Incoming call") {
+            PreferenceCategory(title = stringResource(R.string.hc_incoming_call)) {
                 ListPreference(
-                    title = "Answer style",
+                    title = stringResource(R.string.hc_answer_style),
                     items = listOf(
                         "Buttons" to "buttons",
                         "Swipe" to "swipe",
@@ -224,7 +225,7 @@ fun CommsSettingsScreen() {
                     onValueChanged = { viewModel.setAnswerStyle(it) }
                 )
                 ListPreference(
-                    title = "SIM 1 color",
+                    title = stringResource(R.string.hc_sim_1_color),
                     items = listOf(
                         "Green" to "green", "Blue" to "blue", "Orange" to "orange", "Red" to "red",
                         "Purple" to "purple", "Pink" to "pink", "Teal" to "teal",
@@ -233,7 +234,7 @@ fun CommsSettingsScreen() {
                     onValueChanged = { viewModel.setSim1Color(it) }
                 )
                 ListPreference(
-                    title = "SIM 2 color",
+                    title = stringResource(R.string.hc_sim_2_color),
                     items = listOf(
                         "Green" to "green", "Blue" to "blue", "Orange" to "orange", "Red" to "red",
                         "Purple" to "purple", "Pink" to "pink", "Teal" to "teal",
@@ -242,8 +243,8 @@ fun CommsSettingsScreen() {
                     onValueChanged = { viewModel.setSim2Color(it) }
                 )
                 SwitchPreference(
-                    title = "Secure call screen",
-                    summary = "Block screenshots and hide the call screen in the recent apps overview",
+                    title = stringResource(R.string.hc_secure_call_screen),
+                    summary = stringResource(R.string.hc_block_screenshots_and_hide_the_call_scre),
                     value = secureCallScreen,
                     onValueChanged = { viewModel.setSecureCallScreen(it) }
                 )
@@ -251,34 +252,34 @@ fun CommsSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = "Sounds & Vibrations") {
+            PreferenceCategory(title = stringResource(R.string.hc_sounds_vibrations)) {
                 SwitchPreference(
-                    title = "Dialpad Sounds",
-                    summary = "Play sound tones when using the dialpad",
+                    title = stringResource(R.string.hc_dialpad_sounds),
+                    summary = stringResource(R.string.hc_play_sound_tones_when_using_the_dialpad),
                     value = dialpadSounds,
                     onValueChanged = { viewModel.setDialpadSounds(it) }
                 )
                 SwitchPreference(
-                    title = "Dialpad Vibration",
-                    summary = "Vibrate when using the dialpad",
+                    title = stringResource(R.string.hc_dialpad_vibration),
+                    summary = stringResource(R.string.hc_vibrate_when_using_the_dialpad),
                     value = dialpadVibration,
                     onValueChanged = { viewModel.setDialpadVibration(it) }
                 )
                 SwitchPreference(
-                    title = "Hide dialpad letters",
-                    summary = "Show only digits on the keypad",
+                    title = stringResource(R.string.hc_hide_dialpad_letters),
+                    summary = stringResource(R.string.hc_show_only_digits_on_the_keypad),
                     value = hideLetters,
                     onValueChanged = { viewModel.setHideDialpadLetters(it) }
                 )
                 SwitchPreference(
-                    title = "Vibrate on Answer",
-                    summary = "Vibrate when an outgoing call is answered",
+                    title = stringResource(R.string.hc_vibrate_on_answer),
+                    summary = stringResource(R.string.hc_vibrate_when_an_outgoing_call_is_answere),
                     value = vibrateOnAnswer,
                     onValueChanged = { viewModel.setVibrateOnAnswer(it) }
                 )
                 SwitchPreference(
-                    title = "Vibrate on Hangup",
-                    summary = "Vibrate when a call is disconnected",
+                    title = stringResource(R.string.hc_vibrate_on_hangup),
+                    summary = stringResource(R.string.hc_vibrate_when_a_call_is_disconnected),
                     value = vibrateOnHangup,
                     onValueChanged = { viewModel.setVibrateOnHangup(it) }
                 )
@@ -286,79 +287,79 @@ fun CommsSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = "Calling") {
+            PreferenceCategory(title = stringResource(R.string.hc_calling)) {
                 SwitchPreference(
-                    title = "Tap to call",
-                    summary = "Tapping a recent or contact places a call",
+                    title = stringResource(R.string.hc_tap_to_call),
+                    summary = stringResource(R.string.hc_tapping_a_recent_or_contact_places_a_cal),
                     value = tapToCall,
                     onValueChanged = { viewModel.setTapToCall(it) },
                 )
                 SwitchPreference(
-                    title = "Confirm before calling",
-                    summary = "Show a confirmation sheet before placing a call",
+                    title = stringResource(R.string.hc_confirm_before_calling),
+                    summary = stringResource(R.string.hc_show_a_confirmation_sheet_before_placing),
                     value = confirmBeforeCall,
                     onValueChanged = { viewModel.setConfirmBeforeCall(it) },
                 )
                 SwitchPreference(
-                    title = "Remember dialpad digits",
-                    summary = "Keep the last typed number when reopening the keypad",
+                    title = stringResource(R.string.hc_remember_dialpad_digits),
+                    summary = stringResource(R.string.hc_keep_the_last_typed_number_when_reopenin),
                     value = rememberDialpad,
                     onValueChanged = { viewModel.setRememberDialpad(it) },
                 )
                 SwitchPreference(
-                    title = "Open dialpad on launch",
-                    summary = "Show the keypad when Phone opens",
+                    title = stringResource(R.string.hc_open_dialpad_on_launch),
+                    summary = stringResource(R.string.hc_show_the_keypad_when_phone_opens),
                     value = autoOpenDialpad,
                     onValueChanged = { viewModel.setAutoOpenDialpad(it) },
                 )
                 SwitchPreference(
-                    title = "Auto redial",
-                    summary = "Retry busy, unanswered, or rejected outgoing calls",
+                    title = stringResource(R.string.hc_auto_redial),
+                    summary = stringResource(R.string.hc_retry_busy_unanswered_or_rejected_outgoi),
                     value = autoRedial,
                     onValueChanged = { viewModel.setAutoRedial(it) },
                 )
                 SwitchPreference(
-                    title = "Pocket mode",
-                    summary = "Ignore taps on incoming calls when the proximity sensor is covered",
+                    title = stringResource(R.string.hc_pocket_mode),
+                    summary = stringResource(R.string.hc_ignore_taps_on_incoming_calls_when_the_p),
                     value = pocketMode,
                     onValueChanged = { viewModel.setPocketMode(it) },
                 )
                 SwitchPreference(
-                    title = "Proximity speaker",
-                    summary = "Switch to speaker when the phone is away from your ear",
+                    title = stringResource(R.string.hc_proximity_speaker),
+                    summary = stringResource(R.string.hc_switch_to_speaker_when_the_phone_is_away),
                     value = proximitySpeaker,
                     onValueChanged = { viewModel.setProximitySpeaker(it) },
                 )
                 SwitchPreference(
-                    title = "Show numbers in recents",
+                    title = stringResource(R.string.hc_show_numbers_in_recents),
                     value = showNumbersInRecents,
                     onValueChanged = { viewModel.setShowNumbersInRecents(it) },
                 )
                 SwitchPreference(
-                    title = "Missed call popup",
-                    summary = "Show a callback sheet after a missed call",
+                    title = stringResource(R.string.hc_missed_call_popup),
+                    summary = stringResource(R.string.hc_show_a_callback_sheet_after_a_missed_cal),
                     value = missedCallPopup,
                     onValueChanged = { viewModel.setMissedCallPopup(it) },
                 )
                 SwitchPreference(
-                    title = "Popup after every call",
+                    title = stringResource(R.string.hc_popup_after_every_call),
                     value = postCallPopup,
                     onValueChanged = { viewModel.setPostCallPopup(it) },
                 )
                 SwitchPreference(
-                    title = "In-call notes",
-                    summary = "Notes button and floating note when you leave the call screen",
+                    title = stringResource(R.string.hc_in_call_notes),
+                    summary = stringResource(R.string.hc_notes_button_and_floating_note_when_you),
                     value = inCallNotes,
                     onValueChanged = { viewModel.setInCallNotes(it) },
                 )
                 Preference(
-                    title = "Reject with SMS",
+                    title = stringResource(R.string.hc_reject_with_sms),
                     summary = if (rejectSmsTemplate.isBlank()) "Off" else rejectSmsTemplate,
                     onClick = { showRejectSms = true },
                 )
                 Preference(
-                    title = "Notes",
-                    summary = "All contact call notes",
+                    title = stringResource(R.string.hc_notes),
+                    summary = stringResource(R.string.hc_all_contact_call_notes),
                     onClick = { backStack.add(CallerNotesRoute) },
                 )
             }
@@ -373,15 +374,15 @@ fun CommsSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = "Privacy") {
+            PreferenceCategory(title = stringResource(R.string.hc_privacy)) {
                 SwitchPreference(
-                    title = "Lock Phone app",
-                    summary = "Require biometrics or device PIN when opening Phone",
+                    title = stringResource(R.string.hc_lock_phone_app),
+                    summary = stringResource(R.string.hc_require_biometrics_or_device_pin_when_op),
                     value = phoneAppLock,
                     onValueChanged = { viewModel.setPhoneAppLock(it) },
                 )
                 ListPreference(
-                    title = "Biometric before placing a call",
+                    title = stringResource(R.string.hc_biometric_before_placing_a_call),
                     items = listOf(
                         "Off" to "none",
                         "Every call" to "all",
@@ -391,34 +392,34 @@ fun CommsSettingsScreen() {
                     onValueChanged = { if (it != null) viewModel.setCallProtectMode(it) },
                 )
                 Preference(
-                    title = "Hidden contacts PIN",
-                    summary = "Dial #PIN# on the keypad. 4–6 digits.",
+                    title = stringResource(R.string.hc_hidden_contacts_pin),
+                    summary = stringResource(R.string.hc_dial_pin_on_the_keypad_4_6_digits),
                     onClick = { showPinDialog = true },
                 )
                 if (!stealthHiderMenu || hiderUnlocked) {
                     Preference(
-                        title = "Hidden contacts",
-                        summary = "Numbers hidden from lists until unlocked",
+                        title = stringResource(R.string.hc_hidden_contacts),
+                        summary = stringResource(R.string.hc_numbers_hidden_from_lists_until_unlocked),
                         onClick = { backStack.add(HiddenContactsRoute) },
                     )
                     SwitchPreference(
-                        title = "Hide from contacts tab",
+                        title = stringResource(R.string.hc_hide_from_contacts_tab),
                         value = hideFromContacts,
                         onValueChanged = { viewModel.setHideFromContacts(it) },
                     )
                     SwitchPreference(
-                        title = "Hide from recents",
+                        title = stringResource(R.string.hc_hide_from_recents),
                         value = hideFromRecents,
                         onValueChanged = { viewModel.setHideFromRecents(it) },
                     )
                     SwitchPreference(
-                        title = "Mask name on incoming calls",
+                        title = stringResource(R.string.hc_mask_name_on_incoming_calls),
                         value = maskHiddenIncoming,
                         onValueChanged = { viewModel.setMaskHiddenIncoming(it) },
                     )
                     SwitchPreference(
-                        title = "Hide this menu after PIN is set",
-                        summary = "Stealth: Privacy hider items disappear until you dial #PIN#",
+                        title = stringResource(R.string.hc_hide_this_menu_after_pin_is_set),
+                        summary = stringResource(R.string.hc_stealth_privacy_hider_items_disappear_un),
                         value = stealthHiderMenu,
                         onValueChanged = { viewModel.setStealthHiderMenu(it) },
                     )
@@ -427,44 +428,44 @@ fun CommsSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = "Gestures") {
+            PreferenceCategory(title = stringResource(R.string.hc_gestures)) {
                 SwitchPreference(
-                    title = "Raise to answer",
-                    summary = "Answer incoming calls by lifting the phone to your ear",
+                    title = stringResource(R.string.hc_raise_to_answer),
+                    summary = stringResource(R.string.hc_answer_incoming_calls_by_lifting_the_pho),
                     value = raiseToAnswer,
                     onValueChanged = { viewModel.setRaiseToAnswer(it) },
                 )
                 SwitchPreference(
-                    title = "Flip to decline",
-                    summary = "Decline by turning the phone face down",
+                    title = stringResource(R.string.hc_flip_to_decline),
+                    summary = stringResource(R.string.hc_decline_by_turning_the_phone_face_down),
                     value = flipToDecline,
                     onValueChanged = { viewModel.setFlipToDecline(it) },
                 )
                 SwitchPreference(
-                    title = "Rain mode",
-                    summary = "Answer with a left-right-left-right shake",
+                    title = stringResource(R.string.hc_rain_mode),
+                    summary = stringResource(R.string.hc_answer_with_a_left_right_left_right_shak),
                     value = rainMode,
                     onValueChanged = { viewModel.setRainMode(it) },
                 )
                 SwitchPreference(
-                    title = "Volume keys toggle DND",
-                    summary = "Up-Up-Down-Down. Enable the accessibility service and DND access.",
+                    title = stringResource(R.string.hc_volume_keys_toggle_dnd),
+                    summary = stringResource(R.string.hc_up_up_down_down_enable_the_accessibility),
                     value = volumeDnd,
                     onValueChanged = { viewModel.setVolumeDnd(it) },
                 )
                 SwitchPreference(
-                    title = "Volume DND only on lock screen",
+                    title = stringResource(R.string.hc_volume_dnd_only_on_lock_screen),
                     value = volumeDndLockOnly,
                     onValueChanged = { viewModel.setVolumeDndLockOnly(it) },
                 )
                 Preference(
-                    title = "Accessibility service",
+                    title = stringResource(R.string.hc_accessibility_service),
                     onClick = {
                         context.tryStartActivity(Intent(AndroidSettings.ACTION_ACCESSIBILITY_SETTINGS))
                     },
                 )
                 Preference(
-                    title = "Do Not Disturb access",
+                    title = stringResource(R.string.hc_do_not_disturb_access),
                     onClick = {
                         context.tryStartActivity(Intent(AndroidSettings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS))
                     },
@@ -473,9 +474,9 @@ fun CommsSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = "Cellular network") {
+            PreferenceCategory(title = stringResource(R.string.hc_cellular_network)) {
                 ListPreference(
-                    title = "Preferred mode",
+                    title = stringResource(R.string.hc_preferred_mode),
                     items = listOf(
                         "System auto" to "auto",
                         "4G / LTE only" to "lte",
@@ -491,7 +492,7 @@ fun CommsSettingsScreen() {
                     },
                 )
                 ListPreference(
-                    title = "Control backend",
+                    title = stringResource(R.string.hc_control_backend),
                     items = listOf(
                         "Auto (Shizuku → Root)" to "auto",
                         "Shizuku" to "shizuku",
@@ -514,39 +515,39 @@ fun CommsSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = "Tools") {
+            PreferenceCategory(title = stringResource(R.string.hc_tools)) {
                 Preference(
-                    title = "Fake call",
-                    summary = "Schedule a simulated incoming call",
+                    title = stringResource(R.string.hc_fake_call),
+                    summary = stringResource(R.string.hc_schedule_a_simulated_incoming_call),
                     onClick = { backStack.add(FakeCallSettingsRoute) },
                 )
                 Preference(
-                    title = "Contact groups",
-                    summary = "System and Google contact groups",
+                    title = stringResource(R.string.hc_contact_groups),
+                    summary = stringResource(R.string.hc_system_and_google_contact_groups),
                     onClick = { backStack.add(ContactGroupsRoute) },
                 )
                 Preference(
-                    title = "Scheduled SMS",
+                    title = stringResource(R.string.hc_scheduled_sms),
                     onClick = { backStack.add(ScheduledSmsRoute) },
                 )
                 Preference(
-                    title = "Duplicate contacts",
-                    summary = "Find and clean contacts that share a number",
+                    title = stringResource(R.string.hc_duplicate_contacts),
+                    summary = stringResource(R.string.hc_find_and_clean_contacts_that_share_a_num),
                     onClick = { backStack.add(DuplicateContactsRoute) },
                 )
                 Preference(
-                    title = "Import vCard",
-                    summary = "Add contacts from a .vcf file",
+                    title = stringResource(R.string.hc_import_vcard),
+                    summary = stringResource(R.string.hc_add_contacts_from_a_vcf_file),
                     onClick = { vcfPicker.launch("text/*") },
                 )
             }
         }
 
         item {
-            PreferenceCategory(title = "Call recording") {
+            PreferenceCategory(title = stringResource(R.string.hc_call_recording)) {
                 SwitchPreference(
-                    title = "Auto-record calls",
-                    summary = "Start recording when a call becomes active. Privileged backends capture both sides when the system allows it.",
+                    title = stringResource(R.string.hc_auto_record_calls),
+                    summary = stringResource(R.string.hc_start_recording_when_a_call_becomes_acti),
                     value = autoRecord,
                     onValueChanged = { enabled ->
                         if (enabled) micPermission.launch(Manifest.permission.RECORD_AUDIO)
@@ -554,7 +555,7 @@ fun CommsSettingsScreen() {
                     }
                 )
                 ListPreference(
-                    title = "Delete old recordings",
+                    title = stringResource(R.string.hc_delete_old_recordings),
                     items = listOf(
                         "Never" to 0,
                         "After 7 days" to 7,
@@ -565,7 +566,7 @@ fun CommsSettingsScreen() {
                     onValueChanged = { viewModel.setRecordingAutoDeleteDays(it) }
                 )
                 ListPreference(
-                    title = "Recording backend",
+                    title = stringResource(R.string.hc_recording_backend),
                     items = listOf(
                         "Auto (Shizuku → Root → microphone)" to "auto",
                         "Shizuku (fallback to microphone)" to "shizuku",
@@ -576,7 +577,7 @@ fun CommsSettingsScreen() {
                     onValueChanged = { if (it != null) viewModel.setRecordingBackend(it) },
                 )
                 ListPreference(
-                    title = "Recording quality",
+                    title = stringResource(R.string.hc_recording_quality),
                     items = listOf(
                         "Compact (24 kbps)" to "COMPACT",
                         "Balanced (48 kbps)" to "BALANCED",
@@ -586,63 +587,63 @@ fun CommsSettingsScreen() {
                     onValueChanged = { if (it != null) viewModel.setRecordingQuality(it) }
                 )
                 Preference(
-                    title = "Recordings",
-                    summary = "Play or delete saved call recordings",
+                    title = stringResource(R.string.hc_recordings),
+                    summary = stringResource(R.string.hc_play_or_delete_saved_call_recordings),
                     onClick = { backStack.add(CallRecordingsRoute) },
                 )
             }
         }
 
         item {
-            PreferenceCategory(title = "Encrypted backup") {
+            PreferenceCategory(title = stringResource(R.string.hc_encrypted_backup)) {
                 Preference(
-                    title = "Export backup",
-                    summary = "AES-256-GCM file of notes, block list, and phone settings",
+                    title = stringResource(R.string.hc_export_backup),
+                    summary = stringResource(R.string.hc_aes_256_gcm_file_of_notes_block_list_and),
                     onClick = { backupCreate.launch("telos-comms-backup.bin") },
                 )
                 Preference(
-                    title = "Import backup",
-                    summary = "Restore an encrypted Telos Phone backup",
+                    title = stringResource(R.string.hc_import_backup),
+                    summary = stringResource(R.string.hc_restore_an_encrypted_telos_phone_backup),
                     onClick = { backupOpen.launch(arrayOf("application/octet-stream", "text/plain", "*/*")) },
                 )
             }
         }
 
         item {
-            PreferenceCategory(title = "Privacy & Spam") {
+            PreferenceCategory(title = stringResource(R.string.hc_privacy_spam)) {
                 SwitchPreference(
-                    title = "Offline spam list",
-                    summary = "Block numbers you have added to the Telos block list",
+                    title = stringResource(R.string.hc_offline_spam_list),
+                    summary = stringResource(R.string.hc_block_numbers_you_have_added_to_the_telo),
                     value = enableSpamBlocking,
                     onValueChanged = { viewModel.setEnableSpamBlocking(it) }
                 )
                 SwitchPreference(
-                    title = "Block hidden numbers",
-                    summary = "Reject private, restricted, and unknown caller ID",
+                    title = stringResource(R.string.hc_block_hidden_numbers),
+                    summary = stringResource(R.string.hc_reject_private_restricted_and_unknown_ca),
                     value = blockHidden,
                     onValueChanged = { viewModel.setBlockHiddenNumbers(it) }
                 )
                 SwitchPreference(
-                    title = "Block unknown callers",
-                    summary = "Reject numbers that are not in your contacts",
+                    title = stringResource(R.string.hc_block_unknown_callers),
+                    summary = stringResource(R.string.hc_reject_numbers_that_are_not_in_your_cont),
                     value = blockUnknown,
                     onValueChanged = { viewModel.setBlockUnknownNumbers(it) }
                 )
                 SwitchPreference(
-                    title = "Block international",
-                    summary = "Reject numbers that start with + or 00",
+                    title = stringResource(R.string.hc_block_international),
+                    summary = stringResource(R.string.hc_reject_numbers_that_start_with_or_00),
                     value = blockInternational,
                     onValueChanged = { viewModel.setBlockInternational(it) }
                 )
                 SwitchPreference(
-                    title = "Withhold caller ID (CLIR)",
-                    summary = "Hide your number on outgoing calls",
+                    title = stringResource(R.string.hc_withhold_caller_id_clir),
+                    summary = stringResource(R.string.hc_hide_your_number_on_outgoing_calls),
                     value = clirEnabled,
                     onValueChanged = { viewModel.setClirEnabled(it) }
                 )
                 if (clirEnabled) {
                     ListPreference(
-                        title = "CLIR prefix",
+                        title = stringResource(R.string.hc_clir_prefix),
                         items = listOf(
                             "GSM #31#" to "#31#",
                             "US/Canada *67" to "*67",
@@ -664,7 +665,7 @@ fun CommsSettingsScreen() {
                     )
                     var editClir by remember { mutableStateOf(false) }
                     Preference(
-                        title = "Custom CLIR prefix",
+                        title = stringResource(R.string.hc_custom_clir_prefix),
                         summary = if (clirPrefix.isEmpty()) "Not set" else clirPrefix,
                         onClick = { editClir = true }
                     )
@@ -672,12 +673,12 @@ fun CommsSettingsScreen() {
                         var input by remember { mutableStateOf(clirPrefix) }
                         AlertDialog(
                             onDismissRequest = { editClir = false },
-                            title = { Text("Custom CLIR prefix") },
+                            title = { Text(stringResource(R.string.hc_custom_clir_prefix)) },
                             text = {
                                 OutlinedTextField(
                                     value = input,
                                     onValueChange = { input = it },
-                                    label = { Text("Prefix") },
+                                    label = { Text(stringResource(R.string.hc_prefix)) },
                                     singleLine = true,
                                     modifier = Modifier.fillMaxWidth()
                                 )
@@ -686,10 +687,10 @@ fun CommsSettingsScreen() {
                                 TextButton(onClick = {
                                     viewModel.setClirPrefix(input.trim())
                                     editClir = false
-                                }) { Text("Save") }
+                                }) { Text(stringResource(R.string.hc_save)) }
                             },
                             dismissButton = {
-                                TextButton(onClick = { editClir = false }) { Text("Cancel") }
+                                TextButton(onClick = { editClir = false }) { Text(stringResource(R.string.hc_cancel)) }
                             }
                         )
                     }
@@ -698,13 +699,13 @@ fun CommsSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = "Default phone app") {
+            PreferenceCategory(title = stringResource(R.string.hc_default_phone_app)) {
                 val context = LocalContext.current
                 val isDefault = remember {
                     de.mm20.launcher2.comms.telephony.TelosDialer.isDefaultDialer(context)
                 }
                 Preference(
-                    title = "Set Telos Phone as default dialer",
+                    title = stringResource(R.string.hc_set_telos_phone_as_default_dialer),
                     summary = if (isDefault) "Telos Phone is the default phone app" else "Required for in-call UI, answer, and mute/speaker",
                     onClick = {
                         (context as? android.app.Activity)?.let {
@@ -716,10 +717,10 @@ fun CommsSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = "Call Options") {
+            PreferenceCategory(title = stringResource(R.string.hc_call_options)) {
                 Preference(
-                    title = "Blocked Numbers",
-                    summary = "Manage numbers that are blocked from calling or texting you",
+                    title = stringResource(R.string.hc_blocked_numbers),
+                    summary = stringResource(R.string.hc_manage_numbers_that_are_blocked_from_cal),
                     onClick = {
                         val telecomManager = context.getSystemService<TelecomManager>()
                         telecomManager?.createManageBlockedNumbersIntent()?.let { intent ->
@@ -728,7 +729,7 @@ fun CommsSettingsScreen() {
                     }
                 )
                 ListPreference(
-                    title = "Default Call SIM",
+                    title = stringResource(R.string.hc_default_call_sim),
                     items = listOf(
                         "Always Ask" to "ask",
                         "Last used SIM" to "last",
@@ -743,11 +744,11 @@ fun CommsSettingsScreen() {
         }
 
         item {
-            PreferenceCategory(title = "Speed Dial Setup (Long-Press 1-9)") {
+            PreferenceCategory(title = stringResource(R.string.hc_speed_dial_setup_long_press_1_9)) {
                 for (digit in 1..9) {
                     val number = speedDials[digit]
                     Preference(
-                        title = "Slot $digit",
+                        title = stringResource(R.string.hc_slot_digit, digit),
                         summary = number ?: "Not assigned",
                         onClick = { showSpeedDialDialogFor = digit }
                     )
@@ -760,12 +761,12 @@ fun CommsSettingsScreen() {
         var inputNumber by remember { mutableStateOf(speedDials[digit] ?: "") }
         AlertDialog(
             onDismissRequest = { showSpeedDialDialogFor = null },
-            title = { Text("Set Speed Dial $digit") },
+            title = { Text(stringResource(R.string.hc_set_speed_dial_digit, digit)) },
             text = {
                 OutlinedTextField(
                     value = inputNumber,
                     onValueChange = { inputNumber = it },
-                    label = { Text("Phone Number") },
+                    label = { Text(stringResource(R.string.hc_phone_number)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -777,7 +778,7 @@ fun CommsSettingsScreen() {
                         showSpeedDialDialogFor = null
                     }
                 ) {
-                    Text("Save")
+                    Text(stringResource(R.string.hc_save))
                 }
             },
             dismissButton = {
@@ -787,7 +788,7 @@ fun CommsSettingsScreen() {
                         showSpeedDialDialogFor = null
                     }
                 ) {
-                    Text("Clear")
+                    Text(stringResource(R.string.hc_clear))
                 }
             }
         )
@@ -796,12 +797,12 @@ fun CommsSettingsScreen() {
     if (showExportPassword) {
         AlertDialog(
             onDismissRequest = { showExportPassword = false; pendingExportUri = null },
-            title = { Text("Backup password") },
+            title = { Text(stringResource(R.string.hc_backup_password)) },
             text = {
                 OutlinedTextField(
                     value = backupPassword,
                     onValueChange = { backupPassword = it },
-                    label = { Text("Password") },
+                    label = { Text(stringResource(R.string.hc_password)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -817,24 +818,24 @@ fun CommsSettingsScreen() {
                         if (uri != null && pw.length >= 4) {
                             viewModel.exportBackup(pw) { payload ->
                                 if (payload == null) {
-                                    Toast.makeText(context, "Export failed", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, context.getString(R.string.hc_export_failed), Toast.LENGTH_SHORT).show()
                                 } else {
                                     runCatching {
                                         context.contentResolver.openOutputStream(uri)?.use {
                                             it.write(payload.toByteArray())
                                         }
                                     }
-                                    Toast.makeText(context, "Backup saved", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, context.getString(R.string.hc_backup_saved), Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }
                     },
                     enabled = backupPassword.length >= 4,
-                ) { Text("Export") }
+                ) { Text(stringResource(R.string.hc_export)) }
             },
             dismissButton = {
                 TextButton(onClick = { showExportPassword = false; pendingExportUri = null }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.hc_cancel))
                 }
             },
         )
@@ -843,12 +844,12 @@ fun CommsSettingsScreen() {
     if (showImportPassword) {
         AlertDialog(
             onDismissRequest = { showImportPassword = false; pendingImportText = null },
-            title = { Text("Restore password") },
+            title = { Text(stringResource(R.string.hc_restore_password)) },
             text = {
                 OutlinedTextField(
                     value = backupPassword,
                     onValueChange = { backupPassword = it },
-                    label = { Text("Password") },
+                    label = { Text(stringResource(R.string.hc_password)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -872,11 +873,11 @@ fun CommsSettingsScreen() {
                         }
                     },
                     enabled = backupPassword.isNotEmpty(),
-                ) { Text("Restore") }
+                ) { Text(stringResource(R.string.hc_restore)) }
             },
             dismissButton = {
                 TextButton(onClick = { showImportPassword = false; pendingImportText = null }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.hc_cancel))
                 }
             },
         )

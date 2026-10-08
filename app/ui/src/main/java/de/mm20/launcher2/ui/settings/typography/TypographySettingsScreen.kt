@@ -148,14 +148,14 @@ fun TypographySettingsScreen(themeId: UUID) {
 
         item {
             PreferenceCategory(title = stringResource(R.string.preference_typography_fonts)) {
-                FontPreference(title = "Brand", theme!!.fonts["brand"], onValueChange = {
+                FontPreference(title = stringResource(R.string.hc_brand), theme!!.fonts["brand"], onValueChange = {
                     viewModel.updateTypography(
                         theme!!.copy(
                             fonts = theme!!.fonts.toMutableMap().apply { put("brand", it) })
                     )
                 })
                 FontPreference(
-                    title = "Plain",
+                    title = stringResource(R.string.hc_plain),
                     theme!!.fonts["plain"],
                     onValueChange = {
                         viewModel.updateTypography(
@@ -230,7 +230,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     }
                 }
                 TextStylePreference(
-                    title = "Body Small",
+                    title = stringResource(R.string.hc_body_small),
                     textStyle = previewTypography.bodySmall,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.bodySmall,
@@ -244,7 +244,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Body Medium",
+                    title = stringResource(R.string.hc_body_medium),
                     textStyle = previewTypography.bodyMedium,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.bodyMedium,
@@ -258,7 +258,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Body Large",
+                    title = stringResource(R.string.hc_body_large),
                     textStyle = previewTypography.bodyLarge,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.bodyLarge,
@@ -272,7 +272,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Body Small Emphasized",
+                    title = stringResource(R.string.hc_body_small_emphasized),
                     textStyle = previewTypography.bodySmallEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.bodySmall,
@@ -288,7 +288,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Body Medium Emphasized",
+                    title = stringResource(R.string.hc_body_medium_emphasized),
                     textStyle = previewTypography.bodyMediumEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.bodyMedium,
@@ -304,7 +304,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Body Large Emphasized",
+                    title = stringResource(R.string.hc_body_large_emphasized),
                     textStyle = previewTypography.bodyLargeEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.bodyLarge,
@@ -345,7 +345,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     }
                 }
                 TextStylePreference(
-                    title = "Label Small",
+                    title = stringResource(R.string.hc_label_small),
                     textStyle = previewTypography.labelSmall,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.labelSmall,
@@ -359,7 +359,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Label Medium",
+                    title = stringResource(R.string.hc_label_medium),
                     textStyle = previewTypography.labelMedium,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.labelMedium,
@@ -373,7 +373,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Label Large",
+                    title = stringResource(R.string.hc_label_large),
                     textStyle = previewTypography.labelLarge,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.labelLarge,
@@ -387,7 +387,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Label Small Emphasized",
+                    title = stringResource(R.string.hc_label_small_emphasized),
                     textStyle = previewTypography.labelSmallEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.labelSmall,
@@ -403,7 +403,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Label Medium Emphasized",
+                    title = stringResource(R.string.hc_label_medium_emphasized),
                     textStyle = previewTypography.labelMediumEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.labelMedium,
@@ -419,7 +419,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Label Large Emphasized",
+                    title = stringResource(R.string.hc_label_large_emphasized),
                     textStyle = previewTypography.labelLargeEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.labelLarge,
@@ -465,7 +465,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     }
                 }
                 TextStylePreference(
-                    title = "Title Small",
+                    title = stringResource(R.string.hc_title_small),
                     textStyle = previewTypography.titleSmall,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.titleSmall,
@@ -479,7 +479,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Title Medium",
+                    title = stringResource(R.string.hc_title_medium),
                     textStyle = previewTypography.titleMedium,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.titleMedium,
@@ -493,7 +493,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Title Large",
+                    title = stringResource(R.string.hc_title_large),
                     textStyle = previewTypography.titleLarge,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.titleLarge,
@@ -507,7 +507,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Title Small Emphasized",
+                    title = stringResource(R.string.hc_title_small_emphasized),
                     textStyle = previewTypography.titleSmallEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.titleSmall,
@@ -523,7 +523,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Title Medium Emphasized",
+                    title = stringResource(R.string.hc_title_medium_emphasized),
                     textStyle = previewTypography.titleMediumEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.titleMedium,
@@ -539,7 +539,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Title Large Emphasized",
+                    title = stringResource(R.string.hc_title_large_emphasized),
                     textStyle = previewTypography.titleLargeEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.titleLarge,
@@ -559,7 +559,7 @@ fun TypographySettingsScreen(themeId: UUID) {
         item {
             PreferenceCategory("Headline") {
                 TextStylePreference(
-                    title = "Headline Small",
+                    title = stringResource(R.string.hc_headline_small),
                     textStyle = previewTypography.headlineSmall,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.headlineSmall,
@@ -573,7 +573,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Headline Medium",
+                    title = stringResource(R.string.hc_headline_medium),
                     textStyle = previewTypography.headlineMedium,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.headlineMedium,
@@ -587,7 +587,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Headline Large",
+                    title = stringResource(R.string.hc_headline_large),
                     textStyle = previewTypography.headlineLarge,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.headlineLarge,
@@ -601,7 +601,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Headline Small Emphasized",
+                    title = stringResource(R.string.hc_headline_small_emphasized),
                     textStyle = previewTypography.headlineSmallEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.headlineSmall,
@@ -618,7 +618,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Headline Medium Emphasized",
+                    title = stringResource(R.string.hc_headline_medium_emphasized),
                     textStyle = previewTypography.headlineMediumEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.headlineMedium,
@@ -635,7 +635,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Headline Large Emphasized",
+                    title = stringResource(R.string.hc_headline_large_emphasized),
                     textStyle = previewTypography.headlineLargeEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.headlineLarge,
@@ -656,7 +656,7 @@ fun TypographySettingsScreen(themeId: UUID) {
         item {
             PreferenceCategory("Display") {
                 TextStylePreference(
-                    title = "Display Small",
+                    title = stringResource(R.string.hc_display_small),
                     textStyle = previewTypography.displaySmall,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.displaySmall,
@@ -670,7 +670,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Display Medium",
+                    title = stringResource(R.string.hc_display_medium),
                     textStyle = previewTypography.displayMedium,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.displayMedium,
@@ -684,7 +684,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Display Large",
+                    title = stringResource(R.string.hc_display_large),
                     textStyle = previewTypography.displayLarge,
                     fonts = theme!!.fonts,
                     value = theme!!.styles.displayLarge,
@@ -698,7 +698,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Display Small Emphasized",
+                    title = stringResource(R.string.hc_display_small_emphasized),
                     textStyle = previewTypography.displaySmallEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.displaySmall,
@@ -715,7 +715,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Display Medium Emphasized",
+                    title = stringResource(R.string.hc_display_medium_emphasized),
                     textStyle = previewTypography.displayMediumEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.displayMedium,
@@ -732,7 +732,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                     },
                 )
                 TextStylePreference(
-                    title = "Display Large Emphasized",
+                    title = stringResource(R.string.hc_display_large_emphasized),
                     textStyle = previewTypography.displayLargeEmphasized,
                     fonts = theme!!.fonts,
                     value = theme!!.emphasizedStyles.displayLarge,

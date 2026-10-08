@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.media.video
 
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
@@ -63,25 +65,25 @@ internal fun OpenSourceDialog(onDismiss: () -> Unit) {
     }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Play from the web") },
+        title = { Text(stringResource(R.string.hc_play_from_the_web)) },
         text = {
             Column {
                 Text(
-                    "Web address of a video or stream (HLS, DASH, MP4…), a magnet link, or the address of a .torrent file.",
+                    stringResource(R.string.hc_web_address_of_a_video_or_stream_hls_das),
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 OutlinedTextField(
                     value = text,
                     onValueChange = { text = it },
-                    label = { Text("Address or magnet link") },
+                    label = { Text(stringResource(R.string.hc_address_or_magnet_link)) },
                     modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
-                    TextButton(onClick = { clipboard.getText()?.text?.let { text = it } }) { Text("Paste") }
-                    TextButton(onClick = { torrentPicker.launch(arrayOf("*/*")) }) { Text("Choose .torrent file") }
+                    TextButton(onClick = { clipboard.getText()?.text?.let { text = it } }) { Text(stringResource(R.string.hc_paste)) }
+                    TextButton(onClick = { torrentPicker.launch(arrayOf("*/*")) }) { Text(stringResource(R.string.hc_choose_torrent_file)) }
                 }
                 Text(
-                    "Torrents are downloaded while they play and deleted when the player is closed. Only play content you are allowed to watch.",
+                    stringResource(R.string.hc_torrents_are_downloaded_while_they_play),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 8.dp),
@@ -95,9 +97,9 @@ internal fun OpenSourceDialog(onDismiss: () -> Unit) {
                     openSource(context, text)
                     onDismiss()
                 },
-            ) { Text("Play") }
+            ) { Text(stringResource(R.string.hc_play)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
     )
 }
 
@@ -119,35 +121,35 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Video services") },
+        title = { Text(stringResource(R.string.hc_video_services)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
-                Text("Posters and descriptions", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.hc_posters_and_descriptions), style = MaterialTheme.typography.titleSmall)
                 Text(
-                    "Posters work without a key (from Wikipedia). A free TMDB API key (themoviedb.org, Settings, API) finds more and adds ratings. This product uses the TMDB API but is not endorsed or certified by TMDB.",
+                    stringResource(R.string.hc_posters_work_without_a_key_from_wikipedi),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                OutlinedTextField(tmdb, { tmdb = it }, label = { Text("TMDB API key") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(tmdb, { tmdb = it }, label = { Text(stringResource(R.string.hc_tmdb_api_key)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
 
-                Text("Subtitles", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
+                Text(stringResource(R.string.hc_subtitles), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
                 Text(
-                    "OpenSubtitles API key (opensubtitles.com, Consumers) and your account, which they require for downloads.",
+                    stringResource(R.string.hc_opensubtitles_api_key_opensubtitles_com),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                OutlinedTextField(subKey, { subKey = it }, label = { Text("OpenSubtitles API key") }, singleLine = true, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(subUser, { subUser = it }, label = { Text("User name") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(subKey, { subKey = it }, label = { Text(stringResource(R.string.hc_opensubtitles_api_key)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(subUser, { subUser = it }, label = { Text(stringResource(R.string.hc_user_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
                 OutlinedTextField(
-                    subPass, { subPass = it }, label = { Text("Password") }, singleLine = true,
+                    subPass, { subPass = it }, label = { Text(stringResource(R.string.hc_password)) }, singleLine = true,
                     visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(),
                 )
                 OutlinedTextField(
-                    languages, { languages = it }, label = { Text("Languages (e.g. el,en)") }, singleLine = true,
+                    languages, { languages = it }, label = { Text(stringResource(R.string.hc_languages_e_g_el_en)) }, singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                 )
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 8.dp)) {
-                    Text("Download subtitles automatically", modifier = Modifier.weight(1f))
+                    Text(stringResource(R.string.hc_download_subtitles_automatically), modifier = Modifier.weight(1f))
                     Switch(checked = auto, onCheckedChange = { auto = it })
                 }
 
@@ -155,17 +157,17 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
 
                 Text("Torrents", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Only on Wi-Fi", modifier = Modifier.weight(1f))
+                    Text(stringResource(R.string.hc_only_on_wi_fi), modifier = Modifier.weight(1f))
                     Switch(checked = wifiOnly, onCheckedChange = { wifiOnly = it })
                 }
 
-                Text("Player", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
+                Text(stringResource(R.string.hc_player), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("Play in a separate process", modifier = Modifier.weight(1f))
+                    Text(stringResource(R.string.hc_play_in_a_separate_process), modifier = Modifier.weight(1f))
                     Switch(checked = isolated, onCheckedChange = { isolated = it })
                 }
                 Text(
-                    "Experimental. A crash of the player then does not close the launcher. Videos opened from other apps always use the normal player.",
+                    stringResource(R.string.hc_experimental_a_crash_of_the_player_then),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -176,9 +178,9 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
                 PlayerChoice.setIsolated(appContext, isolated)
                 VideoServices.save(VideoServicesConfig(tmdb, subKey, subUser, subPass, languages, auto, wifiOnly))
                 onDismiss()
-            }) { Text("Save") }
+            }) { Text(stringResource(R.string.hc_save)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
     )
 }
 
@@ -199,13 +201,13 @@ private fun TraktSection() {
 
     Text("Trakt.tv", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
     Text(
-        "Scrobbles what you watch, marks watched videos and adds titles to your watchlist. Create an application at trakt.tv/oauth/applications (redirect address urn:ietf:wg:oauth:2.0:oob) and enter its client id and secret.",
+        stringResource(R.string.hc_scrobbles_what_you_watch_marks_watched_v),
         style = MaterialTheme.typography.bodySmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
     )
     if (login.connected) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 4.dp)) {
-            Text("Connected, scrobbling", modifier = Modifier.weight(1f))
+            Text(stringResource(R.string.hc_connected_scrobbling), modifier = Modifier.weight(1f))
             Switch(checked = login.enabled, onCheckedChange = {
                 de.mm20.launcher2.comms.media.video.trakt.Trakt.setEnabled(context, it)
                 login = de.mm20.launcher2.comms.media.video.trakt.Trakt.login(context)
@@ -214,11 +216,11 @@ private fun TraktSection() {
         TextButton(onClick = {
             de.mm20.launcher2.comms.media.video.trakt.Trakt.signOut(context)
             login = de.mm20.launcher2.comms.media.video.trakt.Trakt.login(context)
-        }) { Text("Sign out") }
+        }) { Text(stringResource(R.string.hc_sign_out)) }
     } else {
-        OutlinedTextField(clientId, { clientId = it }, label = { Text("Client id") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+        OutlinedTextField(clientId, { clientId = it }, label = { Text(stringResource(R.string.hc_client_id)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
         OutlinedTextField(
-            secret, { secret = it }, label = { Text("Client secret") }, singleLine = true,
+            secret, { secret = it }, label = { Text(stringResource(R.string.hc_client_secret)) }, singleLine = true,
             visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(),
         )
         val pending = code
@@ -241,7 +243,7 @@ private fun TraktSection() {
                         }
                         .onFailure { message = it.message ?: "Could not reach Trakt" }
                 }
-            }) { Text("Connect Trakt") }
+            }) { Text(stringResource(R.string.hc_connect_trakt)) }
         } else {
             Text(
                 "Open ${pending.verificationUrl} and enter the code",
@@ -253,7 +255,7 @@ private fun TraktSection() {
                 context.startActivity(
                     Intent(Intent.ACTION_VIEW, android.net.Uri.parse(pending.verificationUrl)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 )
-            }) { Text("Open trakt.tv/activate") }
+            }) { Text(stringResource(R.string.hc_open_trakt_tv_activate)) }
         }
     }
     if (message.isNotEmpty()) Text(message, style = MaterialTheme.typography.bodySmall)

@@ -153,7 +153,7 @@
             android:name=".calculator.CalculatorTileService"
             android:exported="true"
             android:icon="@drawable/ic_glyph_calculator"
-            android:label="Calculator"
+            android:label="@string/hc_calculator"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />

@@ -60,6 +60,7 @@ import de.mm20.launcher2.ui.launcher.scaffold.components.DismissComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.FeedComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.HomeScreenMenuComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.LaunchComponent
+import de.mm20.launcher2.ui.launcher.scaffold.components.TelosAppPageComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.LauncherSettingsComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.NotificationsComponent
 import de.mm20.launcher2.ui.launcher.scaffold.components.PluginActionComponent
@@ -381,6 +382,22 @@ abstract class SharedLauncherActivity(
                                                         animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
                                                     )
                                                 }
+
+                                            // The same apps as TelosApp, but shown as a page of the launcher.
+                                            // Only if the app is installed (not hidden / removed in the Store)
+                                            // and can be embedded, otherwise the gesture does nothing.
+                                            is GestureAction.TelosPage -> {
+                                                val installed = org.koin.mp.KoinPlatform.getKoin()
+                                                    .getAll<de.mm20.launcher2.search.VirtualAppProvider>()
+                                                    .flatMap { it.getVirtualApps() }
+                                                    .any { it.key == action.key }
+                                                if (!installed) null else TelosAppPageComponent.forKey(action.key)?.let { component ->
+                                                    ScaffoldGesture(
+                                                        component = component,
+                                                        animation = if (gesture.orientation == null) ScaffoldAnimation.ZoomIn else ScaffoldAnimation.Push,
+                                                    )
+                                                }
+                                            }
 
                                             is GestureAction.LauncherSettings -> ScaffoldGesture(
                                                 component = LauncherSettingsComponent(this@SharedLauncherActivity),

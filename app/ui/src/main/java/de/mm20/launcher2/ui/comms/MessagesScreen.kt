@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.comms
 
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
 import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -90,14 +92,14 @@ fun MessagesScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
-            Text("Messages", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.hc_messages), style = MaterialTheme.typography.titleMedium)
             Text(
-                "Allow Telos to read and send text messages to see and answer them here.",
+                stringResource(R.string.hc_allow_telos_to_read_and_send_text_messag),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(vertical = 12.dp),
             )
-            Button(onClick = { launcher.launch(arrayOf(Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS)) }) { Text("Allow") }
+            Button(onClick = { launcher.launch(arrayOf(Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS)) }) { Text(stringResource(R.string.hc_allow)) }
         }
         return
     }
@@ -146,15 +148,15 @@ fun MessagesScreen(
             Surface(color = MaterialTheme.colorScheme.secondaryContainer, modifier = Modifier.fillMaxWidth()) {
                 Row(Modifier.padding(horizontal = 16.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        "Make Telos your SMS app to receive messages here, send pictures and keep hidden contacts out of sight.",
+                        stringResource(R.string.hc_make_telos_your_sms_app_to_receive_messa),
                         style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.weight(1f),
                     )
-                    TextButton(onClick = { runCatching { roleLauncher.launch(SmsRole.requestIntent(context)) } }) { Text("Set") }
+                    TextButton(onClick = { runCatching { roleLauncher.launch(SmsRole.requestIntent(context)) } }) { Text(stringResource(R.string.hc_set)) }
                 }
             }
         }
-        TextButton(onClick = { newMessage = true }, modifier = Modifier.padding(horizontal = 8.dp)) { Text("New message") }
+        TextButton(onClick = { newMessage = true }, modifier = Modifier.padding(horizontal = 8.dp)) { Text(stringResource(R.string.hc_new_message)) }
         when {
             shown == null -> Box(Modifier.fillMaxSize())
             shown.isEmpty() -> EmptyCommsTab("No conversations", "Your messages appear here.")
@@ -177,17 +179,17 @@ fun MessagesScreen(
         var number by remember { mutableStateOf("") }
         AlertDialog(
             onDismissRequest = { newMessage = false },
-            title = { Text("New message") },
-            text = { OutlinedTextField(number, { number = it }, label = { Text("Number") }, singleLine = true) },
+            title = { Text(stringResource(R.string.hc_new_message)) },
+            text = { OutlinedTextField(number, { number = it }, label = { Text(stringResource(R.string.hc_number)) }, singleLine = true) },
             confirmButton = {
                 TextButton(enabled = number.isNotBlank(), onClick = {
                     val n = number.trim()
                     newMessage = false
                     open = all?.firstOrNull { c -> c.address.split(", ").any { PhoneNumbers.match(it, n) } }
                         ?: SmsConversation(-1, n, null, "", 0, 0)
-                }) { Text("Write") }
+                }) { Text(stringResource(R.string.hc_write)) }
             },
-            dismissButton = { TextButton(onClick = { newMessage = false }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { newMessage = false }) { Text(stringResource(R.string.hc_cancel)) } },
         )
     }
 }
@@ -219,7 +221,7 @@ private fun ThreadView(
 
     Column(Modifier.fillMaxSize()) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
-            TextButton(onClick = onBack) { Text("Back") }
+            TextButton(onClick = onBack) { Text(stringResource(R.string.hc_back)) }
             Text(conversation.name ?: conversation.address, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
         LazyColumn(
@@ -253,16 +255,16 @@ private fun ThreadView(
                 }
             }
         }
-        if (failed) Text("The message could not be sent.", color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(horizontal = 16.dp))
+        if (failed) Text(stringResource(R.string.hc_the_message_could_not_be_sent), color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(horizontal = 16.dp))
         if (attachments.isNotEmpty()) {
             Row(Modifier.padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                 Text("${attachments.size} attached", modifier = Modifier.weight(1f), style = MaterialTheme.typography.labelMedium)
-                TextButton(onClick = { onAttachments(emptyList()) }) { Text("Remove") }
+                TextButton(onClick = { onAttachments(emptyList()) }) { Text(stringResource(R.string.hc_remove)) }
             }
         }
         Row(Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
             if (isDefault) TextButton(onClick = { picker.launch("image/*") }) { Text("+") }
-            OutlinedTextField(body, onBody, modifier = Modifier.weight(1f), placeholder = { Text("Message") })
+            OutlinedTextField(body, onBody, modifier = Modifier.weight(1f), placeholder = { Text(stringResource(R.string.hc_message)) })
             TextButton(
                 enabled = body.isNotBlank() || attachments.isNotEmpty(),
                 onClick = {
@@ -272,7 +274,7 @@ private fun ThreadView(
                     failed = !ok
                     if (ok) { onBody(""); onAttachments(emptyList()); version++ }
                 },
-            ) { Text("Send") }
+            ) { Text(stringResource(R.string.hc_send)) }
         }
     }
 }

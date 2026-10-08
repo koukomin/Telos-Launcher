@@ -476,7 +476,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
                             Text(
-                                text = "Mobile",
+                                text = stringResource(R.string.hc_mobile),
                                 style = MaterialTheme.typography.bodyLarge,
                             )
                             Text(
@@ -578,7 +578,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                         CommsDetailCard {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(
-                                    text = "Always use this SIM for this number",
+                                    text = stringResource(R.string.hc_always_use_this_sim_for_this_number),
                                     style = MaterialTheme.typography.bodyLarge,
                                     modifier = Modifier.weight(1f),
                                 )
@@ -620,7 +620,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     ) {
                         CommsDetailCard(onClick = { viewModel.dialSip(context, primary) }) {
                             Text(
-                                text = "Call over SIP",
+                                text = stringResource(R.string.hc_call_over_sip),
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.primary,
                             )
@@ -641,7 +641,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                 item {
                     CommsDetailCard {
                         Text(
-                            text = "More",
+                            text = stringResource(R.string.hc_more),
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -652,27 +652,27 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                                     onClick = {
                                         val clipboard = context.getSystemService(android.content.ClipboardManager::class.java)
                                         clipboard?.setPrimaryClip(android.content.ClipData.newPlainText("number", primary))
-                                        android.widget.Toast.makeText(context, "Copied", android.widget.Toast.LENGTH_SHORT).show()
+                                        android.widget.Toast.makeText(context, context.getString(R.string.hc_copied), android.widget.Toast.LENGTH_SHORT).show()
                                     },
-                                    label = { Text("Copy number") },
+                                    label = { Text(stringResource(R.string.hc_copy_number)) },
                                 )
                             }
                             item {
                                 androidx.compose.material3.AssistChip(
                                     onClick = { showReminder = true },
-                                    label = { Text("Remind me") },
+                                    label = { Text(stringResource(R.string.hc_remind_me)) },
                                 )
                             }
                             item {
                                 androidx.compose.material3.AssistChip(
                                     onClick = { showQr = true },
-                                    label = { Text("QR code") },
+                                    label = { Text(stringResource(R.string.hc_qr_code)) },
                                 )
                             }
                             item {
                                 androidx.compose.material3.AssistChip(
                                     onClick = { showSpeedDial = true },
-                                    label = { Text("Speed dial") },
+                                    label = { Text(stringResource(R.string.hc_speed_dial)) },
                                 )
                             }
                             item {
@@ -690,7 +690,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                                                 )
                                         )
                                     },
-                                    label = { Text("Ringtone") },
+                                    label = { Text(stringResource(R.string.hc_ringtone)) },
                                 )
                             }
                         }
@@ -741,7 +741,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
     if (showReminder && contact != null) {
         AlertDialog(
             onDismissRequest = { showReminder = false },
-            title = { Text("Remind me to call back") },
+            title = { Text(stringResource(R.string.hc_remind_me_to_call_back)) },
             text = {
                 Column {
                     listOf(5, 15, 30, 60, 180).forEach { minutes ->
@@ -755,7 +755,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { showReminder = false }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { showReminder = false }) { Text(stringResource(R.string.hc_cancel)) } },
         )
     }
 
@@ -769,17 +769,17 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     modifier = Modifier.size(240.dp),
                 )
             },
-            confirmButton = { TextButton(onClick = { showQr = false }) { Text("Close") } },
+            confirmButton = { TextButton(onClick = { showQr = false }) { Text(stringResource(R.string.hc_close)) } },
         )
     }
 
     if (showSpeedDial && contact != null) {
         AlertDialog(
             onDismissRequest = { showSpeedDial = false },
-            title = { Text("Assign to speed dial") },
+            title = { Text(stringResource(R.string.hc_assign_to_speed_dial)) },
             text = {
                 Column {
-                    Text("Long-press the digit on the dialpad to call ${contact.displayName}.")
+                    Text(stringResource(R.string.hc_long_press_digit_to_call, contact.displayName))
                     Row(
                         modifier = Modifier.padding(top = 8.dp),
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -798,7 +798,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { showSpeedDial = false }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { showSpeedDial = false }) { Text(stringResource(R.string.hc_cancel)) } },
         )
     }
 
@@ -806,7 +806,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
         var draft by remember(primary) { mutableStateOf(notes[primary].orEmpty()) }
         AlertDialog(
             onDismissRequest = { editingNote = false },
-            title = { Text("Notes") },
+            title = { Text(stringResource(R.string.hc_notes)) },
             text = {
                 OutlinedTextField(
                     value = draft,

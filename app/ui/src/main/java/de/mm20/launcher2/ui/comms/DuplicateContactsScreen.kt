@@ -1,5 +1,8 @@
 package de.mm20.launcher2.ui.comms
 
+import androidx.compose.ui.res.pluralStringResource
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -60,8 +63,8 @@ fun DuplicateContactsScreen() {
         val count = toClean.sumOf { it.size - 1 }
         androidx.compose.material3.AlertDialog(
             onDismissRequest = { pending = null },
-            title = { Text("Delete $count contact${if (count == 1) "" else "s"}?") },
-            text = { Text("The first contact of each group is kept. The other $count will be permanently deleted from your Android contacts. This cannot be undone.") },
+            title = { Text(pluralStringResource(R.plurals.hc_delete_contacts_question, count, count)) },
+            text = { Text(stringResource(R.string.hc_delete_duplicates_message, count)) },
             confirmButton = {
                 TextButton(onClick = {
                     pending = null
@@ -69,16 +72,16 @@ fun DuplicateContactsScreen() {
                         toClean.forEach { viewModel.keepFirst(it) }
                         groups = viewModel.load()
                     }
-                }) { Text("Delete") }
+                }) { Text(stringResource(R.string.hc_delete)) }
             },
-            dismissButton = { TextButton(onClick = { pending = null }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { pending = null }) { Text(stringResource(R.string.hc_cancel)) } },
         )
     }
-    PreferenceScreen(title = { Text("Duplicate contacts") }) {
+    PreferenceScreen(title = { Text(stringResource(R.string.hc_duplicate_contacts)) }) {
         if (loaded && groups.isEmpty()) {
             item {
                 Text(
-                    "No duplicate numbers found.",
+                    stringResource(R.string.hc_no_duplicate_numbers_found),
                     modifier = Modifier.padding(16.dp),
                 )
             }
@@ -86,17 +89,17 @@ fun DuplicateContactsScreen() {
         groups.forEachIndexed { index, group ->
             item {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                    Text("Group ${index + 1} · ${group.first().phoneNumbers.firstOrNull().orEmpty()}")
+                    Text(stringResource(R.string.hc_group_number_phone, index + 1, group.first().phoneNumbers.firstOrNull().orEmpty()))
                     group.forEach { contact ->
                         Text("${contact.displayName} · ${contact.phoneNumbers.joinToString()}")
                     }
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         OutlinedButton(onClick = {
                             backStack.add(ContactDetailsRoute(contactId = group.first().id))
-                        }) { Text("Open") }
+                        }) { Text(stringResource(R.string.hc_open)) }
                         Button(onClick = {
                             pending = listOf(group)
-                        }) { Text("Keep first, delete extras") }
+                        }) { Text(stringResource(R.string.hc_keep_first_delete_extras)) }
                     }
                     Spacer(Modifier.height(8.dp))
                 }
@@ -109,7 +112,7 @@ fun DuplicateContactsScreen() {
                         pending = groups
                     },
                     modifier = Modifier.fillMaxWidth(),
-                ) { Text("Keep first in every group, delete extras") }
+                ) { Text(stringResource(R.string.hc_keep_first_in_every_group_delete_extras)) }
             }
         }
     }

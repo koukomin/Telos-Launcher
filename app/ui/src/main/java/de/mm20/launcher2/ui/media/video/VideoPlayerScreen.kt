@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.media.video
 
+import androidx.compose.ui.res.stringResource
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.view.View
@@ -97,7 +98,7 @@ fun VideoPlayerScreen(
                     modifier = Modifier.padding(top = 16.dp),
                 )
                 if (error == null && torrent.stage == TorrentState.Stage.FindingPeers) {
-                    Text("This can take a minute.", color = Color(0xB3FFFFFF), style = MaterialTheme.typography.bodySmall)
+                    Text(stringResource(R.string.hc_this_can_take_a_minute), color = Color(0xB3FFFFFF), style = MaterialTheme.typography.bodySmall)
                 }
                 TextButton(onClick = onClose, modifier = Modifier.padding(top = 16.dp)) {
                     Text(if (error != null) "Close" else "Cancel", color = Color.White)
@@ -368,7 +369,7 @@ private fun PlayerContent(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(onClick = onClose) {
-                    Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back", tint = Color.White)
+                    Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back), tint = Color.White)
                 }
                 Text(
                     text = title,
@@ -380,21 +381,21 @@ private fun PlayerContent(
                 )
                 Box {
                     TextButton(onClick = { subtitleMenu = true }) {
-                        Text("Subtitles…", color = Color.White)
+                        Text(stringResource(R.string.hc_subtitles_2), color = Color.White)
                     }
                     DropdownMenu(expanded = subtitleMenu, onDismissRequest = { subtitleMenu = false }) {
                         DropdownMenuItem(
-                            text = { Text("From a file") },
+                            text = { Text(stringResource(R.string.hc_from_a_file)) },
                             onClick = { subtitleMenu = false; subtitlePicker.launch("*/*") },
                         )
                         DropdownMenuItem(
-                            text = { Text("Search online") },
+                            text = { Text(stringResource(R.string.hc_search_online)) },
                             onClick = { subtitleMenu = false; showOnlineSubtitles = true },
                         )
                     }
                 }
                 IconButton(onClick = { showMenu = true }) {
-                    Icon(painterResource(R.drawable.more_vert_24px), contentDescription = "Playback options", tint = Color.White)
+                    Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_playback_options), tint = Color.White)
                 }
             }
         }
@@ -432,7 +433,7 @@ private fun OnlineSubtitleDialog(rawTitle: String, onDismiss: () -> Unit, onFile
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Subtitles") },
+        title = { Text(stringResource(R.string.hc_subtitles)) },
         text = {
             Column {
                 if (status.isNotEmpty()) Text(status, style = MaterialTheme.typography.bodyMedium)
@@ -465,7 +466,7 @@ private fun OnlineSubtitleDialog(rawTitle: String, onDismiss: () -> Unit, onFile
                 }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Close") } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_close)) } },
     )
 }
 

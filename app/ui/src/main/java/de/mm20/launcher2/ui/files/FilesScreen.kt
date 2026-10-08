@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.files
 
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -207,25 +209,25 @@ fun FilesScreen() {
                             title = { Text(vm.path?.let { vm.connectionName(it)?.takeIf { _ -> RemotePath.isRoot(it) } ?: if (ArchivePath.isRoot(it)) nameOf(ArchivePath.archiveOf(it)) else if (de.mm20.launcher2.ui.files.vault.VaultPath.isRoot(it)) nameOf(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(it)) else nameOf(it) } ?: "Telos Files", maxLines = 1, overflow = TextOverflow.Ellipsis) },
                             navigationIcon = {
                                 IconButton(onClick = { scope.launch { drawer.open() } }) {
-                                    Icon(painterResource(Icons.storage_24px), contentDescription = "Storage")
+                                    Icon(painterResource(Icons.storage_24px), contentDescription = stringResource(R.string.hc_storage))
                                 }
                             },
                             actions = {
                                 if (vm.path != null) IconButton(onClick = { searching = true }) {
-                                    Icon(painterResource(Icons.search_24px), contentDescription = "Search")
+                                    Icon(painterResource(Icons.search_24px), contentDescription = stringResource(R.string.hc_search))
                                 }
                                 Box {
                                     IconButton(onClick = { menuOpen = true }) {
-                                        Icon(painterResource(Icons.more_vert_24px), contentDescription = "More")
+                                        Icon(painterResource(Icons.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
                                     }
                                     DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
                                         DropdownMenuItem(text = { Text(if (vm.grid) "List view" else "Grid view") }, onClick = { menuOpen = false; vm.toggleGrid() })
-                                        DropdownMenuItem(text = { Text("Sort by…") }, onClick = { menuOpen = false; dialog = FilesDialog.Sort })
+                                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_sort_by_2)) }, onClick = { menuOpen = false; dialog = FilesDialog.Sort })
                                         DropdownMenuItem(text = { Text(if (vm.showHidden) "Hide hidden files" else "Show hidden files") }, onClick = { menuOpen = false; vm.toggleHidden() })
                                         vm.path?.takeIf { de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it) }?.let { vp ->
-                                            DropdownMenuItem(text = { Text("Lock vault") }, onClick = { menuOpen = false; vm.lockVault(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(vp)) })
+                                            DropdownMenuItem(text = { Text(stringResource(R.string.hc_lock_vault)) }, onClick = { menuOpen = false; vm.lockVault(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(vp)) })
                                         }
-                                        DropdownMenuItem(text = { Text("Refresh") }, onClick = { menuOpen = false; vm.reload(); vm.refreshVolumes() })
+                                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_refresh)) }, onClick = { menuOpen = false; vm.reload(); vm.refreshVolumes() })
                                         vm.path?.let { p ->
                                             DropdownMenuItem(
                                                 text = { Text(if (vm.isBookmarked(p)) "Remove from favorites" else "Add to favorites") },
@@ -249,10 +251,10 @@ fun FilesScreen() {
             floatingActionButton = {
                 if (vm.path != null && !selecting && vm.error == null) {
                     Box {
-                        FloatingActionButton(onClick = { addMenu = true }) { Icon(painterResource(Icons.add_24px), contentDescription = "New") }
+                        FloatingActionButton(onClick = { addMenu = true }) { Icon(painterResource(Icons.add_24px), contentDescription = stringResource(R.string.hc_new)) }
                         DropdownMenu(expanded = addMenu, onDismissRequest = { addMenu = false }) {
-                            DropdownMenuItem(text = { Text("New folder") }, onClick = { addMenu = false; dialog = FilesDialog.NewFolder })
-                            DropdownMenuItem(text = { Text("New file") }, onClick = { addMenu = false; dialog = FilesDialog.NewFile })
+                            DropdownMenuItem(text = { Text(stringResource(R.string.hc_new_folder)) }, onClick = { addMenu = false; dialog = FilesDialog.NewFolder })
+                            DropdownMenuItem(text = { Text(stringResource(R.string.hc_new_file)) }, onClick = { addMenu = false; dialog = FilesDialog.NewFile })
                         }
                     }
                 }
@@ -343,10 +345,10 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
                 },
                 confirmButton = {
                     TextButton(onClick = { vm.delete(dialog.entries); onDismiss() }) {
-                        Text("Delete", color = MaterialTheme.colorScheme.error)
+                        Text(stringResource(R.string.hc_delete), color = MaterialTheme.colorScheme.error)
                     }
                 },
-                dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+                dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
             )
         }
         FilesDialog.Sort -> SortDialog(vm, onDismiss)
@@ -354,12 +356,12 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
         is FilesDialog.Archive -> AlertDialog(
             onDismissRequest = onDismiss,
             title = { Text(dialog.entry.name) },
-            text = { Text("Look inside the archive, or unpack it into a folder next to it?") },
-            confirmButton = { TextButton(onClick = { vm.open(ArchivePath.build(dialog.entry.path, "/")); onDismiss() }) { Text("Browse") } },
+            text = { Text(stringResource(R.string.hc_look_inside_the_archive_or_unpack_it_int)) },
+            confirmButton = { TextButton(onClick = { vm.open(ArchivePath.build(dialog.entry.path, "/")); onDismiss() }) { Text(stringResource(R.string.hc_browse)) } },
             dismissButton = {
                 Row {
-                    TextButton(onClick = { vm.extract(dialog.entry); onDismiss() }) { Text("Extract here") }
-                    TextButton(onClick = { FileActions.openWith(context, dialog.entry, vm.rootMode); onDismiss() }) { Text("Open with…") }
+                    TextButton(onClick = { vm.extract(dialog.entry); onDismiss() }) { Text(stringResource(R.string.hc_extract_here)) }
+                    TextButton(onClick = { FileActions.openWith(context, dialog.entry, vm.rootMode); onDismiss() }) { Text(stringResource(R.string.hc_open_with_2)) }
                 }
             },
         )
@@ -376,7 +378,7 @@ private fun NameDialog(title: String, initial: String, action: String, onDismiss
         title = { Text(title) },
         text = { OutlinedTextField(text, { text = it }, singleLine = true, modifier = Modifier.fillMaxWidth()) },
         confirmButton = { TextButton(enabled = text.isNotBlank() && '/' !in text, onClick = { onDone(text.trim()) }) { Text(action) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
     )
 }
 
@@ -384,7 +386,7 @@ private fun NameDialog(title: String, initial: String, action: String, onDismiss
 private fun SortDialog(vm: FilesViewModel, onDismiss: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Sort by") },
+        title = { Text(stringResource(R.string.hc_sort_by)) },
         text = {
             Column {
                 SortKey.values().forEach { key ->
@@ -401,7 +403,7 @@ private fun SortDialog(vm: FilesViewModel, onDismiss: () -> Unit) {
                 SwitchRow("Folders first", vm.sort.foldersFirst) { vm.updateSort(vm.sort.copy(foldersFirst = it)) }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Done") } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_done)) } },
     )
 }
 
@@ -419,24 +421,24 @@ private fun RootWarningDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
         icon = { Icon(painterResource(Icons.terminal_24px), contentDescription = null, tint = MaterialTheme.colorScheme.error) },
-        title = { Text("Root explorer") },
+        title = { Text(stringResource(R.string.hc_root_explorer)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("Telos Files will ask for superuser access so that you can see and change files that apps normally cannot reach, such as /system, /data and /vendor.")
+                Text(stringResource(R.string.hc_telos_files_will_ask_for_superuser_acces))
                 Text(
-                    "Careless changes here can stop apps from working, make the phone bootloop or erase your data. " +
+                    stringResource(R.string.hc_careless_changes_here_can_stop_apps_from) +
                         "Nobody can undo a deletion. Change only what you understand, and keep a backup.",
                     color = MaterialTheme.colorScheme.error,
                 )
-                Text("Your root manager (Magisk, KernelSU, ...) will ask you to allow Telos first. Root access ends when you turn it off here.")
+                Text(stringResource(R.string.hc_your_root_manager_magisk_kernelsu_will_a))
                 Row(Modifier.clickable { understood = !understood }, verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(checked = understood, onCheckedChange = { understood = it })
-                    Text("I understand the risks")
+                    Text(stringResource(R.string.hc_i_understand_the_risks))
                 }
             }
         },
-        confirmButton = { TextButton(enabled = understood, onClick = onConfirm) { Text("Continue") } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+        confirmButton = { TextButton(enabled = understood, onClick = onConfirm) { Text(stringResource(R.string.hc_continue)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
     )
 }
 
@@ -467,32 +469,32 @@ private fun PropertiesDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () -
                 entry.linkTarget?.takeIf { it.isNotEmpty() }?.let { Detail("Link to", it) }
                 if (!entry.isDir) {
                     HorizontalDivider()
-                    Text("Checksums", style = MaterialTheme.typography.labelLarge)
+                    Text(stringResource(R.string.hc_checksums), style = MaterialTheme.typography.labelLarge)
                     listOf("MD5" to "MD5", "SHA-1" to "SHA-1", "SHA-256" to "SHA-256").forEach { (label, algorithm) ->
                         val value = hashes[label]
                         if (value == null) {
-                            TextButton(onClick = { scope.launch { hashes = hashes + (label to vm.checksum(entry, algorithm).ifEmpty { "unavailable" }) } }) { Text("Calculate $label") }
+                            TextButton(onClick = { scope.launch { hashes = hashes + (label to vm.checksum(entry, algorithm).ifEmpty { "unavailable" }) } }) { Text(stringResource(R.string.hc_calculate_label, label)) }
                         } else Detail(label, value)
                     }
                 }
                 if (vm.rootMode) {
                     HorizontalDivider()
-                    Text("Change permissions (octal, for example 644)", style = MaterialTheme.typography.labelLarge)
+                    Text(stringResource(R.string.hc_change_permissions_octal_for_example_644), style = MaterialTheme.typography.labelLarge)
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         OutlinedTextField(mode, { mode = it.filter { c -> c in '0'..'7' }.take(4) }, singleLine = true, modifier = Modifier.weight(1f))
-                        TextButton(enabled = mode.length >= 3, onClick = { vm.chmod(entry, mode); onDismiss() }) { Text("Apply") }
+                        TextButton(enabled = mode.length >= 3, onClick = { vm.chmod(entry, mode); onDismiss() }) { Text(stringResource(R.string.hc_apply)) }
                     }
                     if (FileActions.isSystemPath(entry.path, true)) {
-                        Text("This is a system location. A wrong permission can stop the phone from starting.", color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(R.string.hc_this_is_a_system_location_a_wrong_permis), color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
                     }
                 }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Close") } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_close)) } },
         dismissButton = {
             if (!entry.isDir) Row {
-                TextButton(onClick = { FileActions.openWith(context, entry, vm.rootMode) }) { Text("Open with…") }
-                TextButton(onClick = { FileActions.share(context, listOf(entry), vm.rootMode) }) { Text("Share") }
+                TextButton(onClick = { FileActions.openWith(context, entry, vm.rootMode) }) { Text(stringResource(R.string.hc_open_with_2)) }
+                TextButton(onClick = { FileActions.share(context, listOf(entry), vm.rootMode) }) { Text(stringResource(R.string.hc_share)) }
             }
         },
     )
@@ -517,21 +519,21 @@ private fun SelectionBar(
     var more by remember { mutableStateOf(false) }
     TopAppBar(
         title = { Text("$count selected") },
-        navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(Icons.close_24px), contentDescription = "Close") } },
+        navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(Icons.close_24px), contentDescription = stringResource(R.string.hc_close)) } },
         actions = {
-            IconButton(onClick = onCopy) { Icon(painterResource(Icons.content_copy_24px), contentDescription = "Copy") }
-            IconButton(onClick = onCut) { Icon(painterResource(Icons.content_cut_24px), contentDescription = "Cut") }
-            IconButton(onClick = onDelete) { Icon(painterResource(Icons.delete_24px), contentDescription = "Delete") }
+            IconButton(onClick = onCopy) { Icon(painterResource(Icons.content_copy_24px), contentDescription = stringResource(R.string.hc_copy)) }
+            IconButton(onClick = onCut) { Icon(painterResource(Icons.content_cut_24px), contentDescription = stringResource(R.string.hc_cut)) }
+            IconButton(onClick = onDelete) { Icon(painterResource(Icons.delete_24px), contentDescription = stringResource(R.string.hc_delete)) }
             Box {
-                IconButton(onClick = { more = true }) { Icon(painterResource(Icons.more_vert_24px), contentDescription = "More") }
+                IconButton(onClick = { more = true }) { Icon(painterResource(Icons.more_vert_24px), contentDescription = stringResource(R.string.hc_more)) }
                 DropdownMenu(expanded = more, onDismissRequest = { more = false }) {
-                    DropdownMenuItem(text = { Text("Select all") }, onClick = { more = false; onSelectAll() })
-                    DropdownMenuItem(text = { Text("Share") }, onClick = { more = false; onShare() })
-                    DropdownMenuItem(text = { Text("Compress to zip") }, onClick = { more = false; onCompress() })
+                    DropdownMenuItem(text = { Text(stringResource(R.string.hc_select_all)) }, onClick = { more = false; onSelectAll() })
+                    DropdownMenuItem(text = { Text(stringResource(R.string.hc_share)) }, onClick = { more = false; onShare() })
+                    DropdownMenuItem(text = { Text(stringResource(R.string.hc_compress_to_zip)) }, onClick = { more = false; onCompress() })
                     if (single != null) {
-                        DropdownMenuItem(text = { Text("Rename") }, onClick = { more = false; onRename() })
-                        DropdownMenuItem(text = { Text("Properties") }, onClick = { more = false; onProperties() })
-                        if (single.isDir) DropdownMenuItem(text = { Text("Add to favorites") }, onClick = { more = false; onBookmark() })
+                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_rename)) }, onClick = { more = false; onRename() })
+                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_properties)) }, onClick = { more = false; onProperties() })
+                        if (single.isDir) DropdownMenuItem(text = { Text(stringResource(R.string.hc_add_to_favorites)) }, onClick = { more = false; onBookmark() })
                     }
                 }
             }
@@ -546,7 +548,7 @@ private fun SearchBar(query: String, onQuery: (String) -> Unit, onClose: () -> U
     TopAppBar(
         title = {
             androidx.compose.material3.TextField(
-                value = query, onValueChange = onQuery, singleLine = true, placeholder = { Text("Search in this folder") },
+                value = query, onValueChange = onQuery, singleLine = true, placeholder = { Text(stringResource(R.string.hc_search_in_this_folder)) },
                 colors = androidx.compose.material3.TextFieldDefaults.colors(
                     focusedContainerColor = Color.Transparent, unfocusedContainerColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent, unfocusedIndicatorColor = Color.Transparent,
@@ -554,7 +556,7 @@ private fun SearchBar(query: String, onQuery: (String) -> Unit, onClose: () -> U
                 modifier = Modifier.fillMaxWidth(),
             )
         },
-        navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(Icons.arrow_back_24px), contentDescription = "Back") } },
+        navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(Icons.arrow_back_24px), contentDescription = stringResource(R.string.hc_back)) } },
         colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
     )
 }
@@ -601,7 +603,7 @@ private fun TaskBar(task: TaskState) {
         Column(Modifier.fillMaxWidth().padding(16.dp, 10.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(task.title + "…", Modifier.weight(1f), style = MaterialTheme.typography.titleSmall)
-                TextButton(onClick = { task.cancel.cancelled = true }) { Text("Cancel") }
+                TextButton(onClick = { task.cancel.cancelled = true }) { Text(stringResource(R.string.hc_cancel)) }
             }
             if (task.progress != null) LinearProgressIndicator(progress = { task.progress }, Modifier.fillMaxWidth())
             else LinearProgressIndicator(Modifier.fillMaxWidth())
@@ -617,7 +619,7 @@ private fun PasteBar(count: Int, cut: Boolean, onPaste: () -> Unit, onCancel: ()
                 "$count item${if (count == 1) "" else "s"} to ${if (cut) "move" else "copy"}", Modifier.weight(1f),
                 color = MaterialTheme.colorScheme.onTertiaryContainer, style = MaterialTheme.typography.titleSmall,
             )
-            TextButton(onClick = onCancel) { Text("Cancel") }
+            TextButton(onClick = onCancel) { Text(stringResource(R.string.hc_cancel)) }
             Button(onClick = onPaste) { Text(if (cut) "Move here" else "Paste here") }
         }
     }
@@ -629,7 +631,7 @@ private fun RootBanner() {
         Row(Modifier.fillMaxWidth().padding(16.dp, 8.dp), verticalAlignment = Alignment.CenterVertically) {
             Icon(painterResource(Icons.terminal_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onErrorContainer, modifier = Modifier.size(20.dp))
             Text(
-                "System files. Changes here can break the phone.", Modifier.padding(start = 12.dp),
+                stringResource(R.string.hc_system_files_changes_here_can_break_the), Modifier.padding(start = 12.dp),
                 style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onErrorContainer,
             )
         }
@@ -649,14 +651,14 @@ private fun AccessGate(onAllow: () -> Unit) {
             Box(Modifier.size(88.dp).clip(CircleShape).background(FileKind.Folder.color.copy(alpha = 0.18f)), contentAlignment = Alignment.Center) {
                 Icon(painterResource(Icons.folder_24px), contentDescription = null, tint = FileKind.Folder.color, modifier = Modifier.size(44.dp))
             }
-            Text("Telos Files", style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(top = 20.dp))
+            Text(stringResource(R.string.hc_telos_files), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(top = 20.dp))
             Text(
-                "To show and manage the files on your phone, Telos needs access to all files.",
+                stringResource(R.string.hc_to_show_and_manage_the_files_on_your_pho),
                 style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(vertical = 12.dp),
             )
-            Button(onClick = onAllow) { Text("Allow access") }
-            TextButton(onClick = { backStack.removeLastOrNull() }) { Text("Not now") }
+            Button(onClick = onAllow) { Text(stringResource(R.string.hc_allow_access)) }
+            TextButton(onClick = { backStack.removeLastOrNull() }) { Text(stringResource(R.string.hc_not_now)) }
         }
     }
 }
@@ -674,7 +676,7 @@ private fun ErrorPage(error: String, rootMode: Boolean, onRoot: () -> Unit) {
     Column(Modifier.fillMaxSize().padding(32.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         Icon(painterResource(Icons.lock_24px), contentDescription = null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(48.dp))
         Text(error, Modifier.padding(top = 12.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
-        if (!rootMode) TextButton(onClick = onRoot) { Text("Open with root explorer…") }
+        if (!rootMode) TextButton(onClick = onRoot) { Text(stringResource(R.string.hc_open_with_root_explorer)) }
     }
 }
 
@@ -723,7 +725,7 @@ private fun HomePage(vm: FilesViewModel) {
                         Text(nameOf(b), maxLines = 1, overflow = TextOverflow.Ellipsis)
                         Text(b, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
-                    IconButton(onClick = { vm.toggleBookmark(b) }) { Icon(painterResource(Icons.close_20px), contentDescription = "Remove") }
+                    IconButton(onClick = { vm.toggleBookmark(b) }) { Icon(painterResource(Icons.close_20px), contentDescription = stringResource(R.string.hc_remove)) }
                 }
             }
         }
@@ -753,7 +755,7 @@ private fun HomePage(vm: FilesViewModel) {
                 Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
                     Icon(painterResource(Icons.terminal_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onErrorContainer)
                     Column(Modifier.padding(start = 16.dp).weight(1f)) {
-                        Text("Root file system", fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onErrorContainer)
+                        Text(stringResource(R.string.hc_root_file_system), fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.onErrorContainer)
                         Text(
                             if (vm.rootMode) "Superuser access is on. Open / to browse everything." else "Turn root explorer on in the menu or the storage drawer.",
                             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer,
@@ -793,22 +795,22 @@ private fun StorageCard(v: StorageVolume, onClick: () -> Unit) {
 @Composable
 private fun StorageDrawer(vm: FilesViewModel, onGo: (String?) -> Unit, onRoot: () -> Unit, onManage: () -> Unit) {
     Column(Modifier.verticalScroll(rememberScrollState()).padding(12.dp)) {
-        Text("Telos Files", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 8.dp))
+        Text(stringResource(R.string.hc_telos_files), style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 8.dp))
         DrawerItem(Icons.home_24px, "Home", null, vm.path == null) { onGo(null) }
-        Text("Storage", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
+        Text(stringResource(R.string.hc_storage), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
         vm.volumes.forEach { v ->
             DrawerItem(Icons.storage_24px, v.name, "${formatSize(v.free)} free", vm.path?.startsWith(v.path) == true && !vm.rootMode) { onGo(v.path) }
         }
         if (vm.bookmarks.isNotEmpty()) {
-            Text("Favorites", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
+            Text(stringResource(R.string.hc_favorites), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
             vm.bookmarks.forEach { b -> DrawerItem(Icons.star_24px_filled, nameOf(b), null, vm.path == b) { onGo(b) } }
         }
-        Text("Network and cloud", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
+        Text(stringResource(R.string.hc_network_and_cloud), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
         vm.connections.forEach { c ->
             DrawerItem(if (c.type.cloud) Icons.cloud_20px else Icons.storage_24px, c.name, c.type.label, vm.path?.startsWith("rem://" + c.id) == true) { onGo(RemotePath.build(c.id, "/")) }
         }
         DrawerItem(Icons.add_24px, "Add or manage…", null, false, onManage)
-        Text("Tools", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
+        Text(stringResource(R.string.hc_tools), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
         DrawerItem(Icons.terminal_24px, if (vm.rootMode) "Root explorer: on" else "Root explorer", if (vm.rootMode) "Tap to turn off" else "Needs a rooted phone", vm.rootMode, onRoot)
         if (vm.rootMode) {
             DrawerItem(Icons.folder_24px, "Root file system (/)", "System files", vm.path == "/") { onGo("/") }
@@ -900,12 +902,12 @@ private fun UnlockVaultDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () 
     var busy by remember { mutableStateOf(false) }
     AlertDialog(
         onDismissRequest = { if (!busy) onDismiss() },
-        title = { Text("Unlock vault") },
+        title = { Text(stringResource(R.string.hc_unlock_vault)) },
         text = {
             Column {
                 Text("${entry.name} is a Cryptomator vault (read only, experimental). The password is only used to unlock it and is not stored.")
                 OutlinedTextField(
-                    password, { password = it; error = null }, label = { Text("Password") }, singleLine = true,
+                    password, { password = it; error = null }, label = { Text(stringResource(R.string.hc_password)) }, singleLine = true,
                     visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
                     isError = error != null, supportingText = error?.let { { Text(it) } },
                     modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
@@ -918,6 +920,6 @@ private fun UnlockVaultDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () 
                 vm.unlockVault(entry.path, password, onError = { error = it; busy = false }) { busy = false; onDismiss() }
             }) { Text(if (busy) "Unlocking…" else "Unlock") }
         },
-        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text("Cancel") } },
+        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
     )
 }

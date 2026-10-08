@@ -1,0 +1,207 @@
+package de.mm20.launcher2.ui.launcher.scaffold.components
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.ui.NavDisplay
+import de.mm20.launcher2.ui.comms.CallRecordingsRoute
+import de.mm20.launcher2.ui.comms.CallRecordingsScreen
+import de.mm20.launcher2.ui.comms.CallerNotesRoute
+import de.mm20.launcher2.ui.comms.CallerNotesScreen
+import de.mm20.launcher2.ui.comms.CommsDashboardRoute
+import de.mm20.launcher2.ui.comms.CommsDashboardScreen
+import de.mm20.launcher2.ui.comms.ContactDetailsRoute
+import de.mm20.launcher2.ui.comms.ContactDetailsScreen
+import de.mm20.launcher2.ui.comms.ContactGroupsRoute
+import de.mm20.launcher2.ui.comms.ContactGroupsScreen
+import de.mm20.launcher2.ui.comms.DuplicateContactsRoute
+import de.mm20.launcher2.ui.comms.DuplicateContactsScreen
+import de.mm20.launcher2.ui.comms.FakeCallSettingsRoute
+import de.mm20.launcher2.ui.comms.FakeCallSettingsScreen
+import de.mm20.launcher2.ui.comms.HiddenContactsRoute
+import de.mm20.launcher2.ui.comms.HiddenContactsScreen
+import de.mm20.launcher2.ui.comms.ScheduledSmsRoute
+import de.mm20.launcher2.ui.comms.ScheduledSmsScreen
+import de.mm20.launcher2.ui.launcher.scaffold.LauncherScaffoldState
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.settings.comms.CommsSettingsRoute
+import de.mm20.launcher2.ui.settings.comms.CommsSettingsScreen
+
+/**
+ * Which Telos apps can be shown as a page inside the launcher, and the screens they can navigate
+ * to from there. The apps are the same screens that the settings activity hosts
+ * (see SettingsActivity), just in a back stack of their own.
+ *
+ * Not embedded (they keep the normal "open" behaviour): the Store, because it is the way back to
+ * everything else, installs apps and has many deep links of its own.
+ */
+internal object TelosPages {
+
+    /** The first screen of the app with the virtual app [key], or null if it cannot be embedded */
+    fun rootRoute(key: String): NavKey? = when (key) {
+        "telos_phone_app://phone" -> CommsDashboardRoute(initialTab = "recents")
+        "telos_messages_app://messages" -> CommsDashboardRoute(initialTab = "messages")
+        "telos_radio_app://radio" -> de.mm20.launcher2.ui.comms.radio.RadioDashboardRoute
+        "telos_music_app://music" -> de.mm20.launcher2.ui.media.music.MusicRoute
+        "telos_video_app://video" -> de.mm20.launcher2.ui.media.video.VideoRoute
+        "telos_photos_app://photos" -> de.mm20.launcher2.ui.media.photos.PhotosRoute
+        "telos_files_app://files" -> de.mm20.launcher2.ui.files.FilesRoute
+        "telos_calculator_app://calculator" -> de.mm20.launcher2.ui.calculator.CalculatorRoute
+        "telos_notes_app://notes" -> de.mm20.launcher2.ui.notes.NotesRoute
+        "telos_calendar_app://calendar" -> de.mm20.launcher2.ui.calendar.CalendarRoute
+        "telos_voice_recorder_app://voice_recorder" -> de.mm20.launcher2.ui.voice.VoiceRecorderRoute
+        "telos_screen_recorder_app://screen_recorder" -> de.mm20.launcher2.ui.screenrec.ScreenRecorderRoute
+        "telos_screenshot_app://screenshot" -> de.mm20.launcher2.ui.screenshot.ScreenshotRoute
+        else -> null
+    }
+
+    fun canEmbed(key: String): Boolean = rootRoute(key) != null
+
+    /** Same screens as the entries of the same routes in SettingsActivity */
+    val entries = entryProvider {
+        entry<CommsDashboardRoute> {
+            CommsDashboardScreen(it.initialTab, it.initialNumber, it.initialBody, it.initialAttachments)
+        }
+        entry<ContactDetailsRoute> { ContactDetailsScreen(it.contactId, it.phoneNumber) }
+        entry<CommsSettingsRoute> { CommsSettingsScreen() }
+        entry<FakeCallSettingsRoute> { FakeCallSettingsScreen() }
+        entry<DuplicateContactsRoute> { DuplicateContactsScreen() }
+        entry<CallRecordingsRoute> { CallRecordingsScreen() }
+        entry<CallerNotesRoute> { CallerNotesScreen() }
+        entry<HiddenContactsRoute> { HiddenContactsScreen() }
+        entry<ContactGroupsRoute> { ContactGroupsScreen() }
+        entry<ScheduledSmsRoute> { ScheduledSmsScreen() }
+        entry<de.mm20.launcher2.ui.files.remote.ConnectionsRoute> {
+            de.mm20.launcher2.ui.files.remote.ConnectionsScreen()
+        }
+        entry<de.mm20.launcher2.ui.screenshot.ScreenshotRoute> {
+            de.mm20.launcher2.ui.screenshot.ScreenshotScreen()
+        }
+        entry<de.mm20.launcher2.ui.screenshot.ScreenshotSettingsRoute> {
+            de.mm20.launcher2.ui.screenshot.ScreenshotSettingsScreen()
+        }
+        entry<de.mm20.launcher2.ui.screenrec.ScreenRecorderRoute> {
+            de.mm20.launcher2.ui.screenrec.ScreenRecorderScreen()
+        }
+        entry<de.mm20.launcher2.ui.screenrec.ScreenRecorderSettingsRoute> {
+            de.mm20.launcher2.ui.screenrec.ScreenRecorderSettingsScreen()
+        }
+        entry<de.mm20.launcher2.ui.voice.VoiceRecorderRoute> {
+            de.mm20.launcher2.ui.voice.VoiceRecorderScreen()
+        }
+        entry<de.mm20.launcher2.ui.voice.VoiceSettingsRoute> {
+            de.mm20.launcher2.ui.voice.VoiceSettingsScreen()
+        }
+        entry<de.mm20.launcher2.ui.notes.NotesRoute> { de.mm20.launcher2.ui.notes.NotesScreen() }
+        entry<de.mm20.launcher2.ui.calendar.CalendarRoute> { de.mm20.launcher2.ui.calendar.CalendarScreen() }
+        entry<de.mm20.launcher2.ui.calculator.CalculatorRoute> {
+            de.mm20.launcher2.ui.calculator.CalculatorScreen()
+        }
+        entry<de.mm20.launcher2.ui.media.photos.PhotosRoute> {
+            de.mm20.launcher2.ui.media.photos.PhotosScreen()
+        }
+        entry<de.mm20.launcher2.ui.media.video.VideoRoute> {
+            de.mm20.launcher2.ui.media.video.VideoScreen()
+        }
+        entry<de.mm20.launcher2.ui.media.music.MusicRoute> {
+            de.mm20.launcher2.ui.media.music.MusicScreen()
+        }
+        entry<de.mm20.launcher2.ui.comms.radio.RadioDashboardRoute> {
+            de.mm20.launcher2.ui.comms.radio.RadioDashboardScreen()
+        }
+        entry<de.mm20.launcher2.ui.files.FilesRoute> { de.mm20.launcher2.ui.files.FilesScreen() }
+    }
+}
+
+/**
+ * Shows a built-in Telos app as a page of the launcher scaffold (gesture action
+ * [de.mm20.launcher2.preferences.GestureAction.TelosPage]).
+ *
+ * The app's own screen is composed only while this component is the current one, and is disposed
+ * when the page is closed. This matters because the scaffold keeps every component alive off
+ * screen: without this, all assigned apps would load their data, ask for permissions and mark
+ * themselves as "on screen" for the crash guard (VirtualAppGuardEffect) while invisible.
+ * It also means the app starts at its first screen each time the page is opened.
+ */
+internal class TelosAppPageComponent private constructor(
+    private val key: String,
+) : ScaffoldComponent() {
+
+    companion object {
+        private val cache = mutableMapOf<String, TelosAppPageComponent>()
+
+        /** One instance per app, null if the app cannot be embedded */
+        fun forKey(key: String): TelosAppPageComponent? {
+            if (!TelosPages.canEmbed(key)) return null
+            return cache.getOrPut(key) { TelosAppPageComponent(key) }
+        }
+    }
+
+    // The page shows its own title bar and background
+    override val showSearchBar = false
+
+    // Text input in notes, messages, the dialer search, ...
+    override val hasIme = true
+
+    // Leaves the app, resets to the first screen
+    override val survivesPause = false
+
+    // The scroll position of the app's lists is not known here. Lists consume their own drags
+    // first and only pass on what is left over, so closing the page by a drag in the swipe
+    // direction does not fight scrolling. Reporting "at the edge" lets such a drag close the page.
+    override val isAtTop: State<Boolean?> = mutableStateOf(true)
+    override val isAtBottom: State<Boolean?> = mutableStateOf(true)
+
+    @Composable
+    override fun Component(
+        modifier: Modifier,
+        insets: PaddingValues,
+        state: LauncherScaffoldState,
+    ) {
+        // Not on screen: compose nothing (see class doc). Reading the progress here (instead of
+        // only checking the component) also keeps the app away from the home page when a drag is
+        // cancelled. The back handlers inside are registered after the scaffold's own one, so
+        // they get the back gesture first.
+        if (state.currentComponent !== this || state.currentProgress <= 0f) return
+
+        val root = remember(key) { TelosPages.rootRoute(key) } ?: return
+        val backStack = rememberNavBackStack(root)
+
+        // The back button of an app's first screen removes it from the stack, there is nothing
+        // below it: close the page then.
+        val isEmpty = backStack.isEmpty()
+        LaunchedEffect(isEmpty) {
+            if (isEmpty) state.navigateBack()
+        }
+
+        CompositionLocalProvider(LocalBackStack provides backStack) {
+            Box(
+                modifier = modifier
+                    .background(MaterialTheme.colorScheme.surfaceContainer)
+                    // The apps add the system bars themselves. Applied first, so that the
+                    // navigation bar is not added a second time while the keyboard is open.
+                    .imePadding()
+            ) {
+                if (!isEmpty) {
+                    NavDisplay(
+                        backStack = backStack,
+                        onBack = { backStack.removeLastOrNull() },
+                        entryProvider = TelosPages.entries,
+                    )
+                }
+            }
+        }
+    }
+}

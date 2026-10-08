@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.comms
 
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,11 +41,11 @@ fun ScheduledSmsScreen() {
     androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
         exact = ScheduledSmsStore.canScheduleExact(context)
     }
-    PreferenceScreen(title = { Text("Scheduled SMS") }) {
+    PreferenceScreen(title = { Text(stringResource(R.string.hc_scheduled_sms)) }) {
         if (!exact) {
             item {
                 ListItem(
-                    headlineContent = { Text("Exact time") },
+                    headlineContent = { Text(stringResource(R.string.hc_exact_time)) },
                     supportingContent = { Text("Without this permission a message may go out a few minutes late. Allow \"Alarms & reminders\" for Telos to send it on time.") },
                     trailingContent = {
                         TextButton(onClick = {
@@ -55,7 +57,7 @@ fun ScheduledSmsScreen() {
                                     )
                                 )
                             }
-                        }) { Text("Allow") }
+                        }) { Text(stringResource(R.string.hc_allow)) }
                     },
                 )
             }
@@ -64,7 +66,7 @@ fun ScheduledSmsScreen() {
             OutlinedTextField(
                 value = number,
                 onValueChange = { number = it },
-                label = { Text("Number") },
+                label = { Text(stringResource(R.string.hc_number)) },
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
             )
         }
@@ -72,7 +74,7 @@ fun ScheduledSmsScreen() {
             OutlinedTextField(
                 value = body,
                 onValueChange = { body = it },
-                label = { Text("Message") },
+                label = { Text(stringResource(R.string.hc_message)) },
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
             )
         }
@@ -104,7 +106,7 @@ fun ScheduledSmsScreen() {
                     cal.get(Calendar.MONTH),
                     cal.get(Calendar.DAY_OF_MONTH),
                 ).show()
-            }) { Text("Pick time and save") }
+            }) { Text(stringResource(R.string.hc_pick_time_and_save)) }
         }
         items.forEach { sms ->
             item {
@@ -115,7 +117,7 @@ fun ScheduledSmsScreen() {
                         TextButton(onClick = {
                             ScheduledSmsStore.remove(context, sms.id)
                             items = ScheduledSmsStore.list(context)
-                        }) { Text("Cancel") }
+                        }) { Text(stringResource(R.string.hc_cancel)) }
                     },
                 )
             }

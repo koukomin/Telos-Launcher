@@ -289,7 +289,7 @@ A clock, a search bar, an optional dock and, if you want them, widgets. Settings
 | Double tap | Turn off screen |
 | Long press | Home screen menu (change wallpaper, add widget) |
 
-- **Actions:** open any built-in Telos app (Phone, Messages, Notes, Calendar, ...) directly from a gesture, do nothing, search / app drawer, widget pages 1 to 4, Feed (non-release builds), Web Apps Panel, home screen menu, notifications, quick settings, turn off screen, power menu, recent apps, launch an app, shortcut or any searchable item, launcher settings, plugin actions.
+- **Actions:** open any built-in Telos app (Phone, Messages, Notes, Calendar, ...) directly from a gesture, or show most of them as a page inside the launcher (all except the Store), do nothing, search / app drawer, widget pages 1 to 4, Feed (non-release builds), Web Apps Panel, home screen menu, notifications, quick settings, turn off screen, power menu, recent apps, launch an app, shortcut or any searchable item, launcher settings, plugin actions.
 - Turn off screen (Android 9+), power menu and recent apps need the launcher's accessibility service; a banner and a "gesture failed" sheet guide you.
 - Only swipes, double tap and long press can be overridden by a context profile. Tapping the search bar always opens search.
 
@@ -720,8 +720,9 @@ Records the screen to a video with MediaProjection. [Docs](https://koukomin.gith
 A notes app with local storage and optional sync. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/notes/).
 
 - Grid of notes with colours, pins, labels, archive, trash, search, share; checklists as Markdown lines
-- Sync with a folder of Markdown files (Obsidian, Logseq, Syncthing or a cloud app's folder) and with Nextcloud Notes (app password), newest change wins
+- Sync with a folder of Markdown files (Obsidian, Logseq, Syncthing or a cloud app's folder) and with Nextcloud Notes (app password), newest change wins; trashed notes stay on the server until deleted for good, and the folder sync never trashes notes because of an empty, failed or suspicious listing
 - Import Google Keep (Takeout json or zip), Evernote (.enex), Markdown and text files and zips of them (Notion and Joplin exports)
+- Importing the same file twice skips duplicates and reports how many
 - Matching notes show up in the launcher search
 - The **Notes** part of the Telos backup
 
@@ -735,7 +736,7 @@ A calendar on the calendar storage of Android. [Docs](https://koukomin.github.io
 - A local calendar that needs no account, plus every calendar the system has: Google, CalDAV through DAVx5, Exchange. Telos asks the system to sync, the account does the sync
 - A list of the next 30 days next to the month view
 - Show or hide calendars, import and export `.ics`
-- The local calendars are the **Calendar** part of the Telos backup
+- The local calendars are the **Calendar** part of the Telos backup, with all reminders and deleted occurrences of repeating events (changed single occurrences are not backed up)
 
 **Status and limitations:** month and agenda only (no week or day grid), no guests or tasks, repeating events are edited as a whole series, Telos does not log in to Google or CalDAV itself.
 

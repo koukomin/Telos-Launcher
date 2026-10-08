@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.media.music
 
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -56,11 +58,11 @@ internal fun ScrobbleDialog(onDismiss: () -> Unit) {
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Scrobbling") },
+        title = { Text(stringResource(R.string.hc_scrobbling)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 Text(
-                    "Reports what you listen to once half of a song was played. Songs that cannot be sent (no network) are sent later.",
+                    stringResource(R.string.hc_reports_what_you_listen_to_once_half_of),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -69,15 +71,15 @@ internal fun ScrobbleDialog(onDismiss: () -> Unit) {
                     update { it.copy(lastfmEnabled = on) }
                 }
                 Text(
-                    "Create a free API account at last.fm/api/account/create and enter its key and secret.",
+                    stringResource(R.string.hc_create_a_free_api_account_at_last_fm_api),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                OutlinedTextField(lfKey, { lfKey = it }, label = { Text("API key") }, singleLine = true, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(lfSecret, { lfSecret = it }, label = { Text("Shared secret") }, singleLine = true, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(lfUser, { lfUser = it }, label = { Text("User name") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(lfKey, { lfKey = it }, label = { Text(stringResource(R.string.hc_api_key)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(lfSecret, { lfSecret = it }, label = { Text(stringResource(R.string.hc_shared_secret)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(lfUser, { lfUser = it }, label = { Text(stringResource(R.string.hc_user_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
                 OutlinedTextField(
-                    lfPass, { lfPass = it }, label = { Text("Password (not stored)") }, singleLine = true,
+                    lfPass, { lfPass = it }, label = { Text(stringResource(R.string.hc_password_not_stored)) }, singleLine = true,
                     visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(),
                 )
                 TextButton(enabled = !busy && lfKey.isNotBlank() && lfSecret.isNotBlank() && lfUser.isNotBlank() && lfPass.isNotBlank(), onClick = {
@@ -92,14 +94,14 @@ internal fun ScrobbleDialog(onDismiss: () -> Unit) {
                             .onFailure { message = "Last.fm: " + (it.message ?: "login failed") }
                         busy = false
                     }
-                }) { Text("Connect Last.fm") }
+                }) { Text(stringResource(R.string.hc_connect_last_fm)) }
 
                 Section("Libre.fm", config.librefmEnabled, config.librefmPasswordHash.isNotBlank()) { on ->
                     update { it.copy(librefmEnabled = on) }
                 }
-                OutlinedTextField(libUser, { libUser = it }, label = { Text("User name") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(libUser, { libUser = it }, label = { Text(stringResource(R.string.hc_user_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
                 OutlinedTextField(
-                    libPass, { libPass = it }, label = { Text("Password (only its hash is stored)") }, singleLine = true,
+                    libPass, { libPass = it }, label = { Text(stringResource(R.string.hc_password_only_its_hash_is_stored)) }, singleLine = true,
                     visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(),
                 )
                 TextButton(enabled = !busy && libUser.isNotBlank() && libPass.isNotBlank(), onClick = {
@@ -116,27 +118,27 @@ internal fun ScrobbleDialog(onDismiss: () -> Unit) {
                             .onFailure { message = "Libre.fm: " + (it.message ?: "login failed") }
                         busy = false
                     }
-                }) { Text("Connect Libre.fm") }
+                }) { Text(stringResource(R.string.hc_connect_libre_fm)) }
 
                 Section("ListenBrainz", config.listenbrainzEnabled, config.listenbrainzToken.isNotBlank()) { on ->
                     update { it.copy(listenbrainzEnabled = on) }
                 }
                 Text(
-                    "Copy your user token from listenbrainz.org/profile.",
+                    stringResource(R.string.hc_copy_your_user_token_from_listenbrainz_o),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                OutlinedTextField(lbToken, { lbToken = it }, label = { Text("User token") }, singleLine = true, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(lbServer, { lbServer = it }, label = { Text("Server") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(lbToken, { lbToken = it }, label = { Text(stringResource(R.string.hc_user_token)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(lbServer, { lbServer = it }, label = { Text(stringResource(R.string.hc_server)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
                 TextButton(enabled = lbToken.isNotBlank(), onClick = {
                     update { it.copy(listenbrainzToken = lbToken, listenbrainzServer = lbServer, listenbrainzEnabled = true) }
                     message = "ListenBrainz saved"
-                }) { Text("Save ListenBrainz") }
+                }) { Text(stringResource(R.string.hc_save_listenbrainz)) }
 
                 if (message.isNotEmpty()) Text(message, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 8.dp))
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Done") } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_done)) } },
     )
 }
 

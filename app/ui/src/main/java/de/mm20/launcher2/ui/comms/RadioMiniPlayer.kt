@@ -1,6 +1,7 @@
 // === TELOS_PENDING_REVIEW_START: radio_mini_player ===
 package de.mm20.launcher2.ui.comms
 
+import androidx.compose.ui.res.stringResource
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -76,7 +77,7 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.music_note_24px), // Fallback icon
-                        contentDescription = "Radio",
+                        contentDescription = stringResource(R.string.hc_radio),
                         tint = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 }
@@ -120,7 +121,7 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                 IconButton(onClick = { viewModel.stop() }) {
                     Icon(
                         painter = painterResource(R.drawable.close_24px),
-                        contentDescription = "Stop",
+                        contentDescription = stringResource(R.string.hc_stop),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
                 }

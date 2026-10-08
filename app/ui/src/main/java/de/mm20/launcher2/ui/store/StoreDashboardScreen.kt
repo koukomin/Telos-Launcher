@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.store
 
+import androidx.compose.ui.res.stringResource
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.widget.Toast
@@ -133,17 +134,17 @@ fun StoreDashboardScreen(initialLink: String = "") {
         if (tab == 0) {
             IconButton(onClick = { viewModel.checkAll() }, enabled = !checking) {
                 if (checking) CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
-                else Icon(painterResource(R.drawable.download_24px), contentDescription = "Check for updates")
+                else Icon(painterResource(R.drawable.download_24px), contentDescription = stringResource(R.string.hc_check_for_updates))
             }
             Box {
                 IconButton(onClick = { menuOpen = true }) {
-                    Icon(painterResource(R.drawable.more_vert_24px), contentDescription = "More")
+                    Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
                 }
                 DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
-                    DropdownMenuItem(text = { Text("Add installed apps") }, onClick = { menuOpen = false; showInstalled = true })
-                    DropdownMenuItem(text = { Text("Import (Obtainium file)") }, onClick = { menuOpen = false; importPicker.launch(arrayOf("*/*")) })
-                    DropdownMenuItem(text = { Text("Export (Obtainium file)") }, onClick = { menuOpen = false; exportPicker.launch("telos-store-export.json") })
-                    DropdownMenuItem(text = { Text("Store settings") }, onClick = { menuOpen = false; showSettings = true })
+                    DropdownMenuItem(text = { Text(stringResource(R.string.hc_add_installed_apps)) }, onClick = { menuOpen = false; showInstalled = true })
+                    DropdownMenuItem(text = { Text(stringResource(R.string.hc_import_obtainium_file)) }, onClick = { menuOpen = false; importPicker.launch(arrayOf("*/*")) })
+                    DropdownMenuItem(text = { Text(stringResource(R.string.hc_export_obtainium_file)) }, onClick = { menuOpen = false; exportPicker.launch("telos-store-export.json") })
+                    DropdownMenuItem(text = { Text(stringResource(R.string.hc_store_settings)) }, onClick = { menuOpen = false; showSettings = true })
                 }
             }
         }
@@ -151,8 +152,8 @@ fun StoreDashboardScreen(initialLink: String = "") {
         Box(Modifier.fillMaxSize()) {
             Column(Modifier.fillMaxSize()) {
                 TabRow(selectedTabIndex = tab) {
-                    Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text("Apps") })
-                    Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text("Telos apps") })
+                    Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(R.string.hc_apps)) })
+                    Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(R.string.hc_telos_apps)) })
                 }
                 if (tab == 0) {
                     AppsTab(
@@ -191,7 +192,7 @@ fun StoreDashboardScreen(initialLink: String = "") {
                     onClick = { addPrefill = ""; showAdd = true },
                     modifier = Modifier.align(Alignment.BottomEnd).padding(24.dp),
                 ) {
-                    Icon(painterResource(R.drawable.add_24px), contentDescription = "Add app")
+                    Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.hc_add_app))
                 }
             }
         }
@@ -247,7 +248,7 @@ private fun AppsTab(
         }
         if (updateCount > 0) {
             FilledTonalButton(onClick = onUpdateAll, modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-                Text("Update all ($updateCount)")
+                Text(stringResource(R.string.hc_update_all_count, updateCount))
             }
         }
         if (rows.isEmpty()) {
@@ -360,7 +361,7 @@ internal fun StoreActionButton(row: StoreRow, state: StoreInstallUiState, onClic
                 Text(if (state == StoreInstallUiState.Downloading) "Downloading" else "Installing")
             }
         }
-        StoreInstallUiState.Failed -> OutlinedButton(onClick = onClick) { Text("Retry") }
+        StoreInstallUiState.Failed -> OutlinedButton(onClick = onClick) { Text(stringResource(R.string.hc_retry)) }
         StoreInstallUiState.Idle, StoreInstallUiState.Installed -> {
             val label = row.actionLabel()
             if (label == "Open") OutlinedButton(onClick = onClick) { Text(label) } else Button(onClick = onClick) { Text(label) }
@@ -396,7 +397,7 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
     LazyColumn(contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 32.dp), verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxSize()) {
         item {
             Text(
-                "The apps that are part of Telos. Installing one shows its icon in the app grid and in search, removing it hides the icon again. Nothing is downloaded: the apps stay inside Telos.",
+                stringResource(R.string.hc_the_apps_that_are_part_of_telos_installi),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -420,7 +421,7 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
                     val context = androidx.compose.ui.platform.LocalContext.current
                     if (!installed && de.mm20.launcher2.base.VirtualAppGuard.isTripped(context, app.key)) {
                         Text(
-                            "Switched off automatically because it crashed repeatedly.",
+                            stringResource(R.string.hc_switched_off_automatically_because_it_cr),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.error,
                             modifier = Modifier.padding(top = 10.dp),
@@ -435,10 +436,10 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
                     )
                     Row(Modifier.padding(top = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         if (installed) {
-                            OutlinedButton(onClick = { onOpen(app) }) { Text("Open") }
-                            if (app.removable) TextButton(onClick = { onToggle(app, false) }) { Text("Remove") }
+                            OutlinedButton(onClick = { onOpen(app) }) { Text(stringResource(R.string.hc_open)) }
+                            if (app.removable) TextButton(onClick = { onToggle(app, false) }) { Text(stringResource(R.string.hc_remove)) }
                         } else {
-                            Button(onClick = { onToggle(app, true) }) { Text("Install") }
+                            Button(onClick = { onToggle(app, true) }) { Text(stringResource(R.string.hc_install)) }
                         }
                     }
                 }
@@ -460,18 +461,18 @@ private fun AddAppDialog(viewModel: StoreViewModel, prefill: String, onDismiss: 
     var busy by remember { mutableStateOf(false) }
     AlertDialog(
         onDismissRequest = { if (!busy) onDismiss() },
-        title = { Text("Add an app") },
+        title = { Text(stringResource(R.string.hc_add_an_app)) },
         text = {
             Column {
                 Text(
-                    "GitHub, GitLab, Codeberg / Forgejo / Gitea, F-Droid, IzzyOnDroid, SourceForge, a direct APK link, or any page that links to APK files.",
+                    stringResource(R.string.hc_github_gitlab_codeberg_forgejo_gitea_f_d),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                OutlinedTextField(url, { url = it; error = null }, label = { Text("Address") }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp), isError = error != null)
+                OutlinedTextField(url, { url = it; error = null }, label = { Text(stringResource(R.string.hc_address)) }, modifier = Modifier.fillMaxWidth().padding(top = 8.dp), isError = error != null)
                 OutlinedTextField(
-                    pkg, { pkg = it }, label = { Text("Package name (optional)") }, singleLine = true,
-                    supportingText = { Text("Fill this in if the app is already installed, so it shows as installed") },
+                    pkg, { pkg = it }, label = { Text(stringResource(R.string.hc_package_name_optional)) }, singleLine = true,
+                    supportingText = { Text(stringResource(R.string.hc_fill_this_in_if_the_app_is_already_insta)) },
                     modifier = Modifier.fillMaxWidth(),
                 )
                 error?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 4.dp)) }
@@ -485,9 +486,9 @@ private fun AddAppDialog(viewModel: StoreViewModel, prefill: String, onDismiss: 
                     busy = false
                     if (result == null) onDismiss() else error = result
                 }
-            }) { Text("Add") }
+            }) { Text(stringResource(R.string.hc_add)) }
         },
-        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text("Cancel") } },
+        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
     )
 }
 
@@ -497,10 +498,10 @@ private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
     var token by remember { mutableStateOf(g.githubToken) }
     AlertDialog(
         onDismissRequest = { viewModel.setGlobal { it.copy(githubToken = token.trim()) }; onDismiss() },
-        title = { Text("Store settings") },
+        title = { Text(stringResource(R.string.hc_store_settings)) },
         text = {
             Column {
-                Text("Check for updates", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.hc_check_for_updates), style = MaterialTheme.typography.titleSmall)
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(vertical = 4.dp)) {
                     items(listOf(0 to "Never", 1 to "1 h", 3 to "3 h", 6 to "6 h", 12 to "12 h", 24 to "Daily")) { (hours, label) ->
                         FilterChip(selected = g.checkIntervalHours == hours, onClick = { viewModel.setGlobal { it.copy(checkIntervalHours = hours) } }, label = { Text(label) })
@@ -510,19 +511,19 @@ private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
                 ToggleRow("Notify about updates", g.notifyUpdates) { v -> viewModel.setGlobal { it.copy(notifyUpdates = v) } }
                 ToggleRow("Install updates automatically", g.autoInstall) { v -> viewModel.setGlobal { it.copy(autoInstall = v) } }
                 Text(
-                    "Automatic installs only happen when Shizuku or root allows installing without asking. Otherwise you are notified and install with a tap.",
+                    stringResource(R.string.hc_automatic_installs_only_happen_when_shiz),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 OutlinedTextField(
-                    token, { token = it }, label = { Text("GitHub token (optional)") }, singleLine = true,
-                    supportingText = { Text("Raises GitHub's limit from 60 to 5000 requests per hour") },
+                    token, { token = it }, label = { Text(stringResource(R.string.hc_github_token_optional)) }, singleLine = true,
+                    supportingText = { Text(stringResource(R.string.hc_raises_github_s_limit_from_60_to_5000_re)) },
                     visualTransformation = PasswordVisualTransformation(),
                     modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 )
             }
         },
-        confirmButton = { TextButton(onClick = { viewModel.setGlobal { it.copy(githubToken = token.trim()) }; onDismiss() }) { Text("Done") } },
+        confirmButton = { TextButton(onClick = { viewModel.setGlobal { it.copy(githubToken = token.trim()) }; onDismiss() }) { Text(stringResource(R.string.hc_done)) } },
     )
 }
 
@@ -543,11 +544,11 @@ private fun InstalledAppsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
     LaunchedEffect(Unit) { candidates = viewModel.installedCandidates() }
     AlertDialog(
         onDismissRequest = { if (!busy) onDismiss() },
-        title = { Text("Add installed apps") },
+        title = { Text(stringResource(R.string.hc_add_installed_apps)) },
         text = {
             Column {
                 Text(
-                    "Choose apps you already have. Telos looks them up on F-Droid and IzzyOnDroid and keeps the ones it finds up to date.",
+                    stringResource(R.string.hc_choose_apps_you_already_have_telos_looks),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -581,8 +582,8 @@ private fun InstalledAppsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
                     Toast.makeText(context, "$found of ${chosen.size} found and added", Toast.LENGTH_LONG).show()
                     onDismiss()
                 }
-            }) { Text("Add (${selected.size})") }
+            }) { Text(stringResource(R.string.hc_add_count, selected.size)) }
         },
-        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text("Cancel") } },
+        dismissButton = { TextButton(enabled = !busy, onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
     )
 }

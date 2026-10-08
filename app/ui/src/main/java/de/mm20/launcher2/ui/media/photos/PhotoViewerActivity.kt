@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.media.photos
 
+import androidx.compose.ui.res.stringResource
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -214,7 +215,7 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
             onShareClean = {
                 val file = PhotoExif.cleanCopy(context, current)
                 if (file == null) {
-                    Toast.makeText(context, "Could not create a copy", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.hc_could_not_create_a_copy), Toast.LENGTH_SHORT).show()
                 } else {
                     share(FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file))
                 }
@@ -256,11 +257,11 @@ private fun ExifDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Details") },
+        title = { Text(stringResource(R.string.hc_details)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 if (info == null) {
-                    Text("No metadata available")
+                    Text(stringResource(R.string.hc_no_metadata_available))
                 } else {
                     Text("${info.width} × ${info.height}", style = MaterialTheme.typography.bodyMedium)
                     info.latLong?.let {
@@ -290,15 +291,15 @@ private fun ExifDialog(
                             if (info.hasGps) {
                                 AssistChip(onClick = {
                                     withWriteAccess { done(PhotoExif.strip(context.contentResolver, uri, gpsOnly = true)) }
-                                }, label = { Text("Remove location") })
+                                }, label = { Text(stringResource(R.string.hc_remove_location)) })
                             }
                             AssistChip(onClick = {
                                 withWriteAccess { done(PhotoExif.strip(context.contentResolver, uri, gpsOnly = false)) }
-                            }, label = { Text("Remove all") })
+                            }, label = { Text(stringResource(R.string.hc_remove_all)) })
                         }
                         AssistChip(
                             onClick = onShareClean,
-                            label = { Text("Share without metadata") },
+                            label = { Text(stringResource(R.string.hc_share_without_metadata)) },
                             modifier = Modifier.padding(top = 4.dp),
                         )
                     }
@@ -309,9 +310,9 @@ private fun ExifDialog(
             if (editing) {
                 TextButton(onClick = {
                     withWriteAccess { done(PhotoExif.write(context.contentResolver, uri, edits.toMap())); editing = false }
-                }) { Text("Save") }
+                }) { Text(stringResource(R.string.hc_save)) }
             } else if (info != null) {
-                TextButton(onClick = { editing = true }) { Text("Edit") }
+                TextButton(onClick = { editing = true }) { Text(stringResource(R.string.hc_edit)) }
             }
         },
         dismissButton = {

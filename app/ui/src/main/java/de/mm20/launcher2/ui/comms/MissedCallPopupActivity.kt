@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.comms
 
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -47,7 +49,7 @@ class MissedCallPopupActivity : BaseActivity() {
                             )
                             if (ringMs > 0) {
                                 Text(
-                                    text = "Rang for ${ringMs / 1000}s",
+                                    text = stringResource(R.string.hc_rang_for_seconds, (ringMs / 1000).toInt()),
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
@@ -59,17 +61,17 @@ class MissedCallPopupActivity : BaseActivity() {
                                 Modifier.fillMaxWidth().padding(top = 16.dp),
                                 horizontalArrangement = Arrangement.SpaceBetween,
                             ) {
-                                TextButton(onClick = { finish() }) { Text("Dismiss") }
+                                TextButton(onClick = { finish() }) { Text(stringResource(R.string.hc_dismiss)) }
                                 if (template.isNotBlank() && number.isNotBlank()) {
                                     TextButton(onClick = {
                                         QuickSms.send(this@MissedCallPopupActivity, number, template)
                                         finish()
-                                    }) { Text("Message") }
+                                    }) { Text(stringResource(R.string.hc_message)) }
                                 }
                                 FilledTonalButton(onClick = {
                                     if (number.isNotBlank()) SimRouter.place(this@MissedCallPopupActivity, number)
                                     finish()
-                                }) { Text("Call") }
+                                }) { Text(stringResource(R.string.hc_call)) }
                             }
                             if (number.isNotBlank()) {
                                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {

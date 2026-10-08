@@ -1,6 +1,7 @@
 // === TELOS_PENDING_REVIEW_START: radio_browser_ktor ===
 package de.mm20.launcher2.ui.comms.radio
 
+import androidx.compose.ui.res.stringResource
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -83,12 +84,12 @@ fun RadioDashboardScreen() {
 
     de.mm20.launcher2.ui.media.MediaFrame("Radio", askNotifications = true, guardKey = "telos_radio_app://radio", actions = {
         IconButton(onClick = { showAdd = true }) {
-            Icon(painterResource(R.drawable.add_24px), contentDescription = "Add station")
+            Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.hc_add_station))
         }
         IconButton(onClick = { showSleep = true }) {
             Icon(
                 painterResource(R.drawable.timer_24px),
-                contentDescription = "Sleep timer",
+                contentDescription = stringResource(R.string.hc_sleep_timer),
                 tint = if (sleepEndsAt > 0) MaterialTheme.colorScheme.primary
                 else MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -99,28 +100,28 @@ fun RadioDashboardScreen() {
             }
             DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
                 DropdownMenuItem(
-                    text = { Text("Import playlist (M3U / PLS)") },
+                    text = { Text(stringResource(R.string.hc_import_playlist_m3u_pls)) },
                     onClick = {
                         menuOpen = false
                         importLauncher.launch(arrayOf("*/*"))
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text("Export playlist (M3U)") },
+                    text = { Text(stringResource(R.string.hc_export_playlist_m3u)) },
                     onClick = {
                         menuOpen = false
                         exportM3uLauncher.launch("telos-radio.m3u")
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text("Back up collection") },
+                    text = { Text(stringResource(R.string.hc_back_up_collection)) },
                     onClick = {
                         menuOpen = false
                         backupLauncher.launch("telos-radio-backup.json")
                     },
                 )
                 DropdownMenuItem(
-                    text = { Text("Restore backup") },
+                    text = { Text(stringResource(R.string.hc_restore_backup)) },
                     onClick = {
                         menuOpen = false
                         restoreLauncher.launch(arrayOf("*/*"))
@@ -150,7 +151,7 @@ fun RadioDashboardScreen() {
                     if (favorites.isEmpty()) {
                         item {
                             Text(
-                                text = "No stations yet. Search for a station, add one with its address, or import a playlist.",
+                                text = stringResource(R.string.hc_no_stations_yet_search_for_a_station_add),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.padding(16.dp)
@@ -187,7 +188,7 @@ fun RadioDashboardScreen() {
                     }
                     if (!isSearching && searchError == null && searchQuery.isNotBlank() && searchResults.isEmpty()) {
                         Text(
-                            text = "No stations found",
+                            text = stringResource(R.string.hc_no_stations_found),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
@@ -221,7 +222,7 @@ fun RadioDashboardScreen() {
                     if (history.isEmpty()) {
                         item {
                             Text(
-                                text = "Tracks announced by the stations you listen to appear here.",
+                                text = stringResource(R.string.hc_tracks_announced_by_the_stations_you_lis),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.padding(16.dp)
@@ -229,7 +230,7 @@ fun RadioDashboardScreen() {
                         }
                     } else {
                         item {
-                            TextButton(onClick = { viewModel.clearHistory() }) { Text("Clear history") }
+                            TextButton(onClick = { viewModel.clearHistory() }) { Text(stringResource(R.string.hc_clear_history)) }
                         }
                     }
                     items(history, key = { it.id }) { entry ->
@@ -261,20 +262,20 @@ fun RadioDashboardScreen() {
         var address by remember { mutableStateOf("") }
         AlertDialog(
             onDismissRequest = { showAdd = false },
-            title = { Text("Add station") },
+            title = { Text(stringResource(R.string.hc_add_station)) },
             text = {
                 Column {
                     OutlinedTextField(
                         value = address,
                         onValueChange = { address = it },
-                        label = { Text("Stream or playlist address") },
+                        label = { Text(stringResource(R.string.hc_stream_or_playlist_address)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                     )
                     OutlinedTextField(
                         value = name,
                         onValueChange = { name = it },
-                        label = { Text("Name (optional)") },
+                        label = { Text(stringResource(R.string.hc_name_optional)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                     )
@@ -284,34 +285,34 @@ fun RadioDashboardScreen() {
                 TextButton(onClick = {
                     viewModel.addStation(name, address)
                     showAdd = false
-                }) { Text("Add") }
+                }) { Text(stringResource(R.string.hc_add)) }
             },
-            dismissButton = { TextButton(onClick = { showAdd = false }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { showAdd = false }) { Text(stringResource(R.string.hc_cancel)) } },
         )
     }
 
     if (showSleep) {
         AlertDialog(
             onDismissRequest = { showSleep = false },
-            title = { Text("Sleep timer") },
+            title = { Text(stringResource(R.string.hc_sleep_timer)) },
             text = {
                 Column {
                     listOf(15, 30, 45, 60, 90).forEach { minutes ->
                         TextButton(onClick = {
                             playerViewModel.setSleepTimer(minutes)
                             showSleep = false
-                        }) { Text("Stop playback in $minutes minutes") }
+                        }) { Text(stringResource(R.string.hc_stop_playback_in_minutes, minutes)) }
                     }
                     if (sleepEndsAt > 0) {
                         TextButton(onClick = {
                             playerViewModel.cancelSleepTimer()
                             showSleep = false
-                        }) { Text("Turn timer off") }
+                        }) { Text(stringResource(R.string.hc_turn_timer_off)) }
                     }
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { showSleep = false }) { Text("Close") } },
+            dismissButton = { TextButton(onClick = { showSleep = false }) { Text(stringResource(R.string.hc_close)) } },
         )
     }
 
@@ -324,19 +325,19 @@ fun RadioDashboardScreen() {
                 title = { Text(station.name) },
                 text = { Text(station.streamUrl) },
                 confirmButton = {
-                    TextButton(onClick = { renaming = true }) { Text("Rename") }
+                    TextButton(onClick = { renaming = true }) { Text(stringResource(R.string.hc_rename)) }
                 },
                 dismissButton = {
                     TextButton(onClick = {
                         viewModel.deleteStation(station.id)
                         editTarget = null
-                    }) { Text("Remove") }
+                    }) { Text(stringResource(R.string.hc_remove)) }
                 },
             )
         } else {
             AlertDialog(
                 onDismissRequest = { editTarget = null },
-                title = { Text("Rename station") },
+                title = { Text(stringResource(R.string.hc_rename_station)) },
                 text = {
                     OutlinedTextField(
                         value = newName,
@@ -349,9 +350,9 @@ fun RadioDashboardScreen() {
                     TextButton(onClick = {
                         viewModel.renameStation(station.id, newName)
                         editTarget = null
-                    }) { Text("Save") }
+                    }) { Text(stringResource(R.string.hc_save)) }
                 },
-                dismissButton = { TextButton(onClick = { editTarget = null }) { Text("Cancel") } },
+                dismissButton = { TextButton(onClick = { editTarget = null }) { Text(stringResource(R.string.hc_cancel)) } },
             )
         }
     }
@@ -423,7 +424,7 @@ private fun StationRow(
             IconButton(onClick = onFavoriteClick) {
                 Icon(
                     painter = painterResource(R.drawable.star_24px),
-                    contentDescription = "Favorite",
+                    contentDescription = stringResource(R.string.hc_favorite),
                     tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }

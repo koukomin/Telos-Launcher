@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.media.photos
 
+import androidx.compose.ui.res.stringResource
 import android.Manifest
 import android.content.ContentUris
 import android.content.Context
@@ -159,12 +160,12 @@ fun PhotosScreen() {
                     NavigationBarItem(
                         selected = tab == 0, onClick = { tab = 0 },
                         icon = { Icon(painterResource(R.drawable.photo_24px), contentDescription = null) },
-                        label = { Text("Photos") },
+                        label = { Text(stringResource(R.string.hc_photos)) },
                     )
                     NavigationBarItem(
                         selected = tab == 1, onClick = { tab = 1 },
                         icon = { Icon(painterResource(R.drawable.crop_square_24px), contentDescription = null) },
-                        label = { Text("Albums") },
+                        label = { Text(stringResource(R.string.hc_albums)) },
                     )
                 }
             }
@@ -177,7 +178,7 @@ fun PhotosScreen() {
             ) {
                 if (album != null) {
                     IconButton(onClick = { album = null }) {
-                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back")
+                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back))
                     }
                 }
                 Column {
@@ -200,8 +201,8 @@ fun PhotosScreen() {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Text("Allow access to your photos", style = MaterialTheme.typography.titleMedium)
-                    Button(onClick = { launcher.launch(permission) }, modifier = Modifier.padding(top = 16.dp)) { Text("Allow") }
+                    Text(stringResource(R.string.hc_allow_access_to_your_photos), style = MaterialTheme.typography.titleMedium)
+                    Button(onClick = { launcher.launch(permission) }, modifier = Modifier.padding(top = 16.dp)) { Text(stringResource(R.string.hc_allow)) }
                 }
             } else if (tab == 1 && album == null) {
                 LazyVerticalGrid(

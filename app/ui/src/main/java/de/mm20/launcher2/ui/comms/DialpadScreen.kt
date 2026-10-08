@@ -154,7 +154,7 @@ fun DialpadScreen(initialNumber: String = "") {
             } else if (digit.first().isDigit()) {
                 val number = speedDials[digit.toInt()]
                 if (number != null) viewModel.dial(context, number)
-                else Toast.makeText(context, "Speed dial not assigned", Toast.LENGTH_SHORT).show()
+                else Toast.makeText(context, context.getString(R.string.hc_speed_dial_not_assigned), Toast.LENGTH_SHORT).show()
             }
         } else {
             playTone(digit.first())
@@ -231,7 +231,7 @@ fun DialpadScreen(initialNumber: String = "") {
             } else {
                 if (t9Results.isEmpty()) {
                     Text(
-                        text = "No contacts found",
+                        text = stringResource(R.string.hc_no_contacts_found),
                         style = MaterialTheme.typography.bodyLarge,
                         fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),

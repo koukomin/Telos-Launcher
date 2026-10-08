@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.files
 
+import de.mm20.launcher2.ui.R
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -94,7 +95,7 @@ internal object FileActions {
         val files = entries.filter { !it.isDir }
         val uris = files.mapNotNull { uriFor(context, it.path, rootMode) }
         if (uris.isEmpty()) {
-            Toast.makeText(context, "Folders cannot be shared. Compress them first.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.hc_folders_cannot_be_shared_compress_them_f), Toast.LENGTH_SHORT).show()
             return
         }
         val intent = if (uris.size == 1) {

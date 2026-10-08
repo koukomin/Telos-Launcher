@@ -359,7 +359,7 @@ fun ContactsScreen(
         pendingCall?.let { number ->
             AlertDialog(
                 onDismissRequest = { pendingCall = null },
-                title = { Text("Place call") },
+                title = { Text(stringResource(R.string.hc_place_call)) },
                 text = { Text(number) },
                 confirmButton = {
                     TextButton(onClick = {

@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.media.video
 
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
 import android.app.Activity
 import android.content.Context
 import android.media.AudioManager
@@ -166,16 +168,16 @@ internal fun PlaybackMenu(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Playback") },
+        title = { Text(stringResource(R.string.hc_playback)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
-                Text("Speed", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.hc_speed), style = MaterialTheme.typography.titleSmall)
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(vertical = 4.dp)) {
                     listOf(0.5f, 0.75f, 1f, 1.25f, 1.5f, 2f).forEach { v ->
                         FilterChip(selected = speed == v, onClick = { onSpeed(v) }, label = { Text("${v}×".replace(".0×", "×")) })
                     }
                 }
-                Text("Picture", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
+                Text(stringResource(R.string.hc_picture), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(vertical = 4.dp)) {
                     listOf(
                         "Fit" to AspectRatioFrameLayout.RESIZE_MODE_FIT,
@@ -188,7 +190,7 @@ internal fun PlaybackMenu(
 
                 val audio = groups.filter { it.type == C.TRACK_TYPE_AUDIO }
                 if (audio.size > 1) {
-                    Text("Audio", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
+                    Text(stringResource(R.string.hc_audio), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
                     audio.forEachIndexed { i, g ->
                         FilterChip(
                             selected = g.isSelected,
@@ -204,7 +206,7 @@ internal fun PlaybackMenu(
                 }
                 val text = groups.filter { it.type == C.TRACK_TYPE_TEXT }
                 if (text.isNotEmpty()) {
-                    Text("Subtitles", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
+                    Text(stringResource(R.string.hc_subtitles), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
                     FilterChip(
                         selected = textDisabled,
                         onClick = {
@@ -212,7 +214,7 @@ internal fun PlaybackMenu(
                                 .setTrackTypeDisabled(C.TRACK_TYPE_TEXT, true).build()
                             refresh++
                         },
-                        label = { Text("Off") },
+                        label = { Text(stringResource(R.string.hc_off)) },
                         modifier = Modifier.padding(vertical = 2.dp),
                     )
                     text.forEachIndexed { i, g ->
@@ -231,13 +233,13 @@ internal fun PlaybackMenu(
                 }
 
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 12.dp)) {
-                    Text("Repeat this video", modifier = Modifier.weight(1f))
+                    Text(stringResource(R.string.hc_repeat_this_video), modifier = Modifier.weight(1f))
                     Switch(checked = loop, onCheckedChange = {
                         loop = it
                         player.repeatMode = if (it) Player.REPEAT_MODE_ONE else Player.REPEAT_MODE_OFF
                     })
                 }
-                Text("Sleep timer", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
+                Text(stringResource(R.string.hc_sleep_timer), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(vertical = 4.dp)) {
                     listOf(0, 15, 30, 60).forEach { m ->
                         FilterChip(selected = sleepMinutes == m, onClick = { onSleep(m) }, label = { Text(if (m == 0) "Off" else "$m min") })
@@ -245,6 +247,6 @@ internal fun PlaybackMenu(
                 }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Done") } },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_done)) } },
     )
 }

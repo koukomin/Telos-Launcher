@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.comms
 
+import androidx.compose.ui.res.stringResource
 import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.clickable
@@ -40,10 +41,10 @@ fun CallRecordingsScreen() {
     val context = LocalContext.current
     var files by remember { mutableStateOf(CallAudioRecorder.list(context)) }
     androidx.compose.runtime.LaunchedEffect(Unit) { RecordingCrypto.clearSharedCopies(context) }
-    PreferenceScreen(title = { Text("Call recordings") }) {
+    PreferenceScreen(title = { Text(stringResource(R.string.hc_call_recordings)) }) {
         if (files.isEmpty()) {
             item {
-                Text("No recordings yet.", modifier = Modifier.padding(16.dp))
+                Text(stringResource(R.string.hc_no_recordings_yet), modifier = Modifier.padding(16.dp))
             }
         }
         files.forEach { rec ->
@@ -78,7 +79,7 @@ private fun RecordingRow(rec: CallRecordingFile, onChanged: () -> Unit) {
                     }
                     context.tryStartActivity(intent)
                 }.onFailure {
-                    Toast.makeText(context, "Cannot play recording", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.hc_cannot_play_recording), Toast.LENGTH_SHORT).show()
                 }
             },
         trailingContent = {

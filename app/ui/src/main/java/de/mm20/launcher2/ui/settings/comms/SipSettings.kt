@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.settings.comms
 
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.AlertDialog
@@ -38,7 +40,7 @@ fun SipSettings() {
         androidx.activity.result.contract.ActivityResultContracts.RequestMultiplePermissions()
     ) { result ->
         if (result[android.Manifest.permission.RECORD_AUDIO] != false) settings.setSipEnabled(true)
-        else android.widget.Toast.makeText(context, "SIP calls need the microphone permission", android.widget.Toast.LENGTH_LONG).show()
+        else android.widget.Toast.makeText(context, context.getString(R.string.hc_sip_calls_need_the_microphone_permission), android.widget.Toast.LENGTH_LONG).show()
     }
     fun enable() {
         val needed = buildList {
@@ -60,22 +62,22 @@ fun SipSettings() {
         else -> "Starting…"
     }
 
-    PreferenceCategory(title = "SIP / VoIP account") {
+    PreferenceCategory(title = stringResource(R.string.hc_sip_voip_account)) {
         SwitchPreference(
-            title = "Use SIP account",
-            summary = "Keeps the account registered in the background (shows a small notification) so calls can be received. $status",
+            title = stringResource(R.string.hc_use_sip_account),
+            summary = stringResource(R.string.hc_sip_keep_registered_summary, status),
             value = current.sipEnabled,
             enabled = SipEngine.available && current.sipUser.isNotBlank(),
             onValueChanged = { if (it) enable() else settings.setSipEnabled(false) },
         )
         Preference(
-            title = "Account",
+            title = stringResource(R.string.hc_account),
             summary = if (current.sipUser.isBlank()) "Not configured"
             else "${current.sipUser} @ ${current.sipDomain}",
             onClick = { showDialog = true },
         )
         ListPreference(
-            title = "Outgoing calls",
+            title = stringResource(R.string.hc_outgoing_calls),
             items = listOf(
                 "Never, receive calls only" to "off",
                 "Offer a SIP button when calling" to "choose",
@@ -93,27 +95,27 @@ fun SipSettings() {
         var pass by remember { mutableStateOf(SecretBox.decrypt(current.sipPasswordEnc)) }
         AlertDialog(
             onDismissRequest = { showDialog = false },
-            title = { Text("SIP account") },
+            title = { Text(stringResource(R.string.hc_sip_account)) },
             text = {
                 Column {
                     OutlinedTextField(
                         value = domain,
                         onValueChange = { domain = it },
-                        label = { Text("Server (FRITZ!Box: fritz.box)") },
+                        label = { Text(stringResource(R.string.hc_server_fritz_box_fritz_box)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                     )
                     OutlinedTextField(
                         value = user,
                         onValueChange = { user = it },
-                        label = { Text("User name (FRITZ!Box: the IP phone user)") },
+                        label = { Text(stringResource(R.string.hc_user_name_fritz_box_the_ip_phone_user)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                     )
                     OutlinedTextField(
                         value = pass,
                         onValueChange = { pass = it },
-                        label = { Text("Password") },
+                        label = { Text(stringResource(R.string.hc_password)) },
                         singleLine = true,
                         visualTransformation = PasswordVisualTransformation(),
                         modifier = Modifier.fillMaxWidth(),
@@ -121,7 +123,7 @@ fun SipSettings() {
                     OutlinedTextField(
                         value = name,
                         onValueChange = { name = it },
-                        label = { Text("Display name (optional)") },
+                        label = { Text(stringResource(R.string.hc_display_name_optional)) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                     )
@@ -131,9 +133,9 @@ fun SipSettings() {
                 TextButton(enabled = domain.isNotBlank() && domain.all { it.isLetterOrDigit() || it == '.' || it == '-' || it == ':' || it == '_' }, onClick = {
                     settings.setSipAccount(user, domain, name, SecretBox.encrypt(pass))
                     showDialog = false
-                }) { Text("Save") }
+                }) { Text(stringResource(R.string.hc_save)) }
             },
-            dismissButton = { TextButton(onClick = { showDialog = false }) { Text("Cancel") } },
+            dismissButton = { TextButton(onClick = { showDialog = false }) { Text(stringResource(R.string.hc_cancel)) } },
         )
     }
 }

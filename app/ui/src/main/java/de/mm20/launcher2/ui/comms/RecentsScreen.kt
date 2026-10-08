@@ -144,7 +144,7 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
             horizontalArrangement = Arrangement.End,
         ) {
             IconButton(onClick = { viewModel.export(context) }) {
-                Icon(painterResource(R.drawable.share_24px), contentDescription = "Export")
+                Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.hc_export))
             }
         }
         if (showFilters || filter != RecentsFilter.All) LazyRow(
@@ -162,7 +162,7 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
                 FilterChip(
                     selected = filter == RecentsFilter.Today,
                     onClick = { filter = RecentsFilter.Today },
-                    label = { Text("Today") },
+                    label = { Text(stringResource(R.string.hc_today)) },
                 )
             }
             item {
@@ -198,7 +198,7 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
                 FilterChip(
                     selected = filter == RecentsFilter.TalkTime,
                     onClick = { filter = RecentsFilter.TalkTime },
-                    label = { Text("Talk ${formatCallDuration(talk)}") },
+                    label = { Text(stringResource(R.string.hc_talk_duration, formatCallDuration(talk))) },
                 )
             }
         }
@@ -252,7 +252,7 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
         pendingCall?.let { number ->
             AlertDialog(
                 onDismissRequest = { pendingCall = null },
-                title = { Text("Place call") },
+                title = { Text(stringResource(R.string.hc_place_call)) },
                 text = { Text(number) },
                 confirmButton = {
                     TextButton(onClick = {

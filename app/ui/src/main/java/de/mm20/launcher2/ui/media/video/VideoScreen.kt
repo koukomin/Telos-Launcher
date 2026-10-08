@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.media.video
 
+import androidx.compose.ui.res.stringResource
 import de.mm20.launcher2.search.GreekFold
 import android.Manifest
 import android.content.Context
@@ -158,10 +159,10 @@ fun VideoScreen() {
 
     de.mm20.launcher2.ui.media.MediaFrame("Videos", guardKey = "telos_video_app://video", actions = {
         IconButton(onClick = { showOpen = true }) {
-            Icon(painterResource(R.drawable.link_24px), contentDescription = "Play from the web")
+            Icon(painterResource(R.drawable.link_24px), contentDescription = stringResource(R.string.hc_play_from_the_web))
         }
         IconButton(onClick = { showServices = true }) {
-            Icon(painterResource(R.drawable.settings_24px), contentDescription = "Video services")
+            Icon(painterResource(R.drawable.settings_24px), contentDescription = stringResource(R.string.hc_video_services))
         }
     }) {
     if (showOpen) OpenSourceDialog { showOpen = false }
@@ -173,9 +174,9 @@ fun VideoScreen() {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text("Allow access to your videos to build the library", style = MaterialTheme.typography.titleMedium)
+                Text(stringResource(R.string.hc_allow_access_to_your_videos_to_build_the), style = MaterialTheme.typography.titleMedium)
                 Button(onClick = { permissionLauncher.launch(permission) }, modifier = Modifier.padding(top = 16.dp)) {
-                    Text("Allow")
+                    Text(stringResource(R.string.hc_allow))
                 }
             }
             return@Column
@@ -188,7 +189,7 @@ fun VideoScreen() {
             val meta = metas[metaKey(current)]
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
                 IconButton(onClick = { group = null }) {
-                    Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back")
+                    Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back))
                 }
                 if (meta?.posterUrl != null) {
                     Poster(meta.posterUrl, Modifier.width(60.dp).height(90.dp).clip(RoundedCornerShape(8.dp)))
@@ -208,7 +209,7 @@ fun VideoScreen() {
                                 val ok = de.mm20.launcher2.comms.media.video.trakt.Trakt.addToWatchlist(context, current.title, current.year, current.series)
                                 toast(context, if (ok) "Added to your Trakt watchlist" else "Could not add to the watchlist")
                             }
-                        }, contentPadding = PaddingValues(0.dp)) { Text("Add to Trakt watchlist") }
+                        }, contentPadding = PaddingValues(0.dp)) { Text(stringResource(R.string.hc_add_to_trakt_watchlist)) }
                     }
                     if (!meta?.overview.isNullOrBlank()) {
                         Text(meta!!.overview, style = MaterialTheme.typography.bodySmall, maxLines = 4, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 4.dp))
@@ -227,18 +228,18 @@ fun VideoScreen() {
         when {
             loading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
             items.isEmpty() -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("No videos found on this device", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.hc_no_videos_found_on_this_device), color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             tab == 0 -> LazyColumn(contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize()) {
                 if (continueWatching.isNotEmpty() && query.isBlank()) {
                     item {
-                        Text("Continue watching", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(16.dp, 8.dp))
+                        Text(stringResource(R.string.hc_continue_watching), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(16.dp, 8.dp))
                     }
                     items(continueWatching, key = { "c-" + it.id }) { video ->
                         VideoRow(video) { openPlayer(context, continueWatching, continueWatching.indexOf(video)) }
                     }
                     item {
-                        Text("All videos", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 8.dp))
+                        Text(stringResource(R.string.hc_all_videos), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 8.dp))
                     }
                 }
                 items(filtered, key = { it.id }) { video ->
