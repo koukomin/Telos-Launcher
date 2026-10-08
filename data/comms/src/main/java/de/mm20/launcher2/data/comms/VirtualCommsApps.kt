@@ -18,7 +18,6 @@ import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.StaticIconLayer
 import de.mm20.launcher2.icons.TransparentLayer
-import de.mm20.launcher2.icons.ColorLayer
 
 internal class VirtualPhoneApp(context: Context) : Application {
 
@@ -63,7 +62,7 @@ internal class VirtualPhoneApp(context: Context) : Application {
         val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_phone_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = ColorLayer(0xFF0B1F4B.toInt()),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF0A2472.toInt()), 1f),
         )
     }
 
@@ -117,7 +116,7 @@ internal class VirtualMessagesApp(context: Context) : Application {
         val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_messages_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = ColorLayer(0xFF0F6B63.toInt()),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF00897B.toInt()), 1f),
         )
     }
 
@@ -170,7 +169,7 @@ internal class VirtualRadioApp(context: Context) : Application {
         val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_radio_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = ColorLayer(0xFF1B7F3B.toInt()),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF2E9E3F.toInt()), 1f),
         )
     }
 
@@ -223,7 +222,7 @@ internal class VirtualMusicApp(context: Context) : Application {
         val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_music_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = ColorLayer(0xFF5B2DB5.toInt()),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF7B2FC9.toInt()), 1f),
         )
     }
 
@@ -276,7 +275,7 @@ internal class VirtualVideoApp(context: Context) : Application {
         val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_video_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = ColorLayer(0xFFB3261E.toInt()),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFFE53935.toInt()), 1f),
         )
     }
 
@@ -329,7 +328,7 @@ internal class VirtualPhotosApp(context: Context) : Application {
         val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_photos_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = ColorLayer(0xFFB4236A.toInt()),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFFE91E63.toInt()), 1f),
         )
     }
 
@@ -382,7 +381,7 @@ internal class VirtualFilesApp(context: Context) : Application {
         val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_files_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = ColorLayer(0xFFB45309.toInt()),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFFF57C00.toInt()), 1f),
         )
     }
 
@@ -435,7 +434,7 @@ internal class VirtualCalculatorApp(context: Context) : Application {
         val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_calculator_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = ColorLayer(0xFF37474F.toInt()),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF37474F.toInt()), 1f),
         )
     }
 
@@ -488,7 +487,7 @@ internal class VirtualVoiceRecorderApp(context: Context) : Application {
         val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_voice_recorder_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = ColorLayer(0xFF00838F.toInt()),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF00838F.toInt()), 1f),
         )
     }
 
@@ -541,7 +540,7 @@ internal class VirtualScreenRecorderApp(context: Context) : Application {
         val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_screen_recorder_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = ColorLayer(0xFFE64A19.toInt()),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFFF4511E.toInt()), 1f),
         )
     }
 
@@ -594,7 +593,7 @@ internal class VirtualScreenshotApp(context: Context) : Application {
         val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_screenshot_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = ColorLayer(0xFF1A6DFF.toInt()),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF1A6DFF.toInt()), 1f),
         )
     }
 
@@ -647,7 +646,7 @@ internal class VirtualNotesApp(context: Context) : Application {
         val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_notes_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = ColorLayer(0xFFF9A825.toInt()),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFFF9A825.toInt()), 1f),
         )
     }
 
@@ -700,7 +699,7 @@ internal class VirtualCalendarApp(context: Context) : Application {
         val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_calendar_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = ColorLayer(0xFF1E88E5.toInt()),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF1E88E5.toInt()), 1f),
         )
     }
 
@@ -753,7 +752,7 @@ internal class VirtualDownloadsApp(context: Context) : Application {
         val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_downloads_fg) ?: return null
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(drawable, 1f),
-            backgroundLayer = ColorLayer(0xFF5E35B1.toInt()),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF5E35B1.toInt()), 1f),
         )
     }
 
