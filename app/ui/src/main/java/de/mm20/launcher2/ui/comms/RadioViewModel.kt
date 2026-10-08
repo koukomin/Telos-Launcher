@@ -52,6 +52,7 @@ class RadioViewModel : ViewModel(), KoinComponent {
     private var currentStation: RadioStation? = null
     private var streamQueue: List<String> = emptyList()
     private var streamIndex = 0
+    private var startWhenConnected = false
 
     fun initialize(context: Context) {
         if (mediaController != null) return
@@ -61,6 +62,7 @@ class RadioViewModel : ViewModel(), KoinComponent {
         controllerFuture.addListener({
             val controller = controllerFuture.get()
             mediaController = controller
+            if (startWhenConnected) { startWhenConnected = false; startCurrentStream() }
             controller.addListener(object : Player.Listener {
                 override fun onIsPlayingChanged(isPlaying: Boolean) {
                     _isPlaying.value = isPlaying
@@ -135,7 +137,7 @@ class RadioViewModel : ViewModel(), KoinComponent {
     }
 
     private fun startCurrentStream() {
-        val controller = mediaController ?: return
+        val controller = mediaController ?: run { startWhenConnected = true; return }
         val station = currentStation ?: return
         val url = streamQueue.getOrNull(streamIndex) ?: return
 

@@ -41,6 +41,8 @@ fun RadioDashboardScreen() {
     val viewModel: RadioDashboardScreenVM = viewModel()
     val playerViewModel: RadioViewModel = viewModel()
     val context = LocalContext.current
+    // the player connects to the radio service here too, not only in the mini player
+    LaunchedEffect(Unit) { playerViewModel.initialize(context) }
 
     val favorites by viewModel.favorites.collectAsStateWithLifecycle()
     val history by viewModel.history.collectAsStateWithLifecycle()
