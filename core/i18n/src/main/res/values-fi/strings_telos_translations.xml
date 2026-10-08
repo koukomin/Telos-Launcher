@@ -1523,4 +1523,6 @@
         <item quantity="one">teelusikka (US)</item>
         <item quantity="other">teelusikkaa (US)</item>
     </plurals>
+    <string name="dl_m_auto_update">Päivitä yt-dlp automaattisesti</string>
+    <string name="dl_m_auto_update_sum">Hakee uusimman yt-dlp:n kerran päivässä Wi-Fi-yhteydellä, jotta lataukset toimivat sivustojen muuttuessa</string>
 </resources>

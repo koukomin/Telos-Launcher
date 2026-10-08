@@ -1045,4 +1045,6 @@
         <item quantity="one">%1$d foto</item>
         <item quantity="other">%1$d foto\'s</item>
     </plurals>
+    <string name="dl_m_auto_update">yt-dlp automatisch bijwerken</string>
+    <string name="dl_m_auto_update_sum">Haalt eenmaal per dag via wifi de nieuwste yt-dlp op, zodat downloads blijven werken als sites veranderen</string>
 </resources>

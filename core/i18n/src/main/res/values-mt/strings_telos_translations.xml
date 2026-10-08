@@ -2652,4 +2652,6 @@
         <item quantity="many">mgħarfa żgħira (US)</item>
         <item quantity="other">mgħarfa żgħira (US)</item>
     </plurals>
+    <string name="dl_m_auto_update">Aġġorna yt-dlp awtomatikament</string>
+    <string name="dl_m_auto_update_sum">Iniżżel l-aħħar yt-dlp darba kuljum permezz tal-Wi-Fi sabiex it-tniżżil ikompli jaħdem meta s-siti jinbidlu</string>
 </resources>

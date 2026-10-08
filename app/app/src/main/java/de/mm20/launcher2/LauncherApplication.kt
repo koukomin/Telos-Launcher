@@ -259,6 +259,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
         // Telos Downloads: queue the downloads that were running when the process ended
         launch(Dispatchers.Default) {
             runCatching { get<de.mm20.launcher2.downloads.DownloadManager>().start() }
+            runCatching { get<de.mm20.launcher2.downloads.media.MediaRuntime>().scheduleAutoUpdate() }
         }
         // the player process reads the video settings from a file, keep it up to date
         launch(Dispatchers.Default) { runCatching { de.mm20.launcher2.comms.media.video.VideoServices.mirror() } }

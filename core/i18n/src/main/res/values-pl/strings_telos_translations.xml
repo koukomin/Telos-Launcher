@@ -1455,4 +1455,6 @@
         <item quantity="many">łyżeczek (USA)</item>
         <item quantity="other">łyżeczki (USA)</item>
     </plurals>
+    <string name="dl_m_auto_update">Aktualizuj yt-dlp automatycznie</string>
+    <string name="dl_m_auto_update_sum">Raz dziennie pobiera najnowsze yt-dlp przez Wi-Fi, aby pobieranie działało mimo zmian na stronach</string>
 </resources>

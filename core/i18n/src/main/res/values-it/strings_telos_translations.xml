@@ -1050,4 +1050,6 @@
         <item quantity="many">%1$d di foto</item>
         <item quantity="other">%1$d foto</item>
     </plurals>
+    <string name="dl_m_auto_update">Aggiorna yt-dlp automaticamente</string>
+    <string name="dl_m_auto_update_sum">Scarica l\'ultimo yt-dlp una volta al giorno tramite Wi-Fi, così i download continuano a funzionare quando i siti cambiano</string>
 </resources>

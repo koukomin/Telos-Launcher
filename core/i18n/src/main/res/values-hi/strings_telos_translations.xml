@@ -2326,4 +2326,6 @@
         <item quantity="one">चम्मच (US)</item>
         <item quantity="other">चम्मच (US)</item>
     </plurals>
+    <string name="dl_m_auto_update">yt-dlp अपने आप अपडेट करें</string>
+    <string name="dl_m_auto_update_sum">साइटें बदलने पर भी डाउनलोड चलते रहें, इसके लिए दिन में एक बार Wi-Fi पर नवीनतम yt-dlp लाता है</string>
 </resources>

@@ -2652,4 +2652,6 @@
         <item quantity="many">spúnóga tae (SAM)</item>
         <item quantity="other">spúnóga tae (SAM)</item>
     </plurals>
+    <string name="dl_m_auto_update">Nuashonraigh yt-dlp go huathoibríoch</string>
+    <string name="dl_m_auto_update_sum">Faigheann an yt-dlp is nua uair sa lá thar Wi-Fi ionas go leanfaidh íoslódálacha ag obair nuair a athraíonn suíomhanna</string>
 </resources>

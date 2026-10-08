@@ -258,4 +258,6 @@
         <item quantity="one">κουταλάκι του γλυκού (ΗΠΑ)</item>
         <item quantity="other">κουταλάκια του γλυκού (ΗΠΑ)</item>
     </plurals>
+    <string name="dl_m_auto_update">Αυτόματη ενημέρωση του yt-dlp</string>
+    <string name="dl_m_auto_update_sum">Κατεβάζει το νεότερο yt-dlp μία φορά την ημέρα μέσω Wi-Fi, ώστε οι λήψεις να συνεχίζουν να λειτουργούν όταν αλλάζουν τα sites</string>
 </resources>

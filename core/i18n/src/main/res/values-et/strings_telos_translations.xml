@@ -1788,4 +1788,6 @@
         <item quantity="one">teelusikas (USA)</item>
         <item quantity="other">teelusikat (USA)</item>
     </plurals>
+    <string name="dl_m_auto_update">Uuenda yt-dlp automaatselt</string>
+    <string name="dl_m_auto_update_sum">Laadib kord päevas Wi-Fi kaudu alla uusima yt-dlp, et allalaadimised toimiksid ka siis, kui saidid muutuvad</string>
 </resources>

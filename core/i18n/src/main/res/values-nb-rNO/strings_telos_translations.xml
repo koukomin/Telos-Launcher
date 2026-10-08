@@ -1366,4 +1366,6 @@
         <item quantity="one">teskje (US)</item>
         <item quantity="other">teskjeer (US)</item>
     </plurals>
+    <string name="dl_m_auto_update">Oppdater yt-dlp automatisk</string>
+    <string name="dl_m_auto_update_sum">Henter nyeste yt-dlp én gang om dagen over Wi-Fi, slik at nedlastinger fortsetter å fungere når nettsteder endres</string>
 </resources>

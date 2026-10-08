@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
     implementation(libs.koin.android)
+    implementation(libs.androidx.work)
     implementation(libs.okhttp)
     // The torrent engine runs in the one shared libtorrent session (TorrentSession in :services:comms)
     implementation(libs.libtorrent4j)

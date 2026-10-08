@@ -1852,4 +1852,6 @@
         <item quantity="many">чайних ложок (США)</item>
         <item quantity="other">чайної ложки (США)</item>
     </plurals>
+    <string name="dl_m_auto_update">Оновлювати yt-dlp автоматично</string>
+    <string name="dl_m_auto_update_sum">Раз на добу завантажує найновіший yt-dlp через Wi-Fi, щоб завантаження працювали, коли сайти змінюються</string>
 </resources>

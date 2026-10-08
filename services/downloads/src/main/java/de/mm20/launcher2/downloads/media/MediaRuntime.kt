@@ -78,6 +78,19 @@ class MediaRuntime(private val context: Context) {
 
     val version: String? get() = prefs.getString("version", null) ?: backend?.version()?.also { prefs.edit().putString("version", it).apply() }
 
+    /** Keep yt-dlp up to date in the background (Wi-Fi, once a day). Off until the user switches it on. */
+    var autoUpdate: Boolean
+        get() = prefs.getBoolean("autoUpdate", false)
+        set(v) {
+            prefs.edit().putBoolean("autoUpdate", v).apply()
+            if (isAvailable) MediaUpdateWorker.schedule(context, v)
+        }
+
+    /** Re-registers the background update after a restart */
+    fun scheduleAutoUpdate() {
+        if (isAvailable) MediaUpdateWorker.schedule(context, autoUpdate)
+    }
+
     /** Epoch milliseconds of the last successful update, 0 when never */
     val lastUpdate: Long get() = prefs.getLong("lastUpdate", 0)
 

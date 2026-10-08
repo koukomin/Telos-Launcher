@@ -2391,4 +2391,6 @@
         <item quantity="one">чаена лъжичка (САЩ)</item>
         <item quantity="other">чаени лъжички (САЩ)</item>
     </plurals>
+    <string name="dl_m_auto_update">Автоматично обновяване на yt-dlp</string>
+    <string name="dl_m_auto_update_sum">Веднъж дневно изтегля най-новия yt-dlp през Wi-Fi, за да работят изтеглянията при промени в сайтовете</string>
 </resources>

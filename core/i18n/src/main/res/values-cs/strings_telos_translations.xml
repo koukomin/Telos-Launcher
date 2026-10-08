@@ -1055,4 +1055,6 @@
         <item quantity="many">%1$d fotky</item>
         <item quantity="other">%1$d fotek</item>
     </plurals>
+    <string name="dl_m_auto_update">Aktualizovat yt-dlp automaticky</string>
+    <string name="dl_m_auto_update_sum">Jednou denně přes Wi-Fi stáhne nejnovější yt-dlp, aby stahování fungovalo i po změnách webů</string>
 </resources>

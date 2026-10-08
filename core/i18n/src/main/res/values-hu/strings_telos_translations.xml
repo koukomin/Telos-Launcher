@@ -1045,4 +1045,6 @@
         <item quantity="one">%1$d fénykép</item>
         <item quantity="other">%1$d fénykép</item>
     </plurals>
+    <string name="dl_m_auto_update">yt-dlp automatikus frissítése</string>
+    <string name="dl_m_auto_update_sum">Naponta egyszer Wi-Fi-n letölti a legújabb yt-dlp-t, hogy a letöltések az oldalak változásakor is működjenek</string>
 </resources>
