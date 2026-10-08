@@ -141,6 +141,18 @@ object TelosApps {
             route = SettingsDeepLinkContract.ROUTE_DOWNLOADS,
         ),
         TelosApp(
+            key = "telos_network_app://network",
+            name = "Telos Network",
+            description = "A VPN based firewall and DNS filter, built on the engine of RethinkDNS. It stays off until you turn it on, and if it stops the internet works as before. Early version, not yet tested on many devices.",
+            features = listOf(
+                "DNS over HTTPS, TLS, DNSCrypt and your own servers", "Firewall per app and connection type: Wi-Fi, mobile, roaming, LAN",
+                "Universal rules, IP and domain rules", "Blocklists with exceptions", "WireGuard tunnels, also per app",
+                "Connection and DNS logs", "No account, no subscription",
+            ),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_glyph_network,
+            route = SettingsDeepLinkContract.ROUTE_NETWORK,
+        ),
+        TelosApp(
             key = "telos_voice_recorder_app://voice_recorder",
             name = "Telos Voice Recorder",
             description = "A voice recorder with a list of recordings, search, pause and a recording service that keeps going with the screen off.",

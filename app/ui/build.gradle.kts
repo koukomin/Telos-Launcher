@@ -184,6 +184,7 @@ dependencies {
     implementation(project(":services:store"))
     implementation(project(":services:comms"))
     implementation(project(":services:downloads"))
+    implementation(project(":services:network"))
 
     implementation(libs.androidx.biometric)
     implementation(project(":core:devicepose"))

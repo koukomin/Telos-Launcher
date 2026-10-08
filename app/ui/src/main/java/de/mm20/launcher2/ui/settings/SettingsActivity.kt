@@ -291,6 +291,36 @@ class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.downloads.DownloadsSettingsRoute> {
                 de.mm20.launcher2.ui.downloads.DownloadsSettingsScreen()
             }
+            entry<de.mm20.launcher2.ui.network.NetworkRoute> {
+                de.mm20.launcher2.ui.network.NetworkHomeScreen()
+            }
+            entry<de.mm20.launcher2.ui.network.NetworkSettingsRoute> {
+                de.mm20.launcher2.ui.network.NetworkSettingsScreen()
+            }
+            entry<de.mm20.launcher2.ui.network.dns.NetworkDnsRoute> {
+                de.mm20.launcher2.ui.network.dns.NetworkDnsScreen()
+            }
+            entry<de.mm20.launcher2.ui.network.wireguard.NetworkWireguardRoute> {
+                de.mm20.launcher2.ui.network.wireguard.NetworkWireguardScreen()
+            }
+            entry<de.mm20.launcher2.ui.network.wireguard.NetworkWireguardAppsRoute> {
+                de.mm20.launcher2.ui.network.wireguard.NetworkWireguardAppsScreen()
+            }
+            entry<de.mm20.launcher2.ui.network.firewall.NetworkFirewallRoute> {
+                de.mm20.launcher2.ui.network.firewall.NetworkFirewallScreen()
+            }
+            entry<de.mm20.launcher2.ui.network.firewall.NetworkUniversalRulesRoute> {
+                de.mm20.launcher2.ui.network.firewall.NetworkUniversalRulesScreen()
+            }
+            entry<de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesRoute> {
+                de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesScreen()
+            }
+            entry<de.mm20.launcher2.ui.network.blocklists.NetworkBlocklistsRoute> {
+                de.mm20.launcher2.ui.network.blocklists.NetworkBlocklistsScreen()
+            }
+            entry<de.mm20.launcher2.ui.network.logs.NetworkLogsRoute> {
+                de.mm20.launcher2.ui.network.logs.NetworkLogsScreen()
+            }
             entry<de.mm20.launcher2.ui.notes.NotesRoute> {
                 de.mm20.launcher2.ui.notes.NotesScreen()
             }
@@ -657,6 +687,7 @@ class SettingsActivity : BaseActivity() {
             ROUTE_VIDEO -> de.mm20.launcher2.ui.media.video.VideoRoute
             ROUTE_PHOTOS -> de.mm20.launcher2.ui.media.photos.PhotosRoute
             ROUTE_FILES -> de.mm20.launcher2.ui.files.FilesRoute
+            ROUTE_NETWORK -> de.mm20.launcher2.ui.network.NetworkRoute
             ROUTE_CALCULATOR -> de.mm20.launcher2.ui.calculator.CalculatorRoute
             ROUTE_VOICE_RECORDER -> de.mm20.launcher2.ui.voice.VoiceRecorderRoute
             ROUTE_SCREEN_RECORDER -> de.mm20.launcher2.ui.screenrec.ScreenRecorderRoute
@@ -703,6 +734,7 @@ class SettingsActivity : BaseActivity() {
         const val ROUTE_NOTES = SettingsDeepLinkContract.ROUTE_NOTES
         const val ROUTE_CALENDAR = SettingsDeepLinkContract.ROUTE_CALENDAR
         const val ROUTE_DOWNLOADS = SettingsDeepLinkContract.ROUTE_DOWNLOADS
+        const val ROUTE_NETWORK = SettingsDeepLinkContract.ROUTE_NETWORK
         // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
         const val ROUTE_CRASH_REPORT = "settings/debug/crashreport"
         const val EXTRA_CRASH_REPORT_PATH = "crash_report_path"

@@ -63,6 +63,51 @@ enum class WgStatus {
     Error,
 }
 
+/** Live numbers of a running tunnel, read from the engine. */
+data class WgStats(
+    /** Bytes received / sent through the tunnel since it was created. */
+    val rxBytes: Long = 0,
+    val txBytes: Long = 0,
+    /** Epoch millis of the last successful handshake or answer of the peer, 0 = never. */
+    val lastHandshakeMs: Long = 0,
+    /** Epoch millis when the tunnel was created in the engine, 0 = unknown. */
+    val sinceMs: Long = 0,
+    /** Last error text of the engine, may be empty. Not translated. */
+    val lastError: String = "",
+)
+
+/** Why a WireGuard config was rejected. The UI maps this to a translated message. */
+enum class WgConfigError {
+    /** The text is not a wg-quick file (bad line, key outside a section, unknown section). */
+    Syntax,
+    MissingInterface,
+    MissingPrivateKey,
+    MissingAddress,
+    MissingPeer,
+    MissingPublicKey,
+    MissingAllowedIps,
+
+    /** A key is not 32 bytes of base64. */
+    InvalidKey,
+    InvalidAddress,
+    InvalidDns,
+    InvalidAllowedIps,
+    InvalidEndpoint,
+
+    /** MTU, port or keepalive out of range. */
+    InvalidNumber,
+    InvalidName,
+
+    /** The text is too large to be a config. */
+    TooLarge,
+    NotFound,
+    Storage,
+    Other,
+}
+
+/** Failure of [WireguardController.importConf], [WireguardController.add] and [WireguardController.update]. */
+class WgConfigException(val error: WgConfigError, val detail: String = "") : Exception("$error $detail".trim())
+
 /** Which WireGuard config an app (or everything) uses. */
 @Serializable
 sealed interface WgAssignment {
@@ -102,6 +147,9 @@ interface WireguardController : EngineComponent {
     /** Status per config id. */
     val status: StateFlow<Map<Int, WgStatus>>
 
+    /** Traffic and handshake time per config id, refreshed every few seconds while the VPN runs. Empty when it does not. */
+    val stats: StateFlow<Map<Int, WgStats>>
+
     /** The config used by apps with [WgAssignment.SystemDefault], or `null` for none. */
     val systemDefault: StateFlow<Int?>
 
@@ -134,6 +182,18 @@ interface WireguardController : EngineComponent {
 
     /** Assigns an app. [WgAssignment.SystemDefault] removes the entry. */
     suspend fun assign(appId: Int, assignment: WgAssignment)
+
+    /** Assigns many apps in one step (one save). */
+    suspend fun assignAll(appIds: Collection<Int>, assignment: WgAssignment)
+
+    /** Reads status and stats from the engine now (also done periodically). No effect while the VPN is off. */
+    suspend fun refreshStatus()
+
+    /** The public key (base64) that belongs to a private key, or null if the key is invalid. */
+    suspend fun publicKeyOf(privateKey: String): String?
+
+    /** A new random pre-shared key, base64. */
+    fun generatePresharedKey(): String
 
     /** A new random private key, base64. */
     suspend fun generatePrivateKey(): Result<String>

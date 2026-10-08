@@ -62,6 +62,7 @@ internal object TelosPages {
         "telos_notes_app://notes" -> de.mm20.launcher2.ui.notes.NotesRoute
         "telos_calendar_app://calendar" -> de.mm20.launcher2.ui.calendar.CalendarRoute
         "telos_downloads_app://downloads" -> de.mm20.launcher2.ui.downloads.DownloadsRoute()
+        "telos_network_app://network" -> de.mm20.launcher2.ui.network.NetworkRoute
         "telos_voice_recorder_app://voice_recorder" -> de.mm20.launcher2.ui.voice.VoiceRecorderRoute
         "telos_screen_recorder_app://screen_recorder" -> de.mm20.launcher2.ui.screenrec.ScreenRecorderRoute
         "telos_screenshot_app://screenshot" -> de.mm20.launcher2.ui.screenshot.ScreenshotRoute
@@ -107,6 +108,16 @@ internal object TelosPages {
         }
         entry<de.mm20.launcher2.ui.downloads.DownloadsRoute> { de.mm20.launcher2.ui.downloads.DownloadsScreen(it.initialUrls) }
         entry<de.mm20.launcher2.ui.downloads.DownloadsSettingsRoute> { de.mm20.launcher2.ui.downloads.DownloadsSettingsScreen() }
+        entry<de.mm20.launcher2.ui.network.NetworkRoute> { de.mm20.launcher2.ui.network.NetworkHomeScreen() }
+        entry<de.mm20.launcher2.ui.network.NetworkSettingsRoute> { de.mm20.launcher2.ui.network.NetworkSettingsScreen() }
+        entry<de.mm20.launcher2.ui.network.dns.NetworkDnsRoute> { de.mm20.launcher2.ui.network.dns.NetworkDnsScreen() }
+        entry<de.mm20.launcher2.ui.network.wireguard.NetworkWireguardRoute> { de.mm20.launcher2.ui.network.wireguard.NetworkWireguardScreen() }
+        entry<de.mm20.launcher2.ui.network.wireguard.NetworkWireguardAppsRoute> { de.mm20.launcher2.ui.network.wireguard.NetworkWireguardAppsScreen() }
+        entry<de.mm20.launcher2.ui.network.firewall.NetworkFirewallRoute> { de.mm20.launcher2.ui.network.firewall.NetworkFirewallScreen() }
+        entry<de.mm20.launcher2.ui.network.firewall.NetworkUniversalRulesRoute> { de.mm20.launcher2.ui.network.firewall.NetworkUniversalRulesScreen() }
+        entry<de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesRoute> { de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesScreen() }
+        entry<de.mm20.launcher2.ui.network.blocklists.NetworkBlocklistsRoute> { de.mm20.launcher2.ui.network.blocklists.NetworkBlocklistsScreen() }
+        entry<de.mm20.launcher2.ui.network.logs.NetworkLogsRoute> { de.mm20.launcher2.ui.network.logs.NetworkLogsScreen() }
         entry<de.mm20.launcher2.ui.notes.NotesRoute> { de.mm20.launcher2.ui.notes.NotesScreen() }
         entry<de.mm20.launcher2.ui.calendar.CalendarRoute> { de.mm20.launcher2.ui.calendar.CalendarScreen() }
         entry<de.mm20.launcher2.ui.calculator.CalculatorRoute> {
