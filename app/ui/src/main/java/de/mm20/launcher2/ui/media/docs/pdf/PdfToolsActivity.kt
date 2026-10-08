@@ -131,6 +131,7 @@ class PasswordRequest(val name: String, val wrong: Boolean, val answer: Completa
 
 class PdfToolsViewModel(app: Application) : AndroidViewModel(app) {
     private val appContext: Context = app.applicationContext
+    val context: Context get() = appContext
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     var screen by mutableStateOf<PdfScreen>(PdfScreen.Home)
@@ -267,7 +268,7 @@ class PdfToolsViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun back(finish: () -> Unit) {
-        when (val s = screen) {
+        when (screen) {
             PdfScreen.Home -> finish()
             is PdfScreen.Tool -> screen = PdfScreen.Home
             PdfScreen.Result -> screen = resultTool?.let { PdfScreen.Tool(it) } ?: PdfScreen.Home
@@ -614,6 +615,19 @@ private fun ResultScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
                             }
                         }) { Text(stringResource(R.string.pdft_open)) }
                     }
+                }
+            }
+            if (results.size == 1 && results[0].mime == "text/plain") {
+                item {
+                    OutlinedButton(
+                        onClick = {
+                            val text = runCatching { results[0].file.readText() }.getOrDefault("")
+                            val cm = context.getSystemService(android.content.ClipboardManager::class.java)
+                            cm?.setPrimaryClip(android.content.ClipData.newPlainText(null, text))
+                            vm.message = context.getString(R.string.pdft_copied)
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) { Text(stringResource(R.string.pdft_copy_text)) }
                 }
             }
             if (results.size == 1 && results[0].mime == "application/pdf") {

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">dokumento</string>
+    <string name="od_saved">Konservita</string>
+    <string name="od_save_failed">Konservado malsukcesis</string>
+    <string name="od_nothing_to_show">En ĉi tiu dosiero estas nenio por montri. Uzu “Malfermi per” por malfermi ĝin en alia aplikaĵo.</string>
+    <string name="od_pdf_protected">Ĉi tiu PDF estas protektita per pasvorto.</string>
+    <string name="od_cannot_open">Ĉi tiu dosiero ne malfermeblas ĉi tie (%1$s). Uzu “Malfermi per”.</string>
+    <string name="od_legacy_failed">Ĉi tiun malnovan Office-dosieron ne eblis legi. Uzu “Malfermi per” por malfermi ĝin en alia aplikaĵo.</string>
+    <string name="od_text_too_big">Ĉi tiu dosiero estas pli granda ol 2 MB. Ĝi estas montrata nurlege kaj neniam ŝanĝiĝas.</string>
+    <string name="od_edit_copy">Redakti la unuajn 2 MB kiel kopion</string>
+    <string name="od_copy_hint">Vi redaktas kopion de la unuaj 2 MB. Konservado kreas novan dosieron; la originalo ne ŝanĝiĝas.</string>
+    <string name="od_pdf_tools">PDF-iloj</string>
+    <string name="od_search_pdf">Serĉi en PDF</string>
+    <string name="od_search_hint">Serĉi tekston</string>
+    <string name="od_searching">Serĉado… paĝo %1$d</string>
+    <string name="od_no_results">Neniuj rezultoj</string>
+    <string name="od_no_text_layer">Ĉi tiu PDF ne havas serĉeblan tekston (ekzemple ĝi estas skanaĵo).</string>
+    <string name="od_results_count">Rezultoj: %1$d</string>
+    <string name="od_go_to_page">Iri al paĝo</string>
+    <string name="od_page_range">Paĝo (de 1 ĝis %1$d)</string>
+    <string name="od_go">Iri</string>
+    <string name="od_layout_note">Tekston kaj strukturon oni montras. Paĝaranĝo kaj tiparoj ne estas reproduktitaj.</string>
+    <string name="od_slides_note">Titolojn, tekston kaj bildojn oni montras. Aranĝo kaj aspekto de lumbildoj ne estas reproduktitaj.</string>
+    <string name="od_legacy_readonly">Malnova binara Office-dosiero (.doc, .xls, .ppt): nurlega. Teksto kaj valoroj estas eltiritaj laŭeble.</string>
+    <string name="od_convert_note">Konverto kreas novan dosieron. Formatado, bildoj kaj enkorpigitaj objektoj de la malnova dosiero ne transiras. La originalo restas senŝanĝa.</string>
+    <string name="od_convert_action">Konverti al .%1$s kaj redakti</string>
+    <string name="od_convert_failed">Ĉi tiun dosieron ne eblis konverti.</string>
+    <string name="od_converted">Konvertite. Nun vi redaktas la novan dosieron.</string>
+    <string name="od_discard_title">Forĵeti la ŝanĝojn?</string>
+    <string name="od_discard_text">Viaj redaktoj ne estas konservitaj.</string>
+    <string name="od_discard">Forĵeti</string>
+    <string name="od_keep_editing">Daŭrigi redaktadon</string>
+    <string name="od_save_copy">Konservi kiel kopion</string>
+    <string name="od_saved_copy">Konservite kiel nova dosiero.</string>
+    <string name="od_undo_save">Malfari la lastan konservon</string>
+    <string name="od_undo_done">La versio antaŭ la lasta konservo estis restarigita.</string>
+    <string name="od_undo_failed">La antaŭan version ne eblis restarigi.</string>
+    <string name="od_bold">Grasa</string>
+    <string name="od_italic">Kursiva</string>
+    <string name="od_add_paragraph">Aldoni alineon sube</string>
+    <string name="od_delete_paragraph">Forigi alineon</string>
+    <string name="od_table_cell">Tabelĉelo</string>
+    <string name="od_add_row">Aldoni vicon</string>
+    <string name="od_edit_cell">Redakti ĉelon %1$s</string>
+    <string name="od_cell_value">Valoro</string>
+    <string name="od_cell_hint">Teksto, nombro aŭ formulo komencanta per =</string>
+    <string name="od_formula_replaced">Ĉi tiu ĉelo enhavas formulon (%1$s). Nova valoro anstataŭos ĝin.</string>
+    <string name="od_ok">Bone</string>
+    <string name="od_sheet_n">Folio %1$d</string>
+    <string name="od_slide_of">Lumbildo %1$d el %2$d</string>
+    <string name="od_delete_slide">Forigi lumbildon</string>
+    <string name="od_title_box">Titolo</string>
+    <string name="od_text_box_n">Tekstokesto %1$d</string>
+    <string name="od_no_slides">Neniuj lumbildoj</string>
+    <string name="od_image">Bildo</string>
+</resources>

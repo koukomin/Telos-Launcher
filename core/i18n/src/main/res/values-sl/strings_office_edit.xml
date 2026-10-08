@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">dokument</string>
+    <string name="od_saved">Shranjeno</string>
+    <string name="od_save_failed">Shranjevanje ni uspelo</string>
+    <string name="od_nothing_to_show">V tej datoteki ni ničesar za prikaz. Z možnostjo »Odpri z« jo odprite v drugi aplikaciji.</string>
+    <string name="od_pdf_protected">Ta PDF je zaščiten z geslom.</string>
+    <string name="od_cannot_open">Te datoteke tukaj ni mogoče odpreti (%1$s). Uporabite »Odpri z«.</string>
+    <string name="od_legacy_failed">Te stare datoteke Office ni bilo mogoče prebrati. Z možnostjo »Odpri z« jo odprite v drugi aplikaciji.</string>
+    <string name="od_text_too_big">Ta datoteka je večja od 2 MB. Prikazana je samo za branje in se nikoli ne spremeni.</string>
+    <string name="od_edit_copy">Uredi prve 2 MB kot kopijo</string>
+    <string name="od_copy_hint">Urejate kopijo prvih 2 MB. S shranjevanjem nastane nova datoteka; izvirnik ostane nespremenjen.</string>
+    <string name="od_pdf_tools">Orodja za PDF</string>
+    <string name="od_search_pdf">Iskanje po PDF</string>
+    <string name="od_search_hint">Iskanje besedila</string>
+    <string name="od_searching">Iskanje … stran %1$d</string>
+    <string name="od_no_results">Ni zadetkov</string>
+    <string name="od_no_text_layer">Ta PDF nima besedila, po katerem bi lahko iskali (na primer skeniran dokument).</string>
+    <string name="od_results_count">Zadetki: %1$d</string>
+    <string name="od_go_to_page">Pojdi na stran</string>
+    <string name="od_page_range">Stran (od 1 do %1$d)</string>
+    <string name="od_go">Pojdi</string>
+    <string name="od_layout_note">Prikazana sta besedilo in zgradba. Postavitev strani in pisave niso poustvarjene.</string>
+    <string name="od_slides_note">Prikazani so naslovi, besedilo in slike. Postavitev in videz diapozitivov nista poustvarjena.</string>
+    <string name="od_legacy_readonly">Stara binarna datoteka Office (.doc, .xls, .ppt): samo za branje. Besedilo in vrednosti so izluščeni, kolikor je mogoče.</string>
+    <string name="od_convert_note">Pri pretvorbi nastane nova datoteka. Oblikovanje, slike in vdelani predmeti stare datoteke se ne prenesejo. Izvirnik ostane nespremenjen.</string>
+    <string name="od_convert_action">Pretvori v .%1$s in uredi</string>
+    <string name="od_convert_failed">Te datoteke ni bilo mogoče pretvoriti.</string>
+    <string name="od_converted">Pretvorjeno. Zdaj urejate novo datoteko.</string>
+    <string name="od_discard_title">Zavržem spremembe?</string>
+    <string name="od_discard_text">Vaše spremembe niso shranjene.</string>
+    <string name="od_discard">Zavrzi</string>
+    <string name="od_keep_editing">Nadaljuj z urejanjem</string>
+    <string name="od_save_copy">Shrani kot kopijo</string>
+    <string name="od_saved_copy">Shranjeno kot nova datoteka.</string>
+    <string name="od_undo_save">Razveljavi zadnje shranjevanje</string>
+    <string name="od_undo_done">Različica pred zadnjim shranjevanjem je bila obnovljena.</string>
+    <string name="od_undo_failed">Prejšnje različice ni bilo mogoče obnoviti.</string>
+    <string name="od_bold">Krepko</string>
+    <string name="od_italic">Ležeče</string>
+    <string name="od_add_paragraph">Dodaj odstavek spodaj</string>
+    <string name="od_delete_paragraph">Izbriši odstavek</string>
+    <string name="od_table_cell">Celica tabele</string>
+    <string name="od_add_row">Dodaj vrstico</string>
+    <string name="od_edit_cell">Uredi celico %1$s</string>
+    <string name="od_cell_value">Vrednost</string>
+    <string name="od_cell_hint">Besedilo, število ali formula, ki se začne z =</string>
+    <string name="od_formula_replaced">Ta celica vsebuje formulo (%1$s). Nova vrednost jo nadomesti.</string>
+    <string name="od_ok">V redu</string>
+    <string name="od_sheet_n">List %1$d</string>
+    <string name="od_slide_of">Diapozitiv %1$d od %2$d</string>
+    <string name="od_delete_slide">Izbriši diapozitiv</string>
+    <string name="od_title_box">Naslov</string>
+    <string name="od_text_box_n">Besedilno polje %1$d</string>
+    <string name="od_no_slides">Ni diapozitivov</string>
+    <string name="od_image">Slika</string>
+</resources>

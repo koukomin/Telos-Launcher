@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">dokument</string>
+    <string name="od_saved">Salvat</string>
+    <string name="od_save_failed">Ma setax jiġi salvat</string>
+    <string name="od_nothing_to_show">M’hemm xejn x’turi f’dan il-fajl. Uża “Iftaħ bi” biex tiftaħha f’app oħra.</string>
+    <string name="od_pdf_protected">Dan il-PDF huwa protett bil-password.</string>
+    <string name="od_cannot_open">Dan il-fajl ma jistax jinfetaħ hawnhekk (%1$s). Uża “Iftaħ bi”.</string>
+    <string name="od_legacy_failed">Dan il-fajl antik tal-Office ma setax jinqara. Uża “Iftaħ bi” biex tiftaħha f’app oħra.</string>
+    <string name="od_text_too_big">Dan il-fajl huwa akbar minn 2 MB. Qed jintwera għall-qari biss u qatt ma jinbidel.</string>
+    <string name="od_edit_copy">Editja l-ewwel 2 MB bħala kopja</string>
+    <string name="od_copy_hint">Qed teditja kopja tal-ewwel 2 MB. Is-salvataġġ joħloq fajl ġdid; l-oriġinal ma jinbidilx.</string>
+    <string name="od_pdf_tools">Għodod tal-PDF</string>
+    <string name="od_search_pdf">Fittex fil-PDF</string>
+    <string name="od_search_hint">Fittex test</string>
+    <string name="od_searching">Qed ifittex… paġna %1$d</string>
+    <string name="od_no_results">L-ebda riżultat</string>
+    <string name="od_no_text_layer">Dan il-PDF m’għandux test li jista’ jitfittex (pereżempju skan).</string>
+    <string name="od_results_count">Riżultati: %1$d</string>
+    <string name="od_go_to_page">Mur fil-paġna</string>
+    <string name="od_page_range">Paġna (minn 1 sa %1$d)</string>
+    <string name="od_go">Mur</string>
+    <string name="od_layout_note">Jintwera t-test u l-istruttura. Is-saffi tal-paġna u l-fonts ma jiġux riprodotti.</string>
+    <string name="od_slides_note">Jintwerew it-titli, it-test u x-xbihat. Is-saffi u d-disinn tas-slajds ma jiġux riprodotti.</string>
+    <string name="od_legacy_readonly">Fajl antik binarju tal-Office (.doc, .xls, .ppt): għall-qari biss. It-test u l-valuri jiġu estratti kemm jista’ jkun.</string>
+    <string name="od_convert_note">Il-konverżjoni toħloq fajl ġdid. L-iffurmattjar, ix-xbihat u l-oġġetti inkorporati tal-fajl antik ma jinġarrux. L-oriġinal jibqa’ bla bidla.</string>
+    <string name="od_convert_action">Ikkonverti għal .%1$s u editja</string>
+    <string name="od_convert_failed">Dan il-fajl ma setax jiġi kkonvertit.</string>
+    <string name="od_converted">Ikkonvertit. Issa qed teditja l-fajl il-ġdid.</string>
+    <string name="od_discard_title">Tarmi l-bidliet?</string>
+    <string name="od_discard_text">L-editjar tiegħek ma tqiegħedx.</string>
+    <string name="od_discard">Armi</string>
+    <string name="od_keep_editing">Kompli editja</string>
+    <string name="od_save_copy">Salva bħala kopja</string>
+    <string name="od_saved_copy">Salvat bħala fajl ġdid.</string>
+    <string name="od_undo_save">Annulla l-aħħar salvataġġ</string>
+    <string name="od_undo_done">Ir-verżjoni ta’ qabel l-aħħar salvataġġ ġiet restawrata.</string>
+    <string name="od_undo_failed">Ir-verżjoni preċedenti ma setgħetx tiġi restawrata.</string>
+    <string name="od_bold">Grassett</string>
+    <string name="od_italic">Korsiv</string>
+    <string name="od_add_paragraph">Żid paragrafu taħt</string>
+    <string name="od_delete_paragraph">Ħassar il-paragrafu</string>
+    <string name="od_table_cell">Ċellola tat-tabella</string>
+    <string name="od_add_row">Żid ringiela</string>
+    <string name="od_edit_cell">Editja ċ-ċellola %1$s</string>
+    <string name="od_cell_value">Valur</string>
+    <string name="od_cell_hint">Test, numru jew formula li tibda bi =</string>
+    <string name="od_formula_replaced">Din iċ-ċellola fiha formula (%1$s). Valur ġdid jissostitwiha.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Folja %1$d</string>
+    <string name="od_slide_of">Slajd %1$d minn %2$d</string>
+    <string name="od_delete_slide">Ħassar is-slajd</string>
+    <string name="od_title_box">Titlu</string>
+    <string name="od_text_box_n">Kaxxa tat-test %1$d</string>
+    <string name="od_no_slides">L-ebda slajd</string>
+    <string name="od_image">Xbieha</string>
+</resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">sənəd</string>
+    <string name="od_saved">Yadda saxlanıldı</string>
+    <string name="od_save_failed">Yadda saxlamaq alınmadı</string>
+    <string name="od_nothing_to_show">Bu faylda göstəriləcək heç nə yoxdur. Başqa tətbiqdə açmaq üçün “Bununla aç” seçimindən istifadə edin.</string>
+    <string name="od_pdf_protected">Bu PDF parolla qorunur.</string>
+    <string name="od_cannot_open">Bu fayl burada açıla bilməz (%1$s). “Bununla aç” seçimindən istifadə edin.</string>
+    <string name="od_legacy_failed">Bu köhnə Office faylını oxumaq mümkün olmadı. Başqa tətbiqdə açmaq üçün “Bununla aç” seçimindən istifadə edin.</string>
+    <string name="od_text_too_big">Bu fayl 2 MB-dan böyükdür. Yalnız oxumaq üçün göstərilir və heç vaxt dəyişdirilmir.</string>
+    <string name="od_edit_copy">İlk 2 MB-ı surət kimi redaktə et</string>
+    <string name="od_copy_hint">İlk 2 MB-ın surətini redaktə edirsiniz. Yadda saxladıqda yeni fayl yaranır; orijinal dəyişmir.</string>
+    <string name="od_pdf_tools">PDF alətləri</string>
+    <string name="od_search_pdf">PDF-də axtar</string>
+    <string name="od_search_hint">Mətn axtar</string>
+    <string name="od_searching">Axtarılır… səhifə %1$d</string>
+    <string name="od_no_results">Nəticə yoxdur</string>
+    <string name="od_no_text_layer">Bu PDF-də axtarıla bilən mətn yoxdur (məsələn, skan edilmiş sənəddir).</string>
+    <string name="od_results_count">Nəticələr: %1$d</string>
+    <string name="od_go_to_page">Səhifəyə keç</string>
+    <string name="od_page_range">Səhifə (1-dən %1$d-ə qədər)</string>
+    <string name="od_go">Keç</string>
+    <string name="od_layout_note">Mətn və struktur göstərilir. Səhifə düzəni və şriftlər bərpa edilmir.</string>
+    <string name="od_slides_note">Başlıqlar, mətn və şəkillər göstərilir. Slayd düzəni və dizaynı bərpa edilmir.</string>
+    <string name="od_legacy_readonly">Köhnə ikili Office faylı (.doc, .xls, .ppt): yalnız oxumaq üçün. Mətn və dəyərlər mümkün qədər çıxarılır.</string>
+    <string name="od_convert_note">Çevirmə yeni fayl yaradır. Köhnə faylın formatlaşdırması, şəkilləri və yerləşdirilmiş obyektləri köçürülmür. Orijinal dəyişməz qalır.</string>
+    <string name="od_convert_action">.%1$s formatına çevir və redaktə et</string>
+    <string name="od_convert_failed">Bu faylı çevirmək mümkün olmadı.</string>
+    <string name="od_converted">Çevrildi. İndi yeni faylı redaktə edirsiniz.</string>
+    <string name="od_discard_title">Dəyişikliklər ləğv edilsin?</string>
+    <string name="od_discard_text">Redaktələriniz yadda saxlanmayıb.</string>
+    <string name="od_discard">Ləğv et</string>
+    <string name="od_keep_editing">Redaktəyə davam et</string>
+    <string name="od_save_copy">Surət kimi yadda saxla</string>
+    <string name="od_saved_copy">Yeni fayl kimi yadda saxlanıldı.</string>
+    <string name="od_undo_save">Son yadda saxlamanı geri al</string>
+    <string name="od_undo_done">Son yadda saxlamadan əvvəlki versiya bərpa edildi.</string>
+    <string name="od_undo_failed">Əvvəlki versiyanı bərpa etmək mümkün olmadı.</string>
+    <string name="od_bold">Qalın</string>
+    <string name="od_italic">Kursiv</string>
+    <string name="od_add_paragraph">Aşağıya abzas əlavə et</string>
+    <string name="od_delete_paragraph">Abzası sil</string>
+    <string name="od_table_cell">Cədvəl xanası</string>
+    <string name="od_add_row">Sətir əlavə et</string>
+    <string name="od_edit_cell">%1$s xanasını redaktə et</string>
+    <string name="od_cell_value">Dəyər</string>
+    <string name="od_cell_hint">Mətn, rəqəm və ya = ilə başlayan düstur</string>
+    <string name="od_formula_replaced">Bu xanada düstur var (%1$s). Yeni dəyər onu əvəz edəcək.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Vərəq %1$d</string>
+    <string name="od_slide_of">Slayd %1$d / %2$d</string>
+    <string name="od_delete_slide">Slaydı sil</string>
+    <string name="od_title_box">Başlıq</string>
+    <string name="od_text_box_n">Mətn qutusu %1$d</string>
+    <string name="od_no_slides">Slayd yoxdur</string>
+    <string name="od_image">Şəkil</string>
+</resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">dokument</string>
+    <string name="od_saved">Uložené</string>
+    <string name="od_save_failed">Uloženie sa nepodarilo</string>
+    <string name="od_nothing_to_show">V tomto súbore nie je čo zobraziť. Cez „Otvoriť v aplikácii“ ho otvoríte v inej aplikácii.</string>
+    <string name="od_pdf_protected">Tento PDF súbor je chránený heslom.</string>
+    <string name="od_cannot_open">Tento súbor sa tu nedá otvoriť (%1$s). Použite „Otvoriť v aplikácii“.</string>
+    <string name="od_legacy_failed">Tento starý súbor Office sa nepodarilo prečítať. Cez „Otvoriť v aplikácii“ ho otvoríte v inej aplikácii.</string>
+    <string name="od_text_too_big">Tento súbor je väčší ako 2 MB. Zobrazuje sa len na čítanie a nikdy sa nemení.</string>
+    <string name="od_edit_copy">Upraviť prvé 2 MB ako kópiu</string>
+    <string name="od_copy_hint">Upravujete kópiu prvých 2 MB. Uložením vznikne nový súbor; originál zostane bez zmeny.</string>
+    <string name="od_pdf_tools">Nástroje PDF</string>
+    <string name="od_search_pdf">Hľadať v PDF</string>
+    <string name="od_search_hint">Hľadať text</string>
+    <string name="od_searching">Hľadá sa… strana %1$d</string>
+    <string name="od_no_results">Žiadne výsledky</string>
+    <string name="od_no_text_layer">Tento PDF súbor neobsahuje vyhľadateľný text (napríklad sken).</string>
+    <string name="od_results_count">Výsledky: %1$d</string>
+    <string name="od_go_to_page">Prejsť na stranu</string>
+    <string name="od_page_range">Strana (1 až %1$d)</string>
+    <string name="od_go">Prejsť</string>
+    <string name="od_layout_note">Zobrazuje sa text a štruktúra. Rozloženie strany a písma sa nereprodukujú.</string>
+    <string name="od_slides_note">Zobrazujú sa nadpisy, text a obrázky. Rozloženie a vzhľad snímok sa nereprodukujú.</string>
+    <string name="od_legacy_readonly">Starý binárny súbor Office (.doc, .xls, .ppt): len na čítanie. Text a hodnoty sa načítajú, pokiaľ je to možné.</string>
+    <string name="od_convert_note">Prevodom vznikne nový súbor. Formátovanie, obrázky a vložené objekty starého súboru sa neprenášajú. Originál zostane bez zmeny.</string>
+    <string name="od_convert_action">Previesť na .%1$s a upraviť</string>
+    <string name="od_convert_failed">Tento súbor sa nepodarilo previesť.</string>
+    <string name="od_converted">Prevedené. Teraz upravujete nový súbor.</string>
+    <string name="od_discard_title">Zahodiť zmeny?</string>
+    <string name="od_discard_text">Vaše úpravy neboli uložené.</string>
+    <string name="od_discard">Zahodiť</string>
+    <string name="od_keep_editing">Pokračovať v úpravách</string>
+    <string name="od_save_copy">Uložiť ako kópiu</string>
+    <string name="od_saved_copy">Uložené ako nový súbor.</string>
+    <string name="od_undo_save">Vrátiť posledné uloženie</string>
+    <string name="od_undo_done">Verzia pred posledným uložením bola obnovená.</string>
+    <string name="od_undo_failed">Predchádzajúcu verziu sa nepodarilo obnoviť.</string>
+    <string name="od_bold">Tučné</string>
+    <string name="od_italic">Kurzíva</string>
+    <string name="od_add_paragraph">Pridať odsek pod</string>
+    <string name="od_delete_paragraph">Odstrániť odsek</string>
+    <string name="od_table_cell">Bunka tabuľky</string>
+    <string name="od_add_row">Pridať riadok</string>
+    <string name="od_edit_cell">Upraviť bunku %1$s</string>
+    <string name="od_cell_value">Hodnota</string>
+    <string name="od_cell_hint">Text, číslo alebo vzorec začínajúci =</string>
+    <string name="od_formula_replaced">Táto bunka obsahuje vzorec (%1$s). Nová hodnota ho nahradí.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">List %1$d</string>
+    <string name="od_slide_of">Snímka %1$d z %2$d</string>
+    <string name="od_delete_slide">Odstrániť snímku</string>
+    <string name="od_title_box">Názov</string>
+    <string name="od_text_box_n">Textové pole %1$d</string>
+    <string name="od_no_slides">Žiadne snímky</string>
+    <string name="od_image">Obrázok</string>
+</resources>

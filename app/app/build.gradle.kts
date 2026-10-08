@@ -192,6 +192,7 @@ dependencies {
     implementation(project(":data:store"))
     implementation(project(":services:comms"))
     implementation(project(":services:downloads"))
+    implementation(project(":services:network"))
     implementation(project(":data:comms"))
 
     // === TELOS_PENDING_REVIEW_START: smart_freeze_dependencies ===

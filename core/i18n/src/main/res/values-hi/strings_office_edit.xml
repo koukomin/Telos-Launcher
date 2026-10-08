@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">दस्तावेज़</string>
+    <string name="od_saved">सहेजा गया</string>
+    <string name="od_save_failed">सहेजा नहीं जा सका</string>
+    <string name="od_nothing_to_show">इस फ़ाइल में दिखाने के लिए कुछ नहीं है। इसे किसी दूसरे ऐप में खोलने के लिए “इससे खोलें” का उपयोग करें।</string>
+    <string name="od_pdf_protected">यह PDF पासवर्ड से सुरक्षित है।</string>
+    <string name="od_cannot_open">यह फ़ाइल यहाँ नहीं खुल सकती (%1$s)। “इससे खोलें” का उपयोग करें।</string>
+    <string name="od_legacy_failed">यह पुरानी Office फ़ाइल पढ़ी नहीं जा सकी। इसे किसी दूसरे ऐप में खोलने के लिए “इससे खोलें” का उपयोग करें।</string>
+    <string name="od_text_too_big">यह फ़ाइल 2 MB से बड़ी है। यह केवल पढ़ने के लिए दिखाई जाती है और कभी बदली नहीं जाती।</string>
+    <string name="od_edit_copy">पहले 2 MB को प्रति के रूप में संपादित करें</string>
+    <string name="od_copy_hint">आप पहले 2 MB की एक प्रति संपादित कर रहे हैं। सहेजने पर नई फ़ाइल बनती है; मूल फ़ाइल नहीं बदलती।</string>
+    <string name="od_pdf_tools">PDF टूल</string>
+    <string name="od_search_pdf">PDF में खोजें</string>
+    <string name="od_search_hint">टेक्स्ट खोजें</string>
+    <string name="od_searching">खोज जारी है… पृष्ठ %1$d</string>
+    <string name="od_no_results">कोई परिणाम नहीं</string>
+    <string name="od_no_text_layer">इस PDF में खोजने योग्य टेक्स्ट नहीं है (उदाहरण के लिए, यह स्कैन है)।</string>
+    <string name="od_results_count">परिणाम: %1$d</string>
+    <string name="od_go_to_page">पृष्ठ पर जाएँ</string>
+    <string name="od_page_range">पृष्ठ (1 से %1$d)</string>
+    <string name="od_go">जाएँ</string>
+    <string name="od_layout_note">टेक्स्ट और संरचना दिखाई जाती है। पृष्ठ का लेआउट और फ़ॉन्ट दोबारा नहीं बनाए जाते।</string>
+    <string name="od_slides_note">शीर्षक, टेक्स्ट और चित्र दिखाए जाते हैं। स्लाइड का लेआउट और डिज़ाइन दोबारा नहीं बनाए जाते।</string>
+    <string name="od_legacy_readonly">पुरानी बाइनरी Office फ़ाइल (.doc, .xls, .ppt): केवल पढ़ने के लिए। टेक्स्ट और मान यथासंभव निकाले जाते हैं।</string>
+    <string name="od_convert_note">रूपांतरण से नई फ़ाइल बनती है। पुरानी फ़ाइल का फ़ॉर्मैटिंग, चित्र और एम्बेड की गई वस्तुएँ साथ नहीं आतीं। मूल फ़ाइल अपरिवर्तित रहती है।</string>
+    <string name="od_convert_action">.%1$s में बदलें और संपादित करें</string>
+    <string name="od_convert_failed">यह फ़ाइल बदली नहीं जा सकी।</string>
+    <string name="od_converted">रूपांतरण हो गया। अब आप नई फ़ाइल संपादित कर रहे हैं।</string>
+    <string name="od_discard_title">बदलाव छोड़ें?</string>
+    <string name="od_discard_text">आपके संपादन सहेजे नहीं गए हैं।</string>
+    <string name="od_discard">छोड़ें</string>
+    <string name="od_keep_editing">संपादन जारी रखें</string>
+    <string name="od_save_copy">प्रति के रूप में सहेजें</string>
+    <string name="od_saved_copy">नई फ़ाइल के रूप में सहेजा गया।</string>
+    <string name="od_undo_save">पिछला सहेजना पूर्ववत करें</string>
+    <string name="od_undo_done">पिछली बार सहेजने से पहले का संस्करण बहाल कर दिया गया।</string>
+    <string name="od_undo_failed">पिछला संस्करण बहाल नहीं किया जा सका।</string>
+    <string name="od_bold">बोल्ड</string>
+    <string name="od_italic">इटैलिक</string>
+    <string name="od_add_paragraph">नीचे अनुच्छेद जोड़ें</string>
+    <string name="od_delete_paragraph">अनुच्छेद हटाएँ</string>
+    <string name="od_table_cell">तालिका सेल</string>
+    <string name="od_add_row">पंक्ति जोड़ें</string>
+    <string name="od_edit_cell">सेल %1$s संपादित करें</string>
+    <string name="od_cell_value">मान</string>
+    <string name="od_cell_hint">टेक्स्ट, संख्या या = से शुरू होने वाला सूत्र</string>
+    <string name="od_formula_replaced">इस सेल में एक सूत्र है (%1$s)। नया मान उसे बदल देगा।</string>
+    <string name="od_ok">ठीक है</string>
+    <string name="od_sheet_n">शीट %1$d</string>
+    <string name="od_slide_of">स्लाइड %1$d / %2$d</string>
+    <string name="od_delete_slide">स्लाइड हटाएँ</string>
+    <string name="od_title_box">शीर्षक</string>
+    <string name="od_text_box_n">टेक्स्ट बॉक्स %1$d</string>
+    <string name="od_no_slides">कोई स्लाइड नहीं</string>
+    <string name="od_image">चित्र</string>
+</resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">문서</string>
+    <string name="od_saved">저장됨</string>
+    <string name="od_save_failed">저장하지 못했습니다</string>
+    <string name="od_nothing_to_show">이 파일에는 표시할 내용이 없습니다. “연결 앱”을 사용해 다른 앱에서 여세요.</string>
+    <string name="od_pdf_protected">이 PDF는 비밀번호로 보호되어 있습니다.</string>
+    <string name="od_cannot_open">이 파일은 여기서 열 수 없습니다(%1$s). “연결 앱”을 사용하세요.</string>
+    <string name="od_legacy_failed">이 오래된 Office 파일을 읽을 수 없습니다. “연결 앱”을 사용해 다른 앱에서 여세요.</string>
+    <string name="od_text_too_big">이 파일은 2MB보다 큽니다. 읽기 전용으로 표시되며 절대 변경되지 않습니다.</string>
+    <string name="od_edit_copy">처음 2MB를 사본으로 편집</string>
+    <string name="od_copy_hint">처음 2MB의 사본을 편집하고 있습니다. 저장하면 새 파일이 만들어지며 원본은 변경되지 않습니다.</string>
+    <string name="od_pdf_tools">PDF 도구</string>
+    <string name="od_search_pdf">PDF에서 검색</string>
+    <string name="od_search_hint">텍스트 검색</string>
+    <string name="od_searching">검색 중… %1$d페이지</string>
+    <string name="od_no_results">결과 없음</string>
+    <string name="od_no_text_layer">이 PDF에는 검색할 수 있는 텍스트가 없습니다(예: 스캔본).</string>
+    <string name="od_results_count">결과: %1$d개</string>
+    <string name="od_go_to_page">페이지로 이동</string>
+    <string name="od_page_range">페이지(1~%1$d)</string>
+    <string name="od_go">이동</string>
+    <string name="od_layout_note">텍스트와 구조가 표시됩니다. 페이지 레이아웃과 글꼴은 재현되지 않습니다.</string>
+    <string name="od_slides_note">제목, 텍스트, 이미지가 표시됩니다. 슬라이드 레이아웃과 디자인은 재현되지 않습니다.</string>
+    <string name="od_legacy_readonly">오래된 바이너리 Office 파일(.doc, .xls, .ppt): 읽기 전용입니다. 텍스트와 값은 가능한 범위에서 추출됩니다.</string>
+    <string name="od_convert_note">변환하면 새 파일이 만들어집니다. 이전 파일의 서식, 이미지, 포함된 개체는 옮겨지지 않습니다. 원본은 변경되지 않습니다.</string>
+    <string name="od_convert_action">.%1$s(으)로 변환 후 편집</string>
+    <string name="od_convert_failed">이 파일을 변환하지 못했습니다.</string>
+    <string name="od_converted">변환했습니다. 이제 새 파일을 편집하고 있습니다.</string>
+    <string name="od_discard_title">변경사항을 취소할까요?</string>
+    <string name="od_discard_text">편집 내용이 저장되지 않았습니다.</string>
+    <string name="od_discard">취소</string>
+    <string name="od_keep_editing">계속 편집</string>
+    <string name="od_save_copy">사본으로 저장</string>
+    <string name="od_saved_copy">새 파일로 저장했습니다.</string>
+    <string name="od_undo_save">마지막 저장 되돌리기</string>
+    <string name="od_undo_done">마지막 저장 이전 버전을 복원했습니다.</string>
+    <string name="od_undo_failed">이전 버전을 복원하지 못했습니다.</string>
+    <string name="od_bold">굵게</string>
+    <string name="od_italic">기울임꼴</string>
+    <string name="od_add_paragraph">아래에 단락 추가</string>
+    <string name="od_delete_paragraph">단락 삭제</string>
+    <string name="od_table_cell">표 셀</string>
+    <string name="od_add_row">행 추가</string>
+    <string name="od_edit_cell">셀 %1$s 편집</string>
+    <string name="od_cell_value">값</string>
+    <string name="od_cell_hint">텍스트, 숫자 또는 =로 시작하는 수식</string>
+    <string name="od_formula_replaced">이 셀에는 수식(%1$s)이 있습니다. 새 값이 수식을 대체합니다.</string>
+    <string name="od_ok">확인</string>
+    <string name="od_sheet_n">시트 %1$d</string>
+    <string name="od_slide_of">슬라이드 %1$d/%2$d</string>
+    <string name="od_delete_slide">슬라이드 삭제</string>
+    <string name="od_title_box">제목</string>
+    <string name="od_text_box_n">텍스트 상자 %1$d</string>
+    <string name="od_no_slides">슬라이드 없음</string>
+    <string name="od_image">이미지</string>
+</resources>

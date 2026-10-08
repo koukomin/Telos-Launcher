@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">dokumentas</string>
+    <string name="od_saved">Išsaugota</string>
+    <string name="od_save_failed">Nepavyko išsaugoti</string>
+    <string name="od_nothing_to_show">Šiame faile nėra ką rodyti. Naudokite „Atidaryti naudojant“, kad atidarytumėte jį kitoje programoje.</string>
+    <string name="od_pdf_protected">Šis PDF apsaugotas slaptažodžiu.</string>
+    <string name="od_cannot_open">Šio failo čia atidaryti negalima (%1$s). Naudokite „Atidaryti naudojant“.</string>
+    <string name="od_legacy_failed">Nepavyko perskaityti šio seno „Office“ failo. Naudokite „Atidaryti naudojant“, kad atidarytumėte jį kitoje programoje.</string>
+    <string name="od_text_too_big">Šis failas didesnis nei 2 MB. Jis rodomas tik skaitymui ir niekada nekeičiamas.</string>
+    <string name="od_edit_copy">Redaguoti pirmuosius 2 MB kaip kopiją</string>
+    <string name="od_copy_hint">Redaguojate pirmųjų 2 MB kopiją. Išsaugojus sukuriamas naujas failas; originalas nekeičiamas.</string>
+    <string name="od_pdf_tools">PDF įrankiai</string>
+    <string name="od_search_pdf">Ieškoti PDF</string>
+    <string name="od_search_hint">Ieškoti teksto</string>
+    <string name="od_searching">Ieškoma… %1$d puslapis</string>
+    <string name="od_no_results">Rezultatų nėra</string>
+    <string name="od_no_text_layer">Šiame PDF nėra teksto, kurio galima ieškoti (pvz., tai nuskaitytas dokumentas).</string>
+    <string name="od_results_count">Rezultatai: %1$d</string>
+    <string name="od_go_to_page">Eiti į puslapį</string>
+    <string name="od_page_range">Puslapis (nuo 1 iki %1$d)</string>
+    <string name="od_go">Eiti</string>
+    <string name="od_layout_note">Rodomas tekstas ir struktūra. Puslapio maketas ir šriftai neatkuriami.</string>
+    <string name="od_slides_note">Rodomos antraštės, tekstas ir paveikslėliai. Skaidrių maketas ir dizainas neatkuriami.</string>
+    <string name="od_legacy_readonly">Senas dvejetainis „Office“ failas (.doc, .xls, .ppt): tik skaitymui. Tekstas ir reikšmės išgaunami, kiek įmanoma.</string>
+    <string name="od_convert_note">Konvertuojant sukuriamas naujas failas. Seno failo formatavimas, paveikslėliai ir įterpti objektai neperkeliami. Originalas nekeičiamas.</string>
+    <string name="od_convert_action">Konvertuoti į .%1$s ir redaguoti</string>
+    <string name="od_convert_failed">Nepavyko konvertuoti šio failo.</string>
+    <string name="od_converted">Konvertuota. Dabar redaguojate naująjį failą.</string>
+    <string name="od_discard_title">Atmesti pakeitimus?</string>
+    <string name="od_discard_text">Jūsų pakeitimai neišsaugoti.</string>
+    <string name="od_discard">Atmesti</string>
+    <string name="od_keep_editing">Tęsti redagavimą</string>
+    <string name="od_save_copy">Išsaugoti kaip kopiją</string>
+    <string name="od_saved_copy">Išsaugota kaip naujas failas.</string>
+    <string name="od_undo_save">Anuliuoti paskutinį išsaugojimą</string>
+    <string name="od_undo_done">Atkurta versija prieš paskutinį išsaugojimą.</string>
+    <string name="od_undo_failed">Nepavyko atkurti ankstesnės versijos.</string>
+    <string name="od_bold">Pusjuodis</string>
+    <string name="od_italic">Kursyvas</string>
+    <string name="od_add_paragraph">Pridėti pastraipą žemiau</string>
+    <string name="od_delete_paragraph">Ištrinti pastraipą</string>
+    <string name="od_table_cell">Lentelės langelis</string>
+    <string name="od_add_row">Pridėti eilutę</string>
+    <string name="od_edit_cell">Redaguoti langelį %1$s</string>
+    <string name="od_cell_value">Reikšmė</string>
+    <string name="od_cell_hint">Tekstas, skaičius arba formulė, prasidedanti =</string>
+    <string name="od_formula_replaced">Šiame langelyje yra formulė (%1$s). Nauja reikšmė ją pakeis.</string>
+    <string name="od_ok">Gerai</string>
+    <string name="od_sheet_n">%1$d lapas</string>
+    <string name="od_slide_of">Skaidrė %1$d iš %2$d</string>
+    <string name="od_delete_slide">Ištrinti skaidrę</string>
+    <string name="od_title_box">Pavadinimas</string>
+    <string name="od_text_box_n">Teksto laukelis %1$d</string>
+    <string name="od_no_slides">Skaidrių nėra</string>
+    <string name="od_image">Paveikslėlis</string>
+</resources>

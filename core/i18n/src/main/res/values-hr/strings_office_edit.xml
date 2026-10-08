@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">dokument</string>
+    <string name="od_saved">Spremljeno</string>
+    <string name="od_save_failed">Spremanje nije uspjelo</string>
+    <string name="od_nothing_to_show">U ovoj datoteci nema ničega za prikaz. Pomoću „Otvori pomoću” otvorite je u drugoj aplikaciji.</string>
+    <string name="od_pdf_protected">Ovaj je PDF zaštićen lozinkom.</string>
+    <string name="od_cannot_open">Ova se datoteka ovdje ne može otvoriti (%1$s). Upotrijebite „Otvori pomoću”.</string>
+    <string name="od_legacy_failed">Ovu staru Office datoteku nije bilo moguće pročitati. Pomoću „Otvori pomoću” otvorite je u drugoj aplikaciji.</string>
+    <string name="od_text_too_big">Ova je datoteka veća od 2 MB. Prikazuje se samo za čitanje i nikad se ne mijenja.</string>
+    <string name="od_edit_copy">Uredi prva 2 MB kao kopiju</string>
+    <string name="od_copy_hint">Uređujete kopiju prvih 2 MB. Spremanjem nastaje nova datoteka; izvornik ostaje nepromijenjen.</string>
+    <string name="od_pdf_tools">PDF alati</string>
+    <string name="od_search_pdf">Traži u PDF-u</string>
+    <string name="od_search_hint">Traži tekst</string>
+    <string name="od_searching">Traženje… stranica %1$d</string>
+    <string name="od_no_results">Nema rezultata</string>
+    <string name="od_no_text_layer">Ovaj PDF nema tekst koji se može pretraživati (npr. skenirani dokument).</string>
+    <string name="od_results_count">Rezultati: %1$d</string>
+    <string name="od_go_to_page">Idi na stranicu</string>
+    <string name="od_page_range">Stranica (od 1 do %1$d)</string>
+    <string name="od_go">Idi</string>
+    <string name="od_layout_note">Prikazuju se tekst i struktura. Raspored stranice i fontovi ne reproduciraju se.</string>
+    <string name="od_slides_note">Prikazuju se naslovi, tekst i slike. Raspored i dizajn slajdova ne reproduciraju se.</string>
+    <string name="od_legacy_readonly">Stara binarna Office datoteka (.doc, .xls, .ppt): samo za čitanje. Tekst i vrijednosti izdvajaju se koliko je moguće.</string>
+    <string name="od_convert_note">Pretvaranjem nastaje nova datoteka. Oblikovanje, slike i ugrađeni objekti stare datoteke ne prenose se. Izvornik ostaje nepromijenjen.</string>
+    <string name="od_convert_action">Pretvori u .%1$s i uredi</string>
+    <string name="od_convert_failed">Ovu datoteku nije bilo moguće pretvoriti.</string>
+    <string name="od_converted">Pretvoreno. Sada uređujete novu datoteku.</string>
+    <string name="od_discard_title">Odbaciti promjene?</string>
+    <string name="od_discard_text">Vaše izmjene nisu spremljene.</string>
+    <string name="od_discard">Odbaci</string>
+    <string name="od_keep_editing">Nastavi uređivati</string>
+    <string name="od_save_copy">Spremi kao kopiju</string>
+    <string name="od_saved_copy">Spremljeno kao nova datoteka.</string>
+    <string name="od_undo_save">Poništi zadnje spremanje</string>
+    <string name="od_undo_done">Vraćena je verzija prije zadnjeg spremanja.</string>
+    <string name="od_undo_failed">Prethodnu verziju nije bilo moguće vratiti.</string>
+    <string name="od_bold">Podebljano</string>
+    <string name="od_italic">Kurziv</string>
+    <string name="od_add_paragraph">Dodaj odlomak ispod</string>
+    <string name="od_delete_paragraph">Izbriši odlomak</string>
+    <string name="od_table_cell">Ćelija tablice</string>
+    <string name="od_add_row">Dodaj redak</string>
+    <string name="od_edit_cell">Uredi ćeliju %1$s</string>
+    <string name="od_cell_value">Vrijednost</string>
+    <string name="od_cell_hint">Tekst, broj ili formula koja počinje znakom =</string>
+    <string name="od_formula_replaced">Ova ćelija sadrži formulu (%1$s). Nova vrijednost zamjenjuje je.</string>
+    <string name="od_ok">U redu</string>
+    <string name="od_sheet_n">List %1$d</string>
+    <string name="od_slide_of">Slajd %1$d od %2$d</string>
+    <string name="od_delete_slide">Izbriši slajd</string>
+    <string name="od_title_box">Naslov</string>
+    <string name="od_text_box_n">Tekstni okvir %1$d</string>
+    <string name="od_no_slides">Nema slajdova</string>
+    <string name="od_image">Slika</string>
+</resources>

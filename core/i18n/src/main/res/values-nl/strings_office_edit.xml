@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">document</string>
+    <string name="od_saved">Opgeslagen</string>
+    <string name="od_save_failed">Opslaan mislukt</string>
+    <string name="od_nothing_to_show">Er is niets om te tonen in dit bestand. Gebruik “Openen met” om het in een andere app te openen.</string>
+    <string name="od_pdf_protected">Deze pdf is beveiligd met een wachtwoord.</string>
+    <string name="od_cannot_open">Dit bestand kan hier niet worden geopend (%1$s). Gebruik “Openen met”.</string>
+    <string name="od_legacy_failed">Dit oude Office-bestand kon niet worden gelezen. Gebruik “Openen met” om het in een andere app te openen.</string>
+    <string name="od_text_too_big">Dit bestand is groter dan 2 MB. Het wordt alleen-lezen getoond en nooit gewijzigd.</string>
+    <string name="od_edit_copy">Eerste 2 MB als kopie bewerken</string>
+    <string name="od_copy_hint">Je bewerkt een kopie van de eerste 2 MB. Bij opslaan ontstaat een nieuw bestand; het origineel blijft ongewijzigd.</string>
+    <string name="od_pdf_tools">Pdf-hulpmiddelen</string>
+    <string name="od_search_pdf">Zoeken in pdf</string>
+    <string name="od_search_hint">Tekst zoeken</string>
+    <string name="od_searching">Zoeken… pagina %1$d</string>
+    <string name="od_no_results">Geen resultaten</string>
+    <string name="od_no_text_layer">Deze pdf bevat geen doorzoekbare tekst (bijvoorbeeld een scan).</string>
+    <string name="od_results_count">Resultaten: %1$d</string>
+    <string name="od_go_to_page">Naar pagina gaan</string>
+    <string name="od_page_range">Pagina (1 tot %1$d)</string>
+    <string name="od_go">Ga</string>
+    <string name="od_layout_note">Tekst en structuur worden getoond. Pagina-indeling en lettertypen worden niet nagebootst.</string>
+    <string name="od_slides_note">Titels, tekst en afbeeldingen worden getoond. Diavormgeving en -indeling worden niet nagebootst.</string>
+    <string name="od_legacy_readonly">Oud binair Office-bestand (.doc, .xls, .ppt): alleen-lezen. Tekst en waarden worden zo goed mogelijk uitgelezen.</string>
+    <string name="od_convert_note">Bij het converteren ontstaat een nieuw bestand. Opmaak, afbeeldingen en ingesloten objecten van het oude bestand worden niet overgenomen. Het origineel blijft ongewijzigd.</string>
+    <string name="od_convert_action">Converteren naar .%1$s en bewerken</string>
+    <string name="od_convert_failed">Dit bestand kon niet worden geconverteerd.</string>
+    <string name="od_converted">Geconverteerd. Je bewerkt nu het nieuwe bestand.</string>
+    <string name="od_discard_title">Wijzigingen negeren?</string>
+    <string name="od_discard_text">Je wijzigingen zijn niet opgeslagen.</string>
+    <string name="od_discard">Negeren</string>
+    <string name="od_keep_editing">Verder bewerken</string>
+    <string name="od_save_copy">Opslaan als kopie</string>
+    <string name="od_saved_copy">Opgeslagen als nieuw bestand.</string>
+    <string name="od_undo_save">Laatste opslag ongedaan maken</string>
+    <string name="od_undo_done">De versie van vóór de laatste opslag is hersteld.</string>
+    <string name="od_undo_failed">De vorige versie kon niet worden hersteld.</string>
+    <string name="od_bold">Vet</string>
+    <string name="od_italic">Cursief</string>
+    <string name="od_add_paragraph">Alinea eronder toevoegen</string>
+    <string name="od_delete_paragraph">Alinea verwijderen</string>
+    <string name="od_table_cell">Tabelcel</string>
+    <string name="od_add_row">Rij toevoegen</string>
+    <string name="od_edit_cell">Cel %1$s bewerken</string>
+    <string name="od_cell_value">Waarde</string>
+    <string name="od_cell_hint">Tekst, getal of formule die met = begint</string>
+    <string name="od_formula_replaced">Deze cel bevat een formule (%1$s). Een nieuwe waarde vervangt die.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Blad %1$d</string>
+    <string name="od_slide_of">Dia %1$d van %2$d</string>
+    <string name="od_delete_slide">Dia verwijderen</string>
+    <string name="od_title_box">Titel</string>
+    <string name="od_text_box_n">Tekstvak %1$d</string>
+    <string name="od_no_slides">Geen dia’s</string>
+    <string name="od_image">Afbeelding</string>
+</resources>

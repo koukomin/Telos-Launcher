@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">dokument</string>
+    <string name="od_saved">Lagret</string>
+    <string name="od_save_failed">Kunne ikke lagre</string>
+    <string name="od_nothing_to_show">Det er ingenting å vise i denne filen. Bruk «Åpne med» for å åpne den i en annen app.</string>
+    <string name="od_pdf_protected">Denne PDF-en er passordbeskyttet.</string>
+    <string name="od_cannot_open">Denne filen kan ikke åpnes her (%1$s). Bruk «Åpne med».</string>
+    <string name="od_legacy_failed">Denne gamle Office-filen kunne ikke leses. Bruk «Åpne med» for å åpne den i en annen app.</string>
+    <string name="od_text_too_big">Denne filen er større enn 2 MB. Den vises skrivebeskyttet og endres aldri.</string>
+    <string name="od_edit_copy">Rediger de første 2 MB som kopi</string>
+    <string name="od_copy_hint">Du redigerer en kopi av de første 2 MB. Når du lagrer, opprettes en ny fil; originalen endres ikke.</string>
+    <string name="od_pdf_tools">PDF-verktøy</string>
+    <string name="od_search_pdf">Søk i PDF</string>
+    <string name="od_search_hint">Søk etter tekst</string>
+    <string name="od_searching">Søker … side %1$d</string>
+    <string name="od_no_results">Ingen resultater</string>
+    <string name="od_no_text_layer">Denne PDF-en har ingen søkbar tekst (for eksempel en skanning).</string>
+    <string name="od_results_count">Resultater: %1$d</string>
+    <string name="od_go_to_page">Gå til side</string>
+    <string name="od_page_range">Side (1 til %1$d)</string>
+    <string name="od_go">Gå</string>
+    <string name="od_layout_note">Tekst og struktur vises. Sideoppsett og skrifttyper gjengis ikke.</string>
+    <string name="od_slides_note">Titler, tekst og bilder vises. Lysbildeoppsett og design gjengis ikke.</string>
+    <string name="od_legacy_readonly">Gammel binær Office-fil (.doc, .xls, .ppt): skrivebeskyttet. Tekst og verdier hentes ut så godt det lar seg gjøre.</string>
+    <string name="od_convert_note">Ved konvertering opprettes en ny fil. Formatering, bilder og innebygde objekter fra den gamle filen tas ikke med. Originalen forblir uendret.</string>
+    <string name="od_convert_action">Konverter til .%1$s og rediger</string>
+    <string name="od_convert_failed">Filen kunne ikke konverteres.</string>
+    <string name="od_converted">Konvertert. Du redigerer nå den nye filen.</string>
+    <string name="od_discard_title">Forkaste endringene?</string>
+    <string name="od_discard_text">Endringene dine er ikke lagret.</string>
+    <string name="od_discard">Forkast</string>
+    <string name="od_keep_editing">Fortsett å redigere</string>
+    <string name="od_save_copy">Lagre som kopi</string>
+    <string name="od_saved_copy">Lagret som ny fil.</string>
+    <string name="od_undo_save">Angre siste lagring</string>
+    <string name="od_undo_done">Versjonen før siste lagring er gjenopprettet.</string>
+    <string name="od_undo_failed">Kunne ikke gjenopprette forrige versjon.</string>
+    <string name="od_bold">Fet</string>
+    <string name="od_italic">Kursiv</string>
+    <string name="od_add_paragraph">Legg til avsnitt under</string>
+    <string name="od_delete_paragraph">Slett avsnitt</string>
+    <string name="od_table_cell">Tabellcelle</string>
+    <string name="od_add_row">Legg til rad</string>
+    <string name="od_edit_cell">Rediger celle %1$s</string>
+    <string name="od_cell_value">Verdi</string>
+    <string name="od_cell_hint">Tekst, tall eller formel som starter med =</string>
+    <string name="od_formula_replaced">Denne cellen inneholder en formel (%1$s). En ny verdi erstatter den.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Ark %1$d</string>
+    <string name="od_slide_of">Lysbilde %1$d av %2$d</string>
+    <string name="od_delete_slide">Slett lysbilde</string>
+    <string name="od_title_box">Tittel</string>
+    <string name="od_text_box_n">Tekstboks %1$d</string>
+    <string name="od_no_slides">Ingen lysbilder</string>
+    <string name="od_image">Bilde</string>
+</resources>

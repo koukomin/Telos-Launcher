@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">document</string>
+    <string name="od_saved">Desat</string>
+    <string name="od_save_failed">No s’ha pogut desar</string>
+    <string name="od_nothing_to_show">No hi ha res per mostrar en aquest fitxer. Fes servir «Obre amb» per obrir-lo en una altra aplicació.</string>
+    <string name="od_pdf_protected">Aquest PDF està protegit amb contrasenya.</string>
+    <string name="od_cannot_open">Aquest fitxer no es pot obrir aquí (%1$s). Fes servir «Obre amb».</string>
+    <string name="od_legacy_failed">No s’ha pogut llegir aquest fitxer antic d’Office. Fes servir «Obre amb» per obrir-lo en una altra aplicació.</string>
+    <string name="od_text_too_big">Aquest fitxer supera els 2 MB. Es mostra només de lectura i no es modifica mai.</string>
+    <string name="od_edit_copy">Edita els primers 2 MB com a còpia</string>
+    <string name="od_copy_hint">Estàs editant una còpia dels primers 2 MB. En desar es crea un fitxer nou; l’original no canvia.</string>
+    <string name="od_pdf_tools">Eines de PDF</string>
+    <string name="od_search_pdf">Cerca al PDF</string>
+    <string name="od_search_hint">Cerca text</string>
+    <string name="od_searching">S’està cercant… pàgina %1$d</string>
+    <string name="od_no_results">Cap resultat</string>
+    <string name="od_no_text_layer">Aquest PDF no té text en què es pugui cercar (per exemple, és un escaneig).</string>
+    <string name="od_results_count">Resultats: %1$d</string>
+    <string name="od_go_to_page">Ves a la pàgina</string>
+    <string name="od_page_range">Pàgina (de l’1 a %1$d)</string>
+    <string name="od_go">Ves-hi</string>
+    <string name="od_layout_note">Es mostren el text i l’estructura. El disseny de la pàgina i els tipus de lletra no es reprodueixen.</string>
+    <string name="od_slides_note">Es mostren els títols, el text i les imatges. El disseny de les diapositives no es reprodueix.</string>
+    <string name="od_legacy_readonly">Fitxer binari antic d’Office (.doc, .xls, .ppt): només de lectura. El text i els valors s’extreuen tant com es pot.</string>
+    <string name="od_convert_note">La conversió crea un fitxer nou. El format, les imatges i els objectes incrustats del fitxer antic no es conserven. L’original no canvia.</string>
+    <string name="od_convert_action">Converteix a .%1$s i edita</string>
+    <string name="od_convert_failed">No s’ha pogut convertir aquest fitxer.</string>
+    <string name="od_converted">Convertit. Ara estàs editant el fitxer nou.</string>
+    <string name="od_discard_title">Vols descartar els canvis?</string>
+    <string name="od_discard_text">Les teves edicions no s’han desat.</string>
+    <string name="od_discard">Descarta</string>
+    <string name="od_keep_editing">Continua editant</string>
+    <string name="od_save_copy">Desa com a còpia</string>
+    <string name="od_saved_copy">Desat com a fitxer nou.</string>
+    <string name="od_undo_save">Desfés l’últim desament</string>
+    <string name="od_undo_done">S’ha restaurat la versió anterior a l’últim desament.</string>
+    <string name="od_undo_failed">No s’ha pogut restaurar la versió anterior.</string>
+    <string name="od_bold">Negreta</string>
+    <string name="od_italic">Cursiva</string>
+    <string name="od_add_paragraph">Afegeix un paràgraf a sota</string>
+    <string name="od_delete_paragraph">Elimina el paràgraf</string>
+    <string name="od_table_cell">Cel·la de la taula</string>
+    <string name="od_add_row">Afegeix una fila</string>
+    <string name="od_edit_cell">Edita la cel·la %1$s</string>
+    <string name="od_cell_value">Valor</string>
+    <string name="od_cell_hint">Text, número o fórmula que comença per =</string>
+    <string name="od_formula_replaced">Aquesta cel·la conté una fórmula (%1$s). Un valor nou la substitueix.</string>
+    <string name="od_ok">D’acord</string>
+    <string name="od_sheet_n">Full %1$d</string>
+    <string name="od_slide_of">Diapositiva %1$d de %2$d</string>
+    <string name="od_delete_slide">Elimina la diapositiva</string>
+    <string name="od_title_box">Títol</string>
+    <string name="od_text_box_n">Quadre de text %1$d</string>
+    <string name="od_no_slides">Cap diapositiva</string>
+    <string name="od_image">Imatge</string>
+</resources>

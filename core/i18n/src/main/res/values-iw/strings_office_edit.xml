@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">מסמך</string>
+    <string name="od_saved">נשמר</string>
+    <string name="od_save_failed">השמירה נכשלה</string>
+    <string name="od_nothing_to_show">אין מה להציג בקובץ הזה. אפשר להשתמש ב״פתיחה באמצעות״ כדי לפתוח אותו באפליקציה אחרת.</string>
+    <string name="od_pdf_protected">קובץ ה-PDF הזה מוגן בסיסמה.</string>
+    <string name="od_cannot_open">לא ניתן לפתוח את הקובץ הזה כאן (%1$s). אפשר להשתמש ב״פתיחה באמצעות״.</string>
+    <string name="od_legacy_failed">לא ניתן היה לקרוא את קובץ ה-Office הישן הזה. אפשר להשתמש ב״פתיחה באמצעות״ כדי לפתוח אותו באפליקציה אחרת.</string>
+    <string name="od_text_too_big">הקובץ הזה גדול מ-2 מ״ב. הוא מוצג לקריאה בלבד ואינו משתנה לעולם.</string>
+    <string name="od_edit_copy">עריכת 2 המ״ב הראשונים כעותק</string>
+    <string name="od_copy_hint">אתם עורכים עותק של 2 המ״ב הראשונים. השמירה יוצרת קובץ חדש; המקור לא משתנה.</string>
+    <string name="od_pdf_tools">כלי PDF</string>
+    <string name="od_search_pdf">חיפוש ב-PDF</string>
+    <string name="od_search_hint">חיפוש טקסט</string>
+    <string name="od_searching">מחפש… עמוד %1$d</string>
+    <string name="od_no_results">אין תוצאות</string>
+    <string name="od_no_text_layer">ל-PDF הזה אין טקסט שניתן לחפש בו (למשל, זו סריקה).</string>
+    <string name="od_results_count">תוצאות: %1$d</string>
+    <string name="od_go_to_page">מעבר לעמוד</string>
+    <string name="od_page_range">עמוד (1 עד %1$d)</string>
+    <string name="od_go">מעבר</string>
+    <string name="od_layout_note">הטקסט והמבנה מוצגים. פריסת העמוד והגופנים אינם משוחזרים.</string>
+    <string name="od_slides_note">כותרות, טקסט ותמונות מוצגים. פריסת השקפים ועיצובם אינם משוחזרים.</string>
+    <string name="od_legacy_readonly">קובץ Office בינרי ישן (‎.doc‏, ‎.xls‏, ‎.ppt‏): לקריאה בלבד. טקסט וערכים מחולצים ככל האפשר.</string>
+    <string name="od_convert_note">ההמרה יוצרת קובץ חדש. העיצוב, התמונות והאובייקטים המוטמעים של הקובץ הישן אינם עוברים. המקור נשאר ללא שינוי.</string>
+    <string name="od_convert_action">המרה ל-.%1$s ועריכה</string>
+    <string name="od_convert_failed">לא ניתן היה להמיר את הקובץ הזה.</string>
+    <string name="od_converted">ההמרה הושלמה. עכשיו אתם עורכים את הקובץ החדש.</string>
+    <string name="od_discard_title">לבטל את השינויים?</string>
+    <string name="od_discard_text">העריכות שלכם לא נשמרו.</string>
+    <string name="od_discard">ביטול שינויים</string>
+    <string name="od_keep_editing">המשך עריכה</string>
+    <string name="od_save_copy">שמירה כעותק</string>
+    <string name="od_saved_copy">נשמר כקובץ חדש.</string>
+    <string name="od_undo_save">ביטול השמירה האחרונה</string>
+    <string name="od_undo_done">הגרסה שלפני השמירה האחרונה שוחזרה.</string>
+    <string name="od_undo_failed">לא ניתן היה לשחזר את הגרסה הקודמת.</string>
+    <string name="od_bold">מודגש</string>
+    <string name="od_italic">נטוי</string>
+    <string name="od_add_paragraph">הוספת פסקה מתחת</string>
+    <string name="od_delete_paragraph">מחיקת פסקה</string>
+    <string name="od_table_cell">תא בטבלה</string>
+    <string name="od_add_row">הוספת שורה</string>
+    <string name="od_edit_cell">עריכת תא %1$s</string>
+    <string name="od_cell_value">ערך</string>
+    <string name="od_cell_hint">טקסט, מספר או נוסחה שמתחילה ב-=</string>
+    <string name="od_formula_replaced">התא הזה מכיל נוסחה (%1$s). ערך חדש יחליף אותה.</string>
+    <string name="od_ok">אישור</string>
+    <string name="od_sheet_n">גיליון %1$d</string>
+    <string name="od_slide_of">שקף %1$d מתוך %2$d</string>
+    <string name="od_delete_slide">מחיקת שקף</string>
+    <string name="od_title_box">כותרת</string>
+    <string name="od_text_box_n">תיבת טקסט %1$d</string>
+    <string name="od_no_slides">אין שקפים</string>
+    <string name="od_image">תמונה</string>
+</resources>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">document</string>
+    <string name="od_saved">Saved</string>
+    <string name="od_save_failed">Could not save</string>
+    <string name="od_nothing_to_show">Nothing to show in this file. Use “Open with” to open it in another app.</string>
+    <string name="od_pdf_protected">This PDF is protected with a password.</string>
+    <string name="od_cannot_open">This file cannot be opened here (%1$s). Use “Open with”.</string>
+    <string name="od_legacy_failed">This old Office file could not be read. Use “Open with” to open it in another app.</string>
+    <string name="od_text_too_big">This file is larger than 2 MB. It is shown read-only and is never changed.</string>
+    <string name="od_edit_copy">Edit first 2 MB as a copy</string>
+    <string name="od_copy_hint">You are editing a copy of the first 2 MB. Saving creates a new file; the original is not changed.</string>
+    <string name="od_pdf_tools">PDF tools</string>
+    <string name="od_search_pdf">Search in PDF</string>
+    <string name="od_search_hint">Search text</string>
+    <string name="od_searching">Searching… page %1$d</string>
+    <string name="od_no_results">No results</string>
+    <string name="od_no_text_layer">This PDF has no searchable text (for example a scan).</string>
+    <string name="od_results_count">Results: %1$d</string>
+    <string name="od_go_to_page">Go to page</string>
+    <string name="od_page_range">Page (1 to %1$d)</string>
+    <string name="od_go">Go</string>
+    <string name="od_layout_note">Text and structure are shown. Page layout and fonts are not reproduced.</string>
+    <string name="od_slides_note">Titles, text and pictures are shown. Slide layout and design are not reproduced.</string>
+    <string name="od_legacy_readonly">Old binary Office file (.doc, .xls, .ppt): read-only. Text and values are extracted as far as possible.</string>
+    <string name="od_convert_note">Converting creates a new file. Formatting, pictures and embedded objects of the old file are not carried over. The original stays unchanged.</string>
+    <string name="od_convert_action">Convert to .%1$s and edit</string>
+    <string name="od_convert_failed">Could not convert this file.</string>
+    <string name="od_converted">Converted. You are now editing the new file.</string>
+    <string name="od_discard_title">Discard changes?</string>
+    <string name="od_discard_text">Your edits have not been saved.</string>
+    <string name="od_discard">Discard</string>
+    <string name="od_keep_editing">Keep editing</string>
+    <string name="od_save_copy">Save as a copy</string>
+    <string name="od_saved_copy">Saved as a new file.</string>
+    <string name="od_undo_save">Undo last save</string>
+    <string name="od_undo_done">The version before the last save was restored.</string>
+    <string name="od_undo_failed">Could not restore the previous version.</string>
+    <string name="od_bold">Bold</string>
+    <string name="od_italic">Italic</string>
+    <string name="od_add_paragraph">Add paragraph below</string>
+    <string name="od_delete_paragraph">Delete paragraph</string>
+    <string name="od_table_cell">Table cell</string>
+    <string name="od_add_row">Add row</string>
+    <string name="od_edit_cell">Edit cell %1$s</string>
+    <string name="od_cell_value">Value</string>
+    <string name="od_cell_hint">Text, number, or formula starting with =</string>
+    <string name="od_formula_replaced">This cell contains a formula (%1$s). A new value replaces it.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Sheet %1$d</string>
+    <string name="od_slide_of">Slide %1$d of %2$d</string>
+    <string name="od_delete_slide">Delete slide</string>
+    <string name="od_title_box">Title</string>
+    <string name="od_text_box_n">Text box %1$d</string>
+    <string name="od_no_slides">No slides</string>
+    <string name="od_image">Image</string>
+</resources>

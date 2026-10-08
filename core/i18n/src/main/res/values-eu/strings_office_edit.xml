@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">dokumentua</string>
+    <string name="od_saved">Gordeta</string>
+    <string name="od_save_failed">Ezin izan da gorde</string>
+    <string name="od_nothing_to_show">Fitxategi honetan ez dago ezer erakusteko. Erabili «Ireki honekin» beste aplikazio batean irekitzeko.</string>
+    <string name="od_pdf_protected">PDF hau pasahitzez babestuta dago.</string>
+    <string name="od_cannot_open">Fitxategi hau ezin da hemen ireki (%1$s). Erabili «Ireki honekin».</string>
+    <string name="od_legacy_failed">Office-ko fitxategi zahar hau ezin izan da irakurri. Erabili «Ireki honekin» beste aplikazio batean irekitzeko.</string>
+    <string name="od_text_too_big">Fitxategi hau 2 MB baino handiagoa da. Irakurtzeko soilik erakusten da eta ez da inoiz aldatzen.</string>
+    <string name="od_edit_copy">Editatu lehen 2 MB kopia gisa</string>
+    <string name="od_copy_hint">Lehen 2 MBen kopia bat editatzen ari zara. Gordetzean fitxategi berri bat sortzen da; jatorrizkoa ez da aldatzen.</string>
+    <string name="od_pdf_tools">PDF tresnak</string>
+    <string name="od_search_pdf">Bilatu PDFan</string>
+    <string name="od_search_hint">Bilatu testua</string>
+    <string name="od_searching">Bilatzen… %1$d. orria</string>
+    <string name="od_no_results">Emaitzarik ez</string>
+    <string name="od_no_text_layer">PDF honek ez du bilatzeko moduko testurik (adibidez, eskaneatutakoa da).</string>
+    <string name="od_results_count">Emaitzak: %1$d</string>
+    <string name="od_go_to_page">Joan orrira</string>
+    <string name="od_page_range">Orria (1etik %1$dra)</string>
+    <string name="od_go">Joan</string>
+    <string name="od_layout_note">Testua eta egitura erakusten dira. Orriaren diseinua eta letra-tipoak ez dira birsortzen.</string>
+    <string name="od_slides_note">Izenburuak, testua eta irudiak erakusten dira. Diapositiben diseinua ez da birsortzen.</string>
+    <string name="od_legacy_readonly">Office-ko fitxategi bitar zaharra (.doc, .xls, .ppt): irakurtzeko soilik. Testua eta balioak ahal den neurrian ateratzen dira.</string>
+    <string name="od_convert_note">Bihurtzean fitxategi berri bat sortzen da. Fitxategi zaharraren formatua, irudiak eta txertatutako objektuak ez dira eramaten. Jatorrizkoa aldatu gabe geratzen da.</string>
+    <string name="od_convert_action">Bihurtu .%1$s formatura eta editatu</string>
+    <string name="od_convert_failed">Ezin izan da fitxategi hau bihurtu.</string>
+    <string name="od_converted">Bihurtuta. Orain fitxategi berria editatzen ari zara.</string>
+    <string name="od_discard_title">Aldaketak baztertu?</string>
+    <string name="od_discard_text">Zure aldaketak ez dira gorde.</string>
+    <string name="od_discard">Baztertu</string>
+    <string name="od_keep_editing">Jarraitu editatzen</string>
+    <string name="od_save_copy">Gorde kopia gisa</string>
+    <string name="od_saved_copy">Fitxategi berri gisa gorde da.</string>
+    <string name="od_undo_save">Desegin azken gordetzea</string>
+    <string name="od_undo_done">Azken gordetzearen aurreko bertsioa leheneratu da.</string>
+    <string name="od_undo_failed">Ezin izan da aurreko bertsioa leheneratu.</string>
+    <string name="od_bold">Lodia</string>
+    <string name="od_italic">Etzana</string>
+    <string name="od_add_paragraph">Gehitu paragrafoa azpian</string>
+    <string name="od_delete_paragraph">Ezabatu paragrafoa</string>
+    <string name="od_table_cell">Taulako gelaxka</string>
+    <string name="od_add_row">Gehitu errenkada</string>
+    <string name="od_edit_cell">Editatu %1$s gelaxka</string>
+    <string name="od_cell_value">Balioa</string>
+    <string name="od_cell_hint">Testua, zenbakia edo = ikurrarekin hasten den formula</string>
+    <string name="od_formula_replaced">Gelaxka honek formula bat dauka (%1$s). Balio berri batek ordezkatuko du.</string>
+    <string name="od_ok">Ados</string>
+    <string name="od_sheet_n">%1$d. orria</string>
+    <string name="od_slide_of">%1$d. diapositiba, %2$d guztira</string>
+    <string name="od_delete_slide">Ezabatu diapositiba</string>
+    <string name="od_title_box">Izenburua</string>
+    <string name="od_text_box_n">Testu-koadroa %1$d</string>
+    <string name="od_no_slides">Diapositibarik ez</string>
+    <string name="od_image">Irudia</string>
+</resources>

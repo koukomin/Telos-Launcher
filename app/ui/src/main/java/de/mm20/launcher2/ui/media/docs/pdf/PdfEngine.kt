@@ -928,8 +928,9 @@ object PdfEngine {
         pageMarkers: Boolean,
         markerFormat: String,
         progress: Progress,
-    ): String = withContext(Dispatchers.IO) {
+    ): String? = withContext(Dispatchers.IO) {
         val sb = StringBuilder()
+        var any = false
         openDoc(context, src.file).use { doc ->
             val stripper = PDFTextStripper()
             stripper.sortByPosition = true
@@ -939,11 +940,13 @@ object PdfEngine {
                 stripper.startPage = index + 1
                 stripper.endPage = index + 1
                 if (pageMarkers) sb.append(markerFormat.replace("{n}", (index + 1).toString())).append("\n")
-                sb.append(stripper.getText(doc).trim()).append("\n\n")
+                val pageText = stripper.getText(doc).trim()
+                if (pageText.isNotEmpty()) any = true
+                sb.append(pageText).append("\n\n")
             }
         }
         progress(pages.size, pages.size)
-        sb.toString().trim()
+        if (any) sb.toString().trim() else null
     }
 
     suspend fun textToResult(context: Context, src: PdfSource, text: String): List<ResultFile> = withContext(Dispatchers.IO) {

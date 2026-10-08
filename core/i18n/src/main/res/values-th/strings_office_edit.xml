@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">เอกสาร</string>
+    <string name="od_saved">บันทึกแล้ว</string>
+    <string name="od_save_failed">บันทึกไม่ได้</string>
+    <string name="od_nothing_to_show">ไม่มีอะไรให้แสดงในไฟล์นี้ ใช้ “เปิดด้วย” เพื่อเปิดในแอปอื่น</string>
+    <string name="od_pdf_protected">PDF นี้ป้องกันด้วยรหัสผ่าน</string>
+    <string name="od_cannot_open">ไม่สามารถเปิดไฟล์นี้ที่นี่ได้ (%1$s) ใช้ “เปิดด้วย”</string>
+    <string name="od_legacy_failed">อ่านไฟล์ Office รุ่นเก่านี้ไม่ได้ ใช้ “เปิดด้วย” เพื่อเปิดในแอปอื่น</string>
+    <string name="od_text_too_big">ไฟล์นี้ใหญ่กว่า 2 MB แสดงแบบอ่านอย่างเดียวและจะไม่ถูกเปลี่ยนแปลง</string>
+    <string name="od_edit_copy">แก้ไข 2 MB แรกเป็นสำเนา</string>
+    <string name="od_copy_hint">คุณกำลังแก้ไขสำเนาของ 2 MB แรก การบันทึกจะสร้างไฟล์ใหม่ ไฟล์ต้นฉบับจะไม่เปลี่ยนแปลง</string>
+    <string name="od_pdf_tools">เครื่องมือ PDF</string>
+    <string name="od_search_pdf">ค้นหาใน PDF</string>
+    <string name="od_search_hint">ค้นหาข้อความ</string>
+    <string name="od_searching">กำลังค้นหา… หน้า %1$d</string>
+    <string name="od_no_results">ไม่พบผลลัพธ์</string>
+    <string name="od_no_text_layer">PDF นี้ไม่มีข้อความที่ค้นหาได้ (เช่น เป็นไฟล์สแกน)</string>
+    <string name="od_results_count">ผลลัพธ์: %1$d</string>
+    <string name="od_go_to_page">ไปที่หน้า</string>
+    <string name="od_page_range">หน้า (1 ถึง %1$d)</string>
+    <string name="od_go">ไป</string>
+    <string name="od_layout_note">แสดงข้อความและโครงสร้าง ไม่แสดงเค้าโครงหน้าและฟอนต์ตามต้นฉบับ</string>
+    <string name="od_slides_note">แสดงหัวเรื่อง ข้อความ และรูปภาพ ไม่แสดงเค้าโครงและการออกแบบสไลด์ตามต้นฉบับ</string>
+    <string name="od_legacy_readonly">ไฟล์ Office ไบนารีรุ่นเก่า (.doc, .xls, .ppt): อ่านอย่างเดียว ดึงข้อความและค่าออกมาเท่าที่ทำได้</string>
+    <string name="od_convert_note">การแปลงจะสร้างไฟล์ใหม่ การจัดรูปแบบ รูปภาพ และวัตถุที่ฝังไว้ของไฟล์เก่าจะไม่ถูกนำมาด้วย ไฟล์ต้นฉบับไม่เปลี่ยนแปลง</string>
+    <string name="od_convert_action">แปลงเป็น .%1$s และแก้ไข</string>
+    <string name="od_convert_failed">แปลงไฟล์นี้ไม่ได้</string>
+    <string name="od_converted">แปลงแล้ว ตอนนี้คุณกำลังแก้ไขไฟล์ใหม่</string>
+    <string name="od_discard_title">ละทิ้งการเปลี่ยนแปลงหรือไม่</string>
+    <string name="od_discard_text">ยังไม่ได้บันทึกการแก้ไขของคุณ</string>
+    <string name="od_discard">ละทิ้ง</string>
+    <string name="od_keep_editing">แก้ไขต่อ</string>
+    <string name="od_save_copy">บันทึกเป็นสำเนา</string>
+    <string name="od_saved_copy">บันทึกเป็นไฟล์ใหม่แล้ว</string>
+    <string name="od_undo_save">เลิกทำการบันทึกครั้งล่าสุด</string>
+    <string name="od_undo_done">กู้คืนเวอร์ชันก่อนการบันทึกครั้งล่าสุดแล้ว</string>
+    <string name="od_undo_failed">กู้คืนเวอร์ชันก่อนหน้าไม่ได้</string>
+    <string name="od_bold">ตัวหนา</string>
+    <string name="od_italic">ตัวเอียง</string>
+    <string name="od_add_paragraph">เพิ่มย่อหน้าด้านล่าง</string>
+    <string name="od_delete_paragraph">ลบย่อหน้า</string>
+    <string name="od_table_cell">เซลล์ตาราง</string>
+    <string name="od_add_row">เพิ่มแถว</string>
+    <string name="od_edit_cell">แก้ไขเซลล์ %1$s</string>
+    <string name="od_cell_value">ค่า</string>
+    <string name="od_cell_hint">ข้อความ ตัวเลข หรือสูตรที่ขึ้นต้นด้วย =</string>
+    <string name="od_formula_replaced">เซลล์นี้มีสูตร (%1$s) ค่าใหม่จะแทนที่สูตรนั้น</string>
+    <string name="od_ok">ตกลง</string>
+    <string name="od_sheet_n">ชีต %1$d</string>
+    <string name="od_slide_of">สไลด์ %1$d จาก %2$d</string>
+    <string name="od_delete_slide">ลบสไลด์</string>
+    <string name="od_title_box">ชื่อเรื่อง</string>
+    <string name="od_text_box_n">กล่องข้อความ %1$d</string>
+    <string name="od_no_slides">ไม่มีสไลด์</string>
+    <string name="od_image">รูปภาพ</string>
+</resources>

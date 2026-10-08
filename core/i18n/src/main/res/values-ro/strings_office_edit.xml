@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">document</string>
+    <string name="od_saved">Salvat</string>
+    <string name="od_save_failed">Nu s-a putut salva</string>
+    <string name="od_nothing_to_show">Nu există nimic de afișat în acest fișier. Folosiți „Deschide cu” pentru a-l deschide în altă aplicație.</string>
+    <string name="od_pdf_protected">Acest PDF este protejat cu parolă.</string>
+    <string name="od_cannot_open">Acest fișier nu poate fi deschis aici (%1$s). Folosiți „Deschide cu”.</string>
+    <string name="od_legacy_failed">Acest fișier Office vechi nu a putut fi citit. Folosiți „Deschide cu” pentru a-l deschide în altă aplicație.</string>
+    <string name="od_text_too_big">Acest fișier are peste 2 MB. Este afișat doar pentru citire și nu este niciodată modificat.</string>
+    <string name="od_edit_copy">Editează primii 2 MB ca o copie</string>
+    <string name="od_copy_hint">Editați o copie a primilor 2 MB. Salvarea creează un fișier nou; originalul rămâne neschimbat.</string>
+    <string name="od_pdf_tools">Instrumente PDF</string>
+    <string name="od_search_pdf">Caută în PDF</string>
+    <string name="od_search_hint">Caută text</string>
+    <string name="od_searching">Se caută… pagina %1$d</string>
+    <string name="od_no_results">Niciun rezultat</string>
+    <string name="od_no_text_layer">Acest PDF nu are text care poate fi căutat (de exemplu, este o scanare).</string>
+    <string name="od_results_count">Rezultate: %1$d</string>
+    <string name="od_go_to_page">Mergi la pagina</string>
+    <string name="od_page_range">Pagina (de la 1 la %1$d)</string>
+    <string name="od_go">Mergi</string>
+    <string name="od_layout_note">Sunt afișate textul și structura. Aspectul paginii și fonturile nu sunt reproduse.</string>
+    <string name="od_slides_note">Sunt afișate titlurile, textul și imaginile. Aspectul și designul diapozitivelor nu sunt reproduse.</string>
+    <string name="od_legacy_readonly">Fișier Office binar vechi (.doc, .xls, .ppt): doar pentru citire. Textul și valorile sunt extrase pe cât posibil.</string>
+    <string name="od_convert_note">Conversia creează un fișier nou. Formatarea, imaginile și obiectele încorporate ale fișierului vechi nu sunt preluate. Originalul rămâne neschimbat.</string>
+    <string name="od_convert_action">Convertește în .%1$s și editează</string>
+    <string name="od_convert_failed">Acest fișier nu a putut fi convertit.</string>
+    <string name="od_converted">Convertit. Acum editați fișierul nou.</string>
+    <string name="od_discard_title">Renunți la modificări?</string>
+    <string name="od_discard_text">Modificările nu au fost salvate.</string>
+    <string name="od_discard">Renunță</string>
+    <string name="od_keep_editing">Continuă editarea</string>
+    <string name="od_save_copy">Salvează ca o copie</string>
+    <string name="od_saved_copy">Salvat ca fișier nou.</string>
+    <string name="od_undo_save">Anulează ultima salvare</string>
+    <string name="od_undo_done">Versiunea dinaintea ultimei salvări a fost restaurată.</string>
+    <string name="od_undo_failed">Versiunea anterioară nu a putut fi restaurată.</string>
+    <string name="od_bold">Aldin</string>
+    <string name="od_italic">Cursiv</string>
+    <string name="od_add_paragraph">Adaugă paragraf dedesubt</string>
+    <string name="od_delete_paragraph">Șterge paragraful</string>
+    <string name="od_table_cell">Celulă de tabel</string>
+    <string name="od_add_row">Adaugă rând</string>
+    <string name="od_edit_cell">Editează celula %1$s</string>
+    <string name="od_cell_value">Valoare</string>
+    <string name="od_cell_hint">Text, număr sau formulă care începe cu =</string>
+    <string name="od_formula_replaced">Această celulă conține o formulă (%1$s). O valoare nouă o înlocuiește.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Foaia %1$d</string>
+    <string name="od_slide_of">Diapozitivul %1$d din %2$d</string>
+    <string name="od_delete_slide">Șterge diapozitivul</string>
+    <string name="od_title_box">Titlu</string>
+    <string name="od_text_box_n">Casetă de text %1$d</string>
+    <string name="od_no_slides">Niciun diapozitiv</string>
+    <string name="od_image">Imagine</string>
+</resources>
