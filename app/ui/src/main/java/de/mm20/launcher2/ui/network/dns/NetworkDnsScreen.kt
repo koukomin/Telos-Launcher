@@ -73,7 +73,8 @@ fun NetworkDnsScreen() {
         }
     }
 
-    val visible = servers.filter { it.kind == DnsKind.System || it.builtIn.not() || filter == null || filter in it.tags }
+    val activeFilter = filter
+    val visible = servers.filter { it.kind == DnsKind.System || !it.builtIn || activeFilter == null || it.tags.contains(activeFilter) }
     val systemServer = visible.filter { it.kind == DnsKind.System }
     val custom = visible.filter { !it.builtIn }
     val groups = DnsTag.values().map { tag ->
