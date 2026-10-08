@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Αναζήτηση σημειώσεων</string>
+    <string name="tsp_search_calls">Αναζήτηση κλήσεων</string>
+    <string name="tsp_search_favorites">Αναζήτηση αγαπημένων</string>
+    <string name="tsp_search_contacts">Αναζήτηση επαφών</string>
+    <string name="tsp_search_messages">Αναζήτηση μηνυμάτων</string>
+    <string name="tsp_search_in_conversation">Αναζήτηση στη συνομιλία</string>
+    <string name="tsp_search_events">Αναζήτηση συμβάντων</string>
+    <string name="tsp_search_recordings">Αναζήτηση ηχογραφήσεων</string>
+    <string name="tsp_search_screenshots">Αναζήτηση στιγμιότυπων</string>
+    <string name="tsp_search_call_recordings">Αναζήτηση ηχογραφήσεων κλήσεων</string>
+    <string name="tsp_search_groups">Αναζήτηση ομάδων</string>
+</resources>

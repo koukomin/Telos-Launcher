@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">메모 검색</string>
+    <string name="tsp_search_calls">통화 검색</string>
+    <string name="tsp_search_favorites">즐겨찾기 검색</string>
+    <string name="tsp_search_contacts">연락처 검색</string>
+    <string name="tsp_search_messages">메시지 검색</string>
+    <string name="tsp_search_in_conversation">대화 내 검색</string>
+    <string name="tsp_search_events">일정 검색</string>
+    <string name="tsp_search_recordings">녹음 검색</string>
+    <string name="tsp_search_screenshots">스크린샷 검색</string>
+    <string name="tsp_search_call_recordings">통화 녹음 검색</string>
+    <string name="tsp_search_groups">그룹 검색</string>
+</resources>

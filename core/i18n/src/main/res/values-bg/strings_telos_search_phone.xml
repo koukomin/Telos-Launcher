@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Търсене в бележки</string>
+    <string name="tsp_search_calls">Търсене в обаждания</string>
+    <string name="tsp_search_favorites">Търсене в любими</string>
+    <string name="tsp_search_contacts">Търсене в контакти</string>
+    <string name="tsp_search_messages">Търсене в съобщения</string>
+    <string name="tsp_search_in_conversation">Търсене в разговора</string>
+    <string name="tsp_search_events">Търсене в събития</string>
+    <string name="tsp_search_recordings">Търсене в записи</string>
+    <string name="tsp_search_screenshots">Търсене в екранни снимки</string>
+    <string name="tsp_search_call_recordings">Търсене в записи на разговори</string>
+    <string name="tsp_search_groups">Търсене в групи</string>
+</resources>

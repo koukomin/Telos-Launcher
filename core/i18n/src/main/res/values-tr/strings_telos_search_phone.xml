@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Notlarda ara</string>
+    <string name="tsp_search_calls">Aramalarda ara</string>
+    <string name="tsp_search_favorites">Favorilerde ara</string>
+    <string name="tsp_search_contacts">Kişilerde ara</string>
+    <string name="tsp_search_messages">Mesajlarda ara</string>
+    <string name="tsp_search_in_conversation">Konuşmada ara</string>
+    <string name="tsp_search_events">Etkinliklerde ara</string>
+    <string name="tsp_search_recordings">Kayıtlarda ara</string>
+    <string name="tsp_search_screenshots">Ekran görüntülerinde ara</string>
+    <string name="tsp_search_call_recordings">Arama kayıtlarında ara</string>
+    <string name="tsp_search_groups">Gruplarda ara</string>
+</resources>

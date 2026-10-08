@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Cerca notes</string>
+    <string name="tsp_search_calls">Cerca trucades</string>
+    <string name="tsp_search_favorites">Cerca preferits</string>
+    <string name="tsp_search_contacts">Cerca contactes</string>
+    <string name="tsp_search_messages">Cerca missatges</string>
+    <string name="tsp_search_in_conversation">Cerca a la conversa</string>
+    <string name="tsp_search_events">Cerca esdeveniments</string>
+    <string name="tsp_search_recordings">Cerca enregistraments</string>
+    <string name="tsp_search_screenshots">Cerca captures de pantalla</string>
+    <string name="tsp_search_call_recordings">Cerca enregistraments de trucades</string>
+    <string name="tsp_search_groups">Cerca grups</string>
+</resources>

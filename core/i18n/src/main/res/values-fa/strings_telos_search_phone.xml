@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">جستجو در یادداشت‌ها</string>
+    <string name="tsp_search_calls">جستجو در تماس‌ها</string>
+    <string name="tsp_search_favorites">جستجو در علاقه‌مندی‌ها</string>
+    <string name="tsp_search_contacts">جستجو در مخاطبان</string>
+    <string name="tsp_search_messages">جستجو در پیام‌ها</string>
+    <string name="tsp_search_in_conversation">جستجو در گفتگو</string>
+    <string name="tsp_search_events">جستجو در رویدادها</string>
+    <string name="tsp_search_recordings">جستجو در ضبط‌ها</string>
+    <string name="tsp_search_screenshots">جستجو در تصاویر صفحه</string>
+    <string name="tsp_search_call_recordings">جستجو در ضبط تماس‌ها</string>
+    <string name="tsp_search_groups">جستجو در گروه‌ها</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Otsi märkmetest</string>
+    <string name="tsp_search_calls">Otsi kõnedest</string>
+    <string name="tsp_search_favorites">Otsi lemmikutest</string>
+    <string name="tsp_search_contacts">Otsi kontaktidest</string>
+    <string name="tsp_search_messages">Otsi sõnumitest</string>
+    <string name="tsp_search_in_conversation">Otsi vestlusest</string>
+    <string name="tsp_search_events">Otsi sündmustest</string>
+    <string name="tsp_search_recordings">Otsi salvestistest</string>
+    <string name="tsp_search_screenshots">Otsi ekraanipiltidest</string>
+    <string name="tsp_search_call_recordings">Otsi kõnesalvestistest</string>
+    <string name="tsp_search_groups">Otsi gruppidest</string>
+</resources>

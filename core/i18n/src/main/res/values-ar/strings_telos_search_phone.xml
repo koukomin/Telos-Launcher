@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">البحث في الملاحظات</string>
+    <string name="tsp_search_calls">البحث في المكالمات</string>
+    <string name="tsp_search_favorites">البحث في المفضلة</string>
+    <string name="tsp_search_contacts">البحث في جهات الاتصال</string>
+    <string name="tsp_search_messages">البحث في الرسائل</string>
+    <string name="tsp_search_in_conversation">البحث في المحادثة</string>
+    <string name="tsp_search_events">البحث في الأحداث</string>
+    <string name="tsp_search_recordings">البحث في التسجيلات</string>
+    <string name="tsp_search_screenshots">البحث في لقطات الشاشة</string>
+    <string name="tsp_search_call_recordings">البحث في تسجيلات المكالمات</string>
+    <string name="tsp_search_groups">البحث في المجموعات</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Cuardaigh nótaí</string>
+    <string name="tsp_search_calls">Cuardaigh glaonna</string>
+    <string name="tsp_search_favorites">Cuardaigh ceanáin</string>
+    <string name="tsp_search_contacts">Cuardaigh teagmhálaithe</string>
+    <string name="tsp_search_messages">Cuardaigh teachtaireachtaí</string>
+    <string name="tsp_search_in_conversation">Cuardaigh sa chomhrá</string>
+    <string name="tsp_search_events">Cuardaigh imeachtaí</string>
+    <string name="tsp_search_recordings">Cuardaigh taifeadtaí</string>
+    <string name="tsp_search_screenshots">Cuardaigh seatanna scáileáin</string>
+    <string name="tsp_search_call_recordings">Cuardaigh taifeadtaí glaonna</string>
+    <string name="tsp_search_groups">Cuardaigh grúpaí</string>
+</resources>

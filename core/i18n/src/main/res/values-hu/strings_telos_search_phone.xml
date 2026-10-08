@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Jegyzetek keresése</string>
+    <string name="tsp_search_calls">Hívások keresése</string>
+    <string name="tsp_search_favorites">Kedvencek keresése</string>
+    <string name="tsp_search_contacts">Névjegyek keresése</string>
+    <string name="tsp_search_messages">Üzenetek keresése</string>
+    <string name="tsp_search_in_conversation">Keresés a beszélgetésben</string>
+    <string name="tsp_search_events">Események keresése</string>
+    <string name="tsp_search_recordings">Felvételek keresése</string>
+    <string name="tsp_search_screenshots">Képernyőképek keresése</string>
+    <string name="tsp_search_call_recordings">Hívásfelvételek keresése</string>
+    <string name="tsp_search_groups">Csoportok keresése</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Søk i notater</string>
+    <string name="tsp_search_calls">Søk i anrop</string>
+    <string name="tsp_search_favorites">Søk i favoritter</string>
+    <string name="tsp_search_contacts">Søk i kontakter</string>
+    <string name="tsp_search_messages">Søk i meldinger</string>
+    <string name="tsp_search_in_conversation">Søk i samtalen</string>
+    <string name="tsp_search_events">Søk i hendelser</string>
+    <string name="tsp_search_recordings">Søk i opptak</string>
+    <string name="tsp_search_screenshots">Søk i skjermbilder</string>
+    <string name="tsp_search_call_recordings">Søk i samtaleopptak</string>
+    <string name="tsp_search_groups">Søk i grupper</string>
+</resources>

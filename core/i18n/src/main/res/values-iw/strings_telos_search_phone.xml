@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">חיפוש בהערות</string>
+    <string name="tsp_search_calls">חיפוש בשיחות</string>
+    <string name="tsp_search_favorites">חיפוש במועדפים</string>
+    <string name="tsp_search_contacts">חיפוש באנשי קשר</string>
+    <string name="tsp_search_messages">חיפוש בהודעות</string>
+    <string name="tsp_search_in_conversation">חיפוש בשיחה</string>
+    <string name="tsp_search_events">חיפוש באירועים</string>
+    <string name="tsp_search_recordings">חיפוש בהקלטות</string>
+    <string name="tsp_search_screenshots">חיפוש בצילומי מסך</string>
+    <string name="tsp_search_call_recordings">חיפוש בהקלטות שיחה</string>
+    <string name="tsp_search_groups">חיפוש בקבוצות</string>
+</resources>

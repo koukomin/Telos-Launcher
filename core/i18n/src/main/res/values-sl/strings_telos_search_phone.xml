@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Išči po zapiskah</string>
+    <string name="tsp_search_calls">Išči po klicih</string>
+    <string name="tsp_search_favorites">Išči po priljubljenih</string>
+    <string name="tsp_search_contacts">Išči po stikih</string>
+    <string name="tsp_search_messages">Išči po sporočilih</string>
+    <string name="tsp_search_in_conversation">Išči v pogovoru</string>
+    <string name="tsp_search_events">Išči po dogodkih</string>
+    <string name="tsp_search_recordings">Išči po posnetkih</string>
+    <string name="tsp_search_screenshots">Išči po posnetkih zaslona</string>
+    <string name="tsp_search_call_recordings">Išči po posnetkih klicev</string>
+    <string name="tsp_search_groups">Išči po skupinah</string>
+</resources>

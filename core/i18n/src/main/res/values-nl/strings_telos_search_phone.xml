@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Notities zoeken</string>
+    <string name="tsp_search_calls">Gesprekken zoeken</string>
+    <string name="tsp_search_favorites">Favorieten zoeken</string>
+    <string name="tsp_search_contacts">Contacten zoeken</string>
+    <string name="tsp_search_messages">Berichten zoeken</string>
+    <string name="tsp_search_in_conversation">Zoeken in gesprek</string>
+    <string name="tsp_search_events">Afspraken zoeken</string>
+    <string name="tsp_search_recordings">Opnamen zoeken</string>
+    <string name="tsp_search_screenshots">Schermafbeeldingen zoeken</string>
+    <string name="tsp_search_call_recordings">Gespreksopnamen zoeken</string>
+    <string name="tsp_search_groups">Groepen zoeken</string>
+</resources>
