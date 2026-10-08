@@ -847,6 +847,8 @@ private fun OpeningSchedule(
                                         )
                                     }
                                     "${context.getString(R.string.location_open)} • $closingTime"
+                                } else if (openingSchedule.openingHours.isEmpty()) {
+                                    context.getString(R.string.location_closed)
                                 } else {
                                     val nextOpeningTime =
                                         openingSchedule.getNextOpeningHours()

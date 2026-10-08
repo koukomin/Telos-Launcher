@@ -101,9 +101,12 @@ class ScreenRecorderService : Service() {
     }
 
     private fun startRecording(resultCode: Int, data: Intent, settings: ScreenRecorderSettings): Boolean {
+        var pendingRecorder: MediaRecorder? = null
+        var pendingProjection: MediaProjection? = null
         return try {
             val (width, height, dpi) = captureSize(settings.resolution)
             val rec = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) MediaRecorder(this) else @Suppress("DEPRECATION") MediaRecorder()
+            pendingRecorder = rec
             val withMic = settings.audio == ScreenAudio.Microphone &&
                 ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO) == android.content.pm.PackageManager.PERMISSION_GRANTED
             if (withMic) rec.setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -123,6 +126,7 @@ class ScreenRecorderService : Service() {
 
             val manager = getSystemService(MediaProjectionManager::class.java)
             val mp = manager.getMediaProjection(resultCode, data) ?: throw IllegalStateException("no projection")
+            pendingProjection = mp
             // required since Android 14, and called when the user stops the capture from the system
             mp.registerCallback(object : MediaProjection.Callback() {
                 override fun onStop() {
@@ -153,6 +157,8 @@ class ScreenRecorderService : Service() {
             }
             true
         } catch (e: Exception) {
+            runCatching { pendingRecorder?.release() }
+            runCatching { pendingProjection?.stop() }
             cleanup(deleteOutput = true)
             false
         }

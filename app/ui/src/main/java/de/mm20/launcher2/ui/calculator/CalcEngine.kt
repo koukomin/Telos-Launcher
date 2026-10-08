@@ -193,7 +193,7 @@ object CalcEngine {
 
         private fun identifier(): Double {
             val start = pos
-            while (peek()?.isLetter() == true) pos++
+            while (peek()?.let { it.isLetter() && it != 'π' } == true) pos++
             if (s.substring(start, pos) == "log" && peek() == '2') pos++
             val name = s.substring(start, pos).lowercase()
             if (name == "e") return Math.E

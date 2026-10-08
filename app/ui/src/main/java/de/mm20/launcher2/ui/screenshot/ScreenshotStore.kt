@@ -70,7 +70,11 @@ object ScreenshotStore {
                     put(MediaStore.Images.Media.IS_PENDING, 1)
                 }
                 val uri = context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values) ?: return null
-                context.contentResolver.openOutputStream(uri)?.use { toSave.compress(compress, 95, it) } ?: return null
+                val written = context.contentResolver.openOutputStream(uri)?.use { toSave.compress(compress, 95, it) } ?: false
+                if (!written) {
+                    runCatching { context.contentResolver.delete(uri, null, null) }
+                    return null
+                }
                 context.contentResolver.update(uri, ContentValues().apply { put(MediaStore.Images.Media.IS_PENDING, 0) }, null, null)
                 uri
             } else {

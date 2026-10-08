@@ -420,13 +420,13 @@ class SearchVM : ViewModel(), KoinComponent {
                                 }
                         )
                         articleResults.updateItems(
-                            results.wikipedia?.applyRanking(query)
+                            results.wikipedia?.filterNot { hiddenKeys.contains(it.key) }?.applyRanking(query)
                         )
                         websiteResults.updateItems(
-                            results.websites?.applyRanking(query)
+                            results.websites?.filterNot { hiddenKeys.contains(it.key) }?.applyRanking(query)
                         )
                         webAppShortcutResults.updateItems(
-                            results.webAppShortcuts?.applyRanking(query)
+                            results.webAppShortcuts?.filterNot { hiddenKeys.contains(it.key) }?.applyRanking(query)
                         )
                         calculatorResults.updateItems(results.calculators)
                         unitConverterResults.updateItems(results.unitConverters)

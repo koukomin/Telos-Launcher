@@ -130,7 +130,7 @@ object ScreenshotController {
             toast(context, R.string.screenshot_save_failed)
             return
         }
-        if (ScreenshotSettings(context).notify) notifySaved(context, uri, bitmap)
+        if (ScreenshotSettings(context).notify && context.getSystemService(NotificationManager::class.java).areNotificationsEnabled()) notifySaved(context, uri, bitmap)
         else toast(context, R.string.screenshot_saved)
     }
 

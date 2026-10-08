@@ -100,6 +100,8 @@ internal class WebsiteRepository(
                     faviconUrl = favicon.takeIf { it.isNotBlank() },
                     color = color.takeIf { it != 0 }
                 )
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
             } catch (e: IOException) {
                 //Ignore. Not a HTML page or no connection. No result for this query
             } catch (e: UncheckedIOException) {

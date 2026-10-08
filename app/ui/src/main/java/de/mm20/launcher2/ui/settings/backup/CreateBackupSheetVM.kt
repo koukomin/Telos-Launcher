@@ -35,8 +35,13 @@ class CreateBackupSheetVM : ViewModel(), KoinComponent {
     fun createBackup(uri: Uri) {
         viewModelScope.launch {
             state.value = CreateBackupState.BackingUp
-            backupManager.backup(uri, selected.value)
-            state.value = CreateBackupState.BackedUp
+            try {
+                backupManager.backup(uri, selected.value)
+                state.value = CreateBackupState.BackedUp
+            } catch (e: Exception) {
+                if (e is kotlinx.coroutines.CancellationException) throw e
+                state.value = CreateBackupState.Ready
+            }
         }
     }
 }

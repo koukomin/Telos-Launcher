@@ -128,8 +128,9 @@ private class VoicePlayer {
 
     fun play(file: File, speaker: Boolean) {
         stop()
+        var p: MediaPlayer? = null
         try {
-            val p = MediaPlayer()
+            p = MediaPlayer()
             p.setAudioAttributes(
                 AudioAttributes.Builder()
                     .setContentType(if (speaker) AudioAttributes.CONTENT_TYPE_MUSIC else AudioAttributes.CONTENT_TYPE_SPEECH)
@@ -150,6 +151,7 @@ private class VoicePlayer {
             positionMs = 0
             playing = true
         } catch (e: Exception) {
+            runCatching { p?.release() }
             stop()
         }
     }

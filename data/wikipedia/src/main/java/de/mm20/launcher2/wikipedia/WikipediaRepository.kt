@@ -44,6 +44,8 @@ internal class WikipediaRepository(
         val result = try {
             val imageWidth = context.resources.displayMetrics.widthPixels / 2
             wikipediaApi.search(baseUrl, query, imageWidth)
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
         } catch (e: Exception) {
             CrashReporter.logException(e)
             return null

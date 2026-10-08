@@ -235,7 +235,7 @@ class CalculatorViewModel(application: Application) : AndroidViewModel(applicati
     fun vat(amount: Double): VatResult? {
         val rate = vatRate.replace(',', '.').toDoubleOrNull() ?: return null
         if (!amount.isFinite()) return null
-        val value = BigDecimal(amount).setScale(2, RoundingMode.HALF_UP)
+        val value = BigDecimal.valueOf(amount).setScale(2, RoundingMode.HALF_UP)
         val factor = BigDecimal.valueOf(rate).divide(BigDecimal(100))
         return if (!vatRemove) {
             val vat = value.multiply(factor).setScale(2, RoundingMode.HALF_UP)

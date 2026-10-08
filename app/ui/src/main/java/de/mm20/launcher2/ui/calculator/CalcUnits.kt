@@ -43,7 +43,9 @@ object CalcUnits {
 
     /** Converts [text] written in [fromRadix] to [toRadix], or null if it is not a number in that system */
     fun convertRadix(text: String, fromRadix: Int, toRadix: Int): String? {
-        val clean = text.trim().removePrefix("-").removePrefix("0x").removePrefix("0b")
+        var clean = text.trim().removePrefix("-")
+        if (fromRadix == 16) clean = clean.removePrefix("0x").removePrefix("0X")
+        if (fromRadix == 2) clean = clean.removePrefix("0b").removePrefix("0B")
         if (clean.isEmpty()) return null
         val value = clean.toLongOrNull(fromRadix) ?: return null
         val signed = if (text.trim().startsWith("-")) -value else value
