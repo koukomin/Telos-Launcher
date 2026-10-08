@@ -206,19 +206,35 @@ Web apps turn a website into an app-like shortcut. Settings > Web app shortcuts.
    icon.
 4. Choose **Open with**: the **embedded** (in-app) browser, or an installed browser that supports Custom
    Tabs.
-5. Optional: **Custom CSS** (embedded only), **Enable notifications**, and whether it shows in the grid
-   and in the panel. Save.
+5. Optional: **Custom CSS** (embedded only), **Enable notifications**, **Ad blocker** (embedded only:
+   use the global setting, always on, or always off for this web app), a folder, and whether it shows in
+   the grid and in the panel. Save.
 
 Web apps appear in the app grid and in search, can be locked with [App Lock](./privacy-protection#app-lock)
 and can carry per-item customization.
 
 | Browsing setting | Default | Applies to |
 | --- | --- | --- |
-| Block ads and trackers | On | Embedded browser only. A built-in host blocklist, not a full filter-list engine |
+| Block ads and trackers | On | Embedded browser only. A built-in host blocklist, not a full filter-list engine. Each web app can override it (global, on, off) |
 | Pinch to zoom | On | Embedded browser |
 | Strip tracking parameters from links | On | Embedded browser (utm_, fbclid, gclid and similar) |
 | Top bar position | Top | Navigation bar at the top or bottom |
 | Swipe to switch web apps | On | Swipe the top bar to move between your web apps |
+
+**Deleting.** Tap the bin next to a web app in Settings > Web app shortcuts, or choose **Delete** in the
+long-press card of a web app, and confirm. The web app disappears from search, the grid, the panel and
+its folder. Deleting a folder (with confirmation) keeps the web apps inside and leaves them ungrouped.
+Folders can also be renamed.
+
+**Suggested categories.** Settings > Web app shortcuts > **Suggested categories** offers ready-made
+folders: Social, Email, Messaging, Video & Music and Productivity & Work. They are only suggestions:
+nothing is added until you tap **Add** on a category and choose which websites to include. The chosen
+websites are saved as normal web apps (their icon is looked up from the website, with a category icon
+as fallback) in a folder named after the category, and turning the folder feature on if it was off. A website
+you already added with the same address is reused, not duplicated. Afterwards the folder and every web app
+can be edited or deleted like anything else. You sign in on the website itself. The embedded browser keeps
+the logins, so this only applies to web apps that open in the embedded browser; a web app opened in an
+external browser uses that browser's own sign-in.
 
 **Web Apps Panel.** A page that holds the web apps you choose. It is reached by the gesture that has the
 **Web Apps Panel** action (swipe right by default). The settings page **Enable Web Apps Panel** lets you

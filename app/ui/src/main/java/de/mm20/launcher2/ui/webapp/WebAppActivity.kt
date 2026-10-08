@@ -70,6 +70,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.net.toUri
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.preferences.ui.WebAppBrowsingSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
@@ -279,6 +280,13 @@ private fun WebAppScreen(
         shortcutsState.value.find { it.key == (if (key == initialKey) shortcutKey else key) }
     fun cssForKey(key: String): String? =
         shortcutForKey(key)?.customCss ?: customCss.takeIf { key == initialKey }
+    /** Per web app ad blocker mode wins over the global setting unless it is set to Global. */
+    fun adBlockEnabledForKey(key: String): Boolean =
+        when (shortcutForKey(key)?.adBlockMode) {
+            WebAppShortcut.AdBlockMode.On -> true
+            WebAppShortcut.AdBlockMode.Off -> false
+            else -> adBlockEnabledState.value
+        }
     fun notificationsEnabledForKey(key: String): Boolean =
         shortcutForKey(key)?.notificationsEnabled ?: false
     fun labelForKey(key: String): String =
@@ -501,7 +509,7 @@ private fun WebAppScreen(
                                     view: WebView,
                                     request: WebResourceRequest,
                                 ): WebResourceResponse? {
-                                    if (adBlockEnabledState.value && adBlocker.shouldBlock(request.url.host)) {
+                                    if (adBlockEnabledForKey(key) && adBlocker.shouldBlock(request.url.host)) {
                                         return adBlocker.blockedResponse()
                                     }
                                     return super.shouldInterceptRequest(view, request)
@@ -579,11 +587,11 @@ private fun WebAppScreen(
         EditWebAppShortcutSheet(
             expanded = showEditSheet,
             existing = editTarget,
-            onSave = { newLabel, newUrl, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, newCustomCss, newNotificationsEnabled, newGroupId ->
+            onSave = { newLabel, newUrl, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, newCustomCss, newNotificationsEnabled, newGroupId, newAdBlockMode ->
                 webAppShortcutRepository.update(
                     editTarget, newLabel, newUrl, iconUri, faviconUrl, rendererPackage,
                     showInGrid, showInPanel, editTarget.order, iconSource, newCustomCss,
-                    newNotificationsEnabled,
+                    newNotificationsEnabled, newAdBlockMode,
                 )
                 val browsingSettings: de.mm20.launcher2.preferences.ui.WebAppBrowsingSettings = org.koin.java.KoinJavaComponent.getKoin().get()
                 kotlinx.coroutines.MainScope().launch {

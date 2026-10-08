@@ -38,6 +38,7 @@ internal data class WebAppShortcutImpl(
     override val order: Int = 0,
     override val iconSource: WebAppShortcut.IconSource = WebAppShortcut.IconSource.Website,
     override val notificationsEnabled: Boolean = false,
+    override val adBlockMode: WebAppShortcut.AdBlockMode = WebAppShortcut.AdBlockMode.Global,
 ) : WebAppShortcut {
 
     override val domain: String = Domain

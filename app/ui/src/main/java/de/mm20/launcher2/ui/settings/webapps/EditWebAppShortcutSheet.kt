@@ -67,7 +67,7 @@ private enum class IconPickerTab { IconPack, Photo, Favicon }
 fun EditWebAppShortcutSheet(
     expanded: Boolean,
     existing: WebAppShortcut?,
-    onSave: (label: String, url: String, iconUri: String?, faviconUrl: String?, rendererPackage: String?, showInGrid: Boolean, showInPanel: Boolean, iconSource: WebAppShortcut.IconSource, customCss: String?, notificationsEnabled: Boolean, groupId: String?) -> Unit,
+    onSave: (label: String, url: String, iconUri: String?, faviconUrl: String?, rendererPackage: String?, showInGrid: Boolean, showInPanel: Boolean, iconSource: WebAppShortcut.IconSource, customCss: String?, notificationsEnabled: Boolean, groupId: String?, adBlockMode: WebAppShortcut.AdBlockMode) -> Unit,
     onDismiss: () -> Unit,
     onImportIcon: suspend (uri: Uri, sizePx: Int) -> String?,
     onFindFavicon: suspend (url: String) -> String?,
@@ -96,6 +96,8 @@ fun EditWebAppShortcutSheet(
         var groupId by remember(existing, groups) { 
             mutableStateOf(existing?.let { e -> groups.find { it.appKeys.contains(e.key) }?.id }) 
         }
+        var adBlockMode by remember(existing) { mutableStateOf(existing?.adBlockMode ?: WebAppShortcut.AdBlockMode.Global) }
+        var showAdBlockMenu by remember { mutableStateOf(false) }
         var findingFavicon by remember { mutableStateOf(false) }
         var showRendererMenu by remember { mutableStateOf(false) }
         var showIconSourceMenu by remember { mutableStateOf(false) }
@@ -345,6 +347,48 @@ fun EditWebAppShortcutSheet(
                 Checkbox(checked = notificationsEnabled, onCheckedChange = { notificationsEnabled = it })
             }
 
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(R.string.web_app_shortcut_ad_block),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.weight(1f),
+                )
+                val adBlockLabels = mapOf(
+                    WebAppShortcut.AdBlockMode.Global to stringResource(R.string.web_app_shortcut_ad_block_global),
+                    WebAppShortcut.AdBlockMode.On to stringResource(R.string.web_app_shortcut_ad_block_on),
+                    WebAppShortcut.AdBlockMode.Off to stringResource(R.string.web_app_shortcut_ad_block_off),
+                )
+                TextButton(onClick = { showAdBlockMenu = true }) {
+                    Text(adBlockLabels.getValue(adBlockMode))
+                }
+                DropdownMenuPopup(
+                    expanded = showAdBlockMenu,
+                    onDismissRequest = { showAdBlockMenu = false },
+                ) {
+                    DropdownMenuGroup(shapes = MenuDefaults.groupShapes()) {
+                        for ((mode, text) in adBlockLabels) {
+                            DropdownMenuItem(
+                                text = { Text(text) },
+                                onClick = {
+                                    adBlockMode = mode
+                                    showAdBlockMenu = false
+                                },
+                            )
+                        }
+                    }
+                }
+            }
+            Text(
+                text = stringResource(R.string.web_app_shortcut_ad_block_summary),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+
             if (groupsEnabled && groups.isNotEmpty()) {
                 Row(
                     modifier = Modifier
@@ -353,14 +397,14 @@ fun EditWebAppShortcutSheet(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
-                        text = "Group",
+                        text = stringResource(R.string.web_app_group_label),
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.weight(1f),
                     )
                     TextButton(onClick = { showGroupMenu = true }) {
                         Text(
                             groupId?.let { id -> groups.find { it.id == id }?.name }
-                                ?: "None"
+                                ?: stringResource(R.string.web_app_group_none)
                         )
                     }
                     DropdownMenuPopup(
@@ -369,7 +413,7 @@ fun EditWebAppShortcutSheet(
                     ) {
                         DropdownMenuGroup(shapes = MenuDefaults.groupShapes()) {
                             DropdownMenuItem(
-                                text = { Text("None") },
+                                text = { Text(stringResource(R.string.web_app_group_none)) },
                                 onClick = {
                                     groupId = null
                                     showGroupMenu = false
@@ -404,7 +448,7 @@ fun EditWebAppShortcutSheet(
                         onSave(
                             label.trim(), url.trim(), iconUri, faviconUrl, rendererPackage,
                             showInGrid, showInPanel, iconSource, customCss.trim().ifBlank { null },
-                            notificationsEnabled, groupId
+                            notificationsEnabled, groupId, adBlockMode
                         )
                     }
                 ) {

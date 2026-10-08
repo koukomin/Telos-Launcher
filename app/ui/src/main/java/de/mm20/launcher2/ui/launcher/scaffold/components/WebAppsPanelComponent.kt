@@ -115,13 +115,29 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
                             key = "group-${section.group?.id ?: "ungrouped"}",
                             span = { GridItemSpan(maxLineSpan) },
                         ) {
-                            Text(
-                                text = section.group?.name
-                                    ?: stringResource(R.string.web_apps_panel_ungrouped),
-                                style = MaterialTheme.typography.titleSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            androidx.compose.foundation.layout.Row(
+                                verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
                                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
-                            )
+                            ) {
+                                val categoryIcon = de.mm20.launcher2.ui.settings.webapps.WebAppPresets
+                                    .byId(section.group?.category)?.iconRes
+                                if (categoryIcon != null) {
+                                    androidx.compose.material3.Icon(
+                                        painter = androidx.compose.ui.res.painterResource(categoryIcon),
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .padding(end = 8.dp)
+                                            .size(18.dp),
+                                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                                Text(
+                                    text = section.group?.name
+                                        ?: stringResource(R.string.web_apps_panel_ungrouped),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
                         }
                         items(
                             section.items.size,
@@ -271,8 +287,8 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
         EditWebAppShortcutSheet(
             expanded = showCreateSheet,
             existing = null,
-            onSave = { label, url, iconUri, faviconUrl, rendererPackage, _, _, _, _, _, _ ->
-                viewModel.createAndAdd(label, url, iconUri, faviconUrl, rendererPackage)
+            onSave = { label, url, iconUri, faviconUrl, rendererPackage, _, _, _, customCss, notificationsEnabled, _, adBlockMode ->
+                viewModel.createAndAdd(label, url, iconUri, faviconUrl, rendererPackage, customCss, notificationsEnabled, adBlockMode)
                 showCreateSheet = false
             },
             onDismiss = { showCreateSheet = false },

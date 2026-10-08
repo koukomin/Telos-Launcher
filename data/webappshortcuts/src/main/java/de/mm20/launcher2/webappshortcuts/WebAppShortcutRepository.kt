@@ -43,6 +43,7 @@ interface WebAppShortcutRepository : SearchableRepository<WebAppShortcut> {
         iconSource: WebAppShortcut.IconSource = WebAppShortcut.IconSource.Website,
         customCss: String? = null,
         notificationsEnabled: Boolean = false,
+        adBlockMode: WebAppShortcut.AdBlockMode? = null,
     ): WebAppShortcut
 
     fun update(
@@ -58,6 +59,7 @@ interface WebAppShortcutRepository : SearchableRepository<WebAppShortcut> {
         iconSource: WebAppShortcut.IconSource = WebAppShortcut.IconSource.Website,
         customCss: String? = null,
         notificationsEnabled: Boolean = false,
+        adBlockMode: WebAppShortcut.AdBlockMode? = null,
     ): WebAppShortcut
 
     fun delete(shortcut: WebAppShortcut)
@@ -97,6 +99,7 @@ internal class WebAppShortcutRepositoryImpl(
         iconSource: WebAppShortcut.IconSource,
         customCss: String?,
         notificationsEnabled: Boolean,
+        adBlockMode: WebAppShortcut.AdBlockMode?,
     ): WebAppShortcut {
         val shortcut = WebAppShortcutImpl(
             id = UUID.randomUUID().toString(),
@@ -112,6 +115,7 @@ internal class WebAppShortcutRepositoryImpl(
             order = order,
             iconSource = iconSource,
             notificationsEnabled = notificationsEnabled,
+            adBlockMode = adBlockMode ?: WebAppShortcut.AdBlockMode.Global,
         )
         savableSearchableRepository.insert(shortcut)
         return shortcut
@@ -130,6 +134,7 @@ internal class WebAppShortcutRepositoryImpl(
         iconSource: WebAppShortcut.IconSource,
         customCss: String?,
         notificationsEnabled: Boolean,
+        adBlockMode: WebAppShortcut.AdBlockMode?,
     ): WebAppShortcut {
         shortcut as WebAppShortcutImpl
         val updated = shortcut.copy(
@@ -144,6 +149,7 @@ internal class WebAppShortcutRepositoryImpl(
             order = order,
             iconSource = iconSource,
             notificationsEnabled = notificationsEnabled,
+            adBlockMode = adBlockMode ?: shortcut.adBlockMode,
         )
         savableSearchableRepository.update(updated)
         return updated

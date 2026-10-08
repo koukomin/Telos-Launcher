@@ -8,7 +8,9 @@ import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -107,6 +109,15 @@ fun WebAppShortcutItem(
             )
         )
 
+        var showDeleteDialog by remember { mutableStateOf(false) }
+        toolbarActions.add(
+            DefaultToolbarAction(
+                label = stringResource(R.string.menu_delete),
+                icon = R.drawable.delete_24px,
+                action = { showDeleteDialog = true }
+            )
+        )
+
         if (inDock) {
             toolbarActions.add(
                 DefaultToolbarAction(
@@ -143,14 +154,33 @@ fun WebAppShortcutItem(
 
         val webAppShortcutRepository: WebAppShortcutRepository = koinInject()
         val panelManager: WebAppsPanelManager = koinInject()
+        if (showDeleteDialog) {
+            AlertDialog(
+                onDismissRequest = { showDeleteDialog = false },
+                title = { Text(stringResource(R.string.web_app_delete_title)) },
+                text = { Text(stringResource(R.string.web_app_delete_message, shortcut.labelOverride ?: shortcut.label)) },
+                confirmButton = {
+                    TextButton(onClick = {
+                        showDeleteDialog = false
+                        panelManager.delete(shortcut)
+                        onBack?.invoke()
+                    }) { Text(stringResource(R.string.menu_delete)) }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showDeleteDialog = false }) {
+                        Text(stringResource(android.R.string.cancel))
+                    }
+                }
+            )
+        }
         EditWebAppShortcutSheet(
             expanded = showEditSheet,
             existing = shortcut,
-            onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId ->
+            onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode ->
                 webAppShortcutRepository.update(
                     shortcut, label, url, iconUri, faviconUrl, rendererPackage,
                     showInGrid, showInPanel, shortcut.order, iconSource, customCss,
-                    notificationsEnabled,
+                    notificationsEnabled, adBlockMode,
                 )
                 val browsingSettings: de.mm20.launcher2.preferences.ui.WebAppBrowsingSettings = org.koin.java.KoinJavaComponent.getKoin().get()
                 kotlinx.coroutines.MainScope().launch {
