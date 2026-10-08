@@ -496,6 +496,8 @@ private fun AddAppDialog(viewModel: StoreViewModel, prefill: String, onDismiss: 
 private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit) {
     val g by viewModel.global.collectAsStateWithLifecycle()
     var token by remember { mutableStateOf(g.githubToken) }
+    val neverLabel = stringResource(R.string.hf_store_never)
+    val dailyLabel = stringResource(R.string.hf_store_daily)
     AlertDialog(
         onDismissRequest = { viewModel.setGlobal { it.copy(githubToken = token.trim()) }; onDismiss() },
         title = { Text(stringResource(R.string.hc_store_settings)) },
@@ -503,7 +505,7 @@ private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
             Column {
                 Text(stringResource(R.string.hc_check_for_updates), style = MaterialTheme.typography.titleSmall)
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(vertical = 4.dp)) {
-                    items(listOf(0 to stringResource(R.string.hf_store_never), 1 to "1 h", 3 to "3 h", 6 to "6 h", 12 to "12 h", 24 to stringResource(R.string.hf_store_daily))) { (hours, label) ->
+                    items(listOf(0 to neverLabel, 1 to "1 h", 3 to "3 h", 6 to "6 h", 12 to "12 h", 24 to dailyLabel)) { (hours, label) ->
                         FilterChip(selected = g.checkIntervalHours == hours, onClick = { viewModel.setGlobal { it.copy(checkIntervalHours = hours) } }, label = { Text(label) })
                     }
                 }

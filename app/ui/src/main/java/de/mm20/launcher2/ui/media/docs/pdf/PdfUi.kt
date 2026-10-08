@@ -327,10 +327,10 @@ private fun ZoomablePage(pages: PdfPages, index: Int) {
             val b = bmp
             if (b != null) {
                 val aspect = b.width.toFloat() / b.height
-                val fitW = minOf(maxWidth, maxHeight * aspect)
+                val fitW = minOf(this@BoxWithConstraints.maxWidth, this@BoxWithConstraints.maxHeight * aspect)
                 val w = fitW * zoom
                 val h = w / aspect
-                Box(Modifier.size(maxOf(w, maxWidth), maxOf(h, maxHeight)), contentAlignment = Alignment.Center) {
+                Box(Modifier.size(maxOf(w, this@BoxWithConstraints.maxWidth), maxOf(h, this@BoxWithConstraints.maxHeight)), contentAlignment = Alignment.Center) {
                     Image(b.asImageBitmap(), null, Modifier.size(w, h), contentScale = ContentScale.FillBounds)
                 }
             }

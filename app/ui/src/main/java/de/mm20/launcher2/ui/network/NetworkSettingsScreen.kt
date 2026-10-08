@@ -30,7 +30,7 @@ import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import kotlinx.serialization.Serializable
 import org.koin.compose.koinInject
 
-private typealias Icons = de.mm20.launcher2.base.R.drawable
+private typealias IconsNetworkSettingsScreen = de.mm20.launcher2.base.R.drawable
 
 @Serializable
 data object NetworkSettingsRoute : NavKey
@@ -59,7 +59,7 @@ fun NetworkSettingsScreen() {
                 SwitchPreference(
                     title = stringResource(R.string.net_settings_boot),
                     summary = stringResource(R.string.net_settings_boot_sum),
-                    icon = Icons.power_settings_new_24px,
+                    icon = IconsNetworkSettingsScreen.power_settings_new_24px,
                     value = s.startOnBoot,
                     onValueChanged = { settings.setStartOnBoot(it) },
                 )
@@ -69,7 +69,7 @@ fun NetworkSettingsScreen() {
             PreferenceCategory(title = stringResource(R.string.net_settings_cat_network)) {
                 ListPreference(
                     title = stringResource(R.string.net_settings_ip_mode),
-                    icon = Icons.language_24px,
+                    icon = IconsNetworkSettingsScreen.language_24px,
                     items = listOf(
                         stringResource(R.string.net_settings_ip_v4) to IpMode.V4,
                         stringResource(R.string.net_settings_ip_v6) to IpMode.V6,
@@ -81,7 +81,7 @@ fun NetworkSettingsScreen() {
                 SwitchPreference(
                     title = stringResource(R.string.net_settings_lan),
                     summary = stringResource(R.string.net_settings_lan_sum),
-                    icon = Icons.lan_24px,
+                    icon = IconsNetworkSettingsScreen.lan_24px,
                     value = s.routeLan,
                     onValueChanged = { settings.setRouteLan(it) },
                 )
@@ -128,7 +128,7 @@ fun NetworkSettingsScreen() {
             PreferenceCategory(title = stringResource(R.string.net_settings_cat_notif)) {
                 ListPreference(
                     title = stringResource(R.string.net_settings_notif_detail),
-                    icon = Icons.notifications_24px,
+                    icon = IconsNetworkSettingsScreen.notifications_24px,
                     items = listOf(
                         stringResource(R.string.net_settings_notif_minimal) to NotificationDetail.Minimal,
                         stringResource(R.string.net_settings_notif_counters) to NotificationDetail.WithCounters,
@@ -154,7 +154,7 @@ fun NetworkSettingsScreen() {
             PreferenceCategory(title = stringResource(R.string.net_settings_cat_logs)) {
                 SwitchPreference(
                     title = stringResource(R.string.net_settings_log_conn),
-                    icon = Icons.manage_search_24px,
+                    icon = IconsNetworkSettingsScreen.manage_search_24px,
                     value = s.logConnections,
                     onValueChanged = { settings.setLogConnections(it) },
                 )
@@ -185,13 +185,13 @@ fun NetworkSettingsScreen() {
                 Preference(
                     title = stringResource(R.string.net_settings_always_on),
                     summary = stringResource(R.string.net_settings_always_on_sum),
-                    icon = Icons.open_in_new_24px,
+                    icon = IconsNetworkSettingsScreen.open_in_new_24px,
                     onClick = { open(Settings.ACTION_VPN_SETTINGS) },
                 )
                 Preference(
                     title = stringResource(R.string.net_settings_battery),
                     summary = stringResource(R.string.net_settings_battery_sum),
-                    icon = Icons.battery_full_24px,
+                    icon = IconsNetworkSettingsScreen.battery_full_24px,
                     onClick = { open(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS) },
                 )
             }

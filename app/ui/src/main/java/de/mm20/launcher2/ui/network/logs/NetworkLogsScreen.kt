@@ -68,7 +68,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import org.koin.compose.koinInject
 
-private typealias Icons = de.mm20.launcher2.base.R.drawable
+private typealias IconsNetworkLogsScreen = de.mm20.launcher2.base.R.drawable
 
 @Serializable
 data object NetworkLogsRoute : NavKey
@@ -133,7 +133,7 @@ fun NetworkLogsScreen() {
         topBarActions = {
             Box {
                 IconButton(onClick = { menu = true }) {
-                    Icon(painterResource(Icons.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
+                    Icon(painterResource(IconsNetworkLogsScreen.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
                 }
                 DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                     if (tab != TAB_APPS) {
@@ -208,7 +208,7 @@ fun NetworkLogsScreen() {
                         onValueChange = { query = it },
                         singleLine = true,
                         label = { Text(stringResource(R.string.netfw_l_search)) },
-                        leadingIcon = { Icon(painterResource(Icons.search_24px), contentDescription = null) },
+                        leadingIcon = { Icon(painterResource(IconsNetworkLogsScreen.search_24px), contentDescription = null) },
                         modifier = Modifier.fillMaxWidth(),
                     )
                     Row(
@@ -223,7 +223,7 @@ fun NetworkLogsScreen() {
                                 selected = true,
                                 onClick = { appFilter = null },
                                 label = { Text(directory.labelFor(id)) },
-                                trailingIcon = { Icon(painterResource(Icons.close_20px), contentDescription = null) },
+                                trailingIcon = { Icon(painterResource(IconsNetworkLogsScreen.close_20px), contentDescription = null) },
                             )
                         }
                     }
@@ -341,7 +341,7 @@ private fun EmptyLog() {
 @Composable
 private fun VerdictIcon(blocked: Boolean) {
     Icon(
-        painterResource(if (blocked) Icons.close_24px else Icons.check_24px),
+        painterResource(if (blocked) IconsNetworkLogsScreen.close_24px else IconsNetworkLogsScreen.check_24px),
         contentDescription = null,
         tint = if (blocked) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
     )

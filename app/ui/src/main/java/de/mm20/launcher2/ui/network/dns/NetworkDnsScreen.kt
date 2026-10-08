@@ -50,7 +50,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object NetworkDnsRoute : NavKey
 
-private typealias Icons = de.mm20.launcher2.base.R.drawable
+private typealias IconsNetworkDnsScreen = de.mm20.launcher2.base.R.drawable
 
 /** Encrypted DNS of Telos Network: choose a built-in or custom server. Only applies while the VPN runs. */
 @Composable
@@ -87,7 +87,7 @@ fun NetworkDnsScreen() {
                 Preference(
                     title = { Text(engineStateText(engineState)) },
                     summary = { Text(stringResource(R.string.net_dns_vpn_only)) },
-                    icon = { Icon(painterResource(Icons.info_24px), contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
+                    icon = { Icon(painterResource(IconsNetworkDnsScreen.info_24px), contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
                 )
             }
         }
@@ -106,13 +106,13 @@ fun NetworkDnsScreen() {
             PreferenceCategory {
                 Preference(
                     title = stringResource(R.string.net_dns_add_custom),
-                    icon = Icons.add_24px,
+                    icon = IconsNetworkDnsScreen.add_24px,
                     onClick = { formIsNew = true; form = DnsServer("", DnsKind.Doh, "") },
                 )
                 Preference(
                     title = stringResource(R.string.net_dns_nextdns),
                     summary = stringResource(R.string.net_dns_nextdns_summary),
-                    icon = Icons.add_24px,
+                    icon = IconsNetworkDnsScreen.add_24px,
                     onClick = { nextDns = true },
                 )
             }

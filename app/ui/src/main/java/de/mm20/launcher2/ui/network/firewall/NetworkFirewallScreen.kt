@@ -58,7 +58,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import org.koin.compose.koinInject
 
-private typealias Icons = de.mm20.launcher2.base.R.drawable
+private typealias IconsNetworkFirewallScreen = de.mm20.launcher2.base.R.drawable
 
 @Serializable
 data object NetworkFirewallRoute : NavKey
@@ -125,7 +125,7 @@ fun NetworkFirewallScreen() {
         topBarActions = {
             Box {
                 IconButton(onClick = { menu = true }) {
-                    Icon(painterResource(Icons.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
+                    Icon(painterResource(IconsNetworkFirewallScreen.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
                 }
                 DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                     Text(
@@ -151,13 +151,13 @@ fun NetworkFirewallScreen() {
                 Preference(
                     title = stringResource(R.string.netfw_universal_rules),
                     summary = stringResource(R.string.netfw_universal_rules_summary),
-                    icon = Icons.rule_settings_24px,
+                    icon = IconsNetworkFirewallScreen.rule_settings_24px,
                     onClick = { backStack.add(NetworkUniversalRulesRoute) },
                 )
                 Preference(
                     title = stringResource(R.string.netfw_custom_rules),
                     summary = stringResource(R.string.netfw_custom_rules_summary),
-                    icon = Icons.tune_24px,
+                    icon = IconsNetworkFirewallScreen.tune_24px,
                     onClick = { backStack.add(NetworkCustomRulesRoute) },
                 )
             }
@@ -168,7 +168,7 @@ fun NetworkFirewallScreen() {
                 onValueChange = { query = it },
                 singleLine = true,
                 label = { Text(stringResource(R.string.netfw_search_apps)) },
-                leadingIcon = { Icon(painterResource(Icons.search_24px), contentDescription = null) },
+                leadingIcon = { Icon(painterResource(IconsNetworkFirewallScreen.search_24px), contentDescription = null) },
                 modifier = Modifier.fillMaxWidth(),
             )
         }
@@ -281,13 +281,13 @@ private fun AppRuleRow(
                         onClick = onAllowNew,
                     )
                 }
-                SwitchPreference(title = stringResource(R.string.netfw_block_wifi), icon = Icons.wifi_24px, value = rule.blockWifi, onValueChanged = { onRule(rule.copy(blockWifi = it)) })
-                SwitchPreference(title = stringResource(R.string.netfw_block_mobile), icon = Icons.signal_cellular_alt_24px, value = rule.blockMobile, onValueChanged = { onRule(rule.copy(blockMobile = it)) })
-                SwitchPreference(title = stringResource(R.string.netfw_block_roaming), icon = Icons.public_24px, value = rule.blockRoaming, onValueChanged = { onRule(rule.copy(blockRoaming = it)) })
-                SwitchPreference(title = stringResource(R.string.netfw_block_lan), icon = Icons.lan_24px, value = rule.blockLan, onValueChanged = { onRule(rule.copy(blockLan = it)) })
-                SwitchPreference(title = stringResource(R.string.netfw_block_vpn), icon = Icons.lock_24px, value = rule.blockVpn, onValueChanged = { onRule(rule.copy(blockVpn = it)) })
-                SwitchPreference(title = stringResource(R.string.netfw_block_background), icon = Icons.pause_24px, value = rule.blockBackground, onValueChanged = { onRule(rule.copy(blockBackground = it)) })
-                SwitchPreference(title = stringResource(R.string.netfw_block_screen_off), icon = Icons.schedule_24px, value = rule.blockScreenOff, onValueChanged = { onRule(rule.copy(blockScreenOff = it)) })
+                SwitchPreference(title = stringResource(R.string.netfw_block_wifi), icon = IconsNetworkFirewallScreen.wifi_24px, value = rule.blockWifi, onValueChanged = { onRule(rule.copy(blockWifi = it)) })
+                SwitchPreference(title = stringResource(R.string.netfw_block_mobile), icon = IconsNetworkFirewallScreen.signal_cellular_alt_24px, value = rule.blockMobile, onValueChanged = { onRule(rule.copy(blockMobile = it)) })
+                SwitchPreference(title = stringResource(R.string.netfw_block_roaming), icon = IconsNetworkFirewallScreen.public_24px, value = rule.blockRoaming, onValueChanged = { onRule(rule.copy(blockRoaming = it)) })
+                SwitchPreference(title = stringResource(R.string.netfw_block_lan), icon = IconsNetworkFirewallScreen.lan_24px, value = rule.blockLan, onValueChanged = { onRule(rule.copy(blockLan = it)) })
+                SwitchPreference(title = stringResource(R.string.netfw_block_vpn), icon = IconsNetworkFirewallScreen.lock_24px, value = rule.blockVpn, onValueChanged = { onRule(rule.copy(blockVpn = it)) })
+                SwitchPreference(title = stringResource(R.string.netfw_block_background), icon = IconsNetworkFirewallScreen.pause_24px, value = rule.blockBackground, onValueChanged = { onRule(rule.copy(blockBackground = it)) })
+                SwitchPreference(title = stringResource(R.string.netfw_block_screen_off), icon = IconsNetworkFirewallScreen.schedule_24px, value = rule.blockScreenOff, onValueChanged = { onRule(rule.copy(blockScreenOff = it)) })
                 if (!backgroundDetection && rule.blockBackground) {
                     Preference(
                         title = stringResource(R.string.netfw_usage_needed),
@@ -307,7 +307,7 @@ private fun AppRuleRow(
                     Box {
                         Preference(
                             title = stringResource(R.string.netfw_temp_allow),
-                            icon = Icons.timer_24px,
+                            icon = IconsNetworkFirewallScreen.timer_24px,
                             onClick = { open = true },
                         )
                         DropdownMenu(expanded = open, onDismissRequest = { open = false }) {

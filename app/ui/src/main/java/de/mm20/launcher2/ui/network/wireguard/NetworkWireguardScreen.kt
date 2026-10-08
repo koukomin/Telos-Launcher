@@ -66,7 +66,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import org.koin.compose.koinInject
 
-private typealias Icons = de.mm20.launcher2.base.R.drawable
+private typealias IconsNetworkWireguardScreen = de.mm20.launcher2.base.R.drawable
 
 /** The list of WireGuard tunnels. */
 @Serializable
@@ -120,7 +120,7 @@ fun NetworkWireguardScreen() {
                 title = { Text(stringResource(R.string.nwg_title)) },
                 navigationIcon = {
                     IconButton(onClick = { backStack.removeLastOrNull() }) {
-                        Icon(painterResource(Icons.arrow_back_24px), contentDescription = stringResource(R.string.nwg_back))
+                        Icon(painterResource(IconsNetworkWireguardScreen.arrow_back_24px), contentDescription = stringResource(R.string.nwg_back))
                     }
                 },
             )
@@ -128,7 +128,7 @@ fun NetworkWireguardScreen() {
         floatingActionButton = {
             Box {
                 FloatingActionButton(onClick = { addMenu = true }) {
-                    Icon(painterResource(Icons.add_24px), contentDescription = stringResource(R.string.nwg_add))
+                    Icon(painterResource(IconsNetworkWireguardScreen.add_24px), contentDescription = stringResource(R.string.nwg_add))
                 }
                 DropdownMenu(expanded = addMenu, onDismissRequest = { addMenu = false }) {
                     DropdownMenuItem(text = { Text(stringResource(R.string.nwg_add_new)) }, onClick = {
@@ -182,7 +182,7 @@ fun NetworkWireguardScreen() {
                 ListItem(
                     headlineContent = { Text(stringResource(R.string.nwg_apps)) },
                     supportingContent = { Text(stringResource(R.string.nwg_apps_summary)) },
-                    leadingContent = { Icon(painterResource(Icons.apps_24px), contentDescription = null) },
+                    leadingContent = { Icon(painterResource(IconsNetworkWireguardScreen.apps_24px), contentDescription = null) },
                     modifier = Modifier.clickable { backStack.add(NetworkWireguardAppsRoute) },
                 )
                 HorizontalDivider()

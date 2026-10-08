@@ -536,14 +536,14 @@ private fun ResultScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
                     Column(Modifier.padding(start = 12.dp)) {
                         Text(stringResource(R.string.pdft_done), style = MaterialTheme.typography.titleMedium)
                         Text(
-                            resultTool?.let { stringResource(it.title) } ?: "",
+                            vm.resultTool?.let { stringResource(it.title) } ?: "",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
                 }
             }
-            if (resultTool == PdfTool.COMPRESS && results.size == 1 && vm.inputBytes > 0) {
+            if (vm.resultTool == PdfTool.COMPRESS && results.size == 1 && vm.inputBytes > 0) {
                 item {
                     val after = results[0].size
                     val saving = ((vm.inputBytes - after) * 100f / vm.inputBytes)

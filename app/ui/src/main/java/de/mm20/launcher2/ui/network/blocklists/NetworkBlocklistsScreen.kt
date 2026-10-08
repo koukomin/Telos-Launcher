@@ -43,7 +43,7 @@ import kotlinx.serialization.Serializable
 import org.koin.compose.koinInject
 import java.text.NumberFormat
 
-private typealias Icons = de.mm20.launcher2.base.R.drawable
+private typealias IconsNetworkBlocklistsScreen = de.mm20.launcher2.base.R.drawable
 
 @Serializable
 data object NetworkBlocklistsRoute : NavKey
@@ -105,7 +105,7 @@ fun NetworkBlocklistsScreen() {
                         }
                     ),
                     summary = summary,
-                    icon = Icons.download_24px,
+                    icon = IconsNetworkBlocklistsScreen.download_24px,
                     enabled = !busy,
                     onClick = {
                         scope.launch {
@@ -128,14 +128,14 @@ fun NetworkBlocklistsScreen() {
                     SwitchPreference(
                         title = stringResource(R.string.netfw_b_auto),
                         summary = stringResource(R.string.netfw_b_auto_summary),
-                        icon = Icons.schedule_24px,
+                        icon = IconsNetworkBlocklistsScreen.schedule_24px,
                         value = auto,
                         onValueChanged = { v -> scope.launch { blocklists.setAutoUpdate(v) } },
                     )
                     Preference(
                         title = stringResource(R.string.netfw_b_remove),
                         summary = stringResource(R.string.netfw_b_storage, Formatter.formatShortFileSize(context, storage)),
-                        icon = Icons.delete_24px,
+                        icon = IconsNetworkBlocklistsScreen.delete_24px,
                         onClick = { scope.launch { blocklists.removeDownloaded() } },
                     )
                 }
@@ -173,7 +173,7 @@ fun NetworkBlocklistsScreen() {
                 PreferenceCategory {
                     Preference(
                         title = stringResource(R.string.netfw_b_reset_counts),
-                        icon = Icons.settings_backup_restore_24px,
+                        icon = IconsNetworkBlocklistsScreen.settings_backup_restore_24px,
                         onClick = { scope.launch { blocklists.resetCounts() } },
                     )
                 }
@@ -187,7 +187,7 @@ fun NetworkBlocklistsScreen() {
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                 )
-                Preference(title = stringResource(R.string.netfw_b_bypass_add), icon = Icons.add_24px, onClick = { addBypass = true })
+                Preference(title = stringResource(R.string.netfw_b_bypass_add), icon = IconsNetworkBlocklistsScreen.add_24px, onClick = { addBypass = true })
                 bypass.forEach { b ->
                     Preference(
                         title = { Text(b.domain) },
@@ -201,7 +201,7 @@ fun NetworkBlocklistsScreen() {
                         },
                         controls = {
                             IconButton(onClick = { scope.launch { blocklists.removeBypass(b.id) } }) {
-                                Icon(painterResource(Icons.delete_24px), contentDescription = stringResource(R.string.hc_delete))
+                                Icon(painterResource(IconsNetworkBlocklistsScreen.delete_24px), contentDescription = stringResource(R.string.hc_delete))
                             }
                         },
                     )

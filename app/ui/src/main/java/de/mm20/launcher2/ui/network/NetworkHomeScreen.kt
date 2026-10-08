@@ -56,7 +56,7 @@ import kotlinx.serialization.Serializable
 import org.koin.compose.koinInject
 import java.text.NumberFormat
 
-private typealias Icons = de.mm20.launcher2.base.R.drawable
+private typealias IconsNetworkHomeScreen = de.mm20.launcher2.base.R.drawable
 
 /** The hub of Telos Network: on/off switch, a short live summary and links to all areas. */
 @Serializable
@@ -107,7 +107,7 @@ fun NetworkHomeScreen() {
         title = { Text(stringResource(R.string.net_hub_title), modifier = Modifier.padding(horizontal = 16.dp)) },
         topBarActions = {
             IconButton(onClick = { backStack.add(NetworkSettingsRoute) }) {
-                Icon(painterResource(Icons.settings_24px), contentDescription = stringResource(R.string.net_hub_settings))
+                Icon(painterResource(IconsNetworkHomeScreen.settings_24px), contentDescription = stringResource(R.string.net_hub_settings))
             }
         },
     ) {
@@ -126,7 +126,7 @@ fun NetworkHomeScreen() {
             Banner(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.net_hub_safety),
-                icon = Icons.info_24px,
+                icon = IconsNetworkHomeScreen.info_24px,
             )
         }
         item {
@@ -134,25 +134,25 @@ fun NetworkHomeScreen() {
                 Preference(
                     title = stringResource(R.string.net_hub_stat_dns),
                     summary = selectedDns.name,
-                    icon = Icons.language_24px,
+                    icon = IconsNetworkHomeScreen.language_24px,
                     onClick = { backStack.add(NetworkDnsRoute) },
                 )
                 Preference(
                     title = stringResource(R.string.net_hub_wireguard),
                     summary = wgUp.ifEmpty { stringResource(R.string.net_hub_stat_wg_off) },
-                    icon = Icons.lock_24px,
+                    icon = IconsNetworkHomeScreen.lock_24px,
                     onClick = { backStack.add(NetworkWireguardRoute) },
                 )
                 Preference(
                     title = stringResource(R.string.net_hub_stat_blocked_dns),
                     summary = number.format(stats.dnsBlocked),
-                    icon = Icons.visibility_off_24px,
+                    icon = IconsNetworkHomeScreen.visibility_off_24px,
                     onClick = { backStack.add(NetworkLogsRoute) },
                 )
                 Preference(
                     title = stringResource(R.string.net_hub_stat_blocked_conn),
                     summary = number.format(stats.connectionsBlocked) + "\n" + stringResource(R.string.net_hub_stats_note),
-                    icon = Icons.error_24px,
+                    icon = IconsNetworkHomeScreen.error_24px,
                     onClick = { backStack.add(NetworkLogsRoute) },
                 )
             }
@@ -162,19 +162,19 @@ fun NetworkHomeScreen() {
                 Preference(
                     title = stringResource(R.string.net_hub_dns),
                     summary = stringResource(R.string.net_hub_dns_sum),
-                    icon = Icons.language_24px,
+                    icon = IconsNetworkHomeScreen.language_24px,
                     onClick = { backStack.add(NetworkDnsRoute) },
                 )
                 Preference(
                     title = stringResource(R.string.net_hub_wireguard),
                     summary = stringResource(R.string.net_hub_wg_sum),
-                    icon = Icons.lock_24px,
+                    icon = IconsNetworkHomeScreen.lock_24px,
                     onClick = { backStack.add(NetworkWireguardRoute) },
                 )
                 Preference(
                     title = stringResource(R.string.net_hub_wg_apps),
                     summary = stringResource(R.string.net_hub_wg_apps_sum),
-                    icon = Icons.apps_24px,
+                    icon = IconsNetworkHomeScreen.apps_24px,
                     onClick = { backStack.add(NetworkWireguardAppsRoute) },
                 )
             }
@@ -184,19 +184,19 @@ fun NetworkHomeScreen() {
                 Preference(
                     title = stringResource(R.string.net_hub_fw_apps),
                     summary = stringResource(R.string.net_hub_fw_apps_sum),
-                    icon = Icons.apps_24px,
+                    icon = IconsNetworkHomeScreen.apps_24px,
                     onClick = { backStack.add(NetworkFirewallRoute) },
                 )
                 Preference(
                     title = stringResource(R.string.net_hub_fw_universal),
                     summary = stringResource(R.string.net_hub_fw_universal_sum),
-                    icon = Icons.rule_settings_24px,
+                    icon = IconsNetworkHomeScreen.rule_settings_24px,
                     onClick = { backStack.add(NetworkUniversalRulesRoute) },
                 )
                 Preference(
                     title = stringResource(R.string.net_hub_fw_custom),
                     summary = stringResource(R.string.net_hub_fw_custom_sum),
-                    icon = Icons.filter_alt_24px,
+                    icon = IconsNetworkHomeScreen.filter_alt_24px,
                     onClick = { backStack.add(NetworkCustomRulesRoute) },
                 )
             }
@@ -206,19 +206,19 @@ fun NetworkHomeScreen() {
                 Preference(
                     title = stringResource(R.string.net_hub_blocklists),
                     summary = stringResource(R.string.net_hub_blocklists_sum),
-                    icon = Icons.visibility_off_24px,
+                    icon = IconsNetworkHomeScreen.visibility_off_24px,
                     onClick = { backStack.add(NetworkBlocklistsRoute) },
                 )
                 Preference(
                     title = stringResource(R.string.net_hub_logs),
                     summary = stringResource(R.string.net_hub_logs_sum),
-                    icon = Icons.manage_search_24px,
+                    icon = IconsNetworkHomeScreen.manage_search_24px,
                     onClick = { backStack.add(NetworkLogsRoute) },
                 )
                 Preference(
                     title = stringResource(R.string.net_hub_settings),
                     summary = stringResource(R.string.net_hub_settings_sum),
-                    icon = Icons.settings_24px,
+                    icon = IconsNetworkHomeScreen.settings_24px,
                     onClick = { backStack.add(NetworkSettingsRoute) },
                 )
             }
@@ -227,7 +227,7 @@ fun NetworkHomeScreen() {
             Banner(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.net_hub_early),
-                icon = Icons.warning_24px,
+                icon = IconsNetworkHomeScreen.warning_24px,
             )
         }
     }
@@ -278,7 +278,7 @@ private fun StatusCard(
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    painter = painterResource(Icons.ic_glyph_network),
+                    painter = painterResource(IconsNetworkHomeScreen.ic_glyph_network),
                     contentDescription = null,
                     modifier = Modifier.size(40.dp),
                 )

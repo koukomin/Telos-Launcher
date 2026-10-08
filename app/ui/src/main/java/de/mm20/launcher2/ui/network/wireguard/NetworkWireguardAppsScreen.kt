@@ -47,7 +47,7 @@ import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
-private typealias Icons = de.mm20.launcher2.base.R.drawable
+private typealias IconsNetworkWireguardAppsScreen = de.mm20.launcher2.base.R.drawable
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -80,7 +80,7 @@ fun NetworkWireguardAppsScreen() {
                 navigationIcon = {
                     IconButton(onClick = { if (selected.isEmpty()) backStack.removeLastOrNull() else selected.clear() }) {
                         Icon(
-                            painterResource(if (selected.isEmpty()) Icons.arrow_back_24px else Icons.close_24px),
+                            painterResource(if (selected.isEmpty()) IconsNetworkWireguardAppsScreen.arrow_back_24px else IconsNetworkWireguardAppsScreen.close_24px),
                             contentDescription = stringResource(if (selected.isEmpty()) R.string.nwg_back else R.string.nwg_clear_selection),
                         )
                     }
@@ -114,7 +114,7 @@ fun NetworkWireguardAppsScreen() {
                 onValueChange = { query = it },
                 singleLine = true,
                 label = { Text(stringResource(R.string.nwg_search)) },
-                leadingIcon = { Icon(painterResource(Icons.search_24px), contentDescription = null) },
+                leadingIcon = { Icon(painterResource(IconsNetworkWireguardAppsScreen.search_24px), contentDescription = null) },
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
             )
             Row(Modifier.padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -170,7 +170,7 @@ private fun AppRow(
             },
             leadingContent = {
                 if (selecting) Checkbox(checked = isSelected, onCheckedChange = { onToggleSelect() })
-                else Icon(painterResource(Icons.android_24px), contentDescription = null)
+                else Icon(painterResource(IconsNetworkWireguardAppsScreen.android_24px), contentDescription = null)
             },
             modifier = Modifier.combinedClickable(
                 onClick = { if (selecting) onToggleSelect() else menu = true },

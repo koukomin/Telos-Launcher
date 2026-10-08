@@ -275,7 +275,7 @@ internal object LegacyReaders {
                 if (ver == 0xF) parse(pos + 8, bodyEnd, if (type == 0x0FF0) inst else ctx)
                 else if (ctx == 0) {
                     when (type) {
-                        0x03F3 -> { slides += ArrayList(); header = -1 }
+                        0x03F3 -> { slides.add(ArrayList()); header = -1 }
                         0x0F9F -> if (pos + 12 <= end) header = ds.u32(pos + 8)
                         0x0FA0, 0x0FA8 -> if (slides.isNotEmpty()) {
                             val text = if (type == 0x0FA0) String(ds, pos + 8, (bodyEnd - pos - 8) and 1.inv(), Charsets.UTF_16LE) else String(ds, pos + 8, bodyEnd - pos - 8, charset("windows-1252"))

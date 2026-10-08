@@ -49,7 +49,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import org.koin.compose.koinInject
 
-private typealias Icons = de.mm20.launcher2.base.R.drawable
+private typealias IconsNetworkRulesScreens = de.mm20.launcher2.base.R.drawable
 
 @Serializable
 data object NetworkUniversalRulesRoute : NavKey
@@ -83,18 +83,18 @@ fun NetworkUniversalRulesScreen() {
         }
         item {
             PreferenceCategory(stringResource(R.string.netfw_u_networks)) {
-                SwitchPreference(title = stringResource(R.string.netfw_u_wifi), icon = Icons.wifi_24px, value = u.blockWifi, onValueChanged = { v -> set { it.copy(blockWifi = v) } })
-                SwitchPreference(title = stringResource(R.string.netfw_u_mobile), icon = Icons.signal_cellular_alt_24px, value = u.blockMobile, onValueChanged = { v -> set { it.copy(blockMobile = v) } })
-                SwitchPreference(title = stringResource(R.string.netfw_u_roaming), icon = Icons.public_24px, value = u.blockRoaming, onValueChanged = { v -> set { it.copy(blockRoaming = v) } })
-                SwitchPreference(title = stringResource(R.string.netfw_u_metered), icon = Icons.signal_cellular_off_24px, value = u.blockMetered, onValueChanged = { v -> set { it.copy(blockMetered = v) } })
-                SwitchPreference(title = stringResource(R.string.netfw_u_lan), icon = Icons.lan_24px, value = u.blockLan, onValueChanged = { v -> set { it.copy(blockLan = v) } })
+                SwitchPreference(title = stringResource(R.string.netfw_u_wifi), icon = IconsNetworkRulesScreens.wifi_24px, value = u.blockWifi, onValueChanged = { v -> set { it.copy(blockWifi = v) } })
+                SwitchPreference(title = stringResource(R.string.netfw_u_mobile), icon = IconsNetworkRulesScreens.signal_cellular_alt_24px, value = u.blockMobile, onValueChanged = { v -> set { it.copy(blockMobile = v) } })
+                SwitchPreference(title = stringResource(R.string.netfw_u_roaming), icon = IconsNetworkRulesScreens.public_24px, value = u.blockRoaming, onValueChanged = { v -> set { it.copy(blockRoaming = v) } })
+                SwitchPreference(title = stringResource(R.string.netfw_u_metered), icon = IconsNetworkRulesScreens.signal_cellular_off_24px, value = u.blockMetered, onValueChanged = { v -> set { it.copy(blockMetered = v) } })
+                SwitchPreference(title = stringResource(R.string.netfw_u_lan), icon = IconsNetworkRulesScreens.lan_24px, value = u.blockLan, onValueChanged = { v -> set { it.copy(blockLan = v) } })
             }
         }
         item {
             PreferenceCategory(stringResource(R.string.netfw_u_device)) {
-                SwitchPreference(title = stringResource(R.string.netfw_u_background), icon = Icons.pause_24px, value = u.blockBackground, onValueChanged = { v -> set { it.copy(blockBackground = v) } })
-                SwitchPreference(title = stringResource(R.string.netfw_u_screen_off), icon = Icons.schedule_24px, value = u.blockScreenOff, onValueChanged = { v -> set { it.copy(blockScreenOff = v) } })
-                SwitchPreference(title = stringResource(R.string.netfw_u_locked), icon = Icons.lock_24px, value = u.blockWhenDeviceLocked, onValueChanged = { v -> set { it.copy(blockWhenDeviceLocked = v) } })
+                SwitchPreference(title = stringResource(R.string.netfw_u_background), icon = IconsNetworkRulesScreens.pause_24px, value = u.blockBackground, onValueChanged = { v -> set { it.copy(blockBackground = v) } })
+                SwitchPreference(title = stringResource(R.string.netfw_u_screen_off), icon = IconsNetworkRulesScreens.schedule_24px, value = u.blockScreenOff, onValueChanged = { v -> set { it.copy(blockScreenOff = v) } })
+                SwitchPreference(title = stringResource(R.string.netfw_u_locked), icon = IconsNetworkRulesScreens.lock_24px, value = u.blockWhenDeviceLocked, onValueChanged = { v -> set { it.copy(blockWhenDeviceLocked = v) } })
                 if (u.blockBackground && !detection) {
                     val context = LocalContext.current
                     Preference(
@@ -120,15 +120,15 @@ fun NetworkUniversalRulesScreen() {
                 SwitchPreference(
                     title = stringResource(R.string.netfw_u_new_apps),
                     summary = stringResource(R.string.netfw_u_new_apps_summary),
-                    icon = Icons.person_add_24px,
+                    icon = IconsNetworkRulesScreens.person_add_24px,
                     value = u.blockNewApps,
                     onValueChanged = { v -> set { it.copy(blockNewApps = v) } },
                 )
-                SwitchPreference(title = stringResource(R.string.netfw_u_unknown), icon = Icons.person_search_24px, value = u.blockUnknownApps, onValueChanged = { v -> set { it.copy(blockUnknownApps = v) } })
+                SwitchPreference(title = stringResource(R.string.netfw_u_unknown), icon = IconsNetworkRulesScreens.person_search_24px, value = u.blockUnknownApps, onValueChanged = { v -> set { it.copy(blockUnknownApps = v) } })
                 SwitchPreference(
                     title = stringResource(R.string.netfw_u_default_deny),
                     summary = stringResource(R.string.netfw_u_default_deny_summary),
-                    icon = Icons.signal_cellular_off_24px,
+                    icon = IconsNetworkRulesScreens.signal_cellular_off_24px,
                     value = u.defaultDeny,
                     onValueChanged = { v -> set { it.copy(defaultDeny = v) } },
                 )
@@ -193,14 +193,14 @@ fun NetworkCustomRulesScreen() {
         }
         item {
             PreferenceCategory(stringResource(R.string.netfw_c_domains)) {
-                Preference(title = stringResource(R.string.netfw_c_add_domain), icon = Icons.add_24px, onClick = { dialog = false })
+                Preference(title = stringResource(R.string.netfw_c_add_domain), icon = IconsNetworkRulesScreens.add_24px, onClick = { dialog = false })
                 domainRules.forEach { r ->
                     Preference(
                         title = { Text(r.domain) },
                         summary = { Text("${actionText(r.action)} · ${scopeText(r.scope)}") },
                         controls = {
                             IconButton(onClick = { scope.launch { fw.removeDomainRule(r.id) } }) {
-                                Icon(painterResource(Icons.delete_24px), contentDescription = stringResource(R.string.hc_delete))
+                                Icon(painterResource(IconsNetworkRulesScreens.delete_24px), contentDescription = stringResource(R.string.hc_delete))
                             }
                         },
                     )
@@ -209,7 +209,7 @@ fun NetworkCustomRulesScreen() {
         }
         item {
             PreferenceCategory(stringResource(R.string.netfw_c_ip)) {
-                Preference(title = stringResource(R.string.netfw_c_add_ip), icon = Icons.add_24px, onClick = { dialog = true })
+                Preference(title = stringResource(R.string.netfw_c_add_ip), icon = IconsNetworkRulesScreens.add_24px, onClick = { dialog = true })
                 ipRules.forEach { r ->
                     val where = buildString {
                         append(r.address)
@@ -221,7 +221,7 @@ fun NetworkCustomRulesScreen() {
                         summary = { Text("${actionText(r.action)} · ${scopeText(r.scope)}") },
                         controls = {
                             IconButton(onClick = { scope.launch { fw.removeIpRule(r.id) } }) {
-                                Icon(painterResource(Icons.delete_24px), contentDescription = stringResource(R.string.hc_delete))
+                                Icon(painterResource(IconsNetworkRulesScreens.delete_24px), contentDescription = stringResource(R.string.hc_delete))
                             }
                         },
                     )
