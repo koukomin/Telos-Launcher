@@ -125,8 +125,8 @@ A home screen widget with a **Freeze now** button. It shows how many apps are se
 
 | Feature | Backends | Status |
 | --- | --- | --- |
-| Suspend an app | Shizuku, root, device owner, Island (request only) | stable |
-| Disable an app | Shizuku, root, device owner | stable |
+| Suspend an app | Shizuku, Dhizuku, root, device owner, Island (request only) | stable |
+| Disable an app | Shizuku, Dhizuku, root, device owner | stable |
 | Force stop, clear cache | Shizuku, root | stable |
 | Auto-freeze on screen off, idle, Battery Saver | all | stable |
 | Profiles and exclusion rules | all | stable |
@@ -135,15 +135,15 @@ A home screen widget with a **Freeze now** button. It shows how many apps are se
 | Frozen apps hidden, grayscale or badged | all | stable |
 | Work Mode and Sandbox | needs a work profile | <Badge type="warning" text="experimental" /> |
 | Root, device owner | | <Badge type="info" text="untested" /> on many devices |
-| Dhizuku | | <Badge type="warning" text="incomplete" />: reports success but does not freeze |
+| Dhizuku | | <Badge type="warning" text="experimental" />: implemented, untested on a device |
 
 ## Limitations
 
 - With Island Telos can only send the request. It cannot confirm that the app really ended up frozen, and Android blocks
   it when no screen is visible.
 - What works depends on the device and Android version. Root and device owner are
-  <Badge type="info" text="untested" /> on many devices. The Dhizuku backend is a placeholder that does not freeze anything
-  yet, see [Backends](./backends-profiles#dhizuku).
+  <Badge type="info" text="untested" /> on many devices. The Dhizuku backend is experimental and untested on a device,
+  see [Backends](./backends-profiles#dhizuku).
 - Freezing system apps can cause problems. Disabling or force stopping one can break core phone functions and, in the
   worst case, leave the device unable to boot.
 - Frozen apps do not run in the background, so they do not deliver notifications until unfrozen.

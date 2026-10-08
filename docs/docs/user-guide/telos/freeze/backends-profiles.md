@@ -12,7 +12,7 @@ first one that is available, in this order.
 | # | Backend | What it needs | Suspend / disable | Force stop, clear cache |
 | --- | --- | --- | --- | --- |
 | 1 | Shizuku | The [Shizuku](https://github.com/RikkaApps/Shizuku) app running and permission granted | yes | yes |
-| 2 | Dhizuku <Badge type="warning" text="incomplete" /> | The [Dhizuku](https://github.com/iamr0s/Dhizuku) app and permission granted | not implemented yet, see below | no |
+| 2 | Dhizuku <Badge type="warning" text="experimental" /> | The [Dhizuku](https://github.com/iamr0s/Dhizuku) app and permission granted | yes (current user) | no |
 | 3 | Root | A rooted device | yes | yes |
 | 4 | Device owner | Telos set as device owner with `adb` (guided setup screen) | yes | no |
 | 5 | Island | The Island app, only for apps already in the Island profile | request only | no |
@@ -34,7 +34,7 @@ System default and no Shizuku is available. Read the [Dhizuku note](#dhizuku) fi
 | Backend | Suspend | Disable | Force stop and cache | Notes |
 | --- | --- | --- | --- | --- |
 | Shizuku | Calls the package manager's suspend function directly, as the shell or root user | Sets the app's enabled state to disabled (disabled-by-user when Shizuku runs through adb) | Calls the activity manager, and clears the app cache | Works for other users (work profile) |
-| Dhizuku | Not available (placeholder code, never selected automatically) | Not available | Not possible | Do not rely on it |
+| Dhizuku | The device policy manager, through Dhizuku | Hides the app (a hidden app cannot run) | Not possible, always reports failure | Current user only. <Badge type="info" text="untested" /> on a device |
 | Root | `pm suspend` | `pm disable-user` | `am force-stop`, and removes the cache folder only | Works for other users |
 | Device owner | The device policy manager | Hides the app (a hidden app cannot run) | Not possible, always reports failure | Current user only |
 | Island | An intent to Island | An intent to Island | Not possible | Only for apps already inside Island |
@@ -49,9 +49,12 @@ Root availability is checked once per process; if you grant root later, restart 
 
 ### Dhizuku
 
-<Badge type="warning" text="not available" /> The Dhizuku backend is not finished: the freeze calls are placeholders.
-To avoid reporting a freeze that never happened, Telos treats Dhizuku as **unavailable**. System default skips it and
-the manual backend picker offers it, but it does nothing until the missing part is written.
+<Badge type="warning" text="experimental" /> The Dhizuku backend is implemented but **untested on a device**. It lets
+Telos use the device policy manager through the [Dhizuku](https://github.com/iamr0s/Dhizuku) app, which must be
+running as device owner, and needs the permission granted in Dhizuku. Telos suspends and hides (disables) apps for the
+current user, and only reports an app as frozen if Dhizuku confirms the change. Force stop and clear cache are not
+possible. It relies on internal Android classes, so it may not work on every Android version; then freezing reports
+failure and nothing is changed. System default uses Dhizuku only when no Shizuku is available.
 
 ### Setting up root
 
@@ -88,7 +91,7 @@ For automatic freezing Telos shows a notification "Tap to freeze apps" that you 
 | Method | Effect | Which backends |
 | --- | --- | --- |
 | **Suspend** (default) | The app is suspended: it cannot run or start, its icon is grayed out by Android and notifications are blocked | Every backend |
-| **Disable** | The app is disabled (hidden, for device owner): it disappears from the launcher and cannot run | Shizuku, root, device owner (Dhizuku in the future) |
+| **Disable** | The app is disabled (hidden, for device owner): it disappears from the launcher and cannot run | Shizuku, root, device owner, Dhizuku |
 
 The method is chosen **per app** in the app list ("Auto-freeze (Suspend)" or "Auto-freeze (Disable)"). Island always
 uses its own freeze.
@@ -177,7 +180,7 @@ Every freeze and unfreeze is counted per app, with the last time of each. They s
 ## Limitations
 
 - Which backend works depends on the device and Android version. Root and device owner are
-  <Badge type="info" text="untested" /> on many devices, and Dhizuku is not implemented yet.
+  <Badge type="info" text="untested" /> on many devices, and Dhizuku is experimental.
 - Island cannot be automated from the background.
 - Device owner cannot force stop or clear caches, and acts on the current user only.
 - Freezing system apps can break core phone functions.

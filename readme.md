@@ -930,7 +930,7 @@ Freeze or hide apps you do not need right now. It is a launcher feature in Setti
 | Root | A rooted device | Untested on many devices |
 | Device owner | Telos set as device owner with `adb` (guided setup screen) | Untested on many devices; no force stop or cache clearing |
 | Island | The Island app, only for apps already in the Island profile | Request only, cannot be automated from the background |
-| Dhizuku | The Dhizuku app | **Not available:** a placeholder that does not freeze anything yet |
+| Dhizuku | The Dhizuku app | **Experimental:** implemented (suspend and hide through the device policy manager), untested on a device |
 
 **Freezing**
 
@@ -951,7 +951,7 @@ Freeze or hide apps you do not need right now. It is a launcher feature in Setti
 
 </details>
 
-**Status and limitations:** Which backend works depends on the device and Android version. Root and device owner are untested on many devices. **Dhizuku is not available.** Island cannot confirm that an app was frozen. Work Mode and Clone to Sandbox are experimental. Freezing system apps can break core phone functions. The foreground-app check needs Usage access.
+**Status and limitations:** Which backend works depends on the device and Android version. Root and device owner are untested on many devices. **Dhizuku is experimental and untested on a device.** Island cannot confirm that an app was frozen. Work Mode and Clone to Sandbox are experimental. Freezing system apps can break core phone functions. The foreground-app check needs Usage access.
 
 ---
 
@@ -970,9 +970,9 @@ Some features are new and not tested on every device. This is what the project's
 
 | State | Features |
 | --- | --- |
-| **Untested on real devices** | MMS (Messages), SIP / VoIP, root features (the root call recording backend, root explorer, cellular network mode with Shizuku or root, root and device owner freeze backends), desktop window snapping |
+| **Untested on real devices** | MMS (Messages), SIP / VoIP, root features (the root call recording backend, root explorer, cellular network mode with Shizuku or root, root, device owner and Dhizuku freeze backends), desktop window snapping |
 | **Experimental** | Cryptomator vaults (read only), Clone to Sandbox, overlays (floating launcher, Dynamic Island, desktop mode), App Lock, video wallpapers, app recommendations, the separate video process, SIP |
-| **Not supported** | iCloud, Mega, gocryptfs, EncFS, VeraCrypt, Dhizuku (not available) |
+| **Not supported** | iCloud, Mega, gocryptfs, EncFS, VeraCrypt |
 | **Limited by design** | Office documents are shown as extracted text only (no layout, formulas or images; old `.doc`, `.xls`, `.ppt` not opened) |
 | **Debug and nightly builds only** | Feed and the Smartspacer integration |
 | **Disabled or hidden in this build** | Extra home screens, the Favorites widget in the picker, fallback icon pack setting, Dynamic Island timer (no source) |
