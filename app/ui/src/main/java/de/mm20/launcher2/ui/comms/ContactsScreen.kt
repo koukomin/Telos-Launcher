@@ -68,6 +68,8 @@ import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.SearchEmptyState
+import de.mm20.launcher2.ui.component.TelosSearchBar
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -150,37 +152,23 @@ fun ContactsScreen(
 
     Box(Modifier.fillMaxSize()) {
         Column(Modifier.fillMaxSize()) {
-            if (showLocalSearch) Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp, vertical = 4.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                OutlinedTextField(
-                    value = localQuery,
-                    onValueChange = { localQuery = it },
-                    modifier = Modifier.weight(1f),
-                    placeholder = { Text(stringResource(R.string.comms_search_contacts)) },
-                    leadingIcon = {
-                        Icon(painterResource(R.drawable.search_24px), contentDescription = null)
-                    },
-                    singleLine = true,
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = MaterialTheme.colorScheme.surface,
-                        unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                    ),
-                )
-                IconButton(onClick = { localStarred = !localStarred }) {
-                    Icon(
-                        painterResource(
-                            if (localStarred) R.drawable.star_24px_filled else R.drawable.star_24px_outlined
-                        ),
-                        contentDescription = stringResource(R.string.filter_starred),
-                        tint = if (localStarred) MaterialTheme.colorScheme.primary
-                        else MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-            }
+            if (showLocalSearch) TelosSearchBar(
+                value = localQuery,
+                onValueChange = { localQuery = it },
+                placeholder = stringResource(R.string.tsp_search_contacts),
+                trailing = {
+                    IconButton(onClick = { localStarred = !localStarred }) {
+                        Icon(
+                            painterResource(
+                                if (localStarred) R.drawable.star_24px_filled else R.drawable.star_24px_outlined
+                            ),
+                            contentDescription = stringResource(R.string.filter_starred),
+                            tint = if (localStarred) MaterialTheme.colorScheme.primary
+                            else MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                },
+            )
 
             if (showLocalSearch && query.isBlank() && !starredFilter) {
                 val starred = remember(contacts) { contacts.filter { it.starred } }
@@ -222,7 +210,9 @@ fun ContactsScreen(
                     )
                 }
             }
-            if (filtered.isEmpty()) {
+            if (filtered.isEmpty() && query.isNotBlank()) {
+                SearchEmptyState(query)
+            } else if (filtered.isEmpty()) {
                 EmptyCommsTab(
                     title = stringResource(R.string.contacts_empty_title),
                     message = stringResource(R.string.contacts_empty_msg),

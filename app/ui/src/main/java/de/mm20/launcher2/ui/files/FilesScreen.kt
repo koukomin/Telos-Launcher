@@ -279,7 +279,8 @@ fun FilesScreen() {
                     else -> Column(Modifier.fillMaxSize()) {
                         if (FileActions.isSystemPath(current, vm.rootMode)) RootBanner()
                         if (shown.isEmpty() && !vm.loading) {
-                            EmptyPage(if (vm.query.isNotEmpty()) stringResource(R.string.hf_files_nothing_found) else stringResource(R.string.hf_files_folder_empty))
+                            if (vm.query.isNotBlank()) de.mm20.launcher2.ui.component.SearchEmptyState(vm.query.trim(), Modifier.fillMaxSize())
+                            else EmptyPage(stringResource(R.string.hf_files_folder_empty))
                         } else if (vm.grid) {
                             LazyVerticalGrid(
                                 columns = GridCells.Adaptive(112.dp),
@@ -548,13 +549,10 @@ private fun SelectionBar(
 private fun SearchBar(query: String, onQuery: (String) -> Unit, onClose: () -> Unit) {
     TopAppBar(
         title = {
-            androidx.compose.material3.TextField(
-                value = query, onValueChange = onQuery, singleLine = true, placeholder = { Text(stringResource(R.string.hc_search_in_this_folder)) },
-                colors = androidx.compose.material3.TextFieldDefaults.colors(
-                    focusedContainerColor = Color.Transparent, unfocusedContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent, unfocusedIndicatorColor = Color.Transparent,
-                ),
-                modifier = Modifier.fillMaxWidth(),
+            de.mm20.launcher2.ui.component.TelosSearchTopBar(
+                value = query, onValueChange = onQuery,
+                placeholder = stringResource(R.string.hc_search_in_this_folder),
+                autoFocus = true,
             )
         },
         navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(Icons.arrow_back_24px), contentDescription = stringResource(R.string.hc_back)) } },

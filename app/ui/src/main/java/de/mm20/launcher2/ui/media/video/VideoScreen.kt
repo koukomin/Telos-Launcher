@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.media.video
 
 import androidx.compose.ui.res.stringResource
-import de.mm20.launcher2.search.GreekFold
 import android.Manifest
 import android.content.Context
 import android.content.Intent
@@ -106,10 +105,7 @@ fun VideoScreen() {
     BackHandler(enabled = group != null) { group = null }
 
     val filtered = remember(items, query) {
-        if (query.isBlank()) items
-        else {
-            items.filter { GreekFold.contains(it.title, query) }
-        }
+        de.mm20.launcher2.comms.search.TelosSearch.filter(items, query) { listOf(it.title, it.fileName, it.folder) }
     }
     val resumeUris = remember(items, libraryVersion.intValue) { ResumeStore.continueWatching(context).toSet() }
     val continueWatching = remember(items, resumeUris, libraryVersion.intValue) {
@@ -281,6 +277,7 @@ fun VideoScreen() {
             items.isEmpty() -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(stringResource(R.string.hc_no_videos_found_on_this_device), color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
+            filtered.isEmpty() && query.isNotBlank() -> de.mm20.launcher2.ui.component.SearchEmptyState(query)
             tab == 0 -> LazyColumn(contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize()) {
                 if (continueWatching.isNotEmpty() && query.isBlank()) {
                     item {

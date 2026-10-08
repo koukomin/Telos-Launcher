@@ -67,7 +67,7 @@ fun NetworkWireguardAppsScreen() {
 
     val shown = remember(apps, query, showSystem) {
         apps.filter { (showSystem || !it.isSystem) && it.hasInternet }
-            .filter { query.isBlank() || it.label.contains(query, true) || it.packageName.contains(query, true) }
+            .filter { de.mm20.launcher2.comms.search.TelosSearch.matches(query, it.label, it.packageName) }
     }
 
     Scaffold(
@@ -109,19 +109,13 @@ fun NetworkWireguardAppsScreen() {
         },
     ) { padding ->
         Column(Modifier.fillMaxSize().padding(padding)) {
-            OutlinedTextField(
-                value = query,
-                onValueChange = { query = it },
-                singleLine = true,
-                label = { Text(stringResource(R.string.nwg_search)) },
-                leadingIcon = { Icon(painterResource(IconsNetworkWireguardAppsScreen.search_24px), contentDescription = null) },
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-            )
+            de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(R.string.nwg_search))
             Row(Modifier.padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
                 Text(stringResource(R.string.nwg_show_system), Modifier.weight(1f))
                 Switch(checked = showSystem, onCheckedChange = { showSystem = it })
             }
-            LazyColumn(Modifier.fillMaxSize()) {
+            if (shown.isEmpty() && query.isNotBlank()) de.mm20.launcher2.ui.component.SearchEmptyState(query.trim())
+            else LazyColumn(Modifier.fillMaxSize()) {
                 items(shown, key = { it.appId }) { app ->
                     AppRow(
                         app = app,

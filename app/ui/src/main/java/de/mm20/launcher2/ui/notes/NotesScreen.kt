@@ -34,6 +34,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.SearchEmptyState
+import de.mm20.launcher2.ui.component.TelosSearchTopBar
 import kotlinx.serialization.Serializable
 import java.text.DateFormat
 import java.util.Date
@@ -102,8 +104,7 @@ fun NotesScreen() {
             Column(Modifier.padding(pad)) {
                 Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                     if (searching) {
-                        OutlinedTextField(query, { vm.query.value = it }, Modifier.weight(1f), singleLine = true,
-                            placeholder = { Text(stringResource(R.string.notes_search)) })
+                        TelosSearchTopBar(query, { vm.query.value = it }, stringResource(R.string.tsp_search_notes), Modifier.weight(1f), autoFocus = true)
                     } else {
                         Text(stringResource(when (filter) {
                             NotesFilter.Notes -> R.string.notes_title; NotesFilter.Archive -> R.string.notes_archive; NotesFilter.Trash -> R.string.notes_trash
@@ -127,7 +128,9 @@ fun NotesScreen() {
                 if (labels.isNotEmpty()) LazyRow(Modifier.padding(horizontal = 12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     items(labels) { l -> FilterChip(label == l, { vm.label.value = if (label == l) null else l }, { Text(l) }) }
                 }
-                if (notes.isEmpty()) {
+                if (notes.isEmpty() && query.isNotBlank()) {
+                    SearchEmptyState(query)
+                } else if (notes.isEmpty()) {
                     Box(Modifier.fillMaxSize(), Alignment.Center) { Text(stringResource(R.string.notes_empty), color = MaterialTheme.colorScheme.onSurfaceVariant) }
                 } else LazyVerticalStaggeredGrid(
                     StaggeredGridCells.Adaptive(160.dp), Modifier.fillMaxSize(),

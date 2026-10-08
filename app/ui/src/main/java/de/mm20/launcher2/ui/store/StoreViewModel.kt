@@ -1,6 +1,6 @@
 package de.mm20.launcher2.ui.store
 
-import de.mm20.launcher2.search.GreekFold
+import de.mm20.launcher2.comms.search.TelosSearch
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
@@ -67,6 +67,18 @@ data class InstalledCandidate(val packageName: String, val label: String)
  */
 class StoreViewModel : ViewModel(), KoinComponent {
 
+    private fun sourceText(s: AppSource): String = when (s) {
+        is AppSource.GitHub -> "${s.owner} ${s.repo}"
+        is AppSource.FDroid -> s.repoUrl
+        is AppSource.DirectApk -> s.downloadUrl
+        is AppSource.AffiliatePlayStore -> s.packageName
+        is AppSource.AffiliateDirect -> s.downloadUrl
+        is AppSource.GitLab -> "${s.host} ${s.path}"
+        is AppSource.Gitea -> "${s.host} ${s.owner} ${s.repo}"
+        is AppSource.SourceForge -> s.project
+        is AppSource.Html -> s.pageUrl
+    }
+
     private val context: Context by inject()
     private val repository: StoreRepository by inject()
     private val actionHandler: StoreActionHandler by inject()
@@ -106,7 +118,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
                 }
             }
             .filter { c == null || it.options.category == c }
-            .filter { q.isBlank() || GreekFold.contains(it.item.displayName, q) || it.item.packageName.contains(q, true) || GreekFold.contains(it.options.category, q) }
+            .filter { q.isBlank() || TelosSearch.matches(q, it.item.displayName, it.item.packageName, sourceText(it.item.source), it.options.note, it.options.category) }
             .sortedWith(compareByDescending<StoreRow> { it.updateAvailable }.thenBy { it.item.displayName.lowercase() })
             .toList()
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())

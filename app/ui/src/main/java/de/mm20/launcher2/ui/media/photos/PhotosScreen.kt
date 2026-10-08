@@ -147,11 +147,23 @@ fun PhotosScreen() {
     var album by remember { mutableStateOf<Album?>(null) }
     androidx.activity.compose.BackHandler(enabled = album != null) { album = null }
 
-    val albums = remember(items) {
-        items.groupBy { it.folder }.map { (name, list) -> Album(name.ifBlank { "Other" }, list) }
+    var query by remember { mutableStateOf("") }
+    val filteredItems = remember(items, query) {
+        de.mm20.launcher2.comms.search.TelosSearch.filter(items, query) {
+            listOf(
+                it.name, it.folder, dayLabel(it.taken),
+                java.text.SimpleDateFormat("d MMMM yyyy MMMM yyyy M/d/yyyy", java.util.Locale.getDefault()).format(java.util.Date(it.taken)),
+            )
+        }
+    }
+    val albums = remember(filteredItems) {
+        filteredItems.groupBy { it.folder }.map { (name, list) -> Album(name.ifBlank { "Other" }, list) }
             .sortedByDescending { it.items.size }
     }
-    val shown = album?.items ?: items
+    val shown = remember(album, filteredItems) {
+        val a = album
+        if (a != null) { val keep = filteredItems.toSet(); a.items.filter { it in keep } } else filteredItems
+    }
     val byDay = remember(shown) { shown.groupBy { dayLabel(it.taken) } }
 
     androidx.compose.material3.Scaffold(
@@ -198,7 +210,12 @@ fun PhotosScreen() {
                 }
             }
 
-            if (!hasPermission) {
+            if (hasPermission && items.isNotEmpty()) {
+                de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, "Search photos")
+            }
+            if (hasPermission && query.isNotBlank() && shown.isEmpty()) {
+                de.mm20.launcher2.ui.component.SearchEmptyState(query)
+            } else if (!hasPermission) {
                 Column(
                     Modifier.fillMaxSize().padding(32.dp),
                     verticalArrangement = Arrangement.Center,

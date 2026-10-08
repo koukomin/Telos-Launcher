@@ -100,10 +100,9 @@ fun NetworkFirewallScreen() {
     }
 
     val shown = remember(apps, rules, query, filter) {
-        val q = query.trim().lowercase()
         apps.filter { app ->
             app.hasInternet &&
-                (q.isEmpty() || app.label.lowercase().contains(q) || app.packageName.lowercase().contains(q)) &&
+                de.mm20.launcher2.comms.search.TelosSearch.matches(query, app.label, app.packageName) &&
                 when (filter) {
                     FILTER_USER -> !app.isSystem
                     FILTER_SYSTEM -> app.isSystem
@@ -163,14 +162,7 @@ fun NetworkFirewallScreen() {
             }
         }
         item {
-            OutlinedTextField(
-                value = query,
-                onValueChange = { query = it },
-                singleLine = true,
-                label = { Text(stringResource(R.string.netfw_search_apps)) },
-                leadingIcon = { Icon(painterResource(IconsNetworkFirewallScreen.search_24px), contentDescription = null) },
-                modifier = Modifier.fillMaxWidth(),
-            )
+            de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(R.string.netfw_search_apps))
         }
         item {
             Row(
@@ -187,7 +179,9 @@ fun NetworkFirewallScreen() {
                 }
             }
         }
-        if (shown.isEmpty()) {
+        if (shown.isEmpty() && query.isNotBlank()) {
+            item { de.mm20.launcher2.ui.component.SearchEmptyState(query.trim()) }
+        } else if (shown.isEmpty()) {
             item {
                 Text(
                     stringResource(R.string.netfw_no_apps),

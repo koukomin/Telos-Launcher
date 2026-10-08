@@ -223,7 +223,7 @@ private fun AppsTab(
     onUpdateAll: () -> Unit,
 ) {
     Column(Modifier.fillMaxSize()) {
-        MediaSearchBar(query, onQuery, stringResource(R.string.hf_store_search))
+        de.mm20.launcher2.ui.component.TelosSearchBar(query, onQuery, stringResource(R.string.hf_store_search))
         LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             items(StoreFilter.values().toList()) { f ->
                 FilterChip(
@@ -251,7 +251,9 @@ private fun AppsTab(
                 Text(stringResource(R.string.hc_update_all_count, updateCount))
             }
         }
-        if (rows.isEmpty()) {
+        if (rows.isEmpty() && query.isNotBlank()) {
+            de.mm20.launcher2.ui.component.SearchEmptyState(query.trim())
+        } else if (rows.isEmpty()) {
             EmptyMessage(
                 if (totalCount == 0) stringResource(R.string.hf_store_no_apps_yet) else stringResource(R.string.hf_store_no_apps_match),
                 if (totalCount == 0) stringResource(R.string.hf_store_empty_hint) else stringResource(R.string.hf_store_change_filter),
@@ -394,7 +396,12 @@ internal fun AppSource.summary(): String = when (this) {
 
 @Composable
 private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) -> Unit, onOpen: (TelosApp) -> Unit) {
-    LazyColumn(contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 32.dp), verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxSize()) {
+    var tq by remember { mutableStateOf("") }
+    val shownApps = remember(tq) { TelosApps.all.filter { de.mm20.launcher2.comms.search.TelosSearch.matches(tq, it.name, it.description, it.features.joinToString(" ")) } }
+    Column(Modifier.fillMaxSize()) {
+    de.mm20.launcher2.ui.component.TelosSearchBar(tq, { tq = it }, stringResource(R.string.hf_store_search))
+    if (shownApps.isEmpty()) de.mm20.launcher2.ui.component.SearchEmptyState(tq.trim())
+    else LazyColumn(contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 32.dp), verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxSize()) {
         item {
             Text(
                 stringResource(R.string.hc_the_apps_that_are_part_of_telos_installi),
@@ -402,7 +409,7 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        items(TelosApps.all, key = { it.key }) { app ->
+        items(shownApps, key = { it.key }) { app ->
             val installed = app.key !in disabled
             Surface(shape = RoundedCornerShape(20.dp), color = MaterialTheme.colorScheme.surfaceContainerLow, modifier = Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp)) {
@@ -445,6 +452,8 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
                 }
             }
         }
+    }
+}
     }
 }
 
@@ -554,11 +563,14 @@ private fun InstalledAppsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                val list = candidates
+                var iq by remember { mutableStateOf("") }
+                de.mm20.launcher2.ui.component.TelosSearchBar(iq, { iq = it }, stringResource(R.string.hf_store_search))
+                val list = candidates?.let { c -> if (iq.isBlank()) c else c.filter { de.mm20.launcher2.comms.search.TelosSearch.matches(iq, it.label, it.packageName) } }
                 if (list == null) {
                     CircularProgressIndicator(Modifier.padding(16.dp))
                 } else {
-                    LazyColumn(Modifier.height(320.dp)) {
+                    if (list.isEmpty() && iq.isNotBlank()) de.mm20.launcher2.ui.component.SearchEmptyState(iq.trim())
+                    else LazyColumn(Modifier.height(320.dp)) {
                         items(list, key = { it.packageName }) { app ->
                             Row(
                                 Modifier.fillMaxWidth().clickable { if (app.packageName in selected) selected.remove(app.packageName) else selected.add(app.packageName) },

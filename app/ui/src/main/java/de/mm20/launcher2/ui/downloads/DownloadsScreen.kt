@@ -65,11 +65,11 @@ import de.mm20.launcher2.downloads.engine.TorrentController
 import de.mm20.launcher2.downloads.logic.TorrentSources
 import de.mm20.launcher2.downloads.logic.BlockReason
 import de.mm20.launcher2.downloads.logic.Formatting
-import de.mm20.launcher2.search.GreekFold
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.media.MediaFrame
-import de.mm20.launcher2.ui.media.MediaSearchBar
+import de.mm20.launcher2.ui.component.TelosSearchBar
+import de.mm20.launcher2.ui.component.SearchEmptyState
 import org.koin.compose.koinInject
 
 private enum class Filter { All, Active, Queued, Completed, Failed, Torrents, Media }
@@ -147,7 +147,13 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
     val visible by remember(tasks, filter, query) {
         derivedStateOf {
             tasks.filter { filter.matches(it) }
-                .filter { query.isBlank() || GreekFold.contains(it.displayName, query) || it.url.contains(query, true) }
+                .filter {
+                    query.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(
+                        query, it.displayName, it.name,
+                        runCatching { java.net.URI(it.url).host }.getOrNull() ?: it.url,
+                        it.state.name, it.type.name, it.category?.name,
+                    )
+                }
                 .sortedWith(
                     compareByDescending<DownloadTask> { it.state.isActive }
                         .thenByDescending { it.priority }
@@ -181,7 +187,7 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
         Box(Modifier.fillMaxSize()) {
             Column(Modifier.fillMaxSize()) {
                 AnimatedVisibility(searching) {
-                    MediaSearchBar(query, { query = it }, stringResource(R.string.dl_search))
+                    TelosSearchBar(query, { query = it }, stringResource(R.string.dl_search))
                 }
                 Row(
                     Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 4.dp),
@@ -218,7 +224,9 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                 if (blocked != null) BlockBanner(blocked!!)
                 SpeedHeader(tasks)
                 if (filter == Filter.Torrents) TorrentSpeedHeader(tasks)
-                if (filter == Filter.Torrents && visible.isEmpty()) {
+                if (visible.isEmpty() && query.isNotBlank() && tasks.isNotEmpty()) {
+                    SearchEmptyState(query)
+                } else if (filter == Filter.Torrents && visible.isEmpty()) {
                     EmptyState(R.string.dl_t_empty_title, R.string.dl_t_empty_text)
                 } else if (visible.isEmpty()) {
                     if (tasks.isEmpty()) EmptyState(R.string.dl_empty_title, R.string.dl_empty_text)
