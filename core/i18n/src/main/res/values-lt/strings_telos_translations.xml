@@ -1586,4 +1586,6 @@
         <item quantity="many">arbatinio šaukštelio (JAV)</item>
         <item quantity="other">arbatinių šaukštelių (JAV)</item>
     </plurals>
+    <string name="dl_m_auto_update">Atnaujinti yt-dlp automatiškai</string>
+    <string name="dl_m_auto_update_sum">Kartą per dieną per Wi-Fi atsisiunčia naujausią yt-dlp, kad atsisiuntimai veiktų pasikeitus svetainėms</string>
 </resources>

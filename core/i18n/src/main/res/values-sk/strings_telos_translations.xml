@@ -2565,4 +2565,6 @@
         <item quantity="many">čajovej lyžičky (USA)</item>
         <item quantity="other">čajových lyžičiek (USA)</item>
     </plurals>
+    <string name="dl_m_auto_update">Aktualizovať yt-dlp automaticky</string>
+    <string name="dl_m_auto_update_sum">Raz denne cez Wi-Fi stiahne najnovšie yt-dlp, aby sťahovanie fungovalo aj po zmenách webov</string>
 </resources>

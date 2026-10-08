@@ -1155,4 +1155,6 @@
         <item quantity="one">%1$d App</item>
         <item quantity="other">%1$d Apps</item>
     </plurals>
+    <string name="dl_m_auto_update">yt-dlp automatisch aktualisieren</string>
+    <string name="dl_m_auto_update_sum">Lädt einmal täglich per WLAN das neueste yt-dlp, damit Downloads auch nach Änderungen der Seiten funktionieren</string>
 </resources>

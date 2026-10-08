@@ -68,6 +68,7 @@ usually needs cookies from a browser where you passed that check.
 
 Sites change often, and an old yt-dlp is the most common reason for a failure. Settings > **Video and audio sites** > **Update the downloader**
 fetches the newest yt-dlp from GitHub and shows the version and the date of the last update. **Supported sites** opens the yt-dlp list.
+Turn on **Update yt-dlp automatically** and Telos fetches the newest version by itself once a day, on Wi-Fi and when the battery is not low (the switch is off until you turn it on).
 
 ## Capture
 

@@ -1773,4 +1773,6 @@
         <item quantity="one">tesked (US)</item>
         <item quantity="other">teskedar (US)</item>
     </plurals>
+    <string name="dl_m_auto_update">Uppdatera yt-dlp automatiskt</string>
+    <string name="dl_m_auto_update_sum">Hämtar senaste yt-dlp en gång per dag via Wi-Fi så att nedladdningar fortsätter fungera när webbplatser ändras</string>
 </resources>

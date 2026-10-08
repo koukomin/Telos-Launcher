@@ -105,4 +105,6 @@
     <string name="dl_p3_backup_group_downloads">Downloads</string>
     <string name="dl_p3_backup_group_downloads_summary">The list of downloads and the settings of Telos Downloads (not the downloaded files, not cookies)</string>
     <string name="dl_p3_download_with_telos">Download with Telos</string>
+    <string name="dl_m_auto_update">Update yt-dlp automatically</string>
+    <string name="dl_m_auto_update_sum">Fetches the newest yt-dlp once a day on Wi-Fi, so downloads keep working when sites change</string>
 </resources>

@@ -1117,4 +1117,6 @@
         <item quantity="many">ملعقة صغيرة (أمريكية)</item>
         <item quantity="other">ملعقة صغيرة (أمريكية)</item>
     </plurals>
+    <string name="dl_m_auto_update">تحديث yt-dlp تلقائيًا</string>
+    <string name="dl_m_auto_update_sum">ينزّل أحدث إصدار من yt-dlp مرة واحدة يوميًا عبر Wi-Fi لتستمر التنزيلات بالعمل عند تغيّر المواقع</string>
 </resources>

@@ -25,7 +25,7 @@ Next, you may or may not need to perform steps to configure the plugin. For exam
 require you to sign in with an account in order to use it. A banner is shown when additional
 configuration steps are needed:
 
-![](/img/plugin-configuration.png)
+<img src="/img/plugin-configuration.png" width="300"/>
 
 Last but not least, you need to enable the plugin functionalities that you want to use.
 

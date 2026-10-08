@@ -9,17 +9,17 @@ The notification access permission is used to display notification badges, and t
 
 1. Try to grant the notification access permission as you would normally do. If you sideloaded the APK, all the controls are disabled:
 
-![](/img/notification-access-1.png)
+<img src="/img/notification-access-1.png" width="300"/>
 
 2. Tap on the disabled toggle “Allow notification access”. This dialog will show up:
 
-![](/img/notification-access-2.png)
+<img src="/img/notification-access-2.png" width="300"/>
 
 3. Tap “OK” to close the dialog.
 
 4. Tap on the app icon. It leads to the app info screen.
 
-![](/img/notification-access-3.png)
+<img src="/img/notification-access-3.png" width="300"/>
 
 5. Tap on the 3-dot-menu (<span class="material-symbols-rounded">more_vert</span>) in the top-right corner.
 
@@ -28,7 +28,7 @@ The notification access permission is used to display notification badges, and t
 
 6. Tap on “Allow restricted settings”
 
-![](/img/notification-access-4.png)
+<img src="/img/notification-access-4.png" width="300"/>
 
 7. Go back to the previous screen. The controls are no longer disabled, and you can allow notification access.
 
@@ -38,17 +38,17 @@ The accessibility service is used to perform certain gesture actions, like turni
 
 1. Try to enable the accessibility service as you would normally do. If you sideloaded the APK, you will find that Telos is disabled:
 
-![](/img/accessibility-service-1.png)
+<img src="/img/accessibility-service-1.png" width="300"/>
 
 2. Tap on the disabled entry. This dialog will show up:
 
-![](/img/accessibility-service-2.png)
+<img src="/img/accessibility-service-2.png" width="300"/>
 
 3. Tap “OK” to close the dialog.
 
 4. Navigate to the app info screen (system settings > apps > Telos).
 
-![](/img/notification-access-3.png)
+<img src="/img/notification-access-3.png" width="300"/>
 
 5. Tap on the 3-dot-menu (<span class="material-symbols-rounded">more_vert</span>) in the top-right corner.
 
@@ -57,6 +57,6 @@ The accessibility service is used to perform certain gesture actions, like turni
 
 6. Tap on “Allow restricted settings”
 
-![](/img/notification-access-4.png)
+<img src="/img/notification-access-4.png" width="300"/>
 
 7. Go back to the accessibility screen. Telos is no longer disabled, and you can enable it.

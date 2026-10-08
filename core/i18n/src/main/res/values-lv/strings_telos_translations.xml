@@ -2478,4 +2478,6 @@
         <item quantity="one">tējkarote (ASV)</item>
         <item quantity="other">tējkarotes (ASV)</item>
     </plurals>
+    <string name="dl_m_auto_update">Atjaunināt yt-dlp automātiski</string>
+    <string name="dl_m_auto_update_sum">Reizi dienā pa Wi-Fi lejupielādē jaunāko yt-dlp, lai lejupielādes darbotos arī tad, kad vietnes mainās</string>
 </resources>

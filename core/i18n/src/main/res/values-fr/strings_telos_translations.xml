@@ -1074,4 +1074,6 @@
         <item quantity="one">cuillère à café (US)</item>
         <item quantity="other">cuillères à café (US)</item>
     </plurals>
+    <string name="dl_m_auto_update">Mettre à jour yt-dlp automatiquement</string>
+    <string name="dl_m_auto_update_sum">Récupère le dernier yt-dlp une fois par jour en Wi-Fi pour que les téléchargements continuent de fonctionner quand les sites changent</string>
 </resources>

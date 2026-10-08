@@ -2478,4 +2478,6 @@
         <item quantity="few">žličice (SAD)</item>
         <item quantity="other">žličica (SAD)</item>
     </plurals>
+    <string name="dl_m_auto_update">Automatski ažuriraj yt-dlp</string>
+    <string name="dl_m_auto_update_sum">Jednom dnevno putem Wi-Fi-ja preuzima najnoviji yt-dlp kako bi preuzimanja radila i kad se stranice promijene</string>
 </resources>

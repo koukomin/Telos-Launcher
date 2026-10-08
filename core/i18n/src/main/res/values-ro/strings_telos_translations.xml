@@ -1572,4 +1572,6 @@
         <item quantity="few">lingurițe (SUA)</item>
         <item quantity="other">lingurițe (SUA)</item>
     </plurals>
+    <string name="dl_m_auto_update">Actualizează yt-dlp automat</string>
+    <string name="dl_m_auto_update_sum">Descarcă o dată pe zi cel mai nou yt-dlp prin Wi-Fi, ca descărcările să funcționeze când site-urile se schimbă</string>
 </resources>

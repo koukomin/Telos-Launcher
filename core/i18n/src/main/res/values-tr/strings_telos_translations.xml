@@ -1066,4 +1066,6 @@
         <item quantity="one">%1$d fotoğraf</item>
         <item quantity="other">%1$d fotoğraf</item>
     </plurals>
+    <string name="dl_m_auto_update">yt-dlp\'yi otomatik güncelle</string>
+    <string name="dl_m_auto_update_sum">Siteler değiştiğinde indirmelerin çalışmaya devam etmesi için en yeni yt-dlp\'yi günde bir kez Wi-Fi ile indirir</string>
 </resources>

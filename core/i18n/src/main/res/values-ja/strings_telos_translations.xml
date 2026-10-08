@@ -1744,4 +1744,6 @@
     <plurals name="unit_teaspoon">
         <item quantity="other">小さじ (米)</item>
     </plurals>
+    <string name="dl_m_auto_update">yt-dlp を自動更新</string>
+    <string name="dl_m_auto_update_sum">サイトが変わってもダウンロードが動作し続けるよう、Wi-Fi 接続時に 1 日 1 回最新の yt-dlp を取得します</string>
 </resources>

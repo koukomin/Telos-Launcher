@@ -164,6 +164,13 @@ fun DownloadsSettingsScreen() {
                             }
                         },
                     )
+                    var autoUpdate by remember { mutableStateOf(runtime.autoUpdate) }
+                    SwitchPreference(
+                        title = stringResource(R.string.dl_m_auto_update),
+                        summary = stringResource(R.string.dl_m_auto_update_sum),
+                        value = autoUpdate,
+                        onValueChanged = { autoUpdate = it; runtime.autoUpdate = it },
+                    )
                     Preference(
                         title = stringResource(R.string.dl_m_version, version ?: "?"),
                         summary = stringResource(
