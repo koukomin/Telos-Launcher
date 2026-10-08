@@ -454,6 +454,7 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
         }
     }
 }
+}
 
 // ---------------------------------------------------------------------------------------------
 
