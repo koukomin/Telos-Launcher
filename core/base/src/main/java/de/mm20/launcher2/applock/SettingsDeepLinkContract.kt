@@ -30,5 +30,8 @@ object SettingsDeepLinkContract {
     const val ROUTE_SCREENSHOT = "settings/screenshot"
     const val ROUTE_NOTES = "settings/notes"
     const val ROUTE_CALENDAR = "settings/calendar"
+    const val ROUTE_DOWNLOADS = "settings/downloads"
+    /** Links (string array) to offer in the add sheet of Telos Downloads, from a share or an Open with */
+    const val EXTRA_DOWNLOAD_URLS = "de.mm20.launcher2.settings.DOWNLOAD_URLS"
     // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
 }

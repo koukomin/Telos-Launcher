@@ -130,6 +130,17 @@ object TelosApps {
             route = SettingsDeepLinkContract.ROUTE_CALENDAR,
         ),
         TelosApp(
+            key = "telos_downloads_app://downloads",
+            name = "Telos Downloads",
+            description = "A download manager for links: several connections per file, resume after a restart or lost network, a queue with retry, and the folder of your choice.",
+            features = listOf(
+                "HTTP and HTTPS with up to 16 connections", "Resume, queue, retry, Wi-Fi only and battery rules", "Speed limit, headers, cookies, proxy, checksum",
+                "Folder of your choice or Downloads/Telos", "Share a link to Telos Downloads",
+            ),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_glyph_downloads,
+            route = SettingsDeepLinkContract.ROUTE_DOWNLOADS,
+        ),
+        TelosApp(
             key = "telos_voice_recorder_app://voice_recorder",
             name = "Telos Voice Recorder",
             description = "A voice recorder with a list of recordings, search, pause and a recording service that keeps going with the screen off.",

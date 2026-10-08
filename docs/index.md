@@ -56,6 +56,10 @@ features:
     title: Calendar
     details: Month and agenda on your calendars, a local calendar and Google or CalDAV through the system.
     link: /docs/user-guide/telos/calendar/
+  - icon: ⬇️
+    title: Downloads
+    details: Download manager with several connections per file, resume, a queue and the folder of your choice.
+    link: /docs/user-guide/telos/downloads/
   - icon: 🧮
     title: Calculator
     details: Standard and scientific calculator with VAT, unit and currency conversion and a history.

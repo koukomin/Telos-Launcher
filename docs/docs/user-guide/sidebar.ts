@@ -89,6 +89,10 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         link: '/docs/user-guide/telos/calendar/',
       },
       {
+        text: 'Downloads',
+        link: '/docs/user-guide/telos/downloads/',
+      },
+      {
         text: 'Photos',
         collapsed: true,
         link: '/docs/user-guide/telos/photos/',

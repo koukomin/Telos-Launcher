@@ -22,6 +22,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 <a href="./voice-recorder/"><b>🎙️ Voice Recorder</b><span>Recordings with search, pause and call recordings</span></a>
 <a href="./notes/"><b>📝 Notes</b><span>Notes with labels, Markdown folder and Nextcloud sync, Keep and Evernote import</span></a>
 <a href="./calendar/"><b>📅 Calendar</b><span>Month and agenda on your calendars, local calendar, Google and CalDAV through the system</span></a>
+<a href="./downloads/"><b>⬇️ Downloads</b><span>Download manager: several connections, resume, queue, folder of your choice</span></a>
 <a href="./calculator/"><b>🧮 Calculator</b><span>Scientific calculator, VAT, unit and currency converter, history</span></a>
 <a href="./photos/"><b>🖼️ Photos</b><span>Gallery, EXIF tools, editor and a document viewer</span></a>
 <a href="./music/"><b>🎵 Music</b><span>Local library, lyrics, scrobbling, tag editor</span></a>
@@ -50,6 +51,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 | Telos Voice Recorder | Voice recordings with a list and search | [Voice Recorder](./voice-recorder/) |
 | Telos Notes | Notes with sync and import | [Notes](./notes/) |
 | Telos Calendar | Calendar with local and synced calendars | [Calendar](./calendar/) |
+| Telos Downloads | Download manager for links with resume and a queue | [Downloads](./downloads/) |
 | Telos Calculator | Standard and scientific calculator, VAT, converters | [Calculator](./calculator/) |
 | Telos Photos | Gallery, photo editor, document viewer | [Photos](./photos/) |
 | Telos Music | Player for the music on the phone | [Music](./music/) |

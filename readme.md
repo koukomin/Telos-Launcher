@@ -17,7 +17,7 @@ The documentation site is published via GitHub Pages at <https://koukomin.github
 </div>
 
 > **Note:** The Telos apps use flat Material icons: a white glyph on a dark background of its own
-> (navy for Phone, teal for Messages, amber for Files, slate for Calculator, blue for Screenshot, orange for Screen Recorder, cyan for Voice Recorder, amber for Notes, blue for Calendar, rose for Photos, purple for Music, red for
+> (navy for Phone, teal for Messages, amber for Files, slate for Calculator, blue for Screenshot, orange for Screen Recorder, cyan for Voice Recorder, amber for Notes, blue for Calendar, deep purple for Downloads, rose for Photos, purple for Music, red for
 > Video, green for Radio). Telos Store uses the launcher icon. The name and the final branding are
 > still in progress.
 
@@ -53,6 +53,7 @@ from Telos Store.
 | **Telos Screen Recorder** | Screen to video with microphone, pause and countdown | [Screen Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/screen-recorder/) |
 | **Telos Notes** | Notes with labels, sync with a Markdown folder or Nextcloud Notes, Keep and Evernote import | [Notes](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/notes/) |
 | **Telos Calendar** | Month and agenda calendar, local calendar, Google and CalDAV through the system | [Calendar](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calendar/) |
+| **Telos Downloads** | Download manager: several connections per file, resume, queue, retry, folder of your choice (torrents and video sites planned) | [Downloads](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/downloads/) |
 | **Telos Voice Recorder** | Voice recordings with search, pause and call recordings | [Voice Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/voice-recorder/) |
 | **Telos Calculator** | Standard and scientific calculator, VAT, unit and currency converter, history | [Calculator](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calculator/) |
 | **Telos Photos** | Gallery, EXIF tools, editor and a document viewer | [Photos](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
@@ -114,7 +115,7 @@ and custom names are matched; file contents, message texts and note bodies are n
 | Source | What it finds | Min. text | Online? | Default |
 | --- | --- | --- | --- | --- |
 | Apps | Installed apps of every profile (personal, work, private space) | 1 | No | On |
-| Telos apps | Phone, Messages, Radio, Music, Video, Photos, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder, Notes, Calendar, Store, while switched on | 1 | No | On |
+| Telos apps | Phone, Messages, Radio, Music, Video, Photos, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder, Notes, Calendar, Downloads, Store, while switched on | 1 | No | On |
 | Web apps | Web app shortcuts shown in the grid | 1 | No | On |
 | Activity by component name | One app entry for a typed `package/class` | 1 | No | On |
 | App shortcuts | Shortcuts that apps publish (needs Telos as default home app) | 3 | No | On |
@@ -740,6 +741,22 @@ A calendar on the calendar storage of Android. [Docs](https://koukomin.github.io
 
 **Status and limitations:** month and agenda only (no week or day grid), no guests or tasks, repeating events are edited as a whole series, Telos does not log in to Google or CalDAV itself.
 
+### Telos Downloads
+
+A download manager for links. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/downloads/).
+
+- HTTP and HTTPS downloads with up to 16 connections per file (byte ranges); an idle connection takes over half of the biggest part that is left
+- Resume after a restart or a lost network, checked against size, ETag and Last-Modified; mirrors, redirects, file name from Content-Disposition
+- Queue with a limit of parallel downloads, priorities, retry with backoff, Wi-Fi only, pause on low battery, speed limit (global and per download)
+- Custom headers, user agent, referer, cookies, HTTP or SOCKS proxy, checksum check (MD5, SHA-1, SHA-256)
+- Saves to a folder you choose (system folder picker) or to `Downloads/Telos`; categories Video, Audio, Documents, Archives, Programs, Other
+- List with filters All, Active, Queued, Completed, Failed, search, swipe actions, details with one bar per connection, batch add, link from the clipboard, a share target for links
+- Foreground service with a progress notification, pause and cancel; open or share when finished
+
+**Planned (not available yet):** torrents and magnet links with block lists (the Torrents tab is a placeholder; magnet and `.torrent` still open in Telos Video), downloads from video sites, capture from the browser, FTP, schedules.
+
+**Status and limitations:** the list is not part of the Telos backup yet; no extraction of archives; downloads run only while the launcher process lives; Android 15 stops the data sync service after about six hours a day (the downloads are paused).
+
 ### Telos Voice Recorder
 
 A voice recorder with a list, search and a service that keeps recording with the screen off. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/voice-recorder/).
@@ -1002,6 +1019,8 @@ adapted, the original license is respected.
 | [Ever Dialer](https://github.com/hari161008/Ever-Dialer) | GPL-3.0 | Power-user features: recording backends and retention, gestures, auto redial, fake calls, network switcher, notes |
 | [Thor](https://github.com/trinadhthatakula/Thor) | GPL-3.0 | Freeze backends (Shizuku, Dhizuku) and OEM suspend fallbacks |
 | [Undead Wallpaper](https://github.com/maocide/UndeadWallpaper) | GPL-3.0 | Video live wallpaper engine |
+| [Gopeed](https://github.com/GopeedLab/gopeed) | GPL-3.0 | Ideas for Telos Downloads: segmented downloads that resume, task filters, categories, headers and proxy (written from scratch, no code was copied) |
+| [Ketch](https://github.com/linroid/Ketch) | Apache-2.0 | Ideas for Telos Downloads: connections that help each other, clipboard link detection, queue and speed limits (written from scratch, no code was copied) |
 | [Obtainium](https://github.com/ImranR98/Obtainium) | GPL-3.0 | Store behaviour and features: sources, per-app settings, update flow, export format, links, update broadcasts (the behaviour is re-implemented, no code was copied) |
 | [Transistor](https://codeberg.org/y20k/transistor) | MIT | Radio player behaviour |
 | [Radio-Browser](https://www.radio-browser.info/) | public API | Radio station directory |

@@ -711,6 +711,59 @@ internal class VirtualCalendarApp(context: Context) : Application {
     }
 }
 
+internal class VirtualDownloadsApp(context: Context) : Application {
+
+    override val key: String = "$Domain://downloads"
+    override val label: String = "Telos Downloads"
+    override val labelOverride: String? = null
+    override val domain: String = Domain
+    override val score: ResultScore = ResultScore.Unspecified
+
+    override val componentName: ComponentName = ComponentName(
+        context.packageName,
+        "de.mm20.launcher2.comms.VirtualDownloadsApp",
+    )
+    override val isSuspended: Boolean = false
+    override val user: UserHandle = Process.myUserHandle()
+    override val versionName: String? = null
+
+    override val canUninstall: Boolean = false
+    override fun uninstall(context: Context) {}
+    override fun openAppDetails(context: Context) {}
+
+    override val canShareApk: Boolean = false
+
+    override fun overrideLabel(label: String): SavableSearchable = this
+
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return try {
+            val intent = Intent().apply {
+                setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_DOWNLOADS)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent, options)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_downloads_fg) ?: return null
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(drawable, 1f),
+            backgroundLayer = ColorLayer(0xFF5E35B1.toInt()),
+        )
+    }
+
+    override fun getSerializer(): SearchableSerializer = NullSerializer()
+
+    companion object {
+        const val Domain = "telos_downloads_app"
+    }
+}
+
 internal class CommsVirtualAppProvider(private val context: Context) : VirtualAppProvider {
     override fun getVirtualApps(): List<Application> = listOf(
         VirtualPhoneApp(context),
@@ -726,6 +779,7 @@ internal class CommsVirtualAppProvider(private val context: Context) : VirtualAp
         VirtualScreenshotApp(context),
         VirtualNotesApp(context),
         VirtualCalendarApp(context),
+        VirtualDownloadsApp(context),
     )
 }
 // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===

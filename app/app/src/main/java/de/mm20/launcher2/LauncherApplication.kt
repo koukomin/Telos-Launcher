@@ -53,6 +53,7 @@ import de.mm20.launcher2.feed.feedModule
 import de.mm20.launcher2.freeze.freezeModule
 import de.mm20.launcher2.appmanagement.appManagementModule
 import de.mm20.launcher2.comms.commsModule
+import de.mm20.launcher2.downloads.downloadsModule
 import de.mm20.launcher2.data.comms.dataCommsModule
 import de.mm20.launcher2.data.store.dataStoreModule
 import de.mm20.launcher2.data.store.worker.StoreUpdateScheduler
@@ -166,6 +167,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     dataStoreModule,
                     commsModule,
                     dataCommsModule,
+                    downloadsModule,
                 )
             )
         }
@@ -245,6 +247,10 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
         get<StoreUpdateScheduler>().enable()
 
         launch(Dispatchers.Default) { guardVirtualApps() }
+        // Telos Downloads: queue the downloads that were running when the process ended
+        launch(Dispatchers.Default) {
+            runCatching { get<de.mm20.launcher2.downloads.DownloadManager>().start() }
+        }
         // the player process reads the video settings from a file, keep it up to date
         launch(Dispatchers.Default) { runCatching { de.mm20.launcher2.comms.media.video.VideoServices.mirror() } }
     }
@@ -307,10 +313,12 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                 "de.mm20.launcher2.ui.media.photos.PhotoViewerActivity",
                 "de.mm20.launcher2.ui.media.photos.PhotoEditorActivity",
             ),
+            "telos_downloads_app://downloads" to listOf("de.mm20.launcher2.downloads.DownloadService"),
         )
         val GUARDED_NAMES = mapOf(
             "telos_radio_app://radio" to "Telos Radio", "telos_music_app://music" to "Telos Music",
             "telos_video_app://video" to "Telos Video", "telos_photos_app://photos" to "Telos Photos",
+            "telos_downloads_app://downloads" to "Telos Downloads",
         )
     }
 

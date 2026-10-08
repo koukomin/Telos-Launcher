@@ -61,6 +61,7 @@ internal object TelosPages {
         "telos_calculator_app://calculator" -> de.mm20.launcher2.ui.calculator.CalculatorRoute
         "telos_notes_app://notes" -> de.mm20.launcher2.ui.notes.NotesRoute
         "telos_calendar_app://calendar" -> de.mm20.launcher2.ui.calendar.CalendarRoute
+        "telos_downloads_app://downloads" -> de.mm20.launcher2.ui.downloads.DownloadsRoute()
         "telos_voice_recorder_app://voice_recorder" -> de.mm20.launcher2.ui.voice.VoiceRecorderRoute
         "telos_screen_recorder_app://screen_recorder" -> de.mm20.launcher2.ui.screenrec.ScreenRecorderRoute
         "telos_screenshot_app://screenshot" -> de.mm20.launcher2.ui.screenshot.ScreenshotRoute
@@ -104,6 +105,8 @@ internal object TelosPages {
         entry<de.mm20.launcher2.ui.voice.VoiceSettingsRoute> {
             de.mm20.launcher2.ui.voice.VoiceSettingsScreen()
         }
+        entry<de.mm20.launcher2.ui.downloads.DownloadsRoute> { de.mm20.launcher2.ui.downloads.DownloadsScreen(it.initialUrls) }
+        entry<de.mm20.launcher2.ui.downloads.DownloadsSettingsRoute> { de.mm20.launcher2.ui.downloads.DownloadsSettingsScreen() }
         entry<de.mm20.launcher2.ui.notes.NotesRoute> { de.mm20.launcher2.ui.notes.NotesScreen() }
         entry<de.mm20.launcher2.ui.calendar.CalendarRoute> { de.mm20.launcher2.ui.calendar.CalendarScreen() }
         entry<de.mm20.launcher2.ui.calculator.CalculatorRoute> {

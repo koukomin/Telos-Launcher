@@ -306,6 +306,37 @@
             </intent-filter>
         </activity>
 
+        <!-- Telos Downloads: share a link to it, or open a link to a file with it. Magnet and .torrent stay with Telos Video. -->
+        <activity
+            android:name=".downloads.DownloadShareActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/ic_app_downloads_full"
+            android:label="Telos Downloads"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+            <!-- only links that name a kind of file, so that Telos is not offered for every web page -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:mimeType="application/zip" />
+                <data android:mimeType="application/x-zip-compressed" />
+                <data android:mimeType="application/vnd.android.package-archive" />
+                <data android:mimeType="application/octet-stream" />
+                <data android:mimeType="application/x-7z-compressed" />
+                <data android:mimeType="application/vnd.rar" />
+                <data android:mimeType="application/gzip" />
+                <data android:mimeType="application/x-iso9660-image" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".media.photos.PhotoViewerActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboardHidden"
