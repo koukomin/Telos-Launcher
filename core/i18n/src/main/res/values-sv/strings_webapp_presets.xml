@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Föreslagna kategorier</string>
+    <string name="web_app_presets_summary">Lägg till en färdig mapp med populära webbplatser som webbappar. Inget läggs till förrän du väljer det, och varje mapp och webbapp kan redigeras eller tas bort efteråt.</string>
+    <string name="web_app_presets_login_note">Logga in på varje webbplats för sig. Inloggningar sparas av den inbäddade webbläsaren. Detta gäller bara webbappar som öppnas i den inbäddade webbläsaren; webbappar som öppnas i en extern webbläsare använder den webbläsarens egen inloggning.</string>
+    <string name="web_app_preset_category_social">Socialt</string>
+    <string name="web_app_preset_category_email">E-post</string>
+    <string name="web_app_preset_category_messaging">Meddelanden</string>
+    <string name="web_app_preset_category_video">Video och musik</string>
+    <string name="web_app_preset_category_work">Produktivitet och arbete</string>
+    <string name="web_app_preset_add">Lägg till</string>
+    <string name="web_app_preset_dialog_title">Lägg till %1$s</string>
+    <string name="web_app_preset_dialog_summary">Välj vilka webbappar som ska läggas till. De sparas som alla webbappar du skapar själv.</string>
+    <string name="web_app_preset_exists">Finns redan bland dina webbappar, återanvänds</string>
+    <string name="web_app_preset_confirm">Lägg till valda</string>
+    <string name="web_app_preset_added">%1$s tillagd</string>
+    <string name="web_app_groups_title">Mappar</string>
+    <string name="web_app_groups_enable">Aktivera webbappsmappar</string>
+    <string name="web_app_groups_enable_summary">Organisera webbappar i mappar och begränsa svepning per mapp</string>
+    <string name="web_app_groups_manage">Hantera mappar</string>
+    <string name="web_app_group_create">Skapa ny mapp</string>
+    <string name="web_app_group_create_title">Skapa mapp</string>
+    <string name="web_app_group_rename_title">Byt namn på mapp</string>
+    <string name="web_app_group_name">Mappnamn</string>
+    <string name="web_app_group_create_confirm">Skapa</string>
+    <string name="web_app_group_rename_confirm">Byt namn</string>
+    <string name="web_app_group_apps_count">%1$d webbappar</string>
+    <string name="web_app_group_notifications">Aviseringar</string>
+    <string name="web_app_group_label">Mapp</string>
+    <string name="web_app_group_none">Ingen</string>
+    <string name="web_app_group_delete_title">Ta bort mappen?</string>
+    <string name="web_app_group_delete_message">Mappen \"%1$s\" tas bort. Webbapparna i den behålls och blir ogrupperade.</string>
+    <string name="web_app_delete_title">Ta bort webbappen?</string>
+    <string name="web_app_delete_message">\"%1$s\" tas bort från sökningen, startskärmen, mapparna och webbappspanelen. Detta kan inte ångras.</string>
+    <string name="web_app_shortcut_ad_block">Annonsblockerare</string>
+    <string name="web_app_shortcut_ad_block_global">Använd global inställning</string>
+    <string name="web_app_shortcut_ad_block_on">På</string>
+    <string name="web_app_shortcut_ad_block_off">Av</string>
+    <string name="web_app_shortcut_ad_block_summary">Gäller bara den inbäddade webbläsaren. Externa webbläsare (Custom Tabs) styrs av webbläsarappen.</string>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Foreslåtte kategorier</string>
+    <string name="web_app_presets_summary">Legg til en ferdig mappe med populære nettsteder som nettapper. Ingenting legges til før du velger det, og alle mapper og nettapper kan redigeres eller slettes etterpå.</string>
+    <string name="web_app_presets_login_note">Logg inn på hvert nettsted for seg. Innloggingene lagres av den innebygde nettleseren. Dette gjelder bare nettapper som åpnes i den innebygde nettleseren; nettapper som åpnes i en ekstern nettleser bruker den nettleserens egen innlogging.</string>
+    <string name="web_app_preset_category_social">Sosialt</string>
+    <string name="web_app_preset_category_email">E-post</string>
+    <string name="web_app_preset_category_messaging">Meldinger</string>
+    <string name="web_app_preset_category_video">Video og musikk</string>
+    <string name="web_app_preset_category_work">Produktivitet og jobb</string>
+    <string name="web_app_preset_add">Legg til</string>
+    <string name="web_app_preset_dialog_title">Legg til %1$s</string>
+    <string name="web_app_preset_dialog_summary">Velg nettappene som skal legges til. De lagres som alle nettapper du lager selv.</string>
+    <string name="web_app_preset_exists">Finnes allerede i nettappene dine, gjenbrukes</string>
+    <string name="web_app_preset_confirm">Legg til valgte</string>
+    <string name="web_app_preset_added">%1$s lagt til</string>
+    <string name="web_app_groups_title">Mapper</string>
+    <string name="web_app_groups_enable">Aktiver nettapp-mapper</string>
+    <string name="web_app_groups_enable_summary">Organiser nettapper i mapper og begrens sveiping per mappe</string>
+    <string name="web_app_groups_manage">Administrer mapper</string>
+    <string name="web_app_group_create">Opprett ny mappe</string>
+    <string name="web_app_group_create_title">Opprett mappe</string>
+    <string name="web_app_group_rename_title">Gi mappen nytt navn</string>
+    <string name="web_app_group_name">Mappenavn</string>
+    <string name="web_app_group_create_confirm">Opprett</string>
+    <string name="web_app_group_rename_confirm">Gi nytt navn</string>
+    <string name="web_app_group_apps_count">%1$d nettapper</string>
+    <string name="web_app_group_notifications">Varsler</string>
+    <string name="web_app_group_label">Mappe</string>
+    <string name="web_app_group_none">Ingen</string>
+    <string name="web_app_group_delete_title">Slette mappen?</string>
+    <string name="web_app_group_delete_message">Mappen \"%1$s\" blir slettet. Nettappene i den beholdes og blir ugrupperte.</string>
+    <string name="web_app_delete_title">Slette nettappen?</string>
+    <string name="web_app_delete_message">\"%1$s\" fjernes fra søk, startskjermen, mapper og nettapp-panelet. Dette kan ikke angres.</string>
+    <string name="web_app_shortcut_ad_block">Annonseblokkering</string>
+    <string name="web_app_shortcut_ad_block_global">Bruk global innstilling</string>
+    <string name="web_app_shortcut_ad_block_on">På</string>
+    <string name="web_app_shortcut_ad_block_off">Av</string>
+    <string name="web_app_shortcut_ad_block_summary">Gjelder bare den innebygde nettleseren. Eksterne nettlesere (Custom Tabs) styres av nettleserappen.</string>
+</resources>

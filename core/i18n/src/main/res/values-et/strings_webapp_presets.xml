@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Soovitatud kategooriad</string>
+    <string name="web_app_presets_summary">Lisa populaarsete veebisaitidega valmis kaust veebirakendustena. Midagi ei lisata enne, kui selle valid, ning iga kausta ja veebirakendust saab hiljem muuta või kustutada.</string>
+    <string name="web_app_presets_login_note">Logi sisse igal veebisaidil eraldi. Sisselogimised jäävad manustatud brauserisse. See kehtib ainult veebirakenduste kohta, mis avanevad manustatud brauseris; välises brauseris avatavad veebirakendused kasutavad selle brauseri enda sisselogimist.</string>
+    <string name="web_app_preset_category_social">Sotsiaalmeedia</string>
+    <string name="web_app_preset_category_email">E-post</string>
+    <string name="web_app_preset_category_messaging">Sõnumside</string>
+    <string name="web_app_preset_category_video">Video ja muusika</string>
+    <string name="web_app_preset_category_work">Tootlikkus ja töö</string>
+    <string name="web_app_preset_add">Lisa</string>
+    <string name="web_app_preset_dialog_title">Lisa %1$s</string>
+    <string name="web_app_preset_dialog_summary">Vali lisatavad veebirakendused. Need salvestatakse nagu sinu enda loodud veebirakendused.</string>
+    <string name="web_app_preset_exists">On juba sinu veebirakenduste hulgas, kasutatakse uuesti</string>
+    <string name="web_app_preset_confirm">Lisa valitud</string>
+    <string name="web_app_preset_added">%1$s lisatud</string>
+    <string name="web_app_groups_title">Kaustad</string>
+    <string name="web_app_groups_enable">Luba veebirakenduste kaustad</string>
+    <string name="web_app_groups_enable_summary">Korralda veebirakendused kaustadesse ja piira pühkimist kaustapõhiselt</string>
+    <string name="web_app_groups_manage">Halda kaustu</string>
+    <string name="web_app_group_create">Loo uus kaust</string>
+    <string name="web_app_group_create_title">Loo kaust</string>
+    <string name="web_app_group_rename_title">Nimeta kaust ümber</string>
+    <string name="web_app_group_name">Kausta nimi</string>
+    <string name="web_app_group_create_confirm">Loo</string>
+    <string name="web_app_group_rename_confirm">Nimeta ümber</string>
+    <string name="web_app_group_apps_count">%1$d veebirakendust</string>
+    <string name="web_app_group_notifications">Teavitused</string>
+    <string name="web_app_group_label">Kaust</string>
+    <string name="web_app_group_none">Puudub</string>
+    <string name="web_app_group_delete_title">Kas kustutada kaust?</string>
+    <string name="web_app_group_delete_message">Kaust \"%1$s\" kustutatakse. Selles olevad veebirakendused säilivad ja jäävad rühmitamata.</string>
+    <string name="web_app_delete_title">Kas kustutada veebirakendus?</string>
+    <string name="web_app_delete_message">\"%1$s\" eemaldatakse otsingust, avaekraanilt, kaustadest ja veebirakenduste paneelilt. Seda ei saa tagasi võtta.</string>
+    <string name="web_app_shortcut_ad_block">Reklaamiblokeerija</string>
+    <string name="web_app_shortcut_ad_block_global">Kasuta üldist seadet</string>
+    <string name="web_app_shortcut_ad_block_on">Sees</string>
+    <string name="web_app_shortcut_ad_block_off">Väljas</string>
+    <string name="web_app_shortcut_ad_block_summary">Kehtib ainult manustatud brauseri puhul. Väliseid brausereid (Custom Tabs) juhib brauserirakendus.</string>
+</resources>

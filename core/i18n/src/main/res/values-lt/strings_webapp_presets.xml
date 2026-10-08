@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Siūlomos kategorijos</string>
+    <string name="web_app_presets_summary">Pridėkite paruoštą aplanką su populiariomis svetainėmis kaip žiniatinklio programėlėmis. Nieko nepridedama, kol nepasirenkate, o kiekvieną aplanką ir žiniatinklio programėlę vėliau galima redaguoti arba ištrinti.</string>
+    <string name="web_app_presets_login_note">Prisijunkite kiekvienoje svetainėje atskirai. Prisijungimus išsaugo įterptoji naršyklė. Tai taikoma tik žiniatinklio programėlėms, atidaromoms įterptoje naršyklėje; išorinėje naršyklėje atidaromos žiniatinklio programėlės naudoja tos naršyklės prisijungimą.</string>
+    <string name="web_app_preset_category_social">Socialiniai tinklai</string>
+    <string name="web_app_preset_category_email">El. paštas</string>
+    <string name="web_app_preset_category_messaging">Žinutės</string>
+    <string name="web_app_preset_category_video">Vaizdo įrašai ir muzika</string>
+    <string name="web_app_preset_category_work">Produktyvumas ir darbas</string>
+    <string name="web_app_preset_add">Pridėti</string>
+    <string name="web_app_preset_dialog_title">Pridėti: %1$s</string>
+    <string name="web_app_preset_dialog_summary">Pasirinkite, kurias žiniatinklio programėles pridėti. Jos išsaugomos kaip ir pačių sukurtos žiniatinklio programėlės.</string>
+    <string name="web_app_preset_exists">Jau yra jūsų žiniatinklio programėlėse, bus panaudota iš naujo</string>
+    <string name="web_app_preset_confirm">Pridėti pasirinktas</string>
+    <string name="web_app_preset_added">Pridėta: %1$s</string>
+    <string name="web_app_groups_title">Aplankai</string>
+    <string name="web_app_groups_enable">Įjungti žiniatinklio programėlių aplankus</string>
+    <string name="web_app_groups_enable_summary">Tvarkykite žiniatinklio programėles aplankuose ir apribokite perbraukimą kiekvienam aplankui</string>
+    <string name="web_app_groups_manage">Tvarkyti aplankus</string>
+    <string name="web_app_group_create">Sukurti naują aplanką</string>
+    <string name="web_app_group_create_title">Sukurti aplanką</string>
+    <string name="web_app_group_rename_title">Pervadinti aplanką</string>
+    <string name="web_app_group_name">Aplanko pavadinimas</string>
+    <string name="web_app_group_create_confirm">Sukurti</string>
+    <string name="web_app_group_rename_confirm">Pervadinti</string>
+    <string name="web_app_group_apps_count">Žiniatinklio programėlių: %1$d</string>
+    <string name="web_app_group_notifications">Pranešimai</string>
+    <string name="web_app_group_label">Aplankas</string>
+    <string name="web_app_group_none">Nėra</string>
+    <string name="web_app_group_delete_title">Ištrinti aplanką?</string>
+    <string name="web_app_group_delete_message">Aplankas „%1$s“ bus ištrintas. Jame esančios žiniatinklio programėlės bus išsaugotos ir taps nesugrupuotos.</string>
+    <string name="web_app_delete_title">Ištrinti žiniatinklio programėlę?</string>
+    <string name="web_app_delete_message">„%1$s“ bus pašalinta iš paieškos, pagrindinio ekrano, aplankų ir žiniatinklio programėlių skydelio. Šio veiksmo anuliuoti negalima.</string>
+    <string name="web_app_shortcut_ad_block">Skelbimų blokavimas</string>
+    <string name="web_app_shortcut_ad_block_global">Naudoti bendrą nustatymą</string>
+    <string name="web_app_shortcut_ad_block_on">Įjungta</string>
+    <string name="web_app_shortcut_ad_block_off">Išjungta</string>
+    <string name="web_app_shortcut_ad_block_summary">Taikoma tik įterptajai naršyklei. Išorines naršykles („Custom Tabs“) valdo pati naršyklės programa.</string>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Kategoriji suġġeriti</string>
+    <string name="web_app_presets_summary">Żid folder lest b\'siti web popolari bħala web apps. Ma jiżdied xejn sakemm tagħżlu int, u kull folder u web app jistgħu jiġu editjati jew imħassra wara.</string>
+    <string name="web_app_presets_login_note">Idħol fuq kull sit web waħdu. L-idħul jinżamm mill-browser inkorporat. Dan japplika biss għal web apps li jinfetħu fil-browser inkorporat; web apps li jinfetħu f\'browser estern jużaw l-idħol tal-browser stess.</string>
+    <string name="web_app_preset_category_social">Soċjali</string>
+    <string name="web_app_preset_category_email">Email</string>
+    <string name="web_app_preset_category_messaging">Messaġġi</string>
+    <string name="web_app_preset_category_video">Vidjo u Mużika</string>
+    <string name="web_app_preset_category_work">Produttività u Xogħol</string>
+    <string name="web_app_preset_add">Żid</string>
+    <string name="web_app_preset_dialog_title">Żid %1$s</string>
+    <string name="web_app_preset_dialog_summary">Agħżel il-web apps li trid iżżid. Jinħażnu bħal kull web app li toħloq int stess.</string>
+    <string name="web_app_preset_exists">Diġà fil-web apps tiegħek, se terġa\' tintuża</string>
+    <string name="web_app_preset_confirm">Żid dawk magħżula</string>
+    <string name="web_app_preset_added">%1$s żdied</string>
+    <string name="web_app_groups_title">Folders</string>
+    <string name="web_app_groups_enable">Attiva l-folders tal-web apps</string>
+    <string name="web_app_groups_enable_summary">Organizza l-web apps f\'folders u limita s-swiping għal kull folder</string>
+    <string name="web_app_groups_manage">Immaniġġja l-folders</string>
+    <string name="web_app_group_create">Oħloq folder ġdid</string>
+    <string name="web_app_group_create_title">Oħloq folder</string>
+    <string name="web_app_group_rename_title">Semmi mill-ġdid il-folder</string>
+    <string name="web_app_group_name">Isem il-folder</string>
+    <string name="web_app_group_create_confirm">Oħloq</string>
+    <string name="web_app_group_rename_confirm">Semmi mill-ġdid</string>
+    <string name="web_app_group_apps_count">%1$d web apps</string>
+    <string name="web_app_group_notifications">Notifiki</string>
+    <string name="web_app_group_label">Folder</string>
+    <string name="web_app_group_none">L-ebda wieħed</string>
+    <string name="web_app_group_delete_title">Tħassar il-folder?</string>
+    <string name="web_app_group_delete_message">Il-folder \"%1$s\" se jitħassar. Il-web apps ġewwa jinżammu u jsiru mhux miġbura f\'grupp.</string>
+    <string name="web_app_delete_title">Tħassar il-web app?</string>
+    <string name="web_app_delete_message">\"%1$s\" se titneħħa mit-tfittxija, mill-iskrin ewlieni, mill-folders u mill-pannell tal-web apps. Din ma tistax titreġġa\' lura.</string>
+    <string name="web_app_shortcut_ad_block">Blokkatur tar-reklami</string>
+    <string name="web_app_shortcut_ad_block_global">Uża l-issettjar globali</string>
+    <string name="web_app_shortcut_ad_block_on">Mixgħul</string>
+    <string name="web_app_shortcut_ad_block_off">Maqful</string>
+    <string name="web_app_shortcut_ad_block_summary">Japplika biss għall-browser inkorporat. Il-browsers esterni (Custom Tabs) jiġu kkontrollati mill-app tal-browser.</string>
+</resources>

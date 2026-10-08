@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Запропоновані категорії</string>
+    <string name="web_app_presets_summary">Додайте готову папку з популярними сайтами як вебзастосунки. Нічого не додається, доки ви цього не оберете, а кожну папку й вебзастосунок можна пізніше змінити або видалити.</string>
+    <string name="web_app_presets_login_note">Входьте на кожному сайті окремо. Дані для входу зберігає вбудований браузер. Це стосується лише вебзастосунків, що відкриваються у вбудованому браузері; вебзастосунки, відкриті в зовнішньому браузері, використовують вхід цього браузера.</string>
+    <string name="web_app_preset_category_social">Соцмережі</string>
+    <string name="web_app_preset_category_email">Електронна пошта</string>
+    <string name="web_app_preset_category_messaging">Месенджери</string>
+    <string name="web_app_preset_category_video">Відео та музика</string>
+    <string name="web_app_preset_category_work">Продуктивність і робота</string>
+    <string name="web_app_preset_add">Додати</string>
+    <string name="web_app_preset_dialog_title">Додати: %1$s</string>
+    <string name="web_app_preset_dialog_summary">Виберіть вебзастосунки для додавання. Вони зберігаються так само, як і створені вами вебзастосунки.</string>
+    <string name="web_app_preset_exists">Уже є у ваших вебзастосунках, буде використано повторно</string>
+    <string name="web_app_preset_confirm">Додати вибране</string>
+    <string name="web_app_preset_added">Додано: %1$s</string>
+    <string name="web_app_groups_title">Папки</string>
+    <string name="web_app_groups_enable">Увімкнути папки вебзастосунків</string>
+    <string name="web_app_groups_enable_summary">Упорядковуйте вебзастосунки в папках і обмежуйте гортання для кожної папки</string>
+    <string name="web_app_groups_manage">Керування папками</string>
+    <string name="web_app_group_create">Створити нову папку</string>
+    <string name="web_app_group_create_title">Створити папку</string>
+    <string name="web_app_group_rename_title">Перейменувати папку</string>
+    <string name="web_app_group_name">Назва папки</string>
+    <string name="web_app_group_create_confirm">Створити</string>
+    <string name="web_app_group_rename_confirm">Перейменувати</string>
+    <string name="web_app_group_apps_count">Вебзастосунків: %1$d</string>
+    <string name="web_app_group_notifications">Сповіщення</string>
+    <string name="web_app_group_label">Папка</string>
+    <string name="web_app_group_none">Немає</string>
+    <string name="web_app_group_delete_title">Видалити папку?</string>
+    <string name="web_app_group_delete_message">Папку \"%1$s\" буде видалено. Вебзастосунки в ній збережуться та стануть без групи.</string>
+    <string name="web_app_delete_title">Видалити вебзастосунок?</string>
+    <string name="web_app_delete_message">\"%1$s\" буде вилучено з пошуку, головного екрана, папок і панелі вебзастосунків. Цю дію не можна скасувати.</string>
+    <string name="web_app_shortcut_ad_block">Блокування реклами</string>
+    <string name="web_app_shortcut_ad_block_global">Використовувати глобальне налаштування</string>
+    <string name="web_app_shortcut_ad_block_on">Увімкнено</string>
+    <string name="web_app_shortcut_ad_block_off">Вимкнено</string>
+    <string name="web_app_shortcut_ad_block_summary">Стосується лише вбудованого браузера. Зовнішніми браузерами (Custom Tabs) керує застосунок браузера.</string>
+</resources>
