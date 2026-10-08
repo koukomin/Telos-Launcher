@@ -20,7 +20,7 @@ class VideoViewModel : ViewModel() {
     fun load(context: Context) {
         viewModelScope.launch {
             _loading.value = true
-            _items.value = VideoLibrary.load(context)
+            _items.value = VideoLibrary.load(context) + RemoteVideo.cached(context)
             _loading.value = false
         }
     }

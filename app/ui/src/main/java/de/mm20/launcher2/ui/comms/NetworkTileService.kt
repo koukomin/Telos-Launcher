@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.comms
 
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.base.containedScope
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
@@ -18,7 +19,7 @@ class NetworkTileService : TileService() {
 
     override fun onStartListening() {
         qsTile?.state = Tile.STATE_ACTIVE
-        qsTile?.label = "Network"
+        qsTile?.label = getString(R.string.hc_network)
         qsTile?.updateTile()
     }
 
@@ -34,7 +35,7 @@ class NetworkTileService : TileService() {
             commsSettings.setPreferredNetworkMode(next)
             CellularRadio.applyPreferred(applicationContext, next)
         }
-        qsTile?.label = "Cycled"
+        qsTile?.label = getString(R.string.hc_cycled)
         qsTile?.updateTile()
     }
 }

@@ -31,6 +31,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.util.UUID
 
+
 enum class PanelDirection { Left, Right }
 
 class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
@@ -89,7 +90,7 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun updateGroup(group: de.mm20.launcher2.preferences.WebAppGroup) {
         viewModelScope.launch {
-            browsingSettings.setGroups(groups.value.filter { it.id != group.id } + group)
+            browsingSettings.setGroups(groups.value.map { if (it.id == group.id) group else it })
         }
     }
 
@@ -97,6 +98,60 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
         viewModelScope.launch {
             val group = groups.value.find { it.id == groupId } ?: return@launch
             updateGroup(group.copy(notificationsEnabled = enabled))
+        }
+    }
+
+    /**
+     * Adds the [selected] apps of a predefined [category] as ordinary web app shortcuts (reusing
+     * existing ones with the same URL) and puts them into a folder for that category (reusing the
+     * folder if one was already created from it). [onDone] is called with the number of newly
+     * created web apps.
+     */
+    fun addPreset(
+        category: WebAppPresetCategory,
+        selected: List<WebAppPreset>,
+        onDone: (created: Int) -> Unit = {},
+    ) {
+        viewModelScope.launch {
+            val existing = webAppShortcutRepository.search("", false).first()
+            var created = 0
+            val keys = mutableListOf<String>()
+            for (preset in selected) {
+                val wanted = WebAppPresets.comparableUrl(preset.url)
+                val match = existing.find { WebAppPresets.comparableUrl(it.url) == wanted }
+                if (match != null) {
+                    keys.add(match.key)
+                    continue
+                }
+                val favicon = withContext(Dispatchers.IO) { webAppShortcutRepository.findFavicon(preset.url) }
+                val shortcut = webAppShortcutRepository.create(
+                    label = preset.name,
+                    url = preset.url,
+                    iconUri = null,
+                    faviconUrl = favicon,
+                )
+                keys.add(shortcut.key)
+                created++
+            }
+            val current = browsingSettings.groups.first()
+            val target = current.find { it.category == category.id }
+            val updated = if (target != null) {
+                current.map { g ->
+                    if (g.id == target.id) g.copy(appKeys = (g.appKeys + keys).distinct())
+                    else g.copy(appKeys = g.appKeys - keys.toSet())
+                }
+            } else {
+                current.map { g -> g.copy(appKeys = g.appKeys - keys.toSet()) } +
+                        de.mm20.launcher2.preferences.WebAppGroup(
+                            id = UUID.randomUUID().toString(),
+                            name = context.getString(category.nameRes),
+                            appKeys = keys.distinct(),
+                            category = category.id,
+                        )
+            }
+            browsingSettings.setGroups(updated)
+            browsingSettings.setGroupsEnabled(true)
+            onDone(created)
         }
     }
 
@@ -186,19 +241,20 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
         customCss: String?,
         notificationsEnabled: Boolean,
         groupId: String?,
+        adBlockMode: WebAppShortcut.AdBlockMode,
     ) {
         val oldIconUri = existing?.iconUri
         val shortcut = if (existing != null) {
             webAppShortcutRepository.update(
                 existing, label, url, iconUri, faviconUrl, rendererPackage,
                 showInGrid, showInPanel, existing.order, iconSource, customCss,
-                notificationsEnabled,
+                notificationsEnabled, adBlockMode,
             )
         } else {
             webAppShortcutRepository.create(
                 label, url, iconUri, faviconUrl, rendererPackage,
                 showInGrid, showInPanel, 0, iconSource, customCss,
-                notificationsEnabled,
+                notificationsEnabled, adBlockMode,
             )
         }
         assignToGroup(shortcut.key, groupId)
@@ -225,9 +281,9 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
         )
     }
 
+    /** Deletes the web app everywhere: storage, search, panel and folders. */
     fun delete(shortcut: WebAppShortcut) {
-        webAppShortcutRepository.delete(shortcut)
-        shortcut.iconUri?.let { deleteIconFile(it) }
+        panelManager.delete(shortcut)
     }
 
     private fun deleteIconFile(path: String) {

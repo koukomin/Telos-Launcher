@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.floating
 
+import de.mm20.launcher2.search.GreekFold
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -184,7 +185,7 @@ internal fun SidebarEditor(
                         contentPadding = PaddingValues(bottom = 16.dp),
                         modifier = Modifier.fillMaxSize(),
                     ) {
-                        val tools = SidebarTool.entries.filter { q.isEmpty() || context.getString(it.label).lowercase().contains(q) }
+                        val tools = SidebarTool.entries.filter { q.isEmpty() || GreekFold.contains(context.getString(it.label), q) }
                         if (tools.isNotEmpty()) {
                             item(span = { GridItemSpan(maxLineSpan) }) { SectionTitle(R.string.floating_launcher_section_tools) }
                             items(tools, key = { "t-" + it.id }) { tool ->
@@ -197,7 +198,7 @@ internal fun SidebarEditor(
                         val widgetTypes = SIDEBAR_WIDGET_TYPES.mapNotNull { (type, icon) ->
                             val widget = newSidebarWidget(type) ?: return@mapNotNull null
                             val label = widget.getLabel(context)
-                            if (q.isNotEmpty() && !label.lowercase().contains(q)) null else Triple(type, icon, label)
+                            if (q.isNotEmpty() && !GreekFold.contains(label, q)) null else Triple(type, icon, label)
                         }
                         if (widgetTypes.isNotEmpty()) {
                             item(span = { GridItemSpan(maxLineSpan) }) { SectionTitle(R.string.floating_launcher_section_widgets) }
@@ -211,7 +212,7 @@ internal fun SidebarEditor(
                                 }
                             }
                         }
-                        val shownApps = sortedApps.filter { q.isEmpty() || (it.labelOverride ?: it.label).lowercase().contains(q) }
+                        val shownApps = sortedApps.filter { q.isEmpty() || GreekFold.contains(it.labelOverride ?: it.label, q) }
                         if (shownApps.isNotEmpty()) {
                             item(span = { GridItemSpan(maxLineSpan) }) { SectionTitle(R.string.floating_launcher_section_apps) }
                             items(shownApps, key = { "a-" + it.key }) { app ->

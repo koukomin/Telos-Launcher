@@ -99,13 +99,18 @@ class MusicViewModel : ViewModel() {
     private val _repeatMode = MutableStateFlow(Player.REPEAT_MODE_OFF)
     val repeatMode: StateFlow<Int> = _repeatMode
 
+    private var connecting = false
+    private var pendingPlay: Pair<List<MusicTrack>, Int>? = null
+
     fun connect(context: Context) {
-        if (controller != null) return
+        if (controller != null || connecting) return
+        connecting = true
         appContext = context.applicationContext
         val token = SessionToken(context, ComponentName(context, MusicPlayerService::class.java))
         val future = MediaController.Builder(context, token).buildAsync()
         future.addListener({
-            val c = future.get()
+            connecting = false
+            val c = runCatching { future.get() }.getOrNull() ?: return@addListener
             controller = c
             c.addListener(object : Player.Listener {
                 override fun onIsPlayingChanged(isPlaying: Boolean) {
@@ -127,6 +132,7 @@ class MusicViewModel : ViewModel() {
             _shuffle.value = c.shuffleModeEnabled
             _repeatMode.value = c.repeatMode
             refresh()
+            pendingPlay?.let { (l, i) -> pendingPlay = null; play(l, i) }
         }, MoreExecutors.directExecutor())
 
         viewModelScope.launch {
@@ -178,7 +184,7 @@ class MusicViewModel : ViewModel() {
 
     /** Plays [list] as the queue, starting with the track at [index] */
     fun play(list: List<MusicTrack>, index: Int) {
-        val c = controller ?: return
+        val c = controller ?: run { pendingPlay = list to index; return }
         val items = list.map { track ->
             MediaItem.Builder()
                 .setUri(track.uri)

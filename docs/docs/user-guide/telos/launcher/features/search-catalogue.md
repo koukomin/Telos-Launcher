@@ -173,6 +173,7 @@ All ranked lists use one formula: **0.6 x match score + 0.4 x usage weight**.
 | --- | --- |
 | Match score | Jaro-Winkler similarity, plus a prefix bonus and a substring bonus, capped at 1. A match on a secondary field is scaled by 0.8 |
 | Usage weight | Increases each time you launch an item. The step per launch is set by **Ranking flexibility**: Stable 0.01, Balanced 0.03 (default), Variable 0.1 |
+| Greek and Greeklish | Greek is found with or without accents, in any case and with any sigma, and also when typed with Latin letters (Greeklish): `kalimera`, `kalhmera` and `Καλημέρα` are the same, so are `mpala` and `μπάλα`, `thelw` and `θέλω`, `chartis` and `χάρτης`. Greeklish has no standard, so letters that sound alike are merged (i, y, h, ei, oi; o, w; b, v, f; th, t; ch, x, ks), which can also let a few similar sounding English words match. This works for apps, shortcuts, contacts, files, calendar events, tags, notes, the Telos apps (Music, Video, Files, Voice Recorder, Store, Recents) and the widget and sidebar pickers. It does not work for results that a plugin app searches itself, or for what is sent to online services |
 | Normalization | Text is lower-cased and accents are stripped. A transliterator (Settings > Language and region) lets non-Latin names match Latin input. `ae`, `oe` and `ss` are expanded for the letters ae, oe and sharp s |
 | Duplicates | Results with the same item key are removed |
 | Places | When a location is cached, places are sorted by distance. Otherwise they use the formula above |

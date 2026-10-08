@@ -65,6 +65,7 @@ fun GestureSettingsScreen() {
         add(GestureAction.Search::class)
         add(GestureAction.Widgets::class)
         add(GestureAction.Launch::class)
+        add(GestureAction.TelosApp::class)
         add(GestureAction.WebAppsPanel::class)
         add(GestureAction.HomeScreenMenu::class)
     }

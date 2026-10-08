@@ -145,8 +145,8 @@ internal class CalendarRepositoryImpl(
                         from = intervalStart,
                         to = intervalEnd,
                         excludedCalendars = excludeCalendars.mapNotNull {
-                            val (namespace, id) = it.split(":")
-                            if (namespace == provider.namespace) id else null
+                            val parts = it.split(":", limit = 2)
+                            if (parts.size == 2 && parts[0] == provider.namespace) parts[1] else null
                         },
                         excludeAllDayEvents = excludeAllDayEvents,
                         allowNetwork = allowNetwork,

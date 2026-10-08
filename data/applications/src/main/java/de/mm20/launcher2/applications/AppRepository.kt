@@ -230,6 +230,7 @@ internal class AppRepositoryImpl(
 
         val apps = mutableListOf<LauncherApp>()
         val seenPackages = mutableSetOf<String>()
+        val seenComponents = mutableSetOf<ComponentName>()
 
         // 1. Query LauncherApps directly for the specific profile/userHandle.
         // This is multi-user and profile aware (Dual Apps, Work Profiles, Private Space).
@@ -243,7 +244,8 @@ internal class AppRepositoryImpl(
             val pkg = info.applicationInfo.packageName
             if (pkg == context.packageName && !context.packageName.endsWith(".debug")) continue
 
-            if (pkg in seenPackages) continue
+            // Dedupe by component, not package: a package can expose several launcher activities
+            if (!seenComponents.add(info.componentName)) continue
 
             val app = LauncherApp(context, info)
             apps.add(app)

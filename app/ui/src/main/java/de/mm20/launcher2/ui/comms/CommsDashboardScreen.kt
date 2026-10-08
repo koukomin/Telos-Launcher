@@ -108,7 +108,7 @@ fun CommsDashboardScreen(
     if (phoneAppLock && !phoneUnlocked) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("Phone is locked", style = MaterialTheme.typography.titleLarge)
+                Text(stringResource(R.string.hc_phone_is_locked), style = MaterialTheme.typography.titleLarge)
                 Button(
                     onClick = {
                         val activity = context as? androidx.fragment.app.FragmentActivity ?: return@Button
@@ -119,7 +119,7 @@ fun CommsDashboardScreen(
                         }
                     },
                     modifier = Modifier.padding(top = 16.dp),
-                ) { Text("Unlock") }
+                ) { Text(stringResource(R.string.hc_unlock)) }
             }
         }
         return
@@ -162,11 +162,11 @@ fun CommsDashboardScreen(
                         }
                         DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
                             DropdownMenuItem(
-                                text = { Text("Messages") },
+                                text = { Text(stringResource(R.string.hc_messages)) },
                                 onClick = { menuOpen = false; selectedTab = CommsTab.Messages },
                             )
                             DropdownMenuItem(
-                                text = { Text("Settings") },
+                                text = { Text(stringResource(R.string.hc_settings)) },
                                 onClick = { menuOpen = false; backStack.add(CommsSettingsRoute) },
                             )
                         }
@@ -180,7 +180,7 @@ fun CommsDashboardScreen(
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp)
                             .heightIn(min = 48.dp),
-                        placeholder = { Text("Search") },
+                        placeholder = { Text(stringResource(R.string.hc_search)) },
                         leadingIcon = {
                             Icon(painterResource(R.drawable.search_24px), contentDescription = null)
                         },
@@ -189,7 +189,7 @@ fun CommsDashboardScreen(
                                 IconButton(onClick = { showFilters = !showFilters }) {
                                     Icon(
                                         painterResource(R.drawable.filter_alt_24px),
-                                        contentDescription = "Filter",
+                                        contentDescription = stringResource(R.string.hc_filter),
                                         tint = if (showFilters) MaterialTheme.colorScheme.primary
                                         else MaterialTheme.colorScheme.onSurfaceVariant,
                                     )
@@ -238,7 +238,7 @@ fun CommsDashboardScreen(
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary,
                 ) {
-                    Icon(painterResource(R.drawable.dialpad_24px), contentDescription = "Dialpad")
+                    Icon(painterResource(R.drawable.dialpad_24px), contentDescription = stringResource(R.string.hc_dialpad))
                 }
             }
         },

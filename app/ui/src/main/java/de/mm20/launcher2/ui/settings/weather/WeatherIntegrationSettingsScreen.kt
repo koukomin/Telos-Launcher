@@ -1,6 +1,15 @@
 package de.mm20.launcher2.ui.settings.weather
 
+import android.Manifest
 import android.app.PendingIntent
+import android.content.pm.PackageManager
+import android.os.Build
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import de.mm20.launcher2.ui.component.preferences.ListPreferenceItem
+import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -142,6 +151,117 @@ fun WeatherIntegrationSettingsScreen() {
                         title = stringResource(R.string.preference_location),
                         value = location,
                         enabled = !autoLocation,
+                    )
+                }
+            }
+        }
+        item {
+            val alerts by viewModel.alerts.collectAsState()
+            val notificationPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {}
+            PreferenceCategory(title = stringResource(R.string.preference_category_weather_alerts)) {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_weather_alerts),
+                    summary = stringResource(R.string.preference_weather_alerts_summary),
+                    value = alerts.enabled,
+                    onValueChanged = { on ->
+                        viewModel.updateAlerts { it.copy(enabled = on) }
+                        if (on && Build.VERSION.SDK_INT >= 33 &&
+                            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            notificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+                        }
+                    },
+                )
+                if (alerts.enabled) {
+                    ListPreference(
+                        title = stringResource(R.string.preference_weather_alerts_hours),
+                        items = listOf(6, 12, 24, 48, 72).map { ListPreferenceItem(stringResource(R.string.preference_weather_alerts_hours_value, it), it) },
+                        value = alerts.hours,
+                        onValueChanged = { h -> viewModel.updateAlerts { it.copy(hours = h) } },
+                    )
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_weather_alerts_rain),
+                        value = alerts.rain,
+                        onValueChanged = { v -> viewModel.updateAlerts { it.copy(rain = v) } },
+                    )
+                    if (alerts.rain) {
+                        SliderPreference(
+                            title = stringResource(R.string.preference_weather_alerts_rain_probability, alerts.rainProbability),
+                            value = alerts.rainProbability, min = 30, max = 100, step = 10,
+                            onValueChanged = { v -> viewModel.updateAlerts { it.copy(rainProbability = v) } },
+                        )
+                    }
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_weather_alerts_heavy_rain),
+                        value = alerts.heavyRain,
+                        onValueChanged = { v -> viewModel.updateAlerts { it.copy(heavyRain = v) } },
+                    )
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_weather_alerts_snow),
+                        value = alerts.snow,
+                        onValueChanged = { v -> viewModel.updateAlerts { it.copy(snow = v) } },
+                    )
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_weather_alerts_thunder),
+                        value = alerts.thunder,
+                        onValueChanged = { v -> viewModel.updateAlerts { it.copy(thunder = v) } },
+                    )
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_weather_alerts_heat),
+                        value = alerts.heat,
+                        onValueChanged = { v -> viewModel.updateAlerts { it.copy(heat = v) } },
+                    )
+                    if (alerts.heat) {
+                        SliderPreference(
+                            title = stringResource(R.string.preference_weather_alerts_heat_threshold, alerts.heatTemperature),
+                            value = alerts.heatTemperature, min = 25, max = 50, step = 1,
+                            onValueChanged = { v -> viewModel.updateAlerts { it.copy(heatTemperature = v) } },
+                        )
+                    }
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_weather_alerts_frost),
+                        value = alerts.frost,
+                        onValueChanged = { v -> viewModel.updateAlerts { it.copy(frost = v) } },
+                    )
+                    if (alerts.frost) {
+                        SliderPreference(
+                            title = stringResource(R.string.preference_weather_alerts_frost_threshold, alerts.frostTemperature),
+                            value = alerts.frostTemperature, min = -15, max = 5, step = 1,
+                            onValueChanged = { v -> viewModel.updateAlerts { it.copy(frostTemperature = v) } },
+                        )
+                    }
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_weather_alerts_wind),
+                        value = alerts.wind,
+                        onValueChanged = { v -> viewModel.updateAlerts { it.copy(wind = v) } },
+                    )
+                    if (alerts.wind) {
+                        SliderPreference(
+                            title = stringResource(R.string.preference_weather_alerts_wind_threshold, alerts.windSpeed),
+                            value = alerts.windSpeed, min = 30, max = 120, step = 10,
+                            onValueChanged = { v -> viewModel.updateAlerts { it.copy(windSpeed = v) } },
+                        )
+                    }
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_weather_alerts_uv),
+                        value = alerts.uv,
+                        onValueChanged = { v -> viewModel.updateAlerts { it.copy(uv = v) } },
+                    )
+                    if (alerts.uv) {
+                        SliderPreference(
+                            title = stringResource(R.string.preference_weather_alerts_uv_threshold, alerts.uvIndex),
+                            value = alerts.uvIndex, min = 5, max = 11, step = 1,
+                            onValueChanged = { v -> viewModel.updateAlerts { it.copy(uvIndex = v) } },
+                        )
+                    }
+                    Preference(
+                        title = stringResource(R.string.preference_weather_alerts_test),
+                        summary = stringResource(R.string.preference_weather_alerts_test_summary),
+                        onClick = {
+                            viewModel.sendTestAlert { shown ->
+                                if (!shown) Toast.makeText(context, R.string.preference_weather_alerts_test_failed, Toast.LENGTH_LONG).show()
+                            }
+                        },
                     )
                 }
             }

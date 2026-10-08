@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.comms
 
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
@@ -24,11 +26,11 @@ fun HiddenContactsScreen() {
     val commsSettings: CommsSettings = koinInject()
     val hidden by commsSettings.hiddenNumbers.collectAsStateWithLifecycle(emptyMap())
     val backStack = LocalBackStack.current
-    PreferenceScreen(title = { Text("Hidden contacts") }) {
+    PreferenceScreen(title = { Text(stringResource(R.string.hc_hidden_contacts)) }) {
         if (hidden.isEmpty()) {
             item {
                 Text(
-                    "Dial #PIN# on the keypad to unlock. Hide a contact from their details page.",
+                    stringResource(R.string.hc_dial_pin_on_the_keypad_to_unlock_hide_a),
                     modifier = Modifier.padding(16.dp),
                 )
             }
@@ -39,7 +41,7 @@ fun HiddenContactsScreen() {
                     headlineContent = { Text(number) },
                     trailingContent = {
                         TextButton(onClick = { commsSettings.setHiddenNumber(number, false) }) {
-                            Text("Unhide")
+                            Text(stringResource(R.string.hc_unhide))
                         }
                     },
                     modifier = Modifier.padding(0.dp),
@@ -50,7 +52,7 @@ fun HiddenContactsScreen() {
             TextButton(onClick = {
                 de.mm20.launcher2.comms.privacy.PrivacySession.lockHider()
                 backStack.removeLastOrNull()
-            }) { Text("Lock hidden contacts") }
+            }) { Text(stringResource(R.string.hc_lock_hidden_contacts)) }
         }
     }
 }

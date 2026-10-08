@@ -68,8 +68,13 @@ class WebAppsPanelVM : ViewModel(), KoinComponent {
         manager.addExisting(shortcut)
     }
 
-    fun createAndAdd(label: String, url: String, iconUri: String?, faviconUrl: String?, rendererPackage: String?) {
-        manager.createAndAdd(label, url, iconUri, faviconUrl, rendererPackage)
+    fun createAndAdd(
+        label: String, url: String, iconUri: String?, faviconUrl: String?, rendererPackage: String?,
+        customCss: String? = null,
+        notificationsEnabled: Boolean = false,
+        adBlockMode: WebAppShortcut.AdBlockMode = WebAppShortcut.AdBlockMode.Global,
+    ) {
+        manager.createAndAdd(label, url, iconUri, faviconUrl, rendererPackage, customCss, notificationsEnabled, adBlockMode)
     }
 
     suspend fun findFavicon(url: String): String? = manager.findFavicon(url)

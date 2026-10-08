@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.store
 
+import de.mm20.launcher2.search.GreekFold
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
@@ -105,7 +106,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
                 }
             }
             .filter { c == null || it.options.category == c }
-            .filter { q.isBlank() || it.item.displayName.contains(q, true) || it.item.packageName.contains(q, true) || it.options.category.contains(q, true) }
+            .filter { q.isBlank() || GreekFold.contains(it.item.displayName, q) || it.item.packageName.contains(q, true) || GreekFold.contains(it.options.category, q) }
             .sortedWith(compareByDescending<StoreRow> { it.updateAvailable }.thenBy { it.item.displayName.lowercase() })
             .toList()
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())

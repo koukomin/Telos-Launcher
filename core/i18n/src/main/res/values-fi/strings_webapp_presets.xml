@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Ehdotetut luokat</string>
+    <string name="web_app_presets_summary">Lisää valmis kansio suosittuja verkkosivustoja verkkosovelluksina. Mitään ei lisätä, ennen kuin valitset sen, ja jokaista kansiota ja verkkosovellusta voi muokata tai poistaa myöhemmin.</string>
+    <string name="web_app_presets_login_note">Kirjaudu sisään kullakin verkkosivustolla erikseen. Upotettu selain säilyttää kirjautumiset. Tämä koskee vain verkkosovelluksia, jotka avautuvat upotettuun selaimeen; ulkoisessa selaimessa avautuvat verkkosovellukset käyttävät kyseisen selaimen omaa kirjautumista.</string>
+    <string name="web_app_preset_category_social">Sosiaalinen media</string>
+    <string name="web_app_preset_category_email">Sähköposti</string>
+    <string name="web_app_preset_category_messaging">Viestintä</string>
+    <string name="web_app_preset_category_video">Video ja musiikki</string>
+    <string name="web_app_preset_category_work">Tuottavuus ja työ</string>
+    <string name="web_app_preset_add">Lisää</string>
+    <string name="web_app_preset_dialog_title">Lisää %1$s</string>
+    <string name="web_app_preset_dialog_summary">Valitse lisättävät verkkosovellukset. Ne tallennetaan kuten itse luomasi verkkosovellukset.</string>
+    <string name="web_app_preset_exists">On jo verkkosovelluksissasi, käytetään uudelleen</string>
+    <string name="web_app_preset_confirm">Lisää valitut</string>
+    <string name="web_app_preset_added">%1$s lisätty</string>
+    <string name="web_app_groups_title">Kansiot</string>
+    <string name="web_app_groups_enable">Ota verkkosovelluskansiot käyttöön</string>
+    <string name="web_app_groups_enable_summary">Järjestä verkkosovellukset kansioihin ja rajoita pyyhkäisyä kansiokohtaisesti</string>
+    <string name="web_app_groups_manage">Hallitse kansioita</string>
+    <string name="web_app_group_create">Luo uusi kansio</string>
+    <string name="web_app_group_create_title">Luo kansio</string>
+    <string name="web_app_group_rename_title">Nimeä kansio uudelleen</string>
+    <string name="web_app_group_name">Kansion nimi</string>
+    <string name="web_app_group_create_confirm">Luo</string>
+    <string name="web_app_group_rename_confirm">Nimeä uudelleen</string>
+    <string name="web_app_group_apps_count">%1$d verkkosovellusta</string>
+    <string name="web_app_group_notifications">Ilmoitukset</string>
+    <string name="web_app_group_label">Kansio</string>
+    <string name="web_app_group_none">Ei mitään</string>
+    <string name="web_app_group_delete_title">Poistetaanko kansio?</string>
+    <string name="web_app_group_delete_message">Kansio \"%1$s\" poistetaan. Sen sisällä olevat verkkosovellukset säilyvät, ja ne jäävät ilman ryhmää.</string>
+    <string name="web_app_delete_title">Poistetaanko verkkosovellus?</string>
+    <string name="web_app_delete_message">\"%1$s\" poistetaan hausta, aloitusnäytöltä, kansioista ja verkkosovelluspaneelista. Tätä ei voi perua.</string>
+    <string name="web_app_shortcut_ad_block">Mainosten esto</string>
+    <string name="web_app_shortcut_ad_block_global">Käytä yleistä asetusta</string>
+    <string name="web_app_shortcut_ad_block_on">Käytössä</string>
+    <string name="web_app_shortcut_ad_block_off">Pois käytöstä</string>
+    <string name="web_app_shortcut_ad_block_summary">Koskee vain upotettua selainta. Ulkoisia selaimia (Custom Tabs) ohjaa selainsovellus.</string>
+</resources>

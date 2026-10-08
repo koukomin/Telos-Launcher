@@ -116,8 +116,8 @@ fun MainSettingsScreen() {
                 )
                 Preference(
                     icon = R.drawable.apps_24px,
-                    title = "Floating launcher",
-                    summary = "Floating panel with quick access to your apps",
+                    title = stringResource(R.string.hc_floating_launcher),
+                    summary = stringResource(R.string.hc_floating_panel_with_quick_access_to_your),
                     onClick = {
                         backStack.add(FloatingLauncherSettingsRoute)
                     }
@@ -125,8 +125,8 @@ fun MainSettingsScreen() {
                 // === TELOS_PENDING_REVIEW_START: smart_freeze_ui_and_actions ===
                 Preference(
                     icon = R.drawable.ac_unit_24px,
-                    title = "Smart Freeze Dashboard",
-                    summary = "Manage frozen apps and Shizuku status",
+                    title = stringResource(R.string.hc_smart_freeze_dashboard),
+                    summary = stringResource(R.string.hc_manage_frozen_apps_and_shizuku_status),
                     onClick = {
                         backStack.add(SmartFreezeDashboardRoute)
                     }

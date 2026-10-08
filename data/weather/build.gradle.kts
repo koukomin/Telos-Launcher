@@ -59,4 +59,6 @@ dependencies {
     implementation(project(":core:i18n"))
     implementation(project(":core:devicepose"))
 
+    testImplementation(libs.bundles.tests)
+
 }

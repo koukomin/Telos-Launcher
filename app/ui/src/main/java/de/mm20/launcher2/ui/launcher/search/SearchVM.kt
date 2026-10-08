@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search
 
+import de.mm20.launcher2.search.GreekFold
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableIntStateOf
@@ -136,6 +137,9 @@ class SearchVM : ViewModel(), KoinComponent {
     val websiteResults = mutableStateListOf<Website>()
     val webAppShortcutResults = mutableStateListOf<WebAppShortcut>()
     val calculatorResults = mutableStateListOf<Calculator>()
+    /** Telos Notes that match the query. They come straight from the notes store, not from the search service. */
+    val noteResults = mutableStateListOf<de.mm20.launcher2.ui.notes.Note>()
+    private val notesStore: de.mm20.launcher2.ui.notes.NotesStore by inject()
     val unitConverterResults = mutableStateListOf<UnitConverter>()
     val searchActionResults = mutableStateListOf<SearchAction>()
     val locationResults = mutableStateListOf<Location>()
@@ -228,6 +232,13 @@ class SearchVM : ViewModel(), KoinComponent {
         }
         searchQuery.value = query
         isSearchEmpty.value = query.isEmpty()
+        noteResults.clear()
+        if (query.length >= 2 && this.filters.value.tools) {
+            notesStore.load()
+            noteResults.addAll(notesStore.notes.value.filter {
+                !it.trashed && (GreekFold.contains(it.title, query) || GreekFold.contains(it.body, query) || it.labels.any { l -> GreekFold.contains(l, query) })
+            }.take(5))
+        }
 
         val filters = filters.value
 
@@ -410,13 +421,13 @@ class SearchVM : ViewModel(), KoinComponent {
                                 }
                         )
                         articleResults.updateItems(
-                            results.wikipedia?.applyRanking(query)
+                            results.wikipedia?.filterNot { hiddenKeys.contains(it.key) }?.applyRanking(query)
                         )
                         websiteResults.updateItems(
-                            results.websites?.applyRanking(query)
+                            results.websites?.filterNot { hiddenKeys.contains(it.key) }?.applyRanking(query)
                         )
                         webAppShortcutResults.updateItems(
-                            results.webAppShortcuts?.applyRanking(query)
+                            results.webAppShortcuts?.filterNot { hiddenKeys.contains(it.key) }?.applyRanking(query)
                         )
                         calculatorResults.updateItems(results.calculators)
                         unitConverterResults.updateItems(results.unitConverters)
@@ -533,13 +544,13 @@ class SearchVM : ViewModel(), KoinComponent {
             val bWeight = weights[b.key] ?: 0.0
 
             val aScore = if (a.score.isUnspecified) {
-                ResultScore.from(query = query, primaryFields = listOf(a.labelOverride ?: a.label)).score
+                ResultScore.from(query = GreekFold.fold(query), primaryFields = listOf(GreekFold.fold(a.labelOverride ?: a.label))).score
             } else {
                 a.score.score
             }
 
             val bScore = if (b.score.isUnspecified) {
-                ResultScore.from(query = query, primaryFields = listOf(b.labelOverride ?: b.label)).score
+                ResultScore.from(query = GreekFold.fold(query), primaryFields = listOf(GreekFold.fold(b.labelOverride ?: b.label))).score
             } else {
                 b.score.score
             }

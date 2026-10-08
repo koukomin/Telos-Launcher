@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="blocklists_web_title">Λίστες αποκλεισμού</string>
+    <string name="blocklists_torrent_title">Λίστες αποκλεισμού ομότιμων</string>
+    <string name="blocklists_web_info">Λίστες τομέων που προστίθενται στην ενσωματωμένη λίστα διαφημίσεων και ιχνηλατών των web εφαρμογών. Δεν κατεβαίνει τίποτα μέχρι να ενεργοποιήσετε μια λίστα. Κάθε ενεργή λίστα λαμβάνεται απευθείας από τη διεύθυνση που εμφανίζεται από κάτω· δεν επικοινωνείται κανένας άλλος διακομιστής και δεν αποστέλλονται δεδομένα για εσάς.</string>
+    <string name="blocklists_torrent_info">Περιοχές διευθύνσεων IP με τις οποίες η ροή torrent αρνείται να συνδεθεί. Δεν κατεβαίνει τίποτα μέχρι να ενεργοποιήσετε μια λίστα. Κάθε ενεργή λίστα λαμβάνεται απευθείας από τη διεύθυνση που εμφανίζεται από κάτω· δεν επικοινωνείται κανένας άλλος διακομιστής και δεν αποστέλλονται δεδομένα για εσάς. Η λίστα αποκλεισμού μειώνει τις ανεπιθύμητες συνδέσεις αλλά δεν προσφέρει ανωνυμία.</string>
+    <string name="blocklists_downloaded_from">Λήψη από %1$s</string>
+    <string name="blocklists_license">Άδεια: %1$s</string>
+    <string name="blocklists_never">Δεν έχει γίνει λήψη ακόμη</string>
+    <string name="blocklists_status">%1$d εγγραφές, ενημερώθηκε %2$s</string>
+    <string name="blocklists_error">Η τελευταία ενημέρωση απέτυχε: %1$s. Διατηρείται η προηγούμενη λίστα.</string>
+    <string name="blocklists_imported">Εισήχθη από αρχείο, δεν ενημερώνεται αυτόματα</string>
+    <string name="blocklists_updating">Ενημέρωση…</string>
+    <string name="blocklists_update_now">Ενημέρωση τώρα</string>
+    <string name="blocklists_add_custom">Προσθήκη λίστας με διεύθυνση</string>
+    <string name="blocklists_import_file">Εισαγωγή από αρχείο</string>
+    <string name="blocklists_remove">Αφαίρεση λίστας</string>
+    <string name="blocklists_custom_name">Όνομα</string>
+    <string name="blocklists_custom_url">Διεύθυνση (https)</string>
+    <string name="blocklists_add">Προσθήκη</string>
+    <string name="blocklists_cancel">Άκυρο</string>
+    <string name="blocklists_invalid_url">Γίνονται δεκτές μόνο διευθύνσεις https</string>
+    <string name="blocklists_import_failed">Το αρχείο δεν περιέχει χρήσιμες εγγραφές ή δεν ήταν δυνατή η ανάγνωσή του</string>
+    <string name="blocklists_schedule">Αυτόματη ενημέρωση</string>
+    <string name="blocklists_schedule_off">Ανενεργή</string>
+    <string name="blocklists_schedule_daily">Καθημερινά</string>
+    <string name="blocklists_schedule_weekly">Εβδομαδιαία</string>
+    <string name="blocklists_wifi_only">Ενημέρωση μόνο μέσω Wi-Fi</string>
+    <string name="blocklists_schedule_info">Ισχύει για όλες τις λίστες αποκλεισμού, web εφαρμογών και torrent. Οι ενημερώσεις ρωτούν μόνο τον διακομιστή αν η λίστα άλλαξε και παραλείπονται όταν η μπαταρία είναι χαμηλή.</string>
+</resources>

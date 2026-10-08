@@ -63,6 +63,7 @@ dhizuku = "2.5.3"
 sqlcipher = "4.5.4"
 taglib = "1.0.6"
 libtorrent4j = "2.1.0-39"
+youtubedl = "0.18.1"
 
 [libraries]
 taglib = { group = "io.github.kyant0", name = "taglib", version.ref = "taglib" }
@@ -119,6 +120,8 @@ androidx-media3-hls = { group = "androidx.media3", name = "media3-exoplayer-hls"
 androidx-media3-dash = { group = "androidx.media3", name = "media3-exoplayer-dash", version.ref = "media3" }
 androidx-media3-rtsp = { group = "androidx.media3", name = "media3-exoplayer-rtsp", version.ref = "media3" }
 nextlib = { group = "io.github.anilbeesetti", name = "nextlib-media3ext", version.ref = "nextlib" }
+youtubedl-library = { group = "io.github.junkfood02.youtubedl-android", name = "library", version.ref = "youtubedl" }
+youtubedl-ffmpeg = { group = "io.github.junkfood02.youtubedl-android", name = "ffmpeg", version.ref = "youtubedl" }
 libtorrent4j = { group = "org.libtorrent4j", name = "libtorrent4j", version.ref = "libtorrent4j" }
 libtorrent4j-arm64 = { group = "org.libtorrent4j", name = "libtorrent4j-android-arm64", version.ref = "libtorrent4j" }
 libtorrent4j-arm = { group = "org.libtorrent4j", name = "libtorrent4j-android-arm", version.ref = "libtorrent4j" }

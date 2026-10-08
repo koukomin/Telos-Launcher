@@ -20,8 +20,9 @@ enum class RemoteType(val label: String, val defaultPort: Int, val cloud: Boolea
     Sftp("SFTP / SSHFS (SSH)", 22, false, "Server address of an SSH server. SSHFS is SFTP too, so any SSHFS server works. Log in with a password or a private key."),
     Smb("Windows / Samba share (SMB)", 445, false, "Computer name or address, and the name of the shared folder"),
     Ftp("FTP / FTPS", 21, false, "Server address of an FTP server"),
+    System("Cloud app on this phone", 0, false, "Google Drive, OneDrive, Dropbox, Nextcloud and other cloud apps that are installed and signed in on this phone. Pick a folder of the app. It uses the account of the phone, so no client ID or secret is needed."),
     Dropbox("Dropbox", 0, true, "Needs your own Dropbox app key"),
-    GoogleDrive("Google Drive", 0, true, "Needs your own Google OAuth client ID"),
+    GoogleDrive("Google Drive", 0, true, "Needs your own Google OAuth client ID. Without one, use \"Cloud app on this phone\" with the Google Drive app"),
     OneDrive("OneDrive", 0, true, "Needs your own Microsoft app (client) ID");
 }
 

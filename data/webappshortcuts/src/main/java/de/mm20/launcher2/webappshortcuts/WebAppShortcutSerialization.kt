@@ -25,6 +25,7 @@ class WebAppShortcutSerializer : SearchableSerializer {
             "order" to searchable.order,
             "iconSource" to searchable.iconSource.name,
             "notificationsEnabled" to searchable.notificationsEnabled,
+            "adBlockMode" to searchable.adBlockMode.name,
         ).toString()
     }
 
@@ -49,6 +50,7 @@ class WebAppShortcutDeserializer : SearchableDeserializer {
             order = json.optInt("order", 0),
             iconSource = runCatching { WebAppShortcut.IconSource.valueOf(json.optString("iconSource", "Website")) }.getOrDefault(WebAppShortcut.IconSource.Website),
             notificationsEnabled = json.optBoolean("notificationsEnabled", false),
+            adBlockMode = runCatching { WebAppShortcut.AdBlockMode.valueOf(json.optString("adBlockMode", "Global")) }.getOrDefault(WebAppShortcut.AdBlockMode.Global),
         )
     }
 }

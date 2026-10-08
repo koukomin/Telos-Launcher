@@ -1,6 +1,7 @@
 // === TELOS_PENDING_REVIEW_START: smart_freeze_ui_and_actions ===
 package de.mm20.launcher2.ui.settings.freeze
 
+import de.mm20.launcher2.search.GreekFold
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -56,7 +57,7 @@ fun SmartFreezeDashboardScreen() {
     val filteredApps = remember(apps, searchQuery, currentFilter, freezeManager) {
         apps.filter { app ->
             val pkg = app.componentName.packageName
-            val matchesQuery = app.label.contains(searchQuery, ignoreCase = true)
+            val matchesQuery = GreekFold.contains(app.label, searchQuery)
             val matchesFilter = when (currentFilter) {
                 FreezeFilter.All -> true
                 FreezeFilter.User -> app.canUninstall

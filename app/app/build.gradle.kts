@@ -6,6 +6,9 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+// see services/downloads/build.gradle.kts: the yt-dlp runtime is only built in with -Ptelos.media=true
+val mediaRuntime = (findProperty("telos.media") as String?)?.toBoolean() == true
+
 android {
     androidResources {
         generateLocaleConfig = true
@@ -23,6 +26,8 @@ android {
         resources.excludes.add("META-INF/LICENSE.md")
         resources.excludes.add("META-INF/NOTICE.md")
         resources.excludes.add("META-INF/versions/**")
+        // youtubedl-android runs Python and FFmpeg from the extracted native library folder
+        if (mediaRuntime) jniLibs.useLegacyPackaging = true
         resources.excludes.add("META-INF/INDEX.LIST")
         resources.excludes.add("META-INF/DEPENDENCIES.txt")
         resources.excludes.add("META-INF/LICENSE.txt")
@@ -185,6 +190,7 @@ dependencies {
     implementation(project(":services:store"))
     implementation(project(":data:store"))
     implementation(project(":services:comms"))
+    implementation(project(":services:downloads"))
     implementation(project(":data:comms"))
 
     // === TELOS_PENDING_REVIEW_START: smart_freeze_dependencies ===

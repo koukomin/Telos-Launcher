@@ -1,10 +1,13 @@
-<!-- Placeholder monochrome icon (letter "T"); to be replaced with final Telos branding -->
+<!-- Telos: flat bar, two eyes, a thin body that makes a T -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
-    android:viewportWidth="192"
-    android:viewportHeight="192">
-    <path
-        android:fillColor="#FF000000"
-        android:pathData="M46,50 H146 V72 H109 V142 H83 V72 H46 Z" />
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+    <group android:translateY="-28">
+        <path
+            android:fillColor="#FF000000"
+            android:fillType="evenOdd"
+            android:pathData="M273,250 h478 a37,37 0 0 1 0,74 h-478 a37,37 0 0 1 0,-74 Z M387,360 h250 a40,40 0 0 1 40,40 v90 a40,40 0 0 1 -40,40 h-250 a40,40 0 0 1 -40,-40 v-90 a40,40 0 0 1 40,-40 Z M408,390 h52 a30,30 0 0 1 30,30 v50 a30,30 0 0 1 -30,30 h-52 a30,30 0 0 1 -30,-30 v-50 a30,30 0 0 1 30,-30 Z M564,390 h52 a30,30 0 0 1 30,30 v50 a30,30 0 0 1 -30,30 h-52 a30,30 0 0 1 -30,-30 v-50 a30,30 0 0 1 30,-30 Z M432,606 a40,40 0 0 1 40,-40 h80 a40,40 0 0 1 40,40 V790 a40,40 0 0 1 -40,40 h-80 a40,40 0 0 1 -40,-40 Z" />
+    </group>
 </vector>

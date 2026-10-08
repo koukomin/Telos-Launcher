@@ -23,6 +23,7 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
           { text: 'Widgets and feed', link: '/docs/user-guide/telos/launcher/widgets-feed' },
           { text: 'Favorites and tags', link: '/docs/user-guide/telos/launcher/favorites-tags' },
           { text: 'Customization', link: '/docs/user-guide/telos/launcher/customization' },
+          { text: 'Languages', link: '/docs/user-guide/telos/launcher/languages' },
           { text: 'Plugins and integrations', link: '/docs/user-guide/telos/launcher/plugins-integrations' },
           { text: 'Desktop mode and overlays', link: '/docs/user-guide/telos/launcher/desktop-and-overlays' },
           { text: 'Privacy and protection', link: '/docs/user-guide/telos/launcher/privacy-protection' },
@@ -78,6 +79,23 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
       {
         text: 'Voice Recorder',
         link: '/docs/user-guide/telos/voice-recorder/',
+      },
+      {
+        text: 'Notes',
+        link: '/docs/user-guide/telos/notes/',
+      },
+      {
+        text: 'Calendar',
+        link: '/docs/user-guide/telos/calendar/',
+      },
+      {
+        text: 'Downloads',
+        collapsed: true,
+        link: '/docs/user-guide/telos/downloads/',
+        items: [
+          { text: 'Torrents', link: '/docs/user-guide/telos/downloads/torrents' },
+          { text: 'Video and audio sites', link: '/docs/user-guide/telos/downloads/media' },
+        ],
       },
       {
         text: 'Photos',

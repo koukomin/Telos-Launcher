@@ -14,6 +14,13 @@ based on" table in `readme.md`.
 | [Thor](https://github.com/trinadhthatakula/Thor) | GPL-3.0-or-later | Copyright (c) 2025-2026 Trinadh Thatakula |
 | [Undead Wallpaper](https://github.com/maocide/UndeadWallpaper) | GPL-3.0 | The Undead Wallpaper authors |
 | [Obtainium](https://github.com/ImranR98/Obtainium) | GPL-3.0 | The Obtainium authors |
+| [Gopeed](https://github.com/GopeedLab/gopeed) | GPL-3.0 | Design ideas only for Telos Downloads, no code copied (copyright: the Gopeed authors) |
+| [Ketch](https://github.com/linroid/Ketch) | Apache-2.0 | Design ideas only for Telos Downloads, no code copied (copyright: the Ketch authors) |
+| [LibreTorrent](https://github.com/proninyaroslav/libretorrent) | GPL-3.0-or-later | Design ideas only for the torrent part of Telos Downloads (feature set and screens), no code copied (copyright: the LibreTorrent authors) |
+| [Kite](https://github.com/zenzer0s/kite) | GPL-3.0 | Design ideas only for the video and audio sites part of Telos Downloads, no code copied (copyright: the Kite authors) |
+| [AIO Video Downloader](https://github.com/shibaFoss/AIO-Video-Downloader) | custom licence (text not verified) | Ideas only, **no code used** (copyright: the AIO Video Downloader authors) |
+| [yt-dlp](https://github.com/yt-dlp/yt-dlp) | Unlicense (public domain) | Used unchanged, inside the optional media build (see below) |
+| [youtubedl-android](https://github.com/yausername/youtubedl-android) (fork io.github.junkfood02.youtubedl-android) | GPL-3.0 | Copyright (c) the youtubedl-android authors (yausername, JunkFood02 and contributors), used unchanged as a Maven dependency in the optional media build |
 | [Transistor](https://codeberg.org/y20k/transistor) | MIT | Copyright (c) 2015-22 - Y20K.org (full notice below) |
 | [TagLib wrapper (Kyant0/taglib)](https://github.com/Kyant0/taglib) | Apache-2.0 | Copyright 2025 Kyant. Bundles TagLib (LGPL-2.1 / MPL-1.1 upstream) |
 | [baresip](https://github.com/baresip/baresip), [baresip-studio](https://github.com/juha-h/baresip-studio) | BSD-3-Clause | Planned, not yet included |
@@ -89,7 +96,29 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
 
-## libtorrent4j and libtorrent (torrent streaming in Telos Video)
+## Block lists offered by Telos (downloaded on request, not bundled)
+
+Telos contains no copy of these lists. After the user switches a list on, the app downloads it directly from the
+address below. The lists belong to their authors.
+
+| List | Address | Licence |
+| --- | --- | --- |
+| StevenBlack unified hosts | https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | MIT |
+| AdGuard DNS filter | https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt | GPL-3.0 |
+| Peter Lowe's ad and tracking server list | https://pgl.yoyo.org/adservers/ | the site invites combining and redistributing the list; no formal licence is stated |
+| OISD small | https://small.oisd.nl/domainswild | GPL-3.0 |
+| EasyList | https://easylist.to/easylist/easylist.txt | GPL-3.0 or CC BY-SA 3.0 |
+| URLhaus host file | https://urlhaus.abuse.ch/downloads/hostfile/ | abuse.ch terms of use, https://urlhaus.abuse.ch/api/ |
+| Naunter BT_BlockLists | https://raw.githubusercontent.com/Naunter/BT_BlockLists/master/bt_blocklists.gz | Unlicense for the project (its LICENSE file). The README says it is not actively maintained (notice 2024-10-22) while an automatic workflow regenerates the list. The entries come from other lists (for example iBlocklist, the Transmission lists of codebucket.de and others); their terms were not checked |
+| Spamhaus DROP | https://www.spamhaus.org/drop/drop.txt | Free of charge (https://www.spamhaus.org/drop/): when used in a product, credit must be given to The Spamhaus Project, and the date and copyright text must stay with the file and data. Do not fetch automatically more than once an hour (Telos at most daily) |
+| FireHOL level 1 | https://raw.githubusercontent.com/firehol/blocklist-ipsets/master/firehol_level1.netset | A combination of DShield (CC BY-NC-SA 2.5, see the header of the DShield file), Feodo Tracker (CC0), Spamhaus DROP (terms above) and bogons. FireHOL (its scripts GPL v2) says that some lists may have special licences and that the source site must be checked before use (https://iplists.firehol.org). The list is fetched by the user's phone from FireHOL's repository; Telos does not redistribute it |
+
+Lists that were looked at on 2026-10-08 and are **not** offered: the Transmission list of codebucket.de (last modified 2025-01-17),
+abuse.ch Feodo Tracker IP blocklist (CC0; last updated 2026-03-04 with 5 entries), DShield block list (CC BY-NC-SA 2.5; also part of
+FireHOL level 1), FireHOL level 2 and level 3, Emerging Threats compromised IPs, CINS Army, blocklist.de and Bluetack/iBlocklist (terms not
+verified), Tor exit lists (informational only). Details: docs/docs/user-guide/telos/downloads/torrents.md.
+
+## libtorrent4j and libtorrent (torrent streaming in Telos Video, torrent downloads in Telos Downloads)
 
 libtorrent4j, https://github.com/aldenml/libtorrent4j (MIT), used unchanged as a Maven dependency.
 
@@ -118,6 +147,15 @@ SOFTWARE.
 libtorrent, https://www.libtorrent.org (BSD-3-Clause), bundled in the native libraries of libtorrent4j:
 Copyright (c) 2003-2020, Arvid Norberg. All rights reserved.
 
+## yt-dlp, youtubedl-android, FFmpeg and Python (optional media build of Telos Downloads)
+
+Only in builds made with `-Ptelos.media=true`. The default build does not contain any of this.
+
+- yt-dlp, https://github.com/yt-dlp/yt-dlp: Unlicense (public domain dedication), the version that ships in the library and later ones the user downloads from GitHub with "Update the downloader". yt-dlp itself bundles and depends on other Python packages with their own licences (see the yt-dlp repository).
+- youtubedl-android, https://github.com/yausername/youtubedl-android, fork https://github.com/JunkFood02/youtubedl-android (Maven: `io.github.junkfood02.youtubedl-android:library` and `:ffmpeg`, version 0.18.1): GPL-3.0 as stated in its Maven POM.
+- FFmpeg, https://ffmpeg.org, as built in the `ffmpeg` artifact of youtubedl-android: LGPL-2.1+ or GPL, depending on the build options of that artifact (not verified here; the artifact page and the FFmpeg legal notes apply).
+- Python (CPython), https://www.python.org: PSF licence, bundled in the `library` artifact as `libpython`.
+
 ## TMDB and OpenSubtitles (Telos Video online services)
 
 This product uses the TMDB API but is not endorsed or certified by TMDB (https://www.themoviedb.org).
@@ -134,6 +172,22 @@ bundles FFmpeg (LGPL-2.1+, https://ffmpeg.org) and dav1d (BSD-2-Clause, https://
 
 The gestures, speed control and track choice of the Telos Video player follow the feature set of
 Next Player, https://github.com/anilbeesetti/nextplayer (GPL-3.0). No code was copied.
+
+## Nova Video Player
+
+The network storage playback, library scanning from network folders and the subtitle search of Telos Video
+are inspired by Nova Video Player, https://github.com/nova-video-player/aos-AVP (Apache-2.0, derived from
+the Archos Video Player, Copyright Archos SA and the Nova Video Player contributors). It is implemented
+independently with Media3 and Telos' own code. No source code and none of its prebuilt binaries (FFmpeg,
+dav1d, torrentd) were copied. The Apache-2.0 license text: https://www.apache.org/licenses/LICENSE-2.0
+
+## OpenSubtitles and Podnapisi
+
+Telos Video can search subtitles through the OpenSubtitles REST API (https://www.opensubtitles.com and
+https://rest.opensubtitles.org) and the public search of Podnapisi (https://www.podnapisi.net). The
+OpenSubtitles file hash is computed with the algorithm published by OpenSubtitles. Telos is not endorsed
+or certified by these services, and their terms of use apply to the subtitles. Subtitle sources are
+contacted only when the user searches or has switched on automatic download.
 
 ## Trakt.tv
 

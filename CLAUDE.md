@@ -64,3 +64,13 @@ you port, adapt or take design from another project, update `readme.md` **in the
   (check the license is GPL-3.0 compatible before copying code) and keep its copyright notice in
   `THIRD_PARTY_NOTICES.md`;
 - do not describe anything that is not implemented.
+
+## Translations
+
+Every new or changed user-visible string must be translated into all supported languages in the same change
+(Greek first, then the other `values-*` folders of `core/i18n`). Supported: Greek, German, Spanish, French, Italian,
+Portuguese (pt, pt-BR), Russian, Turkish, Dutch, Polish, Czech, Slovak, Slovenian, Croatian, Bulgarian, Romanian,
+Hungarian, Danish, Swedish, Finnish, Estonian, Latvian, Lithuanian, Irish, Maltese, Ukrainian, Norwegian, Chinese
+(zh-CN, zh-TW), Japanese, Korean, Arabic, Hindi, Bengali. Use `tools/i18n/` (see its README) to find the missing keys
+and to write the translation files. New strings go into `values/` first; never leave a language with an English
+fallback for a string you added.

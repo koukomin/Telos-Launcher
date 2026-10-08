@@ -100,12 +100,12 @@ internal class WeatherRepositoryImpl(
 
     private fun groupForecastsPerDay(forecasts: List<Forecast>): List<DailyForecast> {
         val dailyForecasts = mutableListOf<DailyForecast>()
-        val calendar = Calendar.getInstance()
-        var currentDay = 0
+        val zone = java.time.ZoneId.systemDefault()
+        var currentDay: java.time.LocalDate? = null
         var currentDayForecasts: MutableList<Forecast> = mutableListOf()
         for (fc in forecasts) {
-            calendar.timeInMillis = fc.timestamp
-            if (currentDay != calendar.get(Calendar.DAY_OF_YEAR)) {
+            val day = java.time.Instant.ofEpochMilli(fc.timestamp).atZone(zone).toLocalDate()
+            if (currentDay != day) {
                 if (currentDayForecasts.isNotEmpty()) {
                     dailyForecasts.add(
                         DailyForecast(
@@ -119,7 +119,7 @@ internal class WeatherRepositoryImpl(
                     )
                     currentDayForecasts = mutableListOf()
                 }
-                currentDay = calendar.get(Calendar.DAY_OF_YEAR)
+                currentDay = day
             }
             currentDayForecasts.add(fc)
         }
@@ -220,6 +220,7 @@ class WeatherUpdateWorker(
     private val appDatabase: AppDatabase by inject()
     private val settings: WeatherSettings by inject()
     private val locationProvider: DevicePoseProvider by inject()
+    private val alertManager: WeatherAlertManager by inject()
 
     override suspend fun doWork(): Result {
         Log.d("WeatherUpdateWorker", "Requesting weather data")
@@ -231,6 +232,8 @@ class WeatherUpdateWorker(
 
         if (lastUpdate + updateInterval > System.currentTimeMillis()) {
             Log.d("WeatherUpdateWorker", "No weather update required")
+            // the forecast in the database is still current, it may hold something to warn about
+            runCatching { alertManager.check() }
             return Result.failure()
         }
 
@@ -260,6 +263,7 @@ class WeatherUpdateWorker(
             appDatabase.weatherDao()
                 .replaceAll(weatherData.takeWhile { it.timestamp < in7Days  }.map { it.toDatabaseEntity() })
             settings.setLastUpdate(System.currentTimeMillis())
+            runCatching { alertManager.check() }
             Result.success()
         }
     }

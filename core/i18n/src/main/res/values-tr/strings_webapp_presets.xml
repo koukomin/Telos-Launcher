@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Önerilen kategoriler</string>
+    <string name="web_app_presets_summary">Popüler web sitelerinden oluşan hazır bir klasörü web uygulamaları olarak ekleyin. Siz seçene kadar hiçbir şey eklenmez; her klasör ve web uygulaması daha sonra düzenlenebilir veya silinebilir.</string>
+    <string name="web_app_presets_login_note">Her web sitesinde ayrıca oturum açın. Oturumlar yerleşik tarayıcı tarafından saklanır. Bu yalnızca yerleşik tarayıcıda açılan web uygulamaları için geçerlidir; harici tarayıcıda açılanlar o tarayıcının kendi oturumunu kullanır.</string>
+    <string name="web_app_preset_category_social">Sosyal</string>
+    <string name="web_app_preset_category_email">E-posta</string>
+    <string name="web_app_preset_category_messaging">Mesajlaşma</string>
+    <string name="web_app_preset_category_video">Video ve Müzik</string>
+    <string name="web_app_preset_category_work">Verimlilik ve İş</string>
+    <string name="web_app_preset_add">Ekle</string>
+    <string name="web_app_preset_dialog_title">%1$s ekle</string>
+    <string name="web_app_preset_dialog_summary">Eklenecek web uygulamalarını seçin. Kendi oluşturduğunuz web uygulamaları gibi kaydedilirler.</string>
+    <string name="web_app_preset_exists">Web uygulamalarınızda zaten var, yeniden kullanılacak</string>
+    <string name="web_app_preset_confirm">Seçilenleri ekle</string>
+    <string name="web_app_preset_added">%1$s eklendi</string>
+    <string name="web_app_groups_title">Klasörler</string>
+    <string name="web_app_groups_enable">Web uygulaması klasörlerini etkinleştir</string>
+    <string name="web_app_groups_enable_summary">Web uygulamalarını klasörlerde düzenleyin ve kaydırmayı klasör başına kısıtlayın</string>
+    <string name="web_app_groups_manage">Klasörleri yönet</string>
+    <string name="web_app_group_create">Yeni klasör oluştur</string>
+    <string name="web_app_group_create_title">Klasör oluştur</string>
+    <string name="web_app_group_rename_title">Klasörü yeniden adlandır</string>
+    <string name="web_app_group_name">Klasör adı</string>
+    <string name="web_app_group_create_confirm">Oluştur</string>
+    <string name="web_app_group_rename_confirm">Yeniden adlandır</string>
+    <string name="web_app_group_apps_count">%1$d web uygulaması</string>
+    <string name="web_app_group_notifications">Bildirimler</string>
+    <string name="web_app_group_label">Klasör</string>
+    <string name="web_app_group_none">Yok</string>
+    <string name="web_app_group_delete_title">Klasör silinsin mi?</string>
+    <string name="web_app_group_delete_message">\"%1$s\" klasörü silinecek. İçindeki web uygulamaları korunur ve klasörsüz kalır.</string>
+    <string name="web_app_delete_title">Web uygulaması silinsin mi?</string>
+    <string name="web_app_delete_message">\"%1$s\" arama, ana ekran, klasörler ve web uygulamaları panelinden kaldırılacak. Bu işlem geri alınamaz.</string>
+    <string name="web_app_shortcut_ad_block">Reklam engelleyici</string>
+    <string name="web_app_shortcut_ad_block_global">Genel ayarı kullan</string>
+    <string name="web_app_shortcut_ad_block_on">Açık</string>
+    <string name="web_app_shortcut_ad_block_off">Kapalı</string>
+    <string name="web_app_shortcut_ad_block_summary">Yalnızca yerleşik tarayıcı için geçerlidir. Harici tarayıcılar (Custom Tabs) tarayıcı uygulaması tarafından denetlenir.</string>
+</resources>

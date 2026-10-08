@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.voice
 
+import de.mm20.launcher2.search.GreekFold
 import android.Manifest
 import android.content.Context
 import android.content.Intent
@@ -128,8 +129,9 @@ private class VoicePlayer {
 
     fun play(file: File, speaker: Boolean) {
         stop()
+        var p: MediaPlayer? = null
         try {
-            val p = MediaPlayer()
+            p = MediaPlayer()
             p.setAudioAttributes(
                 AudioAttributes.Builder()
                     .setContentType(if (speaker) AudioAttributes.CONTENT_TYPE_MUSIC else AudioAttributes.CONTENT_TYPE_SPEECH)
@@ -150,6 +152,7 @@ private class VoicePlayer {
             positionMs = 0
             playing = true
         } catch (e: Exception) {
+            runCatching { p?.release() }
             stop()
         }
     }
@@ -208,7 +211,7 @@ fun VoiceRecorderScreen() {
 
     val items by produceItems(context, reload, recorder.status)
     val shown = remember(items, tab, query) {
-        items.filter { (tab == 0 || it.isCall) && (query.isBlank() || it.title.contains(query.trim(), ignoreCase = true)) }
+        items.filter { (tab == 0 || it.isCall) && (query.isBlank() || GreekFold.contains(it.title, query.trim())) }
     }
 
     LaunchedEffect(player.playing) {

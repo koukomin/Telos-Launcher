@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.media.docs
 
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color as AndroidColor
@@ -168,11 +170,11 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
         topBar = {
             TopAppBar(
                 title = { Text(name, maxLines = 1) },
-                navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(de.mm20.launcher2.base.R.drawable.arrow_back_24px), contentDescription = "Back") } },
+                navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(de.mm20.launcher2.base.R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back)) } },
                 actions = {
                     if (state is DocState.Text) {
                         // a longer file is only partly loaded, saving it would cut the original
-                        if (!editing) { if (!(state as DocState.Text).truncated) TextButton(onClick = { editText = (state as DocState.Text).text; editing = true }) { Text("Edit") } }
+                        if (!editing) { if (!(state as DocState.Text).truncated) TextButton(onClick = { editText = (state as DocState.Text).text; editing = true }) { Text(stringResource(R.string.hc_edit)) } }
                         else {
                             TextButton(onClick = {
                                 scope.launch(Dispatchers.IO) {
@@ -182,14 +184,14 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
                                         if (ok) { message = "Saved"; state = DocState.Text(editText, false); editing = false } else saveAs.launch(name)
                                     }
                                 }
-                            }) { Text("Save") }
-                            TextButton(onClick = { editing = false }) { Text("Cancel") }
+                            }) { Text(stringResource(R.string.hc_save)) }
+                            TextButton(onClick = { editing = false }) { Text(stringResource(R.string.hc_cancel)) }
                         }
                     }
                     TextButton(onClick = {
                         val view = Intent(Intent.ACTION_VIEW).setDataAndType(uri, context.contentResolver.getType(uri) ?: "*/*").addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         runCatching { context.startActivity(Intent.createChooser(view, name)) }
-                    }) { Text("Open with") }
+                    }) { Text(stringResource(R.string.hc_open_with)) }
                 },
             )
         },
@@ -305,7 +307,7 @@ private fun PdfPage(doc: PdfDoc, index: Int, widthPx: Int) {
     val aspect = remember(index) { runCatching { doc.aspect(index) }.getOrDefault(0.7f) }
     val shown = bitmap
     if (shown != null) {
-        Image(shown.asImageBitmap(), contentDescription = "Page ${index + 1}", modifier = Modifier.fillMaxWidth(), contentScale = ContentScale.FillWidth)
+        Image(shown.asImageBitmap(), contentDescription = stringResource(R.string.hc_page_number, index + 1), modifier = Modifier.fillMaxWidth(), contentScale = ContentScale.FillWidth)
     } else {
         Box(Modifier.fillMaxWidth().aspectRatio(aspect).background(Color.White), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
     }
@@ -319,7 +321,7 @@ private fun TextView(s: DocState.Text) {
             items(lines.size) { i ->
                 Text(lines[i].ifEmpty { " " }, fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 18.sp)
             }
-            if (s.truncated) item { Text("The file is longer, only the first 2 MB are shown. It cannot be edited here, so nothing is overwritten.", Modifier.padding(top = 12.dp), color = MaterialTheme.colorScheme.error) }
+            if (s.truncated) item { Text(stringResource(R.string.hc_the_file_is_longer_only_the_first_2_mb_a), Modifier.padding(top = 12.dp), color = MaterialTheme.colorScheme.error) }
         }
     }
 }

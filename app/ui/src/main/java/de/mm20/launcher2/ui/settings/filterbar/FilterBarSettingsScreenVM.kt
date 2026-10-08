@@ -20,10 +20,9 @@ class FilterBarSettingsScreenVM(
         val items = filterBarItems.value?.toMutableList() ?: return
         val fromIndex = items.indexOf(item)
         val toIndex = items.indexOf(toItem)
-        if (fromIndex > items.lastIndex) return
-        if (toIndex > items.lastIndex) return
-        if (fromIndex != -1) items.removeAt(fromIndex)
-        if (toIndex != -1) items.add(toIndex, item)
+        if (fromIndex == -1 || toIndex == -1) return
+        items.removeAt(fromIndex)
+        items.add(toIndex, item)
         searchFilterSettings.setFilterBarItems(items)
     }
 

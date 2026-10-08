@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.media.music
 
+import androidx.compose.ui.res.stringResource
+import de.mm20.launcher2.search.GreekFold
 import android.Manifest
 import android.app.Activity
 import android.provider.MediaStore
@@ -94,12 +96,7 @@ fun MusicScreen() {
     val filtered = remember(tracks, query) {
         if (query.isBlank()) tracks
         else {
-            val q = GreekText.fold(query)
-            tracks.filter {
-                GreekText.fold(it.title).contains(q) ||
-                    GreekText.fold(it.artist).contains(q) ||
-                    GreekText.fold(it.album).contains(q)
-            }
+            tracks.filter { GreekFold.contains(it.title, query) || GreekFold.contains(it.artist, query) || GreekFold.contains(it.album, query) }
         }
     }
     val albums = remember(filtered) {
@@ -116,7 +113,7 @@ fun MusicScreen() {
     var showScrobble by remember { mutableStateOf(false) }
     de.mm20.launcher2.ui.media.MediaFrame("Music", askNotifications = true, guardKey = "telos_music_app://music", actions = {
         IconButton(onClick = { showScrobble = true }) {
-            Icon(painterResource(R.drawable.settings_24px), contentDescription = "Scrobbling")
+            Icon(painterResource(R.drawable.settings_24px), contentDescription = stringResource(R.string.hc_scrobbling))
         }
     }) {
     if (showScrobble) ScrobbleDialog { showScrobble = false }
@@ -128,11 +125,11 @@ fun MusicScreen() {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Text("Allow access to your music to build the library", style = MaterialTheme.typography.titleMedium)
+                    Text(stringResource(R.string.hc_allow_access_to_your_music_to_build_the), style = MaterialTheme.typography.titleMedium)
                     Button(
                         onClick = { permissionLauncher.launch(permission) },
                         modifier = Modifier.padding(top = 16.dp),
-                    ) { Text("Allow") }
+                    ) { Text(stringResource(R.string.hc_allow)) }
                 }
             } else {
                 de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, "Search music")
@@ -140,7 +137,7 @@ fun MusicScreen() {
                 if (current != null) {
                     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
                         IconButton(onClick = { group = null }) {
-                            Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back")
+                            Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back))
                         }
                         Column {
                             Text(current.title, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
@@ -157,7 +154,7 @@ fun MusicScreen() {
                     when {
                         loading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
                         tracks.isEmpty() -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            Text("No music found on this device", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(stringResource(R.string.hc_no_music_found_on_this_device), color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         tab == 0 -> TrackList(filtered, nowPlaying?.title, onPlay = { i -> viewModel.play(filtered, i) })
                         tab == 1 -> LazyVerticalGrid(
@@ -215,7 +212,7 @@ fun MusicScreen() {
                         Icon(painterResource(if (isPlaying) R.drawable.pause_24px else R.drawable.play_arrow_24px), contentDescription = null)
                     }
                     IconButton(onClick = { viewModel.next() }) {
-                        Icon(painterResource(R.drawable.skip_next_24px), contentDescription = "Next")
+                        Icon(painterResource(R.drawable.skip_next_24px), contentDescription = stringResource(R.string.hc_next))
                     }
                 }
             }
@@ -322,25 +319,25 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, onClose: () -> Unit) {
     if (showSleep) {
         AlertDialog(
             onDismissRequest = { showSleep = false },
-            title = { Text("Sleep timer") },
+            title = { Text(stringResource(R.string.hc_sleep_timer)) },
             text = {
                 Column {
                     listOf(15, 30, 45, 60, 90).forEach { minutes ->
                         TextButton(onClick = {
                             viewModel.setSleepTimer(minutes)
                             showSleep = false
-                        }) { Text("Stop in $minutes minutes") }
+                        }) { Text(stringResource(R.string.hc_stop_in_minutes, minutes)) }
                     }
                     if (sleepEndsAt > 0) {
                         TextButton(onClick = {
                             viewModel.setSleepTimer(0)
                             showSleep = false
-                        }) { Text("Turn timer off") }
+                        }) { Text(stringResource(R.string.hc_turn_timer_off)) }
                     }
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { showSleep = false }) { Text("Close") } },
+            dismissButton = { TextButton(onClick = { showSleep = false }) { Text(stringResource(R.string.hc_close)) } },
         )
     }
 
@@ -367,7 +364,7 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, onClose: () -> Unit) {
         ) {
             Row(Modifier.fillMaxWidth()) {
                 IconButton(onClick = onClose) {
-                    Icon(painterResource(R.drawable.keyboard_arrow_down_24px), contentDescription = "Close")
+                    Icon(painterResource(R.drawable.keyboard_arrow_down_24px), contentDescription = stringResource(R.string.hc_close))
                 }
             }
             if (showLyrics) {
@@ -395,18 +392,18 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, onClose: () -> Unit) {
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = { viewModel.toggleShuffle() }) {
                     Icon(
-                        painterResource(R.drawable.shuffle_24px), contentDescription = "Shuffle",
+                        painterResource(R.drawable.shuffle_24px), contentDescription = stringResource(R.string.hc_shuffle),
                         tint = if (shuffle) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
                 IconButton(onClick = { viewModel.previous() }) {
-                    Icon(painterResource(R.drawable.skip_previous_24px), contentDescription = "Previous")
+                    Icon(painterResource(R.drawable.skip_previous_24px), contentDescription = stringResource(R.string.hc_previous))
                 }
                 FilledIconButton(onClick = { viewModel.togglePlayPause() }, modifier = Modifier.size(64.dp)) {
                     Icon(painterResource(if (isPlaying) R.drawable.pause_24px else R.drawable.play_arrow_24px), contentDescription = null)
                 }
                 IconButton(onClick = { viewModel.next() }) {
-                    Icon(painterResource(R.drawable.skip_next_24px), contentDescription = "Next")
+                    Icon(painterResource(R.drawable.skip_next_24px), contentDescription = stringResource(R.string.hc_next))
                 }
                 TextButton(onClick = { showLyrics = !showLyrics }, enabled = lyrics != null || showLyrics) {
                     Text(if (showLyrics) "Cover" else "Lyrics")
@@ -417,11 +414,11 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, onClose: () -> Unit) {
                 TextButton(onClick = {
                     val uri = current.uri
                     if (uri != null) scope.launch { editing = viewModel.readTags(context, uri) ?: TagEditor.Tags(title = current.title, artist = current.artist) }
-                }) { Text("Edit") }
+                }) { Text(stringResource(R.string.hc_edit)) }
                 IconButton(onClick = { viewModel.cycleRepeat() }) {
                     Icon(
                         painterResource(if (repeat == Player.REPEAT_MODE_ONE) R.drawable.repeat_one_24px else R.drawable.repeat_24px),
-                        contentDescription = "Repeat",
+                        contentDescription = stringResource(R.string.hc_repeat),
                         tint = if (repeat != Player.REPEAT_MODE_OFF) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
@@ -446,7 +443,7 @@ private fun TagEditDialog(
     var track by remember { mutableStateOf(tags.trackNumber) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Edit tags") },
+        title = { Text(stringResource(R.string.hc_edit_tags)) },
         text = {
             LazyColumn {
                 item {
@@ -468,7 +465,7 @@ private fun TagEditDialog(
                         field("Genre", genre) { genre = it }
                         field("Year", year) { year = it }
                         field("Track number", track) { track = it }
-                        TextButton(onClick = onPickCover) { Text("Change cover…") }
+                        TextButton(onClick = onPickCover) { Text(stringResource(R.string.hc_change_cover)) }
                     }
                 }
             }
@@ -476,9 +473,9 @@ private fun TagEditDialog(
         confirmButton = {
             TextButton(onClick = {
                 onSave(TagEditor.Tags(title, artist, album, albumArtist, genre, year, track))
-            }) { Text("Save") }
+            }) { Text(stringResource(R.string.hc_save)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
     )
 }
 
@@ -486,7 +483,7 @@ private fun TagEditDialog(
 private fun LyricsView(lyrics: de.mm20.launcher2.comms.media.Lyrics?, positionMs: Long, modifier: Modifier) {
     if (lyrics == null) {
         Box(modifier, contentAlignment = Alignment.Center) {
-            Text("No lyrics found", color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(stringResource(R.string.hc_no_lyrics_found), color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         return
     }

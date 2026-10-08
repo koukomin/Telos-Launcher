@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="notes_imported_skipped">%1$d notes imported, %2$d skipped as duplicates</string>
+    <string name="notes_synced_skipped">Synced: %1$d sent, %2$d received. %3$d deletions in the folder were skipped because the folder looks unavailable or too many notes would be removed</string>
+</resources>

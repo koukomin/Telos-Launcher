@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="weather_alert_channel">Έντονα καιρικά φαινόμενα</string>
+    <string name="weather_alert_rain">Αναμένεται βροχή</string>
+    <string name="weather_alert_heavy_rain">Αναμένεται δυνατή βροχή</string>
+    <string name="weather_alert_snow">Αναμένεται χιόνι</string>
+    <string name="weather_alert_thunder">Αναμένεται καταιγίδα</string>
+    <string name="weather_alert_heat">Αναμένονται υψηλές θερμοκρασίες</string>
+    <string name="weather_alert_frost">Αναμένεται παγετός</string>
+    <string name="weather_alert_wind">Αναμένονται ισχυροί άνεμοι</string>
+    <string name="weather_alert_uv">Αναμένεται υψηλός δείκτης UV</string>
+    <string name="weather_alert_detail_rain">Πιθανότητα βροχής έως %1$d%%</string>
+    <string name="weather_alert_detail_rain_amount">Έως %1$s %2$s την ώρα</string>
+    <string name="weather_alert_detail_heat">Έως %1$s</string>
+    <string name="weather_alert_detail_frost">Έως %1$s χαμηλότερα</string>
+    <string name="weather_alert_detail_wind">Άνεμος έως %1$d %2$s</string>
+    <string name="weather_alert_detail_uv">Δείκτης UV έως %1$d</string>
+    <string name="weather_alert_now">Τώρα</string>
+    <string name="weather_alert_from">Από %1$s</string>
+    <string name="weather_alert_test_location">Η τοποθεσία σας</string>
+    <string name="preference_category_weather_alerts">Ειδοποιήσεις για έντονα καιρικά φαινόμενα</string>
+    <string name="preference_weather_alerts">Ειδοποίηση για έντονα καιρικά φαινόμενα</string>
+    <string name="preference_weather_alerts_summary">Ελέγχει την πρόγνωση των επόμενων ωρών μετά από κάθε ενημέρωση καιρού και εμφανίζει ειδοποίηση. Κάθε είδος εμφανίζεται το πολύ μία φορά κάθε 12 ώρες</string>
+    <string name="preference_weather_alerts_hours">Έλεγχος των επόμενων</string>
+    <string name="preference_weather_alerts_rain">Βροχή</string>
+    <string name="preference_weather_alerts_rain_probability">Πιθανότητα βροχής από %1$d%%</string>
+    <string name="preference_weather_alerts_heavy_rain">Δυνατή βροχή</string>
+    <string name="preference_weather_alerts_snow">Χιόνι και χιονόνερο</string>
+    <string name="preference_weather_alerts_thunder">Καταιγίδες και χαλάζι</string>
+    <string name="preference_weather_alerts_heat">Υψηλές θερμοκρασίες</string>
+    <string name="preference_weather_alerts_heat_threshold">Από %1$d °C</string>
+    <string name="preference_weather_alerts_frost">Παγετός</string>
+    <string name="preference_weather_alerts_frost_threshold">Στους %1$d °C ή χαμηλότερα</string>
+    <string name="preference_weather_alerts_wind">Ισχυροί άνεμοι</string>
+    <string name="preference_weather_alerts_wind_threshold">Από %1$d km/h</string>
+    <string name="preference_weather_alerts_uv">Υψηλός δείκτης UV</string>
+    <string name="preference_weather_alerts_uv_threshold">Από δείκτη UV %1$d</string>
+    <string name="preference_weather_alerts_test">Αποστολή δοκιμαστικής ειδοποίησης</string>
+    <string name="preference_weather_alerts_test_summary">Δείχνει πώς φαίνεται μια ειδοποίηση</string>
+    <string name="preference_weather_alerts_test_failed">Η ειδοποίηση δεν μπόρεσε να εμφανιστεί. Ελέγξτε ότι οι ειδοποιήσεις επιτρέπονται για το Telos</string>
+    <string name="preference_weather_alerts_hours_value">%1$d ώρες</string>
+</resources>

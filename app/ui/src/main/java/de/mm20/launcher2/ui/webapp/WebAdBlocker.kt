@@ -9,15 +9,21 @@ import java.io.ByteArrayInputStream
 /**
  * Hosts-file-style ad/tracker blocking for the embedded web app WebView. Not a full
  * EasyList/EasyPrivacy cosmetic-filter engine - see [R.raw.web_app_blocklist] for the domain
- * list and rationale.
+ * list and rationale. Block lists the user switched on (see BlockLists) are checked in addition.
  */
 class WebAdBlocker(context: Context) {
     private val blockedHosts: Set<String> by lazy { loadHosts(context) }
 
+    init {
+        // load the user's downloaded block lists off the main thread
+        de.mm20.launcher2.comms.blocklist.BlockLists.ensureWebLoaded(context)
+    }
+
     fun shouldBlock(host: String?): Boolean {
         if (host.isNullOrEmpty()) return false
         val lower = host.lowercase()
-        return blockedHosts.any { lower == it || lower.endsWith(".$it") }
+        if (blockedHosts.any { lower == it || lower.endsWith(".$it") }) return true
+        return de.mm20.launcher2.comms.blocklist.BlockLists.isWebBlocked(lower)
     }
 
     /** An empty 200 response - blocks the request without surfacing a network error to the page. */

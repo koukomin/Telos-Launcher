@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.comms
 
+import de.mm20.launcher2.ui.R
 import android.app.Service
 import android.content.Intent
 import android.graphics.PixelFormat
@@ -27,7 +28,7 @@ class FloatingNotesService : Service() {
         val wm = getSystemService(WindowManager::class.java)
         windowManager = wm
         val input = EditText(this).apply {
-            hint = "Note"
+            hint = getString(R.string.hc_note)
             minWidth = 400
         }
         val root = LinearLayout(this).apply {
@@ -35,12 +36,12 @@ class FloatingNotesService : Service() {
             setPadding(24, 24, 24, 24)
             setBackgroundColor(0xEE222222.toInt())
             addView(TextView(this@FloatingNotesService).apply {
-                text = "Call note"
+                text = getString(R.string.hc_call_note)
                 setTextColor(0xFFFFFFFF.toInt())
             })
             addView(input)
             addView(Button(this@FloatingNotesService).apply {
-                text = "Save"
+                text = getString(R.string.hc_save)
                 setOnClickListener {
                     if (number.isNotBlank()) commsSettings.setCallerNote(number, input.text.toString())
                     stopSelf()

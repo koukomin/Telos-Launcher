@@ -358,8 +358,12 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner, ViewModelSto
                 )
             }
         }
-        panelView = view
-        wm.addView(view, buildPanelLayoutParams(focusable = startInEditMode))
+        try {
+            wm.addView(view, buildPanelLayoutParams(focusable = startInEditMode))
+            panelView = view
+        } catch (e: Exception) {
+            // Overlay permission revoked: nothing to show
+        }
     }
 
     private fun closePanel() {
@@ -451,7 +455,8 @@ class FloatingLauncherService : Service(), SavedStateRegistryOwner, ViewModelSto
                 val item = clipData.getItemAt(i)
                 val uri = item.uri
                 if (uri != null) {
-                    val mimeType = clipData.description.getMimeType(0)
+                    val mimeType = clipData.description.takeIf { it.mimeTypeCount > 0 }?.getMimeType(0)
+                        ?: contentResolver.getType(uri) ?: "*/*"
                     val cachedUri = copyToDockCache(this@FloatingLauncherService, uri, mimeType) ?: continue
                     fileDockItemsState.value = fileDockItemsState.value + FileDockItem.MediaItem(
                         id = UUID.randomUUID().toString(),

@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/public/icon.png" alt="Telos" width="128" height="128">
+
 # Telos Launcher
 
 **A search-focused, free and open source Android launcher with a set of built-in apps.**
@@ -17,7 +19,7 @@ The documentation site is published via GitHub Pages at <https://koukomin.github
 </div>
 
 > **Note:** The Telos apps use flat Material icons: a white glyph on a dark background of its own
-> (navy for Phone, teal for Messages, amber for Files, slate for Calculator, blue for Screenshot, red for Screen Recorder, cyan for Voice Recorder, rose for Photos, purple for Music, red for
+> (navy for Phone, teal for Messages, amber for Files, slate for Calculator, blue for Screenshot, orange for Screen Recorder, cyan for Voice Recorder, amber for Notes, blue for Calendar, deep purple for Downloads, rose for Photos, purple for Music, red for
 > Video, green for Radio). Telos Store uses the launcher icon. The name and the final branding are
 > still in progress.
 
@@ -27,6 +29,7 @@ The documentation site is published via GitHub Pages at <https://koukomin.github
 - [Download](#download)
 - [The launcher](#the-launcher)
 - [The built-in apps](#the-built-in-apps)
+- [Languages](#languages)
 - [Honest status](#honest-status)
 - [Planned](#planned)
 - [Build](#build)
@@ -50,6 +53,9 @@ from Telos Store.
 | **Telos Files** | File manager with network and cloud storages, archives, Cryptomator vaults | [Files](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/) |
 | **Telos Screenshot** | Full, partial and scrolling screenshots with an editor | [Screenshot](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/screenshot/) |
 | **Telos Screen Recorder** | Screen to video with microphone, pause and countdown | [Screen Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/screen-recorder/) |
+| **Telos Notes** | Notes with labels, sync with a Markdown folder or Nextcloud Notes, Keep and Evernote import | [Notes](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/notes/) |
+| **Telos Calendar** | Month and agenda calendar, local calendar, Google and CalDAV through the system | [Calendar](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calendar/) |
+| **Telos Downloads** | Download manager: several connections per file, resume, queue, retry, folder of your choice, torrents and magnet links with file selection, seeding and IP block lists, video and audio sites through yt-dlp (optional build), schedule, backup | [Downloads](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/downloads/) |
 | **Telos Voice Recorder** | Voice recordings with search, pause and call recordings | [Voice Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/voice-recorder/) |
 | **Telos Calculator** | Standard and scientific calculator, VAT, unit and currency converter, history | [Calculator](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calculator/) |
 | **Telos Photos** | Gallery, EXIF tools, editor and a document viewer | [Photos](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
@@ -111,7 +117,7 @@ and custom names are matched; file contents, message texts and note bodies are n
 | Source | What it finds | Min. text | Online? | Default |
 | --- | --- | --- | --- | --- |
 | Apps | Installed apps of every profile (personal, work, private space) | 1 | No | On |
-| Telos apps | Phone, Messages, Radio, Music, Video, Photos, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder, Store, while switched on | 1 | No | On |
+| Telos apps | Phone, Messages, Radio, Music, Video, Photos, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder, Notes, Calendar, Downloads, Store, while switched on | 1 | No | On |
 | Web apps | Web app shortcuts shown in the grid | 1 | No | On |
 | Activity by component name | One app entry for a typed `package/class` | 1 | No | On |
 | App shortcuts | Shortcuts that apps publish (needs Telos as default home app) | 3 | No | On |
@@ -182,6 +188,7 @@ Conversion units: length (m, km, dm, cm, mm, in, ft, yd, mi, nmi), mass (kg, g, 
 
 - Match score: Jaro-Winkler plus prefix and substring bonus, capped at 1; a match on a secondary field counts 20 percent less. Apps need at least 0.8.
 - Usage weight rises with each launch. **Ranking flexibility** sets the step: Stable 0.01, Balanced 0.03 (default), Variable 0.1.
+- **Greek and Greeklish:** Greek matches with or without accents, in any case, and when typed with Latin letters (`kalimera`, `mpala`, `thelw`, `chartis`). Letters that sound alike are merged, so a few similar English words may match too. It covers apps, contacts, files, calendar, tags, notes and the Telos apps, but not results that a plugin searches itself.
 - Text is lower-cased and accent-stripped; ae, oe and ss are expanded; a **transliterator** (Settings > Language and region) lets non-Latin names match Latin input.
 - Places sort by distance when a location is cached. Quick actions keep their configured order. The empty-search drawer is alphabetical per profile (frozen apps can go last). Duplicates by item key are removed.
 
@@ -285,7 +292,7 @@ A clock, a search bar, an optional dock and, if you want them, widgets. Settings
 | Double tap | Turn off screen |
 | Long press | Home screen menu (change wallpaper, add widget) |
 
-- **Actions:** do nothing, search / app drawer, widget pages 1 to 4, Feed (non-release builds), Web Apps Panel, home screen menu, notifications, quick settings, turn off screen, power menu, recent apps, launch an app, shortcut or any searchable item, launcher settings, plugin actions.
+- **Actions:** open any built-in Telos app (Phone, Messages, Notes, Calendar, ...) directly from a gesture, or show most of them as a page inside the launcher (all except the Store), do nothing, search / app drawer, widget pages 1 to 4, Feed (non-release builds), Web Apps Panel, home screen menu, notifications, quick settings, turn off screen, power menu, recent apps, launch an app, shortcut or any searchable item, launcher settings, plugin actions.
 - Turn off screen (Android 9+), power menu and recent apps need the launcher's accessibility service; a banner and a "gesture failed" sheet guide you.
 - Only swipes, double tap and long press can be overridden by a context profile. Tapping the search bar always opens search.
 
@@ -353,7 +360,7 @@ Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/doc
 - **Badges:** notification badges (dot or count, color), cloud, suspended or frozen apps, shortcut and plugin badges; work profile, hidden item and Store update badges are always on. Frozen apps can be grayscale or carry a snowflake.
 - **Motion:** charging animation, reduce animations, animation speed 0.5 to 2.0, bounce physics.
 - **Per-item customization:** long-press and tap Customize for a new label (the original name still matches), icon (including icon pack, themed or text icon), tags, **Show in**, a shutter app, or web app settings.
-- **Language and region:** about 45 translations (German and Greek come with Telos), per-app language on Android 13+, form of address (French, Spanish), transliteration, time format, measurement system, calendar systems, currency order.
+- **Language and region:** 35 languages (see [Languages](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/languages)), per-app language on Android 13+, form of address (French, Spanish), transliteration, time format, measurement system, calendar systems, currency order.
 - **Accessibility and comfort:** text size, high contrast and black and white schemes, reduce animations, label options, fixed rotation.
 - **Limitation:** fallback icon packs are supported by the icon service but have **no setting**, so only a single icon pack is usable. Several other values are stored without a screen (Wikipedia images, dock background blur, legacy surface settings).
 
@@ -376,6 +383,8 @@ Integrations are under **Settings > Integrations**, plugins under **Settings > A
 | Smartspacer | Smartspacer targets in the clock's dynamic zone (Android 10+) | A non-release build |
 | Feed | A content page from another app | A non-release build, a provider app |
 | Cloud and network storage | Dropbox, Google Drive, OneDrive, WebDAV, SFTP, SMB, FTP for Telos Files | Per storage |
+
+**Severe weather alerts** (off by default, Integrations > Weather): a notification when the stored forecast for the next 6 to 72 hours expects rain (chance of rain from a threshold), heavy rain, snow or sleet, thunderstorms or hail, high temperatures, frost, strong wind or a high UV index, with the strongest value, the start time and the place; each kind at most once in 12 hours, temperatures and speeds in your measurement system, a test notification. Forecasts, not official warnings.
 
 **Weather providers:** Open-Meteo (default) and Bright Sky always; OpenWeatherMap and MET Norway only in builds that ship their keys; Breezy Weather when installed; any weather plugin. Automatic or manual location, measurement system (system, metric, UK, US).
 
@@ -401,9 +410,11 @@ Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/doc
 
 **Settings > Advanced settings > Backup and restore** writes and reads a plain ZIP archive (not encrypted).
 
+Backup and restore ask first **what** to include: **Launcher** (settings and the rest of the table), **Notes** and **Calendar** (the local calendars as `.ics`), each with a checkbox and an **All** button. On restore only the parts that the file contains are offered, and unticked parts are not touched.
+
 | Included | Not included |
 | --- | --- |
-| Settings, favorites and saved items (usage weights, pin position, visibility), custom icons, labels and tags, widgets, quick actions, custom color, shape, transparency and typography themes | Cloud logins (Nextcloud, ownCloud), plugin enable state, wallpaper, icon packs, intruder photos, passwords and API keys of the Telos apps, hidden and protected call numbers |
+| Settings, favorites and saved items (usage weights, pin position, visibility), custom icons, labels and tags, widgets, quick actions, custom color, shape, transparency and typography themes, Telos Notes, local calendars of Telos Calendar (their own parts) | Cloud logins (Nextcloud, ownCloud, notes sync), calendars of accounts (the account has them), plugin enable state, wallpaper, icon packs, intruder photos, passwords and API keys of the Telos apps, hidden and protected call numbers |
 
 - Restore wipes saved favorites first, then imports the file; secrets already on the device are kept. A SIP or phonebook account without a password after restore is switched off.
 - Format `1.9`: same version restores fully, a different minor version restores with a warning, a different major version is refused. Archive entries that would unpack outside the restore folder are ignored.
@@ -461,7 +472,7 @@ Telos can draw things in other places than the home screen. Much of this is mark
 - **A profile can change:** gestures, the freeze profile, which home widget page opens, Do Not Disturb, brightness, and launch an app once. Profile icons: Home, Work, Car, Gaming, Battery saver, Sleep, Custom.
 - **Floating launcher settings:** side and position of the handle, handle size, width, color and transparency, hide the handle, two columns, show app names, panel transparency, icon size, rows before scrolling, File Dock, open apps in floating windows (needs freeform mode, see Desktop mode), haptic feedback, hide during a Gaming profile, Edit the sidebar. The handle opens with a tap or a drag, and the card opens next to it. If a bug ever locks the screen, it can be disabled without touch input with `adb shell am broadcast -a de.mm20.launcher2.action.DISABLE_FLOATING_LAUNCHER -p <application id>`.
 - **Dynamic Island:** also shows active calls (needs the phone state permission). The timer slot exists, but nothing in this build starts it.
-- **Web app browsing settings:** block ads and trackers (a built-in host blocklist, not a full filter list engine), pinch to zoom, strip tracking parameters, top bar position, swipe to switch web apps. Web apps can be locked with App Lock and customized per item.
+- **Web app browsing settings:** block ads and trackers (a built-in host blocklist plus optional downloadable block lists, domain rules only, not a full filter list engine), pinch to zoom, strip tracking parameters, top bar position, swipe to switch web apps. The ad blocker can also be set per web app (global, on or off, embedded browser only). **Block lists:** optional lists (StevenBlack, AdGuard DNS, Peter Lowe, OISD small, EasyList domain rules, URLhaus) that are downloaded only after you switch them on, directly from the list's own server, with your own lists by https address or file, and automatic updates (off, daily or weekly, Wi-Fi only by default). Suggested category folders (Social, Email, Messaging, Video & Music, Productivity & Work) can be added with one tap; they are normal web apps and folders that can be edited or deleted, and nothing is added automatically. Web apps can be locked with App Lock and customized per item.
 - **Overlay services** (floating launcher, Dynamic Island, App Lock) are foreground services that only run while switched on and need the display-over-other-apps permission.
 - Desktop quarter snapping is in the code but not in the taskbar menu.
 
@@ -652,7 +663,7 @@ A file manager for your phone, network storages and cloud storages. The layout f
 <details>
 <summary><b>Network and cloud storages</b></summary>
 
-- **Protocols:** WebDAV, Nextcloud, ownCloud, SFTP / SSHFS (password or key, host key pinned on first use), SMB / CIFS (Windows shares, NAS, SMB2 and SMB3), FTP and FTPS (explicit TLS), Dropbox, Google Drive and OneDrive
+- **Protocols:** WebDAV, Nextcloud, ownCloud, SFTP / SSHFS (password or key, host key pinned on first use), SMB / CIFS (Windows shares, NAS, SMB2 and SMB3), FTP and FTPS (explicit TLS), Dropbox, Google Drive and OneDrive, plus **Cloud app on this phone** (the document provider of an installed cloud app such as Google Drive, signed in with the phone's account, no client ID)
 - **Cloud sign-in** uses OAuth with PKCE and **your own client ID** (and for Google a client secret) that you register with the provider. The redirect address is `http://localhost:53682/` (Dropbox, OneDrive) or `http://127.0.0.1:53682/` (Google). The sign-in must finish within three minutes.
 - **Secrets:** passwords, private keys, client secrets and tokens are stored encrypted with a key in the Android Keystore. Saved connections are not part of the launcher backup.
 - **Operations:** browse, open, download, upload, copy between any two storages, rename, move and delete. Server-side copy for WebDAV, Nextcloud, ownCloud and Dropbox, other copies stream through the phone. Opened remote files are downloaded to the cache first.
@@ -706,6 +717,52 @@ Records the screen to a video with MediaProjection. [Docs](https://koukomin.gith
 - Starts from the app or from the floating launcher
 
 **Status and limitations:** Android asks for the capture permission every time, no system sound (only the microphone), protected content is black, no Live Alert or Dynamic Island entry, no editing.
+
+### Telos Notes
+
+A notes app with local storage and optional sync. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/notes/).
+
+- Grid of notes with colours, pins, labels, archive, trash, search, share; checklists as Markdown lines
+- Sync with a folder of Markdown files (Obsidian, Logseq, Syncthing or a cloud app's folder) and with Nextcloud Notes (app password), newest change wins; trashed notes stay on the server until deleted for good, and the folder sync never trashes notes because of an empty, failed or suspicious listing
+- Import Google Keep (Takeout json or zip), Evernote (.enex), Markdown and text files and zips of them (Notion and Joplin exports)
+- Importing the same file twice skips duplicates and reports how many
+- Matching notes show up in the launcher search
+- The **Notes** part of the Telos backup
+
+**Status and limitations:** no direct sync with Google Keep, OneNote, Microsoft Sticky Notes, Apple Notes or Notion (no usable public API for a launcher, import only where an export exists), no background sync, no images, notes are not encrypted.
+
+### Telos Calendar
+
+A calendar on the calendar storage of Android. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calendar/).
+
+- Month view with an agenda of the chosen day, create, edit and delete events (all day, location, description, repeat daily to yearly, one reminder)
+- A local calendar that needs no account, plus every calendar the system has: Google, CalDAV through DAVx5, Exchange. Telos asks the system to sync, the account does the sync
+- A list of the next 30 days next to the month view
+- Show or hide calendars, import and export `.ics`
+- The local calendars are the **Calendar** part of the Telos backup, with all reminders and deleted occurrences of repeating events (changed single occurrences are not backed up)
+
+**Status and limitations:** month and agenda only (no week or day grid), no guests or tasks, repeating events are edited as a whole series, Telos does not log in to Google or CalDAV itself.
+
+### Telos Downloads
+
+A download manager for links. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/downloads/).
+
+- HTTP and HTTPS downloads with up to 16 connections per file (byte ranges); an idle connection takes over half of the biggest part that is left
+- Resume after a restart or a lost network, checked against size, ETag and Last-Modified; mirrors, redirects, file name from Content-Disposition
+- Queue with a limit of parallel downloads, priorities, retry with backoff, Wi-Fi only, pause on low battery, speed limit (global and per download)
+- Custom headers, user agent, referer, cookies, HTTP or SOCKS proxy, checksum check (MD5, SHA-1, SHA-256)
+- Saves to a folder you choose (system folder picker) or to `Downloads/Telos`; categories Video, Audio, Documents, Archives, Programs, Other
+- List with filters All, Active, Queued, Completed, Failed, search, swipe actions, details with one bar per connection, batch add, link from the clipboard, a share target for links
+- Foreground service with a progress notification, pause and cancel; open or share when finished
+- **Torrents** (libtorrent, [docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/downloads/torrents)): magnet links, `.torrent` addresses and files (picker, share, Open with, next to Telos Video); the file list is read first and files can be chosen, with priorities, before and during the download; download in order; pause, resume, force recheck, force reannounce; seeding with ratio and time limits or stop at 100 %; download and upload limits, maximum active downloads and seeds; DHT, PEX, local peer discovery, uTP, encryption mode, fixed or random port, UPnP and NAT-PMP; peers (address, client, speed, flags), trackers (state, add a tracker) and a piece map in the details; resume data so torrents survive a restart; Wi-Fi only, battery rule, notifications and the foreground service as for other downloads
+- Torrent data is written to a working folder in the app storage and copied to your folder when complete (libtorrent needs real files, not a folder picker); seeding goes on from the working folder
+- One torrent session for Telos Video and Telos Downloads (same port, settings and IP filter); the IP block lists (Spamhaus DROP, FireHOL level 1, Naunter, your own) show their licence and the date written in the list. Which other lists were checked, and why they are not offered, is in the docs
+
+- **Video and audio sites** ([docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/downloads/media)): yt-dlp through youtubedl-android; paste or share a link, "Analyze" (title, thumbnail, uploader, duration, resolutions, playlist with item choice), best quality or a height limit, audio only as mp3, m4a or opus, container, subtitles as files or embedded, embedded thumbnail and metadata, SponsorBlock cut; cookies from a cookies.txt or from the Telos browser for sites with a login; progress, speed and remaining time read from yt-dlp, pause and resume from the partial files, readable errors, "Update the downloader" with version and date. **Optional in the build:** the runtime (Python, yt-dlp, FFmpeg) adds about 70 MB, so it is only included with `-Ptelos.media=true`; the default build has the screen but says it is missing. You are responsible for what you download and for the terms of the sites
+- Capture: single video site links in the add sheet open the media sheet; optional "Detect links in the clipboard" (off) offers copied links, video links and magnet links with one tap; "Download with Telos" in the menu of the web apps; the share target accepts text and links. No "Open with" for video sites
+- Schedule (time window and days), extract zip archives (automatic or per download), move to the top or bottom of the queue, speed limit for one torrent, a backup part "Downloads" (list and settings; no files, no cookies; finished downloads whose file is gone are marked "File missing")
+
+**Status and limitations:** downloads run only while the launcher process lives; Android 15 stops the data sync service after about six hours a day (the downloads and seeding are paused). No FTP, no tar.gz, 7z or rar extraction, no browser that finds media on pages. The torrent engine and the media engine have unit tests for their logic but have **not been run on a device yet** (starting Python, yt-dlp and FFmpeg, the real yt-dlp output, the update and the cookie hand-over are untested); while a torrent seeds, its data exists twice (working folder and your folder); the two IP lists offered besides Naunter are security lists, not classic p2p lists.
 
 ### Telos Voice Recorder
 
@@ -787,20 +844,24 @@ A video library and player. It plays the videos on your phone, web streams, and 
 - Speed presets (0.5x to 2x), picture size (fit, fill, zoom), audio and subtitle track choice, repeat, sleep timer, picture in picture
 - FFmpeg software decoders for AC3, E-AC3, DTS, TrueHD and more
 - Also used when another app opens a video; playlists for series and folders
+- Picture size (fit, fill, zoom, fixed width or height), frame rate matching on Android 11 and later, subtitle delay, size, colour and edge (remembered)
+- Mark as watched or not watched and delete from the phone (long press)
+- Videos on your Telos Files network storages (SMB, FTP, SFTP, WebDAV, Nextcloud and more) play directly, and chosen folders can be scanned into the library
 
 <details>
 <summary><b>Web streams, torrents, subtitles, Trakt and the separate process</b></summary>
 
 - **Web streams:** HLS, DASH, RTSP and plain video links via "Play from the web". A magnet link or address on the clipboard is filled in automatically.
+- **Peer block lists:** optional IP block lists for torrents (Spamhaus DROP, FireHOL level 1, Naunter BT_BlockLists which its author no longer actively maintains, or your own list by https address or file in p2p, ipfilter.dat, CIDR or netset format), downloaded only after you switch them on, updated automatically (off, daily, weekly) and applied to the one torrent session shared with Telos Downloads. It reduces unwanted peers but does not hide your IP address.
 - **Torrents:** magnet links, `.torrent` addresses and files open in Telos Video from any app or browser. The video downloads in order while it plays, through a local-only address, on Wi-Fi only by default, and everything is deleted when the player closes. Only play content you are allowed to watch: torrent networks show your IP address to other peers.
-- **Subtitles:** external files (SRT, VTT, ASS / SSA, TTML), embedded tracks, and online search or automatic download from [OpenSubtitles](https://www.opensubtitles.com) (your own API key and account), also for torrents.
+- **Subtitles:** external files (SRT, VTT, ASS / SSA, TTML), embedded tracks, and online search or automatic download **without an account** from OpenSubtitles (old REST API, by file hash and by name) and Podnapisi, plus [OpenSubtitles.com](https://www.opensubtitles.com) with your own key as an optional source. Sources can be switched on and off and ordered; results are ranked by your language order and match, converted to UTF-8, and remembered per video. Also for torrents.
 - **Trakt.tv:** sign in with a device code, scrobbling of movies and episodes, watched marks in the library, add titles to the watchlist (your own Trakt application).
 - **Separate player process (experimental):** Video services > Play in a separate process, so a crash of the player does not close the launcher.
-- **Video services dialog:** TMDB key, OpenSubtitles key and account, languages, automatic subtitles, torrents Wi-Fi only, separate process, Trakt. Keys and passwords are encrypted with the Android Keystore.
+- **Video services dialog:** TMDB key, subtitle sources, OpenSubtitles User-Agent, optional OpenSubtitles.com key and account, network folders, languages, automatic subtitles, torrents Wi-Fi only, separate process, Trakt. Keys and passwords are encrypted with the Android Keystore.
 
 </details>
 
-**Status and limitations:** Decoding depends on the phone, and some codecs may not play. TMDB and OpenSubtitles need your own keys. Title detection relies on file names. Torrent streaming needs healthy peers and has no catalog. No Chromecast, DLNA, offline downloads, equalizer or subtitle styling. The separate process is experimental. Video is guarded by the crash guard.
+**Status and limitations:** Decoding depends on the phone, and some codecs may not play. TMDB needs your own key for ratings, and the free subtitle sources have daily limits (the old OpenSubtitles API may be switched off by its owner; Podnapisi is untested on a device). Title detection relies on file names. Torrent streaming needs healthy peers and has no catalog. No Chromecast, DLNA, offline downloads, equalizer, audio delay or Android TV interface. The subtitle delay works only for loaded subtitle files, not for tracks inside the video. Videos on network storages seek by reading through the data. The separate process is experimental. Video is guarded by the crash guard.
 
 ### Telos Radio
 
@@ -894,6 +955,15 @@ Freeze or hide apps you do not need right now. It is a launcher feature in Setti
 
 ---
 
+## Languages
+
+Telos is translated into Greek (first), German, French, Italian, Spanish, Portuguese (Portugal and Brazil), Dutch, Polish, Czech, Slovak,
+Slovenian, Croatian, Bulgarian, Romanian, Hungarian, Danish, Swedish, Finnish, Estonian, Latvian, Lithuanian, Irish, Maltese
+(all official languages of the European Union), Russian, Ukrainian, Turkish, Norwegian, Chinese (Simplified and Traditional), Japanese, Korean,
+Arabic, Hindi and Bengali, plus the languages that came with the original launcher. The texts that Telos added were translated by machine and are
+not checked by native speakers, a missing string falls back to English, and the documentation is in English only.
+New strings are translated into all of these languages in the same change. Details: [Languages](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/languages).
+
 ## Honest status
 
 Some features are new and not tested on every device. This is what the project's docs say today.
@@ -956,6 +1026,13 @@ adapted, the original license is respected.
 | [Ever Dialer](https://github.com/hari161008/Ever-Dialer) | GPL-3.0 | Power-user features: recording backends and retention, gestures, auto redial, fake calls, network switcher, notes |
 | [Thor](https://github.com/trinadhthatakula/Thor) | GPL-3.0 | Freeze backends (Shizuku, Dhizuku) and OEM suspend fallbacks |
 | [Undead Wallpaper](https://github.com/maocide/UndeadWallpaper) | GPL-3.0 | Video live wallpaper engine |
+| [Gopeed](https://github.com/GopeedLab/gopeed) | GPL-3.0 | Ideas for Telos Downloads: segmented downloads that resume, task filters, categories, headers and proxy (written from scratch, no code was copied) |
+| [Ketch](https://github.com/linroid/Ketch) | Apache-2.0 | Ideas for Telos Downloads: connections that help each other, clipboard link detection, queue and speed limits (written from scratch, no code was copied) |
+| [Kite](https://github.com/zenzer0s/kite) | GPLv3 | Ideas for the video and audio sites part of Telos Downloads: yt-dlp with updates, format choice, cookies from a web view, queue (Flutter/Dart, nothing to reuse; no code was copied) |
+| [AIO Video Downloader](https://github.com/shibaFoss/AIO-Video-Downloader) | custom licence, text not verified | Ideas only (yt-dlp downloads with quality and subtitle choice). **No code was used**, because its licence was not checked |
+| [yt-dlp](https://github.com/yt-dlp/yt-dlp) | Unlicense | The extractor and downloader behind video and audio sites, used unchanged inside the optional media build |
+| [youtubedl-android](https://github.com/yausername/youtubedl-android) (junkfood02 fork) | GPL-3.0 | Library that runs yt-dlp, Python and FFmpeg on Android, used unchanged as a Maven dependency in the optional media build; FFmpeg and Python have their own licences (see `THIRD_PARTY_NOTICES.md`) |
+| [LibreTorrent](https://github.com/proninyaroslav/libretorrent) | GPL-3.0-or-later | Ideas for the torrent part of Telos Downloads: file selection with priorities, sequential download, seeding limits, DHT/PEX/LSD/uTP/encryption/port settings, peers and trackers views, resume data, IP filter (written from scratch on libtorrent4j, no code was copied) |
 | [Obtainium](https://github.com/ImranR98/Obtainium) | GPL-3.0 | Store behaviour and features: sources, per-app settings, update flow, export format, links, update broadcasts (the behaviour is re-implemented, no code was copied) |
 | [Transistor](https://codeberg.org/y20k/transistor) | MIT | Radio player behaviour |
 | [Radio-Browser](https://www.radio-browser.info/) | public API | Radio station directory |
@@ -964,9 +1041,12 @@ adapted, the original license is respected.
 | [LRCLIB](https://lrclib.net) | open API | Song lyrics for Telos Music |
 | [Next Player](https://github.com/anilbeesetti/nextplayer) and [NextLib](https://github.com/anilbeesetti/nextlib) | GPL-3.0 | Player gestures and features (design), FFmpeg decoders for Media3 (library, uses FFmpeg under LGPL-2.1) |
 | [mpv-android](https://github.com/mpv-android/mpv-android) and [mpvKt](https://github.com/abdallahmehiz/mpvKt) | MIT / Apache-2.0 | Ideas for gestures, speed presets and sleep timer (no code) |
+| [Nova Video Player](https://github.com/nova-video-player/aos-AVP) | Apache-2.0 | Feature inspiration for Telos Video: playing and scanning videos from network shares, library marks, subtitle search. Re-implemented with Media3, no code and none of its prebuilt binaries were copied |
+| [OpenSubtitles](https://www.opensubtitles.com) and [Podnapisi](https://www.podnapisi.net) | service terms | Subtitle search and download in Telos Video (old OpenSubtitles REST API without an account, the file hash algorithm is the published one) |
 | [Trakt.tv](https://trakt.tv) | API terms | Scrobbling and watched marks in Telos Video |
 | [Last.fm](https://www.last.fm/api), [Libre.fm](https://libre.fm) and [ListenBrainz](https://listenbrainz.org) | open APIs | Scrobbling in Telos Music |
-| [libtorrent4j](https://github.com/aldenml/libtorrent4j) and [libtorrent](https://www.libtorrent.org) | MIT / BSD-3-Clause | Torrent streaming in Telos Video |
+| [libtorrent4j](https://github.com/aldenml/libtorrent4j) and [libtorrent](https://www.libtorrent.org) | MIT / BSD-3-Clause | The torrent session of Telos: streaming in Telos Video and torrent downloads in Telos Downloads |
+| [StevenBlack/hosts](https://github.com/StevenBlack/hosts), [AdGuard DNS filter](https://github.com/AdguardTeam/AdGuardSDNSFilter), [Peter Lowe's list](https://pgl.yoyo.org/adservers/), [OISD](https://oisd.nl), [EasyList](https://easylist.to), [URLhaus](https://urlhaus.abuse.ch), [Naunter/BT_BlockLists](https://github.com/Naunter/BT_BlockLists), [Spamhaus DROP](https://www.spamhaus.org/drop/), [FireHOL level 1](https://iplists.firehol.org/?ipset=firehol_level1) | MIT, GPL-3.0, see notice, GPL-3.0, GPL-3.0 / CC BY-SA 3.0, abuse.ch terms, Unlicense, free with credit to The Spamhaus Project, mixed (see notice) | Optional block lists for web apps and torrents. Not bundled: downloaded from their own servers only when you switch them on |
 | [TMDB](https://www.themoviedb.org) | API terms | Posters and descriptions in Telos Video (not endorsed or certified by TMDB) |
 | [OpenSubtitles](https://www.opensubtitles.com) | API terms | Subtitle search and download in Telos Video |
 | [TagLib wrapper (Kyant0/taglib)](https://github.com/Kyant0/taglib) | Apache-2.0 | Reading and writing audio tags; it bundles [TagLib](https://taglib.org/) (LGPL-2.1 / MPL-1.1 upstream) |

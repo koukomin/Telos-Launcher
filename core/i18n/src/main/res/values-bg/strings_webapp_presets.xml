@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Предложени категории</string>
+    <string name="web_app_presets_summary">Добавете готова папка с популярни уебсайтове като уеб приложения. Нищо не се добавя, докато не го изберете, а всяка папка и уеб приложение могат да се редактират или изтриват по-късно.</string>
+    <string name="web_app_presets_login_note">Влезте в самия уебсайт. Влизанията се запазват от вградения браузър. Това важи само за уеб приложения, които се отварят във вградения браузър; уеб приложенията, отваряни във външен браузър, използват неговия собствен вход.</string>
+    <string name="web_app_preset_category_social">Социални</string>
+    <string name="web_app_preset_category_email">Имейл</string>
+    <string name="web_app_preset_category_messaging">Съобщения</string>
+    <string name="web_app_preset_category_video">Видео и музика</string>
+    <string name="web_app_preset_category_work">Продуктивност и работа</string>
+    <string name="web_app_preset_add">Добави</string>
+    <string name="web_app_preset_dialog_title">Добавяне на %1$s</string>
+    <string name="web_app_preset_dialog_summary">Изберете уеб приложенията за добавяне. Те се запазват като всяко уеб приложение, което създавате сами.</string>
+    <string name="web_app_preset_exists">Вече е във вашите уеб приложения, ще бъде използвано повторно</string>
+    <string name="web_app_preset_confirm">Добави избраните</string>
+    <string name="web_app_preset_added">Добавено: %1$s</string>
+    <string name="web_app_groups_title">Папки</string>
+    <string name="web_app_groups_enable">Включи папките за уеб приложения</string>
+    <string name="web_app_groups_enable_summary">Организирайте уеб приложенията в папки и ограничавайте плъзгането за всяка папка</string>
+    <string name="web_app_groups_manage">Управление на папките</string>
+    <string name="web_app_group_create">Създаване на нова папка</string>
+    <string name="web_app_group_create_title">Създаване на папка</string>
+    <string name="web_app_group_rename_title">Преименуване на папка</string>
+    <string name="web_app_group_name">Име на папката</string>
+    <string name="web_app_group_create_confirm">Създай</string>
+    <string name="web_app_group_rename_confirm">Преименувай</string>
+    <string name="web_app_group_apps_count">Уеб приложения: %1$d</string>
+    <string name="web_app_group_notifications">Известия</string>
+    <string name="web_app_group_label">Папка</string>
+    <string name="web_app_group_none">Няма</string>
+    <string name="web_app_group_delete_title">Изтриване на папката?</string>
+    <string name="web_app_group_delete_message">Папката „%1$s“ ще бъде изтрита. Уеб приложенията в нея се запазват и вече няма да са групирани.</string>
+    <string name="web_app_delete_title">Изтриване на уеб приложението?</string>
+    <string name="web_app_delete_message">„%1$s“ ще бъде премахнато от търсенето, началния екран, папките и панела с уеб приложения. Това действие не може да бъде отменено.</string>
+    <string name="web_app_shortcut_ad_block">Блокиране на реклами</string>
+    <string name="web_app_shortcut_ad_block_global">Използвай глобалната настройка</string>
+    <string name="web_app_shortcut_ad_block_on">Включено</string>
+    <string name="web_app_shortcut_ad_block_off">Изключено</string>
+    <string name="web_app_shortcut_ad_block_summary">Важи само за вградения браузър. Външните браузъри (Custom Tabs) се управляват от приложението на браузъра.</string>
+</resources>

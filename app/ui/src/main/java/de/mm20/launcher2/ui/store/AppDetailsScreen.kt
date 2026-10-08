@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.store
 
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -93,7 +95,7 @@ fun AppDetailsScreen(itemId: String) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
                     DetailsActionButton(row, installStates[item.id] ?: StoreInstallUiState.Idle) { viewModel.onAppActionClicked(item) }
                     OutlinedButton(onClick = { viewModel.checkOne(item) }, enabled = !checking) {
-                        if (checking) CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp) else Text("Check now")
+                        if (checking) CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp) else Text(stringResource(R.string.hc_check_now))
                     }
                 }
             }
@@ -106,12 +108,12 @@ fun AppDetailsScreen(itemId: String) {
                     item.lastCheckedAt?.let { InfoLine("Last checked", DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(Date(it))) }
                     if (row.updateAvailable) {
                         TextButton(onClick = { viewModel.setOptions(item.id) { it.copy(skippedVersion = item.latestRelease?.version) } }, contentPadding = PaddingValues(0.dp)) {
-                            Text("Skip this version")
+                            Text(stringResource(R.string.hc_skip_this_version))
                         }
                     }
                     if (o.skippedVersion != null) {
                         TextButton(onClick = { viewModel.setOptions(item.id) { it.copy(skippedVersion = null) } }, contentPadding = PaddingValues(0.dp)) {
-                            Text("Stop skipping v${o.skippedVersion}")
+                            Text(stringResource(R.string.hc_stop_skipping_version, o.skippedVersion.orEmpty()))
                         }
                     }
                 }
@@ -132,25 +134,25 @@ fun AppDetailsScreen(itemId: String) {
                     }
                     OutlinedTextField(
                         category, { category = it; viewModel.setOptions(item.id) { o2 -> o2.copy(category = it.trim()) } },
-                        label = { Text("Category") }, singleLine = true, modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                        label = { Text(stringResource(R.string.hc_category)) }, singleLine = true, modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                     )
                     OutlinedTextField(
                         note, { note = it; viewModel.setOptions(item.id) { o2 -> o2.copy(note = it) } },
-                        label = { Text("Note") }, modifier = Modifier.fillMaxWidth(),
+                        label = { Text(stringResource(R.string.hc_note)) }, modifier = Modifier.fillMaxWidth(),
                     )
-                    TextButton(onClick = { renaming = true }, contentPadding = PaddingValues(0.dp)) { Text("Rename") }
+                    TextButton(onClick = { renaming = true }, contentPadding = PaddingValues(0.dp)) { Text(stringResource(R.string.hc_rename)) }
                 }
             }
             if (hasFilter(item.source)) {
                 item {
                     Card("Which file to install") {
                         OutlinedTextField(
-                            filterText, { filterText = it }, label = { Text("File name filter (regular expression)") }, singleLine = true,
-                            supportingText = { Text("For example arm64 or universal. Empty means the best match for this phone.") },
+                            filterText, { filterText = it }, label = { Text(stringResource(R.string.hc_file_name_filter_regular_expression)) }, singleLine = true,
+                            supportingText = { Text(stringResource(R.string.hc_for_example_arm64_or_universal_empty_mea)) },
                             modifier = Modifier.fillMaxWidth(),
                         )
                         if (hasPrerelease(item.source)) SwitchLine("Include pre-releases", null, prerelease) { prerelease = it }
-                        Button(onClick = { viewModel.setSourceFilter(item, filterText, prerelease) }, modifier = Modifier.padding(top = 8.dp)) { Text("Apply and check") }
+                        Button(onClick = { viewModel.setSourceFilter(item, filterText, prerelease) }, modifier = Modifier.padding(top = 8.dp)) { Text(stringResource(R.string.hc_apply_and_check)) }
                     }
                 }
             }
@@ -158,21 +160,21 @@ fun AppDetailsScreen(itemId: String) {
                 Card("Source") {
                     Text(StoreUrlParser.toUrl(item.source), style = MaterialTheme.typography.bodyMedium)
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
-                        OutlinedButton(onClick = { viewModel.openUrl(StoreUrlParser.toUrl(item.source)) }) { Text("Open") }
+                        OutlinedButton(onClick = { viewModel.openUrl(StoreUrlParser.toUrl(item.source)) }) { Text(stringResource(R.string.hc_open)) }
                         OutlinedButton(onClick = {
                             val link = "obtainium://add/" + StoreUrlParser.toUrl(item.source)
                             context.startActivity(
                                 Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, link), null)
                             )
-                        }) { Text("Share link") }
+                        }) { Text(stringResource(R.string.hc_share_link)) }
                     }
                 }
             }
             item {
                 HorizontalDivider()
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(top = 8.dp)) {
-                    TextButton(onClick = { confirmRemove = true }) { Text("Remove from list") }
-                    if (item.installedVersionCode != null) TextButton(onClick = { viewModel.uninstall(item) }) { Text("Uninstall app") }
+                    TextButton(onClick = { confirmRemove = true }) { Text(stringResource(R.string.hc_remove_from_list)) }
+                    if (item.installedVersionCode != null) TextButton(onClick = { viewModel.uninstall(item) }) { Text(stringResource(R.string.hc_uninstall_app)) }
                 }
             }
         }
@@ -180,22 +182,22 @@ fun AppDetailsScreen(itemId: String) {
         if (confirmRemove) {
             AlertDialog(
                 onDismissRequest = { confirmRemove = false },
-                title = { Text("Remove ${item.displayName}?") },
-                text = { Text("It is only removed from this list. The installed app stays on the phone.") },
+                title = { Text(stringResource(R.string.hc_remove_item_question, item.displayName)) },
+                text = { Text(stringResource(R.string.hc_it_is_only_removed_from_this_list_the_in)) },
                 confirmButton = {
-                    TextButton(onClick = { viewModel.remove(item); confirmRemove = false; backStack.removeLastOrNull() }) { Text("Remove") }
+                    TextButton(onClick = { viewModel.remove(item); confirmRemove = false; backStack.removeLastOrNull() }) { Text(stringResource(R.string.hc_remove)) }
                 },
-                dismissButton = { TextButton(onClick = { confirmRemove = false }) { Text("Cancel") } },
+                dismissButton = { TextButton(onClick = { confirmRemove = false }) { Text(stringResource(R.string.hc_cancel)) } },
             )
         }
         if (renaming) {
             var name by remember { mutableStateOf(item.displayName) }
             AlertDialog(
                 onDismissRequest = { renaming = false },
-                title = { Text("Rename") },
+                title = { Text(stringResource(R.string.hc_rename)) },
                 text = { OutlinedTextField(name, { name = it }, singleLine = true, modifier = Modifier.fillMaxWidth()) },
-                confirmButton = { TextButton(onClick = { viewModel.rename(item, name); renaming = false }) { Text("Save") } },
-                dismissButton = { TextButton(onClick = { renaming = false }) { Text("Cancel") } },
+                confirmButton = { TextButton(onClick = { viewModel.rename(item, name); renaming = false }) { Text(stringResource(R.string.hc_save)) } },
+                dismissButton = { TextButton(onClick = { renaming = false }) { Text(stringResource(R.string.hc_cancel)) } },
             )
         }
     }
@@ -259,7 +261,7 @@ private fun DetailsActionButton(row: StoreRow, state: StoreInstallUiState, onCli
                 Text(if (state == StoreInstallUiState.Downloading) "Downloading…" else "Installing…")
             }
         }
-        StoreInstallUiState.Failed -> OutlinedButton(onClick = onClick) { Text("Failed, try again") }
+        StoreInstallUiState.Failed -> OutlinedButton(onClick = onClick) { Text(stringResource(R.string.hc_failed_try_again)) }
         StoreInstallUiState.Idle, StoreInstallUiState.Installed -> Button(onClick = onClick) { Text(row.actionLabel()) }
     }
 }

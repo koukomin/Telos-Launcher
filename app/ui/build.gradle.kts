@@ -180,6 +180,7 @@ dependencies {
     implementation(project(":services:app-management"))
     implementation(project(":services:store"))
     implementation(project(":services:comms"))
+    implementation(project(":services:downloads"))
 
     implementation(libs.androidx.biometric)
     implementation(project(":core:devicepose"))

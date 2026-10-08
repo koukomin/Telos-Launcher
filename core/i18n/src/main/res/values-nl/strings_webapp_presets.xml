@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Voorgestelde categorieën</string>
+    <string name="web_app_presets_summary">Voeg een kant-en-klare map met populaire websites toe als webapps. Er wordt niets toegevoegd totdat je het kiest, en elke map en webapp kan achteraf worden bewerkt of verwijderd.</string>
+    <string name="web_app_presets_login_note">Meld je aan op de website zelf. Aanmeldingen worden bewaard door de ingebouwde browser. Dit geldt alleen voor webapps die in de ingebouwde browser openen; webapps in een externe browser gebruiken de eigen aanmelding van die browser.</string>
+    <string name="web_app_preset_category_social">Sociaal</string>
+    <string name="web_app_preset_category_email">E-mail</string>
+    <string name="web_app_preset_category_messaging">Berichten</string>
+    <string name="web_app_preset_category_video">Video en muziek</string>
+    <string name="web_app_preset_category_work">Productiviteit en werk</string>
+    <string name="web_app_preset_add">Toevoegen</string>
+    <string name="web_app_preset_dialog_title">%1$s toevoegen</string>
+    <string name="web_app_preset_dialog_summary">Kies de webapps die je wilt toevoegen. Ze worden opgeslagen zoals elke webapp die je zelf maakt.</string>
+    <string name="web_app_preset_exists">Staat al in je webapps, wordt hergebruikt</string>
+    <string name="web_app_preset_confirm">Selectie toevoegen</string>
+    <string name="web_app_preset_added">%1$s toegevoegd</string>
+    <string name="web_app_groups_title">Mappen</string>
+    <string name="web_app_groups_enable">Webapp-mappen inschakelen</string>
+    <string name="web_app_groups_enable_summary">Organiseer webapps in mappen en beperk het vegen per map</string>
+    <string name="web_app_groups_manage">Mappen beheren</string>
+    <string name="web_app_group_create">Nieuwe map maken</string>
+    <string name="web_app_group_create_title">Map maken</string>
+    <string name="web_app_group_rename_title">Map hernoemen</string>
+    <string name="web_app_group_name">Mapnaam</string>
+    <string name="web_app_group_create_confirm">Maken</string>
+    <string name="web_app_group_rename_confirm">Hernoemen</string>
+    <string name="web_app_group_apps_count">%1$d webapps</string>
+    <string name="web_app_group_notifications">Meldingen</string>
+    <string name="web_app_group_label">Map</string>
+    <string name="web_app_group_none">Geen</string>
+    <string name="web_app_group_delete_title">Map verwijderen?</string>
+    <string name="web_app_group_delete_message">De map \"%1$s\" wordt verwijderd. De webapps erin blijven behouden en worden losgekoppeld van de map.</string>
+    <string name="web_app_delete_title">Webapp verwijderen?</string>
+    <string name="web_app_delete_message">\"%1$s\" wordt verwijderd uit zoeken, het startscherm, mappen en het webapp-paneel. Dit kan niet ongedaan worden gemaakt.</string>
+    <string name="web_app_shortcut_ad_block">Advertentieblokkering</string>
+    <string name="web_app_shortcut_ad_block_global">Globale instelling gebruiken</string>
+    <string name="web_app_shortcut_ad_block_on">Aan</string>
+    <string name="web_app_shortcut_ad_block_off">Uit</string>
+    <string name="web_app_shortcut_ad_block_summary">Geldt alleen voor de ingebouwde browser. Externe browsers (Custom Tabs) worden beheerd door de browser-app.</string>
+</resources>

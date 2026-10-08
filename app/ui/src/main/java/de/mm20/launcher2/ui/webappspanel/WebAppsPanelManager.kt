@@ -12,6 +12,7 @@ import de.mm20.launcher2.icons.DynamicLauncherIcon
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIconRenderSettings
 import de.mm20.launcher2.icons.StaticLauncherIcon
+import de.mm20.launcher2.preferences.ui.WebAppBrowsingSettings
 import de.mm20.launcher2.preferences.ui.WebAppsPanelSettings
 import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.searchable.SavableSearchableRepository
@@ -40,6 +41,7 @@ class WebAppsPanelManager internal constructor(
     private val searchableRepository: SavableSearchableRepository,
     private val webAppShortcutRepository: WebAppShortcutRepository,
     private val iconService: IconService,
+    private val browsingSettings: WebAppBrowsingSettings,
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
@@ -111,6 +113,24 @@ class WebAppsPanelManager internal constructor(
         }
     }
 
+    /**
+     * Permanently deletes [shortcut]: removes it from the searchable database (search, grid and
+     * panel all read from it), drops its key from every folder and deletes its custom icon file.
+     */
+    fun delete(shortcut: WebAppShortcut) {
+        webAppShortcutRepository.delete(shortcut)
+        scope.launch {
+            val groups = browsingSettings.groups.first()
+            if (groups.any { it.appKeys.contains(shortcut.key) }) {
+                browsingSettings.setGroups(groups.map { it.copy(appKeys = it.appKeys - shortcut.key) })
+            }
+            shortcut.iconUri?.let { path ->
+                // Only delete files we created ourselves, never an arbitrary uri.
+                if (path.startsWith(context.filesDir.absolutePath)) File(path).delete()
+            }
+        }
+    }
+
     fun remove(shortcut: WebAppShortcut) {
         webAppShortcutRepository.update(shortcut, shortcut.label, shortcut.url, shortcut.iconUri, shortcut.faviconUrl, shortcut.rendererPackage, shortcut.showInGrid, false, shortcut.order, shortcut.iconSource, shortcut.customCss, shortcut.notificationsEnabled)
     }
@@ -131,6 +151,9 @@ class WebAppsPanelManager internal constructor(
         iconUri: String?,
         faviconUrl: String?,
         rendererPackage: String?,
+        customCss: String? = null,
+        notificationsEnabled: Boolean = false,
+        adBlockMode: WebAppShortcut.AdBlockMode = WebAppShortcut.AdBlockMode.Global,
     ) {
         scope.launch {
             webAppShortcutRepository.create(
@@ -143,7 +166,9 @@ class WebAppsPanelManager internal constructor(
                 showInPanel = true,
                 order = nextOrder(),
                 iconSource = WebAppShortcut.IconSource.Website,
-                notificationsEnabled = false,
+                customCss = customCss,
+                notificationsEnabled = notificationsEnabled,
+                adBlockMode = adBlockMode,
             )
         }
     }

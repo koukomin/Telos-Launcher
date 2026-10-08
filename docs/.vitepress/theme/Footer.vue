@@ -1,29 +1,31 @@
+<script setup lang="ts">
+import { withBase } from 'vitepress'
+</script>
 <template>
   <footer class="VPFooter">
     <div class="layout-footer">
       <div class="link-columns">
         <div class="column">
           <h4>Documentation</h4>
-          <a href="/docs/user-guide">User Guide</a>
-          <a href="/docs/developer-guide">Developer Guide</a>
-          <a href="/docs/contributor-guide">Contributor Guide</a>
-          <a href="/reference/index.html" target="_blank">SDK Reference</a>
+          <a :href="withBase('/docs/user-guide/')">User Guide</a>
+          <a :href="withBase('/docs/developer-guide/')">Developer Guide</a>
+          <a :href="withBase('/docs/contributor-guide/')">Contributor Guide</a>
+          <a :href="withBase('/reference/index.html')" target="_blank">SDK Reference</a>
         </div>
         <div class="column">
           <h4>Legal</h4>
-          <a href="/privacy-policy">Privacy Policy</a>
-          <a href="/license">License</a>
+          <a :href="withBase('/privacy-policy')">Privacy Policy</a>
+          <a :href="withBase('/license')">License</a>
         </div>
         <div class="column">
           <h4>Links</h4>
           <a href="https://github.com/koukomin/Telos-Launcher" target="_blank"
             >Github</a
           >
-          <a href="https://t.me/Kvaesitso" target="_blank">Telegram</a>
         </div>
       </div>
       <p class="copyright">
-        Copyright © 2026 MM2-0 and the Kvaesitso contributors. Built with
+        Copyright © 2026 Telos contributors, MM2-0 and the Kvaesitso contributors. Built with
         VitePress.
       </p>
     </div>

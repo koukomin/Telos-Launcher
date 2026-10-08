@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
 
 /** Quick Settings tile that opens Telos Calculator */
@@ -13,7 +14,7 @@ class CalculatorTileService : TileService() {
     override fun onStartListening() {
         qsTile?.apply {
             state = Tile.STATE_INACTIVE
-            label = "Calculator"
+            label = getString(R.string.hc_calculator)
             updateTile()
         }
     }

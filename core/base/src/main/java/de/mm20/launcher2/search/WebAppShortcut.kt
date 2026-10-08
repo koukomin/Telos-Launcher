@@ -43,6 +43,19 @@ interface WebAppShortcut : SavableSearchable {
 
     val notificationsEnabled: Boolean
 
+    /**
+     * Per web app override of the global ad blocker setting. Only applies to the embedded
+     * WebView (Custom Tabs are controlled by the browser app).
+     */
+    val adBlockMode: AdBlockMode
+
+    enum class AdBlockMode {
+        /** Follow the global setting. */
+        Global,
+        On,
+        Off,
+    }
+
     enum class IconSource {
         Website,
         System,

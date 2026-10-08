@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.settings.applock
 
+import de.mm20.launcher2.search.GreekFold
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -57,7 +58,7 @@ fun AppLockAppsScreen() {
     var searchQuery by rememberSaveable { mutableStateOf("") }
     val filteredApps = remember(apps, searchQuery) {
         if (searchQuery.isBlank()) apps
-        else apps.filter { it.label.contains(searchQuery, ignoreCase = true) }
+        else apps.filter { GreekFold.contains(it.label, searchQuery) }
     }
 
     val colorSurface = MaterialTheme.colorScheme.surfaceContainer

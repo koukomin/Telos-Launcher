@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gesture_action_telos_app_open">Άνοιγμα: %1$s</string>
+    <string name="gesture_action_telos_app_page">%1$s ως σελίδα στο launcher</string>
+</resources>

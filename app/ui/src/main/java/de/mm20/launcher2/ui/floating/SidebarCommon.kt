@@ -189,7 +189,7 @@ internal enum class SidebarTool(
     Screenshot("screenshot", R.string.floating_launcher_tool_screenshot, R.drawable.ic_sidebar_screenshot, Color(0xFF1A6DFF)),
     PartialScreenshot("partial_screenshot", R.string.floating_launcher_tool_partial_screenshot, R.drawable.ic_sidebar_partial_screenshot, Color(0xFF1A6DFF)),
     ScrollingScreenshot("scrolling_screenshot", R.string.floating_launcher_tool_scrolling_screenshot, R.drawable.ic_sidebar_scrolling_screenshot, Color(0xFF1A6DFF)),
-    ScreenRecorder("screen_recorder", R.string.floating_launcher_tool_screen_recorder, R.drawable.ic_glyph_screen_recorder, Color(0xFFE53935)),
+    ScreenRecorder("screen_recorder", R.string.floating_launcher_tool_screen_recorder, R.drawable.ic_glyph_screen_recorder, Color(0xFFE64A19)),
     VoiceRecorder("voice_recorder", R.string.floating_launcher_tool_voice_recorder, R.drawable.ic_glyph_voice_recorder, Color(0xFF00838F)),
     RecentFiles("recent_files", R.string.floating_launcher_recent_files, R.drawable.schedule_24px, Color(0xFF3D8BFF)),
     Flashlight("flashlight", R.string.floating_launcher_tool_flashlight, R.drawable.bolt_24px, Color(0xFFF59E0B)),

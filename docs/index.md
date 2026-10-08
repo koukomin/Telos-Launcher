@@ -48,6 +48,18 @@ features:
     title: Voice Recorder
     details: Voice recordings with a list, search, pause and the call recordings of Telos Phone.
     link: /docs/user-guide/telos/voice-recorder/
+  - icon: 📝
+    title: Notes
+    details: Notes with labels, sync with a Markdown folder or Nextcloud, import from Google Keep and Evernote.
+    link: /docs/user-guide/telos/notes/
+  - icon: 📅
+    title: Calendar
+    details: Month and agenda on your calendars, a local calendar and Google or CalDAV through the system.
+    link: /docs/user-guide/telos/calendar/
+  - icon: ⬇️
+    title: Downloads
+    details: Download manager with several connections per file, resume, a queue and the folder of your choice.
+    link: /docs/user-guide/telos/downloads/
   - icon: 🧮
     title: Calculator
     details: Standard and scientific calculator with VAT, unit and currency conversion and a history.

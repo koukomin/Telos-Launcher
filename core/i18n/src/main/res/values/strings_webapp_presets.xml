@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="web_app_presets_title">Suggested categories</string>
+    <string name="web_app_presets_summary">Add a ready-made folder with popular websites as web apps. Nothing is added until you choose it, and every folder and web app can be edited or deleted afterwards.</string>
+    <string name="web_app_presets_login_note">Sign in on each website itself. Logins are kept by the embedded browser. This only applies to web apps that open in the embedded browser; web apps opened in an external browser use that browser\'s own sign-in.</string>
+    <string name="web_app_preset_category_social">Social</string>
+    <string name="web_app_preset_category_email">Email</string>
+    <string name="web_app_preset_category_messaging">Messaging</string>
+    <string name="web_app_preset_category_video">Video &amp; Music</string>
+    <string name="web_app_preset_category_work">Productivity &amp; Work</string>
+    <string name="web_app_preset_add">Add</string>
+    <string name="web_app_preset_dialog_title">Add %1$s</string>
+    <string name="web_app_preset_dialog_summary">Choose the web apps to add. They are saved like any web app you create yourself.</string>
+    <string name="web_app_preset_exists">Already in your web apps, will be reused</string>
+    <string name="web_app_preset_confirm">Add selected</string>
+    <string name="web_app_preset_added">%1$s added</string>
+
+    <string name="web_app_groups_title">Folders</string>
+    <string name="web_app_groups_enable">Enable web app folders</string>
+    <string name="web_app_groups_enable_summary">Organize web apps into folders and restrict swiping per folder</string>
+    <string name="web_app_groups_manage">Manage folders</string>
+    <string name="web_app_group_create">Create new folder</string>
+    <string name="web_app_group_create_title">Create folder</string>
+    <string name="web_app_group_rename_title">Rename folder</string>
+    <string name="web_app_group_name">Folder name</string>
+    <string name="web_app_group_create_confirm">Create</string>
+    <string name="web_app_group_rename_confirm">Rename</string>
+    <string name="web_app_group_apps_count">%1$d web apps</string>
+    <string name="web_app_group_notifications">Notifications</string>
+    <string name="web_app_group_label">Folder</string>
+    <string name="web_app_group_none">None</string>
+    <string name="web_app_group_delete_title">Delete folder?</string>
+    <string name="web_app_group_delete_message">The folder \"%1$s\" will be deleted. The web apps inside are kept and become ungrouped.</string>
+
+    <string name="web_app_delete_title">Delete web app?</string>
+    <string name="web_app_delete_message">\"%1$s\" will be removed from search, the home screen, folders and the web apps panel. This cannot be undone.</string>
+
+    <string name="web_app_shortcut_ad_block">Ad blocker</string>
+    <string name="web_app_shortcut_ad_block_global">Use global setting</string>
+    <string name="web_app_shortcut_ad_block_on">On</string>
+    <string name="web_app_shortcut_ad_block_off">Off</string>
+    <string name="web_app_shortcut_ad_block_summary">Only applies to the embedded browser. External browsers (Custom Tabs) are controlled by the browser app.</string>
+</resources>

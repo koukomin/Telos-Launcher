@@ -1,5 +1,6 @@
 package de.mm20.launcher2.backup
 
+import de.mm20.launcher2.backup.BackupGroup
 import de.mm20.launcher2.ktx.jsonObjectOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,6 +18,8 @@ data class BackupMetadata(
      * Backup schema version in format x.y.
      */
     val format: String,
+    /** The parts that this backup contains. Backups from before groups existed only have the launcher. */
+    val groups: Set<BackupGroup> = setOf(BackupGroup.Launcher),
 ) {
 
     internal suspend fun writeToFile(file: File) {
@@ -25,7 +28,8 @@ data class BackupMetadata(
             "timestamp" to timestamp,
             "format" to format,
             "versionName" to appVersionName,
-            "components" to JSONArray()
+            "components" to JSONArray(),
+            "groups" to JSONArray(groups.map { it.key })
         )
         withContext(Dispatchers.IO) {
             file.outputStream().bufferedWriter().use {
@@ -45,6 +49,10 @@ data class BackupMetadata(
                         timestamp = json.optLong("timestamp"),
                         format = json.optString("format"),
                         appVersionName = json.optString("versionName"),
+                        groups = json.optJSONArray("groups")
+                            ?.let { array -> (0 until array.length()).mapNotNull { BackupGroup.fromKey(array.optString(it)) }.toSet() }
+                            ?.takeIf { it.isNotEmpty() }
+                            ?: setOf(BackupGroup.Launcher),
                     )
                 } catch (e: JSONException) {
                     return@withContext null

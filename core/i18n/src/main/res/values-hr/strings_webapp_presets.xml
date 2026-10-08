@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Predložene kategorije</string>
+    <string name="web_app_presets_summary">Dodajte gotovu mapu s popularnim web-stranicama kao web-aplikacijama. Ništa se ne dodaje dok to ne odaberete, a svaku mapu i web-aplikaciju poslije možete urediti ili izbrisati.</string>
+    <string name="web_app_presets_login_note">Prijavite se na samoj web-stranici. Prijave pamti ugrađeni preglednik. To vrijedi samo za web-aplikacije koje se otvaraju u ugrađenom pregledniku; web-aplikacije otvorene u vanjskom pregledniku koriste njegovu vlastitu prijavu.</string>
+    <string name="web_app_preset_category_social">Društvene mreže</string>
+    <string name="web_app_preset_category_email">E-pošta</string>
+    <string name="web_app_preset_category_messaging">Poruke</string>
+    <string name="web_app_preset_category_video">Video i glazba</string>
+    <string name="web_app_preset_category_work">Produktivnost i posao</string>
+    <string name="web_app_preset_add">Dodaj</string>
+    <string name="web_app_preset_dialog_title">Dodaj: %1$s</string>
+    <string name="web_app_preset_dialog_summary">Odaberite web-aplikacije za dodavanje. Spremaju se kao i web-aplikacije koje sami izradite.</string>
+    <string name="web_app_preset_exists">Već među vašim web-aplikacijama, bit će ponovno upotrijebljena</string>
+    <string name="web_app_preset_confirm">Dodaj odabrano</string>
+    <string name="web_app_preset_added">Dodano: %1$s</string>
+    <string name="web_app_groups_title">Mape</string>
+    <string name="web_app_groups_enable">Omogući mape web-aplikacija</string>
+    <string name="web_app_groups_enable_summary">Organizirajte web-aplikacije u mape i ograničite povlačenje za svaku mapu</string>
+    <string name="web_app_groups_manage">Upravljaj mapama</string>
+    <string name="web_app_group_create">Izradi novu mapu</string>
+    <string name="web_app_group_create_title">Izradi mapu</string>
+    <string name="web_app_group_rename_title">Preimenuj mapu</string>
+    <string name="web_app_group_name">Naziv mape</string>
+    <string name="web_app_group_create_confirm">Izradi</string>
+    <string name="web_app_group_rename_confirm">Preimenuj</string>
+    <string name="web_app_group_apps_count">Web-aplikacije: %1$d</string>
+    <string name="web_app_group_notifications">Obavijesti</string>
+    <string name="web_app_group_label">Mapa</string>
+    <string name="web_app_group_none">Nijedna</string>
+    <string name="web_app_group_delete_title">Izbrisati mapu?</string>
+    <string name="web_app_group_delete_message">Mapa „%1$s” bit će izbrisana. Web-aplikacije u njoj ostaju sačuvane i više neće biti grupirane.</string>
+    <string name="web_app_delete_title">Izbrisati web-aplikaciju?</string>
+    <string name="web_app_delete_message">„%1$s” bit će uklonjena iz pretraživanja, početnog zaslona, mapa i ploče web-aplikacija. Ovo se ne može poništiti.</string>
+    <string name="web_app_shortcut_ad_block">Blokator oglasa</string>
+    <string name="web_app_shortcut_ad_block_global">Koristi globalnu postavku</string>
+    <string name="web_app_shortcut_ad_block_on">Uključeno</string>
+    <string name="web_app_shortcut_ad_block_off">Isključeno</string>
+    <string name="web_app_shortcut_ad_block_summary">Vrijedi samo za ugrađeni preglednik. Vanjskim preglednicima (Custom Tabs) upravlja aplikacija preglednika.</string>
+</resources>

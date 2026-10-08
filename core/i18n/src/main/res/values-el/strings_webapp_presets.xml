@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="web_app_presets_title">Προτεινόμενες κατηγορίες</string>
+    <string name="web_app_presets_summary">Προσθέστε έναν έτοιμο φάκελο με δημοφιλείς ιστοσελίδες ως web apps. Τίποτα δεν προστίθεται αν δεν το επιλέξετε εσείς και κάθε φάκελος και web app μπορεί να επεξεργαστεί ή να διαγραφεί αργότερα.</string>
+    <string name="web_app_presets_login_note">Συνδεθείτε στην ίδια την ιστοσελίδα. Οι συνδέσεις διατηρούνται από το ενσωματωμένο πρόγραμμα περιήγησης. Αυτό ισχύει μόνο για web apps που ανοίγουν στο ενσωματωμένο πρόγραμμα περιήγησης· όσα ανοίγουν σε εξωτερικό πρόγραμμα περιήγησης χρησιμοποιούν τη δική του σύνδεση.</string>
+    <string name="web_app_preset_category_social">Κοινωνικά δίκτυα</string>
+    <string name="web_app_preset_category_email">Email</string>
+    <string name="web_app_preset_category_messaging">Μηνύματα</string>
+    <string name="web_app_preset_category_video">Βίντεο &amp; Μουσική</string>
+    <string name="web_app_preset_category_work">Παραγωγικότητα &amp; Εργασία</string>
+    <string name="web_app_preset_add">Προσθήκη</string>
+    <string name="web_app_preset_dialog_title">Προσθήκη: %1$s</string>
+    <string name="web_app_preset_dialog_summary">Επιλέξτε τα web apps που θα προστεθούν. Αποθηκεύονται όπως κάθε web app που δημιουργείτε εσείς.</string>
+    <string name="web_app_preset_exists">Υπάρχει ήδη στα web apps σας, θα χρησιμοποιηθεί</string>
+    <string name="web_app_preset_confirm">Προσθήκη επιλεγμένων</string>
+    <string name="web_app_preset_added">Προστέθηκε: %1$s</string>
+
+    <string name="web_app_groups_title">Φάκελοι</string>
+    <string name="web_app_groups_enable">Ενεργοποίηση φακέλων web apps</string>
+    <string name="web_app_groups_enable_summary">Οργανώστε τα web apps σε φακέλους και περιορίστε το σάρωμα ανά φάκελο</string>
+    <string name="web_app_groups_manage">Διαχείριση φακέλων</string>
+    <string name="web_app_group_create">Δημιουργία νέου φακέλου</string>
+    <string name="web_app_group_create_title">Δημιουργία φακέλου</string>
+    <string name="web_app_group_rename_title">Μετονομασία φακέλου</string>
+    <string name="web_app_group_name">Όνομα φακέλου</string>
+    <string name="web_app_group_create_confirm">Δημιουργία</string>
+    <string name="web_app_group_rename_confirm">Μετονομασία</string>
+    <string name="web_app_group_apps_count">%1$d web apps</string>
+    <string name="web_app_group_notifications">Ειδοποιήσεις</string>
+    <string name="web_app_group_label">Φάκελος</string>
+    <string name="web_app_group_none">Κανένας</string>
+    <string name="web_app_group_delete_title">Διαγραφή φακέλου;</string>
+    <string name="web_app_group_delete_message">Ο φάκελος «%1$s» θα διαγραφεί. Τα web apps μέσα σε αυτόν διατηρούνται και δεν ανήκουν πλέον σε φάκελο.</string>
+
+    <string name="web_app_delete_title">Διαγραφή web app;</string>
+    <string name="web_app_delete_message">Το «%1$s» θα αφαιρεθεί από την αναζήτηση, την αρχική οθόνη, τους φακέλους και τον πίνακα web apps. Η ενέργεια δεν μπορεί να αναιρεθεί.</string>
+
+    <string name="web_app_shortcut_ad_block">Αποκλεισμός διαφημίσεων</string>
+    <string name="web_app_shortcut_ad_block_global">Χρήση καθολικής ρύθμισης</string>
+    <string name="web_app_shortcut_ad_block_on">Ενεργό</string>
+    <string name="web_app_shortcut_ad_block_off">Ανενεργό</string>
+    <string name="web_app_shortcut_ad_block_summary">Ισχύει μόνο για το ενσωματωμένο πρόγραμμα περιήγησης. Τα εξωτερικά προγράμματα περιήγησης (Custom Tabs) ελέγχονται από την εφαρμογή του προγράμματος περιήγησης.</string>
+</resources>

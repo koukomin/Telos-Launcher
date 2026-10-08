@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.comms
 
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
 import android.provider.ContactsContract
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
@@ -56,9 +58,9 @@ fun ContactGroupsScreen() {
             out
         }
     }
-    PreferenceScreen(title = { Text("Groups") }) {
+    PreferenceScreen(title = { Text(stringResource(R.string.hc_groups)) }) {
         if (groups.value.isEmpty()) {
-            item { Text("No contact groups on this device.", modifier = Modifier.padding(16.dp)) }
+            item { Text(stringResource(R.string.hc_no_contact_groups_on_this_device), modifier = Modifier.padding(16.dp)) }
         }
         groups.value.forEach { group ->
             item {

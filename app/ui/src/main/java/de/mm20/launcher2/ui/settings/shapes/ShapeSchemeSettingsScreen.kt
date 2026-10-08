@@ -206,13 +206,13 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                                 leadingIcon = {
                                     Icon(painterResource(R.drawable.more_vert_24px), null)
                                 },
-                                text = { Text("Menu") },
+                                text = { Text(stringResource(R.string.hc_menu)) },
                                 onClick = { })
                         }
                     }
                 }
                 ShapePreference(
-                    title = "Extra small",
+                    title = stringResource(R.string.hc_extra_small),
                     shape = theme!!.extraSmall,
                     baseShape = baseShape,
                     factor = 1f / 3f,
@@ -238,7 +238,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                     )
                 }
                 ShapePreference(
-                    title = "Small",
+                    title = stringResource(R.string.hc_small),
                     shape = theme!!.small,
                     baseShape = baseShape,
                     factor = 2f / 3f,
@@ -273,7 +273,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                     }
                 }
                 ShapePreference(
-                    title = "Medium",
+                    title = stringResource(R.string.hc_medium),
                     shape = theme!!.medium,
                     baseShape = baseShape,
                     factor = 1f,
@@ -295,7 +295,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                     }
                 }
                 ShapePreference(
-                    title = "Large",
+                    title = stringResource(R.string.hc_large),
                     shape = theme!!.large,
                     baseShape = baseShape,
                     factor = 4f / 3f,
@@ -310,7 +310,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
         item {
             PreferenceCategory {
                 ShapePreference(
-                    title = "Large increased",
+                    title = stringResource(R.string.hc_large_increased),
                     shape = theme!!.largeIncreased,
                     baseShape = baseShape,
                     factor = 5f / 3f,
@@ -344,7 +344,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                     }
                 }
                 ShapePreference(
-                    title = "Extra large",
+                    title = stringResource(R.string.hc_extra_large),
                     shape = theme!!.extraLarge,
                     baseShape = baseShape,
                     factor = 7f / 3f,
@@ -359,7 +359,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
         item {
             PreferenceCategory {
                 ShapePreference(
-                    title = "Extra large increased",
+                    title = stringResource(R.string.hc_extra_large_increased),
                     shape = theme!!.extraLargeIncreased,
                     baseShape = baseShape,
                     factor = 8f / 3f,
@@ -374,7 +374,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
         item {
             PreferenceCategory {
                 ShapePreference(
-                    title = "Extra extra large",
+                    title = stringResource(R.string.hc_extra_extra_large),
                     shape = theme!!.extraExtraLarge,
                     baseShape = baseShape,
                     factor = 12f / 3f,

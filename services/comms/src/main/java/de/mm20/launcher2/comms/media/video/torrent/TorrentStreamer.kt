@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
 import org.libtorrent4j.Priority
-import org.libtorrent4j.SessionManager
 import org.libtorrent4j.TorrentFlags
 import org.libtorrent4j.TorrentHandle
 import org.libtorrent4j.TorrentInfo
@@ -53,7 +52,6 @@ object TorrentStreamer {
     private val _state = MutableStateFlow(TorrentState())
     val state: StateFlow<TorrentState> = _state
 
-    private var session: SessionManager? = null
     @Volatile private var handle: TorrentHandle? = null
     @Volatile private var info: TorrentInfo? = null
     @Volatile private var saveDir: File? = null
@@ -98,9 +96,8 @@ object TorrentStreamer {
             val dir = File(context.cacheDir, "torrent/${System.nanoTime()}").apply { mkdirs() }
             saveDir = dir
             try {
-                val sm = SessionManager(false)
-                sm.start()
-                session = sm
+                // the one session of Telos, shared with the torrent downloads of Telos Downloads
+                val sm = TorrentSession.acquire(context, this@TorrentStreamer)
 
                 val data: ByteArray = when {
                     source.startsWith("magnet:", ignoreCase = true) ->
@@ -132,6 +129,9 @@ object TorrentStreamer {
                 sm.download(ti, dir, null, priorities, null, null)
                 val h = sm.find(ti.infoHash()) ?: fail("Could not start the download")
                 h.setFlags(TorrentFlags.SEQUENTIAL_DOWNLOAD)
+                // not part of the queue of the session (its limits are for the downloads), and not paused by it
+                h.unsetFlags(TorrentFlags.AUTO_MANAGED)
+                h.resume()
                 handle = h
 
                 token = UUID.randomUUID().toString().replace("-", "")
@@ -159,6 +159,9 @@ object TorrentStreamer {
                 throw e
             }
         }
+
+    /** Re-applies the peer block lists to the running session, called after a list changed. */
+    fun reapplyBlockList() = TorrentSession.reapplyBlockList()
 
     private fun fail(message: String): Nothing = throw IllegalStateException(message)
 
@@ -363,8 +366,10 @@ object TorrentStreamer {
         runCatching { server?.close() }
         server = null
         synchronized(sockets) { sockets.forEach { runCatching { it.close() } }; sockets.clear() }
-        runCatching { session?.stop() }
-        session = null
+        // only this torrent goes; the session stays when Telos Downloads uses it
+        val h = handle
+        if (h != null) runCatching { TorrentSession.current()?.remove(h) }
+        TorrentSession.release(this)
         handle = null
         info = null
         saveDir?.let { dir -> Thread { runCatching { dir.deleteRecursively() } }.start() }

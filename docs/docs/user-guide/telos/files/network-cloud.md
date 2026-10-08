@@ -31,6 +31,7 @@ Saved connections appear on the Files home page and in the drawer, sorted by nam
 | SMB / CIFS | 445 | User and password, or guest | SMB protocol level | no |
 | FTP / FTPS | 21 | User and password, or anonymous | **Encrypt with TLS (FTPS)**, on by default | no |
 | Dropbox | n/a | OAuth with PKCE, your app key | HTTPS | yes |
+| Cloud app on this phone | n/a | The account of the cloud app | The app's own | no |
 | Google Drive | n/a | OAuth with PKCE, your client ID and secret | HTTPS | no |
 | OneDrive | n/a | OAuth with PKCE, your client ID | HTTPS | no |
 
@@ -91,6 +92,37 @@ instead of your main password, especially with two-factor authentication.
 - Passive mode, binary transfers, UTF-8 names. Anonymous login with the user "anonymous" when the user is empty.
 - FTPS uses explicit TLS and trusts the certificates Android trusts, so a self-signed certificate is rejected.
 - Prefer SFTP or FTPS over plain FTP when you have a choice.
+
+## Cloud app on this phone (no client ID)
+
+Choose **Cloud app on this phone** when you do not want to register your own client ID, or when the phone has no way to
+open the browser sign-in. Telos then uses the **document provider** of an installed cloud app, the same list you see in
+the system file picker. The app signs in with the account that is on the phone, so there is no client ID, secret or
+browser step in Telos.
+
+1. Install the cloud app and sign in there (for example **Google Drive** with the Google account of the phone).
+2. In Telos Files > connections > **Add** > **Cloud app on this phone**.
+3. Tap **Choose a folder**, pick the app in the system picker (Google Drive, OneDrive, Dropbox, Nextcloud, ...) and choose
+   the folder that should be the root. Allow access.
+4. Save. The folder shows up in Telos Files like any other storage.
+
+Listing, reading, writing, creating folders, renaming, moving and deleting go through the app. Copying on the cloud is done
+by the app when it supports it, otherwise the data goes through the phone. Whether an app appears in the picker is up to
+that app: only apps that offer a document provider can be used. If access is withdrawn (the app is cleared or signed
+out) Telos asks you to choose the folder again.
+
+::: tip Google Drive without a client ID
+Google only lets an app use the Drive API with its own registered client, so the account of the phone cannot be used
+directly. Use this entry with the Google Drive app instead. The **Google Drive** entry with your own client ID and secret
+stays for phones that have no Google account or for people who prefer the direct API.
+:::
+
+::: warning MEGA
+MEGA is not available. MEGA has no OAuth sign-in and no WebDAV address that a phone app can use. Its API needs MEGA's own
+end-to-end encryption library, which is not published for Android as a ready-made package. It also needs a developer key
+from MEGA. If the MEGA app on your phone appears in the system file picker, you can try it through **Cloud app on this
+phone**, but this has not been confirmed.
+:::
 
 ## Cloud storages
 

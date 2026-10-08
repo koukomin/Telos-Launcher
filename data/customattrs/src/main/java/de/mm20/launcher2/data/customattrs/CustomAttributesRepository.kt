@@ -6,6 +6,7 @@ import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.CustomAttributeEntity
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.ktx.jsonObjectOf
+import de.mm20.launcher2.search.GreekFold
 import de.mm20.launcher2.search.SavableSearchable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -129,7 +130,10 @@ internal class CustomAttributesRepositoryImpl(
 
     override fun getAllTags(startsWith: String?): Flow<List<String>> {
         val dao = appDatabase.customAttrsDao()
-        return if (startsWith != null) {
+        return if (startsWith != null && GreekFold.needsFold(startsWith)) {
+            val q = GreekFold.fold(startsWith.trim())
+            dao.getAllTags().map { tags -> tags.filter { GreekFold.fold(it).startsWith(q) } }
+        } else if (startsWith != null) {
             dao.getAllTagsLike("$startsWith%")
         } else {
             dao.getAllTags()
@@ -182,7 +186,16 @@ internal class CustomAttributesRepositoryImpl(
             }
         }
         val dao = appDatabase.customAttrsDao()
-        return dao.search("%$query%").flatMapLatest {
+        // LIKE misses accents/final sigma/greeklish: match labels and tags in memory instead
+        val keys = if (GreekFold.needsFold(query)) {
+            val q = GreekFold.fold(query.trim())
+            dao.getAllLabelsAndTags().map { rows ->
+                rows.filter { GreekFold.matches(it.value, q) }.map { it.key }.distinct()
+            }
+        } else {
+            dao.search("%$query%")
+        }
+        return keys.flatMapLatest {
             searchableRepository.getByKeys(it).map {
                 it.toImmutableList()
             }

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Navrhované kategorie</string>
+    <string name="web_app_presets_summary">Přidejte hotovou složku s oblíbenými weby jako webovými aplikacemi. Nic se nepřidá, dokud to nevyberete, a každou složku i webovou aplikaci lze později upravit nebo smazat.</string>
+    <string name="web_app_presets_login_note">Přihlaste se přímo na každém webu. Přihlášení si pamatuje vestavěný prohlížeč. Platí to jen pro webové aplikace otevírané ve vestavěném prohlížeči; webové aplikace otevírané v externím prohlížeči používají jeho vlastní přihlášení.</string>
+    <string name="web_app_preset_category_social">Sociální sítě</string>
+    <string name="web_app_preset_category_email">E-mail</string>
+    <string name="web_app_preset_category_messaging">Zprávy</string>
+    <string name="web_app_preset_category_video">Video a hudba</string>
+    <string name="web_app_preset_category_work">Produktivita a práce</string>
+    <string name="web_app_preset_add">Přidat</string>
+    <string name="web_app_preset_dialog_title">Přidat: %1$s</string>
+    <string name="web_app_preset_dialog_summary">Vyberte webové aplikace, které chcete přidat. Uloží se stejně jako webové aplikace, které vytvoříte sami.</string>
+    <string name="web_app_preset_exists">Již mezi vašimi webovými aplikacemi, bude znovu použita</string>
+    <string name="web_app_preset_confirm">Přidat vybrané</string>
+    <string name="web_app_preset_added">Přidáno: %1$s</string>
+    <string name="web_app_groups_title">Složky</string>
+    <string name="web_app_groups_enable">Povolit složky webových aplikací</string>
+    <string name="web_app_groups_enable_summary">Uspořádejte webové aplikace do složek a omezte přejíždění pro každou složku</string>
+    <string name="web_app_groups_manage">Spravovat složky</string>
+    <string name="web_app_group_create">Vytvořit novou složku</string>
+    <string name="web_app_group_create_title">Vytvořit složku</string>
+    <string name="web_app_group_rename_title">Přejmenovat složku</string>
+    <string name="web_app_group_name">Název složky</string>
+    <string name="web_app_group_create_confirm">Vytvořit</string>
+    <string name="web_app_group_rename_confirm">Přejmenovat</string>
+    <string name="web_app_group_apps_count">Webové aplikace: %1$d</string>
+    <string name="web_app_group_notifications">Oznámení</string>
+    <string name="web_app_group_label">Složka</string>
+    <string name="web_app_group_none">Žádná</string>
+    <string name="web_app_group_delete_title">Smazat složku?</string>
+    <string name="web_app_group_delete_message">Složka „%1$s“ bude smazána. Webové aplikace v ní zůstanou zachovány a přestanou být seskupeny.</string>
+    <string name="web_app_delete_title">Smazat webovou aplikaci?</string>
+    <string name="web_app_delete_message">„%1$s“ bude odebrána z vyhledávání, domovské obrazovky, složek a panelu webových aplikací. Tuto akci nelze vrátit zpět.</string>
+    <string name="web_app_shortcut_ad_block">Blokování reklam</string>
+    <string name="web_app_shortcut_ad_block_global">Použít globální nastavení</string>
+    <string name="web_app_shortcut_ad_block_on">Zapnuto</string>
+    <string name="web_app_shortcut_ad_block_off">Vypnuto</string>
+    <string name="web_app_shortcut_ad_block_summary">Platí jen pro vestavěný prohlížeč. Externí prohlížeče (Custom Tabs) řídí aplikace prohlížeče.</string>
+</resources>

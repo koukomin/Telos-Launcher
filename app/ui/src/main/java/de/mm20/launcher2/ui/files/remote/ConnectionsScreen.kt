@@ -1,5 +1,10 @@
 package de.mm20.launcher2.ui.files.remote
 
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -68,13 +73,13 @@ fun ConnectionsScreen() {
         containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
             TopAppBar(
-                title = { Text("Cloud and network storage") },
-                navigationIcon = { IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(Icons.arrow_back_24px), contentDescription = "Back") } },
+                title = { Text(stringResource(R.string.hc_cloud_and_network_storage)) },
+                navigationIcon = { IconButton(onClick = { backStack.removeLastOrNull() }) { Icon(painterResource(Icons.arrow_back_24px), contentDescription = stringResource(R.string.hc_back)) } },
             )
         },
         floatingActionButton = {
             Box {
-                FloatingActionButton(onClick = { picking = true }) { Icon(painterResource(Icons.add_24px), contentDescription = "Add") }
+                FloatingActionButton(onClick = { picking = true }) { Icon(painterResource(Icons.add_24px), contentDescription = stringResource(R.string.hc_add)) }
                 DropdownMenu(expanded = picking, onDismissRequest = { picking = false }) {
                     RemoteType.values().forEach { type ->
                         DropdownMenuItem(
@@ -89,7 +94,7 @@ fun ConnectionsScreen() {
         if (list.isEmpty()) {
             Column(Modifier.fillMaxSize().padding(padding).padding(32.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                 Icon(painterResource(Icons.cloud_20px), contentDescription = null, tint = MaterialTheme.colorScheme.outline, modifier = Modifier.size(48.dp))
-                Text("Add a Nextcloud, ownCloud, WebDAV, SFTP, SMB or FTP server, or a Dropbox, Google Drive or OneDrive account. They show up in Telos Files.", Modifier.padding(top = 12.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.hc_add_a_nextcloud_owncloud_webdav_sftp_smb), Modifier.padding(top = 12.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         } else LazyColumn(Modifier.fillMaxSize().padding(padding)) {
             items(list, key = { it.id }) { c ->
@@ -130,7 +135,16 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(type.hint, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Field("Name", c.name) { c = c.copy(name = it) }
-                if (!type.cloud) {
+                if (type == RemoteType.System) {
+                    val picker = androidx.activity.compose.rememberLauncherForActivityResult(androidx.activity.result.contract.ActivityResultContracts.OpenDocumentTree()) { uri ->
+                        if (uri != null) {
+                            context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+                            c = c.copy(host = uri.toString(), name = c.name.ifBlank { Uri.decode(uri.toString()).substringAfterLast(':').substringAfterLast('/').ifBlank { "Cloud" } })
+                        }
+                    }
+                    Text(if (c.host.isBlank()) "No folder chosen" else Uri.decode(c.host).substringAfter("tree/"), style = MaterialTheme.typography.bodySmall, maxLines = 2)
+                    OutlinedButton(onClick = { picker.launch(null) }) { Text(if (c.host.isBlank()) "Choose a folder" else "Choose another folder") }
+                } else if (!type.cloud) {
                     Field("Server", c.host, "cloud.example.com") { c = c.copy(host = it) }
                     Field("Port", if (c.port > 0) c.port.toString() else "", type.defaultPort.toString()) { c = c.copy(port = it.filter(Char::isDigit).toIntOrNull() ?: 0) }
                     Field("User name", c.user) { c = c.copy(user = it) }
@@ -147,7 +161,7 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
                     }
                     if (type == RemoteType.Sftp) {
                         Field("Private key (optional, paste the key file)", c.privateKey, minLines = 3) { c = c.copy(privateKey = it) }
-                        if (c.fingerprint.isNotEmpty()) Text("Server key: ${c.fingerprint}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        if (c.fingerprint.isNotEmpty()) Text(stringResource(R.string.hc_server_key, c.fingerprint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 } else {
                     CloudFields(c, onChange = { c = it }, onStatus = { status = it })
@@ -155,10 +169,10 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
                 status?.let { Text(it, color = if (it.startsWith("Connected")) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error) }
             }
         },
-        confirmButton = { TextButton(enabled = c.name.isNotBlank() && !busy, onClick = { onSave(c) }) { Text("Save") } },
+        confirmButton = { TextButton(enabled = c.name.isNotBlank() && !busy && (type != RemoteType.System || c.host.isNotBlank()), onClick = { onSave(c) }) { Text(stringResource(R.string.hc_save)) } },
         dismissButton = {
             Row {
-                if (!isNew) TextButton(onClick = onDelete) { Text("Delete", color = MaterialTheme.colorScheme.error) }
+                if (!isNew) TextButton(onClick = onDelete) { Text(stringResource(R.string.hc_delete), color = MaterialTheme.colorScheme.error) }
                 TextButton(enabled = !busy, onClick = {
                     busy = true; status = "Connecting…"
                     scope.launch {
@@ -171,8 +185,8 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
                         busy = false
                         status = result.fold({ "Connected, $it items in the start folder" }, { "Could not connect: ${it.message}" })
                     }
-                }) { Text("Test") }
-                TextButton(onClick = onDismiss) { Text("Cancel") }
+                }) { Text(stringResource(R.string.hc_test)) }
+                TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) }
             }
         },
     )

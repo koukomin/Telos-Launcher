@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Sugerowane kategorie</string>
+    <string name="web_app_presets_summary">Dodaj gotowy folder z popularnymi stronami jako aplikacjami internetowymi. Nic nie zostanie dodane, dopóki tego nie wybierzesz, a każdy folder i aplikację internetową można później edytować lub usunąć.</string>
+    <string name="web_app_presets_login_note">Zaloguj się na samej stronie. Logowanie jest zapamiętywane przez wbudowaną przeglądarkę. Dotyczy to tylko aplikacji internetowych otwieranych we wbudowanej przeglądarce; aplikacje otwierane w zewnętrznej przeglądarce korzystają z jej własnego logowania.</string>
+    <string name="web_app_preset_category_social">Społecznościowe</string>
+    <string name="web_app_preset_category_email">E-mail</string>
+    <string name="web_app_preset_category_messaging">Komunikatory</string>
+    <string name="web_app_preset_category_video">Wideo i muzyka</string>
+    <string name="web_app_preset_category_work">Produktywność i praca</string>
+    <string name="web_app_preset_add">Dodaj</string>
+    <string name="web_app_preset_dialog_title">Dodaj: %1$s</string>
+    <string name="web_app_preset_dialog_summary">Wybierz aplikacje internetowe do dodania. Zostaną zapisane tak samo jak aplikacje utworzone przez Ciebie.</string>
+    <string name="web_app_preset_exists">Już w Twoich aplikacjach internetowych, zostanie użyta ponownie</string>
+    <string name="web_app_preset_confirm">Dodaj wybrane</string>
+    <string name="web_app_preset_added">Dodano: %1$s</string>
+    <string name="web_app_groups_title">Foldery</string>
+    <string name="web_app_groups_enable">Włącz foldery aplikacji internetowych</string>
+    <string name="web_app_groups_enable_summary">Porządkuj aplikacje internetowe w folderach i ograniczaj przesuwanie dla każdego folderu</string>
+    <string name="web_app_groups_manage">Zarządzaj folderami</string>
+    <string name="web_app_group_create">Utwórz nowy folder</string>
+    <string name="web_app_group_create_title">Utwórz folder</string>
+    <string name="web_app_group_rename_title">Zmień nazwę folderu</string>
+    <string name="web_app_group_name">Nazwa folderu</string>
+    <string name="web_app_group_create_confirm">Utwórz</string>
+    <string name="web_app_group_rename_confirm">Zmień nazwę</string>
+    <string name="web_app_group_apps_count">Aplikacje internetowe: %1$d</string>
+    <string name="web_app_group_notifications">Powiadomienia</string>
+    <string name="web_app_group_label">Folder</string>
+    <string name="web_app_group_none">Brak</string>
+    <string name="web_app_group_delete_title">Usunąć folder?</string>
+    <string name="web_app_group_delete_message">Folder „%1$s” zostanie usunięty. Aplikacje internetowe w środku zostaną zachowane i nie będą już zgrupowane.</string>
+    <string name="web_app_delete_title">Usunąć aplikację internetową?</string>
+    <string name="web_app_delete_message">„%1$s” zostanie usunięta z wyszukiwarki, ekranu głównego, folderów i panelu aplikacji internetowych. Tej operacji nie można cofnąć.</string>
+    <string name="web_app_shortcut_ad_block">Bloker reklam</string>
+    <string name="web_app_shortcut_ad_block_global">Użyj ustawienia globalnego</string>
+    <string name="web_app_shortcut_ad_block_on">Włączony</string>
+    <string name="web_app_shortcut_ad_block_off">Wyłączony</string>
+    <string name="web_app_shortcut_ad_block_summary">Dotyczy tylko wbudowanej przeglądarki. Zewnętrznymi przeglądarkami (Custom Tabs) steruje aplikacja przeglądarki.</string>
+</resources>

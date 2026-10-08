@@ -4,6 +4,13 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import de.mm20.launcher2.backup.BackupGroup
+import de.mm20.launcher2.ui.common.BackupGroupList
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -43,6 +50,8 @@ fun CreateBackupSheet(
         )
         LaunchedEffect(null) {
             viewModel.reset()
+        }
+        fun chooseFile() {
             val fileName = "${
                 ZonedDateTime.now().format(
                     DateTimeFormatter.ISO_INSTANT
@@ -58,7 +67,22 @@ fun CreateBackupSheet(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            if (it == CreateBackupState.BackingUp) {
+            if (it == CreateBackupState.Ready) {
+                Column(Modifier.fillMaxWidth()) {
+                    Text(stringResource(R.string.backup_choose_parts), style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(bottom = 8.dp))
+                    BackupGroupList(
+                        available = BackupGroup.entries.toList(),
+                        selected = viewModel.selected.value,
+                        onToggle = viewModel::toggle,
+                        onSelectAll = viewModel::selectAll,
+                    )
+                    Button(
+                        onClick = ::chooseFile,
+                        enabled = viewModel.selected.value.isNotEmpty(),
+                        modifier = Modifier.padding(top = 16.dp).navigationBarsPadding(),
+                    ) { Text(stringResource(if (viewModel.selected.value.isEmpty()) R.string.backup_nothing_selected else R.string.backup_create)) }
+                }
+            } else if (it == CreateBackupState.BackingUp) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()

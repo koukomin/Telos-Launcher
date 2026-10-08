@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Ieteiktās kategorijas</string>
+    <string name="web_app_presets_summary">Pievienojiet gatavu mapi ar populārām vietnēm kā tīmekļa lietotnes. Nekas netiek pievienots, kamēr to neizvēlaties, un katru mapi un tīmekļa lietotni vēlāk var rediģēt vai dzēst.</string>
+    <string name="web_app_presets_login_note">Pierakstieties katrā vietnē atsevišķi. Pieteikšanās datus saglabā iegultā pārlūkprogramma. Tas attiecas tikai uz tīmekļa lietotnēm, kas tiek atvērtas iegultajā pārlūkprogrammā; tīmekļa lietotnes, kas tiek atvērtas ārējā pārlūkprogrammā, izmanto šīs pārlūkprogrammas pieteikšanos.</string>
+    <string name="web_app_preset_category_social">Sociālie tīkli</string>
+    <string name="web_app_preset_category_email">E-pasts</string>
+    <string name="web_app_preset_category_messaging">Ziņapmaiņa</string>
+    <string name="web_app_preset_category_video">Video un mūzika</string>
+    <string name="web_app_preset_category_work">Produktivitāte un darbs</string>
+    <string name="web_app_preset_add">Pievienot</string>
+    <string name="web_app_preset_dialog_title">Pievienot: %1$s</string>
+    <string name="web_app_preset_dialog_summary">Izvēlieties tīmekļa lietotnes, ko pievienot. Tās tiek saglabātas tāpat kā pašu izveidotās tīmekļa lietotnes.</string>
+    <string name="web_app_preset_exists">Jau ir jūsu tīmekļa lietotnēs, tiks izmantota atkārtoti</string>
+    <string name="web_app_preset_confirm">Pievienot atlasītās</string>
+    <string name="web_app_preset_added">Pievienots: %1$s</string>
+    <string name="web_app_groups_title">Mapes</string>
+    <string name="web_app_groups_enable">Iespējot tīmekļa lietotņu mapes</string>
+    <string name="web_app_groups_enable_summary">Kārtojiet tīmekļa lietotnes mapēs un ierobežojiet pārvilkšanu katrai mapei</string>
+    <string name="web_app_groups_manage">Pārvaldīt mapes</string>
+    <string name="web_app_group_create">Izveidot jaunu mapi</string>
+    <string name="web_app_group_create_title">Izveidot mapi</string>
+    <string name="web_app_group_rename_title">Pārdēvēt mapi</string>
+    <string name="web_app_group_name">Mapes nosaukums</string>
+    <string name="web_app_group_create_confirm">Izveidot</string>
+    <string name="web_app_group_rename_confirm">Pārdēvēt</string>
+    <string name="web_app_group_apps_count">Tīmekļa lietotnes: %1$d</string>
+    <string name="web_app_group_notifications">Paziņojumi</string>
+    <string name="web_app_group_label">Mape</string>
+    <string name="web_app_group_none">Nav</string>
+    <string name="web_app_group_delete_title">Dzēst mapi?</string>
+    <string name="web_app_group_delete_message">Mape \"%1$s\" tiks dzēsta. Tajā esošās tīmekļa lietotnes tiks saglabātas un kļūs negrupētas.</string>
+    <string name="web_app_delete_title">Dzēst tīmekļa lietotni?</string>
+    <string name="web_app_delete_message">\"%1$s\" tiks noņemta no meklēšanas, sākuma ekrāna, mapēm un tīmekļa lietotņu paneļa. Šo darbību nevar atsaukt.</string>
+    <string name="web_app_shortcut_ad_block">Reklāmu bloķētājs</string>
+    <string name="web_app_shortcut_ad_block_global">Izmantot globālo iestatījumu</string>
+    <string name="web_app_shortcut_ad_block_on">Ieslēgts</string>
+    <string name="web_app_shortcut_ad_block_off">Izslēgts</string>
+    <string name="web_app_shortcut_ad_block_summary">Attiecas tikai uz iegulto pārlūkprogrammu. Ārējās pārlūkprogrammas (Custom Tabs) kontrolē pati pārlūkprogramma.</string>
+</resources>

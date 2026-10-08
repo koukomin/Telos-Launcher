@@ -130,7 +130,7 @@ object ScreenshotController {
             toast(context, R.string.screenshot_save_failed)
             return
         }
-        if (ScreenshotSettings(context).notify) notifySaved(context, uri, bitmap)
+        if (ScreenshotSettings(context).notify && context.getSystemService(NotificationManager::class.java).areNotificationsEnabled()) notifySaved(context, uri, bitmap)
         else toast(context, R.string.screenshot_saved)
     }
 
@@ -148,7 +148,7 @@ object ScreenshotController {
         val share = PendingIntent.getActivity(
             context, id + 100000,
             Intent.createChooser(
-                Intent(Intent.ACTION_SEND).setType("image/*").putExtra(Intent.EXTRA_STREAM, uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION),
+                Intent(Intent.ACTION_SEND).setType("image/*").putExtra(Intent.EXTRA_STREAM, shareableUri(context, uri)).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION),
                 null,
             ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
@@ -174,6 +174,17 @@ object ScreenshotController {
                 .addAction(0, context.getString(R.string.voice_delete), delete)
                 .build()
         )
+    }
+
+    /** A file:// URI (Android 9 and below) must not leave the app: it is shared through the FileProvider */
+    private fun shareableUri(context: Context, uri: Uri): Uri {
+        if (uri.scheme != "file") return uri
+        val path = uri.path ?: return uri
+        return try {
+            androidx.core.content.FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", File(path))
+        } catch (e: Exception) {
+            uri
+        }
     }
 
     private fun toast(context: Context, text: Int) = Toast.makeText(context, text, Toast.LENGTH_LONG).show()

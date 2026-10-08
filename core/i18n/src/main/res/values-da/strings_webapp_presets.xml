@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Foreslåede kategorier</string>
+    <string name="web_app_presets_summary">Tilføj en færdig mappe med populære websteder som webapps. Intet tilføjes, før du vælger det, og hver mappe og webapp kan redigeres eller slettes bagefter.</string>
+    <string name="web_app_presets_login_note">Log ind på selve webstedet. Logins gemmes af den indbyggede browser. Dette gælder kun webapps, der åbner i den indbyggede browser; webapps, der åbnes i en ekstern browser, bruger browserens egen login.</string>
+    <string name="web_app_preset_category_social">Sociale medier</string>
+    <string name="web_app_preset_category_email">E-mail</string>
+    <string name="web_app_preset_category_messaging">Beskeder</string>
+    <string name="web_app_preset_category_video">Video og musik</string>
+    <string name="web_app_preset_category_work">Produktivitet og arbejde</string>
+    <string name="web_app_preset_add">Tilføj</string>
+    <string name="web_app_preset_dialog_title">Tilføj %1$s</string>
+    <string name="web_app_preset_dialog_summary">Vælg de webapps, der skal tilføjes. De gemmes ligesom webapps, du selv opretter.</string>
+    <string name="web_app_preset_exists">Findes allerede i dine webapps og genbruges</string>
+    <string name="web_app_preset_confirm">Tilføj valgte</string>
+    <string name="web_app_preset_added">%1$s tilføjet</string>
+    <string name="web_app_groups_title">Mapper</string>
+    <string name="web_app_groups_enable">Aktivér webapp-mapper</string>
+    <string name="web_app_groups_enable_summary">Organisér webapps i mapper, og begræns stryg for hver mappe</string>
+    <string name="web_app_groups_manage">Administrer mapper</string>
+    <string name="web_app_group_create">Opret ny mappe</string>
+    <string name="web_app_group_create_title">Opret mappe</string>
+    <string name="web_app_group_rename_title">Omdøb mappe</string>
+    <string name="web_app_group_name">Mappenavn</string>
+    <string name="web_app_group_create_confirm">Opret</string>
+    <string name="web_app_group_rename_confirm">Omdøb</string>
+    <string name="web_app_group_apps_count">%1$d webapps</string>
+    <string name="web_app_group_notifications">Notifikationer</string>
+    <string name="web_app_group_label">Mappe</string>
+    <string name="web_app_group_none">Ingen</string>
+    <string name="web_app_group_delete_title">Slet mappe?</string>
+    <string name="web_app_group_delete_message">Mappen \"%1$s\" slettes. Webapps i mappen bevares og bliver ugrupperede.</string>
+    <string name="web_app_delete_title">Slet webapp?</string>
+    <string name="web_app_delete_message">\"%1$s\" fjernes fra søgning, startskærmen, mapper og webapp-panelet. Dette kan ikke fortrydes.</string>
+    <string name="web_app_shortcut_ad_block">Reklameblokering</string>
+    <string name="web_app_shortcut_ad_block_global">Brug global indstilling</string>
+    <string name="web_app_shortcut_ad_block_on">Til</string>
+    <string name="web_app_shortcut_ad_block_off">Fra</string>
+    <string name="web_app_shortcut_ad_block_summary">Gælder kun for den indbyggede browser. Eksterne browsere (Custom Tabs) styres af browserappen.</string>
+</resources>

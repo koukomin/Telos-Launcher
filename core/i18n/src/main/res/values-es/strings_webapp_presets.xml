@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Categorías sugeridas</string>
+    <string name="web_app_presets_summary">Añade una carpeta predefinida con sitios web populares como aplicaciones web. No se añade nada hasta que lo elijas, y cada carpeta y aplicación web se puede editar o eliminar después.</string>
+    <string name="web_app_presets_login_note">Inicia sesión en cada sitio web directamente. Los inicios de sesión los conserva el navegador integrado. Esto solo se aplica a las aplicaciones web que se abren en el navegador integrado; las que se abren en un navegador externo usan el inicio de sesión de ese navegador.</string>
+    <string name="web_app_preset_category_social">Social</string>
+    <string name="web_app_preset_category_email">Correo</string>
+    <string name="web_app_preset_category_messaging">Mensajería</string>
+    <string name="web_app_preset_category_video">Vídeo y música</string>
+    <string name="web_app_preset_category_work">Productividad y trabajo</string>
+    <string name="web_app_preset_add">Añadir</string>
+    <string name="web_app_preset_dialog_title">Añadir %1$s</string>
+    <string name="web_app_preset_dialog_summary">Elige las aplicaciones web que quieres añadir. Se guardan como cualquier aplicación web que crees tú mismo.</string>
+    <string name="web_app_preset_exists">Ya está en tus aplicaciones web, se reutilizará</string>
+    <string name="web_app_preset_confirm">Añadir selección</string>
+    <string name="web_app_preset_added">%1$s añadido</string>
+    <string name="web_app_groups_title">Carpetas</string>
+    <string name="web_app_groups_enable">Activar carpetas de aplicaciones web</string>
+    <string name="web_app_groups_enable_summary">Organiza las aplicaciones web en carpetas y restringe el deslizamiento por carpeta</string>
+    <string name="web_app_groups_manage">Gestionar carpetas</string>
+    <string name="web_app_group_create">Crear carpeta nueva</string>
+    <string name="web_app_group_create_title">Crear carpeta</string>
+    <string name="web_app_group_rename_title">Renombrar carpeta</string>
+    <string name="web_app_group_name">Nombre de la carpeta</string>
+    <string name="web_app_group_create_confirm">Crear</string>
+    <string name="web_app_group_rename_confirm">Renombrar</string>
+    <string name="web_app_group_apps_count">%1$d aplicaciones web</string>
+    <string name="web_app_group_notifications">Notificaciones</string>
+    <string name="web_app_group_label">Carpeta</string>
+    <string name="web_app_group_none">Ninguna</string>
+    <string name="web_app_group_delete_title">¿Eliminar carpeta?</string>
+    <string name="web_app_group_delete_message">Se eliminará la carpeta «%1$s». Las aplicaciones web que contiene se conservan y quedan sin agrupar.</string>
+    <string name="web_app_delete_title">¿Eliminar aplicación web?</string>
+    <string name="web_app_delete_message">«%1$s» se quitará de la búsqueda, la pantalla de inicio, las carpetas y el panel de aplicaciones web. Esta acción no se puede deshacer.</string>
+    <string name="web_app_shortcut_ad_block">Bloqueador de anuncios</string>
+    <string name="web_app_shortcut_ad_block_global">Usar ajuste global</string>
+    <string name="web_app_shortcut_ad_block_on">Activado</string>
+    <string name="web_app_shortcut_ad_block_off">Desactivado</string>
+    <string name="web_app_shortcut_ad_block_summary">Solo se aplica al navegador integrado. Los navegadores externos (Custom Tabs) los controla la aplicación del navegador.</string>
+</resources>

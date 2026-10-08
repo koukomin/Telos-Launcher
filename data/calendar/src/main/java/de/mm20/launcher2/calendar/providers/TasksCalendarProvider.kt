@@ -6,6 +6,7 @@ import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import androidx.core.net.toUri
 import de.mm20.launcher2.search.CalendarEvent
+import de.mm20.launcher2.search.GreekFold
 import de.mm20.launcher2.search.calendar.CalendarListType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -31,14 +32,16 @@ internal class TasksCalendarProvider(
                 .withSecond(0)
                 .withNano(0)
                 .toInstant().toEpochMilli()
+            val foldQuery = query?.takeIf { GreekFold.needsFold(it) }?.let { GreekFold.fold(it.trim()) }
             queryTasks(
+                foldQuery = foldQuery,
                 selection = buildList {
                     add("($to >= hideUntil OR hideUntil IS NULL)")
                     add("($from <= dueDate OR ($startOfDay <= dueDate AND dueDate % 60000 <= 0))")
                     if (excludedCalendars.isNotEmpty()) {
                         add("cdl_id NOT IN (${excludedCalendars.joinToString()})")
                     }
-                    if (query != null) {
+                    if (query != null && foldQuery == null) {
                         add(
                             "title LIKE '%${
                                 query.replace("'", "").replace("%", "")
@@ -81,6 +84,7 @@ internal class TasksCalendarProvider(
     }
 
     private fun queryTasks(
+        foldQuery: String? = null,
         selection: String? = null,
         selectionArgs: Array<String>? = arrayOf(),
     ): List<CalendarEvent> {
@@ -120,9 +124,12 @@ internal class TasksCalendarProvider(
                     dueDate
                 }
 
+                val title = cursor.getStringOrNull(titleIndex) ?: continue
+                if (foldQuery != null && !GreekFold.matches(title, foldQuery)) continue
+
                 results += TasksCalendarEvent(
                     id = id,
-                    label = cursor.getStringOrNull(titleIndex) ?: continue,
+                    label = title,
                     description = cursor.getStringOrNull(notesIndex),
                     color = cursor.getIntOrNull(colorIndex),
                     calendarName = cursor.getStringOrNull(calendarNameIndex),

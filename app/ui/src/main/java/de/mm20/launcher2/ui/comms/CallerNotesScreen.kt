@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.comms
 
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ListItem
@@ -24,9 +26,9 @@ fun CallerNotesScreen() {
     val commsSettings: CommsSettings = koinInject()
     val notes by commsSettings.callerNotes.collectAsStateWithLifecycle(emptyMap())
     val backStack = LocalBackStack.current
-    PreferenceScreen(title = { Text("Notes") }) {
+    PreferenceScreen(title = { Text(stringResource(R.string.hc_notes)) }) {
         if (notes.isEmpty()) {
-            item { Text("No contact notes yet.", modifier = Modifier.padding(16.dp)) }
+            item { Text(stringResource(R.string.hc_no_contact_notes_yet), modifier = Modifier.padding(16.dp)) }
         }
         notes.forEach { (number, note) ->
             item {

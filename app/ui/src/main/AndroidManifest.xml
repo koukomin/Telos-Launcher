@@ -153,7 +153,7 @@
             android:name=".calculator.CalculatorTileService"
             android:exported="true"
             android:icon="@drawable/ic_glyph_calculator"
-            android:label="Calculator"
+            android:label="@string/hc_calculator"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
@@ -303,6 +303,54 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="image/*" />
                 <data android:mimeType="video/*" />
+            </intent-filter>
+        </activity>
+
+        <!-- Telos Downloads: share a link to it, or open a link to a file with it. Magnet links and .torrent files are offered here and in Telos Video (Video streams while it downloads, Downloads keeps and seeds). -->
+        <activity
+            android:name=".downloads.DownloadShareActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:icon="@drawable/ic_app_downloads_full"
+            android:label="Telos Downloads"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+            <!-- only links that name a kind of file, so that Telos is not offered for every web page -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:mimeType="application/zip" />
+                <data android:mimeType="application/x-zip-compressed" />
+                <data android:mimeType="application/vnd.android.package-archive" />
+                <data android:mimeType="application/octet-stream" />
+                <data android:mimeType="application/x-7z-compressed" />
+                <data android:mimeType="application/vnd.rar" />
+                <data android:mimeType="application/gzip" />
+                <data android:mimeType="application/x-iso9660-image" />
+                <data android:mimeType="application/x-bittorrent" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="magnet" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/x-bittorrent" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/x-bittorrent" />
             </intent-filter>
         </activity>
 

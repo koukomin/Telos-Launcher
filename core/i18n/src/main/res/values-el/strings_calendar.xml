@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="cal_permission">Το Telos Calendar χρειάζεται πρόσβαση στα ημερολόγια του κινητού.</string>
+    <string name="cal_grant">Άδεια</string>
+    <string name="cal_new_event">Νέο γεγονός</string>
+    <string name="cal_edit_event">Επεξεργασία γεγονότος</string>
+    <string name="cal_previous">Προηγούμενος μήνας</string>
+    <string name="cal_next">Επόμενος μήνας</string>
+    <string name="cal_today">Σήμερα</string>
+    <string name="cal_calendars">Ημερολόγια</string>
+    <string name="cal_sync_now">Συγχρονισμός λογαριασμών τώρα</string>
+    <string name="cal_add_account">Προσθήκη λογαριασμού (Google, CalDAV, Exchange)</string>
+    <string name="cal_import">Εισαγωγή .ics</string>
+    <string name="cal_export">Εξαγωγή .ics</string>
+    <string name="cal_imported">Εισήχθησαν %d γεγονότα</string>
+    <string name="cal_sync_requested">Ζητήθηκε συγχρονισμός</string>
+    <string name="cal_error">Σφάλμα: %s</string>
+    <string name="cal_no_calendars">Δεν υπάρχει ακόμα ημερολόγιο σε αυτό το κινητό.</string>
+    <string name="cal_create_local">Δημιουργία τοπικού ημερολογίου</string>
+    <string name="cal_no_events">Κανένα γεγονός</string>
+    <string name="cal_no_title">(χωρίς τίτλο)</string>
+    <string name="cal_all_day">Ολοήμερο</string>
+    <string name="cal_cancel">Άκυρο</string>
+    <string name="cal_delete">Διαγραφή</string>
+    <string name="cal_save">Αποθήκευση</string>
+    <string name="cal_title">Τίτλος</string>
+    <string name="cal_location">Τοποθεσία</string>
+    <string name="cal_description">Περιγραφή</string>
+    <string name="cal_repeat">Επανάληψη</string>
+    <string name="cal_repeat_none">Χωρίς επανάληψη</string>
+    <string name="cal_repeat_daily">Κάθε μέρα</string>
+    <string name="cal_repeat_weekly">Κάθε εβδομάδα</string>
+    <string name="cal_repeat_monthly">Κάθε μήνα</string>
+    <string name="cal_repeat_yearly">Κάθε χρόνο</string>
+    <string name="cal_reminder">Υπενθύμιση</string>
+    <string name="cal_reminder_none">Καμία</string>
+    <string name="cal_reminder_at_time">Την ώρα του γεγονότος</string>
+    <string name="cal_reminder_before">%d λεπτά πριν</string>
+    <string name="cal_series_note">Οι αλλαγές και η διαγραφή ισχύουν για όλη τη σειρά.</string>
+    <string name="cal_on_phone">Σε αυτό το κινητό</string>
+    <string name="cal_new_local">Νέο τοπικό ημερολόγιο</string>
+    <string name="cal_ok">OK</string>
+    <string name="cal_sync_note">Τα ημερολόγια Google, CalDAV (DAVx5) και Exchange συγχρονίζονται από το σύστημα μέσω του λογαριασμού τους. Τα τοπικά ημερολόγια μένουν στο κινητό και μπαίνουν στο backup του Telos.</string>
+    <string name="cal_view_agenda">Επόμενες 30 μέρες</string>
+    <string name="cal_view_month">Μηνιαία προβολή</string>
+</resources>

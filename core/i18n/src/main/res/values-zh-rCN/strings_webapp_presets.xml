@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">推荐分类</string>
+    <string name="web_app_presets_summary">添加包含热门网站的现成文件夹，网站将作为网页应用添加。在您选择之前不会添加任何内容，之后每个文件夹和网页应用都可以编辑或删除。</string>
+    <string name="web_app_presets_login_note">请在各网站内登录，登录状态由内置浏览器保存。此说明仅适用于在内置浏览器中打开的网页应用；在外部浏览器中打开的网页应用将使用该浏览器自身的登录状态。</string>
+    <string name="web_app_preset_category_social">社交</string>
+    <string name="web_app_preset_category_email">邮箱</string>
+    <string name="web_app_preset_category_messaging">即时通讯</string>
+    <string name="web_app_preset_category_video">视频和音乐</string>
+    <string name="web_app_preset_category_work">效率与办公</string>
+    <string name="web_app_preset_add">添加</string>
+    <string name="web_app_preset_dialog_title">添加%1$s</string>
+    <string name="web_app_preset_dialog_summary">选择要添加的网页应用。它们的保存方式与您自己创建的网页应用相同。</string>
+    <string name="web_app_preset_exists">已在您的网页应用中，将直接复用</string>
+    <string name="web_app_preset_confirm">添加所选项</string>
+    <string name="web_app_preset_added">已添加%1$s</string>
+    <string name="web_app_groups_title">文件夹</string>
+    <string name="web_app_groups_enable">启用网页应用文件夹</string>
+    <string name="web_app_groups_enable_summary">将网页应用整理到文件夹中，并可按文件夹限制滑动</string>
+    <string name="web_app_groups_manage">管理文件夹</string>
+    <string name="web_app_group_create">新建文件夹</string>
+    <string name="web_app_group_create_title">新建文件夹</string>
+    <string name="web_app_group_rename_title">重命名文件夹</string>
+    <string name="web_app_group_name">文件夹名称</string>
+    <string name="web_app_group_create_confirm">创建</string>
+    <string name="web_app_group_rename_confirm">重命名</string>
+    <string name="web_app_group_apps_count">%1$d 个网页应用</string>
+    <string name="web_app_group_notifications">通知</string>
+    <string name="web_app_group_label">文件夹</string>
+    <string name="web_app_group_none">无</string>
+    <string name="web_app_group_delete_title">删除文件夹？</string>
+    <string name="web_app_group_delete_message">文件夹“%1$s”将被删除。其中的网页应用会保留，并变为未分组。</string>
+    <string name="web_app_delete_title">删除网页应用？</string>
+    <string name="web_app_delete_message">“%1$s”将从搜索、主屏幕、文件夹和网页应用面板中移除。此操作无法撤销。</string>
+    <string name="web_app_shortcut_ad_block">广告拦截</string>
+    <string name="web_app_shortcut_ad_block_global">使用全局设置</string>
+    <string name="web_app_shortcut_ad_block_on">开启</string>
+    <string name="web_app_shortcut_ad_block_off">关闭</string>
+    <string name="web_app_shortcut_ad_block_summary">仅适用于内置浏览器。外部浏览器（Custom Tabs）由浏览器应用自行控制。</string>
+</resources>

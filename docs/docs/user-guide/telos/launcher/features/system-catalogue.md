@@ -196,7 +196,7 @@ by Telos Files and opened from Integrations > **Cloud and network storage**. See
 
 | Integration | Where in Settings | Default | What it does | Needs |
 | --- | --- | --- | --- | --- |
-| Weather | Integrations > Weather | provider Open-Meteo, automatic location on | Choose the provider, location, measurement system | Location for automatic mode |
+| Weather | Integrations > Weather | provider Open-Meteo, automatic location on | Choose the provider, location, measurement system, and notifications for severe weather (rain, heavy rain, snow, thunderstorms, heat, frost, wind, UV) | Location for automatic mode, notifications for alerts |
 | Media control | Integrations > Media control | n/a | Choose which music apps the music widget follows. A reset button exists in debug builds | Notification access |
 | Feed | Integrations > Feed | off | Swipe right opens an overlay feed from another app | <Badge type="info" text="non-release" />, a feed provider app |
 | Cloud and network storage | Integrations > Cloud and network storage | n/a | Connections for Telos Files | per storage |

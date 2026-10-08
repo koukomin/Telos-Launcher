@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="backup_choose_parts">Τι θέλετε να αντιγράψετε;</string>
+    <string name="restore_choose_parts">Τι θέλετε να επαναφέρετε;</string>
+    <string name="backup_all">Όλα</string>
+    <string name="backup_create">Δημιουργία αντιγράφου</string>
+    <string name="backup_group_launcher">Ρυθμίσεις και δεδομένα του launcher</string>
+    <string name="backup_group_launcher_summary">Ρυθμίσεις, αγαπημένα, widgets, θέματα, κρυφά στοιχεία, ετικέτες και τα υπόλοιπα του launcher</string>
+    <string name="backup_group_notes">Σημειώσεις</string>
+    <string name="backup_group_notes_summary">Οι σημειώσεις σας στο Telos Notes</string>
+    <string name="backup_group_calendar">Ημερολόγιο</string>
+    <string name="backup_group_calendar_summary">Τα γεγονότα του ημερολογίου του Telos σε αυτό το τηλέφωνο (όχι τα ημερολόγια των λογαριασμών σας, αυτά συγχρονίζονται μόνα τους)</string>
+    <string name="backup_nothing_selected">Διαλέξτε τουλάχιστον ένα τμήμα</string>
+</resources>

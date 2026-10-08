@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.files.remote
 
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
@@ -40,12 +42,12 @@ internal fun CloudFields(c: RemoteConnection, onChange: (RemoteConnection) -> Un
     if (provider.needsSecret) {
         OutlinedTextField(
             value = c.clientSecret, onValueChange = { onChange(c.copy(clientSecret = it.trim())) }, singleLine = true,
-            label = { Text("Client secret") }, visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(),
+            label = { Text(stringResource(R.string.hc_client_secret)) }, visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(),
         )
     }
     Row(Modifier.fillMaxWidth().padding(top = 4.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(if (c.refreshToken.isNotEmpty()) "Signed in" else "Not signed in", Modifier.weight(1f))
-        if (c.refreshToken.isNotEmpty()) TextButton(onClick = { onChange(c.copy(refreshToken = "")) }) { Text("Sign out") }
+        if (c.refreshToken.isNotEmpty()) TextButton(onClick = { onChange(c.copy(refreshToken = "")) }) { Text(stringResource(R.string.hc_sign_out)) }
         Button(
             enabled = c.clientId.isNotBlank() && (!provider.needsSecret || c.clientSecret.isNotBlank()),
             onClick = {

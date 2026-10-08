@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.comms
 
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -40,7 +42,7 @@ fun FakeCallSettingsScreen() {
         "Mom" to "+30 697 555 0101",
         "Doctor" to "+30 210 555 0199",
     )
-    PreferenceScreen(title = { Text("Fake call") }) {
+    PreferenceScreen(title = { Text(stringResource(R.string.hc_fake_call)) }) {
         item {
             Column(
                 Modifier.padding(16.dp),
@@ -49,7 +51,7 @@ fun FakeCallSettingsScreen() {
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Caller name") },
+                    label = { Text(stringResource(R.string.hc_caller_name)) },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                 )
@@ -65,7 +67,7 @@ fun FakeCallSettingsScreen() {
                 OutlinedTextField(
                     value = number,
                     onValueChange = { number = it },
-                    label = { Text("Number") },
+                    label = { Text(stringResource(R.string.hc_number)) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
@@ -73,7 +75,7 @@ fun FakeCallSettingsScreen() {
                 OutlinedTextField(
                     value = delaySec,
                     onValueChange = { delaySec = it.filter { ch -> ch.isDigit() } },
-                    label = { Text("Delay (seconds)") },
+                    label = { Text(stringResource(R.string.hc_delay_seconds)) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
@@ -91,15 +93,15 @@ fun FakeCallSettingsScreen() {
                     onClick = {
                         val delay = delaySec.toIntOrNull() ?: 10
                         FakeCallScheduler.schedule(context, name.ifBlank { "Incoming call" }, number, delay)
-                        Toast.makeText(context, "Fake call in ${delay}s", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(R.string.hc_fake_call_in_seconds, delay), Toast.LENGTH_SHORT).show()
                     },
                     modifier = Modifier.fillMaxWidth(),
                     enabled = number.isNotBlank(),
                 ) {
-                    Text("Schedule fake call")
+                    Text(stringResource(R.string.hc_schedule_fake_call))
                 }
                 TextButton(onClick = { FakeCallScheduler.cancel(context) }) {
-                    Text("Cancel scheduled")
+                    Text(stringResource(R.string.hc_cancel_scheduled))
                 }
             }
         }

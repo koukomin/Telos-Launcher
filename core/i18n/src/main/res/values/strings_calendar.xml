@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="cal_permission">Telos Calendar needs access to the calendars of the phone.</string>
+    <string name="cal_grant">Allow</string>
+    <string name="cal_new_event">New event</string>
+    <string name="cal_edit_event">Edit event</string>
+    <string name="cal_previous">Previous month</string>
+    <string name="cal_next">Next month</string>
+    <string name="cal_today">Today</string>
+    <string name="cal_calendars">Calendars</string>
+    <string name="cal_sync_now">Sync accounts now</string>
+    <string name="cal_add_account">Add account (Google, CalDAV, Exchange)</string>
+    <string name="cal_import">Import .ics</string>
+    <string name="cal_export">Export .ics</string>
+    <string name="cal_imported">%d events imported</string>
+    <string name="cal_sync_requested">Sync requested</string>
+    <string name="cal_error">Error: %s</string>
+    <string name="cal_no_calendars">There is no calendar on this phone yet.</string>
+    <string name="cal_create_local">Create a local calendar</string>
+    <string name="cal_no_events">No events</string>
+    <string name="cal_no_title">(no title)</string>
+    <string name="cal_all_day">All day</string>
+    <string name="cal_cancel">Cancel</string>
+    <string name="cal_delete">Delete</string>
+    <string name="cal_save">Save</string>
+    <string name="cal_title">Title</string>
+    <string name="cal_location">Location</string>
+    <string name="cal_description">Description</string>
+    <string name="cal_repeat">Repeat</string>
+    <string name="cal_repeat_none">Does not repeat</string>
+    <string name="cal_repeat_daily">Every day</string>
+    <string name="cal_repeat_weekly">Every week</string>
+    <string name="cal_repeat_monthly">Every month</string>
+    <string name="cal_repeat_yearly">Every year</string>
+    <string name="cal_reminder">Reminder</string>
+    <string name="cal_reminder_none">None</string>
+    <string name="cal_reminder_at_time">At the time</string>
+    <string name="cal_reminder_before">%d minutes before</string>
+    <string name="cal_series_note">Changes and deleting apply to the whole series.</string>
+    <string name="cal_on_phone">On this phone</string>
+    <string name="cal_new_local">New local calendar</string>
+    <string name="cal_ok">OK</string>
+    <string name="cal_sync_note">Google, CalDAV (DAVx5) and Exchange calendars are synced by the system through their account. Local calendars stay on the phone and are in the Telos backup.</string>
+    <string name="cal_view_agenda">Next 30 days</string>
+    <string name="cal_view_month">Month view</string>
+</resources>

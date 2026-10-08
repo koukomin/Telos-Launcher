@@ -18,12 +18,15 @@ import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCompositionLocals
 import de.mm20.launcher2.ui.theme.LauncherTheme
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.inject
 
 class CallActivity : BaseActivity(), SensorEventListener {
     private val commsSettings: CommsSettings by inject()
+    private var inCallNotes = true
     private var pocketMode = false
     private var proximitySpeaker = false
     private var proximityNear = false
@@ -50,6 +53,9 @@ class CallActivity : BaseActivity(), SensorEventListener {
                 onDecline = { TelosCallSession.reject() },
             )
         }
+        inCallNotes = snap.inCallNotes
+        // keeps the value up to date, so that onStop does not have to wait for the datastore
+        lifecycleScope.launch { commsSettings.inCallNotes.collect { inCallNotes = it } }
         enableEdgeToEdge()
         setContent {
             ProvideCompositionLocals {
@@ -84,7 +90,7 @@ class CallActivity : BaseActivity(), SensorEventListener {
 
     override fun onStop() {
         sensorManager?.unregisterListener(this)
-        val notesOn = runBlocking { commsSettings.inCallNotes.first() }
+        val notesOn = inCallNotes
         if (notesOn && TelosCallSession.ui.value.hasCall && Settings.canDrawOverlays(this)) {
             startService(
                 Intent(this, FloatingNotesService::class.java)

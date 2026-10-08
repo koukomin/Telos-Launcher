@@ -206,19 +206,61 @@ Web apps turn a website into an app-like shortcut. Settings > Web app shortcuts.
    icon.
 4. Choose **Open with**: the **embedded** (in-app) browser, or an installed browser that supports Custom
    Tabs.
-5. Optional: **Custom CSS** (embedded only), **Enable notifications**, and whether it shows in the grid
-   and in the panel. Save.
+5. Optional: **Custom CSS** (embedded only), **Enable notifications**, **Ad blocker** (embedded only:
+   use the global setting, always on, or always off for this web app), a folder, and whether it shows in
+   the grid and in the panel. Save.
+
+### Block lists
+
+Besides the built-in host list, Settings > Web app shortcuts > **Block lists** can load more domain lists. Nothing is
+downloaded until you switch a list on, and the built-in list always stays active.
+
+| Offered list | Licence |
+| --- | --- |
+| StevenBlack unified hosts | MIT |
+| AdGuard DNS filter | GPL-3.0 |
+| Peter Lowe's ad and tracking server list | free to use and redistribute (see its site) |
+| OISD small | GPL-3.0 |
+| EasyList (domain rules only) | GPL-3.0 / CC BY-SA 3.0 |
+| URLhaus malware domains | abuse.ch terms of use |
+
+- Each enabled list is fetched directly from its own address (shown under the list). No other server is contacted.
+- Supported formats: hosts files (`0.0.0.0 domain`), plain domain lists, wildcard lists (`*.domain`) and, from adblock
+  lists, only simple domain rules (`||domain^`, optionally with `$third-party`). Cosmetic filters, path rules and
+  exceptions are ignored, so this is not a full EasyList engine.
+- A blocked domain also blocks its subdomains. The lists apply to the embedded browser only and follow the global
+  switch and each web app's own ad blocker setting.
+- **Add list by address** (https only) and **Import from a file** add your own lists; custom lists can be removed.
+- **Automatic update:** Off, Daily or Weekly (default weekly once a list is on), by default only on Wi-Fi and not when
+  the battery is low; **Update now** ignores the Wi-Fi setting. Unchanged lists are not downloaded again (ETag /
+  Last-Modified). If an update fails the previous list stays in use and the error is shown. Limit: 160 MB of text per list.
+- Switching a downloaded list off deletes its data.
 
 Web apps appear in the app grid and in search, can be locked with [App Lock](./privacy-protection#app-lock)
 and can carry per-item customization.
 
 | Browsing setting | Default | Applies to |
 | --- | --- | --- |
-| Block ads and trackers | On | Embedded browser only. A built-in host blocklist, not a full filter-list engine |
+| Block ads and trackers | On | Embedded browser only. A built-in host blocklist plus the block lists you switch on (domain rules only), not a full filter-list engine. Each web app can override it (global, on, off) |
 | Pinch to zoom | On | Embedded browser |
 | Strip tracking parameters from links | On | Embedded browser (utm_, fbclid, gclid and similar) |
 | Top bar position | Top | Navigation bar at the top or bottom |
 | Swipe to switch web apps | On | Swipe the top bar to move between your web apps |
+
+**Deleting.** Tap the bin next to a web app in Settings > Web app shortcuts, or choose **Delete** in the
+long-press card of a web app, and confirm. The web app disappears from search, the grid, the panel and
+its folder. Deleting a folder (with confirmation) keeps the web apps inside and leaves them ungrouped.
+Folders can also be renamed.
+
+**Suggested categories.** Settings > Web app shortcuts > **Suggested categories** offers ready-made
+folders: Social, Email, Messaging, Video & Music and Productivity & Work. They are only suggestions:
+nothing is added until you tap **Add** on a category and choose which websites to include. The chosen
+websites are saved as normal web apps (their icon is looked up from the website, with a category icon
+as fallback) in a folder named after the category, and turning the folder feature on if it was off. A website
+you already added with the same address is reused, not duplicated. Afterwards the folder and every web app
+can be edited or deleted like anything else. You sign in on the website itself. The embedded browser keeps
+the logins, so this only applies to web apps that open in the embedded browser; a web app opened in an
+external browser uses that browser's own sign-in.
 
 **Web Apps Panel.** A page that holds the web apps you choose. It is reached by the gesture that has the
 **Web Apps Panel** action (swipe right by default). The settings page **Enable Web Apps Panel** lets you

@@ -1,5 +1,9 @@
 package de.mm20.launcher2.ui.settings.webapps
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -63,6 +67,10 @@ fun WebAppsSettingsScreen() {
 
     var showCreateGroupDialog by remember { mutableStateOf(false) }
     var groupToRename by remember { mutableStateOf<de.mm20.launcher2.preferences.WebAppGroup?>(null) }
+    var groupToDelete by remember { mutableStateOf<de.mm20.launcher2.preferences.WebAppGroup?>(null) }
+    var shortcutToDelete by remember { mutableStateOf<de.mm20.launcher2.search.WebAppShortcut?>(null) }
+    var presetToAdd by remember { mutableStateOf<WebAppPresetCategory?>(null) }
+    val context = androidx.compose.ui.platform.LocalContext.current
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_web_app_shortcuts),
@@ -89,22 +97,60 @@ fun WebAppsSettingsScreen() {
             }
         }
         item {
-            PreferenceCategory(title = "Grouping") {
+            PreferenceCategory(title = stringResource(R.string.web_app_groups_title)) {
                 SwitchPreference(
-                    title = "Enable Web App Groups",
-                    summary = "Organize web apps into folders and restrict swiping per group",
+                    title = stringResource(R.string.web_app_groups_enable),
+                    summary = stringResource(R.string.web_app_groups_enable_summary),
                     value = groupsEnabled,
                     onValueChanged = { viewModel.setGroupsEnabled(it) },
                 )
             }
         }
+        item {
+            PreferenceCategory(title = stringResource(R.string.blocklists_web_title)) {
+                de.mm20.launcher2.ui.component.BlockListsSection(
+                    de.mm20.launcher2.comms.blocklist.BlockListKind.WEB,
+                    Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                )
+            }
+        }
+        item {
+            PreferenceCategory(title = stringResource(R.string.web_app_presets_title)) {
+                Text(
+                    text = stringResource(R.string.web_app_presets_summary),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                )
+                for (category in WebAppPresets.categories) {
+                    Preference(
+                        icon = category.iconRes,
+                        title = stringResource(category.nameRes),
+                        summary = category.apps.joinToString(", ") { it.name },
+                        onClick = { presetToAdd = category },
+                        controls = {
+                            TextButton(onClick = { presetToAdd = category }) {
+                                Text(stringResource(R.string.web_app_preset_add))
+                            }
+                        }
+                    )
+                }
+                Text(
+                    text = stringResource(R.string.web_app_presets_login_note),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                )
+            }
+        }
         if (groupsEnabled) {
             item {
-                PreferenceCategory(title = "Manage Groups") {
+                PreferenceCategory(title = stringResource(R.string.web_app_groups_manage)) {
                     for (group in groups) {
                         Preference(
+                            icon = WebAppPresets.byId(group.category)?.iconRes ?: R.drawable.folder_24px,
                             title = group.name,
-                            summary = "${group.appKeys.size} apps",
+                            summary = stringResource(R.string.web_app_group_apps_count, group.appKeys.size),
                             onClick = { groupToRename = group },
                             controls = {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -113,10 +159,13 @@ fun WebAppsSettingsScreen() {
                                             checked = group.notificationsEnabled,
                                             onCheckedChange = { viewModel.toggleGroupNotifications(group.id, it) }
                                         )
-                                        Text("Notifications", style = MaterialTheme.typography.labelSmall)
+                                        Text(stringResource(R.string.web_app_group_notifications), style = MaterialTheme.typography.labelSmall)
                                     }
-                                    IconButton(onClick = { viewModel.deleteGroup(group.id) }) {
-                                        Icon(painterResource(R.drawable.delete_24px), null)
+                                    IconButton(onClick = { groupToDelete = group }) {
+                                        Icon(
+                                            painterResource(R.drawable.delete_24px),
+                                            contentDescription = stringResource(R.string.menu_delete),
+                                        )
                                     }
                                 }
                             }
@@ -124,7 +173,7 @@ fun WebAppsSettingsScreen() {
                     }
                     Preference(
                         icon = R.drawable.add_24px,
-                        title = "Create new group",
+                        title = stringResource(R.string.web_app_group_create),
                         onClick = { showCreateGroupDialog = true }
                     )
                 }
@@ -182,8 +231,11 @@ fun WebAppsSettingsScreen() {
                                         .clip(MaterialTheme.shapes.extraSmall),
                                 )
                             } else {
+                                val categoryIcon = WebAppPresets.byId(
+                                    groups.find { it.appKeys.contains(shortcut.key) }?.category
+                                )?.iconRes
                                 Icon(
-                                    painterResource(R.drawable.language_24px),
+                                    painterResource(categoryIcon ?: R.drawable.language_24px),
                                     contentDescription = null,
                                 )
                             }
@@ -209,7 +261,7 @@ fun WebAppsSettingsScreen() {
                                     )
                                     Text(stringResource(R.string.preference_screen_web_apps_panel), style = MaterialTheme.typography.labelSmall)
                                 }
-                                IconButton(onClick = { viewModel.delete(shortcut) }) {
+                                IconButton(onClick = { shortcutToDelete = shortcut }) {
                                     Icon(
                                         painterResource(R.drawable.delete_24px),
                                         contentDescription = stringResource(R.string.menu_delete),
@@ -250,8 +302,8 @@ fun WebAppsSettingsScreen() {
     EditWebAppShortcutSheet(
         expanded = createShortcut,
         existing = null,
-        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId ->
-            viewModel.save(null, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId)
+        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode ->
+            viewModel.save(null, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode)
         },
         onDismiss = { viewModel.dismissDialogs() },
         onImportIcon = { uri, sizePx -> viewModel.importIcon(uri, sizePx) },
@@ -261,8 +313,8 @@ fun WebAppsSettingsScreen() {
     EditWebAppShortcutSheet(
         expanded = editShortcut != null,
         existing = editShortcut,
-        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId ->
-            viewModel.save(editShortcut, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId)
+        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode ->
+            viewModel.save(editShortcut, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode)
         },
         onDismiss = { viewModel.dismissDialogs() },
         onImportIcon = { uri, sizePx -> viewModel.importIcon(uri, sizePx) },
@@ -274,12 +326,12 @@ fun WebAppsSettingsScreen() {
         var groupName by remember { mutableStateOf("") }
         AlertDialog(
             onDismissRequest = { showCreateGroupDialog = false },
-            title = { Text("Create Group") },
+            title = { Text(stringResource(R.string.web_app_group_create_title)) },
             text = {
                 OutlinedTextField(
                     value = groupName,
                     onValueChange = { groupName = it },
-                    label = { Text("Group Name") },
+                    label = { Text(stringResource(R.string.web_app_group_name)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -292,12 +344,12 @@ fun WebAppsSettingsScreen() {
                         showCreateGroupDialog = false
                     }
                 ) {
-                    Text("Create")
+                    Text(stringResource(R.string.web_app_group_create_confirm))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showCreateGroupDialog = false }) {
-                    Text("Cancel")
+                    Text(stringResource(android.R.string.cancel))
                 }
             }
         )
@@ -307,12 +359,12 @@ fun WebAppsSettingsScreen() {
         var groupName by remember { mutableStateOf(groupToRename!!.name) }
         AlertDialog(
             onDismissRequest = { groupToRename = null },
-            title = { Text("Rename Group") },
+            title = { Text(stringResource(R.string.web_app_group_rename_title)) },
             text = {
                 OutlinedTextField(
                     value = groupName,
                     onValueChange = { groupName = it },
-                    label = { Text("Group Name") },
+                    label = { Text(stringResource(R.string.web_app_group_name)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -325,12 +377,120 @@ fun WebAppsSettingsScreen() {
                         groupToRename = null
                     }
                 ) {
-                    Text("Rename")
+                    Text(stringResource(R.string.web_app_group_rename_confirm))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { groupToRename = null }) {
-                    Text("Cancel")
+                    Text(stringResource(android.R.string.cancel))
+                }
+            }
+        )
+    }
+
+    groupToDelete?.let { group ->
+        AlertDialog(
+            onDismissRequest = { groupToDelete = null },
+            title = { Text(stringResource(R.string.web_app_group_delete_title)) },
+            text = { Text(stringResource(R.string.web_app_group_delete_message, group.name)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.deleteGroup(group.id)
+                    groupToDelete = null
+                }) { Text(stringResource(R.string.menu_delete)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { groupToDelete = null }) {
+                    Text(stringResource(android.R.string.cancel))
+                }
+            }
+        )
+    }
+
+    shortcutToDelete?.let { shortcut ->
+        AlertDialog(
+            onDismissRequest = { shortcutToDelete = null },
+            title = { Text(stringResource(R.string.web_app_delete_title)) },
+            text = { Text(stringResource(R.string.web_app_delete_message, shortcut.labelOverride ?: shortcut.label)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.delete(shortcut)
+                    shortcutToDelete = null
+                }) { Text(stringResource(R.string.menu_delete)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { shortcutToDelete = null }) {
+                    Text(stringResource(android.R.string.cancel))
+                }
+            }
+        )
+    }
+
+    presetToAdd?.let { category ->
+        val selected = remember(category) { mutableStateListOf<WebAppPreset>().apply { addAll(category.apps) } }
+        val existingUrls = remember(shortcuts) { shortcuts.map { WebAppPresets.comparableUrl(it.url) }.toSet() }
+        val categoryName = stringResource(category.nameRes)
+        AlertDialog(
+            onDismissRequest = { presetToAdd = null },
+            icon = { Icon(painterResource(category.iconRes), null) },
+            title = { Text(stringResource(R.string.web_app_preset_dialog_title, categoryName)) },
+            text = {
+                Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                    Text(
+                        stringResource(R.string.web_app_preset_dialog_summary),
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                    for (app in category.apps) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    if (selected.contains(app)) selected.remove(app) else selected.add(app)
+                                },
+                        ) {
+                            Checkbox(
+                                checked = selected.contains(app),
+                                onCheckedChange = { if (it) selected.add(app) else selected.remove(app) },
+                            )
+                            Column {
+                                Text(app.name, style = MaterialTheme.typography.bodyMedium)
+                                if (WebAppPresets.comparableUrl(app.url) in existingUrls) {
+                                    Text(
+                                        stringResource(R.string.web_app_preset_exists),
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    Text(
+                        stringResource(R.string.web_app_presets_login_note),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(top = 8.dp),
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(
+                    enabled = selected.isNotEmpty(),
+                    onClick = {
+                        viewModel.addPreset(category, selected.toList()) {
+                            android.widget.Toast.makeText(
+                                context,
+                                context.getString(R.string.web_app_preset_added, categoryName),
+                                android.widget.Toast.LENGTH_SHORT,
+                            ).show()
+                        }
+                        presetToAdd = null
+                    }
+                ) { Text(stringResource(R.string.web_app_preset_confirm)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { presetToAdd = null }) {
+                    Text(stringResource(android.R.string.cancel))
                 }
             }
         )

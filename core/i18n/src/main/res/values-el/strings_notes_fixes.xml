@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="notes_imported_skipped">%1$d σημειώσεις εισήχθησαν, %2$d παραλείφθηκαν ως διπλότυπα</string>
+    <string name="notes_synced_skipped">Συγχρονίστηκαν: %1$d στάλθηκαν, %2$d λήφθηκαν. %3$d διαγραφές στον φάκελο παραλείφθηκαν επειδή ο φάκελος φαίνεται μη διαθέσιμος ή θα αφαιρούνταν πολλές σημειώσεις</string>
+</resources>

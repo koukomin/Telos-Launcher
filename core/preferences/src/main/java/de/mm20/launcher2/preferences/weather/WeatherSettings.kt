@@ -40,6 +40,25 @@ data class WeatherSettingsData(
     val providerSettings: Map<String, ProviderSettings> = emptyMap(),
 )
 
+/** What the weather alerts watch for, see [WeatherSettings.alerts] */
+data class WeatherAlertConfig(
+    val enabled: Boolean = false,
+    val rain: Boolean = true,
+    val rainProbability: Int = 70,
+    val heavyRain: Boolean = true,
+    val snow: Boolean = true,
+    val thunder: Boolean = true,
+    val heat: Boolean = true,
+    val heatTemperature: Int = 35,
+    val frost: Boolean = true,
+    val frostTemperature: Int = 0,
+    val wind: Boolean = true,
+    val windSpeed: Int = 60,
+    val uv: Boolean = false,
+    val uvIndex: Int = 8,
+    val hours: Int = 24,
+)
+
 class WeatherSettings internal constructor(
     private val launcherDataStore: LauncherDataStore,
 ) :
@@ -192,6 +211,69 @@ class WeatherSettings internal constructor(
                     weatherLastUpdate = 0L,
                 )
             )
+        }
+    }
+
+    /** The settings of the notifications for severe weather */
+    val alerts = launcherDataStore.data.map {
+        val w = it.weather
+        WeatherAlertConfig(
+            enabled = w.weatherAlertsEnabled,
+            rain = w.weatherAlertRain,
+            rainProbability = w.weatherAlertRainProbability,
+            heavyRain = w.weatherAlertHeavyRain,
+            snow = w.weatherAlertSnow,
+            thunder = w.weatherAlertThunder,
+            heat = w.weatherAlertHeat,
+            heatTemperature = w.weatherAlertHeatTemperature,
+            frost = w.weatherAlertFrost,
+            frostTemperature = w.weatherAlertFrostTemperature,
+            wind = w.weatherAlertWind,
+            windSpeed = w.weatherAlertWindSpeed,
+            uv = w.weatherAlertUv,
+            uvIndex = w.weatherAlertUvIndex,
+            hours = w.weatherAlertHours,
+        )
+    }.distinctUntilChanged()
+
+    fun updateAlerts(block: (WeatherAlertConfig) -> WeatherAlertConfig) {
+        launcherDataStore.update {
+            val w = it.weather
+            val c = block(
+                WeatherAlertConfig(
+                    w.weatherAlertsEnabled, w.weatherAlertRain, w.weatherAlertRainProbability, w.weatherAlertHeavyRain,
+                    w.weatherAlertSnow, w.weatherAlertThunder, w.weatherAlertHeat, w.weatherAlertHeatTemperature,
+                    w.weatherAlertFrost, w.weatherAlertFrostTemperature, w.weatherAlertWind, w.weatherAlertWindSpeed,
+                    w.weatherAlertUv, w.weatherAlertUvIndex, w.weatherAlertHours,
+                )
+            )
+            it.copy(
+                weather = w.copy(
+                    weatherAlertsEnabled = c.enabled,
+                    weatherAlertRain = c.rain,
+                    weatherAlertRainProbability = c.rainProbability.coerceIn(10, 100),
+                    weatherAlertHeavyRain = c.heavyRain,
+                    weatherAlertSnow = c.snow,
+                    weatherAlertThunder = c.thunder,
+                    weatherAlertHeat = c.heat,
+                    weatherAlertHeatTemperature = c.heatTemperature.coerceIn(20, 55),
+                    weatherAlertFrost = c.frost,
+                    weatherAlertFrostTemperature = c.frostTemperature.coerceIn(-30, 10),
+                    weatherAlertWind = c.wind,
+                    weatherAlertWindSpeed = c.windSpeed.coerceIn(20, 150),
+                    weatherAlertUv = c.uv,
+                    weatherAlertUvIndex = c.uvIndex.coerceIn(3, 12),
+                    weatherAlertHours = c.hours.coerceIn(3, 72),
+                )
+            )
+        }
+    }
+
+    val alertLastSent = launcherDataStore.data.map { it.weather.weatherAlertLastSent }.distinctUntilChanged()
+
+    fun setAlertSent(type: String, time: Long) {
+        launcherDataStore.update {
+            it.copy(weather = it.weather.copy(weatherAlertLastSent = it.weather.weatherAlertLastSent + (type to time)))
         }
     }
 

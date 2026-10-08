@@ -118,8 +118,8 @@ fun MediaIntegrationSettingsScreen() {
             item {
                 PreferenceCategory(stringResource(R.string.preference_category_debug)) {
                     Preference(
-                        title = "Reset widget",
-                        summary = "Clear all music data",
+                        title = stringResource(R.string.hc_reset_widget),
+                        summary = stringResource(R.string.hc_clear_all_music_data),
                         onClick = {
                             viewModel.resetWidget()
                         }

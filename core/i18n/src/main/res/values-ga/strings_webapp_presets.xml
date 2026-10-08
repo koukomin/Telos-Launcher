@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Catagóirí molta</string>
+    <string name="web_app_presets_summary">Cuir fillteán réamhdhéanta le suíomhanna gréasáin choitianta leis mar aipeanna gréasáin. Ní chuirtear aon rud leis go dtí go roghnaíonn tú é, agus is féidir gach fillteán agus aip ghréasáin a chur in eagar nó a scriosadh ina dhiaidh sin.</string>
+    <string name="web_app_presets_login_note">Sínigh isteach ar gach suíomh gréasáin féin. Coimeádann an brabhsálaí leabaithe na logálacha isteach. Ní bhaineann sé seo ach le haipeanna gréasáin a osclaíonn sa bhrabhsálaí leabaithe; úsáideann aipeanna gréasáin a osclaítear i mbrabhsálaí seachtrach logáil isteach an bhrabhsálaí sin.</string>
+    <string name="web_app_preset_category_social">Sóisialta</string>
+    <string name="web_app_preset_category_email">Ríomhphost</string>
+    <string name="web_app_preset_category_messaging">Teachtaireachtaí</string>
+    <string name="web_app_preset_category_video">Físeáin agus ceol</string>
+    <string name="web_app_preset_category_work">Táirgiúlacht agus obair</string>
+    <string name="web_app_preset_add">Cuir leis</string>
+    <string name="web_app_preset_dialog_title">Cuir %1$s leis</string>
+    <string name="web_app_preset_dialog_summary">Roghnaigh na haipeanna gréasáin le cur leis. Sábháiltear iad cosúil le haon aip ghréasáin a chruthaíonn tú féin.</string>
+    <string name="web_app_preset_exists">Ann cheana i d\'aipeanna gréasáin, athúsáidfear é</string>
+    <string name="web_app_preset_confirm">Cuir na cinn roghnaithe leis</string>
+    <string name="web_app_preset_added">Cuireadh %1$s leis</string>
+    <string name="web_app_groups_title">Fillteáin</string>
+    <string name="web_app_groups_enable">Cumasaigh fillteáin aipeanna gréasáin</string>
+    <string name="web_app_groups_enable_summary">Eagraigh aipeanna gréasáin i bhfillteáin agus cuir srian leis an scuabadh in aghaidh an fhillteáin</string>
+    <string name="web_app_groups_manage">Bainistigh fillteáin</string>
+    <string name="web_app_group_create">Cruthaigh fillteán nua</string>
+    <string name="web_app_group_create_title">Cruthaigh fillteán</string>
+    <string name="web_app_group_rename_title">Athainmnigh fillteán</string>
+    <string name="web_app_group_name">Ainm an fhillteáin</string>
+    <string name="web_app_group_create_confirm">Cruthaigh</string>
+    <string name="web_app_group_rename_confirm">Athainmnigh</string>
+    <string name="web_app_group_apps_count">%1$d aip ghréasáin</string>
+    <string name="web_app_group_notifications">Fógraí</string>
+    <string name="web_app_group_label">Fillteán</string>
+    <string name="web_app_group_none">Ceann ar bith</string>
+    <string name="web_app_group_delete_title">Scrios an fillteán?</string>
+    <string name="web_app_group_delete_message">Scriosfar an fillteán \"%1$s\". Coimeádtar na haipeanna gréasáin ann agus bheidh siad gan ghrúpáil.</string>
+    <string name="web_app_delete_title">Scrios an aip ghréasáin?</string>
+    <string name="web_app_delete_message">Bainfear \"%1$s\" den chuardach, den scáileán baile, de na fillteáin agus den phainéal aipeanna gréasáin. Ní féidir é seo a chealú.</string>
+    <string name="web_app_shortcut_ad_block">Blocálaí fógraí</string>
+    <string name="web_app_shortcut_ad_block_global">Úsáid an socrú domhanda</string>
+    <string name="web_app_shortcut_ad_block_on">Air</string>
+    <string name="web_app_shortcut_ad_block_off">As</string>
+    <string name="web_app_shortcut_ad_block_summary">Ní bhaineann sé ach leis an mbrabhsálaí leabaithe. Is í aip an bhrabhsálaí a rialaíonn brabhsálaithe seachtracha (Custom Tabs).</string>
+</resources>

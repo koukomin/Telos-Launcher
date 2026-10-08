@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.backup.BackupCompatibility
+import de.mm20.launcher2.backup.BackupGroup
 import de.mm20.launcher2.backup.BackupManager
 import de.mm20.launcher2.backup.BackupMetadata
 import kotlinx.coroutines.launch
@@ -21,6 +22,17 @@ class RestoreBackupSheetVM : ViewModel(), KoinComponent {
     val metadata = mutableStateOf<BackupMetadata?>(null)
     val compatibility = mutableStateOf<BackupCompatibility?>(null)
 
+    /** The parts that are restored, all that the backup contains to start with */
+    val selected = mutableStateOf<Set<BackupGroup>>(emptySet())
+
+    fun toggle(group: BackupGroup) {
+        selected.value = if (group in selected.value) selected.value - group else selected.value + group
+    }
+
+    fun selectAll() {
+        selected.value = metadata.value?.groups ?: emptySet()
+    }
+
     fun setInputUri(uri: Uri) {
         restoreUri = uri
         state.value = RestoreBackupState.Parsing
@@ -33,6 +45,7 @@ class RestoreBackupSheetVM : ViewModel(), KoinComponent {
                 compatibility.value = backupManager.checkCompatibility(metadata)
             }
             this@RestoreBackupSheetVM.metadata.value = metadata
+            selected.value = metadata?.groups ?: emptySet()
         }
     }
 
@@ -41,7 +54,7 @@ class RestoreBackupSheetVM : ViewModel(), KoinComponent {
 
         viewModelScope.launch {
             state.value = RestoreBackupState.Restoring
-            backupManager.restore(uri)
+            backupManager.restore(uri, selected.value)
             state.value = RestoreBackupState.Restored
         }
     }

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Catégories suggérées</string>
+    <string name="web_app_presets_summary">Ajoutez un dossier prêt à l\'emploi contenant des sites web populaires sous forme d\'applications web. Rien n\'est ajouté tant que vous ne l\'avez pas choisi, et chaque dossier et application web pourra ensuite être modifié ou supprimé.</string>
+    <string name="web_app_presets_login_note">Connectez-vous sur chaque site web lui-même. Les connexions sont conservées par le navigateur intégré. Cela ne concerne que les applications web ouvertes dans le navigateur intégré ; celles ouvertes dans un navigateur externe utilisent la connexion propre à ce navigateur.</string>
+    <string name="web_app_preset_category_social">Réseaux sociaux</string>
+    <string name="web_app_preset_category_email">E-mail</string>
+    <string name="web_app_preset_category_messaging">Messagerie</string>
+    <string name="web_app_preset_category_video">Vidéo et musique</string>
+    <string name="web_app_preset_category_work">Productivité et travail</string>
+    <string name="web_app_preset_add">Ajouter</string>
+    <string name="web_app_preset_dialog_title">Ajouter %1$s</string>
+    <string name="web_app_preset_dialog_summary">Choisissez les applications web à ajouter. Elles sont enregistrées comme n\'importe quelle application web que vous créez vous-même.</string>
+    <string name="web_app_preset_exists">Déjà dans vos applications web, sera réutilisée</string>
+    <string name="web_app_preset_confirm">Ajouter la sélection</string>
+    <string name="web_app_preset_added">%1$s ajouté</string>
+    <string name="web_app_groups_title">Dossiers</string>
+    <string name="web_app_groups_enable">Activer les dossiers d\'applications web</string>
+    <string name="web_app_groups_enable_summary">Organisez les applications web en dossiers et limitez le balayage par dossier</string>
+    <string name="web_app_groups_manage">Gérer les dossiers</string>
+    <string name="web_app_group_create">Créer un nouveau dossier</string>
+    <string name="web_app_group_create_title">Créer un dossier</string>
+    <string name="web_app_group_rename_title">Renommer le dossier</string>
+    <string name="web_app_group_name">Nom du dossier</string>
+    <string name="web_app_group_create_confirm">Créer</string>
+    <string name="web_app_group_rename_confirm">Renommer</string>
+    <string name="web_app_group_apps_count">%1$d applications web</string>
+    <string name="web_app_group_notifications">Notifications</string>
+    <string name="web_app_group_label">Dossier</string>
+    <string name="web_app_group_none">Aucun</string>
+    <string name="web_app_group_delete_title">Supprimer le dossier ?</string>
+    <string name="web_app_group_delete_message">Le dossier « %1$s » sera supprimé. Les applications web qu\'il contient sont conservées et ne sont plus regroupées.</string>
+    <string name="web_app_delete_title">Supprimer l\'application web ?</string>
+    <string name="web_app_delete_message">« %1$s » sera retirée de la recherche, de l\'écran d\'accueil, des dossiers et du panneau des applications web. Cette action est irréversible.</string>
+    <string name="web_app_shortcut_ad_block">Bloqueur de publicités</string>
+    <string name="web_app_shortcut_ad_block_global">Utiliser le réglage global</string>
+    <string name="web_app_shortcut_ad_block_on">Activé</string>
+    <string name="web_app_shortcut_ad_block_off">Désactivé</string>
+    <string name="web_app_shortcut_ad_block_summary">S\'applique uniquement au navigateur intégré. Les navigateurs externes (Custom Tabs) sont gérés par l\'application du navigateur.</string>
+</resources>

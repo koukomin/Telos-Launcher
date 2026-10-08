@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.media.video
 
+import androidx.compose.ui.res.stringResource
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.view.View
@@ -33,6 +34,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.comms.media.video.EpisodeParser
 import de.mm20.launcher2.comms.media.video.ResumeStore
 import de.mm20.launcher2.comms.media.video.VideoServices
+import de.mm20.launcher2.comms.media.video.VideoPrefs
+import de.mm20.launcher2.comms.media.video.SubtitleFiles
+import de.mm20.launcher2.comms.media.video.SubtitleService
+import de.mm20.launcher2.comms.media.video.SubtitleResult
 import de.mm20.launcher2.comms.media.video.torrent.TorrentState
 import de.mm20.launcher2.comms.media.video.torrent.TorrentStreamer
 import de.mm20.launcher2.ui.R
@@ -97,7 +102,7 @@ fun VideoPlayerScreen(
                     modifier = Modifier.padding(top = 16.dp),
                 )
                 if (error == null && torrent.stage == TorrentState.Stage.FindingPeers) {
-                    Text("This can take a minute.", color = Color(0xB3FFFFFF), style = MaterialTheme.typography.bodySmall)
+                    Text(stringResource(R.string.hc_this_can_take_a_minute), color = Color(0xB3FFFFFF), style = MaterialTheme.typography.bodySmall)
                 }
                 TextButton(onClick = onClose, modifier = Modifier.padding(top = 16.dp)) {
                     Text(if (error != null) "Close" else "Cancel", color = Color.White)
@@ -135,7 +140,14 @@ private fun PlayerContent(
         // FFmpeg software decoders (AC3, E-AC3, DTS, TrueHD, ...) take over where the phone has no decoder
         val renderers = io.github.anilbeesetti.nextlib.media3ext.ffdecoder.NextRenderersFactory(context)
             .setExtensionRendererMode(androidx.media3.exoplayer.DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
-        ExoPlayer.Builder(context, renderers).build().apply {
+        ExoPlayer.Builder(context, renderers)
+            // addresses of network storages (rem://) are read through Telos Files
+            .setMediaSourceFactory(androidx.media3.exoplayer.source.DefaultMediaSourceFactory(RemoteRoutingDataSource.factory(context)))
+            .build().apply {
+            setVideoChangeFrameRateStrategy(
+                if (VideoPrefs.matchFrameRate(context)) C.VIDEO_CHANGE_FRAME_RATE_STRATEGY_ONLY_IF_SEAMLESS
+                else C.VIDEO_CHANGE_FRAME_RATE_STRATEGY_OFF
+            )
             val items = uris.mapIndexed { index, uri ->
                 MediaItem.Builder()
                     .setUri(uri)
@@ -248,43 +260,80 @@ private fun PlayerContent(
         player.seekTo(index, position)
     }
 
+    val scope = rememberCoroutineScope()
+    var subFile by remember { mutableStateOf<java.io.File?>(null) }
+    var subLabel by remember { mutableStateOf<String?>(null) }
+    var subDelay by remember { mutableStateOf(0L) }
+    var subStyle by remember { mutableStateOf(VideoPrefs.subtitleStyle(context)) }
+    var matchFps by remember { mutableStateOf(VideoPrefs.matchFrameRate(context)) }
+
+    /** Loads a subtitle file into the player; the delay starts at zero */
+    fun loadSubtitleFile(file: java.io.File, label: String?) {
+        subFile = file
+        subLabel = label
+        subDelay = 0L
+        attachSubtitle(Uri.fromFile(file), file.name, label)
+    }
+
+    fun changeDelay(ms: Long) {
+        val file = subFile ?: return
+        subDelay = ms
+        scope.launch {
+            val shifted = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { SubtitleFiles.shifted(context, file, ms) }
+            attachSubtitle(Uri.fromFile(shifted), shifted.name, subLabel)
+        }
+    }
+
+    var currentFileName by remember { mutableStateOf(titles.getOrNull(startIndex).orEmpty()) }
+    var currentVideoKey by remember { mutableStateOf<String?>(null) }
+
     val subtitlePicker = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { subtitle ->
         if (subtitle != null) {
-            val name = context.contentResolver.query(subtitle, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
-                ?.use { if (it.moveToFirst()) it.getString(0) else null }.orEmpty()
-            attachSubtitle(subtitle, name)
+            scope.launch {
+                runCatching {
+                    kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                        val name = context.contentResolver.query(subtitle, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
+                            ?.use { if (it.moveToFirst()) it.getString(0) else null }.orEmpty()
+                        val bytes = context.contentResolver.openInputStream(subtitle)!!.use { it.readBytes() }
+                        val lang = VideoServices.config().languages.substringBefore(',')
+                        SubtitleFiles.import(context, name, bytes, lang, currentVideoKey)
+                    }
+                }.onSuccess { loadSubtitleFile(it, null) }
+            }
         }
     }
 
     var subtitleMenu by remember { mutableStateOf(false) }
     var showOnlineSubtitles by remember { mutableStateOf(false) }
-    var currentFileName by remember { mutableStateOf(titles.getOrNull(startIndex).orEmpty()) }
     DisposableEffect(player) {
         val l = object : Player.Listener {
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                 currentFileName = mediaItem?.mediaMetadata?.title?.toString().orEmpty()
+                subFile = null
+                subDelay = 0L
             }
         }
         player.addListener(l)
         onDispose { player.removeListener(l) }
     }
 
-    // Subtitles that are fetched automatically when a video has none and the user turned this on
+    // The subtitle used last time for this video comes back without asking the internet; otherwise,
+    // when the user turned it on, one is fetched from the sources (in their order)
     LaunchedEffect(currentFileName) {
         val item = player.currentMediaItem ?: return@LaunchedEffect
-        if (item.localConfiguration?.subtitleConfigurations?.isNotEmpty() == true) return@LaunchedEffect
         val config = VideoServices.config()
-        if (!config.autoDownload || !config.subtitlesEnabled) return@LaunchedEffect
+        val query = SubtitleService.queryFor(context, item.localConfiguration?.uri, currentFileName, config.languages)
+        val key = SubtitleFiles.videoKey(currentFileName, query.byteSize)
+        currentVideoKey = key
+        if (item.localConfiguration?.subtitleConfigurations?.isNotEmpty() == true) return@LaunchedEffect
+        SubtitleFiles.lastFor(context, key)?.let { loadSubtitleFile(it, null); return@LaunchedEffect }
+        if (!config.autoDownload || !SubtitleService.available(context, config)) return@LaunchedEffect
         runCatching {
-            val search = config.subtitleSearch()
-            val parsed = EpisodeParser.parse(cleanTitle(currentFileName) + ".x")
-            val results = search.search(parsed.title, config.languages, parsed.season, parsed.episode, parsed.year)
-            val wanted = config.languages.split(',')
-            val best = wanted.firstNotNullOfOrNull { lang -> results.firstOrNull { it.language.equals(lang, true) } }
-                ?: results.firstOrNull()
+            val outcome = SubtitleService.search(context, config, query)
+            val best = outcome.results.firstOrNull { it.language in query.languages } ?: outcome.results.firstOrNull()
             if (best != null) {
-                val file = search.download(context, best)
-                attachSubtitle(Uri.fromFile(file), file.name, best.language.uppercase())
+                val file = SubtitleFiles.fetch(context, SubtitleService.provider(context, config, best.provider)!!, best, key)
+                loadSubtitleFile(file, best.language.uppercase())
             }
         }
     }
@@ -292,9 +341,11 @@ private fun PlayerContent(
     if (showOnlineSubtitles) {
         OnlineSubtitleDialog(
             rawTitle = currentFileName,
+            uri = player.currentMediaItem?.localConfiguration?.uri,
+            videoKey = currentVideoKey,
             onDismiss = { showOnlineSubtitles = false },
             onFile = { file, label ->
-                attachSubtitle(Uri.fromFile(file), file.name, label)
+                loadSubtitleFile(file, label)
                 showOnlineSubtitles = false
             },
         )
@@ -320,6 +371,19 @@ private fun PlayerContent(
             onSpeed = { speed = it; player.setPlaybackSpeed(it) },
             sleepMinutes = sleepMinutes,
             onSleep = { sleepMinutes = it },
+            subDelayMs = subDelay,
+            onSubDelay = { changeDelay(it) },
+            hasExternalSub = subFile != null,
+            subStyle = subStyle,
+            onSubStyle = { subStyle = it; VideoPrefs.setSubtitleStyle(context, it) },
+            matchFps = matchFps,
+            onMatchFps = {
+                matchFps = it
+                VideoPrefs.setMatchFrameRate(context, it)
+                player.setVideoChangeFrameRateStrategy(
+                    if (it) C.VIDEO_CHANGE_FRAME_RATE_STRATEGY_ONLY_IF_SEAMLESS else C.VIDEO_CHANGE_FRAME_RATE_STRATEGY_OFF
+                )
+            },
             onDismiss = { showMenu = false },
         )
     }
@@ -331,6 +395,7 @@ private fun PlayerContent(
                 PlayerView(ctx).apply {
                     this.player = player
                     playerView = this
+                    resizeMode = VideoPrefs.resizeMode(ctx)
                     attachGestures(this, player, ctx as? android.app.Activity, { speed }, { gestureHint = it })
                     setShowSubtitleButton(true)
                     setShowNextButton(true)
@@ -341,7 +406,27 @@ private fun PlayerContent(
                     })
                 }
             },
-            update = { view -> view.useController = !inPictureInPicture },
+            update = { view ->
+                view.useController = !inPictureInPicture
+                view.subtitleView?.apply {
+                    val box = subStyle.edge == 3
+                    setStyle(
+                        androidx.media3.ui.CaptionStyleCompat(
+                            subStyle.color,
+                            if (box) 0xB3000000.toInt() else android.graphics.Color.TRANSPARENT,
+                            android.graphics.Color.TRANSPARENT,
+                            when (subStyle.edge) {
+                                1 -> androidx.media3.ui.CaptionStyleCompat.EDGE_TYPE_OUTLINE
+                                2 -> androidx.media3.ui.CaptionStyleCompat.EDGE_TYPE_DROP_SHADOW
+                                else -> androidx.media3.ui.CaptionStyleCompat.EDGE_TYPE_NONE
+                            },
+                            android.graphics.Color.BLACK,
+                            null,
+                        )
+                    )
+                    setFractionalTextSize(androidx.media3.ui.SubtitleView.DEFAULT_TEXT_SIZE_FRACTION * subStyle.scale)
+                }
+            },
         )
         gestureHint?.let { hint ->
             Text(
@@ -368,7 +453,7 @@ private fun PlayerContent(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(onClick = onClose) {
-                    Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back", tint = Color.White)
+                    Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back), tint = Color.White)
                 }
                 Text(
                     text = title,
@@ -380,21 +465,21 @@ private fun PlayerContent(
                 )
                 Box {
                     TextButton(onClick = { subtitleMenu = true }) {
-                        Text("Subtitles…", color = Color.White)
+                        Text(stringResource(R.string.hc_subtitles_2), color = Color.White)
                     }
                     DropdownMenu(expanded = subtitleMenu, onDismissRequest = { subtitleMenu = false }) {
                         DropdownMenuItem(
-                            text = { Text("From a file") },
+                            text = { Text(stringResource(R.string.hc_from_a_file)) },
                             onClick = { subtitleMenu = false; subtitlePicker.launch("*/*") },
                         )
                         DropdownMenuItem(
-                            text = { Text("Search online") },
+                            text = { Text(stringResource(R.string.hc_search_online)) },
                             onClick = { subtitleMenu = false; showOnlineSubtitles = true },
                         )
                     }
                 }
                 IconButton(onClick = { showMenu = true }) {
-                    Icon(painterResource(R.drawable.more_vert_24px), contentDescription = "Playback options", tint = Color.White)
+                    Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_playback_options), tint = Color.White)
                 }
             }
         }
@@ -406,33 +491,53 @@ internal fun cleanTitle(name: String): String =
     name.replace(Regex("\\.(mkv|mp4|avi|mov|webm|m4v|ts|mpg|mpeg|wmv|flv)$", RegexOption.IGNORE_CASE), "")
 
 @Composable
-private fun OnlineSubtitleDialog(rawTitle: String, onDismiss: () -> Unit, onFile: (java.io.File, String) -> Unit) {
+private fun OnlineSubtitleDialog(
+    rawTitle: String,
+    uri: Uri?,
+    videoKey: String?,
+    onDismiss: () -> Unit,
+    onFile: (java.io.File, String) -> Unit,
+) {
     val context = LocalContext.current
-    var status by remember { mutableStateOf("Searching…") }
-    var results by remember { mutableStateOf<List<de.mm20.launcher2.comms.media.video.SubtitleResult>>(emptyList()) }
+    var status by remember { mutableStateOf(context.getString(R.string.vn_searching)) }
+    var results by remember { mutableStateOf<List<SubtitleResult>>(emptyList()) }
     var config by remember { mutableStateOf<de.mm20.launcher2.comms.media.video.VideoServicesConfig?>(null) }
+    var query by remember { mutableStateOf<de.mm20.launcher2.comms.media.video.SubtitleQuery?>(null) }
+    var source by remember { mutableStateOf<String?>(null) }
     var busy by remember { mutableStateOf(false) }
+    var searchAll by remember { mutableStateOf(false) }
     val scope = androidx.compose.runtime.rememberCoroutineScope()
 
-    LaunchedEffect(rawTitle) {
+    LaunchedEffect(rawTitle, searchAll) {
+        busy = true
+        status = context.getString(R.string.vn_searching)
         val c = VideoServices.config()
         config = c
-        if (!c.subtitlesEnabled) {
-            status = "Add your OpenSubtitles key in Video services (the gear icon in the video list)."
+        if (!SubtitleService.available(context, c)) {
+            status = context.getString(R.string.vn_no_sources)
+            busy = false
             return@LaunchedEffect
         }
         runCatching {
-            val parsed = EpisodeParser.parse(cleanTitle(rawTitle) + ".x")
-            c.subtitleSearch().search(parsed.title, c.languages, parsed.season, parsed.episode, parsed.year)
-        }.onSuccess {
-            results = it
-            status = if (it.isEmpty()) "No subtitles found for \"${cleanTitle(rawTitle)}\"" else ""
-        }.onFailure { status = "Search failed: " + (it.message ?: "unknown error") }
+            val q = SubtitleService.queryFor(context, uri, rawTitle, c.languages)
+            query = q
+            SubtitleService.search(context, c, q, all = searchAll)
+        }.onSuccess { o ->
+            results = o.results
+            source = o.source
+            status = when {
+                o.results.isEmpty() && o.errors.isNotEmpty() -> context.getString(R.string.vn_some_sources_failed, o.errors.joinToString("; "))
+                o.results.isEmpty() -> context.getString(R.string.vn_no_subtitles_found, cleanTitle(rawTitle))
+                o.errors.isNotEmpty() -> context.getString(R.string.vn_some_sources_failed, o.errors.joinToString("; "))
+                else -> ""
+            }
+        }.onFailure { status = (it.message ?: "unknown error") }
+        busy = false
     }
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Subtitles") },
+        title = { Text(stringResource(R.string.hc_subtitles)) },
         text = {
             Column {
                 if (status.isNotEmpty()) Text(status, style = MaterialTheme.typography.bodyMedium)
@@ -442,21 +547,28 @@ private fun OnlineSubtitleDialog(rawTitle: String, onDismiss: () -> Unit, onFile
                         Column(
                             Modifier.fillMaxWidth().clickable(enabled = !busy) {
                                 val c = config ?: return@clickable
+                                val p = SubtitleService.provider(context, c, r.provider) ?: return@clickable
                                 busy = true
-                                status = "Downloading…"
+                                status = context.getString(R.string.vn_downloading)
                                 scope.launch {
-                                    runCatching { c.subtitleSearch().download(context, r) }
+                                    runCatching { SubtitleFiles.fetch(context, p, r, videoKey) }
                                         .onSuccess { onFile(it, r.language.uppercase()) }
                                         .onFailure {
                                             busy = false
-                                            status = "Download failed: " + (it.message ?: "unknown error")
+                                            status = (it.message ?: "unknown error")
                                         }
                                 }
                             }.padding(vertical = 8.dp)
                         ) {
                             Text(r.release.ifBlank { r.fileName }, maxLines = 2, overflow = TextOverflow.Ellipsis)
                             Text(
-                                r.language.uppercase() + " · " + r.downloads + " downloads" + if (r.hearingImpaired) " · HI" else "",
+                                listOfNotNull(
+                                    r.language.uppercase(),
+                                    r.downloads.takeIf { it > 0 }?.let { "$it downloads" },
+                                    if (r.hearingImpaired) "HI" else null,
+                                    if (r.hashMatch) context.getString(R.string.vn_exact_match) else null,
+                                    r.provider.replace('_', ' '),
+                                ).joinToString(" · "),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -465,7 +577,10 @@ private fun OnlineSubtitleDialog(rawTitle: String, onDismiss: () -> Unit, onFile
                 }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Close") } },
+        dismissButton = {
+            TextButton(enabled = !busy && !searchAll, onClick = { searchAll = true }) { Text(stringResource(R.string.vn_search_all_sources)) }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_close)) } },
     )
 }
 

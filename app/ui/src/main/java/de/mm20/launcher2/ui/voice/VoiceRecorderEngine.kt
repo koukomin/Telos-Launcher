@@ -113,8 +113,9 @@ object VoiceRecorderEngine {
         val sources = listOf(settings.mode.source, MediaRecorder.AudioSource.MIC, MediaRecorder.AudioSource.DEFAULT).distinct()
         var created: MediaRecorder? = null
         for (source in sources) {
+            var rec: MediaRecorder? = null
             try {
-                val rec = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) MediaRecorder(context) else @Suppress("DEPRECATION") MediaRecorder()
+                rec = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) MediaRecorder(context) else @Suppress("DEPRECATION") MediaRecorder()
                 rec.setAudioSource(source)
                 when (format) {
                     VoiceFormat.Aac -> {
@@ -134,7 +135,7 @@ object VoiceRecorderEngine {
                 created = rec
                 break
             } catch (_: Exception) {
-                runCatching { created?.release() }
+                runCatching { rec?.release() }
                 created = null
             }
         }

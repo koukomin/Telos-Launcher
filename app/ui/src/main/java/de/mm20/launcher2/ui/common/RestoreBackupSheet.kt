@@ -128,6 +128,19 @@ fun RestoreBackupSheet(
                                         stringResource(R.string.app_name) + " " + metadata!!.appVersionName,
                                     )
                                 )
+                                if (compatibility != BackupCompatibility.Incompatible) {
+                                    Text(
+                                        stringResource(R.string.restore_choose_parts),
+                                        style = MaterialTheme.typography.titleMedium,
+                                        modifier = Modifier.padding(top = 12.dp, bottom = 4.dp),
+                                    )
+                                    BackupGroupList(
+                                        available = metadata!!.groups.toList(),
+                                        selected = viewModel.selected.value,
+                                        onToggle = viewModel::toggle,
+                                        onSelectAll = viewModel::selectAll,
+                                    )
+                                }
                                 if (compatibility == BackupCompatibility.Incompatible) {
                                     LargeMessage(
                                         modifier = Modifier
@@ -179,6 +192,7 @@ fun RestoreBackupSheet(
                 ) {
                     Button(
                         onClick = { viewModel.restore() },
+                        enabled = viewModel.selected.value.isNotEmpty(),
                         modifier = Modifier.navigationBarsPadding(),
                     ) {
                         Text(stringResource(R.string.preference_restore))

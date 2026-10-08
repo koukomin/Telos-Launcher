@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="web_app_presets_title">Categorie suggerite</string>
+    <string name="web_app_presets_summary">Aggiungi una cartella già pronta con siti web popolari come web app. Non viene aggiunto nulla finché non la scegli, e ogni cartella e web app potrà essere modificata o eliminata in seguito.</string>
+    <string name="web_app_presets_login_note">Accedi su ciascun sito web. Gli accessi vengono conservati dal browser integrato. Questo vale solo per le web app che si aprono nel browser integrato; quelle aperte in un browser esterno usano l\'accesso del browser stesso.</string>
+    <string name="web_app_preset_category_social">Social</string>
+    <string name="web_app_preset_category_email">Email</string>
+    <string name="web_app_preset_category_messaging">Messaggistica</string>
+    <string name="web_app_preset_category_video">Video e musica</string>
+    <string name="web_app_preset_category_work">Produttività e lavoro</string>
+    <string name="web_app_preset_add">Aggiungi</string>
+    <string name="web_app_preset_dialog_title">Aggiungi %1$s</string>
+    <string name="web_app_preset_dialog_summary">Scegli le web app da aggiungere. Vengono salvate come qualsiasi web app creata da te.</string>
+    <string name="web_app_preset_exists">Già presente tra le tue web app, verrà riutilizzata</string>
+    <string name="web_app_preset_confirm">Aggiungi selezionate</string>
+    <string name="web_app_preset_added">%1$s aggiunto</string>
+    <string name="web_app_groups_title">Cartelle</string>
+    <string name="web_app_groups_enable">Abilita le cartelle di web app</string>
+    <string name="web_app_groups_enable_summary">Organizza le web app in cartelle e limita lo scorrimento per cartella</string>
+    <string name="web_app_groups_manage">Gestisci cartelle</string>
+    <string name="web_app_group_create">Crea nuova cartella</string>
+    <string name="web_app_group_create_title">Crea cartella</string>
+    <string name="web_app_group_rename_title">Rinomina cartella</string>
+    <string name="web_app_group_name">Nome della cartella</string>
+    <string name="web_app_group_create_confirm">Crea</string>
+    <string name="web_app_group_rename_confirm">Rinomina</string>
+    <string name="web_app_group_apps_count">%1$d web app</string>
+    <string name="web_app_group_notifications">Notifiche</string>
+    <string name="web_app_group_label">Cartella</string>
+    <string name="web_app_group_none">Nessuna</string>
+    <string name="web_app_group_delete_title">Eliminare la cartella?</string>
+    <string name="web_app_group_delete_message">La cartella \"%1$s\" verrà eliminata. Le web app al suo interno vengono mantenute e rimarranno senza cartella.</string>
+    <string name="web_app_delete_title">Eliminare la web app?</string>
+    <string name="web_app_delete_message">\"%1$s\" verrà rimossa dalla ricerca, dalla schermata Home, dalle cartelle e dal pannello delle web app. L\'operazione non può essere annullata.</string>
+    <string name="web_app_shortcut_ad_block">Blocco annunci</string>
+    <string name="web_app_shortcut_ad_block_global">Usa impostazione globale</string>
+    <string name="web_app_shortcut_ad_block_on">Attivo</string>
+    <string name="web_app_shortcut_ad_block_off">Disattivo</string>
+    <string name="web_app_shortcut_ad_block_summary">Vale solo per il browser integrato. I browser esterni (Custom Tabs) sono gestiti dall\'app del browser.</string>
+</resources>

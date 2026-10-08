@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.media.photos
 
+import de.mm20.launcher2.ui.R
+import androidx.compose.ui.res.stringResource
 import android.content.ContentValues
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -175,7 +177,7 @@ private fun PhotoEditor(uri: Uri, onClose: () -> Unit) {
 
     Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface).navigationBarsPadding()) {
         Row(Modifier.fillMaxWidth().statusBarsPadding().padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-            TextButton(onClick = onClose) { Text("Cancel") }
+            TextButton(onClick = onClose) { Text(stringResource(R.string.hc_cancel)) }
             Spacer(Modifier.weight(1f))
             Button(enabled = bmp != null && !saving, onClick = {
                 saving = true
@@ -206,9 +208,9 @@ private fun PhotoEditor(uri: Uri, onClose: () -> Unit) {
         }
         Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(12.dp).heightIn(max = 280.dp)) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                AssistChip(onClick = { rotation = (rotation + 270) % 360 }, label = { Text("Rotate left") })
-                AssistChip(onClick = { rotation = (rotation + 90) % 360 }, label = { Text("Rotate right") })
-                AssistChip(onClick = { flipH = !flipH }, label = { Text("Flip") })
+                AssistChip(onClick = { rotation = (rotation + 270) % 360 }, label = { Text(stringResource(R.string.hc_rotate_left)) })
+                AssistChip(onClick = { rotation = (rotation + 90) % 360 }, label = { Text(stringResource(R.string.hc_rotate_right)) })
+                AssistChip(onClick = { flipH = !flipH }, label = { Text(stringResource(R.string.hc_flip)) })
             }
             androidx.compose.foundation.lazy.LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 items(aspects.size) { i ->
@@ -220,11 +222,11 @@ private fun PhotoEditor(uri: Uri, onClose: () -> Unit) {
                     FilterChip(selected = filter == i, onClick = { filter = i }, label = { Text(filters[i]) })
                 }
             }
-            Text("Brightness", style = MaterialTheme.typography.labelMedium)
+            Text(stringResource(R.string.hc_brightness), style = MaterialTheme.typography.labelMedium)
             Slider(value = brightness, onValueChange = { brightness = it }, valueRange = -100f..100f)
-            Text("Contrast", style = MaterialTheme.typography.labelMedium)
+            Text(stringResource(R.string.hc_contrast), style = MaterialTheme.typography.labelMedium)
             Slider(value = contrast, onValueChange = { contrast = it }, valueRange = 0.5f..1.8f)
-            Text("Saturation", style = MaterialTheme.typography.labelMedium)
+            Text(stringResource(R.string.hc_saturation), style = MaterialTheme.typography.labelMedium)
             Slider(value = saturation, onValueChange = { saturation = it }, valueRange = 0f..2f)
         }
     }

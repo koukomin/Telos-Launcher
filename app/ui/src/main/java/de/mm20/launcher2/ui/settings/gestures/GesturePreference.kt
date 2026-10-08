@@ -296,6 +296,35 @@ internal fun GesturePreference(
                             }
                         }
                     }
+                    if (options.contains(GestureAction.TelosApp::class)) item {
+                        PreferenceCategory(
+                            title = stringResource(R.string.gesture_action_category_telos_apps)
+                        ) {
+                            for (app in de.mm20.launcher2.store.catalog.TelosApps.all) {
+                                GestureItem(
+                                    title = stringResource(R.string.gesture_action_telos_app_open, app.name),
+                                    icon = app.iconRes,
+                                    selected = value is GestureAction.TelosApp && value.key == app.key,
+                                    onClick = {
+                                        onValueChanged(GestureAction.TelosApp(app.key), null)
+                                        showSheet = false
+                                    }
+                                )
+                                // Apps that cannot be shown inside the launcher only have "open"
+                                if (de.mm20.launcher2.ui.launcher.scaffold.components.TelosPages.canEmbed(app.key)) {
+                                    GestureItem(
+                                        title = stringResource(R.string.gesture_action_telos_app_page, app.name),
+                                        icon = app.iconRes,
+                                        selected = value is GestureAction.TelosPage && value.key == app.key,
+                                        onClick = {
+                                            onValueChanged(GestureAction.TelosPage(app.key), null)
+                                            showSheet = false
+                                        }
+                                    )
+                                }
+                            }
+                        }
+                    }
                     item {
                         PreferenceCategory(
                             title = stringResource(R.string.gesture_action_category_apps)
@@ -462,6 +491,12 @@ private fun getActionLabel(
 ): String {
     return when (action) {
         GestureAction.Feed -> resources.getString(R.string.gesture_action_feed)
+        is GestureAction.TelosApp -> de.mm20.launcher2.store.catalog.TelosApps.all.firstOrNull { it.key == action.key }?.name
+            ?.let { resources.getString(R.string.gesture_action_telos_app_open, it) }
+            ?: resources.getString(R.string.gesture_action_launch_app)
+        is GestureAction.TelosPage -> de.mm20.launcher2.store.catalog.TelosApps.all.firstOrNull { it.key == action.key }?.name
+            ?.let { resources.getString(R.string.gesture_action_telos_app_page, it) }
+            ?: resources.getString(R.string.gesture_action_launch_app)
         is GestureAction.Launch -> {
             shortcutOptions.find { it.key == action.key }
                 ?.let { it.labelOverride ?: it.label }

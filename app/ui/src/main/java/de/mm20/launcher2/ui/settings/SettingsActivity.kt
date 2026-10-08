@@ -285,6 +285,18 @@ class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.voice.VoiceSettingsRoute> {
                 de.mm20.launcher2.ui.voice.VoiceSettingsScreen()
             }
+            entry<de.mm20.launcher2.ui.downloads.DownloadsRoute> {
+                de.mm20.launcher2.ui.downloads.DownloadsScreen(it.initialUrls)
+            }
+            entry<de.mm20.launcher2.ui.downloads.DownloadsSettingsRoute> {
+                de.mm20.launcher2.ui.downloads.DownloadsSettingsScreen()
+            }
+            entry<de.mm20.launcher2.ui.notes.NotesRoute> {
+                de.mm20.launcher2.ui.notes.NotesScreen()
+            }
+            entry<de.mm20.launcher2.ui.calendar.CalendarRoute> {
+                de.mm20.launcher2.ui.calendar.CalendarScreen()
+            }
             entry<de.mm20.launcher2.ui.calculator.CalculatorRoute> {
                 de.mm20.launcher2.ui.calculator.CalculatorScreen()
             }
@@ -649,6 +661,11 @@ class SettingsActivity : BaseActivity() {
             ROUTE_VOICE_RECORDER -> de.mm20.launcher2.ui.voice.VoiceRecorderRoute
             ROUTE_SCREEN_RECORDER -> de.mm20.launcher2.ui.screenrec.ScreenRecorderRoute
             ROUTE_SCREENSHOT -> de.mm20.launcher2.ui.screenshot.ScreenshotRoute
+            ROUTE_NOTES -> de.mm20.launcher2.ui.notes.NotesRoute
+            ROUTE_CALENDAR -> de.mm20.launcher2.ui.calendar.CalendarRoute
+            ROUTE_DOWNLOADS -> de.mm20.launcher2.ui.downloads.DownloadsRoute(
+                initialUrls = intent.getStringArrayListExtra(SettingsDeepLinkContract.EXTRA_DOWNLOAD_URLS).orEmpty(),
+            )
             // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
             ROUTE_CRASH_REPORT if (intent.hasExtra(EXTRA_CRASH_REPORT_PATH)) -> {
                 CrashReportRoute(intent.getStringExtra(EXTRA_CRASH_REPORT_PATH)!!)
@@ -683,6 +700,9 @@ class SettingsActivity : BaseActivity() {
         const val ROUTE_VOICE_RECORDER = SettingsDeepLinkContract.ROUTE_VOICE_RECORDER
         const val ROUTE_SCREEN_RECORDER = SettingsDeepLinkContract.ROUTE_SCREEN_RECORDER
         const val ROUTE_SCREENSHOT = SettingsDeepLinkContract.ROUTE_SCREENSHOT
+        const val ROUTE_NOTES = SettingsDeepLinkContract.ROUTE_NOTES
+        const val ROUTE_CALENDAR = SettingsDeepLinkContract.ROUTE_CALENDAR
+        const val ROUTE_DOWNLOADS = SettingsDeepLinkContract.ROUTE_DOWNLOADS
         // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
         const val ROUTE_CRASH_REPORT = "settings/debug/crashreport"
         const val EXTRA_CRASH_REPORT_PATH = "crash_report_path"

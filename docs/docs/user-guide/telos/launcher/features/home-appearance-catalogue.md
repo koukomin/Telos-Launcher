@@ -441,13 +441,14 @@ Settings > Web app shortcuts. The panel is a home screen page for web app shortc
 | --- | --- | --- |
 | Enable Web Apps Panel | On (through the swipe right gesture) | Switching on assigns the panel to a swipe gesture, switching off clears it |
 | Swipe direction | Right | Left or right. Moves the gesture assignment |
-| Enable web app groups | Off | Lets you create named groups of shortcuts. Each group can switch notifications on or off |
-| Block ads and trackers | On | Embedded browser only |
+| Enable web app folders | Off | Lets you create, rename and delete (with confirmation) named folders of shortcuts. Each folder can switch notifications on or off |
+| Suggested categories | n/a | One-tap folders (Social, Email, Messaging, Video & Music, Productivity & Work) with chosen websites saved as normal web apps. Nothing is added automatically, existing web apps with the same address are reused |
+| Block ads and trackers | On | Embedded browser only. Per web app override: global, on or off |
 | Pinch to zoom | On | Embedded browser |
 | Strip tracking parameters | On | Embedded browser |
 | Top bar position | Top | Top or bottom |
 | Swipe to switch web apps | On | Swipe sideways on the top bar to switch shortcuts |
-| Panel items | empty | Per shortcut: show it in the app grid, in the panel, or both |
+| Panel items | empty | Per shortcut: show it in the app grid, in the panel, or both. The bin deletes the web app after confirmation |
 
 Shortcut options (name, URL, icon source, browser, custom CSS, notifications) are in
 [Desktop and overlays](../desktop-and-overlays#web-apps).

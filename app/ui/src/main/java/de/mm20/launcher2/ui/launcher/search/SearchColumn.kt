@@ -47,6 +47,7 @@ import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.launcher.search.appmanagement.FossUpdateResults
 import de.mm20.launcher2.ui.launcher.search.apps.AppResults
 import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorResults
+import de.mm20.launcher2.ui.launcher.search.notes.NoteResults
 import de.mm20.launcher2.ui.launcher.search.calendar.CalendarResults
 import de.mm20.launcher2.ui.launcher.search.contacts.ContactResults
 import de.mm20.launcher2.ui.launcher.search.favorites.SearchFavorites
@@ -343,6 +344,8 @@ fun SearchColumn(
                         calculator,
                         reverse = reverse
                     )
+
+                    NoteResults(viewModel.noteResults, reverse = reverse)
 
                     CalendarResults(
                         events = events,

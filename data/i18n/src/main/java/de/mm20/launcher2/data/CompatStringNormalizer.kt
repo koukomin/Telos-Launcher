@@ -1,5 +1,6 @@
 package de.mm20.launcher2.data
 
+import de.mm20.launcher2.search.GreekFold
 import de.mm20.launcher2.search.StringNormalizer
 import org.apache.commons.lang3.StringUtils
 import java.util.Locale
@@ -9,12 +10,12 @@ import java.util.Locale
  */
 internal class CompatStringNormalizer: StringNormalizer  {
 
-    override val id: String = "null"
+    override val id: String = "null;greekfold1"
 
     override fun normalize(input: String): String {
-        return StringUtils.stripAccents(input.lowercase(Locale.getDefault()))
+        return GreekFold.finish(StringUtils.stripAccents(GreekFold.prepare(input).lowercase(Locale.getDefault()))
             .replace("æ", "ae")
             .replace("œ", "oe")
-            .replace("ß", "ss")
+            .replace("ß", "ss"))
     }
 }

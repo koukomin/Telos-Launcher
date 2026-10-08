@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.media
 
+import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -47,7 +48,7 @@ fun MediaFrame(
                 title = { Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 navigationIcon = {
                     IconButton(onClick = { backStack.removeLastOrNull() }) {
-                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back")
+                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back))
                     }
                 },
                 actions = actions,
@@ -77,7 +78,7 @@ fun MediaSearchBar(
         trailingIcon = {
             if (value.isNotEmpty()) {
                 IconButton(onClick = { onValueChange("") }) {
-                    Icon(painterResource(R.drawable.close_24px), contentDescription = "Clear")
+                    Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.hc_clear))
                 }
             }
         },

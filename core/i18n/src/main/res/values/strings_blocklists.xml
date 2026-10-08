@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="blocklists_web_title">Block lists</string>
+    <string name="blocklists_torrent_title">Peer block lists</string>
+    <string name="blocklists_web_info">Domain lists that are added to the built-in ad and tracker list of web apps. Nothing is downloaded until you switch a list on. Each enabled list is fetched directly from the address shown under it; no other server is contacted and nothing about you is sent.</string>
+    <string name="blocklists_torrent_info">IP address ranges that torrent streaming refuses to connect to. Nothing is downloaded until you switch a list on. Each enabled list is fetched directly from the address shown under it; no other server is contacted and nothing about you is sent. A block list reduces unwanted connections but is not anonymity.</string>
+    <string name="blocklists_downloaded_from">Downloaded from %1$s</string>
+    <string name="blocklists_license">Licence: %1$s</string>
+    <string name="blocklists_never">Not downloaded yet</string>
+    <string name="blocklists_status">%1$d entries, updated %2$s</string>
+    <string name="blocklists_error">Last update failed: %1$s. The previous list is kept.</string>
+    <string name="blocklists_imported">Imported from a file, not updated automatically</string>
+    <string name="blocklists_updating">Updating…</string>
+    <string name="blocklists_update_now">Update now</string>
+    <string name="blocklists_add_custom">Add list by address</string>
+    <string name="blocklists_import_file">Import from a file</string>
+    <string name="blocklists_remove">Remove list</string>
+    <string name="blocklists_custom_name">Name</string>
+    <string name="blocklists_custom_url">Address (https)</string>
+    <string name="blocklists_add">Add</string>
+    <string name="blocklists_cancel">Cancel</string>
+    <string name="blocklists_invalid_url">Only https addresses are accepted</string>
+    <string name="blocklists_import_failed">The file contains no usable entries or could not be read</string>
+    <string name="blocklists_schedule">Automatic update</string>
+    <string name="blocklists_schedule_off">Off</string>
+    <string name="blocklists_schedule_daily">Daily</string>
+    <string name="blocklists_schedule_weekly">Weekly</string>
+    <string name="blocklists_wifi_only">Update only on Wi-Fi</string>
+    <string name="blocklists_schedule_info">Applies to all block lists, web apps and torrents. Updates only ask the server whether the list changed and are skipped when the battery is low.</string>
+</resources>
