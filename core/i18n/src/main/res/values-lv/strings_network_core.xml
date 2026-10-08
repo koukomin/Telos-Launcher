@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Telos Network paziņojumi</string>
+    <string name="net_notif_title">Telos Network ir ieslēgts</string>
+    <string name="net_notif_text">Savienojumi tiek filtrēti.</string>
+    <string name="net_notif_blocked">Bloķētie savienojumi: %1$d</string>
+    <string name="net_notif_stop">Izslēgt</string>
+    <string name="net_alert_stopped_title">Telos Network izslēgts</string>
+    <string name="net_alert_crashed">Tīkla dzinējs negaidīti apstājās. Piekļuve internetam netiek ietekmēta.</string>
+    <string name="net_alert_revoked">Cits VPN pārņēma vadību. Piekļuve internetam netiek ietekmēta.</string>
+    <string name="net_alert_start_failed">Telos Network neizdevās startēt. Piekļuve internetam netiek ietekmēta.</string>
+    <string name="net_error_permission">VPN iestatīšanai nepieciešama atļauja.</string>
+    <string name="net_error_start_failed">Neizdevās startēt: %1$s</string>
+    <string name="net_error_unknown">nezināma kļūda</string>
+    <string name="net_app_system">Android sistēma</string>
+    <string name="net_app_unknown">Nezināma lietotne (%1$d)</string>
+    <string name="net_dns_system">Tīkla DNS (sistēmas)</string>
+</resources>

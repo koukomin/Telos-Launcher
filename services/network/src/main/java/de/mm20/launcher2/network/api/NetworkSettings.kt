@@ -2,9 +2,11 @@ package de.mm20.launcher2.network.api
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.serialization.Serializable
 import kotlinx.coroutines.flow.map
 
 /** All settings of Telos Network in one immutable snapshot. Defaults are the safe, quiet choice. */
+@Serializable
 data class NetworkSettingsValues(
     /**
      * Start the VPN after the device booted. Off by default. Even when on, the VPN only starts if
@@ -60,6 +62,9 @@ interface NetworkSettings {
 
     /** The current value, same as `values.value`. */
     val current: NetworkSettingsValues get() = values.value
+
+    /** Writes pending changes to disk now. Used for flags that must survive a crash. */
+    fun flush() {}
 
     /** Atomically changes the settings: [transform] receives the current value and returns the new one. */
     fun update(transform: (NetworkSettingsValues) -> NetworkSettingsValues)

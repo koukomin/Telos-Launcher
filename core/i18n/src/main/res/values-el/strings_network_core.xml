@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Ειδοποιήσεις Telos Network</string>
+    <string name="net_notif_title">Το Telos Network είναι ενεργό</string>
+    <string name="net_notif_text">Οι συνδέσεις φιλτράρονται.</string>
+    <string name="net_notif_blocked">Αποκλεισμένες συνδέσεις: %1$d</string>
+    <string name="net_notif_stop">Απενεργοποίηση</string>
+    <string name="net_alert_stopped_title">Το Telos Network απενεργοποιήθηκε</string>
+    <string name="net_alert_crashed">Η μηχανή δικτύου σταμάτησε απροσδόκητα. Η πρόσβαση στο διαδίκτυο δεν επηρεάζεται.</string>
+    <string name="net_alert_revoked">Άλλο VPN ανέλαβε τον έλεγχο. Η πρόσβαση στο διαδίκτυο δεν επηρεάζεται.</string>
+    <string name="net_alert_start_failed">Το Telos Network δεν μπόρεσε να ξεκινήσει. Η πρόσβαση στο διαδίκτυο δεν επηρεάζεται.</string>
+    <string name="net_error_permission">Απαιτείται άδεια για τη ρύθμιση VPN.</string>
+    <string name="net_error_start_failed">Αδυναμία εκκίνησης: %1$s</string>
+    <string name="net_error_unknown">άγνωστο σφάλμα</string>
+    <string name="net_app_system">Σύστημα Android</string>
+    <string name="net_app_unknown">Άγνωστη εφαρμογή (%1$d)</string>
+    <string name="net_dns_system">DNS δικτύου (συστήματος)</string>
+</resources>

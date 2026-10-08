@@ -24,7 +24,7 @@ data class AppEntry(
  * The list is kept up to date when apps are installed and removed.
  */
 interface AppDirectory {
-    /** All known apps, sorted by label. Includes system uids that can appear in the logs (root, system, dns...). */
+    /** All installed apps, sorted by label. System uids without a package (root, dns...) are not listed; [labelFor] still names them. */
     val apps: StateFlow<List<AppEntry>>
 
     /** The uid of Telos itself without user id. */

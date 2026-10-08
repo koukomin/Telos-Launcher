@@ -1,6 +1,7 @@
 package de.mm20.launcher2.network.api
 
-import java.net.InetAddress
+import de.mm20.launcher2.network.util.IpUtil
+import kotlinx.serialization.Serializable
 
 /**
  * Shared vocabulary of the Telos Network API. Everything here is plain Kotlin and has no dependency
@@ -114,12 +115,7 @@ data class FlowInfo(
 
 /** True for loopback, link-local, site-local and unique-local addresses (IPv4 and IPv6) given as literals. */
 fun isLanAddress(ip: String): Boolean {
-    val address = try {
-        // Only literals are ever passed in, so this never does a DNS lookup
-        InetAddress.getByName(ip.trim().removePrefix("[").removeSuffix("]"))
-    } catch (e: Exception) {
-        return false
-    }
+    val address = IpUtil.parse(ip) ?: return false
     if (address.isLoopbackAddress || address.isLinkLocalAddress || address.isSiteLocalAddress) return true
     val bytes = address.address
     // fc00::/7 unique local addresses are not covered by isSiteLocalAddress
@@ -196,11 +192,14 @@ enum class DnsVerdict {
 }
 
 /** Scope of a rule: one app, or all apps together. */
+@Serializable
 sealed interface RuleScope {
     /** Applies to every app. */
+    @Serializable
     data object System : RuleScope
 
     /** Applies to one app, given by its uid without user id ([FlowInfo.appId]). */
+    @Serializable
     data class App(val appId: Int) : RuleScope
 }
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Notifikasi Telos Network</string>
+    <string name="net_notif_title">Telos Network aktif</string>
+    <string name="net_notif_text">Koneksi sedang disaring.</string>
+    <string name="net_notif_blocked">Koneksi diblokir: %1$d</string>
+    <string name="net_notif_stop">Matikan</string>
+    <string name="net_alert_stopped_title">Telos Network dimatikan</string>
+    <string name="net_alert_crashed">Mesin jaringan berhenti secara tak terduga. Akses internet tidak terpengaruh.</string>
+    <string name="net_alert_revoked">VPN lain mengambil alih. Akses internet tidak terpengaruh.</string>
+    <string name="net_alert_start_failed">Telos Network tidak dapat dimulai. Akses internet tidak terpengaruh.</string>
+    <string name="net_error_permission">Izin diperlukan untuk menyiapkan VPN.</string>
+    <string name="net_error_start_failed">Tidak dapat memulai: %1$s</string>
+    <string name="net_error_unknown">kesalahan tidak dikenal</string>
+    <string name="net_app_system">Sistem Android</string>
+    <string name="net_app_unknown">Aplikasi tidak dikenal (%1$d)</string>
+    <string name="net_dns_system">DNS jaringan (sistem)</string>
+</resources>

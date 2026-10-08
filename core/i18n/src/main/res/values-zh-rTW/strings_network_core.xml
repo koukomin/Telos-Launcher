@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Telos Network 通知</string>
+    <string name="net_notif_title">Telos Network 已開啟</string>
+    <string name="net_notif_text">正在過濾連線。</string>
+    <string name="net_notif_blocked">已封鎖的連線：%1$d</string>
+    <string name="net_notif_stop">關閉</string>
+    <string name="net_alert_stopped_title">Telos Network 已關閉</string>
+    <string name="net_alert_crashed">網路引擎意外停止。網際網路存取不受影響。</string>
+    <string name="net_alert_revoked">另一個 VPN 接管了連線。網際網路存取不受影響。</string>
+    <string name="net_alert_start_failed">Telos Network 無法啟動。網際網路存取不受影響。</string>
+    <string name="net_error_permission">設定 VPN 需要授權。</string>
+    <string name="net_error_start_failed">無法啟動：%1$s</string>
+    <string name="net_error_unknown">未知錯誤</string>
+    <string name="net_app_system">Android 系統</string>
+    <string name="net_app_unknown">未知的應用程式 (%1$d)</string>
+    <string name="net_dns_system">網路 DNS（系統）</string>
+</resources>

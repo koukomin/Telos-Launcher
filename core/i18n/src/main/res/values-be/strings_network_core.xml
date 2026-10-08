@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Апавяшчэнні Telos Network</string>
+    <string name="net_notif_title">Telos Network уключаны</string>
+    <string name="net_notif_text">Злучэнні фільтруюцца.</string>
+    <string name="net_notif_blocked">Заблакіраваныя злучэнні: %1$d</string>
+    <string name="net_notif_stop">Выключыць</string>
+    <string name="net_alert_stopped_title">Telos Network выключаны</string>
+    <string name="net_alert_crashed">Сеткавы модуль нечакана спыніўся. Доступ у інтэрнэт не парушаны.</string>
+    <string name="net_alert_revoked">Іншы VPN перахапіў кіраванне. Доступ у інтэрнэт не парушаны.</string>
+    <string name="net_alert_start_failed">Не ўдалося запусціць Telos Network. Доступ у інтэрнэт не парушаны.</string>
+    <string name="net_error_permission">Патрэбны дазвол на наладу VPN.</string>
+    <string name="net_error_start_failed">Не ўдалося запусціць: %1$s</string>
+    <string name="net_error_unknown">невядомая памылка</string>
+    <string name="net_app_system">Сістэма Android</string>
+    <string name="net_app_unknown">Невядомая праграма (%1$d)</string>
+    <string name="net_dns_system">DNS сеткі (сістэмны)</string>
+</resources>

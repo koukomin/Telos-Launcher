@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">تنبيهات Telos Network</string>
+    <string name="net_notif_title">Telos Network قيد التشغيل</string>
+    <string name="net_notif_text">تتم تصفية الاتصالات.</string>
+    <string name="net_notif_blocked">الاتصالات المحظورة: %1$d</string>
+    <string name="net_notif_stop">إيقاف</string>
+    <string name="net_alert_stopped_title">تم إيقاف Telos Network</string>
+    <string name="net_alert_crashed">توقف محرك الشبكة بشكل غير متوقع. الوصول إلى الإنترنت غير متأثر.</string>
+    <string name="net_alert_revoked">تولّت شبكة VPN أخرى المهمة. الوصول إلى الإنترنت غير متأثر.</string>
+    <string name="net_alert_start_failed">تعذّر بدء Telos Network. الوصول إلى الإنترنت غير متأثر.</string>
+    <string name="net_error_permission">مطلوب إذن لإعداد شبكة VPN.</string>
+    <string name="net_error_start_failed">تعذّر البدء: %1$s</string>
+    <string name="net_error_unknown">خطأ غير معروف</string>
+    <string name="net_app_system">نظام Android</string>
+    <string name="net_app_unknown">تطبيق غير معروف (%1$d)</string>
+    <string name="net_dns_system">DNS الشبكة (النظام)</string>
+</resources>

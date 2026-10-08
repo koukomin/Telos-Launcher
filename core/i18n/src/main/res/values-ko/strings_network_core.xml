@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Telos Network 알림</string>
+    <string name="net_notif_title">Telos Network 켜짐</string>
+    <string name="net_notif_text">연결을 필터링하고 있습니다.</string>
+    <string name="net_notif_blocked">차단된 연결: %1$d</string>
+    <string name="net_notif_stop">끄기</string>
+    <string name="net_alert_stopped_title">Telos Network가 꺼졌습니다</string>
+    <string name="net_alert_crashed">네트워크 엔진이 예기치 않게 중지되었습니다. 인터넷 접속에는 영향이 없습니다.</string>
+    <string name="net_alert_revoked">다른 VPN이 연결을 넘겨받았습니다. 인터넷 접속에는 영향이 없습니다.</string>
+    <string name="net_alert_start_failed">Telos Network를 시작할 수 없습니다. 인터넷 접속에는 영향이 없습니다.</string>
+    <string name="net_error_permission">VPN을 설정하려면 권한이 필요합니다.</string>
+    <string name="net_error_start_failed">시작할 수 없음: %1$s</string>
+    <string name="net_error_unknown">알 수 없는 오류</string>
+    <string name="net_app_system">Android 시스템</string>
+    <string name="net_app_unknown">알 수 없는 앱 (%1$d)</string>
+    <string name="net_dns_system">네트워크 DNS(시스템)</string>
+</resources>

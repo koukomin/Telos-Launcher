@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Telos Network の通知</string>
+    <string name="net_notif_title">Telos Network はオンです</string>
+    <string name="net_notif_text">接続をフィルタリングしています。</string>
+    <string name="net_notif_blocked">ブロックした接続: %1$d</string>
+    <string name="net_notif_stop">オフにする</string>
+    <string name="net_alert_stopped_title">Telos Network がオフになりました</string>
+    <string name="net_alert_crashed">ネットワークエンジンが予期せず停止しました。インターネット接続には影響ありません。</string>
+    <string name="net_alert_revoked">別の VPN が引き継ぎました。インターネット接続には影響ありません。</string>
+    <string name="net_alert_start_failed">Telos Network を開始できませんでした。インターネット接続には影響ありません。</string>
+    <string name="net_error_permission">VPN を設定するには許可が必要です。</string>
+    <string name="net_error_start_failed">開始できませんでした: %1$s</string>
+    <string name="net_error_unknown">不明なエラー</string>
+    <string name="net_app_system">Android システム</string>
+    <string name="net_app_unknown">不明なアプリ (%1$d)</string>
+    <string name="net_dns_system">ネットワークの DNS（システム）</string>
+</resources>

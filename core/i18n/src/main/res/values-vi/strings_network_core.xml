@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Thông báo của Telos Network</string>
+    <string name="net_notif_title">Telos Network đang bật</string>
+    <string name="net_notif_text">Các kết nối đang được lọc.</string>
+    <string name="net_notif_blocked">Kết nối bị chặn: %1$d</string>
+    <string name="net_notif_stop">Tắt</string>
+    <string name="net_alert_stopped_title">Telos Network đã tắt</string>
+    <string name="net_alert_crashed">Công cụ mạng đã dừng đột ngột. Truy cập internet không bị ảnh hưởng.</string>
+    <string name="net_alert_revoked">Một VPN khác đã tiếp quản. Truy cập internet không bị ảnh hưởng.</string>
+    <string name="net_alert_start_failed">Telos Network không thể khởi động. Truy cập internet không bị ảnh hưởng.</string>
+    <string name="net_error_permission">Cần có quyền để thiết lập VPN.</string>
+    <string name="net_error_start_failed">Không thể khởi động: %1$s</string>
+    <string name="net_error_unknown">lỗi không xác định</string>
+    <string name="net_app_system">Hệ thống Android</string>
+    <string name="net_app_unknown">Ứng dụng không xác định (%1$d)</string>
+    <string name="net_dns_system">DNS của mạng (hệ thống)</string>
+</resources>
