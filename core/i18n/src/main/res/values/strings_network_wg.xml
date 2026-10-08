@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Back</string>
+    <string name="nwg_add">Add tunnel</string>
+    <string name="nwg_add_new">Create new</string>
+    <string name="nwg_add_file">Import .conf file</string>
+    <string name="nwg_add_qr">Import from QR code image</string>
+    <string name="nwg_add_paste">Paste config text</string>
+    <string name="nwg_system_default">System default</string>
+    <string name="nwg_system_default_summary">Apps without their own setting use this tunnel. Without a system default they connect directly.</string>
+    <string name="nwg_none">None (direct)</string>
+    <string name="nwg_direct">Direct (no proxy)</string>
+    <string name="nwg_apps">Per-app assignment</string>
+    <string name="nwg_apps_summary">Choose which tunnel each app uses</string>
+    <string name="nwg_configs">Tunnels</string>
+    <string name="nwg_empty">No tunnels yet. Add one with the + button.</string>
+    <string name="nwg_status_off">Off</string>
+    <string name="nwg_status_connecting">Connecting</string>
+    <string name="nwg_status_up">Connected</string>
+    <string name="nwg_status_down">Not responding</string>
+    <string name="nwg_status_error">Error</string>
+    <string name="nwg_traffic">Received %1$s, sent %2$s</string>
+    <string name="nwg_handshake">Last handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Turn on Telos Network to connect the tunnels.</string>
+    <string name="nwg_new_title">New tunnel</string>
+    <string name="nwg_edit_title">Edit tunnel</string>
+    <string name="nwg_name">Name</string>
+    <string name="nwg_private_key">Private key</string>
+    <string name="nwg_public_key">Public key: %1$s</string>
+    <string name="nwg_generate">Generate</string>
+    <string name="nwg_addresses">Addresses (comma separated)</string>
+    <string name="nwg_dns">DNS servers (comma separated)</string>
+    <string name="nwg_mtu">MTU (0 = automatic)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Peer public key</string>
+    <string name="nwg_preshared">Preshared key (optional)</string>
+    <string name="nwg_endpoint">Endpoint (host:port)</string>
+    <string name="nwg_allowed_ips">Allowed IPs (comma separated)</string>
+    <string name="nwg_keepalive">Persistent keepalive in seconds (0 = off)</string>
+    <string name="nwg_add_peer">Add peer</string>
+    <string name="nwg_remove_peer">Remove peer</string>
+    <string name="nwg_mobile_only">Only on mobile data</string>
+    <string name="nwg_lockdown">Block the apps while the tunnel is down</string>
+    <string name="nwg_save">Save</string>
+    <string name="nwg_cancel">Cancel</string>
+    <string name="nwg_delete">Delete</string>
+    <string name="nwg_share">Share config</string>
+    <string name="nwg_share_warning">The exported config contains the private key.</string>
+    <string name="nwg_import">Import</string>
+    <string name="nwg_qr_not_found">No QR code found in this image</string>
+    <string name="nwg_err_syntax">The config has a syntax error: %1$s</string>
+    <string name="nwg_err_missing">The config is incomplete: %1$s is missing</string>
+    <string name="nwg_err_invalid_key">Invalid key: %1$s</string>
+    <string name="nwg_err_invalid_value">Invalid value: %1$s</string>
+    <string name="nwg_err_invalid_name">Enter a name of up to 64 characters</string>
+    <string name="nwg_err_not_found">The tunnel no longer exists</string>
+    <string name="nwg_err_storage">The config could not be stored securely: %1$s</string>
+    <string name="nwg_err_other">The config could not be saved</string>
+    <string name="nwg_apps_title">Apps and tunnels</string>
+    <string name="nwg_search">Search apps</string>
+    <string name="nwg_show_system">Show system apps</string>
+    <string name="nwg_selected">%1$d selected</string>
+    <string name="nwg_assign_selected">Assign selected apps</string>
+    <string name="nwg_clear_selection">Clear selection</string>
+    <string name="nwg_select_all">Select all shown</string>
+</resources>

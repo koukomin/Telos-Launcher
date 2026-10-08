@@ -2,8 +2,10 @@ package de.mm20.launcher2.network.api
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.serialization.Serializable
 
 /** A connection in the log. */
+@Serializable
 data class ConnectionLogEntry(
     /** Assigned by the store when recorded; 0 when still to be recorded. */
     val id: Long = 0,
@@ -29,6 +31,7 @@ data class ConnectionLogEntry(
 )
 
 /** A DNS question and its answer in the log. */
+@Serializable
 data class DnsLogEntry(
     val id: Long = 0,
     val timeMs: Long,
@@ -63,11 +66,23 @@ data class LogFilter(
 )
 
 /** Totals for the dashboard. */
+@Serializable
 data class LogStats(
     val connectionsAllowed: Long = 0,
     val connectionsBlocked: Long = 0,
     val dnsAllowed: Long = 0,
     val dnsBlocked: Long = 0,
+)
+
+/** Per app totals of the logs. */
+data class AppLogSummary(
+    val appId: Int,
+    val connections: Int,
+    val connectionsBlocked: Int,
+    val dnsQueries: Int,
+    val dnsBlocked: Int,
+    val bytes: Long,
+    val lastMs: Long,
 )
 
 /**
@@ -81,6 +96,15 @@ interface LogController {
 
     /** Newest DNS entries first, at most 500 for UI use. */
     val dns: StateFlow<List<DnsLogEntry>>
+
+    /** Totals per app (by app id) over the kept entries, most active first. */
+    val appSummaries: StateFlow<List<AppLogSummary>>
+
+    /** The log as CSV text (header line included) for [filter]; `dns` selects the DNS log. */
+    suspend fun exportCsv(dns: Boolean, filter: LogFilter = LogFilter(limit = Int.MAX_VALUE)): String
+
+    /** Removes the entries of one app from both logs. */
+    suspend fun clearApp(appId: Int)
 
     /** Counters since the logs were cleared. */
     val stats: StateFlow<LogStats>

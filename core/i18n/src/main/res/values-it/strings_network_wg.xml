@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Indietro</string>
+    <string name="nwg_add">Aggiungi tunnel</string>
+    <string name="nwg_add_new">Crea nuovo</string>
+    <string name="nwg_add_file">Importa file .conf</string>
+    <string name="nwg_add_qr">Importa da immagine di codice QR</string>
+    <string name="nwg_add_paste">Incolla testo di configurazione</string>
+    <string name="nwg_system_default">Predefinito di sistema</string>
+    <string name="nwg_system_default_summary">Le app senza impostazione propria usano questo tunnel. Senza predefinito di sistema si connettono direttamente.</string>
+    <string name="nwg_none">Nessuno (diretto)</string>
+    <string name="nwg_direct">Diretto (senza proxy)</string>
+    <string name="nwg_apps">Assegnazione per app</string>
+    <string name="nwg_apps_summary">Scegli quale tunnel usa ogni app</string>
+    <string name="nwg_configs">Tunnel</string>
+    <string name="nwg_empty">Ancora nessun tunnel. Aggiungine uno con il pulsante +.</string>
+    <string name="nwg_status_off">Disattivato</string>
+    <string name="nwg_status_connecting">Connessione in corso</string>
+    <string name="nwg_status_up">Connesso</string>
+    <string name="nwg_status_down">Non risponde</string>
+    <string name="nwg_status_error">Errore</string>
+    <string name="nwg_traffic">Ricevuti %1$s, inviati %2$s</string>
+    <string name="nwg_handshake">Ultimo handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Attiva Telos Network per collegare i tunnel.</string>
+    <string name="nwg_new_title">Nuovo tunnel</string>
+    <string name="nwg_edit_title">Modifica tunnel</string>
+    <string name="nwg_name">Nome</string>
+    <string name="nwg_private_key">Chiave privata</string>
+    <string name="nwg_public_key">Chiave pubblica: %1$s</string>
+    <string name="nwg_generate">Genera</string>
+    <string name="nwg_addresses">Indirizzi (separati da virgole)</string>
+    <string name="nwg_dns">Server DNS (separati da virgole)</string>
+    <string name="nwg_mtu">MTU (0 = automatico)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Chiave pubblica del peer</string>
+    <string name="nwg_preshared">Chiave precondivisa (facoltativa)</string>
+    <string name="nwg_endpoint">Endpoint (host:porta)</string>
+    <string name="nwg_allowed_ips">IP consentiti (separati da virgole)</string>
+    <string name="nwg_keepalive">Persistent keepalive in secondi (0 = disattivato)</string>
+    <string name="nwg_add_peer">Aggiungi peer</string>
+    <string name="nwg_remove_peer">Rimuovi peer</string>
+    <string name="nwg_mobile_only">Solo con dati mobili</string>
+    <string name="nwg_lockdown">Blocca le app mentre il tunnel non è attivo</string>
+    <string name="nwg_save">Salva</string>
+    <string name="nwg_cancel">Annulla</string>
+    <string name="nwg_delete">Elimina</string>
+    <string name="nwg_share">Condividi configurazione</string>
+    <string name="nwg_share_warning">La configurazione esportata contiene la chiave privata.</string>
+    <string name="nwg_import">Importa</string>
+    <string name="nwg_qr_not_found">Nessun codice QR trovato in questa immagine</string>
+    <string name="nwg_err_syntax">La configurazione ha un errore di sintassi: %1$s</string>
+    <string name="nwg_err_missing">La configurazione è incompleta: manca %1$s</string>
+    <string name="nwg_err_invalid_key">Chiave non valida: %1$s</string>
+    <string name="nwg_err_invalid_value">Valore non valido: %1$s</string>
+    <string name="nwg_err_invalid_name">Inserisci un nome di massimo 64 caratteri</string>
+    <string name="nwg_err_not_found">Il tunnel non esiste più</string>
+    <string name="nwg_err_storage">Impossibile salvare la configurazione in modo sicuro: %1$s</string>
+    <string name="nwg_err_other">Impossibile salvare la configurazione</string>
+    <string name="nwg_apps_title">App e tunnel</string>
+    <string name="nwg_search">Cerca app</string>
+    <string name="nwg_show_system">Mostra app di sistema</string>
+    <string name="nwg_selected">%1$d selezionate</string>
+    <string name="nwg_assign_selected">Assegna alle app selezionate</string>
+    <string name="nwg_clear_selection">Cancella selezione</string>
+    <string name="nwg_select_all">Seleziona tutte le visualizzate</string>
+</resources>

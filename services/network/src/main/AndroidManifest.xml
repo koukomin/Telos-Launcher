@@ -12,6 +12,11 @@
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
 
+    <!-- Optional "usage access" (granted by the user in Android settings): lets the firewall's background rules see which app is in the foreground -->
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+
     <application>
         <!--
             The VPN. Never started by itself: only by NetworkEngine.start() (a user action), by the

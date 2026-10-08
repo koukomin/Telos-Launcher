@@ -9,6 +9,8 @@ import de.mm20.launcher2.network.api.DnsController
 import de.mm20.launcher2.network.api.DnsHealth
 import de.mm20.launcher2.network.api.DnsKind
 import de.mm20.launcher2.network.api.DnsServer
+import de.mm20.launcher2.network.impl.dns.DnsCatalog
+import de.mm20.launcher2.network.impl.dns.DnsTester
 import de.mm20.launcher2.network.util.IpUtil
 import de.mm20.launcher2.network.util.PersistedState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -43,49 +45,7 @@ internal class DefaultDnsController(private val context: Context) : DnsControlle
             name = context.getString(I18nR.string.net_dns_system),
             builtIn = true,
         ),
-        DnsServer(
-            id = "cloudflare-doh", kind = DnsKind.Doh, name = "Cloudflare",
-            url = "https://cloudflare-dns.com/dns-query",
-            bootstrapIps = listOf("1.1.1.1", "1.0.0.1", "2606:4700:4700::1111", "2606:4700:4700::1001"),
-            builtIn = true,
-        ),
-        DnsServer(
-            id = "cloudflare-dot", kind = DnsKind.Dot, name = "Cloudflare (TLS)",
-            url = "tls://one.one.one.one",
-            bootstrapIps = listOf("1.1.1.1", "1.0.0.1", "2606:4700:4700::1111", "2606:4700:4700::1001"),
-            builtIn = true,
-        ),
-        DnsServer(
-            id = "quad9-doh", kind = DnsKind.Doh, name = "Quad9",
-            url = "https://dns.quad9.net/dns-query",
-            bootstrapIps = listOf("9.9.9.9", "149.112.112.112", "2620:fe::fe", "2620:fe::9"),
-            builtIn = true,
-        ),
-        DnsServer(
-            id = "quad9-dot", kind = DnsKind.Dot, name = "Quad9 (TLS)",
-            url = "tls://dns.quad9.net",
-            bootstrapIps = listOf("9.9.9.9", "149.112.112.112", "2620:fe::fe", "2620:fe::9"),
-            builtIn = true,
-        ),
-        DnsServer(
-            id = "mullvad-doh", kind = DnsKind.Doh, name = "Mullvad",
-            url = "https://dns.mullvad.net/dns-query",
-            bootstrapIps = listOf("194.242.2.2", "2a07:e340::2"),
-            builtIn = true,
-        ),
-        DnsServer(
-            id = "adguard-doh", kind = DnsKind.Doh, name = "AdGuard",
-            url = "https://dns.adguard-dns.com/dns-query",
-            bootstrapIps = listOf("94.140.14.14", "94.140.15.15", "2a10:50c0::ad1:ff", "2a10:50c0::ad2:ff"),
-            builtIn = true,
-        ),
-        DnsServer(
-            id = "google-doh", kind = DnsKind.Doh, name = "Google",
-            url = "https://dns.google/dns-query",
-            bootstrapIps = listOf("8.8.8.8", "8.8.4.4", "2001:4860:4860::8888", "2001:4860:4860::8844"),
-            builtIn = true,
-        ),
-    )
+    ) + DnsCatalog.servers
 
     private fun allServers(state: DnsState) = builtIn + state.custom
 
@@ -192,12 +152,18 @@ internal class DefaultDnsController(private val context: Context) : DnsControlle
             }
             DnsKind.Odoh -> {
                 val resolver = runCatching { URI(url) }.getOrNull()
-                val proxy = runCatching { URI(server.relay.orEmpty()) }.getOrNull()
-                if (resolver == null || proxy == null || resolver.scheme != "https" || resolver.host.isNullOrEmpty() ||
-                    proxy.scheme != "https" || proxy.host.isNullOrEmpty()
+                val relay = server.relay.orEmpty().trim()
+                val proxy = if (relay.isEmpty()) null else runCatching { URI(relay) }.getOrNull()
+                if (resolver == null || resolver.scheme != "https" || resolver.host.isNullOrEmpty() ||
+                    (relay.isNotEmpty() && (proxy == null || proxy.scheme != "https" || proxy.host.isNullOrEmpty()))
                 ) fail("invalid ODoH resolver or proxy URL") else Result.success(Unit)
             }
         }
+    }
+
+    override suspend fun test(server: DnsServer): Result<Long> {
+        validate(server).onFailure { return Result.failure(it) }
+        return DnsTester.test(server, tunnel)
     }
 
     override fun transportFor(uid: Int, domain: String): String {

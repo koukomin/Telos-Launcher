@@ -108,10 +108,12 @@ data class DomainRule(
  *  1. Telos itself and uid-less internal traffic: allow ([DecisionReason.Internal]).
  *  2. App has `bypassFirewall`: allow.
  *  3. IP rules and domain rules (app scope before system scope; `Trust` before `Block`).
- *  4. App rules (blockAll, connection types, background, screen off).
- *  5. Universal rules unless the app ignores them.
- *  6. Blocklist hits reported by the DNS layer ([FlowInfo.blocklists], [FlowInfo.dnsBlocked]).
- *  7. Allow.
+ *  4. Temporarily allowed apps skip 5 and 6.
+ *  5. App rules (blockAll, connection types, background, screen off).
+ *  6. Universal rules unless the app ignores them (including "block new apps").
+ *  7. Blocklist hits reported by the DNS layer ([FlowInfo.blocklists], [FlowInfo.dnsBlocked]), unless
+ *     the domain is bypassed ([BlocklistController.isBypassed]).
+ *  8. Default deny if switched on, otherwise allow.
  * Implementations may refine this but must keep `bypassFirewall` and Trust semantics.
  */
 interface FirewallController {
@@ -145,6 +147,38 @@ interface FirewallController {
     suspend fun addDomainRule(rule: DomainRule): Result<DomainRule>
 
     suspend fun removeDomainRule(id: Long)
+
+    /** Apps that are allowed for a while: app id to the epoch millis when the permission ends. Expired entries may still be listed. */
+    val tempAllowed: StateFlow<Map<Int, Long>>
+
+    /**
+     * Lifts the app rules and the universal rules of an app for [durationMs]. Explicit IP and domain
+     * rules and the blocklists still apply. Connections that are open when the time ends are not closed.
+     */
+    suspend fun allowTemporarily(appId: Int, durationMs: Long)
+
+    suspend fun cancelTemporaryAllow(appId: Int)
+
+    /** Apps the user allowed although [UniversalRules.blockNewApps] is on. */
+    val allowedNewApps: StateFlow<Set<Int>>
+
+    /** Allows an app that was blocked by [UniversalRules.blockNewApps]. */
+    suspend fun allowNewApp(appId: Int)
+
+    /** True when [UniversalRules.blockNewApps] currently blocks this app. */
+    fun isNewAppBlocked(appId: Int): Boolean
+
+    /** Saves many app rules at once (bulk actions). Empty rules remove the entry. */
+    suspend fun setAppRules(rules: List<AppRule>)
+
+    /**
+     * True when the "background" and "screen off" rules can be enforced because Android grants
+     * Telos the usage access permission (detects which app is in the foreground).
+     */
+    val backgroundDetection: StateFlow<Boolean>
+
+    /** Re-reads the usage access permission, call it when the settings screen is closed. */
+    fun refreshBackgroundDetection()
 
     /** Deletes every rule, app rule and universal rule. */
     suspend fun resetAll()

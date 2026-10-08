@@ -1,6 +1,7 @@
 package de.mm20.launcher2.network.impl
 
 import android.content.Context
+import de.mm20.launcher2.network.api.AppDirectory
 import de.mm20.launcher2.network.api.AppRule
 import de.mm20.launcher2.network.api.BlocklistController
 import de.mm20.launcher2.network.api.ConnectionType
@@ -16,6 +17,7 @@ import de.mm20.launcher2.network.api.Protocol
 import de.mm20.launcher2.network.api.RuleAction
 import de.mm20.launcher2.network.api.RuleScope
 import de.mm20.launcher2.network.api.UniversalRules
+import de.mm20.launcher2.network.impl.firewall.ForegroundTracker
 import de.mm20.launcher2.network.util.IpUtil
 import de.mm20.launcher2.network.util.PersistedState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,6 +32,12 @@ internal data class FirewallState(
     val ipRules: List<IpRule> = emptyList(),
     val domainRules: List<DomainRule> = emptyList(),
     val nextId: Long = 1,
+    /** App id to the epoch millis when its temporary permission ends. */
+    val tempAllow: Map<Int, Long> = emptyMap(),
+    /** Apps the user allowed while "block new apps" is on. */
+    val allowedNewApps: Set<Int> = emptySet(),
+    /** Apps installed after this moment count as new. Set when "block new apps" is switched on. */
+    val newAppsSinceMs: Long = 0,
 )
 
 /**
@@ -40,7 +48,10 @@ internal data class FirewallState(
 internal class DefaultFirewallController(
     context: Context,
     private val blocklists: BlocklistController,
+    private val apps: AppDirectory,
 ) : FirewallController {
+    private val foreground = ForegroundTracker(context, apps)
+
     private val store = PersistedState(
         file = File(File(context.filesDir, "network"), "firewall.json"),
         serializer = FirewallState.serializer(),
@@ -54,6 +65,10 @@ internal class DefaultFirewallController(
         val universal: UniversalRules,
         val ip: List<CompiledIp>,
         val domains: List<DomainRule>,
+        val tempAllow: Map<Int, Long>,
+        val allowedNewApps: Set<Int>,
+        val newAppsSinceMs: Long,
+        val needsForeground: Boolean,
     )
 
     @Volatile
@@ -76,7 +91,28 @@ internal class DefaultFirewallController(
         universal = state.universal,
         ip = state.ipRules.mapNotNull { r -> IpUtil.parseCidr(r.address)?.let { CompiledIp(r, it) } },
         domains = state.domainRules,
+        tempAllow = state.tempAllow,
+        allowedNewApps = state.allowedNewApps,
+        newAppsSinceMs = state.newAppsSinceMs,
+        needsForeground = state.universal.blockBackground || state.appRules.any { it.blockBackground },
     )
+
+    private val _tempAllow = MutableStateFlow(store.value.tempAllow)
+    override val tempAllowed: StateFlow<Map<Int, Long>> = _tempAllow
+
+    private val _allowedNew = MutableStateFlow(store.value.allowedNewApps)
+    override val allowedNewApps: StateFlow<Set<Int>> = _allowedNew
+
+    override val backgroundDetection: StateFlow<Boolean> = foreground.available
+
+    init {
+        foreground.setNeeded(compiled.needsForeground)
+    }
+
+    override fun refreshBackgroundDetection() {
+        foreground.refreshAvailability()
+        foreground.setNeeded(compiled.needsForeground)
+    }
 
     private fun commit(transform: (FirewallState) -> FirewallState): FirewallState {
         val state = store.update(transform)
@@ -85,6 +121,9 @@ internal class DefaultFirewallController(
         _universal.value = state.universal
         _ipRules.value = state.ipRules
         _domainRules.value = state.domainRules
+        _tempAllow.value = state.tempAllow
+        _allowedNew.value = state.allowedNewApps
+        foreground.setNeeded(compiled.needsForeground)
         return state
     }
 
@@ -99,8 +138,49 @@ internal class DefaultFirewallController(
         commit { s -> s.copy(appRules = s.appRules.filterNot { it.appId == appId }) }
     }
 
+    override suspend fun setAppRules(rules: List<AppRule>) {
+        commit { s ->
+            val ids = rules.map { it.appId }.toSet()
+            s.copy(appRules = s.appRules.filterNot { it.appId in ids } + rules.filterNot { it.isEmpty })
+        }
+    }
+
     override suspend fun setUniversalRules(rules: UniversalRules) {
-        commit { it.copy(universal = rules) }
+        commit { s ->
+            val switchedOn = rules.blockNewApps && !s.universal.blockNewApps
+            s.copy(
+                universal = rules,
+                // apps installed from now on are the "new" ones
+                newAppsSinceMs = if (switchedOn) System.currentTimeMillis() else s.newAppsSinceMs,
+                allowedNewApps = if (switchedOn) emptySet() else s.allowedNewApps,
+            )
+        }
+    }
+
+    override suspend fun allowTemporarily(appId: Int, durationMs: Long) {
+        val until = System.currentTimeMillis() + durationMs.coerceAtLeast(0)
+        commit { s -> s.copy(tempAllow = pruned(s.tempAllow) + (appId to until)) }
+    }
+
+    override suspend fun cancelTemporaryAllow(appId: Int) {
+        commit { s -> s.copy(tempAllow = pruned(s.tempAllow) - appId) }
+    }
+
+    private fun pruned(m: Map<Int, Long>): Map<Int, Long> {
+        val now = System.currentTimeMillis()
+        return m.filterValues { it > now }
+    }
+
+    override suspend fun allowNewApp(appId: Int) {
+        commit { s -> s.copy(allowedNewApps = s.allowedNewApps + appId) }
+    }
+
+    override fun isNewAppBlocked(appId: Int): Boolean = newAppBlocked(compiled, appId)
+
+    private fun newAppBlocked(c: Compiled, appId: Int): Boolean {
+        if (!c.universal.blockNewApps || appId in c.allowedNewApps) return false
+        val entry = apps.byUid(appId) ?: return false
+        return !entry.isSystem && entry.installedAtMs > c.newAppsSinceMs
     }
 
     override suspend fun addIpRule(rule: IpRule): Result<IpRule> {
@@ -168,8 +248,11 @@ internal class DefaultFirewallController(
             }
         }
 
+        val tempUntil = c.tempAllow[appId]
+        val tempAllowed = tempUntil != null && tempUntil > System.currentTimeMillis()
+
         // app rules
-        if (app != null) {
+        if (app != null && !tempAllowed) {
             if (app.blockAll) return FlowDecision.block(DecisionReason.AppRule)
             val env = flow.environment
             if (app.blockWifi && env.network == ConnectionType.Wifi) return FlowDecision.block(DecisionReason.ConnectionTypeRule)
@@ -177,12 +260,13 @@ internal class DefaultFirewallController(
             if (app.blockRoaming && env.roaming) return FlowDecision.block(DecisionReason.ConnectionTypeRule)
             if (app.blockVpn && env.network == ConnectionType.Vpn) return FlowDecision.block(DecisionReason.ConnectionTypeRule)
             if (app.blockLan && flow.destIsLan) return FlowDecision.block(DecisionReason.ConnectionTypeRule)
-            if (app.blockBackground && env.appInForeground == false) return FlowDecision.block(DecisionReason.BackgroundRule)
+            if (app.blockBackground && isBackground(env.appInForeground, appId)) return FlowDecision.block(DecisionReason.BackgroundRule)
             if (app.blockScreenOff && !env.screenOn) return FlowDecision.block(DecisionReason.ScreenOffRule)
         }
 
         // universal rules
-        if (app?.ignoreUniversalRules != true) {
+        if (app?.ignoreUniversalRules != true && !tempAllowed) {
+            if (newAppBlocked(c, appId)) return FlowDecision.block(DecisionReason.UniversalRule)
             universalBlock(c.universal, flow)?.let { return it }
         }
 
@@ -194,11 +278,15 @@ internal class DefaultFirewallController(
             return FlowDecision.allow(DecisionReason.Trusted)
         }
 
-        if (c.universal.defaultDeny && app?.ignoreUniversalRules != true) {
+        if (c.universal.defaultDeny && app?.ignoreUniversalRules != true && !tempAllowed) {
             return FlowDecision.block(DecisionReason.UniversalRule)
         }
         return FlowDecision.Allowed
     }
+
+    /** The engine does not know the foreground state, so ask the usage events tracker. Unknown counts as foreground. */
+    private fun isBackground(fromEngine: Boolean?, appId: Int): Boolean =
+        (fromEngine ?: foreground.isForeground(appId)) == false
 
     private fun universalBlock(u: UniversalRules, flow: FlowInfo): FlowDecision? {
         val env = flow.environment
@@ -208,7 +296,7 @@ internal class DefaultFirewallController(
         if (u.blockRoaming && env.roaming) return FlowDecision.block(reason)
         if (u.blockMetered && env.metered) return FlowDecision.block(reason)
         if (u.blockLan && flow.destIsLan) return FlowDecision.block(reason)
-        if (u.blockBackground && env.appInForeground == false) return FlowDecision.block(reason)
+        if (u.blockBackground && isBackground(env.appInForeground, flow.appId)) return FlowDecision.block(reason)
         if (u.blockScreenOff && !env.screenOn) return FlowDecision.block(reason)
         if (u.blockWhenDeviceLocked && env.deviceLocked) return FlowDecision.block(reason)
         if (u.blockUnknownApps && flow.uid < 0) return FlowDecision.block(reason)
@@ -258,11 +346,13 @@ internal class DefaultFirewallController(
         val appId = if (query.uid < 0) -1 else query.uid % FlowInfo.PER_USER_RANGE
         val app = c.appRules[appId]
         if (app?.bypassFirewall == true) return DnsVerdict.AllowSkipBlocklists
+        val tempUntil = c.tempAllow[appId]
+        val tempAllowed = tempUntil != null && tempUntil > System.currentTimeMillis()
         val domain = IpUtil.normalizeDomain(query.domain)
         matchDomainRule(c, appId, domain)?.let { rule ->
             return if (rule.action == RuleAction.Trust) DnsVerdict.AllowSkipBlocklists else DnsVerdict.Block
         }
-        if (app?.blockAll == true) return DnsVerdict.Block
+        if (app?.blockAll == true && !tempAllowed) return DnsVerdict.Block
         if (blocklists.isBypassed(query.uid, domain)) return DnsVerdict.AllowSkipBlocklists
         return DnsVerdict.Allow
     }

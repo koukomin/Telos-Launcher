@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Terug</string>
+    <string name="nwg_add">Tunnel toevoegen</string>
+    <string name="nwg_add_new">Nieuwe maken</string>
+    <string name="nwg_add_file">.conf-bestand importeren</string>
+    <string name="nwg_add_qr">Importeren uit QR-code-afbeelding</string>
+    <string name="nwg_add_paste">Configuratietekst plakken</string>
+    <string name="nwg_system_default">Systeemstandaard</string>
+    <string name="nwg_system_default_summary">Apps zonder eigen instelling gebruiken deze tunnel. Zonder systeemstandaard verbinden ze rechtstreeks.</string>
+    <string name="nwg_none">Geen (rechtstreeks)</string>
+    <string name="nwg_direct">Rechtstreeks (geen proxy)</string>
+    <string name="nwg_apps">Toewijzing per app</string>
+    <string name="nwg_apps_summary">Kies welke tunnel elke app gebruikt</string>
+    <string name="nwg_configs">Tunnels</string>
+    <string name="nwg_empty">Nog geen tunnels. Voeg er een toe met de knop +.</string>
+    <string name="nwg_status_off">Uit</string>
+    <string name="nwg_status_connecting">Verbinden</string>
+    <string name="nwg_status_up">Verbonden</string>
+    <string name="nwg_status_down">Reageert niet</string>
+    <string name="nwg_status_error">Fout</string>
+    <string name="nwg_traffic">%1$s ontvangen, %2$s verzonden</string>
+    <string name="nwg_handshake">Laatste handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Zet Telos Network aan om de tunnels te verbinden.</string>
+    <string name="nwg_new_title">Nieuwe tunnel</string>
+    <string name="nwg_edit_title">Tunnel bewerken</string>
+    <string name="nwg_name">Naam</string>
+    <string name="nwg_private_key">Privésleutel</string>
+    <string name="nwg_public_key">Openbare sleutel: %1$s</string>
+    <string name="nwg_generate">Genereren</string>
+    <string name="nwg_addresses">Adressen (gescheiden door komma’s)</string>
+    <string name="nwg_dns">DNS-servers (gescheiden door komma’s)</string>
+    <string name="nwg_mtu">MTU (0 = automatisch)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Openbare sleutel van de peer</string>
+    <string name="nwg_preshared">Vooraf gedeelde sleutel (optioneel)</string>
+    <string name="nwg_endpoint">Endpoint (host:poort)</string>
+    <string name="nwg_allowed_ips">Toegestane IP’s (gescheiden door komma’s)</string>
+    <string name="nwg_keepalive">Persistent keepalive in seconden (0 = uit)</string>
+    <string name="nwg_add_peer">Peer toevoegen</string>
+    <string name="nwg_remove_peer">Peer verwijderen</string>
+    <string name="nwg_mobile_only">Alleen via mobiele data</string>
+    <string name="nwg_lockdown">Apps blokkeren zolang de tunnel niet actief is</string>
+    <string name="nwg_save">Opslaan</string>
+    <string name="nwg_cancel">Annuleren</string>
+    <string name="nwg_delete">Verwijderen</string>
+    <string name="nwg_share">Configuratie delen</string>
+    <string name="nwg_share_warning">De geëxporteerde configuratie bevat de privésleutel.</string>
+    <string name="nwg_import">Importeren</string>
+    <string name="nwg_qr_not_found">Geen QR-code gevonden in deze afbeelding</string>
+    <string name="nwg_err_syntax">De configuratie bevat een syntaxisfout: %1$s</string>
+    <string name="nwg_err_missing">De configuratie is onvolledig: %1$s ontbreekt</string>
+    <string name="nwg_err_invalid_key">Ongeldige sleutel: %1$s</string>
+    <string name="nwg_err_invalid_value">Ongeldige waarde: %1$s</string>
+    <string name="nwg_err_invalid_name">Voer een naam van maximaal 64 tekens in</string>
+    <string name="nwg_err_not_found">De tunnel bestaat niet meer</string>
+    <string name="nwg_err_storage">De configuratie kon niet veilig worden opgeslagen: %1$s</string>
+    <string name="nwg_err_other">De configuratie kon niet worden opgeslagen</string>
+    <string name="nwg_apps_title">Apps en tunnels</string>
+    <string name="nwg_search">Apps zoeken</string>
+    <string name="nwg_show_system">Systeem-apps tonen</string>
+    <string name="nwg_selected">%1$d geselecteerd</string>
+    <string name="nwg_assign_selected">Toewijzen aan geselecteerde apps</string>
+    <string name="nwg_clear_selection">Selectie wissen</string>
+    <string name="nwg_select_all">Alle getoonde selecteren</string>
+</resources>

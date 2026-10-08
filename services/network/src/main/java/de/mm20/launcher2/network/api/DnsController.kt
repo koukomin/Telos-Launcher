@@ -45,7 +45,29 @@ data class DnsServer(
     val description: String = "",
     /** True for the entries shipped with the app. They cannot be changed or removed. */
     val builtIn: Boolean = false,
+    /** Name of the operator, e.g. `Quad9`. Empty for custom servers. */
+    val provider: String = "",
+    /** What the server is for. The first tag is the primary category the list is grouped by. Empty for custom servers. */
+    val tags: List<DnsTag> = emptyList(),
 )
+
+/** Categories of built-in DNS servers. */
+enum class DnsTag {
+    /** Blocks ads and trackers. */
+    Adblock,
+
+    /** Blocks malware and phishing domains. */
+    Malware,
+
+    /** Blocks adult content (family filter). */
+    Family,
+
+    /** Operator with a privacy focus. */
+    Privacy,
+
+    /** Does not filter anything. */
+    Unfiltered,
+}
 
 /** Result of the last attempt of the engine to use a server. */
 enum class DnsHealth {
@@ -89,6 +111,13 @@ interface DnsController : EngineComponent {
 
     /** Checks whether the address is syntactically valid for the kind. Does no network access. */
     fun validate(server: DnsServer): Result<Unit>
+
+    /**
+     * Resolves a test domain through [server] and returns the time it took in milliseconds.
+     * DoH, DoT, plain DNS and the system DNS are tested directly; DNSCrypt and ODoH need the running
+     * VPN and fail with an exception otherwise. Never throws, errors are in the [Result].
+     */
+    suspend fun test(server: DnsServer): Result<Long>
 
     /**
      * Called by the engine for every DNS question. Returns the id of the Go transport that

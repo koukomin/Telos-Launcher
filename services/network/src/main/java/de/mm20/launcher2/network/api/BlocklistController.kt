@@ -15,6 +15,8 @@ data class Blocklist(
     val description: String = "",
     /** Number of entries, 0 when unknown. */
     val entryCount: Long = 0,
+    /** Where the list comes from. */
+    val url: String = "",
 )
 
 /** A group of lists the user switches on and off together or one by one. */
@@ -25,6 +27,8 @@ data class BlocklistGroup(
     val category: BlocklistCategory,
     val description: String = "",
     val lists: List<Blocklist>,
+    /** Top level section: `parentalcontrol`, `security` or `privacy` (Rethink DNS naming). */
+    val section: String = "",
 )
 
 /** A trusted domain: queries for it skip the blocklists. */
@@ -59,6 +63,26 @@ interface BlocklistController : EngineComponent {
 
     /** Switches one list on or off and applies it to a running tunnel. */
     suspend fun setEnabled(listId: String, enabled: Boolean)
+
+    /** True when the list files are downloaded and can be applied. */
+    val installed: StateFlow<Boolean>
+
+    /** True when the server announced a newer version than the downloaded one (set by [checkForUpdate]). */
+    val updateAvailable: StateFlow<Boolean>
+
+    /** Asks the server whether a newer version exists. Returns true when it does. */
+    suspend fun checkForUpdate(): Result<Boolean>
+
+    /** Checks daily in the background (WorkManager, unmetered network) and downloads when newer. Only after the first download. */
+    val autoUpdate: StateFlow<Boolean>
+
+    suspend fun setAutoUpdate(enabled: Boolean)
+
+    /** Deletes the downloaded files and switches the engine to no blocklists. */
+    suspend fun removeDownloaded()
+
+    /** Disk space used by the downloaded files. */
+    val storageBytes: StateFlow<Long>
 
     /** Switches a whole group. */
     suspend fun setGroupEnabled(groupId: String, enabled: Boolean)
