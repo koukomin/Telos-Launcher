@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Reen</string>
+    <string name="nwg_add">Aldoni tunelon</string>
+    <string name="nwg_add_new">Krei novan</string>
+    <string name="nwg_add_file">Importi dosieron .conf</string>
+    <string name="nwg_add_qr">Importi el bildo kun QR-kodo</string>
+    <string name="nwg_add_paste">Alglui agordan tekston</string>
+    <string name="nwg_system_default">Sistema defaŭlto</string>
+    <string name="nwg_system_default_summary">Aplikaĵoj sen propra agordo uzas ĉi tiun tunelon. Sen sistema defaŭlto ili konektiĝas rekte.</string>
+    <string name="nwg_none">Neniu (rekte)</string>
+    <string name="nwg_direct">Rekte (sen peranto)</string>
+    <string name="nwg_apps">Atribuo laŭ aplikaĵo</string>
+    <string name="nwg_apps_summary">Elektu, kiun tunelon ĉiu aplikaĵo uzas</string>
+    <string name="nwg_configs">Tuneloj</string>
+    <string name="nwg_empty">Ankoraŭ neniuj tuneloj. Aldonu unu per la butono +.</string>
+    <string name="nwg_status_off">Malŝaltita</string>
+    <string name="nwg_status_connecting">Konektiĝas</string>
+    <string name="nwg_status_up">Konektita</string>
+    <string name="nwg_status_down">Ne respondas</string>
+    <string name="nwg_status_error">Eraro</string>
+    <string name="nwg_traffic">Ricevita %1$s, sendita %2$s</string>
+    <string name="nwg_handshake">Lasta handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Ŝaltu Telos Network por konekti la tunelojn.</string>
+    <string name="nwg_new_title">Nova tunelo</string>
+    <string name="nwg_edit_title">Redakti tunelon</string>
+    <string name="nwg_name">Nomo</string>
+    <string name="nwg_private_key">Privata ŝlosilo</string>
+    <string name="nwg_public_key">Publika ŝlosilo: %1$s</string>
+    <string name="nwg_generate">Generi</string>
+    <string name="nwg_addresses">Adresoj (apartigitaj per komoj)</string>
+    <string name="nwg_dns">DNS-serviloj (apartigitaj per komoj)</string>
+    <string name="nwg_mtu">MTU (0 = aŭtomata)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Publika ŝlosilo de la peer</string>
+    <string name="nwg_preshared">Antaŭdividita ŝlosilo (laŭvola)</string>
+    <string name="nwg_endpoint">Endpoint (gastiganto:pordo)</string>
+    <string name="nwg_allowed_ips">Permesataj IP-oj (apartigitaj per komoj)</string>
+    <string name="nwg_keepalive">Persistent keepalive en sekundoj (0 = malŝaltita)</string>
+    <string name="nwg_add_peer">Aldoni peer</string>
+    <string name="nwg_remove_peer">Forigi peer</string>
+    <string name="nwg_mobile_only">Nur per poŝtelefona datumo</string>
+    <string name="nwg_lockdown">Bloki la aplikaĵojn dum la tunelo ne funkcias</string>
+    <string name="nwg_save">Konservi</string>
+    <string name="nwg_cancel">Nuligi</string>
+    <string name="nwg_delete">Forigi</string>
+    <string name="nwg_share">Kundividi agordon</string>
+    <string name="nwg_share_warning">La elportita agordo enhavas la privatan ŝlosilon.</string>
+    <string name="nwg_import">Importi</string>
+    <string name="nwg_qr_not_found">Neniu QR-kodo troviĝis en ĉi tiu bildo</string>
+    <string name="nwg_err_syntax">La agordo havas sintaksan eraron: %1$s</string>
+    <string name="nwg_err_missing">La agordo estas nekompleta: mankas %1$s</string>
+    <string name="nwg_err_invalid_key">Nevalida ŝlosilo: %1$s</string>
+    <string name="nwg_err_invalid_value">Nevalida valoro: %1$s</string>
+    <string name="nwg_err_invalid_name">Enigu nomon de ĝis 64 signoj</string>
+    <string name="nwg_err_not_found">La tunelo ne plu ekzistas</string>
+    <string name="nwg_err_storage">La agordo ne povis esti sekure konservita: %1$s</string>
+    <string name="nwg_err_other">La agordo ne povis esti konservita</string>
+    <string name="nwg_apps_title">Aplikaĵoj kaj tuneloj</string>
+    <string name="nwg_search">Serĉi aplikaĵojn</string>
+    <string name="nwg_show_system">Montri sistemajn aplikaĵojn</string>
+    <string name="nwg_selected">%1$d elektitaj</string>
+    <string name="nwg_assign_selected">Atribui al elektitaj aplikaĵoj</string>
+    <string name="nwg_clear_selection">Vakigi elekton</string>
+    <string name="nwg_select_all">Elekti ĉiujn montritajn</string>
+</resources>

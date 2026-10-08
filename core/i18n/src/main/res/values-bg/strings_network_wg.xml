@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Назад</string>
+    <string name="nwg_add">Добавяне на тунел</string>
+    <string name="nwg_add_new">Създаване на нов</string>
+    <string name="nwg_add_file">Импортиране на .conf файл</string>
+    <string name="nwg_add_qr">Импортиране от изображение с QR код</string>
+    <string name="nwg_add_paste">Поставяне на текст на конфигурация</string>
+    <string name="nwg_system_default">Системна по подразбиране</string>
+    <string name="nwg_system_default_summary">Приложенията без собствена настройка използват този тунел. Без системна по подразбиране те се свързват директно.</string>
+    <string name="nwg_none">Няма (директно)</string>
+    <string name="nwg_direct">Директно (без прокси)</string>
+    <string name="nwg_apps">Задаване по приложения</string>
+    <string name="nwg_apps_summary">Изберете кой тунел използва всяко приложение</string>
+    <string name="nwg_configs">Тунели</string>
+    <string name="nwg_empty">Още няма тунели. Добавете с бутона +.</string>
+    <string name="nwg_status_off">Изключен</string>
+    <string name="nwg_status_connecting">Свързване</string>
+    <string name="nwg_status_up">Свързан</string>
+    <string name="nwg_status_down">Не отговаря</string>
+    <string name="nwg_status_error">Грешка</string>
+    <string name="nwg_traffic">Получени %1$s, изпратени %2$s</string>
+    <string name="nwg_handshake">Последен handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Включете Telos Network, за да се свържат тунелите.</string>
+    <string name="nwg_new_title">Нов тунел</string>
+    <string name="nwg_edit_title">Редактиране на тунел</string>
+    <string name="nwg_name">Име</string>
+    <string name="nwg_private_key">Частен ключ</string>
+    <string name="nwg_public_key">Публичен ключ: %1$s</string>
+    <string name="nwg_generate">Генериране</string>
+    <string name="nwg_addresses">Адреси (разделени със запетая)</string>
+    <string name="nwg_dns">DNS сървъри (разделени със запетая)</string>
+    <string name="nwg_mtu">MTU (0 = автоматично)</string>
+    <string name="nwg_peer">Пиър %1$d</string>
+    <string name="nwg_peer_public_key">Публичен ключ на пиъра</string>
+    <string name="nwg_preshared">Предварително споделен ключ (по избор)</string>
+    <string name="nwg_endpoint">Endpoint (хост:порт)</string>
+    <string name="nwg_allowed_ips">Разрешени IP адреси (разделени със запетая)</string>
+    <string name="nwg_keepalive">Persistent keepalive в секунди (0 = изкл.)</string>
+    <string name="nwg_add_peer">Добавяне на пиър</string>
+    <string name="nwg_remove_peer">Премахване на пиър</string>
+    <string name="nwg_mobile_only">Само при мобилни данни</string>
+    <string name="nwg_lockdown">Блокиране на приложенията, докато тунелът не работи</string>
+    <string name="nwg_save">Запазване</string>
+    <string name="nwg_cancel">Отказ</string>
+    <string name="nwg_delete">Изтриване</string>
+    <string name="nwg_share">Споделяне на конфигурацията</string>
+    <string name="nwg_share_warning">Експортираната конфигурация съдържа частния ключ.</string>
+    <string name="nwg_import">Импортиране</string>
+    <string name="nwg_qr_not_found">В това изображение не е намерен QR код</string>
+    <string name="nwg_err_syntax">Конфигурацията има синтактична грешка: %1$s</string>
+    <string name="nwg_err_missing">Конфигурацията е непълна: липсва %1$s</string>
+    <string name="nwg_err_invalid_key">Невалиден ключ: %1$s</string>
+    <string name="nwg_err_invalid_value">Невалидна стойност: %1$s</string>
+    <string name="nwg_err_invalid_name">Въведете име до 64 знака</string>
+    <string name="nwg_err_not_found">Тунелът вече не съществува</string>
+    <string name="nwg_err_storage">Конфигурацията не можа да бъде запазена сигурно: %1$s</string>
+    <string name="nwg_err_other">Конфигурацията не можа да бъде запазена</string>
+    <string name="nwg_apps_title">Приложения и тунели</string>
+    <string name="nwg_search">Търсене на приложения</string>
+    <string name="nwg_show_system">Показване на системните приложения</string>
+    <string name="nwg_selected">Избрани: %1$d</string>
+    <string name="nwg_assign_selected">Задаване на избраните приложения</string>
+    <string name="nwg_clear_selection">Изчистване на избора</string>
+    <string name="nwg_select_all">Избор на всички показани</string>
+</resources>

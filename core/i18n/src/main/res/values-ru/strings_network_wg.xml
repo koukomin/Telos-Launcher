@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Назад</string>
+    <string name="nwg_add">Добавить туннель</string>
+    <string name="nwg_add_new">Создать новый</string>
+    <string name="nwg_add_file">Импортировать файл .conf</string>
+    <string name="nwg_add_qr">Импорт из изображения с QR-кодом</string>
+    <string name="nwg_add_paste">Вставить текст конфигурации</string>
+    <string name="nwg_system_default">Системный по умолчанию</string>
+    <string name="nwg_system_default_summary">Приложения без собственной настройки используют этот туннель. Без системного по умолчанию они подключаются напрямую.</string>
+    <string name="nwg_none">Нет (напрямую)</string>
+    <string name="nwg_direct">Напрямую (без прокси)</string>
+    <string name="nwg_apps">Назначение для приложений</string>
+    <string name="nwg_apps_summary">Выберите, какой туннель использует каждое приложение</string>
+    <string name="nwg_configs">Туннели</string>
+    <string name="nwg_empty">Туннелей пока нет. Добавьте его кнопкой +.</string>
+    <string name="nwg_status_off">Выключен</string>
+    <string name="nwg_status_connecting">Подключение</string>
+    <string name="nwg_status_up">Подключён</string>
+    <string name="nwg_status_down">Не отвечает</string>
+    <string name="nwg_status_error">Ошибка</string>
+    <string name="nwg_traffic">Получено %1$s, отправлено %2$s</string>
+    <string name="nwg_handshake">Последний handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Включите Telos Network, чтобы подключить туннели.</string>
+    <string name="nwg_new_title">Новый туннель</string>
+    <string name="nwg_edit_title">Изменить туннель</string>
+    <string name="nwg_name">Название</string>
+    <string name="nwg_private_key">Закрытый ключ</string>
+    <string name="nwg_public_key">Открытый ключ: %1$s</string>
+    <string name="nwg_generate">Создать</string>
+    <string name="nwg_addresses">Адреса (через запятую)</string>
+    <string name="nwg_dns">DNS-серверы (через запятую)</string>
+    <string name="nwg_mtu">MTU (0 = авто)</string>
+    <string name="nwg_peer">Пир %1$d</string>
+    <string name="nwg_peer_public_key">Открытый ключ пира</string>
+    <string name="nwg_preshared">Общий ключ (необязательно)</string>
+    <string name="nwg_endpoint">Endpoint (хост:порт)</string>
+    <string name="nwg_allowed_ips">Разрешённые IP (через запятую)</string>
+    <string name="nwg_keepalive">Persistent keepalive в секундах (0 = выкл.)</string>
+    <string name="nwg_add_peer">Добавить пира</string>
+    <string name="nwg_remove_peer">Удалить пира</string>
+    <string name="nwg_mobile_only">Только в мобильной сети</string>
+    <string name="nwg_lockdown">Блокировать приложения, пока туннель не работает</string>
+    <string name="nwg_save">Сохранить</string>
+    <string name="nwg_cancel">Отмена</string>
+    <string name="nwg_delete">Удалить</string>
+    <string name="nwg_share">Поделиться конфигурацией</string>
+    <string name="nwg_share_warning">Экспортированная конфигурация содержит закрытый ключ.</string>
+    <string name="nwg_import">Импорт</string>
+    <string name="nwg_qr_not_found">QR-код на этом изображении не найден</string>
+    <string name="nwg_err_syntax">В конфигурации синтаксическая ошибка: %1$s</string>
+    <string name="nwg_err_missing">Конфигурация неполная: отсутствует %1$s</string>
+    <string name="nwg_err_invalid_key">Недопустимый ключ: %1$s</string>
+    <string name="nwg_err_invalid_value">Недопустимое значение: %1$s</string>
+    <string name="nwg_err_invalid_name">Введите название длиной до 64 символов</string>
+    <string name="nwg_err_not_found">Туннель больше не существует</string>
+    <string name="nwg_err_storage">Не удалось безопасно сохранить конфигурацию: %1$s</string>
+    <string name="nwg_err_other">Не удалось сохранить конфигурацию</string>
+    <string name="nwg_apps_title">Приложения и туннели</string>
+    <string name="nwg_search">Поиск приложений</string>
+    <string name="nwg_show_system">Показать системные приложения</string>
+    <string name="nwg_selected">Выбрано: %1$d</string>
+    <string name="nwg_assign_selected">Назначить выбранным приложениям</string>
+    <string name="nwg_clear_selection">Снять выделение</string>
+    <string name="nwg_select_all">Выбрать все показанные</string>
+</resources>

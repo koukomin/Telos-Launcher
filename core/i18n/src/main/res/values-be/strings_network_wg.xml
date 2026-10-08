@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Назад</string>
+    <string name="nwg_add">Дадаць тунэль</string>
+    <string name="nwg_add_new">Стварыць новы</string>
+    <string name="nwg_add_file">Імпартаваць файл .conf</string>
+    <string name="nwg_add_qr">Імпарт з відарыса з QR-кодам</string>
+    <string name="nwg_add_paste">Уставіць тэкст канфігурацыі</string>
+    <string name="nwg_system_default">Сістэмны па змаўчанні</string>
+    <string name="nwg_system_default_summary">Праграмы без уласнай налады выкарыстоўваюць гэты тунэль. Без сістэмнага па змаўчанні яны злучаюцца наўпрост.</string>
+    <string name="nwg_none">Няма (наўпрост)</string>
+    <string name="nwg_direct">Наўпрост (без проксі)</string>
+    <string name="nwg_apps">Прызначэнне для праграм</string>
+    <string name="nwg_apps_summary">Выберыце, які тунэль выкарыстоўвае кожная праграма</string>
+    <string name="nwg_configs">Тунэлі</string>
+    <string name="nwg_empty">Тунэляў пакуль няма. Дадайце яго кнопкай +.</string>
+    <string name="nwg_status_off">Выключана</string>
+    <string name="nwg_status_connecting">Злучэнне</string>
+    <string name="nwg_status_up">Злучана</string>
+    <string name="nwg_status_down">Не адказвае</string>
+    <string name="nwg_status_error">Памылка</string>
+    <string name="nwg_traffic">Атрымана %1$s, адпраўлена %2$s</string>
+    <string name="nwg_handshake">Апошні handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Уключыце Telos Network, каб злучыць тунэлі.</string>
+    <string name="nwg_new_title">Новы тунэль</string>
+    <string name="nwg_edit_title">Рэдагаваць тунэль</string>
+    <string name="nwg_name">Назва</string>
+    <string name="nwg_private_key">Прыватны ключ</string>
+    <string name="nwg_public_key">Публічны ключ: %1$s</string>
+    <string name="nwg_generate">Стварыць</string>
+    <string name="nwg_addresses">Адрасы (праз коску)</string>
+    <string name="nwg_dns">DNS-серверы (праз коску)</string>
+    <string name="nwg_mtu">MTU (0 = аўта)</string>
+    <string name="nwg_peer">Пір %1$d</string>
+    <string name="nwg_peer_public_key">Публічны ключ піра</string>
+    <string name="nwg_preshared">Агульны ключ (неабавязкова)</string>
+    <string name="nwg_endpoint">Endpoint (хост:порт)</string>
+    <string name="nwg_allowed_ips">Дазволеныя IP (праз коску)</string>
+    <string name="nwg_keepalive">Persistent keepalive у секундах (0 = выкл.)</string>
+    <string name="nwg_add_peer">Дадаць піра</string>
+    <string name="nwg_remove_peer">Выдаліць піра</string>
+    <string name="nwg_mobile_only">Толькі ў мабільнай сетцы</string>
+    <string name="nwg_lockdown">Блакаваць праграмы, пакуль тунэль не працуе</string>
+    <string name="nwg_save">Захаваць</string>
+    <string name="nwg_cancel">Скасаваць</string>
+    <string name="nwg_delete">Выдаліць</string>
+    <string name="nwg_share">Падзяліцца канфігурацыяй</string>
+    <string name="nwg_share_warning">Экспартаваная канфігурацыя змяшчае прыватны ключ.</string>
+    <string name="nwg_import">Імпарт</string>
+    <string name="nwg_qr_not_found">QR-код на гэтым відарысе не знойдзены</string>
+    <string name="nwg_err_syntax">У канфігурацыі сінтаксічная памылка: %1$s</string>
+    <string name="nwg_err_missing">Канфігурацыя няпоўная: бракуе %1$s</string>
+    <string name="nwg_err_invalid_key">Хібны ключ: %1$s</string>
+    <string name="nwg_err_invalid_value">Хібнае значэнне: %1$s</string>
+    <string name="nwg_err_invalid_name">Увядзіце назву даўжынёй да 64 сімвалаў</string>
+    <string name="nwg_err_not_found">Тунэль больш не існуе</string>
+    <string name="nwg_err_storage">Не ўдалося бяспечна захаваць канфігурацыю: %1$s</string>
+    <string name="nwg_err_other">Не ўдалося захаваць канфігурацыю</string>
+    <string name="nwg_apps_title">Праграмы і тунэлі</string>
+    <string name="nwg_search">Пошук праграм</string>
+    <string name="nwg_show_system">Паказаць сістэмныя праграмы</string>
+    <string name="nwg_selected">Выбрана: %1$d</string>
+    <string name="nwg_assign_selected">Прызначыць выбраным праграмам</string>
+    <string name="nwg_clear_selection">Скасаваць выбар</string>
+    <string name="nwg_select_all">Выбраць усе паказаныя</string>
+</resources>

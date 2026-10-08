@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Tillbaka</string>
+    <string name="nwg_add">Lägg till tunnel</string>
+    <string name="nwg_add_new">Skapa ny</string>
+    <string name="nwg_add_file">Importera .conf-fil</string>
+    <string name="nwg_add_qr">Importera från QR-kodsbild</string>
+    <string name="nwg_add_paste">Klistra in konfigurationstext</string>
+    <string name="nwg_system_default">Systemstandard</string>
+    <string name="nwg_system_default_summary">Appar utan egen inställning använder den här tunneln. Utan systemstandard ansluter de direkt.</string>
+    <string name="nwg_none">Ingen (direkt)</string>
+    <string name="nwg_direct">Direkt (ingen proxy)</string>
+    <string name="nwg_apps">Tilldelning per app</string>
+    <string name="nwg_apps_summary">Välj vilken tunnel varje app använder</string>
+    <string name="nwg_configs">Tunnlar</string>
+    <string name="nwg_empty">Inga tunnlar ännu. Lägg till en med knappen +.</string>
+    <string name="nwg_status_off">Av</string>
+    <string name="nwg_status_connecting">Ansluter</string>
+    <string name="nwg_status_up">Ansluten</string>
+    <string name="nwg_status_down">Svarar inte</string>
+    <string name="nwg_status_error">Fel</string>
+    <string name="nwg_traffic">Mottaget %1$s, skickat %2$s</string>
+    <string name="nwg_handshake">Senaste handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Slå på Telos Network för att ansluta tunnlarna.</string>
+    <string name="nwg_new_title">Ny tunnel</string>
+    <string name="nwg_edit_title">Redigera tunnel</string>
+    <string name="nwg_name">Namn</string>
+    <string name="nwg_private_key">Privat nyckel</string>
+    <string name="nwg_public_key">Publik nyckel: %1$s</string>
+    <string name="nwg_generate">Generera</string>
+    <string name="nwg_addresses">Adresser (kommaseparerade)</string>
+    <string name="nwg_dns">DNS-servrar (kommaseparerade)</string>
+    <string name="nwg_mtu">MTU (0 = automatiskt)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Peerens publika nyckel</string>
+    <string name="nwg_preshared">Delad hemlig nyckel (valfri)</string>
+    <string name="nwg_endpoint">Endpoint (värd:port)</string>
+    <string name="nwg_allowed_ips">Tillåtna IP-adresser (kommaseparerade)</string>
+    <string name="nwg_keepalive">Persistent keepalive i sekunder (0 = av)</string>
+    <string name="nwg_add_peer">Lägg till peer</string>
+    <string name="nwg_remove_peer">Ta bort peer</string>
+    <string name="nwg_mobile_only">Endast på mobildata</string>
+    <string name="nwg_lockdown">Blockera apparna medan tunneln är nere</string>
+    <string name="nwg_save">Spara</string>
+    <string name="nwg_cancel">Avbryt</string>
+    <string name="nwg_delete">Ta bort</string>
+    <string name="nwg_share">Dela konfiguration</string>
+    <string name="nwg_share_warning">Den exporterade konfigurationen innehåller den privata nyckeln.</string>
+    <string name="nwg_import">Importera</string>
+    <string name="nwg_qr_not_found">Ingen QR-kod hittades i bilden</string>
+    <string name="nwg_err_syntax">Konfigurationen har ett syntaxfel: %1$s</string>
+    <string name="nwg_err_missing">Konfigurationen är ofullständig: %1$s saknas</string>
+    <string name="nwg_err_invalid_key">Ogiltig nyckel: %1$s</string>
+    <string name="nwg_err_invalid_value">Ogiltigt värde: %1$s</string>
+    <string name="nwg_err_invalid_name">Ange ett namn på högst 64 tecken</string>
+    <string name="nwg_err_not_found">Tunneln finns inte längre</string>
+    <string name="nwg_err_storage">Konfigurationen kunde inte sparas säkert: %1$s</string>
+    <string name="nwg_err_other">Konfigurationen kunde inte sparas</string>
+    <string name="nwg_apps_title">Appar och tunnlar</string>
+    <string name="nwg_search">Sök appar</string>
+    <string name="nwg_show_system">Visa systemappar</string>
+    <string name="nwg_selected">%1$d valda</string>
+    <string name="nwg_assign_selected">Tilldela valda appar</string>
+    <string name="nwg_clear_selection">Rensa markering</string>
+    <string name="nwg_select_all">Markera alla visade</string>
+</resources>

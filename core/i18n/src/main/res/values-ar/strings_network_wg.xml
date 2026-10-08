@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">رجوع</string>
+    <string name="nwg_add">إضافة نفق</string>
+    <string name="nwg_add_new">إنشاء جديد</string>
+    <string name="nwg_add_file">استيراد ملف .conf</string>
+    <string name="nwg_add_qr">استيراد من صورة رمز QR</string>
+    <string name="nwg_add_paste">لصق نص الإعدادات</string>
+    <string name="nwg_system_default">افتراضي النظام</string>
+    <string name="nwg_system_default_summary">تستخدم التطبيقات التي ليس لها إعداد خاص هذا النفق. وبدون افتراضي النظام تتصل مباشرة.</string>
+    <string name="nwg_none">بلا (مباشر)</string>
+    <string name="nwg_direct">مباشر (بدون وكيل)</string>
+    <string name="nwg_apps">التعيين لكل تطبيق</string>
+    <string name="nwg_apps_summary">اختر النفق الذي يستخدمه كل تطبيق</string>
+    <string name="nwg_configs">الأنفاق</string>
+    <string name="nwg_empty">لا توجد أنفاق بعد. أضف نفقًا بزر +.</string>
+    <string name="nwg_status_off">متوقف</string>
+    <string name="nwg_status_connecting">جارٍ الاتصال</string>
+    <string name="nwg_status_up">متصل</string>
+    <string name="nwg_status_down">لا يستجيب</string>
+    <string name="nwg_status_error">خطأ</string>
+    <string name="nwg_traffic">تم استلام %1$s وإرسال %2$s</string>
+    <string name="nwg_handshake">آخر handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">شغّل Telos Network لتوصيل الأنفاق.</string>
+    <string name="nwg_new_title">نفق جديد</string>
+    <string name="nwg_edit_title">تعديل النفق</string>
+    <string name="nwg_name">الاسم</string>
+    <string name="nwg_private_key">المفتاح الخاص</string>
+    <string name="nwg_public_key">المفتاح العام: %1$s</string>
+    <string name="nwg_generate">إنشاء</string>
+    <string name="nwg_addresses">العناوين (مفصولة بفواصل)</string>
+    <string name="nwg_dns">خوادم DNS (مفصولة بفواصل)</string>
+    <string name="nwg_mtu">MTU (0 = تلقائي)</string>
+    <string name="nwg_peer">نظير %1$d</string>
+    <string name="nwg_peer_public_key">المفتاح العام للنظير</string>
+    <string name="nwg_preshared">مفتاح مشترك مسبقًا (اختياري)</string>
+    <string name="nwg_endpoint">Endpoint (المضيف:المنفذ)</string>
+    <string name="nwg_allowed_ips">عناوين IP المسموح بها (مفصولة بفواصل)</string>
+    <string name="nwg_keepalive">Persistent keepalive بالثواني (0 = متوقف)</string>
+    <string name="nwg_add_peer">إضافة نظير</string>
+    <string name="nwg_remove_peer">إزالة النظير</string>
+    <string name="nwg_mobile_only">على بيانات الجوال فقط</string>
+    <string name="nwg_lockdown">حظر التطبيقات أثناء توقف النفق</string>
+    <string name="nwg_save">حفظ</string>
+    <string name="nwg_cancel">إلغاء</string>
+    <string name="nwg_delete">حذف</string>
+    <string name="nwg_share">مشاركة الإعدادات</string>
+    <string name="nwg_share_warning">تحتوي الإعدادات المُصدَّرة على المفتاح الخاص.</string>
+    <string name="nwg_import">استيراد</string>
+    <string name="nwg_qr_not_found">لم يتم العثور على رمز QR في هذه الصورة</string>
+    <string name="nwg_err_syntax">في الإعدادات خطأ في الصياغة: %1$s</string>
+    <string name="nwg_err_missing">الإعدادات غير مكتملة: %1$s مفقود</string>
+    <string name="nwg_err_invalid_key">مفتاح غير صالح: %1$s</string>
+    <string name="nwg_err_invalid_value">قيمة غير صالحة: %1$s</string>
+    <string name="nwg_err_invalid_name">أدخل اسمًا لا يتجاوز 64 حرفًا</string>
+    <string name="nwg_err_not_found">لم يعد النفق موجودًا</string>
+    <string name="nwg_err_storage">تعذّر حفظ الإعدادات بأمان: %1$s</string>
+    <string name="nwg_err_other">تعذّر حفظ الإعدادات</string>
+    <string name="nwg_apps_title">التطبيقات والأنفاق</string>
+    <string name="nwg_search">بحث في التطبيقات</string>
+    <string name="nwg_show_system">إظهار تطبيقات النظام</string>
+    <string name="nwg_selected">تم تحديد %1$d</string>
+    <string name="nwg_assign_selected">تعيين للتطبيقات المحددة</string>
+    <string name="nwg_clear_selection">مسح التحديد</string>
+    <string name="nwg_select_all">تحديد كل المعروض</string>
+</resources>

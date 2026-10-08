@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Tilbage</string>
+    <string name="nwg_add">Tilføj tunnel</string>
+    <string name="nwg_add_new">Opret ny</string>
+    <string name="nwg_add_file">Importér .conf-fil</string>
+    <string name="nwg_add_qr">Importér fra QR-kodebillede</string>
+    <string name="nwg_add_paste">Indsæt konfigurationstekst</string>
+    <string name="nwg_system_default">Systemstandard</string>
+    <string name="nwg_system_default_summary">Apps uden egen indstilling bruger denne tunnel. Uden systemstandard forbinder de direkte.</string>
+    <string name="nwg_none">Ingen (direkte)</string>
+    <string name="nwg_direct">Direkte (ingen proxy)</string>
+    <string name="nwg_apps">Tildeling pr. app</string>
+    <string name="nwg_apps_summary">Vælg, hvilken tunnel hver app bruger</string>
+    <string name="nwg_configs">Tunneler</string>
+    <string name="nwg_empty">Ingen tunneler endnu. Tilføj en med knappen +.</string>
+    <string name="nwg_status_off">Fra</string>
+    <string name="nwg_status_connecting">Opretter forbindelse</string>
+    <string name="nwg_status_up">Forbundet</string>
+    <string name="nwg_status_down">Svarer ikke</string>
+    <string name="nwg_status_error">Fejl</string>
+    <string name="nwg_traffic">Modtaget %1$s, sendt %2$s</string>
+    <string name="nwg_handshake">Seneste handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Slå Telos Network til for at forbinde tunnelerne.</string>
+    <string name="nwg_new_title">Ny tunnel</string>
+    <string name="nwg_edit_title">Rediger tunnel</string>
+    <string name="nwg_name">Navn</string>
+    <string name="nwg_private_key">Privat nøgle</string>
+    <string name="nwg_public_key">Offentlig nøgle: %1$s</string>
+    <string name="nwg_generate">Generér</string>
+    <string name="nwg_addresses">Adresser (adskilt med komma)</string>
+    <string name="nwg_dns">DNS-servere (adskilt med komma)</string>
+    <string name="nwg_mtu">MTU (0 = automatisk)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Peerens offentlige nøgle</string>
+    <string name="nwg_preshared">Delt hemmelig nøgle (valgfri)</string>
+    <string name="nwg_endpoint">Endpoint (vært:port)</string>
+    <string name="nwg_allowed_ips">Tilladte IP-adresser (adskilt med komma)</string>
+    <string name="nwg_keepalive">Persistent keepalive i sekunder (0 = fra)</string>
+    <string name="nwg_add_peer">Tilføj peer</string>
+    <string name="nwg_remove_peer">Fjern peer</string>
+    <string name="nwg_mobile_only">Kun på mobildata</string>
+    <string name="nwg_lockdown">Bloker apps, mens tunnelen er nede</string>
+    <string name="nwg_save">Gem</string>
+    <string name="nwg_cancel">Annuller</string>
+    <string name="nwg_delete">Slet</string>
+    <string name="nwg_share">Del konfiguration</string>
+    <string name="nwg_share_warning">Den eksporterede konfiguration indeholder den private nøgle.</string>
+    <string name="nwg_import">Importér</string>
+    <string name="nwg_qr_not_found">Ingen QR-kode fundet i dette billede</string>
+    <string name="nwg_err_syntax">Konfigurationen har en syntaksfejl: %1$s</string>
+    <string name="nwg_err_missing">Konfigurationen er ufuldstændig: %1$s mangler</string>
+    <string name="nwg_err_invalid_key">Ugyldig nøgle: %1$s</string>
+    <string name="nwg_err_invalid_value">Ugyldig værdi: %1$s</string>
+    <string name="nwg_err_invalid_name">Indtast et navn på højst 64 tegn</string>
+    <string name="nwg_err_not_found">Tunnelen findes ikke længere</string>
+    <string name="nwg_err_storage">Konfigurationen kunne ikke gemmes sikkert: %1$s</string>
+    <string name="nwg_err_other">Konfigurationen kunne ikke gemmes</string>
+    <string name="nwg_apps_title">Apps og tunneler</string>
+    <string name="nwg_search">Søg i apps</string>
+    <string name="nwg_show_system">Vis systemapps</string>
+    <string name="nwg_selected">%1$d valgt</string>
+    <string name="nwg_assign_selected">Tildel til valgte apps</string>
+    <string name="nwg_clear_selection">Ryd markering</string>
+    <string name="nwg_select_all">Vælg alle viste</string>
+</resources>

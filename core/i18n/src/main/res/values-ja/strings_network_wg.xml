@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">戻る</string>
+    <string name="nwg_add">トンネルを追加</string>
+    <string name="nwg_add_new">新規作成</string>
+    <string name="nwg_add_file">.conf ファイルをインポート</string>
+    <string name="nwg_add_qr">QR コード画像からインポート</string>
+    <string name="nwg_add_paste">設定テキストを貼り付け</string>
+    <string name="nwg_system_default">システムのデフォルト</string>
+    <string name="nwg_system_default_summary">個別の設定がないアプリはこのトンネルを使用します。システムのデフォルトがない場合は直接接続します。</string>
+    <string name="nwg_none">なし（直接）</string>
+    <string name="nwg_direct">直接（プロキシなし）</string>
+    <string name="nwg_apps">アプリごとの割り当て</string>
+    <string name="nwg_apps_summary">各アプリが使用するトンネルを選択</string>
+    <string name="nwg_configs">トンネル</string>
+    <string name="nwg_empty">トンネルはまだありません。+ ボタンで追加してください。</string>
+    <string name="nwg_status_off">オフ</string>
+    <string name="nwg_status_connecting">接続中</string>
+    <string name="nwg_status_up">接続済み</string>
+    <string name="nwg_status_down">応答なし</string>
+    <string name="nwg_status_error">エラー</string>
+    <string name="nwg_traffic">受信 %1$s、送信 %2$s</string>
+    <string name="nwg_handshake">最後のハンドシェイク: %1$s</string>
+    <string name="nwg_vpn_off_hint">トンネルを接続するには Telos Network をオンにしてください。</string>
+    <string name="nwg_new_title">新しいトンネル</string>
+    <string name="nwg_edit_title">トンネルを編集</string>
+    <string name="nwg_name">名前</string>
+    <string name="nwg_private_key">秘密鍵</string>
+    <string name="nwg_public_key">公開鍵: %1$s</string>
+    <string name="nwg_generate">生成</string>
+    <string name="nwg_addresses">アドレス（カンマ区切り）</string>
+    <string name="nwg_dns">DNS サーバー（カンマ区切り）</string>
+    <string name="nwg_mtu">MTU（0 = 自動）</string>
+    <string name="nwg_peer">ピア %1$d</string>
+    <string name="nwg_peer_public_key">ピアの公開鍵</string>
+    <string name="nwg_preshared">事前共有鍵（任意）</string>
+    <string name="nwg_endpoint">エンドポイント（ホスト:ポート）</string>
+    <string name="nwg_allowed_ips">許可する IP（カンマ区切り）</string>
+    <string name="nwg_keepalive">Persistent keepalive（秒、0 = オフ）</string>
+    <string name="nwg_add_peer">ピアを追加</string>
+    <string name="nwg_remove_peer">ピアを削除</string>
+    <string name="nwg_mobile_only">モバイルデータ通信時のみ</string>
+    <string name="nwg_lockdown">トンネルが切断されている間はアプリをブロック</string>
+    <string name="nwg_save">保存</string>
+    <string name="nwg_cancel">キャンセル</string>
+    <string name="nwg_delete">削除</string>
+    <string name="nwg_share">設定を共有</string>
+    <string name="nwg_share_warning">エクスポートした設定には秘密鍵が含まれます。</string>
+    <string name="nwg_import">インポート</string>
+    <string name="nwg_qr_not_found">この画像に QR コードが見つかりません</string>
+    <string name="nwg_err_syntax">設定に構文エラーがあります: %1$s</string>
+    <string name="nwg_err_missing">設定が不完全です: %1$s がありません</string>
+    <string name="nwg_err_invalid_key">無効な鍵: %1$s</string>
+    <string name="nwg_err_invalid_value">無効な値: %1$s</string>
+    <string name="nwg_err_invalid_name">64 文字以内の名前を入力してください</string>
+    <string name="nwg_err_not_found">このトンネルは存在しません</string>
+    <string name="nwg_err_storage">設定を安全に保存できませんでした: %1$s</string>
+    <string name="nwg_err_other">設定を保存できませんでした</string>
+    <string name="nwg_apps_title">アプリとトンネル</string>
+    <string name="nwg_search">アプリを検索</string>
+    <string name="nwg_show_system">システムアプリを表示</string>
+    <string name="nwg_selected">%1$d 件選択中</string>
+    <string name="nwg_assign_selected">選択したアプリに割り当て</string>
+    <string name="nwg_clear_selection">選択を解除</string>
+    <string name="nwg_select_all">表示中をすべて選択</string>
+</resources>

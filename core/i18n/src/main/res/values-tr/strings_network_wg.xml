@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Geri</string>
+    <string name="nwg_add">Tünel ekle</string>
+    <string name="nwg_add_new">Yeni oluştur</string>
+    <string name="nwg_add_file">.conf dosyasını içe aktar</string>
+    <string name="nwg_add_qr">QR kodu görselinden içe aktar</string>
+    <string name="nwg_add_paste">Yapılandırma metnini yapıştır</string>
+    <string name="nwg_system_default">Sistem varsayılanı</string>
+    <string name="nwg_system_default_summary">Kendi ayarı olmayan uygulamalar bu tüneli kullanır. Sistem varsayılanı yoksa doğrudan bağlanırlar.</string>
+    <string name="nwg_none">Yok (doğrudan)</string>
+    <string name="nwg_direct">Doğrudan (proxy yok)</string>
+    <string name="nwg_apps">Uygulama bazında atama</string>
+    <string name="nwg_apps_summary">Her uygulamanın hangi tüneli kullanacağını seçin</string>
+    <string name="nwg_configs">Tüneller</string>
+    <string name="nwg_empty">Henüz tünel yok. + düğmesiyle bir tane ekleyin.</string>
+    <string name="nwg_status_off">Kapalı</string>
+    <string name="nwg_status_connecting">Bağlanıyor</string>
+    <string name="nwg_status_up">Bağlandı</string>
+    <string name="nwg_status_down">Yanıt vermiyor</string>
+    <string name="nwg_status_error">Hata</string>
+    <string name="nwg_traffic">%1$s alındı, %2$s gönderildi</string>
+    <string name="nwg_handshake">Son handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Tünelleri bağlamak için Telos Network’ü açın.</string>
+    <string name="nwg_new_title">Yeni tünel</string>
+    <string name="nwg_edit_title">Tüneli düzenle</string>
+    <string name="nwg_name">Ad</string>
+    <string name="nwg_private_key">Özel anahtar</string>
+    <string name="nwg_public_key">Genel anahtar: %1$s</string>
+    <string name="nwg_generate">Oluştur</string>
+    <string name="nwg_addresses">Adresler (virgülle ayrılmış)</string>
+    <string name="nwg_dns">DNS sunucuları (virgülle ayrılmış)</string>
+    <string name="nwg_mtu">MTU (0 = otomatik)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Peer genel anahtarı</string>
+    <string name="nwg_preshared">Önceden paylaşılan anahtar (isteğe bağlı)</string>
+    <string name="nwg_endpoint">Endpoint (ana makine:bağlantı noktası)</string>
+    <string name="nwg_allowed_ips">İzin verilen IP’ler (virgülle ayrılmış)</string>
+    <string name="nwg_keepalive">Saniye cinsinden persistent keepalive (0 = kapalı)</string>
+    <string name="nwg_add_peer">Peer ekle</string>
+    <string name="nwg_remove_peer">Peer’i kaldır</string>
+    <string name="nwg_mobile_only">Yalnızca mobil veride</string>
+    <string name="nwg_lockdown">Tünel kapalıyken uygulamaları engelle</string>
+    <string name="nwg_save">Kaydet</string>
+    <string name="nwg_cancel">İptal</string>
+    <string name="nwg_delete">Sil</string>
+    <string name="nwg_share">Yapılandırmayı paylaş</string>
+    <string name="nwg_share_warning">Dışa aktarılan yapılandırma özel anahtarı içerir.</string>
+    <string name="nwg_import">İçe aktar</string>
+    <string name="nwg_qr_not_found">Bu görselde QR kodu bulunamadı</string>
+    <string name="nwg_err_syntax">Yapılandırmada sözdizimi hatası var: %1$s</string>
+    <string name="nwg_err_missing">Yapılandırma eksik: %1$s yok</string>
+    <string name="nwg_err_invalid_key">Geçersiz anahtar: %1$s</string>
+    <string name="nwg_err_invalid_value">Geçersiz değer: %1$s</string>
+    <string name="nwg_err_invalid_name">En fazla 64 karakterlik bir ad girin</string>
+    <string name="nwg_err_not_found">Tünel artık yok</string>
+    <string name="nwg_err_storage">Yapılandırma güvenli biçimde kaydedilemedi: %1$s</string>
+    <string name="nwg_err_other">Yapılandırma kaydedilemedi</string>
+    <string name="nwg_apps_title">Uygulamalar ve tüneller</string>
+    <string name="nwg_search">Uygulama ara</string>
+    <string name="nwg_show_system">Sistem uygulamalarını göster</string>
+    <string name="nwg_selected">%1$d seçildi</string>
+    <string name="nwg_assign_selected">Seçili uygulamalara ata</string>
+    <string name="nwg_clear_selection">Seçimi temizle</string>
+    <string name="nwg_select_all">Gösterilenlerin tümünü seç</string>
+</resources>

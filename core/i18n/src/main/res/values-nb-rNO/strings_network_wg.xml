@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Tilbake</string>
+    <string name="nwg_add">Legg til tunnel</string>
+    <string name="nwg_add_new">Opprett ny</string>
+    <string name="nwg_add_file">Importer .conf-fil</string>
+    <string name="nwg_add_qr">Importer fra QR-kodebilde</string>
+    <string name="nwg_add_paste">Lim inn konfigurasjonstekst</string>
+    <string name="nwg_system_default">Systemstandard</string>
+    <string name="nwg_system_default_summary">Apper uten egen innstilling bruker denne tunnelen. Uten systemstandard kobler de til direkte.</string>
+    <string name="nwg_none">Ingen (direkte)</string>
+    <string name="nwg_direct">Direkte (ingen proxy)</string>
+    <string name="nwg_apps">Tildeling per app</string>
+    <string name="nwg_apps_summary">Velg hvilken tunnel hver app bruker</string>
+    <string name="nwg_configs">Tunneler</string>
+    <string name="nwg_empty">Ingen tunneler ennå. Legg til en med +-knappen.</string>
+    <string name="nwg_status_off">Av</string>
+    <string name="nwg_status_connecting">Kobler til</string>
+    <string name="nwg_status_up">Tilkoblet</string>
+    <string name="nwg_status_down">Svarer ikke</string>
+    <string name="nwg_status_error">Feil</string>
+    <string name="nwg_traffic">Mottatt %1$s, sendt %2$s</string>
+    <string name="nwg_handshake">Siste handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Slå på Telos Network for å koble til tunnelene.</string>
+    <string name="nwg_new_title">Ny tunnel</string>
+    <string name="nwg_edit_title">Rediger tunnel</string>
+    <string name="nwg_name">Navn</string>
+    <string name="nwg_private_key">Privat nøkkel</string>
+    <string name="nwg_public_key">Offentlig nøkkel: %1$s</string>
+    <string name="nwg_generate">Generer</string>
+    <string name="nwg_addresses">Adresser (kommaseparert)</string>
+    <string name="nwg_dns">DNS-servere (kommaseparert)</string>
+    <string name="nwg_mtu">MTU (0 = automatisk)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Peerens offentlige nøkkel</string>
+    <string name="nwg_preshared">Delt hemmelig nøkkel (valgfritt)</string>
+    <string name="nwg_endpoint">Endpoint (vert:port)</string>
+    <string name="nwg_allowed_ips">Tillatte IP-adresser (kommaseparert)</string>
+    <string name="nwg_keepalive">Persistent keepalive i sekunder (0 = av)</string>
+    <string name="nwg_add_peer">Legg til peer</string>
+    <string name="nwg_remove_peer">Fjern peer</string>
+    <string name="nwg_mobile_only">Bare på mobildata</string>
+    <string name="nwg_lockdown">Blokker appene mens tunnelen er nede</string>
+    <string name="nwg_save">Lagre</string>
+    <string name="nwg_cancel">Avbryt</string>
+    <string name="nwg_delete">Slett</string>
+    <string name="nwg_share">Del konfigurasjon</string>
+    <string name="nwg_share_warning">Den eksporterte konfigurasjonen inneholder den private nøkkelen.</string>
+    <string name="nwg_import">Importer</string>
+    <string name="nwg_qr_not_found">Fant ingen QR-kode i dette bildet</string>
+    <string name="nwg_err_syntax">Konfigurasjonen har en syntaksfeil: %1$s</string>
+    <string name="nwg_err_missing">Konfigurasjonen er ufullstendig: %1$s mangler</string>
+    <string name="nwg_err_invalid_key">Ugyldig nøkkel: %1$s</string>
+    <string name="nwg_err_invalid_value">Ugyldig verdi: %1$s</string>
+    <string name="nwg_err_invalid_name">Skriv inn et navn på høyst 64 tegn</string>
+    <string name="nwg_err_not_found">Tunnelen finnes ikke lenger</string>
+    <string name="nwg_err_storage">Konfigurasjonen kunne ikke lagres sikkert: %1$s</string>
+    <string name="nwg_err_other">Konfigurasjonen kunne ikke lagres</string>
+    <string name="nwg_apps_title">Apper og tunneler</string>
+    <string name="nwg_search">Søk i apper</string>
+    <string name="nwg_show_system">Vis systemapper</string>
+    <string name="nwg_selected">%1$d valgt</string>
+    <string name="nwg_assign_selected">Tildel valgte apper</string>
+    <string name="nwg_clear_selection">Fjern markering</string>
+    <string name="nwg_select_all">Velg alle viste</string>
+</resources>

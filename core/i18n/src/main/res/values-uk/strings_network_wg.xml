@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Назад</string>
+    <string name="nwg_add">Додати тунель</string>
+    <string name="nwg_add_new">Створити новий</string>
+    <string name="nwg_add_file">Імпортувати файл .conf</string>
+    <string name="nwg_add_qr">Імпорт із зображення з QR-кодом</string>
+    <string name="nwg_add_paste">Вставити текст конфігурації</string>
+    <string name="nwg_system_default">Системний за замовчуванням</string>
+    <string name="nwg_system_default_summary">Застосунки без власного налаштування використовують цей тунель. Без системного за замовчуванням вони підключаються напряму.</string>
+    <string name="nwg_none">Немає (напряму)</string>
+    <string name="nwg_direct">Напряму (без проксі)</string>
+    <string name="nwg_apps">Призначення для застосунків</string>
+    <string name="nwg_apps_summary">Виберіть, який тунель використовує кожен застосунок</string>
+    <string name="nwg_configs">Тунелі</string>
+    <string name="nwg_empty">Тунелів ще немає. Додайте його кнопкою +.</string>
+    <string name="nwg_status_off">Вимкнено</string>
+    <string name="nwg_status_connecting">Підключення</string>
+    <string name="nwg_status_up">Підключено</string>
+    <string name="nwg_status_down">Не відповідає</string>
+    <string name="nwg_status_error">Помилка</string>
+    <string name="nwg_traffic">Отримано %1$s, надіслано %2$s</string>
+    <string name="nwg_handshake">Останній handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Увімкніть Telos Network, щоб підключити тунелі.</string>
+    <string name="nwg_new_title">Новий тунель</string>
+    <string name="nwg_edit_title">Редагувати тунель</string>
+    <string name="nwg_name">Назва</string>
+    <string name="nwg_private_key">Приватний ключ</string>
+    <string name="nwg_public_key">Публічний ключ: %1$s</string>
+    <string name="nwg_generate">Згенерувати</string>
+    <string name="nwg_addresses">Адреси (через кому)</string>
+    <string name="nwg_dns">DNS-сервери (через кому)</string>
+    <string name="nwg_mtu">MTU (0 = авто)</string>
+    <string name="nwg_peer">Пір %1$d</string>
+    <string name="nwg_peer_public_key">Публічний ключ піра</string>
+    <string name="nwg_preshared">Спільний ключ (необов’язково)</string>
+    <string name="nwg_endpoint">Endpoint (хост:порт)</string>
+    <string name="nwg_allowed_ips">Дозволені IP (через кому)</string>
+    <string name="nwg_keepalive">Persistent keepalive в секундах (0 = вимк.)</string>
+    <string name="nwg_add_peer">Додати піра</string>
+    <string name="nwg_remove_peer">Видалити піра</string>
+    <string name="nwg_mobile_only">Лише в мобільній мережі</string>
+    <string name="nwg_lockdown">Блокувати застосунки, поки тунель не працює</string>
+    <string name="nwg_save">Зберегти</string>
+    <string name="nwg_cancel">Скасувати</string>
+    <string name="nwg_delete">Видалити</string>
+    <string name="nwg_share">Поділитися конфігурацією</string>
+    <string name="nwg_share_warning">Експортована конфігурація містить приватний ключ.</string>
+    <string name="nwg_import">Імпорт</string>
+    <string name="nwg_qr_not_found">QR-код на цьому зображенні не знайдено</string>
+    <string name="nwg_err_syntax">У конфігурації синтаксична помилка: %1$s</string>
+    <string name="nwg_err_missing">Конфігурація неповна: бракує %1$s</string>
+    <string name="nwg_err_invalid_key">Недійсний ключ: %1$s</string>
+    <string name="nwg_err_invalid_value">Недійсне значення: %1$s</string>
+    <string name="nwg_err_invalid_name">Введіть назву до 64 символів</string>
+    <string name="nwg_err_not_found">Тунель більше не існує</string>
+    <string name="nwg_err_storage">Не вдалося безпечно зберегти конфігурацію: %1$s</string>
+    <string name="nwg_err_other">Не вдалося зберегти конфігурацію</string>
+    <string name="nwg_apps_title">Застосунки й тунелі</string>
+    <string name="nwg_search">Пошук застосунків</string>
+    <string name="nwg_show_system">Показати системні застосунки</string>
+    <string name="nwg_selected">Вибрано: %1$d</string>
+    <string name="nwg_assign_selected">Призначити вибраним застосункам</string>
+    <string name="nwg_clear_selection">Скасувати вибір</string>
+    <string name="nwg_select_all">Вибрати всі показані</string>
+</resources>

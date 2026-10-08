@@ -24,9 +24,9 @@ import org.koin.dsl.module
 val networkModule = module {
     single<NetworkSettings> { DefaultNetworkSettings(androidContext()) }
     single<AppDirectory> { DefaultAppDirectory(androidContext()) }
-    single<LogController> { DefaultLogController(get(), get()) }
+    single<LogController> { DefaultLogController(androidContext(), get(), get()) }
     single<BlocklistController> { DefaultBlocklistController(androidContext()) }
-    single<FirewallController> { DefaultFirewallController(androidContext(), get()) }
+    single<FirewallController> { DefaultFirewallController(androidContext(), get(), get()) }
     single<DnsController> { DefaultDnsController(androidContext()) }
     single<WireguardController> { DefaultWireguardController(androidContext()) }
     single {

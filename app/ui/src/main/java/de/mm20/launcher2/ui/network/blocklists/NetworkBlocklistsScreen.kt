@@ -1,0 +1,296 @@
+package de.mm20.launcher2.ui.network.blocklists
+
+import android.text.format.Formatter
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.network.api.AppDirectory
+import de.mm20.launcher2.network.api.BlocklistController
+import de.mm20.launcher2.network.api.BlocklistGroup
+import de.mm20.launcher2.network.api.BlocklistUpdateState
+import de.mm20.launcher2.network.api.RuleScope
+import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.preferences.Preference
+import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
+import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.network.firewall.AddRuleDialog
+import de.mm20.launcher2.ui.network.firewall.formatDateTime
+import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
+import org.koin.compose.koinInject
+import java.text.NumberFormat
+
+private typealias Icons = de.mm20.launcher2.base.R.drawable
+
+@Serializable
+data object NetworkBlocklistsRoute : NavKey
+
+/** The Rethink DNS blocklists: download, switch lists on and off, and the domains the user allows anyway. */
+@Composable
+fun NetworkBlocklistsScreen() {
+    val blocklists: BlocklistController = koinInject()
+    val directory: AppDirectory = koinInject()
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+
+    val groups by blocklists.groups.collectAsState()
+    val enabled by blocklists.enabled.collectAsState()
+    val installed by blocklists.installed.collectAsState()
+    val state by blocklists.updateState.collectAsState()
+    val lastUpdated by blocklists.lastUpdatedMs.collectAsState()
+    val updateAvailable by blocklists.updateAvailable.collectAsState()
+    val auto by blocklists.autoUpdate.collectAsState()
+    val storage by blocklists.storageBytes.collectAsState()
+    val counts by blocklists.blockCounts.collectAsState()
+    val bypass by blocklists.bypass.collectAsState()
+    var expanded by rememberSaveable { mutableStateOf<String?>(null) }
+    var addBypass by remember { mutableStateOf(false) }
+    var checked by remember { mutableStateOf<Boolean?>(null) }
+    val number = remember { NumberFormat.getInstance() }
+
+    PreferenceScreen(title = { Text(stringResource(R.string.netfw_b_title)) }) {
+        item {
+            Text(
+                stringResource(R.string.netfw_b_intro),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
+        }
+        item {
+            PreferenceCategory {
+                val busy = state is BlocklistUpdateState.Downloading
+                val summary = when (val st = state) {
+                    is BlocklistUpdateState.Downloading ->
+                        if (st.progress < 0f) stringResource(R.string.netfw_b_updating)
+                        else stringResource(R.string.netfw_b_updating_pct, (st.progress * 100).toInt())
+                    is BlocklistUpdateState.Failed -> stringResource(R.string.netfw_b_failed, st.message)
+                    BlocklistUpdateState.Idle -> when {
+                        !installed -> stringResource(R.string.netfw_b_not_installed)
+                        updateAvailable -> stringResource(R.string.netfw_b_update_available)
+                        checked == false -> stringResource(R.string.netfw_b_up_to_date)
+                        lastUpdated > 0 -> stringResource(R.string.netfw_b_updated, formatDateTime(context, lastUpdated))
+                        else -> stringResource(R.string.netfw_b_never)
+                    }
+                }
+                Preference(
+                    title = stringResource(
+                        when {
+                            !installed -> R.string.netfw_b_download
+                            updateAvailable -> R.string.netfw_b_update_now
+                            else -> R.string.netfw_b_check
+                        }
+                    ),
+                    summary = summary,
+                    icon = Icons.download_24px,
+                    enabled = !busy,
+                    onClick = {
+                        scope.launch {
+                            if (!installed || updateAvailable) {
+                                blocklists.update(force = false)
+                            } else {
+                                checked = blocklists.checkForUpdate().getOrNull()
+                            }
+                        }
+                    },
+                )
+                (state as? BlocklistUpdateState.Downloading)?.let { st ->
+                    if (st.progress >= 0f) {
+                        LinearProgressIndicator(progress = { st.progress }, modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp))
+                    } else {
+                        LinearProgressIndicator(modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp))
+                    }
+                }
+                if (installed) {
+                    SwitchPreference(
+                        title = stringResource(R.string.netfw_b_auto),
+                        summary = stringResource(R.string.netfw_b_auto_summary),
+                        icon = Icons.schedule_24px,
+                        value = auto,
+                        onValueChanged = { v -> scope.launch { blocklists.setAutoUpdate(v) } },
+                    )
+                    Preference(
+                        title = stringResource(R.string.netfw_b_remove),
+                        summary = stringResource(R.string.netfw_b_storage, Formatter.formatShortFileSize(context, storage)),
+                        icon = Icons.delete_24px,
+                        onClick = { scope.launch { blocklists.removeDownloaded() } },
+                    )
+                }
+            }
+        }
+        if (installed) {
+            val sections = listOf(
+                "parentalcontrol" to R.string.netfw_b_sec_parental,
+                "security" to R.string.netfw_b_sec_security,
+                "privacy" to R.string.netfw_b_sec_privacy,
+            )
+            val known = sections.map { it.first }.toSet()
+            val all = sections + ("" to R.string.netfw_b_sec_other)
+            all.forEach { (section, title) ->
+                val inSection = groups.filter { if (section.isEmpty()) it.section !in known else it.section == section }
+                if (inSection.isEmpty()) return@forEach
+                item(key = "section-$section") {
+                    PreferenceCategory(stringResource(title)) {
+                        inSection.forEach { group ->
+                            GroupRows(
+                                group = group,
+                                enabled = enabled,
+                                counts = counts,
+                                expanded = expanded == group.id,
+                                number = number,
+                                onToggleExpanded = { expanded = if (expanded == group.id) null else group.id },
+                                onGroup = { on -> scope.launch { blocklists.setGroupEnabled(group.id, on) } },
+                                onList = { id, on -> scope.launch { blocklists.setEnabled(id, on) } },
+                            )
+                        }
+                    }
+                }
+            }
+            item {
+                PreferenceCategory {
+                    Preference(
+                        title = stringResource(R.string.netfw_b_reset_counts),
+                        icon = Icons.settings_backup_restore_24px,
+                        onClick = { scope.launch { blocklists.resetCounts() } },
+                    )
+                }
+            }
+        }
+        item {
+            PreferenceCategory(stringResource(R.string.netfw_b_bypass)) {
+                Text(
+                    stringResource(R.string.netfw_b_bypass_info),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                )
+                Preference(title = stringResource(R.string.netfw_b_bypass_add), icon = Icons.add_24px, onClick = { addBypass = true })
+                bypass.forEach { b ->
+                    Preference(
+                        title = { Text(b.domain) },
+                        summary = {
+                            Text(
+                                when (val s = b.scope) {
+                                    RuleScope.System -> stringResource(R.string.netfw_c_all_apps)
+                                    is RuleScope.App -> directory.labelFor(s.appId)
+                                }
+                            )
+                        },
+                        controls = {
+                            IconButton(onClick = { scope.launch { blocklists.removeBypass(b.id) } }) {
+                                Icon(painterResource(Icons.delete_24px), contentDescription = stringResource(R.string.hc_delete))
+                            }
+                        },
+                    )
+                }
+                if (bypass.isEmpty()) {
+                    Text(
+                        stringResource(R.string.netfw_b_bypass_empty),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(16.dp),
+                    )
+                }
+            }
+        }
+    }
+
+    if (addBypass) {
+        AddRuleDialog(
+            isIp = false,
+            directory = directory,
+            title = stringResource(R.string.netfw_b_bypass_add),
+            showAction = false,
+            onDismiss = { addBypass = false },
+            onAdd = { domain, _, _, ruleScope, _ ->
+                scope.launch {
+                    if (blocklists.addBypass(ruleScope, domain).isSuccess) addBypass = false
+                    else android.widget.Toast.makeText(context, context.getString(R.string.netfw_c_invalid), android.widget.Toast.LENGTH_SHORT).show()
+                }
+            },
+        )
+    }
+}
+
+@Composable
+private fun GroupRows(
+    group: BlocklistGroup,
+    enabled: Set<String>,
+    counts: Map<String, Long>,
+    expanded: Boolean,
+    number: NumberFormat,
+    onToggleExpanded: () -> Unit,
+    onGroup: (Boolean) -> Unit,
+    onList: (String, Boolean) -> Unit,
+) {
+    val on = group.lists.count { it.id in enabled }
+    val domains = group.lists.sumOf { it.entryCount }
+    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Preference(
+            title = groupName(group),
+            summary = stringResource(R.string.netfw_b_selected, on, group.lists.size) + " · " +
+                stringResource(R.string.netfw_b_entries, number.format(domains)),
+            onClick = onToggleExpanded,
+            controls = { Switch(checked = on == group.lists.size, onCheckedChange = onGroup) },
+        )
+        AnimatedVisibility(visible = expanded) {
+            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                group.lists.forEach { list ->
+                    val blocked = counts[list.id] ?: 0L
+                    SwitchPreference(
+                        title = list.name,
+                        summary = stringResource(R.string.netfw_b_entries, number.format(list.entryCount)) +
+                            if (blocked > 0) " · " + stringResource(R.string.netfw_b_blocked_count, number.format(blocked)) else "",
+                        value = list.id in enabled,
+                        onValueChanged = { onList(list.id, it) },
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun groupName(group: BlocklistGroup): String {
+    val sub = group.id.substringAfter('/')
+    val res = when (sub) {
+        "porn" -> R.string.netfw_g_porn
+        "piracy" -> R.string.netfw_g_piracy
+        "gambling" -> R.string.netfw_g_gambling
+        "services" -> R.string.netfw_g_services
+        "threat-intelligence-feeds" -> R.string.netfw_g_threat
+        "cryptojacking" -> R.string.netfw_g_cryptojacking
+        "bypass-methods" -> R.string.netfw_g_bypass_methods
+        "safesearch" -> R.string.netfw_g_safesearch
+        "dating" -> R.string.netfw_g_dating
+        "social-networks" -> R.string.netfw_g_social
+        "tracking-domains" -> R.string.netfw_g_tracking
+        "rethinkdns-recommended" -> R.string.netfw_g_recommended
+        "native" -> R.string.netfw_g_native
+        "others" -> R.string.netfw_g_others
+        else -> null
+    }
+    return if (res != null) stringResource(res) else group.name
+}

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Retro</string>
+    <string name="nwg_add">Adder tunnel</string>
+    <string name="nwg_add_new">Crear nove</string>
+    <string name="nwg_add_file">Importar file .conf</string>
+    <string name="nwg_add_qr">Importar ab imagine de codice QR</string>
+    <string name="nwg_add_paste">Collar texto de configuration</string>
+    <string name="nwg_system_default">Predefinition del systema</string>
+    <string name="nwg_system_default_summary">Le applicationes sin proprie configuration usa iste tunnel. Sin predefinition del systema, illos se connecte directemente.</string>
+    <string name="nwg_none">Nulle (directe)</string>
+    <string name="nwg_direct">Directe (sin proxy)</string>
+    <string name="nwg_apps">Assignation per application</string>
+    <string name="nwg_apps_summary">Selige qual tunnel cata application usa</string>
+    <string name="nwg_configs">Tunnels</string>
+    <string name="nwg_empty">Ancora nulle tunnel. Adde un con le button +.</string>
+    <string name="nwg_status_off">Dishabilitate</string>
+    <string name="nwg_status_connecting">Connectente</string>
+    <string name="nwg_status_up">Connectite</string>
+    <string name="nwg_status_down">Non responde</string>
+    <string name="nwg_status_error">Error</string>
+    <string name="nwg_traffic">Recipite %1$s, inviate %2$s</string>
+    <string name="nwg_handshake">Ultime handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Activa Telos Network pro connecter le tunnels.</string>
+    <string name="nwg_new_title">Nove tunnel</string>
+    <string name="nwg_edit_title">Modificar tunnel</string>
+    <string name="nwg_name">Nomine</string>
+    <string name="nwg_private_key">Clave private</string>
+    <string name="nwg_public_key">Clave public: %1$s</string>
+    <string name="nwg_generate">Generar</string>
+    <string name="nwg_addresses">Adresses (separate per commas)</string>
+    <string name="nwg_dns">Servitores DNS (separate per commas)</string>
+    <string name="nwg_mtu">MTU (0 = automatic)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Clave public del peer</string>
+    <string name="nwg_preshared">Clave pre-condividite (optional)</string>
+    <string name="nwg_endpoint">Endpoint (host:porta)</string>
+    <string name="nwg_allowed_ips">IPs permittite (separate per commas)</string>
+    <string name="nwg_keepalive">Persistent keepalive in secundas (0 = disactivate)</string>
+    <string name="nwg_add_peer">Adder peer</string>
+    <string name="nwg_remove_peer">Remover peer</string>
+    <string name="nwg_mobile_only">Solmente con datos mobile</string>
+    <string name="nwg_lockdown">Blocar le applicationes durante que le tunnel es inactive</string>
+    <string name="nwg_save">Salvar</string>
+    <string name="nwg_cancel">Cancellar</string>
+    <string name="nwg_delete">Deler</string>
+    <string name="nwg_share">Condivider configuration</string>
+    <string name="nwg_share_warning">Le configuration exportate contine le clave private.</string>
+    <string name="nwg_import">Importar</string>
+    <string name="nwg_qr_not_found">Nulle codice QR trovate in iste imagine</string>
+    <string name="nwg_err_syntax">Le configuration ha un error de syntaxe: %1$s</string>
+    <string name="nwg_err_missing">Le configuration es incomplete: %1$s manca</string>
+    <string name="nwg_err_invalid_key">Clave invalide: %1$s</string>
+    <string name="nwg_err_invalid_value">Valor invalide: %1$s</string>
+    <string name="nwg_err_invalid_name">Insere un nomine de maximo 64 characteres</string>
+    <string name="nwg_err_not_found">Le tunnel non existe plus</string>
+    <string name="nwg_err_storage">Le configuration non poteva esser salvate secur: %1$s</string>
+    <string name="nwg_err_other">Le configuration non poteva esser salvate</string>
+    <string name="nwg_apps_title">Applicationes e tunnels</string>
+    <string name="nwg_search">Cercar applicationes</string>
+    <string name="nwg_show_system">Monstrar applicationes del systema</string>
+    <string name="nwg_selected">%1$d selectionate</string>
+    <string name="nwg_assign_selected">Assignar al applicationes selectionate</string>
+    <string name="nwg_clear_selection">Rader selection</string>
+    <string name="nwg_select_all">Seliger tote le monstrate</string>
+</resources>

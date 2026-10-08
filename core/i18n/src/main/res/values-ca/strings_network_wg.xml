@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Enrere</string>
+    <string name="nwg_add">Afegeix un túnel</string>
+    <string name="nwg_add_new">Crea’n un de nou</string>
+    <string name="nwg_add_file">Importa un fitxer .conf</string>
+    <string name="nwg_add_qr">Importa d’una imatge de codi QR</string>
+    <string name="nwg_add_paste">Enganxa el text de configuració</string>
+    <string name="nwg_system_default">Predeterminat del sistema</string>
+    <string name="nwg_system_default_summary">Les aplicacions sense configuració pròpia utilitzen aquest túnel. Sense predeterminat del sistema es connecten directament.</string>
+    <string name="nwg_none">Cap (directe)</string>
+    <string name="nwg_direct">Directe (sense servidor intermediari)</string>
+    <string name="nwg_apps">Assignació per aplicació</string>
+    <string name="nwg_apps_summary">Trieu quin túnel utilitza cada aplicació</string>
+    <string name="nwg_configs">Túnels</string>
+    <string name="nwg_empty">Encara no hi ha túnels. Afegiu-ne un amb el botó +.</string>
+    <string name="nwg_status_off">Desactivat</string>
+    <string name="nwg_status_connecting">S’està connectant</string>
+    <string name="nwg_status_up">Connectat</string>
+    <string name="nwg_status_down">No respon</string>
+    <string name="nwg_status_error">Error</string>
+    <string name="nwg_traffic">Rebut %1$s, enviat %2$s</string>
+    <string name="nwg_handshake">Últim handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Activeu Telos Network per connectar els túnels.</string>
+    <string name="nwg_new_title">Túnel nou</string>
+    <string name="nwg_edit_title">Edita el túnel</string>
+    <string name="nwg_name">Nom</string>
+    <string name="nwg_private_key">Clau privada</string>
+    <string name="nwg_public_key">Clau pública: %1$s</string>
+    <string name="nwg_generate">Genera</string>
+    <string name="nwg_addresses">Adreces (separades per comes)</string>
+    <string name="nwg_dns">Servidors DNS (separats per comes)</string>
+    <string name="nwg_mtu">MTU (0 = automàtic)</string>
+    <string name="nwg_peer">Parell %1$d</string>
+    <string name="nwg_peer_public_key">Clau pública del parell</string>
+    <string name="nwg_preshared">Clau compartida prèviament (opcional)</string>
+    <string name="nwg_endpoint">Endpoint (amfitrió:port)</string>
+    <string name="nwg_allowed_ips">IP permeses (separades per comes)</string>
+    <string name="nwg_keepalive">Persistent keepalive en segons (0 = desactivat)</string>
+    <string name="nwg_add_peer">Afegeix un parell</string>
+    <string name="nwg_remove_peer">Elimina el parell</string>
+    <string name="nwg_mobile_only">Només amb dades mòbils</string>
+    <string name="nwg_lockdown">Bloqueja les aplicacions mentre el túnel estigui caigut</string>
+    <string name="nwg_save">Desa</string>
+    <string name="nwg_cancel">Cancel·la</string>
+    <string name="nwg_delete">Suprimeix</string>
+    <string name="nwg_share">Comparteix la configuració</string>
+    <string name="nwg_share_warning">La configuració exportada conté la clau privada.</string>
+    <string name="nwg_import">Importa</string>
+    <string name="nwg_qr_not_found">No s’ha trobat cap codi QR en aquesta imatge</string>
+    <string name="nwg_err_syntax">La configuració té un error de sintaxi: %1$s</string>
+    <string name="nwg_err_missing">La configuració és incompleta: falta %1$s</string>
+    <string name="nwg_err_invalid_key">Clau no vàlida: %1$s</string>
+    <string name="nwg_err_invalid_value">Valor no vàlid: %1$s</string>
+    <string name="nwg_err_invalid_name">Introduïu un nom de com a màxim 64 caràcters</string>
+    <string name="nwg_err_not_found">El túnel ja no existeix</string>
+    <string name="nwg_err_storage">No s’ha pogut desar la configuració de manera segura: %1$s</string>
+    <string name="nwg_err_other">No s’ha pogut desar la configuració</string>
+    <string name="nwg_apps_title">Aplicacions i túnels</string>
+    <string name="nwg_search">Cerca aplicacions</string>
+    <string name="nwg_show_system">Mostra les aplicacions del sistema</string>
+    <string name="nwg_selected">%1$d seleccionades</string>
+    <string name="nwg_assign_selected">Assigna a les aplicacions seleccionades</string>
+    <string name="nwg_clear_selection">Esborra la selecció</string>
+    <string name="nwg_select_all">Selecciona totes les mostrades</string>
+</resources>

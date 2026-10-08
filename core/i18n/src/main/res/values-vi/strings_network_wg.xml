@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Quay lại</string>
+    <string name="nwg_add">Thêm đường hầm</string>
+    <string name="nwg_add_new">Tạo mới</string>
+    <string name="nwg_add_file">Nhập tệp .conf</string>
+    <string name="nwg_add_qr">Nhập từ ảnh mã QR</string>
+    <string name="nwg_add_paste">Dán văn bản cấu hình</string>
+    <string name="nwg_system_default">Mặc định của hệ thống</string>
+    <string name="nwg_system_default_summary">Các ứng dụng không có thiết lập riêng sẽ dùng đường hầm này. Nếu không có mặc định của hệ thống, chúng kết nối trực tiếp.</string>
+    <string name="nwg_none">Không (trực tiếp)</string>
+    <string name="nwg_direct">Trực tiếp (không proxy)</string>
+    <string name="nwg_apps">Gán theo ứng dụng</string>
+    <string name="nwg_apps_summary">Chọn đường hầm mà mỗi ứng dụng sử dụng</string>
+    <string name="nwg_configs">Đường hầm</string>
+    <string name="nwg_empty">Chưa có đường hầm nào. Hãy thêm bằng nút +.</string>
+    <string name="nwg_status_off">Tắt</string>
+    <string name="nwg_status_connecting">Đang kết nối</string>
+    <string name="nwg_status_up">Đã kết nối</string>
+    <string name="nwg_status_down">Không phản hồi</string>
+    <string name="nwg_status_error">Lỗi</string>
+    <string name="nwg_traffic">Đã nhận %1$s, đã gửi %2$s</string>
+    <string name="nwg_handshake">Handshake gần nhất: %1$s</string>
+    <string name="nwg_vpn_off_hint">Bật Telos Network để kết nối các đường hầm.</string>
+    <string name="nwg_new_title">Đường hầm mới</string>
+    <string name="nwg_edit_title">Sửa đường hầm</string>
+    <string name="nwg_name">Tên</string>
+    <string name="nwg_private_key">Khóa riêng tư</string>
+    <string name="nwg_public_key">Khóa công khai: %1$s</string>
+    <string name="nwg_generate">Tạo</string>
+    <string name="nwg_addresses">Địa chỉ (phân tách bằng dấu phẩy)</string>
+    <string name="nwg_dns">Máy chủ DNS (phân tách bằng dấu phẩy)</string>
+    <string name="nwg_mtu">MTU (0 = tự động)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Khóa công khai của peer</string>
+    <string name="nwg_preshared">Khóa chia sẻ trước (tùy chọn)</string>
+    <string name="nwg_endpoint">Endpoint (máy chủ:cổng)</string>
+    <string name="nwg_allowed_ips">IP được phép (phân tách bằng dấu phẩy)</string>
+    <string name="nwg_keepalive">Persistent keepalive tính bằng giây (0 = tắt)</string>
+    <string name="nwg_add_peer">Thêm peer</string>
+    <string name="nwg_remove_peer">Xóa peer</string>
+    <string name="nwg_mobile_only">Chỉ khi dùng dữ liệu di động</string>
+    <string name="nwg_lockdown">Chặn các ứng dụng khi đường hầm không hoạt động</string>
+    <string name="nwg_save">Lưu</string>
+    <string name="nwg_cancel">Hủy</string>
+    <string name="nwg_delete">Xóa</string>
+    <string name="nwg_share">Chia sẻ cấu hình</string>
+    <string name="nwg_share_warning">Cấu hình đã xuất có chứa khóa riêng tư.</string>
+    <string name="nwg_import">Nhập</string>
+    <string name="nwg_qr_not_found">Không tìm thấy mã QR trong ảnh này</string>
+    <string name="nwg_err_syntax">Cấu hình có lỗi cú pháp: %1$s</string>
+    <string name="nwg_err_missing">Cấu hình chưa đầy đủ: thiếu %1$s</string>
+    <string name="nwg_err_invalid_key">Khóa không hợp lệ: %1$s</string>
+    <string name="nwg_err_invalid_value">Giá trị không hợp lệ: %1$s</string>
+    <string name="nwg_err_invalid_name">Nhập tên tối đa 64 ký tự</string>
+    <string name="nwg_err_not_found">Đường hầm không còn tồn tại</string>
+    <string name="nwg_err_storage">Không thể lưu cấu hình một cách an toàn: %1$s</string>
+    <string name="nwg_err_other">Không thể lưu cấu hình</string>
+    <string name="nwg_apps_title">Ứng dụng và đường hầm</string>
+    <string name="nwg_search">Tìm ứng dụng</string>
+    <string name="nwg_show_system">Hiện ứng dụng hệ thống</string>
+    <string name="nwg_selected">Đã chọn %1$d</string>
+    <string name="nwg_assign_selected">Gán cho các ứng dụng đã chọn</string>
+    <string name="nwg_clear_selection">Bỏ chọn</string>
+    <string name="nwg_select_all">Chọn tất cả mục đang hiển thị</string>
+</resources>

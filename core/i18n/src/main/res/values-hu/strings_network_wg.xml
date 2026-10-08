@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Vissza</string>
+    <string name="nwg_add">Alagút hozzáadása</string>
+    <string name="nwg_add_new">Új létrehozása</string>
+    <string name="nwg_add_file">.conf fájl importálása</string>
+    <string name="nwg_add_qr">Importálás QR-kódot tartalmazó képből</string>
+    <string name="nwg_add_paste">Konfigurációs szöveg beillesztése</string>
+    <string name="nwg_system_default">Rendszer-alapértelmezett</string>
+    <string name="nwg_system_default_summary">A saját beállítás nélküli alkalmazások ezt az alagutat használják. Rendszer-alapértelmezett nélkül közvetlenül csatlakoznak.</string>
+    <string name="nwg_none">Nincs (közvetlen)</string>
+    <string name="nwg_direct">Közvetlen (proxy nélkül)</string>
+    <string name="nwg_apps">Alkalmazásonkénti hozzárendelés</string>
+    <string name="nwg_apps_summary">Válassza ki, melyik alagutat használja az egyes alkalmazások</string>
+    <string name="nwg_configs">Alagutak</string>
+    <string name="nwg_empty">Még nincs alagút. Adjon hozzá egyet a + gombbal.</string>
+    <string name="nwg_status_off">Ki</string>
+    <string name="nwg_status_connecting">Csatlakozás</string>
+    <string name="nwg_status_up">Csatlakoztatva</string>
+    <string name="nwg_status_down">Nem válaszol</string>
+    <string name="nwg_status_error">Hiba</string>
+    <string name="nwg_traffic">Fogadva: %1$s, küldve: %2$s</string>
+    <string name="nwg_handshake">Utolsó handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Kapcsolja be a Telos Networköt az alagutak csatlakoztatásához.</string>
+    <string name="nwg_new_title">Új alagút</string>
+    <string name="nwg_edit_title">Alagút szerkesztése</string>
+    <string name="nwg_name">Név</string>
+    <string name="nwg_private_key">Privát kulcs</string>
+    <string name="nwg_public_key">Nyilvános kulcs: %1$s</string>
+    <string name="nwg_generate">Létrehozás</string>
+    <string name="nwg_addresses">Címek (vesszővel elválasztva)</string>
+    <string name="nwg_dns">DNS-kiszolgálók (vesszővel elválasztva)</string>
+    <string name="nwg_mtu">MTU (0 = automatikus)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">A peer nyilvános kulcsa</string>
+    <string name="nwg_preshared">Előre megosztott kulcs (nem kötelező)</string>
+    <string name="nwg_endpoint">Endpoint (gazda:port)</string>
+    <string name="nwg_allowed_ips">Engedélyezett IP-címek (vesszővel elválasztva)</string>
+    <string name="nwg_keepalive">Persistent keepalive másodpercben (0 = ki)</string>
+    <string name="nwg_add_peer">Peer hozzáadása</string>
+    <string name="nwg_remove_peer">Peer eltávolítása</string>
+    <string name="nwg_mobile_only">Csak mobiladattal</string>
+    <string name="nwg_lockdown">Az alkalmazások tiltása, amíg az alagút nem működik</string>
+    <string name="nwg_save">Mentés</string>
+    <string name="nwg_cancel">Mégse</string>
+    <string name="nwg_delete">Törlés</string>
+    <string name="nwg_share">Konfiguráció megosztása</string>
+    <string name="nwg_share_warning">Az exportált konfiguráció tartalmazza a privát kulcsot.</string>
+    <string name="nwg_import">Importálás</string>
+    <string name="nwg_qr_not_found">Ezen a képen nem található QR-kód</string>
+    <string name="nwg_err_syntax">A konfiguráció szintaktikai hibát tartalmaz: %1$s</string>
+    <string name="nwg_err_missing">A konfiguráció hiányos: hiányzik a(z) %1$s</string>
+    <string name="nwg_err_invalid_key">Érvénytelen kulcs: %1$s</string>
+    <string name="nwg_err_invalid_value">Érvénytelen érték: %1$s</string>
+    <string name="nwg_err_invalid_name">Adjon meg legfeljebb 64 karakteres nevet</string>
+    <string name="nwg_err_not_found">Az alagút már nem létezik</string>
+    <string name="nwg_err_storage">A konfigurációt nem sikerült biztonságosan menteni: %1$s</string>
+    <string name="nwg_err_other">A konfigurációt nem sikerült menteni</string>
+    <string name="nwg_apps_title">Alkalmazások és alagutak</string>
+    <string name="nwg_search">Alkalmazások keresése</string>
+    <string name="nwg_show_system">Rendszeralkalmazások megjelenítése</string>
+    <string name="nwg_selected">Kijelölve: %1$d</string>
+    <string name="nwg_assign_selected">Hozzárendelés a kijelölt alkalmazásokhoz</string>
+    <string name="nwg_clear_selection">Kijelölés törlése</string>
+    <string name="nwg_select_all">Az összes megjelenített kijelölése</string>
+</resources>

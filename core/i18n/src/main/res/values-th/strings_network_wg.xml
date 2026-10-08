@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">กลับ</string>
+    <string name="nwg_add">เพิ่มอุโมงค์</string>
+    <string name="nwg_add_new">สร้างใหม่</string>
+    <string name="nwg_add_file">นำเข้าไฟล์ .conf</string>
+    <string name="nwg_add_qr">นำเข้าจากรูปภาพรหัส QR</string>
+    <string name="nwg_add_paste">วางข้อความการกำหนดค่า</string>
+    <string name="nwg_system_default">ค่าเริ่มต้นของระบบ</string>
+    <string name="nwg_system_default_summary">แอปที่ไม่มีการตั้งค่าของตัวเองจะใช้อุโมงค์นี้ หากไม่มีค่าเริ่มต้นของระบบ จะเชื่อมต่อโดยตรง</string>
+    <string name="nwg_none">ไม่มี (โดยตรง)</string>
+    <string name="nwg_direct">โดยตรง (ไม่ใช้พร็อกซี)</string>
+    <string name="nwg_apps">กำหนดตามแอป</string>
+    <string name="nwg_apps_summary">เลือกอุโมงค์ที่แต่ละแอปใช้</string>
+    <string name="nwg_configs">อุโมงค์</string>
+    <string name="nwg_empty">ยังไม่มีอุโมงค์ เพิ่มได้ด้วยปุ่ม +</string>
+    <string name="nwg_status_off">ปิด</string>
+    <string name="nwg_status_connecting">กำลังเชื่อมต่อ</string>
+    <string name="nwg_status_up">เชื่อมต่อแล้ว</string>
+    <string name="nwg_status_down">ไม่ตอบสนอง</string>
+    <string name="nwg_status_error">ข้อผิดพลาด</string>
+    <string name="nwg_traffic">รับแล้ว %1$s ส่งแล้ว %2$s</string>
+    <string name="nwg_handshake">handshake ล่าสุด: %1$s</string>
+    <string name="nwg_vpn_off_hint">เปิด Telos Network เพื่อเชื่อมต่ออุโมงค์</string>
+    <string name="nwg_new_title">อุโมงค์ใหม่</string>
+    <string name="nwg_edit_title">แก้ไขอุโมงค์</string>
+    <string name="nwg_name">ชื่อ</string>
+    <string name="nwg_private_key">คีย์ส่วนตัว</string>
+    <string name="nwg_public_key">คีย์สาธารณะ: %1$s</string>
+    <string name="nwg_generate">สร้าง</string>
+    <string name="nwg_addresses">ที่อยู่ (คั่นด้วยจุลภาค)</string>
+    <string name="nwg_dns">เซิร์ฟเวอร์ DNS (คั่นด้วยจุลภาค)</string>
+    <string name="nwg_mtu">MTU (0 = อัตโนมัติ)</string>
+    <string name="nwg_peer">เพียร์ %1$d</string>
+    <string name="nwg_peer_public_key">คีย์สาธารณะของเพียร์</string>
+    <string name="nwg_preshared">คีย์ที่แชร์ล่วงหน้า (ไม่บังคับ)</string>
+    <string name="nwg_endpoint">Endpoint (โฮสต์:พอร์ต)</string>
+    <string name="nwg_allowed_ips">IP ที่อนุญาต (คั่นด้วยจุลภาค)</string>
+    <string name="nwg_keepalive">Persistent keepalive เป็นวินาที (0 = ปิด)</string>
+    <string name="nwg_add_peer">เพิ่มเพียร์</string>
+    <string name="nwg_remove_peer">ลบเพียร์</string>
+    <string name="nwg_mobile_only">เฉพาะเมื่อใช้ข้อมูลมือถือ</string>
+    <string name="nwg_lockdown">บล็อกแอปขณะที่อุโมงค์ไม่ทำงาน</string>
+    <string name="nwg_save">บันทึก</string>
+    <string name="nwg_cancel">ยกเลิก</string>
+    <string name="nwg_delete">ลบ</string>
+    <string name="nwg_share">แชร์การกำหนดค่า</string>
+    <string name="nwg_share_warning">การกำหนดค่าที่ส่งออกมีคีย์ส่วนตัวอยู่</string>
+    <string name="nwg_import">นำเข้า</string>
+    <string name="nwg_qr_not_found">ไม่พบรหัส QR ในรูปภาพนี้</string>
+    <string name="nwg_err_syntax">การกำหนดค่ามีข้อผิดพลาดทางไวยากรณ์: %1$s</string>
+    <string name="nwg_err_missing">การกำหนดค่าไม่สมบูรณ์: ขาด %1$s</string>
+    <string name="nwg_err_invalid_key">คีย์ไม่ถูกต้อง: %1$s</string>
+    <string name="nwg_err_invalid_value">ค่าไม่ถูกต้อง: %1$s</string>
+    <string name="nwg_err_invalid_name">ป้อนชื่อไม่เกิน 64 อักขระ</string>
+    <string name="nwg_err_not_found">ไม่มีอุโมงค์นี้แล้ว</string>
+    <string name="nwg_err_storage">ไม่สามารถบันทึกการกำหนดค่าอย่างปลอดภัยได้: %1$s</string>
+    <string name="nwg_err_other">ไม่สามารถบันทึกการกำหนดค่าได้</string>
+    <string name="nwg_apps_title">แอปและอุโมงค์</string>
+    <string name="nwg_search">ค้นหาแอป</string>
+    <string name="nwg_show_system">แสดงแอประบบ</string>
+    <string name="nwg_selected">เลือกแล้ว %1$d</string>
+    <string name="nwg_assign_selected">กำหนดให้แอปที่เลือก</string>
+    <string name="nwg_clear_selection">ล้างการเลือก</string>
+    <string name="nwg_select_all">เลือกทั้งหมดที่แสดง</string>
+</resources>

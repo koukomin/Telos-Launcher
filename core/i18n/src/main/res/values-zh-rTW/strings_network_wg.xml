@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">返回</string>
+    <string name="nwg_add">新增通道</string>
+    <string name="nwg_add_new">建立新的</string>
+    <string name="nwg_add_file">匯入 .conf 檔案</string>
+    <string name="nwg_add_qr">從 QR 碼圖片匯入</string>
+    <string name="nwg_add_paste">貼上設定文字</string>
+    <string name="nwg_system_default">系統預設</string>
+    <string name="nwg_system_default_summary">沒有自己設定的應用程式會使用此通道。沒有系統預設時，它們會直接連線。</string>
+    <string name="nwg_none">無（直連）</string>
+    <string name="nwg_direct">直連（不使用代理）</string>
+    <string name="nwg_apps">依應用程式指派</string>
+    <string name="nwg_apps_summary">選擇每個應用程式使用的通道</string>
+    <string name="nwg_configs">通道</string>
+    <string name="nwg_empty">尚無通道。點選 + 按鈕新增。</string>
+    <string name="nwg_status_off">關閉</string>
+    <string name="nwg_status_connecting">連線中</string>
+    <string name="nwg_status_up">已連線</string>
+    <string name="nwg_status_down">無回應</string>
+    <string name="nwg_status_error">錯誤</string>
+    <string name="nwg_traffic">已接收 %1$s，已傳送 %2$s</string>
+    <string name="nwg_handshake">上次握手：%1$s</string>
+    <string name="nwg_vpn_off_hint">開啟 Telos Network 以連接通道。</string>
+    <string name="nwg_new_title">新增通道</string>
+    <string name="nwg_edit_title">編輯通道</string>
+    <string name="nwg_name">名稱</string>
+    <string name="nwg_private_key">私密金鑰</string>
+    <string name="nwg_public_key">公開金鑰：%1$s</string>
+    <string name="nwg_generate">產生</string>
+    <string name="nwg_addresses">位址（以逗號分隔）</string>
+    <string name="nwg_dns">DNS 伺服器（以逗號分隔）</string>
+    <string name="nwg_mtu">MTU（0 = 自動）</string>
+    <string name="nwg_peer">對等端 %1$d</string>
+    <string name="nwg_peer_public_key">對等端公開金鑰</string>
+    <string name="nwg_preshared">預先共用金鑰（選用）</string>
+    <string name="nwg_endpoint">Endpoint（主機:連接埠）</string>
+    <string name="nwg_allowed_ips">允許的 IP（以逗號分隔）</string>
+    <string name="nwg_keepalive">Persistent keepalive（秒，0 = 關閉）</string>
+    <string name="nwg_add_peer">新增對等端</string>
+    <string name="nwg_remove_peer">移除對等端</string>
+    <string name="nwg_mobile_only">僅使用行動數據時</string>
+    <string name="nwg_lockdown">通道中斷時封鎖這些應用程式</string>
+    <string name="nwg_save">儲存</string>
+    <string name="nwg_cancel">取消</string>
+    <string name="nwg_delete">刪除</string>
+    <string name="nwg_share">分享設定</string>
+    <string name="nwg_share_warning">匯出的設定包含私密金鑰。</string>
+    <string name="nwg_import">匯入</string>
+    <string name="nwg_qr_not_found">在此圖片中找不到 QR 碼</string>
+    <string name="nwg_err_syntax">設定有語法錯誤：%1$s</string>
+    <string name="nwg_err_missing">設定不完整：缺少 %1$s</string>
+    <string name="nwg_err_invalid_key">無效的金鑰：%1$s</string>
+    <string name="nwg_err_invalid_value">無效的值：%1$s</string>
+    <string name="nwg_err_invalid_name">請輸入不超過 64 個字元的名稱</string>
+    <string name="nwg_err_not_found">該通道已不存在</string>
+    <string name="nwg_err_storage">無法安全地儲存設定：%1$s</string>
+    <string name="nwg_err_other">無法儲存設定</string>
+    <string name="nwg_apps_title">應用程式與通道</string>
+    <string name="nwg_search">搜尋應用程式</string>
+    <string name="nwg_show_system">顯示系統應用程式</string>
+    <string name="nwg_selected">已選取 %1$d 項</string>
+    <string name="nwg_assign_selected">指派給所選應用程式</string>
+    <string name="nwg_clear_selection">清除選取</string>
+    <string name="nwg_select_all">全選已顯示的</string>
+</resources>

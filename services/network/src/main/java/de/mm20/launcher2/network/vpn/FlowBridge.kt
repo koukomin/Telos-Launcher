@@ -330,8 +330,10 @@ internal class FlowBridge(
     }
 
     override fun onUpstreamAnswer(id: String?, smm: DNSSummary?, rcvdDnsOpts: DNSOpts?, ipcsv: String?): DNSOpts {
-        // Answers are used as they are; the options of the question stay in force
-        return rcvdDnsOpts ?: DNSOpts()
+        // An empty DNSOpts means "no change": the options of the question (transport, and NOBLOCK for
+        // trusted/bypassed domains) stay in force. Returning the received options instead would make
+        // the engine start the resolve again (see Rethink's TunDnsManager.onUpstreamAnswer).
+        return DNSOpts()
     }
 
     override fun onPrequery(a: String?, b: String?, c: String?, d: Long): DomainOpts? = null

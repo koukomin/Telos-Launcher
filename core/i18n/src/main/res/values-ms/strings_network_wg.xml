@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Kembali</string>
+    <string name="nwg_add">Tambah terowong</string>
+    <string name="nwg_add_new">Cipta baharu</string>
+    <string name="nwg_add_file">Import fail .conf</string>
+    <string name="nwg_add_qr">Import daripada imej kod QR</string>
+    <string name="nwg_add_paste">Tampal teks konfigurasi</string>
+    <string name="nwg_system_default">Lalai sistem</string>
+    <string name="nwg_system_default_summary">Aplikasi tanpa tetapan sendiri menggunakan terowong ini. Tanpa lalai sistem, aplikasi bersambung terus.</string>
+    <string name="nwg_none">Tiada (terus)</string>
+    <string name="nwg_direct">Terus (tanpa proksi)</string>
+    <string name="nwg_apps">Penetapan mengikut aplikasi</string>
+    <string name="nwg_apps_summary">Pilih terowong yang digunakan oleh setiap aplikasi</string>
+    <string name="nwg_configs">Terowong</string>
+    <string name="nwg_empty">Belum ada terowong. Tambah satu dengan butang +.</string>
+    <string name="nwg_status_off">Mati</string>
+    <string name="nwg_status_connecting">Menyambung</string>
+    <string name="nwg_status_up">Bersambung</string>
+    <string name="nwg_status_down">Tiada respons</string>
+    <string name="nwg_status_error">Ralat</string>
+    <string name="nwg_traffic">Diterima %1$s, dihantar %2$s</string>
+    <string name="nwg_handshake">Handshake terakhir: %1$s</string>
+    <string name="nwg_vpn_off_hint">Hidupkan Telos Network untuk menyambung terowong.</string>
+    <string name="nwg_new_title">Terowong baharu</string>
+    <string name="nwg_edit_title">Edit terowong</string>
+    <string name="nwg_name">Nama</string>
+    <string name="nwg_private_key">Kunci peribadi</string>
+    <string name="nwg_public_key">Kunci awam: %1$s</string>
+    <string name="nwg_generate">Jana</string>
+    <string name="nwg_addresses">Alamat (dipisahkan dengan koma)</string>
+    <string name="nwg_dns">Pelayan DNS (dipisahkan dengan koma)</string>
+    <string name="nwg_mtu">MTU (0 = automatik)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Kunci awam peer</string>
+    <string name="nwg_preshared">Kunci pra-kongsi (pilihan)</string>
+    <string name="nwg_endpoint">Endpoint (hos:port)</string>
+    <string name="nwg_allowed_ips">IP yang dibenarkan (dipisahkan dengan koma)</string>
+    <string name="nwg_keepalive">Persistent keepalive dalam saat (0 = mati)</string>
+    <string name="nwg_add_peer">Tambah peer</string>
+    <string name="nwg_remove_peer">Buang peer</string>
+    <string name="nwg_mobile_only">Hanya pada data mudah alih</string>
+    <string name="nwg_lockdown">Sekat aplikasi semasa terowong terputus</string>
+    <string name="nwg_save">Simpan</string>
+    <string name="nwg_cancel">Batal</string>
+    <string name="nwg_delete">Padam</string>
+    <string name="nwg_share">Kongsi konfigurasi</string>
+    <string name="nwg_share_warning">Konfigurasi yang dieksport mengandungi kunci peribadi.</string>
+    <string name="nwg_import">Import</string>
+    <string name="nwg_qr_not_found">Tiada kod QR ditemui dalam imej ini</string>
+    <string name="nwg_err_syntax">Konfigurasi mempunyai ralat sintaks: %1$s</string>
+    <string name="nwg_err_missing">Konfigurasi tidak lengkap: %1$s tiada</string>
+    <string name="nwg_err_invalid_key">Kunci tidak sah: %1$s</string>
+    <string name="nwg_err_invalid_value">Nilai tidak sah: %1$s</string>
+    <string name="nwg_err_invalid_name">Masukkan nama maksimum 64 aksara</string>
+    <string name="nwg_err_not_found">Terowong sudah tidak wujud</string>
+    <string name="nwg_err_storage">Konfigurasi tidak dapat disimpan dengan selamat: %1$s</string>
+    <string name="nwg_err_other">Konfigurasi tidak dapat disimpan</string>
+    <string name="nwg_apps_title">Aplikasi dan terowong</string>
+    <string name="nwg_search">Cari aplikasi</string>
+    <string name="nwg_show_system">Papar aplikasi sistem</string>
+    <string name="nwg_selected">%1$d dipilih</string>
+    <string name="nwg_assign_selected">Tetapkan kepada aplikasi yang dipilih</string>
+    <string name="nwg_clear_selection">Kosongkan pilihan</string>
+    <string name="nwg_select_all">Pilih semua yang dipaparkan</string>
+</resources>

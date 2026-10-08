@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">返回</string>
+    <string name="nwg_add">添加隧道</string>
+    <string name="nwg_add_new">新建</string>
+    <string name="nwg_add_file">导入 .conf 文件</string>
+    <string name="nwg_add_qr">从二维码图片导入</string>
+    <string name="nwg_add_paste">粘贴配置文本</string>
+    <string name="nwg_system_default">系统默认</string>
+    <string name="nwg_system_default_summary">没有自己设置的应用使用此隧道。没有系统默认时，它们直接连接。</string>
+    <string name="nwg_none">无（直连）</string>
+    <string name="nwg_direct">直连（不使用代理）</string>
+    <string name="nwg_apps">按应用分配</string>
+    <string name="nwg_apps_summary">选择每个应用使用的隧道</string>
+    <string name="nwg_configs">隧道</string>
+    <string name="nwg_empty">还没有隧道。点按 + 按钮添加。</string>
+    <string name="nwg_status_off">关闭</string>
+    <string name="nwg_status_connecting">正在连接</string>
+    <string name="nwg_status_up">已连接</string>
+    <string name="nwg_status_down">无响应</string>
+    <string name="nwg_status_error">错误</string>
+    <string name="nwg_traffic">已接收 %1$s，已发送 %2$s</string>
+    <string name="nwg_handshake">上次握手：%1$s</string>
+    <string name="nwg_vpn_off_hint">开启 Telos Network 以连接隧道。</string>
+    <string name="nwg_new_title">新建隧道</string>
+    <string name="nwg_edit_title">编辑隧道</string>
+    <string name="nwg_name">名称</string>
+    <string name="nwg_private_key">私钥</string>
+    <string name="nwg_public_key">公钥：%1$s</string>
+    <string name="nwg_generate">生成</string>
+    <string name="nwg_addresses">地址（以逗号分隔）</string>
+    <string name="nwg_dns">DNS 服务器（以逗号分隔）</string>
+    <string name="nwg_mtu">MTU（0 = 自动）</string>
+    <string name="nwg_peer">对等端 %1$d</string>
+    <string name="nwg_peer_public_key">对等端公钥</string>
+    <string name="nwg_preshared">预共享密钥（可选）</string>
+    <string name="nwg_endpoint">Endpoint（主机:端口）</string>
+    <string name="nwg_allowed_ips">允许的 IP（以逗号分隔）</string>
+    <string name="nwg_keepalive">Persistent keepalive（秒，0 = 关闭）</string>
+    <string name="nwg_add_peer">添加对等端</string>
+    <string name="nwg_remove_peer">移除对等端</string>
+    <string name="nwg_mobile_only">仅使用移动数据时</string>
+    <string name="nwg_lockdown">隧道断开时阻止这些应用联网</string>
+    <string name="nwg_save">保存</string>
+    <string name="nwg_cancel">取消</string>
+    <string name="nwg_delete">删除</string>
+    <string name="nwg_share">分享配置</string>
+    <string name="nwg_share_warning">导出的配置包含私钥。</string>
+    <string name="nwg_import">导入</string>
+    <string name="nwg_qr_not_found">在此图片中未找到二维码</string>
+    <string name="nwg_err_syntax">配置有语法错误：%1$s</string>
+    <string name="nwg_err_missing">配置不完整：缺少 %1$s</string>
+    <string name="nwg_err_invalid_key">无效的密钥：%1$s</string>
+    <string name="nwg_err_invalid_value">无效的值：%1$s</string>
+    <string name="nwg_err_invalid_name">请输入不超过 64 个字符的名称</string>
+    <string name="nwg_err_not_found">该隧道已不存在</string>
+    <string name="nwg_err_storage">无法安全地保存配置：%1$s</string>
+    <string name="nwg_err_other">无法保存配置</string>
+    <string name="nwg_apps_title">应用与隧道</string>
+    <string name="nwg_search">搜索应用</string>
+    <string name="nwg_show_system">显示系统应用</string>
+    <string name="nwg_selected">已选择 %1$d 项</string>
+    <string name="nwg_assign_selected">分配给所选应用</string>
+    <string name="nwg_clear_selection">清除选择</string>
+    <string name="nwg_select_all">全选已显示的</string>
+</resources>
