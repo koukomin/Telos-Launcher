@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="docs/public/icon.png" alt="Telos" width="128" height="128">
+
 # Telos Launcher
 
 **A search-focused, free and open source Android launcher with a set of built-in apps.**

@@ -44,5 +44,5 @@ export default defineConfig({
       text: 'Edit this page on GitHub',
     },
   },
-  head: [['link', { rel: 'icon', href: '/icon.png' }]],
+  head: [['link', { rel: 'icon', href: '/Telos-Launcher/icon.png' }]],
 })
