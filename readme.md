@@ -720,6 +720,7 @@ A notes app with local storage and optional sync. [Docs](https://koukomin.github
 - Grid of notes with colours, pins, labels, archive, trash, search, share; checklists as Markdown lines
 - Sync with a folder of Markdown files (Obsidian, Logseq, Syncthing or a cloud app's folder) and with Nextcloud Notes (app password), newest change wins
 - Import Google Keep (Takeout json or zip), Evernote (.enex), Markdown and text files and zips of them (Notion and Joplin exports)
+- Matching notes show up in the launcher search
 - The **Notes** part of the Telos backup
 
 **Status and limitations:** no direct sync with Google Keep, OneNote, Microsoft Sticky Notes, Apple Notes or Notion (no usable public API for a launcher, import only where an export exists), no background sync, no images, notes are not encrypted.
@@ -730,6 +731,7 @@ A calendar on the calendar storage of Android. [Docs](https://koukomin.github.io
 
 - Month view with an agenda of the chosen day, create, edit and delete events (all day, location, description, repeat daily to yearly, one reminder)
 - A local calendar that needs no account, plus every calendar the system has: Google, CalDAV through DAVx5, Exchange. Telos asks the system to sync, the account does the sync
+- A list of the next 30 days next to the month view
 - Show or hide calendars, import and export `.ics`
 - The local calendars are the **Calendar** part of the Telos backup
 

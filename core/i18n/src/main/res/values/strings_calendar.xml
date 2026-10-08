@@ -41,4 +41,6 @@
     <string name="cal_new_local">New local calendar</string>
     <string name="cal_ok">OK</string>
     <string name="cal_sync_note">Google, CalDAV (DAVx5) and Exchange calendars are synced by the system through their account. Local calendars stay on the phone and are in the Telos backup.</string>
+    <string name="cal_view_agenda">Next 30 days</string>
+    <string name="cal_view_month">Month view</string>
 </resources>

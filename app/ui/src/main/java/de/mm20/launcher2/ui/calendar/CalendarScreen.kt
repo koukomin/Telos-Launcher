@@ -22,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -65,6 +66,7 @@ class CalendarViewModel(app: android.app.Application) : AndroidViewModel(app) {
     val events = MutableStateFlow<List<CalEvent>>(emptyList())
     val month = MutableStateFlow(YearMonth.now())
     val selected = MutableStateFlow(LocalDate.now())
+    val upcoming = MutableStateFlow<List<CalEvent>>(emptyList())
     val message = MutableStateFlow<String?>(null)
 
     fun reload() = viewModelScope.launch {
@@ -74,6 +76,7 @@ class CalendarViewModel(app: android.app.Application) : AndroidViewModel(app) {
                 val first = month.value.atDay(1)
                 events.value = repo.events(first.minusDays(7), month.value.atEndOfMonth().plusDays(7), cals)
                 calendars.value = cals
+                upcoming.value = repo.events(LocalDate.now(), LocalDate.now().plusDays(30), cals)
             } catch (e: SecurityException) { }
         }
     }
@@ -125,6 +128,8 @@ private fun CalendarContent(vm: CalendarViewModel) {
     var draft by remember { mutableStateOf<Draft?>(null) }
     var menu by remember { mutableStateOf(false) }
     var showCalendars by remember { mutableStateOf(false) }
+    var agenda by rememberSaveable { mutableStateOf(false) }
+    val upcoming by vm.upcoming.collectAsState()
     val snack = remember { SnackbarHostState() }
 
     val text = message?.let { m ->
@@ -187,6 +192,7 @@ private fun CalendarContent(vm: CalendarViewModel) {
                 Box {
                     IconButton(onClick = { menu = true }) { Icon(painterResource(R.drawable.more_vert_24px), null) }
                     DropdownMenu(menu, { menu = false }) {
+                        DropdownMenuItem(text = { Text(stringResource(if (agenda) R.string.cal_view_month else R.string.cal_view_agenda)) }, onClick = { menu = false; agenda = !agenda })
                         DropdownMenuItem(text = { Text(stringResource(R.string.cal_calendars)) }, onClick = { menu = false; showCalendars = true })
                         DropdownMenuItem(text = { Text(stringResource(R.string.cal_sync_now)) }, onClick = { menu = false; vm.repo.requestSync(); vm.message.value = "sync" })
                         DropdownMenuItem(text = { Text(stringResource(R.string.cal_add_account)) }, onClick = {
@@ -197,6 +203,21 @@ private fun CalendarContent(vm: CalendarViewModel) {
                         DropdownMenuItem(text = { Text(stringResource(R.string.cal_export)) }, onClick = { menu = false; exporter.launch("telos-calendar.ics") })
                     }
                 }
+            }
+            if (agenda) {
+                val byDay = remember(upcoming) {
+                    val today = LocalDate.now()
+                    upcoming.flatMap { ev -> generateSequence(maxOf(ev.firstDay, today)) { it.plusDays(1) }.takeWhile { it <= ev.lastDay && it <= today.plusDays(30) }.map { it to ev } }
+                        .groupBy({ it.first }, { it.second }).toSortedMap()
+                }
+                if (byDay.isEmpty()) Text(stringResource(R.string.cal_no_events), Modifier.padding(16.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                LazyColumn(contentPadding = PaddingValues(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    byDay.forEach { (day, evs) ->
+                        item(key = "h$day") { Text(day.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 8.dp)) }
+                        items(evs.sortedBy { it.begin }, key = { "$day-${it.id}-${it.begin}" }) { ev -> EventRow(ev, false) {} }
+                    }
+                }
+                return@Scaffold
             }
             MonthGrid(month, selected, events, onSelect = { vm.selected.value = it })
             HorizontalDivider(Modifier.padding(vertical = 8.dp))

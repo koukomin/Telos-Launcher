@@ -26,6 +26,10 @@ one file per note, in the private storage of Telos. Nothing leaves the phone unl
 
 Checklists are plain Markdown lines: `- [ ] item` and `- [x] done`. An empty note is not saved.
 
+## Search
+
+Notes that match what you type in the launcher search (title, text or label) show up under the other results, up to five of them, when the **Tools** filter is on. A tap opens Telos Notes.
+
 ## Sync
 
 Menu > **Sync**. The newest change wins, there is no merge inside a note. Telos syncs when you tap **Sync now** or save the

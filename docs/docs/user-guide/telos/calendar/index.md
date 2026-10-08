@@ -24,6 +24,7 @@ The first time it asks for the **calendar** permission (read and write).
 | A day | Shows its events below. Dots under a day are the colours of its calendars |
 | **+** | New event: title, all day, start and end, location, description, repeat, reminder, calendar |
 | An event | Tap to edit or delete. Only calendars you may write to can be edited |
+| Menu > **Next 30 days** | Switches to a list of the coming 30 days grouped by day. Switch back with **Month view** |
 | Menu > **Calendars** | Show or hide each calendar, create or delete a local calendar |
 | Menu > **Sync accounts now** | Asks the system to sync your accounts |
 | Menu > **Add account** | Opens the Android screen to add a Google, CalDAV or Exchange account |
