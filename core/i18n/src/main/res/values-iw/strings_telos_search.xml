@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">חיפוש</string>
+    <string name="ts_clear">נקה</string>
+    <string name="ts_no_results">אין תוצאות עבור “%1$s”</string>
+</resources>

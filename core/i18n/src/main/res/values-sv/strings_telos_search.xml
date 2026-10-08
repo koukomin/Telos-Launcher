@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">Sök</string>
+    <string name="ts_clear">Rensa</string>
+    <string name="ts_no_results">Inga resultat för ”%1$s”</string>
+</resources>

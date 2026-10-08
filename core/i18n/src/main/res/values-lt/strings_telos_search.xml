@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">Ieškoti</string>
+    <string name="ts_clear">Išvalyti</string>
+    <string name="ts_no_results">Rezultatų pagal „%1$s“ nerasta</string>
+</resources>

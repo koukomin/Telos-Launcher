@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">بحث</string>
+    <string name="ts_clear">مسح</string>
+    <string name="ts_no_results">لا توجد نتائج لـ “%1$s”</string>
+</resources>

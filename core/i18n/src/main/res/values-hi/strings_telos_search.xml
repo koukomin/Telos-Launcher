@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">खोजें</string>
+    <string name="ts_clear">साफ़ करें</string>
+    <string name="ts_no_results">“%1$s” के लिए कोई परिणाम नहीं</string>
+</resources>

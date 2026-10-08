@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">検索</string>
+    <string name="ts_clear">クリア</string>
+    <string name="ts_no_results">「%1$s」の検索結果はありません</string>
+</resources>

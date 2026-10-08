@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">Meklēt</string>
+    <string name="ts_clear">Notīrīt</string>
+    <string name="ts_no_results">Nav rezultātu vaicājumam “%1$s”</string>
+</resources>

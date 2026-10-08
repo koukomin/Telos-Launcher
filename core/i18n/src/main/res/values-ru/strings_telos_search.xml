@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">Поиск</string>
+    <string name="ts_clear">Очистить</string>
+    <string name="ts_no_results">Ничего не найдено по запросу «%1$s»</string>
+</resources>
