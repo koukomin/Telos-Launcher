@@ -206,6 +206,10 @@ dependencies {
 }
 // Bouncy Castle comes in with several versions (sshj, other libraries); the parts must match or the classes are duplicated
 configurations.all {
+    // pdfbox-android brings the jdk15to18 builds of Bouncy Castle, sshj the jdk18on builds: same classes twice
+    exclude(group = "org.bouncycastle", module = "bcprov-jdk15to18")
+    exclude(group = "org.bouncycastle", module = "bcpkix-jdk15to18")
+    exclude(group = "org.bouncycastle", module = "bcutil-jdk15to18")
     resolutionStrategy.eachDependency {
         if (requested.group == "org.bouncycastle") useVersion("1.84")
     }
