@@ -110,8 +110,31 @@ class NotesStore(private val context: Context) : Backupable {
         save(f(cur), touch = false)
     }
 
+    private val tombFile get() = File(context.filesDir, "notes_deleted.json")
+
+    private fun tombs(kind: String): MutableSet<String> = try {
+        JSONObject(tombFile.readText()).optJSONArray(kind)?.let { a -> (0 until a.length()).map { a.getString(it) }.toMutableSet() } ?: mutableSetOf()
+    } catch (e: Exception) { mutableSetOf() }
+
+    private fun writeTombs(kind: String, v: Set<String>) {
+        val o = try { JSONObject(tombFile.readText()) } catch (e: Exception) { JSONObject() }
+        o.put(kind, JSONArray(v.toList())); tombFile.writeText(o.toString())
+    }
+
+    /** Ids in Nextcloud Notes of notes that were deleted for good here and still have to be deleted on the server. */
+    fun pendingNcDeletes(): Set<String> = synchronized(lock) { tombs("nc") }
+    /** Documents of the synced folder of notes that were deleted for good here and still have to be deleted there. */
+    fun pendingRemoteDeletes(): Set<String> = synchronized(lock) { tombs("remote") }
+    fun clearNcDelete(id: String) = synchronized(lock) { writeTombs("nc", tombs("nc") - id) }
+    fun clearRemoteDelete(id: String) = synchronized(lock) { writeTombs("remote", tombs("remote") - id) }
+
+    /** Deletes the note here. Its copies in the sync targets are deleted by the next sync, otherwise the sync would bring it back. */
     fun deleteForever(id: String) = synchronized(lock) {
         loadLocked()
+        _notes.value.firstOrNull { it.id == id }?.let { n ->
+            n.ncId?.let { writeTombs("nc", tombs("nc") + it) }
+            n.remoteId?.let { writeTombs("remote", tombs("remote") + it) }
+        }
         File(dir, "$id.json").delete()
         _notes.value = _notes.value.filter { it.id != id }
     }

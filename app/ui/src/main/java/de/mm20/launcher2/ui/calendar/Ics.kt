@@ -16,6 +16,10 @@ data class IcsEvent(
     val end: Long,
     val allDay: Boolean = false,
     val rrule: String? = null,
+    /** Reminders in minutes before the start. */
+    val reminders: List<Int> = emptyList(),
+    /** Start times (milliseconds) of the occurrences of a repeating event that were deleted (EXDATE). */
+    val exdates: List<Long> = emptyList(),
 )
 
 /** A small iCalendar (RFC 5545) reader and writer for VEVENT, enough to move events between calendars. */
@@ -57,6 +61,13 @@ object Ics {
             if (e.description.isNotEmpty()) line("DESCRIPTION:${esc(e.description)}")
             if (e.location.isNotEmpty()) line("LOCATION:${esc(e.location)}")
             e.rrule?.let { line("RRULE:$it") }
+            if (e.rrule != null && e.exdates.isNotEmpty()) {
+                if (e.allDay) line("EXDATE;VALUE=DATE:${e.exdates.joinToString(",") { date.format(Instant.ofEpochMilli(it)) }}")
+                else line("EXDATE:${e.exdates.joinToString(",") { utc.format(Instant.ofEpochMilli(it)) }}")
+            }
+            for (m in e.reminders.distinct().filter { it >= 0 }) {
+                line("BEGIN:VALARM"); line("ACTION:DISPLAY"); line("DESCRIPTION:Reminder"); line("TRIGGER:-PT${m}M"); line("END:VALARM")
+            }
             line("END:VEVENT")
         }
         line("END:VCALENDAR")
@@ -71,13 +82,22 @@ object Ics {
         }
         val out = mutableListOf<IcsEvent>()
         var cur: MutableMap<String, Pair<Map<String, String>, String>>? = null
+        var alarms = mutableListOf<Int>()
+        var exdates = mutableListOf<Long>()
+        var inAlarm = false
         var nested = 0 // depth inside a component of the event (VALARM), whose properties are not the event's
         for (l in lines) {
             when {
-                l.equals("BEGIN:VEVENT", true) -> { cur = mutableMapOf(); nested = 0 }
-                l.equals("END:VEVENT", true) -> { cur?.let { toEvent(it)?.let(out::add) }; cur = null }
-                cur != null && l.startsWith("BEGIN:", true) -> nested++
-                cur != null && l.startsWith("END:", true) -> if (nested > 0) nested--
+                l.equals("BEGIN:VEVENT", true) -> { cur = mutableMapOf(); nested = 0; alarms = mutableListOf(); exdates = mutableListOf(); inAlarm = false }
+                l.equals("END:VEVENT", true) -> { cur?.let { toEvent(it, alarms, exdates)?.let(out::add) }; cur = null }
+                cur != null && l.startsWith("BEGIN:", true) -> { nested++; if (l.equals("BEGIN:VALARM", true)) inAlarm = true }
+                cur != null && l.startsWith("END:", true) -> { if (nested > 0) nested--; if (l.equals("END:VALARM", true)) inAlarm = false }
+                cur != null && nested > 0 && inAlarm && l.startsWith("TRIGGER", true) && l.contains(':') ->
+                    triggerMinutes(l.substringBefore(':'), l.substringAfter(':'))?.let(alarms::add)
+                cur != null && nested == 0 && l.startsWith("EXDATE", true) && l.contains(':') -> {
+                    val params = l.substringBefore(':').split(';').drop(1).associate { it.substringBefore('=').uppercase() to it.substringAfter('=', "") }
+                    l.substringAfter(':').split(',').forEach { v -> parseTime(params, v.trim())?.let { exdates += it.first } }
+                }
                 cur != null && nested == 0 && l.contains(':') -> {
                     val head = l.substringBefore(':'); val value = l.substringAfter(':')
                     val parts = head.split(';')
@@ -105,7 +125,25 @@ object Ics {
         return g(1) * 604800 + g(2) * 86400 + g(3) * 3600 + g(4) * 60 + g(5)
     }
 
-    private fun toEvent(p: Map<String, Pair<Map<String, String>, String>>): IcsEvent? {
+    /** The EXDATE value of Android's calendar storage (comma separated, UTC) as milliseconds. */
+    fun parseExdates(v: String, allDay: Boolean): List<Long> =
+        v.split(',').mapNotNull { x -> x.trim().takeIf { it.isNotEmpty() }?.let { parseTime(if (allDay) mapOf("VALUE" to "DATE") else emptyMap(), if (!allDay && !it.endsWith("Z") && it.length > 8) it + "Z" else it)?.first } }
+
+    fun formatExdates(ms: List<Long>, allDay: Boolean): String =
+        ms.joinToString(",") { (if (allDay) date else utc).format(Instant.ofEpochMilli(it)) }
+
+    /** Minutes before the start for a relative alarm trigger such as -PT10M, null for triggers after the start or at absolute times. */
+    internal fun triggerMinutes(head: String, v: String): Int? {
+        if (head.uppercase().contains("VALUE=DATE-TIME") || head.uppercase().contains("RELATED=END")) return null
+        val t = v.trim()
+        val before = t.startsWith("-")
+        val secs = durationSeconds(t.removePrefix("-").removePrefix("+"))
+        if (!before && secs > 0) return null
+        if (!t.removePrefix("-").removePrefix("+").startsWith("P")) return null
+        return (secs / 60).toInt()
+    }
+
+    private fun toEvent(p: Map<String, Pair<Map<String, String>, String>>, alarms: List<Int>, exdates: List<Long>): IcsEvent? {
         val (sp, sv) = p["DTSTART"] ?: return null
         val (start, allDay) = parseTime(sp, sv) ?: return null
         val end = p["DTEND"]?.let { (ep, ev) -> parseTime(ep, ev)?.first }
@@ -114,7 +152,8 @@ object Ics {
         return IcsEvent(
             title = unesc(p["SUMMARY"]?.second.orEmpty()), description = unesc(p["DESCRIPTION"]?.second.orEmpty()),
             location = unesc(p["LOCATION"]?.second.orEmpty()), start = start, end = maxOf(end, start), allDay = allDay,
-            rrule = p["RRULE"]?.second,
+            rrule = p["RRULE"]?.second, reminders = alarms.distinct(),
+            exdates = if (p["RRULE"] != null) exdates.distinct() else emptyList(),
         )
     }
 }

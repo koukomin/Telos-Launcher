@@ -67,8 +67,10 @@ fun NotesScreen() {
     val text = message?.let {
         val p = it.split(':')
         when (p[0]) {
-            "import" -> stringResource(R.string.notes_imported, p[1].toInt())
-            "sync" -> stringResource(R.string.notes_synced, p[1].toInt(), p[2].toInt())
+            "import" -> if (p.getOrNull(2)?.toIntOrNull().let { it != null && it > 0 }) stringResource(R.string.notes_imported_skipped, p[1].toInt(), p[2].toInt())
+                else stringResource(R.string.notes_imported, p[1].toInt())
+            "sync" -> if (p.getOrNull(3)?.toIntOrNull().let { it != null && it > 0 }) stringResource(R.string.notes_synced_skipped, p[1].toInt(), p[2].toInt(), p[3].toInt())
+                else stringResource(R.string.notes_synced, p[1].toInt(), p[2].toInt())
             else -> stringResource(R.string.notes_sync_failed, it.substringAfter(':'))
         }
     }

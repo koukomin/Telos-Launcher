@@ -144,12 +144,15 @@ class CalendarRepository(private val context: Context) {
     fun rawEvents(calendarId: Long): List<IcsEvent> {
         val out = mutableListOf<IcsEvent>()
         cr.query(Events.CONTENT_URI, arrayOf(Events.TITLE, Events.DESCRIPTION, Events.EVENT_LOCATION, Events.DTSTART, Events.DTEND,
-            Events.DURATION, Events.ALL_DAY, Events.RRULE), "${Events.CALENDAR_ID}=? AND ${Events.DELETED}=0", arrayOf(calendarId.toString()), Events.DTSTART)?.use { c ->
+            Events.DURATION, Events.ALL_DAY, Events.RRULE, Events._ID, Events.EXDATE), "${Events.CALENDAR_ID}=? AND ${Events.DELETED}=0", arrayOf(calendarId.toString()), Events.DTSTART)?.use { c ->
             while (c.moveToNext()) {
                 val start = c.getLong(3)
                 val allDay = c.getInt(6) == 1
                 val end = if (!c.isNull(4)) c.getLong(4) else start + Ics.durationSeconds(c.getString(5).orEmpty()) * 1000
-                out += IcsEvent(c.getString(0).orEmpty(), c.getString(1).orEmpty(), c.getString(2).orEmpty(), start, maxOf(end, start), allDay, c.getString(7))
+                val rrule = c.getString(7)
+                val ex = if (rrule.isNullOrBlank()) emptyList() else Ics.parseExdates(c.getString(9).orEmpty(), allDay)
+                out += IcsEvent(c.getString(0).orEmpty(), c.getString(1).orEmpty(), c.getString(2).orEmpty(), start, maxOf(end, start), allDay, rrule,
+                    remindersOf(c.getLong(8)).filter { it >= 0 }, ex)
             }
         }
         return out
@@ -161,7 +164,17 @@ class CalendarRepository(private val context: Context) {
         var n = 0
         for (e in events) {
             if (!have.add(e.title to e.start)) continue
-            save(null, calendarId, e.title, e.description, e.location, e.start, e.end, e.allDay, e.rrule, null)
+            val id = save(null, calendarId, e.title, e.description, e.location, e.start, e.end, e.allDay, e.rrule, e.reminders.firstOrNull())
+            if (e.reminders.size > 1) {
+                e.reminders.drop(1).forEach { m -> cr.insert(Reminders.CONTENT_URI, ContentValues().apply {
+                    put(Reminders.EVENT_ID, id); put(Reminders.MINUTES, m); put(Reminders.METHOD, Reminders.METHOD_ALERT)
+                }) }
+            }
+            if (!e.rrule.isNullOrBlank() && e.exdates.isNotEmpty()) {
+                cr.update(ContentUris.withAppendedId(Events.CONTENT_URI, id), ContentValues().apply {
+                    put(Events.EXDATE, Ics.formatExdates(e.exdates, e.allDay))
+                }, null, null)
+            }
             n++
         }
         return n

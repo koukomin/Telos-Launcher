@@ -34,4 +34,29 @@ class IcsTest {
         val e = Ics.read(ics).single()
         assertEquals("Real", e.description); assertEquals("Room", e.location); assertEquals("Meet", e.title)
     }
+
+    @Test
+    fun remindersAndExdatesRoundTrip() {
+        val day = 86_400_000L
+        val start = 1_700_000_000_000 / 3600_000 * 3600_000
+        val e = IcsEvent("Weekly", start = start, end = start + 3600_000, rrule = "FREQ=WEEKLY", reminders = listOf(10, 1440), exdates = listOf(start + 7 * day, start + 14 * day))
+        val back = Ics.read(Ics.write("x", listOf(e))).single()
+        assertEquals(listOf(10, 1440), back.reminders)
+        assertEquals(e.exdates, back.exdates)
+    }
+
+    @Test
+    fun allDayExdatesAndExdateParsing() {
+        val d = 1_700_000_000_000 / 86_400_000 * 86_400_000
+        val e = IcsEvent("Y", start = d, end = d + 86_400_000, allDay = true, rrule = "FREQ=DAILY", exdates = listOf(d + 86_400_000))
+        assertEquals(e.exdates, Ics.read(Ics.write("x", listOf(e))).single().exdates)
+        assertEquals(listOf(1_704_103_200_000), Ics.parseExdates("20240101T100000Z", false))
+        assertEquals("20240101T100000Z", Ics.formatExdates(listOf(1_704_103_200_000), false))
+    }
+
+    @Test
+    fun triggers() {
+        assertEquals(10, Ics.triggerMinutes("TRIGGER", "-PT10M")); assertEquals(0, Ics.triggerMinutes("TRIGGER", "PT0S"))
+        assertEquals(null, Ics.triggerMinutes("TRIGGER", "PT5M")); assertEquals(1440, Ics.triggerMinutes("TRIGGER", "-P1D"))
+    }
 }

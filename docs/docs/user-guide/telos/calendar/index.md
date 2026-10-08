@@ -50,7 +50,7 @@ Telos does not log in to these services itself, the system or the sync app does.
 
 Local calendars are the **Calendar** part of the Telos backup (Settings > Advanced > Backup and restore) and are written as
 `.ics`. Calendars of accounts are not in the backup because the account has them. On restore, events that are already in the
-calendar (same title and start) are not added twice. See [Backup and restore](../launcher/privacy-protection#backup-and-restore).
+calendar (same title and start) are not added twice. The backup also keeps the **reminders** of each event and the **deleted occurrences** (EXDATE) of repeating events. Changed single occurrences of a repeating event (RECURRENCE-ID exceptions) are not backed up, because Telos cannot create them either. See [Backup and restore](../launcher/privacy-protection#backup-and-restore).
 
 ## Limitations
 

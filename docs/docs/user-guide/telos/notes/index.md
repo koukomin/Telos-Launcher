@@ -38,7 +38,7 @@ settings, not in the background.
 | Target | How it works |
 | --- | --- |
 | **Markdown folder** | Pick any folder. Every note becomes a `.md` file with a small front matter block (`title`, `pinned`, `tags`). Files that are new in the folder become notes. Use an Obsidian or Logseq vault, a Syncthing folder or the folder of a cloud app (Dropbox, Google Drive, OneDrive) to carry the notes to other devices |
-| **Nextcloud Notes** | Server address and an **app password** (Nextcloud > Settings > Security). Notes are created, updated and deleted both ways. The first label is the Nextcloud category |
+| **Nextcloud Notes** | Server address and an **app password** (Nextcloud > Settings > Security). Notes are created, updated and deleted both ways. A note in the Telos trash stays on the server, it is deleted there when you delete it for good (or empty the trash) and sync The first label is the Nextcloud category |
 
 The sync login is kept in the private preferences of Telos. It is **not** part of the backup.
 
@@ -63,7 +63,7 @@ Menu > **Import notes**, choose one or more files:
 - Evernote: `.enex` files
 - Markdown and text: `.md`, `.markdown`, `.txt`, and `.zip` archives of them (Notion and Joplin exports, Obsidian vaults)
 
-Importing again adds the notes again, so import a set once.
+Importing the same files again does not duplicate notes: a note with the same title and text as one you already have (also in the trash) is skipped, and the message says how many were skipped as duplicates.
 
 ## Backup
 
@@ -76,4 +76,5 @@ exists on both sides stays as the newer one.
 - Notes are not encrypted
 - Plain text with Markdown lines, no images or attachments, no formatting toolbar
 - No background sync, no merge of two changes to the same note
-- Notes deleted in the Markdown folder go to the trash in Telos, but a note you trash in Telos is not removed from the folder
+- Notes deleted in the Markdown folder go to the trash in Telos, but a note you trash in Telos stays in the folder until you delete it for good. To protect your notes, nothing is trashed when the folder cannot be listed, when it is empty and cannot be reached (offline cloud folder, lost permission), or when a single sync would trash more than half of the synced notes. The sync then reports how many deletions it skipped
+- Deleting a synced note for good (also by emptying it) removes its file and its Nextcloud note on the next sync, so it does not come back

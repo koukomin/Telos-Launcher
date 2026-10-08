@@ -34,7 +34,7 @@ class NotesSyncSettings(context: Context) {
     val nextcloudReady get() = ncUrl.isNotBlank() && ncUser.isNotBlank() && ncPassword.isNotBlank()
 }
 
-data class SyncResult(val uploaded: Int, val downloaded: Int, val error: String? = null)
+data class SyncResult(val uploaded: Int, val downloaded: Int, val error: String? = null, val skippedDeletes: Int = 0)
 
 /**
  * Two way sync of the local notes with a folder of Markdown files (any Storage Access Framework folder:
@@ -47,20 +47,28 @@ class NotesSync(private val context: Context, private val store: NotesStore) {
     private val http = OkHttpClient()
 
     suspend fun syncAll(): SyncResult = withContext(Dispatchers.IO) {
-        var up = 0; var down = 0; var err: String? = null
+        var up = 0; var down = 0; var skipped = 0; var err: String? = null
         settings.folderUri?.let {
-            try { syncFolder(Uri.parse(it)).also { r -> up += r.uploaded; down += r.downloaded } } catch (e: Exception) { err = e.message ?: "folder" }
+            try { syncFolder(Uri.parse(it)).also { r -> up += r.uploaded; down += r.downloaded; skipped += r.skippedDeletes } } catch (e: Exception) { err = e.message ?: "folder" }
         }
         if (settings.nextcloudReady) {
             try { syncNextcloud().also { r -> up += r.uploaded; down += r.downloaded } } catch (e: Exception) { err = e.message ?: "nextcloud" }
         }
         settings.lastSync = System.currentTimeMillis()
-        SyncResult(up, down, err)
+        SyncResult(up, down, err, skipped)
     }
 
     // ---- folder ----------------------------------------------------------------------------
 
     private class RemoteFile(val docId: String, val name: String, val modified: Long)
+
+    /** Whether the root of the folder can still be queried. An empty listing of an unreachable folder must not delete notes. */
+    private fun rootReachable(tree: Uri): Boolean = try {
+        context.contentResolver.query(DocumentsContract.buildDocumentUriUsingTree(tree, DocumentsContract.getTreeDocumentId(tree)),
+            arrayOf(DocumentsContract.Document.COLUMN_MIME_TYPE), null, null, null)?.use {
+            it.moveToFirst() && it.getString(0) == DocumentsContract.Document.MIME_TYPE_DIR
+        } ?: false
+    } catch (e: Exception) { false }
 
     private fun listFolder(tree: Uri): List<RemoteFile> {
         val parent = DocumentsContract.getTreeDocumentId(tree)
@@ -68,13 +76,14 @@ class NotesSync(private val context: Context, private val store: NotesStore) {
         val out = mutableListOf<RemoteFile>()
         context.contentResolver.query(children, arrayOf(
             DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_DISPLAY_NAME,
-            DocumentsContract.Document.COLUMN_LAST_MODIFIED, DocumentsContract.Document.COLUMN_MIME_TYPE), null, null, null)?.use { c ->
+            DocumentsContract.Document.COLUMN_LAST_MODIFIED, DocumentsContract.Document.COLUMN_MIME_TYPE), null, null, null)
+            ?.use { c ->
             while (c.moveToNext()) {
                 if (c.getString(3) == DocumentsContract.Document.MIME_TYPE_DIR) continue
                 val name = c.getString(1)
                 if (name.endsWith(".md", true)) out += RemoteFile(c.getString(0), name, c.getLong(2))
             }
-        }
+        } ?: error("folder")
         return out
     }
 
@@ -86,7 +95,18 @@ class NotesSync(private val context: Context, private val store: NotesStore) {
 
     private fun syncFolder(tree: Uri): SyncResult {
         val cr = context.contentResolver
-        val files = listFolder(tree).associateBy { it.docId }
+        // a failed listing throws, the folder is then left alone
+        val listed = listFolder(tree)
+        // notes deleted for good here: their file goes too, and is not imported again
+        val pending = store.pendingRemoteDeletes()
+        for (rf in listed.filter { it.docId in pending }) {
+            try { DocumentsContract.deleteDocument(cr, DocumentsContract.buildDocumentUriUsingTree(tree, rf.docId)) } catch (e: Exception) { continue }
+            store.clearRemoteDelete(rf.docId)
+        }
+        val reachable = listed.isNotEmpty() || rootReachable(tree)
+        // (a file that is already gone needs no deleting)
+        pending.filter { id -> listed.none { it.docId == id } }.forEach { if (reachable) store.clearRemoteDelete(it) }
+        val files = listed.filter { it.docId !in pending }.associateBy { it.docId }
         var up = 0; var down = 0
         val seen = mutableSetOf<String>()
         val createdIds = mutableSetOf<String>() // documents created by this run, they are not in [files]
@@ -125,13 +145,10 @@ class NotesSync(private val context: Context, private val store: NotesStore) {
             store.save(p.copy(remoteId = rf.docId, modifiedAt = rf.modified, createdAt = rf.modified), touch = false)
             down++
         }
-        // Notes that were deleted in the folder go to the trash here
-        for (n in store.notes.value) {
-            if (n.remoteId != null && n.remoteId !in files && n.remoteId !in createdIds && !n.trashed) {
-                store.update(n.id) { it.copy(trashed = true, remoteId = null) }
-            }
-        }
-        return SyncResult(up, down)
+        // Notes that were deleted in the folder go to the trash here, but never because of an empty or failed listing
+        val decision = NotesSyncLogic.folderDeletions(store.notes.value, files.keys, createdIds, true, reachable)
+        for (id in decision.toTrash) store.update(id) { it.copy(trashed = true, remoteId = null) }
+        return SyncResult(up, down, skippedDeletes = decision.skipped)
     }
 
     private fun write(tree: Uri, doc: Uri, n: Note) {
@@ -151,7 +168,13 @@ class NotesSync(private val context: Context, private val store: NotesStore) {
             if (!it.isSuccessful) error("Nextcloud ${it.code}")
             JSONArray(it.body!!.string())
         }
-        val remoteById = (0 until remote.length()).associate { val o = remote.getJSONObject(it); o.getLong("id").toString() to o }
+        // notes deleted for good here are deleted on the server first
+        for (id in store.pendingNcDeletes()) {
+            val ok = http.newCall(ncRequest("${ncBase()}/$id").delete().build()).execute().use { it.isSuccessful || it.code == 404 }
+            if (ok) store.clearNcDelete(id)
+        }
+        val pendingNc = store.pendingNcDeletes()
+        val remoteById = (0 until remote.length()).filter { remote.getJSONObject(it).getLong("id").toString() !in pendingNc }.associate { val o = remote.getJSONObject(it); o.getLong("id").toString() to o }
         var up = 0; var down = 0
         for (n in store.notes.value) {
             val tag = n.ncId
@@ -176,8 +199,7 @@ class NotesSync(private val context: Context, private val store: NotesStore) {
             } else {
                 val rm = r.getLong("modified") * 1000
                 if (n.trashed) {
-                    http.newCall(ncRequest("${ncBase()}/$tag").delete().build()).execute().close()
-                    store.deleteForever(n.id)
+                    // a trashed note stays on the server until it is deleted for good
                 } else if (rm > n.modifiedAt + 1000) {
                     val category = r.optString("category")
                     store.update(n.id, expected = n.modifiedAt) {

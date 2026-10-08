@@ -53,14 +53,16 @@ class NotesViewModel(app: Application) : AndroidViewModel(app), KoinComponent {
 
     fun import(uris: List<Uri>) = viewModelScope.launch {
         val read = withContext(Dispatchers.IO) { NotesImport.read(getApplication(), uris) }
-        withContext(Dispatchers.IO) { read.forEach { store.save(it, touch = false) } }
-        message.value = "import:${read.size}"
+        val (fresh, skipped) = withContext(Dispatchers.IO) {
+            NotesSyncLogic.dedupe(read, store.notes.value).also { (f, _) -> f.forEach { store.save(it, touch = false) } }
+        }
+        message.value = "import:${fresh.size}:$skipped"
     }
 
     fun syncNow() = viewModelScope.launch {
         syncing.value = true
         val r = sync.syncAll()
         syncing.value = false
-        message.value = if (r.error != null) "error:${r.error}" else "sync:${r.uploaded}:${r.downloaded}"
+        message.value = if (r.error != null) "error:${r.error}" else "sync:${r.uploaded}:${r.downloaded}:${r.skippedDeletes}"
     }
 }
