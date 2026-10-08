@@ -302,7 +302,7 @@
     <string name="dl_m_last_update">L-aħħar aġġornament: %1$s</string>
     <string name="dl_m_never">qatt</string>
     <string name="dl_m_update">Aġġorna d-downloader</string>
-    <string name="dl_m_update_sum">Iniżżel l-aħħar yt-dlp minn GitHub. Is-siti jinbidlu spiss, aġġornament isewwi l-biċċa l-kbira tal-fallimenti.</string>
+    <string name="dl_m_update_sum">Ineżżel l-aħħar yt-dlp minn GitHub. Is-siti jinbidlu spiss, aġġornament isewwi l-biċċa l-kbira tal-fallimenti.</string>
     <string name="dl_m_updating">Qed jaġġorna</string>
     <string name="dl_m_updated">Aġġornat: %1$s</string>
     <string name="dl_m_update_failed">L-aġġornament falla: %1$s</string>
@@ -326,7 +326,7 @@
     <string name="dl_p3_day_6">Sib</string>
     <string name="dl_p3_day_7">Ħad</string>
     <string name="dl_p3_auto_extract">Estratta l-arkivji</string>
-    <string name="dl_p3_auto_extract_sum">Iftaħ il-fajls zip lesti f\'folder ħdejhom.</string>
+    <string name="dl_p3_auto_extract_sum">Ifrex il-fajls zip lesti f\'folder ħdejhom.</string>
     <string name="dl_p3_extract">Estratta hawn</string>
     <string name="dl_p3_extract_running">Qed jestratta</string>
     <string name="dl_p3_extract_done">Estratt</string>
