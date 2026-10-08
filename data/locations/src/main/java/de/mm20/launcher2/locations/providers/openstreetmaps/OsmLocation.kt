@@ -382,8 +382,12 @@ internal fun parseOpeningSchedule(
                 when (selector) {
                     is Weekday -> rulesMap[selector]!!.add(rule)
                     is WeekdayRange -> {
-                        for (weekday in selector.start.ordinal..selector.end.ordinal) {
-                            rulesMap[Weekday.entries[weekday]]!!.add(rule)
+                        val days = Weekday.entries.size
+                        val start = selector.start.ordinal
+                        // ranges may wrap around the end of the week, e.g. Sa-Mo
+                        val length = (selector.end.ordinal - start + days) % days
+                        for (offset in 0..length) {
+                            rulesMap[Weekday.entries[(start + offset) % days]]!!.add(rule)
                         }
                     }
                     is SpecificWeekdays -> {
