@@ -469,7 +469,7 @@ Telos can draw things in other places than the home screen. Much of this is mark
 - **A profile can change:** gestures, the freeze profile, which home widget page opens, Do Not Disturb, brightness, and launch an app once. Profile icons: Home, Work, Car, Gaming, Battery saver, Sleep, Custom.
 - **Floating launcher settings:** side and position of the handle, handle size, width, color and transparency, hide the handle, two columns, show app names, panel transparency, icon size, rows before scrolling, File Dock, open apps in floating windows (needs freeform mode, see Desktop mode), haptic feedback, hide during a Gaming profile, Edit the sidebar. The handle opens with a tap or a drag, and the card opens next to it. If a bug ever locks the screen, it can be disabled without touch input with `adb shell am broadcast -a de.mm20.launcher2.action.DISABLE_FLOATING_LAUNCHER -p <application id>`.
 - **Dynamic Island:** also shows active calls (needs the phone state permission). The timer slot exists, but nothing in this build starts it.
-- **Web app browsing settings:** block ads and trackers (a built-in host blocklist, not a full filter list engine), pinch to zoom, strip tracking parameters, top bar position, swipe to switch web apps. The ad blocker can also be set per web app (global, on or off, embedded browser only). Suggested category folders (Social, Email, Messaging, Video & Music, Productivity & Work) can be added with one tap; they are normal web apps and folders that can be edited or deleted, and nothing is added automatically. Web apps can be locked with App Lock and customized per item.
+- **Web app browsing settings:** block ads and trackers (a built-in host blocklist plus optional downloadable block lists, domain rules only, not a full filter list engine), pinch to zoom, strip tracking parameters, top bar position, swipe to switch web apps. The ad blocker can also be set per web app (global, on or off, embedded browser only). **Block lists:** optional lists (StevenBlack, AdGuard DNS, Peter Lowe, OISD small, EasyList domain rules, URLhaus) that are downloaded only after you switch them on, directly from the list's own server, with your own lists by https address or file, and automatic updates (off, daily or weekly, Wi-Fi only by default). Suggested category folders (Social, Email, Messaging, Video & Music, Productivity & Work) can be added with one tap; they are normal web apps and folders that can be edited or deleted, and nothing is added automatically. Web apps can be locked with App Lock and customized per item.
 - **Overlay services** (floating launcher, Dynamic Island, App Lock) are foreground services that only run while switched on and need the display-over-other-apps permission.
 - Desktop quarter snapping is in the code but not in the taskbar menu.
 
@@ -820,20 +820,24 @@ A video library and player. It plays the videos on your phone, web streams, and 
 - Speed presets (0.5x to 2x), picture size (fit, fill, zoom), audio and subtitle track choice, repeat, sleep timer, picture in picture
 - FFmpeg software decoders for AC3, E-AC3, DTS, TrueHD and more
 - Also used when another app opens a video; playlists for series and folders
+- Picture size (fit, fill, zoom, fixed width or height), frame rate matching on Android 11 and later, subtitle delay, size, colour and edge (remembered)
+- Mark as watched or not watched and delete from the phone (long press)
+- Videos on your Telos Files network storages (SMB, FTP, SFTP, WebDAV, Nextcloud and more) play directly, and chosen folders can be scanned into the library
 
 <details>
 <summary><b>Web streams, torrents, subtitles, Trakt and the separate process</b></summary>
 
 - **Web streams:** HLS, DASH, RTSP and plain video links via "Play from the web". A magnet link or address on the clipboard is filled in automatically.
+- **Peer block lists:** an optional IP block list for torrents (Naunter BT_BlockLists, or your own list by https address or file in p2p, ipfilter.dat or CIDR format), downloaded only after you switch it on, updated automatically (off, daily, weekly) and applied to the torrent session. It reduces unwanted peers but does not hide your IP address.
 - **Torrents:** magnet links, `.torrent` addresses and files open in Telos Video from any app or browser. The video downloads in order while it plays, through a local-only address, on Wi-Fi only by default, and everything is deleted when the player closes. Only play content you are allowed to watch: torrent networks show your IP address to other peers.
-- **Subtitles:** external files (SRT, VTT, ASS / SSA, TTML), embedded tracks, and online search or automatic download from [OpenSubtitles](https://www.opensubtitles.com) (your own API key and account), also for torrents.
+- **Subtitles:** external files (SRT, VTT, ASS / SSA, TTML), embedded tracks, and online search or automatic download **without an account** from OpenSubtitles (old REST API, by file hash and by name) and Podnapisi, plus [OpenSubtitles.com](https://www.opensubtitles.com) with your own key as an optional source. Sources can be switched on and off and ordered; results are ranked by your language order and match, converted to UTF-8, and remembered per video. Also for torrents.
 - **Trakt.tv:** sign in with a device code, scrobbling of movies and episodes, watched marks in the library, add titles to the watchlist (your own Trakt application).
 - **Separate player process (experimental):** Video services > Play in a separate process, so a crash of the player does not close the launcher.
-- **Video services dialog:** TMDB key, OpenSubtitles key and account, languages, automatic subtitles, torrents Wi-Fi only, separate process, Trakt. Keys and passwords are encrypted with the Android Keystore.
+- **Video services dialog:** TMDB key, subtitle sources, OpenSubtitles User-Agent, optional OpenSubtitles.com key and account, network folders, languages, automatic subtitles, torrents Wi-Fi only, separate process, Trakt. Keys and passwords are encrypted with the Android Keystore.
 
 </details>
 
-**Status and limitations:** Decoding depends on the phone, and some codecs may not play. TMDB and OpenSubtitles need your own keys. Title detection relies on file names. Torrent streaming needs healthy peers and has no catalog. No Chromecast, DLNA, offline downloads, equalizer or subtitle styling. The separate process is experimental. Video is guarded by the crash guard.
+**Status and limitations:** Decoding depends on the phone, and some codecs may not play. TMDB needs your own key for ratings, and the free subtitle sources have daily limits (the old OpenSubtitles API may be switched off by its owner; Podnapisi is untested on a device). Title detection relies on file names. Torrent streaming needs healthy peers and has no catalog. No Chromecast, DLNA, offline downloads, equalizer, audio delay or Android TV interface. The subtitle delay works only for loaded subtitle files, not for tracks inside the video. Videos on network storages seek by reading through the data. The separate process is experimental. Video is guarded by the crash guard.
 
 ### Telos Radio
 
@@ -1006,9 +1010,12 @@ adapted, the original license is respected.
 | [LRCLIB](https://lrclib.net) | open API | Song lyrics for Telos Music |
 | [Next Player](https://github.com/anilbeesetti/nextplayer) and [NextLib](https://github.com/anilbeesetti/nextlib) | GPL-3.0 | Player gestures and features (design), FFmpeg decoders for Media3 (library, uses FFmpeg under LGPL-2.1) |
 | [mpv-android](https://github.com/mpv-android/mpv-android) and [mpvKt](https://github.com/abdallahmehiz/mpvKt) | MIT / Apache-2.0 | Ideas for gestures, speed presets and sleep timer (no code) |
+| [Nova Video Player](https://github.com/nova-video-player/aos-AVP) | Apache-2.0 | Feature inspiration for Telos Video: playing and scanning videos from network shares, library marks, subtitle search. Re-implemented with Media3, no code and none of its prebuilt binaries were copied |
+| [OpenSubtitles](https://www.opensubtitles.com) and [Podnapisi](https://www.podnapisi.net) | service terms | Subtitle search and download in Telos Video (old OpenSubtitles REST API without an account, the file hash algorithm is the published one) |
 | [Trakt.tv](https://trakt.tv) | API terms | Scrobbling and watched marks in Telos Video |
 | [Last.fm](https://www.last.fm/api), [Libre.fm](https://libre.fm) and [ListenBrainz](https://listenbrainz.org) | open APIs | Scrobbling in Telos Music |
 | [libtorrent4j](https://github.com/aldenml/libtorrent4j) and [libtorrent](https://www.libtorrent.org) | MIT / BSD-3-Clause | Torrent streaming in Telos Video |
+| [StevenBlack/hosts](https://github.com/StevenBlack/hosts), [AdGuard DNS filter](https://github.com/AdguardTeam/AdGuardSDNSFilter), [Peter Lowe's list](https://pgl.yoyo.org/adservers/), [OISD](https://oisd.nl), [EasyList](https://easylist.to), [URLhaus](https://urlhaus.abuse.ch), [Naunter/BT_BlockLists](https://github.com/Naunter/BT_BlockLists) | MIT, GPL-3.0, see notice, GPL-3.0, GPL-3.0 / CC BY-SA 3.0, abuse.ch terms, Unlicense | Optional block lists for web apps and torrents. Not bundled: downloaded from their own servers only when you switch them on |
 | [TMDB](https://www.themoviedb.org) | API terms | Posters and descriptions in Telos Video (not endorsed or certified by TMDB) |
 | [OpenSubtitles](https://www.opensubtitles.com) | API terms | Subtitle search and download in Telos Video |
 | [TagLib wrapper (Kyant0/taglib)](https://github.com/Kyant0/taglib) | Apache-2.0 | Reading and writing audio tags; it bundles [TagLib](https://taglib.org/) (LGPL-2.1 / MPL-1.1 upstream) |

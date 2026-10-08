@@ -89,6 +89,21 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ```
 
 
+## Block lists offered by Telos (downloaded on request, not bundled)
+
+Telos contains no copy of these lists. After the user switches a list on, the app downloads it directly from the
+address below. The lists belong to their authors.
+
+| List | Address | Licence |
+| --- | --- | --- |
+| StevenBlack unified hosts | https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | MIT |
+| AdGuard DNS filter | https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt | GPL-3.0 |
+| Peter Lowe's ad and tracking server list | https://pgl.yoyo.org/adservers/ | the site invites combining and redistributing the list; no formal licence is stated |
+| OISD small | https://small.oisd.nl/domainswild | GPL-3.0 |
+| EasyList | https://easylist.to/easylist/easylist.txt | GPL-3.0 or CC BY-SA 3.0 |
+| URLhaus host file | https://urlhaus.abuse.ch/downloads/hostfile/ | abuse.ch terms of use, https://urlhaus.abuse.ch/api/ |
+| Naunter BT_BlockLists | https://github.com/Naunter/BT_BlockLists/raw/master/bt_blocklists.gz | Unlicense |
+
 ## libtorrent4j and libtorrent (torrent streaming in Telos Video)
 
 libtorrent4j, https://github.com/aldenml/libtorrent4j (MIT), used unchanged as a Maven dependency.
@@ -134,6 +149,22 @@ bundles FFmpeg (LGPL-2.1+, https://ffmpeg.org) and dav1d (BSD-2-Clause, https://
 
 The gestures, speed control and track choice of the Telos Video player follow the feature set of
 Next Player, https://github.com/anilbeesetti/nextplayer (GPL-3.0). No code was copied.
+
+## Nova Video Player
+
+The network storage playback, library scanning from network folders and the subtitle search of Telos Video
+are inspired by Nova Video Player, https://github.com/nova-video-player/aos-AVP (Apache-2.0, derived from
+the Archos Video Player, Copyright Archos SA and the Nova Video Player contributors). It is implemented
+independently with Media3 and Telos' own code. No source code and none of its prebuilt binaries (FFmpeg,
+dav1d, torrentd) were copied. The Apache-2.0 license text: https://www.apache.org/licenses/LICENSE-2.0
+
+## OpenSubtitles and Podnapisi
+
+Telos Video can search subtitles through the OpenSubtitles REST API (https://www.opensubtitles.com and
+https://rest.opensubtitles.org) and the public search of Podnapisi (https://www.podnapisi.net). The
+OpenSubtitles file hash is computed with the algorithm published by OpenSubtitles. Telos is not endorsed
+or certified by these services, and their terms of use apply to the subtitles. Subtitle sources are
+contacted only when the user searches or has switched on automatic download.
 
 ## Trakt.tv
 

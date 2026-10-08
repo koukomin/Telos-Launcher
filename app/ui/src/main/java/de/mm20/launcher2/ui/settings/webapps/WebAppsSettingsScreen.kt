@@ -107,6 +107,14 @@ fun WebAppsSettingsScreen() {
             }
         }
         item {
+            PreferenceCategory(title = stringResource(R.string.blocklists_web_title)) {
+                de.mm20.launcher2.ui.component.BlockListsSection(
+                    de.mm20.launcher2.comms.blocklist.BlockListKind.WEB,
+                    Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                )
+            }
+        }
+        item {
             PreferenceCategory(title = stringResource(R.string.web_app_presets_title)) {
                 Text(
                     text = stringResource(R.string.web_app_presets_summary),

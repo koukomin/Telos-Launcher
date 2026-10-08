@@ -60,6 +60,25 @@ This product uses the TMDB API but is not endorsed or certified by TMDB.
 - A playlist (a series folder, or the videos of a Telos Files folder) saves progress when an item ends and moves to the
   next one.
 
+### Mark as watched, delete
+
+Long press a video in a list: **Mark as watched** / **Mark as not watched** (a watched video shows a check mark and
+does not come back under continue watching) and **Delete from phone**. Delete asks first and then Android asks for
+permission again; a deleted video is gone, there is no trash. Videos of network storages cannot be deleted from here.
+
+### Network storages
+
+**Video services > Network folders** lets you add folders of the network storages you set up in Telos Files (SMB,
+FTP, SFTP, WebDAV, Nextcloud, ownCloud, the cloud app on this phone and the other storages). **Scan again** lists the
+video files below the folders (three levels deep, up to 3000 files) and shows them in the library, folder named after
+the storage. Video titles are recognised from the file names like for local files, but a scan reads no durations or
+thumbnails. A video in Telos Files on a network storage also plays directly instead of being downloaded first, and
+the videos next to it form the playlist.
+
+Playing reads the file through the storage connection. There is no true range request: a jump forward reads through
+the data in between on protocols that cannot seek, so jumping far on a slow link can take a while. Subtitles for such
+videos are found by name only. The connection data of Telos Files is used; see [Files](../files/).
+
 ## The player
 
 Open a video from the library, Telos Files, another app, or a web address. The screen is full screen (the system bars are hidden)
@@ -90,9 +109,12 @@ and stays on while the player is open.
 | Option | Details |
 | --- | --- |
 | Speed | 0.5x, 0.75x, 1x, 1.25x, 1.5x, 2x, chosen with chips |
-| Picture | Fit, Fill or Zoom |
+| Picture | Fit, Fill, Zoom, Fixed width or Fixed height. The choice is remembered |
+| Match frame rate | On (default) lets Android switch the screen refresh rate to the video frame rate when that is possible without a visible switch (Android 11 and later). Off never asks for it. Remembered |
 | Audio | Choose between the audio tracks of the file (shown when there is more than one) |
 | Subtitles | Off, or one of the embedded tracks |
+| Subtitle delay | -0.5 s, -0.1, +0.1, +0.5 s for subtitles loaded from a file or the internet |
+| Subtitle size, colour, edge | Four sizes, four colours, edge none, outline, shadow or box. Remembered |
 | Repeat this video | On or off (repeat one) |
 | Sleep timer | Off, 15, 30 or 60 minutes |
 
@@ -132,7 +154,10 @@ See [overview](./#getting-started-and-permissions). The player itself does no ne
 - Decoding depends on the phone. Some 10-bit or exotic codecs may not play smoothly.
 - Brightness changes apply to the player window only.
 - Resume positions are per file path, so renaming a file loses its position.
-- There is no equalizer, no audio delay setting, no subtitle styling, and no casting.
+- There is no equalizer, no audio delay setting, and no casting.
+- The subtitle delay does not work for subtitle tracks inside the video file.
+- Frame rate matching only asks for seamless switches; it never forces a screen mode change with a black flicker.
+- Audio passthrough (AC3, DTS to an HDMI receiver) is left to Android and Media3, which use it automatically when the output supports it. There is no switch for it.
 
 ## Troubleshooting
 

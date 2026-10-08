@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
@@ -152,8 +153,16 @@ internal fun PlaybackMenu(
     onSpeed: (Float) -> Unit,
     sleepMinutes: Int,
     onSleep: (Int) -> Unit,
+    subDelayMs: Long,
+    onSubDelay: (Long) -> Unit,
+    hasExternalSub: Boolean,
+    subStyle: de.mm20.launcher2.comms.media.video.VideoPrefs.SubtitleStyle,
+    onSubStyle: (de.mm20.launcher2.comms.media.video.VideoPrefs.SubtitleStyle) -> Unit,
+    matchFps: Boolean,
+    onMatchFps: (Boolean) -> Unit,
     onDismiss: () -> Unit,
 ) {
+    val context = androidx.compose.ui.platform.LocalContext.current
     var aspect by remember { mutableIntStateOf(playerView?.resizeMode ?: AspectRatioFrameLayout.RESIZE_MODE_FIT) }
     var loop by remember { mutableStateOf(player.repeatMode == Player.REPEAT_MODE_ONE) }
     var refresh by remember { mutableIntStateOf(0) }
@@ -172,20 +181,34 @@ internal fun PlaybackMenu(
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 Text(stringResource(R.string.hc_speed), style = MaterialTheme.typography.titleSmall)
-                Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(vertical = 4.dp)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 4.dp)) {
                     listOf(0.5f, 0.75f, 1f, 1.25f, 1.5f, 2f).forEach { v ->
                         FilterChip(selected = speed == v, onClick = { onSpeed(v) }, label = { Text("${v}×".replace(".0×", "×")) })
                     }
                 }
                 Text(stringResource(R.string.hc_picture), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
-                Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(vertical = 4.dp)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 4.dp)) {
                     listOf(
                         "Fit" to AspectRatioFrameLayout.RESIZE_MODE_FIT,
                         "Fill" to AspectRatioFrameLayout.RESIZE_MODE_FILL,
                         "Zoom" to AspectRatioFrameLayout.RESIZE_MODE_ZOOM,
+                        stringResource(R.string.vn_fixed_width) to AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH,
+                        stringResource(R.string.vn_fixed_height) to AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT,
                     ).forEach { (name, mode) ->
-                        FilterChip(selected = aspect == mode, onClick = { aspect = mode; playerView?.resizeMode = mode }, label = { Text(name) })
+                        FilterChip(
+                            selected = aspect == mode,
+                            onClick = {
+                                aspect = mode
+                                playerView?.resizeMode = mode
+                                de.mm20.launcher2.comms.media.video.VideoPrefs.setResizeMode(context, mode)
+                            },
+                            label = { Text(name) },
+                        )
                     }
+                }
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 4.dp)) {
+                    Text(stringResource(R.string.vn_match_frame_rate), modifier = Modifier.weight(1f))
+                    Switch(checked = matchFps, onCheckedChange = onMatchFps)
                 }
 
                 val audio = groups.filter { it.type == C.TRACK_TYPE_AUDIO }
@@ -232,6 +255,44 @@ internal fun PlaybackMenu(
                     }
                 }
 
+                Text(stringResource(R.string.vn_subtitle_delay), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 12.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    TextButton(enabled = hasExternalSub, onClick = { onSubDelay(subDelayMs - 500) }) { Text("-0.5 s") }
+                    TextButton(enabled = hasExternalSub, onClick = { onSubDelay(subDelayMs - 100) }) { Text("-0.1") }
+                    Text("%+.1f s".format(subDelayMs / 1000f), modifier = Modifier.weight(1f))
+                    TextButton(enabled = hasExternalSub, onClick = { onSubDelay(subDelayMs + 100) }) { Text("+0.1") }
+                    TextButton(enabled = hasExternalSub, onClick = { onSubDelay(subDelayMs + 500) }) { Text("+0.5 s") }
+                }
+                Text(stringResource(R.string.vn_subtitle_delay_help), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+
+                Text(stringResource(R.string.vn_subtitle_size), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 4.dp)) {
+                    listOf(
+                        R.string.vn_size_small to 0.75f, R.string.vn_size_normal to 1f,
+                        R.string.vn_size_large to 1.4f, R.string.vn_size_huge to 1.9f,
+                    ).forEach { (name, v) ->
+                        FilterChip(selected = subStyle.scale == v, onClick = { onSubStyle(subStyle.copy(scale = v)) }, label = { Text(stringResource(name)) })
+                    }
+                }
+                Text(stringResource(R.string.vn_subtitle_color), style = MaterialTheme.typography.titleSmall)
+                Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 4.dp)) {
+                    listOf(
+                        R.string.vn_color_white to 0xFFFFFFFF.toInt(), R.string.vn_color_yellow to 0xFFFFEB3B.toInt(),
+                        R.string.vn_color_green to 0xFF8BC34A.toInt(), R.string.vn_color_cyan to 0xFF4DD0E1.toInt(),
+                    ).forEach { (name, c) ->
+                        FilterChip(selected = subStyle.color == c, onClick = { onSubStyle(subStyle.copy(color = c)) }, label = { Text(stringResource(name)) })
+                    }
+                }
+                Text(stringResource(R.string.vn_subtitle_edge), style = MaterialTheme.typography.titleSmall)
+                Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 4.dp)) {
+                    listOf(
+                        R.string.vn_edge_none to 0, R.string.vn_edge_outline to 1,
+                        R.string.vn_edge_shadow to 2, R.string.vn_edge_box to 3,
+                    ).forEach { (name, e) ->
+                        FilterChip(selected = subStyle.edge == e, onClick = { onSubStyle(subStyle.copy(edge = e)) }, label = { Text(stringResource(name)) })
+                    }
+                }
+
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 12.dp)) {
                     Text(stringResource(R.string.hc_repeat_this_video), modifier = Modifier.weight(1f))
                     Switch(checked = loop, onCheckedChange = {
@@ -240,7 +301,7 @@ internal fun PlaybackMenu(
                     })
                 }
                 Text(stringResource(R.string.hc_sleep_timer), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
-                Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(vertical = 4.dp)) {
+                Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 4.dp)) {
                     listOf(0, 15, 30, 60).forEach { m ->
                         FilterChip(selected = sleepMinutes == m, onClick = { onSleep(m) }, label = { Text(if (m == 0) "Off" else "$m min") })
                     }

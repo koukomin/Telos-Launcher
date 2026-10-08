@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.files
 
+import de.mm20.launcher2.ui.files.remote.RemotePath
 import de.mm20.launcher2.ui.R
 import android.content.Context
 import android.content.Intent
@@ -40,6 +41,19 @@ internal object FileActions {
         }
         FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
     }.getOrNull()
+
+    /** Plays a video on a network storage straight from there, the videos next to it form the playlist */
+    fun playRemoteVideo(context: Context, entry: FsEntry, siblings: List<FsEntry>) {
+        val videos = siblings.filter { it.kind == FileKind.Video && !it.isDir && RemotePath.isRemote(it.path) }
+        val index = videos.indexOfFirst { it.path == entry.path }
+        if (index < 0) return
+        context.startActivity(
+            Intent(context, PlayerChoice.playerClass(context))
+                .putStringArrayListExtra(VideoPlayerActivity.EXTRA_URIS, ArrayList(videos.map { de.mm20.launcher2.ui.media.video.RemoteVideo.uriOf(it.path).toString() }))
+                .putStringArrayListExtra(VideoPlayerActivity.EXTRA_TITLES, ArrayList(videos.map { it.name.substringBeforeLast('.') }))
+                .putExtra(VideoPlayerActivity.EXTRA_INDEX, index)
+        )
+    }
 
     fun open(context: Context, entry: FsEntry, siblings: List<FsEntry>, rootMode: Boolean) {
         val toast = { text: String -> Toast.makeText(context, text, Toast.LENGTH_SHORT).show() }

@@ -101,6 +101,8 @@ object TorrentStreamer {
                 val sm = SessionManager(false)
                 sm.start()
                 session = sm
+                de.mm20.launcher2.comms.blocklist.BlockLists.init(context)
+                de.mm20.launcher2.comms.blocklist.BlockLists.applyToSession(sm)
 
                 val data: ByteArray = when {
                     source.startsWith("magnet:", ignoreCase = true) ->
@@ -159,6 +161,11 @@ object TorrentStreamer {
                 throw e
             }
         }
+
+    /** Re-applies the peer block lists to the running session, called after a list changed. */
+    fun reapplyBlockList() {
+        session?.let { de.mm20.launcher2.comms.blocklist.BlockLists.applyToSession(it) }
+    }
 
     private fun fail(message: String): Nothing = throw IllegalStateException(message)
 

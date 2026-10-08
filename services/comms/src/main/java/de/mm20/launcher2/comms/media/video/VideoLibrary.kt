@@ -127,6 +127,19 @@ object ResumeStore {
             .apply()
     }
 
+    /** Marks a video as seen (also when it was never started) */
+    fun markWatched(context: Context, uri: Uri, durationMs: Long) {
+        val d = durationMs.takeIf { it > 0 } ?: 1L
+        prefs(context).edit().putLong("p:$uri", d).putLong("d:$uri", d).putLong("t:$uri", System.currentTimeMillis()).apply()
+    }
+
+    /** Forgets the position and the watched mark */
+    fun markUnwatched(context: Context, uri: Uri) {
+        prefs(context).edit().remove("p:$uri").remove("d:$uri").remove("t:$uri").apply()
+    }
+
+    fun isWatched(context: Context, uri: Uri): Boolean = progress(context, uri) >= 0.95f
+
     fun position(context: Context, uri: Uri): Long = prefs(context).getLong("p:$uri", 0L)
 
     /** 0..1, how much of the video was watched */

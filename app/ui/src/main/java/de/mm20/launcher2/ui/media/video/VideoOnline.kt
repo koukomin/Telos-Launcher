@@ -118,6 +118,10 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
     var wifiOnly by remember { mutableStateOf(c.torrentWifiOnly) }
     val appContext = androidx.compose.ui.platform.LocalContext.current
     var isolated by remember { mutableStateOf(PlayerChoice.isolated(appContext)) }
+    var sources by remember { mutableStateOf(de.mm20.launcher2.comms.media.video.VideoPrefs.subtitleSources(appContext)) }
+    var userAgent by remember { mutableStateOf(with(de.mm20.launcher2.comms.media.video.VideoPrefs) { appContext.legacyUserAgent }) }
+    var showNetwork by remember { mutableStateOf(false) }
+    if (showNetwork) NetworkSourcesDialog { showNetwork = false }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -132,6 +136,42 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
                 )
                 OutlinedTextField(tmdb, { tmdb = it }, label = { Text(stringResource(R.string.hc_tmdb_api_key)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
 
+                Text(stringResource(R.string.vn_subtitle_sources), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
+                Text(
+                    stringResource(R.string.vn_subtitle_sources_help),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+                sources.forEachIndexed { i, src ->
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Switch(
+                            checked = src.enabled,
+                            onCheckedChange = { on -> sources = sources.toMutableList().also { it[i] = src.copy(enabled = on) } },
+                        )
+                        Text(
+                            stringResource(
+                                when (src.id) {
+                                    de.mm20.launcher2.comms.media.video.PodnapisiProvider.ID -> R.string.vn_source_podnapisi
+                                    de.mm20.launcher2.comms.media.video.OpenSubtitlesComProvider.ID -> R.string.vn_source_os_com
+                                    else -> R.string.vn_source_os_legacy
+                                }
+                            ),
+                            modifier = Modifier.weight(1f).padding(start = 8.dp),
+                        )
+                        TextButton(
+                            enabled = i > 0,
+                            onClick = { sources = sources.toMutableList().also { java.util.Collections.swap(it, i, i - 1) } },
+                        ) { Text("▲") }
+                        TextButton(
+                            enabled = i < sources.lastIndex,
+                            onClick = { sources = sources.toMutableList().also { java.util.Collections.swap(it, i, i + 1) } },
+                        ) { Text("▼") }
+                    }
+                }
+                OutlinedTextField(
+                    userAgent, { userAgent = it }, label = { Text(stringResource(R.string.vn_os_user_agent)) }, singleLine = true,
+                    supportingText = { Text(stringResource(R.string.vn_os_user_agent_help)) }, modifier = Modifier.fillMaxWidth(),
+                )
                 Text(stringResource(R.string.hc_subtitles), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
                 Text(
                     stringResource(R.string.hc_opensubtitles_api_key_opensubtitles_com),
@@ -155,11 +195,16 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
 
                 TraktSection()
 
+                Text(stringResource(R.string.vn_network_folders), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
+                TextButton(onClick = { showNetwork = true }) { Text(stringResource(R.string.vn_network_scan_title)) }
+
                 Text("Torrents", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(stringResource(R.string.hc_only_on_wi_fi), modifier = Modifier.weight(1f))
                     Switch(checked = wifiOnly, onCheckedChange = { wifiOnly = it })
                 }
+                Text(stringResource(R.string.blocklists_torrent_title), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 12.dp))
+                de.mm20.launcher2.ui.component.BlockListsSection(de.mm20.launcher2.comms.blocklist.BlockListKind.TORRENT_IP)
 
                 Text(stringResource(R.string.hc_player), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -176,6 +221,8 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
         confirmButton = {
             TextButton(onClick = {
                 PlayerChoice.setIsolated(appContext, isolated)
+                de.mm20.launcher2.comms.media.video.VideoPrefs.setSubtitleSources(appContext, sources)
+                with(de.mm20.launcher2.comms.media.video.VideoPrefs) { appContext.legacyUserAgent = userAgent }
                 VideoServices.save(VideoServicesConfig(tmdb, subKey, subUser, subPass, languages, auto, wifiOnly))
                 onDismiss()
             }) { Text(stringResource(R.string.hc_save)) }

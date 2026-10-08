@@ -160,6 +160,7 @@ fun FilesScreen() {
                 if (de.mm20.launcher2.ui.files.vault.VaultSessions.isUnlocked(entry.path)) vm.open(de.mm20.launcher2.ui.files.vault.VaultPath.build(entry.path, "/")) else dialog = FilesDialog.Unlock(entry)
             entry.isDir -> vm.open(entry.path)
             ArchivePath.canOpen(entry.name) && !RemotePath.isRemote(entry.path) && !ArchivePath.isArchive(entry.path) -> dialog = FilesDialog.Archive(entry)
+            RemotePath.isRemote(entry.path) && entry.kind == FileKind.Video -> FileActions.playRemoteVideo(context, entry, vm.entries)
             (RemotePath.isRemote(entry.path) || ArchivePath.isArchive(entry.path) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(entry.path)) -> vm.download(entry) { file ->
                 FileActions.open(context, FsEntry(file.path, file.name, false, file.length(), file.lastModified()), emptyList(), false)
             }

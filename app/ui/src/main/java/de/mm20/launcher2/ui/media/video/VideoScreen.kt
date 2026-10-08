@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -50,6 +51,13 @@ data object VideoRoute : NavKey
 
 /** Raised when the watched marks from Trakt were refreshed, so the rows draw again */
 private val traktVersion = androidx.compose.runtime.mutableIntStateOf(0)
+
+/** Raised when watched marks or the list of videos changed, so the rows draw again */
+private val libraryVersion = androidx.compose.runtime.mutableIntStateOf(0)
+
+private class VideoActions(val onDelete: (VideoItem) -> Unit)
+
+private val LocalVideoActions = androidx.compose.runtime.staticCompositionLocalOf<VideoActions?> { null }
 
 private data class VideoGroup(
     val title: String,
@@ -100,8 +108,8 @@ fun VideoScreen() {
             items.filter { GreekFold.contains(it.title, query) }
         }
     }
-    val resumeUris = remember(items) { ResumeStore.continueWatching(context).toSet() }
-    val continueWatching = remember(items, resumeUris) {
+    val resumeUris = remember(items, libraryVersion.intValue) { ResumeStore.continueWatching(context).toSet() }
+    val continueWatching = remember(items, resumeUris, libraryVersion.intValue) {
         ResumeStore.continueWatching(context).mapNotNull { uri -> items.firstOrNull { it.uri.toString() == uri } }.take(10)
     }
     val series = remember(filtered) {
@@ -126,6 +134,43 @@ fun VideoScreen() {
     LaunchedEffect(Unit) {
         de.mm20.launcher2.comms.media.video.trakt.Trakt.refreshWatched(context)
         traktVersion.intValue++
+    }
+    var pendingDelete by remember { mutableStateOf<VideoItem?>(null) }
+    val deleteLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+        if (result.resultCode == android.app.Activity.RESULT_OK) {
+            pendingDelete?.let { ResumeStore.markUnwatched(context, it.uri) }
+            viewModel.load(context)
+        }
+        pendingDelete = null
+    }
+    var confirmDelete by remember { mutableStateOf<VideoItem?>(null) }
+    fun performDelete(video: VideoItem) {
+        pendingDelete = video
+        runCatching {
+            if (Build.VERSION.SDK_INT >= 30) {
+                val request = android.provider.MediaStore.createDeleteRequest(context.contentResolver, listOf(video.uri))
+                deleteLauncher.launch(androidx.activity.result.IntentSenderRequest.Builder(request.intentSender).build())
+            } else {
+                try {
+                    context.contentResolver.delete(video.uri, null, null)
+                    ResumeStore.markUnwatched(context, video.uri)
+                    viewModel.load(context)
+                } catch (e: SecurityException) {
+                    val action = (e as? android.app.RecoverableSecurityException)?.userAction?.actionIntent?.intentSender
+                    if (action != null) deleteLauncher.launch(androidx.activity.result.IntentSenderRequest.Builder(action).build()) else throw e
+                }
+            }
+        }.onFailure { toast(context, context.getString(R.string.vn_delete_failed)) }
+    }
+    val videoActions = remember { VideoActions { confirmDelete = it } }
+    confirmDelete?.let { video ->
+        AlertDialog(
+            onDismissRequest = { confirmDelete = null },
+            title = { Text(stringResource(R.string.vn_delete_video)) },
+            text = { Text(stringResource(R.string.vn_delete_confirm, video.fileName)) },
+            confirmButton = { TextButton(onClick = { confirmDelete = null; performDelete(video) }) { Text(stringResource(R.string.vn_delete_video)) } },
+            dismissButton = { TextButton(onClick = { confirmDelete = null }) { Text(stringResource(R.string.hc_cancel)) } },
+        )
     }
     var showOpen by remember { mutableStateOf(false) }
     var showServices by remember { mutableStateOf(false) }
@@ -166,7 +211,8 @@ fun VideoScreen() {
         }
     }) {
     if (showOpen) OpenSourceDialog { showOpen = false }
-    if (showServices) VideoServicesDialog { showServices = false; servicesVersion++ }
+    if (showServices) VideoServicesDialog { showServices = false; servicesVersion++; viewModel.load(context) }
+    androidx.compose.runtime.CompositionLocalProvider(LocalVideoActions provides videoActions) {
     Column(Modifier.fillMaxSize()) {
         if (!hasPermission) {
             Column(
@@ -252,6 +298,7 @@ fun VideoScreen() {
         }
     }
     }
+    }
 }
 
 @Composable
@@ -288,12 +335,18 @@ private fun VideoList(list: List<VideoItem>, onPlay: (Int) -> Unit) {
 @Composable
 private fun VideoRow(video: VideoItem, onClick: () -> Unit) {
     val context = LocalContext.current
-    val progress = remember(video.uri) { ResumeStore.progress(context, video.uri) }
-    val watched = remember(video.uri, traktVersion.intValue) {
+    val progress = remember(video.uri, libraryVersion.intValue) { ResumeStore.progress(context, video.uri) }
+    val actions = LocalVideoActions.current
+    var menu by remember { mutableStateOf(false) }
+    val seen = remember(video.uri, libraryVersion.intValue) { ResumeStore.isWatched(context, video.uri) }
+    val watched = seen || remember(video.uri, traktVersion.intValue) {
         de.mm20.launcher2.comms.media.video.trakt.Trakt.isWatched(context, EpisodeParser.parse(video.fileName))
     }
+    @OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
     Row(
-        modifier = Modifier.fillMaxWidth().clickable(onClick = onClick).padding(horizontal = 16.dp, vertical = 8.dp),
+        modifier = Modifier.fillMaxWidth()
+            .combinedClickable(onClick = onClick, onLongClick = { menu = true })
+            .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Box {
@@ -307,6 +360,22 @@ private fun VideoRow(video: VideoItem, onClick: () -> Unit) {
         }
         Column(Modifier.weight(1f).padding(start = 12.dp)) {
             Text((if (watched) "✓ " else "") + video.title, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium, maxLines = 2, overflow = TextOverflow.Ellipsis)
+            DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+                DropdownMenuItem(
+                    text = { Text(stringResource(if (seen) R.string.vn_mark_unwatched else R.string.vn_mark_watched)) },
+                    onClick = {
+                        menu = false
+                        if (seen) ResumeStore.markUnwatched(context, video.uri) else ResumeStore.markWatched(context, video.uri, video.durationMs)
+                        libraryVersion.intValue++
+                    },
+                )
+                if (video.id > 0) {
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.vn_delete_video)) },
+                        onClick = { menu = false; actions?.onDelete?.invoke(video) },
+                    )
+                }
+            }
             Text(
                 formatDuration(video.durationMs) + " · " + video.folder,
                 style = MaterialTheme.typography.bodySmall,

@@ -71,7 +71,11 @@ One dialog with the sections Posters and descriptions, Subtitles, Torrents, Play
 | Setting | Where | Default | Effect |
 | --- | --- | --- | --- |
 | TMDB API key | Video services | empty | Posters, descriptions and ratings from TMDB instead of Wikipedia |
-| OpenSubtitles key, user, password | Video services | empty | Subtitle search and download |
+| Subtitle sources | Video services | OpenSubtitles (no account), Podnapisi (no account), OpenSubtitles.com | Order and switches of the subtitle sources |
+| OpenSubtitles User-Agent | Video services | empty (generic) | Agent name for the account-free OpenSubtitles API |
+| OpenSubtitles.com key, user, password | Video services | empty | Optional source |
+| Network folders | Video services | none | Folders of Telos Files storages shown in the library |
+| Subtitle size, colour, edge, match frame rate, picture size | Playback options | normal, white, outline, on, fit | Remembered between videos |
 | Languages | Video services | `en` | Comma separated codes, most wanted first |
 | Download subtitles automatically | Video services | off | Fetches a subtitle without asking |
 | Trakt | Video services | not connected | Client id and secret, connect, scrobbling switch, sign out |
@@ -84,7 +88,8 @@ One dialog with the sections Posters and descriptions, Subtitles, Torrents, Play
 | --- | --- | --- |
 | Local videos | None | Always local |
 | Posters, descriptions | `en.wikipedia.org`, or `api.themoviedb.org` and `image.tmdb.org` with a key | Once per title, then cached |
-| Subtitles | `api.opensubtitles.com` | Only when you search, or if automatic download is on |
+| Subtitles | `rest.opensubtitles.org` and `dl.opensubtitles.org` (old API, no account), `www.podnapisi.net`, and `api.opensubtitles.com` only if you entered a key | Only when you search, or if automatic download is on. Sent: title, season, episode, year, languages, and the file hash (a number computed from the video, not the video) of local files |
+| Network videos | The server of the storage you set up in Telos Files | When you scan or play them |
 | Trakt | `api.trakt.tv` | Only if you connected Trakt |
 | Web streams | The address you entered | When you play it |
 | Torrents | Trackers and peers of that torrent | Only while the torrent plays |
@@ -104,7 +109,12 @@ are entered by you and kept on the device, encrypted with the Android Keystore.
 | FFmpeg audio decoders | Player | stable |
 | Web streams (HLS, DASH, MP4, RTSP) | Link icon | stable |
 | Torrents | Link icon, magnet links | stable, depends on peers |
-| Subtitles from a file or OpenSubtitles | Player | needs your own key |
+| Subtitles from a file, and online search without an account | Player | stable (Podnapisi untested) |
+| Subtitle sources with order, file hash search, UTF-8 conversion, cache per video | Video services | stable |
+| Subtitle delay, size, colour and edge | Playback options | stable (delay: external subtitles only) |
+| Picture modes (fit, fill, zoom, fixed width or height), frame rate matching | Playback options | stable, frame rate depends on the phone |
+| Mark as watched, delete from phone | Long press in lists | stable |
+| Videos from network storages, library folders with rescan | Video services, Telos Files | new, not tested on every protocol |
 | Trakt.tv | Video services | optional |
 | Separate player process | Video services | <Badge type="warning" text="experimental" /> |
 | Chromecast, DLNA, downloads for offline viewing | | Not available |
@@ -122,7 +132,8 @@ are entered by you and kept on the device, encrypted with the Android Keystore.
 ## Limitations
 
 - Video decoding depends on your phone hardware. Some codecs may not play.
-- TMDB and OpenSubtitles need your own keys, and OpenSubtitles needs an account.
+- TMDB needs your own key for ratings. Subtitle search works without an account, but the free sources have daily download limits, and the old OpenSubtitles API may be switched off by its owner. Only OpenSubtitles.com needs an account.
+- Not available: audio delay, a switch for audio passthrough, forced screen mode switching for frame rate matching, an Android TV interface, UPnP / DLNA browsing, automatic scraping of network videos for durations and thumbnails.
 - Title detection relies on file names. Poorly named files can get a wrong poster or none.
 - Torrent streaming needs enough healthy peers. Quality depends on the source and your connection.
 - The torrent and stream features show no catalog: you must supply the address.
@@ -135,5 +146,5 @@ are entered by you and kept on the device, encrypted with the Android Keystore.
 | Series not recognised | Name files like `Show.S01E02.mkv` |
 | "Torrent streaming is set to Wi-Fi only" | Connect to Wi-Fi or switch the option off |
 | Torrent does not start | The torrent may have no peers. Try another source |
-| No subtitle results | Add your OpenSubtitles key, user and password, and check the language codes |
+| No subtitle results | Check the language codes and that at least one source is switched on. A source that fails is named in the dialog. Try **Search all sources**, or an OpenSubtitles User-Agent of your own |
 | No sound for a track | Pick another audio track in the options |

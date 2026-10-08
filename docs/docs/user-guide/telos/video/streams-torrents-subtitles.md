@@ -12,8 +12,11 @@ where they are secret.
 | Setting | Default | Effect |
 | --- | --- | --- |
 | TMDB API key | empty | Use TMDB for posters, descriptions and ratings instead of Wikipedia |
-| OpenSubtitles API key | empty | Needed for subtitle search. The key comes from opensubtitles.com (Consumers) |
-| OpenSubtitles user name and password | empty | Your account, which OpenSubtitles requires for downloads |
+| Subtitle sources | all on | Which sources are asked and in which order (switch and arrows), see [Subtitles](#subtitles) |
+| OpenSubtitles User-Agent | empty | Optional. Empty uses the generic test agent of the old OpenSubtitles API |
+| OpenSubtitles API key | empty | Only for the optional OpenSubtitles.com source. The key comes from opensubtitles.com (Consumers) |
+| OpenSubtitles user name and password | empty | Only for the optional OpenSubtitles.com source: your account, which that API requires for downloads |
+| Network folders | none | Folders of your Telos Files network storages whose videos appear in the library, see [Network storages](./library-player#network-storages) |
 | Languages | `en` | Comma separated codes, most wanted first, for example `el,en`. Spaces are removed |
 | Download subtitles automatically | off | Fetches a subtitle without asking when a video has none |
 | Torrents: Only on Wi-Fi | on | A torrent refuses to start on a metered (mobile data) connection |
@@ -64,6 +67,25 @@ address to other peers, and while a torrent runs you also share the pieces you h
 6. The biggest video starts, the others become the playlist.
 7. The player shows "Buffering..." and then plays. A status line shows "Peers N, N KB/s, N% downloaded".
 
+### Peer block lists
+
+In the **Video services** dialog, under Torrents, **Peer block lists** can make the torrent session refuse
+connections to listed IP address ranges (IPv4). Nothing is downloaded until you switch a list on.
+
+- **Offered list:** Naunter BT_BlockLists (Unlicense), `github.com/Naunter/BT_BlockLists`. The project says it is no
+  longer actively maintained, although its automatic workflow still runs.
+- **Your own lists:** **Add list by address** (https only) or **Import from a file**. Accepted formats are PeerGuardian
+  p2p (`name:1.2.3.4-1.2.3.5`), eMule `ipfilter.dat`, CIDR (`1.2.3.0/24`), `a-b` ranges and single addresses, plain or
+  as gzip or zip. IPv6 entries are skipped.
+- **Which server is contacted:** only the address shown under the list, directly from your phone. Updates ask with
+  `If-None-Match` / `If-Modified-Since`, so an unchanged list is not downloaded again. A list may not exceed 160 MB of text.
+- **Automatic update:** Off, Daily or Weekly (default weekly once a list is on), by default only on Wi-Fi and not when
+  the battery is low. The setting is shared with the web app block lists. **Update now** ignores the Wi-Fi setting.
+- If an update fails, the previous list stays in use and the error is shown under the list.
+- The filter is applied when a torrent starts and again after a list changes while a torrent runs.
+- Switching a downloaded list off deletes its data. Imported lists keep their data until you remove them.
+- A block list reduces connections to unwanted peers. It does not hide your IP address from other peers.
+
 ### Stop and cleanup
 
 - Everything is stopped and the downloaded data is **deleted when the player closes**.
@@ -82,38 +104,51 @@ Tap **Subtitles...** in the player's top bar:
 
 | Choice | Behavior |
 | --- | --- |
-| **From a file** | Pick any file. SRT, VTT, ASS / SSA and TTML are recognised, and the file name is used as the label |
-| **Search online** | Searches OpenSubtitles for the title, and for series also the season and episode, in your languages |
+| **From a file** | Pick any file. SRT, VTT, ASS / SSA and TTML are recognised. The file is converted to UTF-8 (see below) and kept in the cache |
+| **Search online** | Searches the subtitle sources for the video, in your languages |
 
-Embedded subtitle tracks are chosen in the [playback options](./library-player#playback-options-the-three-dot-menu).
+Embedded subtitle tracks, the delay and the look of subtitles are in the [playback options](./library-player#playback-options-the-three-dot-menu).
 
-### Search online
+### Subtitle sources (no account needed)
 
-1. The dialog "Subtitles" shows "Searching..." and then a list sorted by download count. Each row has the release or
-   file name, the language, the number of downloads and "HI" for hearing impaired.
-2. Tap a result. "Downloading..." follows and the subtitle is added to the playing video.
-3. If you did not enter a key, the dialog says "Add your OpenSubtitles key in Video services (the gear icon in the video
-   list)."
+Subtitle search works **without any account or key**. **Video services > Subtitle sources** lists the sources. Each has a
+switch and arrows to change the order. A search asks the sources from the top and stops at the first one that has
+results; **Search all sources** in the dialog asks every switched-on source and merges the results.
 
-OpenSubtitles needs **your own API key and your account** (user name and password), because their API requires them
-for downloads. The search uses the title from the file name (without the extension), the language list, the season
-and episode for series, and, when TMDB data exists for a movie, its TMDB id. Downloads are saved as SRT in the cache
-folder `subtitles`.
+| Source | Account | How it is asked | Notes |
+| --- | --- | --- | --- |
+| OpenSubtitles (old REST API, `rest.opensubtitles.org`) | none | By the **file hash** of the video (when the file can be read) and then by title, season and episode | Needs only a User-Agent. The generic `TemporaryUserAgent` works for testing; a free registered agent from opensubtitles.org (field "OpenSubtitles User-Agent") is more reliable. OpenSubtitles has announced this API as deprecated, so it may stop working |
+| Podnapisi (`podnapisi.net`) | none | By title, season, episode or year, and language | Public search of the web site. Telos could not test it from the development environment, so treat it as experimental |
+| OpenSubtitles.com (new API) | your API key, and user name and password for downloads | By title, season, episode, year and file hash | Optional. Skipped when no key is entered |
+
+How results are ordered: first by your **language order** (the first language in the list wins), then an **exact file
+hash match**, how similar the release name is to the video file name, the number of downloads, and hearing impaired
+subtitles last. Rows show the language, downloads, "HI", "exact match" and the source.
+
+What happens to a downloaded subtitle: zip and gzip files are unpacked, the text is converted to UTF-8 (Byte order mark,
+UTF-16, UTF-8 or the code page that fits the language, for example Windows-1253 for Greek or Windows-1251 for Russian;
+the source's stated character set is used when given), and the file is stored in the cache folder `subtitles`. The
+subtitle chosen for a video is remembered, so the next time the same file (same name and size) opens with it again
+without asking the internet. Failed sources are named in the dialog and the next one is used.
+
+The file hash is read from the video file for local videos. It is not available for web addresses, torrents and
+network storages, which are searched by name only.
 
 ### Automatic subtitles
 
-When **Download subtitles automatically** is on and a video has no subtitles yet, Telos searches in the background
-when the video starts. It takes the first result in your first language that has one, otherwise the first result, and
-adds it. It also works for torrents. Failures are ignored quietly.
+When **Download subtitles automatically** is on and a video has no subtitles yet, Telos searches the sources in the
+background when the video starts. It takes the best result in your first language that has one, otherwise the best
+result, and adds it. It also works for torrents. Failures are ignored quietly.
 
 ### Subtitle details
 
 | Topic | Detail |
 | --- | --- |
 | Formats | SRT, VTT, ASS / SSA, TTML, and embedded tracks |
-| Languages | ISO 639-1 codes such as `en`, `el`, `de`. Wrong codes simply give no results |
+| Languages | ISO 639-1 codes such as `en`, `el`, `de` (also `pt-BR`, which counts as `pt`). Wrong codes simply give no results |
 | Storage | Downloaded subtitles stay in the cache until Android clears it |
-| Style | The player's default subtitle style. No styling options |
+| Delay | -/+ 0.1 and 0.5 s in the playback options, for subtitles loaded from a file or the internet. Not for tracks inside the video |
+| Style | Size, colour and edge (none, outline, shadow, box) in the playback options, remembered |
 
 ## Posters and descriptions (TMDB and Wikipedia)
 
