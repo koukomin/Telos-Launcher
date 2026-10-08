@@ -31,6 +31,8 @@ class MusicPlayerService : MediaSessionService() {
         val player = ExoPlayer.Builder(this)
             .setAudioAttributes(audioAttributes, true)
             .setHandleAudioBecomingNoisy(true)
+            // keeps the CPU (and for a stream the Wi-Fi) awake while playing with the screen off
+            .setWakeMode(C.WAKE_MODE_LOCAL)
             .build()
         player.addListener(object : Player.Listener {
             override fun onIsPlayingChanged(isPlaying: Boolean) {

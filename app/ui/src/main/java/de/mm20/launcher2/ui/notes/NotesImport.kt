@@ -23,13 +23,28 @@ object NotesImport {
                     ZipInputStream(it).use { zip ->
                         while (true) {
                             val e = zip.nextEntry ?: break
-                            if (!e.isDirectory) out += readFile(e.name.substringAfterLast('/'), zip.readBytes().toString(Charsets.UTF_8))
+                            if (!e.isDirectory) readLimited(zip, MAX_FILE_BYTES)?.let { out += readFile(e.name.substringAfterLast('/'), it.toString(Charsets.UTF_8)) }
                         }
                     }
-                } else out += readFile(name, it.readBytes().toString(Charsets.UTF_8))
+                } else readLimited(it, MAX_FILE_BYTES)?.let { b -> out += readFile(name, b.toString(Charsets.UTF_8)) }
             }
         }
         return out
+    }
+
+    private const val MAX_FILE_BYTES = 32 * 1024 * 1024
+
+    /** All bytes of [input], or null if there are more than [max] (protects against huge files and zip bombs). */
+    fun readLimited(input: java.io.InputStream, max: Int): ByteArray? {
+        val out = java.io.ByteArrayOutputStream()
+        val buf = ByteArray(16 * 1024)
+        while (true) {
+            val r = input.read(buf)
+            if (r < 0) break
+            if (out.size() + r > max) return null
+            out.write(buf, 0, r)
+        }
+        return out.toByteArray()
     }
 
     fun readFile(name: String, text: String): List<Note> = try {
@@ -110,7 +125,7 @@ object NotesImport {
     /** Markdown with front matter, the file format used by the folder sync. */
     fun toMarkdown(n: Note): String = buildString {
         append("---\n")
-        append("title: \"").append(n.title.replace("\"", "'")).append("\"\n")
+        append("title: \"").append(n.title.replace("\"", "'").replace('\n', ' ').replace('\r', ' ')).append("\"\n")
         if (n.pinned) append("pinned: true\n")
         if (n.labels.isNotEmpty()) append("tags: [").append(n.labels.joinToString(", ")).append("]\n")
         append("---\n")

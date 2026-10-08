@@ -148,7 +148,8 @@ object CallAudioRecorder {
                 return null
             }
             // the recording is not left readable in the app's files
-            RecordingCrypto.encryptInPlace(file)
+            // off the main thread (the call service stops the recording there); list() finishes it if the process dies first
+            Thread { RecordingCrypto.encryptInPlace(file) }.start()
             return file
         }
     }

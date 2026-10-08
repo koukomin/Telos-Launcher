@@ -13,6 +13,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.ensureActive
+import kotlin.coroutines.coroutineContext
 import kotlinx.coroutines.withContext
 import de.mm20.launcher2.ui.files.remote.ConnectionStore
 import de.mm20.launcher2.ui.files.remote.RemoteConnection
@@ -203,12 +205,14 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         }
         searchJob = viewModelScope.launch {
             val found = withContext(Dispatchers.IO) {
+                // the walk is a plain sequence: it has to look at the job itself, or a cancelled search keeps walking the whole storage
+                val job = coroutineContext
                 if (rootMode) {
                     RootShell.run("find ${RootShell.q(dir)} -iname ${RootShell.q("*$text*")} 2>/dev/null | head -300").out.lines()
                         .filter { it.isNotBlank() }
                         .map { FsEntry(it, nameOf(it), File(it).isDirectory, -1, 0) }
                 } else {
-                    File(dir).walkTopDown().onEnter { true }.filter { GreekFold.contains(it.name, text) && it.path != dir }.take(300)
+                    File(dir).walkTopDown().onEnter { job.ensureActive(); true }.filter { GreekFold.contains(it.name, text) && it.path != dir }.take(300)
                         .map { FsEntry(it.path, it.name, it.isDirectory, if (it.isDirectory) -1 else it.length(), it.lastModified()) }.toList()
                 }
             }
@@ -301,7 +305,11 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     fun rename(entry: FsEntry, newName: String) {
         val dir = parentOf(entry.path) ?: return
         viewModelScope.launch {
-            val ok = withContext(Dispatchers.IO) { newName.isNotBlank() && !fs.exists(joinPath(dir, newName)) && fs.rename(entry.path, newName) }
+            // the storage ignores upper/lower case when it looks for a name: "a.jpg" -> "A.jpg" is not a clash with itself
+            val onlyCase = newName != entry.name && newName.equals(entry.name, ignoreCase = true)
+            val ok = withContext(Dispatchers.IO) {
+                newName.isNotBlank() && isPlainName(newName) && (onlyCase || !fs.exists(joinPath(dir, newName))) && fs.rename(entry.path, newName)
+            }
             message = if (ok) null else "Could not rename (does the name exist already?)"
             selection = emptySet()
             reload()
@@ -336,6 +344,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             for (src in clip.paths) {
                 if (cancel.cancelled) break
                 if (dir == src || dir.startsWith(src.trimEnd('/') + "/")) { failed++; continue } // not into itself
+                if (clip.cut && parentOf(src)?.trimEnd('/') == dir.trimEnd('/')) continue // moved into its own folder: nothing to do
                 val name = dstFs.freeName(dir, nameOf(src))
                 val ok = when {
                     bothLocal -> if (clip.cut && File(src).renameTo(File(dir, name))) true else runCatching {
@@ -361,8 +370,8 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     private fun across(src: Fs, srcPath: String, isDir: Boolean?, dst: Fs, dstPath: String, cancel: CancelFlag, progress: (Long) -> Unit, move: Boolean): Boolean {
         val dir = isDir ?: runCatching { src.list(srcPath); true }.getOrDefault(false)
         FsOps.copyAcross(src, srcPath, dir, dst, dstPath, cancel, progress)
-        if (move) src.delete(srcPath)
-        return true
+        // the copy is there; a move that could not remove the original is reported, not shown as done
+        return !move || src.delete(srcPath)
     }
 
     /** Unlocks a Cryptomator vault (the key derivation is slow on purpose, so it runs off the main thread) and opens it. */
@@ -384,7 +393,8 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
 
     /** Fetches a file from a remote storage into the cache, then calls [then] on the main thread with the local file. */
     fun download(entry: FsEntry, then: (File) -> Unit) {
-        val target = File(File(context.cacheDir, "remote_open").apply { mkdirs() }, entry.name)
+        // the name comes from a server: only its last part is used, so it cannot point out of the folder
+        val target = File(File(context.cacheDir, "remote_open").apply { mkdirs() }, entry.name.substringAfterLast('/').takeIf { isPlainName(it) } ?: "file")
         val cancel = CancelFlag()
         task = TaskState("Downloading", if (entry.size > 0) 0f else null, cancel)
         viewModelScope.launch {
@@ -431,8 +441,13 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val dir = path ?: return
         val archiveFs = ArchiveFs(File(entry.path))
         runTask("Extracting", null) { cancel, progress ->
-            val target = File(dir, local.freeName(dir, entry.name.substringBefore('.')))
-            FsOps.copyAcross(archiveFs, ArchivePath.build(entry.path, "/"), true, local, target.path, cancel, progress)
+            val target = File(dir, local.freeName(dir, ArchivePath.baseName(entry.name)))
+            try {
+                archiveFs.extractAll(target, cancel, progress)
+            } catch (e: Exception) {
+                target.deleteRecursively() // a half unpacked folder helps nobody
+                throw e
+            }
             "Extracted to ${target.name}"
         }
     }

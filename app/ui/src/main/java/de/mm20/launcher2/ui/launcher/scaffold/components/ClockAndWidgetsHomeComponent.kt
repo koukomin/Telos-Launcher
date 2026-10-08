@@ -84,7 +84,11 @@ internal class ClockAndWidgetsHomeComponent(
         val desktopLocked by uiSettings.desktopLocked.collectAsState(false)
 
         LaunchedEffect(desktopLocked) {
-            if (desktopLocked) editMode = false
+            if (desktopLocked && editMode) {
+                editMode = false
+                // Entering edit mode locked the scaffold; nothing else would unlock it now
+                state.unlock()
+            }
         }
 
         HomeScreenPager(modifier = modifier, insets = insets, state = state) { pageModifier, pageInsets ->

@@ -90,7 +90,8 @@ class WebDavClient(
                     "getlastmodified" -> modified = runCatching { date.parse(text.trim())!!.time }.getOrDefault(0)
                     "response" -> {
                         // the address on the server, without the part that leads to our root
-                        var p = Uri.decode(Uri.parse(href).path ?: href)
+                        // Uri.path is decoded already; decoding it again would turn a name like "100%25.txt" into "100%.txt"
+                        var p = Uri.parse(href).path ?: Uri.decode(href)
                         if (basePath.isNotEmpty() && p.startsWith(basePath)) p = p.removePrefix(basePath)
                         p = "/" + p.trim('/')
                         if (p != wanted && p != "/") out += RemoteEntry(p.substringAfterLast('/'), p, dir, size, modified)

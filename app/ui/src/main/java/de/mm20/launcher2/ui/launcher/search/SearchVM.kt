@@ -235,9 +235,12 @@ class SearchVM : ViewModel(), KoinComponent {
         noteResults.clear()
         if (query.length >= 2 && this.filters.value.tools) {
             notesStore.load()
-            noteResults.addAll(notesStore.notes.value.filter {
-                !it.trashed && (GreekFold.contains(it.title, query) || GreekFold.contains(it.body, query) || it.labels.any { l -> GreekFold.contains(l, query) })
-            }.take(5))
+            val foldedQuery = GreekFold.fold(query)
+            if (foldedQuery.isNotEmpty()) {
+                noteResults.addAll(notesStore.notes.value.asSequence().filter {
+                    !it.trashed && (GreekFold.matches(it.title, foldedQuery) || it.labels.any { l -> GreekFold.matches(l, foldedQuery) } || GreekFold.matches(it.body, foldedQuery))
+                }.take(5).toList())
+            }
         }
 
         val filters = filters.value
@@ -537,30 +540,22 @@ class SearchVM : ViewModel(), KoinComponent {
 
     private suspend fun <T : SavableSearchable> List<T>.applyRanking(query: String): List<T> {
         if (size <= 1) return this
-        val sequence = asSequence()
         val weights = searchableRepository.getWeights(map { it.key }).first()
-        val sorted = sequence.sortedWith { a, b ->
-            val aWeight = weights[a.key] ?: 0.0
-            val bWeight = weights[b.key] ?: 0.0
-
-            val aScore = if (a.score.isUnspecified) {
-                ResultScore.from(query = GreekFold.fold(query), primaryFields = listOf(GreekFold.fold(a.labelOverride ?: a.label))).score
+        // Fold the query once and score every item once, not once per comparison
+        val foldedQuery = GreekFold.fold(query)
+        val keyed = map { item ->
+            val score = if (item.score.isUnspecified) {
+                ResultScore.from(
+                    query = foldedQuery,
+                    primaryFields = listOf(GreekFold.fold(item.labelOverride ?: item.label))
+                ).score
             } else {
-                a.score.score
+                item.score.score
             }
-
-            val bScore = if (b.score.isUnspecified) {
-                ResultScore.from(query = GreekFold.fold(query), primaryFields = listOf(GreekFold.fold(b.labelOverride ?: b.label))).score
-            } else {
-                b.score.score
-            }
-
-            val aTotal = aScore * 0.6f + aWeight.toFloat() * 0.4f
-            val bTotal = bScore * 0.6f + bWeight.toFloat() * 0.4f
-
-            bTotal.compareTo(aTotal)
+            val weight = weights[item.key] ?: 0.0
+            item to (score * 0.6f + weight.toFloat() * 0.4f)
         }
-        return sorted.distinctBy { it.key }.toList()
+        return keyed.sortedByDescending { it.second }.map { it.first }.distinctBy { it.key }
     }
 
     /**

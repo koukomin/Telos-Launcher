@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import de.mm20.launcher2.comms.media.windowAround
 import android.os.Build
 import android.util.Size
 import androidx.activity.compose.BackHandler
@@ -69,7 +70,9 @@ private data class VideoGroup(
 
 private fun metaKey(g: VideoGroup) = (if (g.series) "tv:" else "movie:") + g.title.lowercase() + ":" + g.year
 
-internal fun openPlayer(context: Context, list: List<VideoItem>, index: Int) {
+internal fun openPlayer(context: Context, fullList: List<VideoItem>, fullIndex: Int) {
+    // a whole library does not fit through an Intent (Binder limit): the player gets the videos around the chosen one
+    val (list, index) = fullList.windowAround(fullIndex)
     context.startActivity(
         Intent(context, PlayerChoice.playerClass(context)).apply {
             putStringArrayListExtra(VideoPlayerActivity.EXTRA_URIS, ArrayList(list.map { it.uri.toString() }))
@@ -112,9 +115,11 @@ fun VideoScreen() {
     val continueWatching = remember(items, resumeUris, libraryVersion.intValue) {
         ResumeStore.continueWatching(context).mapNotNull { uri -> items.firstOrNull { it.uri.toString() == uri } }.take(10)
     }
-    val series = remember(filtered) {
+    // the file names are parsed once per library, not on every letter typed in the search field
+    val parsedNames = remember(items) { items.associate { it.id to EpisodeParser.parse(it.fileName) } }
+    val series = remember(filtered, parsedNames) {
         filtered.mapNotNull { item ->
-            val parsed = EpisodeParser.parse(item.fileName)
+            val parsed = parsedNames[item.id] ?: EpisodeParser.parse(item.fileName)
             if (parsed.isEpisode) Triple(parsed.title.lowercase(), parsed, item) else null
         }.groupBy { it.first }.values.map { list ->
             val name = list.first().second.title
@@ -122,9 +127,9 @@ fun VideoScreen() {
             VideoGroup(name, "${episodes.size} episodes", episodes, series = true)
         }.sortedBy { it.title.lowercase() }
     }
-    val movies = remember(filtered) {
+    val movies = remember(filtered, parsedNames) {
         filtered.mapNotNull { item ->
-            val parsed = EpisodeParser.parse(item.fileName)
+            val parsed = parsedNames[item.id] ?: EpisodeParser.parse(item.fileName)
             if (parsed.isEpisode) null else Triple(parsed.title.lowercase() + "|" + parsed.year, parsed, item)
         }.groupBy { it.first }.values.map { list ->
             val parsed = list.first().second

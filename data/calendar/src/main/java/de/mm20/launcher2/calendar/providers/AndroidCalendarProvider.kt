@@ -62,6 +62,7 @@ class AndroidCalendarProvider(
                 CalendarContract.Attendees.ATTENDEE_EMAIL
             )
             val s = "${CalendarContract.Attendees.ATTENDEE_NAME} COLLATE NOCASE ASC"
+            cursor.use {
             while (cursor.moveToNext()) {
                 if (foldQuery != null && !GreekFold.matches(cursor.getStringOrNull(1), foldQuery)) continue
                 val sel = "${CalendarContract.Attendees.EVENT_ID} = ${cursor.getLong(0)}"
@@ -102,7 +103,7 @@ class AndroidCalendarProvider(
                 )
                 results.add(event)
             }
-            cursor.close()
+            }
             return@withContext results
         }
 

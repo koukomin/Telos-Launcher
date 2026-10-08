@@ -88,7 +88,7 @@ class NotesStore(private val context: Context) : Backupable {
     fun save(note: Note, touch: Boolean = true) = synchronized(lock) {
         loadLocked()
         val n = if (touch) note.copy(modifiedAt = System.currentTimeMillis()) else note
-        File(dir, "${n.id}.json").writeText(n.toJson().toString())
+        writeAtomic(File(dir, "${n.id}.json"), n.toJson().toString())
         _notes.value = (_notes.value.filter { it.id != n.id } + n).sortedByDescending { it.modifiedAt }
     }
 
@@ -118,7 +118,7 @@ class NotesStore(private val context: Context) : Backupable {
 
     private fun writeTombs(kind: String, v: Set<String>) {
         val o = try { JSONObject(tombFile.readText()) } catch (e: Exception) { JSONObject() }
-        o.put(kind, JSONArray(v.toList())); tombFile.writeText(o.toString())
+        o.put(kind, JSONArray(v.toList())); writeAtomic(tombFile, o.toString())
     }
 
     /** Ids in Nextcloud Notes of notes that were deleted for good here and still have to be deleted on the server. */
@@ -166,6 +166,16 @@ class NotesStore(private val context: Context) : Backupable {
     }
 
     companion object {
+        /** A crash or a full disk while writing must not leave a truncated (= unreadable = lost) note behind. */
+        internal fun writeAtomic(target: File, text: String) {
+            val tmp = File(target.parentFile, target.name + ".tmp")
+            tmp.writeText(text)
+            if (!tmp.renameTo(target)) {
+                target.delete()
+                if (!tmp.renameTo(target)) { tmp.delete(); throw java.io.IOException("Could not write ${target.name}") }
+            }
+        }
+
         val Colors = listOf(0x00000000, 0xFFF28B82.toInt(), 0xFFFBBC04.toInt(), 0xFFFFF475.toInt(), 0xFFCCFF90.toInt(),
             0xFFA7FFEB.toInt(), 0xFFCBF0F8.toInt(), 0xFFAECBFA.toInt(), 0xFFD7AEFB.toInt(), 0xFFFDCFE8.toInt())
     }

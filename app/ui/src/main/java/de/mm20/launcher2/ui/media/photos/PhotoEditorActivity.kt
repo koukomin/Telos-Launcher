@@ -125,6 +125,8 @@ private fun render(source: Bitmap, a: Adjust): Bitmap {
         colorFilter = android.graphics.ColorMatrixColorFilter(matrixFor(a))
     }
     Canvas(out).drawBitmap(transformed, -x.toFloat(), -y.toFloat(), paint)
+    // the rotated copy can be as big as the photo: give its memory back now (the source belongs to the caller)
+    if (transformed !== source) transformed.recycle()
     return out
 }
 
@@ -137,7 +139,29 @@ private fun decode(context: android.content.Context, uri: Uri, maxSide: Int): Bi
     val bmp = resolver.openInputStream(uri)?.use {
         BitmapFactory.decodeStream(it, null, BitmapFactory.Options().apply { inSampleSize = sample })
     } ?: return null
-    return PhotoExif.applyOrientation(context, uri, bmp)
+    val oriented = PhotoExif.applyOrientation(context, uri, bmp)
+    if (oriented !== bmp) bmp.recycle()
+    return oriented
+}
+
+/**
+ * Renders the full size result. A photo of 50+ megapixels needs several bitmaps of its size at once, so on
+ * OutOfMemoryError it is tried again from a smaller decode instead of ending the app.
+ */
+private fun renderAndSave(context: android.content.Context, uri: Uri, a: Adjust): Uri? {
+    for (maxSide in intArrayOf(6000, 4096, 2560)) {
+        try {
+            val full = decode(context, uri, maxSide) ?: return null
+            val result = render(full, a)
+            full.recycle()
+            val saved = save(context, result)
+            result.recycle()
+            return saved
+        } catch (e: OutOfMemoryError) {
+            System.gc()
+        }
+    }
+    return null
 }
 
 private fun save(context: android.content.Context, bitmap: Bitmap): Uri? {
@@ -183,8 +207,7 @@ private fun PhotoEditor(uri: Uri, onClose: () -> Unit) {
                 saving = true
                 val a = adjust()
                 scope.launch {
-                    val full = withContext(Dispatchers.IO) { decode(context, uri, 6000) }
-                    val saved = withContext(Dispatchers.IO) { full?.let { save(context, render(it, a)) } }
+                    val saved = withContext(Dispatchers.IO) { runCatching { renderAndSave(context, uri, a) }.getOrNull() }
                     saving = false
                     Toast.makeText(context, if (saved != null) "Saved to Pictures/Telos" else "Saving failed", Toast.LENGTH_SHORT).show()
                     if (saved != null) onClose()

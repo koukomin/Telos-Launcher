@@ -22,6 +22,15 @@ object ArchivePath {
     fun isRoot(p: String) = isArchive(p) && innerOf(p) == "/"
     fun build(archive: String, inner: String) = PREFIX + Uri.encode(archive) + "!/" + inner.trim('/')
 
+    /** "photos.tar.gz" -> "photos", "my.report.zip" -> "my.report": the folder an archive is unpacked into */
+    fun baseName(name: String): String {
+        val lower = name.lowercase()
+        for (suffix in listOf(".tar.gz", ".tar.bz2", ".tar.xz", ".tgz")) {
+            if (lower.endsWith(suffix) && name.length > suffix.length) return name.dropLast(suffix.length)
+        }
+        return name.substringBeforeLast('.', name).ifEmpty { name }
+    }
+
     /** Whether Telos can open this file as a folder */
     fun canOpen(name: String): Boolean {
         val n = name.lowercase()
@@ -115,6 +124,60 @@ class ArchiveFs(private val archive: File) : Fs {
     override fun chmod(path: String, mode: String) = false
     override fun exists(path: String) = inner(path).isEmpty() || items.any { it.path == inner(path) }
     override fun totalSize(path: String): Long = items.filter { !it.isDir && (inner(path).isEmpty() || it.path == inner(path) || it.path.startsWith(inner(path) + "/")) }.sumOf { it.size }
+
+    /**
+     * Unpacks everything into [target] in one pass. Reading file by file through [openRead] would
+     * decompress a tar or 7z archive from its start again for every single file.
+     */
+    fun extractAll(target: File, cancel: CancelFlag, progress: (Long) -> Unit) {
+        target.mkdirs()
+        val root = target.canonicalPath + File.separator
+        fun destination(name: String): File? {
+            val f = File(target, clean(name) ?: return null)
+            return if (f.canonicalPath.startsWith(root)) f else null // zip-slip guard on top of clean()
+        }
+        fun write(dest: File, read: (ByteArray) -> Int) {
+            dest.parentFile?.mkdirs()
+            val buffer = ByteArray(64 * 1024)
+            dest.outputStream().use { out ->
+                while (true) {
+                    if (cancel.cancelled) throw IOException("Cancelled")
+                    val n = read(buffer)
+                    if (n < 0) break
+                    out.write(buffer, 0, n)
+                    progress(n.toLong())
+                }
+            }
+        }
+        when (kind) {
+            "zip" -> ZipFile.builder().setFile(archive).get().use { z ->
+                for (e in z.entries) {
+                    if (cancel.cancelled) throw IOException("Cancelled")
+                    val dest = destination(e.name) ?: continue
+                    if (e.isDirectory) dest.mkdirs() else z.getInputStream(e).use { input -> write(dest) { input.read(it) } }
+                }
+            }
+            "7z" -> SevenZFile.builder().setFile(archive).get().use { z ->
+                var e = z.nextEntry
+                while (e != null) {
+                    if (cancel.cancelled) throw IOException("Cancelled")
+                    val dest = destination(e.name)
+                    if (dest != null) { if (e.isDirectory) dest.mkdirs() else write(dest) { z.read(it) } }
+                    e = z.nextEntry
+                }
+            }
+            else -> tarStream().use { s ->
+                var e = s.nextEntry
+                while (e != null) {
+                    if (cancel.cancelled) throw IOException("Cancelled")
+                    val link = (e as? org.apache.commons.compress.archivers.tar.TarArchiveEntry)?.let { it.isSymbolicLink || it.isLink } == true
+                    val dest = if (link) null else destination(e.name)
+                    if (dest != null) { if (e.isDirectory) dest.mkdirs() else write(dest) { s.read(it) } }
+                    e = s.nextEntry
+                }
+            }
+        }
+    }
 
     override fun openRead(path: String): InputStream {
         val wanted = inner(path)

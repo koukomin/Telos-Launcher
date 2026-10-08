@@ -15,23 +15,27 @@ internal interface TextClassifier {
     suspend fun classify(context: Context, query: String): TextClassificationResult
 }
 
+private val EMAIL_REGEX = Regex("^\\S+@\\S+$")
+private val PHONE_REGEX = Regex("^\\+?[0-9- /.]{4,18}$")
+private val URL_REGEX = Regex("^(http(s)?://.)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_+.~#?&/=]*)$")
+
 internal class TextClassifierImpl : TextClassifier {
     override suspend fun classify(context: Context, query: String): TextClassificationResult {
         val trimmedQuery = query.trim()
         return when {
-            trimmedQuery.matches(Regex("^\\S+@\\S+$")) -> TextClassificationResult(
+            trimmedQuery.matches(EMAIL_REGEX) -> TextClassificationResult(
                 type = TextType.Email,
                 text = trimmedQuery,
                 email = trimmedQuery
             )
 
-            trimmedQuery.matches(Regex("^\\+?[0-9- /.]{4,18}$")) -> TextClassificationResult(
+            trimmedQuery.matches(PHONE_REGEX) -> TextClassificationResult(
                 type = TextType.PhoneNumber,
                 text = trimmedQuery,
                 phoneNumber = trimmedQuery
             )
 
-            trimmedQuery.matches(Regex("^(http(s)?://.)?(www\\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_+.~#?&/=]*)$")) -> TextClassificationResult(
+            trimmedQuery.matches(URL_REGEX) -> TextClassificationResult(
                 type = TextType.Url,
                 text = trimmedQuery,
                 url = trimmedQuery

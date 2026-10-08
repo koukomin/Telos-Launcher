@@ -29,8 +29,8 @@
     <string name="freeze_dashboard_running_now">Работает сейчас</string>
     <string name="freeze_dashboard_not_used_today">Не использовалось сегодня</string>
     <string name="freeze_dashboard_runtime_today">%1$s сегодня</string>
-    <string name="freeze_dashboard_runtime_hours_minutes">%1$д %2$м</string>
-    <string name="freeze_dashboard_runtime_minutes">%1$м</string>
+    <string name="freeze_dashboard_runtime_hours_minutes">%1$d ч %2$d мин</string>
+    <string name="freeze_dashboard_runtime_minutes">%1$d мин</string>
     <string name="freeze_dashboard_runtime_under_a_minute">Меньше минуты</string>
     <string name="freeze_dashboard_refresh">Обновить</string>
     <string name="freeze_dashboard_no_apps_in_category">Нет приложений в этой категории</string>

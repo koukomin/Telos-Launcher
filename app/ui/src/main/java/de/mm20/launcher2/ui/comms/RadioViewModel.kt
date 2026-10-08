@@ -54,16 +54,24 @@ class RadioViewModel : ViewModel(), KoinComponent {
     private var streamIndex = 0
     private var startWhenConnected = false
     private var connecting = false
+    private var controllerFuture: com.google.common.util.concurrent.ListenableFuture<MediaController>? = null
+    private var cleared = false
 
     fun initialize(context: Context) {
         if (mediaController != null || connecting) return
         connecting = true
         val sessionToken = SessionToken(context, ComponentName(context, RadioPlayerService::class.java))
         val controllerFuture = MediaController.Builder(context, sessionToken).buildAsync()
+        this.controllerFuture = controllerFuture
 
         controllerFuture.addListener({
             connecting = false
             val controller = runCatching { controllerFuture.get() }.getOrNull() ?: return@addListener
+            if (cleared) {
+                // the screen was left while the service was still being connected: nobody would release this controller
+                controller.release()
+                return@addListener
+            }
             mediaController = controller
             if (startWhenConnected) { startWhenConnected = false; startCurrentStream() }
             controller.addListener(object : Player.Listener {
@@ -81,7 +89,9 @@ class RadioViewModel : ViewModel(), KoinComponent {
                 }
 
                 override fun onPlayerError(error: PlaybackException) {
-                    tryNextStream()
+                    // a station that was picked with next/previous on the notification is not the one this screen started:
+                    // its streams are not in the queue, trying "the next stream" would jump back to the old station
+                    if (controller.currentMediaItem?.mediaId == currentStation?.id) tryNextStream()
                 }
             })
 
@@ -173,7 +183,10 @@ class RadioViewModel : ViewModel(), KoinComponent {
 
     override fun onCleared() {
         super.onCleared()
+        cleared = true
         mediaController?.release()
+        mediaController = null
+        if (connecting) controllerFuture?.let { MediaController.releaseFuture(it) }
     }
 }
 // === TELOS_PENDING_REVIEW_END: radio_mini_player ===

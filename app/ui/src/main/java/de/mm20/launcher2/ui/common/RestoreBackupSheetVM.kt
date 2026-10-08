@@ -54,8 +54,14 @@ class RestoreBackupSheetVM : ViewModel(), KoinComponent {
 
         viewModelScope.launch {
             state.value = RestoreBackupState.Restoring
-            backupManager.restore(uri, selected.value)
-            state.value = RestoreBackupState.Restored
+            try {
+                backupManager.restore(uri, selected.value)
+                state.value = RestoreBackupState.Restored
+            } catch (e: Exception) {
+                if (e is kotlinx.coroutines.CancellationException) throw e
+                android.util.Log.e("MM20", "Restore failed", e)
+                state.value = RestoreBackupState.InvalidFile
+            }
         }
     }
 }

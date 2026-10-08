@@ -31,4 +31,11 @@ object HttpRanges {
         if (!oldModified.isNullOrBlank() && !newModified.isNullOrBlank() && oldModified != newModified) return true
         return false
     }
+
+    /**
+     * Cookies and Authorization only go to the host the user gave the address for, and never over a connection
+     * that is less protected than the one it was meant for (a redirect from https to http).
+     */
+    fun mayForwardCredentials(originHost: String, originHttps: Boolean, host: String, https: Boolean): Boolean =
+        host.equals(originHost, ignoreCase = true) && (https || !originHttps)
 }

@@ -218,6 +218,8 @@ class TorrentDownloadEngine(
                 if (!updated.files.filter { it.wanted }.all { it.uri != null }) {
                     cur = moveFiles(cur, updated, staging, session)
                     fileList = cur.torrent?.files ?: fileList
+                    // the time spent copying is not seeding time
+                    lastTick = SystemClock.elapsedRealtime()
                 }
                 if (cur.completedAt == 0L) session.markCompleted()
                 seedingSeconds += dt / 1000
@@ -297,6 +299,11 @@ class TorrentDownloadEngine(
                 session.files.copyTorrentFile(folder, segments, src, MimeTypes.forName(segments.last()), { job?.isActive == false }, {})
             }
             result[i] = f.copy(uri = created.uri, done = f.size)
+            // remembered right away: a failure on a later file must not make the next try copy this one again
+            session.update { t ->
+                val d = t.torrent ?: return@update t
+                t.copy(torrent = d.copy(files = d.files.map { if (it.index == f.index) it.copy(uri = created.uri) else it }))
+            }
         }
         val wantedFiles = result.filter { it.wanted }
         val single = wantedFiles.singleOrNull()

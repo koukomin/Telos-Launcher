@@ -77,7 +77,7 @@ internal class UnitConverterRepositoryImpl(
         query: String,
         includeCurrencies: Boolean
     ): UnitConverter? {
-        val regex = Regex("""([+\-]?[\d+\-e,.]+|[^\d>\-]+)""")
+        val regex = QUERY_REGEX
 
         val matches = regex.findAll(query)
 
@@ -126,3 +126,5 @@ internal class UnitConverterRepositoryImpl(
         return null
     }
 }
+
+private val QUERY_REGEX = Regex("""([+\-]?[\d+\-e,.]+|[^\d>\-]+)""")

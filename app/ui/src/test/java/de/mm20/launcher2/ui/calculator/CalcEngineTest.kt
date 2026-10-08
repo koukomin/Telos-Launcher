@@ -68,4 +68,11 @@ class CalcEngineTest {
         assertEquals("-2.5E30", CalcEngine.format(-2.5e30))
         assertEquals("1000", CalcEngine.format(1000.0))
     }
+
+    @Test
+    fun `trigonometry has no residue at multiples of the half turn`() {
+        assertEquals("0", CalcEngine.format(CalcEngine.evaluate("sin(180)", true)))
+        assertEquals("0", CalcEngine.format(CalcEngine.evaluate("cos(90)", true)))
+        assertEquals("0", CalcEngine.format(CalcEngine.evaluate("sin(π)", false)))
+    }
 }

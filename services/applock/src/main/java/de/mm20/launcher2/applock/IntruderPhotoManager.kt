@@ -62,7 +62,9 @@ class IntruderPhotoManager(
 
     /** Deletes any photo older than the configured retention period. */
     suspend fun deleteExpired() {
+        // a restored or hand edited value of 0 or less must not mean "delete everything now"
         val retentionDays = appLockSettings.intruderPhotoRetentionDays.first()
+            .coerceIn(1, de.mm20.launcher2.preferences.applock.INTRUDER_PHOTO_MAX_RETENTION_DAYS)
         val cutoff = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(retentionDays.toLong())
         storage.list().forEach { if (it.lastModified < cutoff) storage.delete(it) }
     }

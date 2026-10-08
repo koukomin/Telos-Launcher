@@ -31,21 +31,21 @@ class CalculatorRepositoryImpl(
 
     private suspend fun queryCalculator(query: String): Calculator? {
         return when {
-            query.matches(Regex("0x[0-9a-fA-F]+")) -> {
+            query.matches(HEX_REGEX) -> {
                 val solution = query.substring(2).toIntOrNull(16) ?: run {
                     return null
                 }
                 Calculator(term = query, solution = solution.toDouble())
             }
 
-            query.matches(Regex("0b[01]+")) -> {
+            query.matches(BIN_REGEX) -> {
                 val solution = query.substring(2).toIntOrNull(2) ?: run {
                     return null
                 }
                 Calculator(term = query, solution = solution.toDouble())
             }
 
-            query.matches(Regex("0[0-7]+")) -> {
+            query.matches(OCT_REGEX) -> {
                 val solution = query.substring(1).toIntOrNull(8) ?: run {
                     return null
                 }
@@ -72,3 +72,7 @@ class CalculatorRepositoryImpl(
         }
     }
 }
+
+private val HEX_REGEX = Regex("0x[0-9a-fA-F]+")
+private val BIN_REGEX = Regex("0b[01]+")
+private val OCT_REGEX = Regex("0[0-7]+")

@@ -136,7 +136,8 @@ internal class AppShortcutRepositoryImpl(
                 if (enabled && perm) {
                     val launcherApps =
                         context.getSystemService<LauncherApps>() ?: return@map persistentListOf()
-
+                    // Not the default launcher (any more): getShortcuts() would throw a SecurityException
+                    if (!launcherApps.hasShortcutHostPermission()) return@map persistentListOf()
 
                     val shortcutQuery = LauncherApps.ShortcutQuery()
                     shortcutQuery.setQueryFlags(
@@ -146,7 +147,13 @@ internal class AppShortcutRepositoryImpl(
                                 LauncherApps.ShortcutQuery.FLAG_MATCH_CACHED or
                                 LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED_BY_ANY_LAUNCHER
                     )
-                    val shortcuts = launcherApps.getShortcuts(shortcutQuery, Process.myUserHandle())
+                    val shortcuts = (try {
+                        launcherApps.getShortcuts(shortcutQuery, Process.myUserHandle())
+                    } catch (e: SecurityException) {
+                        null
+                    } catch (e: IllegalStateException) {
+                        null
+                    })
                         ?.mapNotNull {
                             val score = ResultScore.from(
                                 query = normalizedQuery,

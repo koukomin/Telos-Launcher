@@ -86,11 +86,12 @@ object TorrentSession {
 
     /** [owner] does not need the session any more. The session stops when nobody does. */
     fun release(owner: Any) {
-        val toStop: SessionManager? = synchronized(lock) {
+        // stopThread is set under the lock: a new owner that gets the lock next must see it and wait for the old session
+        synchronized(lock) {
             owners.remove(owner)
-            if (owners.isEmpty()) manager.also { manager = null } else null
-        }
-        if (toStop != null) {
+            if (owners.isNotEmpty()) return
+            val toStop = manager ?: return
+            manager = null
             // stopping can block, and a new owner may already be waiting for the lock: stop on another thread
             val t = Thread {
                 try {

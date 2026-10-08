@@ -19,6 +19,7 @@ class ConditionsMonitor(private val context: Context) {
     private val _conditions = MutableStateFlow(Conditions())
     val conditions: StateFlow<Conditions> = _conditions
     private var started = false
+    @Volatile private var current: Network? = null
 
     @Synchronized
     fun start() {
@@ -26,8 +27,17 @@ class ConditionsMonitor(private val context: Context) {
         started = true
         try {
             val cm = context.getSystemService(ConnectivityManager::class.java)
+            // the callback below is silent when there is no network at all: start from what is true now
+            val caps0 = cm.activeNetwork?.let { cm.getNetworkCapabilities(it) }
+            _conditions.update {
+                it.copy(
+                    online = caps0?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true,
+                    unmetered = caps0?.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED) == true,
+                )
+            }
             cm.registerDefaultNetworkCallback(object : ConnectivityManager.NetworkCallback() {
                 override fun onCapabilitiesChanged(network: Network, caps: NetworkCapabilities) {
+                    current = network
                     _conditions.update {
                         it.copy(
                             online = caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET),
@@ -37,6 +47,9 @@ class ConditionsMonitor(private val context: Context) {
                 }
 
                 override fun onLost(network: Network) {
+                    // the old network of a switch (Wi-Fi to mobile) can be reported lost after the new one is up
+                    if (current != null && current != network) return
+                    current = null
                     _conditions.update { it.copy(online = false) }
                 }
             })

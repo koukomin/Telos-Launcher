@@ -60,6 +60,8 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
             .setMediaSourceFactory(DefaultMediaSourceFactory(DefaultDataSource.Factory(this, httpFactory)))
             .setAudioAttributes(audioAttributes, true)
             .setHandleAudioBecomingNoisy(true)
+            // keeps the CPU (and for a stream the Wi-Fi) awake while playing with the screen off
+            .setWakeMode(C.WAKE_MODE_NETWORK)
             .build()
         player = exo
 

@@ -61,8 +61,20 @@ class WidgetsVM(
         widgetRepository.update(widget)
     }
 
+    /**
+     * Adds [widget] so that it ends up at slot position [slotIndex] ([slots] index, which differs
+     * from the index in [widgets] as soon as a stack precedes it).
+     */
+    fun addWidgetAtSlot(widget: Widget, slotIndex: Int) {
+        val slots = slots.value
+        val index = slots.take(slotIndex.coerceAtLeast(0)).sumOf { it.size }
+        addWidget(widget, index)
+    }
+
     fun moveUp(index: Int) {
+        if (index < 1) return
         val widgets = widgets.value.toMutableList()
+        if (index > widgets.lastIndex) return
         val widget = widgets.removeAt(index)
         widgets.add(index - 1, widget)
         widgetRepository.set(widgets, parentId)
@@ -70,6 +82,7 @@ class WidgetsVM(
 
     fun moveDown(index: Int) {
         val widgets = widgets.value.toMutableList()
+        if (index < 0 || index >= widgets.lastIndex) return
         val widget = widgets.removeAt(index)
         widgets.add(index + 1, widget)
         widgetRepository.set(widgets, parentId)
@@ -77,6 +90,7 @@ class WidgetsVM(
 
     fun moveSlotUp(slotIndex: Int) {
         val slots = slots.value.toMutableList()
+        if (slotIndex < 1 || slotIndex > slots.lastIndex) return
         val slot = slots.removeAt(slotIndex)
         slots.add(slotIndex - 1, slot)
         widgetRepository.set(slots.flatten(), parentId)
@@ -84,6 +98,7 @@ class WidgetsVM(
 
     fun moveSlotDown(slotIndex: Int) {
         val slots = slots.value.toMutableList()
+        if (slotIndex < 0 || slotIndex >= slots.lastIndex) return
         val slot = slots.removeAt(slotIndex)
         slots.add(slotIndex + 1, slot)
         widgetRepository.set(slots.flatten(), parentId)

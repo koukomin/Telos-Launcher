@@ -275,7 +275,7 @@ internal class LauncherScaffoldState(
      */
     private val velocityThreshold: Float,
     private val maxSearchBarOffset: Float,
-    private val bounceDampingRatio: Float = Spring.DampingRatioNoBouncy,
+    bounceDampingRatio: Float = Spring.DampingRatioNoBouncy,
     private val onHapticFeedback: (HapticFeedbackType) -> Unit,
     initialGesture: Gesture? = null,
     initialIsLocked: Boolean = false,
@@ -290,6 +290,13 @@ internal class LauncherScaffoldState(
      * entire scaffold (including the home component) briefly remounted from scratch.
      */
     var config: ScaffoldConfiguration by mutableStateOf(initialConfig)
+
+    /**
+     * Updated in place (not part of the state's remember keys): the preference is loaded
+     * asynchronously, and re-keying on it would recreate this state right after the first frame
+     * and drop the gesture that was restored after a configuration change / process death.
+     */
+    var bounceDampingRatio: Float = bounceDampingRatio
 
     private val rubberbandAnimationController = RubberbandScaffoldAnimationController(
         rubberbandThreshold = rubberbandThreshold,
@@ -1066,7 +1073,7 @@ internal fun LauncherScaffold(
 
         val state =
             rememberSaveable(
-                widthPx, heightPx, touchSlop, rubberbandThreshold, minFlingVelocity, bounceDampingRatio,
+                widthPx, heightPx, touchSlop, rubberbandThreshold, minFlingVelocity,
                 saver = listSaver(
                     save = {
                         listOf(
@@ -1111,6 +1118,7 @@ internal fun LauncherScaffold(
         // "widgets on home screen") can update it in place on this stable, already-created state
         // instead of forcing a full LauncherScaffoldState re-creation - see the property's doc.
         state.config = config
+        state.bounceDampingRatio = bounceDampingRatio
 
         // Feeds the scaffold's own drag offset - the same value that drives every gesture
         // destination (WebAppsPanel, Widgets, Feed, ...) - into the system wallpaper offset API,
@@ -1571,6 +1579,11 @@ private fun SecondaryPage(
             config.swipeRight?.component,
             config.doubleTap?.component,
             config.longPress?.component,
+            config.homeButton?.component,
+            config.pinchIn?.component,
+            config.pinchOut?.component,
+            config.twoFingerSwipeUp?.component,
+            config.twoFingerSwipeDown?.component,
             config.searchComponent,
         )
     }

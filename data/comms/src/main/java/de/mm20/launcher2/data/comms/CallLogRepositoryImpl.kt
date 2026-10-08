@@ -17,6 +17,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -50,14 +51,14 @@ internal class CallLogRepositoryImpl(
                     awaitClose {
                         context.contentResolver.unregisterContentObserver(observer)
                     }
-                }.map {
+                }.conflate().map {
                     queryCallLog()
                 }
             }
         }
     }
 
-    private suspend fun queryCallLog(): List<CallLogEntry> = withContext(Dispatchers.IO) {
+    private suspend fun queryCallLog(limit: Int = 100): List<CallLogEntry> = withContext(Dispatchers.IO) {
         try {
             val calls = mutableListOf<CallLogEntry>()
             val projection = arrayOf(
@@ -78,7 +79,7 @@ internal class CallLogRepositoryImpl(
                 projection,
                 null,
                 null,
-                "${CallLog.Calls.DATE} DESC LIMIT 100"
+                "${CallLog.Calls.DATE} DESC LIMIT $limit"
             )
 
             if (cursor == null) return@withContext emptyList()
@@ -145,7 +146,8 @@ internal class CallLogRepositoryImpl(
     override suspend fun deleteForNumbers(numbers: List<String>) = withContext(Dispatchers.IO) {
         if (numbers.isEmpty()) return@withContext
         try {
-            val recents = queryCallLog()
+            // the whole log, not only the newest entries shown in the recents
+            val recents = queryCallLog(limit = 5000)
             val ids = recents
                 .filter { entry -> numbers.any { PhoneNumbers.match(it, entry.phoneNumber) } }
                 .map { it.id }

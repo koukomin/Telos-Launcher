@@ -70,6 +70,9 @@ abstract class BaseSettings<T>(
             Log.e("MM20", "Cannot restore $fileName", e)
         } catch (e: IllegalArgumentException) {
             Log.e("MM20", "Cannot restore $fileName", e)
+        } catch (e: java.io.IOException) {
+            // includes DataStore's CorruptionException, which the serializers throw for a malformed file
+            Log.e("MM20", "Cannot restore $fileName", e)
         }
     }
 }

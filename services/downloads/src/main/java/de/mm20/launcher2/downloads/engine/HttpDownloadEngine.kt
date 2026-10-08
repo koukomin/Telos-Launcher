@@ -170,17 +170,22 @@ class HttpDownloadEngine : DownloadEngine {
     /** Request headers; [sameOrigin] false (after a redirect to another host) drops cookies and credentials */
     private fun headersFor(task: DownloadTask, s: DownloadSettingsValues, sameOrigin: Boolean): Headers {
         val b = Headers.Builder()
-        b.set("User-Agent", task.userAgent?.takeIf { it.isNotBlank() } ?: s.effectiveUserAgent)
+        // OkHttp refuses names and values with control or non-ASCII characters: such a header is left out
+        // instead of failing the whole download again and again
+        fun put(name: String, value: String) {
+            try { b.set(name, value) } catch (_: IllegalArgumentException) { }
+        }
+        put("User-Agent", task.userAgent?.takeIf { it.isNotBlank() } ?: s.effectiveUserAgent)
         b.set("Accept-Encoding", "identity")
         b.set("Accept", "*/*")
-        if (!task.referer.isNullOrBlank()) b.set("Referer", task.referer)
-        if (sameOrigin && !task.cookies.isNullOrBlank()) b.set("Cookie", task.cookies)
+        if (!task.referer.isNullOrBlank()) put("Referer", task.referer)
+        if (sameOrigin && !task.cookies.isNullOrBlank()) put("Cookie", task.cookies)
         for ((k, v) in task.headers) {
             val name = k.trim()
-            if (name.isEmpty() || name.equals("Range", true) || name.equals("Accept-Encoding", true) || name.contains(Regex("[\\s:]"))) continue
+            if (name.isEmpty() || name.equals("Range", true) || name.equals("Accept-Encoding", true) || name.any { it.isWhitespace() || it == ':' }) continue
             if (!sameOrigin && (name.equals("Authorization", true) || name.equals("Cookie", true))) continue
             if (v.any { it == '\r' || it == '\n' }) continue
-            b.set(name, v)
+            put(name, v)
         }
         return b.build()
     }
@@ -191,8 +196,11 @@ class HttpDownloadEngine : DownloadEngine {
         startUrl: HttpUrl, range: String?, ifRange: String?,
     ): Pair<Response, HttpUrl> {
         var url = startUrl
+        // credentials belong to the address the user gave, not to the start of this request: the ranged requests
+        // start at the final address of the probe (often a CDN), and mirrors are other hosts
+        val origin = task.url.toHttpUrlOrNull() ?: startUrl
         repeat(11) {
-            val sameOrigin = url.host == startUrl.host
+            val sameOrigin = HttpRanges.mayForwardCredentials(origin.host, origin.isHttps, url.host, url.isHttps)
             val rb = Request.Builder().url(url).headers(headersFor(task, s, sameOrigin))
             if (range != null) {
                 rb.header("Range", range)
@@ -251,6 +259,14 @@ class HttpDownloadEngine : DownloadEngine {
     private suspend fun run(session: EngineSession, forceRestart: Boolean) {
         val settings = session.settings
         val client = buildClient(settings)
+        try {
+            runWith(client, session, settings, forceRestart)
+        } finally {
+            client.connectionPool.evictAll()
+        }
+    }
+
+    private suspend fun runWith(client: OkHttpClient, session: EngineSession, settings: DownloadSettingsValues, forceRestart: Boolean) {
         var t = session.update { it.copy(state = DownloadState.Connecting, error = null, errorKind = ErrorKind.None, speedBps = 0) }
 
         var probe: Probe? = null
@@ -291,7 +307,9 @@ class HttpDownloadEngine : DownloadEngine {
         }
 
         val connections = if (p.ranges) SegmentPlanner.clampConnections(if (t.connections > 0) t.connections else settings.connections) else 1
-        val segments: List<SegmentState> = if (restart || t.segments.isEmpty()) SegmentPlanner.plan(p.total, if (p.ranges) connections else 1) else t.segments
+        // nothing valid to continue from: the file is written from the start (and cut to size)
+        val fresh = restart || t.segments.isEmpty()
+        val segments: List<SegmentState> = if (fresh) SegmentPlanner.plan(p.total, if (p.ranges) connections else 1) else t.segments
         t = session.update {
             it.copy(
                 name = finalName, category = category, totalBytes = p.total, etag = p.etag, lastModified = p.lastModified,
@@ -302,6 +320,7 @@ class HttpDownloadEngine : DownloadEngine {
         }
 
         if (p.total == 0L) {
+            if (restart) runCatching { session.files.openSink(fileUri).use { it.truncate(0) } }
             session.files.finish(fileUri)
             session.update { it.copy(segments = emptyList(), downloadedBytes = 0) }
             return
@@ -310,7 +329,7 @@ class HttpDownloadEngine : DownloadEngine {
         val sink = session.files.openSink(fileUri)
         val plan = Plan(segments)
         try {
-            if (restart) sink.truncate(0)
+            if (fresh) sink.truncate(0)
             val taskLimiter = RateLimiter().also { it.bytesPerSecond = t.speedLimitBps }
             val ctx = Ctx(
                 client, t, settings, p.finalUrl, p.ranges, p.etag, p.lastModified, p.total, sink, plan,
@@ -319,12 +338,16 @@ class HttpDownloadEngine : DownloadEngine {
             download(ctx, session, connections)
         } finally {
             withContext(NonCancellable) {
-                runCatching { sink.sync() }
-                val snap = plan.snapshot()
-                val done = SegmentPlanner.downloadedTotal(snap)
-                session.progress(done, 0, snap)
-                session.update { it.copy(segments = snap, downloadedBytes = done, speedBps = 0) }
-                runCatching { sink.close() }
+                try {
+                    runCatching { sink.sync() }
+                    val snap = plan.snapshot()
+                    val done = SegmentPlanner.downloadedTotal(snap)
+                    session.progress(done, 0, snap)
+                    session.update { it.copy(segments = snap, downloadedBytes = done, speedBps = 0) }
+                } finally {
+                    // also when the task is gone (update throws): the file must not stay open
+                    runCatching { sink.close() }
+                }
             }
         }
 
@@ -345,11 +368,15 @@ class HttpDownloadEngine : DownloadEngine {
         val uri = task.fileUri ?: return
         session.update { it.copy(state = DownloadState.Verifying) }
         val actual = withContext(Dispatchers.IO) {
+            val job = currentCoroutineContext()[kotlinx.coroutines.Job]
             val input = session.files.openInput(uri)
                 ?: throw DownloadException(ErrorKind.Storage, "Can not read the file to verify it", false)
-            input.use { Checksums.compute(expected.algorithm, it) }
+            // a pause must not wait for the end of a big file
+            input.use { Checksums.compute(expected.algorithm, it) { job?.ensureActive() } }
         }
         if (actual != expected.hex) {
+            // the data is wrong: a retry has to download it again, not verify the same bytes
+            session.update { it.copy(segments = emptyList(), downloadedBytes = 0, etag = null, lastModified = null) }
             throw DownloadException(ErrorKind.Checksum, "Checksum differs (${expected.algorithm}: expected ${expected.hex}, got $actual)", false)
         }
     }

@@ -12,6 +12,7 @@ import de.mm20.launcher2.ui.media.photos.PhotoViewerActivity
 import de.mm20.launcher2.ui.media.video.PlayerChoice
 import de.mm20.launcher2.ui.media.video.VideoPlayerActivity
 import java.io.File
+import de.mm20.launcher2.comms.media.windowAround
 
 /** Opening, sharing and handing out files. */
 internal object FileActions {
@@ -44,9 +45,10 @@ internal object FileActions {
 
     /** Plays a video on a network storage straight from there, the videos next to it form the playlist */
     fun playRemoteVideo(context: Context, entry: FsEntry, siblings: List<FsEntry>) {
-        val videos = siblings.filter { it.kind == FileKind.Video && !it.isDir && RemotePath.isRemote(it.path) }
-        val index = videos.indexOfFirst { it.path == entry.path }
-        if (index < 0) return
+        val allVideos = siblings.filter { it.kind == FileKind.Video && !it.isDir && RemotePath.isRemote(it.path) }
+        val chosen = allVideos.indexOfFirst { it.path == entry.path }
+        if (chosen < 0) return
+        val (videos, index) = allVideos.windowAround(chosen)
         context.startActivity(
             Intent(context, PlayerChoice.playerClass(context))
                 .putStringArrayListExtra(VideoPlayerActivity.EXTRA_URIS, ArrayList(videos.map { de.mm20.launcher2.ui.media.video.RemoteVideo.uriOf(it.path).toString() }))
@@ -59,26 +61,36 @@ internal object FileActions {
         val toast = { text: String -> Toast.makeText(context, text, Toast.LENGTH_SHORT).show() }
         when (entry.kind) {
             FileKind.Image -> {
-                val images = siblings.filter { it.kind == FileKind.Image && !it.isDir }
-                val uris = images.mapNotNull { uriFor(context, it.path, rootMode)?.toString() }
-                val index = images.indexOfFirst { it.path == entry.path }
-                if (uris.isEmpty() || index < 0) { toast("Cannot open this picture"); return }
+                val allImages = siblings.filter { it.kind == FileKind.Image && !it.isDir }
+                val chosen = allImages.indexOfFirst { it.path == entry.path }
+                if (chosen < 0) { toast("Cannot open this picture"); return }
+                // only the pictures around the chosen one go along (Intent size limit), and only those are made readable
+                val (images, index) = allImages.windowAround(chosen)
+                // a picture that cannot be handed out is left out, the chosen one has to stay at its place
+                val readable = images.mapIndexedNotNull { i, e -> uriFor(context, e.path, rootMode)?.toString()?.let { i to it } }
+                val uris = readable.map { it.second }
+                val shownIndex = readable.indexOfFirst { it.first == index }
+                if (shownIndex < 0) { toast("Cannot open this picture"); return }
                 context.startActivity(
                     Intent(context, PhotoViewerActivity::class.java)
                         .putStringArrayListExtra(PhotoViewerActivity.EXTRA_URIS, ArrayList(uris))
-                        .putExtra(PhotoViewerActivity.EXTRA_INDEX, index)
+                        .putExtra(PhotoViewerActivity.EXTRA_INDEX, shownIndex)
                 )
             }
             FileKind.Video -> {
-                val videos = siblings.filter { it.kind == FileKind.Video && !it.isDir }
-                val uris = videos.mapNotNull { uriFor(context, it.path, rootMode)?.toString() }
-                val index = videos.indexOfFirst { it.path == entry.path }
-                if (uris.isEmpty() || index < 0) { toast("Cannot open this video"); return }
+                val allVideos = siblings.filter { it.kind == FileKind.Video && !it.isDir }
+                val chosen = allVideos.indexOfFirst { it.path == entry.path }
+                if (chosen < 0) { toast("Cannot open this video"); return }
+                val (videos, index) = allVideos.windowAround(chosen)
+                val readable = videos.mapIndexedNotNull { i, e -> uriFor(context, e.path, rootMode)?.toString()?.let { i to it } }
+                val uris = readable.map { it.second }
+                val shownIndex = readable.indexOfFirst { it.first == index }
+                if (shownIndex < 0) { toast("Cannot open this video"); return }
                 context.startActivity(
                     Intent(context, PlayerChoice.playerClass(context))
                         .putStringArrayListExtra(VideoPlayerActivity.EXTRA_URIS, ArrayList(uris))
-                        .putStringArrayListExtra(VideoPlayerActivity.EXTRA_TITLES, ArrayList(videos.map { it.name.substringBeforeLast('.') }))
-                        .putExtra(VideoPlayerActivity.EXTRA_INDEX, index)
+                        .putStringArrayListExtra(VideoPlayerActivity.EXTRA_TITLES, ArrayList(readable.map { videos[it.first].name.substringBeforeLast('.') }))
+                        .putExtra(VideoPlayerActivity.EXTRA_INDEX, shownIndex)
                 )
             }
             else -> {

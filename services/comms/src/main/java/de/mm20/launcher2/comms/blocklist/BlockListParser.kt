@@ -19,6 +19,22 @@ object BlockListParser {
         return out
     }
 
+    /**
+     * Like [parseDomains] but keeps only the 64 bit hashes (see [DomainSet]) instead of one String per
+     * domain: lists with a million entries need ~8 MB instead of 100+ MB of heap.
+     */
+    fun parseDomainHashes(reader: BufferedReader, maxEntries: Int = 2_000_000): LongArray {
+        var out = LongArray(4096)
+        var n = 0
+        while (n < maxEntries) {
+            val line = reader.readLine() ?: break
+            val d = parseDomainLine(line) ?: continue
+            if (n == out.size) out = out.copyOf(n * 2)
+            out[n++] = DomainSet.hash(d)
+        }
+        return out.copyOf(n)
+    }
+
     fun parseDomainLine(raw: String): String? {
         var line = raw.trim().trimStart('﻿')
         if (line.isEmpty()) return null

@@ -99,6 +99,7 @@ object TelosCallSession {
         _ui.value = _ui.value.copy(
             speaker = route == CallAudioState.ROUTE_SPEAKER,
             bluetooth = route == CallAudioState.ROUTE_BLUETOOTH,
+            muted = audioState.isMuted,
         )
     }
 

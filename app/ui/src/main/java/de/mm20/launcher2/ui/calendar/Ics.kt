@@ -41,8 +41,18 @@ object Ics {
 
     private fun fold(line: String): String {
         if (line.length <= 73) return line
-        val sb = StringBuilder(line.substring(0, 73)); var i = 73
-        while (i < line.length) { sb.append("\r\n ").append(line, i, minOf(i + 72, line.length)); i += 72 }
+        val sb = StringBuilder()
+        var i = 0
+        var max = 73
+        while (i < line.length) {
+            var end = minOf(i + max, line.length)
+            // never cut a surrogate pair (emoji) in two
+            if (end < line.length && Character.isHighSurrogate(line[end - 1])) end--
+            if (i > 0) sb.append("\r\n ")
+            sb.append(line, i, end)
+            i = end
+            max = 72
+        }
         return sb.toString()
     }
 
@@ -55,7 +65,12 @@ object Ics {
             line("BEGIN:VEVENT")
             line("UID:${e.start}-$i-${e.title.hashCode()}@telos")
             line("DTSTAMP:$stamp")
-            if (e.allDay) { line("DTSTART;VALUE=DATE:${date.format(Instant.ofEpochMilli(e.start))}"); line("DTEND;VALUE=DATE:${date.format(Instant.ofEpochMilli(e.end))}") }
+            if (!e.allDay && !e.rrule.isNullOrBlank()) {
+                // A repeating event keeps its wall clock time across daylight saving changes only with a time zone
+                val z = ZoneId.systemDefault()
+                val local = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss").withZone(z)
+                line("DTSTART;TZID=${z.id}:${local.format(Instant.ofEpochMilli(e.start))}"); line("DTEND;TZID=${z.id}:${local.format(Instant.ofEpochMilli(e.end))}")
+            } else if (e.allDay) { line("DTSTART;VALUE=DATE:${date.format(Instant.ofEpochMilli(e.start))}"); line("DTEND;VALUE=DATE:${date.format(Instant.ofEpochMilli(e.end))}") }
             else { line("DTSTART:${utc.format(Instant.ofEpochMilli(e.start))}"); line("DTEND:${utc.format(Instant.ofEpochMilli(e.end))}") }
             line("SUMMARY:${esc(e.title)}")
             if (e.description.isNotEmpty()) line("DESCRIPTION:${esc(e.description)}")
@@ -63,7 +78,11 @@ object Ics {
             e.rrule?.let { line("RRULE:$it") }
             if (e.rrule != null && e.exdates.isNotEmpty()) {
                 if (e.allDay) line("EXDATE;VALUE=DATE:${e.exdates.joinToString(",") { date.format(Instant.ofEpochMilli(it)) }}")
-                else line("EXDATE:${e.exdates.joinToString(",") { utc.format(Instant.ofEpochMilli(it)) }}")
+                else {
+                    val z = ZoneId.systemDefault()
+                    val local = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss").withZone(z)
+                    line("EXDATE;TZID=${z.id}:${e.exdates.joinToString(",") { local.format(Instant.ofEpochMilli(it)) }}")
+                }
             }
             for (m in e.reminders.distinct().filter { it >= 0 }) {
                 line("BEGIN:VALARM"); line("ACTION:DISPLAY"); line("DESCRIPTION:Reminder"); line("TRIGGER:-PT${m}M"); line("END:VALARM")

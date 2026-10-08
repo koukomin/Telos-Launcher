@@ -56,6 +56,7 @@ class GlobalActionsService(private val context: Context) {
             callback(null)
             return
         }
+        try {
         service.takeScreenshot(
             android.view.Display.DEFAULT_DISPLAY,
             context.mainExecutor,
@@ -63,9 +64,12 @@ class GlobalActionsService(private val context: Context) {
                 override fun onSuccess(screenshot: AccessibilityService.ScreenshotResult) {
                     val buffer = screenshot.hardwareBuffer
                     val bitmap = try {
-                        android.graphics.Bitmap.wrapHardwareBuffer(buffer, screenshot.colorSpace)
-                            ?.copy(android.graphics.Bitmap.Config.ARGB_8888, false)
+                        val hardware = android.graphics.Bitmap.wrapHardwareBuffer(buffer, screenshot.colorSpace)
+                        // the software copy is the one that is kept, the hardware bitmap holds GPU memory
+                        hardware?.copy(android.graphics.Bitmap.Config.ARGB_8888, false).also { hardware?.recycle() }
                     } catch (e: Exception) {
+                        null
+                    } catch (e: OutOfMemoryError) {
                         null
                     } finally {
                         buffer.close()
@@ -78,6 +82,10 @@ class GlobalActionsService(private val context: Context) {
                 }
             },
         )
+        } catch (e: Exception) {
+            // e.g. the service has lost its screenshot capability: the caller must not wait for a callback that never comes
+            callback(null)
+        }
     }
 
     /** True if the accessibility service is running, which Telos Screenshot needs */

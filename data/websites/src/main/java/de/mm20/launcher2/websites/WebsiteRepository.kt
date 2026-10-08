@@ -47,7 +47,8 @@ internal class WebsiteRepository(
         if (!allowNetwork) return flowOf(persistentListOf())
         return settings.enabled.transformLatest { enabled ->
             emit(persistentListOf())
-            if (!enabled || query.isBlank()) return@transformLatest
+            // A URL never contains whitespace; URLUtil.isValidUrl only checks the scheme, so skip pointless requests
+            if (!enabled || query.isBlank() || query.any { it.isWhitespace() }) return@transformLatest
 
             val website = queryWebsite(query)
             website?.let {

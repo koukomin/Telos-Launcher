@@ -147,7 +147,7 @@ private fun CalendarContent(vm: CalendarViewModel) {
     val importer = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
         if (uri != null) vm.io {
             val target = writable.firstOrNull { it.visible }?.id ?: writable.firstOrNull()?.id ?: vm.repo.createLocalCalendar("Telos", 0xFF1E88E5.toInt())
-            val t = context.contentResolver.openInputStream(uri)?.use { it.readBytes().toString(Charsets.UTF_8) }.orEmpty()
+            val t = context.contentResolver.openInputStream(uri)?.use { de.mm20.launcher2.ui.notes.NotesImport.readLimited(it, 32 * 1024 * 1024)?.toString(Charsets.UTF_8) }.orEmpty()
             vm.message.value = "imported:${vm.repo.importEvents(target, Ics.read(t))}"
         }
     }

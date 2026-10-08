@@ -28,6 +28,8 @@ class AppShortcutBadgeProvider(
                             componentName
                         )
                     } catch (e: PackageManager.NameNotFoundException) {
+                        // combine() never emits if one of the flows completes without a value
+                        send(null)
                         return@withContext
                     }
                     val badge = MutableBadge(icon = BadgeIcon(BadgeDrawable(context, icon)))
@@ -40,6 +42,8 @@ class AppShortcutBadgeProvider(
                             packageName
                         )
                     } catch (e: PackageManager.NameNotFoundException) {
+                        // combine() never emits if one of the flows completes without a value
+                        send(null)
                         return@withContext
                     }
                     val badge = MutableBadge(icon = BadgeIcon(BadgeDrawable(context, icon)))

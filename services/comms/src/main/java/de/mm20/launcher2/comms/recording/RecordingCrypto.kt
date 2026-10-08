@@ -48,6 +48,7 @@ object RecordingCrypto {
     }.getOrDefault(false)
 
     /** Replaces [file] with its encrypted version. Returns false when that did not work. */
+    @Synchronized
     fun encryptInPlace(file: File): Boolean = runCatching {
         if (!file.exists() || isEncrypted(file)) return true
         val cipher = Cipher.getInstance("AES/GCM/NoPadding")

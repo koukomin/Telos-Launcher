@@ -30,13 +30,12 @@ class TelosCallScreeningService : CallScreeningService(), KoinComponent {
         val handle: Uri? = callDetails.handle
         val phoneNumber = handle?.schemeSpecificPart ?: ""
         
-        Log.i("TelosCallScreening", "Screening call from: $phoneNumber")
-
         val presentation = callDetails.handlePresentation
         scope.launch {
-            val block = shouldBlock(phoneNumber, presentation)
+            // a failing lookup must never leave the call without an answer
+            val block = runCatching { shouldBlock(phoneNumber, presentation) }.getOrDefault(false)
             if (block) {
-                Log.i("TelosCallScreening", "Silently rejecting call from $phoneNumber")
+                Log.i("TelosCallScreening", "Silently rejecting a call")
                 val response = CallResponse.Builder()
                     .setDisallowCall(true)
                     .setRejectCall(true)
@@ -45,7 +44,6 @@ class TelosCallScreeningService : CallScreeningService(), KoinComponent {
                     .build()
                 respondToCall(callDetails, response)
             } else {
-                Log.i("TelosCallScreening", "Allowing call from $phoneNumber")
                 val response = CallResponse.Builder()
                     .setDisallowCall(false)
                     .setRejectCall(false)

@@ -16,7 +16,13 @@ object GreekFold {
     fun hasGreek(text: String): Boolean = text.any { it in 'Ͱ'..'Ͽ' || it in 'ἀ'..'῿' }
 
     /** Lower case, no accents, final sigma as sigma. Greek stays Greek. */
-    fun stripAccents(text: String): String =
+    fun stripAccents(text: String): String {
+        // Fast path (most text): plain ASCII has nothing to decompose and no final sigma
+        if (text.all { it.code < 0x80 }) return text.lowercase()
+        return stripAccentsSlow(text)
+    }
+
+    private fun stripAccentsSlow(text: String): String =
         COMBINING.replace(Normalizer.normalize(text, Normalizer.Form.NFD), "").lowercase().replace('ς', 'σ')
 
     /** Greek letters to Latin letters, by sound. Everything else is kept. The input has to be lower case and without accents. */

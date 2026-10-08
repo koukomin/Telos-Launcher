@@ -914,7 +914,7 @@ sealed interface GestureAction {
     /** Opens one of the built-in Telos apps (Phone, Messages, Notes, Calendar, ...) with the virtual app [key] */
     @Serializable
     @SerialName("telos_app")
-    data class TelosApp(val key: String) : GestureAction
+    data class TelosApp(val key: String = "") : GestureAction
 
     /**
      * Shows one of the built-in Telos apps as a page inside the launcher (reached with the gesture)
@@ -922,7 +922,7 @@ sealed interface GestureAction {
      */
     @Serializable
     @SerialName("telos_page")
-    data class TelosPage(val key: String) : GestureAction
+    data class TelosPage(val key: String = "") : GestureAction
 
     @Serializable
     @SerialName("launcher_settings")
