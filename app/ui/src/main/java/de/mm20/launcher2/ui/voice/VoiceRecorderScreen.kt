@@ -78,6 +78,8 @@ import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.comms.recording.CallAudioRecorder
 import de.mm20.launcher2.comms.recording.RecordingCrypto
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.SearchEmptyState
+import de.mm20.launcher2.ui.component.TelosSearchTopBar
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreferenceItem
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -211,7 +213,7 @@ fun VoiceRecorderScreen() {
 
     val items by produceItems(context, reload, recorder.status)
     val shown = remember(items, tab, query) {
-        items.filter { (tab == 0 || it.isCall) && (query.isBlank() || GreekFold.contains(it.title, query.trim())) }
+        items.filter { (tab == 0 || it.isCall) && (query.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(query, it.title)) }
     }
 
     LaunchedEffect(player.playing) {
@@ -268,22 +270,13 @@ fun VoiceRecorderScreen() {
             Column(Modifier.fillMaxSize()) {
                 Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                     if (searching) {
-                        Row(
-                            Modifier.weight(1f).padding(start = 8.dp).clip(RoundedCornerShape(24.dp)).background(MaterialTheme.colorScheme.surfaceContainerHigh).padding(horizontal = 16.dp, vertical = 10.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Box(Modifier.weight(1f)) {
-                                if (query.isEmpty()) Text(stringResource(R.string.voice_search), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                                BasicTextField(
-                                    value = query,
-                                    onValueChange = { query = it },
-                                    singleLine = true,
-                                    textStyle = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onSurface),
-                                    cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-                                    modifier = Modifier.fillMaxWidth(),
-                                )
-                            }
-                        }
+                        TelosSearchTopBar(
+                            value = query,
+                            onValueChange = { query = it },
+                            placeholder = stringResource(R.string.tsp_search_recordings),
+                            modifier = Modifier.weight(1f).padding(start = 8.dp),
+                            autoFocus = true,
+                        )
                         IconButton(onClick = { searching = false; query = "" }) {
                             Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.close))
                         }
@@ -325,7 +318,9 @@ fun VoiceRecorderScreen() {
                     FilterChip(selected = tab == 1, onClick = { tab = 1 }, label = { Text(stringResource(R.string.voice_call_recordings)) })
                 }
                 Box(Modifier.weight(1f).fillMaxWidth()) {
-                    if (shown.isEmpty()) {
+                    if (shown.isEmpty() && query.isNotBlank()) {
+                        SearchEmptyState(query)
+                    } else if (shown.isEmpty()) {
                         EmptyState()
                     } else {
                         LazyColumn(Modifier.fillMaxSize()) {

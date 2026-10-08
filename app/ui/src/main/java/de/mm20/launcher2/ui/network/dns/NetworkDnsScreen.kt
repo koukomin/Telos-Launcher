@@ -61,6 +61,7 @@ fun NetworkDnsScreen() {
     val selected by vm.selected.collectAsStateWithLifecycle()
     val engineState by vm.engineState.collectAsStateWithLifecycle()
 
+    var dnsQuery by remember { mutableStateOf("") }
     var filter by remember { mutableStateOf<DnsTag?>(null) }
     var details by remember { mutableStateOf<DnsServer?>(null) }
     var form by remember { mutableStateOf<DnsServer?>(null) }
@@ -75,6 +76,7 @@ fun NetworkDnsScreen() {
 
     val activeFilter = filter
     val visible = servers.filter { it.kind == DnsKind.System || !it.builtIn || activeFilter == null || it.tags.contains(activeFilter) }
+        .filter { dnsQuery.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(dnsQuery, it.name, it.provider, it.url, it.description, it.relay, *it.tags.map { t -> t.name }.toTypedArray(), *it.tags.map { t -> tagText(t) }.toTypedArray()) }
     val systemServer = visible.filter { it.kind == DnsKind.System }
     val custom = visible.filter { !it.builtIn }
     val groups = DnsTag.values().map { tag ->
@@ -90,6 +92,12 @@ fun NetworkDnsScreen() {
                     icon = { Icon(painterResource(IconsNetworkDnsScreen.info_24px), contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
                 )
             }
+        }
+        item {
+            de.mm20.launcher2.ui.component.TelosSearchBar(dnsQuery, { dnsQuery = it }, stringResource(R.string.hc_search), Modifier.padding(horizontal = 0.dp))
+        }
+        if (dnsQuery.isNotBlank() && visible.isEmpty()) {
+            item { de.mm20.launcher2.ui.component.SearchEmptyState(dnsQuery.trim()) }
         }
         item {
             Row(

@@ -104,18 +104,24 @@ fun NetworkLogsScreen() {
     val summaries by logs.appSummaries.collectAsState()
 
     val filter = LogFilter(
-        query = query.ifBlank { null },
+        query = null,
         appId = appFilter,
         blocked = when (blockedFilter) { 1 -> true; 2 -> false; else -> null },
-        limit = 500,
+        limit = if (query.isBlank()) 500 else 5000,
     )
-    val connections by remember(query, appFilter, blockedFilter) { logs.connections(filter) }.collectAsState(emptyList())
-    val dnsEntries by remember(query, appFilter, blockedFilter) { logs.dns(filter) }.collectAsState(emptyList())
+    val connectionsRaw by remember(query.isBlank(), appFilter, blockedFilter) { logs.connections(filter) }.collectAsState(emptyList())
+    val dnsRaw by remember(query.isBlank(), appFilter, blockedFilter) { logs.dns(filter) }.collectAsState(emptyList())
+    val connections = if (query.isBlank()) connectionsRaw else connectionsRaw.filter {
+        de.mm20.launcher2.comms.search.TelosSearch.matches(query, it.domain, it.destIp, directory.labelFor(it.uid))
+    }.take(500)
+    val dnsEntries = if (query.isBlank()) dnsRaw else dnsRaw.filter {
+        de.mm20.launcher2.comms.search.TelosSearch.matches(query, it.domain, directory.labelFor(it.uid), it.server, *it.answers.toTypedArray())
+    }.take(500)
 
     val exporter = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/csv")) { uri ->
         if (uri != null) {
             scope.launch {
-                val text = logs.exportCsv(exportDns, filter.copy(limit = Int.MAX_VALUE))
+                val text = logs.exportCsv(exportDns, filter.copy(query = query.ifBlank { null }, limit = Int.MAX_VALUE))
                 withContext(Dispatchers.IO) {
                     try {
                         context.contentResolver.openOutputStream(uri)?.use { it.write(text.toByteArray()) }
@@ -200,18 +206,11 @@ fun NetworkLogsScreen() {
                 )
             }
         }
-        if (tab != TAB_APPS) {
+        run {
             item {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(
-                        value = query,
-                        onValueChange = { query = it },
-                        singleLine = true,
-                        label = { Text(stringResource(R.string.netfw_l_search)) },
-                        leadingIcon = { Icon(painterResource(IconsNetworkLogsScreen.search_24px), contentDescription = null) },
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                    Row(
+                    de.mm20.launcher2.ui.component.TelosSearchBar(query, { query = it }, stringResource(R.string.netfw_l_search))
+                    if (tab != TAB_APPS) Row(
                         modifier = Modifier.horizontalScroll(rememberScrollState()),
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
@@ -232,7 +231,7 @@ fun NetworkLogsScreen() {
         }
         when (tab) {
             TAB_CONNECTIONS -> {
-                if (connections.isEmpty()) item { EmptyLog() }
+                if (connections.isEmpty()) item { EmptyLog(query) }
                 items(connections.size, key = { connections[it].id }) { i ->
                     val e = connections[i]
                     val blocked = e.verdict == Verdict.Block
@@ -251,7 +250,7 @@ fun NetworkLogsScreen() {
                 }
             }
             TAB_DNS -> {
-                if (dnsEntries.isEmpty()) item { EmptyLog() }
+                if (dnsEntries.isEmpty()) item { EmptyLog(query) }
                 items(dnsEntries.size, key = { dnsEntries[it].id }) { i ->
                     val e = dnsEntries[i]
                     Preference(
@@ -270,9 +269,10 @@ fun NetworkLogsScreen() {
                 }
             }
             else -> {
-                if (summaries.isEmpty()) item { EmptyLog() }
-                items(summaries.size, key = { summaries[it].appId }) { i ->
-                    val s = summaries[i]
+                val appSummaries = if (query.isBlank()) summaries else summaries.filter { de.mm20.launcher2.comms.search.TelosSearch.matches(query, directory.labelFor(it.appId)) }
+                if (appSummaries.isEmpty()) item { EmptyLog(query) }
+                items(appSummaries.size, key = { appSummaries[it].appId }) { i ->
+                    val s = appSummaries[i]
                     Preference(
                         title = { Text(directory.labelFor(s.appId)) },
                         summary = {
@@ -330,7 +330,8 @@ fun NetworkLogsScreen() {
 }
 
 @Composable
-private fun EmptyLog() {
+private fun EmptyLog(query: String = "") {
+    if (query.isNotBlank()) { de.mm20.launcher2.ui.component.SearchEmptyState(query.trim()); return }
     Text(
         stringResource(R.string.netfw_l_empty),
         color = MaterialTheme.colorScheme.onSurfaceVariant,

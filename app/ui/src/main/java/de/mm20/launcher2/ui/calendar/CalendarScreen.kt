@@ -39,6 +39,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.SearchEmptyState
+import de.mm20.launcher2.ui.component.TelosSearchBar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -160,6 +162,23 @@ private fun CalendarContent(vm: CalendarViewModel) {
 
     BackHandler(enabled = draft != null) { draft = null }
 
+    var searching by rememberSaveable { mutableStateOf(false) }
+    var calQuery by rememberSaveable { mutableStateOf("") }
+    var searchPool by remember { mutableStateOf<List<CalEvent>>(emptyList()) }
+    LaunchedEffect(searching, calendars) {
+        if (searching) searchPool = withContext(Dispatchers.IO) {
+            try { vm.repo.events(LocalDate.now().minusYears(1), LocalDate.now().plusYears(1), calendars) } catch (e: SecurityException) { emptyList() }
+        }
+    }
+    BackHandler(enabled = searching && draft == null) { searching = false; calQuery = "" }
+    fun openEvent(ev: CalEvent) {
+        val zone = ZoneId.systemDefault()
+        val s = if (ev.allDay) LocalDateTime.ofInstant(Instant.ofEpochMilli(ev.begin), ZoneOffset.UTC) else LocalDateTime.ofInstant(Instant.ofEpochMilli(ev.begin), zone)
+        val en = if (ev.allDay) LocalDateTime.ofInstant(Instant.ofEpochMilli(ev.end - 1), ZoneOffset.UTC) else LocalDateTime.ofInstant(Instant.ofEpochMilli(ev.end), zone)
+        draft = Draft(ev.id, ev.calendarId, ev.title, ev.description, ev.location, s, maxOf(en, s), ev.allDay,
+            repeatIndex(ev.rrule), vm.repo.reminderOf(ev.id), ev.rrule, ev.begin)
+    }
+
     val e = draft
     if (e != null) {
         EventEditor(e, writable, calendars, onChange = { draft = it }, onDismiss = { draft = null },
@@ -200,6 +219,9 @@ private fun CalendarContent(vm: CalendarViewModel) {
                     modifier = Modifier.weight(1f), textAlign = TextAlign.Center)
                 IconButton(onClick = { vm.go(month.plusMonths(1)) }) { Icon(painterResource(R.drawable.chevron_forward_24px), stringResource(R.string.cal_next)) }
                 IconButton(onClick = { vm.selected.value = LocalDate.now(); vm.go(YearMonth.now()) }) { Icon(painterResource(R.drawable.today_24px), stringResource(R.string.cal_today)) }
+                IconButton(onClick = { searching = !searching; if (!searching) calQuery = "" }) {
+                    Icon(painterResource(if (searching) R.drawable.close_24px else R.drawable.search_24px), stringResource(R.string.ts_search))
+                }
                 Box {
                     IconButton(onClick = { menu = true }) { Icon(painterResource(R.drawable.more_vert_24px), null) }
                     DropdownMenu(menu, { menu = false }) {
@@ -214,6 +236,22 @@ private fun CalendarContent(vm: CalendarViewModel) {
                         DropdownMenuItem(text = { Text(stringResource(R.string.cal_export)) }, onClick = { menu = false; exporter.launch("telos-calendar.ics") })
                     }
                 }
+            }
+            if (searching) {
+                TelosSearchBar(calQuery, { calQuery = it }, stringResource(R.string.tsp_search_events), autoFocus = true)
+                val results = remember(searchPool, calQuery) {
+                    if (calQuery.isBlank()) emptyList() else de.mm20.launcher2.comms.search.TelosSearch
+                        .filter(searchPool, calQuery) { listOf(it.title, it.location, it.description) }
+                        .sortedBy { it.begin }
+                }
+                if (calQuery.isNotBlank() && results.isEmpty()) SearchEmptyState(calQuery)
+                LazyColumn(contentPadding = PaddingValues(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    items(results, key = { "s${it.id}-${it.begin}" }) { ev ->
+                        Text(ev.firstDay.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
+                        EventRow(ev, writable.any { it.id == ev.calendarId }) { openEvent(ev) }
+                    }
+                }
+                return@Scaffold
             }
             if (agenda) {
                 val byDay = remember(upcoming) {
@@ -243,13 +281,7 @@ private fun CalendarContent(vm: CalendarViewModel) {
                 Text(stringResource(R.string.cal_no_events), Modifier.padding(16.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
             } else LazyColumn(contentPadding = PaddingValues(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 items(dayEvents, key = { "${it.id}-${it.begin}" }) { ev ->
-                    EventRow(ev, writable.any { it.id == ev.calendarId }) {
-                        val zone = ZoneId.systemDefault()
-                        val s = if (ev.allDay) LocalDateTime.ofInstant(Instant.ofEpochMilli(ev.begin), ZoneOffset.UTC) else LocalDateTime.ofInstant(Instant.ofEpochMilli(ev.begin), zone)
-                        val en = if (ev.allDay) LocalDateTime.ofInstant(Instant.ofEpochMilli(ev.end - 1), ZoneOffset.UTC) else LocalDateTime.ofInstant(Instant.ofEpochMilli(ev.end), zone)
-                        draft = Draft(ev.id, ev.calendarId, ev.title, ev.description, ev.location, s, maxOf(en, s), ev.allDay,
-                            repeatIndex(ev.rrule), vm.repo.reminderOf(ev.id), ev.rrule, ev.begin)
-                    }
+                    EventRow(ev, writable.any { it.id == ev.calendarId }) { openEvent(ev) }
                 }
             }
         }
