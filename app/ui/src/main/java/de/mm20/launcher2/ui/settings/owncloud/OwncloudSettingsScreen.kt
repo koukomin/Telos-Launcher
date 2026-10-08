@@ -80,10 +80,10 @@ fun OwncloudSettingsScreen() {
                     ) {
                         Text(
                             text = owncloudUser!!.userName.split(" ")
-                                .map { it.first() }
+                                .mapNotNull { it.firstOrNull() }
                                 .joinToString("").let {
                                     if (it.length >= 2) it.first().toString() + it.last().toString()
-                                    else it.first().toString()
+                                    else it
                                 }
                             ,
                             color = MaterialTheme.colorScheme.onSecondary,

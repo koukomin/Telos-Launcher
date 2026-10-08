@@ -7,7 +7,7 @@
     <string name="backup_group_launcher">Settings and launcher data</string>
     <string name="backup_group_launcher_summary">Settings, favorites, widgets, themes, hidden items, tags and the rest of the launcher</string>
     <string name="backup_group_notes">Notes</string>
-    <string name="backup_group_notes_summary">Your notes of Telos Notes and the settings of their sync folders</string>
+    <string name="backup_group_notes_summary">Your notes of Telos Notes</string>
     <string name="backup_group_calendar">Calendar</string>
     <string name="backup_group_calendar_summary">The events of the Telos calendar on this phone (not the calendars of your accounts, those sync by themselves)</string>
     <string name="backup_nothing_selected">Choose at least one part</string>

@@ -85,10 +85,10 @@ fun NextcloudSettingsScreen() {
                     ) {
                         Text(
                             text = nextcloudUser!!.userName.split(" ")
-                                .map { it.first() }
+                                .mapNotNull { it.firstOrNull() }
                                 .joinToString("").let {
                                     if (it.length >= 2) it.first().toString() + it.last().toString()
-                                    else it.first().toString()
+                                    else it
                                 },
                             color = MaterialTheme.colorScheme.onSecondary,
                             style = MaterialTheme.typography.headlineMedium,
