@@ -4,14 +4,16 @@ A photo gallery, a metadata (EXIF) tool, a simple photo editor and a document vi
 
 ::: tip At a glance
 Gallery by date and by folder, full screen viewer with pinch zoom, EXIF viewer and editor, removal of location,
-sharing without metadata, a non-destructive editor, and a viewer for PDF, text, Office, OpenDocument, RTF and EPUB
-files.
+sharing without metadata, a non-destructive editor, and a viewer and editor for PDF, text, Office, OpenDocument, RTF and EPUB
+files, with 20 PDF tools.
 :::
 
 ::: info This section
 - This page: what it is, permissions, the gallery, entry points, privacy and the feature matrix.
 - [Viewer, metadata and editor](./viewer-editor): the picture viewer, EXIF tools and the editor.
 - [Document viewer](./documents): PDF, text, Office, OpenDocument, RTF and EPUB.
+- [Office editing and PDF search](./office-editing): editing and saving documents, old Office files, search in a PDF.
+- [PDF tools](./pdf-tools): 20 on-device PDF tools.
 :::
 
 ## What it is
@@ -98,7 +100,10 @@ Telos Photos has **no settings page of its own**. Its behavior depends on the sy
 | Remove location, remove all metadata | Details | Changes the original file |
 | Share without metadata | Details | Makes a JPEG copy |
 | Editor with rotate, flip, crop ratio, adjustments, filters | Edit | Saves a copy in `Pictures/Telos` |
-| Document viewer | Open with | PDF, text, Office, OpenDocument, RTF, EPUB |
+| Document viewer and editor | Open with | PDF, text, Office, OpenDocument, RTF, EPUB; Office and text are editable |
+| Search in a PDF | Document viewer | Greek, accents and Greeklish, see [Office editing and PDF search](./office-editing) |
+| PDF tools | Document viewer | 20 tools, see [PDF tools](./pdf-tools) |
+| Search the gallery | Photos tab | By file name, folder and date, see [Search in the apps](../search-in-apps) |
 | Cloud albums, face recognition, slideshows | | Not available |
 
 ## Supported formats
@@ -109,12 +114,13 @@ Telos Photos has **no settings page of its own**. Its behavior depends on the sy
 | EXIF editing | Formats that Android's EXIF interface can write, mainly JPEG. Others show an error |
 | Editor output | JPEG |
 | Documents | PDF, plain text and code, `.docx`, `.xlsx`, `.pptx`, `.odt`, `.ods`, `.odp`, RTF, EPUB |
-| Not supported | `.doc`, `.xls`, `.ppt`, encrypted or password-protected files |
+| Read-only | `.doc`, `.xls`, `.ppt` (can be converted to `.docx`, `.xlsx`, `.pptx`) |
+| Not supported | Encrypted or password-protected Office files |
 
 ## Limitations
 
-- Office and OpenDocument files are text extraction only, with no layout.
-- No search inside documents, and no annotations on PDFs.
+- Office and OpenDocument files are shown with structure but without page layout or fonts.
+- Search works inside an open PDF only, and there are no annotations on PDFs.
 - No cloud albums, face recognition, slideshows, favorites or sorting options.
 - The editor always saves JPEG copies and has no free crop tool, only the listed crop ratios.
 - Metadata removal cleans the known EXIF fields. It does not guarantee that every kind of embedded data is gone.

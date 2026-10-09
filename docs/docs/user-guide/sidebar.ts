@@ -65,6 +65,10 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         ],
       },
       {
+        text: 'Search in the apps',
+        link: '/docs/user-guide/telos/search-in-apps',
+      },
+      {
         text: 'Calculator',
         link: '/docs/user-guide/telos/calculator/',
       },
@@ -116,6 +120,8 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         items: [
           { text: 'Viewer and editor', link: '/docs/user-guide/telos/photos/viewer-editor' },
           { text: 'Document viewer', link: '/docs/user-guide/telos/photos/documents' },
+          { text: 'Office editing and PDF search', link: '/docs/user-guide/telos/photos/office-editing' },
+          { text: 'PDF tools', link: '/docs/user-guide/telos/photos/pdf-tools' },
         ],
       },
       {

@@ -817,12 +817,19 @@ A photo gallery, a metadata (EXIF) tool, a simple photo editor and a document vi
 
 - Rotate in 90 degree steps, horizontal flip, crop ratios (1:1, 4:3, 3:4, 16:9, 9:16, centered), brightness, contrast and saturation sliders, filters (Original, Mono, Sepia, Warm, Cool, Invert)
 
-**Document viewer**
+**Document viewer and editing**
 
-- PDF page by page with zoom, plain text and code (editable and saved back to the file, up to 2 MB), Word (.docx), Excel (.xlsx), PowerPoint (.pptx), OpenDocument (.odt, .ods, .odp), RTF and EPUB
-- Reads documents handed to it from Telos Files or other apps' "Open with", with an **Open with** button to send them to another app
+- PDF page by page with zoom, **Search in PDF** (Greek, accents and Greeklish) and **Go to page**; plain text and code (up to 2 MB, saved back to the file); Word (.docx), Excel (.xlsx), PowerPoint (.pptx) and OpenDocument (.odt, .ods, .odp) shown with their structure and **editable** (text, bold and italic, paragraphs, table cells and rows, cell values and formulas, text boxes, deleting slides); RTF and EPUB
+- Saving writes a finished file into the cache first, so a failed save never cuts the original; **Save as a copy** and **Undo last save**
+- Old `.doc`, `.xls` and `.ppt` open read-only (own OLE2 reader); **Convert to .docx/.xlsx/.pptx and edit** makes a new file
+- Reads documents handed to it from Telos Files or other apps' "Open with", with an **Open with** button
 
-**Status and limitations:** Office, OpenDocument, RTF and EPUB files are shown as extracted text and tables only: the page layout, fonts, images and formulas are not reproduced. Old binary `.doc`, `.xls` and `.ppt` files and password-protected PDFs cannot be opened. No search in documents, no annotations, no free crop, no cloud albums, no face recognition and no slideshows. The editor always saves JPEG.
+**PDF tools** (20 tools, all on the device; feature set adapted from [PaperKnife+](https://github.com/potatameister/PaperKnifePlus))
+
+- Organize: merge, split, rotate, rearrange, delete pages, bookmarks. Optimize: compress, grayscale, repair. Security: protect, unlock. Edit: watermark, page numbers, sign, metadata. Convert: images to PDF, PDF to images, extract images, PDF to text. View: preview pages, compare two PDFs
+- Results are saved to a folder you choose, can be shared or chained into another tool, and are listed in a history
+
+**Status and limitations:** Fonts, page layout and slide design are not reproduced; macros, comments, charts and tracked changes are kept in the file but not shown. Encrypted Office files cannot be opened, and old binary Office files cannot be saved (only converted). Docs: [Office editing and PDF search](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/office-editing), [PDF tools](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/pdf-tools).
 
 ### Telos Music
 
