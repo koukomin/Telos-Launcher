@@ -1230,7 +1230,7 @@ internal fun LauncherScaffold(
                         ?: config.homeComponent.drawBackground)
                     || state.currentProgress < 0.5f && config.homeComponent.drawBackground
                 ) {
-                    8.dp.toPixels().toInt()
+                    config.wallpaperBlurRadius.toPixels().toInt()
                 } else {
                     0
                 }

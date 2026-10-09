@@ -147,7 +147,7 @@ fun PluginSettingsScreen(pluginId: String) {
                     }) {
                         Icon(
                             painterResource(R.drawable.arrow_back_24px),
-                            contentDescription = "Back"
+                            contentDescription = stringResource(R.string.menu_back)
                         )
                     }
                 },
@@ -160,7 +160,7 @@ fun PluginSettingsScreen(pluginId: String) {
                         }) {
                             Icon(
                                 painterResource(R.drawable.settings_24px),
-                                contentDescription = null
+                                contentDescription = stringResource(R.string.settings)
                             )
                         }
                     }
@@ -169,7 +169,7 @@ fun PluginSettingsScreen(pluginId: String) {
                     }) {
                         Icon(
                             painterResource(R.drawable.info_24px),
-                            contentDescription = null
+                            contentDescription = stringResource(R.string.menu_app_info)
                         )
                     }
                     IconButton(onClick = {
@@ -182,7 +182,7 @@ fun PluginSettingsScreen(pluginId: String) {
                     }) {
                         Icon(
                             painterResource(R.drawable.delete_24px),
-                            contentDescription = null
+                            contentDescription = stringResource(R.string.menu_uninstall)
                         )
                     }
                 }
