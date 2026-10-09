@@ -4,14 +4,16 @@ A photo gallery, a metadata (EXIF) tool, a simple photo editor and a document vi
 
 ::: tip At a glance
 Gallery by date and by folder, full screen viewer with pinch zoom, EXIF viewer and editor, removal of location,
-sharing without metadata, a non-destructive editor, and a viewer for PDF, text, Office, OpenDocument, RTF and EPUB
-files.
+sharing without metadata, a non-destructive editor, and a viewer and editor for PDF, text, Office, OpenDocument, RTF and EPUB
+files, with 20 PDF tools.
 :::
 
 ::: info This section
 - This page: what it is, permissions, the gallery, entry points, privacy and the feature matrix.
 - [Viewer, metadata and editor](./viewer-editor): the picture viewer, EXIF tools and the editor.
 - [Document viewer](./documents): PDF, text, Office, OpenDocument, RTF and EPUB.
+- [Office editing and PDF search](./office-editing): editing and saving documents, old Office files, search in a PDF.
+- [PDF tools](./pdf-tools): 20 on-device PDF tools.
 :::
 
 ## What it is

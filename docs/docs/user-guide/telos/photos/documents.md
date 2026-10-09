@@ -1,7 +1,9 @@
 # Document viewer
 
 Telos Photos also opens documents. Android offers it for PDF, plain text and code, Office, OpenDocument, RTF and EPUB
-files. It is a **reader**: it shows text and tables, and it can edit plain text files. It is not an office suite.
+files. It shows documents with their structure and can **edit and save** text files, Word, Excel, PowerPoint and
+OpenDocument files, see [Office editing and PDF search](./office-editing). PDFs have their own set of
+[PDF tools](./pdf-tools). It is not a full office suite.
 
 ## How documents reach the viewer
 
@@ -19,22 +21,23 @@ when the sender gives a generic type.
 
 | Format | How it is shown |
 | --- | --- |
-| PDF | Page by page, pinch to zoom (1x to 4x), page counter "Page N". Password-protected PDFs cannot be opened |
+| PDF | Page by page, pinch to zoom (1x to 4x), page counter, **Search in PDF**, **Go to page**, **PDF tools**. Password-protected PDFs ask for the password in the PDF tools |
 | Plain text and code | Monospace, selectable. **Edit** and **Save** write back to the file |
-| Word (`.docx`) | Extracted headings, paragraphs and tables |
-| Excel (`.xlsx`) | Extracted cell text, one table per sheet |
-| PowerPoint (`.pptx`) | Extracted slide text |
-| OpenDocument (`.odt`, `.ods`, `.odp`) | Extracted text and tables |
+| Word (`.docx`) | Headings, paragraphs, lists, tables and pictures. Editable |
+| Excel (`.xlsx`) | One table per sheet, with formulas. Editable |
+| PowerPoint (`.pptx`) | Titles, text boxes and pictures per slide. Editable |
+| OpenDocument (`.odt`, `.ods`, `.odp`) | Like the matching Office format. Editable |
+| Old Office (`.doc`, `.xls`, `.ppt`) | Read-only, with **Convert to ... and edit** |
 | RTF | Extracted text |
 | EPUB | Extracted readable text |
 
 Recognised text and code extensions: `txt md markdown csv tsv log json xml html htm yml yaml ini conf prop
 properties kt java py js css sh c cpp h rs go toml sql gradle srt vtt ass gpx kml tex bat`.
 
-::: warning Text extraction only
-Office, OpenDocument, RTF and EPUB files are shown as **extracted text and tables**. Fonts, images, page layout,
-formulas and formatting are not reproduced, and you cannot edit them. The old binary Office formats **`.doc`, `.xls`
-and `.ppt` cannot be opened**. Use **Open with** to send the file to another app.
+::: info Layout is not reproduced
+Text, structure, tables and pictures are shown. Fonts, page layout and slide design are not reproduced. Old binary
+files (`.doc`, `.xls`, `.ppt`) are read-only; they can be converted to a new `.docx`, `.xlsx` or `.pptx` file.
+Encrypted Office files are not supported.
 :::
 
 ## The screen
@@ -42,7 +45,7 @@ and `.ppt` cannot be opened**. Use **Open with** to send the file to another app
 | Element | Behavior |
 | --- | --- |
 | Top bar | The file name and a back arrow |
-| **Edit**, **Save**, **Cancel** | Only for text files. See below |
+| **Edit**, **Save**, **Cancel** | For text and editable Office files. See [Office editing](./office-editing) |
 | **Open with** | Sends the file to another app through Android's chooser, with a read permission |
 | Content | A progress circle while loading, then the document, or a message |
 | Message line | "Saved", "Could not save", shown at the bottom for about 2.5 seconds |
@@ -74,9 +77,9 @@ text can never be written back over the original. Open long files in another app
 | --- | --- |
 | Text size | The first 2 MB, with a note when the file is longer |
 | Office blocks | At most 20,000 paragraphs, headings or table blocks of an OpenDocument file, and 3,000 rows per table |
-| PDF | Rendered with Android's own PDF renderer |
+| PDF | Rendered with Android's own PDF renderer; processed with PdfBox-Android in the PDF tools |
 | Cache | The document is copied into the app cache (`doc_view`) because a PDF needs a real file. Copies older than two hours are deleted |
-| Searching in a document | Not available |
+| Searching in a document | In a PDF (**Search in PDF**) |
 | Annotations | Not available |
 | Printing | Not available. Use **Open with** |
 | Layout of Office files | Not reproduced |
@@ -90,9 +93,9 @@ text can never be written back over the original. Open long files in another app
 
 ## Limitations
 
-- Text extraction only, no layout, no formulas, no images.
-- `.doc`, `.xls`, `.ppt`, encrypted and password-protected files cannot be opened.
-- No search, no annotations, no bookmarks.
+- No layout, fonts or slide design; macros, comments, charts and tracked changes are kept but not shown.
+- Encrypted Office files cannot be opened. Old `.doc`, `.xls` and `.ppt` are read-only.
+- No annotations in the viewer. No bookmarks (the PDF tools can edit them).
 - Large spreadsheets and documents are cut at the limits above.
 
 ## Troubleshooting
@@ -100,8 +103,8 @@ text can never be written back over the original. Open long files in another app
 | Problem | What to check |
 | --- | --- |
 | "Nothing to show in this file" | The file has no readable text. Use **Open with** |
-| PDF says it is protected | Open it in an app that supports passwords |
+| PDF says it is protected | Open the [PDF tools](./pdf-tools) and enter the password, or use Unlock |
 | A `.docx` from Files shows an archive dialog | Choose **Open with...** and pick Telos Photos |
 | "Could not save" | The sender did not allow writing. Use the **Save as** dialog |
 | A CSV looks cramped | CSV is shown as plain text, not as a table |
-| An Excel file shows only text | Formulas and formatting are not reproduced |
+| A `.doc` cannot be saved | Use **Convert to .docx and edit** |
