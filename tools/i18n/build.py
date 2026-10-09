@@ -1,5 +1,6 @@
 import sys,re,json,os
 loc=sys.argv[1]
+OUT=sys.argv[2] if len(sys.argv)>2 else 'strings_telos_translations.xml'  # pass another file name to add a batch without replacing the earlier one
 src=json.load(open(f'missing/{loc}.json'))
 import glob
 tr={}
@@ -27,5 +28,5 @@ if plr:
         pl.append('    </plurals>')
 d=os.path.join(os.path.dirname(os.path.abspath(__file__)),'..','..','core','i18n','src','main','res','values-'+loc)
 import os; os.makedirs(d, exist_ok=True)
-open(f'{d}/strings_telos_translations.xml','w').write("<?xml version='1.0' encoding='utf-8'?>\n<resources>\n"+'\n'.join(out+pl)+"\n</resources>\n")
+open(f'{d}/{OUT}','w').write("<?xml version='1.0' encoding='utf-8'?>\n<resources>\n"+'\n'.join(out+pl)+"\n</resources>\n")
 print(loc,'written',len(out),'skipped(placeholder mismatch)',bad[:10],len(bad),'missing',len(src)-len(out)-len(bad))

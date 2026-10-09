@@ -548,23 +548,24 @@ private fun load(context: Context, uri: Uri, name: String): DocState = runCatchi
             else if (DocumentTypes.isLegacyOffice(name)) DocState.Failed(context.getString(R.string.od_legacy_failed))
             else {
                 // the structure could not be read: fall back to the plain text and tables
-                val blocks = DocumentReaders.read(file, name)
+                val blocks = DocumentReaders.read(file, name, DocLabels({ context.getString(R.string.od_sheet_n, it) }, { context.getString(R.string.au_office_slide_n, it) }))
                 if (blocks.isEmpty()) DocState.Failed(context.getString(R.string.od_nothing_to_show)) else DocState.Blocks(flatten(blocks))
             }
         }
         DocumentTypes.isOffice(name) -> {
-            val blocks = DocumentReaders.read(file, name)
+            val blocks = DocumentReaders.read(file, name, DocLabels({ context.getString(R.string.od_sheet_n, it) }, { context.getString(R.string.au_office_slide_n, it) }))
             if (blocks.isEmpty()) DocState.Failed(context.getString(R.string.od_nothing_to_show))
             else DocState.Blocks(flatten(blocks))
         }
         else -> {
-            if (file.length() <= TEXT_EDIT_LIMIT) DocState.Text(file.readText(Charsets.UTF_8), file, null)
+            if (file.length() <= TEXT_EDIT_LIMIT) DocState.Text(DocumentReaders.decodeText(file.readBytes()), file, null)
             else DocState.BigText(BigTextFile(file).also { it.index() })
         }
     }
 }.getOrElse {
     DocState.Failed(
-        if (it is SecurityException) context.getString(R.string.od_pdf_protected)
+        if (it is EncryptedDocumentException) context.getString(R.string.au_office_encrypted)
+        else if (it is SecurityException) context.getString(R.string.od_pdf_protected)
         else context.getString(R.string.od_cannot_open, it.message ?: it.javaClass.simpleName),
     )
 }
