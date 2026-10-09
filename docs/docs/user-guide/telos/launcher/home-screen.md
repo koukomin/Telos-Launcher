@@ -15,7 +15,7 @@ virtual apps that cannot be saved as a normal shortcut. Switching an app off in 
 For every app except the Store you get a second choice: **"&lt;App&gt; as a page in the launcher"**. Then the app is not started in a
 separate screen but shown as a page of the home screen, which slides in with the gesture (push for swipes, zoom for double tap and
 long press) and goes away with the back gesture or by swiping back. Phone, Messages, Notes, Calendar, Calculator, Voice Recorder,
-Screen Recorder, Screenshot, Radio, Music, Video, Photos and Files can be used this way, including their own sub screens
+Screen Recorder, Screenshot, Radio, Music, Video, Photos, Files, Downloads and Network can be used this way, including their own sub screens
 (for example contact details or the app's settings). The page always starts on the app's first screen and is closed again when you
 leave the launcher. The keyboard moves the page up while you type. Lists inside the page scroll first; the page only closes when you
 drag further than the list can scroll. Like "open", the page does nothing if the app is switched off in Telos Store. This is not
@@ -123,9 +123,10 @@ Settings > Home screen > Dock.
 | --- | --- | --- |
 | Dock | Seeded with your default apps on first start | Shown when enabled or when custom pages exist; icons are always round |
 | Enable custom dock | n/a | Place apps and widgets in slots yourself instead of showing pinned favorites |
-| Dock rows and columns | 1 x 5 | Size of one dock page |
+| Dock rows and columns | 1 x 5 | Size of one dock page. The column count comes from the **Dock columns** slider |
 | Multiple docks | Off | Up to several docks; swipe on the dock to switch. New docks start empty |
-| Override dock grid | Off | Own column count and icon size |
+| Override dock grid | Off | Own icon size for the dock. It does not change the number of columns |
+| Clear a slot | n/a | Tap a filled dock slot to open the slot dialog and choose **Remove from dock** |
 | Dock background | Off | A plate behind the dock with color, opacity and shadow |
 | Page indicator | On | Dots when there is more than one dock |
 | Shutters | On | Swipe up on a dock app to launch the app assigned to it |
@@ -142,7 +143,7 @@ Settings > Appearance > Wallpaper (also the home screen menu entry **Change wall
 | Change wallpaper | n/a | Pick a photo or a video. For photos you choose home screen, lock screen or both |
 | System wallpaper picker | n/a | Open the Android wallpaper chooser |
 | Dim wallpaper | Off | Darken the wallpaper in dark themes |
-| Blur wallpaper | On | Blur behind the drawer; radius 32. Not on every device |
+| Blur wallpaper | On | Blur behind the drawer and other full pages, using the blur radius slider (default 32). Not on every device |
 
 **Video wallpaper** <Badge type="warning" text="experimental" />: add one or more videos to a playlist and
 activate it. It runs as a live wallpaper service.

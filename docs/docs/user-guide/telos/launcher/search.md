@@ -73,7 +73,7 @@ the app grid and your web apps. Once you type, these groups can appear, in this 
 | 2 | Apps and web apps | A grid, or a list if the grid is set to list |
 | 3 | App shortcuts | Shows a permission prompt if the default-home-app role is missing |
 | 4 | Unit converter | Several lines, one per target unit |
-| 5 | Calculator | One card with the result and a copy action |
+| 5 | Calculator | One card with the result and a visible copy button. Tapping or long-pressing the card also copies; what is copied is the plain number |
 | 6 | Events, then reminders | Reminders appear as tasks |
 | 7 | Contacts | Call, message and email buttons per contact |
 | 8 | Places | Map preview, opening hours, distance |
@@ -113,7 +113,7 @@ services. Telos shows a warning in the filter settings for this reason.
 
 ## Online results
 
-Network lookups only run when the **Online results** filter is on for that search.
+Network lookups only run when the **Online results** filter is on for that search. Item pickers (for the dock, folders, gestures, shutters and context profiles) search only on the device and never fire online searches.
 
 | Source | Sends | Minimum text |
 | --- | --- | --- |

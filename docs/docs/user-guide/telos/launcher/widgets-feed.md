@@ -24,12 +24,18 @@ screen, page 1 is no longer offered as a gesture target, because it is the home 
 1. Open the widgets page (swipe up) and tap **Edit widgets**. The button can be hidden in Settings >
    Home screen > Edit button. A short tutorial runs the first time and can be shown again with **Reset
    tutorial**.
-2. Tap **Add widget**. The picker lists the built-in widgets, plugin widgets and the Android widgets of
-   your apps. You can search in it.
+2. Edit mode has no **Add widget** button. To add a widget, use **Add widget** in the overflow menu of the
+   search bar, or in the menu of a long press on the home screen. This opens the Android system widget
+   picker; Telos's own picker (built-in widgets, plugin widgets and Android widgets, with search) is
+   used only when the system picker cannot be started. Edit mode is for reordering, resizing, stacking
+   and removing.
 3. Drag the handle on a widget header to reorder it. Drag its bottom edge to resize it.
 4. Tap the **+** icon on a widget to **stack** it with another one in the same slot. Swipe left or right on
    a stack to switch between its widgets. Use **Remove from stack** to split them.
 5. **Replace** swaps a widget for another one, **Remove** deletes it.
+
+Widgets without options (Battery, Network, System, Freeze, At a Glance and plugin widgets) show no
+settings button.
 
 Android widgets have extra options: **Borderless**, **Background card** and **Use theme color**, and
 **Configure widget** when the app offers a configuration screen.
@@ -72,8 +78,9 @@ replacement for the weather or calendar widget.
 
 ### Note widget
 
-The note widget keeps its text in the launcher. **Link to file** keeps the note in sync with an external
-text file (for example one that Syncthing syncs). If the file and the last saved note differ, Telos asks
+The note widget keeps its text in the launcher. **Link to file** currently creates a new
+text file (the system "create document" dialog) and links the note to it; it cannot pick an existing file yet.
+Once linked, the note is kept in sync with that file. If the file and the last saved note differ, Telos asks
 which version to keep (**Conflict**). If the file cannot be written, a copy stays in the launcher's own
 storage. Other actions: new note, share, save, dismiss with undo. See also the existing
 [Notes](../../widgets/notes-widget) page.

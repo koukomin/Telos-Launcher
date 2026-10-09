@@ -123,7 +123,7 @@ Badges are small marks on an icon. Settings > Grid and icons > Badges.
 | Setting | Where | Default | What it does |
 | --- | --- | --- | --- |
 | Charging animation | Home screen | On | Bubbles while charging |
-| Reduce animations | Performance | Off | Instant transitions |
+| Reduce animations | Performance | Off | Instant transitions, and no bounce |
 | Animation speed | Performance | 1.0 | Scales the length of fade and effect motion |
 | Bounce physics | Performance | 1.0 (no bounce) | Lower values overshoot before settling after a gesture |
 
@@ -150,7 +150,7 @@ Settings > Language and region.
 | Setting | What it does |
 | --- | --- |
 | Language | Any of the launcher's languages. Greek and German come with Telos in addition to the original locales |
-| Form of address | Neutral, feminine or masculine, where the language has it |
+| Form of address | Neutral, feminine or masculine, for every language that ships feminine and masculine variants |
 | Preferred transliteration | Which transliterator normalizes text for search. Automatic by default |
 | Measurement system | System, metric, UK or US |
 | Time format | System, 12-hour or 24-hour |

@@ -103,8 +103,8 @@ page. A floating note window can stay on screen after you leave the call screen 
 | --- | --- | --- | --- |
 | Missed call popup | Calling | on | A sheet with Dismiss, Message (sends the reject template), Call and WhatsApp, and how long it rang |
 | Popup after every call | Calling | off | The same sheet after answered calls |
-| Vibrate on Answer | Sounds & Vibrations | off | Vibrates when an outgoing call is answered |
-| Vibrate on Hangup | Sounds & Vibrations | off | Vibrates when a call ends |
+| Vibrate on Answer | Sounds & Vibrations | off | One short pulse when an outgoing call is answered |
+| Vibrate on Hangup | Sounds & Vibrations | off | One short pulse when a call ends |
 | Secure call screen | Incoming call | off | Blocks screenshots and hides the call screen in the recent apps overview |
 | SIM 1 color, SIM 2 color | Incoming call | green, blue | Accent for SIM badges (green, blue, orange, red, purple, pink, teal) |
 | Answer style | Incoming call | Buttons | Buttons or Swipe |
@@ -149,7 +149,7 @@ in the settings screen at this time and keep their defaults.
 | `*67` | US and Canada |
 | `141` | UK |
 | `1831` | Japan |
-| Custom | Any prefix you type |
+| Custom | Any prefix you type. Choosing it opens the editor; a blank prefix sends `#31#` |
 
 Emergency numbers and network codes starting with `*` or `#` are never prefixed. Whether your carrier honors the
 prefix is up to the carrier.

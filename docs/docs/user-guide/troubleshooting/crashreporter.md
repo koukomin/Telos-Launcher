@@ -2,7 +2,7 @@
 
 When the launcher crashes, a notification is posted. When you tap on that notification, the crash reporter screen opens. You can also navigate to that screen like this: Settings > Debug > Crash reporter.
 
-The crash reporter lists crashes and exceptions.
+The crash reporter lists crashes and exceptions of the last 7 days. When there are none, it shows an empty state. The detail screen of an entry has **Share**, **Report on GitHub** (crashes only) and **Delete**.
 
 ## Crashes
 
