@@ -50,7 +50,7 @@ The first time you turn it on, Android asks for your consent to set up a VPN. Wi
 - It cannot look inside encrypted connections. It filters by app, address and domain.
 - It does not make you anonymous. Websites still see your IP address, unless you use a WireGuard tunnel you trust.
 - Android allows one VPN at a time. Telos Network replaces another VPN while it runs; use [WireGuard](wireguard.md) inside Telos Network instead.
-- The foreground or background state of other apps is not known to the engine, so rules for *background* do not block yet.
+- The engine does not know which app is in the foreground. Rules for *background* work only if you grant *usage access* (the firewall screen offers a button for it); without it they never block.
 
 ## Pages
 

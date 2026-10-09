@@ -32,6 +32,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.calculateCentroid
 import androidx.compose.foundation.gestures.calculateZoom
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.horizontalScroll
@@ -76,6 +77,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -104,6 +106,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import de.mm20.launcher2.base.R as BaseR
 import de.mm20.launcher2.ui.R
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -304,6 +307,7 @@ private fun ZoomablePage(pages: PdfPages, index: Int) {
         }
         val hScroll = rememberScrollState()
         val vScroll = rememberScrollState()
+        val scope = rememberCoroutineScope()
         Box(
             Modifier
                 .fillMaxSize()
@@ -317,7 +321,21 @@ private fun ZoomablePage(pages: PdfPages, index: Int) {
                         do {
                             val event = awaitPointerEvent()
                             if (event.changes.size >= 2) {
-                                zoom = (zoom * event.calculateZoom()).coerceIn(1f, 5f)
+                                val old = zoom
+                                val new = (old * event.calculateZoom()).coerceIn(1f, 5f)
+                                val f = new / old
+                                if (f != 1f) {
+                                    // zoom around the point between the fingers (content coordinates)
+                                    val c = event.calculateCentroid(useCurrent = true)
+                                    val tx = ((c.x * f) - (c.x - hScroll.value)).toInt().coerceAtLeast(0)
+                                    val ty = ((c.y * f) - (c.y - vScroll.value)).toInt().coerceAtLeast(0)
+                                    zoom = new
+                                    scope.launch {
+                                        androidx.compose.runtime.withFrameNanos { }
+                                        hScroll.scrollTo(tx)
+                                        vScroll.scrollTo(ty)
+                                    }
+                                }
                                 event.changes.forEach { it.consume() }
                             }
                         } while (event.changes.any { it.pressed })

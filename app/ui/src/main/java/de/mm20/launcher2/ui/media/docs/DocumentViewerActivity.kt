@@ -19,6 +19,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.calculateCentroid
 import androidx.compose.foundation.gestures.calculateZoom
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -580,6 +581,7 @@ private fun PdfView(doc: PdfDoc, listState: androidx.compose.foundation.lazy.Laz
     var zoom by remember { mutableStateOf(1f) }
     val widthPx = (screenWidth * zoom).toInt()
     val hScroll = rememberScrollState()
+    val scope = rememberCoroutineScope()
     Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surfaceContainer)) {
         Box(
             Modifier.fillMaxSize().horizontalScroll(hScroll).pointerInput(Unit) {
@@ -589,7 +591,25 @@ private fun PdfView(doc: PdfDoc, listState: androidx.compose.foundation.lazy.Laz
                     do {
                         val event = awaitPointerEvent()
                         if (event.changes.size >= 2) {
-                            zoom = (zoom * event.calculateZoom()).coerceIn(1f, 4f)
+                            val old = zoom
+                            val new = (old * event.calculateZoom()).coerceIn(1f, 4f)
+                            val f = new / old
+                            if (f != 1f) {
+                                // keep the point between the fingers where it is: x is in content coordinates here
+                                val c = event.calculateCentroid(useCurrent = true)
+                                val viewportX = c.x - hScroll.value
+                                val targetX = ((c.x * f) - viewportX).toInt().coerceAtLeast(0)
+                                val item = listState.layoutInfo.visibleItemsInfo.firstOrNull { c.y >= it.offset && c.y < it.offset + it.size }
+                                if (item != null) {
+                                    val frac = (c.y - item.offset) / item.size.toFloat()
+                                    listState.requestScrollToItem(item.index, (item.size * f * frac - c.y).toInt())
+                                }
+                                zoom = new
+                                scope.launch {
+                                    androidx.compose.runtime.withFrameNanos { }
+                                    hScroll.scrollTo(targetX)
+                                }
+                            }
                             event.changes.forEach { it.consume() }
                         }
                     } while (event.changes.any { it.pressed })
