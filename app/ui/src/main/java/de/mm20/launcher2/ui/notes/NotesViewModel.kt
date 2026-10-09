@@ -52,7 +52,10 @@ class NotesViewModel(app: Application) : AndroidViewModel(app), KoinComponent {
     fun emptyTrash() = viewModelScope.launch(Dispatchers.IO) { store.emptyTrash() }
 
     fun import(uris: List<Uri>) = viewModelScope.launch {
-        val read = withContext(Dispatchers.IO) { NotesImport.read(getApplication(), uris) }
+        val read = try { withContext(Dispatchers.IO) { NotesImport.read(getApplication(), uris) } } catch (e: Exception) {
+            if (e is kotlinx.coroutines.CancellationException) throw e
+            message.value = "error:${e.message.orEmpty()}"; return@launch
+        }
         val (fresh, skipped) = withContext(Dispatchers.IO) {
             NotesSyncLogic.dedupe(read, store.notes.value).also { (f, _) -> f.forEach { store.save(it, touch = false) } }
         }

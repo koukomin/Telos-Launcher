@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
@@ -47,8 +48,11 @@ fun FreezeSettingsScreen() {
     val context = LocalContext.current
     val viewModel: FreezeSettingsScreenVM = viewModel()
 
-    LaunchedEffect(Unit) {
+    // Re-check on every resume: the user may have just started Shizuku/Dhizuku, granted root or
+    // usage access in another app or system screen and come back.
+    LifecycleResumeEffect(Unit) {
         viewModel.refreshBackendState()
+        onPauseOrDispose { }
     }
 
     val activeBackend by viewModel.activeBackend.collectAsStateWithLifecycle()
@@ -103,6 +107,7 @@ fun FreezeSettingsScreen() {
                     items = listOf(
                         stringResource(R.string.preference_value_system_default) to FreezeBackendPreference.Auto,
                         stringResource(R.string.freeze_backend_shizuku) to FreezeBackendPreference.ShizukuOnly,
+                        stringResource(R.string.telos_freeze_backend_dhizuku) to FreezeBackendPreference.DhizukuOnly,
                         stringResource(R.string.freeze_backend_root) to FreezeBackendPreference.RootOnly,
                         stringResource(R.string.freeze_backend_island) to FreezeBackendPreference.Island,
                         stringResource(R.string.freeze_backend_device_owner) to FreezeBackendPreference.DeviceOwnerOnly,
@@ -243,7 +248,7 @@ fun FreezeSettingsScreen() {
                                         max = 1000,
                                         step = 10,
                                         onValueChanged = { viewModel.setNetworkThresholdKb(it) },
-                                        label = { Text("$it KB/s") }
+                                        label = { Text(stringResource(R.string.au_freeze_kbps, it)) }
                                     )
                                 }
                             }

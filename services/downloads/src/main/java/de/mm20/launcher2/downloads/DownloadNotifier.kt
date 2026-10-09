@@ -138,6 +138,11 @@ class DownloadNotifier(private val context: Context, private val settings: Downl
         shown.clear(); shown.addAll(ids)
     }
 
+    /** Removes the finished or failed notification of a task (it is retried or removed) */
+    fun clearResult(taskId: String) {
+        nm.cancel(notificationId(taskId) + RESULT_OFFSET)
+    }
+
     fun clearTaskNotifications() {
         for (id in shown) nm.cancel(id)
         shown.clear()

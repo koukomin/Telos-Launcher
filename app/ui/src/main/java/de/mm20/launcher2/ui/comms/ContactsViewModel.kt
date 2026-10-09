@@ -5,6 +5,7 @@ import android.content.Intent
 import android.telephony.PhoneNumberUtils
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.comms.PhoneNumbers
 import de.mm20.launcher2.comms.model.DialerContact
 import de.mm20.launcher2.comms.repository.ContactDirectoryRepository
 import de.mm20.launcher2.comms.repository.SpamRepository
@@ -47,18 +48,18 @@ class ContactsViewModel : ViewModel(), KoinComponent {
         viewModelScope.launch { CallGuard.place(context, phoneNumber) }
     }
 
-    fun numberFor(contact: DialerContact): String =
-        de.mm20.launcher2.comms.telephony.SimRouter.defaultNumberFor(contact.id, contact.phoneNumbers)
+    /** Kept collected by the screen so that [numberFor] never has to block on the datastore */
+    val defaultNumbers = commsSettings.contactDefaultNumbers
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyMap())
+
+    fun numberFor(contact: DialerContact): String {
+        if (contact.phoneNumbers.isEmpty()) return ""
+        val mapped = defaultNumbers.value[contact.id.toString()].orEmpty()
+        return contact.phoneNumbers.find { PhoneNumbers.match(it, mapped) } ?: contact.phoneNumbers.first()
+    }
 
     fun share(context: Context, contact: DialerContact) {
-        val vcard = buildString {
-            appendLine("BEGIN:VCARD")
-            appendLine("VERSION:3.0")
-            appendLine("FN:${contact.displayName}")
-            contact.phoneNumbers.forEach { appendLine("TEL:$it") }
-            contact.emails.forEach { appendLine("EMAIL:$it") }
-            appendLine("END:VCARD")
-        }
+        val vcard = contactVcard(contact.displayName, contact.phoneNumbers, contact.emails)
         context.tryStartActivity(
             Intent.createChooser(
                 Intent(Intent.ACTION_SEND).apply {

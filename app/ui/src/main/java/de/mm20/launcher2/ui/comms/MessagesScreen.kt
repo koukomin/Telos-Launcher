@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,6 +25,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.FilterChip
+import de.mm20.launcher2.comms.repository.SpamRepository
+import de.mm20.launcher2.comms.sms.BlockedMessage
+import de.mm20.launcher2.comms.sms.BlockedMessages
+import de.mm20.launcher2.comms.sms.SmsSims
 import androidx.compose.material3.Button
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Icon
@@ -119,19 +125,29 @@ fun MessagesScreen(
     LaunchedEffect(refresh, isDefault) { all = withContext(Dispatchers.IO) { SmsThreads.conversations(context) } }
     var open by remember { mutableStateOf<SmsConversation?>(null) }
     var newMessage by remember { mutableStateOf(false) }
+    var showBlocked by remember { mutableStateOf(false) }
+    val spam: SpamRepository = koinInject()
+    var blockedCount by remember { mutableStateOf(0) }
+    LaunchedEffect(refresh, showBlocked) { blockedCount = withContext(Dispatchers.IO) { BlockedMessages.count(context) } }
     var body by remember { mutableStateOf(initialBody) }
     var attachments by remember { mutableStateOf(initialAttachments.map { Uri.parse(it) }) }
 
-    // something was shared to Telos Messages: write to that number
-    LaunchedEffect(initialNumber, all) {
-        val list = all ?: return@LaunchedEffect
-        if (initialNumber.isNotBlank() && open == null) {
-            open = list.firstOrNull { c -> c.address.split(", ").any { PhoneNumbers.match(it, initialNumber) } }
-                ?: SmsConversation(-1, initialNumber, null, "", 0, 0)
-        }
+    fun isHidden(c: SmsConversation) = c.address.split(", ").any { HiddenContacts.matches(it, hidden) }
+    // an existing conversation with a number, or a new one. The history of a hidden contact stays
+    // closed while the hidden contacts are locked.
+    fun conversationFor(number: String): SmsConversation {
+        val existing = all?.firstOrNull { c -> c.address.split(", ").any { PhoneNumbers.match(it, number) } }
+        return if (existing != null && (unlocked || !isHidden(existing))) existing
+        else SmsConversation(-1, number, null, "", 0, 0)
     }
 
-    fun isHidden(c: SmsConversation) = c.address.split(", ").any { HiddenContacts.matches(it, hidden) }
+    // something was shared to Telos Messages: write to that number (once, not again after going back)
+    var initialHandled by remember(initialNumber) { mutableStateOf(false) }
+    LaunchedEffect(initialNumber, all) {
+        if (all == null || initialHandled) return@LaunchedEffect
+        if (initialNumber.isNotBlank() && open == null) open = conversationFor(initialNumber)
+        initialHandled = true
+    }
     var listQuery by remember { mutableStateOf("") }
     // message texts per thread, loaded in the background while a search is active
     val bodies = remember { androidx.compose.runtime.mutableStateMapOf<Long, List<String>>() }
@@ -151,6 +167,12 @@ fun MessagesScreen(
         de.mm20.launcher2.comms.search.TelosSearch.filter(visibleAll, listQuery) { c ->
             listOf(c.name, c.address, c.snippet) + (bodies[c.threadId] ?: emptyList())
         }
+
+    if (showBlocked) {
+        BackHandler { showBlocked = false; refresh++ }
+        BlockedMessagesView(onBack = { showBlocked = false; refresh++ })
+        return
+    }
 
     val current = open
     if (current != null) {
@@ -188,10 +210,14 @@ fun MessagesScreen(
                 TextButton(onClick = { newMessage = true }) { Text(stringResource(R.string.hc_new_message)) }
             },
         )
+        if (blockedCount > 0) TextButton(
+            onClick = { showBlocked = true },
+            modifier = Modifier.padding(horizontal = 8.dp),
+        ) { Text(stringResource(R.string.au2_msg2_blocked_messages_count, blockedCount)) }
         when {
             shown == null -> Box(Modifier.fillMaxSize())
             shown.isEmpty() && listQuery.isNotBlank() -> SearchEmptyState(listQuery)
-            shown.isEmpty() -> EmptyCommsTab("No conversations", "Your messages appear here.")
+            shown.isEmpty() -> EmptyCommsTab(stringResource(R.string.au_messages_no_conversations), stringResource(R.string.au_messages_no_conversations_hint))
             else -> LazyColumn(Modifier.fillMaxSize()) {
                 items(shown, key = { it.threadId.toString() + it.address }) { c ->
                     ListItem(
@@ -217,8 +243,7 @@ fun MessagesScreen(
                 TextButton(enabled = number.isNotBlank(), onClick = {
                     val n = number.trim()
                     newMessage = false
-                    open = all?.firstOrNull { c -> c.address.split(", ").any { PhoneNumbers.match(it, n) } }
-                        ?: SmsConversation(-1, n, null, "", 0, 0)
+                    open = conversationFor(n)
                 }) { Text(stringResource(R.string.hc_write)) }
             },
             dismissButton = { TextButton(onClick = { newMessage = false }) { Text(stringResource(R.string.hc_cancel)) } },
@@ -256,11 +281,33 @@ private fun ThreadView(
         if (picked.isNotEmpty()) onAttachments(attachments + picked)
     }
     val addresses = conversation.address.split(", ").filter { it.isNotBlank() }
+    // the SIM that sends (only offered on a phone with two or more active SIMs)
+    val sims = remember { SmsSims.active(context) }
+    var simId by remember(conversation.address) { mutableStateOf(SmsSims.preselected(context, conversation.address, sims)?.subId ?: -1) }
+    val spam: SpamRepository = koinInject()
+    var blocked by remember(conversation.address) { mutableStateOf(false) }
+    val single = addresses.size == 1
+    LaunchedEffect(conversation.address) {
+        blocked = single && runCatching { spam.isNumberBlocked(addresses[0]) }.getOrDefault(false)
+    }
 
-    Column(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize().imePadding()) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
             TextButton(onClick = onBack) { Text(stringResource(R.string.hc_back)) }
             Text(conversation.name ?: conversation.address, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
+            if (single) TextButton(onClick = {
+                val number = addresses[0]
+                val block = !blocked
+                blocked = block
+                sendScope.launch {
+                    withContext(Dispatchers.IO) {
+                        runCatching { spam.setBlocked(number, block) }
+                        // unblocking returns what was kept while the number was blocked
+                        if (!block) BlockedMessages.restore(context, number)
+                    }
+                    if (!block) version++
+                }
+            }) { Text(stringResource(if (blocked) R.string.au2_msg2_unblock_number else R.string.au2_msg2_block_number)) }
             IconButton(onClick = { searching = !searching; if (!searching) threadQuery = "" }) {
                 Icon(
                     painterResource(if (searching) R.drawable.close_24px else R.drawable.search_24px),
@@ -290,14 +337,14 @@ private fun ThreadView(
                             m.attachments.forEach { a ->
                                 if (a.mimeType.startsWith("image/") || a.mimeType.startsWith("video/")) {
                                     AsyncImage(
-                                        model = a.uri, contentDescription = null, contentScale = ContentScale.Fit,
+                                        model = a.uri, contentDescription = stringResource(R.string.au_messages_attachment), contentScale = ContentScale.Fit,
                                         modifier = Modifier.fillMaxWidth().heightIn(max = 240.dp),
                                     )
-                                } else Text("[${a.mimeType}]", style = MaterialTheme.typography.labelSmall)
+                                } else Text(stringResource(R.string.au_messages_attachment) + " (${a.mimeType})", style = MaterialTheme.typography.labelSmall)
                             }
                             if (m.body.isNotBlank()) Text(m.body)
                             Text(
-                                shortDate(m.date) + if (m.failed) " · not sent" else "",
+                                shortDate(m.date) + if (m.failed) " · " + stringResource(R.string.au_messages_not_sent) else "",
                                 style = MaterialTheme.typography.labelSmall,
                                 color = if (m.failed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -309,12 +356,15 @@ private fun ThreadView(
         if (failed) Text(stringResource(R.string.hc_the_message_could_not_be_sent), color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(horizontal = 16.dp))
         if (attachments.isNotEmpty()) {
             Row(Modifier.padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text("${attachments.size} attached", modifier = Modifier.weight(1f), style = MaterialTheme.typography.labelMedium)
+                Text(stringResource(R.string.au_messages_attached_count, attachments.size), modifier = Modifier.weight(1f), style = MaterialTheme.typography.labelMedium)
                 TextButton(onClick = { onAttachments(emptyList()) }) { Text(stringResource(R.string.hc_remove)) }
             }
         }
+        if (sims.size >= 2) SimChooser(sims, simId, { simId = it }, Modifier.padding(horizontal = 12.dp))
         Row(Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
-            if (isDefault) TextButton(onClick = { picker.launch("image/*") }) { Text("+") }
+            if (isDefault) IconButton(onClick = { picker.launch("image/*") }) {
+                Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.au_messages_attach))
+            }
             OutlinedTextField(body, onBody, modifier = Modifier.weight(1f), placeholder = { Text(stringResource(R.string.hc_message)) })
             TextButton(
                 enabled = body.isNotBlank() || attachments.isNotEmpty(),
@@ -322,11 +372,14 @@ private fun ThreadView(
                     val asMms = attachments.isNotEmpty() || addresses.size > 1
                     val text = body
                     val picked = attachments
+                    val sub = if (sims.size >= 2) simId else -1
+                    if (sub >= 0) SmsSims.remember(context, conversation.address, sub)
+                    failed = false
                     // message store, attachment reading and the carrier hand-over are not main thread work
                     sendScope.launch {
                         val ok = withContext(Dispatchers.IO) {
-                            if (asMms) SmsThreads.sendMms(context, addresses, text, picked)
-                            else SmsThreads.send(context, addresses.firstOrNull().orEmpty(), text)
+                            if (asMms) SmsThreads.sendMms(context, addresses, text, picked, sub)
+                            else SmsThreads.send(context, addresses.firstOrNull().orEmpty(), text, sub)
                         }
                         failed = !ok
                         if (ok) { onBody(""); onAttachments(emptyList()); version++ }
@@ -339,3 +392,106 @@ private fun ThreadView(
 
 private fun shortDate(ms: Long): String =
     if (ms <= 0) "" else DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(Date(ms))
+
+/** The SIM that sends: one chip per active SIM (slot and carrier) */
+@Composable
+internal fun SimChooser(sims: List<SmsSims.Sim>, selected: Int, onSelect: (Int) -> Unit, modifier: Modifier = Modifier) {
+    Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(stringResource(R.string.au2_msg2_send_with), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        sims.forEach { sim ->
+            FilterChip(
+                selected = sim.subId == selected,
+                onClick = { onSelect(sim.subId) },
+                label = { Text(sim.label, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                modifier = Modifier.weight(1f, fill = false),
+            )
+        }
+    }
+}
+
+/** The kept messages of blocked numbers, and the blocked numbers with a way to unblock them */
+@Composable
+private fun BlockedMessagesView(onBack: () -> Unit) {
+    val context = LocalContext.current
+    val spam: SpamRepository = koinInject()
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+    var version by remember { mutableStateOf(0) }
+    var messages by remember { mutableStateOf(emptyList<BlockedMessage>()) }
+    var numbers by remember { mutableStateOf(emptyList<String>()) }
+    LaunchedEffect(version) {
+        withContext(Dispatchers.IO) {
+            messages = BlockedMessages.list(context)
+            numbers = runCatching { spam.getAllBlocked() }.getOrDefault(emptyList())
+        }
+    }
+    Column(Modifier.fillMaxSize()) {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
+            TextButton(onClick = onBack) { Text(stringResource(R.string.hc_back)) }
+            Text(stringResource(R.string.au2_msg2_blocked_messages), style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
+        }
+        LazyColumn(Modifier.fillMaxSize()) {
+            if (numbers.isNotEmpty()) {
+                item {
+                    Text(
+                        stringResource(R.string.au2_msg2_blocked_numbers), style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                    )
+                }
+                items(numbers, key = { "n$it" }) { n ->
+                    ListItem(
+                        headlineContent = { Text(SmsThreads.displayNameOf(context, n) ?: n, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                        supportingContent = if (SmsThreads.displayNameOf(context, n) != null) ({ Text(n) }) else null,
+                        trailingContent = {
+                            TextButton(onClick = {
+                                scope.launch {
+                                    withContext(Dispatchers.IO) {
+                                        runCatching { spam.setBlocked(n, false) }
+                                        BlockedMessages.restore(context, n)
+                                    }
+                                    version++
+                                }
+                            }) { Text(stringResource(R.string.au2_msg2_unblock_number)) }
+                        },
+                    )
+                }
+                item {
+                    Text(
+                        stringResource(R.string.au2_msg2_blocked_restore_hint), style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                    )
+                }
+            }
+            if (messages.isEmpty()) {
+                item {
+                    EmptyCommsTab(stringResource(R.string.au2_msg2_blocked_empty_title), stringResource(R.string.au2_msg2_blocked_empty_hint))
+                }
+            }
+            items(messages, key = { "m${it.id}" }) { m ->
+                ListItem(
+                    headlineContent = { Text(SmsThreads.displayNameOf(context, m.address) ?: m.address, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                    supportingContent = {
+                        Column {
+                            m.attachments.forEach { a ->
+                                if (a.mimeType.startsWith("image/")) AsyncImage(
+                                    model = a.uri, contentDescription = stringResource(R.string.au_messages_attachment), contentScale = ContentScale.Fit,
+                                    modifier = Modifier.fillMaxWidth().heightIn(max = 160.dp),
+                                ) else Text(stringResource(R.string.au_messages_attachment) + " (${a.mimeType})", style = MaterialTheme.typography.labelSmall)
+                            }
+                            if (m.body.isNotBlank()) Text(m.body, maxLines = 4, overflow = TextOverflow.Ellipsis)
+                            Text(shortDate(m.date), style = MaterialTheme.typography.labelSmall)
+                        }
+                    },
+                    trailingContent = {
+                        TextButton(onClick = {
+                            scope.launch {
+                                withContext(Dispatchers.IO) { BlockedMessages.delete(context, m.id) }
+                                version++
+                            }
+                        }) { Text(stringResource(R.string.hc_delete)) }
+                    },
+                )
+            }
+        }
+    }
+}

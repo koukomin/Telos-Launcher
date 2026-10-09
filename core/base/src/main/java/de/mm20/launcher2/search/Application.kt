@@ -24,6 +24,12 @@ interface Application: SavableSearchable {
      */
     val isPrivate: Boolean
         get() = false
+
+    /**
+     * Extra search keywords matched in addition to the label (used by the Telos virtual apps).
+     */
+    val keywords: List<String>
+        get() = emptyList()
     val user: UserHandle
     val versionName: String?
 

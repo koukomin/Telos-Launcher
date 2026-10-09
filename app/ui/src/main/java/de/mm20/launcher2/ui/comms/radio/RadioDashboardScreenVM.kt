@@ -3,6 +3,8 @@ package de.mm20.launcher2.ui.comms.radio
 
 import android.content.Context
 import android.net.Uri
+import androidx.annotation.StringRes
+import de.mm20.launcher2.ui.R
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.comms.model.RadioStation
@@ -21,6 +23,9 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.net.URL
 import java.util.UUID
+
+/** A message made of a string resource and an optional format argument, resolved by the UI */
+data class RadioText(@StringRes val resId: Int, val arg: Any? = null)
 
 class RadioDashboardScreenVM : ViewModel(), KoinComponent {
 
@@ -42,11 +47,11 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
     val isSearching: StateFlow<Boolean> = _isSearching
 
     /** One-shot message for the user (shown as a toast, then cleared) */
-    private val _message = MutableStateFlow<String?>(null)
-    val message: StateFlow<String?> = _message
+    private val _message = MutableStateFlow<RadioText?>(null)
+    val message: StateFlow<RadioText?> = _message
 
-    private val _searchError = MutableStateFlow<String?>(null)
-    val searchError: StateFlow<String?> = _searchError
+    private val _searchError = MutableStateFlow<RadioText?>(null)
+    val searchError: StateFlow<RadioText?> = _searchError
 
     private var searchJob: Job? = null
 
@@ -75,7 +80,7 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
                 throw e
             } catch (e: Exception) {
                 _searchResults.value = emptyList()
-                _searchError.value = "Search failed: " + (e.message ?: e.javaClass.simpleName)
+                _searchError.value = RadioText(R.string.au_radio_search_failed, e.message ?: e.javaClass.simpleName)
             }
             _isSearching.value = false
         }
@@ -100,7 +105,7 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
         viewModelScope.launch {
             val url = address.trim()
             if (!url.startsWith("http", ignoreCase = true)) {
-                _message.value = "Enter an address that starts with http:// or https://"
+                _message.value = RadioText(R.string.au_radio_enter_http_address)
                 return@launch
             }
             val resolved = StreamResolver.resolve(url)
@@ -114,8 +119,14 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
                 nameManuallySet = name.isNotBlank(),
                 alternateStreams = resolved.urls.drop(1),
             )
-            repository.saveStation(station)
-            _message.value = "Added ${station.name}"
+            _message.value = try {
+                repository.saveStation(station)
+                RadioText(R.string.au_radio_station_added, station.name)
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                RadioText(R.string.au_radio_add_failed)
+            }
         }
     }
 
@@ -125,28 +136,28 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
                 val text = readText(context, uri)
                 repository.importPlaylist(text)
             }.getOrNull()
-            _message.value = if (count == null) "Could not read that file" else "Imported $count stations"
+            _message.value = if (count == null) RadioText(R.string.au_radio_import_failed) else RadioText(R.string.au_radio_imported, count)
         }
     }
 
     fun exportM3u(context: Context, uri: Uri) {
         viewModelScope.launch {
             val ok = runCatching { writeText(context, uri, repository.exportM3u()) }.isSuccess
-            _message.value = if (ok) "Playlist saved" else "Could not save the playlist"
+            _message.value = if (ok) RadioText(R.string.au_radio_playlist_saved) else RadioText(R.string.au_radio_playlist_save_failed)
         }
     }
 
     fun exportBackup(context: Context, uri: Uri) {
         viewModelScope.launch {
             val ok = runCatching { writeText(context, uri, repository.exportBackup()) }.isSuccess
-            _message.value = if (ok) "Backup saved" else "Could not save the backup"
+            _message.value = if (ok) RadioText(R.string.au_radio_backup_saved) else RadioText(R.string.au_radio_backup_save_failed)
         }
     }
 
     fun restoreBackup(context: Context, uri: Uri) {
         viewModelScope.launch {
             val count = runCatching { repository.restoreBackup(readText(context, uri)) }.getOrNull()
-            _message.value = if (count == null) "Could not read that backup" else "Restored $count stations"
+            _message.value = if (count == null) RadioText(R.string.au_radio_restore_failed) else RadioText(R.string.au_radio_restored, count)
         }
     }
 

@@ -34,7 +34,12 @@ class OfficeSheet(
     private val formulas: Map<Long, String>,
     /** true when a text that starts with "=" is stored as a formula */
     val formulaEditable: Boolean,
+    /** true when more rows or columns exist in the file than are shown */
+    val truncated: Boolean = false,
 ) {
+    /** Non-empty cells as key to text, in no particular order. */
+    fun cells(): Map<Long, String> = values
+
     fun value(row: Int, col: Int): String = values[key(row, col)].orEmpty()
     fun formula(row: Int, col: Int): String? = formulas[key(row, col)]
 
@@ -52,6 +57,10 @@ abstract class OfficeDoc(val file: File) {
     abstract val kind: OfficeKind
     open val readOnly: Boolean get() = false
     var dirty: Boolean = false
+        protected set
+
+    /** true when the file holds more than is shown (large documents); the rest stays unchanged when saving */
+    var truncated: Boolean = false
         protected set
 
     protected val zip: ZipFile? by lazy { runCatching { ZipFile(file) }.getOrNull() }

@@ -29,10 +29,14 @@ import kotlinx.coroutines.withContext
 
 /** The sign-in fields of the cloud storages: the ID of the app the user registered, and the sign-in itself. */
 @Composable
-internal fun CloudFields(c: RemoteConnection, onChange: (RemoteConnection) -> Unit, onStatus: (String) -> Unit) {
+internal fun CloudFields(c: RemoteConnection, onChange: (RemoteConnection) -> Unit, onStatus: (String, Boolean) -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val provider = remember(c.type) { OAuthProviders.of(c.type) }
+    val waitingText = stringResource(R.string.au_files_oauth_waiting)
+    val browserFailedText = stringResource(R.string.au_files_oauth_browser_failed)
+    val signedInText = stringResource(R.string.au_files_oauth_signed_in)
+    val failedFormat = stringResource(R.string.au_files_oauth_failed, "%s")
 
     Text(provider.consoleHint, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
     OutlinedTextField(
@@ -53,17 +57,17 @@ internal fun CloudFields(c: RemoteConnection, onChange: (RemoteConnection) -> Un
             onClick = {
                 val verifier = Pkce.verifier()
                 val state = Pkce.state()
-                onStatus("Waiting for you to sign in in the browser…")
+                onStatus(waitingText, true)
                 scope.launch {
                     // the small server has to listen before the browser is opened
                     val code = async(Dispatchers.IO) { runCatching { OAuth.waitForCode(state) } }
                     delay(400)
                     runCatching {
                         context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(OAuth.authorizeUrl(c, verifier, state))).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-                    }.onFailure { onStatus("Could not open the browser"); return@launch }
+                    }.onFailure { onStatus(browserFailedText, false); return@launch }
                     code.await().mapCatching { withContext(Dispatchers.IO) { OAuth.exchange(c, it, verifier) } }
-                        .onSuccess { onChange(c.copy(refreshToken = it)); onStatus("Connected: signed in. Save the connection.") }
-                        .onFailure { onStatus("Sign-in failed: ${it.message}") }
+                        .onSuccess { onChange(c.copy(refreshToken = it)); onStatus(signedInText, true) }
+                        .onFailure { onStatus(failedFormat.replace("%s", it.message.orEmpty()), false) }
                 }
             },
         ) { Text(if (c.refreshToken.isNotEmpty()) stringResource(R.string.hf_remote_sign_in_again) else stringResource(R.string.hf_remote_sign_in)) }

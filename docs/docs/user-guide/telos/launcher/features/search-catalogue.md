@@ -62,7 +62,7 @@ Notes on the table:
 
 | Source | Matched fields | How |
 | --- | --- | --- |
-| Apps, Telos apps | Label (custom label if you set one) | Normalized text, score of at least 0.8 needed |
+| Apps, Telos apps | Label (custom label if you set one). Telos apps also match built-in synonym keywords in English and Greek (for example `pdf`, `gallery`, `photos`, `έγγραφα` find Telos Viewer) | Normalized text, score of at least 0.8 needed |
 | App shortcuts | Long label and short label | Same score rule as apps |
 | Contacts | Display name, alternative name, phonetic name, sort key | Substring, case-insensitive |
 | Calendar events | Event title | Substring |

@@ -22,7 +22,8 @@ object StoreUrlParser {
         } catch (e: Exception) {
             return null
         }
-        if (uri.scheme != "http" && uri.scheme != "https") return null
+        val scheme = uri.scheme?.lowercase()
+        if (scheme != "http" && scheme != "https") return null
         val host = uri.host?.lowercase()?.removePrefix("www.") ?: return null
         val segments = uri.pathSegments ?: emptyList()
 

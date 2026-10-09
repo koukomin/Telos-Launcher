@@ -33,6 +33,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
@@ -93,22 +96,38 @@ fun VideoScreen() {
     var hasPermission by remember {
         mutableStateOf(ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED)
     }
+    var permissionDenied by remember { mutableStateOf(false) }
     val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         hasPermission = granted
+        permissionDenied = !granted
         if (granted) viewModel.load(context)
     }
     LaunchedEffect(Unit) { if (hasPermission) viewModel.load(context) }
+    // back from the player (new watch positions) or from the system settings (permission changed there)
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        libraryVersion.intValue++
+        val granted = ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+        if (granted != hasPermission) {
+            hasPermission = granted
+            if (granted) viewModel.load(context)
+        }
+    }
+    // the Trakt login is decrypted with the keystore: not on the main thread
+    val traktConnected by produceState(false) {
+        value = withContext(Dispatchers.IO) {
+            runCatching { de.mm20.launcher2.comms.media.video.trakt.Trakt.login(context).connected }.getOrDefault(false)
+        }
+    }
 
-    var tab by remember { mutableStateOf(0) }
-    var query by remember { mutableStateOf("") }
+    var tab by rememberSaveable { mutableStateOf(0) }
+    var query by rememberSaveable { mutableStateOf("") }
     var group by remember { mutableStateOf<VideoGroup?>(null) }
     BackHandler(enabled = group != null) { group = null }
 
     val filtered = remember(items, query) {
         de.mm20.launcher2.comms.search.TelosSearch.filter(items, query) { listOf(it.title, it.fileName, it.folder) }
     }
-    val resumeUris = remember(items, libraryVersion.intValue) { ResumeStore.continueWatching(context).toSet() }
-    val continueWatching = remember(items, resumeUris, libraryVersion.intValue) {
+    val continueWatching = remember(items, libraryVersion.intValue) {
         ResumeStore.continueWatching(context).mapNotNull { uri -> items.firstOrNull { it.uri.toString() == uri } }.take(10)
     }
     // the file names are parsed once per library, not on every letter typed in the search field
@@ -120,7 +139,7 @@ fun VideoScreen() {
         }.groupBy { it.first }.values.map { list ->
             val name = list.first().second.title
             val episodes = list.sortedWith(compareBy({ it.second.season }, { it.second.episode })).map { it.third }
-            VideoGroup(name, "${episodes.size} episodes", episodes, series = true)
+            VideoGroup(name, context.getString(R.string.au_video_episodes_count, episodes.size), episodes, series = true)
         }.sortedBy { it.title.lowercase() }
     }
     val movies = remember(filtered, parsedNames) {
@@ -129,7 +148,7 @@ fun VideoScreen() {
             if (parsed.isEpisode) null else Triple(parsed.title.lowercase() + "|" + parsed.year, parsed, item)
         }.groupBy { it.first }.values.map { list ->
             val parsed = list.first().second
-            VideoGroup(parsed.title, parsed.year?.toString() ?: "${list.size} file(s)", list.map { it.third }, series = false, year = parsed.year)
+            VideoGroup(parsed.title, parsed.year?.toString() ?: context.getString(R.string.au_video_files_count, list.size), list.map { it.third }, series = false, year = parsed.year)
         }.sortedBy { it.title.lowercase() }
     }
     LaunchedEffect(Unit) {
@@ -184,26 +203,30 @@ fun VideoScreen() {
         val cfg = services ?: return@LaunchedEffect
         if (!cfg.postersEnabled) return@LaunchedEffect
         val language = cfg.languages.substringBefore(',').ifBlank { "en" }
-        for (g in series + movies) {
-            val k = metaKey(g)
-            if (metas.containsKey(k)) continue
-            val vm = de.mm20.launcher2.comms.media.video.VideoMetadata
-            val tmdb = cfg.tmdbKey.isNotBlank()
-            if (vm.known(context, g.series, g.title, g.year, tmdb)) {
-                metas[k] = vm.cached(context, g.series, g.title, g.year, tmdb)
-                continue
+        // the cache is a JSON file that is read for every title: off the main thread
+        withContext(Dispatchers.IO) {
+            for (g in series + movies) {
+                val k = metaKey(g)
+                if (metas.containsKey(k)) continue
+                val vm = de.mm20.launcher2.comms.media.video.VideoMetadata
+                val tmdb = cfg.tmdbKey.isNotBlank()
+                if (vm.known(context, g.series, g.title, g.year, tmdb)) {
+                    metas[k] = vm.cached(context, g.series, g.title, g.year, tmdb)
+                    continue
+                }
+                metas[k] = vm.lookup(context, cfg.tmdbKey, g.series, g.title, g.year, language)
+                kotlinx.coroutines.delay(150)
             }
-            metas[k] = vm.lookup(context, cfg.tmdbKey, g.series, g.title, g.year, language)
-            kotlinx.coroutines.delay(150)
         }
     }
-    val folders = remember(filtered) {
-        filtered.groupBy { it.folder }
-            .map { (name, list) -> VideoGroup(name, "${list.size} videos", list.sortedBy { it.title.lowercase() }) }
+    val otherFolder = stringResource(R.string.au_video_other_folder)
+    val folders = remember(filtered, otherFolder) {
+        filtered.groupBy { it.folder.ifBlank { otherFolder } }
+            .map { (name, list) -> VideoGroup(name, context.getString(R.string.au_video_videos_count, list.size), list.sortedBy { it.title.lowercase() }) }
             .sortedBy { it.title.lowercase() }
     }
 
-    de.mm20.launcher2.ui.media.MediaFrame("Videos", guardKey = "telos_video_app://video", actions = {
+    de.mm20.launcher2.ui.media.MediaFrame(stringResource(R.string.au_video_title), guardKey = "telos_video_app://video", actions = {
         IconButton(onClick = { showOpen = true }) {
             Icon(painterResource(R.drawable.link_24px), contentDescription = stringResource(R.string.hc_play_from_the_web))
         }
@@ -225,14 +248,31 @@ fun VideoScreen() {
                 Button(onClick = { permissionLauncher.launch(permission) }, modifier = Modifier.padding(top = 16.dp)) {
                     Text(stringResource(R.string.hc_allow))
                 }
+                if (permissionDenied) {
+                    // after two refusals the system no longer shows its dialog: the switch is in the app settings
+                    TextButton(onClick = {
+                        context.startActivity(
+                            Intent(
+                                android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                android.net.Uri.fromParts("package", context.packageName, null),
+                            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        )
+                    }) { Text(stringResource(R.string.au_video_open_settings)) }
+                }
             }
             return@Column
         }
 
-        de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(R.string.tsm_search_videos))
-
         val current = group
+        // inside a series or folder the search field would have no effect
+        if (current == null) {
+            de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(R.string.tsm_search_videos))
+        }
         if (current != null) {
+            // videos deleted in the meantime drop out of the open group
+            val present = remember(items) { items.mapTo(HashSet()) { it.id } }
+            val shown = remember(current, present) { current.items.filter { it.id in present } }
+            LaunchedEffect(shown.isEmpty()) { if (shown.isEmpty()) group = null }
             val meta = metas[metaKey(current)]
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
                 IconButton(onClick = { group = null }) {
@@ -249,12 +289,12 @@ fun VideoScreen() {
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
-                    if (de.mm20.launcher2.comms.media.video.trakt.Trakt.login(context).connected) {
+                    if (traktConnected) {
                         val scope = androidx.compose.runtime.rememberCoroutineScope()
                         TextButton(onClick = {
                             scope.launch {
                                 val ok = de.mm20.launcher2.comms.media.video.trakt.Trakt.addToWatchlist(context, current.title, current.year, current.series)
-                                toast(context, if (ok) "Added to your Trakt watchlist" else "Could not add to the watchlist")
+                                toast(context, context.getString(if (ok) R.string.au_video_watchlist_added else R.string.au_video_watchlist_failed))
                             }
                         }, contentPadding = PaddingValues(0.dp)) { Text(stringResource(R.string.hc_add_to_trakt_watchlist)) }
                     }
@@ -263,13 +303,13 @@ fun VideoScreen() {
                     }
                 }
             }
-            VideoList(current.items) { index -> openPlayer(context, current.items, index) }
+            VideoList(shown) { index -> openPlayer(context, shown, index) }
             return@Column
         }
 
         TabRow(selectedTabIndex = tab) {
-            listOf("Library", "Movies", "Series", "Folders").forEachIndexed { i, title ->
-                Tab(selected = tab == i, onClick = { tab = i }, text = { Text(title) })
+            listOf(R.string.au_video_tab_library, R.string.au_video_tab_movies, R.string.au_video_tab_series, R.string.au_video_tab_folders).forEachIndexed { i, title ->
+                Tab(selected = tab == i, onClick = { tab = i }, text = { Text(stringResource(title)) })
             }
         }
         when {
@@ -283,19 +323,19 @@ fun VideoScreen() {
                     item {
                         Text(stringResource(R.string.hc_continue_watching), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(16.dp, 8.dp))
                     }
-                    items(continueWatching, key = { "c-" + it.id }) { video ->
+                    items(continueWatching, key = { "c-" + it.uri }) { video ->
                         VideoRow(video) { openPlayer(context, continueWatching, continueWatching.indexOf(video)) }
                     }
                     item {
                         Text(stringResource(R.string.hc_all_videos), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 8.dp))
                     }
                 }
-                items(filtered, key = { it.id }) { video ->
+                items(filtered, key = { it.uri.toString() }) { video ->
                     VideoRow(video) { openPlayer(context, filtered, filtered.indexOf(video)) }
                 }
             }
-            tab == 1 -> PosterGrid(movies, metas, "No movies found") { group = it }
-            tab == 2 -> PosterGrid(series, metas, "No series recognised. Name files like Show.S01E02.mkv") { group = it }
+            tab == 1 -> PosterGrid(movies, metas, stringResource(R.string.au_video_no_movies)) { group = it }
+            tab == 2 -> PosterGrid(series, metas, stringResource(R.string.au_video_no_series)) { group = it }
             else -> GroupList(folders, "") { group = it }
         }
     }
@@ -312,7 +352,8 @@ private fun GroupList(groups: List<VideoGroup>, emptyText: String, onOpen: (Vide
         return
     }
     LazyColumn(contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize()) {
-        items(groups, key = { it.title }) { g ->
+        items(groups.size) { index ->
+            val g = groups[index]
             Row(
                 modifier = Modifier.fillMaxWidth().clickable { onOpen(g) }.padding(horizontal = 16.dp, vertical = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -330,7 +371,7 @@ private fun GroupList(groups: List<VideoGroup>, emptyText: String, onOpen: (Vide
 @Composable
 private fun VideoList(list: List<VideoItem>, onPlay: (Int) -> Unit) {
     LazyColumn(contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize()) {
-        items(list.size, key = { list[it].id }) { index -> VideoRow(list[index]) { onPlay(index) } }
+        items(list.size, key = { list[it].uri.toString() }) { index -> VideoRow(list[index]) { onPlay(index) } }
     }
 }
 
@@ -379,7 +420,7 @@ private fun VideoRow(video: VideoItem, onClick: () -> Unit) {
                 }
             }
             Text(
-                formatDuration(video.durationMs) + " · " + video.folder,
+                formatDuration(video.durationMs) + " · " + video.folder.ifBlank { stringResource(R.string.au_video_other_folder) },
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,

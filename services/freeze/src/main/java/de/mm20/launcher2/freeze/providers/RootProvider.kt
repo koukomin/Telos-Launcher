@@ -20,7 +20,9 @@ internal class RootProvider : PrivilegedAccessProvider {
     override suspend fun isAvailable(): Boolean {
         hasRoot?.let { return it }
         val granted = runAsRoot("id")
-        hasRoot = granted
+        // Only a positive result is cached: a denied/cancelled su prompt must not lock root out until
+        // the process restarts, the user may grant it later.
+        if (granted) hasRoot = true
         return granted
     }
 
@@ -50,8 +52,9 @@ internal class RootProvider : PrivilegedAccessProvider {
     // === TELOS_PENDING_REVIEW_END: multi_user_freeze ===
 
     private suspend fun runAsRoot(command: String): Boolean = withContext(Dispatchers.IO) {
+        var process: Process? = null
         try {
-            val process = Runtime.getRuntime().exec("su")
+            process = Runtime.getRuntime().exec("su")
             DataOutputStream(process.outputStream).use { stdin ->
                 stdin.writeBytes("$command\n")
                 stdin.writeBytes("exit\n")
@@ -60,6 +63,8 @@ internal class RootProvider : PrivilegedAccessProvider {
             process.waitFor() == 0
         } catch (e: Exception) {
             false
+        } finally {
+            process?.destroy()
         }
     }
 }

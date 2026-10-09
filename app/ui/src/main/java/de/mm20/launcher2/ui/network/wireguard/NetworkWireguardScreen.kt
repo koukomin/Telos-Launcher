@@ -13,6 +13,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -34,6 +35,9 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.ui.graphics.Color
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -114,9 +118,10 @@ fun NetworkWireguardScreen() {
     }
 
     Scaffold(
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
         topBar = {
             TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                 title = { Text(stringResource(R.string.nwg_title)) },
                 navigationIcon = {
                     IconButton(onClick = { backStack.removeLastOrNull() }) {
@@ -152,7 +157,10 @@ fun NetworkWireguardScreen() {
             }
         },
     ) { padding ->
-        LazyColumn(Modifier.fillMaxSize().padding(padding)) {
+        LazyColumn(
+            Modifier.fillMaxSize().padding(padding),
+            contentPadding = PaddingValues(bottom = 88.dp), // room for the add button
+        ) {
             item {
                 Box {
                     val current = configs.firstOrNull { it.id == systemDefault }
@@ -164,6 +172,7 @@ fun NetworkWireguardScreen() {
                                 Text(stringResource(R.string.nwg_system_default_summary))
                             }
                         },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                         modifier = Modifier.clickable { defaultMenu = true },
                     )
                     DropdownMenu(expanded = defaultMenu, onDismissRequest = { defaultMenu = false }) {
@@ -183,6 +192,7 @@ fun NetworkWireguardScreen() {
                     headlineContent = { Text(stringResource(R.string.nwg_apps)) },
                     supportingContent = { Text(stringResource(R.string.nwg_apps_summary)) },
                     leadingContent = { Icon(painterResource(IconsNetworkWireguardScreen.apps_24px), contentDescription = null) },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                     modifier = Modifier.clickable { backStack.add(NetworkWireguardAppsRoute) },
                 )
                 HorizontalDivider()
@@ -223,6 +233,7 @@ fun NetworkWireguardScreen() {
                     trailingContent = {
                         Switch(checked = c.enabled, onCheckedChange = { on -> scope.launch { wg.setEnabled(c.id, on) } })
                     },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent),
                     modifier = Modifier.clickable { editingIsNew = false; editing = c },
                 )
             }
@@ -319,7 +330,13 @@ private fun java.io.InputStream.readNBytesCompat(max: Int): ByteArray {
 }
 
 private fun decodeQr(context: Context, uri: Uri): String? = try {
-    val bmp = context.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it) } ?: return null
+    // read the size first and decode a smaller bitmap for big photos (avoids out-of-memory)
+    val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+    context.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, bounds) }
+    var sample = 1
+    while (bounds.outWidth / sample > 2048 || bounds.outHeight / sample > 2048) sample *= 2
+    val options = BitmapFactory.Options().apply { inSampleSize = sample }
+    val bmp = context.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, options) } ?: return null
     val pixels = IntArray(bmp.width * bmp.height)
     bmp.getPixels(pixels, 0, bmp.width, 0, 0, bmp.width, bmp.height)
     val source = RGBLuminanceSource(bmp.width, bmp.height, pixels)

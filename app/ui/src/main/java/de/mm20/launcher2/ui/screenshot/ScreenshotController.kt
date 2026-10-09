@@ -191,7 +191,7 @@ object ScreenshotController {
     }
 
     /** A file:// URI (Android 9 and below) must not leave the app: it is shared through the FileProvider */
-    private fun shareableUri(context: Context, uri: Uri): Uri {
+    internal fun shareableUri(context: Context, uri: Uri): Uri {
         if (uri.scheme != "file") return uri
         val path = uri.path ?: return uri
         return try {

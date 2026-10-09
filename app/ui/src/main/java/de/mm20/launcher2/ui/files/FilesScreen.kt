@@ -207,7 +207,7 @@ fun FilesScreen() {
                             onClose = { searching = false; vm.clearSearch() },
                         )
                         else -> TopAppBar(
-                            title = { Text(vm.path?.let { vm.connectionName(it)?.takeIf { _ -> RemotePath.isRoot(it) } ?: if (ArchivePath.isRoot(it)) nameOf(ArchivePath.archiveOf(it)) else if (de.mm20.launcher2.ui.files.vault.VaultPath.isRoot(it)) nameOf(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(it)) else nameOf(it) } ?: "Telos Files", maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                            title = { Text(vm.path?.let { vm.connectionName(it)?.takeIf { _ -> RemotePath.isRoot(it) } ?: if (ArchivePath.isRoot(it)) nameOf(ArchivePath.archiveOf(it)) else if (de.mm20.launcher2.ui.files.vault.VaultPath.isRoot(it)) nameOf(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(it)) else nameOf(it) } ?: stringResource(R.string.hc_telos_files), maxLines = 1, overflow = TextOverflow.Ellipsis) },
                             navigationIcon = {
                                 IconButton(onClick = { scope.launch { drawer.open() } }) {
                                     Icon(painterResource(Icons.storage_24px), contentDescription = stringResource(R.string.hc_storage))
@@ -397,7 +397,7 @@ private fun SortDialog(vm: FilesViewModel, onDismiss: () -> Unit) {
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         androidx.compose.material3.RadioButton(selected = vm.sort.key == key, onClick = { vm.updateSort(vm.sort.copy(key = key)) })
-                        Text(key.label, Modifier.padding(start = 8.dp))
+                        Text(stringResource(key.labelRes), Modifier.padding(start = 8.dp))
                     }
                 }
                 HorizontalDivider(Modifier.padding(vertical = 8.dp))
@@ -451,6 +451,7 @@ private fun PropertiesDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () -
     var count by remember { mutableStateOf<Int?>(null) }
     var hashes by remember { mutableStateOf<Map<String, String>>(emptyMap()) }
     var mode by remember { mutableStateOf("") }
+    val unavailableLabel = stringResource(R.string.au_files_unavailable)
     val scope = rememberCoroutineScope()
     LaunchedEffect(entry.path) {
         size = vm.sizeOf(entry)
@@ -461,7 +462,7 @@ private fun PropertiesDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () -
         title = { Text(entry.name, maxLines = 2, overflow = TextOverflow.Ellipsis) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Detail(stringResource(R.string.hf_files_prop_type), entry.kind.label + if (entry.extension.isNotEmpty()) " (.${entry.extension})" else "")
+                Detail(stringResource(R.string.hf_files_prop_type), stringResource(entry.kind.labelRes) + if (entry.extension.isNotEmpty()) " (.${entry.extension})" else "")
                 Detail(stringResource(R.string.hf_files_prop_location), parentOf(entry.path) ?: "/")
                 Detail(stringResource(R.string.hf_files_prop_size), size?.let { if (it < 0) stringResource(R.string.hf_files_unknown) else formatSize(it) + if (it >= 1024) " (" + stringResource(R.string.hf_files_bytes_exact, it) + ")" else "" } ?: stringResource(R.string.hf_files_calculating))
                 count?.let { if (it >= 0) Detail(stringResource(R.string.hf_files_prop_contains), "$it") }
@@ -475,7 +476,7 @@ private fun PropertiesDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () -
                     listOf("MD5" to "MD5", "SHA-1" to "SHA-1", "SHA-256" to "SHA-256").forEach { (label, algorithm) ->
                         val value = hashes[label]
                         if (value == null) {
-                            TextButton(onClick = { scope.launch { hashes = hashes + (label to vm.checksum(entry, algorithm).ifEmpty { "unavailable" }) } }) { Text(stringResource(R.string.hc_calculate_label, label)) }
+                            TextButton(onClick = { scope.launch { hashes = hashes + (label to vm.checksum(entry, algorithm).ifEmpty { unavailableLabel }) } }) { Text(stringResource(R.string.hc_calculate_label, label)) }
                         } else Detail(label, value)
                     }
                 }
@@ -520,7 +521,7 @@ private fun SelectionBar(
 ) {
     var more by remember { mutableStateOf(false) }
     TopAppBar(
-        title = { Text("$count selected") },
+        title = { Text(stringResource(R.string.au_files_selected_count, count)) },
         navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(Icons.close_24px), contentDescription = stringResource(R.string.hc_close)) } },
         actions = {
             IconButton(onClick = onCopy) { Icon(painterResource(Icons.content_copy_24px), contentDescription = stringResource(R.string.hc_copy)) }
@@ -568,9 +569,11 @@ private fun Breadcrumbs(vm: FilesViewModel, onGo: (String?) -> Unit) {
     val remote = RemotePath.isRemote(p)
     val volume = if (!vm.rootMode && !remote && !inArchive && !inVault) vm.volumes.firstOrNull { p == it.path || p.startsWith(it.path + "/") } else null
     val base = if (remote) "rem://" + RemotePath.idOf(p) else if (inArchive) ArchivePath.build(ArchivePath.archiveOf(p), "/").trimEnd('/') else if (inVault) de.mm20.launcher2.ui.files.vault.VaultPath.build(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(p), "/").trimEnd('/') else volume?.path ?: "/"
+    val homeLabel = stringResource(R.string.hf_files_home)
+    val storageLabel = stringResource(R.string.hc_storage)
     val crumbs = buildList<Pair<String, String?>> {
-        add("Home" to null)
-        add((if (remote) vm.connectionName(p) ?: "Storage" else if (inArchive) nameOf(ArchivePath.archiveOf(p)) else if (inVault) nameOf(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(p)) else volume?.name?.substringBefore(" (") ?: "/") to base)
+        add(homeLabel to null)
+        add((if (remote) vm.connectionName(p) ?: storageLabel else if (inArchive) nameOf(ArchivePath.archiveOf(p)) else if (inVault) nameOf(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(p)) else volume?.name?.substringBefore(" (") ?: "/") to base)
         var acc = base
         val rest = if (remote) RemotePath.innerOf(p) else if (inArchive) ArchivePath.innerOf(p) else if (inVault) de.mm20.launcher2.ui.files.vault.VaultPath.innerOf(p) else p.removePrefix(base)
         rest.trim('/').split('/').filter { it.isNotEmpty() }.forEach { seg -> acc = joinPath(acc, seg); add(seg to acc) }
@@ -789,7 +792,7 @@ private fun StorageCard(v: StorageVolume, onClick: () -> Unit) {
                 }
                 Column(Modifier.padding(start = 12.dp).weight(1f)) {
                     Text(v.name, style = MaterialTheme.typography.titleMedium)
-                    Text("${formatSize(v.free)} free of ${formatSize(v.total)}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.au_files_free_of, formatSize(v.free), formatSize(v.total)), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
             LinearProgressIndicator(progress = { fraction }, Modifier.fillMaxWidth().padding(top = 14.dp).height(8.dp).clip(RoundedCornerShape(4.dp)))
@@ -804,7 +807,7 @@ private fun StorageDrawer(vm: FilesViewModel, onGo: (String?) -> Unit, onRoot: (
         DrawerItem(Icons.home_24px, stringResource(R.string.hf_files_home), null, vm.path == null) { onGo(null) }
         Text(stringResource(R.string.hc_storage), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))
         vm.volumes.forEach { v ->
-            DrawerItem(Icons.storage_24px, v.name, "${formatSize(v.free)} free", vm.path?.startsWith(v.path) == true && !vm.rootMode) { onGo(v.path) }
+            DrawerItem(Icons.storage_24px, v.name, stringResource(R.string.au_files_free, formatSize(v.free)), vm.path?.startsWith(v.path) == true && !vm.rootMode) { onGo(v.path) }
         }
         if (vm.bookmarks.isNotEmpty()) {
             Text(stringResource(R.string.hc_favorites), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 4.dp))

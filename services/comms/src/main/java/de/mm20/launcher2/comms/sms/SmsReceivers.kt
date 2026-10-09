@@ -8,6 +8,7 @@ import android.net.Uri
 import android.provider.Telephony
 import android.util.Log
 import de.mm20.launcher2.base.containedScope
+import de.mm20.launcher2.comms.repository.SpamRepository
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,6 +19,7 @@ import java.io.File
 /** A text message arrives while Telos is the default SMS app: store it, then tell the user. */
 class SmsDeliverReceiver : BroadcastReceiver(), KoinComponent {
     private val settings: CommsSettings by inject()
+    private val spam: SpamRepository by inject()
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != Telephony.Sms.Intents.SMS_DELIVER_ACTION) return
@@ -29,6 +31,8 @@ class SmsDeliverReceiver : BroadcastReceiver(), KoinComponent {
         val pending = goAsync()
         containedScope(Dispatchers.IO).launch {
             try {
+                // a blocked number: kept in "Blocked messages", not stored in the conversations, no notification
+                if (BlockedMessages.interceptIfBlocked(context, spam, address, body, date)) return@launch
                 SmsStore.insertInbox(context, address, body, date)
                 SmsNotifier.incoming(context, settings, address, body)
             } finally {
@@ -43,7 +47,7 @@ class SmsSentReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val row = intent.data ?: return
         val type = if (resultCode == Activity.RESULT_OK) Telephony.Sms.MESSAGE_TYPE_SENT else Telephony.Sms.MESSAGE_TYPE_FAILED
-        SmsStore.setType(context, row, type)
+        SmsStore.setType(context, row, type, keepFailed = type == Telephony.Sms.MESSAGE_TYPE_SENT)
     }
 }
 
@@ -65,6 +69,7 @@ class MmsPushReceiver : BroadcastReceiver() {
 /** A multimedia message was fetched: read the file, store the message, tell the user. */
 class MmsDownloadedReceiver : BroadcastReceiver(), KoinComponent {
     private val settings: CommsSettings by inject()
+    private val spam: SpamRepository by inject()
 
     override fun onReceive(context: Context, intent: Intent) {
         val path = intent.getStringExtra("file") ?: return
@@ -81,11 +86,16 @@ class MmsDownloadedReceiver : BroadcastReceiver(), KoinComponent {
             try {
                 val message = runCatching { MmsPdu.parseRetrieved(file.readBytes()) }.getOrNull()
                 if (message != null) {
-                    MmsStore.insertIncoming(context, message, tid, from)
                     val address = message.from ?: from ?: "MMS"
                     val text = message.parts.firstOrNull { it.contentType.startsWith("text/plain") }
                         ?.let { String(it.data, Charsets.UTF_8) }
-                        ?: if (message.parts.any { it.contentType.startsWith("image/") }) "Picture" else "Multimedia message"
+                        ?: if (message.parts.any { it.contentType.startsWith("image/") }) SmsText.get(context, "au_messages_picture", "Picture")
+                        else SmsText.get(context, "au_messages_mms", "Multimedia message")
+                    // a blocked number: kept in "Blocked messages", no entry in the conversations, no notification
+                    val date = (message.dateSeconds ?: (System.currentTimeMillis() / 1000)) * 1000
+                    val bodyText = message.parts.filter { it.contentType.startsWith("text/plain") }.joinToString("") { String(it.data, Charsets.UTF_8) }
+                    if (BlockedMessages.interceptIfBlocked(context, spam, address, bodyText, date, message.parts)) return@launch
+                    MmsStore.insertIncoming(context, message, tid, from)
                     SmsNotifier.incoming(context, settings, address, text)
                 }
             } finally {

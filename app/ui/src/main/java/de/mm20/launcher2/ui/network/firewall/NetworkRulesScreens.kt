@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -72,7 +73,7 @@ fun NetworkUniversalRulesScreen() {
         scope.launch { fw.setUniversalRules(change(fw.universalRules.value)) }
     }
 
-    PreferenceScreen(title = { Text(stringResource(R.string.netfw_u_title)) }) {
+    PreferenceScreen(title = stringResource(R.string.netfw_u_title)) {
         item {
             Text(
                 stringResource(R.string.netfw_u_intro),
@@ -173,8 +174,8 @@ fun NetworkCustomRulesScreen() {
     val context = LocalContext.current
     val ipRules by fw.ipRules.collectAsState()
     val domainRules by fw.domainRules.collectAsState()
-    var cq by remember { mutableStateOf("") }
-    var dialog by remember { mutableStateOf<Boolean?>(null) } // true = IP rule, false = domain rule
+    var cq by rememberSaveable { mutableStateOf("") }
+    var dialog by rememberSaveable { mutableStateOf<Boolean?>(null) } // true = IP rule, false = domain rule
 
     fun scopeText(scope: RuleScope) = when (scope) {
         RuleScope.System -> context.getString(R.string.netfw_c_all_apps)
@@ -186,7 +187,7 @@ fun NetworkCustomRulesScreen() {
     val shownDomains = domainRules.filter { cq.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(cq, it.domain, scopeText(it.scope)) }
     val shownIps = ipRules.filter { cq.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(cq, it.address, it.port.takeIf { p -> p != 0 }?.toString(), it.protocol?.name, scopeText(it.scope)) }
 
-    PreferenceScreen(title = { Text(stringResource(R.string.netfw_c_title)) }) {
+    PreferenceScreen(title = stringResource(R.string.netfw_c_title)) {
         item {
             de.mm20.launcher2.ui.component.TelosSearchBar(cq, { cq = it }, stringResource(R.string.hc_search))
         }

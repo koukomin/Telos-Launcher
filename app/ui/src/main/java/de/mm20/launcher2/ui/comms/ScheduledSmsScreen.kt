@@ -6,6 +6,17 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import android.Manifest
+import android.content.pm.PackageManager
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.core.content.ContextCompat
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -20,6 +31,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.comms.sms.ScheduledSmsStore
+import de.mm20.launcher2.comms.sms.SmsSims
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import kotlinx.serialization.Serializable
 import java.text.SimpleDateFormat
@@ -41,7 +53,28 @@ fun ScheduledSmsScreen() {
     androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
         exact = ScheduledSmsStore.canScheduleExact(context)
     }
+    var smsGranted by remember {
+        mutableStateOf(ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED)
+    }
+    val smsLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { smsGranted = it }
+    val sims = remember { SmsSims.active(context) }
+    var simId by remember { mutableStateOf(-1) }
+    // preselect the SIM used last for this number (or the system default)
+    androidx.compose.runtime.LaunchedEffect(number, sims) {
+        if (sims.size >= 2) simId = SmsSims.preselected(context, number.trim(), sims)?.subId ?: sims.first().subId
+    }
+    val canSave = number.isNotBlank() && body.isNotBlank()
     PreferenceScreen(title = { Text(stringResource(R.string.hc_scheduled_sms)) }) {
+        if (!smsGranted) {
+            item {
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.au_messages_scheduled_permission)) },
+                    trailingContent = {
+                        TextButton(onClick = { smsLauncher.launch(Manifest.permission.SEND_SMS) }) { Text(stringResource(R.string.hc_allow)) }
+                    },
+                )
+            }
+        }
         if (!exact) {
             item {
                 ListItem(
@@ -67,6 +100,8 @@ fun ScheduledSmsScreen() {
                 value = number,
                 onValueChange = { number = it },
                 label = { Text(stringResource(R.string.hc_number)) },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
             )
         }
@@ -78,8 +113,17 @@ fun ScheduledSmsScreen() {
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
             )
         }
+        if (sims.size >= 2) item {
+            SimChooser(sims, simId, { simId = it }, Modifier.padding(horizontal = 16.dp, vertical = 4.dp))
+        }
         item {
-            TextButton(onClick = {
+            Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            if (!canSave) Text(
+                stringResource(R.string.au_messages_scheduled_fill_fields),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            TextButton(enabled = canSave, onClick = {
                 val cal = Calendar.getInstance().apply { add(Calendar.MINUTE, 5) }
                 DatePickerDialog(
                     context,
@@ -92,9 +136,18 @@ fun ScheduledSmsScreen() {
                             { _, h, min ->
                                 cal.set(Calendar.HOUR_OF_DAY, h)
                                 cal.set(Calendar.MINUTE, min)
-                                if (number.isNotBlank() && body.isNotBlank()) {
-                                    ScheduledSmsStore.add(context, number, body, cal.timeInMillis)
+                                cal.set(Calendar.SECOND, 0)
+                                cal.set(Calendar.MILLISECOND, 0)
+                                if (cal.timeInMillis <= System.currentTimeMillis()) {
+                                    Toast.makeText(context, R.string.au_messages_scheduled_past, Toast.LENGTH_SHORT).show()
+                                } else if (canSave) {
+                                    val sub = if (sims.size >= 2) simId else -1
+                                    if (sub >= 0) SmsSims.remember(context, number.trim(), sub)
+                                    ScheduledSmsStore.add(context, number.trim(), body, cal.timeInMillis, sub)
                                     items = ScheduledSmsStore.list(context)
+                                    number = ""
+                                    body = ""
+                                    Toast.makeText(context, R.string.au_messages_scheduled_saved, Toast.LENGTH_SHORT).show()
                                 }
                             },
                             cal.get(Calendar.HOUR_OF_DAY),
@@ -107,12 +160,28 @@ fun ScheduledSmsScreen() {
                     cal.get(Calendar.DAY_OF_MONTH),
                 ).show()
             }) { Text(stringResource(R.string.hc_pick_time_and_save)) }
+            }
+        }
+        if (items.isEmpty()) {
+            item {
+                Column(Modifier.fillMaxWidth().padding(32.dp), horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
+                    Text(stringResource(R.string.au_messages_scheduled_empty_title), style = MaterialTheme.typography.titleMedium)
+                    Text(
+                        stringResource(R.string.au_messages_scheduled_empty_hint),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
         }
         items.forEach { sms ->
             item {
                 ListItem(
                     headlineContent = { Text(sms.number) },
-                    supportingContent = { Text("${fmt.format(Date(sms.atEpochMs))} · ${sms.body}") },
+                    supportingContent = {
+                        val simLabel = sims.firstOrNull { it.subId == sms.subId }?.label
+                        Text("${fmt.format(Date(sms.atEpochMs))}${if (simLabel != null) " · $simLabel" else ""} · ${sms.body}")
+                    },
                     trailingContent = {
                         TextButton(onClick = {
                             ScheduledSmsStore.remove(context, sms.id)

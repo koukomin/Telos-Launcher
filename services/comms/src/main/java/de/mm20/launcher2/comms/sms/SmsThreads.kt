@@ -60,7 +60,7 @@ object SmsThreads {
             while (c.moveToNext()) {
                 val numbers = c.getString(recipients).orEmpty().split(' ').mapNotNull { it.toLongOrNull() }.mapNotNull { addresses[it] }
                 if (numbers.isEmpty()) continue
-                val text = c.getString(snippet).orEmpty().ifBlank { if (attachment >= 0 && c.getInt(attachment) > 0) "Attachment" else "" }
+                val text = c.getString(snippet).orEmpty().ifBlank { if (attachment >= 0 && c.getInt(attachment) > 0) SmsText.get(context, "au_messages_attachment", "Attachment") else "" }
                 out += SmsConversation(c.getLong(id), numbers.joinToString(", "), null, text, c.getLong(date), if (c.getInt(read) == 0) 1 else 0)
             }
         }
@@ -105,25 +105,39 @@ object SmsThreads {
     /** The messages of one conversation, oldest first, with what was sent from Telos mixed in. */
     fun messages(context: Context, conversation: SmsConversation): List<SmsMessage> = runCatching {
         val out = mutableListOf<SmsMessage>()
-        if (conversation.threadId >= 0) {
+        val threadId = if (conversation.threadId >= 0) conversation.threadId else threadOf(context, conversation.address)
+        if (threadId >= 0) {
             context.contentResolver.query(
                 Telephony.Sms.CONTENT_URI,
                 arrayOf(Telephony.Sms._ID, Telephony.Sms.BODY, Telephony.Sms.DATE, Telephony.Sms.TYPE),
-                "${Telephony.Sms.THREAD_ID} = ?", arrayOf(conversation.threadId.toString()),
+                "${Telephony.Sms.THREAD_ID} = ?", arrayOf(threadId.toString()),
                 "${Telephony.Sms.DATE} DESC LIMIT 500",
             )?.use { c ->
                 while (c.moveToNext()) {
                     val type = c.getInt(3)
-                    out += SmsMessage("s${c.getLong(0)}", c.getString(1).orEmpty(), c.getLong(2), type != Telephony.Sms.MESSAGE_TYPE_INBOX)
+                    out += SmsMessage(
+                        "s${c.getLong(0)}", c.getString(1).orEmpty(), c.getLong(2), type != Telephony.Sms.MESSAGE_TYPE_INBOX,
+                        failed = type == Telephony.Sms.MESSAGE_TYPE_FAILED,
+                    )
                 }
             }
         }
-        if (conversation.threadId >= 0) out += mmsMessages(context, conversation.threadId)
+        if (threadId >= 0) out += mmsMessages(context, threadId)
         SentLog.all(context)
             .filter { de.mm20.launcher2.comms.PhoneNumbers.match(it.first, conversation.address) }
             .forEach { out += it.second }
         out.sortedBy { it.date }
     }.getOrDefault(emptyList())
+
+    /**
+     * The thread of a number that has no conversation yet (a message was just written to it). Only the
+     * default SMS app may create it; otherwise there is none and -1 is returned.
+     */
+    private fun threadOf(context: Context, address: String): Long = runCatching {
+        val numbers = address.split(",").map { it.trim() }.filter { it.isNotBlank() }.toSet()
+        if (numbers.isEmpty() || !SmsRole.isDefault(context)) -1L
+        else Telephony.Threads.getOrCreateThreadId(context, numbers)
+    }.getOrDefault(-1L)
 
     private fun mmsMessages(context: Context, threadId: Long): List<SmsMessage> = runCatching {
         val out = mutableListOf<SmsMessage>()
@@ -158,6 +172,9 @@ object SmsThreads {
         out
     }.getOrDefault(emptyList())
 
+    /** The name of the contact with [number], if any */
+    fun displayNameOf(context: Context, number: String): String? = displayName(context, number)
+
     internal fun displayName(context: Context, number: String): String? = runCatching {
         if (number.isBlank()) return null
         val uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number))
@@ -171,9 +188,9 @@ object SmsThreads {
      * copy is kept by Telos (the system does not store what another app sends). Returns false when
      * it could not be sent.
      */
-    fun send(context: Context, address: String, text: String): Boolean {
+    fun send(context: Context, address: String, text: String, subId: Int = -1): Boolean {
         if (address.isBlank() || text.isBlank()) return false
-        val row = SmsStore.insertOutgoing(context, address, text.trim())
+        val row = SmsStore.insertOutgoing(context, address, text.trim(), subId)
         val sentIntent = row?.let {
             android.app.PendingIntent.getBroadcast(
                 context, it.hashCode(),
@@ -182,21 +199,21 @@ object SmsThreads {
                     (if (android.os.Build.VERSION.SDK_INT >= 31) android.app.PendingIntent.FLAG_MUTABLE else 0),
             )
         }
-        val sent = SmsRepository(context).sendSms(address, text.trim(), sentIntent)
+        val sent = SmsRepository(context).sendSms(address, text.trim(), sentIntent, subId)
         if (!sent) row?.let { SmsStore.setType(context, it, Telephony.Sms.MESSAGE_TYPE_FAILED) }
         if (sent && row == null) SentLog.add(context, address, text.trim())
         return sent
     }
 
     /** Sends a multimedia message: [text] and the pictures or videos at [attachments]. Default SMS app only. */
-    fun sendMms(context: Context, addresses: List<String>, text: String, attachments: List<Uri>): Boolean {
+    fun sendMms(context: Context, addresses: List<String>, text: String, attachments: List<Uri>, subId: Int = -1): Boolean {
         if (!SmsRole.isDefault(context) || addresses.isEmpty()) return false
         val parts = mutableListOf<MmsPart>()
         if (text.isNotBlank()) parts += MmsPart("text/plain", "text.txt", text.trim().toByteArray(Charsets.UTF_8))
         attachments.forEachIndexed { i, uri -> MmsMedia.read(context, uri, i)?.let { parts += it } }
         if (parts.isEmpty()) return false
-        val row = MmsStore.insertOutgoing(context, addresses, parts)
-        val ok = MmsTransport.send(context, addresses, parts, row)
+        val row = MmsStore.insertOutgoing(context, addresses, parts, subId)
+        val ok = MmsTransport.send(context, addresses, parts, row, subId)
         if (!ok) row?.let { MmsStore.setBox(context, it, Telephony.Mms.MESSAGE_BOX_FAILED) }
         return ok
     }

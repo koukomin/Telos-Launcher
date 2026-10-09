@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au2_callsec_sip_verify">Verify the server certificate</string>
+    <string name="au2_callsec_sip_verify_hint">A FRITZ!Box with its own (self-signed) certificate usually needs this switched off.</string>
+    <string name="au2_callsec_sip_err_tls">The server certificate could not be verified. Check the server address, or switch off \"Verify the server certificate\" for a FRITZ!Box with a self-signed certificate.</string>
+    <string name="au2_callsec_cannot_confirm">The confirmation prompt cannot be shown here, so the call was not placed.</string>
+    <string name="au2_callsec_block_international_summary">Reject calls from other countries than your home country</string>
+    <string name="au2_callsec_home_country">Home country</string>
+    <string name="au2_callsec_home_country_auto">Automatic (SIM, network, language)</string>
+</resources>

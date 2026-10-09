@@ -26,6 +26,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.network.api.DnsKind
 import de.mm20.launcher2.network.api.DnsServer
+import de.mm20.launcher2.network.api.InsecureDnsUrlException
 import de.mm20.launcher2.network.impl.dns.DnsCatalog
 import de.mm20.launcher2.network.impl.dns.NextDns
 import de.mm20.launcher2.ui.R
@@ -52,6 +53,7 @@ internal fun DnsServerForm(
     var relay by remember { mutableStateOf(initial.relay.orEmpty()) }
     var bootstrap by remember { mutableStateOf(initial.bootstrapIps.joinToString(", ")) }
     var error by remember { mutableStateOf(false) }
+    var insecure by remember { mutableStateOf(false) }
     var testing by remember { mutableStateOf(false) }
     var testResult by remember { mutableStateOf<Result<Long>?>(null) }
 
@@ -81,7 +83,7 @@ internal fun DnsServerForm(
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     FORM_KINDS.forEach { k ->
-                        FilterChip(selected = kind == k, onClick = { kind = k; error = false }, label = { Text(kindLabel(k)) })
+                        FilterChip(selected = kind == k, onClick = { kind = k; error = false; insecure = false }, label = { Text(kindLabel(k)) })
                     }
                 }
                 OutlinedTextField(
@@ -89,10 +91,10 @@ internal fun DnsServerForm(
                     label = { Text(stringResource(R.string.net_dns_field_name)) }, modifier = Modifier.fillMaxWidth(),
                 )
                 OutlinedTextField(
-                    value = url, onValueChange = { url = it; error = false },
+                    value = url, onValueChange = { url = it; error = false; insecure = false },
                     label = { Text(urlLabel) }, modifier = Modifier.fillMaxWidth(),
                     isError = error, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri),
-                    supportingText = if (error) ({ Text(stringResource(R.string.net_dns_invalid)) }) else null,
+                    supportingText = if (error) ({ Text(stringResource(if (insecure) R.string.au2_netsec_http_not_allowed else R.string.net_dns_invalid)) }) else null,
                 )
                 if (kind == DnsKind.DnsCrypt) {
                     Text(stringResource(R.string.net_dns_field_relay), style = MaterialTheme.typography.labelMedium)
@@ -135,8 +137,12 @@ internal fun DnsServerForm(
         confirmButton = {
             TextButton(onClick = {
                 val s = build()
-                if (validate(s).isFailure || s.name.isEmpty()) error = true
-                else onSave(s) { r -> if (r.isFailure) error = true }
+                val v = validate(s)
+                insecure = v.exceptionOrNull() is InsecureDnsUrlException
+                if (v.isFailure || s.name.isEmpty()) error = true
+                else onSave(s) { r ->
+                    if (r.isFailure) { insecure = r.exceptionOrNull() is InsecureDnsUrlException; error = true }
+                }
             }) { Text(stringResource(R.string.net_dns_save)) }
         },
         dismissButton = {
@@ -145,7 +151,12 @@ internal fun DnsServerForm(
                     enabled = !testing,
                     onClick = {
                         val s = build()
-                        if (validate(s).isFailure) { error = true; return@TextButton }
+                        val v = validate(s)
+                        if (v.isFailure) {
+                            insecure = v.exceptionOrNull() is InsecureDnsUrlException
+                            error = true
+                            return@TextButton
+                        }
                         testing = true
                         scope.launch { testResult = test(s); testing = false }
                     },

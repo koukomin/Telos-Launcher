@@ -79,7 +79,7 @@ class CalendarViewModel(app: android.app.Application) : AndroidViewModel(app) {
                 events.value = repo.events(first.minusDays(7), month.value.atEndOfMonth().plusDays(7), cals)
                 calendars.value = cals
                 upcoming.value = repo.events(LocalDate.now(), LocalDate.now().plusDays(30), cals)
-            } catch (e: SecurityException) { }
+            } catch (e: Exception) { if (e is kotlinx.coroutines.CancellationException) throw e }
         }
     }
 
@@ -98,6 +98,31 @@ private data class Draft(
     val rrule: String? = null, val instanceStart: Long = 0,
 )
 
+private val draftSaver = androidx.compose.runtime.saveable.Saver<Draft?, String>(
+    save = { d ->
+        if (d == null) "" else org.json.JSONObject().apply {
+            d.id?.let { put("id", it) }
+            put("cal", d.calendarId); put("title", d.title); put("desc", d.description); put("loc", d.location)
+            put("start", d.start.toString()); put("end", d.end.toString()); put("allDay", d.allDay); put("repeat", d.repeat)
+            d.reminder?.let { put("rem", it) }
+            d.rrule?.let { put("rrule", it) }
+            put("inst", d.instanceStart)
+        }.toString()
+    },
+    restore = { s ->
+        if (s.isEmpty()) null else runCatching {
+            val o = org.json.JSONObject(s)
+            Draft(
+                id = if (o.has("id")) o.getLong("id") else null, calendarId = o.getLong("cal"), title = o.getString("title"),
+                description = o.getString("desc"), location = o.getString("loc"),
+                start = LocalDateTime.parse(o.getString("start")), end = LocalDateTime.parse(o.getString("end")),
+                allDay = o.getBoolean("allDay"), repeat = o.getInt("repeat"), reminder = if (o.has("rem")) o.getInt("rem") else null,
+                rrule = if (o.has("rrule")) o.getString("rrule") else null, instanceStart = o.getLong("inst"),
+            )
+        }.getOrNull()
+    },
+)
+
 private val repeatRules = listOf(null, "FREQ=DAILY", "FREQ=WEEKLY", "FREQ=MONTHLY", "FREQ=YEARLY")
 
 private fun repeatIndex(rrule: String?) = repeatRules.indexOf(rrule?.split(';')?.firstOrNull { it.startsWith("FREQ") }).coerceAtLeast(0)
@@ -107,14 +132,27 @@ fun CalendarScreen() {
     val vm: CalendarViewModel = viewModel()
     val context = LocalContext.current
     var granted by remember { mutableStateOf(hasPermission(context)) }
-    val permLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { granted = hasPermission(context); vm.reload() }
+    var blocked by remember { mutableStateOf(false) }
+    val permLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+        granted = hasPermission(context); vm.reload()
+        // denied and no rationale left: the system will not ask again, only the app settings can grant it
+        val activity = generateSequence(context) { (it as? android.content.ContextWrapper)?.baseContext }.filterIsInstance<android.app.Activity>().firstOrNull()
+        blocked = !granted && activity != null && listOf(Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)
+            .none { p -> androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale(activity, p) }
+    }
+    // coming back from the app settings
+    androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) { granted = hasPermission(context) }
     LaunchedEffect(granted) { if (granted) vm.reload() }
 
     Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface).systemBarsPadding()) {
         if (!granted) {
             Column(Modifier.fillMaxSize().padding(32.dp), Arrangement.Center, Alignment.CenterHorizontally) {
                 Text(stringResource(R.string.cal_permission), textAlign = TextAlign.Center)
-                Button(onClick = { permLauncher.launch(arrayOf(Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)) }, modifier = Modifier.padding(top = 16.dp)) {
+                if (blocked) {
+                    Button(onClick = {
+                        context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", context.packageName, null)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                    }, modifier = Modifier.padding(top = 16.dp)) { Text(stringResource(R.string.au_planner_open_settings)) }
+                } else Button(onClick = { permLauncher.launch(arrayOf(Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)) }, modifier = Modifier.padding(top = 16.dp)) {
                     Text(stringResource(R.string.cal_grant))
                 }
             }
@@ -131,7 +169,8 @@ private fun CalendarContent(vm: CalendarViewModel) {
     val month by vm.month.collectAsState()
     val selected by vm.selected.collectAsState()
     val message by vm.message.collectAsState()
-    var draft by remember { mutableStateOf<Draft?>(null) }
+    var draft by rememberSaveable(stateSaver = draftSaver) { mutableStateOf<Draft?>(null) }
+    var confirmDelete by remember { mutableStateOf<Long?>(null) }
     var menu by remember { mutableStateOf(false) }
     var showCalendars by remember { mutableStateOf(false) }
     var agenda by rememberSaveable { mutableStateOf(false) }
@@ -198,7 +237,16 @@ private fun CalendarContent(vm: CalendarViewModel) {
                 }
                 draft = null
             },
-            onDelete = { id -> vm.io { vm.repo.delete(id) }; draft = null })
+            onDelete = { id -> if (e.rrule != null) confirmDelete = id else { vm.io { vm.repo.delete(id) }; draft = null } })
+        confirmDelete?.let { id ->
+            AlertDialog(
+                onDismissRequest = { confirmDelete = null },
+                title = { Text(stringResource(R.string.au_planner_delete_series_title)) },
+                text = { Text(stringResource(R.string.au_planner_delete_series_message)) },
+                confirmButton = { TextButton(onClick = { confirmDelete = null; vm.io { vm.repo.delete(id) }; draft = null }) { Text(stringResource(R.string.cal_delete)) } },
+                dismissButton = { TextButton(onClick = { confirmDelete = null }) { Text(stringResource(R.string.cal_cancel)) } },
+            )
+        }
         return
     }
 
@@ -263,12 +311,16 @@ private fun CalendarContent(vm: CalendarViewModel) {
                 LazyColumn(contentPadding = PaddingValues(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     byDay.forEach { (day, evs) ->
                         item(key = "h$day") { Text(day.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 8.dp)) }
-                        items(evs.sortedBy { it.begin }, key = { "$day-${it.id}-${it.begin}" }) { ev -> EventRow(ev, false) {} }
+                        items(evs.sortedBy { it.begin }, key = { "$day-${it.id}-${it.begin}" }) { ev -> EventRow(ev, writable.any { it.id == ev.calendarId }) { openEvent(ev) } }
                     }
                 }
                 return@Scaffold
             }
-            MonthGrid(month, selected, events, onSelect = { vm.selected.value = it })
+            MonthGrid(month, selected, events, onSelect = {
+                vm.selected.value = it
+                // a day of the previous or next month shown in the grid: move to that month
+                if (YearMonth.from(it) != month) vm.go(YearMonth.from(it))
+            })
             HorizontalDivider(Modifier.padding(vertical = 8.dp))
             val dayEvents = events.filter { selected in it.firstDay..it.lastDay }.sortedWith(compareByDescending<CalEvent> { it.allDay }.thenBy { it.begin })
             Text(selected.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(horizontal = 16.dp))
@@ -310,7 +362,7 @@ private fun MonthGrid(month: YearMonth, selected: LocalDate, events: List<CalEve
                     Column(
                         Modifier.weight(1f).height(48.dp).padding(2.dp).clip(RoundedCornerShape(12.dp))
                             .background(if (day == selected) MaterialTheme.colorScheme.primaryContainer else Color.Transparent)
-                            .clickable { onSelect(day); if (!inMonth) { } },
+                            .clickable { onSelect(day) },
                         horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center,
                     ) {
                         Text(day.dayOfMonth.toString(), style = MaterialTheme.typography.bodyMedium,
@@ -358,7 +410,7 @@ private fun EventEditor(d: Draft, writable: List<DeviceCalendar>, all: List<Devi
     val reminders = listOf(null, 0, 10, 30, 60, 1440)
     val cal = all.firstOrNull { it.id == d.calendarId }
 
-    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface).verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface).imePadding().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onDismiss) { Icon(painterResource(R.drawable.close_24px), stringResource(R.string.cal_cancel)) }
             Text(stringResource(if (d.id == null) R.string.cal_new_event else R.string.cal_edit_event), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))

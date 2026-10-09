@@ -33,11 +33,12 @@ internal class Cfb(private val b: ByteArray) {
         var guard = 0
         while (difat >= 0 && guard++ < 10000) {
             val o = off(difat)
+            if (o < 0 || o + secSize > b.size) break
             for (i in 0 until secSize / 4 - 1) { val s = u32(o + 4 * i); if (s >= 0) fatSecs += s }
             difat = u32(o + secSize - 4)
         }
         val f = ArrayList<Int>()
-        for (s in fatSecs) { val o = off(s); if (o + secSize > b.size) break; for (i in 0 until secSize / 4) f += u32(o + 4 * i) }
+        for (s in fatSecs) { val o = off(s); if (o < 0 || o + secSize > b.size) break; for (i in 0 until secSize / 4) f += u32(o + 4 * i) }
         fat = f.toIntArray()
         miniFat = if (miniFatStart >= 0) readChain(miniFatStart, Long.MAX_VALUE).let { d -> IntArray(d.size / 4) { i -> (d[4 * i].toInt() and 0xFF) or ((d[4 * i + 1].toInt() and 0xFF) shl 8) or ((d[4 * i + 2].toInt() and 0xFF) shl 16) or ((d[4 * i + 3].toInt() and 0xFF) shl 24) } } else IntArray(0)
         val dir = readChain(dirStart, Long.MAX_VALUE)
@@ -60,7 +61,8 @@ internal class Cfb(private val b: ByteArray) {
         val out = ByteArrayOutputStream()
         var s = start
         var guard = 0
-        while (s >= 0 && guard++ < 4_000_000 && out.size() < size) {
+        // a cyclic chain must not be followed endlessly
+        while (s >= 0 && guard++ <= fat.size && out.size() < size) {
             val o = off(s)
             if (o < 0 || o + secSize > b.size) break
             out.write(b, o, secSize)
@@ -78,7 +80,7 @@ internal class Cfb(private val b: ByteArray) {
         val out = ByteArrayOutputStream()
         var s = e.start
         var guard = 0
-        while (s >= 0 && guard++ < 1_000_000 && out.size() < e.size) {
+        while (s >= 0 && guard++ <= miniFat.size && out.size() < e.size) {
             val o = s * miniSize
             if (o + miniSize > miniStream.size) break
             out.write(miniStream, o, miniSize)
@@ -99,6 +101,7 @@ internal object LegacyReaders {
         val wd = cfb.stream("WordDocument") ?: error("no WordDocument")
         require(wd.u16(0) == 0xA5EC) { "unsupported Word version" }
         val flags = wd.u16(0x0A)
+        if (flags and 0x100 != 0) throw SecurityException("encrypted")
         val table = cfb.stream(if (flags and 0x200 != 0) "1Table" else "0Table") ?: error("no table stream")
         val ccpText = wd.u32(0x4C)
         val fcClx = wd.u32(0x1A2)
@@ -219,6 +222,8 @@ internal object LegacyReaders {
                     for (i in 0 until count.coerceAtMost(500_000)) { if (!r.more()) break; sst += r.readString() }
                 }
                 0x85 -> {
+                    // only worksheets (not chart or macro sheets) have a sheet stream of their own that is shown
+                    if (wb.u8(d + 5) != 0) { pos = d + len; continue }
                     val cch = wb.u8(d + 6); val wide = wb.u8(d + 7) and 1 != 0
                     names += if (wide) String(wb, d + 8, cch * 2, Charsets.UTF_16LE) else String(wb, d + 8, cch, charset("windows-1252"))
                 }
@@ -256,7 +261,7 @@ internal object LegacyReaders {
         return sheets.mapIndexed { i, m ->
             var maxR = -1; var maxC = -1
             for (k in m.keys) { val r = (k shr 20).toInt(); val c = (k and 0xFFFFF).toInt(); if (r > maxR) maxR = r; if (c > maxC) maxC = c }
-            OfficeSheet(names.getOrNull(i) ?: "Sheet ${i + 1}", maxR + 1, maxC + 1, m, emptyMap(), false)
+            OfficeSheet(names.getOrNull(i).orEmpty(), maxR + 1, maxC + 1, m, emptyMap(), false)
         }
     }
 
@@ -302,6 +307,7 @@ internal class LegacyDoc(file: File, val ext: String) : OfficeDoc(file) {
     private val slideList: List<OfficeSlide>
 
     init {
+        if (file.length() > 64L * 1024 * 1024) throw IllegalArgumentException("file too large")
         val cfb = Cfb(file.readBytes())
         paragraphs = if (ext == "doc") LegacyReaders.word(cfb) else emptyList()
         sheetList = if (ext == "xls") LegacyReaders.excel(cfb) else emptyList()
@@ -372,22 +378,30 @@ internal object OoxmlWriter {
         parts += "[Content_Types].xml" to "<Types xmlns=\"$CT\"><Default Extension=\"rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/><Default Extension=\"xml\" ContentType=\"application/xml\"/><Override PartName=\"/xl/workbook.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml\"/>" +
             list.indices.joinToString("") { "<Override PartName=\"/xl/worksheets/sheet${it + 1}.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml\"/>" } + "</Types>"
         parts += "_rels/.rels" to rels(Triple("rId1", "officeDocument", "xl/workbook.xml"))
+        // sheet names: at most 31 characters, none of \ / ? * [ ] :, not starting or ending with an apostrophe, unique ignoring case
+        val usedNames = HashSet<String>()
+        val sheetNames = list.mapIndexed { i, s ->
+            val base = s.name.replace(Regex("[\\\\/?*\\[\\]:]"), "_").trim('\'').take(31).trim('\'').ifEmpty { "Sheet${i + 1}" }
+            var n = base
+            var k = 2
+            while (!usedNames.add(n.lowercase())) { val suffix = " ($k)"; n = base.take(31 - suffix.length) + suffix; k++ }
+            n
+        }
         parts += "xl/workbook.xml" to "<workbook xmlns=\"$NS_S\" xmlns:r=\"$R\"><sheets>" +
-            list.mapIndexed { i, s -> "<sheet name=\"${esc(s.name.take(31).replace(Regex("[\\\\/?*\\[\\]:]"), "_").ifEmpty { "Sheet${i + 1}" })}\" sheetId=\"${i + 1}\" r:id=\"rId${i + 1}\"/>" }.joinToString("") + "</sheets></workbook>"
+            sheetNames.mapIndexed { i, n -> "<sheet name=\"${esc(n)}\" sheetId=\"${i + 1}\" r:id=\"rId${i + 1}\"/>" }.joinToString("") + "</sheets></workbook>"
         parts += "xl/_rels/workbook.xml.rels" to rels(*list.indices.map { Triple("rId${it + 1}", "worksheet", "worksheets/sheet${it + 1}.xml") }.toTypedArray())
-        val number = Regex("""-?\d+(\.\d+)?([eE][+-]?\d+)?""")
         list.forEachIndexed { si, s ->
             val rows = StringBuilder()
-            for (r in 0 until s.rows) {
+            // only the filled cells are visited, a sheet can be 65,536 rows by 256 columns
+            val byRow = s.cells().entries.filter { it.value.isNotEmpty() }.sortedBy { it.key }.groupBy { (it.key shr 20).toInt() }
+            for ((r, cellList) in byRow) {
                 val cells = StringBuilder()
-                for (c in 0 until s.cols) {
-                    val v = s.value(r, c)
-                    if (v.isEmpty()) continue
-                    val ref = colName(c) + (r + 1)
-                    if (number.matches(v)) cells.append("<c r=\"$ref\"><v>$v</v></c>")
+                for ((k, v) in cellList) {
+                    val ref = colName((k and 0xFFFFF).toInt()) + (r + 1)
+                    if (isPlainNumber(v) && v == v.trim()) cells.append("<c r=\"$ref\"><v>$v</v></c>")
                     else cells.append("<c r=\"$ref\" t=\"inlineStr\"><is><t xml:space=\"preserve\">${esc(v)}</t></is></c>")
                 }
-                if (cells.isNotEmpty()) rows.append("<row r=\"${r + 1}\">$cells</row>")
+                rows.append("<row r=\"${r + 1}\">$cells</row>")
             }
             parts += "xl/worksheets/sheet${si + 1}.xml" to "<worksheet xmlns=\"$NS_S\"><sheetData>$rows</sheetData></worksheet>"
         }

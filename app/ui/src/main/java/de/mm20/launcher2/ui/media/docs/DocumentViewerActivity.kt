@@ -19,6 +19,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.calculateCentroid
 import androidx.compose.foundation.gestures.calculateZoom
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -102,7 +103,7 @@ import java.io.File
 private const val TEXT_EDIT_LIMIT = 2 * 1024 * 1024
 
 /**
- * Telos Photos as a viewer for documents: PDF pages (with search and page jump), text files (that can be edited), and
+ * Telos Viewer as a viewer for documents: PDF pages (with search and page jump), text files (that can be edited), and
  * Word, Excel, PowerPoint and OpenDocument files (preview and editing, old binary formats read-only or converted).
  * The page layout and fonts of Office files are not reproduced.
  */
@@ -160,8 +161,11 @@ private class PdfDoc(val file: File) {
 
     @Synchronized
     fun render(page: Int, width: Int): Bitmap = renderer.openPage(page).use { p ->
-        val height = (width * p.height / p.width.toFloat()).toInt().coerceAtLeast(1)
-        Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888).also {
+        // a zoomed page must not need more than ~16 megapixels (64 MB), or several visible pages run out of memory
+        val ratio = p.height / p.width.toFloat()
+        val w = minOf(width.toFloat(), kotlin.math.sqrt(16_000_000f / ratio)).toInt().coerceAtLeast(1)
+        val height = (w * ratio).toInt().coerceAtLeast(1)
+        Bitmap.createBitmap(w, height, Bitmap.Config.ARGB_8888).also {
             it.eraseColor(AndroidColor.WHITE)
             p.render(it, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
         }
@@ -239,7 +243,11 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
     val office = (state as? DocState.Office)?.controller
     BackHandler(enabled = editing || office?.editing == true) {
         if (office != null) { if (office.isDirty) confirmDiscard = true else office.discard() }
-        else editing = false
+        else {
+            val t = state as? DocState.Text
+            // unsaved text edits are not thrown away silently
+            if (t != null && editText != t.text) confirmDiscard = true else editing = false
+        }
     }
 
     fun savedMessage() { message = context.getString(R.string.od_saved) }
@@ -435,12 +443,12 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
         }
     }
 
-    if (confirmDiscard && office != null) {
+    if (confirmDiscard && (office != null || editing)) {
         AlertDialog(
             onDismissRequest = { confirmDiscard = false },
             title = { Text(stringResource(R.string.od_discard_title)) },
             text = { Text(stringResource(R.string.od_discard_text)) },
-            confirmButton = { TextButton(onClick = { confirmDiscard = false; office.discard() }) { Text(stringResource(R.string.od_discard)) } },
+            confirmButton = { TextButton(onClick = { confirmDiscard = false; if (office != null) office.discard() else editing = false }) { Text(stringResource(R.string.od_discard)) } },
             dismissButton = { TextButton(onClick = { confirmDiscard = false }) { Text(stringResource(R.string.od_keep_editing)) } },
         )
     }
@@ -540,23 +548,24 @@ private fun load(context: Context, uri: Uri, name: String): DocState = runCatchi
             else if (DocumentTypes.isLegacyOffice(name)) DocState.Failed(context.getString(R.string.od_legacy_failed))
             else {
                 // the structure could not be read: fall back to the plain text and tables
-                val blocks = DocumentReaders.read(file, name)
+                val blocks = DocumentReaders.read(file, name, DocLabels({ context.getString(R.string.od_sheet_n, it) }, { context.getString(R.string.au_office_slide_n, it) }))
                 if (blocks.isEmpty()) DocState.Failed(context.getString(R.string.od_nothing_to_show)) else DocState.Blocks(flatten(blocks))
             }
         }
         DocumentTypes.isOffice(name) -> {
-            val blocks = DocumentReaders.read(file, name)
+            val blocks = DocumentReaders.read(file, name, DocLabels({ context.getString(R.string.od_sheet_n, it) }, { context.getString(R.string.au_office_slide_n, it) }))
             if (blocks.isEmpty()) DocState.Failed(context.getString(R.string.od_nothing_to_show))
             else DocState.Blocks(flatten(blocks))
         }
         else -> {
-            if (file.length() <= TEXT_EDIT_LIMIT) DocState.Text(file.readText(Charsets.UTF_8), file, null)
+            if (file.length() <= TEXT_EDIT_LIMIT) DocState.Text(DocumentReaders.decodeText(file.readBytes()), file, null)
             else DocState.BigText(BigTextFile(file).also { it.index() })
         }
     }
 }.getOrElse {
     DocState.Failed(
-        if (it is SecurityException) context.getString(R.string.od_pdf_protected)
+        if (it is EncryptedDocumentException) context.getString(R.string.au_office_encrypted)
+        else if (it is SecurityException) context.getString(R.string.od_pdf_protected)
         else context.getString(R.string.od_cannot_open, it.message ?: it.javaClass.simpleName),
     )
 }
@@ -580,6 +589,7 @@ private fun PdfView(doc: PdfDoc, listState: androidx.compose.foundation.lazy.Laz
     var zoom by remember { mutableStateOf(1f) }
     val widthPx = (screenWidth * zoom).toInt()
     val hScroll = rememberScrollState()
+    val scope = rememberCoroutineScope()
     Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surfaceContainer)) {
         Box(
             Modifier.fillMaxSize().horizontalScroll(hScroll).pointerInput(Unit) {
@@ -589,7 +599,25 @@ private fun PdfView(doc: PdfDoc, listState: androidx.compose.foundation.lazy.Laz
                     do {
                         val event = awaitPointerEvent()
                         if (event.changes.size >= 2) {
-                            zoom = (zoom * event.calculateZoom()).coerceIn(1f, 4f)
+                            val old = zoom
+                            val new = (old * event.calculateZoom()).coerceIn(1f, 4f)
+                            val f = new / old
+                            if (f != 1f) {
+                                // keep the point between the fingers where it is: x is in content coordinates here
+                                val c = event.calculateCentroid(useCurrent = true)
+                                val viewportX = c.x - hScroll.value
+                                val targetX = ((c.x * f) - viewportX).toInt().coerceAtLeast(0)
+                                val item = listState.layoutInfo.visibleItemsInfo.firstOrNull { c.y >= it.offset && c.y < it.offset + it.size }
+                                if (item != null) {
+                                    val frac = (c.y - item.offset) / item.size.toFloat()
+                                    listState.requestScrollToItem(item.index, (item.size * f * frac - c.y).toInt())
+                                }
+                                zoom = new
+                                scope.launch {
+                                    androidx.compose.runtime.withFrameNanos { }
+                                    hScroll.scrollTo(targetX)
+                                }
+                            }
                             event.changes.forEach { it.consume() }
                         }
                     } while (event.changes.any { it.pressed })

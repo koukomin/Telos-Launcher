@@ -76,8 +76,9 @@ object CallAudioRecorder {
             val sources = if (privilegedCapture) privileged + unprivileged else unprivileged
             var recorder: MediaRecorder? = null
             for ((src, rate) in sources) {
+                var rec: MediaRecorder? = null
                 try {
-                    val rec = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    rec = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                         MediaRecorder(context)
                     } else {
                         @Suppress("DEPRECATION")
@@ -94,8 +95,9 @@ object CallAudioRecorder {
                     recorder = rec
                     break
                 } catch (_: Exception) {
+                    // the failed recorder must be released, or every failed source leaks one
                     try {
-                        recorder?.release()
+                        rec?.release()
                     } catch (_: Exception) {
                     }
                     recorder = null

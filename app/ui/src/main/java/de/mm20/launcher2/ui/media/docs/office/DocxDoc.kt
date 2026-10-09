@@ -47,6 +47,7 @@ internal class DocxDoc(file: File) : OfficeDoc(file) {
         cache?.let { return it }
         val list = ArrayList<Element>()
         paras = list
+        truncated = false
         val out = ArrayList<OfficeBlock>()
         val counters = HashMap<Pair<String, Int>, Int>()
         val body = docXml.documentElement.child(NS_W, "body")
@@ -59,8 +60,8 @@ internal class DocxDoc(file: File) : OfficeDoc(file) {
         for (c in container.elements()) {
             if (c.namespaceURI != NS_W) continue
             when (c.localName) {
-                "p" -> out += para(c, counters, inTable)
-                "tbl" -> {
+                "p" -> if (paras.size < MAX_BLOCKS) out += para(c, counters, inTable) else truncated = true
+                "tbl" -> if (paras.size >= MAX_BLOCKS) truncated = true else {
                     val rows = c.children(NS_W, "tr").map { tr ->
                         tr.children(NS_W, "tc").map { tc ->
                             val cell = ArrayList<OfficeBlock>()
@@ -170,7 +171,7 @@ internal class DocxDoc(file: File) : OfficeDoc(file) {
     override fun setParagraphText(id: Int, text: String) {
         blocks()
         val p = paras.getOrNull(id) ?: return
-        OoxmlText.setText(p, text, NS_W, "w")
+        OoxmlText.setText(p, xmlSafe(text), NS_W, "w")
         changed()
     }
 

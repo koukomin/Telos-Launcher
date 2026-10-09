@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -48,7 +49,7 @@ class FakeCallActivity : BaseActivity() {
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
                 WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
         )
-        val name = intent.getStringExtra(FakeCallScheduler.EXTRA_NAME) ?: "Incoming call"
+        val name = intent.getStringExtra(FakeCallScheduler.EXTRA_NAME) ?: getString(R.string.comms_incoming_call)
         val number = intent.getStringExtra(FakeCallScheduler.EXTRA_NUMBER).orEmpty()
         enableEdgeToEdge()
         setContent {
@@ -84,6 +85,7 @@ private fun FakeCallScreen(name: String, number: String, onFinished: () -> Unit)
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.surface)
+            .systemBarsPadding()
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -110,7 +112,7 @@ private fun FakeCallScreen(name: String, number: String, onFinished: () -> Unit)
                     modifier = Modifier.size(72.dp),
                     shape = CircleShape,
                 ) {
-                    Icon(painterResource(R.drawable.rd_ic_call_end), contentDescription = null)
+                    Icon(painterResource(R.drawable.rd_ic_call_end), contentDescription = stringResource(R.string.comms_reject))
                 }
                 FloatingActionButton(
                     onClick = { ringing = false },
@@ -119,7 +121,7 @@ private fun FakeCallScreen(name: String, number: String, onFinished: () -> Unit)
                     modifier = Modifier.size(72.dp),
                     shape = CircleShape,
                 ) {
-                    Icon(painterResource(R.drawable.rd_ic_call_accept), contentDescription = null)
+                    Icon(painterResource(R.drawable.rd_ic_call_accept), contentDescription = stringResource(R.string.comms_answer))
                 }
             }
         } else {
@@ -130,7 +132,7 @@ private fun FakeCallScreen(name: String, number: String, onFinished: () -> Unit)
                 modifier = Modifier.size(76.dp),
                 shape = CircleShape,
             ) {
-                Icon(painterResource(R.drawable.rd_ic_call_end), contentDescription = null)
+                Icon(painterResource(R.drawable.rd_ic_call_end), contentDescription = stringResource(R.string.comms_hangup))
             }
         }
         Spacer(Modifier.height(32.dp))

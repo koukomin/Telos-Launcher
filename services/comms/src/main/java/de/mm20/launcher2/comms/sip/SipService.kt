@@ -9,6 +9,7 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ServiceInfo
+import android.media.AudioManager
 import android.media.Ringtone
 import android.media.RingtoneManager
 import android.net.ConnectivityManager
@@ -22,6 +23,7 @@ import android.provider.CallLog
 import android.telephony.TelephonyManager
 import androidx.core.app.NotificationCompat
 import de.mm20.launcher2.comms.remote.SecretBox
+import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -60,7 +62,13 @@ class SipService : Service(), KoinComponent {
         super.onCreate()
         audio = SipAudio(this)
         createChannels()
-        startInForeground(statusNotification("Starting…"))
+        try {
+            startInForeground(statusNotification(getString(I18nR.string.au_phoneb_sip_starting)))
+        } catch (_: Exception) {
+            // not allowed to run in the foreground right now (background start limits, missing permission)
+            stopSelf()
+            return
+        }
         scope.launch { startEngine() }
         scope.launch { SipEngine.registration.collect { updateStatus() } }
         scope.launch { SipEngine.call.collect { onCallChanged(it) } }
@@ -94,7 +102,7 @@ class SipService : Service(), KoinComponent {
         lastAddresses = info.addresses
         SipEngine.start(
             this,
-            SipAccount(snap.sipUser, SecretBox.decrypt(snap.sipPasswordEnc), snap.sipDomain, snap.sipDisplayName),
+            SipAccount(snap.sipUser, SecretBox.decrypt(snap.sipPasswordEnc), snap.sipDomain, snap.sipDisplayName, snap.sipVerifyServer),
             info.addresses,
             info.dns,
         )
@@ -183,13 +191,23 @@ class SipService : Service(), KoinComponent {
 
     private fun startRinging() {
         if (ringtone?.isPlaying == true) return
-        runCatching {
-            ringtone = RingtoneManager.getRingtone(this, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE))
-                ?.also { it.play() }
+        // the ringer switch is respected: silent rings nothing, vibrate does not play the ringtone
+        val ringerMode = getSystemService(AudioManager::class.java)?.ringerMode ?: AudioManager.RINGER_MODE_NORMAL
+        if (ringerMode == AudioManager.RINGER_MODE_NORMAL) {
+            runCatching {
+                ringtone = RingtoneManager.getRingtone(this, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE))
+                    ?.also {
+                        // rings until the call is answered or ends, not just once
+                        if (Build.VERSION.SDK_INT >= 28) it.isLooping = true
+                        it.play()
+                    }
+            }
         }
-        runCatching {
-            val vibrator = getSystemService(Vibrator::class.java)
-            vibrator?.vibrate(VibrationEffect.createWaveform(longArrayOf(0, 800, 800), 0))
+        if (ringerMode != AudioManager.RINGER_MODE_SILENT) {
+            runCatching {
+                val vibrator = getSystemService(Vibrator::class.java)
+                vibrator?.vibrate(VibrationEffect.createWaveform(longArrayOf(0, 800, 800), 0))
+            }
         }
     }
 
@@ -204,13 +222,13 @@ class SipService : Service(), KoinComponent {
     private fun createChannels() {
         val nm = getSystemService(NotificationManager::class.java)
         nm.createNotificationChannel(
-            NotificationChannel(CHANNEL_STATUS, "SIP account", NotificationManager.IMPORTANCE_MIN).apply {
-                description = "Shows that the SIP account is registered so that calls can be received"
+            NotificationChannel(CHANNEL_STATUS, getString(I18nR.string.au_phoneb_sip_channel_status), NotificationManager.IMPORTANCE_MIN).apply {
+                description = getString(I18nR.string.au_phoneb_sip_channel_status_desc)
                 setShowBadge(false)
             }
         )
         nm.createNotificationChannel(
-            NotificationChannel(CHANNEL_CALLS, "SIP calls", NotificationManager.IMPORTANCE_HIGH).apply {
+            NotificationChannel(CHANNEL_CALLS, getString(I18nR.string.au_phoneb_sip_channel_calls), NotificationManager.IMPORTANCE_HIGH).apply {
                 setSound(null, null)
                 enableVibration(false)
             }
@@ -228,13 +246,14 @@ class SipService : Service(), KoinComponent {
     private fun updateStatus() {
         val call = SipEngine.call.value
         val text = when {
-            call.state == SipCallState.Established -> "In call with ${SipUri.displayName(this, SipUri.user(call.peer))}"
-            call.state != SipCallState.None -> "Call in progress"
+            call.state == SipCallState.Established ->
+                getString(I18nR.string.au_phoneb_sip_in_call_with, SipUri.displayName(this, SipUri.user(call.peer)))
+            call.state != SipCallState.None -> getString(I18nR.string.au_phoneb_sip_call_in_progress)
             else -> when (SipEngine.registration.value) {
-                SipRegistration.Registered -> "Registered, ready for calls"
-                SipRegistration.Registering -> "Connecting…"
-                SipRegistration.Failed -> "Registration failed: " + SipEngine.lastError.value
-                SipRegistration.Offline -> "Offline"
+                SipRegistration.Registered -> getString(I18nR.string.au_phoneb_sip_registered)
+                SipRegistration.Registering -> getString(I18nR.string.au_phoneb_sip_connecting)
+                SipRegistration.Failed -> getString(I18nR.string.au_phoneb_sip_reg_failed, SipEngine.lastError.value)
+                SipRegistration.Offline -> getString(I18nR.string.au_phoneb_sip_offline)
             }
         }
         notify(STATUS_ID, statusNotification(text, call.state != SipCallState.None))
@@ -260,29 +279,29 @@ class SipService : Service(), KoinComponent {
             .setOngoing(true)
             .setOnlyAlertOnce(true)
             .setContentIntent(screenIntent())
-            .apply { if (inCall) addAction(0, "Hang up", action(ACTION_HANGUP, 3)) }
+            .apply { if (inCall) addAction(0, getString(I18nR.string.comms_hangup), action(ACTION_HANGUP, 3)) }
             .build()
 
     private fun incomingNotification(call: SipCall): Notification {
         val name = SipUri.displayName(this, SipUri.user(call.peer))
         return NotificationCompat.Builder(this, CHANNEL_CALLS)
             .setSmallIcon(android.R.drawable.stat_sys_phone_call)
-            .setContentTitle("Incoming SIP call")
+            .setContentTitle(getString(I18nR.string.au_phoneb_sip_incoming))
             .setContentText(name)
             .setCategory(NotificationCompat.CATEGORY_CALL)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setOngoing(true)
             .setFullScreenIntent(screenIntent(), true)
             .setContentIntent(screenIntent())
-            .addAction(0, "Decline", action(ACTION_DECLINE, 1))
-            .addAction(0, "Answer", action(ACTION_ANSWER, 2))
+            .addAction(0, getString(I18nR.string.au_phoneb_decline), action(ACTION_DECLINE, 1))
+            .addAction(0, getString(I18nR.string.comms_answer), action(ACTION_ANSWER, 2))
             .build()
     }
 
     private fun missedNotification(number: String): Notification =
         NotificationCompat.Builder(this, CHANNEL_CALLS)
             .setSmallIcon(android.R.drawable.sym_call_missed)
-            .setContentTitle("Missed SIP call")
+            .setContentTitle(getString(I18nR.string.au_phoneb_sip_missed))
             .setContentText(SipUri.displayName(this, number))
             .setAutoCancel(true)
             .build()

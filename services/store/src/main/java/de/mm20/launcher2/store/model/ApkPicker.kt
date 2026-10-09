@@ -25,7 +25,9 @@ object ApkPicker {
             val mentioned = abiTokens.filter { n.contains(it) }
             if (mentioned.isEmpty()) return 1 // universal or unknown
             val index = preferred.indexOfFirst { abi -> aliases(abi).any { n.contains(it) } }
-            return if (index >= 0) 0 else 3 // exactly for this phone / for another CPU
+            // the phone's preferred CPU first, then universal files, then its other supported CPUs,
+            // and files for a CPU the phone cannot run last
+            return if (index >= 0) index * 2 + (if (index == 0) 0 else 2) else 100
         }
         return candidates.sortedBy { rank(it) }.first()
     }

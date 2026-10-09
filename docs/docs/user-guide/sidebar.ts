@@ -114,7 +114,7 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         ],
       },
       {
-        text: 'Photos',
+        text: 'Viewer',
         collapsed: true,
         link: '/docs/user-guide/telos/photos/',
         items: [

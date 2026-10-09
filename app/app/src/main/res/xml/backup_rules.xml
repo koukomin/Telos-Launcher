@@ -6,6 +6,7 @@
     <exclude domain="sharedpref" path="owncloud.xml" />
     <exclude domain="sharedpref" path="trakt.xml" />
     <exclude domain="sharedpref" path="scrobble.xml" />
+    <exclude domain="sharedpref" path="telos_notes_sync.xml" />
     <exclude domain="sharedpref" path="telos_torrent_session.xml" />
     <exclude domain="sharedpref" path="telos_downloads_media.xml" />
     <exclude domain="file" path="sip" />

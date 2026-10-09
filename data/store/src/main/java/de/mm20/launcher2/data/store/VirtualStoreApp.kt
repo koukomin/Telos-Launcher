@@ -10,6 +10,7 @@ import de.mm20.launcher2.applock.SettingsDeepLinkContract
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.NullSerializer
 import de.mm20.launcher2.search.ResultScore
+import de.mm20.launcher2.search.TelosAppKeywords
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.VirtualAppProvider
@@ -30,6 +31,7 @@ internal class VirtualStoreApp(context: Context) : Application {
     override val key: String = "$Domain://store"
     override val label: String = "Telos Store"
     override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 

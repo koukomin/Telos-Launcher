@@ -56,7 +56,7 @@ object MmsTransport {
     }
 
     /** Hands a finished message to the system for sending. [rowUri] is the entry in the message store, if any. */
-    fun send(context: Context, recipients: List<String>, parts: List<MmsPart>, rowUri: Uri?): Boolean = runCatching {
+    fun send(context: Context, recipients: List<String>, parts: List<MmsPart>, rowUri: Uri?, subId: Int = -1): Boolean = runCatching {
         val pdu = MmsPdu.buildSendRequest(recipients, parts, null)
         val file = File(dir(context), "out_${System.currentTimeMillis()}.dat")
         file.writeBytes(pdu)
@@ -65,7 +65,7 @@ object MmsTransport {
             putExtra("file", file.absolutePath)
             if (rowUri != null) putExtra("row", rowUri.toString())
         }
-        manager(context, -1).sendMultimediaMessage(context, uri, null, null, sent)
+        manager(context, subId).sendMultimediaMessage(context, uri, null, null, sent)
         true
     }.onFailure { Log.w(TAG, "Could not send the message", it) }.isSuccess
 }

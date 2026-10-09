@@ -212,6 +212,9 @@ object PdfEngine {
                 raw.delete()
                 LoadResult.Failed(e.message ?: e.javaClass.simpleName)
             }
+        } catch (e: OutOfMemoryError) {
+            raw.delete()
+            LoadResult.Failed(e.javaClass.simpleName)
         }
     }
 
@@ -907,6 +910,8 @@ object PdfEngine {
                                 written++
                             } catch (e: Exception) {
                                 // skip this image
+                            } catch (e: OutOfMemoryError) {
+                                // skip this image
                             }
                             progress(written, selected.size)
                         }
@@ -988,8 +993,14 @@ object PdfEngine {
     // ---------------------------------------------------------------- bitmaps
 
     fun renderPdfPage(page: PdfRenderer.Page, scale: Float): Bitmap {
-        val maxSide = 6000f
-        val s = min(scale, maxSide / max(page.width, page.height))
+        // keep the bitmap below ~16 megapixels (64 MB) so large pages cannot exhaust the heap
+        val maxSide = 4500f
+        val maxPixels = 16_000_000f
+        val s = minOf(
+            scale,
+            maxSide / max(page.width, page.height),
+            kotlin.math.sqrt(maxPixels / (page.width.toFloat() * page.height).coerceAtLeast(1f)),
+        )
         val w = (page.width * s).toInt().coerceAtLeast(1)
         val h = (page.height * s).toInt().coerceAtLeast(1)
         val bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)

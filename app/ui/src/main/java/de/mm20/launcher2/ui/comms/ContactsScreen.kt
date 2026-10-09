@@ -101,6 +101,7 @@ fun ContactsScreen(
     var cabContact by remember { mutableStateOf<DialerContact?>(null) }
     var pendingCall by remember { mutableStateOf<String?>(null) }
     val tapToCall by viewModel.tapToCall.collectAsStateWithLifecycle()
+    val defaultNumbers by viewModel.defaultNumbers.collectAsStateWithLifecycle()
     val confirmBeforeCall by viewModel.confirmBeforeCall.collectAsStateWithLifecycle()
     val query = if (showLocalSearch) localQuery else searchQuery
     val starredFilter = starredOnly || localStarred
@@ -135,7 +136,8 @@ fun ContactsScreen(
     val rows = remember(filtered, query) {
         val grouped = if (query.isBlank()) {
             filtered.groupBy {
-                GreekText.fold(it.displayName).firstOrNull()?.uppercaseChar() ?: '#'
+                val first = GreekText.fold(it.displayName).firstOrNull()?.uppercaseChar()
+                if (first != null && first.isLetter()) first else '#'
             }.toSortedMap()
         } else {
             linkedMapOf(' ' to filtered)
@@ -206,7 +208,7 @@ fun ContactsScreen(
                 IconButton(onClick = { gridMode = !gridMode }) {
                     Icon(
                         painterResource(if (gridMode) R.drawable.person_24px else R.drawable.apps_24px),
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.au_phonea_toggle_grid),
                     )
                 }
             }
@@ -363,26 +365,35 @@ fun ContactsScreen(
             )
         }
         cabContact?.let { selected ->
-            val number = selected.phoneNumbers.firstOrNull().orEmpty()
+            val number = viewModel.numberFor(selected)
+            val callLabel = stringResource(R.string.search_action_call)
+            val messageLabel = stringResource(R.string.search_action_message)
+            val detailsLabel = stringResource(R.string.contact_details_title)
+            val shareLabel = stringResource(R.string.search_action_share)
+            val blockLabel = stringResource(R.string.comms_block_number)
             CommsCabSheet(
                 title = selected.displayName,
-                actions = listOf(
-                    CommsCabAction(R.drawable.rd_ic_phone_green_vector, stringResource(R.string.search_action_call)) {
-                        viewModel.dial(context, number)
-                    },
-                    CommsCabAction(R.drawable.rd_ic_messages, stringResource(R.string.search_action_message)) {
-                        if (number.isNotEmpty()) context.tryStartActivity(MessengerIntentUtils.sms(number))
-                    },
-                    CommsCabAction(R.drawable.info_24px, stringResource(R.string.contact_details_title)) {
+                actions = buildList {
+                    if (number.isNotEmpty()) {
+                        add(CommsCabAction(R.drawable.rd_ic_phone_green_vector, callLabel) {
+                            viewModel.dial(context, number)
+                        })
+                        add(CommsCabAction(R.drawable.rd_ic_messages, messageLabel) {
+                            context.tryStartActivity(MessengerIntentUtils.sms(number))
+                        })
+                    }
+                    add(CommsCabAction(R.drawable.info_24px, detailsLabel) {
                         backStack.add(ContactDetailsRoute(contactId = selected.id))
-                    },
-                    CommsCabAction(R.drawable.share_24px, stringResource(R.string.search_action_share)) {
+                    })
+                    add(CommsCabAction(R.drawable.share_24px, shareLabel) {
                         viewModel.share(context, selected)
-                    },
-                    CommsCabAction(R.drawable.delete_24px, stringResource(R.string.comms_block_number), destructive = true) {
-                        viewModel.block(number)
-                    },
-                ),
+                    })
+                    if (number.isNotEmpty()) {
+                        add(CommsCabAction(R.drawable.delete_24px, blockLabel, destructive = true) {
+                            viewModel.block(number)
+                        })
+                    }
+                },
                 onDismiss = { cabContact = null },
             )
         }
@@ -479,8 +490,8 @@ private fun ContactRow(
                     if (contact.starred) {
                         Icon(
                             painterResource(R.drawable.rd_ic_star_vector),
-                            contentDescription = null,
-                            tint = Color(0xFFFFCC00),
+                            contentDescription = stringResource(R.string.favorites),
+                            tint = MaterialTheme.colorScheme.tertiary,
                             modifier = Modifier
                                 .padding(start = 6.dp)
                                 .width(14.dp)

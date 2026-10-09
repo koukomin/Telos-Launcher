@@ -32,13 +32,30 @@ object LyricsClient {
     ): Lyrics? = withContext(Dispatchers.IO) {
         if (title.isBlank()) return@withContext null
         val dir = File(context.cacheDir, "lyrics").apply { mkdirs() }
-        val key = (artist + "|" + title + "|" + album).hashCode().toUInt().toString(16)
+        val key = java.security.MessageDigest.getInstance("MD5")
+            .digest((artist + "|" + title + "|" + album + "|" + durationMs / 1000).toByteArray())
+            .joinToString("") { "%02x".format(it) }
         val cached = File(dir, "$key.json")
-        runCatching {
-            val json = if (cached.exists()) cached.readText() else download(artist, title, album, durationMs)
-                ?.also { cached.writeText(it) }
-            json?.let { parse(it) }
-        }.getOrNull()
+        try {
+            if (cached.exists()) {
+                val lyrics = runCatching { parse(cached.readText()) }.getOrNull()
+                if (lyrics != null) return@withContext lyrics
+                cached.delete() // damaged cache entry
+            }
+            val json = download(artist, title, album, durationMs) ?: return@withContext null
+            val lyrics = parse(json) ?: return@withContext null
+            // write to a temporary file first so an interrupted write never leaves a broken entry
+            runCatching {
+                val tmp = File(dir, "$key.tmp")
+                tmp.writeText(json)
+                if (!tmp.renameTo(cached)) tmp.delete()
+            }
+            lyrics
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            null
+        }
     }
 
     private fun download(artist: String, title: String, album: String, durationMs: Long): String? {

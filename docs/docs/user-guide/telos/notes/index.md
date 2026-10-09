@@ -38,7 +38,7 @@ settings, not in the background.
 | Target | How it works |
 | --- | --- |
 | **Markdown folder** | Pick any folder. Every note becomes a `.md` file with a small front matter block (`title`, `pinned`, `tags`). Files that are new in the folder become notes. Use an Obsidian or Logseq vault, a Syncthing folder or the folder of a cloud app (Dropbox, Google Drive, OneDrive) to carry the notes to other devices |
-| **Nextcloud Notes** | Server address and an **app password** (Nextcloud > Settings > Security). Notes are created, updated and deleted both ways. A note in the Telos trash stays on the server, it is deleted there when you delete it for good (or empty the trash) and sync The first label is the Nextcloud category |
+| **Nextcloud Notes** | Server address and an **app password** (Nextcloud > Settings > Security). The password is stored encrypted with an Android Keystore key and is not part of any backup; on a new phone you enter it again. Notes are created, updated and deleted both ways. A note in the Telos trash stays on the server, it is deleted there when you delete it for good (or empty the trash) and sync The first label is the Nextcloud category |
 
 The sync login is kept in the private preferences of Telos. It is **not** part of the backup.
 

@@ -41,6 +41,8 @@ them here." with an **Allow** button.
 | **+** | Attach pictures. Only as the default SMS app |
 | "N attached" with **Remove** | Appears after attaching or sharing into Messages |
 | Reply field and **Send** | Sends a text. With attachments, or more than one recipient, it is sent as MMS |
+| **Send with** chips | Choose the SIM when two or more SIMs are active and the Phone permission is granted. The last SIM is remembered per conversation |
+| **Block number** / **Unblock** | In the header of a conversation with one recipient. Shares the block list with call blocking, see [SMS and MMS](./sms-mms#blocking-numbers) |
 
 Opening a conversation marks it read.
 
@@ -102,6 +104,8 @@ your history.
 | Prefilled text from a link | stable | no | `sms_body` or `?body=` |
 | Reject with SMS | stable | no (needs the SMS permission) | Phone settings > Calling |
 | Scheduled SMS | stable | no | Phone settings > Tools |
+| Choose the SIM for a message | stable | no | **Send with** chips (two active SIMs, Phone permission) |
+| Block a number, blocked messages | stable | no (to store and silence them: yes) | Thread header, **Blocked messages** |
 | Hidden contacts stay out of the list | stable | no | Phone settings > Privacy |
 | Search, delete, mute or archive conversations | not available | | |
 | RCS, end-to-end encryption | not available | | |
@@ -125,6 +129,7 @@ Messages has no settings screen of its own.
 - Not the default app: no receiving, storing or notifying, no MMS, text replies only.
 - Attachments: only pictures can be attached from the app; videos and pictures can be shared into it.
 - There is no way to delete, search or archive messages in Telos; use another app or the system messaging app.
+- Blocking: if Telos is not the default SMS app, the system messaging app still stores and notifies about messages from blocked numbers.
 - No RCS and no end-to-end encryption; this is plain SMS and MMS.
 - The conversation list shows the messages Android returns for each thread, with MMS limited to the newest 200 of a
   thread.

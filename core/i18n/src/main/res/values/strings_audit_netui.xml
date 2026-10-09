@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_netui_net_ethernet">Ethernet</string>
+    <string name="au_netui_net_other">Other network</string>
+    <string name="au_netui_net_none">No network</string>
+    <string name="au_netui_export_failed">The file could not be written</string>
+    <string name="au_netui_loading_apps">Loading apps…</string>
+</resources>

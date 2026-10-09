@@ -67,7 +67,7 @@ Menu > **Settings**.
 | Default folder | A folder you pick, or `Downloads/Telos` |
 | When a download finishes | Nothing, open or share the file. Works while the Downloads screen is open; the notification always has **Open** and **Share** |
 | User agent | Empty means a browser-like default |
-| Proxy | HTTP or SOCKS host and port |
+| Proxy | HTTP or SOCKS host and port for HTTP and media downloads. **Torrents and magnet links do not use the proxy:** while a proxy is on they do not start (and running ones are paused) with a message, so no torrent traffic bypasses it |
 | Schedule | Only download between two times of day on the days you tick (also over midnight, for example 22:00 to 07:00; the days are the days the window starts on). Outside the window downloads wait in the queue and a banner says so; they start at the opening time |
 | Extract archives | Unpacks finished **zip** files into a folder named like the file, next to it (the **Extract here** action does it for one download). Limits: 20 000 files and 20 GB per archive, unsafe paths (`..`) are dropped. tar.gz, 7z and rar are not supported |
 | Detect links in the clipboard | Off by default, see above |

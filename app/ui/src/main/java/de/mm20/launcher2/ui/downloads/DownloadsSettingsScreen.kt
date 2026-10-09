@@ -289,13 +289,15 @@ fun DownloadsSettingsScreen() {
                         }
                     }
                     if (type != ProxyType.None) {
+                        Text(stringResource(R.string.au2_dlsec_torrent_proxy_note), style = androidx.compose.material3.MaterialTheme.typography.bodySmall, modifier = Modifier.padding(vertical = 8.dp))
                         OutlinedTextField(host, { host = it }, Modifier.fillMaxWidth(), singleLine = true, label = { Text(stringResource(R.string.dl_proxy_host)) })
                         OutlinedTextField(port, { port = it.filter(Char::isDigit).take(5) }, Modifier.fillMaxWidth(), singleLine = true, label = { Text(stringResource(R.string.dl_proxy_port)) })
                     }
                 }
             },
             confirmButton = {
-                TextButton(onClick = {
+                // a proxy without host or with a wrong port would be ignored; do not store it
+                TextButton(enabled = type == ProxyType.None || (host.isNotBlank() && port.toIntOrNull() in 1..65535), onClick = {
                     store.update { it.copy(proxyType = type, proxyHost = host.trim(), proxyPort = port.toIntOrNull() ?: 0) }
                     editProxy = false
                 }) { Text(stringResource(R.string.dl_save)) }

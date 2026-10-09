@@ -18,14 +18,14 @@ object SmsNotifier {
     suspend fun incoming(context: Context, settings: CommsSettings, address: String, text: String) {
         val hidden = runCatching { HiddenContacts.matches(address, settings.hiddenNumbers.first()) }.getOrDefault(false)
         // a hidden contact is not named, and the text is not shown
-        val title = if (hidden) "New message" else (SmsThreads.displayName(context, address) ?: address)
+        val title = if (hidden) SmsText.get(context, "hc_new_message", "New message") else (SmsThreads.displayName(context, address) ?: address)
         show(context, address, title, if (hidden) "" else text)
     }
 
     fun show(context: Context, address: String, title: String, text: String) {
         val nm = context.getSystemService(NotificationManager::class.java) ?: return
         if (!nm.areNotificationsEnabled()) return
-        nm.createNotificationChannel(NotificationChannel(CHANNEL, "Messages", NotificationManager.IMPORTANCE_HIGH))
+        nm.createNotificationChannel(NotificationChannel(CHANNEL, SmsText.get(context, "hc_messages", "Messages"), NotificationManager.IMPORTANCE_HIGH))
         val open = PendingIntent.getActivity(
             context, address.hashCode(),
             Intent().setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)

@@ -75,6 +75,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -266,9 +267,9 @@ private enum class SplitMode { RANGES, EVERY_N, EACH_PAGE, SELECTED }
 
 @Composable
 private fun ColumnScope.SplitBody(vm: PdfToolsViewModel, src: PdfSource) {
-    var mode by remember { mutableStateOf(SplitMode.RANGES) }
-    var ranges by remember { mutableStateOf("") }
-    var everyN by remember { mutableStateOf("1") }
+    var mode by rememberSaveable { mutableStateOf(SplitMode.RANGES) }
+    var ranges by rememberSaveable { mutableStateOf("") }
+    var everyN by rememberSaveable { mutableStateOf("1") }
     val selected = remember { mutableStateListOf<Int>() }
     val pages = rememberPdfPages(src.file)
     val parsed = if (mode == SplitMode.RANGES) parseRanges(ranges, src.pageCount) else null
@@ -490,11 +491,13 @@ private fun ColumnScope.BookmarksBody(vm: PdfToolsViewModel, src: PdfSource) {
                             label = { Text(stringResource(R.string.pdft_bookmark_title)) },
                         )
                         OutlinedTextField(
-                            value = b.page.toString(),
+                            value = if (b.page > 0) b.page.toString() else "",
                             onValueChange = { v ->
-                                val n = digits(v).toIntOrNull()
-                                if (n != null) update(index) { it.copy(page = n.coerceIn(1, src.pageCount)) }
+                                // an empty field is allowed while typing (page 0), Apply stays disabled until it is filled
+                                val n = digits(v).toIntOrNull() ?: 0
+                                update(index) { it.copy(page = n.coerceIn(0, src.pageCount)) }
                             },
+                            isError = b.page < 1,
                             modifier = Modifier.width(84.dp),
                             singleLine = true,
                             label = { Text(stringResource(R.string.pdft_page)) },
@@ -514,7 +517,7 @@ private fun ColumnScope.BookmarksBody(vm: PdfToolsViewModel, src: PdfSource) {
                         IconButton(onClick = { val x = items.removeAt(index); items.add(index + 1, x) }, enabled = index < items.lastIndex) {
                             Ico(BaseR.drawable.keyboard_arrow_down_24px, description = stringResource(R.string.pdft_move_down))
                         }
-                        IconButton(onClick = { previewPage = b.page - 1 }) {
+                        IconButton(onClick = { previewPage = (b.page - 1).coerceAtLeast(0) }) {
                             Ico(BaseR.drawable.visibility_24px, description = stringResource(R.string.pdft_preview))
                         }
                         Spacer(Modifier.weight(1f))
@@ -529,7 +532,7 @@ private fun ColumnScope.BookmarksBody(vm: PdfToolsViewModel, src: PdfSource) {
     val addedDefault = stringResource(R.string.pdft_bookmark_new)
     ActionBar(
         stringResource(R.string.pdft_apply),
-        loaded && items.none { it.title.isBlank() },
+        loaded && items.none { it.title.isBlank() || it.page < 1 },
         onClick = {
             val list = items.map { Bookmark(it.title.trim(), it.page - 1, it.level) }
             vm.run(PdfTool.BOOKMARKS, src.sizeBytes) { p -> PdfEngine.writeBookmarks(vm.context, src, list).also { p(1, 1) } }

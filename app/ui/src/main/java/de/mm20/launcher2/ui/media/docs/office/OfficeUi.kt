@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.media.docs.office
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -72,15 +73,25 @@ internal fun OfficeView(c: OfficeController, onConvert: () -> Unit, modifier: Mo
             else -> stringResource(R.string.od_layout_note)
         }
         if (doc is LegacyDoc) {
-            Surface(Modifier.fillMaxWidth(), color = MaterialTheme.colorScheme.tertiaryContainer) {
-                Column(Modifier.padding(12.dp, 8.dp)) {
+            Surface(Modifier.fillMaxWidth().padding(12.dp, 8.dp), color = MaterialTheme.colorScheme.tertiaryContainer, shape = MaterialTheme.shapes.large) {
+                Column(Modifier.padding(16.dp, 12.dp)) {
                     Text(stringResource(R.string.od_legacy_readonly), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onTertiaryContainer)
                     Text(stringResource(R.string.od_convert_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onTertiaryContainer, modifier = Modifier.padding(top = 4.dp))
                     Button(onClick = onConvert, modifier = Modifier.padding(top = 8.dp)) { Text(stringResource(R.string.od_convert_action, doc.targetExt)) }
                 }
             }
         } else if (note != null) {
-            Text(note, Modifier.fillMaxWidth().padding(12.dp, 6.dp), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(note, Modifier.fillMaxWidth().padding(16.dp, 6.dp), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        val moreInFile = remember(doc, c.version) {
+            when (doc.kind) {
+                OfficeKind.Text -> { doc.blocks(); doc.truncated }
+                OfficeKind.Sheet -> doc.sheets().any { it.truncated }
+                OfficeKind.Slides -> false
+            }
+        }
+        if (moreInFile) {
+            Text(stringResource(R.string.au_office_truncated), Modifier.fillMaxWidth().padding(16.dp, 4.dp), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.tertiary)
         }
         Box(Modifier.weight(1f)) {
             when (doc.kind) {
@@ -146,7 +157,7 @@ private fun TextDocView(c: OfficeController) {
     val blocks = remember(doc, c.version) { doc.blocks() }
     if (c.editing) {
         val paras = remember(blocks) { flatten(blocks) }
-        LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(12.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             items(paras, key = { it.id }) { p -> ParaEditor(c, p) }
         }
         return
@@ -193,7 +204,8 @@ private fun ParaView(doc: OfficeDoc, p: OfficeBlock.Para, style: androidx.compos
 private fun ParaEditor(c: OfficeController, p: OfficeBlock.Para) {
     var text by remember(c.version, p.id) { mutableStateOf(p.text) }
     val tableLabel: (@Composable () -> Unit)? = if (p.inTable) { { Text(stringResource(R.string.od_table_cell)) } } else null
-    Column {
+    Surface(Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.large, color = MaterialTheme.colorScheme.surfaceContainerLow) {
+        Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
         OutlinedTextField(
             value = text,
             onValueChange = {
@@ -211,6 +223,7 @@ private fun ParaEditor(c: OfficeController, p: OfficeBlock.Para) {
             }
             TextButton(onClick = { c.mutate { addParagraphAfter(p.id) } }) { Text(stringResource(R.string.od_add_paragraph)) }
             TextButton(onClick = { c.mutate { deleteParagraph(p.id) } }) { Text(stringResource(R.string.od_delete_paragraph)) }
+        }
         }
     }
 }
@@ -244,9 +257,9 @@ private fun SheetView(c: OfficeController) {
             LazyColumn(Modifier.width(rw + cw * cols)) {
                 item {
                     Row {
-                        Box(Modifier.width(rw).border(0.5.dp, MaterialTheme.colorScheme.outlineVariant).padding(6.dp))
+                        Box(Modifier.width(rw).background(MaterialTheme.colorScheme.surfaceContainerHigh).border(0.5.dp, MaterialTheme.colorScheme.outlineVariant).padding(6.dp))
                         for (col in 0 until cols) {
-                            Box(Modifier.width(cw).border(0.5.dp, MaterialTheme.colorScheme.outlineVariant).padding(6.dp)) {
+                            Box(Modifier.width(cw).background(MaterialTheme.colorScheme.surfaceContainerHigh).border(0.5.dp, MaterialTheme.colorScheme.outlineVariant).padding(6.dp)) {
                                 Text(colName(col), style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.SemiBold)
                             }
                         }
@@ -254,12 +267,12 @@ private fun SheetView(c: OfficeController) {
                 }
                 items(rows) { r ->
                     Row {
-                        Box(Modifier.width(rw).border(0.5.dp, MaterialTheme.colorScheme.outlineVariant).padding(6.dp)) {
+                        Box(Modifier.width(rw).heightIn(min = if (c.editing) 48.dp else 36.dp).background(MaterialTheme.colorScheme.surfaceContainerHigh).border(0.5.dp, MaterialTheme.colorScheme.outlineVariant).padding(6.dp)) {
                             Text("${r + 1}", style = MaterialTheme.typography.labelMedium)
                         }
                         for (col in 0 until cols) {
                             Box(
-                                Modifier.width(cw).heightIn(min = 36.dp).border(0.5.dp, MaterialTheme.colorScheme.outlineVariant)
+                                Modifier.width(cw).heightIn(min = if (c.editing) 48.dp else 36.dp).border(0.5.dp, MaterialTheme.colorScheme.outlineVariant)
                                     .then(if (c.editing) Modifier.clickable { editCell = r to col } else Modifier)
                                     .padding(horizontal = 6.dp, vertical = 4.dp),
                             ) {
@@ -314,7 +327,7 @@ private fun SlidesView(c: OfficeController) {
     LaunchedEffect(pager.currentPage) { if (c.editing) c.commit() }
     Column(Modifier.fillMaxSize()) {
         Text(
-            stringResource(R.string.od_slide_of, current + 1, slides.size), Modifier.padding(12.dp, 4.dp),
+            stringResource(R.string.od_slide_of, current + 1, slides.size), Modifier.padding(16.dp, 4.dp),
             style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         HorizontalPager(pager, Modifier.weight(1f)) { i ->
@@ -322,7 +335,7 @@ private fun SlidesView(c: OfficeController) {
         }
         if (c.editing) {
             val slide = slides[current]
-            Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(16.dp, 8.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 slide.boxes.forEachIndexed { n, b ->
                     var t by remember(c.version, current, b.id) { mutableStateOf(b.text) }
                     OutlinedTextField(

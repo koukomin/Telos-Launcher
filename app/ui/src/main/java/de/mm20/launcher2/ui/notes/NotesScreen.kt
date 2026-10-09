@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,12 +37,18 @@ import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchEmptyState
 import de.mm20.launcher2.ui.component.TelosSearchTopBar
+import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import java.text.DateFormat
 import java.util.Date
 
 @Serializable
 data object NotesRoute : NavKey
+
+private val noteSaver = Saver<Note?, String>(
+    save = { it?.toJson()?.toString() ?: "" },
+    restore = { s -> if (s.isEmpty()) null else runCatching { Note.fromJson(org.json.JSONObject(s)) }.getOrNull() },
+)
 
 private fun noteColor(i: Int, fallback: Color): Color =
     NotesStore.Colors.getOrNull(i)?.takeIf { it != 0 }?.let { Color(it).copy(alpha = 0.85f) } ?: fallback
@@ -58,11 +65,13 @@ fun NotesScreen() {
     val label by vm.label.collectAsState()
     val syncing by vm.syncing.collectAsState()
     val message by vm.message.collectAsState()
-    var editing by remember { mutableStateOf<Note?>(null) }
+    // saved with the instance state, so that a rotation does not throw away the note that is being written
+    var editing by rememberSaveable(stateSaver = noteSaver) { mutableStateOf<Note?>(null) }
     var showSync by rememberSaveable { mutableStateOf(false) }
     var menu by remember { mutableStateOf(false) }
     var searching by rememberSaveable { mutableStateOf(false) }
     val snack = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
     val importer = rememberLauncherForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { if (it.isNotEmpty()) vm.import(it) }
 
@@ -76,6 +85,8 @@ fun NotesScreen() {
             else -> stringResource(R.string.notes_sync_failed, it.substringAfter(':'))
         }
     }
+    // a label filter whose notes are all gone has no chip left to switch it off
+    LaunchedEffect(labels, label) { if (label != null && label !in labels) vm.label.value = null }
     LaunchedEffect(text) { if (text != null) { snack.showSnackbar(text); vm.message.value = null } }
 
     BackHandler(enabled = editing != null || searching || filter != NotesFilter.Notes) {
@@ -114,7 +125,7 @@ fun NotesScreen() {
                         Icon(painterResource(if (searching) R.drawable.close_24px else R.drawable.search_24px), stringResource(R.string.notes_search))
                     }
                     if (syncing) CircularProgressIndicator(Modifier.size(24.dp)) else Box {
-                        IconButton(onClick = { menu = true }) { Icon(painterResource(R.drawable.more_vert_24px), null) }
+                        IconButton(onClick = { menu = true }) { Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.notes_title)) }
                         DropdownMenu(menu, { menu = false }) {
                             DropdownMenuItem(text = { Text(stringResource(R.string.notes_sync_now)) }, onClick = { menu = false; vm.syncNow() })
                             DropdownMenuItem(text = { Text(stringResource(R.string.notes_sync_settings)) }, onClick = { menu = false; showSync = true })
@@ -138,7 +149,18 @@ fun NotesScreen() {
                 ) {
                     items(notes, key = { it.id }) { n ->
                         NoteCard(n, onClick = { if (filter == NotesFilter.Trash) vm.restore(n) else editing = n },
-                            onLong = { if (filter == NotesFilter.Trash) vm.delete(n) else vm.save(n.copy(archived = !n.archived)) },
+                            onLong = {
+                                if (filter == NotesFilter.Trash) vm.delete(n) else {
+                                    vm.save(n.copy(archived = !n.archived))
+                                    scope.launch {
+                                        snack.currentSnackbarData?.dismiss()
+                                        val r = snack.showSnackbar(
+                                            context.getString(if (n.archived) R.string.au_planner_unarchived else R.string.au_planner_archived),
+                                            context.getString(R.string.au_planner_undo), duration = SnackbarDuration.Short)
+                                        if (r == SnackbarResult.ActionPerformed) vm.save(n)
+                                    }
+                                }
+                            },
                             trash = filter == NotesFilter.Trash)
                     }
                 }
@@ -160,8 +182,12 @@ private fun NoteCard(n: Note, onClick: () -> Unit, onLong: () -> Unit, trash: Bo
         if (n.body.isNotBlank()) Text(n.body, style = MaterialTheme.typography.bodyMedium, color = fg, maxLines = 8, overflow = TextOverflow.Ellipsis,
             modifier = Modifier.padding(top = if (n.title.isNotBlank()) 6.dp else 0.dp))
         if (n.labels.isNotEmpty()) Text(n.labels.joinToString("  ") { "#$it" }, style = MaterialTheme.typography.labelSmall, color = fg.copy(alpha = 0.7f), modifier = Modifier.padding(top = 8.dp))
-        Text(DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(n.modifiedAt)) + if (n.pinned) "  📌" else "",
-            style = MaterialTheme.typography.labelSmall, color = fg.copy(alpha = 0.6f), modifier = Modifier.padding(top = 6.dp))
+        Row(Modifier.padding(top = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text(DateFormat.getDateInstance(DateFormat.MEDIUM).format(Date(n.modifiedAt)),
+                style = MaterialTheme.typography.labelSmall, color = fg.copy(alpha = 0.6f))
+            if (n.pinned) Icon(painterResource(R.drawable.star_24px_filled), stringResource(R.string.notes_pin),
+                Modifier.padding(start = 6.dp).size(14.dp), tint = fg.copy(alpha = 0.6f))
+        }
     }
 }
 
@@ -173,7 +199,7 @@ private fun NoteEditor(note: Note, labels: List<String>, onChange: (Note) -> Uni
     var colors by remember { mutableStateOf(false) }
     var labelDialog by remember { mutableStateOf(false) }
     val context = LocalContext.current
-    Column(Modifier.fillMaxSize().background(bg)) {
+    Column(Modifier.fillMaxSize().background(bg).imePadding()) {
         Row(Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onClose) { Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.notes_back), tint = fg) }
             Spacer(Modifier.weight(1f))

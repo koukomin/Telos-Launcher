@@ -36,6 +36,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -84,18 +85,18 @@ internal fun AddTorrentSheet(initialText: String, manager: DownloadManager, onDi
     val scope = rememberCoroutineScope()
     val settings by manager.settings.values.collectAsState()
     val cfg by TorrentSession.config.collectAsState()
-    var text by remember { mutableStateOf(initialText) }
+    var text by rememberSaveable { mutableStateOf(initialText) }
     var preview by remember { mutableStateOf<TorrentPreview?>(null) }
     var previewSource by remember { mutableStateOf("") }
     var files by remember { mutableStateOf<List<TorrentFile>>(emptyList()) }
     var loading by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
-    var folder by remember { mutableStateOf<String?>(null) }
+    var folder by rememberSaveable { mutableStateOf<String?>(null) }
     var sequential by remember(cfg.sequentialByDefault) { mutableStateOf(cfg.sequentialByDefault) }
     var stopAtDone by remember(cfg.stopAtDone) { mutableStateOf(cfg.stopAtDone) }
     var ratioX100 by remember(cfg.seedRatioX100) { mutableStateOf(cfg.seedRatioX100) }
     var minutes by remember(cfg.seedMinutes) { mutableStateOf(cfg.seedMinutes) }
-    var startPaused by remember { mutableStateOf(false) }
+    var startPaused by rememberSaveable { mutableStateOf(false) }
 
     val sources = remember(text) {
         val extracted = TorrentSources.extract(text)
@@ -155,6 +156,9 @@ internal fun AddTorrentSheet(initialText: String, manager: DownloadManager, onDi
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text(stringResource(R.string.dl_t_add_title), style = MaterialTheme.typography.titleLarge)
+            if (settings.proxyType != de.mm20.launcher2.downloads.ProxyType.None) {
+                Text(stringResource(R.string.au2_dlsec_torrent_proxy_note), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.error)
+            }
             OutlinedTextField(
                 value = text,
                 onValueChange = { text = it; if (preview != null && it != previewSource) preview = null },

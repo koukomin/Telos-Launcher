@@ -1,6 +1,7 @@
 package de.mm20.launcher2.store.options
 
 import android.content.Context
+import de.mm20.launcher2.comms.remote.SecretBox
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
@@ -41,6 +42,10 @@ data class GlobalOptions(
  * database), so adding a setting never needs a database migration.
  */
 class StoreOptions(context: Context) {
+    private companion object {
+        const val TOKEN_KEY = "github_token_enc"
+    }
+
     private val prefs = context.applicationContext.getSharedPreferences("store_options", Context.MODE_PRIVATE)
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
 
@@ -60,9 +65,32 @@ class StoreOptions(context: Context) {
         return map
     }
 
-    private fun loadGlobal(): GlobalOptions =
-        runCatching { json.decodeFromString(GlobalOptions.serializer(), prefs.getString("global", "") ?: "") }
+    /**
+     * The GitHub token is never stored in the "global" JSON: it is encrypted with the Android Keystore
+     * ([SecretBox]) under its own key. A plain token from an older version is encrypted on first read and
+     * the plain value is deleted.
+     */
+    private fun loadGlobal(): GlobalOptions {
+        val stored = runCatching { json.decodeFromString(GlobalOptions.serializer(), prefs.getString("global", "") ?: "") }
             .getOrDefault(GlobalOptions())
+        val legacy = stored.githubToken
+        if (legacy.isNotEmpty()) {
+            // migration: encrypt first, delete the plain value only when the encrypted one is in place
+            val enc = encryptOrNull(legacy)
+            if (enc != null) {
+                prefs.edit()
+                    .putString(TOKEN_KEY, enc)
+                    .putString("global", json.encodeToString(GlobalOptions.serializer(), stored.copy(githubToken = ""))).apply()
+            }
+            // when encryption is not possible the token stays as it was and is used from memory
+            return stored
+        }
+        val token = SecretBox.decrypt(prefs.getString(TOKEN_KEY, "") ?: "")
+        return stored.copy(githubToken = token)
+    }
+
+    private fun encryptOrNull(plain: String): String? =
+        runCatching { SecretBox.encrypt(plain).takeIf { it.isNotEmpty() } }.getOrNull()
 
     fun item(id: String): ItemOptions = _items.value[id] ?: ItemOptions()
 
@@ -82,7 +110,15 @@ class StoreOptions(context: Context) {
     @Synchronized
     fun updateGlobal(change: (GlobalOptions) -> GlobalOptions) {
         val next = change(_global.value)
-        prefs.edit().putString("global", json.encodeToString(GlobalOptions.serializer(), next)).apply()
+        val editor = prefs.edit().putString("global", json.encodeToString(GlobalOptions.serializer(), next.copy(githubToken = "")))
+        if (next.githubToken.isEmpty()) {
+            editor.remove(TOKEN_KEY)
+        } else {
+            val enc = encryptOrNull(next.githubToken)
+            // never plaintext: when encryption fails the token is only kept for this session
+            if (enc != null) editor.putString(TOKEN_KEY, enc) else editor.remove(TOKEN_KEY)
+        }
+        editor.apply()
         _global.value = next
     }
 }

@@ -1,6 +1,6 @@
 # Document viewer
 
-Telos Photos also opens documents. Android offers it for PDF, plain text and code, Office, OpenDocument, RTF and EPUB
+Telos Viewer also opens documents. Android offers it for PDF, plain text and code, Office, OpenDocument, RTF and EPUB
 files. It shows documents with their structure and can **edit and save** text files, Word, Excel, PowerPoint and
 OpenDocument files, see [Office editing and PDF search](./office-editing). PDFs have their own set of
 [PDF tools](./pdf-tools). It is not a full office suite.
@@ -9,8 +9,8 @@ OpenDocument files, see [Office editing and PDF search](./office-editing). PDFs 
 
 | From | Behavior |
 | --- | --- |
-| "Open with" in another app, for the types below | Telos Photos is listed as **Telos Photos** |
-| [Telos Files](../files/browsing#opening-and-sharing-files) | PDF, text, code and RTF open directly. `docx`, `xlsx`, `pptx`, `odt`, `ods` and `epub` first show the archive dialog, where **Open with...** leads to Telos Photos |
+| "Open with" in another app, for the types below | Telos Viewer is listed as **Telos Viewer** |
+| [Telos Files](../files/browsing#opening-and-sharing-files) | PDF, text, code and RTF open directly. `docx`, `xlsx`, `pptx`, `odt`, `ods` and `epub` first show the archive dialog, where **Open with...** leads to Telos Viewer |
 | A file shared with a "view" action | Opens in the viewer |
 
 The registered media types are PDF, plain text, Markdown, CSV, XML, JSON, RTF (`application/rtf` and `text/rtf`),
@@ -104,7 +104,7 @@ text can never be written back over the original. Open long files in another app
 | --- | --- |
 | "Nothing to show in this file" | The file has no readable text. Use **Open with** |
 | PDF says it is protected | Open the [PDF tools](./pdf-tools) and enter the password, or use Unlock |
-| A `.docx` from Files shows an archive dialog | Choose **Open with...** and pick Telos Photos |
+| A `.docx` from Files shows an archive dialog | Choose **Open with...** and pick Telos Viewer |
 | "Could not save" | The sender did not allow writing. Use the **Save as** dialog |
 | A CSV looks cramped | CSV is shown as plain text, not as a table |
 | A `.doc` cannot be saved | Use **Convert to .docx and edit** |

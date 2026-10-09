@@ -6,7 +6,7 @@ and credited in the project's third-party notices.
 
 ::: tip At a glance
 Collection, search and history tabs. Add stations by address, import M3U or PLS playlists, find stations in the
-Radio-Browser directory, see the current track, and use a sleep timer.
+Radio-Browser directory, see the current track, use a sleep timer, and record the playing station to a file.
 :::
 
 ## What it is
@@ -24,6 +24,7 @@ when you switch it off in [Telos Store](../store/). Radio has a single reference
 | Internet | Streaming and station search | Always |
 | Notifications | Playback notification | Android 13 and later |
 | Foreground service of type media playback | Keep playing with the screen off | Declared by the app |
+| Foreground service for recording | Keep a recording running in the background | Only while recording |
 
 There is **no storage permission**. Import, export and backup use Android's file picker, so you choose each file.
 
@@ -36,16 +37,17 @@ address yourself.
 | --- | --- |
 | Title "Radio" and back arrow | The screen name and a way back |
 | **+** (Add station) | Adds a station by address |
+| Record button | Starts or stops [recording](#recording-a-station) the playing station |
 | Sleep timer icon | Opens the sleep timer |
 | Three-dot menu | Import playlist (M3U / PLS), Export playlist (M3U), Back up collection, Restore backup |
 | Tabs **Collection**, **Search**, **History** | The three views |
-| Mini player | Station name and current track at the bottom, with play or pause and stop |
+| Mini player | At the bottom of the Radio dashboard while a station is loaded: station name, current track (with a sleep timer indicator when one is running), play or pause, **Record** and a close **X** that stops playback |
 
 ## Stations
 
 | Tab | Contents |
 | --- | --- |
-| **Collection** | Your stations. Tap to play, long-press to rename or remove, the heart removes a station from the collection. An empty collection says "No stations yet. Search for a station, add one with its address, or import a playlist." |
+| **Collection** | A **Recordings** row (see below) and your stations. Tap to play, long-press to rename or remove, the heart removes a station from the collection. An empty collection says "No stations yet. Search for a station, add one with its address, or import a playlist." |
 | **Search** | A search field "Search by station name" with a progress bar. Results show a heart that saves a station to your collection |
 | **History** | The tracks announced by the stations you listen to, newest first, with **Clear history** |
 
@@ -101,6 +103,28 @@ Which track information you see depends entirely on what the station sends. Stat
 station name or "Streaming live...".
 :::
 
+## Recording a station
+
+The **Record** button in the top bar of the Radio dashboard and in the mini player records the stream of the playing
+station. Tap it again to stop.
+
+| Topic | Behavior |
+| --- | --- |
+| What is recorded | The raw stream, saved as `.mp3`, `.aac` or `.ogg` depending on the stream's `Content-Type`. HLS (`.m3u8`) streams cannot be recorded; Telos says so |
+| Where | `Music/Telos Radio` (the app's own Music folder on Android 9 and older) |
+| File name | `<Station> - yyyy-MM-dd HH-mm.ext` |
+| While recording | A foreground notification with a timer and a **Stop** action. The elapsed time and the size so far are shown in the app |
+| Ending | If the stream drops, the storage is nearly full, or you tap **Stop**, what was captured so far is saved |
+| Too short | A recording under 1 KB saves nothing |
+| Recordings list | The **Recordings** row at the top of the Collection tab opens a sheet with the saved files: open, share and delete (delete asks for confirmation) |
+
+::: warning Closing the mini player does not stop a recording
+Stopping playback with the **X** of the mini player does not stop an active recording. Stop the recording with the
+**Record** button or the **Stop** action of its notification.
+:::
+
+Only record what you have the right to record; copyright rules for recordings of broadcasts differ by country.
+
 ## A typical session
 
 1. Open the **Search** tab and type a name, for example the station you know from home.
@@ -127,6 +151,7 @@ Telos Radio has no settings page of its own. Everything is in the top bar of the
 | Playing a station | The station's own server (and a playlist host if the address is a playlist) | When you play |
 | Searching stations | A Radio-Browser mirror (`de1`, `de2` or `all.api.radio-browser.info`, found through DNS) | Only when you type in the Search tab |
 | Playing a station that came from Radio-Browser | Radio-Browser | A play is counted for that station, as Radio-Browser asks apps to do. Stations you added by address or imported from a playlist are not reported |
+| Recording | The station's own server | Same stream as playing, saved on the phone only |
 | Import, export, backup | None | Done locally through the file picker |
 
 The station you play can see your IP address, as with any radio app. The user agent sent is "Telos Radio". If the
@@ -154,7 +179,9 @@ you search for.
 | Track metadata and history | Mini player, History tab | If the station sends it |
 | Next and previous station | Notification, headset | Within the collection |
 | Sleep timer | Top bar | |
-| Recording a stream, equalizer, alarms | | Not available |
+| Record the playing station | Top bar, mini player | mp3 / aac / ogg streams, not HLS |
+| Recordings list (open, share, delete) | Collection tab | |
+| Equalizer, alarms | | Not available |
 
 ## Limitations
 
@@ -162,7 +189,8 @@ you search for.
 - Stations that change their address stop working until you update them.
 - Search lists only Radio-Browser. Other directories are not available.
 - Track names exist only when the station sends them.
-- No recording of streams, no alarm clock, no station favorites separate from the collection.
+- HLS streams cannot be recorded. Closing the mini player with its **X** does not stop an active recording.
+- No alarm clock, no equalizer, no station favorites separate from the collection.
 
 ## Troubleshooting
 

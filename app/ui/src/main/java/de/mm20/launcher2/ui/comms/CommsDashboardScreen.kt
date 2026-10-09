@@ -1,6 +1,8 @@
 package de.mm20.launcher2.ui.comms
 
 import androidx.activity.compose.BackHandler
+import androidx.annotation.StringRes
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -61,12 +63,12 @@ data class CommsDashboardRoute(
     val initialAttachments: List<String> = emptyList(),
 ) : NavKey
 
-private enum class CommsTab(val label: String) {
-    Favorites("Favorites"),
-    Recents("Recents"),
-    Contacts("Contacts"),
-    Keypad("Keypad"),
-    Messages("Messages"),
+private enum class CommsTab(@StringRes val label: Int) {
+    Favorites(R.string.hc_favorites),
+    Recents(R.string.au_phonea_recents),
+    Contacts(R.string.preference_search_contacts),
+    Keypad(R.string.comms_keypad),
+    Messages(R.string.hc_messages),
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,8 +86,8 @@ fun CommsDashboardScreen(
         "keypad", "dialpad", "dial" -> CommsTab.Keypad
         else -> CommsTab.Recents
     }
-    var selectedTab by remember(initialTab) { mutableStateOf(defaultTab) }
-    var searchQuery by remember { mutableStateOf("") }
+    var selectedTab by rememberSaveable(initialTab) { mutableStateOf(defaultTab) }
+    var searchQuery by rememberSaveable { mutableStateOf("") }
     var menuOpen by remember { mutableStateOf(false) }
     var showFilters by remember { mutableStateOf(false) }
     val commsSettings: CommsSettings = koinInject()
@@ -99,13 +101,16 @@ fun CommsDashboardScreen(
         val snap = commsSettings.snapshot.first()
         val stale = System.currentTimeMillis() - de.mm20.launcher2.comms.remote.RemotePhonebook.lastSyncMillis > 6 * 3600_000L
         if (snap.remotePhonebookEnabled && snap.remotePhonebookUser.isNotBlank() && stale) {
-            de.mm20.launcher2.comms.remote.RemotePhonebook.sync(
-                snap.remotePhonebookHost,
-                snap.remotePhonebookUser,
-                de.mm20.launcher2.comms.remote.SecretBox.decrypt(snap.remotePhonebookPasswordEnc),
-            )
+            runCatching {
+                de.mm20.launcher2.comms.remote.RemotePhonebook.sync(
+                    snap.remotePhonebookHost,
+                    snap.remotePhonebookUser,
+                    de.mm20.launcher2.comms.remote.SecretBox.decrypt(snap.remotePhonebookPasswordEnc),
+                )
+            }
         }
     }
+    val unlockTitle = stringResource(R.string.au_phonea_unlock_phone)
     if (phoneAppLock && !phoneUnlocked) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -115,7 +120,7 @@ fun CommsDashboardScreen(
                         val activity = context as? androidx.fragment.app.FragmentActivity ?: return@Button
                         scope.launch {
                             val ok = de.mm20.launcher2.comms.AuthManager()
-                                .authenticateNative(activity, "Unlock Phone")
+                                .authenticateNative(activity, unlockTitle)
                             if (ok) de.mm20.launcher2.comms.privacy.PrivacySession.unlockPhone()
                         }
                     },
@@ -149,17 +154,19 @@ fun CommsDashboardScreen(
                 ) {
                     if (inSubScreen) {
                         IconButton(onClick = { selectedTab = CommsTab.Recents }) {
-                            Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = null)
+                            Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back))
                         }
                     }
                     Text(
-                        text = if (selectedTab == CommsTab.Keypad) "" else if (inSubScreen) selectedTab.label else "Dialer",
+                        text = if (selectedTab == CommsTab.Keypad) "" else stringResource(
+                            if (inSubScreen) selectedTab.label else R.string.au_phonea_dialer
+                        ),
                         style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.weight(1f).padding(start = if (inSubScreen) 8.dp else 0.dp),
                     )
                     Box {
                         IconButton(onClick = { menuOpen = true }) {
-                            Icon(painterResource(R.drawable.more_vert_24px), contentDescription = null)
+                            Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_menu))
                         }
                         DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
                             DropdownMenuItem(
@@ -207,15 +214,15 @@ fun CommsDashboardScreen(
                     tonalElevation = 0.dp,
                 ) {
                     listOf(
-                        Triple(CommsTab.Favorites, R.drawable.star_24px, "Favorites"),
-                        Triple(CommsTab.Recents, R.drawable.schedule_24px, "Recents"),
-                        Triple(CommsTab.Contacts, R.drawable.person_24px_filled, "Contacts"),
+                        Triple(CommsTab.Favorites, R.drawable.star_24px, CommsTab.Favorites.label),
+                        Triple(CommsTab.Recents, R.drawable.schedule_24px, CommsTab.Recents.label),
+                        Triple(CommsTab.Contacts, R.drawable.person_24px_filled, CommsTab.Contacts.label),
                     ).forEach { (tab, icon, label) ->
                         NavigationBarItem(
                             selected = selectedTab == tab,
                             onClick = { selectedTab = tab },
                             icon = { Icon(painterResource(icon), contentDescription = null) },
-                            label = { Text(label) },
+                            label = { Text(stringResource(label)) },
                         )
                     }
                 }

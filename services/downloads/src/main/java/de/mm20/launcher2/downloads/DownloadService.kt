@@ -51,7 +51,7 @@ class DownloadService : Service(), KoinComponent {
         manager.start()
         when (intent?.action) {
             ACTION_PAUSE -> intent.getStringExtra(EXTRA_TASK_ID)?.let(manager::pause)
-            ACTION_RESUME -> intent.getStringExtra(EXTRA_TASK_ID)?.let(manager::resume)
+            ACTION_RESUME -> intent.getStringExtra(EXTRA_TASK_ID)?.let { notifier.clearResult(it); manager.resume(it) }
             ACTION_CANCEL -> intent.getStringExtra(EXTRA_TASK_ID)?.let { manager.remove(it, deleteFile = false) }
             ACTION_PAUSE_ALL -> manager.pauseAll()
             ACTION_RESUME_ALL -> manager.resumeAll()

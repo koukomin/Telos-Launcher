@@ -24,6 +24,13 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.graphics.Color
+import de.mm20.launcher2.ui.network.firewall.NetAppIcon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -31,6 +38,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -60,8 +68,8 @@ fun NetworkWireguardAppsScreen() {
     val configs by wg.configs.collectAsState()
     val assignments by wg.assignments.collectAsState()
 
-    var query by remember { mutableStateOf("") }
-    var showSystem by remember { mutableStateOf(false) }
+    var query by rememberSaveable { mutableStateOf("") }
+    var showSystem by rememberSaveable { mutableStateOf(false) }
     val selected = remember { mutableStateListOf<Int>() }
     var bulkMenu by remember { mutableStateOf(false) }
 
@@ -71,9 +79,10 @@ fun NetworkWireguardAppsScreen() {
     }
 
     Scaffold(
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
         topBar = {
             TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
                 title = {
                     Text(if (selected.isEmpty()) stringResource(R.string.nwg_apps_title) else stringResource(R.string.nwg_selected, selected.size))
                 },
@@ -115,6 +124,19 @@ fun NetworkWireguardAppsScreen() {
                 Switch(checked = showSystem, onCheckedChange = { showSystem = it })
             }
             if (shown.isEmpty() && query.isNotBlank()) de.mm20.launcher2.ui.component.SearchEmptyState(query.trim())
+            else if (shown.isEmpty() && apps.isEmpty()) Row(
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
+                Text(stringResource(R.string.au_netui_loading_apps), color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            else if (shown.isEmpty()) Text(
+                stringResource(R.string.netfw_no_apps),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(16.dp),
+            )
             else LazyColumn(Modifier.fillMaxSize()) {
                 items(shown, key = { it.appId }) { app ->
                     AppRow(
@@ -164,8 +186,9 @@ private fun AppRow(
             },
             leadingContent = {
                 if (selecting) Checkbox(checked = isSelected, onCheckedChange = { onToggleSelect() })
-                else Icon(painterResource(IconsNetworkWireguardAppsScreen.android_24px), contentDescription = null)
+                else NetAppIcon(app.packageName, 32.dp)
             },
+            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
             modifier = Modifier.combinedClickable(
                 onClick = { if (selecting) onToggleSelect() else menu = true },
                 onLongClick = onToggleSelect,

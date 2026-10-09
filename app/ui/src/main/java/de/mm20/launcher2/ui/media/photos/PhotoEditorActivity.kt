@@ -23,6 +23,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
@@ -76,8 +77,8 @@ private class Adjust(
     val aspect: Float?,
 )
 
-private val filters = listOf("Original", "Mono", "Sepia", "Warm", "Cool", "Invert")
-private val aspects = listOf("Free" to null, "1:1" to 1f, "4:3" to 4f / 3f, "3:4" to 3f / 4f, "16:9" to 16f / 9f, "9:16" to 9f / 16f)
+private val filters = listOf(R.string.au_viewer_filter_original, R.string.au_viewer_filter_mono, R.string.au_viewer_filter_sepia, R.string.au_viewer_filter_warm, R.string.au_viewer_filter_cool, R.string.au_viewer_filter_invert)
+private val aspects = listOf<Pair<String?, Float?>>(null to null, "1:1" to 1f, "4:3" to 4f / 3f, "3:4" to 3f / 4f, "16:9" to 16f / 9f, "9:16" to 9f / 16f)
 
 private fun matrixFor(a: Adjust): ColorMatrix {
     val m = ColorMatrix()
@@ -187,13 +188,13 @@ private fun PhotoEditor(uri: Uri, onClose: () -> Unit) {
     var source by remember { mutableStateOf<Bitmap?>(null) }
     LaunchedEffect(uri) { source = withContext(Dispatchers.IO) { decode(context, uri, 2048) } }
 
-    var rotation by remember { mutableIntStateOf(0) }
-    var flipH by remember { mutableStateOf(false) }
-    var brightness by remember { mutableFloatStateOf(0f) }
-    var contrast by remember { mutableFloatStateOf(1f) }
-    var saturation by remember { mutableFloatStateOf(1f) }
-    var filter by remember { mutableIntStateOf(0) }
-    var aspectIndex by remember { mutableIntStateOf(0) }
+    var rotation by rememberSaveable { mutableIntStateOf(0) }
+    var flipH by rememberSaveable { mutableStateOf(false) }
+    var brightness by rememberSaveable { mutableFloatStateOf(0f) }
+    var contrast by rememberSaveable { mutableFloatStateOf(1f) }
+    var saturation by rememberSaveable { mutableFloatStateOf(1f) }
+    var filter by rememberSaveable { mutableIntStateOf(0) }
+    var aspectIndex by rememberSaveable { mutableIntStateOf(0) }
     var saving by remember { mutableStateOf(false) }
 
     fun adjust() = Adjust(rotation, flipH, brightness, contrast, saturation, filter, aspects[aspectIndex].second)
@@ -209,10 +210,10 @@ private fun PhotoEditor(uri: Uri, onClose: () -> Unit) {
                 scope.launch {
                     val saved = withContext(Dispatchers.IO) { runCatching { renderAndSave(context, uri, a) }.getOrNull() }
                     saving = false
-                    Toast.makeText(context, if (saved != null) "Saved to Pictures/Telos" else "Saving failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(if (saved != null) R.string.au_viewer_saved_to_telos else R.string.au_viewer_save_failed), Toast.LENGTH_SHORT).show()
                     if (saved != null) onClose()
                 }
-            }) { Text(if (saving) "Saving…" else "Save copy") }
+            }) { Text(stringResource(if (saving) R.string.au_viewer_saving else R.string.au_viewer_save_copy)) }
         }
         Box(Modifier.weight(1f).fillMaxWidth().clipToBounds(), contentAlignment = Alignment.Center) {
             if (bmp != null) {
@@ -229,7 +230,7 @@ private fun PhotoEditor(uri: Uri, onClose: () -> Unit) {
                 )
             } else CircularProgressIndicator()
         }
-        Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(12.dp).heightIn(max = 280.dp)) {
+        Column(Modifier.fillMaxWidth().heightIn(max = 280.dp).verticalScroll(rememberScrollState()).padding(12.dp)) {
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 AssistChip(onClick = { rotation = (rotation + 270) % 360 }, label = { Text(stringResource(R.string.hc_rotate_left)) })
                 AssistChip(onClick = { rotation = (rotation + 90) % 360 }, label = { Text(stringResource(R.string.hc_rotate_right)) })
@@ -237,12 +238,12 @@ private fun PhotoEditor(uri: Uri, onClose: () -> Unit) {
             }
             androidx.compose.foundation.lazy.LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 items(aspects.size) { i ->
-                    FilterChip(selected = aspectIndex == i, onClick = { aspectIndex = i }, label = { Text(aspects[i].first) })
+                    FilterChip(selected = aspectIndex == i, onClick = { aspectIndex = i }, label = { Text(aspects[i].first ?: stringResource(R.string.au_viewer_aspect_free)) })
                 }
             }
             androidx.compose.foundation.lazy.LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 items(filters.size) { i ->
-                    FilterChip(selected = filter == i, onClick = { filter = i }, label = { Text(filters[i]) })
+                    FilterChip(selected = filter == i, onClick = { filter = i }, label = { Text(stringResource(filters[i])) })
                 }
             }
             Text(stringResource(R.string.hc_brightness), style = MaterialTheme.typography.labelMedium)

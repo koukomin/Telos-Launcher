@@ -2,6 +2,9 @@ package de.mm20.launcher2.data.comms
 
 import android.content.ContentProviderOperation
 import android.content.Context
+import android.database.ContentObserver
+import android.os.Handler
+import android.os.Looper
 import android.provider.ContactsContract
 import de.mm20.launcher2.comms.PhoneNumbers
 import de.mm20.launcher2.comms.model.DialerContact
@@ -10,9 +13,13 @@ import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 /**
@@ -29,7 +36,23 @@ internal class ContactDirectoryRepositoryImpl(
     @OptIn(ExperimentalCoroutinesApi::class)
     override fun observeContacts(): Flow<List<DialerContact>> {
         return permissionsManager.hasPermission(PermissionGroup.Contacts).flatMapLatest { granted ->
-            if (!granted) flowOf(emptyList()) else flowOf(queryContacts())
+            if (!granted) flowOf(emptyList()) else {
+                // reloads whenever the address book changes (added, edited or deleted contacts)
+                callbackFlow {
+                    val observer = object : ContentObserver(Handler(Looper.getMainLooper())) {
+                        override fun onChange(selfChange: Boolean) {
+                            trySend(Unit)
+                        }
+                    }
+                    context.contentResolver.registerContentObserver(
+                        ContactsContract.Contacts.CONTENT_URI,
+                        true,
+                        observer,
+                    )
+                    trySend(Unit)
+                    awaitClose { context.contentResolver.unregisterContentObserver(observer) }
+                }.conflate().map { queryContacts() }
+            }
         }
     }
 

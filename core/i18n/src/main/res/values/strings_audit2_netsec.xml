@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au2_netsec_http_not_allowed">Use an https:// address. Plain http:// is only allowed for local servers (loopback, private network, .local, .lan, .home.arpa, .internal or a single-label host name).</string>
+    <string name="au2_netsec_clear_logs_message">All entries in this log will be deleted. This cannot be undone.</string>
+    <string name="au2_netsec_clear_app_logs_message">All log entries of %1$s will be deleted. This cannot be undone.</string>
+    <string name="au2_netsec_confirm_clear">Clear</string>
+    <string name="au2_netsec_reset_message">The firewall rules of the %1$d apps currently shown will be reset to the defaults.</string>
+    <string name="au2_netsec_confirm_reset">Reset</string>
+    <string name="au2_netsec_cancel">Cancel</string>
+</resources>

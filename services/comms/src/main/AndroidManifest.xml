@@ -154,6 +154,10 @@
                 <action android:name="androidx.media3.session.MediaSessionService" />
             </intent-filter>
         </service>
+        <service
+            android:name=".radio.RadioRecordingService"
+            android:exported="false"
+            android:foregroundServiceType="mediaPlayback" />
         <!-- === TELOS_PENDING_REVIEW_END: sms_and_radio_engine === -->
         <receiver
             android:name=".media.video.PlayerBridgeReceiver"

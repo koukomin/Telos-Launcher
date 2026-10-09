@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.tutpro.baresip.Api
 import com.tutpro.baresip.BaresipService
+import de.mm20.launcher2.i18n.R as I18nR
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.io.File
@@ -15,6 +16,8 @@ data class SipAccount(
     val password: String,
     val domain: String,
     val displayName: String = "",
+    /** Verify the TLS certificate of the server (off keeps a self-signed FRITZ!Box working) */
+    val verifyServer: Boolean = false,
 )
 
 enum class SipRegistration { Offline, Registering, Registered, Failed }
@@ -26,6 +29,8 @@ data class SipCall(
     val peer: String = "",
     val uap: Long = 0,
     val callp: Long = 0,
+    /** When the call was answered (epoch ms), 0 while it is not established */
+    val establishedAt: Long = 0,
 )
 
 /**
@@ -50,11 +55,15 @@ object SipEngine : BaresipService.Listener {
     val lastError: StateFlow<String> = _lastError
 
     @Volatile private var running = false
+    @Volatile private var verifyServer = false
     @Volatile private var pendingAccount: SipAccount? = null
     @Volatile private var uap = 0L
     @Volatile private var addresses = ""
     @Volatile private var nameservers = ""
     @Volatile private var restartWith: Pair<Context, SipAccount>? = null
+    @Volatile private var appContext: Context? = null
+
+    private fun text(id: Int): String = appContext?.getString(id).orEmpty()
 
     /** True once the account is registered and calls can be placed */
     val isReady: Boolean get() = _registration.value == SipRegistration.Registered
@@ -66,6 +75,7 @@ object SipEngine : BaresipService.Listener {
      */
     fun start(context: Context, account: SipAccount, linkAddresses: String = "", dns: String = "") {
         if (!available) return
+        appContext = context.applicationContext
         if (running) {
             // A different account (or none) is already running: restart once it has stopped
             restartWith = context to account
@@ -76,11 +86,12 @@ object SipEngine : BaresipService.Listener {
         }
         running = true
         pendingAccount = account
+        verifyServer = account.verifyServer
         addresses = linkAddresses
         nameservers = dns
         _registration.value = SipRegistration.Registering
         val dir = File(context.filesDir, "sip").apply { mkdirs() }
-        File(dir, "config").writeText(config())
+        File(dir, "config").writeText(config(account.verifyServer))
         File(dir, "accounts").writeText("")
         File(dir, "contacts").writeText("")
         thread(name = "baresip", isDaemon = true) {
@@ -141,7 +152,7 @@ object SipEngine : BaresipService.Listener {
     }
 
     /** Base configuration, following the static config of baresip-studio. */
-    private fun config(): String {
+    private fun config(verify: Boolean): String {
         val dnsLines = nameservers.split(",").filter { it.isNotBlank() }.joinToString("") {
             if (it.contains(':')) "dns_server [$it]:53\n" else "dns_server $it:53\n"
         }
@@ -168,7 +179,8 @@ object SipEngine : BaresipService.Listener {
             rtp_stats no
             rtp_timeout 60
             rtp_rxmode thread
-            sip_verify_server no
+            sip_verify_server ${if (verify) "yes" else "no"}
+            ${if (verify) "sip_capath /system/etc/security/cacerts" else ""}
             log_level 2
             module aaudio.so
             module stun.so
@@ -203,7 +215,7 @@ object SipEngine : BaresipService.Listener {
         val name = if (cleanName.isNotBlank()) "\"$cleanName\" " else ""
         if (!isValidDomain(account.domain)) {
             _registration.value = SipRegistration.Failed
-            _lastError.value = "The SIP server address is not valid"
+            _lastError.value = text(I18nR.string.au_phoneb_sip_err_bad_server)
             return
         }
         // the password is quoted so that characters such as ; or > cannot break the account line
@@ -212,7 +224,7 @@ object SipEngine : BaresipService.Listener {
         uap = Api.ua_alloc(line)
         if (uap != 0L) Api.ua_register(uap) else {
             _registration.value = SipRegistration.Failed
-            _lastError.value = "Could not create the SIP account"
+            _lastError.value = text(I18nR.string.au_phoneb_sip_err_account)
         }
     }
 
@@ -235,18 +247,36 @@ object SipEngine : BaresipService.Listener {
             "registered" -> _registration.value = SipRegistration.Registered
             "registering failed" -> {
                 _registration.value = SipRegistration.Failed
-                _lastError.value = ev.drop(1).joinToString(",")
+                val reason = ev.drop(1).joinToString(",")
+                _lastError.value = if (verifyServer && isTlsFailure(reason)) text(I18nR.string.au2_callsec_sip_err_tls) else reason
             }
             // A SIP INVITE arrived: callp is the SIP message, accept it to create the call
             "incoming call" -> Api.ua_accept(uap, callp)
-            "call incoming" -> _call.value = SipCall(SipCallState.Incoming, ev.getOrElse(1) { "" }, uap, callp)
+            "call incoming" -> {
+                if (_call.value.state != SipCallState.None && _call.value.callp != callp) {
+                    // already in a call: the second one is declined and must not replace the first
+                    Api.ua_hangup(uap, callp, 486, "Busy Here")
+                } else {
+                    _call.value = SipCall(SipCallState.Incoming, ev.getOrElse(1) { "" }, uap, callp)
+                }
+            }
             "call ringing" -> _call.value = _call.value.copy(state = SipCallState.Ringing)
-            "call established" -> _call.value = _call.value.copy(state = SipCallState.Established)
+            "call established" -> {
+                val c = _call.value
+                _call.value = c.copy(
+                    state = SipCallState.Established,
+                    establishedAt = if (c.establishedAt > 0) c.establishedAt else System.currentTimeMillis(),
+                )
+            }
             "call closed" -> {
                 val c = _call.value
                 if (c.callp == callp || c.callp == 0L) {
                     if (callp != 0L) Api.call_destroy(callp)
+                    // the microphone must not stay muted for the next call
+                    Api.calls_mute(false)
                     _call.value = SipCall()
+                } else if (callp != 0L) {
+                    Api.call_destroy(callp)
                 }
             }
         }
@@ -255,6 +285,12 @@ object SipEngine : BaresipService.Listener {
     override fun onMessage(uap: Long, peerUri: String, contentType: String, body: ByteArray) = Unit
 
     override fun onMessageResponse(code: Int, reason: String, time: String) = Unit
+
+    /** True when a registration failure text looks like a TLS / certificate problem */
+    internal fun isTlsFailure(reason: String): Boolean {
+        val r = reason.lowercase()
+        return listOf("tls", "ssl", "certificate", "x509", "verify", "handshake").any { r.contains(it) }
+    }
 
     /** A host name or an IP address, optionally with a port */
     internal fun isValidDomain(domain: String): Boolean =

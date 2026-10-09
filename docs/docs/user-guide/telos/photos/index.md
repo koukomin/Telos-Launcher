@@ -1,4 +1,4 @@
-# Telos Photos
+# Telos Viewer
 
 A photo gallery, a metadata (EXIF) tool, a simple photo editor and a document viewer in one app.
 
@@ -18,7 +18,7 @@ files, with 20 PDF tools.
 
 ## What it is
 
-Telos Photos shows the pictures that Android has indexed (the system media library) and opens images and documents
+Telos Viewer shows the pictures that Android has indexed (the system media library) and opens images and documents
 sent to it by other apps. It does not upload anything: it has no cloud, no account and no network features of its
 own. It is a [virtual app](../#how-the-built-in-apps-work), part of the launcher, and it is covered by the
 [crash guard](../#how-the-built-in-apps-work). Switching it off in [Telos Store](../store/) disables its screens
@@ -32,20 +32,20 @@ and removes it from the "Open with" and share menus.
 | Location access for photos (`ACCESS_MEDIA_LOCATION`) | Read the GPS position of photos on recent Android versions | Declared by the app, used by the metadata view |
 | Write access to a file | Needed by Android for the first metadata change, and for deleting | Asked by the system, **per picture**, on Android 11 and later |
 
-Open **Telos Photos** and tap **Allow** ("Allow access to your photos"). Pictures and documents that another app
-sends to Telos Photos open directly, without browsing the gallery and without the permission.
+Open **Telos Viewer** and tap **Allow** ("Allow access to your photos"). Pictures and documents that another app
+sends to Telos Viewer open directly, without browsing the gallery and without the permission.
 
 ## How it is reached
 
 | From | What opens |
 | --- | --- |
-| The Telos Photos icon in the app grid or search | The gallery |
+| The Telos Viewer icon in the app grid or search | The gallery |
 | "Open with" for an image (`image/*`) | The viewer for that picture only |
-| Share an image to "Telos Photos" | The viewer for the shared picture |
+| Share an image to "Telos Viewer" | The viewer for the shared picture |
 | "Open with" for a PDF, text, Office, OpenDocument, RTF or EPUB file | The [document viewer](./documents) |
 | A picture tapped in [Telos Files](../files/browsing#opening-and-sharing-files) | The viewer, paging through that folder's pictures |
 
-It is listed as **Telos Photos** in the menus of other apps, for pictures and for the document types.
+It is listed as **Telos Viewer** in the menus of other apps, for pictures and for the document types.
 
 ## The gallery
 
@@ -70,7 +70,7 @@ not indexed.
 
 ## Settings
 
-Telos Photos has **no settings page of its own**. Its behavior depends on the system permissions above and on your
+Telos Viewer has **no settings page of its own**. Its behavior depends on the system permissions above and on your
 [App Lock](../launcher/privacy-protection#app-lock) settings.
 
 | Item | Where | Default | Effect |

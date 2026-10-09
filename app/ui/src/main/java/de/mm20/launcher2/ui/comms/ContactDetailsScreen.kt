@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -59,7 +60,10 @@ import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -135,6 +139,9 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
         emptyMap(),
     )
 
+    /** Bumped after the block list changed so that the blocked state is read again */
+    private val blockedTick = MutableStateFlow(0)
+
     private var cachedKey: Pair<Long, String>? = null
     private var cachedUi: StateFlow<ContactDetailsUi>? = null
 
@@ -157,7 +164,7 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
             val numbers = contact?.phoneNumbers.orEmpty()
             if (numbers.isEmpty()) flowOf(emptyList()) else callLog.observeForNumbers(numbers)
         }
-        val blockedFlow = contactFlow.flatMapLatest { contact ->
+        val blockedFlow = combine(contactFlow, blockedTick) { contact, _ -> contact }.flatMapLatest { contact ->
             val number = contact?.phoneNumbers?.firstOrNull().orEmpty()
             if (number.isEmpty()) flowOf(false) else flow { emit(spam.isNumberBlocked(number)) }
         }
@@ -187,24 +194,41 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
         if (number.isEmpty()) return
         viewModelScope.launch {
             val ok = de.mm20.launcher2.comms.privacy.CallGuard.placeSip(context, number)
-            if (!ok) android.widget.Toast.makeText(context, de.mm20.launcher2.comms.sip.SipDialer.lastFailure.ifBlank { "SIP account is not connected" }, android.widget.Toast.LENGTH_SHORT).show()
+            if (!ok) {
+                android.widget.Toast.makeText(
+                    context,
+                    de.mm20.launcher2.comms.sip.SipDialer.lastFailure
+                        .ifBlank { context.getString(R.string.au_phoneb_sip_err_not_connected) },
+                    android.widget.Toast.LENGTH_SHORT,
+                ).show()
+            }
         }
     }
 
-    fun setStarred(context: Context, contactId: Long, starred: Boolean) {
-        runCatching {
-            val values = android.content.ContentValues().apply {
-                put(android.provider.ContactsContract.Contacts.STARRED, if (starred) 1 else 0)
+    /** [onFailed] runs on the main thread when the contact could not be changed */
+    fun setStarred(context: Context, contactId: Long, starred: Boolean, onFailed: () -> Unit) {
+        if (contactId < 0) {
+            onFailed()
+            return
+        }
+        viewModelScope.launch {
+            val ok = withContext(Dispatchers.IO) {
+                runCatching {
+                    val values = android.content.ContentValues().apply {
+                        put(android.provider.ContactsContract.Contacts.STARRED, if (starred) 1 else 0)
+                    }
+                    context.contentResolver.update(
+                        android.content.ContentUris.withAppendedId(
+                            android.provider.ContactsContract.Contacts.CONTENT_URI,
+                            contactId,
+                        ),
+                        values,
+                        null,
+                        null,
+                    ) > 0
+                }.getOrDefault(false)
             }
-            context.contentResolver.update(
-                android.content.ContentUris.withAppendedId(
-                    android.provider.ContactsContract.Contacts.CONTENT_URI,
-                    contactId,
-                ),
-                values,
-                null,
-                null,
-            )
+            if (!ok) onFailed()
         }
     }
 
@@ -245,8 +269,7 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
     fun setBlocked(number: String, blocked: Boolean, onDone: () -> Unit) {
         viewModelScope.launch {
             spam.setBlocked(number, blocked)
-            cachedKey = null
-            cachedUi = null
+            blockedTick.value += 1
             onDone()
         }
     }
@@ -274,6 +297,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
     val contact = ui.contact
     val blocked = blockedOverride ?: ui.blocked
     val primary = contact?.phoneNumbers?.firstOrNull().orEmpty()
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
     val ringtoneLauncher = androidx.activity.compose.rememberLauncherForActivityResult(
         androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -284,7 +308,15 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                 android.media.RingtoneManager.EXTRA_RINGTONE_PICKED_URI,
                 Uri::class.java,
             )
-            contact?.let { ContactActions.setRingtone(context, it.id, picked) }
+            contact?.let {
+                scope.launch {
+                    if (!ContactActions.setRingtone(context, it.id, picked)) {
+                        android.widget.Toast.makeText(
+                            context, R.string.au_phonea_action_failed, android.widget.Toast.LENGTH_SHORT,
+                        ).show()
+                    }
+                }
+            }
         }
     }
     val hasEmail = !contact?.emails.isNullOrEmpty()
@@ -298,13 +330,14 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .statusBarsPadding()
                     .padding(horizontal = 4.dp, vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(onClick = { backStack.removeLastOrNull() }) {
                     Icon(
                         painterResource(R.drawable.arrow_back_24px),
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.hc_back),
                         tint = MaterialTheme.colorScheme.primary,
                     )
                 }
@@ -314,16 +347,21 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     onClick = {
                         contact?.let {
                             starOverride = !starred
-                            viewModel.setStarred(context, it.id, !starred)
+                            viewModel.setStarred(context, it.id, !starred) {
+                                starOverride = null
+                                android.widget.Toast.makeText(
+                                    context, R.string.au_phonea_action_failed, android.widget.Toast.LENGTH_SHORT,
+                                ).show()
+                            }
                         }
                     },
-                    enabled = contact != null,
+                    enabled = contact != null && contact.id >= 0,
                 ) {
                     Icon(
                         painterResource(
                             if (starred) R.drawable.star_24px_filled else R.drawable.star_24px_outlined
                         ),
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.favorites),
                         tint = MaterialTheme.colorScheme.primary,
                     )
                 }
@@ -487,14 +525,14 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                             )
                             if (contact.phoneNumbers.size > 1) {
                                 TextButton(onClick = { viewModel.setDefaultNumber(contact.id, number) }) {
-                                    Text(if (isDefault) "Default number" else "Set as default")
+                                    Text(stringResource(if (isDefault) R.string.au_phonea_default_number else R.string.au_phonea_set_default))
                                 }
                             }
                         }
                         IconButton(onClick = { viewModel.dial(context, number) }) {
                             Icon(
                                 painterResource(R.drawable.rd_ic_phone_green_vector),
-                                contentDescription = null,
+                                contentDescription = stringResource(R.string.search_action_call),
                                 tint = RdGreenCall,
                             )
                         }
@@ -631,7 +669,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     val note = notes[primary]
                     CommsDetailCard(onClick = { editingNote = true }) {
                         Text(
-                            text = if (note.isNullOrBlank()) "Add notes" else note,
+                            text = if (note.isNullOrBlank()) stringResource(R.string.au_phonea_add_notes) else note,
                             style = MaterialTheme.typography.bodyLarge,
                             color = if (note.isNullOrBlank()) MaterialTheme.colorScheme.onSurfaceVariant
                             else MaterialTheme.colorScheme.onSurface,
@@ -675,7 +713,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                                     label = { Text(stringResource(R.string.hc_speed_dial)) },
                                 )
                             }
-                            item {
+                            if (contact.id >= 0) item {
                                 androidx.compose.material3.AssistChip(
                                     onClick = {
                                         ringtoneLauncher.launch(
@@ -700,7 +738,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     val hidden = de.mm20.launcher2.comms.privacy.HiddenContacts.matches(primary, hiddenNumbers)
                     CommsDetailCard(onClick = { viewModel.setHidden(primary, !hidden) }) {
                         Text(
-                            text = if (hidden) "Unhide contact" else "Hide contact",
+                            text = stringResource(if (hidden) R.string.au_phonea_unhide_contact else R.string.au_phonea_hide_contact),
                             style = MaterialTheme.typography.titleMedium,
                         )
                     }
@@ -709,7 +747,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     val guarded = de.mm20.launcher2.comms.privacy.HiddenContacts.matches(primary, protectedNumbers)
                     CommsDetailCard(onClick = { viewModel.setCallProtected(primary, !guarded) }) {
                         Text(
-                            text = if (guarded) "Don't require biometric to call" else "Require biometric to call",
+                            text = stringResource(if (guarded) R.string.au_phonea_unprotect_call else R.string.au_phonea_protect_call),
                             style = MaterialTheme.typography.titleMedium,
                         )
                     }
@@ -750,7 +788,12 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                                 context, primary, contact.displayName, minutes,
                             )
                             showReminder = false
-                        }) { Text(if (minutes < 60) "In $minutes min" else "In ${minutes / 60} h") }
+                        }) {
+                            Text(
+                                if (minutes < 60) stringResource(R.string.au_phonea_in_minutes, minutes)
+                                else stringResource(R.string.au_phonea_in_hours, minutes / 60)
+                            )
+                        }
                     }
                 }
             },
@@ -780,19 +823,21 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
             text = {
                 Column {
                     Text(stringResource(R.string.hc_long_press_digit_to_call, contact.displayName))
-                    Row(
-                        modifier = Modifier.padding(top = 8.dp),
-                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                    ) {
-                        (2..9).forEach { digit ->
-                            TextButton(
-                                onClick = {
-                                    viewModel.setSpeedDial(digit, primary)
-                                    showSpeedDial = false
-                                },
-                                contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp),
-                                modifier = Modifier.size(36.dp),
-                            ) { Text(digit.toString()) }
+                    (2..9).chunked(4).forEach { digits ->
+                        Row(
+                            modifier = Modifier.padding(top = 8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            digits.forEach { digit ->
+                                TextButton(
+                                    onClick = {
+                                        viewModel.setSpeedDial(digit, primary)
+                                        showSpeedDial = false
+                                    },
+                                    contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp),
+                                    modifier = Modifier.size(48.dp),
+                                ) { Text(digit.toString()) }
+                            }
                         }
                     }
                 }
@@ -874,9 +919,9 @@ private fun MessengerRow(
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.weight(1f),
         )
-        if (onVideo != null) MessengerButton(R.drawable.videocam_24px, "Video call", onVideo)
-        if (onCall != null) MessengerButton(R.drawable.call_24px, "Call", onCall)
-        MessengerButton(R.drawable.rd_ic_messages, "Message", onChat)
+        if (onVideo != null) MessengerButton(R.drawable.videocam_24px, stringResource(R.string.au_phonea_video_call), onVideo)
+        if (onCall != null) MessengerButton(R.drawable.call_24px, stringResource(R.string.search_action_call), onCall)
+        MessengerButton(R.drawable.rd_ic_messages, stringResource(R.string.search_action_message), onChat)
     }
 }
 

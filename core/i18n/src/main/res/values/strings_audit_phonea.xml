@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_phonea_recents">Recents</string>
+    <string name="au_phonea_dialer">Dialer</string>
+    <string name="au_phonea_unlock_phone">Unlock Phone</string>
+    <string name="au_phonea_sip_not_connected">SIP account is not connected</string>
+    <string name="au_phonea_backspace">Delete digit</string>
+    <string name="au_phonea_toggle_grid">Switch contacts layout</string>
+    <string name="au_phonea_history_empty_hint">Call history stays empty until Telos is the default Phone app, or until call-log permission is granted.</string>
+    <string name="au_phonea_export_subject">Call history</string>
+    <string name="au_phonea_grant_calllog">Grant call log permission</string>
+    <string name="au_phonea_untitled_group">Untitled</string>
+    <plurals name="au_phonea_group_contacts">
+        <item quantity="one">%1$d contact</item>
+        <item quantity="other">%1$d contacts</item>
+    </plurals>
+    <string name="au_phonea_group_empty">No contacts in this group</string>
+    <string name="au_phonea_default_number">Default number</string>
+    <string name="au_phonea_set_default">Set as default</string>
+    <string name="au_phonea_add_notes">Add notes</string>
+    <string name="au_phonea_hide_contact">Hide contact</string>
+    <string name="au_phonea_unhide_contact">Unhide contact</string>
+    <string name="au_phonea_protect_call">Require biometric to call</string>
+    <string name="au_phonea_unprotect_call">Don\'t require biometric to call</string>
+    <string name="au_phonea_in_minutes">In %1$d min</string>
+    <string name="au_phonea_in_hours">In %1$d h</string>
+    <string name="au_phonea_video_call">Video call</string>
+    <string name="au_phonea_blocked">Blocked</string>
+    <string name="au_phonea_action_failed">Couldn\'t save the change. Check the contacts permission.</string>
+    <string name="au_phonea_qr_too_large">This contact has too much data for a QR code.</string>
+</resources>

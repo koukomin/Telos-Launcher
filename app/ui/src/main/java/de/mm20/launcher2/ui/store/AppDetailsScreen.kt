@@ -72,13 +72,13 @@ fun AppDetailsScreen(itemId: String) {
         var renaming by remember { mutableStateOf(false) }
         var filterText by remember(item.source) { mutableStateOf(sourceRegex(item.source).orEmpty()) }
         var prerelease by remember(item.source) { mutableStateOf(sourcePrerelease(item.source)) }
-        var category by remember(o.category) { mutableStateOf(o.category) }
-        var note by remember(o.note) { mutableStateOf(o.note) }
+        var category by remember(item.id) { mutableStateOf(o.category) }
+        var note by remember(item.id) { mutableStateOf(o.note) }
 
         LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             item {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    AppIcon(item.packageName, item.displayName, 64)
+                    AppIcon(item.packageName, item.displayName, 64, item.installedVersionCode)
                     Spacer(Modifier.width(16.dp))
                     Column(Modifier.weight(1f)) {
                         Text(item.displayName, style = MaterialTheme.typography.titleLarge)
@@ -149,6 +149,7 @@ fun AppDetailsScreen(itemId: String) {
                         OutlinedTextField(
                             filterText, { filterText = it }, label = { Text(stringResource(R.string.hc_file_name_filter_regular_expression)) }, singleLine = true,
                             supportingText = { Text(stringResource(R.string.hc_for_example_arm64_or_universal_empty_mea)) },
+                            isError = filterText.isNotBlank() && runCatching { Regex(filterText) }.isFailure,
                             modifier = Modifier.fillMaxWidth(),
                         )
                         if (hasPrerelease(item.source)) SwitchLine(stringResource(R.string.hf_store_prereleases), null, prerelease) { prerelease = it }

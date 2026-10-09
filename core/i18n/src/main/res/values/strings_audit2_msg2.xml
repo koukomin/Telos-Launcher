@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au2_msg2_send_with">Send with</string>
+    <string name="au2_msg2_block_number">Block number</string>
+    <string name="au2_msg2_unblock_number">Unblock</string>
+    <string name="au2_msg2_blocked_messages">Blocked messages</string>
+    <string name="au2_msg2_blocked_messages_count">Blocked messages (%1$d)</string>
+    <string name="au2_msg2_blocked_numbers">Blocked numbers</string>
+    <string name="au2_msg2_blocked_empty_title">No blocked messages</string>
+    <string name="au2_msg2_blocked_empty_hint">Messages from blocked numbers are kept here without a notification.</string>
+    <string name="au2_msg2_blocked_restore_hint">After unblocking, the messages of that number return to the conversations when Telos is your SMS app.</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_office_truncated">Large file: only the first part is shown. The rest stays unchanged when you save.</string>
+    <string name="au_office_encrypted">This file is protected with a password and cannot be opened here.</string>
+    <string name="au_office_slide_n">Slide %1$d</string>
+</resources>

@@ -11,6 +11,10 @@ import de.mm20.launcher2.comms.repository.CallLogRepository
 import de.mm20.launcher2.comms.repository.ContactDirectoryRepository
 import de.mm20.launcher2.comms.t9.T9SearchEngine
 import de.mm20.launcher2.comms.AuthManager
+import de.mm20.launcher2.comms.privacy.HiddenContacts
+import de.mm20.launcher2.comms.privacy.PrivacySession
+import de.mm20.launcher2.ui.R
+import kotlinx.coroutines.Dispatchers
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import android.telephony.PhoneNumberUtils
 import java.util.Locale
@@ -48,12 +52,19 @@ class DialpadViewModel : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
     val clirPrefix = commsSettings.clirPrefix
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
-    val recents: StateFlow<List<CallLogEntry>> = callLogRepository.observeRecents()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    val recents: StateFlow<List<CallLogEntry>> = combine(
+        callLogRepository.observeRecents(),
+        commsSettings.hiddenNumbers,
+        commsSettings.hideFromRecents,
+        PrivacySession.hiderUnlocked,
+    ) { list, hidden, hide, unlocked ->
+        if (!hide || unlocked) list
+        else list.filter { !HiddenContacts.matches(it.phoneNumber, hidden) }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     private val _input = MutableStateFlow("")
-    val input: StateFlow<String> = _input.map { 
-        PhoneNumberUtils.formatNumber(it, Locale.getDefault().country) ?: it 
+    val input: StateFlow<String> = _input.map {
+        runCatching { PhoneNumberUtils.formatNumber(it, Locale.getDefault().country) }.getOrNull() ?: it
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
 
     private val _isVaultUnlocked = MutableStateFlow(false)
@@ -62,8 +73,16 @@ class DialpadViewModel : ViewModel(), KoinComponent {
     private val _vaultAuthRequested = MutableStateFlow(false)
     val vaultAuthRequested: StateFlow<Boolean> = _vaultAuthRequested
 
-    private val contacts = contactDirectory.observeContacts()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    // hidden contacts must not show up in the T9 suggestions while the hider is locked
+    private val contacts = combine(
+        contactDirectory.observeContacts(),
+        commsSettings.hiddenNumbers,
+        commsSettings.hideFromContacts,
+        PrivacySession.hiderUnlocked,
+    ) { list, hidden, hide, unlocked ->
+        if (!hide || unlocked) list
+        else list.filter { !HiddenContacts.contactHidden(it, hidden) }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val t9Results: StateFlow<List<DialerContact>> = combine(_input, contacts) { query, contacts ->
         t9SearchEngine.search(query, contacts)
@@ -97,19 +116,34 @@ class DialpadViewModel : ViewModel(), KoinComponent {
             _input.value = ""
             // To be secure, the actual PIN validation happens via AuthManager
             val pin = currentInput.removeSurrounding("#")
-            if (authManager.hasCustomPin() && authManager.authenticateCustom(pin)) {
-                _isVaultUnlocked.value = true
-                de.mm20.launcher2.comms.privacy.PrivacySession.unlockHider()
-            } else if (!authManager.hasCustomPin()) {
-                _vaultAuthRequested.value = true
+            // the PIN hash is deliberately slow, so it must not run on the main thread
+            viewModelScope.launch(Dispatchers.Default) {
+                if (authManager.hasCustomPin()) {
+                    if (authManager.authenticateCustom(pin)) {
+                        PrivacySession.unlockHider()
+                        _isVaultUnlocked.value = true
+                    }
+                } else {
+                    _vaultAuthRequested.value = true
+                }
             }
         }
     }
 
     fun onVaultAuthSuccess() {
-        _isVaultUnlocked.value = true
         _vaultAuthRequested.value = false
-        de.mm20.launcher2.comms.privacy.PrivacySession.unlockHider()
+        PrivacySession.unlockHider()
+        _isVaultUnlocked.value = true
+    }
+
+    /** The biometric prompt is finished (successful or not): the next vault code may ask again */
+    fun onVaultAuthHandled() {
+        _vaultAuthRequested.value = false
+    }
+
+    /** The screen has navigated to the hidden contacts; the event must not fire a second time */
+    fun onVaultNavigated() {
+        _isVaultUnlocked.value = false
     }
 
     fun onBackspace() {
@@ -163,7 +197,14 @@ class DialpadViewModel : ViewModel(), KoinComponent {
         if (number.isEmpty()) return
         viewModelScope.launch {
             val ok = de.mm20.launcher2.comms.privacy.CallGuard.placeSip(context, number)
-            if (!ok) android.widget.Toast.makeText(context, de.mm20.launcher2.comms.sip.SipDialer.lastFailure.ifBlank { "SIP account is not connected" }, android.widget.Toast.LENGTH_SHORT).show()
+            if (!ok) {
+                android.widget.Toast.makeText(
+                    context,
+                    de.mm20.launcher2.comms.sip.SipDialer.lastFailure
+                        .ifBlank { context.getString(R.string.au_phoneb_sip_err_not_connected) },
+                    android.widget.Toast.LENGTH_SHORT,
+                ).show()
+            }
         }
     }
 

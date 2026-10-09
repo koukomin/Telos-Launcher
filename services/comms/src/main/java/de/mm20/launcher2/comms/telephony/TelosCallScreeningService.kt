@@ -3,6 +3,7 @@ package de.mm20.launcher2.comms.telephony
 
 import de.mm20.launcher2.base.containedScope
 import android.net.Uri
+import android.os.Build
 import android.telecom.Call
 import android.telecom.CallScreeningService
 import android.telephony.PhoneNumberUtils
@@ -27,6 +28,13 @@ class TelosCallScreeningService : CallScreeningService(), KoinComponent {
 
 
     override fun onScreenCall(callDetails: Call.Details) {
+        // only incoming calls are screened: outgoing calls (also emergency calls) always go through
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+            callDetails.callDirection != Call.Details.DIRECTION_INCOMING
+        ) {
+            respondToCall(callDetails, CallResponse.Builder().build())
+            return
+        }
         val handle: Uri? = callDetails.handle
         val phoneNumber = handle?.schemeSpecificPart ?: ""
         
@@ -76,13 +84,11 @@ class TelosCallScreeningService : CallScreeningService(), KoinComponent {
         return false
     }
 
-    private fun isInternational(number: String): Boolean {
-        val digits = number.filter { it.isDigit() }
-        if (digits.isEmpty()) return false
-        if (number.startsWith("+") || number.startsWith("00")) {
-            return !PhoneNumberUtils.isEmergencyNumber(number)
-        }
-        return false
+    private suspend fun isInternational(number: String): Boolean {
+        if (number.none { it.isDigit() }) return false
+        if (PhoneNumberUtils.isEmergencyNumber(number)) return false
+        val home = HomeCountry.resolve(this, commsSettings.homeCountry.first())
+        return HomeCountry.isInternational(number, home)
     }
 }
 // === TELOS_PENDING_REVIEW_END: telephony_encryption_suite ===

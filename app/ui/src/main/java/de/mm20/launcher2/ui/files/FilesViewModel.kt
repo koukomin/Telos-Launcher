@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.ensureActive
 import kotlin.coroutines.coroutineContext
 import kotlinx.coroutines.withContext
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.files.remote.ConnectionStore
 import de.mm20.launcher2.ui.files.remote.RemoteConnection
 import de.mm20.launcher2.ui.files.remote.RemotePath
@@ -31,6 +32,7 @@ data class TaskState(val title: String, val progress: Float?, val cancel: Cancel
 
 class FilesViewModel(application: Application) : AndroidViewModel(application) {
     private val context: Context get() = getApplication()
+    private fun s(id: Int, vararg args: Any): String = context.getString(id, *args)
     private val prefs = context.getSharedPreferences("telos_files", Context.MODE_PRIVATE)
     private val local = LocalFs()
     private val root = RootFs()
@@ -101,6 +103,12 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         reloadConnections()
     }
 
+    override fun onCleared() {
+        // files fetched from a server, an archive or a vault (decrypted!) must not stay in the cache
+        runCatching { File(context.cacheDir, "remote_open").deleteRecursively() }
+        super.onCleared()
+    }
+
     private fun loadSort(): SortSpec = SortSpec(
         key = runCatching { SortKey.valueOf(prefs.getString("sortKey", "Name")!!) }.getOrDefault(SortKey.Name),
         ascending = prefs.getBoolean("sortAsc", true),
@@ -116,11 +124,11 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                     found += StorageVolume(name, dir.path, stat.totalBytes, stat.availableBytes, removable)
                 }
             }
-            add("Internal storage", Environment.getExternalStorageDirectory(), false)
+            add(s(R.string.au_files_internal_storage), Environment.getExternalStorageDirectory(), false)
             // other volumes show up as app folders: .../Android/data/<package>/files
             context.getExternalFilesDirs(null).drop(1).filterNotNull().forEach { d ->
                 val volume = File(d.path.substringBefore("/Android"))
-                if (volume.exists()) add(volume.name.let { "SD card / USB ($it)" }, volume, true)
+                if (volume.exists()) add(s(R.string.au_files_sd_usb, volume.name), volume, true)
             }
             withContext(Dispatchers.Main) { volumes = found }
         }
@@ -147,7 +155,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             if (path != dir) return@launch
             loading = false
             result.onSuccess { entries = it; error = null }
-                .onFailure { entries = emptyList(); error = it.message ?: "Cannot open this folder" }
+                .onFailure { entries = emptyList(); error = it.message?.takeIf { m -> m != "Cannot open this folder" } ?: s(R.string.au_files_cannot_open_folder) }
         }
     }
 
@@ -238,7 +246,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) { RootShell.available(force = true) }
             rootMode = ok
-            if (!ok) message = "Root access was not granted"
+            if (!ok) message = s(R.string.au_files_root_denied)
             onResult(ok)
             path?.let { load(it) }
         }
@@ -250,14 +258,14 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) { root.remount(mountPoint, writable) }
             rootMounted = if (ok) writable else rootMounted
-            message = if (ok) "$mountPoint is now ${if (writable) "writable" else "read-only"}" else "Could not remount $mountPoint"
+            message = if (ok) s(if (writable) R.string.au_files_remount_rw else R.string.au_files_remount_ro, mountPoint) else s(R.string.au_files_remount_failed, mountPoint)
         }
     }
 
     fun chmod(entry: FsEntry, mode: String) {
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) { root.chmod(entry.path, mode) }
-            message = if (ok) "Permissions changed" else "Could not change the permissions"
+            message = if (ok) s(R.string.au_files_chmod_ok) else s(R.string.au_files_chmod_failed)
             reload()
         }
     }
@@ -278,7 +286,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
             task = null
-            message = result.getOrElse { if (cancel.cancelled) "Cancelled" else it.message ?: "Failed" }
+            message = result.getOrElse { if (cancel.cancelled) s(R.string.au_files_cancelled) else it.message ?: s(R.string.au_files_failed) }
             selection = emptySet()
             reload()
         }
@@ -288,7 +296,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val dir = path ?: return
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) { fs.mkdir(dir, fs.freeName(dir, name)) }
-            message = if (ok) null else "Could not create the folder"
+            message = if (ok) null else s(R.string.au_files_mkdir_failed)
             reload()
         }
     }
@@ -297,7 +305,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val dir = path ?: return
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) { fs.createFile(dir, fs.freeName(dir, name)) }
-            message = if (ok) null else "Could not create the file"
+            message = if (ok) null else s(R.string.au_files_create_failed)
             reload()
         }
     }
@@ -310,36 +318,40 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             val ok = withContext(Dispatchers.IO) {
                 newName.isNotBlank() && isPlainName(newName) && (onlyCase || !fs.exists(joinPath(dir, newName))) && fs.rename(entry.path, newName)
             }
-            message = if (ok) null else "Could not rename (does the name exist already?)"
+            message = if (ok) null else s(R.string.au_files_rename_failed)
             selection = emptySet()
             reload()
         }
     }
 
     fun delete(items: List<FsEntry>) {
-        runTask("Deleting", null) { _, _ ->
-            val failed = items.count { !fs.delete(it.path) }
-            if (failed == 0) "Deleted" else "$failed could not be deleted"
+        runTask(s(R.string.au_files_deleting), null) { cancel, _ ->
+            var failed = 0
+            for (item in items) {
+                if (cancel.cancelled) break
+                if (!fs.delete(item.path)) failed++
+            }
+            if (failed == 0) s(R.string.au_files_deleted) else s(R.string.au_files_delete_failed, failed)
         }
     }
 
     fun copyToClipboard(cut: Boolean) {
         clipboard = ClipboardState(selectedEntries().map { it.path }, cut, rootMode)
         selection = emptySet()
-        message = if (cut) "Cut. Open the target folder and paste." else "Copied. Open the target folder and paste."
+        message = if (cut) s(R.string.au_files_cut_hint) else s(R.string.au_files_copied_hint)
     }
 
     fun clearClipboard() { clipboard = null }
 
     fun paste() {
-        val clip = clipboard ?: return
+        val clip = clipboard?.takeIf { it.paths.isNotEmpty() } ?: return
         val dir = path ?: return
         val dstFs = fsFor(dir)
         val srcFs = fsFor(clip.paths.first())
         val bothLocal = !dstFs.isRemote && !srcFs.isRemote && !(rootMode || clip.rootMode)
         val total = if (bothLocal) clip.paths.sumOf { FsOps.sizeOf(File(it)) } else null
         val infoByPath = (searchResults ?: entries).associateBy { it.path }
-        runTask(if (clip.cut) "Moving" else "Copying", total) { cancel, progress ->
+        runTask(if (clip.cut) s(R.string.au_files_moving) else s(R.string.au_files_copying), total) { cancel, progress ->
             var failed = 0
             for (src in clip.paths) {
                 if (cancel.cancelled) break
@@ -362,7 +374,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                 if (!ok) failed++
             }
             if (clip.cut) clipboard = null
-            if (failed == 0) "Done" else "$failed could not be ${if (clip.cut) "moved" else "copied"}"
+            if (failed == 0) s(R.string.au_files_done) else if (clip.cut) s(R.string.au_files_move_failed, failed) else s(R.string.au_files_copy_failed, failed)
         }
     }
 
@@ -379,7 +391,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) { runCatching { de.mm20.launcher2.ui.files.vault.VaultSessions.unlock(vault, password) } }
             result.onSuccess { onDone(); open(de.mm20.launcher2.ui.files.vault.VaultPath.build(vault, "/")) }.onFailure {
-                onError(if (it is de.mm20.launcher2.ui.files.vault.WrongPasswordException) "Wrong password" else it.message ?: "Could not open the vault")
+                onError(if (it is de.mm20.launcher2.ui.files.vault.WrongPasswordException) s(R.string.au_files_wrong_password) else it.message ?: s(R.string.au_files_vault_failed))
             }
         }
     }
@@ -396,7 +408,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         // the name comes from a server: only its last part is used, so it cannot point out of the folder
         val target = File(File(context.cacheDir, "remote_open").apply { mkdirs() }, entry.name.substringAfterLast('/').takeIf { isPlainName(it) } ?: "file")
         val cancel = CancelFlag()
-        task = TaskState("Downloading", if (entry.size > 0) 0f else null, cancel)
+        task = TaskState(s(R.string.au_files_downloading), if (entry.size > 0) 0f else null, cancel)
         viewModelScope.launch {
             val done = java.util.concurrent.atomic.AtomicLong()
             val result = withContext(Dispatchers.IO) {
@@ -417,7 +429,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
             task = null
-            result.onSuccess { then(target) }.onFailure { message = if (cancel.cancelled) "Cancelled" else it.message ?: "Download failed" }
+            result.onSuccess { then(target) }.onFailure { target.delete(); message = if (cancel.cancelled) s(R.string.au_files_cancelled) else it.message ?: s(R.string.au_files_download_failed) }
         }
     }
 
@@ -425,14 +437,14 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val dir = path ?: return
         val files = items.map { File(it.path) }
         val total = files.sumOf { FsOps.sizeOf(it) }
-        runTask("Compressing", total) { cancel, progress ->
+        runTask(s(R.string.au_files_compressing), total) { cancel, progress ->
             val target = File(dir, local.freeName(dir, if (zipName.endsWith(".zip")) zipName else "$zipName.zip"))
             try {
                 FsOps.zip(files, target, cancel, progress)
             } catch (e: Exception) {
                 target.delete(); throw e
             }
-            "Created ${target.name}"
+            s(R.string.au_files_created, target.name)
         }
     }
 
@@ -440,7 +452,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     fun extract(entry: FsEntry) {
         val dir = path ?: return
         val archiveFs = ArchiveFs(File(entry.path))
-        runTask("Extracting", null) { cancel, progress ->
+        runTask(s(R.string.au_files_extracting), null) { cancel, progress ->
             val target = File(dir, local.freeName(dir, ArchivePath.baseName(entry.name)))
             try {
                 archiveFs.extractAll(target, cancel, progress)
@@ -448,11 +460,11 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                 target.deleteRecursively() // a half unpacked folder helps nobody
                 throw e
             }
-            "Extracted to ${target.name}"
+            s(R.string.au_files_extracted, target.name)
         }
     }
 
-    suspend fun sizeOf(entry: FsEntry): Long = withContext(Dispatchers.IO) { fs.totalSize(entry.path) }
+    suspend fun sizeOf(entry: FsEntry): Long = withContext(Dispatchers.IO) { runCatching { fs.totalSize(entry.path) }.getOrDefault(-1L) }
     suspend fun checksum(entry: FsEntry, algorithm: String): String = withContext(Dispatchers.IO) { runCatching { FsOps.hash(File(entry.path), algorithm) }.getOrDefault("") }
     suspend fun childCount(entry: FsEntry): Int = withContext(Dispatchers.IO) { runCatching { fs.list(entry.path).size }.getOrDefault(-1) }
 }

@@ -127,3 +127,6 @@ interface DnsController : EngineComponent {
      */
     fun transportFor(uid: Int, domain: String): String
 }
+
+/** Thrown by [DnsController.validate] when a DoH address uses plain http:// for a host that is not local. */
+class InsecureDnsUrlException(message: String) : IllegalArgumentException(message)

@@ -102,11 +102,15 @@ class SmbRemoteClient(private val connection: RemoteConnection) : RemoteClient {
 }
 
 /** FTP, and FTPS (FTP over TLS) when the connection asks for TLS. */
-class FtpRemoteClient(private val connection: RemoteConnection) : RemoteClient {
+class FtpRemoteClient(private val connection: RemoteConnection, private val hostMismatchMessage: String = "") : RemoteClient {
     private var shared: FTPClient? = null
 
     private fun connect(): FTPClient {
         val c: FTPClient = if (connection.tls) FTPSClient("TLS", false) else FTPClient()
+        if (c is FTPSClient) {
+            // the certificate has to be issued for this host name, unless the connection says otherwise
+            c.isEndpointCheckingEnabled = !connection.acceptAnyHost
+        }
         c.connectTimeout = 20_000
         c.defaultTimeout = 60_000
         c.controlEncoding = "UTF-8"
@@ -121,8 +125,26 @@ class FtpRemoteClient(private val connection: RemoteConnection) : RemoteClient {
             return c
         } catch (e: Exception) {
             runCatching { c.disconnect() }
+            if (c is FTPSClient && !connection.acceptAnyHost && hostMismatchMessage.isNotEmpty() && isHostMismatch(e)) {
+                throw IOException(hostMismatchMessage, e)
+            }
             throw if (e is IOException) e else IOException(e.message, e)
         }
+    }
+
+    /** True when TLS failed because the certificate does not belong to the host name (and not for another reason) */
+    private fun isHostMismatch(e: Throwable): Boolean {
+        var t: Throwable? = e
+        var depth = 0
+        while (t != null && depth++ < 8) {
+            if (t is javax.net.ssl.SSLPeerUnverifiedException) return true
+            val m = t.message.orEmpty().lowercase()
+            if ((t is java.security.cert.CertificateException || t is javax.net.ssl.SSLHandshakeException) &&
+                (m.contains("subject alternative") || m.contains("hostname") || m.contains("host name") || m.contains("not verified") || m.contains("identity"))
+            ) return true
+            t = t.cause
+        }
+        return false
     }
 
     @Synchronized
@@ -145,7 +167,8 @@ class FtpRemoteClient(private val connection: RemoteConnection) : RemoteClient {
     override fun delete(path: String): Boolean = withClient { c ->
         val target = abs(path)
         val children = c.listFiles(target)
-        if (children != null && children.isNotEmpty() || c.changeWorkingDirectory(target)) {
+        // a plain file can list as itself, so only a folder that can be entered counts as one
+        if (c.changeWorkingDirectory(target)) {
             c.changeWorkingDirectory("/")
             children?.filter { it.name != "." && it.name != ".." }?.forEach { delete(path.trimEnd('/') + "/" + it.name) }
             c.removeDirectory(target)

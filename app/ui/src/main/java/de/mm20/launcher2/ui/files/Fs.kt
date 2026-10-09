@@ -201,17 +201,22 @@ object FsOps {
             dst.mkdirs()
             src.listFiles()?.forEach { copyTree(it, File(dst, it.name), cancel, progress) }
         } else {
-            src.inputStream().use { input ->
-                dst.outputStream().use { output ->
-                    val buffer = ByteArray(256 * 1024)
-                    while (true) {
-                        if (cancel.cancelled) throw IOException("Cancelled")
-                        val n = input.read(buffer)
-                        if (n < 0) break
-                        output.write(buffer, 0, n)
-                        progress(n.toLong())
+            try {
+                src.inputStream().use { input ->
+                    dst.outputStream().use { output ->
+                        val buffer = ByteArray(256 * 1024)
+                        while (true) {
+                            if (cancel.cancelled) throw IOException("Cancelled")
+                            val n = input.read(buffer)
+                            if (n < 0) break
+                            output.write(buffer, 0, n)
+                            progress(n.toLong())
+                        }
                     }
                 }
+            } catch (e: Exception) {
+                dst.delete()
+                throw e
             }
             dst.setLastModified(src.lastModified())
         }
@@ -227,17 +232,23 @@ object FsOps {
                 copyAcross(src, child.path, child.isDir, dst, joinPath(dstPath, child.name), cancel, progress)
             }
         } else {
-            src.openRead(srcPath).use { input ->
-                dst.openWrite(dstPath).use { output ->
-                    val buffer = ByteArray(128 * 1024)
-                    while (true) {
-                        if (cancel.cancelled) throw IOException("Cancelled")
-                        val n = input.read(buffer)
-                        if (n < 0) break
-                        output.write(buffer, 0, n)
-                        progress(n.toLong())
+            try {
+                src.openRead(srcPath).use { input ->
+                    dst.openWrite(dstPath).use { output ->
+                        val buffer = ByteArray(128 * 1024)
+                        while (true) {
+                            if (cancel.cancelled) throw IOException("Cancelled")
+                            val n = input.read(buffer)
+                            if (n < 0) break
+                            output.write(buffer, 0, n)
+                            progress(n.toLong())
+                        }
                     }
                 }
+            } catch (e: Exception) {
+                // a cancelled or failed copy must not leave a cut-off file behind (a server may even have stored it when the stream closed)
+                runCatching { dst.delete(dstPath) }
+                throw e
             }
         }
     }

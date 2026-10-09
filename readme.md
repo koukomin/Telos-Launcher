@@ -59,10 +59,10 @@ from Telos Store.
 | **Telos Network** | VPN based firewall and DNS filter on the Rethink engine: DNS servers, firewall per app and connection type, blocklists with exceptions, WireGuard per app, logs. Off until you turn it on, early version | [Network](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/network/) |
 | **Telos Voice Recorder** | Voice recordings with search, pause and call recordings | [Voice Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/voice-recorder/) |
 | **Telos Calculator** | Standard and scientific calculator, VAT, unit and currency converter, history | [Calculator](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calculator/) |
-| **Telos Photos** | Gallery, EXIF tools, editor and a document viewer | [Photos](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
+| **Telos Viewer** | Gallery, EXIF tools, photo editor, document viewer and editor, PDF tools | [Viewer](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
 | **Telos Music** | Local library, lyrics, scrobbling, tag editor | [Music](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/music/) |
 | **Telos Video** | Library, player, web streams, torrents, subtitles, Trakt | [Video](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/video/) |
-| **Telos Radio** | Internet radio with station search and sleep timer | [Radio](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/radio/) |
+| **Telos Radio** | Internet radio with station search, sleep timer and stream recording | [Radio](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/radio/) |
 | **Telos Store** | Install and update apps from GitHub, F-Droid and more, manages the Telos apps | [Store](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/store/) |
 | **Smart Freeze** | Freeze or hide apps through Shizuku, root, device owner or Island (a launcher feature in Settings, not a Telos app) | [Smart Freeze](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/freeze/) |
 
@@ -70,14 +70,14 @@ from Telos Store.
 
 - **They look like normal apps.** Each has an icon in the app grid and shows up in search.
 - **They can be switched on and off.** In Telos Store "install" shows an app's icon and "remove" hides it. Telos Store itself cannot be removed.
-- **Switched-off apps cost nothing.** For Radio, Music, Video and Photos the services and screens are disabled, so they use no memory or CPU and are not offered in "Open with". Phone and Messages are never touched.
-- **They are guarded against crashes.** Radio, Music, Video and Photos are switched off automatically when they crash or hang twice within a day, with a notification that points to the Store. Installing the app again resets the counter. Phone and Messages are never switched off, because Android needs them.
+- **Switched-off apps cost nothing.** For Radio, Music, Video and Viewer the services and screens are disabled, so they use no memory or CPU and are not offered in "Open with". Phone and Messages are never touched.
+- **They are guarded against crashes.** Radio, Music, Video and Viewer are switched off automatically when they crash or hang twice within a day, with a notification that points to the Store. Installing the app again resets the counter. Phone and Messages are never switched off, because Android needs them.
 - **They appear in the share menu**, each under its own name and icon and only while installed:
 
 | Share target | Accepts |
 | --- | --- |
 | Telos Messages | text, pictures, videos, `sms:` links |
-| Telos Photos | pictures |
+| Telos Viewer | pictures |
 | Telos Video | videos, magnet links, torrent files |
 | Telos Store | `obtainium:` links |
 | Telos Phone | `tel:` links |
@@ -118,7 +118,7 @@ and custom names are matched; file contents, message texts and note bodies are n
 | Source | What it finds | Min. text | Online? | Default |
 | --- | --- | --- | --- | --- |
 | Apps | Installed apps of every profile (personal, work, private space) | 1 | No | On |
-| Telos apps | Phone, Messages, Radio, Music, Video, Photos, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder, Notes, Calendar, Downloads, Store, while switched on | 1 | No | On |
+| Telos apps | Phone, Messages, Radio, Music, Video, Viewer, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder, Notes, Calendar, Downloads, Store, while switched on. Also found by synonym keywords in English and Greek (for example `pdf`, `gallery`, `photos` or `έγγραφα` find Telos Viewer); the Store's Telos apps tab search uses the same keywords | 1 | No | On |
 | Web apps | Web app shortcuts shown in the grid | 1 | No | On |
 | Activity by component name | One app entry for a typed `package/class` | 1 | No | On |
 | App shortcuts | Shortcuts that apps publish (needs Telos as default home app) | 3 | No | On |
@@ -542,7 +542,7 @@ Each app below is a virtual app. Full pages with troubleshooting tables are in t
 
 ### Search inside the Telos apps
 
-Every Telos app has the same modern search bar (a rounded field with a clear button and room for filters), and each search is limited to what the app is about: Phone searches contacts, call history or messages, Video only videos, Music songs, albums and artists, Radio stations, Photos pictures, Files the files of the folder you are in, Store apps, Network its apps, DNS providers, rules and logs, and so on. Matching understands Greek with and without accents and the final sigma, and Greeklish in both directions (`giorgos`, `yiorgos` and `Γιώργος` find each other). Phone numbers match without spaces or dashes. The matching is deliberately loose, so occasional extra results are possible.
+Every Telos app has the same modern search bar (a rounded field with a clear button and room for filters), and each search is limited to what the app is about: Phone searches contacts, call history or messages, Video only videos, Music songs, albums and artists, Radio stations, Viewer pictures and documents, Files the files of the folder you are in, Store apps, Network its apps, DNS providers, rules and logs, and so on. Matching understands Greek with and without accents and the final sigma, and Greeklish in both directions (`giorgos`, `yiorgos` and `Γιώργος` find each other). Phone numbers match without spaces or dashes. The matching is deliberately loose, so occasional extra results are possible.
 
 ### Telos Phone
 
@@ -554,7 +554,7 @@ A complete phone app inside the launcher. Its layout follows [Right Dialer](http
 - Long-press `0` types `+`, long-press `1` calls voicemail, long-press `2` to `9` calls a speed dial, one-tap speed dial slots 1 to 9
 - MMI / USSD / secret codes (`*#06#`, `*21*...#`) are passed to the network unchanged
 - Tap to call and confirm before calling options
-- Biometric confirmation before placing a call (every call, or listed contacts only)
+- Biometric or device credential confirmation before placing a call (every call, or listed contacts only), also on Android 9 and 10; if the prompt cannot be shown the call is not placed and a message says so
 
 **Dual SIM**
 
@@ -595,7 +595,7 @@ A complete phone app inside the launcher. Its layout follows [Right Dialer](http
 <details>
 <summary><b>Privacy, call screening and backup</b></summary>
 
-- **Call screening** (offline, all rules off by default): block hidden numbers, a Telos block list (exact number match), unknown callers (not in your contacts) and international callers. Blocked calls are rejected silently and leave no log entry and no notification.
+- **Call screening** (offline, all rules off by default): block hidden numbers, a Telos block list (exact number match, shared with Messages), unknown callers (not in your contacts) and international callers (a number is international only when its country calling code differs from your selectable **Home country**; default SIM, then network, then language country; numbers without `+` or `00` are domestic; emergency numbers are exempt). Blocked calls are rejected silently and leave no log entry and no notification.
 - **Hidden contacts:** hide numbers behind a 4 to 6 digit PIN typed on the dialpad as `#PIN#`. Hidden from the contacts tab and recents, name masked on incoming calls, optional stealth mode that hides the settings menu. PBKDF2 hash, guesses slowed down after five wrong ones, no PIN recovery. Hiding only changes what Telos shows.
 - **Phone app lock** with biometrics or device credential, and biometric protection for chosen numbers
 - **Secure storage:** call recordings AES-256-GCM with a Keystore key, block list in a SQLCipher database, SIP and FRITZ!Box passwords encrypted with a Keystore key
@@ -611,7 +611,7 @@ A complete phone app inside the launcher. Its layout follows [Right Dialer](http
 - **Cellular network mode switcher** (Shizuku or root) with a Quick Settings tile and screen-off / battery-saver automation
 - **Home screen widgets:** recent calls and direct call (dialpad)
 - **Settings page** in the Right Dialer style (accent section captions, rounded cards)
-- **SIP / VoIP (experimental):** a SIP account (for example a FRITZ!Box IP telephone) on top of [baresip](https://github.com/baresip/baresip), kept registered in the background only while it is switched on. Incoming SIP calls with a call screen, notification and call log entries. Outgoing as a separate SIP button, as the default, or not at all so that it only receives calls. Opus and G.711, one SIP call at a time, no hold, merge or recording. TLS certificates are not verified, so use it only on networks you trust.
+- **SIP / VoIP (experimental):** a SIP account (for example a FRITZ!Box IP telephone) on top of [baresip](https://github.com/baresip/baresip), kept registered in the background only while it is switched on. **Verify the server certificate** (TLS) is on for new accounts and stays off for accounts saved earlier; a FRITZ!Box with a self-signed certificate usually needs it off, and a certificate-looking registration failure shows a clear message. Incoming SIP calls with a call screen, notification and call log entries. Outgoing as a separate SIP button, as the default, or not at all so that it only receives calls. Opus and G.711, one SIP call at a time, no hold, merge or recording. TLS certificates are not verified, so use it only on networks you trust.
 - **Remote phonebook:** caller names from an AVM FRITZ!Box telephone book (TR-064), cached locally and used for incoming calls and recents. The password is kept in the Android Keystore. Traffic to the FRITZ!Box is plain HTTP, so use it only on your home network.
 
 </details>
@@ -641,12 +641,18 @@ Text (SMS) and picture (MMS) messages as conversations with a reply field. It is
 - **Scheduled SMS** (Phone settings > Tools): text only, one recipient, on the exact minute once "Alarms & reminders" is allowed, alarms set again after a reboot
 - Notifications: one per sender while Telos is the default SMS app
 
+**Dual SIM and blocking**
+
+- **Send with** SIM chips in the thread composer and in Scheduled SMS when two or more SIMs are active and the Phone permission is granted; the last SIM is remembered per conversation and the subscription id is stored with the message
+- **Block number** / **Unblock** in the header of a single-recipient conversation. The block list is shared with call blocking
+- Blocked senders' SMS and MMS get no notification and are kept in **Blocked messages** (up to 500, MMS attachments in private storage) with a list of blocked numbers; unblocking puts them back when Telos is the default SMS app. If Telos is not the default SMS app, the system messaging app still stores and notifies
+
 **Privacy**
 
 - Conversations with hidden contacts are only listed while the hidden contacts are unlocked, and their notifications read "New message" without sender or text
 - No upload feature: messages move only between your phone, the system SMS service and your carrier
 
-**Status and limitations:** MMS (pictures, videos, group messages) is experimental and untested across devices and carriers. A video of more than about 2.4 MB is silently left out of a message. There is no search, delete, archive, delivery report, SIM choice or draft saving, no RCS and no end-to-end encryption.
+**Status and limitations:** MMS (pictures, videos, group messages) is experimental and untested across devices and carriers. A video of more than about 2.4 MB is silently left out of a message. There is no search, delete, archive, delivery report or draft saving, no RCS and no end-to-end encryption.
 
 ### Telos Files
 
@@ -657,7 +663,7 @@ A file manager for your phone, network storages and cloud storages. The layout f
 - Home page with storage overview (free space, SD cards and USB drives), quick access to Downloads, Camera, Pictures, Music, Movies and Documents, favorites, and saved connections
 - Breadcrumb path bar, storage drawer, list and adaptive grid view with picture thumbnails and type colors, sorting by name, date, size or type, folders first, hidden files toggle
 - Search in the current folder (recursive on local storage, up to 300 results)
-- Files open in the right app: pictures in Telos Photos, videos in Telos Video, PDF, text, code and RTF in the Photos document viewer, everything else through Android's chooser
+- Files open in the right app: pictures in Telos Viewer, videos in Telos Video, PDF, text, code and RTF in the Telos Viewer document viewer, everything else through Android's chooser
 
 **File operations**
 
@@ -775,15 +781,15 @@ A firewall and DNS filter that works through the Android VPN service, built on t
 
 - **Safety first:** it never starts by itself (only after a reboot if you switch on "Start on boot" and the VPN permission was granted before). If the engine fails to start or stops working, the VPN is torn down and the internet works normally again; the stop button always works, also while starting. Telos itself is kept out of the tunnel
 - **On/off hub** with the state (off, starting, on, stopped, permission needed), the active DNS server, the active WireGuard tunnels and the number of blocked DNS queries and connections
-- **DNS:** system DNS, plain DNS, DNS over HTTPS, DNS over TLS, DNSCrypt, Oblivious DoH and local DNS servers, built-in providers (Mullvad is not offered) and your own servers, with a health display
-- **WireGuard:** import `.conf` files or add tunnels by hand, a system default tunnel, a tunnel per app, "only on mobile data", "only on these Wi-Fi networks" and lockdown (block the app while its tunnel is down). The tunnels run inside the engine, no second VPN is needed
-- **Firewall:** rules per app (block everything, Wi-Fi, mobile data, roaming, local network, other VPN, background, screen off, ignore universal rules, bypass the firewall, exclude from the VPN), universal rules for all apps (including metered networks, device locked, new apps, unknown apps, UDP, plain HTTP, own-DNS bypass and default deny), and custom IP and domain rules that block or trust
-- **Blocklists:** downloadable domain lists in groups (ads, trackers, malware and more) that you switch on one by one, counters per list, update on request, and exceptions (trusted domains) for one app or for all
-- **Logs:** connection and DNS logs with search and filters, limited by entry count and days
+- **DNS:** system DNS, plain DNS, DNS over HTTPS, DNS over TLS, DNSCrypt, Oblivious DoH and local DNS servers (custom DNS over HTTPS needs `https://`; `http://` only for loopback, link-local, private, `.local`/`.lan`/`.home.arpa`/`.internal` and single-label hosts), built-in providers (Mullvad is not offered), your own servers, a NextDNS setup by configuration ID and a test button, with a health display
+- **WireGuard:** import `.conf` files, from a QR code image or pasted text, or add tunnels by hand, a system default tunnel, a tunnel per app, "only on mobile data" and lockdown (block the app while its tunnel is down). The tunnels run inside the engine, no second VPN is needed
+- **Firewall:** rules per app (block everything, Wi-Fi, mobile data, roaming, local network, other VPN, background, screen off, ignore universal rules, bypass the firewall, exclude from the VPN; temporary allow for 15 minutes to 8 hours), universal rules for all apps (including metered networks, device locked, new apps, unknown apps, UDP, plain HTTP, own-DNS bypass and default deny), and custom IP and domain rules that block or trust
+- **Blocklists:** downloadable Rethink domain lists in groups (parental controls, security, privacy) that you switch on one by one, counters per list, update on request or daily on an unmetered network, and exceptions (trusted domains) for one app or for all
+- **Logs:** connection and DNS logs and per-app totals with search and filters, CSV export, limited by entry count and days
 - **Settings:** start on boot, IPv4 and/or IPv6, route the local network, exclude Telos, MTU, let apps bypass the VPN, notification detail, log retention, help for Android's always-on VPN and battery optimisation
 - **Not included, on purpose:** no subscription and no RPN, no account and no server of ours, none of the experimental features of RethinkDNS
 
-**Status and limitations:** this is an early version that has **not been run on a device yet**; it was written without a compiler or a test run. Android allows one VPN at a time, so it replaces another VPN while it runs. It cannot look into encrypted connections and does not make you anonymous. Whether an app is in the foreground is not known for other apps, so "background" rules do not block yet. The Android always-on / lockdown setting is yours to choose and is never switched on by Telos.
+**Status and limitations:** this is an early version that has **not been run on a device yet**; it was written without a compiler or a test run. Android allows one VPN at a time, so it replaces another VPN while it runs. It cannot look into encrypted connections and does not make you anonymous. "Background" rules need the usage access permission to know which app is in the foreground; without it they never block. The Android always-on / lockdown setting is yours to choose and is never switched on by Telos.
 
 ### Telos Voice Recorder
 
@@ -797,7 +803,7 @@ A voice recorder with a list, search and a service that keeps recording with the
 
 **Status and limitations:** recordings are in the private storage of Telos and not encrypted (call recordings are), no AI assistant, transcription, markers, trimming or WAV.
 
-### Telos Photos
+### Telos Viewer
 
 A photo gallery, a metadata (EXIF) tool, a simple photo editor and a document viewer in one app. No cloud, no account and no network features of its own. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/).
 
@@ -882,7 +888,7 @@ A video library and player. It plays the videos on your phone, web streams, and 
 - **Web streams:** HLS, DASH, RTSP and plain video links via "Play from the web". A magnet link or address on the clipboard is filled in automatically.
 - **Peer block lists:** optional IP block lists for torrents (Spamhaus DROP, FireHOL level 1, Naunter BT_BlockLists which its author no longer actively maintains, or your own list by https address or file in p2p, ipfilter.dat, CIDR or netset format), downloaded only after you switch them on, updated automatically (off, daily, weekly) and applied to the one torrent session shared with Telos Downloads. It reduces unwanted peers but does not hide your IP address.
 - **Torrents:** magnet links, `.torrent` addresses and files open in Telos Video from any app or browser. The video downloads in order while it plays, through a local-only address, on Wi-Fi only by default, and everything is deleted when the player closes. Only play content you are allowed to watch: torrent networks show your IP address to other peers.
-- **Subtitles:** external files (SRT, VTT, ASS / SSA, TTML), embedded tracks, and online search or automatic download **without an account** from OpenSubtitles (old REST API, by file hash and by name) and Podnapisi, plus [OpenSubtitles.com](https://www.opensubtitles.com) with your own key as an optional source. Sources can be switched on and off and ordered; results are ranked by your language order and match, converted to UTF-8, and remembered per video. Also for torrents.
+- **Subtitles:** external files (SRT, VTT, ASS / SSA, TTML), embedded tracks, and online search or automatic download **without an account** from OpenSubtitles (old REST API, by file hash and by name) and Podnapisi, plus [OpenSubtitles.com](https://www.opensubtitles.com) with your own key as an optional source. Sources can be switched on and off and ordered; results are ranked by your language order and match, converted to UTF-8, and remembered per video. Also for torrents. Subtitle requests follow at most 5 redirects and refuse redirects to loopback, link-local or private addresses unless the first address was one too.
 - **Trakt.tv:** sign in with a device code, scrobbling of movies and episodes, watched marks in the library, add titles to the watchlist (your own Trakt application).
 - **Separate player process (experimental):** Video services > Play in a separate process, so a crash of the player does not close the launcher.
 - **Video services dialog:** TMDB key, subtitle sources, OpenSubtitles User-Agent, optional OpenSubtitles.com key and account, network folders, languages, automatic subtitles, torrents Wi-Fi only, separate process, Trakt. Keys and passwords are encrypted with the Android Keystore.
@@ -911,8 +917,15 @@ Internet radio with your own station collection. Behavior and logic follow [Tran
 - Current track from the stream metadata with a track history (newest 500)
 - Next / previous buttons switch stations (notification, lock screen, headset)
 - Sleep timer (15 to 90 minutes), pauses when headphones are unplugged, background playback with a notification
+- Mini player at the bottom of the Radio dashboard while a station is loaded: play/pause, now playing, sleep timer indicator, record
 
-**Status and limitations:** Needs a network connection, track names exist only when the station sends them, and search lists only Radio-Browser. No stream recording, no alarm clock and no equalizer. Radio is guarded by the crash guard.
+**Recording**
+
+- **Record** button (dashboard top bar and mini player) saves the playing station's stream (mp3, aac or ogg by Content-Type, not HLS) to `Music/Telos Radio` (the app's Music folder before Android 10), named `<Station> - yyyy-MM-dd HH-mm.ext`
+- Foreground notification with Stop and a timer, elapsed time and size shown; a dropped stream, full storage or Stop all save what was captured; under 1 KB nothing is saved
+- A **Recordings** row in the Collection tab opens a sheet to open, share and delete (with confirmation) recordings
+
+**Status and limitations:** Needs a network connection, track names exist only when the station sends them, and search lists only Radio-Browser. HLS streams cannot be recorded, and closing the mini player with its X does not stop an active recording. No alarm clock and no equalizer. Radio is guarded by the crash guard.
 
 ### Telos Store
 
@@ -941,7 +954,7 @@ An app installer and updater that works like [Obtainium](https://github.com/Imra
 
 **Managing the Telos apps**
 
-- The Telos apps (Phone, Messages, Radio, Music, Video, Photos, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder) are listed with what each one does; "installing" one shows its icon in the app grid and in search, "removing" hides it. Telos Store itself cannot be removed.
+- The Telos apps (Phone, Messages, Radio, Music, Video, Viewer, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder) are listed with what each one does; "installing" one shows its icon in the app grid and in search, "removing" hides it. Telos Store itself cannot be removed.
 - Crash guard: an app that crashes (or hangs) twice within a day is switched off automatically, with a notification pointing to the Store; "installing" it again resets the counter.
 
 **Status and limitations:** Only the listed sources: APKMirror, Uptodown, Aptoide, APKPure, the Play Store, Huawei, Tencent, RuStore and Telegram entries are skipped when importing. Split APKs and apps that need a login are not supported, direct APK links have no version check, and silent installs need Shizuku or root. Installing APKs from outside an app store means you trust the source.

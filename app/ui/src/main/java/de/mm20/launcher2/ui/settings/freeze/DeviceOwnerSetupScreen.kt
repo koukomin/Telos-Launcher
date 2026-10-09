@@ -25,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LifecycleResumeEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
@@ -44,6 +45,12 @@ fun DeviceOwnerSetupScreen() {
     val viewModel: DeviceOwnerSetupScreenVM = viewModel()
     val isDeviceOwner by viewModel.isDeviceOwner.collectAsStateWithLifecycle()
     var understood by remember { mutableStateOf(false) }
+
+    // The user runs the adb command elsewhere and comes back: re-check without needing a tap.
+    LifecycleResumeEffect(Unit) {
+        viewModel.refresh()
+        onPauseOrDispose { }
+    }
 
     val clipboardManager = LocalClipboardManager.current
     val hapticFeedback = LocalHapticFeedback.current

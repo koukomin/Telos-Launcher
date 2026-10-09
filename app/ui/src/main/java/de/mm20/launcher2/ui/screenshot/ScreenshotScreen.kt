@@ -194,8 +194,8 @@ private fun CaptureCard(icon: Int, title: Int, summary: Int, onClick: () -> Unit
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        Box(Modifier.size(48.dp).clip(CircleShape).background(androidx.compose.ui.graphics.Color(0xFF1A6DFF)), contentAlignment = Alignment.Center) {
-            Icon(painterResource(icon), contentDescription = null, tint = androidx.compose.ui.graphics.Color.White, modifier = Modifier.size(26.dp))
+        Box(Modifier.size(48.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary), contentAlignment = Alignment.Center) {
+            Icon(painterResource(icon), contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(26.dp))
         }
         Column(Modifier.weight(1f)) {
             Text(stringResource(title), style = MaterialTheme.typography.titleMedium)
@@ -226,7 +226,9 @@ fun ScreenshotSettingsScreen() {
                     title = stringResource(R.string.screenshot_delay),
                     items = listOf(
                         ListPreferenceItem(stringResource(R.string.screenshot_delay_none), 0),
-                        ListPreferenceItem("3 s", 3), ListPreferenceItem("5 s", 5), ListPreferenceItem("10 s", 10),
+                        ListPreferenceItem(stringResource(R.string.au_capture_seconds, 3), 3),
+                        ListPreferenceItem(stringResource(R.string.au_capture_seconds, 5), 5),
+                        ListPreferenceItem(stringResource(R.string.au_capture_seconds, 10), 10),
                     ),
                     value = delay,
                     onValueChanged = { delay = it; settings.delay = it },

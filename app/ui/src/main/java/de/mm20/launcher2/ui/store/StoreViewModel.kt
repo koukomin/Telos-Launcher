@@ -19,6 +19,7 @@ import de.mm20.launcher2.store.parser.StoreUrlParser
 import de.mm20.launcher2.store.repository.StoreRepository
 import de.mm20.launcher2.store.updater.StoreTools
 import de.mm20.launcher2.store.updater.StoreUpdater
+import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -80,6 +81,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
     }
 
     private val context: Context by inject()
+    private fun str(id: Int, vararg args: Any): String = context.getString(id, *args)
     private val repository: StoreRepository by inject()
     private val actionHandler: StoreActionHandler by inject()
     private val tools: StoreTools by inject()
@@ -157,8 +159,8 @@ class StoreViewModel : ViewModel(), KoinComponent {
 
     fun addFromUrl(url: String, packageName: String = "", onResult: (String?) -> Unit) {
         viewModelScope.launch {
-            val result = tools.addFromUrl(url.trim(), packageName)
-            result.onSuccess { onResult(null) }.onFailure { onResult(it.message ?: "Could not add this address") }
+            val result = runCatching { tools.addFromUrl(url.trim(), packageName) }.getOrElse { Result.failure(it) }
+            result.onSuccess { onResult(null) }.onFailure { onResult(it.message ?: str(R.string.au_store_msg_add_failed)) }
         }
     }
 
@@ -170,10 +172,12 @@ class StoreViewModel : ViewModel(), KoinComponent {
                 link.startsWith("obtainium://app/", true) -> {
                     val json = Uri.decode(link.substringAfter("obtainium://app/"))
                     val wrapped = runCatching { JSONObject().put("apps", org.json.JSONArray().put(JSONObject(json))).toString() }.getOrNull()
-                    if (wrapped == null) _message.value = "This link could not be read"
-                    else {
-                        val s = tools.importObtainium(wrapped)
-                        _message.value = if (s.added > 0) "App added" else if (s.skipped > 0) "Already in your list" else "This app is not supported"
+                    val summary = wrapped?.let { runCatching { tools.importObtainium(it) }.getOrNull() }
+                    _message.value = when {
+                        summary == null -> str(R.string.au_store_msg_link_unreadable)
+                        summary.added > 0 -> str(R.string.au_store_msg_app_added)
+                        summary.skipped > 0 -> str(R.string.au_store_msg_already_listed)
+                        else -> str(R.string.au_store_msg_unsupported)
                     }
                 }
                 link.startsWith("obtainium://add/", true) -> onPrefill(link.substringAfter("obtainium://add/"))
@@ -188,22 +192,30 @@ class StoreViewModel : ViewModel(), KoinComponent {
         if (_checking.value) return
         viewModelScope.launch {
             _checking.value = true
-            val summary = updater.checkAll(background = false)
-            _checking.value = false
+            val summary = try {
+                runCatching { updater.checkAll(background = false) }.getOrNull()
+            } finally {
+                _checking.value = false
+            }
             _message.value = when {
-                summary.updates.isNotEmpty() -> "${summary.updates.size} update(s) available"
-                summary.failed > 0 -> "Up to date, ${summary.failed} source(s) could not be reached"
-                else -> "Everything is up to date"
+                summary == null -> str(R.string.au_store_msg_check_failed)
+                summary.updates.isNotEmpty() -> str(R.string.au_store_msg_updates_available, summary.updates.size)
+                summary.failed > 0 -> str(R.string.au_store_msg_up_to_date_unreachable, summary.failed)
+                else -> str(R.string.au_store_msg_all_up_to_date)
             }
         }
     }
 
     fun checkOne(item: StoreItem) {
+        if (_checking.value) return
         viewModelScope.launch {
             _checking.value = true
-            val ok = updater.checkOne(item)
-            _checking.value = false
-            if (!ok) _message.value = "Could not reach the source of ${item.displayName}"
+            val ok = try {
+                runCatching { updater.checkOne(item) }.getOrDefault(false)
+            } finally {
+                _checking.value = false
+            }
+            if (!ok) _message.value = str(R.string.au_store_msg_source_unreachable, item.displayName)
         }
     }
 
@@ -234,7 +246,15 @@ class StoreViewModel : ViewModel(), KoinComponent {
 
     private suspend fun installNow(item: StoreItem) {
         setState(item.id, StoreInstallUiState.Downloading)
-        when (val action = actionHandler.install(item)) {
+        val result = try {
+            actionHandler.install(item)
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            setState(item.id, StoreInstallUiState.Idle)
+            throw e
+        } catch (e: Exception) {
+            StoreAction.Failed(e.message ?: str(R.string.au_store_msg_install_failed), e)
+        }
+        when (val action = result) {
             is StoreAction.Installed -> setState(item.id, StoreInstallUiState.Installed)
             is StoreAction.Installing -> setState(item.id, StoreInstallUiState.Installing)
             is StoreAction.LaunchedPlayStore -> setState(item.id, StoreInstallUiState.Idle)
@@ -292,7 +312,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
                     context.contentResolver.openOutputStream(uri)!!.use { it.write(json.toByteArray()) }
                 }.isSuccess
             }
-            _message.value = if (ok) "Exported (Obtainium format)" else "Export failed"
+            _message.value = if (ok) str(R.string.au_store_msg_exported) else str(R.string.au_store_msg_export_failed)
         }
     }
 
@@ -302,17 +322,19 @@ class StoreViewModel : ViewModel(), KoinComponent {
                 runCatching { context.contentResolver.openInputStream(uri)!!.bufferedReader().use { it.readText() } }.getOrNull()
             }
             if (text == null) {
-                _message.value = "Could not read the file"
+                _message.value = str(R.string.au_store_msg_read_failed)
                 return@launch
             }
             runCatching { tools.importObtainium(text) }
                 .onSuccess {
-                    _message.value = "${it.added} added" +
-                        (if (it.skipped > 0) ", ${it.skipped} already there" else "") +
-                        (if (it.unsupported > 0) ", ${it.unsupported} not supported" else "")
+                    _message.value = listOfNotNull(
+                        str(R.string.au_store_msg_imported_added, it.added),
+                        if (it.skipped > 0) str(R.string.au_store_msg_imported_skipped, it.skipped) else null,
+                        if (it.unsupported > 0) str(R.string.au_store_msg_imported_unsupported, it.unsupported) else null,
+                    ).joinToString(", ")
                     if (it.added > 0) checkAll()
                 }
-                .onFailure { _message.value = "This is not an Obtainium export file" }
+                .onFailure { _message.value = str(R.string.au_store_msg_not_obtainium) }
         }
     }
 
@@ -332,7 +354,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
         viewModelScope.launch {
             var found = 0
             for (app in selected) {
-                val source = tools.findSourceForInstalled(app.packageName) ?: continue
+                val source = runCatching { tools.findSourceForInstalled(app.packageName) }.getOrNull() ?: continue
                 val item = StoreItem(
                     id = java.util.UUID.randomUUID().toString(),
                     packageName = app.packageName,
@@ -342,7 +364,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
                 repository.insertItem(item)
                 found++
             }
-            if (found > 0) updater.checkAll(background = false)
+            if (found > 0) runCatching { updater.checkAll(background = false) }
             onDone(found)
         }
     }
@@ -364,7 +386,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
     private fun openApp(packageName: String) {
         val intent = context.packageManager.getLaunchIntentForPackage(packageName) ?: return
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.startActivity(intent)
+        runCatching { context.startActivity(intent) }
     }
 
     fun openUrl(url: String) {

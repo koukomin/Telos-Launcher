@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -53,6 +54,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -154,6 +157,9 @@ private fun TopBar(title: String, onBack: () -> Unit, actions: @Composable () ->
 
 // ---- calculator page ------------------------------------------------------------------------
 
+/** In landscape the keys cannot be round and square: seven rows of them would not fit the screen. */
+private val LocalCompactKeys = compositionLocalOf { false }
+
 private enum class KeyKind { Number, Operator, Clear, Function, Equals }
 
 @Composable
@@ -174,8 +180,9 @@ private fun RoundKey(
         KeyKind.Function -> scheme.surfaceContainer to (if (selected) scheme.primary else scheme.onSurfaceVariant)
         KeyKind.Equals -> scheme.primary to scheme.onPrimary
     }
+    val compact = LocalCompactKeys.current
     Box(
-        modifier.padding(4.dp).aspectRatio(1f).clip(CircleShape).background(bg).clickable(onClick = onClick),
+        modifier.padding(4.dp).then(if (compact) Modifier.height(32.dp) else Modifier.aspectRatio(1f)).clip(CircleShape).background(bg).clickable(onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
         if (iconRes != null) {
@@ -184,7 +191,7 @@ private fun RoundKey(
             Text(
                 label,
                 color = fg,
-                fontSize = fontSize.sp,
+                fontSize = (if (compact) minOf(fontSize, 18) else fontSize).sp,
                 fontWeight = if (kind == KeyKind.Clear || selected) FontWeight.SemiBold else FontWeight.Normal,
                 maxLines = 1,
             )
@@ -203,7 +210,7 @@ private fun CalculatorPage(vm: CalculatorViewModel, onUnits: () -> Unit, onVat: 
     var showHistory by rememberSaveable { mutableStateOf(false) }
     var menu by remember { mutableStateOf(false) }
 
-    Column(Modifier.fillMaxSize()) {
+    val topBar: @Composable () -> Unit = {
         // top bar: scientific or standard keys, unit converter, more
         Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
             Spacer(Modifier.weight(1f))
@@ -240,9 +247,23 @@ private fun CalculatorPage(vm: CalculatorViewModel, onUnits: () -> Unit, onVat: 
                 }
             }
         }
+    }
 
+    if (landscape) {
+        Row(Modifier.fillMaxSize()) {
+            Column(Modifier.weight(1f).fillMaxHeight()) {
+                topBar()
+                Display(vm, Modifier.weight(1f), onHistory = { showHistory = true })
+            }
+            Box(Modifier.weight(1.5f).fillMaxHeight(), contentAlignment = Alignment.Center) {
+                CompositionLocalProvider(LocalCompactKeys provides true) {
+                    ScientificKeys(vm, inverse, { inverse = !inverse }, Modifier.padding(horizontal = 12.dp))
+                }
+            }
+        }
+    } else Column(Modifier.fillMaxSize()) {
+        topBar()
         Display(vm, Modifier.weight(1f), onHistory = { showHistory = true })
-
         if (scientific) {
             ScientificKeys(vm, inverse, { inverse = !inverse }, Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
         } else {

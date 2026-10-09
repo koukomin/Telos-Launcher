@@ -1,6 +1,6 @@
 # Office editing and PDF search
 
-The [document viewer](./documents) of Telos Photos shows Word, Excel, PowerPoint and OpenDocument files with their
+The [document viewer](./documents) of Telos Viewer shows Word, Excel, PowerPoint and OpenDocument files with their
 structure and lets you **edit and save** them. It is not a full office suite: the edits are limited to text and
 simple formatting, and page layout and fonts are not reproduced.
 

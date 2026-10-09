@@ -4,6 +4,8 @@ package de.mm20.launcher2.ui.comms
 import android.content.ComponentName
 import android.content.Context
 import android.net.Uri
+import androidx.annotation.StringRes
+import de.mm20.launcher2.ui.R
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
@@ -16,6 +18,7 @@ import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.MoreExecutors
 import de.mm20.launcher2.comms.model.RadioStation
 import de.mm20.launcher2.comms.radio.RadioPlayerService
+import de.mm20.launcher2.comms.radio.RadioRecorder
 import de.mm20.launcher2.comms.radio.RadioSleepTimer
 import de.mm20.launcher2.comms.radio.StreamResolver
 import de.mm20.launcher2.comms.repository.RadioRepository
@@ -44,10 +47,30 @@ class RadioViewModel : ViewModel(), KoinComponent {
     private val _isVisible = MutableStateFlow(false)
     val isVisible: StateFlow<Boolean> = _isVisible
 
-    private val _error = MutableStateFlow<String?>(null)
-    val error: StateFlow<String?> = _error
+    private val _error = MutableStateFlow<Int?>(null)
+    /** String resource of the current playback error, or null */
+    val error: StateFlow<Int?> = _error
 
     val sleepEndsAt: StateFlow<Long> = RadioSleepTimer.endsAt
+
+    val recordingState: StateFlow<RadioRecorder.State> = RadioRecorder.state
+
+    /**
+     * Starts or stops recording the stream that is playing now. Returns a string resource to show
+     * when recording could not be started, or null.
+     */
+    fun toggleRecording(context: Context): Int? {
+        if (RadioRecorder.state.value is RadioRecorder.State.Recording) {
+            RadioRecorder.stop()
+            return null
+        }
+        val item = mediaController?.currentMediaItem ?: return R.string.au2_radio2_nothing_playing
+        val url = item.localConfiguration?.uri?.toString() ?: return R.string.au2_radio2_nothing_playing
+        if (!RadioRecorder.isRecordable(url)) return R.string.au2_radio2_hls
+        val name = _stationName.value.ifEmpty { context.getString(R.string.au_radio_unknown_station) }
+        RadioRecorder.start(context, item.mediaId, name, url)
+        return null
+    }
 
     private var currentStation: RadioStation? = null
     private var streamQueue: List<String> = emptyList()
@@ -56,6 +79,7 @@ class RadioViewModel : ViewModel(), KoinComponent {
     private var connecting = false
     private var controllerFuture: com.google.common.util.concurrent.ListenableFuture<MediaController>? = null
     private var cleared = false
+    private var playJob: kotlinx.coroutines.Job? = null
 
     fun initialize(context: Context) {
         if (mediaController != null || connecting) return
@@ -110,7 +134,7 @@ class RadioViewModel : ViewModel(), KoinComponent {
         val item = controller.currentMediaItem
         val station = item?.mediaMetadata?.title?.toString().orEmpty()
         val track = controller.mediaMetadata.title?.toString()?.trim().orEmpty()
-        _stationName.value = station.ifEmpty { "Unknown Station" }
+        _stationName.value = station
         _nowPlayingMetadata.value = if (track.isNotEmpty() && track != station) track else ""
         _isVisible.value = item != null
     }
@@ -138,7 +162,9 @@ class RadioViewModel : ViewModel(), KoinComponent {
     fun playStation(station: RadioStation) {
         currentStation = station
         _error.value = null
-        viewModelScope.launch {
+        // a second tap while the first station is still being resolved must not start both
+        playJob?.cancel()
+        playJob = viewModelScope.launch {
             // playlist links (.pls, .m3u) are opened to find the real stream first
             val resolved = StreamResolver.resolve(station.streamUrl)
             streamQueue = (resolved.urls + station.alternateStreams).distinct()
@@ -176,7 +202,7 @@ class RadioViewModel : ViewModel(), KoinComponent {
             streamIndex++
             startCurrentStream()
         } else {
-            _error.value = "This station cannot be played right now"
+            _error.value = R.string.au_radio_cannot_play
         }
     }
     // === TELOS_PENDING_REVIEW_END: radio_browser_ktor ===

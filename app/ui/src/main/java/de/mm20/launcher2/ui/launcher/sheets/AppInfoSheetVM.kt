@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.appmanagement.ShizukuManager
+import de.mm20.launcher2.freeze.FreezeManager
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.search.Application
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,6 +19,7 @@ class AppInfoSheetVM(
 ) : ViewModel(), KoinComponent {
 
     private val shizukuManager: ShizukuManager by inject()
+    private val freezeManager: FreezeManager by inject()
 
     private val _permissions = MutableStateFlow<List<PermissionInfo>>(emptyList())
     val permissions = _permissions.asStateFlow()
@@ -28,8 +30,23 @@ class AppInfoSheetVM(
     private val _isShizukuAvailable = MutableStateFlow(false)
     val isShizukuAvailable = _isShizukuAvailable.asStateFlow()
 
+    private val _isFrozen = MutableStateFlow(false)
+    val isFrozen = _isFrozen.asStateFlow()
+
+    private val _canFreeze = MutableStateFlow(false)
+    val canFreeze = _canFreeze.asStateFlow()
+
     init {
         _isShizukuAvailable.value = shizukuManager.isAvailable()
+        refreshFreezeState()
+    }
+
+    private fun refreshFreezeState() {
+        viewModelScope.launch {
+            _isFrozen.value = freezeManager.isFrozen(app.componentName.packageName)
+            freezeManager.refreshBackendState()
+            _canFreeze.value = freezeManager.hasPermission()
+        }
     }
 
     fun init(context: Context, iconSize: Int) {
@@ -75,8 +92,17 @@ class AppInfoSheetVM(
     }
 
     fun freeze() {
+        // Goes through FreezeManager (selected backend, protected packages, freeze stats) rather
+        // than talking to Shizuku directly. Toggles, so a frozen app can be unfrozen again here.
         viewModelScope.launch {
-            shizukuManager.setPackageEnabled(app.componentName.packageName, false)
+            val packageName = app.componentName.packageName
+            val userId = app.user.hashCode()
+            if (freezeManager.isFrozen(packageName)) {
+                freezeManager.unfreeze(packageName, userId)
+            } else {
+                freezeManager.freeze(packageName, userId)
+            }
+            _isFrozen.value = freezeManager.isFrozen(packageName)
         }
     }
 
@@ -84,6 +110,7 @@ class AppInfoSheetVM(
         viewModelScope.launch {
             shizukuManager.requestPermission()
             _isShizukuAvailable.value = shizukuManager.isAvailable()
+            refreshFreezeState()
         }
     }
 

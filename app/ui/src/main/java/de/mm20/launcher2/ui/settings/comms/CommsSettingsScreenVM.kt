@@ -93,6 +93,12 @@ class CommsSettingsScreenVM : ViewModel(), KoinComponent {
         commsSettings.setBlockUnknownNumbers(enabled)
     }
 
+    val homeCountry = commsSettings.homeCountry
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
+    fun setHomeCountry(region: String) {
+        commsSettings.setHomeCountry(region)
+    }
+
     val blockInternational = commsSettings.blockInternational
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
     fun setBlockInternational(enabled: Boolean) {

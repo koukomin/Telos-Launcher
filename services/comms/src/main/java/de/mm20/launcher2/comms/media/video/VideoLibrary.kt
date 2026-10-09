@@ -61,7 +61,7 @@ object VideoLibrary {
                         fileName = fileName,
                         durationMs = cursor.getLong(durationCol),
                         sizeBytes = cursor.getLong(sizeCol),
-                        folder = cursor.getString(bucketCol).orEmpty().ifBlank { "Other" },
+                        folder = cursor.getString(bucketCol).orEmpty(),
                         dateAddedSeconds = cursor.getLong(addedCol),
                     )
                 }

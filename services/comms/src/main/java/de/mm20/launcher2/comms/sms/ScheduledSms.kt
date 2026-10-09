@@ -9,7 +9,7 @@ import android.os.Build
 import org.json.JSONArray
 import org.json.JSONObject
 
-data class ScheduledSms(val id: Long, val number: String, val body: String, val atEpochMs: Long)
+data class ScheduledSms(val id: Long, val number: String, val body: String, val atEpochMs: Long, val subId: Int = -1)
 
 object ScheduledSmsStore {
     private const val PREFS = "telos_scheduled_sms"
@@ -21,7 +21,7 @@ object ScheduledSmsStore {
             val arr = JSONArray(raw)
             (0 until arr.length()).map { i ->
                 val o = arr.getJSONObject(i)
-                ScheduledSms(o.getLong("id"), o.getString("number"), o.getString("body"), o.getLong("at"))
+                ScheduledSms(o.getLong("id"), o.getString("number"), o.getString("body"), o.getLong("at"), o.optInt("sub", -1))
             }.sortedBy { it.atEpochMs }
         }.getOrDefault(emptyList()) // unreadable data must not crash the list
     }
@@ -32,14 +32,16 @@ object ScheduledSmsStore {
         list(context).forEach { schedule(context, it.copy(atEpochMs = maxOf(it.atEpochMs, now + 5_000))) }
     }
 
-    fun add(context: Context, number: String, body: String, atEpochMs: Long): ScheduledSms {
-        val item = ScheduledSms(System.currentTimeMillis(), number, body, atEpochMs)
+    @Synchronized
+    fun add(context: Context, number: String, body: String, atEpochMs: Long, subId: Int = -1): ScheduledSms {
+        val item = ScheduledSms(System.currentTimeMillis(), number, body, atEpochMs, subId)
         val next = list(context) + item
         persist(context, next)
         schedule(context, item)
         return item
     }
 
+    @Synchronized
     fun remove(context: Context, id: Long) {
         // a removed message must not go out when its alarm fires
         list(context).firstOrNull { it.id == id }?.let { item ->
@@ -51,7 +53,7 @@ object ScheduledSmsStore {
     private fun persist(context: Context, items: List<ScheduledSms>) {
         val arr = JSONArray()
         items.forEach {
-            arr.put(JSONObject().put("id", it.id).put("number", it.number).put("body", it.body).put("at", it.atEpochMs))
+            arr.put(JSONObject().put("id", it.id).put("number", it.number).put("body", it.body).put("at", it.atEpochMs).put("sub", it.subId))
         }
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putString(KEY, arr.toString()).apply()
     }
@@ -80,6 +82,7 @@ object ScheduledSmsStore {
             .putExtra("id", item.id)
             .putExtra("number", item.number)
             .putExtra("body", item.body)
+            .putExtra("sub", item.subId)
         return PendingIntent.getBroadcast(
             context,
             (item.id xor (item.id ushr 32)).toInt(),
@@ -94,8 +97,16 @@ class ScheduledSmsReceiver : BroadcastReceiver() {
         val number = intent.getStringExtra("number").orEmpty()
         val body = intent.getStringExtra("body").orEmpty()
         val id = intent.getLongExtra("id", 0L)
+        // the SIM may have been removed since: then the system default sends it
+        val chosen = intent.getIntExtra("sub", -1)
+        val sims = SmsSims.active(context)
+        val subId = if (sims.isNotEmpty() && sims.none { it.subId == chosen }) -1 else chosen
         // when it could not be sent (no permission) it stays in the list instead of vanishing
-        if (QuickSms.send(context, number, body)) ScheduledSmsStore.remove(context, id)
+        val granted = androidx.core.content.ContextCompat.checkSelfPermission(context, android.Manifest.permission.SEND_SMS) ==
+            android.content.pm.PackageManager.PERMISSION_GRANTED
+        // SmsThreads keeps the sent message in the conversation (system store or Telos' own copy), QuickSms only sends
+        val sent = if (granted) SmsThreads.send(context, number, body, subId) else QuickSms.send(context, number, body)
+        if (sent) ScheduledSmsStore.remove(context, id)
     }
 }
 

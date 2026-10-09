@@ -26,6 +26,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -84,10 +85,10 @@ fun MusicScreen() {
         if (hasPermission) viewModel.loadLibrary(context)
     }
 
-    var tab by remember { mutableStateOf(0) }
-    var query by remember { mutableStateOf("") }
+    var tab by rememberSaveable { mutableStateOf(0) }
+    var query by rememberSaveable { mutableStateOf("") }
     var group by remember { mutableStateOf<TrackGroup?>(null) }
-    var showNowPlaying by remember { mutableStateOf(false) }
+    var showNowPlaying by rememberSaveable { mutableStateOf(false) }
 
     BackHandler(enabled = showNowPlaying) { showNowPlaying = false }
     BackHandler(enabled = !showNowPlaying && group != null) { group = null }
@@ -95,19 +96,22 @@ fun MusicScreen() {
     val filtered = remember(tracks, query) {
         de.mm20.launcher2.comms.search.TelosSearch.filter(tracks, query) { listOf(it.title, it.artist, it.album) }
     }
-    val albums = remember(filtered) {
+    val unknownAlbum = stringResource(R.string.au_music_unknown_album)
+    val unknownArtist = stringResource(R.string.au_music_unknown_artist)
+    val songsFormat = stringResource(R.string.au_music_songs_count)
+    val albums = remember(filtered, unknownAlbum) {
         filtered.groupBy { it.albumId }.values
-            .map { list -> TrackGroup(list.first().album.ifBlank { "Unknown album" }, list.first().artist, list.sortedBy { it.trackNumber }) }
+            .map { list -> TrackGroup(list.first().album.ifBlank { unknownAlbum }, list.first().artist, list.sortedBy { it.trackNumber }) }
             .sortedBy { it.title.lowercase() }
     }
-    val artists = remember(filtered) {
-        filtered.groupBy { it.artist.ifBlank { "Unknown artist" } }
-            .map { (name, list) -> TrackGroup(name, "${list.size} songs", list.sortedBy { it.title.lowercase() }) }
+    val artists = remember(filtered, unknownArtist, songsFormat) {
+        filtered.groupBy { it.artist.ifBlank { unknownArtist } }
+            .map { (name, list) -> TrackGroup(name, songsFormat.format(list.size), list.sortedBy { it.title.lowercase() }) }
             .sortedBy { it.title.lowercase() }
     }
 
     var showScrobble by remember { mutableStateOf(false) }
-    de.mm20.launcher2.ui.media.MediaFrame("Music", askNotifications = true, guardKey = "telos_music_app://music", actions = {
+    de.mm20.launcher2.ui.media.MediaFrame(stringResource(R.string.au_music_title), askNotifications = true, guardKey = "telos_music_app://music", actions = {
         IconButton(onClick = { showScrobble = true }) {
             Icon(painterResource(R.drawable.settings_24px), contentDescription = stringResource(R.string.hc_scrobbling))
         }
@@ -140,10 +144,10 @@ fun MusicScreen() {
                             Text(current.subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
-                    TrackList(current.tracks, nowPlaying?.title, onPlay = { i -> viewModel.play(current.tracks, i) })
+                    TrackList(current.tracks, nowPlaying?.mediaId, onPlay = { i -> viewModel.play(current.tracks, i) })
                 } else {
                     TabRow(selectedTabIndex = tab) {
-                        listOf("Songs", "Albums", "Artists").forEachIndexed { i, title ->
+                        listOf(stringResource(R.string.au_music_tab_songs), stringResource(R.string.hc_albums), stringResource(R.string.au_music_tab_artists)).forEachIndexed { i, title ->
                             Tab(selected = tab == i, onClick = { tab = i }, text = { Text(title) })
                         }
                     }
@@ -153,7 +157,7 @@ fun MusicScreen() {
                             Text(stringResource(R.string.hc_no_music_found_on_this_device), color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         filtered.isEmpty() && query.isNotBlank() -> de.mm20.launcher2.ui.component.SearchEmptyState(query)
-                        tab == 0 -> TrackList(filtered, nowPlaying?.title, onPlay = { i -> viewModel.play(filtered, i) })
+                        tab == 0 -> TrackList(filtered, nowPlaying?.mediaId, onPlay = { i -> viewModel.play(filtered, i) })
                         tab == 1 -> LazyVerticalGrid(
                             columns = GridCells.Fixed(2),
                             contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 96.dp),
@@ -206,7 +210,7 @@ fun MusicScreen() {
                         Text(np.artist, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                     IconButton(onClick = { viewModel.togglePlayPause() }) {
-                        Icon(painterResource(if (isPlaying) R.drawable.pause_24px else R.drawable.play_arrow_24px), contentDescription = null)
+                        Icon(painterResource(if (isPlaying) R.drawable.pause_24px else R.drawable.play_arrow_24px), contentDescription = stringResource(if (isPlaying) R.string.au_music_pause else R.string.hc_play))
                     }
                     IconButton(onClick = { viewModel.next() }) {
                         Icon(painterResource(R.drawable.skip_next_24px), contentDescription = stringResource(R.string.hc_next))
@@ -227,7 +231,7 @@ fun MusicScreen() {
 }
 
 @Composable
-private fun TrackList(list: List<MusicTrack>, currentTitle: String?, onPlay: (Int) -> Unit) {
+private fun TrackList(list: List<MusicTrack>, currentId: String?, onPlay: (Int) -> Unit) {
     LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
         itemsIndexed(list, key = { _, t -> t.id }) { index, track ->
             Row(
@@ -239,7 +243,7 @@ private fun TrackList(list: List<MusicTrack>, currentTitle: String?, onPlay: (In
                     Text(
                         track.title,
                         style = MaterialTheme.typography.bodyLarge,
-                        color = if (track.title == currentTitle) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
+                        color = if (currentId != null && track.id.toString() == currentId) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -397,21 +401,11 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, onClose: () -> Unit) {
                     Icon(painterResource(R.drawable.skip_previous_24px), contentDescription = stringResource(R.string.hc_previous))
                 }
                 FilledIconButton(onClick = { viewModel.togglePlayPause() }, modifier = Modifier.size(64.dp)) {
-                    Icon(painterResource(if (isPlaying) R.drawable.pause_24px else R.drawable.play_arrow_24px), contentDescription = null)
+                    Icon(painterResource(if (isPlaying) R.drawable.pause_24px else R.drawable.play_arrow_24px), contentDescription = stringResource(if (isPlaying) R.string.au_music_pause else R.string.hc_play))
                 }
                 IconButton(onClick = { viewModel.next() }) {
                     Icon(painterResource(R.drawable.skip_next_24px), contentDescription = stringResource(R.string.hc_next))
                 }
-                TextButton(onClick = { showLyrics = !showLyrics }, enabled = lyrics != null || showLyrics) {
-                    Text(if (showLyrics) "Cover" else "Lyrics")
-                }
-                TextButton(onClick = { showSleep = true }) {
-                    Text(if (sleepEndsAt > 0) "Sleep ✓" else "Sleep")
-                }
-                TextButton(onClick = {
-                    val uri = current.uri
-                    if (uri != null) scope.launch { editing = viewModel.readTags(context, uri) ?: TagEditor.Tags(title = current.title, artist = current.artist) }
-                }) { Text(stringResource(R.string.hc_edit)) }
                 IconButton(onClick = { viewModel.cycleRepeat() }) {
                     Icon(
                         painterResource(if (repeat == Player.REPEAT_MODE_ONE) R.drawable.repeat_one_24px else R.drawable.repeat_24px),
@@ -419,6 +413,18 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, onClose: () -> Unit) {
                         tint = if (repeat != Player.REPEAT_MODE_OFF) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
+            }
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
+                TextButton(onClick = { showLyrics = !showLyrics }, enabled = lyrics != null || showLyrics) {
+                    Text(stringResource(if (showLyrics) R.string.au_music_show_cover else R.string.au_music_show_lyrics))
+                }
+                TextButton(onClick = { showSleep = true }) {
+                    Text(stringResource(if (sleepEndsAt > 0) R.string.au_music_sleep_active else R.string.au_music_sleep))
+                }
+                TextButton(onClick = {
+                    val uri = current.uri
+                    if (uri != null) scope.launch { editing = viewModel.readTags(context, uri) ?: TagEditor.Tags(title = current.title, artist = current.artist) }
+                }) { Text(stringResource(R.string.hc_edit)) }
             }
         }
     }
@@ -455,13 +461,13 @@ private fun TagEditDialog(
                         )
                     }
                     Column {
-                        field("Title", title) { title = it }
-                        field("Artist", artist) { artist = it }
-                        field("Album", album) { album = it }
-                        field("Album artist", albumArtist) { albumArtist = it }
-                        field("Genre", genre) { genre = it }
-                        field("Year", year) { year = it }
-                        field("Track number", track) { track = it }
+                        field(stringResource(R.string.au_music_field_title), title) { title = it }
+                        field(stringResource(R.string.au_music_field_artist), artist) { artist = it }
+                        field(stringResource(R.string.au_music_field_album), album) { album = it }
+                        field(stringResource(R.string.au_music_field_album_artist), albumArtist) { albumArtist = it }
+                        field(stringResource(R.string.au_music_field_genre), genre) { genre = it }
+                        field(stringResource(R.string.au_music_field_year), year) { year = it }
+                        field(stringResource(R.string.au_music_field_track), track) { track = it }
                         TextButton(onClick = onPickCover) { Text(stringResource(R.string.hc_change_cover)) }
                     }
                 }

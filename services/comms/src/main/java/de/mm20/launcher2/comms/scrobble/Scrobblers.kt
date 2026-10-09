@@ -83,16 +83,23 @@ object Scrobblers {
         val q = queue(context)
         q.put(JSONObject().put("s", service).put("a", t.artist).put("t", t.title).put("b", t.album).put("l", t.durationSeconds).put("ts", t.timestampSeconds))
         while (q.length() > 500) q.remove(0)
-        prefs(context).edit().putString("queue", q.toString()).apply()
+        setQueue(context, q)
     }
 
     @Synchronized
     fun queue(context: Context): JSONArray =
-        runCatching { JSONArray(prefs(context).getString("queue", "[]")) }.getOrDefault(JSONArray())
+        runCatching {
+            val raw = prefs(context).getString("queue", "").orEmpty()
+            // the listening history is stored encrypted; older versions wrote plain JSON
+            val text = if (raw.startsWith("[")) raw else SecretBox.decrypt(raw)
+            JSONArray(text.ifBlank { "[]" })
+        }.getOrDefault(JSONArray())
 
     @Synchronized
     fun setQueue(context: Context, q: JSONArray) {
-        prefs(context).edit().putString("queue", q.toString()).apply()
+        val text = q.toString()
+        val stored = runCatching { SecretBox.encrypt(text) }.getOrDefault(text)
+        prefs(context).edit().putString("queue", stored).apply()
     }
 
     // ---- shared helpers ----
@@ -175,7 +182,7 @@ class LastFm(private val key: String, private val secret: String, private val se
                 .entries.joinToString("&") { it.key + "=" + Scrobblers.enc(it.value) }
             val answer = JSONObject(Scrobblers.post("https://ws.audioscrobbler.com/2.0/", body))
             answer.optJSONObject("session")?.optString("key")?.takeIf { it.isNotBlank() }?.let { return it }
-            error(answer.optString("message", "Login failed"))
+            throw IllegalStateException(answer.optString("message").takeIf { it.isNotBlank() })
         }
     }
 }
@@ -199,7 +206,7 @@ class LibreFm(private val user: String, private val passwordHash: String) {
         val answer = Scrobblers.get(
             "https://turtle.libre.fm/?hs=true&p=1.2&c=tst&v=1.0&u=${Scrobblers.enc(user)}&t=$ts&a=$token"
         ).lines()
-        if (answer.firstOrNull()?.trim() != "OK" || answer.size < 4) error(answer.firstOrNull().orEmpty().ifBlank { "Libre.fm login failed" })
+        if (answer.firstOrNull()?.trim() != "OK" || answer.size < 4) throw IllegalStateException(answer.firstOrNull().orEmpty().takeIf { it.isNotBlank() })
         sessionId = answer[1].trim()
         nowPlayingUrl = answer[2].trim()
         submitUrl = answer[3].trim()
@@ -208,7 +215,7 @@ class LibreFm(private val user: String, private val passwordHash: String) {
     private fun check(answer: String) {
         if (!answer.trim().startsWith("OK")) {
             sessionId = "" // session expired: log in again next time
-            error(answer.trim().ifBlank { "Libre.fm refused the request" })
+            throw IllegalStateException(answer.trim().takeIf { it.isNotBlank() })
         }
     }
 

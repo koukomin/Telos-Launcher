@@ -2,6 +2,7 @@ package de.mm20.launcher2.store.catalog
 
 import androidx.annotation.DrawableRes
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
+import de.mm20.launcher2.search.TelosAppKeywords
 
 /**
  * One of the apps that are part of Telos itself. They are not installed from anywhere: "installing"
@@ -21,7 +22,10 @@ data class TelosApp(
     val commsTab: String? = null,
     /** The Store itself cannot be removed, otherwise there would be no way back */
     val removable: Boolean = true,
-)
+) {
+    /** Extra search words (synonyms, Greek names) for the Store search */
+    val keywords: List<String> get() = TelosAppKeywords.forKey(key)
+}
 
 object TelosApps {
 
@@ -85,9 +89,9 @@ object TelosApps {
         ),
         TelosApp(
             key = "telos_photos_app://photos",
-            name = "Telos Photos",
-            description = "A gallery and photo editor with a privacy focus.",
-            features = listOf("Albums and a date timeline", "EXIF viewer, editor and remover", "Share without metadata", "Crop, rotate, filters"),
+            name = "Telos Viewer",
+            description = "A gallery, photo editor and viewer for documents: PDF, Office and OpenDocument files, with a privacy focus.",
+            features = listOf("Albums and a date timeline", "EXIF viewer, editor and remover", "Crop, rotate, filters", "PDF, Word, Excel and PowerPoint viewing and editing", "20 PDF tools"),
             iconRes = de.mm20.launcher2.base.R.drawable.ic_glyph_photos,
             route = SettingsDeepLinkContract.ROUTE_PHOTOS,
         ),

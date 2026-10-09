@@ -28,7 +28,7 @@ object SmsStore {
     }
 
     /** A message that is about to be sent, in the outbox until the result is known */
-    fun insertOutgoing(context: Context, address: String, body: String): Uri? {
+    fun insertOutgoing(context: Context, address: String, body: String, subId: Int = -1): Uri? {
         if (!SmsRole.isDefault(context)) return null
         return runCatching {
             val values = ContentValues().apply {
@@ -38,14 +38,21 @@ object SmsStore {
                 put(Telephony.Sms.READ, 1)
                 put(Telephony.Sms.SEEN, 1)
                 put(Telephony.Sms.TYPE, Telephony.Sms.MESSAGE_TYPE_OUTBOX)
+                if (subId >= 0) put(Telephony.Sms.SUBSCRIPTION_ID, subId)
             }
             context.contentResolver.insert(Telephony.Sms.Outbox.CONTENT_URI, values)
         }.getOrNull()
     }
 
-    fun setType(context: Context, uri: Uri, type: Int) {
+    /** [keepFailed]: a message of several parts reports once per part; one failed part keeps the whole message failed */
+    fun setType(context: Context, uri: Uri, type: Int, keepFailed: Boolean = false) {
         runCatching {
-            context.contentResolver.update(uri, ContentValues().apply { put(Telephony.Sms.TYPE, type) }, null, null)
+            val values = ContentValues().apply { put(Telephony.Sms.TYPE, type) }
+            if (keepFailed) {
+                context.contentResolver.update(uri, values, "${Telephony.Sms.TYPE} != ?", arrayOf(Telephony.Sms.MESSAGE_TYPE_FAILED.toString()))
+            } else {
+                context.contentResolver.update(uri, values, null, null)
+            }
         }
     }
 

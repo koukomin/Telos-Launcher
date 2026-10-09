@@ -75,6 +75,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -121,20 +122,21 @@ private val markColors = listOf(0xFF000000.toInt(), 0xFF757575.toInt(), 0xFFD32F
 
 @Composable
 private fun ColorRow(colors: List<Int>, selected: Int, onSelect: (Int) -> Unit) {
-    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(vertical = 4.dp)) {
+    Row(horizontalArrangement = Arrangement.spacedBy(0.dp), modifier = Modifier.padding(vertical = 0.dp)) {
         colors.forEach { c ->
             val isSelected = c == selected
-            Box(
-                Modifier
-                    .size(36.dp)
-                    .background(Color(c), CircleShape)
-                    .border(
-                        if (isSelected) 3.dp else 1.dp,
-                        if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
-                        CircleShape,
-                    )
-                    .clickable { onSelect(c) },
-            )
+            Box(Modifier.size(48.dp).clickable { onSelect(c) }, contentAlignment = Alignment.Center) {
+                Box(
+                    Modifier
+                        .size(36.dp)
+                        .background(Color(c), CircleShape)
+                        .border(
+                            if (isSelected) 3.dp else 1.dp,
+                            if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
+                            CircleShape,
+                        ),
+                )
+            }
         }
     }
 }
@@ -157,7 +159,7 @@ internal fun ColumnScope.WatermarkBody(vm: PdfToolsViewModel, src: PdfSource) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var useImage by remember { mutableStateOf(false) }
-    var text by remember { mutableStateOf("") }
+    var text by rememberSaveable { mutableStateOf("") }
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     var size by remember { mutableFloatStateOf(0.5f) }
     var opacity by remember { mutableFloatStateOf(0.3f) }
@@ -202,7 +204,7 @@ internal fun ColumnScope.WatermarkBody(vm: PdfToolsViewModel, src: PdfSource) {
             }
         } else {
             OutlinedTextField(
-                value = text, onValueChange = { text = it }, singleLine = true,
+                value = text, onValueChange = { text = it.take(80) }, singleLine = true,
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 label = { Text(stringResource(R.string.pdft_watermark_text_label)) },
             )
@@ -227,12 +229,12 @@ internal fun ColumnScope.WatermarkBody(vm: PdfToolsViewModel, src: PdfSource) {
 
 @Composable
 internal fun ColumnScope.PageNumbersBody(vm: PdfToolsViewModel, src: PdfSource) {
-    var format by remember { mutableStateOf("{n}") }
-    var position by remember { mutableStateOf(NumberPosition.BOTTOM_CENTER) }
+    var format by rememberSaveable { mutableStateOf("{n}") }
+    var position by rememberSaveable { mutableStateOf(NumberPosition.BOTTOM_CENTER) }
     var fontSize by remember { mutableFloatStateOf(12f) }
     var color by remember { mutableIntStateOf(markColors[0]) }
-    var start by remember { mutableStateOf("1") }
-    var skip by remember { mutableStateOf("0") }
+    var start by rememberSaveable { mutableStateOf("1") }
+    var skip by rememberSaveable { mutableStateOf("0") }
     val startNumber = start.toIntOrNull() ?: 1
     val skipFirst = (skip.toIntOrNull() ?: 0).coerceIn(0, src.pageCount - 1)
     val sample = format.replace("{n}", startNumber.toString()).replace("{total}", (startNumber + src.pageCount - skipFirst - 1).toString())
@@ -867,14 +869,21 @@ internal fun CompareScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
     var lightbox by remember { mutableStateOf<Pair<Int, Int>?>(null) }
     var progress by remember { mutableStateOf<Pair<Int, Int>?>(null) }
 
+    var compareFailed by remember { mutableStateOf(false) }
     val analysis by produceState<CompareResult?>(null, a?.id, b?.id) {
         value = null
+        compareFailed = false
         val x = a
         val y = b
         if (x != null && y != null) {
-            value = runCatching {
+            value = try {
                 PdfEngine.compare(vm.context, x, y) { d, t -> progress = d to t }
-            }.getOrNull()
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: Throwable) {
+                compareFailed = true
+                null
+            }
         }
         progress = null
     }
@@ -904,6 +913,7 @@ internal fun CompareScreen(vm: PdfToolsViewModel, snackbar: SnackbarHostState) {
                         when {
                             r != null && r.differing.isEmpty() -> stringResource(R.string.pdft_compare_same_text)
                             r != null -> stringResource(R.string.pdft_compare_summary, r.differing.size, max(r.pagesA, r.pagesB))
+                            compareFailed -> stringResource(R.string.pdft_error_title)
                             pr != null -> stringResource(R.string.pdft_progress, pr.first.coerceAtMost(pr.second), pr.second)
                             else -> stringResource(R.string.pdft_working)
                         },

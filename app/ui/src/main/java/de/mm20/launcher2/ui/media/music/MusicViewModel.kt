@@ -16,6 +16,7 @@ import de.mm20.launcher2.comms.media.MusicPlayerService
 import de.mm20.launcher2.comms.media.MusicSleepTimer
 import de.mm20.launcher2.comms.media.MusicTrack
 import de.mm20.launcher2.comms.media.TagEditor
+import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import de.mm20.launcher2.comms.media.LyricsClient
@@ -27,6 +28,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 data class NowPlaying(
+    /** Media store id of the track (see [MusicTrack.id]); empty when unknown */
+    val mediaId: String = "",
     val uri: Uri?,
     val title: String,
     val artist: String,
@@ -58,7 +61,7 @@ class MusicViewModel : ViewModel() {
     fun saveTags(context: Context, uri: Uri, tags: TagEditor.Tags) {
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) { TagEditor.write(context, uri, tags) }
-            _message.value = if (ok) "Tags saved" else "Could not save the tags"
+            _message.value = if (ok) context.getString(R.string.au_music_tags_saved) else context.getString(R.string.au_music_tags_failed)
             if (ok) loadLibrary(context)
         }
     }
@@ -70,7 +73,7 @@ class MusicViewModel : ViewModel() {
                 val mime = context.contentResolver.getType(image) ?: "image/jpeg"
                 bytes != null && TagEditor.writeCover(context, uri, bytes, mime)
             }
-            _message.value = if (ok) "Cover saved" else "Could not save the cover"
+            _message.value = if (ok) context.getString(R.string.au_music_cover_saved) else context.getString(R.string.au_music_cover_failed)
             if (ok) loadLibrary(context)
         }
     }
@@ -159,11 +162,14 @@ class MusicViewModel : ViewModel() {
         val item = c.currentMediaItem
         if (item == null) {
             _nowPlaying.value = null
+            _lyrics.value = null
+            lyricsKey = ""
             return
         }
         val md = c.mediaMetadata
         _positionMs.value = c.currentPosition.coerceAtLeast(0L)
         val playing = NowPlaying(
+            mediaId = item.mediaId,
             uri = item.localConfiguration?.uri,
             title = md.title?.toString().orEmpty(),
             artist = md.artist?.toString().orEmpty(),
@@ -189,8 +195,16 @@ class MusicViewModel : ViewModel() {
     fun loadLibrary(context: Context) {
         viewModelScope.launch {
             _loading.value = true
-            _tracks.value = MusicLibrary.load(context)
-            _loading.value = false
+            try {
+                _tracks.value = MusicLibrary.load(context)
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                // e.g. the audio permission was revoked: show an empty library instead of crashing
+                _tracks.value = emptyList()
+            } finally {
+                _loading.value = false
+            }
         }
     }
 

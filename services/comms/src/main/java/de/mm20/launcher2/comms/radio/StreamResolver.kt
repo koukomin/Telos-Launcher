@@ -49,7 +49,7 @@ object StreamResolver {
         }.getOrDefault(fallback)
     }
 
-    private fun open(startUrl: String): HttpURLConnection {
+    internal fun open(startUrl: String): HttpURLConnection {
         var current = startUrl
         for (attempt in 0 until MAX_REDIRECTS) {
             val connection = URL(current).openConnection() as HttpURLConnection

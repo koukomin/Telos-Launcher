@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -53,9 +54,15 @@ fun RadioDashboardScreen() {
     val searchError by viewModel.searchError.collectAsStateWithLifecycle()
     val message by viewModel.message.collectAsStateWithLifecycle()
     val sleepEndsAt by playerViewModel.sleepEndsAt.collectAsStateWithLifecycle()
+    val recordingState by playerViewModel.recordingState.collectAsStateWithLifecycle()
+    val isRecording = recordingState is de.mm20.launcher2.comms.radio.RadioRecorder.State.Recording
 
-    var selectedTabIndex by remember { mutableStateOf(0) }
-    val tabs = listOf("Collection", "Search", "History")
+    var selectedTabIndex by rememberSaveable { mutableStateOf(0) }
+    val tabs = listOf(
+        stringResource(R.string.au_radio_tab_collection),
+        stringResource(R.string.hc_search),
+        stringResource(R.string.au_radio_tab_history),
+    )
 
     var menuOpen by remember { mutableStateOf(false) }
     var showAdd by remember { mutableStateOf(false) }
@@ -64,7 +71,8 @@ fun RadioDashboardScreen() {
 
     LaunchedEffect(message) {
         message?.let {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            val text = if (it.arg != null) context.getString(it.resId, it.arg) else context.getString(it.resId)
+            Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
             viewModel.consumeMessage()
         }
     }
@@ -82,9 +90,20 @@ fun RadioDashboardScreen() {
         if (uri != null) viewModel.restoreBackup(context, uri)
     }
 
-    de.mm20.launcher2.ui.media.MediaFrame("Radio", askNotifications = true, guardKey = "telos_radio_app://radio", actions = {
+    de.mm20.launcher2.ui.media.MediaFrame(stringResource(R.string.hc_radio), askNotifications = true, guardKey = "telos_radio_app://radio", actions = {
         IconButton(onClick = { showAdd = true }) {
             Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.hc_add_station))
+        }
+        IconButton(onClick = {
+            playerViewModel.toggleRecording(context)?.let {
+                Toast.makeText(context, context.getString(it), Toast.LENGTH_SHORT).show()
+            }
+        }) {
+            Icon(
+                painterResource(if (isRecording) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px),
+                contentDescription = stringResource(if (isRecording) R.string.au2_radio2_stop_recording else R.string.au2_radio2_record),
+                tint = if (isRecording) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
         IconButton(onClick = { showSleep = true }) {
             Icon(
@@ -96,7 +115,7 @@ fun RadioDashboardScreen() {
         }
         Box {
             IconButton(onClick = { menuOpen = true }) {
-                Icon(painterResource(R.drawable.more_vert_24px), contentDescription = null)
+                Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
             }
             DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
                 DropdownMenuItem(
@@ -131,6 +150,7 @@ fun RadioDashboardScreen() {
         }
     }) {
     Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.weight(1f).fillMaxWidth()) {
         TabRow(selectedTabIndex = selectedTabIndex) {
             tabs.forEachIndexed { index, title ->
                 Tab(
@@ -158,6 +178,7 @@ fun RadioDashboardScreen() {
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                     modifier = Modifier.fillMaxSize()
                 ) {
+                    item { RadioRecordingsEntry() }
                     if (shownFavorites.isEmpty() && favorites.isNotEmpty() && collectionQuery.isNotBlank()) {
                         item { de.mm20.launcher2.ui.component.SearchEmptyState(collectionQuery) }
                     }
@@ -194,7 +215,7 @@ fun RadioDashboardScreen() {
                     }
                     searchError?.let {
                         Text(
-                            text = it,
+                            text = if (it.arg != null) stringResource(it.resId, it.arg) else stringResource(it.resId),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.error,
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
@@ -269,7 +290,11 @@ fun RadioDashboardScreen() {
             }
         }
     }
+    de.mm20.launcher2.ui.comms.RadioMiniPlayer()
     }
+    }
+
+    RadioRecordingResultEffect()
 
     if (showAdd) {
         var name by remember { mutableStateOf("") }

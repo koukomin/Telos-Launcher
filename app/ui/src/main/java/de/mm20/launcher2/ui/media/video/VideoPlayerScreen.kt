@@ -80,7 +80,7 @@ fun VideoPlayerScreen(
                         startIndex = opened.startPosition,
                     )
                 }
-                .onFailure { error = it.message ?: "Torrent could not be opened" }
+                .onFailure { error = it.message ?: context.getString(R.string.au_video_torrent_failed) }
         }
         LaunchedEffect(torrentSource) {
             while (true) {
@@ -96,7 +96,9 @@ fun VideoPlayerScreen(
             Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(32.dp)) {
                 if (error == null) CircularProgressIndicator(color = Color.White)
                 Text(
-                    text = error ?: torrent.message.ifBlank { "Opening…" },
+                    text = error ?: stringResource(
+                        if (torrent.stage == TorrentState.Stage.FindingPeers) R.string.au_video_finding_peers else R.string.au_video_opening
+                    ),
                     color = Color.White,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(top = 16.dp),
@@ -105,7 +107,7 @@ fun VideoPlayerScreen(
                     Text(stringResource(R.string.hc_this_can_take_a_minute), color = Color(0xB3FFFFFF), style = MaterialTheme.typography.bodySmall)
                 }
                 TextButton(onClick = onClose, modifier = Modifier.padding(top = 16.dp)) {
-                    Text(if (error != null) "Close" else "Cancel", color = Color.White)
+                    Text(stringResource(if (error != null) R.string.hc_close else R.string.hc_cancel), color = Color.White)
                 }
             }
         }
@@ -236,6 +238,28 @@ private fun PlayerContent(
         }
     }
     LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) { saveProgress() }
+    // there is no service behind the player: when the screen is left (and it is not the picture-in-picture
+    // window), sound must not go on in the background
+    LifecycleEventEffect(Lifecycle.Event.ON_STOP) { player.pause() }
+
+    var playbackError by remember { mutableStateOf(false) }
+    DisposableEffect(player) {
+        val errorListener = object : Player.Listener {
+            override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
+                playbackError = true
+            }
+
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                if (playbackState == Player.STATE_READY) playbackError = false
+            }
+
+            override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
+                if (reason != Player.MEDIA_ITEM_TRANSITION_REASON_PLAYLIST_CHANGED) playbackError = false
+            }
+        }
+        player.addListener(errorListener)
+        onDispose { player.removeListener(errorListener) }
+    }
     LaunchedEffect(player) {
         while (true) {
             delay(5000)
@@ -315,11 +339,23 @@ private fun PlayerContent(
                     kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
                         val name = context.contentResolver.query(subtitle, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
                             ?.use { if (it.moveToFirst()) it.getString(0) else null }.orEmpty()
-                        val bytes = context.contentResolver.openInputStream(subtitle)!!.use { it.readBytes() }
+                        // a subtitle file is small: a huge file picked by mistake must not fill the memory
+                        val bytes = context.contentResolver.openInputStream(subtitle)!!.use { input ->
+                            val out = java.io.ByteArrayOutputStream()
+                            val buffer = ByteArray(8192)
+                            while (true) {
+                                val n = input.read(buffer)
+                                if (n < 0) break
+                                out.write(buffer, 0, n)
+                                if (out.size() > 6_000_000) error("The subtitle file is too big")
+                            }
+                            out.toByteArray()
+                        }
                         val lang = VideoServices.config().languages.substringBefore(',')
                         SubtitleFiles.import(context, name, bytes, lang, currentVideoKey)
                     }
                 }.onSuccess { loadSubtitleFile(it, null) }
+                    .onFailure { toast(context, context.getString(R.string.au_video_subtitle_failed)) }
             }
         }
     }
@@ -454,6 +490,17 @@ private fun PlayerContent(
                 }
             },
         )
+        if (playbackError && !inPictureInPicture) {
+            val remote = player.currentMediaItem?.localConfiguration?.uri?.let { RemoteVideo.isRemote(it) } == true
+            Text(
+                text = stringResource(if (remote) R.string.vn_network_open_failed else R.string.au_video_playback_error),
+                color = Color.White,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.align(Alignment.Center).padding(horizontal = 32.dp)
+                    .background(Color(0x99000000), androidx.compose.foundation.shape.RoundedCornerShape(12.dp))
+                    .padding(horizontal = 20.dp, vertical = 10.dp),
+            )
+        }
         gestureHint?.let { hint ->
             Text(
                 text = hint,
@@ -464,7 +511,9 @@ private fun PlayerContent(
         }
         if (isTorrent && !inPictureInPicture && (controlsVisible || torrent.downloadBytesPerSecond < 50_000)) {
             Text(
-                text = "Peers ${torrent.peers} · ${torrent.downloadBytesPerSecond / 1024} KB/s · ${(torrent.progress * 100).toInt()}% downloaded",
+                text = stringResource(
+                    R.string.au_video_torrent_stats, torrent.peers, torrent.downloadBytesPerSecond / 1024, (torrent.progress * 100).toInt()
+                ),
                 color = Color(0xCCFFFFFF),
                 style = MaterialTheme.typography.labelMedium,
                 modifier = Modifier.align(Alignment.TopEnd).statusBarsPadding().padding(top = 52.dp, end = 12.dp),
@@ -557,7 +606,7 @@ private fun OnlineSubtitleDialog(
                 o.errors.isNotEmpty() -> context.getString(R.string.vn_some_sources_failed, o.errors.joinToString("; "))
                 else -> ""
             }
-        }.onFailure { status = (it.message ?: "unknown error") }
+        }.onFailure { status = (it.message ?: context.getString(R.string.au_video_unknown_error)) }
         busy = false
     }
 
@@ -581,7 +630,7 @@ private fun OnlineSubtitleDialog(
                                         .onSuccess { onFile(it, r.language.uppercase()) }
                                         .onFailure {
                                             busy = false
-                                            status = (it.message ?: "unknown error")
+                                            status = (it.message ?: context.getString(R.string.au_video_unknown_error))
                                         }
                                 }
                             }.padding(vertical = 8.dp)
@@ -590,8 +639,8 @@ private fun OnlineSubtitleDialog(
                             Text(
                                 listOfNotNull(
                                     r.language.uppercase(),
-                                    r.downloads.takeIf { it > 0 }?.let { "$it downloads" },
-                                    if (r.hearingImpaired) "HI" else null,
+                                    r.downloads.takeIf { it > 0 }?.let { context.getString(R.string.au_video_downloads_count, it) },
+                                    if (r.hearingImpaired) context.getString(R.string.au_video_hearing_impaired_short) else null,
                                     if (r.hashMatch) context.getString(R.string.vn_exact_match) else null,
                                     r.provider.replace('_', ' '),
                                 ).joinToString(" · "),

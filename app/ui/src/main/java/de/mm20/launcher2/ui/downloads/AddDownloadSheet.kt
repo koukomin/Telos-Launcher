@@ -35,6 +35,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -64,20 +65,20 @@ internal fun parseHeaders(text: String): Map<String, String> =
 internal fun AddDownloadSheet(initialText: String, manager: DownloadManager, onDismiss: () -> Unit, onTorrent: (String) -> Unit = {}, onMedia: (String) -> Unit = {}) {
     val context = LocalContext.current
     val settings by manager.settings.values.collectAsState()
-    var text by remember { mutableStateOf(initialText) }
-    var folder by remember { mutableStateOf<String?>(null) }
-    var category by remember { mutableStateOf<DownloadCategory?>(null) }
-    var connections by remember { mutableStateOf(0) }
-    var advanced by remember { mutableStateOf(false) }
-    var name by remember { mutableStateOf("") }
-    var userAgent by remember { mutableStateOf("") }
-    var referer by remember { mutableStateOf("") }
+    var text by rememberSaveable { mutableStateOf(initialText) }
+    var folder by rememberSaveable { mutableStateOf<String?>(null) }
+    var category by rememberSaveable { mutableStateOf<DownloadCategory?>(null) }
+    var connections by rememberSaveable { mutableStateOf(0) }
+    var advanced by rememberSaveable { mutableStateOf(false) }
+    var name by rememberSaveable { mutableStateOf("") }
+    var userAgent by rememberSaveable { mutableStateOf("") }
+    var referer by rememberSaveable { mutableStateOf("") }
     var cookies by remember { mutableStateOf("") }
-    var headers by remember { mutableStateOf("") }
-    var checksum by remember { mutableStateOf("") }
-    var limit by remember { mutableStateOf("") }
-    var mirrors by remember { mutableStateOf("") }
-    var startPaused by remember { mutableStateOf(false) }
+    var headers by rememberSaveable { mutableStateOf("") }
+    var checksum by rememberSaveable { mutableStateOf("") }
+    var limit by rememberSaveable { mutableStateOf("") }
+    var mirrors by rememberSaveable { mutableStateOf("") }
+    var startPaused by rememberSaveable { mutableStateOf(false) }
     var clip by remember { mutableStateOf<String?>(null) }
 
     // the clipboard is only read on its own when the user switched "detect links in the clipboard" on; the paste button always works

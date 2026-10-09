@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -101,14 +102,14 @@ internal fun openViewer(context: Context, fullList: List<PhotoItem>, fullIndex: 
 
 private data class Album(val name: String, val items: List<PhotoItem>)
 
-private fun dayLabel(millis: Long): String {
+private fun dayLabel(context: Context, millis: Long): String {
     val now = java.util.Calendar.getInstance()
     val then = java.util.Calendar.getInstance().apply { timeInMillis = millis }
     val sameYear = now.get(java.util.Calendar.YEAR) == then.get(java.util.Calendar.YEAR)
     val dayDiff = now.get(java.util.Calendar.DAY_OF_YEAR) - then.get(java.util.Calendar.DAY_OF_YEAR)
     return when {
-        sameYear && dayDiff == 0 -> "Today"
-        sameYear && dayDiff == 1 -> "Yesterday"
+        sameYear && dayDiff == 0 -> context.getString(R.string.hc_today)
+        sameYear && dayDiff == 1 -> context.getString(R.string.au_viewer_yesterday)
         else -> java.text.SimpleDateFormat(if (sameYear) "EEE, d MMM" else "d MMM yyyy", java.util.Locale.getDefault())
             .format(java.util.Date(millis))
     }
@@ -143,7 +144,7 @@ fun PhotosScreen() {
     }
     LaunchedEffect(Unit) { if (hasPermission) viewModel.load(context) }
 
-    var tab by remember { mutableStateOf(0) }
+    var tab by rememberSaveable { mutableIntStateOf(0) }
     var album by remember { mutableStateOf<Album?>(null) }
     androidx.activity.compose.BackHandler(enabled = album != null) { album = null }
 
@@ -151,20 +152,20 @@ fun PhotosScreen() {
     val filteredItems = remember(items, query) {
         de.mm20.launcher2.comms.search.TelosSearch.filter(items, query) {
             listOf(
-                it.name, it.folder, dayLabel(it.taken),
+                it.name, it.folder, dayLabel(context, it.taken),
                 java.text.SimpleDateFormat("d MMMM yyyy MMMM yyyy M/d/yyyy", java.util.Locale.getDefault()).format(java.util.Date(it.taken)),
             )
         }
     }
     val albums = remember(filteredItems) {
-        filteredItems.groupBy { it.folder }.map { (name, list) -> Album(name.ifBlank { "Other" }, list) }
+        filteredItems.groupBy { it.folder }.map { (name, list) -> Album(name.ifBlank { context.getString(R.string.au_viewer_other) }, list) }
             .sortedByDescending { it.items.size }
     }
     val shown = remember(album, filteredItems) {
         val a = album
         if (a != null) { val keep = filteredItems.toSet(); a.items.filter { it in keep } } else filteredItems
     }
-    val byDay = remember(shown) { shown.groupBy { dayLabel(it.taken) } }
+    val byDay = remember(shown) { shown.groupBy { dayLabel(context, it.taken) } }
 
     androidx.compose.material3.Scaffold(
         containerColor = MaterialTheme.colorScheme.surface,
@@ -198,12 +199,12 @@ fun PhotosScreen() {
                 }
                 Column {
                     Text(
-                        album?.name ?: "Photos",
+                        album?.name ?: stringResource(R.string.hc_photos),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.SemiBold,
                     )
                     Text(
-                        "${shown.size} items",
+                        stringResource(R.string.au_viewer_items, shown.size),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )

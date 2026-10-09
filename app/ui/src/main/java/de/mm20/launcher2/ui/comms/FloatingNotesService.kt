@@ -24,7 +24,7 @@ class FloatingNotesService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         number = intent?.getStringExtra("number").orEmpty()
-        if (view != null) return START_STICKY
+        if (view != null) return START_NOT_STICKY
         val wm = getSystemService(WindowManager::class.java)
         windowManager = wm
         val input = EditText(this).apply {
@@ -59,8 +59,9 @@ class FloatingNotesService : Service() {
             gravity = Gravity.TOP or Gravity.END
             y = 120
         }
-        runCatching { wm.addView(root, params) }
-        return START_STICKY
+        // without the overlay permission the view cannot be shown: do not keep an invisible service alive
+        if (runCatching { wm.addView(root, params) }.isFailure) { view = null; stopSelf(); return START_NOT_STICKY }
+        return START_NOT_STICKY
     }
 
     override fun onDestroy() {

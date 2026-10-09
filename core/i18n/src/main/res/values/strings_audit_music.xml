@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_music_title">Music</string>
+    <string name="au_music_tab_songs">Songs</string>
+    <string name="au_music_tab_artists">Artists</string>
+    <string name="au_music_unknown_album">Unknown album</string>
+    <string name="au_music_unknown_artist">Unknown artist</string>
+    <string name="au_music_songs_count">%1$d songs</string>
+    <string name="au_music_show_cover">Cover</string>
+    <string name="au_music_show_lyrics">Lyrics</string>
+    <string name="au_music_sleep">Sleep</string>
+    <string name="au_music_sleep_active">Sleep timer on</string>
+    <string name="au_music_pause">Pause</string>
+    <string name="au_music_field_title">Title</string>
+    <string name="au_music_field_artist">Artist</string>
+    <string name="au_music_field_album">Album</string>
+    <string name="au_music_field_album_artist">Album artist</string>
+    <string name="au_music_field_genre">Genre</string>
+    <string name="au_music_field_year">Year</string>
+    <string name="au_music_field_track">Track number</string>
+    <string name="au_music_tags_saved">Tags saved</string>
+    <string name="au_music_tags_failed">Could not save the tags</string>
+    <string name="au_music_cover_saved">Cover saved</string>
+    <string name="au_music_cover_failed">Could not save the cover</string>
+    <string name="au_music_connected">Connected</string>
+    <string name="au_music_not_connected">Not connected</string>
+    <string name="au_music_lastfm_connected">Last.fm connected</string>
+    <string name="au_music_librefm_connected">Libre.fm connected</string>
+    <string name="au_music_listenbrainz_saved">ListenBrainz saved</string>
+    <string name="au_music_login_failed">%1$s: %2$s</string>
+    <string name="au_music_login_failed_generic">Login failed</string>
+</resources>

@@ -22,7 +22,11 @@ class SpamRepositoryImpl(private val context: Context) : SpamRepository {
         if (blocked) {
             dao.insert(BlockedNumberEntity(number))
         } else {
+            // isNumberBlocked() also matches other notations, so unblocking removes those entries too
             dao.delete(BlockedNumberEntity(number))
+            dao.getAllNumbers()
+                .filter { it != number && PhoneNumbers.match(it, number) }
+                .forEach { dao.delete(BlockedNumberEntity(it)) }
         }
     }
 

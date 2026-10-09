@@ -24,7 +24,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 <a href="./calendar/"><b>📅 Calendar</b><span>Month and agenda on your calendars, local calendar, Google and CalDAV through the system</span></a>
 <a href="./downloads/"><b>⬇️ Downloads</b><span>Download manager: several connections, resume, queue, folder of your choice</span></a>
 <a href="./calculator/"><b>🧮 Calculator</b><span>Scientific calculator, VAT, unit and currency converter, history</span></a>
-<a href="./photos/"><b>🖼️ Photos</b><span>Gallery, EXIF tools, editor and a document viewer</span></a>
+<a href="./photos/"><b>🖼️ Viewer</b><span>Gallery, EXIF tools, photo editor, document viewer and editor, PDF tools</span></a>
 <a href="./music/"><b>🎵 Music</b><span>Local library, lyrics, scrobbling, tag editor</span></a>
 <a href="./video/"><b>🎬 Video</b><span>Library, player, web streams, torrents, subtitles, Trakt</span></a>
 <a href="./radio/"><b>📻 Radio</b><span>Internet radio with station search and sleep timer</span></a>
@@ -54,7 +54,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 | Telos Calendar | Calendar with local and synced calendars | [Calendar](./calendar/) |
 | Telos Downloads | Download manager for links with resume and a queue | [Downloads](./downloads/) |
 | Telos Calculator | Standard and scientific calculator, VAT, converters | [Calculator](./calculator/) |
-| Telos Photos | Gallery, photo editor, document viewer | [Photos](./photos/) |
+| Telos Viewer | Gallery, photo editor, document viewer | [Viewer](./photos/) |
 | Telos Music | Player for the music on the phone | [Music](./music/) |
 | Telos Video | Video library and player, streams and torrents | [Video](./video/) |
 | Telos Radio | Internet radio | [Radio](./radio/) |
@@ -69,7 +69,7 @@ gallery, music, video and radio players, an app store and an app freezer.
 | Origin | Kvaesitso | Added by Telos |
 | Where it runs | Launcher process | Launcher process (Video can use its own process) |
 | Can be switched off | No | Yes, from the [Store](./store/) (except the Store itself) |
-| Guarded by the crash guard | n/a | Radio, Music, Video, Photos |
+| Guarded by the crash guard | n/a | Radio, Music, Video, Viewer |
 | Docs | [The launcher](./launcher/) | One page per app |
 
 ## How the built-in apps work
@@ -82,20 +82,20 @@ they run inside the launcher process (the video player can optionally run in a s
 - **They can be switched on and off.** Open [Telos Store](./store/) and "install" or "remove" an app.
   "Installing" shows its icon, "removing" hides it. Telos Store itself cannot be removed, otherwise
   there would be no way back.
-- **Switched-off apps cost nothing.** For Radio, Music, Video and Photos the services and screens are
+- **Switched-off apps cost nothing.** For Radio, Music, Video and Viewer the services and screens are
   disabled, so they use no memory or CPU and are not offered in "Open with". Phone and Messages are
   never touched by this.
 - **They appear in the share menu.** Other apps can hand text, pictures, videos, `sms:`, `tel:`,
   `magnet:` and `obtainium:` links to them. Each entry appears under its own name and icon, and only
   while that app is installed.
-- **They are guarded against crashes.** Radio, Music, Video and Photos are switched off automatically
+- **They are guarded against crashes.** Radio, Music, Video and Viewer are switched off automatically
   when they crash or hang twice within a day, with a notification that points to the Store. Installing
   the app again resets the counter. Phone and Messages are never switched off, because Android needs them.
 
 | Share target | Accepts |
 | --- | --- |
 | Telos Messages | text, pictures, videos, `sms:` links |
-| Telos Photos | pictures |
+| Telos Viewer | pictures |
 | Telos Video | videos, magnet links, torrent files |
 | Telos Store | `obtainium:` links |
 | Telos Phone | `tel:` links |

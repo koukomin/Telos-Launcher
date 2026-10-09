@@ -138,7 +138,10 @@ class FreezeManager internal constructor(
         if (packageNames.isEmpty()) return emptySet()
 
         // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
-        val safePackages = packageNames.filterNot { PROTECTED_PACKAGES.contains(it) }
+        // Package names end up in shell commands (root / Shizuku fallbacks), so anything that is not a
+        // well-formed package name is dropped here rather than trusted.
+        val safePackages = packageNames.filter { VALID_PACKAGE_NAME.matches(it) }
+            .filterNot { PROTECTED_PACKAGES.contains(it) }
         if (safePackages.isEmpty()) {
             Log.w(TAG, "All targeted packages are protected system packages. Aborting freeze.")
             return emptySet()
@@ -230,7 +233,7 @@ class FreezeManager internal constructor(
 
     suspend fun forceStop(packageName: String, userId: Int = Process.myUid() / 100000): Boolean {
         // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
-        if (PROTECTED_PACKAGES.contains(packageName)) return false
+        if (PROTECTED_PACKAGES.contains(packageName) || !VALID_PACKAGE_NAME.matches(packageName)) return false
         // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
         return when (_activeBackend.value) {
             FreezeBackendType.Shizuku -> shizukuProvider.forceStopPackage(packageName, userId)
@@ -244,7 +247,7 @@ class FreezeManager internal constructor(
 
     suspend fun clearCache(packageName: String, userId: Int = Process.myUid() / 100000): Boolean {
         // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
-        if (PROTECTED_PACKAGES.contains(packageName)) return false
+        if (PROTECTED_PACKAGES.contains(packageName) || !VALID_PACKAGE_NAME.matches(packageName)) return false
         // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
         return when (_activeBackend.value) {
             FreezeBackendType.Shizuku -> shizukuProvider.clearCache(packageName, userId)
@@ -334,5 +337,6 @@ class FreezeManager internal constructor(
 
     companion object {
         private const val TAG = "FreezeManager"
+        private val VALID_PACKAGE_NAME = Regex("[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)*")
     }
 }

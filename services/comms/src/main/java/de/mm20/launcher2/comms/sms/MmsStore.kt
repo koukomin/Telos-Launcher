@@ -24,13 +24,13 @@ object MmsStore {
     }
 
     /** A message that is being sent, in the outbox until the result is known */
-    fun insertOutgoing(context: Context, recipients: List<String>, parts: List<MmsPart>): Uri? {
+    fun insertOutgoing(context: Context, recipients: List<String>, parts: List<MmsPart>, subId: Int = -1): Uri? {
         if (!SmsRole.isDefault(context) || recipients.isEmpty()) return null
         return runCatching {
             val threadId = Telephony.Threads.getOrCreateThreadId(context, recipients.toSet())
             val id = insertMessage(
                 context, threadId, Telephony.Mms.MESSAGE_BOX_OUTBOX, null, null, parts,
-                dateSeconds = System.currentTimeMillis() / 1000, read = 1,
+                dateSeconds = System.currentTimeMillis() / 1000, read = 1, subId = subId,
             ) ?: return null
             recipients.forEach { addAddress(context, id, it, 151) } // to
             ContentUris.withAppendedId(Telephony.Mms.CONTENT_URI, id)
@@ -45,13 +45,14 @@ object MmsStore {
 
     private fun insertMessage(
         context: Context, threadId: Long, box: Int, subject: String?, transactionId: String?,
-        parts: List<MmsPart>, dateSeconds: Long, read: Int,
+        parts: List<MmsPart>, dateSeconds: Long, read: Int, subId: Int = -1,
     ): Long? {
         val values = ContentValues().apply {
             put(Telephony.Mms.THREAD_ID, threadId)
             put(Telephony.Mms.DATE, dateSeconds)
             put(Telephony.Mms.MESSAGE_BOX, box)
             put(Telephony.Mms.READ, read)
+            if (subId >= 0) put(Telephony.Mms.SUBSCRIPTION_ID, subId)
             put(Telephony.Mms.SEEN, read)
             put(Telephony.Mms.MESSAGE_TYPE, if (box == Telephony.Mms.MESSAGE_BOX_INBOX) 132 else 128)
             put(Telephony.Mms.MMS_VERSION, 18)

@@ -66,7 +66,7 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
 
     override suspend fun requestPermission(): Boolean {
         if (!isAvailable()) return false
-        if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) return true
+        if (runCatching { Shizuku.checkSelfPermission() }.getOrNull() == PackageManager.PERMISSION_GRANTED) return true
 
         return suspendCancellableCoroutine { cont ->
             val listener = object : Shizuku.OnRequestPermissionResultListener {
@@ -82,7 +82,14 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
             cont.invokeOnCancellation {
                 Shizuku.removeRequestPermissionResultListener(listener)
             }
-            Shizuku.requestPermission(REQUEST_CODE)
+            try {
+                Shizuku.requestPermission(REQUEST_CODE)
+            } catch (e: Throwable) {
+                // Binder died between the availability check and the request: don't hang forever.
+                Log.w(TAG, "requestPermission failed", e)
+                Shizuku.removeRequestPermissionResultListener(listener)
+                if (cont.isActive) cont.resume(false)
+            }
         }
     }
 

@@ -36,12 +36,24 @@ class AuthManager : KoinComponent {
                 }
             })
 
-        val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle(title)
-            .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
-            .build()
+        val builder = BiometricPrompt.PromptInfo.Builder().setTitle(title)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            builder.setAllowedAuthenticators(
+                BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL
+            )
+        } else {
+            // BIOMETRIC_STRONG or DEVICE_CREDENTIAL is not supported on API 28-29: the (deprecated)
+            // device credential flag is the supported way to allow PIN/pattern/password there
+            @Suppress("DEPRECATION")
+            builder.setDeviceCredentialAllowed(true)
+        }
+        val promptInfo = builder.build()
 
-        biometricPrompt.authenticate(promptInfo)
+        try {
+            biometricPrompt.authenticate(promptInfo)
+        } catch (e: Exception) {
+            if (cont.isActive) cont.resume(false)
+        }
     }
 
     fun hasCustomPin(): Boolean {

@@ -41,6 +41,40 @@ internal object OfficeXml {
     }
 }
 
+/** Removes characters that are not allowed in XML 1.0 and normalises line breaks, so that user input can never produce a broken part. */
+internal fun xmlSafe(s: String): String {
+    val sb = StringBuilder(s.length)
+    var i = 0
+    while (i < s.length) {
+        val c = s[i]
+        when {
+            c == '\r' -> { sb.append('\n'); if (i + 1 < s.length && s[i + 1] == '\n') i++ }
+            c == '\n' || c == '\t' -> sb.append(c)
+            c < ' ' || c == '\uFFFE' || c == '\uFFFF' -> {}
+            Character.isHighSurrogate(c) -> if (i + 1 < s.length && Character.isLowSurrogate(s[i + 1])) { sb.append(c).append(s[i + 1]); i++ }
+            Character.isLowSurrogate(c) -> {}
+            else -> sb.append(c)
+        }
+        i++
+    }
+    return sb.toString()
+}
+
+private val plainNumber = Regex("""-?\d+(\.\d+)?([eE][+-]?\d+)?""")
+
+/** True when [s] can be stored as a number without changing how it reads (no leading zeros, at most 15 digits). */
+internal fun isPlainNumber(s: String): Boolean {
+    val t = s.trim()
+    if (!plainNumber.matches(t)) return false
+    val digits = t.trimStart('-')
+    if (digits.length > 1 && digits[0] == '0' && digits[1].isDigit()) return false
+    return digits.takeWhile { it.isDigit() }.length <= 15
+}
+
+internal const val MAX_BLOCKS = 20_000
+internal const val MAX_SHEET_ROWS = 3_000
+internal const val MAX_SHEET_COLS = 200
+
 internal fun ZipFile.bytes(name: String): ByteArray? = getEntry(name)?.let { e -> getInputStream(e).use { it.readBytes() } }
 
 internal fun Node.elements(): List<Element> {
@@ -89,13 +123,13 @@ internal object ZipRewrite {
      * Writes a copy of [src] to [dst]. Entries in [replace] get new content, entries in [extra] are added, every other entry is copied unchanged.
      * The OpenDocument `mimetype` entry is written first and stored uncompressed.
      */
-    fun rewrite(src: File, dst: File, replace: Map<String, ByteArray>, extra: Map<String, ByteArray> = emptyMap()) {
+    fun rewrite(src: File, dst: File, replace: Map<String, ByteArray>, extra: Map<String, ByteArray> = emptyMap(), remove: Set<String> = emptySet()) {
         ZipFile(src).use { zip ->
             ZipOutputStream(FileOutputStream(dst).buffered()).use { out ->
                 val entries = zip.entries().toList().sortedBy { if (it.name == "mimetype") 0 else 1 }
                 val written = HashSet<String>()
                 for (e in entries) {
-                    if (!written.add(e.name)) continue
+                    if (e.name in remove || !written.add(e.name)) continue
                     val ne = ZipEntry(e.name)
                     if (e.time != -1L) ne.time = e.time
                     if (e.isDirectory) { out.putNextEntry(ne); out.closeEntry(); continue }

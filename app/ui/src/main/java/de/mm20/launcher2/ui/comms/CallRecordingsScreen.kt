@@ -7,10 +7,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -77,37 +79,61 @@ fun CallRecordingsScreen() {
 @Composable
 private fun RecordingRow(rec: CallRecordingFile, onChanged: () -> Unit) {
     val context = LocalContext.current
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+    var confirmDelete by remember { mutableStateOf(false) }
     val whenStr = SimpleDateFormat("d MMM HH:mm", Locale.getDefault()).format(Date(rec.file.lastModified()))
+    // the recorder names a recording without a number "Unknown"
+    val title = if (rec.number == "Unknown") stringResource(R.string.widget_name_unknown) else rec.number
     ListItem(
-        headlineContent = { Text(rec.number) },
+        headlineContent = { Text(title) },
         supportingContent = { Text("$whenStr · ${rec.file.length() / 1024} KB") },
         modifier = Modifier
             .fillMaxWidth()
             .clickable {
-                runCatching {
-                    // the player gets a temporary readable copy, removed later
-                    val readable = RecordingCrypto.readableCopy(context, rec.file)!!
-                    val uri = FileProvider.getUriForFile(
-                        context,
-                        "${context.packageName}.fileprovider",
-                        readable,
-                    )
-                    val intent = Intent(Intent.ACTION_VIEW).apply {
-                        setDataAndType(uri, "audio/mp4")
-                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                scope.launch {
+                    // decrypting the recording is file work, not for the main thread
+                    val opened = runCatching {
+                        // the player gets a temporary readable copy, removed later
+                        val readable = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                            RecordingCrypto.readableCopy(context, rec.file)
+                        } ?: error("no readable copy")
+                        val uri = FileProvider.getUriForFile(
+                            context,
+                            "${context.packageName}.fileprovider",
+                            readable,
+                        )
+                        val intent = Intent(Intent.ACTION_VIEW).apply {
+                            setDataAndType(uri, "audio/mp4")
+                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        }
+                        context.tryStartActivity(intent)
+                    }.getOrDefault(false)
+                    if (!opened) {
+                        Toast.makeText(context, context.getString(R.string.hc_cannot_play_recording), Toast.LENGTH_SHORT).show()
                     }
-                    context.tryStartActivity(intent)
-                }.onFailure {
-                    Toast.makeText(context, context.getString(R.string.hc_cannot_play_recording), Toast.LENGTH_SHORT).show()
                 }
             },
         trailingContent = {
-            IconButton(onClick = {
-                CallAudioRecorder.delete(rec.file)
-                onChanged()
-            }) {
-                Icon(painterResource(R.drawable.delete_24px), contentDescription = null)
+            IconButton(onClick = { confirmDelete = true }) {
+                Icon(painterResource(R.drawable.delete_24px), contentDescription = stringResource(R.string.hc_delete))
             }
         },
     )
+    if (confirmDelete) {
+        AlertDialog(
+            onDismissRequest = { confirmDelete = false },
+            title = { Text(stringResource(R.string.au_phoneb_delete_recording)) },
+            text = { Text(title) },
+            confirmButton = {
+                TextButton(onClick = {
+                    confirmDelete = false
+                    CallAudioRecorder.delete(rec.file)
+                    onChanged()
+                }) { Text(stringResource(R.string.hc_delete)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { confirmDelete = false }) { Text(stringResource(R.string.hc_cancel)) }
+            },
+        )
+    }
 }

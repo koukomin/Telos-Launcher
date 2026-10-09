@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -34,14 +35,17 @@ data object FakeCallSettingsRoute : NavKey
 @Composable
 fun FakeCallSettingsScreen() {
     val context = LocalContext.current
-    var name by remember { mutableStateOf("Boss") }
-    var number by remember { mutableStateOf("+30") }
-    var delaySec by remember { mutableStateOf("10") }
+    val boss = stringResource(R.string.au_phoneb_preset_boss)
     val presets = listOf(
-        "Boss" to "+30 210 555 0100",
-        "Mom" to "+30 697 555 0101",
-        "Doctor" to "+30 210 555 0199",
+        boss to "+30 210 555 0100",
+        stringResource(R.string.au_phoneb_preset_mom) to "+30 697 555 0101",
+        stringResource(R.string.au_phoneb_preset_doctor) to "+30 210 555 0199",
     )
+    // kept over rotation
+    var name by rememberSaveable { mutableStateOf(boss) }
+    var number by rememberSaveable { mutableStateOf("+30") }
+    var delaySec by rememberSaveable { mutableStateOf("10") }
+    val incomingLabel = stringResource(R.string.comms_incoming_call)
     PreferenceScreen(title = { Text(stringResource(R.string.hc_fake_call)) }) {
         item {
             Column(
@@ -91,8 +95,8 @@ fun FakeCallSettingsScreen() {
                 }
                 Button(
                     onClick = {
-                        val delay = delaySec.toIntOrNull() ?: 10
-                        FakeCallScheduler.schedule(context, name.ifBlank { "Incoming call" }, number, delay)
+                        val delay = (delaySec.toIntOrNull() ?: 10).coerceIn(1, 3600)
+                        FakeCallScheduler.schedule(context, name.ifBlank { incomingLabel }, number, delay)
                         Toast.makeText(context, context.getString(R.string.hc_fake_call_in_seconds, delay), Toast.LENGTH_SHORT).show()
                     },
                     modifier = Modifier.fillMaxWidth(),

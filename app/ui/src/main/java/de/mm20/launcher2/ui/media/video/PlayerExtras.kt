@@ -94,7 +94,7 @@ internal fun attachGestures(
                     val current = if (attrs.screenBrightness < 0) 0.5f else attrs.screenBrightness
                     attrs.screenBrightness = (current + distanceY / view.height).coerceIn(0.02f, 1f)
                     window.attributes = attrs
-                    onHint("Brightness ${(attrs.screenBrightness * 100).toInt()}%")
+                    onHint(context.getString(R.string.au_video_brightness, (attrs.screenBrightness * 100).toInt()))
                 }
                 3 -> {
                     val max = audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
@@ -105,7 +105,7 @@ internal fun attachGestures(
                         val now = audio.getStreamVolume(AudioManager.STREAM_MUSIC)
                         audio.setStreamVolume(AudioManager.STREAM_MUSIC, (now + step).coerceIn(0, max), 0)
                     }
-                    onHint("Volume ${audio.getStreamVolume(AudioManager.STREAM_MUSIC) * 100 / max}%")
+                    onHint(context.getString(R.string.au_video_volume, if (max > 0) audio.getStreamVolume(AudioManager.STREAM_MUSIC) * 100 / max else 0))
                 }
             }
             return true
@@ -115,7 +115,7 @@ internal fun attachGestures(
             doubleTapped = true
             val forward = e.x > view.width / 2f
             player.seekTo((player.currentPosition + if (forward) 10_000 else -10_000).coerceAtLeast(0))
-            onHint(if (forward) "+10 s" else "-10 s")
+            onHint(context.getString(if (forward) R.string.au_video_skip_forward else R.string.au_video_skip_back))
             return true
         }
 
@@ -171,7 +171,7 @@ internal fun PlaybackMenu(
 
     fun label(g: androidx.media3.common.Tracks.Group, fallback: String): String {
         val f = g.getTrackFormat(0)
-        return listOfNotNull(f.label, f.language?.uppercase(), f.codecs?.takeIf { g.type == C.TRACK_TYPE_AUDIO }, f.channelCount.takeIf { it > 0 && g.type == C.TRACK_TYPE_AUDIO }?.let { "$it ch" })
+        return listOfNotNull(f.label, f.language?.uppercase(), f.codecs?.takeIf { g.type == C.TRACK_TYPE_AUDIO }, f.channelCount.takeIf { it > 0 && g.type == C.TRACK_TYPE_AUDIO }?.let { context.getString(R.string.au_video_channels, it) })
             .joinToString(" · ").ifBlank { fallback }
     }
 
@@ -189,9 +189,9 @@ internal fun PlaybackMenu(
                 Text(stringResource(R.string.hc_picture), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 4.dp)) {
                     listOf(
-                        "Fit" to AspectRatioFrameLayout.RESIZE_MODE_FIT,
-                        "Fill" to AspectRatioFrameLayout.RESIZE_MODE_FILL,
-                        "Zoom" to AspectRatioFrameLayout.RESIZE_MODE_ZOOM,
+                        stringResource(R.string.au_video_fit) to AspectRatioFrameLayout.RESIZE_MODE_FIT,
+                        stringResource(R.string.au_video_fill) to AspectRatioFrameLayout.RESIZE_MODE_FILL,
+                        stringResource(R.string.au_video_zoom) to AspectRatioFrameLayout.RESIZE_MODE_ZOOM,
                         stringResource(R.string.vn_fixed_width) to AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH,
                         stringResource(R.string.vn_fixed_height) to AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT,
                     ).forEach { (name, mode) ->
@@ -222,7 +222,7 @@ internal fun PlaybackMenu(
                                     .setOverrideForType(TrackSelectionOverride(g.mediaTrackGroup, 0)).build()
                                 refresh++
                             },
-                            label = { Text(label(g, "Track ${i + 1}")) },
+                            label = { Text(label(g, stringResource(R.string.au_video_track_n, i + 1))) },
                             modifier = Modifier.padding(vertical = 2.dp),
                         )
                     }
@@ -249,7 +249,7 @@ internal fun PlaybackMenu(
                                     .setOverrideForType(TrackSelectionOverride(g.mediaTrackGroup, 0)).build()
                                 refresh++
                             },
-                            label = { Text(label(g, "Subtitle ${i + 1}")) },
+                            label = { Text(label(g, stringResource(R.string.au_video_subtitle_n, i + 1))) },
                             modifier = Modifier.padding(vertical = 2.dp),
                         )
                     }
@@ -257,11 +257,11 @@ internal fun PlaybackMenu(
 
                 Text(stringResource(R.string.vn_subtitle_delay), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 12.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    TextButton(enabled = hasExternalSub, onClick = { onSubDelay(subDelayMs - 500) }) { Text("-0.5 s") }
+                    TextButton(enabled = hasExternalSub, onClick = { onSubDelay(subDelayMs - 500) }) { Text(stringResource(R.string.au_video_seconds_signed, -0.5f)) }
                     TextButton(enabled = hasExternalSub, onClick = { onSubDelay(subDelayMs - 100) }) { Text("-0.1") }
-                    Text("%+.1f s".format(subDelayMs / 1000f), modifier = Modifier.weight(1f))
+                    Text(stringResource(R.string.au_video_seconds_signed, subDelayMs / 1000f), modifier = Modifier.weight(1f))
                     TextButton(enabled = hasExternalSub, onClick = { onSubDelay(subDelayMs + 100) }) { Text("+0.1") }
-                    TextButton(enabled = hasExternalSub, onClick = { onSubDelay(subDelayMs + 500) }) { Text("+0.5 s") }
+                    TextButton(enabled = hasExternalSub, onClick = { onSubDelay(subDelayMs + 500) }) { Text(stringResource(R.string.au_video_seconds_signed, 0.5f)) }
                 }
                 Text(stringResource(R.string.vn_subtitle_delay_help), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
@@ -303,7 +303,7 @@ internal fun PlaybackMenu(
                 Text(stringResource(R.string.hc_sleep_timer), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 8.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 4.dp)) {
                     listOf(0, 15, 30, 60).forEach { m ->
-                        FilterChip(selected = sleepMinutes == m, onClick = { onSleep(m) }, label = { Text(if (m == 0) "Off" else "$m min") })
+                        FilterChip(selected = sleepMinutes == m, onClick = { onSleep(m) }, label = { Text(if (m == 0) stringResource(R.string.hc_off) else stringResource(R.string.au_video_minutes, m)) })
                     }
                 }
             }

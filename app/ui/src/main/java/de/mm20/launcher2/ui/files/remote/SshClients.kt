@@ -34,6 +34,8 @@ internal object SshSupport {
 class SftpRemoteClient(private val connection: RemoteConnection, private val onFingerprint: (String) -> Unit) : RemoteClient {
     private var ssh: SSHClient? = null
     private var sftp: SFTPClient? = null
+    /** The key trusted so far: remembered on the first connect, so a reconnect cannot accept a different one */
+    @Volatile private var pinned: String = connection.fingerprint
 
     @Synchronized
     private fun client(): SFTPClient {
@@ -43,8 +45,8 @@ class SftpRemoteClient(private val connection: RemoteConnection, private val onF
         c.addHostKeyVerifier(object : HostKeyVerifier {
             override fun verify(hostname: String, port: Int, key: PublicKey): Boolean {
                 val fingerprint = SecurityUtils.getFingerprint(key)
-                if (connection.fingerprint.isEmpty()) { onFingerprint(fingerprint); return true }
-                return connection.fingerprint == fingerprint
+                if (pinned.isEmpty()) { pinned = fingerprint; onFingerprint(fingerprint); return true }
+                return pinned == fingerprint
             }
             override fun findExistingAlgorithms(hostname: String, port: Int): List<String> = emptyList()
         })

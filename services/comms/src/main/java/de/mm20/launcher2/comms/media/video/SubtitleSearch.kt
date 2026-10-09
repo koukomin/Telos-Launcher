@@ -75,23 +75,85 @@ internal object Http {
         val c = URL(url).openConnection() as HttpURLConnection
         c.connectTimeout = 8000
         c.readTimeout = 20000
-        c.instanceFollowRedirects = true
+        // redirects are followed by hand in [resolve], so that every hop can be checked
+        c.instanceFollowRedirects = false
         c.setRequestProperty("User-Agent", userAgent)
         c.setRequestProperty("Accept", accept)
         return c
     }
 
-    fun readText(c: HttpURLConnection): String = try {
+    private const val MAX_HOPS = 5
+
+    /** True for loopback, link-local, private and similar addresses */
+    internal fun isPrivateAddress(a: java.net.InetAddress): Boolean {
+        if (a.isLoopbackAddress || a.isLinkLocalAddress || a.isSiteLocalAddress || a.isAnyLocalAddress || a.isMulticastAddress) return true
+        val b = a.address
+        if (b.size == 4) {
+            val x = b[0].toInt() and 0xff
+            val y = b[1].toInt() and 0xff
+            return x == 0 || (x == 100 && y in 64..127)
+        }
+        // unique local fc00::/7
+        return b.size == 16 && (b[0].toInt() and 0xfe) == 0xfc
+    }
+
+    private fun resolvesPrivate(host: String): Boolean =
+        runCatching { java.net.InetAddress.getAllByName(host.trim('[', ']')).any { isPrivateAddress(it) } }.getOrDefault(true)
+
+    /**
+     * Sends the request and follows redirects by hand, at most [MAX_HOPS] times. A hop whose host
+     * resolves to a loopback, link-local or private address is refused, unless the very first URL
+     * already was one (a NAS in the home network). Only GET requests are redirected.
+     */
+    fun resolve(first: HttpURLConnection): HttpURLConnection {
+        var c = first
+        val startedPrivate = resolvesPrivate(first.url.host)
+        var hops = 0
+        while (true) {
+            val code = c.responseCode
+            if (code !in setOf(301, 302, 303, 307, 308) || c.requestMethod != "GET") return c
+            val location = c.getHeaderField("Location") ?: return c
+            if (++hops > MAX_HOPS) {
+                c.disconnect()
+                throw java.io.IOException("Too many redirects")
+            }
+            val target = runCatching { URL(c.url, location) }.getOrNull()
+            val ua = c.getRequestProperty("User-Agent")
+            val accept = c.getRequestProperty("Accept")
+            c.disconnect()
+            if (target == null || target.protocol.lowercase() !in setOf("http", "https")) {
+                throw java.io.IOException("This address is not allowed")
+            }
+            if (!startedPrivate && resolvesPrivate(target.host)) {
+                throw java.io.IOException("This address is not allowed")
+            }
+            // credentials and API keys of the first host are not sent on to another one
+            c = (target.openConnection() as HttpURLConnection).also {
+                it.connectTimeout = 8000
+                it.readTimeout = 20000
+                it.instanceFollowRedirects = false
+                if (ua != null) it.setRequestProperty("User-Agent", ua)
+                if (accept != null) it.setRequestProperty("Accept", accept)
+            }
+        }
+    }
+
+    fun readText(first: HttpURLConnection): String {
+        val c = try { resolve(first) } catch (e: Exception) { first.disconnect(); throw e }
+        return try {
         val code = c.responseCode
         val text = (if (code in 200..299) c.inputStream else c.errorStream)?.bufferedReader()?.use { it.readText() }.orEmpty()
         if (code !in 200..299) error(JSONObject(runCatching { JSONObject(text) }.getOrNull()?.toString() ?: "{}").optString("message", "HTTP $code"))
         text
-    } finally {
-        c.disconnect()
+        } finally {
+            c.disconnect()
+        }
     }
 
     /** At most 6 MB, which is far more than any subtitle */
-    fun readBytes(c: HttpURLConnection): ByteArray = try {
+    fun readBytes(first: HttpURLConnection): ByteArray {
+        val c = try { resolve(first) } catch (e: Exception) { first.disconnect(); throw e }
+        return try {
         val code = c.responseCode
         if (code !in 200..299) error("HTTP $code")
         c.inputStream.use { input ->
@@ -105,8 +167,9 @@ internal object Http {
             }
             out.toByteArray()
         }
-    } finally {
-        c.disconnect()
+        } finally {
+            c.disconnect()
+        }
     }
 
     fun enc(s: String): String = URLEncoder.encode(s, "UTF-8").replace("+", "%20")
@@ -345,7 +408,10 @@ object SubtitleFiles {
     private fun safe(s: String) = s.replace(Regex("[^A-Za-z0-9._-]"), "_").take(60)
 
     /** Downloads (or finds in the cache) the subtitle and returns the UTF-8 file */
-    suspend fun fetch(context: Context, provider: SubtitleProvider, r: SubtitleResult, videoKey: String?): File {
+    suspend fun fetch(context: Context, provider: SubtitleProvider, r: SubtitleResult, videoKey: String?): File =
+        kotlinx.coroutines.withContext(Dispatchers.IO) { fetchBlocking(context, provider, r, videoKey) }
+
+    private suspend fun fetchBlocking(context: Context, provider: SubtitleProvider, r: SubtitleResult, videoKey: String?): File {
         val cached = File(dir(context), "${safe(r.provider)}-${safe(r.id)}.${safe(r.language)}.${safe(r.format.ifBlank { "srt" })}")
         if (cached.exists() && cached.length() > 0) {
             remember(context, videoKey, cached)

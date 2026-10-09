@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.notes
 import android.content.Context
 import android.net.Uri
 import android.provider.DocumentsContract
+import de.mm20.launcher2.comms.remote.SecretBox
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -26,9 +27,28 @@ class NotesSyncSettings(context: Context) {
     var ncUser: String
         get() = prefs.getString("nc_user", "") ?: ""
         set(v) = prefs.edit().putString("nc_user", v).apply()
+    /**
+     * The Nextcloud password is stored encrypted with the Android Keystore ([SecretBox]). A plain value written
+     * by an older version is encrypted on the first read and the plain value is deleted. If the Keystore is not
+     * usable the password is not written to disk at all.
+     */
     var ncPassword: String
-        get() = prefs.getString("nc_pass", "") ?: ""
-        set(v) = prefs.edit().putString("nc_pass", v).apply()
+        get() {
+            val legacy = prefs.getString("nc_pass", null)
+            if (legacy != null) {
+                if (legacy.isNotEmpty()) {
+                    val enc = try { SecretBox.encrypt(legacy) } catch (e: Exception) { null }
+                    if (enc != null) prefs.edit().putString("nc_pass_enc", enc).remove("nc_pass").apply()
+                    else return legacy
+                } else prefs.edit().remove("nc_pass").apply()
+            }
+            val enc = prefs.getString("nc_pass_enc", null).orEmpty()
+            return if (enc.isEmpty()) "" else SecretBox.decrypt(enc)
+        }
+        set(v) {
+            val enc = if (v.isEmpty()) "" else try { SecretBox.encrypt(v) } catch (e: Exception) { return }
+            prefs.edit().remove("nc_pass").putString("nc_pass_enc", enc).apply()
+        }
     var lastSync: Long
         get() = prefs.getLong("last", 0)
         set(v) = prefs.edit().putLong("last", v).apply()
