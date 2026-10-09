@@ -97,7 +97,7 @@ it as a vault.
 - The Phone lock stays open until Android ends the launcher process. There is no timeout.
 - The call check shows a "Confirm call" prompt before a call placed from the Telos keypad, lists or contact page,
   including SIP calls placed from there.
-- The check is not applied to calls started by `ACTION_CALL` links from other apps, to auto redial or to the
+- Calls from other apps' `ACTION_CALL` links only open the keypad, so you press call yourself and the check applies. The check is not applied to auto redial or to the
   callback buttons of the missed-call popup.
 
 ## Secure call screen
@@ -152,7 +152,7 @@ snapshot, unlike the launcher-wide settings backup, which leaves out passwords, 
 - Blocked calls are invisible; there is no "blocked calls" list.
 - The Telos block list needs exact number matches.
 - There is no PIN recovery and no automatic re-lock.
-- The biometric call check can be bypassed by `ACTION_CALL` links and by the missed-call popup.
+- The biometric call check can be bypassed by the missed-call popup.
 - The backup does not move secrets between phones.
 
 ## Troubleshooting

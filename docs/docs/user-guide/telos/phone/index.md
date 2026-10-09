@@ -24,7 +24,7 @@ This is the feature reference of Telos Phone. It is split into pages:
 | --- | --- |
 | The Telos Phone icon in the app grid or search | Opens the Recents tab |
 | A `tel:` link or a "dial" request from another app | Opens the keypad with the number filled in, nothing is dialed |
-| An `ACTION_CALL` request for a `tel:` number | Places the call at once (needs the default dialer role and the Phone permission) |
+| An `ACTION_CALL` request for a `tel:` number | Opens the keypad with the number filled in. You press the call button yourself, so no other app can start a call for you |
 | The Recents or Direct call home screen widget | Opens Recents or the keypad |
 | The overflow menu of a Messages screen | Switches between Phone and [Messages](../messages/) |
 

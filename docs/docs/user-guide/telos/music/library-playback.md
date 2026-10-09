@@ -45,7 +45,7 @@ Tap a track. The **list you tapped in becomes the play queue**, and playback sta
 | Inside an album | The album's tracks in track order |
 | Inside an artist | The artist's tracks by title |
 
-There are no user-defined playlists and no "play next" or "add to queue". To change the queue, start again from a
+The queue, the position, shuffle and repeat are saved, so playback comes back paused where you left it after the player stops. There are no user-defined playlists and no "play next" or "add to queue". To change the queue, start again from a
 different list.
 
 ## The mini player
