@@ -122,7 +122,7 @@ Compress to zip and extract are described in [Archives and vaults](./archives-va
 | Image | [Telos Photos](../photos/viewer-editor). The viewer pages through all pictures of the folder |
 | Video | [Telos Video](../video/library-player). The folder's videos become a playlist starting at the one you tapped. The player runs in its own process when that Video option is on |
 | PDF, text, code, RTF | The [document viewer](../photos/documents) of Telos Photos |
-| `docx xlsx pptx odt ods epub` | The archive dialog first (these files are zip containers). Choose **Open with...** and pick Telos Photos to read them as documents |
+| `docx xlsx pptx odt ods epub` | The archive dialog first (these files are zip containers). Choose **Open with...** and pick Telos Photos to read and edit them as documents |
 | Archive (zip, jar, apk, 7z, tar family) | A dialog: **Browse**, **Extract here** or **Open with...** |
 | Cryptomator vault folder | An **Unlock vault** dialog |
 | Anything else | Android's chooser |
