@@ -134,8 +134,7 @@ Only the first category of an app is kept on import. Installed state is taken fr
 
 ## Privacy and permissions
 
-- Requests go only to the sources of the apps you track, and to GitHub with your token when you set one (kept in the
-  private Store preferences).
+- Requests go only to the sources of the apps you track, and to GitHub with your token when you set one (stored encrypted with an Android Keystore key; a token saved by an older version is encrypted automatically).
 - The list, options and cache stay on the phone. Per-app and global options are in private preferences, not in the
   database.
 

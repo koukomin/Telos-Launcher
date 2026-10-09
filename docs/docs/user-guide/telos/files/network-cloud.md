@@ -90,7 +90,7 @@ instead of your main password, especially with two-factor authentication.
 ### FTP / FTPS
 
 - Passive mode, binary transfers, UTF-8 names. Anonymous login with the user "anonymous" when the user is empty.
-- FTPS uses explicit TLS and trusts the certificates Android trusts, so a self-signed certificate is rejected.
+- FTPS uses explicit TLS and trusts the certificates Android trusts, so a self-signed certificate is rejected. The certificate must also match the host name you typed; if it does not, the connection fails with a message. For a server you trust, the FTPS switch **Accept a certificate for another host name** (off by default) skips only the host name check.
 - Prefer SFTP or FTPS over plain FTP when you have a choice.
 
 ## Cloud app on this phone (no client ID)
