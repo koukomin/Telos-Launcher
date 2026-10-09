@@ -1009,17 +1009,21 @@ fun ColumnScope.ConfigureCalendarWidget(
                 .align(Alignment.CenterHorizontally),
             contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
             onClick = {
-                CustomTabsIntent.Builder()
-                    .setDefaultColorSchemeParams(
-                        CustomTabColorSchemeParams.Builder()
-                            .setToolbarColor(colorScheme.primaryContainer.toArgb())
-                            .setSecondaryToolbarColor(colorScheme.secondaryContainer.toArgb())
-                            .build()
-                    )
-                    .build().launchUrl(
-                        context,
-                        Uri.parse("https://koukomin.github.io/Telos-Launcher/docs/user-guide/widgets/calendar-widget#my-calendars-dont-show-up")
-                    )
+                try {
+                    CustomTabsIntent.Builder()
+                        .setDefaultColorSchemeParams(
+                            CustomTabColorSchemeParams.Builder()
+                                .setToolbarColor(colorScheme.primaryContainer.toArgb())
+                                .setSecondaryToolbarColor(colorScheme.secondaryContainer.toArgb())
+                                .build()
+                        )
+                        .build().launchUrl(
+                            context,
+                            Uri.parse("https://koukomin.github.io/Telos-Launcher/docs/user-guide/widgets/calendar-widget#my-calendars-dont-show-up")
+                        )
+                } catch (e: android.content.ActivityNotFoundException) {
+                    // No browser installed
+                }
             }) {
             Icon(
                 modifier = Modifier

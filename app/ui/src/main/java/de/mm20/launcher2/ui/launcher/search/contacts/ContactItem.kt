@@ -155,13 +155,13 @@ fun ContactItem(
                                         viewModel.reportUsage(contact)
                                         context.tryStartActivity(
                                             Intent(Intent.ACTION_SENDTO).apply {
-                                                data = Uri.parse("smsto:${it.number}")
+                                                data = Uri.fromParts("smsto", it.number, null)
                                             }
                                         )
                                     }) {
                                         Icon(
                                             painterResource(R.drawable.sms_24px),
-                                            null,
+                                            stringResource(R.string.search_action_message),
                                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                         )
                                     }
@@ -177,7 +177,7 @@ fun ContactItem(
                                                 Intent.ACTION_CALL
                                             else
                                                 Intent.ACTION_DIAL
-                                        ).setData("tel:${it.number}".toUri())
+                                        ).setData(Uri.fromParts("tel", it.number, null))
                                     )
                                 },
                                 copyText = { it.number },
@@ -230,13 +230,13 @@ fun ContactItem(
                                             context.tryStartActivity(
                                                 Intent(Intent.ACTION_VIEW).apply {
                                                     data =
-                                                        Uri.parse("google.navigation:q=${it.address}")
+                                                        Uri.parse("google.navigation:q=${Uri.encode(it.address)}")
                                                 }
                                             )
                                         }) {
                                             Icon(
                                                 painterResource(R.drawable.directions_24px),
-                                                null,
+                                                stringResource(R.string.menu_navigation),
                                                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                             )
                                         }
@@ -253,7 +253,7 @@ fun ContactItem(
                                     viewModel.reportUsage(contact)
                                     context.tryStartActivity(
                                         Intent(Intent.ACTION_VIEW).apply {
-                                            data = Uri.parse("geo:0,0?q=${it.address}")
+                                            data = Uri.parse("geo:0,0?q=${Uri.encode(it.address)}")
                                         }
                                     )
                                 },

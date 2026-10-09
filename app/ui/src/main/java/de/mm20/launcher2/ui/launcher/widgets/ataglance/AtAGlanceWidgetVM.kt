@@ -16,11 +16,14 @@ import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.weather.WeatherRepository
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -52,12 +55,10 @@ class AtAGlanceWidgetVM : ViewModel(), KoinComponent {
             current?.let { GlanceContent.Weather(it) }
         }
 
-    private val calendarFlow: Flow<GlanceContent.Calendar?> = flow {
-        if (!permissionsManager.checkPermissionOnce(PermissionGroup.Calendar)) {
-            emit(null)
-            return@flow
-        }
-        emitAll(
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val calendarFlow: Flow<GlanceContent.Calendar?> =
+        permissionsManager.hasPermission(PermissionGroup.Calendar).flatMapLatest { granted ->
+            if (!granted) return@flatMapLatest flowOf(null)
             calendarRepository.findMany(
                 from = System.currentTimeMillis() - 60 * 60 * 1000L,
                 to = System.currentTimeMillis() + 24 * 60 * 60 * 1000L,
@@ -68,12 +69,21 @@ class AtAGlanceWidgetVM : ViewModel(), KoinComponent {
                     .minByOrNull { it.startTime ?: it.endTime }
                     ?.let { GlanceContent.Calendar(it) }
             }
-        )
+        }
+
+    /** Re-evaluates the scores once a minute, so an event moves up as its start time approaches. */
+    private val ticker: Flow<Unit> = flow {
+        while (true) {
+            emit(Unit)
+            delay(60_000L)
+        }
     }
 
     private val batteryFlow: Flow<GlanceContent.Battery> = callbackFlow {
-        val batteryManager = context.getSystemService(BatteryManager::class.java)
-            ?: return@callbackFlow
+        val batteryManager = context.getSystemService(BatteryManager::class.java) ?: run {
+            close()
+            return@callbackFlow
+        }
 
         fun currentInfo(intent: Intent?) = GlanceContent.Battery(
             level = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY),
@@ -99,7 +109,7 @@ class AtAGlanceWidgetVM : ViewModel(), KoinComponent {
         }
     }
 
-    val content = combine(weatherFlow, calendarFlow, batteryFlow) { weather, calendar, battery ->
+    val content = combine(weatherFlow, calendarFlow, batteryFlow, ticker) { weather, calendar, battery, _ ->
         val candidates = listOfNotNull(
             weather?.let { it to WEATHER_SCORE },
             batteryScore(battery)?.let { battery to it },

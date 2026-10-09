@@ -55,6 +55,11 @@ fun FolderGridPopup(
     val folderBackgroundColor by uiSettings.folderBackgroundColor.collectAsState(null)
     val folderCoverEnabled by uiSettings.folderCoverEnabled.collectAsState(true)
 
+    // The popup keeps showing the folder instance it was opened with, so edits must be applied
+    // on top of the latest saved version instead of that stale instance (otherwise a second
+    // edit would silently revert the first one).
+    var latestFolder by remember(folder.key) { mutableStateOf(folder as? FolderImpl) }
+
     var showPicker by remember { mutableStateOf(false) }
     var showRenameDialog by remember { mutableStateOf(false) }
 
@@ -152,14 +157,16 @@ fun FolderGridPopup(
             de.mm20.launcher2.ui.common.SearchablePicker(
                 value = null,
                 onValueChanged = { searchable ->
-                    if (searchable != null) {
-                        val currentKeys = folder.itemKeys.toMutableList()
+                    val base = latestFolder
+                    if (searchable != null && base != null) {
+                        val currentKeys = base.itemKeys.toMutableList()
                         if (currentKeys.contains(searchable.key)) {
                             currentKeys.remove(searchable.key)
                         } else {
                             currentKeys.add(searchable.key)
                         }
-                        val updated = (folder as FolderImpl).copy(itemKeys = currentKeys)
+                        val updated = base.copy(itemKeys = currentKeys)
+                        latestFolder = updated
                         searchableRepository.upsert(updated)
                     }
                 },
@@ -188,7 +195,11 @@ fun FolderGridPopup(
                             Text(stringResource(android.R.string.cancel))
                         }
                         TextButton(onClick = {
-                            searchableRepository.upsert((folder as FolderImpl).copy(labelOverride = newName))
+                            latestFolder?.let {
+                                val updated = it.copy(labelOverride = newName.trim().ifBlank { null })
+                                latestFolder = updated
+                                searchableRepository.upsert(updated)
+                            }
                             showRenameDialog = false
                         }) {
                             Text(stringResource(android.R.string.ok))

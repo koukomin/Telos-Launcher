@@ -65,7 +65,9 @@ fun WidgetColumn(
     )
     val snackbarHostState = LocalSnackbarHostState.current
 
-    var stackTarget by rememberSaveable { mutableStateOf<Widget?>(null) }
+    // Widgets are not Parcelable/Serializable, so only the id of the target survives a configuration
+    // change; the widget itself is looked up again from the current slots.
+    var stackTargetId by rememberSaveable { mutableStateOf<String?>(null) }
 
 
     Column(
@@ -157,7 +159,7 @@ fun WidgetColumn(
                             onWidgetUpdate = {
                                 viewModel.updateWidget(it)
                             },
-                            onAddToStack = { stackTarget = widget },
+                            onAddToStack = { stackTargetId = widget.id.toString() },
                             modifier = itemModifier,
                             draggableState = itemDraggableState,
                             onDragStopped = itemOnDragStopped,
@@ -173,7 +175,7 @@ fun WidgetColumn(
                                 viewModel.updateWidget(it)
                             },
                             onWidgetRemove = onWidgetRemove,
-                            onAddToStack = { stackTarget = it },
+                            onAddToStack = { stackTargetId = it.id.toString() },
                             onRemoveFromStack = { viewModel.removeFromStack(it) },
                             modifier = itemModifier,
                             draggableState = itemDraggableState,
@@ -210,14 +212,17 @@ fun WidgetColumn(
     }
 
     WidgetPickerSheet(
-        expanded = stackTarget != null,
-        onDismiss = { stackTarget = null },
-        onWidgetSelected = {
-            val target = stackTarget
+        expanded = stackTargetId != null,
+        onDismiss = { stackTargetId = null },
+        onWidgetSelected = { picked ->
+            val targetId = stackTargetId
+            val target = if (targetId != null) {
+                viewModel.widgets.value.find { it.id.toString() == targetId }
+            } else null
             if (target != null) {
-                viewModel.addToStack(target, it)
+                viewModel.addToStack(target, picked)
             }
-            stackTarget = null
+            stackTargetId = null
         },
     )
 }

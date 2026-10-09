@@ -319,7 +319,7 @@ fun GridItem(
         
         Box(
             modifier = if (highlight) {
-                Modifier.background(highlightBg, iconShape)
+                semanticsModifier.background(highlightBg, iconShape)
             } else semanticsModifier,
         ) {
             ShapedLauncherIcon(

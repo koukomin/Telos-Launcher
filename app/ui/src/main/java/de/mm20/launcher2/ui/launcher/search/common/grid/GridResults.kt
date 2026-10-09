@@ -25,6 +25,8 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
     columns: Int,
     reverse: Boolean = false,
 ) {
+    @Suppress("NAME_SHADOWING")
+    val columns = columns.coerceAtLeast(1)
     if (before != null) {
         item(
             key = "$key-before",

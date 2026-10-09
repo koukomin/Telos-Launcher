@@ -109,7 +109,10 @@ private fun stateFor(capabilities: NetworkCapabilities?): NetworkWidgetState {
 }
 
 private fun networkStateFlow(context: Context): Flow<NetworkWidgetState> = callbackFlow {
-    val connectivityManager: ConnectivityManager = context.getSystemService() ?: return@callbackFlow
+    val connectivityManager: ConnectivityManager = context.getSystemService() ?: run {
+        close()
+        return@callbackFlow
+    }
 
     trySendBlocking(
         stateFor(connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork))

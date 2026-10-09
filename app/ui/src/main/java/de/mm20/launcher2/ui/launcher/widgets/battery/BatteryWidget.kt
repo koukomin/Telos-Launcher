@@ -110,7 +110,10 @@ private data class BatteryWidgetInfo(
 )
 
 private fun batteryInfoFlow(context: Context): Flow<BatteryWidgetInfo> = callbackFlow {
-    val batteryManager: BatteryManager = context.getSystemService() ?: return@callbackFlow
+    val batteryManager: BatteryManager = context.getSystemService() ?: run {
+        close()
+        return@callbackFlow
+    }
 
     fun currentInfo(intent: Intent?) = BatteryWidgetInfo(
         level = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY),

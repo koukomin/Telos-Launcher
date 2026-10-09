@@ -277,22 +277,24 @@ fun MapTiles(
                             )
                         }
                     }
+                }
 
-                    if (osmAttribution != null) {
-                        Text(
-                            text = osmAttribution,
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            modifier = Modifier
-                                .align(Alignment.BottomEnd)
-                                .background(
-                                    MaterialTheme.colorScheme.surfaceContainerHigh.copy(
-                                        alpha = .5f
-                                    )
+                // Map data attribution is required regardless of whether the user's own
+                // position is known, so it must not depend on userLocation.
+                if (osmAttribution != null) {
+                    Text(
+                        text = osmAttribution,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .background(
+                                MaterialTheme.colorScheme.surfaceContainerHigh.copy(
+                                    alpha = .5f
                                 )
-                                .padding(top = 2.dp, bottom = 2.dp, start = 4.dp, end = 4.dp)
-                        )
-                    }
+                            )
+                            .padding(top = 2.dp, bottom = 2.dp, start = 4.dp, end = 4.dp)
+                    )
                 }
             }
         }

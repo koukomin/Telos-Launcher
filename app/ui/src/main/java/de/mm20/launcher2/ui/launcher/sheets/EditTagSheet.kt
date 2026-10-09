@@ -25,8 +25,10 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -61,6 +63,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -252,9 +256,10 @@ fun CreateNewTagPage(viewModel: EditTagSheetVM) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(
                 onDone = {
-                    viewModel.onClickContinue()
+                    if (viewModel.tagName.isNotBlank()) viewModel.onClickContinue()
                 }
             ),
             isError = viewModel.tagNameExists,
@@ -268,7 +273,7 @@ fun CreateNewTagPage(viewModel: EditTagSheetVM) {
 
 @Composable
 fun PickItems(viewModel: EditTagSheetVM) {
-    val columns = LocalGridSettings.current.columnCount - 1
+    val columns = (LocalGridSettings.current.columnCount - 1).coerceAtLeast(1)
 
     if (viewModel.wasOnLastPage) {
         BackHandler {
@@ -324,18 +329,20 @@ fun ListItem(
     onTagChanged: (Boolean) -> Unit
 ) {
     Column(
-        modifier = Modifier.padding(8.dp),
+        modifier = Modifier
+            .toggleable(
+                value = item.isTagged,
+                role = Role.Checkbox,
+                onValueChange = onTagChanged,
+            )
+            .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box {
             ShapedLauncherIcon(
                 icon = { icon },
                 size = 48.dp,
-                modifier = Modifier
-                    .padding(4.dp)
-                    .clickable {
-                        onTagChanged(!item.isTagged)
-                    },
+                modifier = Modifier.padding(4.dp),
             )
             if (item.isTagged) {
                 Surface(
@@ -344,9 +351,6 @@ fun ListItem(
                         .align(Alignment.BottomEnd),
                     color = MaterialTheme.colorScheme.primary,
                     shape = CircleShape,
-                    onClick = {
-                        onTagChanged(false)
-                    }
                 ) {
                     Icon(
                         painterResource(R.drawable.check_20px),
@@ -388,7 +392,10 @@ fun CustomizeTag(viewModel: EditTagSheetVM) {
                 modifier = Modifier
                     .padding(end = 16.dp)
                     .clip(CircleShape)
-                    .clickable {
+                    .clickable(
+                        onClickLabel = stringResource(R.string.au3_launcher3_change_icon),
+                        role = Role.Button,
+                    ) {
                         viewModel.openIconPicker()
                     }
                     .size(72.dp)

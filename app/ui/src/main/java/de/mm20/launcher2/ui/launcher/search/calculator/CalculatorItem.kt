@@ -52,7 +52,11 @@ fun CalculatorItem(
                     interactionSource = remember { MutableInteractionSource() }
                 ),
         )
-        if (calculator.term.matches(Regex("(0x|0b)?[0-9]+"))) {
+        // Base conversions are only meaningful (and only computed correctly) for integer literals
+        // that fit into an Int
+        if (calculator.term.matches(Regex("0x[0-9a-fA-F]+|0b[01]+|[0-9]+")) &&
+            calculator.solution in 0.0..Int.MAX_VALUE.toDouble()
+        ) {
             Text(
                 calculator.formattedBinaryString,
                 style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),

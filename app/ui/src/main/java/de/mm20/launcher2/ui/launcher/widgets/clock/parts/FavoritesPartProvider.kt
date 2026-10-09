@@ -234,6 +234,10 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                                                         onLongClick = {
                                                             if (!desktopLocked && (dockItem == null || (dockItem is DockItem.Searchable && dockItem.key.isEmpty()))) {
                                                                 showSlotMenuForSlot = pageIndex to itemIndex
+                                                            } else if (!desktopLocked && dockItem is DockItem.Widget) {
+                                                                // Fallback for widgets whose provider is gone (the widget host
+                                                                // handles the long press itself otherwise)
+                                                                showWidgetActionsForSlot = pageIndex to itemIndex
                                                             }
                                                         }
                                                     ),
@@ -251,9 +255,9 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                                                                     searchableRepository.getByKeys(listOf(dockItem.key))
                                                                 }.collectAsState(emptyList())
                                                                 val searchable = searchables.firstOrNull()
-                                                                searchable?.let {
+                                                                if (searchable != null) {
                                                                     GridItem(
-                                                                        item = it,
+                                                                        item = searchable,
                                                                         showLabels = false,
                                                                         enableShutterGesture = true,
                                                                         inDock = true,
@@ -272,7 +276,20 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                                                                             }
                                                                         }
                                                                     )
-                                                                }
+                                                                } else Box(
+                                                                    // Item not (yet) resolvable, e.g. an uninstalled app:
+                                                                    // keep the slot long-pressable so it can be replaced.
+                                                                    modifier = Modifier
+                                                                        .fillMaxSize()
+                                                                        .combinedClickable(
+                                                                            onClick = {},
+                                                                            onLongClick = {
+                                                                                if (!desktopLocked) {
+                                                                                    showSlotMenuForSlot = pageIndex to itemIndex
+                                                                                }
+                                                                            }
+                                                                        )
+                                                                )
                                                             } else {
                                                                 // Placeholder icon
                                                                 Icon(

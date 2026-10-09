@@ -131,7 +131,7 @@ fun FileItem(
                                 Text(
                                     text = stringResource(
                                         R.string.file_meta_size,
-                                        formatFileSize(file.size)
+                                        android.text.format.Formatter.formatFileSize(context, file.size)
                                     ),
                                     style = MaterialTheme.typography.bodySmall,
                                 )
@@ -338,16 +338,6 @@ fun FileItemGridPopup(
             showDetails = true,
             onBack = onDismiss
         )
-    }
-}
-
-private fun formatFileSize(size: Long): String {
-    return when {
-        size < 1000L -> "$size Bytes"
-        size < 1000000L -> "${DecimalFormat("#,##0.#").format(size / 1000.0)} kB"
-        size < 1000000000L -> "${DecimalFormat("#,##0.#").format(size / 1000000.0)} MB"
-        size < 1000000000000L -> "${DecimalFormat("#,##0.#").format(size / 1000000000.0)} GB"
-        else -> "${DecimalFormat("#,##0.#").format(size / 1000000000000.0)} TB"
     }
 }
 

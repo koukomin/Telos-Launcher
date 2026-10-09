@@ -29,12 +29,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -90,12 +93,15 @@ fun CustomizeSearchableSheet(
                         icon = BadgeIcon(R.drawable.edit_20px)
                     )
                 },
-                modifier = Modifier.clickable {
+                modifier = Modifier.clickable(
+                    onClickLabel = stringResource(R.string.au3_launcher3_change_icon),
+                    role = Role.Button,
+                ) {
                     viewModel.openIconPicker()
                 }
             )
 
-            var customLabelValue by remember {
+            var customLabelValue by rememberSaveable {
                 mutableStateOf(searchable.labelOverride ?: "")
             }
             OutlinedTextField(
@@ -120,10 +126,14 @@ fun CustomizeSearchableSheet(
 
             var tags by remember { mutableStateOf(emptyList<String>()) }
             var visibility by remember { mutableStateOf(VisibilityLevel.Default) }
+            // Tags and visibility are written back when the sheet closes. Until they have been
+            // loaded they still hold placeholder values, which must never overwrite the stored ones.
+            var attributesLoaded by remember { mutableStateOf(false) }
 
             LaunchedEffect(searchable.key) {
                 visibility = viewModel.getVisibility().first()
                 tags = viewModel.getTags().first()
+                attributesLoaded = true
             }
 
             OutlinedTagsInputField(
@@ -268,11 +278,17 @@ fun CustomizeSearchableSheet(
                 }
             }
 
+            val currentLabel by rememberUpdatedState(customLabelValue)
+            val currentTags by rememberUpdatedState(tags)
+            val currentVisibility by rememberUpdatedState(visibility)
+            val currentLoaded by rememberUpdatedState(attributesLoaded)
             DisposableEffect(searchable.key) {
                 onDispose {
-                    viewModel.setCustomLabel(customLabelValue)
-                    viewModel.setTags(tags)
-                    viewModel.setVisibility(visibility)
+                    viewModel.setCustomLabel(currentLabel)
+                    if (currentLoaded) {
+                        viewModel.setTags(currentTags)
+                        viewModel.setVisibility(currentVisibility)
+                    }
                 }
             }
         }
