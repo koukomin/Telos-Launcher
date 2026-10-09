@@ -22,7 +22,29 @@ see the [Messages overview](./).
 | No SEND_SMS permission | The reply field fails; the quick-reply and scheduled-SMS paths open your messaging app with the text prefilled instead |
 | Empty text and no attachment | The **Send** button stays disabled |
 
-Telos does not choose a SIM for text messages; Android's default SMS SIM is used. Delivery reports are not shown.
+Delivery reports are not shown.
+
+### Choosing the SIM (dual SIM)
+
+When two or more SIMs are active **and** the Phone permission (`READ_PHONE_STATE`) is granted, the thread composer
+and the Scheduled SMS screen show **Send with** chips, one per SIM. The SIM you used last is remembered per
+conversation and preselected next time; the chosen subscription id is stored with the message (also for scheduled
+messages). Without that permission, or with a single active SIM, no chooser is shown and Android's default SMS SIM is
+used.
+
+## Blocking numbers
+
+In the header of a conversation with a single recipient, **Block number** adds the number to the Telos block list;
+**Unblock** takes it off again. Group conversations have no such button.
+
+| Topic | Behavior |
+| --- | --- |
+| Shared list | It is the same block list that [call blocking](../phone/privacy-screening#call-screening) uses: a number blocked here is also blocked for calls, and the other way round |
+| Blocked senders | Their SMS and MMS get **no notification** and are not shown in the conversations. They are kept in **Blocked messages** instead (button on the conversation list while there are some) |
+| Blocked messages screen | Lists the kept messages and the **Blocked numbers**, where you can unblock a number |
+| Capacity | At most 500 messages are kept; the oldest are dropped first. MMS attachments are kept in private app storage |
+| Unblocking | When Telos is the default SMS app, the kept messages of that number are put back into the conversation |
+| Limit | Not the default SMS app: the system messaging app still stores and notifies about messages from that number. Telos cannot prevent that |
 
 ## Receiving
 
@@ -128,7 +150,7 @@ A message from a **hidden contact** is announced as "New message" without the se
 ## Limitations
 
 - <Badge type="warning" text="experimental" /> MMS is untested across carriers.
-- No delivery reports, no SIM choice, no draft saving.
+- No delivery reports and no draft saving. The SIM chooser needs two active SIMs and the Phone permission.
 - Non-picture attachments cannot be added from the app.
 - Videos over about 2.4 MB are dropped from a message.
 - No search, delete or archive.

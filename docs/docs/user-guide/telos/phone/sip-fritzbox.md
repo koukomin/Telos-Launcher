@@ -66,10 +66,15 @@ name or address, otherwise registration fails with "The SIP server address is no
 - Server transports accepted: UDP, TCP, TLS, WebSocket.
 - The password is stored encrypted with a Keystore key.
 
-::: danger TLS certificates are not verified
-The engine is configured with `sip_verify_server no`. When you use TLS, the server's certificate is **not
-checked**, so an attacker on your network could impersonate your server. Use SIP only on networks you trust, for
-example your own home network, until this changes.
+::: warning Verify the server certificate
+The account form has a switch **Verify the server certificate**. It is **on** for new accounts: with TLS, the
+server's certificate is checked against the Android system certificates. Accounts saved before this switch existed
+keep it **off**, as before, until you edit the account. A FRITZ!Box usually has its own self-signed certificate, so
+it normally needs the switch **off**. With it off, the certificate is **not checked** and an attacker on your
+network could impersonate your server, so use that only on networks you trust, for example your home network.
+
+If registration fails in a way that looks like a TLS or certificate problem while the switch is on, Telos shows a
+translated message that names the switch.
 :::
 
 ### Limitations

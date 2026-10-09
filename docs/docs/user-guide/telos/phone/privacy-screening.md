@@ -24,19 +24,26 @@ the first one that matches blocks the call.
 | Hidden numbers | Block hidden numbers | Private, restricted or unknown caller ID (an empty number) |
 | Offline spam list | Offline spam list | Numbers on the Telos block list |
 | Unknown callers | Block unknown callers | Numbers that are not in your Android contacts |
-| International | Block international | Numbers starting with `+` or `00`, except emergency numbers |
+| International | Block international | Numbers whose country calling code differs from your **Home country**, except emergency numbers. Numbers without `+` or `00` count as domestic |
 
 ::: danger Side effects
 Blocking unknown or international callers also blocks legitimate calls such as a courier, a doctor's office or a
 call from abroad. A number from your own contacts is never an "unknown caller", but it can still match the
 international rule.
+
+**Home country** (Phone settings > Privacy & Spam, shown while **Block international** is on) decides what "international" means. The default is **Automatic**: the
+SIM country, then the network country, then the country of the app language. Pick a country in the list to fix it. A
+number written with `+` or `00` is international only when its country calling code differs from the one of the home
+country (so `+49 30 123` is domestic with Germany as home country, and countries that share a code such as the US and
+Canada count as one). Numbers without `+` or `00` are always domestic. If no home country can be found, nothing is
+called international. Emergency numbers are never blocked.
 :::
 
 ### The two block lists
 
 | List | Used by | How to add a number | How to manage |
 | --- | --- | --- | --- |
-| **Telos block list** | The "Offline spam list" rule | **Block number** in a contact's long-press sheet or on the contact page | Contact page: **Unblock number**. The list is part of the encrypted backup |
+| **Telos block list** | The "Offline spam list" rule | **Block number** in a contact's long-press sheet or on the contact page | Contact page: **Unblock number**. The list is part of the encrypted backup. It is shared with [Telos Messages](../messages/sms-mms#blocking-numbers), where a blocked sender's SMS and MMS are silenced and kept |
 | **Android's blocked numbers** | The system, before and independent of Telos | Android's own screens | **Call Options > Blocked Numbers** opens the Android screen |
 
 The Telos list is stored in an encrypted database (SQLCipher, key wrapped by the Android Keystore). The match is
@@ -93,6 +100,11 @@ it as a vault.
 | Lock Phone app | Privacy | off | Phone shows "Phone is locked" with an **Unlock** button. You unlock with biometrics (strong) or the device PIN, pattern or password |
 | Biometric before placing a call | Privacy | Off | **Off**, **Every call**, or **Listed contacts only** |
 | Require biometric to call | Contact page | | Adds one number to the list used by "Listed contacts only" |
+
+The fingerprint, face or device PIN, pattern or password prompt for calls works on Android 9 and newer (on Android 9 and
+10 through the device credential option of the system prompt). If the prompt cannot be shown, the call is **not
+placed** and a message (toast) says that the call could not be confirmed.
+
 
 - The Phone lock stays open until Android ends the launcher process. There is no timeout.
 - The call check shows a "Confirm call" prompt before a call placed from the Telos keypad, lists or contact page,

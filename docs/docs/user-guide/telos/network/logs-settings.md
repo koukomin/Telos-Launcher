@@ -4,7 +4,7 @@
 
 Three tabs: **Connections**, **DNS** and **Apps** (totals per app). The first two list entries newest first: **connections** (time, app, protocol, address and port, the domain if known, allowed or blocked and why, the network, the tunnel, bytes
 and duration) and **DNS queries** (time, app, name, record type, answer, server, delay, cached, blocked and by which list). You can search, filter by app and
-by blocked or allowed, clear them (all, or the entries of one app) and **Export as CSV**. Entries offer shortcuts to allow or block the domain or address for one app or all apps, or to allow the app for 15 minutes.
+by blocked or allowed, clear them (all, or the entries of one app; both ask for confirmation first) and **Export as CSV**. Entries offer shortcuts to allow or block the domain or address for one app or all apps, or to allow the app for 15 minutes.
 
 Logs stay on the phone and are limited by the number of entries (1000, 5000, 20000 or 100000; default 5000) and the number of days (1, 3, 7, 30, 90 or until the entry limit; default 7). You can switch the logging of connections and of
 DNS queries off.

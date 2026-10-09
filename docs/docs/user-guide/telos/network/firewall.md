@@ -22,7 +22,7 @@ when the app is in the **background** (needs usage access, see below), or with t
 firewall** (skips everything, including blocklists and IP and domain rules; DNS is still answered by Telos) and **Exclude from the VPN**
 (the app does not use the VPN at all; applies after the VPN restarted).
 
-The app list can be searched and filtered (all, user apps, system apps, with rules). *Actions for the apps shown* blocks or allows all connections, blocks Wi-Fi or mobile data, or removes the rules of all apps shown. **Allow temporarily** lets an app through the app and universal rules for 15 minutes, 1 hour or 8 hours (**End now** cancels it).
+The app list can be searched and filtered (all, user apps, system apps, with rules). *Actions for the apps shown* blocks or allows all connections, blocks Wi-Fi or mobile data, or removes the rules of all apps shown (resets them to the defaults); the last one asks for confirmation first. **Allow temporarily** lets an app through the app and universal rules for 15 minutes, 1 hour or 8 hours (**End now** cancels it).
 
 ::: info Background rules and usage access
 Android does not tell a VPN which app is in the foreground. Telos reads it from the usage events, which needs the *usage access* permission (the firewall screen has a **Grant access** button). Without it, rules for the background never block. An app counts as background shortly after it left the screen.
