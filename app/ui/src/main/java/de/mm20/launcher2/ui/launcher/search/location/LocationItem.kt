@@ -495,7 +495,7 @@ fun LocationItem(
                                 }
                             )
                         }
-                        if (location.phoneNumber != null) {
+                        if (!location.phoneNumber.isNullOrBlank()) {
                             AssistChip(
                                 modifier = Modifier.padding(end = 12.dp),
                                 onClick = {
@@ -516,7 +516,7 @@ fun LocationItem(
                             )
                         }
 
-                        if (location.websiteUrl != null) {
+                        if (!location.websiteUrl.isNullOrBlank()) {
                             AssistChip(
                                 modifier = Modifier.padding(end = 12.dp),
                                 onClick = {
@@ -1121,8 +1121,8 @@ fun LineFilterChip(
         avatar = {
             Box(
                 modifier = Modifier
-                    .background(color.atTone(if (dark) 80 else 40))
                     .clip(CircleShape)
+                    .background(color.atTone(if (dark) 80 else 40))
                     .requiredSize(
                         InputChipDefaults.AvatarSize * scale
                     )
@@ -1269,7 +1269,6 @@ fun DepartureRow(
                         text = "+$delayMinutes",
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.error,
-                        fontSize = TextUnit(2f, TextUnitType.Em),
                     )
                 }
             }

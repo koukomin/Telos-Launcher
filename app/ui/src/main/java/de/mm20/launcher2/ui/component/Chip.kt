@@ -84,7 +84,7 @@ fun Chip(
                     Icon(
                         modifier = Modifier.size(20.dp),
                         imageVector = rightIcon,
-                        contentDescription = null
+                        contentDescription = androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.menu_remove)
                     )
                 }
             } else {

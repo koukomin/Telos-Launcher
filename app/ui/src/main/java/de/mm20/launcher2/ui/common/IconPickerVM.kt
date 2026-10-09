@@ -43,12 +43,21 @@ class IconPickerVM(
             isSearchingIcons.value = false
             return
         }
+        // Shown as busy during the debounce too, so the UI never flashes "no results"
+        isSearchingIcons.value = true
         withContext(coroutineContext) {
             debounceSearchJob = launch {
                 delay(500)
                 isSearchingIcons.value = true
                 iconSearchResults.value = emptyList()
-                iconSearchResults.value = iconService.searchCustomIcons(query, iconPack)
+                try {
+                    iconSearchResults.value = iconService.searchCustomIcons(query, iconPack)
+                } catch (e: kotlinx.coroutines.CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    // A failing icon pack must not crash the picker
+                    iconSearchResults.value = emptyList()
+                }
                 isSearchingIcons.value = false
             }
         }

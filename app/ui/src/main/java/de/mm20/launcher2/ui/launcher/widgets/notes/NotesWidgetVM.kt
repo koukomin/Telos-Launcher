@@ -97,6 +97,7 @@ class NotesWidgetVM(
                     } else {
                         noteText.value = TextFieldValue(widget.config.storedText)
                     }
+                    linkedFileReadError.value = false
                 }
             } catch (e: Exception) {
                 // Catch-all because for some reason the content resolver can throw all sorts of exceptions

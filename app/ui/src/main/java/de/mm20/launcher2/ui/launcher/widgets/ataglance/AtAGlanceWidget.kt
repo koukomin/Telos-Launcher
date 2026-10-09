@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.locals.LocalMeasurementSystem
 import de.mm20.launcher2.ui.utils.formatPercent
 import de.mm20.launcher2.ui.utils.formatTemperature
@@ -84,7 +85,7 @@ fun AtAGlanceWidget(widget: AtAGlanceWidget) {
                         overflow = TextOverflow.Ellipsis,
                     )
                     val start = c.event.startTime
-                    val now = System.currentTimeMillis()
+                    val now = LocalTime.current
                     val subtitle = if (start != null && start > now) {
                         DateUtils.getRelativeTimeSpanString(
                             start, now, DateUtils.MINUTE_IN_MILLIS
@@ -107,7 +108,7 @@ fun AtAGlanceWidget(widget: AtAGlanceWidget) {
                 )
                 Column(modifier = Modifier.padding(start = 16.dp)) {
                     Text(
-                        text = formatPercent(c.level / 100f),
+                        text = formatPercent(c.level.toFloat()),
                         style = MaterialTheme.typography.titleLarge,
                     )
                     Text(

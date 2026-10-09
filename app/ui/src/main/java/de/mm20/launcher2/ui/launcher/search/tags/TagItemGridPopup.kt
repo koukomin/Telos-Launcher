@@ -22,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -110,7 +111,8 @@ fun TagItemGridPopup(
                     modifier = Modifier.heightIn(max = 320.dp),
                 ) {
                     items(items, key = { it.key }) { item ->
-                        val icon by viewModel.getIcon(item, with(LocalDensity.current) { 40.dp.roundToPx() })
+                        val iconSizePx = with(LocalDensity.current) { 40.dp.roundToPx() }
+                        val icon by remember(item, iconSizePx) { viewModel.getIcon(item, iconSizePx) }
                             .collectAsStateWithLifecycle(null)
                         Column(
                             modifier = Modifier

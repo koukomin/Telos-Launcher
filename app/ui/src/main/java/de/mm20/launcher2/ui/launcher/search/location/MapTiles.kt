@@ -422,7 +422,7 @@ private object MapTileLoader : KoinComponent {
                 .replace("\${y}", y.toString())
                 .replace("\${z}", zoom.toString())
         } else {
-            "$tileServerUrl/$zoom/$x/$y.png"
+            "${tileServerUrl.trimEnd('/')}/$zoom/$x/$y.png"
         }
         return ImageRequest.Builder(context)
             .data(url)

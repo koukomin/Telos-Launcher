@@ -55,7 +55,7 @@ fun BatteryWidget(widget: BatteryWidget) {
             modifier = Modifier.padding(start = 16.dp),
         ) {
             Text(
-                text = formatPercent(info.level / 100f),
+                text = formatPercent(info.level.toFloat()),
                 style = MaterialTheme.typography.titleLarge,
             )
             if (info.charging) {

@@ -601,8 +601,9 @@ fun NoteReadWriteErrorSheet(
 fun getDefaultNoteFileName(context: Context): String {
     return context.getString(
         R.string.notes_widget_export_filename,
+        // No colons: many document providers reject or rewrite them in file names
         ZonedDateTime.now().format(
-            DateTimeFormatter.ISO_INSTANT
+            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm-ss", java.util.Locale.ROOT)
         )
     ) + ".md"
 }

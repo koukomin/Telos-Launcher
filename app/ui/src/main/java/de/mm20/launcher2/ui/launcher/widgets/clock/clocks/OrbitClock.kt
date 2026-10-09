@@ -236,7 +236,7 @@ fun OrbitClock(
             drawText(
                 textHResult,
                 color = Color.Black,
-                topLeft = size.center - textHResult.size.center.toOffset() + mPos,
+                topLeft = size.center - textHResult.size.center.toOffset() + hPos,
                 blendMode = BlendMode.DstOut
             )
 

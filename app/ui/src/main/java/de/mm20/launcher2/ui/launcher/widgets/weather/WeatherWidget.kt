@@ -54,6 +54,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -125,7 +126,7 @@ fun WeatherWidget(widget: WeatherWidget) {
 
     val isProviderAvailable by viewModel.isProviderAvailable.collectAsStateWithLifecycle(true)
 
-    var showLocationDialog by remember { mutableStateOf(false) }
+    var showLocationDialog by rememberSaveable { mutableStateOf(false) }
 
     WeatherLocationSearchDialog(
         expanded = showLocationDialog,
