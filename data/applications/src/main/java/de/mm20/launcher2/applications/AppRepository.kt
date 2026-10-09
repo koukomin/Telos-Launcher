@@ -423,7 +423,8 @@ internal class AppRepositoryImpl(
                     virtualApps.forEach { vApp ->
                         val score = ResultScore.from(
                             query = normalizedQuery,
-                            primaryFields = listOf(stringNormalizer.normalize(vApp.label))
+                            primaryFields = listOf(stringNormalizer.normalize(vApp.label)) +
+                                vApp.keywords.map { stringNormalizer.normalize(it) }
                         )
                         if (score.score >= 0.8f) {
                             appResults.add(vApp)

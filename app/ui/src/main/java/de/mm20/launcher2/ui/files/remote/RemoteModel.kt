@@ -38,6 +38,8 @@ data class RemoteConnection(
     /** SMB: name of the share. WebDAV, Nextcloud, ownCloud, SFTP, FTP: the folder to start in. */
     val path: String = "",
     val tls: Boolean = true,
+    /** FTPS: also accept a certificate that was issued for another host name (off by default) */
+    val acceptAnyHost: Boolean = false,
     /** SFTP: the private key text (optional), the password then protects the key */
     val privateKey: String = "",
     /** SFTP: the fingerprint of the server's key, saved the first time and checked afterwards */
@@ -79,7 +81,7 @@ class ConnectionStore(context: Context) {
 
     private fun toJson(c: RemoteConnection) = JSONObject()
         .put("id", c.id).put("type", c.type.name).put("name", c.name).put("host", c.host).put("port", c.port)
-        .put("user", c.user).put("password", SecretBox.encrypt(c.password)).put("path", c.path).put("tls", c.tls)
+        .put("user", c.user).put("password", SecretBox.encrypt(c.password)).put("path", c.path).put("tls", c.tls).put("acceptAnyHost", c.acceptAnyHost)
         .put("key", SecretBox.encrypt(c.privateKey)).put("fingerprint", c.fingerprint)
         .put("clientId", c.clientId).put("clientSecret", SecretBox.encrypt(c.clientSecret))
         .put("refresh", SecretBox.encrypt(c.refreshToken))
@@ -87,7 +89,7 @@ class ConnectionStore(context: Context) {
     private fun fromJson(o: JSONObject) = RemoteConnection(
         id = o.getString("id"), type = RemoteType.valueOf(o.getString("type")), name = o.optString("name"),
         host = o.optString("host"), port = o.optInt("port"), user = o.optString("user"),
-        password = SecretBox.decrypt(o.optString("password")), path = o.optString("path"), tls = o.optBoolean("tls", true),
+        password = SecretBox.decrypt(o.optString("password")), path = o.optString("path"), tls = o.optBoolean("tls", true), acceptAnyHost = o.optBoolean("acceptAnyHost", false),
         privateKey = SecretBox.decrypt(o.optString("key")), fingerprint = o.optString("fingerprint"),
         clientId = o.optString("clientId"), clientSecret = SecretBox.decrypt(o.optString("clientSecret")),
         refreshToken = SecretBox.decrypt(o.optString("refresh")),

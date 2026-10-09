@@ -156,6 +156,9 @@ internal fun AddTorrentSheet(initialText: String, manager: DownloadManager, onDi
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text(stringResource(R.string.dl_t_add_title), style = MaterialTheme.typography.titleLarge)
+            if (settings.proxyType != de.mm20.launcher2.downloads.ProxyType.None) {
+                Text(stringResource(R.string.au2_dlsec_torrent_proxy_note), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.error)
+            }
             OutlinedTextField(
                 value = text,
                 onValueChange = { text = it; if (preview != null && it != previewSource) preview = null },

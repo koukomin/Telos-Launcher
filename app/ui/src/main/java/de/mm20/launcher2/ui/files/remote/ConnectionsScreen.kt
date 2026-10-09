@@ -168,6 +168,15 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
                             Switch(checked = c.tls, onCheckedChange = { c = c.copy(tls = it) })
                         }
                     }
+                    if (type == RemoteType.Ftp && c.tls) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Column(Modifier.weight(1f)) {
+                                Text(stringResource(R.string.au2_dlsec_ftps_anyhost))
+                                Text(stringResource(R.string.au2_dlsec_ftps_anyhost_summary), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                            Switch(checked = c.acceptAnyHost, onCheckedChange = { c = c.copy(acceptAnyHost = it) })
+                        }
+                    }
                     if (type == RemoteType.Sftp) {
                         Field(stringResource(R.string.hf_remote_private_key), c.privateKey, minLines = 3) { c = c.copy(privateKey = it) }
                         if (c.fingerprint.isNotEmpty()) Text(stringResource(R.string.hc_server_key, c.fingerprint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)

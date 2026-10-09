@@ -2,6 +2,7 @@ package de.mm20.launcher2.store.catalog
 
 import androidx.annotation.DrawableRes
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
+import de.mm20.launcher2.search.TelosAppKeywords
 
 /**
  * One of the apps that are part of Telos itself. They are not installed from anywhere: "installing"
@@ -21,7 +22,10 @@ data class TelosApp(
     val commsTab: String? = null,
     /** The Store itself cannot be removed, otherwise there would be no way back */
     val removable: Boolean = true,
-)
+) {
+    /** Extra search words (synonyms, Greek names) for the Store search */
+    val keywords: List<String> get() = TelosAppKeywords.forKey(key)
+}
 
 object TelosApps {
 

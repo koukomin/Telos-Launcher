@@ -289,6 +289,7 @@ fun DownloadsSettingsScreen() {
                         }
                     }
                     if (type != ProxyType.None) {
+                        Text(stringResource(R.string.au2_dlsec_torrent_proxy_note), style = androidx.compose.material3.MaterialTheme.typography.bodySmall, modifier = Modifier.padding(vertical = 8.dp))
                         OutlinedTextField(host, { host = it }, Modifier.fillMaxWidth(), singleLine = true, label = { Text(stringResource(R.string.dl_proxy_host)) })
                         OutlinedTextField(port, { port = it.filter(Char::isDigit).take(5) }, Modifier.fillMaxWidth(), singleLine = true, label = { Text(stringResource(R.string.dl_proxy_port)) })
                     }

@@ -9,6 +9,7 @@ import de.mm20.launcher2.network.api.DnsController
 import de.mm20.launcher2.network.api.DnsHealth
 import de.mm20.launcher2.network.api.DnsKind
 import de.mm20.launcher2.network.api.DnsServer
+import de.mm20.launcher2.network.api.InsecureDnsUrlException
 import de.mm20.launcher2.network.impl.dns.DnsCatalog
 import de.mm20.launcher2.network.impl.dns.DnsTester
 import de.mm20.launcher2.network.util.IpUtil
@@ -139,6 +140,8 @@ internal class DefaultDnsController(private val context: Context) : DnsControlle
                 val uri = runCatching { URI(url) }.getOrNull()
                 if (uri == null || (uri.scheme != "https" && uri.scheme != "http") || uri.host.isNullOrEmpty()) {
                     fail("invalid DoH URL: $url")
+                } else if (uri.scheme == "http" && !isLocalHost(uri.host)) {
+                    Result.failure(InsecureDnsUrlException("DoH over http:// is only allowed for local hosts: $url"))
                 } else Result.success(Unit)
             }
             DnsKind.Dot -> {
@@ -159,6 +162,24 @@ internal class DefaultDnsController(private val context: Context) : DnsControlle
                 ) fail("invalid ODoH resolver or proxy URL") else Result.success(Unit)
             }
         }
+    }
+
+    /**
+     * Hosts for which a plain http:// DoH address is acceptable: loopback, link-local, private (RFC1918 / ULA)
+     * addresses, local names (.local, .lan, .home.arpa, .internal) and bare single-label host names.
+     */
+    private fun isLocalHost(rawHost: String): Boolean {
+        val host = rawHost.trim().removePrefix("[").removeSuffix("]").trimEnd('.').lowercase()
+        if (host.isEmpty()) return false
+        val ip = IpUtil.parse(host)
+        if (ip != null) {
+            if (ip.isLoopbackAddress || ip.isLinkLocalAddress || ip.isSiteLocalAddress) return true
+            val b = ip.address
+            return b.size == 16 && (b[0].toInt() and 0xFE) == 0xFC // fc00::/7 unique local
+        }
+        if (host == "localhost" || host.endsWith(".localhost")) return true
+        if (!host.contains('.')) return true
+        return listOf(".local", ".lan", ".home.arpa", ".internal").any { host.endsWith(it) }
     }
 
     override suspend fun test(server: DnsServer): Result<Long> {

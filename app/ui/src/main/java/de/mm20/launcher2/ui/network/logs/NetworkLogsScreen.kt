@@ -99,6 +99,8 @@ fun NetworkLogsScreen() {
     var connDetail by remember { mutableStateOf<ConnectionLogEntry?>(null) }
     var dnsDetail by remember { mutableStateOf<DnsLogEntry?>(null) }
     var exportDns by remember { mutableStateOf(false) }
+    var confirmClear by remember { mutableStateOf(false) }
+    var confirmClearApp by remember { mutableStateOf<Int?>(null) }
 
     val values by settings.values.collectAsState()
     val stats by logs.stats.collectAsState()
@@ -139,6 +141,41 @@ fun NetworkLogsScreen() {
         }
     }
 
+    if (confirmClear) {
+        AlertDialog(
+            onDismissRequest = { confirmClear = false },
+            title = { Text(stringResource(R.string.netfw_l_clear)) },
+            text = { Text(stringResource(R.string.au2_netsec_clear_logs_message)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    confirmClear = false
+                    scope.launch {
+                        when (tab) {
+                            TAB_CONNECTIONS -> logs.clearConnections()
+                            TAB_DNS -> logs.clearDns()
+                            else -> logs.clearAll()
+                        }
+                    }
+                }) { Text(stringResource(R.string.au2_netsec_confirm_clear)) }
+            },
+            dismissButton = { TextButton(onClick = { confirmClear = false }) { Text(stringResource(R.string.au2_netsec_cancel)) } },
+        )
+    }
+    confirmClearApp?.let { id ->
+        AlertDialog(
+            onDismissRequest = { confirmClearApp = null },
+            title = { Text(stringResource(R.string.netfw_l_clear_app, directory.labelFor(id))) },
+            text = { Text(stringResource(R.string.au2_netsec_clear_app_logs_message, directory.labelFor(id))) },
+            confirmButton = {
+                TextButton(onClick = {
+                    confirmClearApp = null
+                    scope.launch { logs.clearApp(id) }
+                }) { Text(stringResource(R.string.au2_netsec_confirm_clear)) }
+            },
+            dismissButton = { TextButton(onClick = { confirmClearApp = null }) { Text(stringResource(R.string.au2_netsec_cancel)) } },
+        )
+    }
+
     PreferenceScreen(
         title = stringResource(R.string.netfw_l_title),
         topBarActions = {
@@ -161,19 +198,13 @@ fun NetworkLogsScreen() {
                         text = { Text(stringResource(R.string.netfw_l_clear)) },
                         onClick = {
                             menu = false
-                            scope.launch {
-                                when (tab) {
-                                    TAB_CONNECTIONS -> logs.clearConnections()
-                                    TAB_DNS -> logs.clearDns()
-                                    else -> logs.clearAll()
-                                }
-                            }
+                            confirmClear = true
                         },
                     )
                     appFilter?.let { id ->
                         DropdownMenuItem(
                             text = { Text(stringResource(R.string.netfw_l_clear_app, directory.labelFor(id))) },
-                            onClick = { menu = false; scope.launch { logs.clearApp(id) } },
+                            onClick = { menu = false; confirmClearApp = id },
                         )
                     }
                 }

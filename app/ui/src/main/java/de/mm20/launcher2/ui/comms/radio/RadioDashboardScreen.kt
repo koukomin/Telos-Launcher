@@ -54,6 +54,8 @@ fun RadioDashboardScreen() {
     val searchError by viewModel.searchError.collectAsStateWithLifecycle()
     val message by viewModel.message.collectAsStateWithLifecycle()
     val sleepEndsAt by playerViewModel.sleepEndsAt.collectAsStateWithLifecycle()
+    val recordingState by playerViewModel.recordingState.collectAsStateWithLifecycle()
+    val isRecording = recordingState is de.mm20.launcher2.comms.radio.RadioRecorder.State.Recording
 
     var selectedTabIndex by rememberSaveable { mutableStateOf(0) }
     val tabs = listOf(
@@ -91,6 +93,17 @@ fun RadioDashboardScreen() {
     de.mm20.launcher2.ui.media.MediaFrame(stringResource(R.string.hc_radio), askNotifications = true, guardKey = "telos_radio_app://radio", actions = {
         IconButton(onClick = { showAdd = true }) {
             Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.hc_add_station))
+        }
+        IconButton(onClick = {
+            playerViewModel.toggleRecording(context)?.let {
+                Toast.makeText(context, context.getString(it), Toast.LENGTH_SHORT).show()
+            }
+        }) {
+            Icon(
+                painterResource(if (isRecording) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px),
+                contentDescription = stringResource(if (isRecording) R.string.au2_radio2_stop_recording else R.string.au2_radio2_record),
+                tint = if (isRecording) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
         IconButton(onClick = { showSleep = true }) {
             Icon(
@@ -137,6 +150,7 @@ fun RadioDashboardScreen() {
         }
     }) {
     Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.weight(1f).fillMaxWidth()) {
         TabRow(selectedTabIndex = selectedTabIndex) {
             tabs.forEachIndexed { index, title ->
                 Tab(
@@ -164,6 +178,7 @@ fun RadioDashboardScreen() {
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                     modifier = Modifier.fillMaxSize()
                 ) {
+                    item { RadioRecordingsEntry() }
                     if (shownFavorites.isEmpty() && favorites.isNotEmpty() && collectionQuery.isNotBlank()) {
                         item { de.mm20.launcher2.ui.component.SearchEmptyState(collectionQuery) }
                     }
@@ -275,7 +290,11 @@ fun RadioDashboardScreen() {
             }
         }
     }
+    de.mm20.launcher2.ui.comms.RadioMiniPlayer()
     }
+    }
+
+    RadioRecordingResultEffect()
 
     if (showAdd) {
         var name by remember { mutableStateOf("") }

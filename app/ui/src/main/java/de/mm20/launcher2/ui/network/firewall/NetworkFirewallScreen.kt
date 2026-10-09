@@ -16,6 +16,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.background
 import androidx.compose.ui.draw.clip
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -91,6 +92,7 @@ fun NetworkFirewallScreen() {
     var filter by rememberSaveable { mutableIntStateOf(FILTER_ALL) }
     var expanded by rememberSaveable { mutableStateOf<Int?>(null) }
     var menu by remember { mutableStateOf(false) }
+    var confirmReset by remember { mutableStateOf(false) }
 
     // the usage access permission is granted in the Android settings: look again when coming back
     val lifecycle = LocalLifecycleOwner.current.lifecycle
@@ -122,6 +124,21 @@ fun NetworkFirewallScreen() {
         }
     }
 
+    if (confirmReset) {
+        AlertDialog(
+            onDismissRequest = { confirmReset = false },
+            title = { Text(stringResource(R.string.netfw_bulk_reset)) },
+            text = { Text(stringResource(R.string.au2_netsec_reset_message, shown.size)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    confirmReset = false
+                    bulk { AppRule(it.appId) }
+                }) { Text(stringResource(R.string.au2_netsec_confirm_reset)) }
+            },
+            dismissButton = { TextButton(onClick = { confirmReset = false }) { Text(stringResource(R.string.au2_netsec_cancel)) } },
+        )
+    }
+
     PreferenceScreen(
         title = stringResource(R.string.netfw_title),
         topBarActions = {
@@ -142,7 +159,7 @@ fun NetworkFirewallScreen() {
                     DropdownMenuItem(text = { Text(stringResource(R.string.netfw_bulk_block_mobile)) }, onClick = { menu = false; bulk { it.copy(blockMobile = true) } })
                     DropdownMenuItem(
                         text = { Text(stringResource(R.string.netfw_bulk_reset)) },
-                        onClick = { menu = false; bulk { AppRule(it.appId) } },
+                        onClick = { menu = false; confirmReset = true },
                     )
                 }
             }

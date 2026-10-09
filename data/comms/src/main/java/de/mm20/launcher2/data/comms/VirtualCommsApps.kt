@@ -11,6 +11,7 @@ import de.mm20.launcher2.applock.SettingsDeepLinkContract
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.NullSerializer
 import de.mm20.launcher2.search.ResultScore
+import de.mm20.launcher2.search.TelosAppKeywords
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.VirtualAppProvider
@@ -24,6 +25,7 @@ internal class VirtualPhoneApp(context: Context) : Application {
     override val key: String = "$Domain://phone"
     override val label: String = "Telos Phone"
     override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -78,6 +80,7 @@ internal class VirtualMessagesApp(context: Context) : Application {
     override val key: String = "$Domain://messages"
     override val label: String = "Telos Messages"
     override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -132,6 +135,7 @@ internal class VirtualRadioApp(context: Context) : Application {
     override val key: String = "$Domain://radio"
     override val label: String = "Telos Radio"
     override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -185,6 +189,7 @@ internal class VirtualMusicApp(context: Context) : Application {
     override val key: String = "$Domain://music"
     override val label: String = "Telos Music"
     override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -238,6 +243,7 @@ internal class VirtualVideoApp(context: Context) : Application {
     override val key: String = "$Domain://video"
     override val label: String = "Telos Video"
     override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -291,6 +297,7 @@ internal class VirtualPhotosApp(context: Context) : Application {
     override val key: String = "$Domain://photos"
     override val label: String = "Telos Viewer"
     override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -344,6 +351,7 @@ internal class VirtualFilesApp(context: Context) : Application {
     override val key: String = "$Domain://files"
     override val label: String = "Telos Files"
     override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -397,6 +405,7 @@ internal class VirtualCalculatorApp(context: Context) : Application {
     override val key: String = "$Domain://calculator"
     override val label: String = "Telos Calculator"
     override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -450,6 +459,7 @@ internal class VirtualVoiceRecorderApp(context: Context) : Application {
     override val key: String = "$Domain://voice_recorder"
     override val label: String = "Telos Voice Recorder"
     override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -503,6 +513,7 @@ internal class VirtualScreenRecorderApp(context: Context) : Application {
     override val key: String = "$Domain://screen_recorder"
     override val label: String = "Telos Screen Recorder"
     override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -556,6 +567,7 @@ internal class VirtualScreenshotApp(context: Context) : Application {
     override val key: String = "$Domain://screenshot"
     override val label: String = "Telos Screenshot"
     override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -609,6 +621,7 @@ internal class VirtualNotesApp(context: Context) : Application {
     override val key: String = "$Domain://notes"
     override val label: String = "Telos Notes"
     override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -662,6 +675,7 @@ internal class VirtualCalendarApp(context: Context) : Application {
     override val key: String = "$Domain://calendar"
     override val label: String = "Telos Calendar"
     override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -715,6 +729,7 @@ internal class VirtualDownloadsApp(context: Context) : Application {
     override val key: String = "$Domain://downloads"
     override val label: String = "Telos Downloads"
     override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 
@@ -768,6 +783,7 @@ internal class VirtualNetworkApp(context: Context) : Application {
     override val key: String = "$Domain://network"
     override val label: String = "Telos Network"
     override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified
 

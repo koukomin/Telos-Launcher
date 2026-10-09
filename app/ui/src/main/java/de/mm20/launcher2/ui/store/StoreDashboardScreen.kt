@@ -411,7 +411,7 @@ internal fun AppSource.summary(): String = when (this) {
 @Composable
 private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) -> Unit, onOpen: (TelosApp) -> Unit) {
     var tq by remember { mutableStateOf("") }
-    val shownApps = remember(tq) { TelosApps.all.filter { de.mm20.launcher2.comms.search.TelosSearch.matches(tq, it.name, it.description, it.features.joinToString(" ")) } }
+    val shownApps = remember(tq) { TelosApps.all.filter { de.mm20.launcher2.comms.search.TelosSearch.matches(tq, it.name, it.description, it.features.joinToString(" "), it.keywords.joinToString(" ")) } }
     Column(Modifier.fillMaxSize()) {
     de.mm20.launcher2.ui.component.TelosSearchBar(tq, { tq = it }, stringResource(R.string.hf_store_search))
     if (shownApps.isEmpty()) de.mm20.launcher2.ui.component.SearchEmptyState(tq.trim())
