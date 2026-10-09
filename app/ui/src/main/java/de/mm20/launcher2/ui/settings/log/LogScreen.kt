@@ -47,6 +47,8 @@ import java.io.File
 import java.io.IOException
 import java.util.regex.Pattern
 
+private const val MAX_LOG_LINES = 2000
+
 @Serializable
 data object LogRoute: NavKey
 
@@ -56,7 +58,11 @@ fun LogScreen() {
     val listState = rememberLazyListState()
 
     LaunchedEffect(null) {
-        val process = Runtime.getRuntime().exec("/system/bin/logcat -v time")
+        val process = try {
+            Runtime.getRuntime().exec("/system/bin/logcat -v time")
+        } catch (e: IOException) {
+            return@LaunchedEffect
+        }
 
         val pattern = Pattern.compile(
             "^(\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}.\\d{3})\\s+" +  /* timestamp [1] */
@@ -67,7 +73,7 @@ fun LogScreen() {
             val inputStream = process.inputStream.bufferedReader()
             while (isActive) {
                 val line = try {
-                    val line = inputStream.readLine() ?: continue
+                    val line = inputStream.readLine() ?: break
                     val matcher = pattern.matcher(line)
                     if (matcher.matches()) {
                         FormattedLogcatLine(
@@ -82,7 +88,7 @@ fun LogScreen() {
                 } catch (e: IOException) {
                     break
                 }
-                lines = (lines + line)
+                lines = (lines + line).takeLast(MAX_LOG_LINES)
             }
         }
         try {
@@ -117,7 +123,7 @@ fun LogScreen() {
                     )
                 }
             }) {
-                Icon(painterResource(R.drawable.share_24px), contentDescription = null)
+                Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.menu_share))
             }
         },
         verticalArrangement = Arrangement.spacedBy(2.dp),

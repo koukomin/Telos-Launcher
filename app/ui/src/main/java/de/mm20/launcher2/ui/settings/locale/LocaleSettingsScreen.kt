@@ -32,6 +32,14 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object LocaleSettingsRoute : NavKey
 
+/**
+ * Languages that ship feminine and masculine string variants (the values-xx-feminine and
+ * values-xx-masculine folders of core/i18n). "iw" is the old code of Hebrew.
+ */
+private val languagesWithFormOfAddress = setOf(
+    "ar", "be", "ca", "cs", "el", "es", "fr", "he", "iw", "hi", "it", "pl", "pt", "ro", "ru", "uk",
+)
+
 @Composable
 fun LocaleSettingsScreen() {
     val context = LocalContext.current
@@ -47,14 +55,15 @@ fun LocaleSettingsScreen() {
     val currencies by viewModel.currencies.collectAsStateWithLifecycle(null)
 
     // The language that has been selected by the user, or null to use the system language
-    val selectedLocale = remember {
-        AppCompatDelegate.getApplicationLocales().get(0)
-    }
-
     val locales = LocalResources.current.configuration?.locales
 
     // The current language, including the resolved system language
     val currentLocale = locales?.get(0)
+
+    // keyed on the current language so that a change in the system's app language settings shows up
+    val selectedLocale = remember(currentLocale) {
+        AppCompatDelegate.getApplicationLocales().get(0)
+    }
 
     val transliterators: List<Pair<String, String?>> = remember(locales) {
         if (!isAtLeastApiLevel(29)) return@remember listOf()
@@ -138,7 +147,7 @@ fun LocaleSettingsScreen() {
                         )
                     }
                 )
-                if (listOf("fr", "es").contains(currentLocale?.language)) {
+                if (currentLocale?.language in languagesWithFormOfAddress) {
                     ListPreference(
                         icon = R.drawable.wc_24px,
                         title = stringResource(R.string.preference_form_of_address),

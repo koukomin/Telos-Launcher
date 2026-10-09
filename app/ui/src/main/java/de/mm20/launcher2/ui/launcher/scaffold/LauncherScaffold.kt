@@ -1033,7 +1033,10 @@ internal fun LauncherScaffold(
     val wallpaperManager = remember(activity) { WallpaperManager.getInstance(activity) }
 
     val performanceSettings = koinInject<de.mm20.launcher2.preferences.ui.PerformanceSettings>()
-    val bounceDampingRatio by performanceSettings.bouncePhysics.collectAsState(Spring.DampingRatioNoBouncy)
+    val storedBounceDampingRatio by performanceSettings.bouncePhysics.collectAsState(Spring.DampingRatioNoBouncy)
+    val reduceAnimations by performanceSettings.reduceAnimations.collectAsState(false)
+    // "Reduce animations" also switches the bounce off
+    val bounceDampingRatio = if (reduceAnimations) Spring.DampingRatioNoBouncy else storedBounceDampingRatio
 
     val density = LocalDensity.current
     val systemBarInsets = WindowInsets.displayCutout

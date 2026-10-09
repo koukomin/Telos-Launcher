@@ -161,6 +161,7 @@ class NotesWidgetVM(
                 // Must be released on failure as well, otherwise every later save blocks forever
                 writeSemaphore.release()
             }
+            linkedFileSavingState.value = LinkedFileSavingState.Saved
             return@withContext true
         }
     }
@@ -219,9 +220,10 @@ class NotesWidgetVM(
         linkedFileSavingState.value = LinkedFileSavingState.Saved
         linkedFileReadError.value = false
         linkedFileConflict.value = false
+        val oldFile = widget.config.linkedFile ?: return
         try {
             context.contentResolver.releasePersistableUriPermission(
-                Uri.parse(widget.config.linkedFile),
+                Uri.parse(oldFile),
                 Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
             )
         } catch (e: SecurityException) {

@@ -65,7 +65,13 @@ internal class LauncherDataStore(
             hiddenNumbers = emptyMap(),
             protectedCallNumbers = emptyMap(),
             lastDialpadDigits = "",
-        )
+        ),
+        // the PIN hash of the custom lock stays on this device: a plain backup file must not carry
+        // something that can be brute-forced offline
+        protection = data.protection.copy(
+            protectionCustomLockHashed = null,
+            protectionUseCustomLock = false,
+        ),
     )
 
     override fun forRestore(restored: LauncherSettingsData, current: LauncherSettingsData): LauncherSettingsData {
@@ -83,6 +89,11 @@ internal class LauncherDataStore(
         )
         // no account without its password: it would only fail to register
         return restored.copy(
+            // keep this device's own PIN lock (a backup never carries it)
+            protection = restored.protection.copy(
+                protectionCustomLockHashed = current.protection.protectionCustomLockHashed,
+                protectionUseCustomLock = current.protection.protectionUseCustomLock,
+            ),
             comms = comms.copy(
                 sipEnabled = comms.sipEnabled && comms.sipPasswordEnc.isNotBlank(),
                 remotePhonebookEnabled = comms.remotePhonebookEnabled && comms.remotePhonebookPasswordEnc.isNotBlank(),

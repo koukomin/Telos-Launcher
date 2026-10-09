@@ -339,17 +339,18 @@ fun CurrentWeather(
                         timeFormat,
                     )
                 })",
-                style = MaterialTheme.typography.bodySmall.copy(fontSize = 8.sp),
+                style = MaterialTheme.typography.bodySmall.copy(fontSize = 10.sp),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier
                     .offset(-16.dp, 4.dp)
-                    .clickable(onClick = {
-                        val intent = Intent(Intent.ACTION_VIEW).apply {
-                            data = Uri.parse(forecast.providerUrl)
-                                ?: return@clickable
-                        }
-                        context.tryStartActivity(intent)
-                    })
+                    .clickable(
+                        enabled = forecast.providerUrl.isNotBlank(),
+                        onClick = {
+                            val intent = Intent(Intent.ACTION_VIEW).apply {
+                                data = Uri.parse(forecast.providerUrl)
+                            }
+                            context.tryStartActivity(intent)
+                        })
                     .padding(horizontal = 16.dp, vertical = 4.dp)
             )
 
@@ -691,7 +692,7 @@ fun WeatherDaySelector(
     onDaySelected: (Int) -> Unit,
     measurementSystem: MeasurementSystem
 ) {
-    val dateFormat = SimpleDateFormat("EEE")
+    val dateFormat = remember { SimpleDateFormat("EEE", java.util.Locale.getDefault()) }
     val context = LocalContext.current
 
     val colors = WeatherIconDefaults.colors(MaterialTheme.colorScheme.surfaceBright)
@@ -857,7 +858,7 @@ fun NoData() {
     ) {
         Icon(
             painter = painterResource(R.drawable.light_mode_24px),
-            contentDescription = "",
+            contentDescription = null,
             modifier = Modifier
                 .padding(24.dp)
                 .size(32.dp),

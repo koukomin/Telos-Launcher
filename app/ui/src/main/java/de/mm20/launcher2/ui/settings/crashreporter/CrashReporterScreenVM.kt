@@ -35,12 +35,25 @@ class CrashReporterScreenVM: ViewModel() {
     val reports = mutableStateOf<List<CrashReport>?>(null)
     private var _reports: List<CrashReport>? = null
 
-    init {
+    private var initialized = false
+
+    /**
+     * (Re)load the list of reports from disk. Called whenever the screen enters the composition,
+     * so reports deleted from the detail screen disappear from the list.
+     */
+    fun reload() {
         viewModelScope.launch {
             _reports = CrashReporter.getCrashReports()
-            reports.value = _reports
-            setShowExceptions(BuildConfig.DEBUG)
+            if (!initialized) {
+                initialized = true
+                showExceptions.value = BuildConfig.DEBUG
+            }
+            updateReports()
         }
+    }
+
+    init {
+        reload()
     }
 
 }

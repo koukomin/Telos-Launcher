@@ -434,7 +434,7 @@ fun CustomActions(
                 IconButton(onClick = { showOverflowMenu = true }) {
                     Icon(
                         painterResource(R.drawable.more_vert_24px),
-                        contentDescription = null
+                        contentDescription = stringResource(R.string.action_more_actions)
                     )
                 }
             }
@@ -445,18 +445,19 @@ fun CustomActions(
                 DropdownMenuGroup(
                     shapes = MenuDefaults.groupShapes(),
                 ) {
-                    for (i in slots - 1 until actions.customActions.size) {
+                    val firstOverflow = slots - 1
+                    for (i in firstOverflow until actions.customActions.size) {
                         val action = actions.customActions[i]
                         DropdownMenuItem(
                             shape =
-                                if (actions.customActions.size == 1) MenuDefaults.standaloneItemShape
+                                if (actions.customActions.size - firstOverflow == 1) MenuDefaults.standaloneItemShape
                                 else when (i) {
-                                    0 -> MenuDefaults.leadingItemShape
+                                    firstOverflow -> MenuDefaults.leadingItemShape
                                     actions.customActions.lastIndex -> MenuDefaults.trailingItemShape
                                     else -> MenuDefaults.middleItemShape
                                 },
                             leadingIcon = {
-                                CustomActionIcon(action, playerPackage)
+                                CustomActionIcon(action, playerPackage, describe = false)
                             },
                             text = {
                                 Text(
@@ -490,7 +491,7 @@ fun CustomActions(
 }
 
 @Composable
-fun CustomActionIcon(action: CustomAction, playerPackage: String?) {
+fun CustomActionIcon(action: CustomAction, playerPackage: String?, describe: Boolean = true) {
     val context = LocalContext.current
     val resources = remember(playerPackage) {
         playerPackage?.let {
@@ -525,7 +526,7 @@ fun CustomActionIcon(action: CustomAction, playerPackage: String?) {
     )
     Icon(
         painter = painter,
-        contentDescription = null,
+        contentDescription = if (describe) action.name?.toString() else null,
     )
 }
 
@@ -539,7 +540,7 @@ fun NoData() {
     ) {
         Icon(
             painter = painterResource(R.drawable.music_note_24px),
-            contentDescription = "",
+            contentDescription = null,
             modifier = Modifier
                 .padding(24.dp)
                 .size(32.dp),

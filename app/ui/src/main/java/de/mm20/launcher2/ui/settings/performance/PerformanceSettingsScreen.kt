@@ -17,6 +17,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import kotlinx.serialization.Serializable
+import kotlin.math.roundToInt
 
 @Serializable
 data object PerformanceSettingsRoute : NavKey
@@ -63,7 +64,7 @@ fun PerformanceSettingsScreen() {
                         )
                         SliderPreference(
                             title = stringResource(R.string.preference_performance_bounce_physics),
-                            value = (((1f - (bouncePhysics ?: 1f)) / 0.7f) * 100).toInt(),
+                            value = (((1f - (bouncePhysics ?: 1f)) / 0.7f) * 100).roundToInt().coerceIn(0, 100),
                             min = 0,
                             max = 100,
                             step = 10,

@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +35,7 @@ fun CrashReporterScreen() {
     val reports by viewModel.reports
     val showExceptions by viewModel.showExceptions
     val showCrashes by viewModel.showCrashes
+    LaunchedEffect(Unit) { viewModel.reload() }
     PreferenceScreen(
         title = stringResource(R.string.preference_crash_reporter),
         helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/troubleshooting/crashreporter"
@@ -50,7 +52,7 @@ fun CrashReporterScreen() {
                     }) {
                         Icon(
                             painterResource(if (showExceptions) R.drawable.warning_24px_filled else R.drawable.warning_24px),
-                            contentDescription = null,
+                            contentDescription = stringResource(R.string.au3_sysb_crash_show_exceptions),
                             modifier = Modifier.alpha(if (showExceptions) 1f else 0.5f)
                         )
                     }
@@ -59,10 +61,20 @@ fun CrashReporterScreen() {
                     }) {
                         Icon(
                             painterResource(if (showCrashes) R.drawable.error_24px_filled else R.drawable.error_24px),
-                            contentDescription = null,
+                            contentDescription = stringResource(R.string.au3_sysb_crash_show_crashes),
                             modifier = Modifier.alpha(if (showCrashes) 1f else 0.5f)
                         )
                     }
+                }
+            }
+            if (it.isEmpty()) {
+                item {
+                    Text(
+                        text = stringResource(R.string.au3_sysb_crash_empty),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.fillMaxWidth().padding(16.dp)
+                    )
                 }
             }
             items(it) {
@@ -101,7 +113,7 @@ fun CrashReporterScreen() {
                                     contentDescription = null
                                 )
                                 Text(
-                                    text = if (it.type == CrashReportType.Exception) "Exception" else "Crash",
+                                    text = stringResource(if (it.type == CrashReportType.Exception) R.string.au3_sysb_crash_type_exception else R.string.au3_sysb_crash_type_crash),
                                     style = MaterialTheme.typography.titleMedium
                                 )
                             }
