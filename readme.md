@@ -62,7 +62,7 @@ from Telos Store.
 | **Telos Viewer** | Gallery, EXIF tools, photo editor, document viewer and editor, PDF tools | [Viewer](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
 | **Telos Music** | Local library, lyrics, scrobbling, tag editor | [Music](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/music/) |
 | **Telos Video** | Library, player, web streams, torrents, subtitles, Trakt | [Video](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/video/) |
-| **Telos Radio** | Internet radio with station search and sleep timer | [Radio](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/radio/) |
+| **Telos Radio** | Internet radio with station search, sleep timer and stream recording | [Radio](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/radio/) |
 | **Telos Store** | Install and update apps from GitHub, F-Droid and more, manages the Telos apps | [Store](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/store/) |
 | **Smart Freeze** | Freeze or hide apps through Shizuku, root, device owner or Island (a launcher feature in Settings, not a Telos app) | [Smart Freeze](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/freeze/) |
 
@@ -118,7 +118,7 @@ and custom names are matched; file contents, message texts and note bodies are n
 | Source | What it finds | Min. text | Online? | Default |
 | --- | --- | --- | --- | --- |
 | Apps | Installed apps of every profile (personal, work, private space) | 1 | No | On |
-| Telos apps | Phone, Messages, Radio, Music, Video, Viewer, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder, Notes, Calendar, Downloads, Store, while switched on | 1 | No | On |
+| Telos apps | Phone, Messages, Radio, Music, Video, Viewer, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder, Notes, Calendar, Downloads, Store, while switched on. Also found by synonym keywords in English and Greek (for example `pdf`, `gallery`, `photos` or `έγγραφα` find Telos Viewer); the Store's Telos apps tab search uses the same keywords | 1 | No | On |
 | Web apps | Web app shortcuts shown in the grid | 1 | No | On |
 | Activity by component name | One app entry for a typed `package/class` | 1 | No | On |
 | App shortcuts | Shortcuts that apps publish (needs Telos as default home app) | 3 | No | On |
@@ -595,7 +595,7 @@ A complete phone app inside the launcher. Its layout follows [Right Dialer](http
 <details>
 <summary><b>Privacy, call screening and backup</b></summary>
 
-- **Call screening** (offline, all rules off by default): block hidden numbers, a Telos block list (exact number match), unknown callers (not in your contacts) and international callers. Blocked calls are rejected silently and leave no log entry and no notification.
+- **Call screening** (offline, all rules off by default): block hidden numbers, a Telos block list (exact number match, shared with Messages), unknown callers (not in your contacts) and international callers (a number is international only when its country calling code differs from your selectable **Home country**; default SIM, then network, then language country; numbers without `+` or `00` are domestic; emergency numbers are exempt). Blocked calls are rejected silently and leave no log entry and no notification.
 - **Hidden contacts:** hide numbers behind a 4 to 6 digit PIN typed on the dialpad as `#PIN#`. Hidden from the contacts tab and recents, name masked on incoming calls, optional stealth mode that hides the settings menu. PBKDF2 hash, guesses slowed down after five wrong ones, no PIN recovery. Hiding only changes what Telos shows.
 - **Phone app lock** with biometrics or device credential, and biometric protection for chosen numbers
 - **Secure storage:** call recordings AES-256-GCM with a Keystore key, block list in a SQLCipher database, SIP and FRITZ!Box passwords encrypted with a Keystore key
@@ -641,12 +641,18 @@ Text (SMS) and picture (MMS) messages as conversations with a reply field. It is
 - **Scheduled SMS** (Phone settings > Tools): text only, one recipient, on the exact minute once "Alarms & reminders" is allowed, alarms set again after a reboot
 - Notifications: one per sender while Telos is the default SMS app
 
+**Dual SIM and blocking**
+
+- **Send with** SIM chips in the thread composer and in Scheduled SMS when two or more SIMs are active and the Phone permission is granted; the last SIM is remembered per conversation and the subscription id is stored with the message
+- **Block number** / **Unblock** in the header of a single-recipient conversation. The block list is shared with call blocking
+- Blocked senders' SMS and MMS get no notification and are kept in **Blocked messages** (up to 500, MMS attachments in private storage) with a list of blocked numbers; unblocking puts them back when Telos is the default SMS app. If Telos is not the default SMS app, the system messaging app still stores and notifies
+
 **Privacy**
 
 - Conversations with hidden contacts are only listed while the hidden contacts are unlocked, and their notifications read "New message" without sender or text
 - No upload feature: messages move only between your phone, the system SMS service and your carrier
 
-**Status and limitations:** MMS (pictures, videos, group messages) is experimental and untested across devices and carriers. A video of more than about 2.4 MB is silently left out of a message. There is no search, delete, archive, delivery report, SIM choice or draft saving, no RCS and no end-to-end encryption.
+**Status and limitations:** MMS (pictures, videos, group messages) is experimental and untested across devices and carriers. A video of more than about 2.4 MB is silently left out of a message. There is no search, delete, archive, delivery report or draft saving, no RCS and no end-to-end encryption.
 
 ### Telos Files
 
@@ -911,8 +917,15 @@ Internet radio with your own station collection. Behavior and logic follow [Tran
 - Current track from the stream metadata with a track history (newest 500)
 - Next / previous buttons switch stations (notification, lock screen, headset)
 - Sleep timer (15 to 90 minutes), pauses when headphones are unplugged, background playback with a notification
+- Mini player at the bottom of the Radio dashboard while a station is loaded: play/pause, now playing, sleep timer indicator, record
 
-**Status and limitations:** Needs a network connection, track names exist only when the station sends them, and search lists only Radio-Browser. No stream recording, no alarm clock and no equalizer. Radio is guarded by the crash guard.
+**Recording**
+
+- **Record** button (dashboard top bar and mini player) saves the playing station's stream (mp3, aac or ogg by Content-Type, not HLS) to `Music/Telos Radio` (the app's Music folder before Android 10), named `<Station> - yyyy-MM-dd HH-mm.ext`
+- Foreground notification with Stop and a timer, elapsed time and size shown; a dropped stream, full storage or Stop all save what was captured; under 1 KB nothing is saved
+- A **Recordings** row in the Collection tab opens a sheet to open, share and delete (with confirmation) recordings
+
+**Status and limitations:** Needs a network connection, track names exist only when the station sends them, and search lists only Radio-Browser. HLS streams cannot be recorded, and closing the mini player with its X does not stop an active recording. No alarm clock and no equalizer. Radio is guarded by the crash guard.
 
 ### Telos Store
 

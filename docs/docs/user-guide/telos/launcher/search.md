@@ -13,7 +13,7 @@ All search settings live in **Settings > Search**. Some sources open their own s
 
 | Source | What it finds | Needs | Online? | Default |
 | --- | --- | --- | --- | --- |
-| Apps | Installed apps of every profile, plus the [Telos apps](../) that are switched on | Nothing | No | On |
+| Apps | Installed apps of every profile, plus the [Telos apps](../) that are switched on. Telos apps are also found by synonym keywords in English and Greek, for example `pdf`, `gallery`, `photos` or `έγγραφα` for Telos Viewer | Nothing | No | On |
 | Web apps | [Web app shortcuts](./desktop-and-overlays#web-apps) that are shown in the grid | Nothing | No | On |
 | App shortcuts | Launcher shortcuts that apps publish (for example "New message") | Telos set as the default home app | No | On |
 | Contacts | Android contacts, plus contact plugins | Contacts permission | No | On |

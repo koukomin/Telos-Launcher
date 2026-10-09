@@ -87,7 +87,7 @@ The details of these settings are in [Sources and updates](./sources-updates#per
 
 ## Managing the Telos apps
 
-The **Telos apps** tab lists the built-in apps with a description and feature list of each one.
+The **Telos apps** tab lists the built-in apps with a description and feature list of each one. Its search field also matches the same English and Greek synonym keywords as the launcher search (for example `pdf` or `gallery` for Telos Viewer).
 
 | Action | Result |
 | --- | --- |

@@ -94,6 +94,8 @@ One dialog with the sections Posters and descriptions, Subtitles, Torrents, Play
 | Web streams | The address you entered | When you play it |
 | Torrents | Trackers and peers of that torrent | Only while the torrent plays |
 
+Subtitle requests follow at most 5 redirects and refuse redirects to loopback, link-local or private addresses unless the first address was one too.
+
 Video titles taken from file names are sent to the metadata, subtitle and Trakt services you use. Secrets such as keys
 are entered by you and kept on the device, encrypted with the Android Keystore.
 

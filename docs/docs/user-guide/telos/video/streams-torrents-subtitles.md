@@ -152,6 +152,7 @@ result, and adds it. It also works for torrents. Failures are ignored quietly.
 | Formats | SRT, VTT, ASS / SSA, TTML, and embedded tracks |
 | Languages | ISO 639-1 codes such as `en`, `el`, `de` (also `pt-BR`, which counts as `pt`). Wrong codes simply give no results |
 | Storage | Downloaded subtitles stay in the cache until Android clears it |
+| Redirects | A subtitle download or search follows at most 5 redirects. A redirect to a loopback, link-local or private address is refused, unless the original address was itself a private or local-network address |
 | Delay | -/+ 0.1 and 0.5 s in the playback options, for subtitles loaded from a file or the internet. Not for tracks inside the video |
 | Style | Size, colour and edge (none, outline, shadow, box) in the playback options, remembered |
 
