@@ -317,9 +317,15 @@ internal fun NetworkSourcesDialog(onDismiss: () -> Unit) {
                         scanning = true
                         status = context.getString(R.string.vn_scanning)
                         scope.launch {
-                            val n = RemoteVideo.scan(context)
-                            status = context.getString(R.string.vn_scan_done, n)
-                            scanning = false
+                            try {
+                                val n = RemoteVideo.scan(context)
+                                status = context.getString(R.string.vn_scan_done, n)
+                            } catch (e: Exception) {
+                                if (e is kotlinx.coroutines.CancellationException) throw e
+                                status = e.message ?: context.getString(R.string.au_video_unknown_error)
+                            } finally {
+                                scanning = false
+                            }
                         }
                     }) { Text(stringResource(R.string.vn_rescan)) }
                 }

@@ -34,7 +34,10 @@ class VideoViewModel : ViewModel() {
                 // the cached list of the network videos is a file read and a JSON parse: not on the main thread
                 val remote = withContext(Dispatchers.IO) { RemoteVideo.cached(appContext) }
                 _items.value = local + remote
-            } finally {
+                _loading.value = false
+            } catch (e: Exception) {
+                // a cancelled scan leaves the flag to the scan that replaced it
+                if (e is kotlinx.coroutines.CancellationException) throw e
                 _loading.value = false
             }
         }

@@ -279,14 +279,31 @@ class PdfToolsViewModel(app: Application) : AndroidViewModel(app) {
     // ---------------------------------------------------------------- saving
 
     fun saveToDocuments() = save(results) { PdfStorage.saveToMediaStore(appContext, it) }
-    fun saveToFolder(tree: Uri) = save(results) { PdfStorage.saveToTree(appContext, tree, it) }
-    fun saveAs(target: Uri) = save(results.take(1)) { PdfStorage.saveToDocument(appContext, target, it) }
+    fun saveToFolder(tree: Uri) {
+        persistGrant(tree)
+        save(results) { PdfStorage.saveToTree(appContext, tree, it) }
+    }
+
+    fun saveAs(target: Uri) {
+        persistGrant(target)
+        save(results.take(1)) { PdfStorage.saveToDocument(appContext, target, it) }
+    }
+
+    /** Keeps access to the chosen folder or file so that history entries can still be opened later. */
+    private fun persistGrant(uri: Uri) {
+        runCatching {
+            appContext.contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION,
+            )
+        }
+    }
 
     private fun save(files: List<ResultFile>, op: (ResultFile) -> SavedFile) {
         if (busy) return
         busy = true
         progress = null
-        scope.launch {
+        job = scope.launch {
             try {
                 val done = withContext(Dispatchers.IO) { files.map(op) }
                 saved = saved + done

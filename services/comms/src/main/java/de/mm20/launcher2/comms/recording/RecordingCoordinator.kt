@@ -38,8 +38,11 @@ object RecordingCoordinator : KoinComponent {
         val days = commsSettings.recordingAutoDeleteDays.first()
         if (days <= 0) return
         val cutoff = System.currentTimeMillis() - days * 24L * 60 * 60 * 1000
-        for (rec in CallAudioRecorder.list(context)) {
-            if (rec.file.lastModified() in 1 until cutoff) CallAudioRecorder.delete(rec.file)
+        // listing encrypts older recordings: file work, not for the main thread
+        withContext(Dispatchers.IO) {
+            for (rec in CallAudioRecorder.list(context)) {
+                if (rec.file.lastModified() in 1 until cutoff) CallAudioRecorder.delete(rec.file)
+            }
         }
     }
 

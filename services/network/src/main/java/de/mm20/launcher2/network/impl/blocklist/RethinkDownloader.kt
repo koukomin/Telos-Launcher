@@ -25,7 +25,12 @@ internal class RethinkDownloader {
 
     /** Asks the server whether there is a version newer than [timestamp] (`/update/blocklists`). */
     fun check(timestamp: Long): Check {
-        val text = open("$BASE/update/blocklists?tstamp=$timestamp&vcode=$VCODE").use { it.readText() }
+        val conn = connect("$BASE/update/blocklists?tstamp=$timestamp&vcode=$VCODE")
+        val text = try {
+            conn.inputStream.reader().use { it.readText() }
+        } finally {
+            conn.disconnect()
+        }
         val o = Json.parseToJsonElement(text).jsonObject
         val version = o["version"]?.jsonPrimitive?.intOrNull ?: 0
         if (version != RESPONSE_VERSION) throw java.io.IOException("unsupported update response")
@@ -84,8 +89,6 @@ internal class RethinkDownloader {
         }
         return digest.digest().joinToString("") { "%02x".format(it) }
     }
-
-    private fun open(url: String): java.io.Reader = connect(url).inputStream.reader()
 
     private fun connect(url: String): HttpURLConnection {
         val conn = URL(url).openConnection() as HttpURLConnection

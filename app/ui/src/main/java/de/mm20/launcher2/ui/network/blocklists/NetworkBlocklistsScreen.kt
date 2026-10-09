@@ -121,7 +121,15 @@ fun NetworkBlocklistsScreen() {
                             if (!installed || updateAvailable) {
                                 blocklists.update(force = false)
                             } else {
-                                checked = blocklists.checkForUpdate().getOrNull()
+                                val check = blocklists.checkForUpdate()
+                                checked = check.getOrNull()
+                                check.exceptionOrNull()?.let { e ->
+                                    android.widget.Toast.makeText(
+                                        context,
+                                        context.getString(R.string.netfw_b_failed, e.message ?: e.javaClass.simpleName),
+                                        android.widget.Toast.LENGTH_LONG,
+                                    ).show()
+                                }
                             }
                         }
                     },

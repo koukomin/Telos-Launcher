@@ -66,9 +66,10 @@ internal class DefaultLogController(
     private val version = MutableStateFlow(0L)
 
     init {
-        load()
-        dirty = true
         scope.launch {
+            // reading the saved logs (up to 100000 entries) must not block whoever creates the controller
+            load()
+            dirty = true
             var sinceSave = 0L
             while (true) {
                 delay(PUBLISH_INTERVAL_MS)
@@ -89,11 +90,29 @@ internal class DefaultLogController(
     }
 
     private fun load() {
+        val savedConnections = read("connections.json", ListSerializer(ConnectionLogEntry.serializer())).orEmpty()
+        val savedDns = read("dns.json", ListSerializer(DnsLogEntry.serializer())).orEmpty()
+        val savedStats = read("stats.json", LogStats.serializer())
         synchronized(lock) {
-            read("connections.json", ListSerializer(ConnectionLogEntry.serializer()))?.let { connectionBuffer.addAll(it) }
-            read("dns.json", ListSerializer(DnsLogEntry.serializer()))?.let { dnsBuffer.addAll(it) }
-            read("stats.json", LogStats.serializer())?.let { statsValue = it }
-            nextId = (connectionBuffer.maxOfOrNull { it.id } ?: 0L).coerceAtLeast(dnsBuffer.maxOfOrNull { it.id } ?: 0L) + 1
+            // entries recorded while the files were read get new ids after the saved ones, so ids stay unique
+            var next = (savedConnections.maxOfOrNull { it.id } ?: 0L).coerceAtLeast(savedDns.maxOfOrNull { it.id } ?: 0L) + 1
+            val earlyConnections = connectionBuffer.toList()
+            val earlyDns = dnsBuffer.toList()
+            connectionBuffer.clear()
+            dnsBuffer.clear()
+            earlyConnections.forEach { connectionBuffer.addLast(it.copy(id = next++)) }
+            connectionBuffer.addAll(savedConnections)
+            earlyDns.forEach { dnsBuffer.addLast(it.copy(id = next++)) }
+            dnsBuffer.addAll(savedDns)
+            nextId = next
+            if (savedStats != null) {
+                statsValue = LogStats(
+                    connectionsAllowed = savedStats.connectionsAllowed + statsValue.connectionsAllowed,
+                    connectionsBlocked = savedStats.connectionsBlocked + statsValue.connectionsBlocked,
+                    dnsAllowed = savedStats.dnsAllowed + statsValue.dnsAllowed,
+                    dnsBlocked = savedStats.dnsBlocked + statsValue.dnsBlocked,
+                )
+            }
         }
     }
 

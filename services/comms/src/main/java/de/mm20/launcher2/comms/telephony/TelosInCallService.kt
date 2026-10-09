@@ -7,8 +7,10 @@ import android.telecom.InCallService
 import de.mm20.launcher2.comms.overlay.CallOverlayIntents
 import de.mm20.launcher2.comms.recording.RecordingCoordinator
 import de.mm20.launcher2.preferences.comms.CommsSettings
+import de.mm20.launcher2.base.containedScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -56,19 +58,31 @@ class TelosInCallService : InCallService(), KoinComponent {
     }
 
     private fun maybeShowPopup() {
-        val snap = runBlocking { commsSettings.snapshot.first() }
+        // read the data of the ended call now, a new call may replace it while the settings load
         val missed = TelosCallSession.lastEndedWasMissed
-        if (!snap.missedCallPopup && !(snap.postCallPopup && !missed)) return
-        if (missed && !snap.missedCallPopup) return
-        if (!missed && !snap.postCallPopup) return
-        val popup = Intent().setClassName(packageName, "de.mm20.launcher2.ui.comms.MissedCallPopupActivity")
-        popup.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        popup.putExtra(CallOverlayIntents.EXTRA_NAME, TelosCallSession.lastEndedName)
-        popup.putExtra(CallOverlayIntents.EXTRA_NUMBER, TelosCallSession.lastEndedNumber)
-        popup.putExtra(CallOverlayIntents.EXTRA_RING_MS, TelosCallSession.lastEndedRingMs)
-        try {
-            startActivity(popup)
-        } catch (_: Exception) {
+        val name = TelosCallSession.lastEndedName
+        val number = TelosCallSession.lastEndedNumber
+        val ringMs = TelosCallSession.lastEndedRingMs
+        val context = applicationContext
+        // not tied to the service: it may be unbound as soon as the last call is gone
+        popupScope.launch {
+            val snap = commsSettings.snapshot.first()
+            // a missed call needs the missed call popup, any other call the post-call popup
+            if (missed && !snap.missedCallPopup) return@launch
+            if (!missed && !snap.postCallPopup) return@launch
+            val popup = Intent().setClassName(context.packageName, "de.mm20.launcher2.ui.comms.MissedCallPopupActivity")
+            popup.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            popup.putExtra(CallOverlayIntents.EXTRA_NAME, name)
+            popup.putExtra(CallOverlayIntents.EXTRA_NUMBER, number)
+            popup.putExtra(CallOverlayIntents.EXTRA_RING_MS, ringMs)
+            try {
+                context.startActivity(popup)
+            } catch (_: Exception) {
+            }
         }
+    }
+
+    private companion object {
+        val popupScope = containedScope(Dispatchers.Main.immediate)
     }
 }

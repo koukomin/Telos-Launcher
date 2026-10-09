@@ -30,6 +30,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.comms.media.video.VideoServices
@@ -157,6 +159,8 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+                val moveUp = stringResource(R.string.vn_move_up)
+                val moveDown = stringResource(R.string.vn_move_down)
                 sources.forEachIndexed { i, src ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Switch(
@@ -176,11 +180,11 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
                         TextButton(
                             enabled = i > 0,
                             onClick = { sources = sources.toMutableList().also { java.util.Collections.swap(it, i, i - 1) } },
-                        ) { Text("▲") }
+                        ) { Text("▲", modifier = Modifier.semantics { contentDescription = moveUp }) }
                         TextButton(
                             enabled = i < sources.lastIndex,
                             onClick = { sources = sources.toMutableList().also { java.util.Collections.swap(it, i, i + 1) } },
-                        ) { Text("▼") }
+                        ) { Text("▼", modifier = Modifier.semantics { contentDescription = moveDown }) }
                     }
                 }
                 OutlinedTextField(
@@ -289,7 +293,7 @@ private fun TraktSection() {
         if (pending == null) {
             TextButton(enabled = clientId.isNotBlank() && secret.isNotBlank(), onClick = {
                 de.mm20.launcher2.comms.media.video.trakt.Trakt.saveApp(context, clientId, secret)
-                message = "Contacting Trakt…"
+                message = context.getString(R.string.au_video_trakt_contacting)
                 scope.launch {
                     runCatching { de.mm20.launcher2.comms.media.video.trakt.Trakt.startDeviceLogin(clientId.trim()) }
                         .onSuccess { c ->
@@ -299,16 +303,16 @@ private fun TraktSection() {
                                 de.mm20.launcher2.comms.media.video.trakt.Trakt.finishDeviceLogin(context, clientId.trim(), secret.trim(), c)
                             }.onSuccess {
                                 login = de.mm20.launcher2.comms.media.video.trakt.Trakt.login(context)
-                                message = "Connected"
-                            }.onFailure { message = it.message ?: "Sign in failed" }
+                                message = context.getString(R.string.au_video_trakt_connected)
+                            }.onFailure { message = it.message ?: context.getString(R.string.au_video_trakt_signin_failed) }
                             code = null
                         }
-                        .onFailure { message = it.message ?: "Could not reach Trakt" }
+                        .onFailure { message = it.message ?: context.getString(R.string.au_video_trakt_unreachable) }
                 }
             }) { Text(stringResource(R.string.hc_connect_trakt)) }
         } else {
             Text(
-                "Open ${pending.verificationUrl} and enter the code",
+                stringResource(R.string.au_video_trakt_open_and_enter, pending.verificationUrl),
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(top = 8.dp),
             )

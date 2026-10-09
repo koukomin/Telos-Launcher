@@ -101,6 +101,7 @@ fun ContactsScreen(
     var cabContact by remember { mutableStateOf<DialerContact?>(null) }
     var pendingCall by remember { mutableStateOf<String?>(null) }
     val tapToCall by viewModel.tapToCall.collectAsStateWithLifecycle()
+    val defaultNumbers by viewModel.defaultNumbers.collectAsStateWithLifecycle()
     val confirmBeforeCall by viewModel.confirmBeforeCall.collectAsStateWithLifecycle()
     val query = if (showLocalSearch) localQuery else searchQuery
     val starredFilter = starredOnly || localStarred

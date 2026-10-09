@@ -3,6 +3,7 @@ package de.mm20.launcher2.comms.telephony
 
 import de.mm20.launcher2.base.containedScope
 import android.net.Uri
+import android.os.Build
 import android.telecom.Call
 import android.telecom.CallScreeningService
 import android.telephony.PhoneNumberUtils
@@ -27,6 +28,13 @@ class TelosCallScreeningService : CallScreeningService(), KoinComponent {
 
 
     override fun onScreenCall(callDetails: Call.Details) {
+        // only incoming calls are screened: outgoing calls (also emergency calls) always go through
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+            callDetails.callDirection != Call.Details.DIRECTION_INCOMING
+        ) {
+            respondToCall(callDetails, CallResponse.Builder().build())
+            return
+        }
         val handle: Uri? = callDetails.handle
         val phoneNumber = handle?.schemeSpecificPart ?: ""
         

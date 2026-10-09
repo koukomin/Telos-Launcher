@@ -17,6 +17,8 @@ object TelosCallSession {
 
     private val calls = mutableListOf<Call>()
     private val callbacks = mutableMapOf<Call, Call.Callback>()
+    // when each call became active, kept over hold/unhold so that the call timer does not restart
+    private val connectedAt = mutableMapOf<Call, Long>()
     private var call: Call? = null
     private var ringingStartedAt = 0L
     private var answeredThisCall = false
@@ -89,6 +91,7 @@ object TelosCallSession {
 
     fun onCallRemoved(removed: Call) {
         callbacks.remove(removed)?.let { removed.unregisterCallback(it) }
+        connectedAt.remove(removed)
         calls.remove(removed)
         call = pickPrimary()
         publish()
@@ -214,13 +217,8 @@ object TelosCallSession {
         val number = current.details.handle?.schemeSpecificPart.orEmpty()
         val name = current.details.callerDisplayName?.ifBlank { null }
             ?: de.mm20.launcher2.comms.remote.RemotePhonebook.lookup(number)
-        val wasActive = _ui.value.active
-        val connectedAt = when {
-            state == Call.STATE_ACTIVE && _ui.value.connectedAtEpochMs != null -> _ui.value.connectedAtEpochMs
-            state == Call.STATE_ACTIVE && !wasActive -> System.currentTimeMillis()
-            state == Call.STATE_ACTIVE -> _ui.value.connectedAtEpochMs ?: System.currentTimeMillis()
-            else -> null
-        }
+        if (state == Call.STATE_ACTIVE) connectedAt.getOrPut(current) { System.currentTimeMillis() }
+        val connectedAtMs = connectedAt[current]
         _ui.value = InCallUiState(
             hasCall = true,
             incoming = state == Call.STATE_RINGING,
@@ -233,7 +231,7 @@ object TelosCallSession {
             number = number,
             name = name,
             photoUri = _ui.value.photoUri,
-            connectedAtEpochMs = connectedAt,
+            connectedAtEpochMs = connectedAtMs,
             secondNumber = other?.details?.handle?.schemeSpecificPart.orEmpty(),
             secondName = other?.details?.callerDisplayName?.ifBlank { null }
                 ?: other?.details?.handle?.schemeSpecificPart?.let { de.mm20.launcher2.comms.remote.RemotePhonebook.lookup(it) },

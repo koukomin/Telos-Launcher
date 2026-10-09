@@ -4,6 +4,9 @@ import androidx.compose.ui.res.pluralStringResource
 import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.ui.Alignment
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +25,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import android.widget.Toast
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -40,16 +45,28 @@ data object DuplicateContactsRoute : NavKey
 
 class DuplicateContactsViewModel : ViewModel(), KoinComponent {
     private val repo: ContactDirectoryRepository by inject()
-    suspend fun load(): List<List<DialerContact>> = repo.findDuplicateGroups()
-    suspend fun keepFirst(group: List<DialerContact>) {
-        group.drop(1).forEach { repo.deleteContact(it.id) }
+    suspend fun load(): List<List<DialerContact>> =
+        runCatching { repo.findDuplicateGroups() }.getOrDefault(emptyList())
+
+    /**
+     * The contacts that go away when the first one of every group is kept. A contact that is the
+     * first one of any group is never deleted, even when it is an extra one in another group.
+     */
+    fun idsToDelete(groups: List<List<DialerContact>>): Set<Long> {
+        val kept = groups.mapNotNull { it.firstOrNull()?.id }.toSet()
+        return groups.flatMap { it.drop(1) }.map { it.id }.toSet() - kept
     }
+
+    /** Returns the number of contacts that could not be deleted */
+    suspend fun keepFirst(groups: List<List<DialerContact>>): Int =
+        idsToDelete(groups).count { id -> !runCatching { repo.deleteContact(id) }.getOrDefault(false) }
 }
 
 @Composable
 fun DuplicateContactsScreen() {
     val viewModel: DuplicateContactsViewModel = viewModel()
     val backStack = LocalBackStack.current
+    val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var groups by remember { mutableStateOf<List<List<DialerContact>>>(emptyList()) }
     var loaded by remember { mutableStateOf(false) }
@@ -60,7 +77,7 @@ fun DuplicateContactsScreen() {
         loaded = true
     }
     pending?.let { toClean ->
-        val count = toClean.sumOf { it.size - 1 }
+        val count = viewModel.idsToDelete(toClean).size
         androidx.compose.material3.AlertDialog(
             onDismissRequest = { pending = null },
             title = { Text(pluralStringResource(R.plurals.hc_delete_contacts_question, count, count)) },
@@ -69,8 +86,11 @@ fun DuplicateContactsScreen() {
                 TextButton(onClick = {
                     pending = null
                     scope.launch {
-                        toClean.forEach { viewModel.keepFirst(it) }
+                        val failed = viewModel.keepFirst(toClean)
                         groups = viewModel.load()
+                        if (failed > 0) {
+                            Toast.makeText(context, R.string.au_phonea_action_failed, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }) { Text(stringResource(R.string.hc_delete)) }
             },
@@ -78,6 +98,13 @@ fun DuplicateContactsScreen() {
         )
     }
     PreferenceScreen(title = { Text(stringResource(R.string.hc_duplicate_contacts)) }) {
+        if (!loaded) {
+            item {
+                Box(Modifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            }
+        }
         if (loaded && groups.isEmpty()) {
             item {
                 Text(
