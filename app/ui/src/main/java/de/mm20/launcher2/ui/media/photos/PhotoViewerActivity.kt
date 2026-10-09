@@ -189,7 +189,7 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(onClick = onClose) {
-                    Icon(painterResource(R.drawable.arrow_back_24px), "Back", tint = Color.White)
+                    Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back), tint = Color.White)
                 }
                 Spacer(Modifier.weight(1f))
                 Text(
@@ -204,13 +204,13 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
                     .navigationBarsPadding().padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
-                ViewerAction(R.drawable.share_24px, "Share") { share(current) }
-                ViewerAction(R.drawable.tune_24px, "Edit") {
+                ViewerAction(R.drawable.share_24px, stringResource(R.string.hc_share)) { share(current) }
+                ViewerAction(R.drawable.tune_24px, stringResource(R.string.hc_edit)) {
                     context.startActivity(Intent(context, PhotoEditorActivity::class.java).setData(current))
                 }
-                ViewerAction(R.drawable.info_24px, "Details") { showInfo = true }
+                ViewerAction(R.drawable.info_24px, stringResource(R.string.hc_details)) { showInfo = true }
                 if (Build.VERSION.SDK_INT >= 30 && current.authority == MediaStore.AUTHORITY) {
-                    ViewerAction(R.drawable.delete_24px, "Delete") {
+                    ViewerAction(R.drawable.delete_24px, stringResource(R.string.hc_delete)) {
                         val sender = MediaStore.createDeleteRequest(context.contentResolver, listOf(current)).intentSender
                         deleteLauncher.launch(IntentSenderRequest.Builder(sender).build())
                     }
@@ -263,7 +263,7 @@ private fun ExifDialog(
     var editing by remember { mutableStateOf(false) }
 
     fun done(ok: Boolean) {
-        Toast.makeText(context, if (ok) "Done" else "This file format does not support metadata changes", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(if (ok) R.string.hc_done else R.string.au_viewer_metadata_unsupported), Toast.LENGTH_SHORT).show()
         reload++
     }
 
@@ -275,16 +275,17 @@ private fun ExifDialog(
                 if (info == null) {
                     Text(stringResource(R.string.hc_no_metadata_available))
                 } else {
-                    Text("${info.width} × ${info.height}", style = MaterialTheme.typography.bodyMedium)
+                    if (info.width > 0 && info.height > 0) Text("${info.width} × ${info.height}", style = MaterialTheme.typography.bodyMedium)
                     info.latLong?.let {
                         Text(
-                            "Location: %.5f, %.5f".format(it[0], it[1]),
+                            stringResource(R.string.au_viewer_location, "%.5f, %.5f".format(it[0], it[1])),
                             style = MaterialTheme.typography.bodyMedium,
                             modifier = Modifier.padding(top = 4.dp),
                         )
                     }
                     Spacer(Modifier.height(8.dp))
-                    for ((label, tag) in PhotoExif.tags) {
+                    for ((labelRes, tag) in PhotoExif.tags) {
+                        val label = stringResource(labelRes)
                         if (editing) {
                             OutlinedTextField(
                                 value = edits[tag].orEmpty(),
@@ -329,7 +330,7 @@ private fun ExifDialog(
         },
         dismissButton = {
             TextButton(onClick = { if (editing) editing = false else onDismiss() }) {
-                Text(if (editing) "Cancel" else "Close")
+                Text(stringResource(if (editing) R.string.hc_cancel else R.string.hc_close))
             }
         },
     )

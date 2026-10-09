@@ -88,7 +88,7 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = stationName.ifEmpty { "Transistor Radio" },
+                        text = stationName.ifEmpty { stringResource(R.string.au_radio_unknown_station) },
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,
@@ -97,10 +97,10 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                     )
                     val sleepSuffix = if (sleepEndsAt > 0L) {
                         val minutes = ((sleepEndsAt - now).coerceAtLeast(0L) / 60_000L) + 1
-                        "  ·  Sleep in $minutes min"
+                        "  ·  " + stringResource(R.string.au_radio_sleep_in, minutes.toInt())
                     } else ""
                     Text(
-                        text = (error ?: nowPlaying.ifEmpty { "Streaming live..." }) + sleepSuffix,
+                        text = (error?.let { stringResource(it) } ?: nowPlaying.ifEmpty { stringResource(R.string.au_radio_streaming_live) }) + sleepSuffix,
                         style = MaterialTheme.typography.labelSmall,
                         color = if (error != null) MaterialTheme.colorScheme.error
                         else MaterialTheme.colorScheme.onSurfaceVariant,
@@ -113,7 +113,7 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                 IconButton(onClick = { viewModel.togglePlayPause() }) {
                     Icon(
                         painter = painterResource(if (isPlaying) R.drawable.pause_24px else R.drawable.play_arrow_24px),
-                        contentDescription = if (isPlaying) "Pause" else "Play",
+                        contentDescription = if (isPlaying) stringResource(R.string.au_radio_pause) else stringResource(R.string.hc_play),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
                 }

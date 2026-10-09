@@ -16,6 +16,7 @@ import de.mm20.launcher2.comms.media.MusicPlayerService
 import de.mm20.launcher2.comms.media.MusicSleepTimer
 import de.mm20.launcher2.comms.media.MusicTrack
 import de.mm20.launcher2.comms.media.TagEditor
+import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import de.mm20.launcher2.comms.media.LyricsClient
@@ -58,7 +59,7 @@ class MusicViewModel : ViewModel() {
     fun saveTags(context: Context, uri: Uri, tags: TagEditor.Tags) {
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) { TagEditor.write(context, uri, tags) }
-            _message.value = if (ok) "Tags saved" else "Could not save the tags"
+            _message.value = if (ok) context.getString(R.string.au_music_tags_saved) else context.getString(R.string.au_music_tags_failed)
             if (ok) loadLibrary(context)
         }
     }
@@ -70,7 +71,7 @@ class MusicViewModel : ViewModel() {
                 val mime = context.contentResolver.getType(image) ?: "image/jpeg"
                 bytes != null && TagEditor.writeCover(context, uri, bytes, mime)
             }
-            _message.value = if (ok) "Cover saved" else "Could not save the cover"
+            _message.value = if (ok) context.getString(R.string.au_music_cover_saved) else context.getString(R.string.au_music_cover_failed)
             if (ok) loadLibrary(context)
         }
     }

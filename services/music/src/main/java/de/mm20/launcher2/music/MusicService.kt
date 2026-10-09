@@ -356,7 +356,7 @@ internal class MusicServiceImpl(
                     }
                 } else {
                     val file = java.io.File(context.filesDir, "album_art")
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, file.outputStream())
+                    file.outputStream().use { bitmap.compress(Bitmap.CompressFormat.PNG, 100, it) }
                     preferences.edit {
                         putString(PREFS_KEY_ALBUM_ART, "notnull")
                     }

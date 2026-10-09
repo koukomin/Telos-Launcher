@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_radio_tab_collection">Collection</string>
+    <string name="au_radio_tab_history">History</string>
+    <string name="au_radio_unknown_station">Unknown station</string>
+    <string name="au_radio_cannot_play">This station cannot be played right now</string>
+    <string name="au_radio_streaming_live">Streaming live…</string>
+    <string name="au_radio_sleep_in">Sleep in %1$d min</string>
+    <string name="au_radio_pause">Pause</string>
+    <string name="au_radio_search_failed">Search failed: %1$s</string>
+    <string name="au_radio_enter_http_address">Enter an address that starts with http:// or https://</string>
+    <string name="au_radio_station_added">Added %1$s</string>
+    <string name="au_radio_add_failed">Could not add the station</string>
+    <string name="au_radio_imported">Imported %1$d stations</string>
+    <string name="au_radio_import_failed">Could not read that file</string>
+    <string name="au_radio_playlist_saved">Playlist saved</string>
+    <string name="au_radio_playlist_save_failed">Could not save the playlist</string>
+    <string name="au_radio_backup_saved">Backup saved</string>
+    <string name="au_radio_backup_save_failed">Could not save the backup</string>
+    <string name="au_radio_restored">Restored %1$d stations</string>
+    <string name="au_radio_restore_failed">Could not read that backup</string>
+</resources>

@@ -6,26 +6,27 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.exifinterface.media.ExifInterface
+import de.mm20.launcher2.ui.R
 import java.io.File
 import java.io.FileOutputStream
 
 /** Reading, editing and removing EXIF metadata of images. */
 object PhotoExif {
 
-    /** Tags that are shown and can be edited or removed. Label to tag. */
-    val tags: List<Pair<String, String>> = listOf(
-        "Date taken" to ExifInterface.TAG_DATETIME_ORIGINAL,
-        "Camera make" to ExifInterface.TAG_MAKE,
-        "Camera model" to ExifInterface.TAG_MODEL,
-        "Lens" to ExifInterface.TAG_LENS_MODEL,
-        "Exposure" to ExifInterface.TAG_EXPOSURE_TIME,
-        "Aperture" to ExifInterface.TAG_F_NUMBER,
-        "ISO" to ExifInterface.TAG_PHOTOGRAPHIC_SENSITIVITY,
-        "Focal length" to ExifInterface.TAG_FOCAL_LENGTH,
-        "Software" to ExifInterface.TAG_SOFTWARE,
-        "Artist" to ExifInterface.TAG_ARTIST,
-        "Description" to ExifInterface.TAG_IMAGE_DESCRIPTION,
-        "Copyright" to ExifInterface.TAG_COPYRIGHT,
+    /** Tags that are shown and can be edited or removed. String resource of the label to tag. */
+    val tags: List<Pair<Int, String>> = listOf(
+        R.string.au_viewer_exif_date_taken to ExifInterface.TAG_DATETIME_ORIGINAL,
+        R.string.au_viewer_exif_make to ExifInterface.TAG_MAKE,
+        R.string.au_viewer_exif_model to ExifInterface.TAG_MODEL,
+        R.string.au_viewer_exif_lens to ExifInterface.TAG_LENS_MODEL,
+        R.string.au_viewer_exif_exposure to ExifInterface.TAG_EXPOSURE_TIME,
+        R.string.au_viewer_exif_aperture to ExifInterface.TAG_F_NUMBER,
+        R.string.au_viewer_exif_iso to ExifInterface.TAG_PHOTOGRAPHIC_SENSITIVITY,
+        R.string.au_viewer_exif_focal_length to ExifInterface.TAG_FOCAL_LENGTH,
+        R.string.au_viewer_exif_software to ExifInterface.TAG_SOFTWARE,
+        R.string.au_viewer_exif_artist to ExifInterface.TAG_ARTIST,
+        R.string.au_viewer_exif_description to ExifInterface.TAG_IMAGE_DESCRIPTION,
+        R.string.au_viewer_exif_copyright to ExifInterface.TAG_COPYRIGHT,
     )
 
     private val gpsTags = listOf(
@@ -123,6 +124,8 @@ object PhotoExif {
             ?: return null
         val rotated = applyOrientation(context, uri, bitmap)
         val dir = File(context.cacheDir, "photos").apply { mkdirs() }
+        // earlier copies were handed to another app long ago
+        dir.listFiles()?.filter { it.lastModified() < System.currentTimeMillis() - 60 * 60_000 }?.forEach { it.delete() }
         val file = File(dir, "clean_${System.currentTimeMillis()}.jpg")
         FileOutputStream(file).use { rotated.compress(Bitmap.CompressFormat.JPEG, 95, it) }
         file

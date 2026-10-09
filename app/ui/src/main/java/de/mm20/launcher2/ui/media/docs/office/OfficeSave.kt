@@ -111,6 +111,8 @@ internal class OfficeController(private val context: Context, val uri: Uri, val 
     }
 
     private fun backup() {
+        // an older backup must not stay if this one fails: it would be offered as "undo" for a different version
+        runCatching { DocFiles.undoFile(context, uri).delete() }
         runCatching { doc.file.copyTo2(DocFiles.undoFile(context, uri)) }
         hasUndo = DocFiles.undoFile(context, uri).exists()
     }
@@ -123,8 +125,8 @@ internal class OfficeController(private val context: Context, val uri: Uri, val 
                 WriteResult.Ok -> { runCatching { swap(OfficeDocs.open(tmp, name)) }; editing = false; SaveOutcome.Saved }
                 WriteResult.NotWritable -> SaveOutcome.NeedSaveAs(tmp)
                 WriteResult.Partial -> {
-                    // put the previous version back
-                    DocFiles.copyToUri(context, DocFiles.undoFile(context, uri), uri)
+                    // put the previous version back (the file that is open now is exactly that version)
+                    DocFiles.copyToUri(context, doc.file, uri)
                     SaveOutcome.NeedSaveAs(tmp)
                 }
             }

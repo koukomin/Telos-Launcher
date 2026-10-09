@@ -458,7 +458,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    suspend fun sizeOf(entry: FsEntry): Long = withContext(Dispatchers.IO) { fs.totalSize(entry.path) }
+    suspend fun sizeOf(entry: FsEntry): Long = withContext(Dispatchers.IO) { runCatching { fs.totalSize(entry.path) }.getOrDefault(-1L) }
     suspend fun checksum(entry: FsEntry, algorithm: String): String = withContext(Dispatchers.IO) { runCatching { FsOps.hash(File(entry.path), algorithm) }.getOrDefault("") }
     suspend fun childCount(entry: FsEntry): Int = withContext(Dispatchers.IO) { runCatching { fs.list(entry.path).size }.getOrDefault(-1) }
 }

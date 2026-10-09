@@ -43,6 +43,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -63,6 +64,7 @@ import androidx.core.content.FileProvider
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import android.graphics.Color as AColor
@@ -120,6 +122,8 @@ private fun ScreenshotEditor(uri: Uri?, path: String?, partial: Boolean, onClose
     val freePoints = remember { mutableStateListOf<Offset>() }
     val penWidth = strokeWidth
     var selectionDone by remember { mutableStateOf(false) }
+    var saving by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(uri, path) {
         bitmap = withContext(Dispatchers.IO) {
@@ -157,32 +161,43 @@ private fun ScreenshotEditor(uri: Uri?, path: String?, partial: Boolean, onClose
                 onClick = { undo.removeLastOrNull()?.let { bitmap = it; resetSelection() } },
                 enabled = undo.isNotEmpty(),
             ) { Text(stringResource(R.string.screenshot_undo), color = if (undo.isNotEmpty()) Color.White else Color.Gray) }
-            TextButton(onClick = {
+            TextButton(enabled = !saving, onClick = {
                 val b = bitmap ?: return@TextButton
-                val saved = ScreenshotStore.save(context, b)
-                if (saved == null) {
-                    Toast.makeText(context, R.string.screenshot_save_failed, Toast.LENGTH_SHORT).show()
-                } else {
-                    runCatching {
-                        context.startActivity(
-                            Intent.createChooser(
-                                Intent(Intent.ACTION_SEND).setType("image/*").putExtra(Intent.EXTRA_STREAM, saved).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION),
-                                null,
+                saving = true
+                scope.launch {
+                    val saved = withContext(Dispatchers.IO) { ScreenshotStore.save(context, b) }
+                    saving = false
+                    if (saved == null) {
+                        Toast.makeText(context, R.string.screenshot_save_failed, Toast.LENGTH_SHORT).show()
+                    } else {
+                        runCatching {
+                            context.startActivity(
+                                Intent.createChooser(
+                                    Intent(Intent.ACTION_SEND).setType("image/*")
+                                        .putExtra(Intent.EXTRA_STREAM, ScreenshotController.shareableUri(context, saved))
+                                        .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION),
+                                    null,
+                                )
                             )
-                        )
+                        }
                     }
                 }
-            }) { Text(stringResource(R.string.voice_share), color = Color.White) }
-            TextButton(onClick = {
+            }) { Text(stringResource(R.string.voice_share), color = if (saving) Color.Gray else Color.White) }
+            TextButton(enabled = !saving, onClick = {
                 val b = bitmap ?: return@TextButton
-                if (ScreenshotStore.save(context, b) != null) {
-                    Toast.makeText(context, R.string.screenshot_saved, Toast.LENGTH_SHORT).show()
-                    path?.let { File(it).delete() }
-                    onClose()
-                } else {
-                    Toast.makeText(context, R.string.screenshot_save_failed, Toast.LENGTH_SHORT).show()
+                saving = true
+                scope.launch {
+                    val saved = withContext(Dispatchers.IO) { ScreenshotStore.save(context, b) }
+                    saving = false
+                    if (saved != null) {
+                        Toast.makeText(context, R.string.screenshot_saved, Toast.LENGTH_SHORT).show()
+                        path?.let { File(it).delete() }
+                        onClose()
+                    } else {
+                        Toast.makeText(context, R.string.screenshot_save_failed, Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }) { Text(stringResource(R.string.voice_save), color = MaterialTheme.colorScheme.primary) }
+            }) { Text(stringResource(R.string.voice_save), color = if (saving) Color.Gray else MaterialTheme.colorScheme.primary) }
         }
 
         BoxWithConstraints(Modifier.weight(1f).fillMaxWidth()) {

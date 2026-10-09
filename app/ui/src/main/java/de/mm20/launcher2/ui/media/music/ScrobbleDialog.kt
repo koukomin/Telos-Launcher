@@ -41,6 +41,11 @@ internal fun ScrobbleDialog(onDismiss: () -> Unit) {
     var config by remember { mutableStateOf(Scrobblers.load(context)) }
     var message by remember { mutableStateOf("") }
     var busy by remember { mutableStateOf(false) }
+    val lastFmConnectedMsg = stringResource(R.string.au_music_lastfm_connected)
+    val libreFmConnectedMsg = stringResource(R.string.au_music_librefm_connected)
+    val listenBrainzSavedMsg = stringResource(R.string.au_music_listenbrainz_saved)
+    val loginFailedMsg = stringResource(R.string.au_music_login_failed_generic)
+    val loginFailedFormat = stringResource(R.string.au_music_login_failed)
 
     var lfKey by remember { mutableStateOf(config.lastfmKey) }
     var lfSecret by remember { mutableStateOf(config.lastfmSecret) }
@@ -67,7 +72,7 @@ internal fun ScrobbleDialog(onDismiss: () -> Unit) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
 
-                Section("Last.fm", config.lastfmEnabled, config.lastfmSession.isNotBlank()) { on ->
+                Section("Last.fm", stringResource(R.string.au_music_connected), stringResource(R.string.au_music_not_connected), config.lastfmEnabled, config.lastfmSession.isNotBlank()) { on ->
                     update { it.copy(lastfmEnabled = on) }
                 }
                 Text(
@@ -87,16 +92,16 @@ internal fun ScrobbleDialog(onDismiss: () -> Unit) {
                     scope.launch {
                         runCatching { withContext(Dispatchers.IO) { LastFm.login(lfKey.trim(), lfSecret.trim(), lfUser.trim(), lfPass) } }
                             .onSuccess { session ->
-                                update { it.copy(lastfmKey = lfKey, lastfmSecret = lfSecret, lastfmUser = lfUser, lastfmSession = session, lastfmEnabled = true) }
+                                update { it.copy(lastfmKey = lfKey.trim(), lastfmSecret = lfSecret.trim(), lastfmUser = lfUser.trim(), lastfmSession = session, lastfmEnabled = true) }
                                 lfPass = ""
-                                message = "Last.fm connected"
+                                message = lastFmConnectedMsg
                             }
-                            .onFailure { message = "Last.fm: " + (it.message ?: "login failed") }
+                            .onFailure { message = loginFailedFormat.format("Last.fm", it.message ?: loginFailedMsg) }
                         busy = false
                     }
                 }) { Text(stringResource(R.string.hc_connect_last_fm)) }
 
-                Section("Libre.fm", config.librefmEnabled, config.librefmPasswordHash.isNotBlank()) { on ->
+                Section("Libre.fm", stringResource(R.string.au_music_connected), stringResource(R.string.au_music_not_connected), config.librefmEnabled, config.librefmPasswordHash.isNotBlank()) { on ->
                     update { it.copy(librefmEnabled = on) }
                 }
                 OutlinedTextField(libUser, { libUser = it }, label = { Text(stringResource(R.string.hc_user_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
@@ -111,16 +116,16 @@ internal fun ScrobbleDialog(onDismiss: () -> Unit) {
                         val hash = Scrobblers.md5Public(libPass)
                         runCatching { withContext(Dispatchers.IO) { de.mm20.launcher2.comms.scrobble.LibreFm(libUser.trim(), hash).login() } }
                             .onSuccess {
-                                update { it.copy(librefmUser = libUser, librefmPasswordHash = hash, librefmEnabled = true) }
+                                update { it.copy(librefmUser = libUser.trim(), librefmPasswordHash = hash, librefmEnabled = true) }
                                 libPass = ""
-                                message = "Libre.fm connected"
+                                message = libreFmConnectedMsg
                             }
-                            .onFailure { message = "Libre.fm: " + (it.message ?: "login failed") }
+                            .onFailure { message = loginFailedFormat.format("Libre.fm", it.message ?: loginFailedMsg) }
                         busy = false
                     }
                 }) { Text(stringResource(R.string.hc_connect_libre_fm)) }
 
-                Section("ListenBrainz", config.listenbrainzEnabled, config.listenbrainzToken.isNotBlank()) { on ->
+                Section("ListenBrainz", stringResource(R.string.au_music_connected), stringResource(R.string.au_music_not_connected), config.listenbrainzEnabled, config.listenbrainzToken.isNotBlank()) { on ->
                     update { it.copy(listenbrainzEnabled = on) }
                 }
                 Text(
@@ -131,8 +136,8 @@ internal fun ScrobbleDialog(onDismiss: () -> Unit) {
                 OutlinedTextField(lbToken, { lbToken = it }, label = { Text(stringResource(R.string.hc_user_token)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
                 OutlinedTextField(lbServer, { lbServer = it }, label = { Text(stringResource(R.string.hc_server)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
                 TextButton(enabled = lbToken.isNotBlank(), onClick = {
-                    update { it.copy(listenbrainzToken = lbToken, listenbrainzServer = lbServer, listenbrainzEnabled = true) }
-                    message = "ListenBrainz saved"
+                    update { it.copy(listenbrainzToken = lbToken.trim(), listenbrainzServer = lbServer.trim(), listenbrainzEnabled = true) }
+                    message = listenBrainzSavedMsg
                 }) { Text(stringResource(R.string.hc_save_listenbrainz)) }
 
                 if (message.isNotEmpty()) Text(message, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 8.dp))
@@ -143,7 +148,7 @@ internal fun ScrobbleDialog(onDismiss: () -> Unit) {
 }
 
 @Composable
-private fun Section(title: String, on: Boolean, ready: Boolean, onChange: (Boolean) -> Unit) {
+private fun Section(title: String, connectedText: String, notConnectedText: String, on: Boolean, ready: Boolean, onChange: (Boolean) -> Unit) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -152,7 +157,7 @@ private fun Section(title: String, on: Boolean, ready: Boolean, onChange: (Boole
         Column(Modifier.weight(1f)) {
             Text(title, style = MaterialTheme.typography.titleSmall)
             Text(
-                if (ready) "Connected" else "Not connected",
+                if (ready) connectedText else notConnectedText,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

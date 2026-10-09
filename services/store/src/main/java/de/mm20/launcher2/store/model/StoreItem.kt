@@ -52,7 +52,9 @@ object VersionCompare {
         if (candidate.isBlank() || candidate == "unknown") return false
         val a = numbers(candidate)
         val b = numbers(installed)
-        if (a == null || b == null) return candidate.trim().lowercase().removePrefix("v") != installed.trim().lowercase().removePrefix("v")
+        // only one of them has numbers (e.g. a tag like "latest" or "nightly"): not comparable, so never an update
+        if (a == null && b == null) return candidate.trim().lowercase().removePrefix("v") != installed.trim().lowercase().removePrefix("v")
+        if (a == null || b == null) return false
         for (i in 0 until maxOf(a.size, b.size)) {
             val x = a.getOrElse(i) { 0L }
             val y = b.getOrElse(i) { 0L }
