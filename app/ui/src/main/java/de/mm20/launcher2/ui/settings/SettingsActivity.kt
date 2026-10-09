@@ -220,7 +220,8 @@ class SettingsActivity : BaseActivity() {
         WindowCompat.enableEdgeToEdge(window)
 
         val newRoute = getStartRoute(intent)
-        initialRoute = newRoute
+        // Only apply the deep link on a fresh start; after rotation the restored back stack must be kept.
+        initialRoute = if (savedInstanceState == null) newRoute else null
 
         val entryProvider = entryProvider {
             entry<MainRoute> {

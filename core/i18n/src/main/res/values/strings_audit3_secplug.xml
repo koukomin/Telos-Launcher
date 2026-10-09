@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="au3_secplug_wrong_pin">Wrong PIN</string>
+    <string name="au3_secplug_web_apps_empty">No web apps yet. Add one with the button below or pick some from the presets above.</string>
+    <string name="au3_secplug_applock_web_apps_empty">No web apps to lock yet. Create one in the Web Apps settings first.</string>
 </resources>

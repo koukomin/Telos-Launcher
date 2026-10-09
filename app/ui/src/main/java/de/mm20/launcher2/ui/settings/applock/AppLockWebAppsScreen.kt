@@ -2,10 +2,13 @@ package de.mm20.launcher2.ui.settings.applock
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -37,6 +40,16 @@ fun AppLockWebAppsScreen() {
         title = stringResource(R.string.preference_category_app_lock_web_apps),
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
+        if (shortcuts.isEmpty()) {
+            item {
+                Text(
+                    text = stringResource(R.string.au3_secplug_applock_web_apps_empty),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(16.dp),
+                )
+            }
+        }
         itemsIndexed(shortcuts, key = { _, it -> it.key }) { _, shortcut ->
             val icon by viewModel.getIcon(shortcut, 32.dp.value.toInt()).collectAsStateWithLifecycle(null)
             val locked = shortcut.key in lockedShortcuts

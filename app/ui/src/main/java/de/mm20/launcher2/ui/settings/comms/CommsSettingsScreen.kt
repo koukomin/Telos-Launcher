@@ -676,7 +676,7 @@ fun CommsSettingsScreen() {
                         onValueChanged = { selected ->
                             when (selected) {
                                 null -> {}
-                                "custom" -> editClir = true
+                                "custom" -> { editClir = true }
                                 else -> viewModel.setClirPrefix(selected)
                             }
                         }

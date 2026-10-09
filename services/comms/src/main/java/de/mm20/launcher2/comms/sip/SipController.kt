@@ -20,7 +20,7 @@ class SipController(context: Context, settings: CommsSettings) {
         val appContext = context.applicationContext
         containedScope(Dispatchers.Main).launch {
             settings.snapshot
-                .map { Triple(it.sipEnabled, it.sipUser to it.sipDomain, it.sipPasswordEnc to it.sipVerifyServer) }
+                .map { Triple(it.sipEnabled, it.sipUser to it.sipDomain, Triple(it.sipPasswordEnc, it.sipVerifyServer, it.sipDisplayName)) }
                 .distinctUntilChanged()
                 .collect { (enabled, account, _) ->
                     val usable = enabled && account.first.isNotBlank() && account.second.isNotBlank()

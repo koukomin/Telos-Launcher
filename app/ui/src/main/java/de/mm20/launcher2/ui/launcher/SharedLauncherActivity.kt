@@ -38,6 +38,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.preferences.ScreenOrientation
 import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.preferences.SystemBarColors
@@ -167,17 +168,17 @@ abstract class SharedLauncherActivity(
                         val wallpaperBlur by viewModel.wallpaperBlur.collectAsState()
                         val wallpaperBlurRadius by viewModel.wallpaperBlurRadius.collectAsState()
 
-                        val fixedRotation by viewModel.fixedRotation.collectAsState()
+                        val screenOrientation by viewModel.screenOrientation.collectAsState()
 
                         val backgroundColor = MaterialTheme.colorScheme.surfaceContainer
 
                         if (gestures == null || widgetsOnHomeScreen == null) return@ProvideCompositionLocals
 
-                        LaunchedEffect(fixedRotation) {
-                            requestedOrientation = if (fixedRotation) {
-                                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                            } else {
-                                ActivityInfo.SCREEN_ORIENTATION_USER
+                        LaunchedEffect(screenOrientation) {
+                            requestedOrientation = when (screenOrientation) {
+                                ScreenOrientation.Portrait -> ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                                ScreenOrientation.Landscape -> ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                                else -> ActivityInfo.SCREEN_ORIENTATION_USER
                             }
                         }
 
@@ -260,6 +261,8 @@ abstract class SharedLauncherActivity(
                                 gestures,
                                 searchBarStyle,
                                 darkSearchBar,
+                                darkSearchBarDrawer,
+                                disabledTelosApps,
                                 backgroundColor,
                                 lightStatus,
                                 lightNav,
