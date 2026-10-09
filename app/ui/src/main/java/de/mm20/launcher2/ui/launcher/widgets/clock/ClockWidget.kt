@@ -445,7 +445,7 @@ fun ConfigureClockWidgetSheet(
                 ) {
                     Icon(
                         painterResource(R.drawable.auto_awesome_24dp),
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.preference_system_bar_icons_auto),
                     )
                 }
                 ToggleButton(
@@ -458,7 +458,7 @@ fun ConfigureClockWidgetSheet(
                 ) {
                     Icon(
                         painterResource(R.drawable.light_mode_24px),
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.preference_system_bar_icons_dark),
                     )
                 }
                 ToggleButton(
@@ -471,7 +471,7 @@ fun ConfigureClockWidgetSheet(
                 ) {
                     Icon(
                         painterResource(R.drawable.dark_mode_24px),
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.preference_system_bar_icons_light),
                     )
                 }
             }

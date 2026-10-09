@@ -101,7 +101,7 @@ class BatteryPartProvider(
                     )
                     Column {
                         Text(
-                            text = "${it.level} %",
+                            text = formatPercent(it.level.toFloat()),
                             style = MaterialTheme.typography.titleLarge,
                         )
                         if (it.charging) {
@@ -143,7 +143,10 @@ class BatteryPartProvider(
     }
 
     private fun getChargingInfo(context: Context): Flow<BatteryInfo> = callbackFlow {
-        val batteryManager: BatteryManager = context.getSystemService() ?: return@callbackFlow
+        val batteryManager: BatteryManager = context.getSystemService() ?: run {
+            close()
+            return@callbackFlow
+        }
 
         trySendBlocking(
             BatteryInfo(

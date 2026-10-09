@@ -54,7 +54,10 @@ class AlarmPartProvider : PartProvider {
     }
 
     private fun getNextAlarmTime(context: Context): Flow<Long?> = callbackFlow {
-        val alarmManager: AlarmManager = context.getSystemService() ?: return@callbackFlow
+        val alarmManager: AlarmManager = context.getSystemService() ?: run {
+            close()
+            return@callbackFlow
+        }
         trySendBlocking(alarmManager.nextAlarmClock?.triggerTime)
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
