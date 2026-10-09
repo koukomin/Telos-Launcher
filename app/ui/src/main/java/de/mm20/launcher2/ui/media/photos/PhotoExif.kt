@@ -61,18 +61,40 @@ object PhotoExif {
         }
     }.getOrNull()
 
-    /** Writes the given tag values in place. The caller must hold write access to [uri]. */
-    fun write(resolver: ContentResolver, uri: Uri, values: Map<String, String>): Boolean = runCatching {
+    /**
+     * ExifInterface rewrites the file in place: a crash, a full disk or a broken file in the middle would destroy the photo.
+     * So the original bytes are kept in a temporary file while [edit] runs, put back when it fails or when the result
+     * can no longer be decoded, and deleted afterwards.
+     */
+    private fun withBackup(resolver: ContentResolver, uri: Uri, edit: () -> Unit): Boolean {
+        val backup = File.createTempFile("exif_backup", ".bin")
+        try {
+            resolver.openInputStream(uri)?.use { input -> backup.outputStream().use { input.copyTo(it) } } ?: return false
+            val ok = runCatching { edit() }.isSuccess && runCatching {
+                val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+                resolver.openInputStream(uri)!!.use { BitmapFactory.decodeStream(it, null, bounds) }
+                bounds.outWidth > 0 && bounds.outHeight > 0
+            }.getOrDefault(false)
+            if (!ok) {
+                runCatching { resolver.openOutputStream(uri, "wt")!!.use { out -> backup.inputStream().use { it.copyTo(out) } } }
+            }
+            return ok
+        } finally {
+            backup.delete()
+        }
+    }
+
+    /** Writes the given tag values in place. The caller must hold write access to [uri]. The original is restored if it fails. */
+    fun write(resolver: ContentResolver, uri: Uri, values: Map<String, String>): Boolean = withBackup(resolver, uri) {
         resolver.openFileDescriptor(uri, "rw")!!.use { pfd ->
             val exif = ExifInterface(pfd.fileDescriptor)
             for ((tag, value) in values) exif.setAttribute(tag, value.ifBlank { null })
             exif.saveAttributes()
         }
-        true
-    }.getOrDefault(false)
+    }
 
-    /** Removes the location only, or all known tags, in place. */
-    fun strip(resolver: ContentResolver, uri: Uri, gpsOnly: Boolean): Boolean = runCatching {
+    /** Removes the location only, or all known tags, in place. The original is restored if it fails. */
+    fun strip(resolver: ContentResolver, uri: Uri, gpsOnly: Boolean): Boolean = withBackup(resolver, uri) {
         resolver.openFileDescriptor(uri, "rw")!!.use { pfd ->
             val exif = ExifInterface(pfd.fileDescriptor)
             for (tag in gpsTags) exif.setAttribute(tag, null)
@@ -87,8 +109,7 @@ object PhotoExif {
             }
             exif.saveAttributes()
         }
-        true
-    }.getOrDefault(false)
+    }
 
     /** Creates a copy without any metadata (re-encoded) in the cache and returns it. */
     fun cleanCopy(context: Context, uri: Uri): File? = runCatching {
