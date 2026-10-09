@@ -185,7 +185,7 @@ fun ThemeColorPreference(
                         val hct = Hct.fromInt(corePalette.get(themeColor.color))
                         val hue = hct.hue.toFloat()
                         val chroma = hct.chroma.toFloat()
-                        var tone by remember(value == null) { mutableStateOf(themeColor.tone.toFloat()) }
+                        var tone by remember(currentValue == null) { mutableStateOf(themeColor.tone.toFloat()) }
                         Row(
                             modifier = Modifier.padding(top = 24.dp, bottom = 8.dp)
                         ) {

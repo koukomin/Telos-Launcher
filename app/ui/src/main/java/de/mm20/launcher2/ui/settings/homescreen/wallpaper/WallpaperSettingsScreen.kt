@@ -18,6 +18,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -82,7 +83,7 @@ fun WallpaperSettingsScreen() {
         }
     }
 
-    var pendingImageUri by remember { mutableStateOf<Uri?>(null) }
+    var pendingImageUri by rememberSaveable { mutableStateOf<Uri?>(null) }
     val wallpaperPicker = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri ->
@@ -96,7 +97,7 @@ fun WallpaperSettingsScreen() {
         }
     }
 
-    var appendToPlaylist by remember { mutableStateOf(false) }
+    var appendToPlaylist by rememberSaveable { mutableStateOf(false) }
     val videoPicker = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri ->

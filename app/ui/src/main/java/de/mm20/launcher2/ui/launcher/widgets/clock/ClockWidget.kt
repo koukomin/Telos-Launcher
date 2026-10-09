@@ -546,7 +546,7 @@ fun ConfigureClockWidgetSheet(
                         onClick = {
                             showDropdown = true
                         },
-                        enabled = fillHeight == true,
+                        enabled = fillHeight == true || widgetsOnHome == false,
                     )
                     DropdownMenuPopup(
                         expanded = showDropdown,

@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.settings.appearance
 
 import android.net.Uri
-import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -57,6 +56,7 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.settings.transparencies.checkerboard
 import de.mm20.launcher2.ui.theme.colorscheme.darkColorSchemeOf
@@ -79,7 +79,7 @@ fun ImportThemeSettingsScreen(
     fromUri: Uri,
 ) {
     val context = LocalContext.current
-    val activity = LocalActivity.current
+    val backStack = LocalBackStack.current
     val viewModel: ImportThemeSettingsScreenVM = viewModel()
 
     val scope = rememberCoroutineScope()
@@ -198,7 +198,7 @@ fun ImportThemeSettingsScreen(
                             } else null,
                         )
                     }
-                    if (viewModel.colorsExists || viewModel.shapesExists) {
+                    if (viewModel.colorsExists || viewModel.typographyExists || viewModel.shapesExists || viewModel.transparenciesExists) {
                         Banner(
                             modifier = Modifier
                                 .background(
@@ -231,7 +231,7 @@ fun ImportThemeSettingsScreen(
                         onClick = {
                             scope.launch {
                                 viewModel.import()?.join()
-                                activity?.onBackPressed()
+                                backStack.removeLastOrNull()
                             }
 
                         }

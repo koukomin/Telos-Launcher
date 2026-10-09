@@ -110,16 +110,21 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
     fun setComponentName(componentName: ComponentName) {
         val action = searchAction.value ?: return
 
+        // Never mutate the existing intent: it is shared with the saved builder (its key is derived
+        // from the intent), and a mutated instance would not trigger a state update either.
+        fun Intent.withComponent(): Intent = cloneFilter().also {
+            it.replaceExtras(extras?.deepCopy() ?: Bundle())
+            it.setComponent(componentName)
+        }
+
         val newAction = when (action) {
             is CustomIntentActionBuilder -> action.copy(
-                baseIntent = action.baseIntent.setComponent(
-                    componentName
-                )
+                baseIntent = action.baseIntent.withComponent()
             )
 
-            is AppSearchActionBuilder -> action.also {
-                it.baseIntent.setComponent(componentName)
-            }
+            is AppSearchActionBuilder -> action.copy(
+                baseIntent = action.baseIntent.withComponent()
+            )
 
             is CustomWebsearchActionBuilder -> action
         }

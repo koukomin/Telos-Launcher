@@ -74,11 +74,17 @@ class ImportThemeSettingsScreenVM : ViewModel(), KoinComponent {
                         loading = false
                     } else {
                         error = true
+                        loading = false
                     }
+                } ?: run {
+                    error = true
+                    loading = false
                 }
-            } catch (e: SecurityException) {
+            } catch (e: Exception) {
+                if (e is kotlinx.coroutines.CancellationException) throw e
                 CrashReporter.logException(e)
                 error = true
+                loading = false
             }
         }
     }

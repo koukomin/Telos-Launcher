@@ -62,12 +62,15 @@ class FreezeDashboardScreenVM : ViewModel(), KoinComponent {
         }
     }
 
+    private val refreshTrigger = MutableStateFlow(0)
+
     private val allApps = combine(
         appRepository.findMany(), iconlessApps,
-    ) { apps, iconless -> apps + iconless }
+    ) { apps, iconless -> (apps + iconless).distinctBy { it.key } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), persistentListOf())
 
-    val rows = combine(freezeManager.stats, allApps) { stats, apps ->
+    // refreshTrigger: the live frozen state of the apps is not a flow, recompute it on refresh
+    val rows = combine(freezeManager.stats, allApps, refreshTrigger) { stats, apps, _ ->
         withContext(Dispatchers.Default) {
             stats.mapNotNull { (packageName, appStats) ->
                 val app = apps.firstOrNull { it.componentName.packageName == packageName }
@@ -114,7 +117,6 @@ class FreezeDashboardScreenVM : ViewModel(), KoinComponent {
     // bumps to force a recompute instead, called on screen resume and via a manual refresh
     // action. No continuous polling: that would work against the point of a battery-focused
     // feature, for a number that only matters while this screen is actually open.
-    private val refreshTrigger = MutableStateFlow(0)
     fun refresh() {
         refreshTrigger.value++
     }

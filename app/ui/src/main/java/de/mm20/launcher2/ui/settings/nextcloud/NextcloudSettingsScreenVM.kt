@@ -21,7 +21,6 @@ class NextcloudSettingsScreenVM: ViewModel(), KoinComponent {
 
     fun onResume() {
         viewModelScope.launch {
-            loading.value = true
             nextcloudUser.value = accountsRepository.getCurrentlySignedInAccount(AccountType.Nextcloud)
             loading.value = false
         }

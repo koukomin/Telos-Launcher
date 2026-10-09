@@ -21,7 +21,6 @@ class OwncloudSettingsScreenVM: ViewModel(), KoinComponent {
 
     fun onResume() {
         viewModelScope.launch {
-            loading.value = true
             owncloudUser.value = accountsRepository.getCurrentlySignedInAccount(AccountType.Owncloud)
             loading.value = false
         }

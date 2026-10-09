@@ -54,10 +54,11 @@ fun ContactsSettingsScreen() {
                         title = stringResource(R.string.preference_search_contacts),
                         summary = stringResource(R.string.preference_search_contacts_summary),
                         icon = R.drawable.person_24px,
-                        value = enabledProviders.contains("local"),
+                        value = enabledProviders.contains("local") && hasContactsPermission == true,
                         onValueChanged = {
                             viewModel.setProviderEnabled("local", it)
-                        }
+                        },
+                        enabled = hasContactsPermission == true,
                     )
                 }
                 for (plugin in plugins) {

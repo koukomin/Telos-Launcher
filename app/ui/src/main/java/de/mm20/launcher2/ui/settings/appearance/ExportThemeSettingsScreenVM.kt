@@ -38,8 +38,16 @@ class ExportThemeSettingsScreenVM: ViewModel(), KoinComponent {
 
 
     fun init() {
-        themeName = ""
+        // Only reset when nothing has been picked yet, so a configuration change
+        // does not wipe the name the user typed.
+        if (colorScheme == null && typographyScheme == null && shapeScheme == null && transparencyScheme == null) {
+            themeName = ""
+        }
     }
+
+    /** File name (without extension) that is safe to use in the cache dir and as a suggested name. */
+    val fileBaseName: String
+        get() = themeName.replace(Regex("[\\\\/:*?\"<>|\\p{Cntrl}]"), "_").trim().ifBlank { "theme" }
 
     var colorScheme by mutableStateOf<Colors?>(null)
         @JvmName("_setColorScheme")
@@ -87,8 +95,12 @@ class ExportThemeSettingsScreenVM: ViewModel(), KoinComponent {
     fun exportTheme(context: Context, uri: Uri) {
         val themeBundle = getThemeBundle()
         viewModelScope.launch(Dispatchers.IO) {
-            context.contentResolver.openOutputStream(uri)?.writer()?.use {
-                it.write(themeBundle.toJson())
+            try {
+                context.contentResolver.openOutputStream(uri)?.writer()?.use {
+                    it.write(themeBundle.toJson())
+                }
+            } catch (e: java.io.IOException) {
+                android.util.Log.e("ExportTheme", "Failed to export theme", e)
             }
         }
     }
@@ -97,13 +109,19 @@ class ExportThemeSettingsScreenVM: ViewModel(), KoinComponent {
         val themeBundle = getThemeBundle()
         viewModelScope.launch {
             val file = withContext(Dispatchers.IO) {
-                val file = File(context.cacheDir, "${themeName}.kvtheme")
-                file.writeText(themeBundle.toJson())
-                file
-            }
+                val file = File(context.cacheDir, "${fileBaseName}.kvtheme")
+                try {
+                    file.writeText(themeBundle.toJson())
+                    file
+                } catch (e: java.io.IOException) {
+                    android.util.Log.e("ExportTheme", "Failed to write theme", e)
+                    null
+                }
+            } ?: return@launch
             context.tryStartActivity(Intent().apply {
                 action = Intent.ACTION_SEND
                 type = "application/json"
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(
                     context,
                     context.applicationContext.packageName + ".fileprovider",

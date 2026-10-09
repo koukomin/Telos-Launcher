@@ -82,7 +82,7 @@ fun ColorSchemesSettingsScreen() {
                                 IconButton(
                                     modifier = Modifier.padding(start = 12.dp),
                                     onClick = { showMenu = true }) {
-                                    Icon(painterResource(R.drawable.more_vert_24px), null)
+                                    Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions))
                                 }
                                 DropdownMenuPopup(
                                     expanded = showMenu,
@@ -133,7 +133,7 @@ fun ColorSchemesSettingsScreen() {
                                     IconButton(
                                         modifier = Modifier.padding(start = 12.dp),
                                         onClick = { showMenu = true }) {
-                                        Icon(painterResource(R.drawable.more_vert_24px), null)
+                                        Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions))
                                     }
                                     DropdownMenuPopup(
                                         expanded = showMenu,

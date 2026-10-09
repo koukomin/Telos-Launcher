@@ -770,7 +770,7 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
         }
 
         Text(
-            text = "Query",
+            text = stringResource(R.string.au3_searchset_intent_query),
             modifier = Modifier.padding(top = 24.dp, bottom = 8.dp),
             style = MaterialTheme.typography.titleSmall,
         )
@@ -796,7 +796,7 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
                             .size(ToggleButtonDefaults.IconSize)
                     )
                 }
-                Text("Data")
+                Text(stringResource(R.string.au3_searchset_intent_data))
             }
             ToggleButton(
                 modifier = Modifier.weight(1f),
@@ -815,7 +815,7 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
                             .size(ToggleButtonDefaults.IconSize)
                     )
                 }
-                Text("String extra")
+                Text(stringResource(R.string.au3_searchset_intent_string_extra))
             }
         }
 
@@ -827,7 +827,7 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
                     .padding(top = 8.dp),
                 value = action.queryKey ?: "",
                 onValueChange = { viewModel.setQueryKey(it) },
-                label = { Text("Extra key") },
+                label = { Text(stringResource(R.string.au3_searchset_intent_extra_key)) },
                 singleLine = true,
                 isError = viewModel.customIntentKeyError.value
             )
@@ -842,14 +842,16 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
                 .padding(top = 8.dp),
             value = action.queryTemplate ?: "",
             onValueChange = { viewModel.setIntentQueryTemplate(it) },
-            label = { Text(if (action.queryKey == null) "Data template" else "String extra template") },
+            label = { Text(stringResource(if (action.queryKey == null) R.string.au3_searchset_intent_data_template else R.string.au3_searchset_intent_extra_template)) },
             supportingText = {
                 Text(
-                    if (action.queryKey == null) {
-                        "The URI template that is used to construct the intent\'s data URI. Use ‘\${1}’ as a placeholder for the actual search term"
-                    } else {
-                        "The template that is used to construct the string that is passed to the intent as a string extra. Use ‘\${1}’ as a placeholder for the actual search term"
-                    }
+                    stringResource(
+                        if (action.queryKey == null) {
+                            R.string.au3_searchset_intent_data_template_hint
+                        } else {
+                            R.string.au3_searchset_intent_extra_template_hint
+                        }
+                    )
                 )
             },
             singleLine = true,
@@ -873,7 +875,7 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
         )
 
         Text(
-            text = "Base intent",
+            text = stringResource(R.string.au3_searchset_intent_base),
             modifier = Modifier.padding(top = 24.dp, bottom = 8.dp),
             style = MaterialTheme.typography.titleSmall,
         )
@@ -885,7 +887,7 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
                 .padding(top = 16.dp),
             value = action.baseIntent.action ?: "",
             onValueChange = { viewModel.setIntentAction(it) },
-            label = { Text("Action") },
+            label = { Text(stringResource(R.string.au3_searchset_intent_action)) },
             singleLine = true,
         )
 
@@ -895,7 +897,7 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
                 .padding(top = 8.dp),
             value = action.baseIntent.categories?.firstOrNull() ?: "",
             onValueChange = { viewModel.setIntentCategory(it) },
-            label = { Text("Category") },
+            label = { Text(stringResource(R.string.au3_searchset_intent_category)) },
             singleLine = true,
         )
 
@@ -906,7 +908,7 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
                     .padding(top = 8.dp),
                 value = action.baseIntent.dataString ?: "",
                 onValueChange = { viewModel.setIntentData(it) },
-                label = { Text("Data") },
+                label = { Text(stringResource(R.string.au3_searchset_intent_data)) },
                 singleLine = true,
             )
         }
@@ -917,7 +919,7 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
                 .padding(top = 8.dp),
             value = action.baseIntent.type ?: "",
             onValueChange = { viewModel.setIntentType(it) },
-            label = { Text("Type") },
+            label = { Text(stringResource(R.string.au3_searchset_intent_type)) },
             singleLine = true,
         )
 
@@ -929,7 +931,7 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
                 .padding(top = 8.dp),
             value = packageName ?: "",
             onValueChange = { viewModel.setIntentPackage(it) },
-            label = { Text("Package") },
+            label = { Text(stringResource(R.string.au3_searchset_intent_package)) },
             singleLine = true,
         )
 
@@ -940,7 +942,7 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
                     .padding(top = 8.dp),
                 value = action.baseIntent.component?.className ?: "",
                 onValueChange = { viewModel.setIntentClassName(it) },
-                label = { Text("Class name") },
+                label = { Text(stringResource(R.string.au3_searchset_intent_class_name)) },
                 singleLine = true,
             )
         }
@@ -1049,7 +1051,7 @@ fun PickIcon(viewModel: EditSearchActionSheetVM) {
                 ) {
                     Text(
                         modifier = Modifier.padding(end = 16.dp),
-                        text = "Monochrome",
+                        text = stringResource(R.string.au3_searchset_icon_monochrome),
                         textAlign = TextAlign.End,
                         style = MaterialTheme.typography.labelMedium,
                     )
@@ -1128,7 +1130,7 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
     Column(
         modifier = Modifier.padding(top = 24.dp)
     ) {
-        Text("Extras", style = MaterialTheme.typography.titleSmall)
+        Text(stringResource(R.string.au3_searchset_intent_extras), style = MaterialTheme.typography.titleSmall)
         for (key in keys) {
             Row(
                 modifier = Modifier.padding(top = 12.dp),
@@ -1254,7 +1256,7 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                 ) {
                     Icon(
                         painterResource(R.drawable.do_not_disturb_on_24px),
-                        contentDescription = null
+                        contentDescription = stringResource(R.string.menu_delete)
                     )
                 }
             }
@@ -1321,7 +1323,7 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                                         style = MaterialTheme.typography.labelSmall
                                     )
                                 },
-                                text = { Text("String") },
+                                text = { Text(stringResource(R.string.au3_searchset_type_string)) },
                                 onClick = {
                                     newType = "string"
                                     showTypeDropdown = false
@@ -1334,7 +1336,7 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                                         style = MaterialTheme.typography.labelSmall
                                     )
                                 },
-                                text = { Text("Integer") },
+                                text = { Text(stringResource(R.string.au3_searchset_type_integer)) },
                                 onClick = {
                                     newType = "int"
                                     showTypeDropdown = false
@@ -1347,7 +1349,7 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                                         style = MaterialTheme.typography.labelSmall
                                     )
                                 },
-                                text = { Text("Long") },
+                                text = { Text(stringResource(R.string.au3_searchset_type_long)) },
                                 onClick = {
                                     newType = "long"
                                     showTypeDropdown = false
@@ -1360,7 +1362,7 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                                         style = MaterialTheme.typography.labelSmall
                                     )
                                 },
-                                text = { Text("Float") },
+                                text = { Text(stringResource(R.string.au3_searchset_type_float)) },
                                 onClick = {
                                     newType = "float"
                                     showTypeDropdown = false
@@ -1373,7 +1375,7 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                                         style = MaterialTheme.typography.labelSmall
                                     )
                                 },
-                                text = { Text("Double") },
+                                text = { Text(stringResource(R.string.au3_searchset_type_double)) },
                                 onClick = {
                                     newType = "double"
                                     showTypeDropdown = false
@@ -1386,7 +1388,7 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                                         null
                                     )
                                 },
-                                text = { Text("Boolean") },
+                                text = { Text(stringResource(R.string.au3_searchset_type_boolean)) },
                                 onClick = {
                                     newType = "bool"
                                     showTypeDropdown = false
@@ -1398,7 +1400,7 @@ private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
                     modifier = Modifier
                         .weight(1f)
                         .padding(bottom = 8.dp),
-                    label = { Text("Key") },
+                    label = { Text(stringResource(R.string.au3_searchset_intent_key)) },
                     value = newKey,
                     onValueChange = { newKey = it },
                     singleLine = true,

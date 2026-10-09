@@ -92,7 +92,7 @@ fun TypographiesSettingsScreen() {
                                 IconButton(
                                     modifier = Modifier.padding(start = 12.dp),
                                     onClick = { showMenu = true }) {
-                                    Icon(painterResource(R.drawable.more_vert_24px), null)
+                                    Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions))
                                 }
                                 DropdownMenuPopup(
                                     expanded = showMenu,
@@ -157,7 +157,7 @@ fun TypographiesSettingsScreen() {
                                     IconButton(
                                         modifier = Modifier.padding(start = 12.dp),
                                         onClick = { showMenu = true }) {
-                                        Icon(painterResource(R.drawable.more_vert_24px), null)
+                                        Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions))
                                     }
                                     DropdownMenuPopup(
                                         expanded = showMenu,
@@ -219,7 +219,9 @@ fun TypographiesSettingsScreen() {
                     }
                 }
             }
-            item {
+        }
+        item {
+            run {
                 FilledTonalButton(
                     contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
                     onClick = {
@@ -242,7 +244,7 @@ fun TypographiesSettingsScreen() {
             text = {
                 Text(
                     stringResource(
-                        R.string.confirmation_delete_transparencies_scheme,
+                        R.string.confirmation_delete_typography_scheme,
                         deleteTypography!!.name
                     )
                 )

@@ -67,7 +67,7 @@ fun FreezeDashboardScreen() {
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_screen_presets)) {
+            PreferenceCategory(title = stringResource(R.string.au3_commsfreeze_overview)) {
                 Preference(
                     title = stringResource(R.string.freeze_dashboard_counts, totalFreezes, totalUnfreezes),
                     summary = stringResource(R.string.preference_freeze_dashboard_summary),
