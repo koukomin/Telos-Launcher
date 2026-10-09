@@ -213,7 +213,7 @@ private fun RecommendedAppCard(recommendation: AppRecommendation, modifier: Modi
             }
             Spacer(modifier = Modifier.weight(1f))
             IconButton(
-                modifier = Modifier.size(24.dp),
+                modifier = Modifier.size(40.dp),
                 onClick = { showInfo = true },
             ) {
                 Icon(

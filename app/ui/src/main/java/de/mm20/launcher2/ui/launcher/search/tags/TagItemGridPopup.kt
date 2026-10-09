@@ -25,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -109,7 +110,7 @@ fun TagItemGridPopup(
                     modifier = Modifier.heightIn(max = 320.dp),
                 ) {
                     items(items, key = { it.key }) { item ->
-                        val icon by viewModel.getIcon(item, 32.dp.value.toInt())
+                        val icon by viewModel.getIcon(item, with(LocalDensity.current) { 40.dp.roundToPx() })
                             .collectAsStateWithLifecycle(null)
                         Column(
                             modifier = Modifier

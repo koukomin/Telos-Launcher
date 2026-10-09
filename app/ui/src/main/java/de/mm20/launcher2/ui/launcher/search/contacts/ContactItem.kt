@@ -173,7 +173,13 @@ fun ContactItem(
                                     viewModel.reportUsage(contact)
                                     context.tryStartActivity(
                                         Intent(
-                                            if (callOnTap)
+                                            // Fall back to the dialer if the call permission is missing
+                                            // (e.g. revoked after "tap to call" was enabled)
+                                            if (callOnTap && androidx.core.content.ContextCompat.checkSelfPermission(
+                                                    context,
+                                                    android.Manifest.permission.CALL_PHONE
+                                                ) == android.content.pm.PackageManager.PERMISSION_GRANTED
+                                            )
                                                 Intent.ACTION_CALL
                                             else
                                                 Intent.ACTION_DIAL

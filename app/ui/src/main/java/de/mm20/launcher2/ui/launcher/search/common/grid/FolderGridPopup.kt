@@ -120,7 +120,8 @@ fun FolderGridPopup(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = folder.labelOverride ?: folder.label,
+                text = latestFolder?.let { it.labelOverride ?: it.label }
+                    ?: (folder.labelOverride ?: folder.label),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier
                     .padding(bottom = 16.dp)
