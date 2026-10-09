@@ -16,6 +16,8 @@ data class SipAccount(
     val password: String,
     val domain: String,
     val displayName: String = "",
+    /** Verify the TLS certificate of the server (off keeps a self-signed FRITZ!Box working) */
+    val verifyServer: Boolean = false,
 )
 
 enum class SipRegistration { Offline, Registering, Registered, Failed }
@@ -53,6 +55,7 @@ object SipEngine : BaresipService.Listener {
     val lastError: StateFlow<String> = _lastError
 
     @Volatile private var running = false
+    @Volatile private var verifyServer = false
     @Volatile private var pendingAccount: SipAccount? = null
     @Volatile private var uap = 0L
     @Volatile private var addresses = ""
@@ -83,11 +86,12 @@ object SipEngine : BaresipService.Listener {
         }
         running = true
         pendingAccount = account
+        verifyServer = account.verifyServer
         addresses = linkAddresses
         nameservers = dns
         _registration.value = SipRegistration.Registering
         val dir = File(context.filesDir, "sip").apply { mkdirs() }
-        File(dir, "config").writeText(config())
+        File(dir, "config").writeText(config(account.verifyServer))
         File(dir, "accounts").writeText("")
         File(dir, "contacts").writeText("")
         thread(name = "baresip", isDaemon = true) {
@@ -148,7 +152,7 @@ object SipEngine : BaresipService.Listener {
     }
 
     /** Base configuration, following the static config of baresip-studio. */
-    private fun config(): String {
+    private fun config(verify: Boolean): String {
         val dnsLines = nameservers.split(",").filter { it.isNotBlank() }.joinToString("") {
             if (it.contains(':')) "dns_server [$it]:53\n" else "dns_server $it:53\n"
         }
@@ -175,7 +179,8 @@ object SipEngine : BaresipService.Listener {
             rtp_stats no
             rtp_timeout 60
             rtp_rxmode thread
-            sip_verify_server no
+            sip_verify_server ${if (verify) "yes" else "no"}
+            ${if (verify) "sip_capath /system/etc/security/cacerts" else ""}
             log_level 2
             module aaudio.so
             module stun.so
@@ -242,7 +247,8 @@ object SipEngine : BaresipService.Listener {
             "registered" -> _registration.value = SipRegistration.Registered
             "registering failed" -> {
                 _registration.value = SipRegistration.Failed
-                _lastError.value = ev.drop(1).joinToString(",")
+                val reason = ev.drop(1).joinToString(",")
+                _lastError.value = if (verifyServer && isTlsFailure(reason)) text(I18nR.string.au2_callsec_sip_err_tls) else reason
             }
             // A SIP INVITE arrived: callp is the SIP message, accept it to create the call
             "incoming call" -> Api.ua_accept(uap, callp)
@@ -279,6 +285,12 @@ object SipEngine : BaresipService.Listener {
     override fun onMessage(uap: Long, peerUri: String, contentType: String, body: ByteArray) = Unit
 
     override fun onMessageResponse(code: Int, reason: String, time: String) = Unit
+
+    /** True when a registration failure text looks like a TLS / certificate problem */
+    internal fun isTlsFailure(reason: String): Boolean {
+        val r = reason.lowercase()
+        return listOf("tls", "ssl", "certificate", "x509", "verify", "handshake").any { r.contains(it) }
+    }
 
     /** A host name or an IP address, optionally with a port */
     internal fun isValidDomain(domain: String): Boolean =

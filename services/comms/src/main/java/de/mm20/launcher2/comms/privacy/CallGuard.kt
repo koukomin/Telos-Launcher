@@ -1,6 +1,9 @@
 package de.mm20.launcher2.comms.privacy
 
 import android.content.Context
+import android.widget.Toast
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import android.telecom.PhoneAccountHandle
 import androidx.fragment.app.FragmentActivity
 import de.mm20.launcher2.comms.AuthManager
@@ -21,7 +24,7 @@ object CallGuard : KoinComponent {
         val snap = commsSettings.snapshot.first()
         val clirNumber = TelosDialer.withClir(number, snap.clirEnabled, snap.clirPrefix)
         if (requiresAuth(clirNumber, snap.callProtectMode, snap.protectedCallNumbers)) {
-            val activity = context as? FragmentActivity ?: return
+            val activity = context as? FragmentActivity ?: return cannotConfirm(context)
             if (!authManager.authenticateNative(activity, activity.getString(I18nR.string.au_phoneb_confirm_call))) return
         }
         // Calls without an explicit SIM go over SIP when the account is set to be preferred
@@ -36,10 +39,21 @@ object CallGuard : KoinComponent {
         if (number.isEmpty()) return false
         val snap = commsSettings.snapshot.first()
         if (requiresAuth(number, snap.callProtectMode, snap.protectedCallNumbers)) {
-            val activity = context as? FragmentActivity ?: return false
+            val activity = context as? FragmentActivity ?: run { cannotConfirm(context); return false }
             if (!authManager.authenticateNative(activity, activity.getString(I18nR.string.au_phoneb_confirm_call))) return false
         }
         return de.mm20.launcher2.comms.sip.SipDialer.place(context, number)
+    }
+
+    /** The confirmation prompt cannot be shown: the call is not placed, and the user is told why */
+    private suspend fun cannotConfirm(context: Context) {
+        withContext(Dispatchers.Main) {
+            Toast.makeText(
+                context.applicationContext,
+                context.getString(I18nR.string.au2_callsec_cannot_confirm),
+                Toast.LENGTH_LONG,
+            ).show()
+        }
     }
 
     private fun requiresAuth(

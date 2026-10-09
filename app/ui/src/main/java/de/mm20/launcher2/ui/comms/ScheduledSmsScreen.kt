@@ -31,6 +31,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.comms.sms.ScheduledSmsStore
+import de.mm20.launcher2.comms.sms.SmsSims
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import kotlinx.serialization.Serializable
 import java.text.SimpleDateFormat
@@ -56,6 +57,12 @@ fun ScheduledSmsScreen() {
         mutableStateOf(ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED)
     }
     val smsLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { smsGranted = it }
+    val sims = remember { SmsSims.active(context) }
+    var simId by remember { mutableStateOf(-1) }
+    // preselect the SIM used last for this number (or the system default)
+    androidx.compose.runtime.LaunchedEffect(number, sims) {
+        if (sims.size >= 2) simId = SmsSims.preselected(context, number.trim(), sims)?.subId ?: sims.first().subId
+    }
     val canSave = number.isNotBlank() && body.isNotBlank()
     PreferenceScreen(title = { Text(stringResource(R.string.hc_scheduled_sms)) }) {
         if (!smsGranted) {
@@ -106,6 +113,9 @@ fun ScheduledSmsScreen() {
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
             )
         }
+        if (sims.size >= 2) item {
+            SimChooser(sims, simId, { simId = it }, Modifier.padding(horizontal = 16.dp, vertical = 4.dp))
+        }
         item {
             Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             if (!canSave) Text(
@@ -131,7 +141,9 @@ fun ScheduledSmsScreen() {
                                 if (cal.timeInMillis <= System.currentTimeMillis()) {
                                     Toast.makeText(context, R.string.au_messages_scheduled_past, Toast.LENGTH_SHORT).show()
                                 } else if (canSave) {
-                                    ScheduledSmsStore.add(context, number.trim(), body, cal.timeInMillis)
+                                    val sub = if (sims.size >= 2) simId else -1
+                                    if (sub >= 0) SmsSims.remember(context, number.trim(), sub)
+                                    ScheduledSmsStore.add(context, number.trim(), body, cal.timeInMillis, sub)
                                     items = ScheduledSmsStore.list(context)
                                     number = ""
                                     body = ""
@@ -166,7 +178,10 @@ fun ScheduledSmsScreen() {
             item {
                 ListItem(
                     headlineContent = { Text(sms.number) },
-                    supportingContent = { Text("${fmt.format(Date(sms.atEpochMs))} · ${sms.body}") },
+                    supportingContent = {
+                        val simLabel = sims.firstOrNull { it.subId == sms.subId }?.label
+                        Text("${fmt.format(Date(sms.atEpochMs))}${if (simLabel != null) " · $simLabel" else ""} · ${sms.body}")
+                    },
                     trailingContent = {
                         TextButton(onClick = {
                             ScheduledSmsStore.remove(context, sms.id)

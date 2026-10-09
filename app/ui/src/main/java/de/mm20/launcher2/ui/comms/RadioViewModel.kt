@@ -18,6 +18,7 @@ import androidx.media3.session.SessionToken
 import com.google.common.util.concurrent.MoreExecutors
 import de.mm20.launcher2.comms.model.RadioStation
 import de.mm20.launcher2.comms.radio.RadioPlayerService
+import de.mm20.launcher2.comms.radio.RadioRecorder
 import de.mm20.launcher2.comms.radio.RadioSleepTimer
 import de.mm20.launcher2.comms.radio.StreamResolver
 import de.mm20.launcher2.comms.repository.RadioRepository
@@ -51,6 +52,25 @@ class RadioViewModel : ViewModel(), KoinComponent {
     val error: StateFlow<Int?> = _error
 
     val sleepEndsAt: StateFlow<Long> = RadioSleepTimer.endsAt
+
+    val recordingState: StateFlow<RadioRecorder.State> = RadioRecorder.state
+
+    /**
+     * Starts or stops recording the stream that is playing now. Returns a string resource to show
+     * when recording could not be started, or null.
+     */
+    fun toggleRecording(context: Context): Int? {
+        if (RadioRecorder.state.value is RadioRecorder.State.Recording) {
+            RadioRecorder.stop()
+            return null
+        }
+        val item = mediaController?.currentMediaItem ?: return R.string.au2_radio2_nothing_playing
+        val url = item.localConfiguration?.uri?.toString() ?: return R.string.au2_radio2_nothing_playing
+        if (!RadioRecorder.isRecordable(url)) return R.string.au2_radio2_hls
+        val name = _stationName.value.ifEmpty { context.getString(R.string.au_radio_unknown_station) }
+        RadioRecorder.start(context, item.mediaId, name, url)
+        return null
+    }
 
     private var currentStation: RadioStation? = null
     private var streamQueue: List<String> = emptyList()

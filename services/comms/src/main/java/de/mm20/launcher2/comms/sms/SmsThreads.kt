@@ -172,6 +172,9 @@ object SmsThreads {
         out
     }.getOrDefault(emptyList())
 
+    /** The name of the contact with [number], if any */
+    fun displayNameOf(context: Context, number: String): String? = displayName(context, number)
+
     internal fun displayName(context: Context, number: String): String? = runCatching {
         if (number.isBlank()) return null
         val uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number))
@@ -185,9 +188,9 @@ object SmsThreads {
      * copy is kept by Telos (the system does not store what another app sends). Returns false when
      * it could not be sent.
      */
-    fun send(context: Context, address: String, text: String): Boolean {
+    fun send(context: Context, address: String, text: String, subId: Int = -1): Boolean {
         if (address.isBlank() || text.isBlank()) return false
-        val row = SmsStore.insertOutgoing(context, address, text.trim())
+        val row = SmsStore.insertOutgoing(context, address, text.trim(), subId)
         val sentIntent = row?.let {
             android.app.PendingIntent.getBroadcast(
                 context, it.hashCode(),
@@ -196,21 +199,21 @@ object SmsThreads {
                     (if (android.os.Build.VERSION.SDK_INT >= 31) android.app.PendingIntent.FLAG_MUTABLE else 0),
             )
         }
-        val sent = SmsRepository(context).sendSms(address, text.trim(), sentIntent)
+        val sent = SmsRepository(context).sendSms(address, text.trim(), sentIntent, subId)
         if (!sent) row?.let { SmsStore.setType(context, it, Telephony.Sms.MESSAGE_TYPE_FAILED) }
         if (sent && row == null) SentLog.add(context, address, text.trim())
         return sent
     }
 
     /** Sends a multimedia message: [text] and the pictures or videos at [attachments]. Default SMS app only. */
-    fun sendMms(context: Context, addresses: List<String>, text: String, attachments: List<Uri>): Boolean {
+    fun sendMms(context: Context, addresses: List<String>, text: String, attachments: List<Uri>, subId: Int = -1): Boolean {
         if (!SmsRole.isDefault(context) || addresses.isEmpty()) return false
         val parts = mutableListOf<MmsPart>()
         if (text.isNotBlank()) parts += MmsPart("text/plain", "text.txt", text.trim().toByteArray(Charsets.UTF_8))
         attachments.forEachIndexed { i, uri -> MmsMedia.read(context, uri, i)?.let { parts += it } }
         if (parts.isEmpty()) return false
-        val row = MmsStore.insertOutgoing(context, addresses, parts)
-        val ok = MmsTransport.send(context, addresses, parts, row)
+        val row = MmsStore.insertOutgoing(context, addresses, parts, subId)
+        val ok = MmsTransport.send(context, addresses, parts, row, subId)
         if (!ok) row?.let { MmsStore.setBox(context, it, Telephony.Mms.MESSAGE_BOX_FAILED) }
         return ok
     }

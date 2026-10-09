@@ -117,6 +117,12 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(blockInternational = enabled)) }
     }
 
+    val homeCountry
+        get() = dataStore.data.map { it.comms.homeCountry }
+    fun setHomeCountry(region: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(homeCountry = region.uppercase())) }
+    }
+
     val clirEnabled
         get() = dataStore.data.map { it.comms.clirEnabled }
     fun setClirEnabled(enabled: Boolean) {
@@ -399,13 +405,14 @@ class CommsSettings internal constructor(
     fun setSipOutgoing(mode: String) {
         dataStore.update { it.copy(comms = it.comms.copy(sipOutgoing = mode)) }
     }
-    fun setSipAccount(user: String, domain: String, displayName: String, passwordEnc: String) {
+    fun setSipAccount(user: String, domain: String, displayName: String, passwordEnc: String, verifyServer: Boolean) {
         dataStore.update {
             it.copy(
                 comms = it.comms.copy(
                     sipUser = user.trim(),
                     sipDomain = domain.trim(),
                     sipDisplayName = displayName.trim(),
+                    sipVerifyServer = verifyServer,
                     sipPasswordEnc = passwordEnc,
                 )
             )

@@ -93,6 +93,8 @@ object Trakt {
     ): HttpResult {
         val c = URL(API + path).openConnection() as HttpURLConnection
         c.requestMethod = method
+        // the API never redirects; a redirect must not carry the bearer token to another host
+        c.instanceFollowRedirects = false
         c.connectTimeout = 10000
         c.readTimeout = 20000
         c.setRequestProperty("Content-Type", "application/json")

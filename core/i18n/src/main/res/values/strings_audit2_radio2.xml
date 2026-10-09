@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au2_radio2_record">Record</string>
+    <string name="au2_radio2_stop_recording">Stop recording</string>
+    <string name="au2_radio2_rec_status">REC %1$s · %2$s</string>
+    <string name="au2_radio2_nothing_playing">Start a station before recording</string>
+    <string name="au2_radio2_hls">This stream type cannot be recorded</string>
+    <string name="au2_radio2_saved">Recording saved: %1$s</string>
+    <string name="au2_radio2_saved_dropped">The stream ended. Saved what was recorded: %1$s</string>
+    <string name="au2_radio2_saved_full">Storage is full. Saved what was recorded: %1$s</string>
+    <string name="au2_radio2_nothing_recorded">Nothing was recorded</string>
+    <string name="au2_radio2_failed">Recording failed</string>
+    <string name="au2_radio2_save_failed">The recording could not be saved</string>
+    <string name="au2_radio2_recordings">Recordings</string>
+    <string name="au2_radio2_recordings_summary">%1$d saved in Music/Telos Radio</string>
+    <string name="au2_radio2_recordings_empty">No recordings yet. Recordings are saved to Music/Telos Radio.</string>
+    <string name="au2_radio2_delete_title">Delete recording?</string>
+    <string name="au2_radio2_delete_message">%1$s will be deleted permanently.</string>
+    <string name="au2_radio2_delete_failed">The recording could not be deleted</string>
+    <string name="au2_radio2_no_app">No app can open this recording</string>
+    <string name="au2_radio2_notif_channel">Radio recording</string>
+    <string name="au2_radio2_notif_channel_desc">Shown while a radio stream is being recorded</string>
+    <string name="au2_radio2_notif_title">Recording %1$s</string>
+    <string name="au2_radio2_notif_stop">Stop</string>
+</resources>

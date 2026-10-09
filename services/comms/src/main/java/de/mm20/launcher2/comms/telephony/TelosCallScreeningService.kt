@@ -84,13 +84,11 @@ class TelosCallScreeningService : CallScreeningService(), KoinComponent {
         return false
     }
 
-    private fun isInternational(number: String): Boolean {
-        val digits = number.filter { it.isDigit() }
-        if (digits.isEmpty()) return false
-        if (number.startsWith("+") || number.startsWith("00")) {
-            return !PhoneNumberUtils.isEmergencyNumber(number)
-        }
-        return false
+    private suspend fun isInternational(number: String): Boolean {
+        if (number.none { it.isDigit() }) return false
+        if (PhoneNumberUtils.isEmergencyNumber(number)) return false
+        val home = HomeCountry.resolve(this, commsSettings.homeCountry.first())
+        return HomeCountry.isInternational(number, home)
     }
 }
 // === TELOS_PENDING_REVIEW_END: telephony_encryption_suite ===

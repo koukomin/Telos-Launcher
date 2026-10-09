@@ -7,9 +7,13 @@ import android.util.Log
 
 class SmsRepository(private val context: Context) {
 
-    fun sendSms(destinationAddress: String, text: String, sentIntent: android.app.PendingIntent? = null): Boolean {
+    /** [subId]: the SIM (subscription) that sends the message, -1 for the system default */
+    @Suppress("DEPRECATION")
+    fun sendSms(destinationAddress: String, text: String, sentIntent: android.app.PendingIntent? = null, subId: Int = -1): Boolean {
         try {
-            val smsManager: SmsManager = context.getSystemService(SmsManager::class.java)
+            val default: SmsManager? = context.getSystemService(SmsManager::class.java) ?: SmsManager.getDefault()
+            val smsManager: SmsManager = (if (subId >= 0) runCatching { SmsManager.getSmsManagerForSubscriptionId(subId) }.getOrNull() else null)
+                ?: default
                 ?: return false
 
             // We divide the message if it's too long

@@ -3,6 +3,12 @@ package de.mm20.launcher2.ui.settings.comms
 import de.mm20.launcher2.ui.R
 import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.OutlinedTextField
@@ -93,6 +99,8 @@ fun SipSettings() {
         var domain by remember { mutableStateOf(current.sipDomain) }
         var name by remember { mutableStateOf(current.sipDisplayName) }
         var pass by remember { mutableStateOf(SecretBox.decrypt(current.sipPasswordEnc)) }
+        // new accounts verify the certificate; accounts saved before keep their stored (off) value
+        var verify by remember { mutableStateOf(if (current.sipUser.isBlank()) true else current.sipVerifyServer) }
         AlertDialog(
             onDismissRequest = { showDialog = false },
             title = { Text(stringResource(R.string.hc_sip_account)) },
@@ -127,11 +135,25 @@ fun SipSettings() {
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                     )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                    ) {
+                        Column(Modifier.weight(1f)) {
+                            Text(stringResource(R.string.au2_callsec_sip_verify))
+                            Text(
+                                stringResource(R.string.au2_callsec_sip_verify_hint),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                        Switch(checked = verify, onCheckedChange = { verify = it })
+                    }
                 }
             },
             confirmButton = {
                 TextButton(enabled = domain.isNotBlank() && domain.all { it.isLetterOrDigit() || it == '.' || it == '-' || it == ':' || it == '_' }, onClick = {
-                    settings.setSipAccount(user, domain, name, SecretBox.encrypt(pass))
+                    settings.setSipAccount(user, domain, name, SecretBox.encrypt(pass), verify)
                     showDialog = false
                 }) { Text(stringResource(R.string.hc_save)) }
             },

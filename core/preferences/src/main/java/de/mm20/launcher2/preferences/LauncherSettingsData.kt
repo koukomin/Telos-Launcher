@@ -1243,6 +1243,8 @@ data class CommsGroup(
     val blockHiddenNumbers: Boolean = false,
     val blockUnknownNumbers: Boolean = false,
     val blockInternational: Boolean = false,
+    /** ISO 3166 region of the home country; empty = SIM, then network, then locale country */
+    val homeCountry: String = "",
     val clirEnabled: Boolean = false,
     val autoRecordCalls: Boolean = false,
     val recordingQuality: String = "BALANCED",
@@ -1281,6 +1283,8 @@ data class CommsGroup(
     /** Registrar, for a FRITZ!Box usually fritz.box */
     val sipDomain: String = "fritz.box",
     val sipDisplayName: String = "",
+    /** Verify the TLS certificate of the server. Off for accounts saved before this option existed (self-signed FRITZ!Box). */
+    val sipVerifyServer: Boolean = false,
     /** Encrypted with the Android Keystore, never stored in plain text */
     val sipPasswordEnc: String = "",
     /** off = receive only | choose = extra SIP button when calling | default = SIP preferred */

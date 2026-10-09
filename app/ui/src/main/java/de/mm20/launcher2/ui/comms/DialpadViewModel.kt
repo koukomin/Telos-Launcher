@@ -201,7 +201,7 @@ class DialpadViewModel : ViewModel(), KoinComponent {
                 android.widget.Toast.makeText(
                     context,
                     de.mm20.launcher2.comms.sip.SipDialer.lastFailure
-                        .ifBlank { context.getString(R.string.au_phonea_sip_not_connected) },
+                        .ifBlank { context.getString(R.string.au_phoneb_sip_err_not_connected) },
                     android.widget.Toast.LENGTH_SHORT,
                 ).show()
             }

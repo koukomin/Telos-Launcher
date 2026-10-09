@@ -102,7 +102,7 @@ class SipService : Service(), KoinComponent {
         lastAddresses = info.addresses
         SipEngine.start(
             this,
-            SipAccount(snap.sipUser, SecretBox.decrypt(snap.sipPasswordEnc), snap.sipDomain, snap.sipDisplayName),
+            SipAccount(snap.sipUser, SecretBox.decrypt(snap.sipPasswordEnc), snap.sipDomain, snap.sipDisplayName, snap.sipVerifyServer),
             info.addresses,
             info.dns,
         )

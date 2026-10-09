@@ -22,6 +22,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import android.text.format.Formatter
+import android.widget.Toast
+import de.mm20.launcher2.comms.radio.RadioRecorder
 import de.mm20.launcher2.ui.R
 
 @Composable
@@ -34,9 +37,11 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
     val nowPlaying by viewModel.nowPlayingMetadata.collectAsStateWithLifecycle()
     val error by viewModel.error.collectAsStateWithLifecycle()
     val sleepEndsAt by viewModel.sleepEndsAt.collectAsStateWithLifecycle()
+    val recording by viewModel.recordingState.collectAsStateWithLifecycle()
+    val recState = recording as? RadioRecorder.State.Recording
     var now by remember { mutableStateOf(System.currentTimeMillis()) }
-    LaunchedEffect(sleepEndsAt) {
-        while (sleepEndsAt > 0L) {
+    LaunchedEffect(sleepEndsAt, recState?.startedAt) {
+        while (sleepEndsAt > 0L || recState != null) {
             now = System.currentTimeMillis()
             kotlinx.coroutines.delay(1000)
         }
@@ -99,10 +104,20 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                         val minutes = ((sleepEndsAt - now).coerceAtLeast(0L) / 60_000L) + 1
                         "  ·  " + stringResource(R.string.au_radio_sleep_in, minutes.toInt())
                     } else ""
+                    val recText = recState?.let {
+                        val seconds = ((now - it.startedAt).coerceAtLeast(0L) / 1000L)
+                        val clock = if (seconds >= 3600) {
+                            String.format(java.util.Locale.ROOT, "%d:%02d:%02d", seconds / 3600, seconds / 60 % 60, seconds % 60)
+                        } else {
+                            String.format(java.util.Locale.ROOT, "%02d:%02d", seconds / 60, seconds % 60)
+                        }
+                        stringResource(R.string.au2_radio2_rec_status, clock, Formatter.formatShortFileSize(context, it.bytes))
+                    }
                     Text(
-                        text = (error?.let { stringResource(it) } ?: nowPlaying.ifEmpty { stringResource(R.string.au_radio_streaming_live) }) + sleepSuffix,
+                        text = (recText?.let { "$it  ·  " }.orEmpty()) +
+                            (error?.let { stringResource(it) } ?: nowPlaying.ifEmpty { stringResource(R.string.au_radio_streaming_live) }) + sleepSuffix,
                         style = MaterialTheme.typography.labelSmall,
-                        color = if (error != null) MaterialTheme.colorScheme.error
+                        color = if (error != null || recText != null) MaterialTheme.colorScheme.error
                         else MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -110,6 +125,17 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                 }
 
                 // Controls
+                IconButton(onClick = {
+                    viewModel.toggleRecording(context)?.let {
+                        Toast.makeText(context, context.getString(it), Toast.LENGTH_SHORT).show()
+                    }
+                }) {
+                    Icon(
+                        painter = painterResource(if (recState != null) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px),
+                        contentDescription = stringResource(if (recState != null) R.string.au2_radio2_stop_recording else R.string.au2_radio2_record),
+                        tint = if (recState != null) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
+                    )
+                }
                 IconButton(onClick = { viewModel.togglePlayPause() }) {
                     Icon(
                         painter = painterResource(if (isPlaying) R.drawable.pause_24px else R.drawable.play_arrow_24px),

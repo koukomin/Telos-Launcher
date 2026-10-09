@@ -631,10 +631,24 @@ fun CommsSettingsScreen() {
                 )
                 SwitchPreference(
                     title = stringResource(R.string.hc_block_international),
-                    summary = stringResource(R.string.hc_reject_numbers_that_start_with_or_00),
+                    summary = stringResource(R.string.au2_callsec_block_international_summary),
                     value = blockInternational,
                     onValueChanged = { viewModel.setBlockInternational(it) }
                 )
+                if (blockInternational) {
+                    val homeCountry by viewModel.homeCountry.collectAsStateWithLifecycle()
+                    val countries = remember {
+                        listOf(
+                            context.getString(R.string.au2_callsec_home_country_auto) to ""
+                        ) + de.mm20.launcher2.comms.telephony.HomeCountry.regions().map { it.second to it.first }
+                    }
+                    ListPreference(
+                        title = stringResource(R.string.au2_callsec_home_country),
+                        items = countries,
+                        value = homeCountry,
+                        onValueChanged = { viewModel.setHomeCountry(it) },
+                    )
+                }
                 SwitchPreference(
                     title = stringResource(R.string.hc_withhold_caller_id_clir),
                     summary = stringResource(R.string.hc_hide_your_number_on_outgoing_calls),
