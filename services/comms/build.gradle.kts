@@ -70,6 +70,7 @@ dependencies {
     testImplementation(libs.bundles.tests)
 
     implementation(project(":core:ktx"))
+    implementation(project(":core:i18n"))
     implementation(project(":core:base"))
     implementation(project(":core:crashreporter"))
     implementation(project(":core:preferences"))

@@ -10,11 +10,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.background
 import androidx.compose.ui.draw.clip
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
@@ -35,6 +37,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -120,7 +123,7 @@ fun NetworkFirewallScreen() {
     }
 
     PreferenceScreen(
-        title = { Text(stringResource(R.string.netfw_title)) },
+        title = stringResource(R.string.netfw_title),
         topBarActions = {
             Box {
                 IconButton(onClick = { menu = true }) {
@@ -181,6 +184,18 @@ fun NetworkFirewallScreen() {
         }
         if (shown.isEmpty() && query.isNotBlank()) {
             item { de.mm20.launcher2.ui.component.SearchEmptyState(query.trim()) }
+        } else if (shown.isEmpty() && apps.isEmpty()) {
+            // the app list is read in the background: show progress instead of a false "no apps"
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 2.dp)
+                    Text(stringResource(R.string.au_netui_loading_apps), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
         } else if (shown.isEmpty()) {
             item {
                 Text(

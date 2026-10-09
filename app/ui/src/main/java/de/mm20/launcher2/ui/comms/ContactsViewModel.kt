@@ -51,14 +51,7 @@ class ContactsViewModel : ViewModel(), KoinComponent {
         de.mm20.launcher2.comms.telephony.SimRouter.defaultNumberFor(contact.id, contact.phoneNumbers)
 
     fun share(context: Context, contact: DialerContact) {
-        val vcard = buildString {
-            appendLine("BEGIN:VCARD")
-            appendLine("VERSION:3.0")
-            appendLine("FN:${contact.displayName}")
-            contact.phoneNumbers.forEach { appendLine("TEL:$it") }
-            contact.emails.forEach { appendLine("EMAIL:$it") }
-            appendLine("END:VCARD")
-        }
+        val vcard = contactVcard(contact.displayName, contact.phoneNumbers, contact.emails)
         context.tryStartActivity(
             Intent.createChooser(
                 Intent(Intent.ACTION_SEND).apply {

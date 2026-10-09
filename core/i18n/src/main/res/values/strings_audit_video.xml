@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_video_title">Videos</string>
+    <string name="au_video_tab_library">Library</string>
+    <string name="au_video_tab_movies">Movies</string>
+    <string name="au_video_tab_series">Series</string>
+    <string name="au_video_tab_folders">Folders</string>
+    <string name="au_video_episodes_count">Episodes: %1$d</string>
+    <string name="au_video_files_count">Files: %1$d</string>
+    <string name="au_video_videos_count">Videos: %1$d</string>
+    <string name="au_video_no_movies">No movies found</string>
+    <string name="au_video_no_series">No series recognised. Name files like Show.S01E02.mkv</string>
+    <string name="au_video_watchlist_added">Added to your Trakt watchlist</string>
+    <string name="au_video_watchlist_failed">Could not add to the watchlist</string>
+    <string name="au_video_other_folder">Other</string>
+    <string name="au_video_open_settings">Open app settings</string>
+    <string name="au_video_opening">Opening…</string>
+    <string name="au_video_finding_peers">Finding peers…</string>
+    <string name="au_video_torrent_failed">The torrent could not be opened</string>
+    <string name="au_video_torrent_stats">Peers %1$d · %2$d KB/s · %3$d%% downloaded</string>
+    <string name="au_video_playback_error">This video could not be played</string>
+    <string name="au_video_subtitle_failed">The subtitle file could not be loaded</string>
+    <string name="au_video_unknown_error">Unknown error</string>
+    <string name="au_video_downloads_count">%1$d downloads</string>
+    <string name="au_video_hearing_impaired_short">HI</string>
+    <string name="au_video_brightness">Brightness %1$d%%</string>
+    <string name="au_video_volume">Volume %1$d%%</string>
+    <string name="au_video_skip_forward">+10 s</string>
+    <string name="au_video_skip_back">-10 s</string>
+    <string name="au_video_fit">Fit</string>
+    <string name="au_video_fill">Fill</string>
+    <string name="au_video_zoom">Zoom</string>
+    <string name="au_video_track_n">Track %1$d</string>
+    <string name="au_video_subtitle_n">Subtitle %1$d</string>
+    <string name="au_video_channels">%1$d ch</string>
+    <string name="au_video_minutes">%1$d min</string>
+    <string name="au_video_seconds_signed">%1$+.1f s</string>
+    <string name="au_video_trakt_contacting">Contacting Trakt…</string>
+    <string name="au_video_trakt_connected">Connected</string>
+    <string name="au_video_trakt_signin_failed">Sign in failed</string>
+    <string name="au_video_trakt_unreachable">Could not reach Trakt</string>
+    <string name="au_video_trakt_open_and_enter">Open %1$s and enter the code</string>
+</resources>

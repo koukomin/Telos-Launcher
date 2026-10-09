@@ -27,6 +27,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -61,8 +62,9 @@ fun NetworkDnsScreen() {
     val selected by vm.selected.collectAsStateWithLifecycle()
     val engineState by vm.engineState.collectAsStateWithLifecycle()
 
-    var dnsQuery by remember { mutableStateOf("") }
-    var filter by remember { mutableStateOf<DnsTag?>(null) }
+    var dnsQuery by rememberSaveable { mutableStateOf("") }
+    var filterName by rememberSaveable { mutableStateOf<String?>(null) }
+    val filter = filterName?.let { n -> DnsTag.values().firstOrNull { it.name == n } }
     var details by remember { mutableStateOf<DnsServer?>(null) }
     var form by remember { mutableStateOf<DnsServer?>(null) }
     var formIsNew by remember { mutableStateOf(true) }
@@ -104,9 +106,9 @@ fun NetworkDnsScreen() {
                 Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 4.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                FilterChip(selected = filter == null, onClick = { filter = null }, label = { Text(stringResource(R.string.net_dns_filter_all)) })
+                FilterChip(selected = filter == null, onClick = { filterName = null }, label = { Text(stringResource(R.string.net_dns_filter_all)) })
                 DnsTag.values().forEach { tag ->
-                    FilterChip(selected = filter == tag, onClick = { filter = tag }, label = { Text(tagFilterText(tag)) })
+                    FilterChip(selected = filter == tag, onClick = { filterName = tag.name }, label = { Text(tagFilterText(tag)) })
                 }
             }
         }
@@ -187,8 +189,10 @@ fun NetworkDnsScreen() {
     if (nextDns) {
         NextDnsDialog(
             onAdd = { s ->
-                vm.add(s) { }
-                nextDns = false
+                vm.add(s) { r ->
+                    if (r.isSuccess) nextDns = false
+                    else Toast.makeText(context, context.getString(R.string.net_dns_invalid), Toast.LENGTH_LONG).show()
+                }
             },
             onDismiss = { nextDns = false },
         )

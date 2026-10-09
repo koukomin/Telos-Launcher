@@ -27,6 +27,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import de.mm20.launcher2.ui.R
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -178,7 +180,7 @@ internal fun CommsRoundAction(
         ) {
             Icon(
                 painter = painterResource(icon),
-                contentDescription = label,
+                contentDescription = null,
                 tint = contentColor.copy(alpha = if (enabled) 1f else 0.4f),
                 modifier = Modifier.size(24.dp),
             )
@@ -218,7 +220,7 @@ internal fun CommsActionCard(
         ) {
             Icon(
                 painter = painterResource(icon),
-                contentDescription = label,
+                contentDescription = null,
                 tint = tint,
                 modifier = Modifier.size(22.dp),
             )
@@ -256,15 +258,17 @@ internal fun CommsDetailCard(
 @Composable
 internal fun CommsHistoryRow(call: CallLogEntry) {
     val missed = call.type == CallType.Missed || call.type == CallType.Rejected
-    val color = if (missed) Color(0xFFE53935) else MaterialTheme.colorScheme.onSurface
-    val typeLabel = when (call.type) {
-        CallType.Incoming -> "Incoming"
-        CallType.Outgoing -> "Outgoing"
-        CallType.Missed -> "Missed"
-        CallType.Rejected -> "Rejected"
-        CallType.Blocked -> "Blocked"
-        CallType.Unknown -> "Call"
-    }
+    val color = if (missed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
+    val typeLabel = stringResource(
+        when (call.type) {
+            CallType.Incoming -> R.string.filter_incoming
+            CallType.Outgoing -> R.string.filter_outgoing
+            CallType.Missed -> R.string.filter_missed
+            CallType.Rejected -> R.string.filter_rejected
+            CallType.Blocked -> R.string.au_phonea_blocked
+            CallType.Unknown -> R.string.search_action_call
+        }
+    )
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -296,9 +300,10 @@ internal fun formatCallTimestamp(timestamp: Long): String {
 }
 
 internal fun formatCallDuration(seconds: Long): String {
-    val m = seconds / 60
+    val h = seconds / 3600
+    val m = (seconds % 3600) / 60
     val s = seconds % 60
-    return "%d:%02d".format(m, s)
+    return if (h > 0) "%d:%02d:%02d".format(h, m, s) else "%d:%02d".format(m, s)
 }
 
 internal fun highlightedName(text: String, query: String, highlightColor: Color): androidx.compose.ui.text.AnnotatedString {

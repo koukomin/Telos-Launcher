@@ -3,7 +3,12 @@ package de.mm20.launcher2.comms.media
 import androidx.media3.common.AudioAttributes
 import android.os.Handler
 import android.os.Looper
+import android.net.Uri
 import androidx.media3.common.C
+import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
+import org.json.JSONArray
+import org.json.JSONObject
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
@@ -37,9 +42,23 @@ class MusicPlayerService : MediaSessionService() {
         player.addListener(object : Player.Listener {
             override fun onIsPlayingChanged(isPlaying: Boolean) {
                 handler.removeCallbacks(idleStop)
-                if (!isPlaying) handler.postDelayed(idleStop, IDLE_STOP_MS)
+                if (!isPlaying) {
+                    handler.postDelayed(idleStop, IDLE_STOP_MS)
+                    saveState(player) // position is only written when playback stops
+                }
+            }
+
+            override fun onEvents(player: Player, events: Player.Events) {
+                if (events.containsAny(
+                        Player.EVENT_TIMELINE_CHANGED,
+                        Player.EVENT_MEDIA_ITEM_TRANSITION,
+                        Player.EVENT_SHUFFLE_MODE_ENABLED_CHANGED,
+                        Player.EVENT_REPEAT_MODE_CHANGED,
+                    )
+                ) saveState(player)
             }
         })
+        restoreState(player)
         handler.postDelayed(idleStop, IDLE_STOP_MS)
         mediaSession = MediaSession.Builder(this, player)
             .setBitmapLoader(AlbumArtBitmapLoader(this))
@@ -50,7 +69,72 @@ class MusicPlayerService : MediaSessionService() {
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? = mediaSession
 
+    // ---- queue, shuffle and repeat survive the service being stopped ----
+
+    private fun saveState(player: Player) {
+        runCatching {
+            val prefs = getSharedPreferences(STATE_PREFS, MODE_PRIVATE)
+            val count = player.mediaItemCount
+            if (count == 0) {
+                prefs.edit().clear().apply()
+                return
+            }
+            val items = JSONArray()
+            for (i in 0 until minOf(count, MAX_SAVED_ITEMS)) {
+                val item = player.getMediaItemAt(i)
+                val uri = item.localConfiguration?.uri ?: continue
+                items.put(
+                    JSONObject()
+                        .put("id", item.mediaId)
+                        .put("uri", uri.toString())
+                        .put("title", item.mediaMetadata.title?.toString().orEmpty())
+                        .put("artist", item.mediaMetadata.artist?.toString().orEmpty())
+                        .put("album", item.mediaMetadata.albumTitle?.toString().orEmpty())
+                        .put("art", item.mediaMetadata.artworkUri?.toString().orEmpty())
+                )
+            }
+            prefs.edit()
+                .putString("items", items.toString())
+                .putInt("index", player.currentMediaItemIndex)
+                .putLong("position", player.currentPosition.coerceAtLeast(0L))
+                .putBoolean("shuffle", player.shuffleModeEnabled)
+                .putInt("repeat", player.repeatMode)
+                .apply()
+        }
+    }
+
+    private fun restoreState(player: Player) {
+        runCatching {
+            val prefs = getSharedPreferences(STATE_PREFS, MODE_PRIVATE)
+            val array = JSONArray(prefs.getString("items", null) ?: return)
+            val items = (0 until array.length()).mapNotNull { i ->
+                val o = array.optJSONObject(i) ?: return@mapNotNull null
+                val uri = o.optString("uri").takeIf { it.isNotBlank() } ?: return@mapNotNull null
+                MediaItem.Builder()
+                    .setUri(Uri.parse(uri))
+                    .setMediaId(o.optString("id"))
+                    .setMediaMetadata(
+                        MediaMetadata.Builder()
+                            .setTitle(o.optString("title"))
+                            .setArtist(o.optString("artist"))
+                            .setAlbumTitle(o.optString("album"))
+                            .setArtworkUri(o.optString("art").takeIf { it.isNotBlank() }?.let { Uri.parse(it) })
+                            .build()
+                    )
+                    .build()
+            }
+            if (items.isEmpty()) return
+            player.shuffleModeEnabled = prefs.getBoolean("shuffle", false)
+            player.repeatMode = prefs.getInt("repeat", Player.REPEAT_MODE_OFF)
+            val index = prefs.getInt("index", 0).coerceIn(0, items.size - 1)
+            // paused: the person decides when the music starts again
+            player.setMediaItems(items, index, prefs.getLong("position", 0L))
+            player.prepare()
+        }
+    }
+
     override fun onDestroy() {
+        mediaSession?.player?.let { saveState(it) }
         handler.removeCallbacks(idleStop)
         scrobbler?.release()
         scrobbler = null
@@ -66,5 +150,7 @@ class MusicPlayerService : MediaSessionService() {
 
     private companion object {
         const val IDLE_STOP_MS = 5 * 60 * 1000L
+        const val STATE_PREFS = "music_player_state"
+        const val MAX_SAVED_ITEMS = 1000
     }
 }

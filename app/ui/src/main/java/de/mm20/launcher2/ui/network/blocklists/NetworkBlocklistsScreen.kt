@@ -80,7 +80,7 @@ fun NetworkBlocklistsScreen() {
         TS.matches(bq, b.domain, (b.scope as? RuleScope.App)?.let { directory.labelFor(it.appId) })
     }
 
-    PreferenceScreen(title = { Text(stringResource(R.string.netfw_b_title)) }) {
+    PreferenceScreen(title = stringResource(R.string.netfw_b_title)) {
         item {
             Text(
                 stringResource(R.string.netfw_b_intro),

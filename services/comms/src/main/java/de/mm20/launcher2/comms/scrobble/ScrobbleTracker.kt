@@ -60,6 +60,16 @@ class ScrobbleTracker(private val context: Context, private val player: Player) 
         scrobbled = false
     }
 
+    // the saved logins are decrypted with the Keystore: not on every 5 s tick on the main thread
+    private var cachedConfig: ScrobbleConfig? = null
+    private var cachedAt = 0L
+
+    private fun config(): ScrobbleConfig {
+        val now = System.currentTimeMillis()
+        cachedConfig?.let { if (now - cachedAt < 30_000L) return it }
+        return Scrobblers.load(context).also { cachedConfig = it; cachedAt = now }
+    }
+
     private fun accumulate() {
         val now = System.currentTimeMillis()
         if (lastTick != 0L && player.isPlaying) playedMs += now - lastTick
@@ -68,7 +78,7 @@ class ScrobbleTracker(private val context: Context, private val player: Player) 
 
     private fun check() {
         val t = track ?: return
-        if (!Scrobblers.load(context).any) return
+        if (!config().any) return
         // the duration is known once playback started
         val durationSeconds = if (t.durationSeconds > 0) t.durationSeconds else (player.duration.takeIf { it > 0 } ?: 0L).div(1000).toInt()
         val withDuration = if (durationSeconds != t.durationSeconds) t.copy(durationSeconds = durationSeconds).also { track = it } else t
@@ -108,7 +118,7 @@ class ScrobbleTracker(private val context: Context, private val player: Player) 
     // ---- sending (off the main thread) ----
 
     private fun send(action: (Service) -> Unit) {
-        val config = Scrobblers.load(context)
+        val config = config()
         network.execute {
             for (s in services(config)) runCatching { action(s) }
         }
@@ -145,16 +155,18 @@ class ScrobbleTracker(private val context: Context, private val player: Player) 
         // earlier scrobbles that could not be sent go first
         val old = Scrobblers.queue(context)
         val keep = org.json.JSONArray()
+        // a service that failed once (offline) is not asked again for the rest of this round
+        val failed = mutableSetOf<String>()
         for (i in 0 until old.length()) {
-            val o = old.getJSONObject(i)
+            val o = old.optJSONObject(i) ?: continue
             val s = list.firstOrNull { it.name == o.optString("s") }
-            if (s == null) { keep.put(o); continue } // service switched off: keep it for later
+            if (s == null || s.name in failed) { keep.put(o); continue } // service switched off or offline: keep it for later
             val past = ScrobbleTrack(o.optString("a"), o.optString("t"), o.optString("b"), o.optInt("l"), o.optLong("ts"))
-            if (runCatching { s.scrobble(past) }.isFailure) keep.put(o)
+            if (runCatching { s.scrobble(past) }.isFailure) { failed += s.name; keep.put(o) }
         }
         Scrobblers.setQueue(context, keep)
         for (s in list) {
-            if (runCatching { s.scrobble(t) }.isFailure) Scrobblers.enqueue(context, s.name, t)
+            if (s.name in failed || runCatching { s.scrobble(t) }.isFailure) Scrobblers.enqueue(context, s.name, t)
         }
     }
 }

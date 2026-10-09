@@ -144,7 +144,7 @@ fun MusicScreen() {
                             Text(current.subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
-                    TrackList(current.tracks, nowPlaying?.title, onPlay = { i -> viewModel.play(current.tracks, i) })
+                    TrackList(current.tracks, nowPlaying?.mediaId, onPlay = { i -> viewModel.play(current.tracks, i) })
                 } else {
                     TabRow(selectedTabIndex = tab) {
                         listOf(stringResource(R.string.au_music_tab_songs), stringResource(R.string.hc_albums), stringResource(R.string.au_music_tab_artists)).forEachIndexed { i, title ->
@@ -157,7 +157,7 @@ fun MusicScreen() {
                             Text(stringResource(R.string.hc_no_music_found_on_this_device), color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         filtered.isEmpty() && query.isNotBlank() -> de.mm20.launcher2.ui.component.SearchEmptyState(query)
-                        tab == 0 -> TrackList(filtered, nowPlaying?.title, onPlay = { i -> viewModel.play(filtered, i) })
+                        tab == 0 -> TrackList(filtered, nowPlaying?.mediaId, onPlay = { i -> viewModel.play(filtered, i) })
                         tab == 1 -> LazyVerticalGrid(
                             columns = GridCells.Fixed(2),
                             contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 96.dp),
@@ -231,7 +231,7 @@ fun MusicScreen() {
 }
 
 @Composable
-private fun TrackList(list: List<MusicTrack>, currentTitle: String?, onPlay: (Int) -> Unit) {
+private fun TrackList(list: List<MusicTrack>, currentId: String?, onPlay: (Int) -> Unit) {
     LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
         itemsIndexed(list, key = { _, t -> t.id }) { index, track ->
             Row(
@@ -243,7 +243,7 @@ private fun TrackList(list: List<MusicTrack>, currentTitle: String?, onPlay: (In
                     Text(
                         track.title,
                         style = MaterialTheme.typography.bodyLarge,
-                        color = if (track.title == currentTitle) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
+                        color = if (currentId != null && track.id.toString() == currentId) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )

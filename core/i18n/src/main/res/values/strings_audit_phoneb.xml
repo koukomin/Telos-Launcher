@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_phoneb_sip_incoming">Incoming SIP call</string>
+    <string name="au_phoneb_ringing">Ringing…</string>
+    <string name="au_phoneb_call_ended">Call ended</string>
+    <string name="au_phoneb_private_caller">Private</string>
+    <string name="au_phoneb_bluetooth">Bluetooth</string>
+    <string name="au_phoneb_record">Record</string>
+    <string name="au_phoneb_recording_short">REC</string>
+    <string name="au_phoneb_mic_needed">Microphone permission is needed to record calls</string>
+    <string name="au_phoneb_record_failed">Could not start the recording</string>
+    <string name="au_phoneb_decline">Decline</string>
+    <string name="au_phoneb_confirm_call">Confirm call</string>
+    <string name="au_phoneb_calls_channel">Calls</string>
+    <string name="au_phoneb_call_title_fallback">Call</string>
+    <string name="au_phoneb_ongoing_call">Ongoing call</string>
+    <string name="au_phoneb_sip_channel_status">SIP account</string>
+    <string name="au_phoneb_sip_channel_status_desc">Shows that the SIP account is registered so that calls can be received</string>
+    <string name="au_phoneb_sip_channel_calls">SIP calls</string>
+    <string name="au_phoneb_sip_starting">Starting…</string>
+    <string name="au_phoneb_sip_in_call_with">In call with %1$s</string>
+    <string name="au_phoneb_sip_call_in_progress">Call in progress</string>
+    <string name="au_phoneb_sip_registered">Registered, ready for calls</string>
+    <string name="au_phoneb_sip_connecting">Connecting…</string>
+    <string name="au_phoneb_sip_reg_failed">Registration failed: %1$s</string>
+    <string name="au_phoneb_sip_offline">Offline</string>
+    <string name="au_phoneb_sip_missed">Missed SIP call</string>
+    <string name="au_phoneb_sip_err_mic">Microphone permission is needed for SIP calls</string>
+    <string name="au_phoneb_sip_err_busy">A SIP call is already in progress</string>
+    <string name="au_phoneb_sip_err_not_connected">SIP account is not connected</string>
+    <string name="au_phoneb_sip_err_bad_server">The SIP server address is not valid</string>
+    <string name="au_phoneb_sip_err_account">Could not create the SIP account</string>
+    <string name="au_phoneb_reminder_channel">Call reminders</string>
+    <string name="au_phoneb_reminder_title">Call back %1$s</string>
+    <string name="au_phoneb_fake_incoming_number">Incoming call (%1$s)</string>
+    <string name="au_phoneb_preset_boss">Boss</string>
+    <string name="au_phoneb_preset_mom">Mom</string>
+    <string name="au_phoneb_preset_doctor">Doctor</string>
+    <string name="au_phoneb_delete_recording">Delete this recording?</string>
+</resources>

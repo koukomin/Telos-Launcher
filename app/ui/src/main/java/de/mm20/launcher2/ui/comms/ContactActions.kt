@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.ContactsContract
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /** One entry in the contact's data that messenger apps add so that calls can start from the contact */
 internal data class DataAction(val uri: Uri, val mimeType: String) {
@@ -43,17 +45,21 @@ internal object ContactActions {
         }.getOrNull()
     }
 
-    fun setRingtone(context: Context, contactId: Long, ringtone: Uri?) {
-        runCatching {
-            val values = android.content.ContentValues().apply {
-                put(ContactsContract.Contacts.CUSTOM_RINGTONE, ringtone?.toString())
-            }
-            context.contentResolver.update(
-                ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId),
-                values,
-                null,
-                null,
-            )
+    /** Stores the contact's own ringtone (null = silent). Returns false when the contact could not be changed. */
+    suspend fun setRingtone(context: Context, contactId: Long, ringtone: Uri?): Boolean {
+        if (contactId < 0) return false
+        return withContext(Dispatchers.IO) {
+            runCatching {
+                val values = android.content.ContentValues().apply {
+                    put(ContactsContract.Contacts.CUSTOM_RINGTONE, ringtone?.toString())
+                }
+                context.contentResolver.update(
+                    ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId),
+                    values,
+                    null,
+                    null,
+                ) > 0
+            }.getOrDefault(false)
         }
     }
 }

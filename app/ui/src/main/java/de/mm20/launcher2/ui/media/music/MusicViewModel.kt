@@ -28,6 +28,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 data class NowPlaying(
+    /** Media store id of the track (see [MusicTrack.id]); empty when unknown */
+    val mediaId: String = "",
     val uri: Uri?,
     val title: String,
     val artist: String,
@@ -167,6 +169,7 @@ class MusicViewModel : ViewModel() {
         val md = c.mediaMetadata
         _positionMs.value = c.currentPosition.coerceAtLeast(0L)
         val playing = NowPlaying(
+            mediaId = item.mediaId,
             uri = item.localConfiguration?.uri,
             title = md.title?.toString().orEmpty(),
             artist = md.artist?.toString().orEmpty(),

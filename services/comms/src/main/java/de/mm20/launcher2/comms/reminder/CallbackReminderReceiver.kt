@@ -9,6 +9,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import de.mm20.launcher2.i18n.R as I18nR
 
 class CallbackReminderReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
@@ -27,18 +28,18 @@ class CallbackReminderReceiver : BroadcastReceiver() {
         val channelId = "telos_callback_reminder"
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             nm.createNotificationChannel(
-                NotificationChannel(channelId, "Call reminders", NotificationManager.IMPORTANCE_HIGH)
+                NotificationChannel(channelId, context.getString(I18nR.string.au_phoneb_reminder_channel), NotificationManager.IMPORTANCE_HIGH)
             )
         }
         nm.notify(
             number.hashCode(),
             NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(android.R.drawable.stat_sys_phone_call)
-                .setContentTitle("Call back $name")
+                .setContentTitle(context.getString(I18nR.string.au_phoneb_reminder_title, name))
                 .setContentText(number)
                 .setCategory(NotificationCompat.CATEGORY_REMINDER)
                 .setContentIntent(pending)
-                .addAction(android.R.drawable.sym_action_call, "Call", pending)
+                .addAction(android.R.drawable.sym_action_call, context.getString(I18nR.string.hc_call), pending)
                 .setAutoCancel(true)
                 .build(),
         )
