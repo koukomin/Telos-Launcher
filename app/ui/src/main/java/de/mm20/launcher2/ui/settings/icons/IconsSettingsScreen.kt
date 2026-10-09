@@ -33,6 +33,9 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.foundation.border
+import kotlin.math.roundToInt
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -94,7 +97,7 @@ fun IconsSettingsScreen() {
 
     val installedIconPacks by viewModel.installedIconPacks.collectAsState(emptyList())
 
-    var showIconPackSheet by remember { mutableStateOf(false) }
+    var showIconPackSheet by rememberSaveable { mutableStateOf(false) }
 
     val hasNotificationsPermission by viewModel.hasNotificationsPermission.collectAsStateWithLifecycle(
         null
@@ -290,7 +293,7 @@ fun IconsSettingsScreen() {
                         )
                         SliderPreference(
                             title = stringResource(R.string.preference_dock_background_opacity),
-                            value = (drawerBackgroundOpacity * 100).toInt(),
+                            value = (drawerBackgroundOpacity * 100).roundToInt(),
                             min = 0,
                             max = 100,
                             onValueChanged = { viewModel.setDrawerBackgroundOpacity(it / 100f) }
@@ -384,7 +387,7 @@ fun IconsSettingsScreen() {
                     summary = if (items.size <= 1) {
                         stringResource(R.string.preference_icon_pack_summary_empty)
                     } else {
-                        iconPack?.name ?: "System"
+                        iconPack?.let { iconPackName(it) } ?: stringResource(R.string.preference_value_system_default)
                     },
                     enabled = installedIconPacks.size > 1,
                     onClick = {
@@ -415,7 +418,7 @@ fun IconsSettingsScreen() {
                         }
                     )
                 }
-                AnimatedVisibility(notificationBadges == true) {
+                AnimatedVisibility(notificationBadges == true && hasNotificationsPermission == true) {
                     Column {
                         ListPreference(
                             title = stringResource(R.string.preference_notification_badge_style),
@@ -471,14 +474,15 @@ fun IconsSettingsScreen() {
         }
     }
 
-    val iconPackPreviewIcons = remember(installedIconPacks, iconSize) {
+    val themedIconsEnabled = icons?.themedIcons == true
+    val iconPackPreviewIcons = remember(installedIconPacks, iconSize, grid.columnCount, themedIconsEnabled) {
         installedIconPacks.associate {
             it.packageName to viewModel.getIconPackPreviewIcons(
                 context,
                 it,
                 grid.columnCount,
                 iconSize,
-                icons?.themedIcons == true
+                themedIconsEnabled
             )
         }
     }
@@ -488,6 +492,7 @@ fun IconsSettingsScreen() {
         installedIconPacks,
         iconPackPreviewIcons = iconPackPreviewIcons,
         columns = grid.columnCount,
+        selectedPackage = icons?.iconPack.orEmpty(),
         onSelect = {
             viewModel.setIconPack(it.packageName)
             showIconPackSheet = false
@@ -502,6 +507,7 @@ private fun IconPackSelectorSheet(
     installedIconPacks: List<IconPack>,
     iconPackPreviewIcons: Map<String, Flow<List<LauncherIcon>>>,
     columns: Int,
+    selectedPackage: String,
     onSelect: (IconPack) -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -527,6 +533,7 @@ private fun IconPackSelectorSheet(
                 Column(
                     modifier = Modifier
                         .clip(when {
+                            installedIconPacks.size == 1 -> md
                             it == 0 -> md.copy(
                                 bottomStart = xs.bottomStart,
                                 bottomEnd = xs.bottomEnd,
@@ -535,7 +542,6 @@ private fun IconPackSelectorSheet(
                                 topStart = xs.topStart,
                                 topEnd = xs.topEnd,
                             )
-                            installedIconPacks.size == 1 -> md
                             else -> xs
                         })
                         .background(
@@ -545,7 +551,7 @@ private fun IconPackSelectorSheet(
                             onSelect(pack)
                         }
                 ) {
-                    val icons by iconPackPreviewIcons[pack.packageName]!!.collectAsState(null)
+                    val icons by remember(iconPackPreviewIcons, pack) { iconPackPreviewIcons[pack.packageName] ?: kotlinx.coroutines.flow.flowOf(null) }.collectAsState(null)
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -584,12 +590,22 @@ private fun IconPackSelectorSheet(
                         modifier = Modifier.padding(16.dp)
                     ) {
                         Text(
-                            text = pack.name,
+                            text = iconPackName(pack),
                             style = MaterialTheme.typography.titleMedium,
                             modifier = Modifier
                                 .weight(1f)
                                 .padding(end = 8.dp)
                         )
+                        if (pack.packageName == selectedPackage) {
+                            Icon(
+                                modifier = Modifier
+                                    .padding(end = 8.dp)
+                                    .size(20.dp),
+                                painter = painterResource(R.drawable.check_24px),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
                         if (pack.themed) {
                             Icon(
                                 modifier = Modifier
@@ -614,7 +630,7 @@ fun IconShapePreference(
     value: IconShape?,
     onValueChanged: (IconShape) -> Unit
 ) {
-    var showDialog by remember { mutableStateOf(false) }
+    var showDialog by rememberSaveable { mutableStateOf(false) }
     Preference(title = title, summary = summary, onClick = { showDialog = true })
 
     if (showDialog && value != null) {
@@ -658,6 +674,9 @@ fun IconShapePreference(
                                         .clip(getShape(it))
                                         .size(48.dp)
                                         .background(MaterialTheme.colorScheme.primary)
+                                        .then(
+                                            if (it == value) Modifier.border(3.dp, MaterialTheme.colorScheme.onSurface, getShape(it)) else Modifier
+                                        )
                                         .clickable {
                                             onValueChanged(it)
                                             showDialog = false
@@ -697,3 +716,7 @@ private fun getShapeName(shape: IconShape?): String? {
         }
     )
 }
+
+@Composable
+private fun iconPackName(pack: IconPack): String =
+    if (pack.packageName.isEmpty()) stringResource(R.string.preference_value_system_default) else pack.name

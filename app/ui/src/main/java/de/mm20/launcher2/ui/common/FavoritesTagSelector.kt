@@ -157,7 +157,7 @@ fun FavoritesTagSelector(
                             modifier = Modifier
                                 .rotate(rot),
                             onClick = { onExpand(true) }) {
-                            Icon(painterResource(R.drawable.arrow_drop_down_24px), null)
+                            Icon(painterResource(R.drawable.arrow_drop_down_24px), stringResource(R.string.au3_launcher2_expand))
                         }
                     }
 

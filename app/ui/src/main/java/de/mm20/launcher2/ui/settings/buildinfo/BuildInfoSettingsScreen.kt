@@ -14,6 +14,8 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import kotlinx.serialization.Serializable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.security.MessageDigest
 
 @Serializable
@@ -29,7 +31,9 @@ fun BuildInfoSettingsScreen() {
             PreferenceCategory {
                 Preference(title = stringResource(R.string.hf_buildinfo_type), summary = BuildConfig.BUILD_TYPE)
                 var buildSignature by remember { mutableStateOf<String?>(null) }
-                LaunchedEffect(null) {
+                LaunchedEffect(Unit) {
+                    buildSignature = withContext(Dispatchers.IO) {
+                    try {
                     val signature = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                         val pi = context.packageManager.getPackageInfo(
                             context.packageName,
@@ -54,10 +58,14 @@ fun BuildInfoSettingsScreen() {
                                 }
                             }
                         )
-                    } else "null"
-                    buildSignature = signatureHash
+                    } else null
+                    signatureHash
+                    } catch (e: Exception) {
+                        null
+                    }
+                    }
                 }
-                Preference(title = stringResource(R.string.hf_buildinfo_signature), summary = buildSignature)
+                Preference(title = stringResource(R.string.hf_buildinfo_signature), summary = buildSignature ?: stringResource(R.string.au3_sysb_unknown))
             }
         }
         item {
@@ -65,7 +73,7 @@ fun BuildInfoSettingsScreen() {
                 for (feature in buildFeatures) {
                     Preference(
                         title = feature.key,
-                        summary = if (feature.value) "YES" else "NO"
+                        summary = stringResource(if (feature.value) R.string.au3_sysb_yes else R.string.au3_sysb_no)
                     )
                 }
             }

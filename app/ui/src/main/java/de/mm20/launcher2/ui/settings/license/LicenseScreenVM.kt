@@ -10,8 +10,9 @@ import kotlinx.coroutines.withContext
 class LicenseScreenVM(private val context: Application) : AndroidViewModel(context) {
     fun getLicenseText(library: OpenSourceLibrary) = flow<String?> {
         val text = withContext(Dispatchers.IO) {
-            context.resources.openRawResource(library.licenseText).reader()
-                .readText()
+            context.resources.openRawResource(library.licenseText).use {
+                it.reader().readText()
+            }
         }
         emit(text)
     }

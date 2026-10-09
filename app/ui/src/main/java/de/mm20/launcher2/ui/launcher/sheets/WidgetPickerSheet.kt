@@ -368,7 +368,7 @@ fun WidgetPickerSheet(
                                         modifier = Modifier.offset(16.dp),
                                         onClick = { viewModel.search("") }
                                     ) {
-                                        Icon(painterResource(R.drawable.close_24px), null)
+                                        Icon(painterResource(R.drawable.close_24px), stringResource(R.string.action_clear))
                                     }
                                 }
                             },

@@ -1,6 +1,8 @@
 package de.mm20.launcher2.ui.settings.license
 
+import android.content.ActivityNotFoundException
 import android.net.Uri
+import android.widget.Toast
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.Column
@@ -40,7 +42,8 @@ fun LicenseScreen(libraryName: String?) {
         if (libraryName == null) {
             AppLicense.get(context)
         } else {
-            OpenSourceLicenses.first { lib -> lib.name == libraryName }
+            OpenSourceLicenses.firstOrNull { lib -> lib.name == libraryName }
+                ?: AppLicense.get(context)
         }
     }
 
@@ -61,19 +64,23 @@ fun LicenseScreen(libraryName: String?) {
                     IconButton(onClick = {
                         backStack.removeLastOrNull()
                     }) {
-                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = "Back")
+                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.menu_back))
                     }
                 },
                 scrollBehavior = scrollBehavior,
                 actions = {
                     val colorScheme = MaterialTheme.colorScheme
                     IconButton(onClick = {
-                        CustomTabsIntent.Builder()
-                            .setDefaultColorSchemeParams(CustomTabColorSchemeParams.Builder()
-                                .setToolbarColor(colorScheme.primaryContainer.toArgb())
-                                .build())
-                            .build()
-                            .launchUrl(context, Uri.parse(library.url))
+                        try {
+                            CustomTabsIntent.Builder()
+                                .setDefaultColorSchemeParams(CustomTabColorSchemeParams.Builder()
+                                    .setToolbarColor(colorScheme.primaryContainer.toArgb())
+                                    .build())
+                                .build()
+                                .launchUrl(context, Uri.parse(library.url))
+                        } catch (e: ActivityNotFoundException) {
+                            Toast.makeText(context, R.string.au3_sysb_no_browser, Toast.LENGTH_SHORT).show()
+                        }
                     }) {
                         Icon(
                             painterResource(R.drawable.open_in_browser_24px),
@@ -118,7 +125,7 @@ fun LicenseScreen(libraryName: String?) {
                                 style = MaterialTheme.typography.bodySmall
                             )
                         }
-                        val licenseText by viewModel.getLicenseText(library).collectAsState(null)
+                        val licenseText by remember(library) { viewModel.getLicenseText(library) }.collectAsState(null)
                         licenseText?.let {
                             Text(
                                 text = it,

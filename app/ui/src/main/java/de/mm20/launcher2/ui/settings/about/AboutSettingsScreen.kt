@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.licenses.OpenSourceLicenses
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
@@ -38,12 +39,16 @@ fun AboutSettingsScreen() {
         item {
             PreferenceCategory {
                 var appVersion by remember { mutableStateOf<String?>(null) }
-                LaunchedEffect(null) {
+                LaunchedEffect(Unit) {
                     appVersion = withContext(Dispatchers.IO) {
-                        context.packageManager.getPackageInfo(
-                            context.packageName,
-                            0
-                        ).versionName
+                        try {
+                            context.packageManager.getPackageInfo(
+                                context.packageName,
+                                0
+                            ).versionName
+                        } catch (e: Exception) {
+                            null
+                        }
                     }
                 }
                 var easterEggCounter by remember { mutableStateOf(0) }
@@ -86,7 +91,7 @@ fun AboutSettingsScreen() {
                     title = "GitHub",
                     summary = "github.com/koukomin/Telos-Launcher",
                     onClick = {
-                        context.startActivity(Intent(Intent.ACTION_VIEW).apply {
+                        context.tryStartActivity(Intent(Intent.ACTION_VIEW).apply {
                             data = "https://github.com/koukomin/Telos-Launcher".toUri()
                         })
                     }

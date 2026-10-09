@@ -45,7 +45,7 @@ fun ProvideCurrentTime(content: @Composable () -> Unit) {
                 var next = 1000L - millis
                 if (next <= 200L) next += 1000L
 
-                handler.postDelayed(this, 1000 - millis)
+                handler.postDelayed(this, next)
             }
 
         }

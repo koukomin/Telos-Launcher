@@ -2,7 +2,7 @@ package de.mm20.launcher2.ui.modifier
 
 import androidx.annotation.FloatRange
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.BlendMode
@@ -28,7 +28,7 @@ fun Modifier.verticalFadingEdges(
     if(!enabled) return this
     if (top == 0.dp && bottom == 0.dp) return this
 
-    return drawWithContent {
+    return drawWithCache {
 
         val topColors = if (top > 0.dp) createColors(
             1f - amount,
@@ -61,12 +61,12 @@ fun Modifier.verticalFadingEdges(
                 colorStops = topSteps + bottomSteps
             )
         }
-        drawContent()
-        drawIntoCanvas {
-            it.drawRect(
-                Rect(0f, 0f, size.width, size.height),
-                paint
-            )
+        val rect = Rect(0f, 0f, size.width, size.height)
+        onDrawWithContent {
+            drawContent()
+            drawIntoCanvas {
+                it.drawRect(rect, paint)
+            }
         }
     }
 }

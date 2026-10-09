@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au3_sysb_yes">Yes</string>
+    <string name="au3_sysb_no">No</string>
+    <string name="au3_sysb_unknown">Unknown</string>
+    <string name="au3_sysb_crash_type_exception">Exception</string>
+    <string name="au3_sysb_crash_type_crash">Crash</string>
+    <string name="au3_sysb_crash_device_info">Device information</string>
+    <string name="au3_sysb_crash_share_via">Share via</string>
+    <string name="au3_sysb_crash_create_issue">Report on GitHub</string>
+    <string name="au3_sysb_crash_show_exceptions">Show exceptions</string>
+    <string name="au3_sysb_crash_show_crashes">Show crashes</string>
+    <string name="au3_sysb_crash_empty">No reports from the last 7 days</string>
+    <string name="au3_sysb_crash_not_found">This report no longer exists</string>
+    <string name="au3_sysb_no_browser">No web browser found</string>
+    <string name="au3_sysb_dump_failed">The memory snapshot could not be created</string>
+    <string name="au3_sysb_normalizer_title">String normalization test</string>
+    <string name="au3_sysb_normalizer_summary">Test string transliteration and normalization</string>
+</resources>

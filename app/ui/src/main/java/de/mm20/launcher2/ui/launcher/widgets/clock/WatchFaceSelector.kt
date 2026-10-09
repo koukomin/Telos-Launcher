@@ -290,7 +290,7 @@ fun WatchFaceSelector(
                                                         null
                                                     )
                                                 },
-                                                text = { Text("Reset") },
+                                                text = { Text(stringResource(R.string.au3_launcher2_reset)) },
                                                 onClick = {
                                                     val widgetId = selected.widgetId
                                                     if (widgetId != null) {
