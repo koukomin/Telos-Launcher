@@ -4,6 +4,8 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialExpressiveTheme
 import androidx.compose.material3.MotionScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -117,7 +119,14 @@ fun LauncherTheme(
             motionScheme = remember(reduceAnimations, animationSpeed) {
                 MotionScheme.expressive().scaledBy(!reduceAnimations, animationSpeed)
             },
-            content = content
+            content = {
+                // Compose's default content colour is black. Without this, icons and texts that sit
+                // on a plain background (not in a Surface or Scaffold) are black on the dark theme.
+                CompositionLocalProvider(
+                    LocalContentColor provides MaterialTheme.colorScheme.onSurface,
+                    content = content,
+                )
+            }
         )
     }
 }
