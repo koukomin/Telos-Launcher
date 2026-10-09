@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Takaisin</string>
+    <string name="nwg_add">Lisää tunneli</string>
+    <string name="nwg_add_new">Luo uusi</string>
+    <string name="nwg_add_file">Tuo .conf-tiedosto</string>
+    <string name="nwg_add_qr">Tuo QR-koodikuvasta</string>
+    <string name="nwg_add_paste">Liitä asetusteksti</string>
+    <string name="nwg_system_default">Järjestelmän oletus</string>
+    <string name="nwg_system_default_summary">Sovellukset, joilla ei ole omaa asetusta, käyttävät tätä tunnelia. Ilman järjestelmän oletusta ne yhdistävät suoraan.</string>
+    <string name="nwg_none">Ei mitään (suora)</string>
+    <string name="nwg_direct">Suora (ei välityspalvelinta)</string>
+    <string name="nwg_apps">Sovelluskohtainen määritys</string>
+    <string name="nwg_apps_summary">Valitse, mitä tunnelia kukin sovellus käyttää</string>
+    <string name="nwg_configs">Tunnelit</string>
+    <string name="nwg_empty">Ei vielä tunneleita. Lisää tunneli + -painikkeella.</string>
+    <string name="nwg_status_off">Pois päältä</string>
+    <string name="nwg_status_connecting">Yhdistetään</string>
+    <string name="nwg_status_up">Yhdistetty</string>
+    <string name="nwg_status_down">Ei vastaa</string>
+    <string name="nwg_status_error">Virhe</string>
+    <string name="nwg_traffic">Vastaanotettu %1$s, lähetetty %2$s</string>
+    <string name="nwg_handshake">Viimeisin handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Ota Telos Network käyttöön yhdistääksesi tunnelit.</string>
+    <string name="nwg_new_title">Uusi tunneli</string>
+    <string name="nwg_edit_title">Muokkaa tunnelia</string>
+    <string name="nwg_name">Nimi</string>
+    <string name="nwg_private_key">Yksityinen avain</string>
+    <string name="nwg_public_key">Julkinen avain: %1$s</string>
+    <string name="nwg_generate">Luo</string>
+    <string name="nwg_addresses">Osoitteet (pilkuilla erotettuina)</string>
+    <string name="nwg_dns">DNS-palvelimet (pilkuilla erotettuina)</string>
+    <string name="nwg_mtu">MTU (0 = automaattinen)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Peerin julkinen avain</string>
+    <string name="nwg_preshared">Esijaettu avain (valinnainen)</string>
+    <string name="nwg_endpoint">Endpoint (isäntä:portti)</string>
+    <string name="nwg_allowed_ips">Sallitut IP-osoitteet (pilkuilla erotettuina)</string>
+    <string name="nwg_keepalive">Persistent keepalive sekunteina (0 = pois)</string>
+    <string name="nwg_add_peer">Lisää peer</string>
+    <string name="nwg_remove_peer">Poista peer</string>
+    <string name="nwg_mobile_only">Vain mobiilidatalla</string>
+    <string name="nwg_lockdown">Estä sovellukset, kun tunneli ei toimi</string>
+    <string name="nwg_save">Tallenna</string>
+    <string name="nwg_cancel">Peruuta</string>
+    <string name="nwg_delete">Poista</string>
+    <string name="nwg_share">Jaa asetukset</string>
+    <string name="nwg_share_warning">Viedyt asetukset sisältävät yksityisen avaimen.</string>
+    <string name="nwg_import">Tuo</string>
+    <string name="nwg_qr_not_found">Kuvasta ei löytynyt QR-koodia</string>
+    <string name="nwg_err_syntax">Asetuksissa on syntaksivirhe: %1$s</string>
+    <string name="nwg_err_missing">Asetukset ovat puutteelliset: %1$s puuttuu</string>
+    <string name="nwg_err_invalid_key">Virheellinen avain: %1$s</string>
+    <string name="nwg_err_invalid_value">Virheellinen arvo: %1$s</string>
+    <string name="nwg_err_invalid_name">Anna enintään 64 merkin pituinen nimi</string>
+    <string name="nwg_err_not_found">Tunnelia ei enää ole</string>
+    <string name="nwg_err_storage">Asetuksia ei voitu tallentaa turvallisesti: %1$s</string>
+    <string name="nwg_err_other">Asetuksia ei voitu tallentaa</string>
+    <string name="nwg_apps_title">Sovellukset ja tunnelit</string>
+    <string name="nwg_search">Hae sovelluksia</string>
+    <string name="nwg_show_system">Näytä järjestelmäsovellukset</string>
+    <string name="nwg_selected">%1$d valittu</string>
+    <string name="nwg_assign_selected">Määritä valituille sovelluksille</string>
+    <string name="nwg_clear_selection">Tyhjennä valinta</string>
+    <string name="nwg_select_all">Valitse kaikki näytetyt</string>
+</resources>

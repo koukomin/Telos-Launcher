@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">Fittex</string>
+    <string name="ts_clear">Neħħi</string>
+    <string name="ts_no_results">L-ebda riżultat għal “%1$s”</string>
+</resources>

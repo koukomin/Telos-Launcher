@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Bilatu oharretan</string>
+    <string name="tsp_search_calls">Bilatu deietan</string>
+    <string name="tsp_search_favorites">Bilatu gogokoetan</string>
+    <string name="tsp_search_contacts">Bilatu kontaktuetan</string>
+    <string name="tsp_search_messages">Bilatu mezuetan</string>
+    <string name="tsp_search_in_conversation">Bilatu elkarrizketan</string>
+    <string name="tsp_search_events">Bilatu gertaeretan</string>
+    <string name="tsp_search_recordings">Bilatu grabaketetan</string>
+    <string name="tsp_search_screenshots">Bilatu pantaila-argazkietan</string>
+    <string name="tsp_search_call_recordings">Bilatu deien grabaketetan</string>
+    <string name="tsp_search_groups">Bilatu taldeetan</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Hľadať v poznámkach</string>
+    <string name="tsp_search_calls">Hľadať v hovoroch</string>
+    <string name="tsp_search_favorites">Hľadať v obľúbených</string>
+    <string name="tsp_search_contacts">Hľadať v kontaktoch</string>
+    <string name="tsp_search_messages">Hľadať v správach</string>
+    <string name="tsp_search_in_conversation">Hľadať v konverzácii</string>
+    <string name="tsp_search_events">Hľadať v udalostiach</string>
+    <string name="tsp_search_recordings">Hľadať v nahrávkach</string>
+    <string name="tsp_search_screenshots">Hľadať v snímkach obrazovky</string>
+    <string name="tsp_search_call_recordings">Hľadať v nahrávkach hovorov</string>
+    <string name="tsp_search_groups">Hľadať v skupinách</string>
+</resources>

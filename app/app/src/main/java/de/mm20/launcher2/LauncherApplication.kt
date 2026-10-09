@@ -54,6 +54,7 @@ import de.mm20.launcher2.freeze.freezeModule
 import de.mm20.launcher2.appmanagement.appManagementModule
 import de.mm20.launcher2.comms.commsModule
 import de.mm20.launcher2.downloads.downloadsModule
+import de.mm20.launcher2.network.networkModule
 import de.mm20.launcher2.data.comms.dataCommsModule
 import de.mm20.launcher2.data.store.dataStoreModule
 import de.mm20.launcher2.data.store.worker.StoreUpdateScheduler
@@ -168,6 +169,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     commsModule,
                     dataCommsModule,
                     downloadsModule,
+                    networkModule,
                 )
             )
         }

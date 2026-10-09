@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Sciigoj de Telos Network</string>
+    <string name="net_notif_title">Telos Network estas ŝaltita</string>
+    <string name="net_notif_text">Konektoj estas filtrataj.</string>
+    <string name="net_notif_blocked">Blokitaj konektoj: %1$d</string>
+    <string name="net_notif_stop">Malŝalti</string>
+    <string name="net_alert_stopped_title">Telos Network malŝaltiĝis</string>
+    <string name="net_alert_crashed">La reta motoro neatendite haltis. Retaliro ne estas tuŝita.</string>
+    <string name="net_alert_revoked">Alia VPN transprenis. Retaliro ne estas tuŝita.</string>
+    <string name="net_alert_start_failed">Telos Network ne povis ekfunkcii. Retaliro ne estas tuŝita.</string>
+    <string name="net_error_permission">Necesas permeso por agordi VPN.</string>
+    <string name="net_error_start_failed">Ne eblis ekfunkcii: %1$s</string>
+    <string name="net_error_unknown">nekonata eraro</string>
+    <string name="net_app_system">Sistemo Android</string>
+    <string name="net_app_unknown">Nekonata apo (%1$d)</string>
+    <string name="net_dns_system">Reta DNS (sistema)</string>
+</resources>

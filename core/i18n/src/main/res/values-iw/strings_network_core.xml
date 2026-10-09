@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">התראות Telos Network</string>
+    <string name="net_notif_title">Telos Network פועל</string>
+    <string name="net_notif_text">החיבורים מסוננים.</string>
+    <string name="net_notif_blocked">חיבורים שנחסמו: %1$d</string>
+    <string name="net_notif_stop">כיבוי</string>
+    <string name="net_alert_stopped_title">Telos Network כובה</string>
+    <string name="net_alert_crashed">מנוע הרשת נעצר באופן בלתי צפוי. הגישה לאינטרנט לא נפגעה.</string>
+    <string name="net_alert_revoked">VPN אחר השתלט על החיבור. הגישה לאינטרנט לא נפגעה.</string>
+    <string name="net_alert_start_failed">לא ניתן היה להפעיל את Telos Network. הגישה לאינטרנט לא נפגעה.</string>
+    <string name="net_error_permission">נדרשת הרשאה להגדרת VPN.</string>
+    <string name="net_error_start_failed">ההפעלה נכשלה: %1$s</string>
+    <string name="net_error_unknown">שגיאה לא ידועה</string>
+    <string name="net_app_system">מערכת Android</string>
+    <string name="net_app_unknown">אפליקציה לא מוכרת (%1$d)</string>
+    <string name="net_dns_system">DNS של הרשת (מערכת)</string>
+</resources>

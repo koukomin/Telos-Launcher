@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Lura</string>
+    <string name="nwg_add">Żid tunnel</string>
+    <string name="nwg_add_new">Oħloq ġdid</string>
+    <string name="nwg_add_file">Importa fajl .conf</string>
+    <string name="nwg_add_qr">Importa minn immaġni b’kodiċi QR</string>
+    <string name="nwg_add_paste">Waħħal it-test tal-konfigurazzjoni</string>
+    <string name="nwg_system_default">Is-sistema awtomatika</string>
+    <string name="nwg_system_default_summary">L-applikazzjonijiet mingħajr issettjar tagħhom jużaw dan it-tunnel. Mingħajr is-sistema awtomatika jgħaqqdu direttament.</string>
+    <string name="nwg_none">Xejn (direttament)</string>
+    <string name="nwg_direct">Direttament (mingħajr proxy)</string>
+    <string name="nwg_apps">Assenjazzjoni għal kull applikazzjoni</string>
+    <string name="nwg_apps_summary">Agħżel liema tunnel juża kull applikazzjoni</string>
+    <string name="nwg_configs">Tunnels</string>
+    <string name="nwg_empty">Għad m’hemm l-ebda tunnel. Żid wieħed bil-buttuna +.</string>
+    <string name="nwg_status_off">Mitfi</string>
+    <string name="nwg_status_connecting">Qed jgħaqqad</string>
+    <string name="nwg_status_up">Mgħaqqad</string>
+    <string name="nwg_status_down">Ma jwieġebx</string>
+    <string name="nwg_status_error">Żball</string>
+    <string name="nwg_traffic">Riċevut %1$s, mibgħut %2$s</string>
+    <string name="nwg_handshake">L-aħħar handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Ixgħel Telos Network biex jingħaqdu t-tunnels.</string>
+    <string name="nwg_new_title">Tunnel ġdid</string>
+    <string name="nwg_edit_title">Immodifika t-tunnel</string>
+    <string name="nwg_name">Isem</string>
+    <string name="nwg_private_key">Ċavetta privata</string>
+    <string name="nwg_public_key">Ċavetta pubblika: %1$s</string>
+    <string name="nwg_generate">Iġġenera</string>
+    <string name="nwg_addresses">Indirizzi (separati b’virgola)</string>
+    <string name="nwg_dns">Servers DNS (separati b’virgola)</string>
+    <string name="nwg_mtu">MTU (0 = awtomatiku)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Iċ-ċavetta pubblika tal-peer</string>
+    <string name="nwg_preshared">Ċavetta maqsuma minn qabel (mhux obbligatorju)</string>
+    <string name="nwg_endpoint">Endpoint (host:port)</string>
+    <string name="nwg_allowed_ips">IPs permessi (separati b’virgola)</string>
+    <string name="nwg_keepalive">Persistent keepalive f’sekondi (0 = mitfi)</string>
+    <string name="nwg_add_peer">Żid peer</string>
+    <string name="nwg_remove_peer">Neħħi peer</string>
+    <string name="nwg_mobile_only">Fuq data mobbli biss</string>
+    <string name="nwg_lockdown">Imblokka l-applikazzjonijiet waqt li t-tunnel ma jaħdimx</string>
+    <string name="nwg_save">Salva</string>
+    <string name="nwg_cancel">Ikkanċella</string>
+    <string name="nwg_delete">Ħassar</string>
+    <string name="nwg_share">Aqsam il-konfigurazzjoni</string>
+    <string name="nwg_share_warning">Il-konfigurazzjoni esportata fiha ċ-ċavetta privata.</string>
+    <string name="nwg_import">Importa</string>
+    <string name="nwg_qr_not_found">Ma nstab l-ebda kodiċi QR f’din l-immaġni</string>
+    <string name="nwg_err_syntax">Il-konfigurazzjoni fiha żball ta’ sintassi: %1$s</string>
+    <string name="nwg_err_missing">Il-konfigurazzjoni mhix kompluta: nieqes %1$s</string>
+    <string name="nwg_err_invalid_key">Ċavetta invalida: %1$s</string>
+    <string name="nwg_err_invalid_value">Valur invalidu: %1$s</string>
+    <string name="nwg_err_invalid_name">Daħħal isem ta’ mhux aktar minn 64 karattru</string>
+    <string name="nwg_err_not_found">It-tunnel ma għadux jeżisti</string>
+    <string name="nwg_err_storage">Il-konfigurazzjoni ma setgħetx tinħażen b’mod sigur: %1$s</string>
+    <string name="nwg_err_other">Il-konfigurazzjoni ma setgħetx tinħażen</string>
+    <string name="nwg_apps_title">Applikazzjonijiet u tunnels</string>
+    <string name="nwg_search">Fittex applikazzjonijiet</string>
+    <string name="nwg_show_system">Uri l-applikazzjonijiet tas-sistema</string>
+    <string name="nwg_selected">%1$d magħżula</string>
+    <string name="nwg_assign_selected">Assenja lill-applikazzjonijiet magħżula</string>
+    <string name="nwg_clear_selection">Neħħi l-għażla</string>
+    <string name="nwg_select_all">Agħżel dawk kollha murija</string>
+</resources>

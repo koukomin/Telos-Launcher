@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">Szukaj</string>
+    <string name="ts_clear">Wyczyść</string>
+    <string name="ts_no_results">Brak wyników dla „%1$s”</string>
+</resources>

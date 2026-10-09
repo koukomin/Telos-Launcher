@@ -241,7 +241,7 @@
     </plurals>
     <string name="unit_megabyte_symbol">MB</string>
     <plurals name="unit_megabyte">
-        <item quantity="one">megabytes</item>
+        <item quantity="one">megabyte</item>
         <item quantity="other">megabytes</item>
     </plurals>
     <plurals name="unit_mebibyte">
@@ -249,8 +249,8 @@
         <item quantity="other">mebibytes</item>
     </plurals>
     <plurals name="unit_tebibyte">
-        <item quantity="one">tebiyte</item>
-        <item quantity="other">tebiytes</item>
+        <item quantity="one">tebibyte</item>
+        <item quantity="other">tebibytes</item>
     </plurals>
     <plurals name="unit_mile_per_hour">
         <item quantity="one">μίλι ανά ώρα</item>

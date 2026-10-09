@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Telos Networkin ilmoitukset</string>
+    <string name="net_notif_title">Telos Network on päällä</string>
+    <string name="net_notif_text">Yhteyksiä suodatetaan.</string>
+    <string name="net_notif_blocked">Estetyt yhteydet: %1$d</string>
+    <string name="net_notif_stop">Sammuta</string>
+    <string name="net_alert_stopped_title">Telos Network sammutettiin</string>
+    <string name="net_alert_crashed">Verkkomoottori pysähtyi odottamatta. Internet-yhteys ei häiriinny.</string>
+    <string name="net_alert_revoked">Toinen VPN otti vastuun. Internet-yhteys ei häiriinny.</string>
+    <string name="net_alert_start_failed">Telos Networkia ei voitu käynnistää. Internet-yhteys ei häiriinny.</string>
+    <string name="net_error_permission">VPN:n määrittämiseen tarvitaan lupa.</string>
+    <string name="net_error_start_failed">Käynnistys epäonnistui: %1$s</string>
+    <string name="net_error_unknown">tuntematon virhe</string>
+    <string name="net_app_system">Android-järjestelmä</string>
+    <string name="net_app_unknown">Tuntematon sovellus (%1$d)</string>
+    <string name="net_dns_system">Verkon DNS (järjestelmä)</string>
+</resources>

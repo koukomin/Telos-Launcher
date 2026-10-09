@@ -337,7 +337,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
             ) {
                 Column(modifier = Modifier.padding(16.dp).navigationBarsPadding()) {
                     Preference(
-                        title = "Add app",
+                        title = stringResource(R.string.hc_add_app),
                         icon = R.drawable.add_24px,
                         onClick = {
                             showSearchablePickerForSlot = pageIdx to itemIdx
@@ -345,7 +345,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                         }
                     )
                     Preference(
-                        title = "Add folder",
+                        title = stringResource(R.string.hf_add_folder),
                         icon = de.mm20.launcher2.base.R.drawable.folder_24px,
                         onClick = {
                             showFolderCreationForSlot = pageIdx to itemIdx

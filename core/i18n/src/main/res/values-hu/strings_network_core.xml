@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Telos Network értesítések</string>
+    <string name="net_notif_title">A Telos Network be van kapcsolva</string>
+    <string name="net_notif_text">A kapcsolatok szűrése folyamatban.</string>
+    <string name="net_notif_blocked">Blokkolt kapcsolatok: %1$d</string>
+    <string name="net_notif_stop">Kikapcsolás</string>
+    <string name="net_alert_stopped_title">A Telos Network kikapcsolt</string>
+    <string name="net_alert_crashed">A hálózati motor váratlanul leállt. Az internetelérést ez nem érinti.</string>
+    <string name="net_alert_revoked">Egy másik VPN vette át a helyét. Az internetelérést ez nem érinti.</string>
+    <string name="net_alert_start_failed">A Telos Network nem tudott elindulni. Az internetelérést ez nem érinti.</string>
+    <string name="net_error_permission">A VPN beállításához engedély szükséges.</string>
+    <string name="net_error_start_failed">Az indítás nem sikerült: %1$s</string>
+    <string name="net_error_unknown">ismeretlen hiba</string>
+    <string name="net_app_system">Android rendszer</string>
+    <string name="net_app_unknown">Ismeretlen alkalmazás (%1$d)</string>
+    <string name="net_dns_system">Hálózati DNS (rendszer)</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsm_search_music">Zene keresése</string>
+    <string name="tsm_search_videos">Videók keresése</string>
+    <string name="tsm_search_radio_browser">Keresés az állomás neve alapján</string>
+    <string name="tsm_search_my_stations">Keresés az állomásaid között</string>
+    <string name="tsm_search_photos">Fotók keresése</string>
+</resources>

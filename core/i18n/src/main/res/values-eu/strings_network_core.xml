@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Telos Network-en jakinarazpenak</string>
+    <string name="net_notif_title">Telos Network aktibo dago</string>
+    <string name="net_notif_text">Konexioak iragazten ari dira.</string>
+    <string name="net_notif_blocked">Blokeatutako konexioak: %1$d</string>
+    <string name="net_notif_stop">Desaktibatu</string>
+    <string name="net_alert_stopped_title">Telos Network desaktibatu da</string>
+    <string name="net_alert_crashed">Sare-motorra ustekabean gelditu da. Internet sarbidea ez da kaltetu.</string>
+    <string name="net_alert_revoked">Beste VPN batek hartu du kontrola. Internet sarbidea ez da kaltetu.</string>
+    <string name="net_alert_start_failed">Telos Network ezin izan da abiarazi. Internet sarbidea ez da kaltetu.</string>
+    <string name="net_error_permission">Baimena behar da VPN bat konfiguratzeko.</string>
+    <string name="net_error_start_failed">Ezin izan da abiarazi: %1$s</string>
+    <string name="net_error_unknown">errore ezezaguna</string>
+    <string name="net_app_system">Android sistema</string>
+    <string name="net_app_unknown">Aplikazio ezezaguna (%1$d)</string>
+    <string name="net_dns_system">Sarearen DNSa (sistema)</string>
+</resources>

@@ -130,7 +130,7 @@ fun StoreDashboardScreen(initialLink: String = "") {
         if (uri != null) viewModel.export(uri)
     }
 
-    MediaFrame("Store", askNotifications = true, actions = {
+    MediaFrame(stringResource(R.string.hf_store_title), askNotifications = true, actions = {
         if (tab == 0) {
             IconButton(onClick = { viewModel.checkAll() }, enabled = !checking) {
                 if (checking) CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
@@ -223,7 +223,7 @@ private fun AppsTab(
     onUpdateAll: () -> Unit,
 ) {
     Column(Modifier.fillMaxSize()) {
-        MediaSearchBar(query, onQuery, "Search apps")
+        de.mm20.launcher2.ui.component.TelosSearchBar(query, onQuery, stringResource(R.string.hf_store_search))
         LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             items(StoreFilter.values().toList()) { f ->
                 FilterChip(
@@ -232,11 +232,11 @@ private fun AppsTab(
                     label = {
                         Text(
                             when (f) {
-                                StoreFilter.All -> "All"
-                                StoreFilter.Updates -> "Updates ($updateCount)"
-                                StoreFilter.Installed -> "Installed"
-                                StoreFilter.NotInstalled -> "Not installed"
-                                StoreFilter.TrackOnly -> "Track only"
+                                StoreFilter.All -> stringResource(R.string.hf_store_filter_all)
+                                StoreFilter.Updates -> stringResource(R.string.hf_store_filter_updates, updateCount)
+                                StoreFilter.Installed -> stringResource(R.string.hf_store_installed)
+                                StoreFilter.NotInstalled -> stringResource(R.string.hf_store_not_installed)
+                                StoreFilter.TrackOnly -> stringResource(R.string.hf_store_track_only)
                             }
                         )
                     },
@@ -251,10 +251,12 @@ private fun AppsTab(
                 Text(stringResource(R.string.hc_update_all_count, updateCount))
             }
         }
-        if (rows.isEmpty()) {
+        if (rows.isEmpty() && query.isNotBlank()) {
+            de.mm20.launcher2.ui.component.SearchEmptyState(query.trim())
+        } else if (rows.isEmpty()) {
             EmptyMessage(
-                if (totalCount == 0) "No apps yet" else "No apps match",
-                if (totalCount == 0) "Add an app with the + button: paste a GitHub, GitLab, Codeberg, F-Droid or SourceForge address or any page with APK links. You can also import an Obtainium export or add the apps you already have." else "Change the search or the filter.",
+                if (totalCount == 0) stringResource(R.string.hf_store_no_apps_yet) else stringResource(R.string.hf_store_no_apps_match),
+                if (totalCount == 0) stringResource(R.string.hf_store_empty_hint) else stringResource(R.string.hf_store_change_filter),
             )
         } else {
             LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
@@ -358,7 +360,7 @@ internal fun StoreActionButton(row: StoreRow, state: StoreInstallUiState, onClic
             OutlinedButton(onClick = {}, enabled = false) {
                 CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp)
                 Spacer(Modifier.width(8.dp))
-                Text(if (state == StoreInstallUiState.Downloading) "Downloading" else "Installing")
+                Text(if (state == StoreInstallUiState.Downloading) stringResource(R.string.hf_store_downloading) else stringResource(R.string.hf_store_installing))
             }
         }
         StoreInstallUiState.Failed -> OutlinedButton(onClick = onClick) { Text(stringResource(R.string.hc_retry)) }
@@ -394,7 +396,12 @@ internal fun AppSource.summary(): String = when (this) {
 
 @Composable
 private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) -> Unit, onOpen: (TelosApp) -> Unit) {
-    LazyColumn(contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 32.dp), verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxSize()) {
+    var tq by remember { mutableStateOf("") }
+    val shownApps = remember(tq) { TelosApps.all.filter { de.mm20.launcher2.comms.search.TelosSearch.matches(tq, it.name, it.description, it.features.joinToString(" ")) } }
+    Column(Modifier.fillMaxSize()) {
+    de.mm20.launcher2.ui.component.TelosSearchBar(tq, { tq = it }, stringResource(R.string.hf_store_search))
+    if (shownApps.isEmpty()) de.mm20.launcher2.ui.component.SearchEmptyState(tq.trim())
+    else LazyColumn(contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 32.dp), verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxSize()) {
         item {
             Text(
                 stringResource(R.string.hc_the_apps_that_are_part_of_telos_installi),
@@ -402,7 +409,7 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        items(TelosApps.all, key = { it.key }) { app ->
+        items(shownApps, key = { it.key }) { app ->
             val installed = app.key !in disabled
             Surface(shape = RoundedCornerShape(20.dp), color = MaterialTheme.colorScheme.surfaceContainerLow, modifier = Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp)) {
@@ -415,7 +422,7 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
                         Spacer(Modifier.width(12.dp))
                         Column(Modifier.weight(1f)) {
                             Text(app.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-                            Text(if (installed) "Installed" else "Not installed", style = MaterialTheme.typography.labelMedium, color = if (installed) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(if (installed) stringResource(R.string.hf_store_installed) else stringResource(R.string.hf_store_not_installed), style = MaterialTheme.typography.labelMedium, color = if (installed) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
                     val context = androidx.compose.ui.platform.LocalContext.current
@@ -446,6 +453,7 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
             }
         }
     }
+}
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -496,6 +504,8 @@ private fun AddAppDialog(viewModel: StoreViewModel, prefill: String, onDismiss: 
 private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit) {
     val g by viewModel.global.collectAsStateWithLifecycle()
     var token by remember { mutableStateOf(g.githubToken) }
+    val neverLabel = stringResource(R.string.hf_store_never)
+    val dailyLabel = stringResource(R.string.hf_store_daily)
     AlertDialog(
         onDismissRequest = { viewModel.setGlobal { it.copy(githubToken = token.trim()) }; onDismiss() },
         title = { Text(stringResource(R.string.hc_store_settings)) },
@@ -503,13 +513,13 @@ private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
             Column {
                 Text(stringResource(R.string.hc_check_for_updates), style = MaterialTheme.typography.titleSmall)
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(vertical = 4.dp)) {
-                    items(listOf(0 to "Never", 1 to "1 h", 3 to "3 h", 6 to "6 h", 12 to "12 h", 24 to "Daily")) { (hours, label) ->
+                    items(listOf(0 to neverLabel, 1 to "1 h", 3 to "3 h", 6 to "6 h", 12 to "12 h", 24 to dailyLabel)) { (hours, label) ->
                         FilterChip(selected = g.checkIntervalHours == hours, onClick = { viewModel.setGlobal { it.copy(checkIntervalHours = hours) } }, label = { Text(label) })
                     }
                 }
-                ToggleRow("Only on Wi-Fi", g.wifiOnly) { v -> viewModel.setGlobal { it.copy(wifiOnly = v) } }
-                ToggleRow("Notify about updates", g.notifyUpdates) { v -> viewModel.setGlobal { it.copy(notifyUpdates = v) } }
-                ToggleRow("Install updates automatically", g.autoInstall) { v -> viewModel.setGlobal { it.copy(autoInstall = v) } }
+                ToggleRow(stringResource(R.string.hc_only_on_wi_fi), g.wifiOnly) { v -> viewModel.setGlobal { it.copy(wifiOnly = v) } }
+                ToggleRow(stringResource(R.string.hf_store_notify), g.notifyUpdates) { v -> viewModel.setGlobal { it.copy(notifyUpdates = v) } }
+                ToggleRow(stringResource(R.string.hf_store_auto_install), g.autoInstall) { v -> viewModel.setGlobal { it.copy(autoInstall = v) } }
                 Text(
                     stringResource(R.string.hc_automatic_installs_only_happen_when_shiz),
                     style = MaterialTheme.typography.bodySmall,
@@ -552,11 +562,14 @@ private fun InstalledAppsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
-                val list = candidates
+                var iq by remember { mutableStateOf("") }
+                de.mm20.launcher2.ui.component.TelosSearchBar(iq, { iq = it }, stringResource(R.string.hf_store_search))
+                val list = candidates?.let { c -> if (iq.isBlank()) c else c.filter { de.mm20.launcher2.comms.search.TelosSearch.matches(iq, it.label, it.packageName) } }
                 if (list == null) {
                     CircularProgressIndicator(Modifier.padding(16.dp))
                 } else {
-                    LazyColumn(Modifier.height(320.dp)) {
+                    if (list.isEmpty() && iq.isNotBlank()) de.mm20.launcher2.ui.component.SearchEmptyState(iq.trim())
+                    else LazyColumn(Modifier.height(320.dp)) {
                         items(list, key = { it.packageName }) { app ->
                             Row(
                                 Modifier.fillMaxWidth().clickable { if (app.packageName in selected) selected.remove(app.packageName) else selected.add(app.packageName) },

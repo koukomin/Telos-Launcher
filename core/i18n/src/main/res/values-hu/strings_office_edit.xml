@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">dokumentum</string>
+    <string name="od_saved">Mentve</string>
+    <string name="od_save_failed">A mentés nem sikerült</string>
+    <string name="od_nothing_to_show">Ebben a fájlban nincs megjeleníthető tartalom. A „Megnyitás ezzel” funkcióval megnyithatja másik alkalmazásban.</string>
+    <string name="od_pdf_protected">Ez a PDF jelszóval védett.</string>
+    <string name="od_cannot_open">Ez a fájl itt nem nyitható meg (%1$s). Használja a „Megnyitás ezzel” funkciót.</string>
+    <string name="od_legacy_failed">Ezt a régi Office-fájlt nem sikerült beolvasni. A „Megnyitás ezzel” funkcióval megnyithatja másik alkalmazásban.</string>
+    <string name="od_text_too_big">Ez a fájl nagyobb 2 MB-nál. Csak olvasható módban jelenik meg, és soha nem módosul.</string>
+    <string name="od_edit_copy">Az első 2 MB szerkesztése másolatként</string>
+    <string name="od_copy_hint">Az első 2 MB másolatát szerkeszti. Mentéskor új fájl jön létre; az eredeti nem változik.</string>
+    <string name="od_pdf_tools">PDF-eszközök</string>
+    <string name="od_search_pdf">Keresés a PDF-ben</string>
+    <string name="od_search_hint">Szöveg keresése</string>
+    <string name="od_searching">Keresés… %1$d. oldal</string>
+    <string name="od_no_results">Nincs találat</string>
+    <string name="od_no_text_layer">Ebben a PDF-ben nincs kereshető szöveg (például szkennelt dokumentum).</string>
+    <string name="od_results_count">Találatok: %1$d</string>
+    <string name="od_go_to_page">Ugrás oldalra</string>
+    <string name="od_page_range">Oldal (1–%1$d)</string>
+    <string name="od_go">Ugrás</string>
+    <string name="od_layout_note">A szöveg és a szerkezet látható. Az oldalelrendezés és a betűtípusok nem jelennek meg.</string>
+    <string name="od_slides_note">A címek, a szöveg és a képek láthatók. A diák elrendezése és kialakítása nem jelenik meg.</string>
+    <string name="od_legacy_readonly">Régi bináris Office-fájl (.doc, .xls, .ppt): csak olvasható. A szöveg és az értékek lehetőség szerint kinyerhetők.</string>
+    <string name="od_convert_note">Az átalakítás új fájlt hoz létre. A régi fájl formázása, képei és beágyazott objektumai nem kerülnek át. Az eredeti változatlan marad.</string>
+    <string name="od_convert_action">Átalakítás .%1$s formátumba és szerkesztés</string>
+    <string name="od_convert_failed">Ezt a fájlt nem sikerült átalakítani.</string>
+    <string name="od_converted">Átalakítva. Most az új fájlt szerkeszti.</string>
+    <string name="od_discard_title">Elveti a módosításokat?</string>
+    <string name="od_discard_text">A módosítások nincsenek mentve.</string>
+    <string name="od_discard">Elvetés</string>
+    <string name="od_keep_editing">Szerkesztés folytatása</string>
+    <string name="od_save_copy">Mentés másolatként</string>
+    <string name="od_saved_copy">Új fájlként mentve.</string>
+    <string name="od_undo_save">Utolsó mentés visszavonása</string>
+    <string name="od_undo_done">Az utolsó mentés előtti verzió vissza lett állítva.</string>
+    <string name="od_undo_failed">Az előző verziót nem sikerült visszaállítani.</string>
+    <string name="od_bold">Félkövér</string>
+    <string name="od_italic">Dőlt</string>
+    <string name="od_add_paragraph">Bekezdés hozzáadása alá</string>
+    <string name="od_delete_paragraph">Bekezdés törlése</string>
+    <string name="od_table_cell">Táblázatcella</string>
+    <string name="od_add_row">Sor hozzáadása</string>
+    <string name="od_edit_cell">%1$s cella szerkesztése</string>
+    <string name="od_cell_value">Érték</string>
+    <string name="od_cell_hint">Szöveg, szám vagy =-lel kezdődő képlet</string>
+    <string name="od_formula_replaced">Ez a cella képletet tartalmaz (%1$s). Egy új érték felülírja.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">%1$d. munkalap</string>
+    <string name="od_slide_of">%1$d. dia / %2$d</string>
+    <string name="od_delete_slide">Dia törlése</string>
+    <string name="od_title_box">Cím</string>
+    <string name="od_text_box_n">%1$d. szövegdoboz</string>
+    <string name="od_no_slides">Nincs dia</string>
+    <string name="od_image">Kép</string>
+</resources>

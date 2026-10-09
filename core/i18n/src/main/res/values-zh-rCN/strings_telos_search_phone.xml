@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">搜索笔记</string>
+    <string name="tsp_search_calls">搜索通话</string>
+    <string name="tsp_search_favorites">搜索收藏</string>
+    <string name="tsp_search_contacts">搜索联系人</string>
+    <string name="tsp_search_messages">搜索信息</string>
+    <string name="tsp_search_in_conversation">在对话中搜索</string>
+    <string name="tsp_search_events">搜索日程</string>
+    <string name="tsp_search_recordings">搜索录音</string>
+    <string name="tsp_search_screenshots">搜索截图</string>
+    <string name="tsp_search_call_recordings">搜索通话录音</string>
+    <string name="tsp_search_groups">搜索群组</string>
+</resources>

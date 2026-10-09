@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Atpakaļ</string>
+    <string name="nwg_add">Pievienot tuneli</string>
+    <string name="nwg_add_new">Izveidot jaunu</string>
+    <string name="nwg_add_file">Importēt .conf failu</string>
+    <string name="nwg_add_qr">Importēt no QR koda attēla</string>
+    <string name="nwg_add_paste">Ielīmēt konfigurācijas tekstu</string>
+    <string name="nwg_system_default">Sistēmas noklusējums</string>
+    <string name="nwg_system_default_summary">Lietotnes bez savas iestatījuma izmanto šo tuneli. Bez sistēmas noklusējuma tās savienojas tieši.</string>
+    <string name="nwg_none">Nav (tieši)</string>
+    <string name="nwg_direct">Tieši (bez starpniekservera)</string>
+    <string name="nwg_apps">Piešķiršana pa lietotnēm</string>
+    <string name="nwg_apps_summary">Izvēlieties, kuru tuneli izmanto katra lietotne</string>
+    <string name="nwg_configs">Tuneļi</string>
+    <string name="nwg_empty">Tuneļu vēl nav. Pievienojiet tuneli ar pogu +.</string>
+    <string name="nwg_status_off">Izslēgts</string>
+    <string name="nwg_status_connecting">Savienojas</string>
+    <string name="nwg_status_up">Savienots</string>
+    <string name="nwg_status_down">Neatbild</string>
+    <string name="nwg_status_error">Kļūda</string>
+    <string name="nwg_traffic">Saņemts %1$s, nosūtīts %2$s</string>
+    <string name="nwg_handshake">Pēdējais handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Ieslēdziet Telos Network, lai savienotu tuneļus.</string>
+    <string name="nwg_new_title">Jauns tunelis</string>
+    <string name="nwg_edit_title">Rediģēt tuneli</string>
+    <string name="nwg_name">Nosaukums</string>
+    <string name="nwg_private_key">Privātā atslēga</string>
+    <string name="nwg_public_key">Publiskā atslēga: %1$s</string>
+    <string name="nwg_generate">Ģenerēt</string>
+    <string name="nwg_addresses">Adreses (atdalītas ar komatiem)</string>
+    <string name="nwg_dns">DNS serveri (atdalīti ar komatiem)</string>
+    <string name="nwg_mtu">MTU (0 = automātiski)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Peer publiskā atslēga</string>
+    <string name="nwg_preshared">Iepriekš kopīgota atslēga (neobligāti)</string>
+    <string name="nwg_endpoint">Endpoint (resursdators:ports)</string>
+    <string name="nwg_allowed_ips">Atļautās IP adreses (atdalītas ar komatiem)</string>
+    <string name="nwg_keepalive">Persistent keepalive sekundēs (0 = izslēgts)</string>
+    <string name="nwg_add_peer">Pievienot peer</string>
+    <string name="nwg_remove_peer">Noņemt peer</string>
+    <string name="nwg_mobile_only">Tikai mobilajos datos</string>
+    <string name="nwg_lockdown">Bloķēt lietotnes, kamēr tunelis nedarbojas</string>
+    <string name="nwg_save">Saglabāt</string>
+    <string name="nwg_cancel">Atcelt</string>
+    <string name="nwg_delete">Dzēst</string>
+    <string name="nwg_share">Kopīgot konfigurāciju</string>
+    <string name="nwg_share_warning">Eksportētā konfigurācija satur privāto atslēgu.</string>
+    <string name="nwg_import">Importēt</string>
+    <string name="nwg_qr_not_found">Šajā attēlā QR kods nav atrasts</string>
+    <string name="nwg_err_syntax">Konfigurācijā ir sintakses kļūda: %1$s</string>
+    <string name="nwg_err_missing">Konfigurācija ir nepilnīga: trūkst %1$s</string>
+    <string name="nwg_err_invalid_key">Nederīga atslēga: %1$s</string>
+    <string name="nwg_err_invalid_value">Nederīga vērtība: %1$s</string>
+    <string name="nwg_err_invalid_name">Ievadiet nosaukumu līdz 64 rakstzīmēm</string>
+    <string name="nwg_err_not_found">Tunelis vairs nepastāv</string>
+    <string name="nwg_err_storage">Konfigurāciju neizdevās droši saglabāt: %1$s</string>
+    <string name="nwg_err_other">Konfigurāciju neizdevās saglabāt</string>
+    <string name="nwg_apps_title">Lietotnes un tuneļi</string>
+    <string name="nwg_search">Meklēt lietotnes</string>
+    <string name="nwg_show_system">Rādīt sistēmas lietotnes</string>
+    <string name="nwg_selected">Atlasīts: %1$d</string>
+    <string name="nwg_assign_selected">Piešķirt atlasītajām lietotnēm</string>
+    <string name="nwg_clear_selection">Notīrīt atlasi</string>
+    <string name="nwg_select_all">Atlasīt visas rādītās</string>
+</resources>

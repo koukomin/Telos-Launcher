@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">dokument</string>
+    <string name="od_saved">Sparat</string>
+    <string name="od_save_failed">Det gick inte att spara</string>
+    <string name="od_nothing_to_show">Det finns inget att visa i den här filen. Använd ”Öppna med” för att öppna den i en annan app.</string>
+    <string name="od_pdf_protected">Den här PDF-filen är lösenordsskyddad.</string>
+    <string name="od_cannot_open">Filen kan inte öppnas här (%1$s). Använd ”Öppna med”.</string>
+    <string name="od_legacy_failed">Den här gamla Office-filen kunde inte läsas. Använd ”Öppna med” för att öppna den i en annan app.</string>
+    <string name="od_text_too_big">Filen är större än 2 MB. Den visas skrivskyddad och ändras aldrig.</string>
+    <string name="od_edit_copy">Redigera de första 2 MB som kopia</string>
+    <string name="od_copy_hint">Du redigerar en kopia av de första 2 MB. När du sparar skapas en ny fil; originalet ändras inte.</string>
+    <string name="od_pdf_tools">PDF-verktyg</string>
+    <string name="od_search_pdf">Sök i PDF</string>
+    <string name="od_search_hint">Sök text</string>
+    <string name="od_searching">Söker … sida %1$d</string>
+    <string name="od_no_results">Inga resultat</string>
+    <string name="od_no_text_layer">Den här PDF-filen har ingen sökbar text (till exempel en skanning).</string>
+    <string name="od_results_count">Resultat: %1$d</string>
+    <string name="od_go_to_page">Gå till sida</string>
+    <string name="od_page_range">Sida (1 till %1$d)</string>
+    <string name="od_go">Gå</string>
+    <string name="od_layout_note">Text och struktur visas. Sidlayout och typsnitt återges inte.</string>
+    <string name="od_slides_note">Rubriker, text och bilder visas. Bildernas layout och design återges inte.</string>
+    <string name="od_legacy_readonly">Gammal binär Office-fil (.doc, .xls, .ppt): skrivskyddad. Text och värden läses ut så gott det går.</string>
+    <string name="od_convert_note">Vid konvertering skapas en ny fil. Formatering, bilder och inbäddade objekt från den gamla filen följer inte med. Originalet förblir oförändrat.</string>
+    <string name="od_convert_action">Konvertera till .%1$s och redigera</string>
+    <string name="od_convert_failed">Filen kunde inte konverteras.</string>
+    <string name="od_converted">Konverterad. Du redigerar nu den nya filen.</string>
+    <string name="od_discard_title">Ignorera ändringarna?</string>
+    <string name="od_discard_text">Dina ändringar har inte sparats.</string>
+    <string name="od_discard">Ignorera</string>
+    <string name="od_keep_editing">Fortsätt redigera</string>
+    <string name="od_save_copy">Spara som kopia</string>
+    <string name="od_saved_copy">Sparad som ny fil.</string>
+    <string name="od_undo_save">Ångra senaste sparning</string>
+    <string name="od_undo_done">Versionen före den senaste sparningen har återställts.</string>
+    <string name="od_undo_failed">Det gick inte att återställa den tidigare versionen.</string>
+    <string name="od_bold">Fet</string>
+    <string name="od_italic">Kursiv</string>
+    <string name="od_add_paragraph">Lägg till stycke nedanför</string>
+    <string name="od_delete_paragraph">Ta bort stycke</string>
+    <string name="od_table_cell">Tabellcell</string>
+    <string name="od_add_row">Lägg till rad</string>
+    <string name="od_edit_cell">Redigera cell %1$s</string>
+    <string name="od_cell_value">Värde</string>
+    <string name="od_cell_hint">Text, tal eller formel som börjar med =</string>
+    <string name="od_formula_replaced">Cellen innehåller en formel (%1$s). Ett nytt värde ersätter den.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Blad %1$d</string>
+    <string name="od_slide_of">Bild %1$d av %2$d</string>
+    <string name="od_delete_slide">Ta bort bild</string>
+    <string name="od_title_box">Rubrik</string>
+    <string name="od_text_box_n">Textruta %1$d</string>
+    <string name="od_no_slides">Inga bilder</string>
+    <string name="od_image">Bild</string>
+</resources>

@@ -15,6 +15,7 @@ android {
 
     packaging {
         resources.excludes.add("META-INF/DEPENDENCIES")
+        resources.excludes.add("META-INF/INDEX.LIST")
     }
 
     defaultConfig {
@@ -124,6 +125,8 @@ dependencies {
     implementation(libs.commons.net)
     implementation(libs.commons.compress)
     implementation(libs.bouncycastle)
+    // Telos PDF tools (adapted from PaperKnife+): PDF editing
+    implementation(libs.pdfbox.android)
     implementation(libs.coil.compose)
     implementation(libs.zxing.core)
 
@@ -181,6 +184,7 @@ dependencies {
     implementation(project(":services:store"))
     implementation(project(":services:comms"))
     implementation(project(":services:downloads"))
+    implementation(project(":services:network"))
 
     implementation(libs.androidx.biometric)
     implementation(project(":core:devicepose"))
@@ -202,6 +206,10 @@ dependencies {
 }
 // Bouncy Castle comes in with several versions (sshj, other libraries); the parts must match or the classes are duplicated
 configurations.all {
+    // pdfbox-android brings the jdk15to18 builds of Bouncy Castle, sshj the jdk18on builds: same classes twice
+    exclude(group = "org.bouncycastle", module = "bcprov-jdk15to18")
+    exclude(group = "org.bouncycastle", module = "bcpkix-jdk15to18")
+    exclude(group = "org.bouncycastle", module = "bcutil-jdk15to18")
     resolutionStrategy.eachDependency {
         if (requested.group == "org.bouncycastle") useVersion("1.84")
     }

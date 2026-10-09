@@ -17,12 +17,17 @@ sealed interface DocBlock {
 
 object DocumentTypes {
     private val pdf = setOf("pdf")
-    private val office = setOf("docx", "xlsx", "pptx", "odt", "ods", "odp", "rtf", "epub")
+    private val office = setOf("docx", "xlsx", "pptx", "odt", "ods", "odp", "rtf", "epub", "doc", "xls", "ppt")
+    private val editableOffice = setOf("docx", "xlsx", "pptx", "odt", "ods", "odp")
+    private val legacyOffice = setOf("doc", "xls", "ppt")
     private val text = setOf("txt", "md", "markdown", "csv", "tsv", "log", "json", "xml", "html", "htm", "yml", "yaml", "ini", "conf", "prop", "properties", "kt", "java", "py", "js", "css", "sh", "c", "cpp", "h", "rs", "go", "toml", "sql", "gradle", "srt", "vtt", "ass", "gpx", "kml", "tex", "bat")
 
     fun ext(name: String) = name.substringAfterLast('.', "").lowercase()
     fun isPdf(name: String) = ext(name) in pdf
     fun isOffice(name: String) = ext(name) in office
+    /** formats that have an Office document model (preview and editing), RTF and EPUB are plain views */
+    fun isOfficeModel(name: String) = ext(name) in editableOffice || ext(name) in legacyOffice
+    fun isLegacyOffice(name: String) = ext(name) in legacyOffice
     fun isText(name: String) = ext(name) in text
     fun supports(name: String) = isPdf(name) || isOffice(name) || isText(name)
 }

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">بازگشت</string>
+    <string name="nwg_add">افزودن تونل</string>
+    <string name="nwg_add_new">ایجاد جدید</string>
+    <string name="nwg_add_file">وارد کردن فایل .conf</string>
+    <string name="nwg_add_qr">وارد کردن از تصویر کد QR</string>
+    <string name="nwg_add_paste">چسباندن متن پیکربندی</string>
+    <string name="nwg_system_default">پیش‌فرض سیستم</string>
+    <string name="nwg_system_default_summary">برنامه‌های بدون تنظیم مخصوص از این تونل استفاده می‌کنند. بدون پیش‌فرض سیستم، مستقیم متصل می‌شوند.</string>
+    <string name="nwg_none">هیچ‌کدام (مستقیم)</string>
+    <string name="nwg_direct">مستقیم (بدون پروکسی)</string>
+    <string name="nwg_apps">اختصاص برای هر برنامه</string>
+    <string name="nwg_apps_summary">انتخاب کنید هر برنامه از کدام تونل استفاده کند</string>
+    <string name="nwg_configs">تونل‌ها</string>
+    <string name="nwg_empty">هنوز تونلی وجود ندارد. با دکمه + یکی اضافه کنید.</string>
+    <string name="nwg_status_off">خاموش</string>
+    <string name="nwg_status_connecting">در حال اتصال</string>
+    <string name="nwg_status_up">متصل</string>
+    <string name="nwg_status_down">پاسخ نمی‌دهد</string>
+    <string name="nwg_status_error">خطا</string>
+    <string name="nwg_traffic">%1$s دریافت شد، %2$s ارسال شد</string>
+    <string name="nwg_handshake">آخرین handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">برای اتصال تونل‌ها Telos Network را روشن کنید.</string>
+    <string name="nwg_new_title">تونل جدید</string>
+    <string name="nwg_edit_title">ویرایش تونل</string>
+    <string name="nwg_name">نام</string>
+    <string name="nwg_private_key">کلید خصوصی</string>
+    <string name="nwg_public_key">کلید عمومی: %1$s</string>
+    <string name="nwg_generate">تولید</string>
+    <string name="nwg_addresses">نشانی‌ها (جداشده با ویرگول)</string>
+    <string name="nwg_dns">سرورهای DNS (جداشده با ویرگول)</string>
+    <string name="nwg_mtu">MTU (۰ = خودکار)</string>
+    <string name="nwg_peer">همتا %1$d</string>
+    <string name="nwg_peer_public_key">کلید عمومی همتا</string>
+    <string name="nwg_preshared">کلید از پیش‌اشتراکی (اختیاری)</string>
+    <string name="nwg_endpoint">Endpoint (میزبان:درگاه)</string>
+    <string name="nwg_allowed_ips">IPهای مجاز (جداشده با ویرگول)</string>
+    <string name="nwg_keepalive">Persistent keepalive بر حسب ثانیه (۰ = خاموش)</string>
+    <string name="nwg_add_peer">افزودن همتا</string>
+    <string name="nwg_remove_peer">حذف همتا</string>
+    <string name="nwg_mobile_only">فقط با داده تلفن همراه</string>
+    <string name="nwg_lockdown">مسدود کردن برنامه‌ها تا زمانی که تونل قطع است</string>
+    <string name="nwg_save">ذخیره</string>
+    <string name="nwg_cancel">لغو</string>
+    <string name="nwg_delete">حذف</string>
+    <string name="nwg_share">اشتراک‌گذاری پیکربندی</string>
+    <string name="nwg_share_warning">پیکربندی صادرشده شامل کلید خصوصی است.</string>
+    <string name="nwg_import">وارد کردن</string>
+    <string name="nwg_qr_not_found">در این تصویر کد QR پیدا نشد</string>
+    <string name="nwg_err_syntax">پیکربندی خطای نحوی دارد: %1$s</string>
+    <string name="nwg_err_missing">پیکربندی ناقص است: %1$s وجود ندارد</string>
+    <string name="nwg_err_invalid_key">کلید نامعتبر: %1$s</string>
+    <string name="nwg_err_invalid_value">مقدار نامعتبر: %1$s</string>
+    <string name="nwg_err_invalid_name">نامی حداکثر ۶۴ نویسه وارد کنید</string>
+    <string name="nwg_err_not_found">تونل دیگر وجود ندارد</string>
+    <string name="nwg_err_storage">پیکربندی به‌صورت امن ذخیره نشد: %1$s</string>
+    <string name="nwg_err_other">پیکربندی ذخیره نشد</string>
+    <string name="nwg_apps_title">برنامه‌ها و تونل‌ها</string>
+    <string name="nwg_search">جستجوی برنامه‌ها</string>
+    <string name="nwg_show_system">نمایش برنامه‌های سیستمی</string>
+    <string name="nwg_selected">%1$d انتخاب شد</string>
+    <string name="nwg_assign_selected">اختصاص به برنامه‌های انتخاب‌شده</string>
+    <string name="nwg_clear_selection">پاک کردن انتخاب</string>
+    <string name="nwg_select_all">انتخاب همه موارد نمایش‌داده‌شده</string>
+</resources>

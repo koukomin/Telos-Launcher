@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Telos Network bildirimleri</string>
+    <string name="net_notif_title">Telos Network açık</string>
+    <string name="net_notif_text">Bağlantılar filtreleniyor.</string>
+    <string name="net_notif_blocked">Engellenen bağlantılar: %1$d</string>
+    <string name="net_notif_stop">Kapat</string>
+    <string name="net_alert_stopped_title">Telos Network kapatıldı</string>
+    <string name="net_alert_crashed">Ağ motoru beklenmedik şekilde durdu. İnternet erişimi etkilenmedi.</string>
+    <string name="net_alert_revoked">Başka bir VPN devraldı. İnternet erişimi etkilenmedi.</string>
+    <string name="net_alert_start_failed">Telos Network başlatılamadı. İnternet erişimi etkilenmedi.</string>
+    <string name="net_error_permission">VPN kurmak için izin gerekli.</string>
+    <string name="net_error_start_failed">Başlatılamadı: %1$s</string>
+    <string name="net_error_unknown">bilinmeyen hata</string>
+    <string name="net_app_system">Android sistemi</string>
+    <string name="net_app_unknown">Bilinmeyen uygulama (%1$d)</string>
+    <string name="net_dns_system">Ağ DNS\'i (sistem)</string>
+</resources>

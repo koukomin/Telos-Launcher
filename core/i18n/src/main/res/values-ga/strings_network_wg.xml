@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Siar</string>
+    <string name="nwg_add">Cuir tollán leis</string>
+    <string name="nwg_add_new">Cruthaigh nua</string>
+    <string name="nwg_add_file">Iompórtáil comhad .conf</string>
+    <string name="nwg_add_qr">Iompórtáil ó íomhá cód QR</string>
+    <string name="nwg_add_paste">Greamaigh téacs cumraíochta</string>
+    <string name="nwg_system_default">Réamhshocrú an chórais</string>
+    <string name="nwg_system_default_summary">Úsáideann aipeanna gan socrú dá gcuid féin an tollán seo. Gan réamhshocrú córais, nascann siad go díreach.</string>
+    <string name="nwg_none">Gan aon cheann (díreach)</string>
+    <string name="nwg_direct">Díreach (gan seachfhreastalaí)</string>
+    <string name="nwg_apps">Sannadh de réir aipe</string>
+    <string name="nwg_apps_summary">Roghnaigh an tollán a úsáideann gach aip</string>
+    <string name="nwg_configs">Tolláin</string>
+    <string name="nwg_empty">Gan aon tollán fós. Cuir ceann leis leis an gcnaipe +.</string>
+    <string name="nwg_status_off">As</string>
+    <string name="nwg_status_connecting">Ag nascadh</string>
+    <string name="nwg_status_up">Nasctha</string>
+    <string name="nwg_status_down">Gan freagra</string>
+    <string name="nwg_status_error">Earráid</string>
+    <string name="nwg_traffic">Fuarthas %1$s, seoladh %2$s</string>
+    <string name="nwg_handshake">Handshake deireanach: %1$s</string>
+    <string name="nwg_vpn_off_hint">Cuir Telos Network air chun na tolláin a nascadh.</string>
+    <string name="nwg_new_title">Tollán nua</string>
+    <string name="nwg_edit_title">Cuir tollán in eagar</string>
+    <string name="nwg_name">Ainm</string>
+    <string name="nwg_private_key">Eochair phríobháideach</string>
+    <string name="nwg_public_key">Eochair phoiblí: %1$s</string>
+    <string name="nwg_generate">Giniúin</string>
+    <string name="nwg_addresses">Seoltaí (scartha le camóga)</string>
+    <string name="nwg_dns">Freastalaithe DNS (scartha le camóga)</string>
+    <string name="nwg_mtu">MTU (0 = uathoibríoch)</string>
+    <string name="nwg_peer">Piaras %1$d</string>
+    <string name="nwg_peer_public_key">Eochair phoiblí an phiaras</string>
+    <string name="nwg_preshared">Eochair réamhroinnte (roghnach)</string>
+    <string name="nwg_endpoint">Endpoint (óstach:port)</string>
+    <string name="nwg_allowed_ips">IPanna ceadaithe (scartha le camóga)</string>
+    <string name="nwg_keepalive">Persistent keepalive i soicindí (0 = as)</string>
+    <string name="nwg_add_peer">Cuir piaras leis</string>
+    <string name="nwg_remove_peer">Bain piaras</string>
+    <string name="nwg_mobile_only">Ar shonraí soghluaiste amháin</string>
+    <string name="nwg_lockdown">Bac na haipeanna cé go bhfuil an tollán síos</string>
+    <string name="nwg_save">Sábháil</string>
+    <string name="nwg_cancel">Cealaigh</string>
+    <string name="nwg_delete">Scrios</string>
+    <string name="nwg_share">Roinn cumraíocht</string>
+    <string name="nwg_share_warning">Tá an eochair phríobháideach sa chumraíocht easpórtáilte.</string>
+    <string name="nwg_import">Iompórtáil</string>
+    <string name="nwg_qr_not_found">Níor aimsíodh cód QR san íomhá seo</string>
+    <string name="nwg_err_syntax">Tá earráid chomhréire sa chumraíocht: %1$s</string>
+    <string name="nwg_err_missing">Tá an chumraíocht neamhiomlán: tá %1$s ar iarraidh</string>
+    <string name="nwg_err_invalid_key">Eochair neamhbhailí: %1$s</string>
+    <string name="nwg_err_invalid_value">Luach neamhbhailí: %1$s</string>
+    <string name="nwg_err_invalid_name">Cuir isteach ainm suas le 64 carachtar</string>
+    <string name="nwg_err_not_found">Níl an tollán ann a thuilleadh</string>
+    <string name="nwg_err_storage">Níorbh fhéidir an chumraíocht a shábháil go slán: %1$s</string>
+    <string name="nwg_err_other">Níorbh fhéidir an chumraíocht a shábháil</string>
+    <string name="nwg_apps_title">Aipeanna agus tolláin</string>
+    <string name="nwg_search">Cuardaigh aipeanna</string>
+    <string name="nwg_show_system">Taispeáin aipeanna córais</string>
+    <string name="nwg_selected">%1$d roghnaithe</string>
+    <string name="nwg_assign_selected">Sann do na haipeanna roghnaithe</string>
+    <string name="nwg_clear_selection">Glan an rogha</string>
+    <string name="nwg_select_all">Roghnaigh gach ceann a thaispeántar</string>
+</resources>

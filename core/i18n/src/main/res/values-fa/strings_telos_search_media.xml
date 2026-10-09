@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsm_search_music">جستجوی موسیقی</string>
+    <string name="tsm_search_videos">جستجوی ویدیوها</string>
+    <string name="tsm_search_radio_browser">جستجو با نام ایستگاه</string>
+    <string name="tsm_search_my_stations">جستجو در ایستگاه‌های شما</string>
+    <string name="tsm_search_photos">جستجوی عکس‌ها</string>
+</resources>

@@ -41,7 +41,7 @@ class NotesViewModel(app: Application) : AndroidViewModel(app), KoinComponent {
                 NotesFilter.Trash -> it.trashed
             }
         }.filter { l == null || l in it.labels }
-            .filter { q.isBlank() || GreekFold.contains(it.title, q) || GreekFold.contains(it.body, q) || it.labels.any { x -> GreekFold.contains(x, q) } }
+            .filter { q.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(q, it.title, it.body, *it.labels.toTypedArray()) }
             .sortedWith(compareByDescending<Note> { it.pinned }.thenByDescending { it.modifiedAt })
     }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 

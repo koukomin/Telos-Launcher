@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Ieškoti užrašuose</string>
+    <string name="tsp_search_calls">Ieškoti skambučiuose</string>
+    <string name="tsp_search_favorites">Ieškoti mėgstamuose</string>
+    <string name="tsp_search_contacts">Ieškoti kontaktuose</string>
+    <string name="tsp_search_messages">Ieškoti žinutėse</string>
+    <string name="tsp_search_in_conversation">Ieškoti pokalbyje</string>
+    <string name="tsp_search_events">Ieškoti įvykiuose</string>
+    <string name="tsp_search_recordings">Ieškoti įrašuose</string>
+    <string name="tsp_search_screenshots">Ieškoti ekrano nuotraukose</string>
+    <string name="tsp_search_call_recordings">Ieškoti skambučių įrašuose</string>
+    <string name="tsp_search_groups">Ieškoti grupėse</string>
+</resources>

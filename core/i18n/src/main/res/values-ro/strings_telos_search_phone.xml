@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Caută în notițe</string>
+    <string name="tsp_search_calls">Caută în apeluri</string>
+    <string name="tsp_search_favorites">Caută în favorite</string>
+    <string name="tsp_search_contacts">Caută în contacte</string>
+    <string name="tsp_search_messages">Caută în mesaje</string>
+    <string name="tsp_search_in_conversation">Caută în conversație</string>
+    <string name="tsp_search_events">Caută în evenimente</string>
+    <string name="tsp_search_recordings">Caută în înregistrări</string>
+    <string name="tsp_search_screenshots">Caută în capturi de ecran</string>
+    <string name="tsp_search_call_recordings">Caută în înregistrările apelurilor</string>
+    <string name="tsp_search_groups">Caută în grupuri</string>
+</resources>

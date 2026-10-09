@@ -98,6 +98,18 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         ],
       },
       {
+        text: 'Network',
+        collapsed: true,
+        link: '/docs/user-guide/telos/network/',
+        items: [
+          { text: 'DNS', link: '/docs/user-guide/telos/network/dns' },
+          { text: 'WireGuard', link: '/docs/user-guide/telos/network/wireguard' },
+          { text: 'Firewall', link: '/docs/user-guide/telos/network/firewall' },
+          { text: 'Blocklists and exceptions', link: '/docs/user-guide/telos/network/blocklists-bypass' },
+          { text: 'Logs and settings', link: '/docs/user-guide/telos/network/logs-settings' },
+        ],
+      },
+      {
         text: 'Photos',
         collapsed: true,
         link: '/docs/user-guide/telos/photos/',

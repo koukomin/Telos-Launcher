@@ -25,7 +25,7 @@
     <string name="web_app_group_name">Όνομα φακέλου</string>
     <string name="web_app_group_create_confirm">Δημιουργία</string>
     <string name="web_app_group_rename_confirm">Μετονομασία</string>
-    <string name="web_app_group_apps_count">%1$d web apps</string>
+    <string name="web_app_group_apps_count">%1$d εφαρμογές ιστού</string>
     <string name="web_app_group_notifications">Ειδοποιήσεις</string>
     <string name="web_app_group_label">Φάκελος</string>
     <string name="web_app_group_none">Κανένας</string>

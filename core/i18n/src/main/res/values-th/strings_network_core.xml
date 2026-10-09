@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">การแจ้งเตือนของ Telos Network</string>
+    <string name="net_notif_title">Telos Network เปิดอยู่</string>
+    <string name="net_notif_text">กำลังกรองการเชื่อมต่อ</string>
+    <string name="net_notif_blocked">การเชื่อมต่อที่ถูกบล็อก: %1$d</string>
+    <string name="net_notif_stop">ปิด</string>
+    <string name="net_alert_stopped_title">Telos Network ถูกปิดแล้ว</string>
+    <string name="net_alert_crashed">เอนจินเครือข่ายหยุดทำงานโดยไม่คาดคิด การเข้าถึงอินเทอร์เน็ตไม่ได้รับผลกระทบ</string>
+    <string name="net_alert_revoked">VPN อื่นเข้ามาแทนที่ การเข้าถึงอินเทอร์เน็ตไม่ได้รับผลกระทบ</string>
+    <string name="net_alert_start_failed">ไม่สามารถเริ่ม Telos Network ได้ การเข้าถึงอินเทอร์เน็ตไม่ได้รับผลกระทบ</string>
+    <string name="net_error_permission">ต้องได้รับสิทธิ์เพื่อตั้งค่า VPN</string>
+    <string name="net_error_start_failed">ไม่สามารถเริ่มได้: %1$s</string>
+    <string name="net_error_unknown">ข้อผิดพลาดที่ไม่ทราบสาเหตุ</string>
+    <string name="net_app_system">ระบบ Android</string>
+    <string name="net_app_unknown">แอปที่ไม่รู้จัก (%1$d)</string>
+    <string name="net_dns_system">DNS ของเครือข่าย (ระบบ)</string>
+</resources>

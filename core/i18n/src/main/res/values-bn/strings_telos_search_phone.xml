@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">নোট খুঁজুন</string>
+    <string name="tsp_search_calls">কল খুঁজুন</string>
+    <string name="tsp_search_favorites">প্রিয় খুঁজুন</string>
+    <string name="tsp_search_contacts">পরিচিতি খুঁজুন</string>
+    <string name="tsp_search_messages">বার্তা খুঁজুন</string>
+    <string name="tsp_search_in_conversation">কথোপকথনে খুঁজুন</string>
+    <string name="tsp_search_events">ইভেন্ট খুঁজুন</string>
+    <string name="tsp_search_recordings">রেকর্ডিং খুঁজুন</string>
+    <string name="tsp_search_screenshots">স্ক্রিনশট খুঁজুন</string>
+    <string name="tsp_search_call_recordings">কল রেকর্ডিং খুঁজুন</string>
+    <string name="tsp_search_groups">গ্রুপ খুঁজুন</string>
+</resources>

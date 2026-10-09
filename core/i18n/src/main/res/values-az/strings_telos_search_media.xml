@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsm_search_music">Musiqi axtar</string>
+    <string name="tsm_search_videos">Videolar axtar</string>
+    <string name="tsm_search_radio_browser">Stansiya adına görə axtar</string>
+    <string name="tsm_search_my_stations">Stansiyalarında axtar</string>
+    <string name="tsm_search_photos">Şəkillər axtar</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">Cuardaigh</string>
+    <string name="ts_clear">Glan</string>
+    <string name="ts_no_results">Gan torthaí do “%1$s”</string>
+</resources>

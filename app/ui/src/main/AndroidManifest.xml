@@ -271,8 +271,20 @@
                 <data android:mimeType="application/vnd.oasis.opendocument.text" />
                 <data android:mimeType="application/vnd.oasis.opendocument.spreadsheet" />
                 <data android:mimeType="application/vnd.oasis.opendocument.presentation" />
+                <data android:mimeType="application/msword" />
+                <data android:mimeType="application/vnd.ms-excel" />
+                <data android:mimeType="application/vnd.ms-powerpoint" />
             </intent-filter>
         </activity>
+
+        <!-- Telos PDF tools (adapted from PaperKnife+), started from the Telos Photos document viewer -->
+        <activity
+            android:name=".media.docs.pdf.PdfToolsActivity"
+            android:exported="false"
+            android:icon="@drawable/ic_app_photos_full"
+            android:label="@string/pdft_title"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
 
         <!-- Telos Messages: what the system and other apps open for text links and shared files -->
         <activity

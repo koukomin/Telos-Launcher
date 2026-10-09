@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.media.docs
 
-import de.mm20.launcher2.ui.R
-import androidx.compose.ui.res.stringResource
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color as AndroidColor
@@ -10,16 +9,18 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.ParcelFileDescriptor
 import android.provider.OpenableColumns
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.calculateZoom
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,14 +29,20 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -54,6 +61,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,22 +73,38 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.FileProvider
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCompositionLocals
+import de.mm20.launcher2.ui.media.docs.office.BigTextFile
+import de.mm20.launcher2.ui.media.docs.office.DocFiles
+import de.mm20.launcher2.ui.media.docs.office.OfficeController
+import de.mm20.launcher2.ui.media.docs.office.OfficeDocs
+import de.mm20.launcher2.ui.media.docs.office.OfficeView
+import de.mm20.launcher2.ui.media.docs.office.PdfHit
+import de.mm20.launcher2.ui.media.docs.office.PdfTextSearch
+import de.mm20.launcher2.ui.media.docs.office.SaveOutcome
+import de.mm20.launcher2.ui.media.docs.office.WriteResult
+import de.mm20.launcher2.ui.media.docs.pdf.PdfToolsActivity
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 
+private const val TEXT_EDIT_LIMIT = 2 * 1024 * 1024
+
 /**
- * Telos Photos as a viewer for documents: PDF pages, text files (that can be edited), and the text and
- * tables of Word, Excel, PowerPoint, OpenDocument, RTF and EPUB files. The page layout of Office files is not reproduced.
+ * Telos Photos as a viewer for documents: PDF pages (with search and page jump), text files (that can be edited), and
+ * Word, Excel, PowerPoint and OpenDocument files (preview and editing, old binary formats read-only or converted).
+ * The page layout and fonts of Office files are not reproduced.
  */
 class DocumentViewerActivity : BaseActivity() {
 
@@ -105,7 +129,7 @@ class DocumentViewerActivity : BaseActivity() {
                 contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)?.use { if (it.moveToFirst()) return it.getString(0) }
             }
         }
-        return uri.lastPathSegment?.substringAfterLast('/') ?: "document"
+        return uri.lastPathSegment?.substringAfterLast('/') ?: getString(R.string.od_default_name)
     }
 }
 
@@ -114,7 +138,10 @@ private sealed interface DocState {
     data class Failed(val message: String) : DocState
     class Pdf(val doc: PdfDoc) : DocState
     class Blocks(val items: List<ViewItem>) : DocState
-    class Text(val text: String, val truncated: Boolean) : DocState
+    /** [copyOf] is set when this is a copy of the beginning of a big file: it can only be saved as a new file */
+    class Text(val text: String, val source: File, val copyOf: BigTextFile?) : DocState
+    class BigText(val big: BigTextFile) : DocState
+    class Office(val controller: OfficeController) : DocState
 }
 
 private sealed interface ViewItem {
@@ -123,7 +150,7 @@ private sealed interface ViewItem {
 }
 
 /** A PDF opened with the system's renderer. Only one page can be open at a time. */
-private class PdfDoc(file: File) {
+private class PdfDoc(val file: File) {
     private val fd = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
     private val renderer = PdfRenderer(fd)
     val count: Int = renderer.pageCount
@@ -145,25 +172,155 @@ private class PdfDoc(file: File) {
     fun close() { runCatching { renderer.close() }; runCatching { fd.close() } }
 }
 
+private fun convertedName(name: String): String = name.substringBeforeLast('.') + "." + when (name.substringAfterLast('.', "").lowercase()) {
+    "xls" -> "xlsx"; "ppt" -> "pptx"; else -> "docx"
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    var curUri by remember { mutableStateOf(uri) }
+    var curName by remember { mutableStateOf(name) }
     var state by remember { mutableStateOf<DocState>(DocState.Loading) }
+    val stateRef by rememberUpdatedState(state)
     var editing by remember { mutableStateOf(false) }
     var editText by remember { mutableStateOf("") }
     var message by remember { mutableStateOf<String?>(null) }
+    var menu by remember { mutableStateOf(false) }
+    var confirmDiscard by remember { mutableStateOf(false) }
+    var showSearch by remember { mutableStateOf(false) }
+    var showJump by remember { mutableStateOf(false) }
+    var textUndo by remember { mutableStateOf(false) }
+    val pdfList = rememberLazyListState()
+    var searcher by remember { mutableStateOf<PdfTextSearch?>(null) }
+
+    // Save-as: one launcher, the mime type and what happens with the chosen location are set before it starts
+    var saveMime by remember { mutableStateOf("*/*") }
+    var onTarget by remember { mutableStateOf<((Uri) -> Unit)?>(null) }
+    val saveAs = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument(saveMime)) { target ->
+        if (target != null) onTarget?.invoke(target)
+        onTarget = null
+    }
+    var launchName by remember { mutableStateOf<String?>(null) }
+    // the launcher is started after the next composition, so that it already uses the new mime type
+    LaunchedEffect(launchName) {
+        launchName?.let { launchName = null; saveAs.launch(it) }
+    }
+    fun askTarget(suggested: String, mime: String, then: (Uri) -> Unit) {
+        saveMime = mime
+        onTarget = then
+        launchName = suggested
+    }
 
     LaunchedEffect(uri) {
-        state = withContext(Dispatchers.IO) { load(context, uri, name) }
+        val s = withContext(Dispatchers.IO) { load(context, uri, name) }
+        state = s
+        textUndo = DocFiles.undoFile(context, uri).exists()
     }
-    DisposableEffect(Unit) { onDispose { (state as? DocState.Pdf)?.doc?.close() } }
+    DisposableEffect(Unit) {
+        onDispose {
+            when (val s = stateRef) {
+                is DocState.Pdf -> s.doc.close()
+                is DocState.BigText -> s.big.close()
+                is DocState.Text -> s.copyOf?.close()
+                is DocState.Office -> s.controller.close()
+                else -> {}
+            }
+        }
+    }
+    DisposableEffect(state) {
+        val s = state
+        if (s is DocState.Pdf) searcher = PdfTextSearch(context, s.doc.file)
+        onDispose { searcher?.close(); searcher = null }
+    }
 
-    val saveAs = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/plain")) { target ->
-        if (target != null) scope.launch(Dispatchers.IO) {
-            val ok = runCatching { context.contentResolver.openOutputStream(target, "wt")!!.use { it.write(editText.toByteArray()) } }.isSuccess
-            message = if (ok) "Saved" else "Could not save"
+    val office = (state as? DocState.Office)?.controller
+    BackHandler(enabled = editing || office?.editing == true) {
+        if (office != null) { if (office.isDirty) confirmDiscard = true else office.discard() }
+        else editing = false
+    }
+
+    fun savedMessage() { message = context.getString(R.string.od_saved) }
+    fun failedMessage() { message = context.getString(R.string.od_save_failed) }
+
+    fun openWith() {
+        val view = Intent(Intent.ACTION_VIEW).setDataAndType(curUri, context.contentResolver.getType(curUri) ?: "*/*").addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        runCatching { context.startActivity(Intent.createChooser(view, curName)) }
+    }
+
+    fun saveText(s: DocState.Text) {
+        scope.launch(Dispatchers.IO) {
+            val tmp = DocFiles.tempFile(context, curName)
+            val ok = runCatching { tmp.writeText(editText) }.isSuccess
+            if (!ok) { withContext(Dispatchers.Main) { failedMessage() }; return@launch }
+            // the original is written when the sender allows it, otherwise it is saved as a new file; a copy of a cut file never replaces the original
+            var result = WriteResult.NotWritable
+            if (s.copyOf == null) {
+                runCatching { s.source.copyTo(DocFiles.undoFile(context, curUri), overwrite = true) }
+                result = DocFiles.copyToUri(context, tmp, curUri)
+                if (result == WriteResult.Partial) DocFiles.copyToUri(context, s.source, curUri)
+            }
+            withContext(Dispatchers.Main) {
+                if (result == WriteResult.Ok) {
+                    savedMessage(); state = DocState.Text(editText, tmp, null); editing = false
+                    textUndo = DocFiles.undoFile(context, curUri).exists()
+                } else {
+                    askTarget(curName, "text/plain") { target ->
+                        scope.launch(Dispatchers.IO) {
+                            val done = DocFiles.copyToUri(context, tmp, target) == WriteResult.Ok
+                            withContext(Dispatchers.Main) { if (done) { savedMessage(); editing = false } else failedMessage() }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun saveOffice(c: OfficeController) {
+        scope.launch {
+            c.commit()
+            when (val r = c.save()) {
+                SaveOutcome.Saved -> savedMessage()
+                is SaveOutcome.NeedSaveAs -> askTarget(c.name, DocFiles.mimeFor(c.name)) { target ->
+                    scope.launch { if (c.finishSaveAs(r.file, target)) message = context.getString(R.string.od_saved_copy) else failedMessage() }
+                }
+                SaveOutcome.Failed -> failedMessage()
+            }
+        }
+    }
+
+    fun saveOfficeCopy(c: OfficeController) {
+        scope.launch {
+            c.commit()
+            val tmp = c.build()
+            if (tmp == null) { failedMessage(); return@launch }
+            askTarget(c.name, DocFiles.mimeFor(c.name)) { target ->
+                scope.launch { if (c.finishSaveAs(tmp, target)) message = context.getString(R.string.od_saved_copy) else failedMessage() }
+            }
+        }
+    }
+
+    fun convertLegacy(c: OfficeController) {
+        scope.launch {
+            val converted = c.convertLegacy()
+            if (converted == null) { message = context.getString(R.string.od_convert_failed); return@launch }
+            val (tmp, newName) = converted
+            askTarget(newName, DocFiles.mimeFor(newName)) { target ->
+                scope.launch {
+                    val done = withContext(Dispatchers.IO) { DocFiles.copyToUri(context, tmp, target) == WriteResult.Ok }
+                    if (!done) { failedMessage(); return@launch }
+                    val newDoc = withContext(Dispatchers.IO) { runCatching { OfficeDocs.open(tmp, newName) }.getOrNull() }
+                    if (newDoc == null) { failedMessage(); return@launch }
+                    c.close()
+                    val nc = OfficeController(context, target, newName, newDoc)
+                    nc.editing = true
+                    curUri = target; curName = newName
+                    state = DocState.Office(nc)
+                    message = context.getString(R.string.od_converted)
+                }
+            }
         }
     }
 
@@ -171,29 +328,82 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
         containerColor = MaterialTheme.colorScheme.surface,
         topBar = {
             TopAppBar(
-                title = { Text(name, maxLines = 1) },
+                title = { Text(curName, maxLines = 1) },
                 navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(de.mm20.launcher2.base.R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back)) } },
                 actions = {
-                    if (state is DocState.Text) {
-                        // a longer file is only partly loaded, saving it would cut the original
-                        if (!editing) { if (!(state as DocState.Text).truncated) TextButton(onClick = { editText = (state as DocState.Text).text; editing = true }) { Text(stringResource(R.string.hc_edit)) } }
-                        else {
-                            TextButton(onClick = {
-                                scope.launch(Dispatchers.IO) {
-                                    // the original is written when the sender allows it, otherwise it is saved as a new file
-                                    val ok = runCatching { context.contentResolver.openOutputStream(uri, "wt")!!.use { it.write(editText.toByteArray()) } }.isSuccess
-                                    withContext(Dispatchers.Main) {
-                                        if (ok) { message = "Saved"; state = DocState.Text(editText, false); editing = false } else saveAs.launch(name)
+                    val s = state
+                    when {
+                        s is DocState.Text && !editing -> TextButton(onClick = { editText = s.text; editing = true }) { Text(stringResource(R.string.hc_edit)) }
+                        s is DocState.Text && editing -> {
+                            TextButton(onClick = { saveText(s) }) { Text(stringResource(R.string.hc_save)) }
+                            TextButton(onClick = { editing = false; if (s.copyOf != null) state = DocState.BigText(s.copyOf) }) { Text(stringResource(R.string.hc_cancel)) }
+                        }
+                        s is DocState.Pdf -> TextButton(onClick = {
+                            runCatching {
+                                context.startActivity(
+                                    Intent(context, PdfToolsActivity::class.java).setData(curUri).putExtra("name", curName)
+                                        .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION),
+                                )
+                            }
+                        }) { Text(stringResource(R.string.od_pdf_tools)) }
+                        s is DocState.Office && s.controller.editing -> {
+                            TextButton(onClick = { saveOffice(s.controller) }) { Text(stringResource(R.string.hc_save)) }
+                            TextButton(onClick = { if (s.controller.isDirty) confirmDiscard = true else s.controller.discard() }) { Text(stringResource(R.string.hc_cancel)) }
+                        }
+                        s is DocState.Office && s.controller.canEdit -> TextButton(onClick = { s.controller.editing = true }) { Text(stringResource(R.string.hc_edit)) }
+                    }
+                    Box {
+                        IconButton(onClick = { menu = true }) { Text("⋮", style = MaterialTheme.typography.titleLarge) }
+                        DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
+                            if (s is DocState.Pdf) {
+                                DropdownMenuItem(text = { Text(stringResource(R.string.od_search_pdf)) }, onClick = { menu = false; showSearch = true })
+                                DropdownMenuItem(text = { Text(stringResource(R.string.od_go_to_page)) }, onClick = { menu = false; showJump = true })
+                            }
+                            if (s is DocState.BigText) {
+                                DropdownMenuItem(text = { Text(stringResource(R.string.od_edit_copy)) }, onClick = {
+                                    menu = false
+                                    scope.launch {
+                                        val text = withContext(Dispatchers.IO) { s.big.head(TEXT_EDIT_LIMIT) }
+                                        editText = text; editing = true
+                                        state = DocState.Text(text, s.big.file, s.big)
                                     }
+                                })
+                            }
+                            if (s is DocState.Text && !editing && textUndo) {
+                                DropdownMenuItem(text = { Text(stringResource(R.string.od_undo_save)) }, onClick = {
+                                    menu = false
+                                    scope.launch {
+                                        val ok = withContext(Dispatchers.IO) {
+                                            val bak = DocFiles.undoFile(context, curUri)
+                                            val done = bak.exists() && DocFiles.copyToUri(context, bak, curUri) == WriteResult.Ok
+                                            if (done) bak.delete()
+                                            done
+                                        }
+                                        if (ok) {
+                                            textUndo = false
+                                            state = withContext(Dispatchers.IO) { load(context, curUri, curName) }
+                                            message = context.getString(R.string.od_undo_done)
+                                        } else message = context.getString(R.string.od_undo_failed)
+                                    }
+                                })
+                            }
+                            if (s is DocState.Office) {
+                                if (s.controller.editing) {
+                                    DropdownMenuItem(text = { Text(stringResource(R.string.od_save_copy)) }, onClick = { menu = false; saveOfficeCopy(s.controller) })
+                                } else if (s.controller.hasUndo) {
+                                    DropdownMenuItem(text = { Text(stringResource(R.string.od_undo_save)) }, onClick = {
+                                        menu = false
+                                        scope.launch {
+                                            message = context.getString(if (s.controller.undoLastSave()) R.string.od_undo_done else R.string.od_undo_failed)
+                                        }
+                                    })
                                 }
-                            }) { Text(stringResource(R.string.hc_save)) }
-                            TextButton(onClick = { editing = false }) { Text(stringResource(R.string.hc_cancel)) }
+                            }
+                            if (!editing && office?.editing != true) {
+                                DropdownMenuItem(text = { Text(stringResource(R.string.hc_open_with)) }, onClick = { menu = false; openWith() })
+                            }
                         }
                     }
-                    TextButton(onClick = {
-                        val view = Intent(Intent.ACTION_VIEW).setDataAndType(uri, context.contentResolver.getType(uri) ?: "*/*").addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                        runCatching { context.startActivity(Intent.createChooser(view, name)) }
-                    }) { Text(stringResource(R.string.hc_open_with)) }
                 },
             )
         },
@@ -202,14 +412,19 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
             when (val s = state) {
                 DocState.Loading -> CircularProgressIndicator(Modifier.align(Alignment.Center))
                 is DocState.Failed -> Text(s.message, Modifier.align(Alignment.Center).padding(32.dp), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                is DocState.Pdf -> PdfView(s.doc)
+                is DocState.Pdf -> PdfView(s.doc, pdfList)
                 is DocState.Blocks -> BlocksView(s.items)
+                is DocState.BigText -> BigTextView(s.big)
+                is DocState.Office -> OfficeView(s.controller, onConvert = { convertLegacy(s.controller) })
                 is DocState.Text -> if (editing) {
-                    OutlinedTextField(
-                        value = editText, onValueChange = { editText = it }, modifier = Modifier.fillMaxSize().padding(8.dp),
-                        textStyle = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
-                    )
-                } else TextView(s)
+                    Column(Modifier.fillMaxSize()) {
+                        if (s.copyOf != null) Text(stringResource(R.string.od_copy_hint), Modifier.padding(12.dp, 6.dp), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
+                        OutlinedTextField(
+                            value = editText, onValueChange = { editText = it }, modifier = Modifier.fillMaxSize().padding(8.dp),
+                            textStyle = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
+                        )
+                    }
+                } else TextView(s.text)
             }
             message?.let { m ->
                 Surface(Modifier.align(Alignment.BottomCenter).padding(16.dp), shape = MaterialTheme.shapes.medium, color = MaterialTheme.colorScheme.inverseSurface) {
@@ -219,39 +434,130 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
             }
         }
     }
+
+    if (confirmDiscard && office != null) {
+        AlertDialog(
+            onDismissRequest = { confirmDiscard = false },
+            title = { Text(stringResource(R.string.od_discard_title)) },
+            text = { Text(stringResource(R.string.od_discard_text)) },
+            confirmButton = { TextButton(onClick = { confirmDiscard = false; office.discard() }) { Text(stringResource(R.string.od_discard)) } },
+            dismissButton = { TextButton(onClick = { confirmDiscard = false }) { Text(stringResource(R.string.od_keep_editing)) } },
+        )
+    }
+    val pdf = (state as? DocState.Pdf)?.doc
+    if (showSearch && pdf != null && searcher != null) {
+        PdfSearchDialog(searcher!!, onJump = { page -> showSearch = false; scope.launch { pdfList.animateScrollToItem(page) } }, onDismiss = { showSearch = false })
+    }
+    if (showJump && pdf != null) {
+        var input by remember { mutableStateOf("") }
+        val go = {
+            input.trim().toIntOrNull()?.let { p -> showJump = false; scope.launch { pdfList.animateScrollToItem((p - 1).coerceIn(0, pdf.count - 1)) } }
+            Unit
+        }
+        AlertDialog(
+            onDismissRequest = { showJump = false },
+            title = { Text(stringResource(R.string.od_go_to_page)) },
+            text = {
+                OutlinedTextField(
+                    input, { input = it.filter { c -> c.isDigit() }.take(6) }, singleLine = true,
+                    label = { Text(stringResource(R.string.od_page_range, pdf.count)) },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Go),
+                    keyboardActions = KeyboardActions(onGo = { go() }),
+                )
+            },
+            confirmButton = { TextButton(onClick = { go() }) { Text(stringResource(R.string.od_go)) } },
+            dismissButton = { TextButton(onClick = { showJump = false }) { Text(stringResource(R.string.hc_cancel)) } },
+        )
+    }
+}
+
+@Composable
+private fun PdfSearchDialog(searcher: PdfTextSearch, onJump: (Int) -> Unit, onDismiss: () -> Unit) {
+    val scope = rememberCoroutineScope()
+    var query by remember { mutableStateOf("") }
+    var results by remember { mutableStateOf<List<PdfHit>?>(null) }
+    var busy by remember { mutableStateOf(false) }
+    var progress by remember { mutableStateOf(0) }
+    var noText by remember { mutableStateOf(false) }
+    fun run() {
+        if (busy || query.isBlank()) return
+        busy = true; progress = 0
+        scope.launch {
+            val found = withContext(Dispatchers.Default) { runCatching { searcher.search(query) { progress = it } }.getOrDefault(emptyList()) }
+            results = found; noText = !searcher.hasText; busy = false
+        }
+    }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.od_search_pdf)) },
+        text = {
+            Column {
+                de.mm20.launcher2.ui.component.TelosSearchBar(
+                    query, { query = it }, stringResource(R.string.od_search_hint),
+                    modifier = Modifier.padding(horizontal = 0.dp),
+                    autoFocus = true,
+                    onSearch = { run() },
+                )
+                val r = results
+                when {
+                    busy -> Row(Modifier.padding(top = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+                        CircularProgressIndicator(Modifier.width(20.dp).aspectRatio(1f), strokeWidth = 2.dp)
+                        Text(stringResource(R.string.od_searching, progress), Modifier.padding(start = 12.dp), style = MaterialTheme.typography.bodySmall)
+                    }
+                    r != null && noText -> Text(stringResource(R.string.od_no_text_layer), Modifier.padding(top = 12.dp), style = MaterialTheme.typography.bodySmall)
+                    r != null && r.isEmpty() -> Text(stringResource(R.string.od_no_results), Modifier.padding(top = 12.dp), style = MaterialTheme.typography.bodySmall)
+                    r != null -> {
+                        Text(stringResource(R.string.od_results_count, r.size), Modifier.padding(top = 12.dp, bottom = 4.dp), style = MaterialTheme.typography.labelMedium)
+                        LazyColumn(Modifier.heightIn(max = 320.dp)) {
+                            items(r.size) { i ->
+                                Column(Modifier.fillMaxWidth().clickable { onJump(r[i].page) }.padding(vertical = 6.dp)) {
+                                    Text(stringResource(R.string.hc_page_number, r[i].page + 1), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
+                                    Text(r[i].snippet, style = MaterialTheme.typography.bodySmall, maxLines = 3)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = { TextButton(onClick = { run() }) { Text(stringResource(R.string.hc_search)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_close)) } },
+    )
 }
 
 /** Copies the document into the cache (a PDF needs a real file) and reads it. */
-private fun load(context: android.content.Context, uri: Uri, name: String): DocState = runCatching {
+private fun load(context: Context, uri: Uri, name: String): DocState = runCatching {
     val dir = File(context.cacheDir, "doc_view").apply { mkdirs() }
     dir.listFiles()?.filter { it.lastModified() < System.currentTimeMillis() - 2 * 60 * 60_000 }?.forEach { it.delete() }
+    DocFiles.sweep(context)
     val file = File(dir, "${System.nanoTime()}_" + name.replace('/', '_'))
     context.contentResolver.openInputStream(uri)!!.use { input -> file.outputStream().use { input.copyTo(it) } }
     when {
         DocumentTypes.isPdf(name) -> DocState.Pdf(PdfDoc(file))
+        DocumentTypes.isOfficeModel(name) -> {
+            val doc = runCatching { OfficeDocs.open(file, name) }.getOrNull()
+            if (doc != null) DocState.Office(OfficeController(context, uri, name, doc))
+            else if (DocumentTypes.isLegacyOffice(name)) DocState.Failed(context.getString(R.string.od_legacy_failed))
+            else {
+                // the structure could not be read: fall back to the plain text and tables
+                val blocks = DocumentReaders.read(file, name)
+                if (blocks.isEmpty()) DocState.Failed(context.getString(R.string.od_nothing_to_show)) else DocState.Blocks(flatten(blocks))
+            }
+        }
         DocumentTypes.isOffice(name) -> {
             val blocks = DocumentReaders.read(file, name)
-            if (blocks.isEmpty()) DocState.Failed("Nothing to show in this file. Use \"Open with\" to open it in another app.")
+            if (blocks.isEmpty()) DocState.Failed(context.getString(R.string.od_nothing_to_show))
             else DocState.Blocks(flatten(blocks))
         }
         else -> {
-            val limit = 2 * 1024 * 1024
-            val buffer = java.io.ByteArrayOutputStream()
-            file.inputStream().use { input ->
-                val chunk = ByteArray(64 * 1024)
-                while (buffer.size() <= limit) {
-                    val n = input.read(chunk)
-                    if (n < 0) break
-                    buffer.write(chunk, 0, n)
-                }
-            }
-            val bytes = buffer.toByteArray()
-            DocState.Text(String(bytes, 0, minOf(bytes.size, limit), Charsets.UTF_8), bytes.size > limit)
+            if (file.length() <= TEXT_EDIT_LIMIT) DocState.Text(file.readText(Charsets.UTF_8), file, null)
+            else DocState.BigText(BigTextFile(file).also { it.index() })
         }
     }
 }.getOrElse {
     DocState.Failed(
-        if (it is SecurityException) "This PDF is protected with a password." else "This file cannot be opened here (${it.message ?: it.javaClass.simpleName}). Use \"Open with\".",
+        if (it is SecurityException) context.getString(R.string.od_pdf_protected)
+        else context.getString(R.string.od_cannot_open, it.message ?: it.javaClass.simpleName),
     )
 }
 
@@ -268,13 +574,12 @@ private fun flatten(blocks: List<DocBlock>): List<ViewItem> = buildList {
 // ---------------------------------------------------------------- views
 
 @Composable
-private fun PdfView(doc: PdfDoc) {
+private fun PdfView(doc: PdfDoc, listState: androidx.compose.foundation.lazy.LazyListState) {
     val density = LocalDensity.current
     val screenWidth = with(density) { LocalConfiguration.current.screenWidthDp.dp.roundToPx() }
     var zoom by remember { mutableStateOf(1f) }
     val widthPx = (screenWidth * zoom).toInt()
     val hScroll = rememberScrollState()
-    val listState = rememberLazyListState()
     Box(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surfaceContainer)) {
         Box(
             Modifier.fillMaxSize().horizontalScroll(hScroll).pointerInput(Unit) {
@@ -316,14 +621,26 @@ private fun PdfPage(doc: PdfDoc, index: Int, widthPx: Int) {
 }
 
 @Composable
-private fun TextView(s: DocState.Text) {
-    val lines = remember(s.text) { s.text.lines() }
+private fun TextView(text: String) {
+    val lines = remember(text) { text.lines() }
     SelectionContainer {
         LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(12.dp)) {
             items(lines.size) { i ->
                 Text(lines[i].ifEmpty { " " }, fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 18.sp)
             }
-            if (s.truncated) item { Text(stringResource(R.string.hc_the_file_is_longer_only_the_first_2_mb_a), Modifier.padding(top = 12.dp), color = MaterialTheme.colorScheme.error) }
+        }
+    }
+}
+
+/** A text file that is too big to edit: lines are read from the file when they scroll into view. */
+@Composable
+private fun BigTextView(big: BigTextFile) {
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(12.dp)) {
+        item {
+            Text(stringResource(R.string.od_text_too_big), Modifier.padding(bottom = 12.dp), color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+        }
+        items(big.lines) { i ->
+            Text(big.line(i).ifEmpty { " " }, fontFamily = FontFamily.Monospace, fontSize = 13.sp, lineHeight = 18.sp, maxLines = 6)
         }
     }
 }

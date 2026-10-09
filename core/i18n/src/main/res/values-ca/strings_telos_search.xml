@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">Cerca</string>
+    <string name="ts_clear">Esborra</string>
+    <string name="ts_no_results">Cap resultat per a «%1$s»</string>
+</resources>

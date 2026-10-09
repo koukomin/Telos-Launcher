@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">Dokument</string>
+    <string name="od_saved">Gespeichert</string>
+    <string name="od_save_failed">Speichern nicht möglich</string>
+    <string name="od_nothing_to_show">In dieser Datei gibt es nichts anzuzeigen. Mit „Öffnen mit“ lässt sie sich in einer anderen App öffnen.</string>
+    <string name="od_pdf_protected">Dieses PDF ist passwortgeschützt.</string>
+    <string name="od_cannot_open">Diese Datei kann hier nicht geöffnet werden (%1$s). Nutze „Öffnen mit“.</string>
+    <string name="od_legacy_failed">Diese alte Office-Datei konnte nicht gelesen werden. Mit „Öffnen mit“ lässt sie sich in einer anderen App öffnen.</string>
+    <string name="od_text_too_big">Diese Datei ist größer als 2 MB. Sie wird nur lesend angezeigt und nie verändert.</string>
+    <string name="od_edit_copy">Die ersten 2 MB als Kopie bearbeiten</string>
+    <string name="od_copy_hint">Du bearbeitest eine Kopie der ersten 2 MB. Beim Speichern entsteht eine neue Datei; das Original bleibt unverändert.</string>
+    <string name="od_pdf_tools">PDF-Werkzeuge</string>
+    <string name="od_search_pdf">Im PDF suchen</string>
+    <string name="od_search_hint">Text suchen</string>
+    <string name="od_searching">Suche … Seite %1$d</string>
+    <string name="od_no_results">Keine Ergebnisse</string>
+    <string name="od_no_text_layer">Dieses PDF enthält keinen durchsuchbaren Text (z. B. bei einem Scan).</string>
+    <string name="od_results_count">Ergebnisse: %1$d</string>
+    <string name="od_go_to_page">Gehe zu Seite</string>
+    <string name="od_page_range">Seite (1 bis %1$d)</string>
+    <string name="od_go">Los</string>
+    <string name="od_layout_note">Text und Struktur werden angezeigt. Seitenlayout und Schriftarten werden nicht nachgebildet.</string>
+    <string name="od_slides_note">Titel, Text und Bilder werden angezeigt. Folienlayout und Design werden nicht nachgebildet.</string>
+    <string name="od_legacy_readonly">Altes binäres Office-Dateiformat (.doc, .xls, .ppt): nur lesbar. Text und Werte werden so weit wie möglich ausgelesen.</string>
+    <string name="od_convert_note">Beim Umwandeln entsteht eine neue Datei. Formatierung, Bilder und eingebettete Objekte der alten Datei werden nicht übernommen. Das Original bleibt unverändert.</string>
+    <string name="od_convert_action">In .%1$s umwandeln und bearbeiten</string>
+    <string name="od_convert_failed">Diese Datei konnte nicht umgewandelt werden.</string>
+    <string name="od_converted">Umgewandelt. Du bearbeitest jetzt die neue Datei.</string>
+    <string name="od_discard_title">Änderungen verwerfen?</string>
+    <string name="od_discard_text">Deine Änderungen wurden nicht gespeichert.</string>
+    <string name="od_discard">Verwerfen</string>
+    <string name="od_keep_editing">Weiter bearbeiten</string>
+    <string name="od_save_copy">Als Kopie speichern</string>
+    <string name="od_saved_copy">Als neue Datei gespeichert.</string>
+    <string name="od_undo_save">Letztes Speichern rückgängig machen</string>
+    <string name="od_undo_done">Die Version vor dem letzten Speichern wurde wiederhergestellt.</string>
+    <string name="od_undo_failed">Die vorherige Version konnte nicht wiederhergestellt werden.</string>
+    <string name="od_bold">Fett</string>
+    <string name="od_italic">Kursiv</string>
+    <string name="od_add_paragraph">Absatz darunter einfügen</string>
+    <string name="od_delete_paragraph">Absatz löschen</string>
+    <string name="od_table_cell">Tabellenzelle</string>
+    <string name="od_add_row">Zeile hinzufügen</string>
+    <string name="od_edit_cell">Zelle %1$s bearbeiten</string>
+    <string name="od_cell_value">Wert</string>
+    <string name="od_cell_hint">Text, Zahl oder Formel, die mit = beginnt</string>
+    <string name="od_formula_replaced">Diese Zelle enthält eine Formel (%1$s). Ein neuer Wert ersetzt sie.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Tabelle %1$d</string>
+    <string name="od_slide_of">Folie %1$d von %2$d</string>
+    <string name="od_delete_slide">Folie löschen</string>
+    <string name="od_title_box">Titel</string>
+    <string name="od_text_box_n">Textfeld %1$d</string>
+    <string name="od_no_slides">Keine Folien</string>
+    <string name="od_image">Bild</string>
+</resources>

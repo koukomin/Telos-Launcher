@@ -27,6 +27,8 @@ import de.mm20.launcher2.comms.recording.CallRecordingFile
 import de.mm20.launcher2.comms.recording.RecordingCrypto
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.SearchEmptyState
+import de.mm20.launcher2.ui.component.TelosSearchBar
 import kotlinx.coroutines.launch
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import kotlinx.serialization.Serializable
@@ -50,13 +52,21 @@ fun CallRecordingsScreen() {
         kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { RecordingCrypto.clearSharedCopies(context) }
         files = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { CallAudioRecorder.list(context) }
     }
+    var recQuery by remember { mutableStateOf("") }
+    val shownFiles = de.mm20.launcher2.comms.search.TelosSearch.filter(files, recQuery) {
+        listOf(it.number, SimpleDateFormat("d MMM yyyy HH:mm", Locale.getDefault()).format(Date(it.file.lastModified())))
+    }
     PreferenceScreen(title = { Text(stringResource(R.string.hc_call_recordings)) }) {
+        if (files.isNotEmpty()) {
+            item { TelosSearchBar(recQuery, { recQuery = it }, stringResource(R.string.tsp_search_call_recordings)) }
+            if (shownFiles.isEmpty() && recQuery.isNotBlank()) item { SearchEmptyState(recQuery) }
+        }
         if (files.isEmpty()) {
             item {
                 Text(stringResource(R.string.hc_no_recordings_yet), modifier = Modifier.padding(16.dp))
             }
         }
-        files.forEach { rec ->
+        shownFiles.forEach { rec ->
             item {
                 RecordingRow(rec, onChanged = reload)
             }

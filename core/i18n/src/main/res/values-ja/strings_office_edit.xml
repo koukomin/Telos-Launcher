@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">ドキュメント</string>
+    <string name="od_saved">保存しました</string>
+    <string name="od_save_failed">保存できませんでした</string>
+    <string name="od_nothing_to_show">このファイルには表示できる内容がありません。「アプリで開く」から別のアプリで開いてください。</string>
+    <string name="od_pdf_protected">この PDF はパスワードで保護されています。</string>
+    <string name="od_cannot_open">このファイルはここでは開けません(%1$s)。「アプリで開く」をご利用ください。</string>
+    <string name="od_legacy_failed">この古い Office ファイルを読み取れませんでした。「アプリで開く」から別のアプリで開いてください。</string>
+    <string name="od_text_too_big">このファイルは 2 MB を超えています。読み取り専用で表示され、変更されることはありません。</string>
+    <string name="od_edit_copy">最初の 2 MB をコピーとして編集</string>
+    <string name="od_copy_hint">最初の 2 MB のコピーを編集しています。保存すると新しいファイルが作成され、元のファイルは変更されません。</string>
+    <string name="od_pdf_tools">PDF ツール</string>
+    <string name="od_search_pdf">PDF 内を検索</string>
+    <string name="od_search_hint">テキストを検索</string>
+    <string name="od_searching">検索中… %1$d ページ</string>
+    <string name="od_no_results">結果なし</string>
+    <string name="od_no_text_layer">この PDF には検索できるテキストがありません(スキャンなど)。</string>
+    <string name="od_results_count">結果: %1$d 件</string>
+    <string name="od_go_to_page">ページへ移動</string>
+    <string name="od_page_range">ページ(1~%1$d)</string>
+    <string name="od_go">移動</string>
+    <string name="od_layout_note">テキストと構造を表示します。ページレイアウトやフォントは再現されません。</string>
+    <string name="od_slides_note">タイトル、テキスト、画像を表示します。スライドのレイアウトやデザインは再現されません。</string>
+    <string name="od_legacy_readonly">古いバイナリ形式の Office ファイル(.doc、.xls、.ppt):読み取り専用です。テキストと値は可能な範囲で抽出されます。</string>
+    <string name="od_convert_note">変換すると新しいファイルが作成されます。古いファイルの書式、画像、埋め込みオブジェクトは引き継がれません。元のファイルは変更されません。</string>
+    <string name="od_convert_action">.%1$s に変換して編集</string>
+    <string name="od_convert_failed">このファイルを変換できませんでした。</string>
+    <string name="od_converted">変換しました。新しいファイルを編集しています。</string>
+    <string name="od_discard_title">変更を破棄しますか?</string>
+    <string name="od_discard_text">編集内容は保存されていません。</string>
+    <string name="od_discard">破棄</string>
+    <string name="od_keep_editing">編集を続ける</string>
+    <string name="od_save_copy">コピーとして保存</string>
+    <string name="od_saved_copy">新しいファイルとして保存しました。</string>
+    <string name="od_undo_save">最後の保存を元に戻す</string>
+    <string name="od_undo_done">最後に保存する前のバージョンを復元しました。</string>
+    <string name="od_undo_failed">前のバージョンを復元できませんでした。</string>
+    <string name="od_bold">太字</string>
+    <string name="od_italic">斜体</string>
+    <string name="od_add_paragraph">下に段落を追加</string>
+    <string name="od_delete_paragraph">段落を削除</string>
+    <string name="od_table_cell">表のセル</string>
+    <string name="od_add_row">行を追加</string>
+    <string name="od_edit_cell">セル %1$s を編集</string>
+    <string name="od_cell_value">値</string>
+    <string name="od_cell_hint">テキスト、数値、または = で始まる数式</string>
+    <string name="od_formula_replaced">このセルには数式(%1$s)が含まれています。新しい値で置き換えられます。</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">シート %1$d</string>
+    <string name="od_slide_of">スライド %1$d/%2$d</string>
+    <string name="od_delete_slide">スライドを削除</string>
+    <string name="od_title_box">タイトル</string>
+    <string name="od_text_box_n">テキスト ボックス %1$d</string>
+    <string name="od_no_slides">スライドがありません</string>
+    <string name="od_image">画像</string>
+</resources>

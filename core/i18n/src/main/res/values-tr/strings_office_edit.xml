@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">belge</string>
+    <string name="od_saved">Kaydedildi</string>
+    <string name="od_save_failed">Kaydedilemedi</string>
+    <string name="od_nothing_to_show">Bu dosyada gösterilecek bir şey yok. Başka bir uygulamada açmak için “Birlikte aç” seçeneğini kullanın.</string>
+    <string name="od_pdf_protected">Bu PDF parolayla korunuyor.</string>
+    <string name="od_cannot_open">Bu dosya burada açılamıyor (%1$s). “Birlikte aç” seçeneğini kullanın.</string>
+    <string name="od_legacy_failed">Bu eski Office dosyası okunamadı. Başka bir uygulamada açmak için “Birlikte aç” seçeneğini kullanın.</string>
+    <string name="od_text_too_big">Bu dosya 2 MB’tan büyük. Salt okunur gösterilir ve asla değiştirilmez.</string>
+    <string name="od_edit_copy">İlk 2 MB’ı kopya olarak düzenle</string>
+    <string name="od_copy_hint">İlk 2 MB’ın bir kopyasını düzenliyorsunuz. Kaydetmek yeni bir dosya oluşturur; orijinal değişmez.</string>
+    <string name="od_pdf_tools">PDF araçları</string>
+    <string name="od_search_pdf">PDF’de ara</string>
+    <string name="od_search_hint">Metin ara</string>
+    <string name="od_searching">Aranıyor… sayfa %1$d</string>
+    <string name="od_no_results">Sonuç yok</string>
+    <string name="od_no_text_layer">Bu PDF’de aranabilir metin yok (örneğin bir tarama).</string>
+    <string name="od_results_count">Sonuçlar: %1$d</string>
+    <string name="od_go_to_page">Sayfaya git</string>
+    <string name="od_page_range">Sayfa (1 – %1$d)</string>
+    <string name="od_go">Git</string>
+    <string name="od_layout_note">Metin ve yapı gösterilir. Sayfa düzeni ve yazı tipleri yeniden oluşturulmaz.</string>
+    <string name="od_slides_note">Başlıklar, metin ve resimler gösterilir. Slayt düzeni ve tasarımı yeniden oluşturulmaz.</string>
+    <string name="od_legacy_readonly">Eski ikili Office dosyası (.doc, .xls, .ppt): salt okunur. Metin ve değerler mümkün olduğunca çıkarılır.</string>
+    <string name="od_convert_note">Dönüştürme yeni bir dosya oluşturur. Eski dosyanın biçimlendirmesi, resimleri ve gömülü nesneleri aktarılmaz. Orijinal değişmeden kalır.</string>
+    <string name="od_convert_action">.%1$s biçimine dönüştür ve düzenle</string>
+    <string name="od_convert_failed">Bu dosya dönüştürülemedi.</string>
+    <string name="od_converted">Dönüştürüldü. Şimdi yeni dosyayı düzenliyorsunuz.</string>
+    <string name="od_discard_title">Değişiklikler silinsin mi?</string>
+    <string name="od_discard_text">Düzenlemeleriniz kaydedilmedi.</string>
+    <string name="od_discard">Sil</string>
+    <string name="od_keep_editing">Düzenlemeye devam et</string>
+    <string name="od_save_copy">Kopya olarak kaydet</string>
+    <string name="od_saved_copy">Yeni dosya olarak kaydedildi.</string>
+    <string name="od_undo_save">Son kaydı geri al</string>
+    <string name="od_undo_done">Son kayıttan önceki sürüm geri yüklendi.</string>
+    <string name="od_undo_failed">Önceki sürüm geri yüklenemedi.</string>
+    <string name="od_bold">Kalın</string>
+    <string name="od_italic">İtalik</string>
+    <string name="od_add_paragraph">Altına paragraf ekle</string>
+    <string name="od_delete_paragraph">Paragrafı sil</string>
+    <string name="od_table_cell">Tablo hücresi</string>
+    <string name="od_add_row">Satır ekle</string>
+    <string name="od_edit_cell">%1$s hücresini düzenle</string>
+    <string name="od_cell_value">Değer</string>
+    <string name="od_cell_hint">Metin, sayı veya = ile başlayan formül</string>
+    <string name="od_formula_replaced">Bu hücre bir formül içeriyor (%1$s). Yeni bir değer onun yerine geçer.</string>
+    <string name="od_ok">Tamam</string>
+    <string name="od_sheet_n">Sayfa %1$d</string>
+    <string name="od_slide_of">Slayt %1$d / %2$d</string>
+    <string name="od_delete_slide">Slaytı sil</string>
+    <string name="od_title_box">Başlık</string>
+    <string name="od_text_box_n">Metin kutusu %1$d</string>
+    <string name="od_no_slides">Slayt yok</string>
+    <string name="od_image">Resim</string>
+</resources>

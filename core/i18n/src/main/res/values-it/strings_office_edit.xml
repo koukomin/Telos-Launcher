@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">documento</string>
+    <string name="od_saved">Salvato</string>
+    <string name="od_save_failed">Impossibile salvare</string>
+    <string name="od_nothing_to_show">Niente da mostrare in questo file. Usa «Apri con» per aprirlo in un’altra app.</string>
+    <string name="od_pdf_protected">Questo PDF è protetto da password.</string>
+    <string name="od_cannot_open">Questo file non può essere aperto qui (%1$s). Usa «Apri con».</string>
+    <string name="od_legacy_failed">Questo vecchio file Office non può essere letto. Usa «Apri con» per aprirlo in un’altra app.</string>
+    <string name="od_text_too_big">Questo file supera i 2 MB. Viene mostrato in sola lettura e non viene mai modificato.</string>
+    <string name="od_edit_copy">Modifica i primi 2 MB come copia</string>
+    <string name="od_copy_hint">Stai modificando una copia dei primi 2 MB. Il salvataggio crea un nuovo file; l’originale non cambia.</string>
+    <string name="od_pdf_tools">Strumenti PDF</string>
+    <string name="od_search_pdf">Cerca nel PDF</string>
+    <string name="od_search_hint">Cerca testo</string>
+    <string name="od_searching">Ricerca… pagina %1$d</string>
+    <string name="od_no_results">Nessun risultato</string>
+    <string name="od_no_text_layer">Questo PDF non contiene testo ricercabile (ad esempio una scansione).</string>
+    <string name="od_results_count">Risultati: %1$d</string>
+    <string name="od_go_to_page">Vai alla pagina</string>
+    <string name="od_page_range">Pagina (da 1 a %1$d)</string>
+    <string name="od_go">Vai</string>
+    <string name="od_layout_note">Vengono mostrati testo e struttura. Impaginazione e caratteri non vengono riprodotti.</string>
+    <string name="od_slides_note">Vengono mostrati titoli, testo e immagini. Layout e design delle diapositive non vengono riprodotti.</string>
+    <string name="od_legacy_readonly">Vecchio file Office binario (.doc, .xls, .ppt): sola lettura. Testo e valori vengono estratti per quanto possibile.</string>
+    <string name="od_convert_note">La conversione crea un nuovo file. Formattazione, immagini e oggetti incorporati del vecchio file non vengono mantenuti. L’originale resta invariato.</string>
+    <string name="od_convert_action">Converti in .%1$s e modifica</string>
+    <string name="od_convert_failed">Impossibile convertire questo file.</string>
+    <string name="od_converted">Convertito. Ora stai modificando il nuovo file.</string>
+    <string name="od_discard_title">Scartare le modifiche?</string>
+    <string name="od_discard_text">Le modifiche non sono state salvate.</string>
+    <string name="od_discard">Scarta</string>
+    <string name="od_keep_editing">Continua a modificare</string>
+    <string name="od_save_copy">Salva come copia</string>
+    <string name="od_saved_copy">Salvato come nuovo file.</string>
+    <string name="od_undo_save">Annulla ultimo salvataggio</string>
+    <string name="od_undo_done">La versione precedente all’ultimo salvataggio è stata ripristinata.</string>
+    <string name="od_undo_failed">Impossibile ripristinare la versione precedente.</string>
+    <string name="od_bold">Grassetto</string>
+    <string name="od_italic">Corsivo</string>
+    <string name="od_add_paragraph">Aggiungi paragrafo sotto</string>
+    <string name="od_delete_paragraph">Elimina paragrafo</string>
+    <string name="od_table_cell">Cella della tabella</string>
+    <string name="od_add_row">Aggiungi riga</string>
+    <string name="od_edit_cell">Modifica cella %1$s</string>
+    <string name="od_cell_value">Valore</string>
+    <string name="od_cell_hint">Testo, numero o formula che inizia con =</string>
+    <string name="od_formula_replaced">Questa cella contiene una formula (%1$s). Un nuovo valore la sostituisce.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Foglio %1$d</string>
+    <string name="od_slide_of">Diapositiva %1$d di %2$d</string>
+    <string name="od_delete_slide">Elimina diapositiva</string>
+    <string name="od_title_box">Titolo</string>
+    <string name="od_text_box_n">Casella di testo %1$d</string>
+    <string name="od_no_slides">Nessuna diapositiva</string>
+    <string name="od_image">Immagine</string>
+</resources>

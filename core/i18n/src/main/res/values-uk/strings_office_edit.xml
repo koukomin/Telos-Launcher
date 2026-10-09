@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">документ</string>
+    <string name="od_saved">Збережено</string>
+    <string name="od_save_failed">Не вдалося зберегти</string>
+    <string name="od_nothing_to_show">У цьому файлі немає що показувати. Скористайтеся «Відкрити за допомогою», щоб відкрити його в іншому застосунку.</string>
+    <string name="od_pdf_protected">Цей PDF захищено паролем.</string>
+    <string name="od_cannot_open">Цей файл не можна відкрити тут (%1$s). Скористайтеся «Відкрити за допомогою».</string>
+    <string name="od_legacy_failed">Не вдалося прочитати цей старий файл Office. Скористайтеся «Відкрити за допомогою», щоб відкрити його в іншому застосунку.</string>
+    <string name="od_text_too_big">Цей файл більший за 2 МБ. Його показано лише для читання, і він ніколи не змінюється.</string>
+    <string name="od_edit_copy">Редагувати перші 2 МБ як копію</string>
+    <string name="od_copy_hint">Ви редагуєте копію перших 2 МБ. Під час збереження створюється новий файл; оригінал не змінюється.</string>
+    <string name="od_pdf_tools">Інструменти PDF</string>
+    <string name="od_search_pdf">Пошук у PDF</string>
+    <string name="od_search_hint">Шукати текст</string>
+    <string name="od_searching">Пошук… сторінка %1$d</string>
+    <string name="od_no_results">Нічого не знайдено</string>
+    <string name="od_no_text_layer">У цьому PDF немає тексту, за яким можна шукати (наприклад, це скан).</string>
+    <string name="od_results_count">Результатів: %1$d</string>
+    <string name="od_go_to_page">Перейти до сторінки</string>
+    <string name="od_page_range">Сторінка (від 1 до %1$d)</string>
+    <string name="od_go">Перейти</string>
+    <string name="od_layout_note">Показано текст і структуру. Розмітка сторінок і шрифти не відтворюються.</string>
+    <string name="od_slides_note">Показано заголовки, текст і зображення. Макет і оформлення слайдів не відтворюються.</string>
+    <string name="od_legacy_readonly">Старий двійковий файл Office (.doc, .xls, .ppt): лише читання. Текст і значення видобуваються наскільки це можливо.</string>
+    <string name="od_convert_note">Під час перетворення створюється новий файл. Форматування, зображення та вбудовані об’єкти старого файлу не переносяться. Оригінал залишається без змін.</string>
+    <string name="od_convert_action">Перетворити на .%1$s і редагувати</string>
+    <string name="od_convert_failed">Не вдалося перетворити цей файл.</string>
+    <string name="od_converted">Перетворено. Тепер ви редагуєте новий файл.</string>
+    <string name="od_discard_title">Скасувати зміни?</string>
+    <string name="od_discard_text">Ваші правки не збережено.</string>
+    <string name="od_discard">Скасувати</string>
+    <string name="od_keep_editing">Продовжити редагування</string>
+    <string name="od_save_copy">Зберегти як копію</string>
+    <string name="od_saved_copy">Збережено як новий файл.</string>
+    <string name="od_undo_save">Скасувати останнє збереження</string>
+    <string name="od_undo_done">Відновлено версію до останнього збереження.</string>
+    <string name="od_undo_failed">Не вдалося відновити попередню версію.</string>
+    <string name="od_bold">Напівжирний</string>
+    <string name="od_italic">Курсив</string>
+    <string name="od_add_paragraph">Додати абзац нижче</string>
+    <string name="od_delete_paragraph">Видалити абзац</string>
+    <string name="od_table_cell">Клітинка таблиці</string>
+    <string name="od_add_row">Додати рядок</string>
+    <string name="od_edit_cell">Редагувати клітинку %1$s</string>
+    <string name="od_cell_value">Значення</string>
+    <string name="od_cell_hint">Текст, число або формула, що починається з =</string>
+    <string name="od_formula_replaced">Ця клітинка містить формулу (%1$s). Нове значення замінить її.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Аркуш %1$d</string>
+    <string name="od_slide_of">Слайд %1$d з %2$d</string>
+    <string name="od_delete_slide">Видалити слайд</string>
+    <string name="od_title_box">Заголовок</string>
+    <string name="od_text_box_n">Текстове поле %1$d</string>
+    <string name="od_no_slides">Немає слайдів</string>
+    <string name="od_image">Зображення</string>
+</resources>

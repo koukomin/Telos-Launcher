@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">dokuments</string>
+    <string name="od_saved">Saglabāts</string>
+    <string name="od_save_failed">Neizdevās saglabāt</string>
+    <string name="od_nothing_to_show">Šajā failā nav, ko rādīt. Izmantojiet „Atvērt ar“, lai atvērtu to citā lietotnē.</string>
+    <string name="od_pdf_protected">Šis PDF ir aizsargāts ar paroli.</string>
+    <string name="od_cannot_open">Šo failu šeit nevar atvērt (%1$s). Izmantojiet „Atvērt ar“.</string>
+    <string name="od_legacy_failed">Šo veco Office failu neizdevās nolasīt. Izmantojiet „Atvērt ar“, lai atvērtu to citā lietotnē.</string>
+    <string name="od_text_too_big">Šis fails ir lielāks par 2 MB. Tas tiek rādīts tikai lasīšanai un nekad netiek mainīts.</string>
+    <string name="od_edit_copy">Rediģēt pirmos 2 MB kā kopiju</string>
+    <string name="od_copy_hint">Jūs rediģējat pirmo 2 MB kopiju. Saglabājot tiek izveidots jauns fails; oriģināls netiek mainīts.</string>
+    <string name="od_pdf_tools">PDF rīki</string>
+    <string name="od_search_pdf">Meklēt PDF</string>
+    <string name="od_search_hint">Meklēt tekstu</string>
+    <string name="od_searching">Meklē… %1$d. lappuse</string>
+    <string name="od_no_results">Nav rezultātu</string>
+    <string name="od_no_text_layer">Šajā PDF nav teksta, kurā var meklēt (piemēram, tas ir skenējums).</string>
+    <string name="od_results_count">Rezultāti: %1$d</string>
+    <string name="od_go_to_page">Doties uz lappusi</string>
+    <string name="od_page_range">Lappuse (no 1 līdz %1$d)</string>
+    <string name="od_go">Doties</string>
+    <string name="od_layout_note">Tiek rādīts teksts un struktūra. Lappuses izkārtojums un fonti netiek atveidoti.</string>
+    <string name="od_slides_note">Tiek rādīti virsraksti, teksts un attēli. Slaidu izkārtojums un noformējums netiek atveidots.</string>
+    <string name="od_legacy_readonly">Vecs binārs Office fails (.doc, .xls, .ppt): tikai lasīšanai. Teksts un vērtības tiek izgūtas, cik vien iespējams.</string>
+    <string name="od_convert_note">Konvertējot tiek izveidots jauns fails. Vecā faila formatējums, attēli un iegultie objekti netiek pārnesti. Oriģināls paliek nemainīts.</string>
+    <string name="od_convert_action">Konvertēt uz .%1$s un rediģēt</string>
+    <string name="od_convert_failed">Šo failu neizdevās konvertēt.</string>
+    <string name="od_converted">Konvertēts. Tagad jūs rediģējat jauno failu.</string>
+    <string name="od_discard_title">Atmest izmaiņas?</string>
+    <string name="od_discard_text">Jūsu labojumi nav saglabāti.</string>
+    <string name="od_discard">Atmest</string>
+    <string name="od_keep_editing">Turpināt rediģēt</string>
+    <string name="od_save_copy">Saglabāt kā kopiju</string>
+    <string name="od_saved_copy">Saglabāts kā jauns fails.</string>
+    <string name="od_undo_save">Atsaukt pēdējo saglabāšanu</string>
+    <string name="od_undo_done">Atjaunota versija pirms pēdējās saglabāšanas.</string>
+    <string name="od_undo_failed">Neizdevās atjaunot iepriekšējo versiju.</string>
+    <string name="od_bold">Treknraksts</string>
+    <string name="od_italic">Slīpraksts</string>
+    <string name="od_add_paragraph">Pievienot rindkopu zemāk</string>
+    <string name="od_delete_paragraph">Dzēst rindkopu</string>
+    <string name="od_table_cell">Tabulas šūna</string>
+    <string name="od_add_row">Pievienot rindu</string>
+    <string name="od_edit_cell">Rediģēt šūnu %1$s</string>
+    <string name="od_cell_value">Vērtība</string>
+    <string name="od_cell_hint">Teksts, skaitlis vai formula, kas sākas ar =</string>
+    <string name="od_formula_replaced">Šajā šūnā ir formula (%1$s). Jauna vērtība to aizstās.</string>
+    <string name="od_ok">Labi</string>
+    <string name="od_sheet_n">%1$d. lapa</string>
+    <string name="od_slide_of">%1$d. slaids no %2$d</string>
+    <string name="od_delete_slide">Dzēst slaidu</string>
+    <string name="od_title_box">Virsraksts</string>
+    <string name="od_text_box_n">Teksta lodziņš %1$d</string>
+    <string name="od_no_slides">Nav slaidu</string>
+    <string name="od_image">Attēls</string>
+</resources>

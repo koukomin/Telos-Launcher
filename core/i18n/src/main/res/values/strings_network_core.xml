@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Telos Network alerts</string>
+    <string name="net_notif_title">Telos Network is on</string>
+    <string name="net_notif_text">Connections are being filtered.</string>
+    <string name="net_notif_blocked">Blocked connections: %1$d</string>
+    <string name="net_notif_stop">Turn off</string>
+    <string name="net_alert_stopped_title">Telos Network turned off</string>
+    <string name="net_alert_crashed">The network engine stopped unexpectedly. Internet access is not affected.</string>
+    <string name="net_alert_revoked">Another VPN took over. Internet access is not affected.</string>
+    <string name="net_alert_start_failed">Telos Network could not start. Internet access is not affected.</string>
+    <string name="net_error_permission">Permission to set up a VPN is needed.</string>
+    <string name="net_error_start_failed">Could not start: %1$s</string>
+    <string name="net_error_unknown">unknown error</string>
+    <string name="net_app_system">Android system</string>
+    <string name="net_app_unknown">Unknown app (%1$d)</string>
+    <string name="net_dns_system">Network DNS (system)</string>
+</resources>

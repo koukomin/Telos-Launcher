@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">Zoeken</string>
+    <string name="ts_clear">Wissen</string>
+    <string name="ts_no_results">Geen resultaten voor “%1$s”</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsm_search_music">Пошук музыкі</string>
+    <string name="tsm_search_videos">Пошук відэа</string>
+    <string name="tsm_search_radio_browser">Пошук па назве станцыі</string>
+    <string name="tsm_search_my_stations">Пошук у вашых станцыях</string>
+    <string name="tsm_search_photos">Пошук фота</string>
+</resources>

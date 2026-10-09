@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">文档</string>
+    <string name="od_saved">已保存</string>
+    <string name="od_save_failed">无法保存</string>
+    <string name="od_nothing_to_show">此文件中没有可显示的内容。请使用“打开方式”在其他应用中打开。</string>
+    <string name="od_pdf_protected">此 PDF 受密码保护。</string>
+    <string name="od_cannot_open">无法在此处打开该文件(%1$s)。请使用“打开方式”。</string>
+    <string name="od_legacy_failed">无法读取这个旧版 Office 文件。请使用“打开方式”在其他应用中打开。</string>
+    <string name="od_text_too_big">此文件大于 2 MB,仅以只读方式显示,绝不会被修改。</string>
+    <string name="od_edit_copy">将前 2 MB 作为副本编辑</string>
+    <string name="od_copy_hint">你正在编辑前 2 MB 的副本。保存会创建新文件,原文件不会改变。</string>
+    <string name="od_pdf_tools">PDF 工具</string>
+    <string name="od_search_pdf">在 PDF 中搜索</string>
+    <string name="od_search_hint">搜索文本</string>
+    <string name="od_searching">正在搜索… 第 %1$d 页</string>
+    <string name="od_no_results">无结果</string>
+    <string name="od_no_text_layer">此 PDF 没有可搜索的文本(例如扫描件)。</string>
+    <string name="od_results_count">结果:%1$d</string>
+    <string name="od_go_to_page">转到页面</string>
+    <string name="od_page_range">页码(1 至 %1$d)</string>
+    <string name="od_go">转到</string>
+    <string name="od_layout_note">显示文本和结构,不还原页面布局和字体。</string>
+    <string name="od_slides_note">显示标题、文本和图片,不还原幻灯片的布局和设计。</string>
+    <string name="od_legacy_readonly">旧版二进制 Office 文件(.doc、.xls、.ppt):只读。会尽可能提取文本和数值。</string>
+    <string name="od_convert_note">转换会创建新文件。旧文件的格式、图片和嵌入对象不会带入新文件。原文件保持不变。</string>
+    <string name="od_convert_action">转换为 .%1$s 并编辑</string>
+    <string name="od_convert_failed">无法转换此文件。</string>
+    <string name="od_converted">转换完成。你现在正在编辑新文件。</string>
+    <string name="od_discard_title">放弃更改?</string>
+    <string name="od_discard_text">你的修改尚未保存。</string>
+    <string name="od_discard">放弃</string>
+    <string name="od_keep_editing">继续编辑</string>
+    <string name="od_save_copy">另存为副本</string>
+    <string name="od_saved_copy">已另存为新文件。</string>
+    <string name="od_undo_save">撤销上次保存</string>
+    <string name="od_undo_done">已恢复到上次保存之前的版本。</string>
+    <string name="od_undo_failed">无法恢复上一个版本。</string>
+    <string name="od_bold">粗体</string>
+    <string name="od_italic">斜体</string>
+    <string name="od_add_paragraph">在下方添加段落</string>
+    <string name="od_delete_paragraph">删除段落</string>
+    <string name="od_table_cell">表格单元格</string>
+    <string name="od_add_row">添加行</string>
+    <string name="od_edit_cell">编辑单元格 %1$s</string>
+    <string name="od_cell_value">值</string>
+    <string name="od_cell_hint">文本、数字或以 = 开头的公式</string>
+    <string name="od_formula_replaced">此单元格包含公式(%1$s)。输入新值将替换该公式。</string>
+    <string name="od_ok">确定</string>
+    <string name="od_sheet_n">工作表 %1$d</string>
+    <string name="od_slide_of">幻灯片 %1$d/%2$d</string>
+    <string name="od_delete_slide">删除幻灯片</string>
+    <string name="od_title_box">标题</string>
+    <string name="od_text_box_n">文本框 %1$d</string>
+    <string name="od_no_slides">没有幻灯片</string>
+    <string name="od_image">图片</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Varsler fra Telos Network</string>
+    <string name="net_notif_title">Telos Network er på</string>
+    <string name="net_notif_text">Tilkoblinger filtreres.</string>
+    <string name="net_notif_blocked">Blokkerte tilkoblinger: %1$d</string>
+    <string name="net_notif_stop">Slå av</string>
+    <string name="net_alert_stopped_title">Telos Network ble slått av</string>
+    <string name="net_alert_crashed">Nettverksmotoren stoppet uventet. Internettilgangen påvirkes ikke.</string>
+    <string name="net_alert_revoked">En annen VPN overtok. Internettilgangen påvirkes ikke.</string>
+    <string name="net_alert_start_failed">Telos Network kunne ikke starte. Internettilgangen påvirkes ikke.</string>
+    <string name="net_error_permission">Det kreves tillatelse for å sette opp en VPN.</string>
+    <string name="net_error_start_failed">Kunne ikke starte: %1$s</string>
+    <string name="net_error_unknown">ukjent feil</string>
+    <string name="net_app_system">Android-systemet</string>
+    <string name="net_app_unknown">Ukjent app (%1$d)</string>
+    <string name="net_dns_system">Nettverkets DNS (system)</string>
+</resources>

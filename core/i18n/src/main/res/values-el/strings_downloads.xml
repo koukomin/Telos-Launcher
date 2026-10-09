@@ -75,7 +75,7 @@
     <string name="dl_no">Όχι</string>
     <string name="dl_detail_url">Σύνδεσμος</string>
     <string name="dl_detail_final_url">Διεύθυνση μετά τις ανακατευθύνσεις</string>
-    <string name="dl_detail_mirrors">Mirrors</string>
+    <string name="dl_detail_mirrors">Κατοπτρικοί διακομιστές</string>
     <string name="dl_detail_size">Μέγεθος</string>
     <string name="dl_detail_mime">Τύπος</string>
     <string name="dl_detail_saved_to">Αποθηκεύτηκε σε</string>

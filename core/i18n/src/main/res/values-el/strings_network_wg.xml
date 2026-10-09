@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Πίσω</string>
+    <string name="nwg_add">Προσθήκη τούνελ</string>
+    <string name="nwg_add_new">Δημιουργία νέου</string>
+    <string name="nwg_add_file">Εισαγωγή αρχείου .conf</string>
+    <string name="nwg_add_qr">Εισαγωγή από εικόνα κωδικού QR</string>
+    <string name="nwg_add_paste">Επικόλληση κειμένου ρύθμισης</string>
+    <string name="nwg_system_default">Προεπιλογή συστήματος</string>
+    <string name="nwg_system_default_summary">Οι εφαρμογές χωρίς δική τους ρύθμιση χρησιμοποιούν αυτό το τούνελ. Χωρίς προεπιλογή συστήματος συνδέονται απευθείας.</string>
+    <string name="nwg_none">Κανένα (απευθείας)</string>
+    <string name="nwg_direct">Απευθείας (χωρίς proxy)</string>
+    <string name="nwg_apps">Ανάθεση ανά εφαρμογή</string>
+    <string name="nwg_apps_summary">Επιλέξτε ποιο τούνελ χρησιμοποιεί κάθε εφαρμογή</string>
+    <string name="nwg_configs">Τούνελ</string>
+    <string name="nwg_empty">Δεν υπάρχουν τούνελ ακόμη. Προσθέστε ένα με το κουμπί +.</string>
+    <string name="nwg_status_off">Ανενεργό</string>
+    <string name="nwg_status_connecting">Σύνδεση…</string>
+    <string name="nwg_status_up">Συνδεδεμένο</string>
+    <string name="nwg_status_down">Δεν ανταποκρίνεται</string>
+    <string name="nwg_status_error">Σφάλμα</string>
+    <string name="nwg_traffic">Ελήφθησαν %1$s, στάλθηκαν %2$s</string>
+    <string name="nwg_handshake">Τελευταία χειραψία: %1$s</string>
+    <string name="nwg_vpn_off_hint">Ενεργοποιήστε το Telos Network για να συνδεθούν τα τούνελ.</string>
+    <string name="nwg_new_title">Νέο τούνελ</string>
+    <string name="nwg_edit_title">Επεξεργασία τούνελ</string>
+    <string name="nwg_name">Όνομα</string>
+    <string name="nwg_private_key">Ιδιωτικό κλειδί</string>
+    <string name="nwg_public_key">Δημόσιο κλειδί: %1$s</string>
+    <string name="nwg_generate">Δημιουργία</string>
+    <string name="nwg_addresses">Διευθύνσεις (χωρισμένες με κόμμα)</string>
+    <string name="nwg_dns">Διακομιστές DNS (χωρισμένοι με κόμμα)</string>
+    <string name="nwg_mtu">MTU (0 = αυτόματο)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Δημόσιο κλειδί του peer</string>
+    <string name="nwg_preshared">Κοινόχρηστο κλειδί (προαιρετικό)</string>
+    <string name="nwg_endpoint">Endpoint (host:port)</string>
+    <string name="nwg_allowed_ips">Επιτρεπόμενες IP (χωρισμένες με κόμμα)</string>
+    <string name="nwg_keepalive">Persistent keepalive σε δευτερόλεπτα (0 = ανενεργό)</string>
+    <string name="nwg_add_peer">Προσθήκη peer</string>
+    <string name="nwg_remove_peer">Αφαίρεση peer</string>
+    <string name="nwg_mobile_only">Μόνο με δεδομένα κινητής</string>
+    <string name="nwg_lockdown">Φραγή των εφαρμογών όσο το τούνελ είναι εκτός λειτουργίας</string>
+    <string name="nwg_save">Αποθήκευση</string>
+    <string name="nwg_cancel">Ακύρωση</string>
+    <string name="nwg_delete">Διαγραφή</string>
+    <string name="nwg_share">Κοινοποίηση ρύθμισης</string>
+    <string name="nwg_share_warning">Η εξαγόμενη ρύθμιση περιέχει το ιδιωτικό κλειδί.</string>
+    <string name="nwg_import">Εισαγωγή</string>
+    <string name="nwg_qr_not_found">Δεν βρέθηκε κωδικός QR σε αυτή την εικόνα</string>
+    <string name="nwg_err_syntax">Η ρύθμιση έχει συντακτικό σφάλμα: %1$s</string>
+    <string name="nwg_err_missing">Η ρύθμιση είναι ελλιπής: λείπει το %1$s</string>
+    <string name="nwg_err_invalid_key">Μη έγκυρο κλειδί: %1$s</string>
+    <string name="nwg_err_invalid_value">Μη έγκυρη τιμή: %1$s</string>
+    <string name="nwg_err_invalid_name">Εισαγάγετε όνομα έως 64 χαρακτήρων</string>
+    <string name="nwg_err_not_found">Το τούνελ δεν υπάρχει πια</string>
+    <string name="nwg_err_storage">Η ρύθμιση δεν μπόρεσε να αποθηκευτεί με ασφάλεια: %1$s</string>
+    <string name="nwg_err_other">Η ρύθμιση δεν μπόρεσε να αποθηκευτεί</string>
+    <string name="nwg_apps_title">Εφαρμογές και τούνελ</string>
+    <string name="nwg_search">Αναζήτηση εφαρμογών</string>
+    <string name="nwg_show_system">Εμφάνιση εφαρμογών συστήματος</string>
+    <string name="nwg_selected">%1$d επιλεγμένες</string>
+    <string name="nwg_assign_selected">Ανάθεση στις επιλεγμένες εφαρμογές</string>
+    <string name="nwg_clear_selection">Εκκαθάριση επιλογής</string>
+    <string name="nwg_select_all">Επιλογή όλων των εμφανιζόμενων</string>
+</resources>

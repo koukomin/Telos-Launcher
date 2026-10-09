@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">नोट्स खोजें</string>
+    <string name="tsp_search_calls">कॉल खोजें</string>
+    <string name="tsp_search_favorites">पसंदीदा खोजें</string>
+    <string name="tsp_search_contacts">संपर्क खोजें</string>
+    <string name="tsp_search_messages">संदेश खोजें</string>
+    <string name="tsp_search_in_conversation">बातचीत में खोजें</string>
+    <string name="tsp_search_events">इवेंट खोजें</string>
+    <string name="tsp_search_recordings">रिकॉर्डिंग खोजें</string>
+    <string name="tsp_search_screenshots">स्क्रीनशॉट खोजें</string>
+    <string name="tsp_search_call_recordings">कॉल रिकॉर्डिंग खोजें</string>
+    <string name="tsp_search_groups">समूह खोजें</string>
+</resources>

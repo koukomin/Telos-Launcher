@@ -25,7 +25,7 @@ fun LazyListScope.FossUpdateResults(
 
     item(key = "foss_updates_header") {
         Text(
-            text = "Available Updates",
+            text = stringResource(R.string.hf_available_updates),
             style = MaterialTheme.typography.titleSmall,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
         )
@@ -49,7 +49,7 @@ fun LazyListScope.FossUpdateResults(
                     onShowDetails = {},
                 )
                 IconButton(onClick = { onDismiss(app) }) {
-                    Icon(painterResource(R.drawable.close_24px), contentDescription = "Dismiss")
+                    Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.hc_dismiss))
                 }
             }
         }

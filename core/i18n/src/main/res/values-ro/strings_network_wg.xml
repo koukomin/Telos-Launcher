@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Înapoi</string>
+    <string name="nwg_add">Adaugă tunel</string>
+    <string name="nwg_add_new">Creează nou</string>
+    <string name="nwg_add_file">Importă fișier .conf</string>
+    <string name="nwg_add_qr">Importă din imagine cu cod QR</string>
+    <string name="nwg_add_paste">Lipește textul configurației</string>
+    <string name="nwg_system_default">Implicit al sistemului</string>
+    <string name="nwg_system_default_summary">Aplicațiile fără setare proprie folosesc acest tunel. Fără implicit al sistemului se conectează direct.</string>
+    <string name="nwg_none">Niciunul (direct)</string>
+    <string name="nwg_direct">Direct (fără proxy)</string>
+    <string name="nwg_apps">Atribuire pe aplicații</string>
+    <string name="nwg_apps_summary">Alege ce tunel folosește fiecare aplicație</string>
+    <string name="nwg_configs">Tuneluri</string>
+    <string name="nwg_empty">Încă nu există tuneluri. Adaugă unul cu butonul +.</string>
+    <string name="nwg_status_off">Oprit</string>
+    <string name="nwg_status_connecting">Se conectează</string>
+    <string name="nwg_status_up">Conectat</string>
+    <string name="nwg_status_down">Nu răspunde</string>
+    <string name="nwg_status_error">Eroare</string>
+    <string name="nwg_traffic">Primit %1$s, trimis %2$s</string>
+    <string name="nwg_handshake">Ultimul handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Pornește Telos Network pentru a conecta tunelurile.</string>
+    <string name="nwg_new_title">Tunel nou</string>
+    <string name="nwg_edit_title">Editează tunelul</string>
+    <string name="nwg_name">Nume</string>
+    <string name="nwg_private_key">Cheie privată</string>
+    <string name="nwg_public_key">Cheie publică: %1$s</string>
+    <string name="nwg_generate">Generează</string>
+    <string name="nwg_addresses">Adrese (separate prin virgulă)</string>
+    <string name="nwg_dns">Servere DNS (separate prin virgulă)</string>
+    <string name="nwg_mtu">MTU (0 = automat)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Cheia publică a peer-ului</string>
+    <string name="nwg_preshared">Cheie partajată în prealabil (opțional)</string>
+    <string name="nwg_endpoint">Endpoint (gazdă:port)</string>
+    <string name="nwg_allowed_ips">IP-uri permise (separate prin virgulă)</string>
+    <string name="nwg_keepalive">Persistent keepalive în secunde (0 = oprit)</string>
+    <string name="nwg_add_peer">Adaugă peer</string>
+    <string name="nwg_remove_peer">Elimină peer</string>
+    <string name="nwg_mobile_only">Doar pe date mobile</string>
+    <string name="nwg_lockdown">Blochează aplicațiile cât timp tunelul nu funcționează</string>
+    <string name="nwg_save">Salvează</string>
+    <string name="nwg_cancel">Anulează</string>
+    <string name="nwg_delete">Șterge</string>
+    <string name="nwg_share">Partajează configurația</string>
+    <string name="nwg_share_warning">Configurația exportată conține cheia privată.</string>
+    <string name="nwg_import">Importă</string>
+    <string name="nwg_qr_not_found">Nu s-a găsit niciun cod QR în această imagine</string>
+    <string name="nwg_err_syntax">Configurația are o eroare de sintaxă: %1$s</string>
+    <string name="nwg_err_missing">Configurația este incompletă: lipsește %1$s</string>
+    <string name="nwg_err_invalid_key">Cheie nevalidă: %1$s</string>
+    <string name="nwg_err_invalid_value">Valoare nevalidă: %1$s</string>
+    <string name="nwg_err_invalid_name">Introdu un nume de cel mult 64 de caractere</string>
+    <string name="nwg_err_not_found">Tunelul nu mai există</string>
+    <string name="nwg_err_storage">Configurația nu a putut fi salvată în siguranță: %1$s</string>
+    <string name="nwg_err_other">Configurația nu a putut fi salvată</string>
+    <string name="nwg_apps_title">Aplicații și tuneluri</string>
+    <string name="nwg_search">Caută aplicații</string>
+    <string name="nwg_show_system">Arată aplicațiile de sistem</string>
+    <string name="nwg_selected">%1$d selectate</string>
+    <string name="nwg_assign_selected">Atribuie aplicațiilor selectate</string>
+    <string name="nwg_clear_selection">Șterge selecția</string>
+    <string name="nwg_select_all">Selectează toate cele afișate</string>
+</resources>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Atgal</string>
+    <string name="nwg_add">Pridėti tunelį</string>
+    <string name="nwg_add_new">Sukurti naują</string>
+    <string name="nwg_add_file">Importuoti .conf failą</string>
+    <string name="nwg_add_qr">Importuoti iš QR kodo paveikslėlio</string>
+    <string name="nwg_add_paste">Įklijuoti konfigūracijos tekstą</string>
+    <string name="nwg_system_default">Sistemos numatytasis</string>
+    <string name="nwg_system_default_summary">Programos be savo nustatymo naudoja šį tunelį. Be sistemos numatytojo jos jungiasi tiesiogiai.</string>
+    <string name="nwg_none">Nėra (tiesiogiai)</string>
+    <string name="nwg_direct">Tiesiogiai (be tarpinio serverio)</string>
+    <string name="nwg_apps">Priskyrimas programoms</string>
+    <string name="nwg_apps_summary">Pasirinkite, kurį tunelį naudoja kiekviena programa</string>
+    <string name="nwg_configs">Tuneliai</string>
+    <string name="nwg_empty">Tunelių dar nėra. Pridėkite tunelį mygtuku +.</string>
+    <string name="nwg_status_off">Išjungtas</string>
+    <string name="nwg_status_connecting">Jungiamasi</string>
+    <string name="nwg_status_up">Prisijungta</string>
+    <string name="nwg_status_down">Neatsako</string>
+    <string name="nwg_status_error">Klaida</string>
+    <string name="nwg_traffic">Gauta %1$s, išsiųsta %2$s</string>
+    <string name="nwg_handshake">Paskutinis handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Įjunkite Telos Network, kad tuneliai prisijungtų.</string>
+    <string name="nwg_new_title">Naujas tunelis</string>
+    <string name="nwg_edit_title">Redaguoti tunelį</string>
+    <string name="nwg_name">Pavadinimas</string>
+    <string name="nwg_private_key">Privatusis raktas</string>
+    <string name="nwg_public_key">Viešasis raktas: %1$s</string>
+    <string name="nwg_generate">Generuoti</string>
+    <string name="nwg_addresses">Adresai (atskirti kableliais)</string>
+    <string name="nwg_dns">DNS serveriai (atskirti kableliais)</string>
+    <string name="nwg_mtu">MTU (0 = automatiškai)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Peer viešasis raktas</string>
+    <string name="nwg_preshared">Iš anksto bendrintas raktas (nebūtina)</string>
+    <string name="nwg_endpoint">Endpoint (pagrindinis kompiuteris:prievadas)</string>
+    <string name="nwg_allowed_ips">Leidžiami IP adresai (atskirti kableliais)</string>
+    <string name="nwg_keepalive">Persistent keepalive sekundėmis (0 = išjungta)</string>
+    <string name="nwg_add_peer">Pridėti peer</string>
+    <string name="nwg_remove_peer">Pašalinti peer</string>
+    <string name="nwg_mobile_only">Tik mobiliaisiais duomenimis</string>
+    <string name="nwg_lockdown">Blokuoti programas, kol tunelis neveikia</string>
+    <string name="nwg_save">Išsaugoti</string>
+    <string name="nwg_cancel">Atšaukti</string>
+    <string name="nwg_delete">Ištrinti</string>
+    <string name="nwg_share">Bendrinti konfigūraciją</string>
+    <string name="nwg_share_warning">Eksportuota konfigūracija turi privatųjį raktą.</string>
+    <string name="nwg_import">Importuoti</string>
+    <string name="nwg_qr_not_found">Šiame paveikslėlyje QR kodo nerasta</string>
+    <string name="nwg_err_syntax">Konfigūracijoje yra sintaksės klaida: %1$s</string>
+    <string name="nwg_err_missing">Konfigūracija neišsami: trūksta %1$s</string>
+    <string name="nwg_err_invalid_key">Netinkamas raktas: %1$s</string>
+    <string name="nwg_err_invalid_value">Netinkama reikšmė: %1$s</string>
+    <string name="nwg_err_invalid_name">Įveskite iki 64 simbolių pavadinimą</string>
+    <string name="nwg_err_not_found">Tunelio nebėra</string>
+    <string name="nwg_err_storage">Konfigūracijos nepavyko saugiai išsaugoti: %1$s</string>
+    <string name="nwg_err_other">Konfigūracijos nepavyko išsaugoti</string>
+    <string name="nwg_apps_title">Programos ir tuneliai</string>
+    <string name="nwg_search">Ieškoti programų</string>
+    <string name="nwg_show_system">Rodyti sistemos programas</string>
+    <string name="nwg_selected">Pasirinkta: %1$d</string>
+    <string name="nwg_assign_selected">Priskirti pasirinktoms programoms</string>
+    <string name="nwg_clear_selection">Išvalyti pasirinkimą</string>
+    <string name="nwg_select_all">Pasirinkti visas rodomas</string>
+</resources>

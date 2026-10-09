@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Cari nota</string>
+    <string name="tsp_search_calls">Cari panggilan</string>
+    <string name="tsp_search_favorites">Cari kegemaran</string>
+    <string name="tsp_search_contacts">Cari kenalan</string>
+    <string name="tsp_search_messages">Cari mesej</string>
+    <string name="tsp_search_in_conversation">Cari dalam perbualan</string>
+    <string name="tsp_search_events">Cari acara</string>
+    <string name="tsp_search_recordings">Cari rakaman</string>
+    <string name="tsp_search_screenshots">Cari tangkapan skrin</string>
+    <string name="tsp_search_call_recordings">Cari rakaman panggilan</string>
+    <string name="tsp_search_groups">Cari kumpulan</string>
+</resources>

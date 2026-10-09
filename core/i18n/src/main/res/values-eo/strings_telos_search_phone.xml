@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Serĉi notojn</string>
+    <string name="tsp_search_calls">Serĉi alvokojn</string>
+    <string name="tsp_search_favorites">Serĉi favoratojn</string>
+    <string name="tsp_search_contacts">Serĉi kontaktojn</string>
+    <string name="tsp_search_messages">Serĉi mesaĝojn</string>
+    <string name="tsp_search_in_conversation">Serĉi en la interparolo</string>
+    <string name="tsp_search_events">Serĉi eventojn</string>
+    <string name="tsp_search_recordings">Serĉi registraĵojn</string>
+    <string name="tsp_search_screenshots">Serĉi ekrankopiojn</string>
+    <string name="tsp_search_call_recordings">Serĉi alvokregistraĵojn</string>
+    <string name="tsp_search_groups">Serĉi grupojn</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Sök i anteckningar</string>
+    <string name="tsp_search_calls">Sök i samtal</string>
+    <string name="tsp_search_favorites">Sök i favoriter</string>
+    <string name="tsp_search_contacts">Sök i kontakter</string>
+    <string name="tsp_search_messages">Sök i meddelanden</string>
+    <string name="tsp_search_in_conversation">Sök i konversationen</string>
+    <string name="tsp_search_events">Sök i händelser</string>
+    <string name="tsp_search_recordings">Sök i inspelningar</string>
+    <string name="tsp_search_screenshots">Sök i skärmdumpar</string>
+    <string name="tsp_search_call_recordings">Sök i samtalsinspelningar</string>
+    <string name="tsp_search_groups">Sök i grupper</string>
+</resources>

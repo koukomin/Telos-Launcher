@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">Iskanje</string>
+    <string name="ts_clear">Počisti</string>
+    <string name="ts_no_results">Ni rezultatov za »%1$s«</string>
+</resources>

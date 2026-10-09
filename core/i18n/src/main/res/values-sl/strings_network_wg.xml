@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Nazaj</string>
+    <string name="nwg_add">Dodaj tunel</string>
+    <string name="nwg_add_new">Ustvari novega</string>
+    <string name="nwg_add_file">Uvozi datoteko .conf</string>
+    <string name="nwg_add_qr">Uvozi iz slike s kodo QR</string>
+    <string name="nwg_add_paste">Prilepi besedilo konfiguracije</string>
+    <string name="nwg_system_default">Sistemska privzeta</string>
+    <string name="nwg_system_default_summary">Aplikacije brez lastne nastavitve uporabljajo ta tunel. Brez sistemske privzete se povežejo neposredno.</string>
+    <string name="nwg_none">Brez (neposredno)</string>
+    <string name="nwg_direct">Neposredno (brez posrednika)</string>
+    <string name="nwg_apps">Dodelitev po aplikacijah</string>
+    <string name="nwg_apps_summary">Izberite, kateri tunel uporablja posamezna aplikacija</string>
+    <string name="nwg_configs">Tuneli</string>
+    <string name="nwg_empty">Tunelov še ni. Dodajte ga z gumbom +.</string>
+    <string name="nwg_status_off">Izklopljen</string>
+    <string name="nwg_status_connecting">Povezovanje</string>
+    <string name="nwg_status_up">Povezan</string>
+    <string name="nwg_status_down">Se ne odziva</string>
+    <string name="nwg_status_error">Napaka</string>
+    <string name="nwg_traffic">Prejeto %1$s, poslano %2$s</string>
+    <string name="nwg_handshake">Zadnji handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Vklopite Telos Network, da se tuneli povežejo.</string>
+    <string name="nwg_new_title">Nov tunel</string>
+    <string name="nwg_edit_title">Uredi tunel</string>
+    <string name="nwg_name">Ime</string>
+    <string name="nwg_private_key">Zasebni ključ</string>
+    <string name="nwg_public_key">Javni ključ: %1$s</string>
+    <string name="nwg_generate">Ustvari</string>
+    <string name="nwg_addresses">Naslovi (ločeni z vejicami)</string>
+    <string name="nwg_dns">Strežniki DNS (ločeni z vejicami)</string>
+    <string name="nwg_mtu">MTU (0 = samodejno)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Javni ključ peera</string>
+    <string name="nwg_preshared">Vnaprej deljeni ključ (neobvezno)</string>
+    <string name="nwg_endpoint">Endpoint (gostitelj:vrata)</string>
+    <string name="nwg_allowed_ips">Dovoljeni IP-ji (ločeni z vejicami)</string>
+    <string name="nwg_keepalive">Persistent keepalive v sekundah (0 = izklopljeno)</string>
+    <string name="nwg_add_peer">Dodaj peer</string>
+    <string name="nwg_remove_peer">Odstrani peer</string>
+    <string name="nwg_mobile_only">Samo prek mobilnih podatkov</string>
+    <string name="nwg_lockdown">Blokiraj aplikacije, dokler tunel ne deluje</string>
+    <string name="nwg_save">Shrani</string>
+    <string name="nwg_cancel">Prekliči</string>
+    <string name="nwg_delete">Izbriši</string>
+    <string name="nwg_share">Deli konfiguracijo</string>
+    <string name="nwg_share_warning">Izvožena konfiguracija vsebuje zasebni ključ.</string>
+    <string name="nwg_import">Uvozi</string>
+    <string name="nwg_qr_not_found">Na tej sliki ni najdene kode QR</string>
+    <string name="nwg_err_syntax">Konfiguracija ima skladenjsko napako: %1$s</string>
+    <string name="nwg_err_missing">Konfiguracija je nepopolna: manjka %1$s</string>
+    <string name="nwg_err_invalid_key">Neveljaven ključ: %1$s</string>
+    <string name="nwg_err_invalid_value">Neveljavna vrednost: %1$s</string>
+    <string name="nwg_err_invalid_name">Vnesite ime z do 64 znaki</string>
+    <string name="nwg_err_not_found">Tunel ne obstaja več</string>
+    <string name="nwg_err_storage">Konfiguracije ni bilo mogoče varno shraniti: %1$s</string>
+    <string name="nwg_err_other">Konfiguracije ni bilo mogoče shraniti</string>
+    <string name="nwg_apps_title">Aplikacije in tuneli</string>
+    <string name="nwg_search">Iskanje aplikacij</string>
+    <string name="nwg_show_system">Pokaži sistemske aplikacije</string>
+    <string name="nwg_selected">Izbrano: %1$d</string>
+    <string name="nwg_assign_selected">Dodeli izbranim aplikacijam</string>
+    <string name="nwg_clear_selection">Počisti izbor</string>
+    <string name="nwg_select_all">Izberi vse prikazane</string>
+</resources>

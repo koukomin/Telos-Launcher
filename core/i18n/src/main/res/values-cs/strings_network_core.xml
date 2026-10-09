@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Oznámení Telos Network</string>
+    <string name="net_notif_title">Telos Network je zapnutá</string>
+    <string name="net_notif_text">Připojení se filtrují.</string>
+    <string name="net_notif_blocked">Blokovaná připojení: %1$d</string>
+    <string name="net_notif_stop">Vypnout</string>
+    <string name="net_alert_stopped_title">Telos Network byla vypnuta</string>
+    <string name="net_alert_crashed">Síťový modul se nečekaně zastavil. Přístup k internetu to neovlivní.</string>
+    <string name="net_alert_revoked">Převzala to jiná VPN. Přístup k internetu to neovlivní.</string>
+    <string name="net_alert_start_failed">Telos Network se nepodařilo spustit. Přístup k internetu to neovlivní.</string>
+    <string name="net_error_permission">Pro nastavení VPN je potřeba oprávnění.</string>
+    <string name="net_error_start_failed">Spuštění se nezdařilo: %1$s</string>
+    <string name="net_error_unknown">neznámá chyba</string>
+    <string name="net_app_system">Systém Android</string>
+    <string name="net_app_unknown">Neznámá aplikace (%1$d)</string>
+    <string name="net_dns_system">DNS sítě (systémový)</string>
+</resources>

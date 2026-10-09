@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">dokument</string>
+    <string name="od_saved">Gemt</string>
+    <string name="od_save_failed">Kunne ikke gemme</string>
+    <string name="od_nothing_to_show">Der er intet at vise i denne fil. Brug “Åbn med” for at åbne den i en anden app.</string>
+    <string name="od_pdf_protected">Denne PDF er beskyttet med adgangskode.</string>
+    <string name="od_cannot_open">Denne fil kan ikke åbnes her (%1$s). Brug “Åbn med”.</string>
+    <string name="od_legacy_failed">Denne gamle Office-fil kunne ikke læses. Brug “Åbn med” for at åbne den i en anden app.</string>
+    <string name="od_text_too_big">Denne fil er større end 2 MB. Den vises skrivebeskyttet og ændres aldrig.</string>
+    <string name="od_edit_copy">Rediger de første 2 MB som kopi</string>
+    <string name="od_copy_hint">Du redigerer en kopi af de første 2 MB. Når du gemmer, oprettes en ny fil; originalen ændres ikke.</string>
+    <string name="od_pdf_tools">PDF-værktøjer</string>
+    <string name="od_search_pdf">Søg i PDF</string>
+    <string name="od_search_hint">Søg efter tekst</string>
+    <string name="od_searching">Søger … side %1$d</string>
+    <string name="od_no_results">Ingen resultater</string>
+    <string name="od_no_text_layer">Denne PDF har ingen søgbar tekst (f.eks. en scanning).</string>
+    <string name="od_results_count">Resultater: %1$d</string>
+    <string name="od_go_to_page">Gå til side</string>
+    <string name="od_page_range">Side (1 til %1$d)</string>
+    <string name="od_go">Gå</string>
+    <string name="od_layout_note">Tekst og struktur vises. Sidelayout og skrifttyper gengives ikke.</string>
+    <string name="od_slides_note">Titler, tekst og billeder vises. Slidelayout og design gengives ikke.</string>
+    <string name="od_legacy_readonly">Gammel binær Office-fil (.doc, .xls, .ppt): skrivebeskyttet. Tekst og værdier udtrækkes så godt som muligt.</string>
+    <string name="od_convert_note">Ved konvertering oprettes en ny fil. Formatering, billeder og indlejrede objekter fra den gamle fil medtages ikke. Originalen forbliver uændret.</string>
+    <string name="od_convert_action">Konverter til .%1$s og rediger</string>
+    <string name="od_convert_failed">Filen kunne ikke konverteres.</string>
+    <string name="od_converted">Konverteret. Du redigerer nu den nye fil.</string>
+    <string name="od_discard_title">Kassér ændringer?</string>
+    <string name="od_discard_text">Dine ændringer er ikke gemt.</string>
+    <string name="od_discard">Kassér</string>
+    <string name="od_keep_editing">Fortsæt redigering</string>
+    <string name="od_save_copy">Gem som kopi</string>
+    <string name="od_saved_copy">Gemt som ny fil.</string>
+    <string name="od_undo_save">Fortryd seneste gem</string>
+    <string name="od_undo_done">Versionen før det seneste gem er gendannet.</string>
+    <string name="od_undo_failed">Den tidligere version kunne ikke gendannes.</string>
+    <string name="od_bold">Fed</string>
+    <string name="od_italic">Kursiv</string>
+    <string name="od_add_paragraph">Tilføj afsnit nedenfor</string>
+    <string name="od_delete_paragraph">Slet afsnit</string>
+    <string name="od_table_cell">Tabelcelle</string>
+    <string name="od_add_row">Tilføj række</string>
+    <string name="od_edit_cell">Rediger celle %1$s</string>
+    <string name="od_cell_value">Værdi</string>
+    <string name="od_cell_hint">Tekst, tal eller formel der starter med =</string>
+    <string name="od_formula_replaced">Denne celle indeholder en formel (%1$s). En ny værdi erstatter den.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Ark %1$d</string>
+    <string name="od_slide_of">Slide %1$d af %2$d</string>
+    <string name="od_delete_slide">Slet slide</string>
+    <string name="od_title_box">Titel</string>
+    <string name="od_text_box_n">Tekstfelt %1$d</string>
+    <string name="od_no_slides">Ingen slides</string>
+    <string name="od_image">Billede</string>
+</resources>

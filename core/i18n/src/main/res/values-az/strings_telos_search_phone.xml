@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Qeydlərdə axtar</string>
+    <string name="tsp_search_calls">Zənglərdə axtar</string>
+    <string name="tsp_search_favorites">Sevimlilərdə axtar</string>
+    <string name="tsp_search_contacts">Kontaktlarda axtar</string>
+    <string name="tsp_search_messages">Mesajlarda axtar</string>
+    <string name="tsp_search_in_conversation">Söhbətdə axtar</string>
+    <string name="tsp_search_events">Tədbirlərdə axtar</string>
+    <string name="tsp_search_recordings">Səs yazılarında axtar</string>
+    <string name="tsp_search_screenshots">Ekran görüntülərində axtar</string>
+    <string name="tsp_search_call_recordings">Zəng yazılarında axtar</string>
+    <string name="tsp_search_groups">Qruplarda axtar</string>
+</resources>

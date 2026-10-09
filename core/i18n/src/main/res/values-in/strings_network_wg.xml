@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Kembali</string>
+    <string name="nwg_add">Tambah terowongan</string>
+    <string name="nwg_add_new">Buat baru</string>
+    <string name="nwg_add_file">Impor berkas .conf</string>
+    <string name="nwg_add_qr">Impor dari gambar kode QR</string>
+    <string name="nwg_add_paste">Tempel teks konfigurasi</string>
+    <string name="nwg_system_default">Default sistem</string>
+    <string name="nwg_system_default_summary">Aplikasi tanpa pengaturan sendiri memakai terowongan ini. Tanpa default sistem, aplikasi terhubung langsung.</string>
+    <string name="nwg_none">Tidak ada (langsung)</string>
+    <string name="nwg_direct">Langsung (tanpa proxy)</string>
+    <string name="nwg_apps">Penetapan per aplikasi</string>
+    <string name="nwg_apps_summary">Pilih terowongan yang dipakai tiap aplikasi</string>
+    <string name="nwg_configs">Terowongan</string>
+    <string name="nwg_empty">Belum ada terowongan. Tambahkan dengan tombol +.</string>
+    <string name="nwg_status_off">Mati</string>
+    <string name="nwg_status_connecting">Menghubungkan</string>
+    <string name="nwg_status_up">Terhubung</string>
+    <string name="nwg_status_down">Tidak merespons</string>
+    <string name="nwg_status_error">Kesalahan</string>
+    <string name="nwg_traffic">Diterima %1$s, dikirim %2$s</string>
+    <string name="nwg_handshake">Handshake terakhir: %1$s</string>
+    <string name="nwg_vpn_off_hint">Aktifkan Telos Network untuk menghubungkan terowongan.</string>
+    <string name="nwg_new_title">Terowongan baru</string>
+    <string name="nwg_edit_title">Edit terowongan</string>
+    <string name="nwg_name">Nama</string>
+    <string name="nwg_private_key">Kunci pribadi</string>
+    <string name="nwg_public_key">Kunci publik: %1$s</string>
+    <string name="nwg_generate">Buat</string>
+    <string name="nwg_addresses">Alamat (dipisahkan koma)</string>
+    <string name="nwg_dns">Server DNS (dipisahkan koma)</string>
+    <string name="nwg_mtu">MTU (0 = otomatis)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Kunci publik peer</string>
+    <string name="nwg_preshared">Kunci pra-berbagi (opsional)</string>
+    <string name="nwg_endpoint">Endpoint (host:port)</string>
+    <string name="nwg_allowed_ips">IP yang diizinkan (dipisahkan koma)</string>
+    <string name="nwg_keepalive">Persistent keepalive dalam detik (0 = mati)</string>
+    <string name="nwg_add_peer">Tambah peer</string>
+    <string name="nwg_remove_peer">Hapus peer</string>
+    <string name="nwg_mobile_only">Hanya di data seluler</string>
+    <string name="nwg_lockdown">Blokir aplikasi saat terowongan terputus</string>
+    <string name="nwg_save">Simpan</string>
+    <string name="nwg_cancel">Batal</string>
+    <string name="nwg_delete">Hapus</string>
+    <string name="nwg_share">Bagikan konfigurasi</string>
+    <string name="nwg_share_warning">Konfigurasi yang diekspor berisi kunci pribadi.</string>
+    <string name="nwg_import">Impor</string>
+    <string name="nwg_qr_not_found">Kode QR tidak ditemukan pada gambar ini</string>
+    <string name="nwg_err_syntax">Konfigurasi memiliki kesalahan sintaks: %1$s</string>
+    <string name="nwg_err_missing">Konfigurasi tidak lengkap: %1$s tidak ada</string>
+    <string name="nwg_err_invalid_key">Kunci tidak valid: %1$s</string>
+    <string name="nwg_err_invalid_value">Nilai tidak valid: %1$s</string>
+    <string name="nwg_err_invalid_name">Masukkan nama maksimal 64 karakter</string>
+    <string name="nwg_err_not_found">Terowongan sudah tidak ada</string>
+    <string name="nwg_err_storage">Konfigurasi tidak dapat disimpan dengan aman: %1$s</string>
+    <string name="nwg_err_other">Konfigurasi tidak dapat disimpan</string>
+    <string name="nwg_apps_title">Aplikasi dan terowongan</string>
+    <string name="nwg_search">Cari aplikasi</string>
+    <string name="nwg_show_system">Tampilkan aplikasi sistem</string>
+    <string name="nwg_selected">%1$d dipilih</string>
+    <string name="nwg_assign_selected">Tetapkan ke aplikasi terpilih</string>
+    <string name="nwg_clear_selection">Hapus pilihan</string>
+    <string name="nwg_select_all">Pilih semua yang ditampilkan</string>
+</resources>

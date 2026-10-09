@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">Otsi</string>
+    <string name="ts_clear">Tühjenda</string>
+    <string name="ts_no_results">Päringule „%1$s“ ei leitud tulemusi</string>
+</resources>

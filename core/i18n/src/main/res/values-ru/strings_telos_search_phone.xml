@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Поиск заметок</string>
+    <string name="tsp_search_calls">Поиск звонков</string>
+    <string name="tsp_search_favorites">Поиск избранного</string>
+    <string name="tsp_search_contacts">Поиск контактов</string>
+    <string name="tsp_search_messages">Поиск сообщений</string>
+    <string name="tsp_search_in_conversation">Поиск в переписке</string>
+    <string name="tsp_search_events">Поиск событий</string>
+    <string name="tsp_search_recordings">Поиск записей</string>
+    <string name="tsp_search_screenshots">Поиск скриншотов</string>
+    <string name="tsp_search_call_recordings">Поиск записей звонков</string>
+    <string name="tsp_search_groups">Поиск групп</string>
+</resources>

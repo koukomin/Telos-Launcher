@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">dokument</string>
+    <string name="od_saved">Zapisano</string>
+    <string name="od_save_failed">Nie udało się zapisać</string>
+    <string name="od_nothing_to_show">W tym pliku nie ma nic do wyświetlenia. Użyj opcji „Otwórz za pomocą”, aby otworzyć go w innej aplikacji.</string>
+    <string name="od_pdf_protected">Ten plik PDF jest chroniony hasłem.</string>
+    <string name="od_cannot_open">Tego pliku nie można tutaj otworzyć (%1$s). Użyj opcji „Otwórz za pomocą”.</string>
+    <string name="od_legacy_failed">Nie udało się odczytać tego starego pliku Office. Użyj opcji „Otwórz za pomocą”, aby otworzyć go w innej aplikacji.</string>
+    <string name="od_text_too_big">Ten plik ma ponad 2 MB. Jest wyświetlany tylko do odczytu i nigdy nie jest zmieniany.</string>
+    <string name="od_edit_copy">Edytuj pierwsze 2 MB jako kopię</string>
+    <string name="od_copy_hint">Edytujesz kopię pierwszych 2 MB. Zapis tworzy nowy plik; oryginał pozostaje bez zmian.</string>
+    <string name="od_pdf_tools">Narzędzia PDF</string>
+    <string name="od_search_pdf">Szukaj w PDF</string>
+    <string name="od_search_hint">Szukaj tekstu</string>
+    <string name="od_searching">Wyszukiwanie… strona %1$d</string>
+    <string name="od_no_results">Brak wyników</string>
+    <string name="od_no_text_layer">Ten plik PDF nie zawiera tekstu, który można przeszukiwać (np. skan).</string>
+    <string name="od_results_count">Wyniki: %1$d</string>
+    <string name="od_go_to_page">Przejdź do strony</string>
+    <string name="od_page_range">Strona (od 1 do %1$d)</string>
+    <string name="od_go">Idź</string>
+    <string name="od_layout_note">Wyświetlane są tekst i struktura. Układ strony i czcionki nie są odtwarzane.</string>
+    <string name="od_slides_note">Wyświetlane są tytuły, tekst i obrazy. Układ i wygląd slajdów nie są odtwarzane.</string>
+    <string name="od_legacy_readonly">Stary binarny plik Office (.doc, .xls, .ppt): tylko do odczytu. Tekst i wartości są wyodrębniane w miarę możliwości.</string>
+    <string name="od_convert_note">Konwersja tworzy nowy plik. Formatowanie, obrazy i osadzone obiekty starego pliku nie są przenoszone. Oryginał pozostaje bez zmian.</string>
+    <string name="od_convert_action">Konwertuj na .%1$s i edytuj</string>
+    <string name="od_convert_failed">Nie udało się skonwertować tego pliku.</string>
+    <string name="od_converted">Skonwertowano. Edytujesz teraz nowy plik.</string>
+    <string name="od_discard_title">Odrzucić zmiany?</string>
+    <string name="od_discard_text">Twoje zmiany nie zostały zapisane.</string>
+    <string name="od_discard">Odrzuć</string>
+    <string name="od_keep_editing">Edytuj dalej</string>
+    <string name="od_save_copy">Zapisz jako kopię</string>
+    <string name="od_saved_copy">Zapisano jako nowy plik.</string>
+    <string name="od_undo_save">Cofnij ostatni zapis</string>
+    <string name="od_undo_done">Przywrócono wersję sprzed ostatniego zapisu.</string>
+    <string name="od_undo_failed">Nie udało się przywrócić poprzedniej wersji.</string>
+    <string name="od_bold">Pogrubienie</string>
+    <string name="od_italic">Kursywa</string>
+    <string name="od_add_paragraph">Dodaj akapit poniżej</string>
+    <string name="od_delete_paragraph">Usuń akapit</string>
+    <string name="od_table_cell">Komórka tabeli</string>
+    <string name="od_add_row">Dodaj wiersz</string>
+    <string name="od_edit_cell">Edytuj komórkę %1$s</string>
+    <string name="od_cell_value">Wartość</string>
+    <string name="od_cell_hint">Tekst, liczba lub formuła zaczynająca się od =</string>
+    <string name="od_formula_replaced">Ta komórka zawiera formułę (%1$s). Nowa wartość ją zastąpi.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Arkusz %1$d</string>
+    <string name="od_slide_of">Slajd %1$d z %2$d</string>
+    <string name="od_delete_slide">Usuń slajd</string>
+    <string name="od_title_box">Tytuł</string>
+    <string name="od_text_box_n">Pole tekstowe %1$d</string>
+    <string name="od_no_slides">Brak slajdów</string>
+    <string name="od_image">Obraz</string>
+</resources>

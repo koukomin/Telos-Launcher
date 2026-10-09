@@ -46,7 +46,7 @@ fun ScheduledSmsScreen() {
             item {
                 ListItem(
                     headlineContent = { Text(stringResource(R.string.hc_exact_time)) },
-                    supportingContent = { Text("Without this permission a message may go out a few minutes late. Allow \"Alarms & reminders\" for Telos to send it on time.") },
+                    supportingContent = { Text(stringResource(R.string.hf_sms_exact_alarm_hint)) },
                     trailingContent = {
                         TextButton(onClick = {
                             runCatching {

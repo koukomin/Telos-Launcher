@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Atzera</string>
+    <string name="nwg_add">Gehitu tunela</string>
+    <string name="nwg_add_new">Sortu berria</string>
+    <string name="nwg_add_file">Inportatu .conf fitxategia</string>
+    <string name="nwg_add_qr">Inportatu QR kodearen irudi batetik</string>
+    <string name="nwg_add_paste">Itsatsi konfigurazio-testua</string>
+    <string name="nwg_system_default">Sistemaren lehenetsia</string>
+    <string name="nwg_system_default_summary">Ezarpen propiorik gabeko aplikazioek tunel hau erabiltzen dute. Sistemaren lehenetsirik gabe, zuzenean konektatzen dira.</string>
+    <string name="nwg_none">Bat ere ez (zuzena)</string>
+    <string name="nwg_direct">Zuzena (proxyrik gabe)</string>
+    <string name="nwg_apps">Aplikazioen araberako esleipena</string>
+    <string name="nwg_apps_summary">Aukeratu aplikazio bakoitzak zein tunel erabiltzen duen</string>
+    <string name="nwg_configs">Tunelak</string>
+    <string name="nwg_empty">Oraindik ez dago tunelik. Gehitu bat + botoiarekin.</string>
+    <string name="nwg_status_off">Desaktibatuta</string>
+    <string name="nwg_status_connecting">Konektatzen</string>
+    <string name="nwg_status_up">Konektatuta</string>
+    <string name="nwg_status_down">Ez du erantzuten</string>
+    <string name="nwg_status_error">Errorea</string>
+    <string name="nwg_traffic">%1$s jaso da, %2$s bidali da</string>
+    <string name="nwg_handshake">Azken handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Aktibatu Telos Network tunelak konektatzeko.</string>
+    <string name="nwg_new_title">Tunel berria</string>
+    <string name="nwg_edit_title">Editatu tunela</string>
+    <string name="nwg_name">Izena</string>
+    <string name="nwg_private_key">Gako pribatua</string>
+    <string name="nwg_public_key">Gako publikoa: %1$s</string>
+    <string name="nwg_generate">Sortu</string>
+    <string name="nwg_addresses">Helbideak (komaz bereizita)</string>
+    <string name="nwg_dns">DNS zerbitzariak (komaz bereizita)</string>
+    <string name="nwg_mtu">MTU (0 = automatikoa)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Peer-aren gako publikoa</string>
+    <string name="nwg_preshared">Aldez aurretik partekatutako gakoa (aukerakoa)</string>
+    <string name="nwg_endpoint">Endpoint (ostalaria:portua)</string>
+    <string name="nwg_allowed_ips">Baimendutako IPak (komaz bereizita)</string>
+    <string name="nwg_keepalive">Persistent keepalive segundotan (0 = desaktibatuta)</string>
+    <string name="nwg_add_peer">Gehitu peer-a</string>
+    <string name="nwg_remove_peer">Kendu peer-a</string>
+    <string name="nwg_mobile_only">Datu mugikorretan soilik</string>
+    <string name="nwg_lockdown">Blokeatu aplikazioak tunela erorita dagoen bitartean</string>
+    <string name="nwg_save">Gorde</string>
+    <string name="nwg_cancel">Utzi</string>
+    <string name="nwg_delete">Ezabatu</string>
+    <string name="nwg_share">Partekatu konfigurazioa</string>
+    <string name="nwg_share_warning">Esportatutako konfigurazioak gako pribatua dauka.</string>
+    <string name="nwg_import">Inportatu</string>
+    <string name="nwg_qr_not_found">Ez da QR koderik aurkitu irudi honetan</string>
+    <string name="nwg_err_syntax">Konfigurazioak sintaxi-errorea du: %1$s</string>
+    <string name="nwg_err_missing">Konfigurazioa osatu gabe dago: %1$s falta da</string>
+    <string name="nwg_err_invalid_key">Gako baliogabea: %1$s</string>
+    <string name="nwg_err_invalid_value">Balio baliogabea: %1$s</string>
+    <string name="nwg_err_invalid_name">Idatzi gehienez 64 karaktereko izen bat</string>
+    <string name="nwg_err_not_found">Tunela ez da existitzen jada</string>
+    <string name="nwg_err_storage">Ezin izan da konfigurazioa modu seguruan gorde: %1$s</string>
+    <string name="nwg_err_other">Ezin izan da konfigurazioa gorde</string>
+    <string name="nwg_apps_title">Aplikazioak eta tunelak</string>
+    <string name="nwg_search">Bilatu aplikazioak</string>
+    <string name="nwg_show_system">Erakutsi sistemaren aplikazioak</string>
+    <string name="nwg_selected">%1$d hautatuta</string>
+    <string name="nwg_assign_selected">Esleitu hautatutako aplikazioei</string>
+    <string name="nwg_clear_selection">Garbitu hautapena</string>
+    <string name="nwg_select_all">Hautatu erakutsi guztiak</string>
+</resources>

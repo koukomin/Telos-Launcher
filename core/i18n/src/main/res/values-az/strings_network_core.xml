@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Telos Network bildirişləri</string>
+    <string name="net_notif_title">Telos Network aktivdir</string>
+    <string name="net_notif_text">Bağlantılar süzgəcdən keçirilir.</string>
+    <string name="net_notif_blocked">Bloklanmış bağlantılar: %1$d</string>
+    <string name="net_notif_stop">Söndür</string>
+    <string name="net_alert_stopped_title">Telos Network söndürüldü</string>
+    <string name="net_alert_crashed">Şəbəkə mühərriki gözlənilmədən dayandı. İnternet girişinə təsir olunmur.</string>
+    <string name="net_alert_revoked">Başqa VPN əvəz etdi. İnternet girişinə təsir olunmur.</string>
+    <string name="net_alert_start_failed">Telos Network başlaya bilmədi. İnternet girişinə təsir olunmur.</string>
+    <string name="net_error_permission">VPN qurmaq üçün icazə lazımdır.</string>
+    <string name="net_error_start_failed">Başlatmaq mümkün olmadı: %1$s</string>
+    <string name="net_error_unknown">naməlum xəta</string>
+    <string name="net_app_system">Android sistemi</string>
+    <string name="net_app_unknown">Naməlum tətbiq (%1$d)</string>
+    <string name="net_dns_system">Şəbəkə DNS-i (sistem)</string>
+</resources>

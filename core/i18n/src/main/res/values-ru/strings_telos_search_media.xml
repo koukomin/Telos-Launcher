@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsm_search_music">Поиск музыки</string>
+    <string name="tsm_search_videos">Поиск видео</string>
+    <string name="tsm_search_radio_browser">Поиск по названию станции</string>
+    <string name="tsm_search_my_stations">Поиск в ваших станциях</string>
+    <string name="tsm_search_photos">Поиск фотографий</string>
+</resources>

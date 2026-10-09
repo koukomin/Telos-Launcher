@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">مستند</string>
+    <string name="od_saved">تم الحفظ</string>
+    <string name="od_save_failed">تعذر الحفظ</string>
+    <string name="od_nothing_to_show">لا يوجد ما يمكن عرضه في هذا الملف. استخدم «فتح باستخدام» لفتحه في تطبيق آخر.</string>
+    <string name="od_pdf_protected">هذا الملف PDF محمي بكلمة مرور.</string>
+    <string name="od_cannot_open">لا يمكن فتح هذا الملف هنا (%1$s). استخدم «فتح باستخدام».</string>
+    <string name="od_legacy_failed">تعذرت قراءة ملف Office القديم هذا. استخدم «فتح باستخدام» لفتحه في تطبيق آخر.</string>
+    <string name="od_text_too_big">حجم هذا الملف أكبر من 2 ميغابايت. يُعرض للقراءة فقط ولا يتغير أبدًا.</string>
+    <string name="od_edit_copy">تحرير أول 2 ميغابايت كنسخة</string>
+    <string name="od_copy_hint">أنت تحرر نسخة من أول 2 ميغابايت. يؤدي الحفظ إلى إنشاء ملف جديد، ولا يتغير الأصل.</string>
+    <string name="od_pdf_tools">أدوات PDF</string>
+    <string name="od_search_pdf">بحث في PDF</string>
+    <string name="od_search_hint">بحث عن نص</string>
+    <string name="od_searching">جارٍ البحث… الصفحة %1$d</string>
+    <string name="od_no_results">لا توجد نتائج</string>
+    <string name="od_no_text_layer">لا يحتوي هذا الملف PDF على نص قابل للبحث (مثل المستندات الممسوحة ضوئيًا).</string>
+    <string name="od_results_count">النتائج: %1$d</string>
+    <string name="od_go_to_page">الانتقال إلى صفحة</string>
+    <string name="od_page_range">الصفحة (من 1 إلى %1$d)</string>
+    <string name="od_go">انتقال</string>
+    <string name="od_layout_note">يتم عرض النص والبنية. لا يتم إعادة إنتاج تخطيط الصفحة والخطوط.</string>
+    <string name="od_slides_note">يتم عرض العناوين والنصوص والصور. لا يتم إعادة إنتاج تخطيط الشرائح وتصميمها.</string>
+    <string name="od_legacy_readonly">ملف Office ثنائي قديم (.doc و.xls و.ppt): للقراءة فقط. يتم استخراج النص والقيم قدر الإمكان.</string>
+    <string name="od_convert_note">يؤدي التحويل إلى إنشاء ملف جديد. لا يتم نقل التنسيق والصور والكائنات المضمنة من الملف القديم. يبقى الأصل دون تغيير.</string>
+    <string name="od_convert_action">تحويل إلى .%1$s وتحرير</string>
+    <string name="od_convert_failed">تعذر تحويل هذا الملف.</string>
+    <string name="od_converted">تم التحويل. أنت الآن تحرر الملف الجديد.</string>
+    <string name="od_discard_title">تجاهل التغييرات؟</string>
+    <string name="od_discard_text">لم يتم حفظ تعديلاتك.</string>
+    <string name="od_discard">تجاهل</string>
+    <string name="od_keep_editing">متابعة التحرير</string>
+    <string name="od_save_copy">حفظ كنسخة</string>
+    <string name="od_saved_copy">تم الحفظ كملف جديد.</string>
+    <string name="od_undo_save">التراجع عن آخر حفظ</string>
+    <string name="od_undo_done">تمت استعادة النسخة التي سبقت آخر حفظ.</string>
+    <string name="od_undo_failed">تعذرت استعادة النسخة السابقة.</string>
+    <string name="od_bold">غامق</string>
+    <string name="od_italic">مائل</string>
+    <string name="od_add_paragraph">إضافة فقرة أدناه</string>
+    <string name="od_delete_paragraph">حذف الفقرة</string>
+    <string name="od_table_cell">خلية جدول</string>
+    <string name="od_add_row">إضافة صف</string>
+    <string name="od_edit_cell">تحرير الخلية %1$s</string>
+    <string name="od_cell_value">القيمة</string>
+    <string name="od_cell_hint">نص أو رقم أو صيغة تبدأ بالعلامة =</string>
+    <string name="od_formula_replaced">تحتوي هذه الخلية على صيغة (%1$s). ستحل القيمة الجديدة محلها.</string>
+    <string name="od_ok">موافق</string>
+    <string name="od_sheet_n">الورقة %1$d</string>
+    <string name="od_slide_of">الشريحة %1$d من %2$d</string>
+    <string name="od_delete_slide">حذف الشريحة</string>
+    <string name="od_title_box">العنوان</string>
+    <string name="od_text_box_n">مربع النص %1$d</string>
+    <string name="od_no_slides">لا توجد شرائح</string>
+    <string name="od_image">صورة</string>
+</resources>

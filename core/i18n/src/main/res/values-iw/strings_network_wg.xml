@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">חזרה</string>
+    <string name="nwg_add">הוספת מנהרה</string>
+    <string name="nwg_add_new">יצירת חדשה</string>
+    <string name="nwg_add_file">ייבוא קובץ .conf</string>
+    <string name="nwg_add_qr">ייבוא מתמונת קוד QR</string>
+    <string name="nwg_add_paste">הדבקת טקסט תצורה</string>
+    <string name="nwg_system_default">ברירת המחדל של המערכת</string>
+    <string name="nwg_system_default_summary">יישומים ללא הגדרה משלהם משתמשים במנהרה זו. ללא ברירת מחדל של המערכת הם מתחברים ישירות.</string>
+    <string name="nwg_none">ללא (ישיר)</string>
+    <string name="nwg_direct">ישיר (ללא פרוקסי)</string>
+    <string name="nwg_apps">שיוך לפי יישום</string>
+    <string name="nwg_apps_summary">בחרו באיזו מנהרה כל יישום משתמש</string>
+    <string name="nwg_configs">מנהרות</string>
+    <string name="nwg_empty">אין עדיין מנהרות. הוסיפו מנהרה בכפתור +.</string>
+    <string name="nwg_status_off">כבוי</string>
+    <string name="nwg_status_connecting">מתחבר</string>
+    <string name="nwg_status_up">מחובר</string>
+    <string name="nwg_status_down">לא מגיב</string>
+    <string name="nwg_status_error">שגיאה</string>
+    <string name="nwg_traffic">התקבלו %1$s, נשלחו %2$s</string>
+    <string name="nwg_handshake">לחיצת יד אחרונה: %1$s</string>
+    <string name="nwg_vpn_off_hint">הפעילו את Telos Network כדי לחבר את המנהרות.</string>
+    <string name="nwg_new_title">מנהרה חדשה</string>
+    <string name="nwg_edit_title">עריכת מנהרה</string>
+    <string name="nwg_name">שם</string>
+    <string name="nwg_private_key">מפתח פרטי</string>
+    <string name="nwg_public_key">מפתח ציבורי: %1$s</string>
+    <string name="nwg_generate">יצירה</string>
+    <string name="nwg_addresses">כתובות (מופרדות בפסיקים)</string>
+    <string name="nwg_dns">שרתי DNS (מופרדים בפסיקים)</string>
+    <string name="nwg_mtu">MTU (0 = אוטומטי)</string>
+    <string name="nwg_peer">עמית %1$d</string>
+    <string name="nwg_peer_public_key">המפתח הציבורי של העמית</string>
+    <string name="nwg_preshared">מפתח משותף מראש (אופציונלי)</string>
+    <string name="nwg_endpoint">Endpoint (מארח:יציאה)</string>
+    <string name="nwg_allowed_ips">כתובות IP מותרות (מופרדות בפסיקים)</string>
+    <string name="nwg_keepalive">Persistent keepalive בשניות (0 = כבוי)</string>
+    <string name="nwg_add_peer">הוספת עמית</string>
+    <string name="nwg_remove_peer">הסרת עמית</string>
+    <string name="nwg_mobile_only">בנתונים סלולריים בלבד</string>
+    <string name="nwg_lockdown">חסימת היישומים כשהמנהרה מנותקת</string>
+    <string name="nwg_save">שמירה</string>
+    <string name="nwg_cancel">ביטול</string>
+    <string name="nwg_delete">מחיקה</string>
+    <string name="nwg_share">שיתוף התצורה</string>
+    <string name="nwg_share_warning">התצורה המיוצאת מכילה את המפתח הפרטי.</string>
+    <string name="nwg_import">ייבוא</string>
+    <string name="nwg_qr_not_found">לא נמצא קוד QR בתמונה זו</string>
+    <string name="nwg_err_syntax">בתצורה יש שגיאת תחביר: %1$s</string>
+    <string name="nwg_err_missing">התצורה חלקית: חסר %1$s</string>
+    <string name="nwg_err_invalid_key">מפתח לא תקין: %1$s</string>
+    <string name="nwg_err_invalid_value">ערך לא תקין: %1$s</string>
+    <string name="nwg_err_invalid_name">הזינו שם של עד 64 תווים</string>
+    <string name="nwg_err_not_found">המנהרה כבר לא קיימת</string>
+    <string name="nwg_err_storage">לא ניתן היה לשמור את התצורה באופן מאובטח: %1$s</string>
+    <string name="nwg_err_other">לא ניתן היה לשמור את התצורה</string>
+    <string name="nwg_apps_title">יישומים ומנהרות</string>
+    <string name="nwg_search">חיפוש יישומים</string>
+    <string name="nwg_show_system">הצגת יישומי מערכת</string>
+    <string name="nwg_selected">%1$d נבחרו</string>
+    <string name="nwg_assign_selected">שיוך ליישומים שנבחרו</string>
+    <string name="nwg_clear_selection">ניקוי הבחירה</string>
+    <string name="nwg_select_all">בחירת כל המוצגים</string>
+</resources>

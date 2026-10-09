@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">tài liệu</string>
+    <string name="od_saved">Đã lưu</string>
+    <string name="od_save_failed">Không thể lưu</string>
+    <string name="od_nothing_to_show">Không có gì để hiển thị trong tệp này. Hãy dùng “Mở bằng” để mở trong ứng dụng khác.</string>
+    <string name="od_pdf_protected">PDF này được bảo vệ bằng mật khẩu.</string>
+    <string name="od_cannot_open">Không thể mở tệp này tại đây (%1$s). Hãy dùng “Mở bằng”.</string>
+    <string name="od_legacy_failed">Không đọc được tệp Office cũ này. Hãy dùng “Mở bằng” để mở trong ứng dụng khác.</string>
+    <string name="od_text_too_big">Tệp này lớn hơn 2 MB. Tệp chỉ được hiển thị ở chế độ chỉ đọc và không bao giờ bị thay đổi.</string>
+    <string name="od_edit_copy">Chỉnh sửa 2 MB đầu tiên dưới dạng bản sao</string>
+    <string name="od_copy_hint">Bạn đang chỉnh sửa bản sao của 2 MB đầu tiên. Khi lưu sẽ tạo tệp mới; tệp gốc không thay đổi.</string>
+    <string name="od_pdf_tools">Công cụ PDF</string>
+    <string name="od_search_pdf">Tìm trong PDF</string>
+    <string name="od_search_hint">Tìm văn bản</string>
+    <string name="od_searching">Đang tìm… trang %1$d</string>
+    <string name="od_no_results">Không có kết quả</string>
+    <string name="od_no_text_layer">PDF này không có văn bản để tìm kiếm (ví dụ: bản quét).</string>
+    <string name="od_results_count">Kết quả: %1$d</string>
+    <string name="od_go_to_page">Đến trang</string>
+    <string name="od_page_range">Trang (từ 1 đến %1$d)</string>
+    <string name="od_go">Đi</string>
+    <string name="od_layout_note">Văn bản và cấu trúc được hiển thị. Bố cục trang và phông chữ không được tái tạo.</string>
+    <string name="od_slides_note">Tiêu đề, văn bản và hình ảnh được hiển thị. Bố cục và thiết kế trang chiếu không được tái tạo.</string>
+    <string name="od_legacy_readonly">Tệp Office nhị phân cũ (.doc, .xls, .ppt): chỉ đọc. Văn bản và giá trị được trích xuất trong phạm vi có thể.</string>
+    <string name="od_convert_note">Việc chuyển đổi tạo ra tệp mới. Định dạng, hình ảnh và đối tượng nhúng của tệp cũ không được mang theo. Tệp gốc không thay đổi.</string>
+    <string name="od_convert_action">Chuyển sang .%1$s và chỉnh sửa</string>
+    <string name="od_convert_failed">Không thể chuyển đổi tệp này.</string>
+    <string name="od_converted">Đã chuyển đổi. Bây giờ bạn đang chỉnh sửa tệp mới.</string>
+    <string name="od_discard_title">Bỏ các thay đổi?</string>
+    <string name="od_discard_text">Các chỉnh sửa của bạn chưa được lưu.</string>
+    <string name="od_discard">Bỏ</string>
+    <string name="od_keep_editing">Tiếp tục chỉnh sửa</string>
+    <string name="od_save_copy">Lưu dưới dạng bản sao</string>
+    <string name="od_saved_copy">Đã lưu thành tệp mới.</string>
+    <string name="od_undo_save">Hoàn tác lần lưu gần nhất</string>
+    <string name="od_undo_done">Đã khôi phục phiên bản trước lần lưu gần nhất.</string>
+    <string name="od_undo_failed">Không thể khôi phục phiên bản trước.</string>
+    <string name="od_bold">In đậm</string>
+    <string name="od_italic">In nghiêng</string>
+    <string name="od_add_paragraph">Thêm đoạn bên dưới</string>
+    <string name="od_delete_paragraph">Xóa đoạn</string>
+    <string name="od_table_cell">Ô bảng</string>
+    <string name="od_add_row">Thêm hàng</string>
+    <string name="od_edit_cell">Sửa ô %1$s</string>
+    <string name="od_cell_value">Giá trị</string>
+    <string name="od_cell_hint">Văn bản, số hoặc công thức bắt đầu bằng =</string>
+    <string name="od_formula_replaced">Ô này chứa một công thức (%1$s). Giá trị mới sẽ thay thế công thức.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Trang tính %1$d</string>
+    <string name="od_slide_of">Trang chiếu %1$d/%2$d</string>
+    <string name="od_delete_slide">Xóa trang chiếu</string>
+    <string name="od_title_box">Tiêu đề</string>
+    <string name="od_text_box_n">Hộp văn bản %1$d</string>
+    <string name="od_no_slides">Không có trang chiếu</string>
+    <string name="od_image">Hình ảnh</string>
+</resources>

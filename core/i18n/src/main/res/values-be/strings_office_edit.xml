@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">дакумент</string>
+    <string name="od_saved">Захавана</string>
+    <string name="od_save_failed">Не атрымалася захаваць</string>
+    <string name="od_nothing_to_show">У гэтым файле няма чаго паказваць. Выкарыстайце «Адкрыць у», каб адкрыць яго ў іншай праграме.</string>
+    <string name="od_pdf_protected">Гэты PDF абаронены паролем.</string>
+    <string name="od_cannot_open">Гэты файл нельга адкрыць тут (%1$s). Выкарыстайце «Адкрыць у».</string>
+    <string name="od_legacy_failed">Не атрымалася прачытаць гэты стары файл Office. Выкарыстайце «Адкрыць у», каб адкрыць яго ў іншай праграме.</string>
+    <string name="od_text_too_big">Гэты файл большы за 2 МБ. Ён паказаны толькі для чытання і ніколі не змяняецца.</string>
+    <string name="od_edit_copy">Рэдагаваць першыя 2 МБ як копію</string>
+    <string name="od_copy_hint">Вы рэдагуеце копію першых 2 МБ. Пры захаванні ствараецца новы файл; арыгінал не змяняецца.</string>
+    <string name="od_pdf_tools">Інструменты PDF</string>
+    <string name="od_search_pdf">Пошук у PDF</string>
+    <string name="od_search_hint">Шукаць тэкст</string>
+    <string name="od_searching">Пошук… старонка %1$d</string>
+    <string name="od_no_results">Нічога не знойдзена</string>
+    <string name="od_no_text_layer">У гэтым PDF няма тэксту, па якім можна шукаць (напрыклад, гэта скан).</string>
+    <string name="od_results_count">Вынікаў: %1$d</string>
+    <string name="od_go_to_page">Перайсці да старонкі</string>
+    <string name="od_page_range">Старонка (ад 1 да %1$d)</string>
+    <string name="od_go">Перайсці</string>
+    <string name="od_layout_note">Паказаны тэкст і структура. Разметка старонак і шрыфты не ўзнаўляюцца.</string>
+    <string name="od_slides_note">Паказаны загалоўкі, тэкст і выявы. Макет і афармленне слайдаў не ўзнаўляюцца.</string>
+    <string name="od_legacy_readonly">Стары двайковы файл Office (.doc, .xls, .ppt): толькі чытанне. Тэкст і значэнні здабываюцца наколькі гэта магчыма.</string>
+    <string name="od_convert_note">Пры пераўтварэнні ствараецца новы файл. Фарматаванне, выявы і ўбудаваныя аб’екты старога файла не пераносяцца. Арыгінал застаецца без змен.</string>
+    <string name="od_convert_action">Пераўтварыць у .%1$s і рэдагаваць</string>
+    <string name="od_convert_failed">Не атрымалася пераўтварыць гэты файл.</string>
+    <string name="od_converted">Пераўтворана. Цяпер вы рэдагуеце новы файл.</string>
+    <string name="od_discard_title">Адмяніць змены?</string>
+    <string name="od_discard_text">Вашы праўкі не захаваны.</string>
+    <string name="od_discard">Адмяніць</string>
+    <string name="od_keep_editing">Працягнуць рэдагаванне</string>
+    <string name="od_save_copy">Захаваць як копію</string>
+    <string name="od_saved_copy">Захавана як новы файл.</string>
+    <string name="od_undo_save">Адрабіць апошняе захаванне</string>
+    <string name="od_undo_done">Адноўлена версія да апошняга захавання.</string>
+    <string name="od_undo_failed">Не атрымалася аднавіць папярэднюю версію.</string>
+    <string name="od_bold">Тоўсты</string>
+    <string name="od_italic">Курсіў</string>
+    <string name="od_add_paragraph">Дадаць абзац ніжэй</string>
+    <string name="od_delete_paragraph">Выдаліць абзац</string>
+    <string name="od_table_cell">Ячэйка табліцы</string>
+    <string name="od_add_row">Дадаць радок</string>
+    <string name="od_edit_cell">Змяніць ячэйку %1$s</string>
+    <string name="od_cell_value">Значэнне</string>
+    <string name="od_cell_hint">Тэкст, лік або формула, якая пачынаецца з =</string>
+    <string name="od_formula_replaced">Гэтая ячэйка змяшчае формулу (%1$s). Новае значэнне заменіць яе.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Аркуш %1$d</string>
+    <string name="od_slide_of">Слайд %1$d з %2$d</string>
+    <string name="od_delete_slide">Выдаліць слайд</string>
+    <string name="od_title_box">Загаловак</string>
+    <string name="od_text_box_n">Тэкставае поле %1$d</string>
+    <string name="od_no_slides">Няма слайдаў</string>
+    <string name="od_image">Выява</string>
+</resources>

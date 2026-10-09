@@ -48,7 +48,10 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
 import de.mm20.launcher2.globalactions.GlobalActionsService
+import androidx.compose.runtime.saveable.rememberSaveable
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.SearchEmptyState
+import de.mm20.launcher2.ui.component.TelosSearchBar
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.ListPreferenceItem
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -83,6 +86,12 @@ fun ScreenshotScreen() {
     }
     val shots by produceState(emptyList<SavedScreenshot>(), reload) {
         value = withContext(Dispatchers.IO) { runCatching { ScreenshotStore.list(context) }.getOrDefault(emptyList()) }
+    }
+
+    var shotQuery by rememberSaveable { mutableStateOf("") }
+    val shownShots = remember(shots, shotQuery) {
+        val df = java.text.DateFormat.getDateTimeInstance(java.text.DateFormat.MEDIUM, java.text.DateFormat.SHORT)
+        de.mm20.launcher2.comms.search.TelosSearch.filter(shots, shotQuery) { listOf(it.name, df.format(java.util.Date(it.modified))) }
     }
 
     fun capture(block: () -> Unit) {
@@ -149,8 +158,15 @@ fun ScreenshotScreen() {
                 item(span = { GridItemSpan(maxLineSpan) }) {
                     Text(stringResource(R.string.screenshot_none), color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(8.dp))
                 }
+            } else {
+                item(span = { GridItemSpan(maxLineSpan) }) {
+                    TelosSearchBar(shotQuery, { shotQuery = it }, stringResource(R.string.tsp_search_screenshots), Modifier.padding(horizontal = 0.dp))
+                }
+                if (shownShots.isEmpty() && shotQuery.isNotBlank()) {
+                    item(span = { GridItemSpan(maxLineSpan) }) { SearchEmptyState(shotQuery) }
+                }
             }
-            items(shots, key = { it.uri.toString() }) { shot ->
+            items(shownShots, key = { it.uri.toString() }) { shot ->
                 AsyncImage(
                     model = shot.uri,
                     contentDescription = shot.name,

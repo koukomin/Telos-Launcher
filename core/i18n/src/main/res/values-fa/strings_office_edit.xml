@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">سند</string>
+    <string name="od_saved">ذخیره شد</string>
+    <string name="od_save_failed">ذخیره نشد</string>
+    <string name="od_nothing_to_show">چیزی برای نمایش در این فایل نیست. با «باز کردن با» آن را در برنامه‌ای دیگر باز کنید.</string>
+    <string name="od_pdf_protected">این PDF با گذرواژه محافظت شده است.</string>
+    <string name="od_cannot_open">این فایل در اینجا باز نمی‌شود (%1$s). از «باز کردن با» استفاده کنید.</string>
+    <string name="od_legacy_failed">خواندن این فایل قدیمی Office ممکن نشد. با «باز کردن با» آن را در برنامه‌ای دیگر باز کنید.</string>
+    <string name="od_text_too_big">حجم این فایل بیش از ۲ مگابایت است. فقط‌خواندنی نمایش داده می‌شود و هرگز تغییر نمی‌کند.</string>
+    <string name="od_edit_copy">ویرایش ۲ مگابایت اول به‌صورت نسخه</string>
+    <string name="od_copy_hint">شما نسخه‌ای از ۲ مگابایت اول را ویرایش می‌کنید. ذخیره، فایل جدیدی می‌سازد و اصل تغییر نمی‌کند.</string>
+    <string name="od_pdf_tools">ابزارهای PDF</string>
+    <string name="od_search_pdf">جستجو در PDF</string>
+    <string name="od_search_hint">جستجوی متن</string>
+    <string name="od_searching">در حال جستجو… صفحه %1$d</string>
+    <string name="od_no_results">نتیجه‌ای نیست</string>
+    <string name="od_no_text_layer">این PDF متن قابل جستجو ندارد (مثلاً اسکن است).</string>
+    <string name="od_results_count">نتایج: %1$d</string>
+    <string name="od_go_to_page">رفتن به صفحه</string>
+    <string name="od_page_range">صفحه (۱ تا %1$d)</string>
+    <string name="od_go">برو</string>
+    <string name="od_layout_note">متن و ساختار نمایش داده می‌شود. چیدمان صفحه و قلم‌ها بازسازی نمی‌شوند.</string>
+    <string name="od_slides_note">عنوان‌ها، متن و تصاویر نمایش داده می‌شوند. چیدمان و طراحی اسلایدها بازسازی نمی‌شود.</string>
+    <string name="od_legacy_readonly">فایل باینری قدیمی Office (‏.doc، .xls، .ppt): فقط‌خواندنی. متن و مقادیر تا حد امکان استخراج می‌شوند.</string>
+    <string name="od_convert_note">تبدیل، فایل جدیدی می‌سازد. قالب‌بندی، تصاویر و اشیای جاسازی‌شده فایل قدیمی منتقل نمی‌شوند. اصل بدون تغییر می‌ماند.</string>
+    <string name="od_convert_action">تبدیل به .%1$s و ویرایش</string>
+    <string name="od_convert_failed">تبدیل این فایل ممکن نشد.</string>
+    <string name="od_converted">تبدیل شد. اکنون فایل جدید را ویرایش می‌کنید.</string>
+    <string name="od_discard_title">تغییرات نادیده گرفته شود؟</string>
+    <string name="od_discard_text">ویرایش‌های شما ذخیره نشده‌اند.</string>
+    <string name="od_discard">نادیده گرفتن</string>
+    <string name="od_keep_editing">ادامه ویرایش</string>
+    <string name="od_save_copy">ذخیره به‌صورت نسخه</string>
+    <string name="od_saved_copy">به‌صورت فایل جدید ذخیره شد.</string>
+    <string name="od_undo_save">واگرد آخرین ذخیره</string>
+    <string name="od_undo_done">نسخه پیش از آخرین ذخیره بازیابی شد.</string>
+    <string name="od_undo_failed">بازیابی نسخه قبلی ممکن نشد.</string>
+    <string name="od_bold">پررنگ</string>
+    <string name="od_italic">کج</string>
+    <string name="od_add_paragraph">افزودن بند در زیر</string>
+    <string name="od_delete_paragraph">حذف بند</string>
+    <string name="od_table_cell">سلول جدول</string>
+    <string name="od_add_row">افزودن ردیف</string>
+    <string name="od_edit_cell">ویرایش سلول %1$s</string>
+    <string name="od_cell_value">مقدار</string>
+    <string name="od_cell_hint">متن، عدد یا فرمولی که با = شروع می‌شود</string>
+    <string name="od_formula_replaced">این سلول فرمول دارد (%1$s). مقدار جدید جایگزین آن می‌شود.</string>
+    <string name="od_ok">تأیید</string>
+    <string name="od_sheet_n">برگه %1$d</string>
+    <string name="od_slide_of">اسلاید %1$d از %2$d</string>
+    <string name="od_delete_slide">حذف اسلاید</string>
+    <string name="od_title_box">عنوان</string>
+    <string name="od_text_box_n">کادر متن %1$d</string>
+    <string name="od_no_slides">اسلایدی نیست</string>
+    <string name="od_image">تصویر</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Telos Network pranešimai</string>
+    <string name="net_notif_title">Telos Network įjungtas</string>
+    <string name="net_notif_text">Ryšiai filtruojami.</string>
+    <string name="net_notif_blocked">Užblokuoti ryšiai: %1$d</string>
+    <string name="net_notif_stop">Išjungti</string>
+    <string name="net_alert_stopped_title">Telos Network išjungtas</string>
+    <string name="net_alert_crashed">Tinklo variklis netikėtai sustojo. Prieiga prie interneto nepaveikta.</string>
+    <string name="net_alert_revoked">Kitas VPN perėmė valdymą. Prieiga prie interneto nepaveikta.</string>
+    <string name="net_alert_start_failed">Nepavyko paleisti Telos Network. Prieiga prie interneto nepaveikta.</string>
+    <string name="net_error_permission">VPN nustatyti reikia leidimo.</string>
+    <string name="net_error_start_failed">Nepavyko paleisti: %1$s</string>
+    <string name="net_error_unknown">nežinoma klaida</string>
+    <string name="net_app_system">Android sistema</string>
+    <string name="net_app_unknown">Nežinoma programa (%1$d)</string>
+    <string name="net_dns_system">Tinklo DNS (sistemos)</string>
+</resources>

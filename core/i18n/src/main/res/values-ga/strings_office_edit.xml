@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">doiciméad</string>
+    <string name="od_saved">Sábháilte</string>
+    <string name="od_save_failed">Níorbh fhéidir a shábháil</string>
+    <string name="od_nothing_to_show">Níl aon rud le taispeáint sa chomhad seo. Úsáid “Oscail le” chun é a oscailt in aip eile.</string>
+    <string name="od_pdf_protected">Tá an PDF seo cosanta le focal faire.</string>
+    <string name="od_cannot_open">Ní féidir an comhad seo a oscailt anseo (%1$s). Úsáid “Oscail le”.</string>
+    <string name="od_legacy_failed">Níorbh fhéidir an seanchomhad Office seo a léamh. Úsáid “Oscail le” chun é a oscailt in aip eile.</string>
+    <string name="od_text_too_big">Tá an comhad seo níos mó ná 2 MB. Taispeántar é le léamh amháin agus ní athraítear riamh é.</string>
+    <string name="od_edit_copy">Cuir an chéad 2 MB in eagar mar chóip</string>
+    <string name="od_copy_hint">Tá cóip den chéad 2 MB á cur in eagar agat. Cruthaíonn sábháil comhad nua; ní athraítear an bunchomhad.</string>
+    <string name="od_pdf_tools">Uirlisí PDF</string>
+    <string name="od_search_pdf">Cuardaigh sa PDF</string>
+    <string name="od_search_hint">Cuardaigh téacs</string>
+    <string name="od_searching">Ag cuardach… leathanach %1$d</string>
+    <string name="od_no_results">Gan torthaí</string>
+    <string name="od_no_text_layer">Níl aon téacs inchuardaithe sa PDF seo (scanadh, mar shampla).</string>
+    <string name="od_results_count">Torthaí: %1$d</string>
+    <string name="od_go_to_page">Téigh go leathanach</string>
+    <string name="od_page_range">Leathanach (1 go %1$d)</string>
+    <string name="od_go">Téigh</string>
+    <string name="od_layout_note">Taispeántar an téacs agus an struchtúr. Ní atáirgtear leagan amach an leathanaigh ná na clónna.</string>
+    <string name="od_slides_note">Taispeántar teidil, téacs agus pictiúir. Ní atáirgtear leagan amach ná dearadh na sleamhnán.</string>
+    <string name="od_legacy_readonly">Seanchomhad Office dénártha (.doc, .xls, .ppt): léamh amháin. Baintear téacs agus luachanna amach a mhéid is féidir.</string>
+    <string name="od_convert_note">Cruthaíonn comhshó comhad nua. Ní thugtar formáidiú, pictiúir ná réada leabaithe an tseanchomhaid leis. Fanann an bunchomhad gan athrú.</string>
+    <string name="od_convert_action">Comhshóigh go .%1$s agus cuir in eagar</string>
+    <string name="od_convert_failed">Níorbh fhéidir an comhad seo a chomhshó.</string>
+    <string name="od_converted">Comhshóite. Tá an comhad nua á chur in eagar agat anois.</string>
+    <string name="od_discard_title">An gcaithfear na hathruithe amach?</string>
+    <string name="od_discard_text">Níor sábháladh do chuid eagarthóireachta.</string>
+    <string name="od_discard">Caith amach</string>
+    <string name="od_keep_editing">Lean ort ag cur in eagar</string>
+    <string name="od_save_copy">Sábháil mar chóip</string>
+    <string name="od_saved_copy">Sábháilte mar chomhad nua.</string>
+    <string name="od_undo_save">Cealaigh an tsábháil dheireanach</string>
+    <string name="od_undo_done">Athchóiríodh an leagan roimh an tsábháil dheireanach.</string>
+    <string name="od_undo_failed">Níorbh fhéidir an leagan roimhe seo a athchóiriú.</string>
+    <string name="od_bold">Trom</string>
+    <string name="od_italic">Iodálach</string>
+    <string name="od_add_paragraph">Cuir alt leis thíos</string>
+    <string name="od_delete_paragraph">Scrios an t-alt</string>
+    <string name="od_table_cell">Cill tábla</string>
+    <string name="od_add_row">Cuir sraith leis</string>
+    <string name="od_edit_cell">Cuir cill %1$s in eagar</string>
+    <string name="od_cell_value">Luach</string>
+    <string name="od_cell_hint">Téacs, uimhir nó foirmle a thosaíonn le =</string>
+    <string name="od_formula_replaced">Tá foirmle sa chill seo (%1$s). Cuirfidh luach nua ina háit í.</string>
+    <string name="od_ok">Ceart go leor</string>
+    <string name="od_sheet_n">Leathanach %1$d</string>
+    <string name="od_slide_of">Sleamhnán %1$d de %2$d</string>
+    <string name="od_delete_slide">Scrios an sleamhnán</string>
+    <string name="od_title_box">Teideal</string>
+    <string name="od_text_box_n">Bosca téacs %1$d</string>
+    <string name="od_no_slides">Gan sleamhnáin</string>
+    <string name="od_image">Íomhá</string>
+</resources>

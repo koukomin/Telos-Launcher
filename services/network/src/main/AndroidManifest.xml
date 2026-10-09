@@ -1,0 +1,51 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SYSTEM_EXEMPTED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+
+    <!-- Optional "usage access" (granted by the user in Android settings): lets the firewall's background rules see which app is in the foreground -->
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+
+    <application>
+        <!--
+            The VPN. Never started by itself: only by NetworkEngine.start() (a user action), by the
+            boot receiver below when the user switched on "start on boot", or by the system when the
+            user selected Telos Network as always-on VPN in the Android settings.
+            systemExempted: the foreground service type Android allows for VPN apps (API 34+);
+            specialUse is the fallback when a device refuses it.
+        -->
+        <service
+            android:name="de.mm20.launcher2.network.vpn.TelosVpnService"
+            android:exported="true"
+            android:foregroundServiceType="systemExempted|specialUse"
+            android:permission="android.permission.BIND_VPN_SERVICE"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="android.net.VpnService" />
+            </intent-filter>
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="vpn_network_filter" />
+        </service>
+
+        <!-- Starts the VPN after a reboot, only when the user enabled "start on boot" and already granted the VPN permission -->
+        <receiver
+            android:name="de.mm20.launcher2.network.vpn.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

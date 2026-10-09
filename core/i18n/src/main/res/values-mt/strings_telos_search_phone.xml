@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Fittex fin-noti</string>
+    <string name="tsp_search_calls">Fittex fiċ-ċempliet</string>
+    <string name="tsp_search_favorites">Fittex fil-favoriti</string>
+    <string name="tsp_search_contacts">Fittex fil-kontatti</string>
+    <string name="tsp_search_messages">Fittex fil-messaġġi</string>
+    <string name="tsp_search_in_conversation">Fittex fil-konversazzjoni</string>
+    <string name="tsp_search_events">Fittex fl-avvenimenti</string>
+    <string name="tsp_search_recordings">Fittex fir-reġistrazzjonijiet</string>
+    <string name="tsp_search_screenshots">Fittex fix-screenshots</string>
+    <string name="tsp_search_call_recordings">Fittex fir-reġistrazzjonijiet taċ-ċempliet</string>
+    <string name="tsp_search_groups">Fittex fil-gruppi</string>
+</resources>

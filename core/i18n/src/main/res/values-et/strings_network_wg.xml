@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Tagasi</string>
+    <string name="nwg_add">Lisa tunnel</string>
+    <string name="nwg_add_new">Loo uus</string>
+    <string name="nwg_add_file">Impordi .conf-fail</string>
+    <string name="nwg_add_qr">Impordi QR-koodi pildilt</string>
+    <string name="nwg_add_paste">Kleebi konfiguratsiooni tekst</string>
+    <string name="nwg_system_default">Süsteemi vaikimisi</string>
+    <string name="nwg_system_default_summary">Rakendused, millel pole oma seadet, kasutavad seda tunnelit. Ilma süsteemi vaikimisi tunnelita ühendavad need otse.</string>
+    <string name="nwg_none">Puudub (otse)</string>
+    <string name="nwg_direct">Otse (ilma puhverserverita)</string>
+    <string name="nwg_apps">Rakenduste määramine</string>
+    <string name="nwg_apps_summary">Vali, millist tunnelit iga rakendus kasutab</string>
+    <string name="nwg_configs">Tunnelid</string>
+    <string name="nwg_empty">Tunneleid veel pole. Lisa tunnel nupuga +.</string>
+    <string name="nwg_status_off">Väljas</string>
+    <string name="nwg_status_connecting">Ühendamine</string>
+    <string name="nwg_status_up">Ühendatud</string>
+    <string name="nwg_status_down">Ei vasta</string>
+    <string name="nwg_status_error">Viga</string>
+    <string name="nwg_traffic">Vastu võetud %1$s, saadetud %2$s</string>
+    <string name="nwg_handshake">Viimane handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Tunnelite ühendamiseks lülita Telos Network sisse.</string>
+    <string name="nwg_new_title">Uus tunnel</string>
+    <string name="nwg_edit_title">Muuda tunnelit</string>
+    <string name="nwg_name">Nimi</string>
+    <string name="nwg_private_key">Privaatvõti</string>
+    <string name="nwg_public_key">Avalik võti: %1$s</string>
+    <string name="nwg_generate">Loo</string>
+    <string name="nwg_addresses">Aadressid (komadega eraldatud)</string>
+    <string name="nwg_dns">DNS-serverid (komadega eraldatud)</string>
+    <string name="nwg_mtu">MTU (0 = automaatne)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Peeri avalik võti</string>
+    <string name="nwg_preshared">Eeljagatud võti (valikuline)</string>
+    <string name="nwg_endpoint">Endpoint (host:port)</string>
+    <string name="nwg_allowed_ips">Lubatud IP-aadressid (komadega eraldatud)</string>
+    <string name="nwg_keepalive">Persistent keepalive sekundites (0 = väljas)</string>
+    <string name="nwg_add_peer">Lisa peer</string>
+    <string name="nwg_remove_peer">Eemalda peer</string>
+    <string name="nwg_mobile_only">Ainult mobiilandmesidega</string>
+    <string name="nwg_lockdown">Blokeeri rakendused, kuni tunnel ei tööta</string>
+    <string name="nwg_save">Salvesta</string>
+    <string name="nwg_cancel">Tühista</string>
+    <string name="nwg_delete">Kustuta</string>
+    <string name="nwg_share">Jaga konfiguratsiooni</string>
+    <string name="nwg_share_warning">Eksporditud konfiguratsioon sisaldab privaatvõtit.</string>
+    <string name="nwg_import">Impordi</string>
+    <string name="nwg_qr_not_found">Sellelt pildilt ei leitud QR-koodi</string>
+    <string name="nwg_err_syntax">Konfiguratsioonis on süntaksiviga: %1$s</string>
+    <string name="nwg_err_missing">Konfiguratsioon on poolik: puudub %1$s</string>
+    <string name="nwg_err_invalid_key">Kehtetu võti: %1$s</string>
+    <string name="nwg_err_invalid_value">Kehtetu väärtus: %1$s</string>
+    <string name="nwg_err_invalid_name">Sisesta kuni 64 märgi pikkune nimi</string>
+    <string name="nwg_err_not_found">Tunnelit enam ei ole</string>
+    <string name="nwg_err_storage">Konfiguratsiooni ei saanud turvaliselt salvestada: %1$s</string>
+    <string name="nwg_err_other">Konfiguratsiooni ei saanud salvestada</string>
+    <string name="nwg_apps_title">Rakendused ja tunnelid</string>
+    <string name="nwg_search">Otsi rakendusi</string>
+    <string name="nwg_show_system">Näita süsteemirakendusi</string>
+    <string name="nwg_selected">Valitud: %1$d</string>
+    <string name="nwg_assign_selected">Määra valitud rakendustele</string>
+    <string name="nwg_clear_selection">Tühista valik</string>
+    <string name="nwg_select_all">Vali kõik kuvatud</string>
+</resources>

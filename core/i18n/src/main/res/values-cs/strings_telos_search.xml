@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">Hledat</string>
+    <string name="ts_clear">Vymazat</string>
+    <string name="ts_no_results">Žádné výsledky pro „%1$s“</string>
+</resources>

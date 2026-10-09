@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">dokumen</string>
+    <string name="od_saved">Tersimpan</string>
+    <string name="od_save_failed">Tidak dapat menyimpan</string>
+    <string name="od_nothing_to_show">Tidak ada yang bisa ditampilkan di berkas ini. Gunakan “Buka dengan” untuk membukanya di aplikasi lain.</string>
+    <string name="od_pdf_protected">PDF ini dilindungi kata sandi.</string>
+    <string name="od_cannot_open">Berkas ini tidak dapat dibuka di sini (%1$s). Gunakan “Buka dengan”.</string>
+    <string name="od_legacy_failed">Berkas Office lama ini tidak dapat dibaca. Gunakan “Buka dengan” untuk membukanya di aplikasi lain.</string>
+    <string name="od_text_too_big">Berkas ini lebih besar dari 2 MB. Berkas ditampilkan hanya-baca dan tidak pernah diubah.</string>
+    <string name="od_edit_copy">Edit 2 MB pertama sebagai salinan</string>
+    <string name="od_copy_hint">Anda mengedit salinan 2 MB pertama. Menyimpan akan membuat berkas baru; aslinya tidak berubah.</string>
+    <string name="od_pdf_tools">Alat PDF</string>
+    <string name="od_search_pdf">Cari di PDF</string>
+    <string name="od_search_hint">Cari teks</string>
+    <string name="od_searching">Mencari… halaman %1$d</string>
+    <string name="od_no_results">Tidak ada hasil</string>
+    <string name="od_no_text_layer">PDF ini tidak memiliki teks yang dapat dicari (misalnya hasil pindaian).</string>
+    <string name="od_results_count">Hasil: %1$d</string>
+    <string name="od_go_to_page">Buka halaman</string>
+    <string name="od_page_range">Halaman (1 sampai %1$d)</string>
+    <string name="od_go">Buka</string>
+    <string name="od_layout_note">Teks dan struktur ditampilkan. Tata letak halaman dan font tidak ditampilkan ulang.</string>
+    <string name="od_slides_note">Judul, teks, dan gambar ditampilkan. Tata letak dan desain slide tidak ditampilkan ulang.</string>
+    <string name="od_legacy_readonly">Berkas Office biner lama (.doc, .xls, .ppt): hanya-baca. Teks dan nilai diekstrak sebisa mungkin.</string>
+    <string name="od_convert_note">Konversi membuat berkas baru. Pemformatan, gambar, dan objek tersemat dari berkas lama tidak ikut terbawa. Berkas asli tetap tidak berubah.</string>
+    <string name="od_convert_action">Konversi ke .%1$s dan edit</string>
+    <string name="od_convert_failed">Berkas ini tidak dapat dikonversi.</string>
+    <string name="od_converted">Selesai dikonversi. Sekarang Anda mengedit berkas baru.</string>
+    <string name="od_discard_title">Buang perubahan?</string>
+    <string name="od_discard_text">Suntingan Anda belum disimpan.</string>
+    <string name="od_discard">Buang</string>
+    <string name="od_keep_editing">Lanjut mengedit</string>
+    <string name="od_save_copy">Simpan sebagai salinan</string>
+    <string name="od_saved_copy">Disimpan sebagai berkas baru.</string>
+    <string name="od_undo_save">Urungkan penyimpanan terakhir</string>
+    <string name="od_undo_done">Versi sebelum penyimpanan terakhir telah dipulihkan.</string>
+    <string name="od_undo_failed">Versi sebelumnya tidak dapat dipulihkan.</string>
+    <string name="od_bold">Tebal</string>
+    <string name="od_italic">Miring</string>
+    <string name="od_add_paragraph">Tambahkan paragraf di bawah</string>
+    <string name="od_delete_paragraph">Hapus paragraf</string>
+    <string name="od_table_cell">Sel tabel</string>
+    <string name="od_add_row">Tambah baris</string>
+    <string name="od_edit_cell">Edit sel %1$s</string>
+    <string name="od_cell_value">Nilai</string>
+    <string name="od_cell_hint">Teks, angka, atau rumus yang diawali =</string>
+    <string name="od_formula_replaced">Sel ini berisi rumus (%1$s). Nilai baru akan menggantikannya.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Lembar %1$d</string>
+    <string name="od_slide_of">Slide %1$d dari %2$d</string>
+    <string name="od_delete_slide">Hapus slide</string>
+    <string name="od_title_box">Judul</string>
+    <string name="od_text_box_n">Kotak teks %1$d</string>
+    <string name="od_no_slides">Tidak ada slide</string>
+    <string name="od_image">Gambar</string>
+</resources>

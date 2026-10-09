@@ -155,7 +155,7 @@ fun CommsSettingsScreen() {
                 OutlinedTextField(
                     value = pin,
                     onValueChange = { pin = it.filter { ch -> ch.isDigit() }.take(6) },
-                    label = { Text("4–6 digits") },
+                    label = { Text(stringResource(R.string.hf_comms_pin_digits)) },
                     modifier = Modifier.fillMaxWidth(),
                 )
             },
@@ -502,12 +502,12 @@ fun CommsSettingsScreen() {
                     onValueChanged = { if (it != null) viewModel.setNetworkBackend(it) },
                 )
                 SwitchPreference(
-                    title = "4G when screen is off",
+                    title = stringResource(R.string.hf_comms_lte_screen_off),
                     value = screenOffLte,
                     onValueChanged = { viewModel.setScreenOffLte(it) },
                 )
                 SwitchPreference(
-                    title = "4G in Battery Saver",
+                    title = stringResource(R.string.hf_comms_lte_battery_saver),
                     value = batterySaverLte,
                     onValueChanged = { viewModel.setBatterySaverLte(it) },
                 )

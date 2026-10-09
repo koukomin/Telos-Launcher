@@ -45,6 +45,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.TelosSearchBar
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.settings.comms.CommsSettingsRoute
 import kotlinx.coroutines.flow.first
@@ -173,18 +174,17 @@ fun CommsDashboardScreen(
                     }
                 }
                 if (!inSubScreen) {
-                    TextField(
+                    TelosSearchBar(
                         value = searchQuery,
                         onValueChange = { searchQuery = it },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                            .heightIn(min = 48.dp),
-                        placeholder = { Text(stringResource(R.string.hc_search)) },
-                        leadingIcon = {
-                            Icon(painterResource(R.drawable.search_24px), contentDescription = null)
-                        },
-                        trailingIcon = if (selectedTab == CommsTab.Recents) {
+                        placeholder = stringResource(
+                            when (selectedTab) {
+                                CommsTab.Recents -> R.string.tsp_search_calls
+                                CommsTab.Favorites -> R.string.tsp_search_favorites
+                                else -> R.string.tsp_search_contacts
+                            }
+                        ),
+                        trailing = if (selectedTab == CommsTab.Recents) {
                             {
                                 IconButton(onClick = { showFilters = !showFilters }) {
                                     Icon(
@@ -196,15 +196,6 @@ fun CommsDashboardScreen(
                                 }
                             }
                         } else null,
-                        singleLine = true,
-                        shape = RoundedCornerShape(14.dp),
-                        colors = TextFieldDefaults.colors(
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent,
-                            disabledIndicatorColor = Color.Transparent,
-                            focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-                        ),
                     )
                 }
             }

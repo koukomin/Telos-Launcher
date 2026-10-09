@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">搜索</string>
+    <string name="ts_clear">清除</string>
+    <string name="ts_no_results">没有“%1$s”的结果</string>
+</resources>

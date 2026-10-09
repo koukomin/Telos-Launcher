@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">asiakirja</string>
+    <string name="od_saved">Tallennettu</string>
+    <string name="od_save_failed">Tallennus epäonnistui</string>
+    <string name="od_nothing_to_show">Tässä tiedostossa ei ole mitään näytettävää. Avaa se toisessa sovelluksessa valinnalla ”Avaa sovelluksella”.</string>
+    <string name="od_pdf_protected">Tämä PDF on suojattu salasanalla.</string>
+    <string name="od_cannot_open">Tiedostoa ei voi avata täällä (%1$s). Käytä valintaa ”Avaa sovelluksella”.</string>
+    <string name="od_legacy_failed">Tätä vanhaa Office-tiedostoa ei voitu lukea. Avaa se toisessa sovelluksessa valinnalla ”Avaa sovelluksella”.</string>
+    <string name="od_text_too_big">Tiedosto on yli 2 Mt. Se näytetään vain luku -tilassa, eikä sitä koskaan muuteta.</string>
+    <string name="od_edit_copy">Muokkaa ensimmäisiä 2 Mt kopiona</string>
+    <string name="od_copy_hint">Muokkaat kopiota ensimmäisistä 2 Mt:stä. Tallennus luo uuden tiedoston; alkuperäinen ei muutu.</string>
+    <string name="od_pdf_tools">PDF-työkalut</string>
+    <string name="od_search_pdf">Hae PDF:stä</string>
+    <string name="od_search_hint">Hae tekstiä</string>
+    <string name="od_searching">Haetaan… sivu %1$d</string>
+    <string name="od_no_results">Ei tuloksia</string>
+    <string name="od_no_text_layer">Tässä PDF:ssä ei ole haettavaa tekstiä (esimerkiksi skannaus).</string>
+    <string name="od_results_count">Tuloksia: %1$d</string>
+    <string name="od_go_to_page">Siirry sivulle</string>
+    <string name="od_page_range">Sivu (1–%1$d)</string>
+    <string name="od_go">Siirry</string>
+    <string name="od_layout_note">Teksti ja rakenne näytetään. Sivun ulkoasua ja fontteja ei toisteta.</string>
+    <string name="od_slides_note">Otsikot, teksti ja kuvat näytetään. Diojen asettelua ja ulkoasua ei toisteta.</string>
+    <string name="od_legacy_readonly">Vanha binäärimuotoinen Office-tiedosto (.doc, .xls, .ppt): vain luku. Teksti ja arvot poimitaan mahdollisuuksien mukaan.</string>
+    <string name="od_convert_note">Muunnos luo uuden tiedoston. Vanhan tiedoston muotoilut, kuvat ja upotetut objektit eivät siirry mukaan. Alkuperäinen pysyy ennallaan.</string>
+    <string name="od_convert_action">Muunna muotoon .%1$s ja muokkaa</string>
+    <string name="od_convert_failed">Tiedostoa ei voitu muuntaa.</string>
+    <string name="od_converted">Muunnettu. Muokkaat nyt uutta tiedostoa.</string>
+    <string name="od_discard_title">Hylätäänkö muutokset?</string>
+    <string name="od_discard_text">Muutoksiasi ei ole tallennettu.</string>
+    <string name="od_discard">Hylkää</string>
+    <string name="od_keep_editing">Jatka muokkausta</string>
+    <string name="od_save_copy">Tallenna kopiona</string>
+    <string name="od_saved_copy">Tallennettu uutena tiedostona.</string>
+    <string name="od_undo_save">Kumoa viimeisin tallennus</string>
+    <string name="od_undo_done">Ennen viimeisintä tallennusta ollut versio palautettiin.</string>
+    <string name="od_undo_failed">Edellistä versiota ei voitu palauttaa.</string>
+    <string name="od_bold">Lihavointi</string>
+    <string name="od_italic">Kursivointi</string>
+    <string name="od_add_paragraph">Lisää kappale alle</string>
+    <string name="od_delete_paragraph">Poista kappale</string>
+    <string name="od_table_cell">Taulukon solu</string>
+    <string name="od_add_row">Lisää rivi</string>
+    <string name="od_edit_cell">Muokkaa solua %1$s</string>
+    <string name="od_cell_value">Arvo</string>
+    <string name="od_cell_hint">Teksti, luku tai =-merkillä alkava kaava</string>
+    <string name="od_formula_replaced">Tässä solussa on kaava (%1$s). Uusi arvo korvaa sen.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Taulukko %1$d</string>
+    <string name="od_slide_of">Dia %1$d / %2$d</string>
+    <string name="od_delete_slide">Poista dia</string>
+    <string name="od_title_box">Otsikko</string>
+    <string name="od_text_box_n">Tekstiruutu %1$d</string>
+    <string name="od_no_slides">Ei diaa</string>
+    <string name="od_image">Kuva</string>
+</resources>

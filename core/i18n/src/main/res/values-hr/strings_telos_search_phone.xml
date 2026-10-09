@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Pretraži bilješke</string>
+    <string name="tsp_search_calls">Pretraži pozive</string>
+    <string name="tsp_search_favorites">Pretraži favorite</string>
+    <string name="tsp_search_contacts">Pretraži kontakte</string>
+    <string name="tsp_search_messages">Pretraži poruke</string>
+    <string name="tsp_search_in_conversation">Pretraži razgovor</string>
+    <string name="tsp_search_events">Pretraži događaje</string>
+    <string name="tsp_search_recordings">Pretraži snimke</string>
+    <string name="tsp_search_screenshots">Pretraži snimke zaslona</string>
+    <string name="tsp_search_call_recordings">Pretraži snimke poziva</string>
+    <string name="tsp_search_groups">Pretraži grupe</string>
+</resources>

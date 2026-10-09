@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">Căutare</string>
+    <string name="ts_clear">Șterge</string>
+    <string name="ts_no_results">Niciun rezultat pentru „%1$s”</string>
+</resources>

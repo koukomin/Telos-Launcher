@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.media.music
 
 import androidx.compose.ui.res.stringResource
-import de.mm20.launcher2.search.GreekFold
 import android.Manifest
 import android.app.Activity
 import android.provider.MediaStore
@@ -94,10 +93,7 @@ fun MusicScreen() {
     BackHandler(enabled = !showNowPlaying && group != null) { group = null }
 
     val filtered = remember(tracks, query) {
-        if (query.isBlank()) tracks
-        else {
-            tracks.filter { GreekFold.contains(it.title, query) || GreekFold.contains(it.artist, query) || GreekFold.contains(it.album, query) }
-        }
+        de.mm20.launcher2.comms.search.TelosSearch.filter(tracks, query) { listOf(it.title, it.artist, it.album) }
     }
     val albums = remember(filtered) {
         filtered.groupBy { it.albumId }.values
@@ -132,7 +128,7 @@ fun MusicScreen() {
                     ) { Text(stringResource(R.string.hc_allow)) }
                 }
             } else {
-                de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, "Search music")
+                de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(R.string.tsm_search_music))
                 val current = group
                 if (current != null) {
                     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
@@ -156,6 +152,7 @@ fun MusicScreen() {
                         tracks.isEmpty() -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                             Text(stringResource(R.string.hc_no_music_found_on_this_device), color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
+                        filtered.isEmpty() && query.isNotBlank() -> de.mm20.launcher2.ui.component.SearchEmptyState(query)
                         tab == 0 -> TrackList(filtered, nowPlaying?.title, onPlay = { i -> viewModel.play(filtered, i) })
                         tab == 1 -> LazyVerticalGrid(
                             columns = GridCells.Fixed(2),

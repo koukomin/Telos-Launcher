@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Obvestila Telos Network</string>
+    <string name="net_notif_title">Telos Network je vklopljen</string>
+    <string name="net_notif_text">Povezave se filtrirajo.</string>
+    <string name="net_notif_blocked">Blokirane povezave: %1$d</string>
+    <string name="net_notif_stop">Izklopi</string>
+    <string name="net_alert_stopped_title">Telos Network je bil izklopljen</string>
+    <string name="net_alert_crashed">Omrežni pogon se je nepričakovano ustavil. Dostop do interneta ni prizadet.</string>
+    <string name="net_alert_revoked">Drug VPN je prevzel nadzor. Dostop do interneta ni prizadet.</string>
+    <string name="net_alert_start_failed">Telos Network se ni mogel zagnati. Dostop do interneta ni prizadet.</string>
+    <string name="net_error_permission">Za nastavitev VPN je potrebno dovoljenje.</string>
+    <string name="net_error_start_failed">Zagon ni uspel: %1$s</string>
+    <string name="net_error_unknown">neznana napaka</string>
+    <string name="net_app_system">Sistem Android</string>
+    <string name="net_app_unknown">Neznana aplikacija (%1$d)</string>
+    <string name="net_dns_system">DNS omrežja (sistemski)</string>
+</resources>

@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsm_search_music">Traži glazbu</string>
+    <string name="tsm_search_videos">Traži videozapise</string>
+    <string name="tsm_search_radio_browser">Traži po nazivu postaje</string>
+    <string name="tsm_search_my_stations">Traži u svojim postajama</string>
+    <string name="tsm_search_photos">Traži fotografije</string>
+</resources>

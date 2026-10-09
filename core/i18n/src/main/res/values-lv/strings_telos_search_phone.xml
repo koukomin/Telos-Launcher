@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Meklēt piezīmēs</string>
+    <string name="tsp_search_calls">Meklēt zvanos</string>
+    <string name="tsp_search_favorites">Meklēt izlasē</string>
+    <string name="tsp_search_contacts">Meklēt kontaktpersonās</string>
+    <string name="tsp_search_messages">Meklēt ziņās</string>
+    <string name="tsp_search_in_conversation">Meklēt sarunā</string>
+    <string name="tsp_search_events">Meklēt notikumos</string>
+    <string name="tsp_search_recordings">Meklēt ierakstos</string>
+    <string name="tsp_search_screenshots">Meklēt ekrānuzņēmumos</string>
+    <string name="tsp_search_call_recordings">Meklēt zvanu ierakstos</string>
+    <string name="tsp_search_groups">Meklēt grupās</string>
+</resources>

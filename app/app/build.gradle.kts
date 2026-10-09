@@ -16,6 +16,7 @@ android {
 
     packaging {
         resources.excludes.add("META-INF/DEPENDENCIES")
+        resources.excludes.add("META-INF/INDEX.LIST")
         resources.excludes.add("META-INF/LICENSE")
         resources.excludes.add("META-INF/LICENSE.txt")
         resources.excludes.add("META-INF/license.txt")
@@ -191,6 +192,7 @@ dependencies {
     implementation(project(":data:store"))
     implementation(project(":services:comms"))
     implementation(project(":services:downloads"))
+    implementation(project(":services:network"))
     implementation(project(":data:comms"))
 
     // === TELOS_PENDING_REVIEW_START: smart_freeze_dependencies ===
@@ -208,6 +210,10 @@ dependencies {
 
 // Bouncy Castle comes in with several versions (sshj, other libraries); the parts must match or the classes are duplicated
 configurations.all {
+    // pdfbox-android brings the jdk15to18 builds of Bouncy Castle, sshj the jdk18on builds: same classes twice
+    exclude(group = "org.bouncycastle", module = "bcprov-jdk15to18")
+    exclude(group = "org.bouncycastle", module = "bcpkix-jdk15to18")
+    exclude(group = "org.bouncycastle", module = "bcutil-jdk15to18")
     resolutionStrategy.eachDependency {
         if (requested.group == "org.bouncycastle") useVersion("1.84")
     }

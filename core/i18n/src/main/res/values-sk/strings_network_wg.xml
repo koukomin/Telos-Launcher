@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">Späť</string>
+    <string name="nwg_add">Pridať tunel</string>
+    <string name="nwg_add_new">Vytvoriť nový</string>
+    <string name="nwg_add_file">Importovať súbor .conf</string>
+    <string name="nwg_add_qr">Importovať z obrázka s QR kódom</string>
+    <string name="nwg_add_paste">Vložiť text konfigurácie</string>
+    <string name="nwg_system_default">Predvolený systémový</string>
+    <string name="nwg_system_default_summary">Aplikácie bez vlastného nastavenia používajú tento tunel. Bez predvoleného systémového sa pripájajú priamo.</string>
+    <string name="nwg_none">Žiadny (priamo)</string>
+    <string name="nwg_direct">Priamo (bez proxy)</string>
+    <string name="nwg_apps">Priradenie podľa aplikácií</string>
+    <string name="nwg_apps_summary">Vyberte, ktorý tunel každá aplikácia používa</string>
+    <string name="nwg_configs">Tunely</string>
+    <string name="nwg_empty">Zatiaľ žiadne tunely. Pridajte tunel tlačidlom +.</string>
+    <string name="nwg_status_off">Vypnuté</string>
+    <string name="nwg_status_connecting">Pripája sa</string>
+    <string name="nwg_status_up">Pripojené</string>
+    <string name="nwg_status_down">Neodpovedá</string>
+    <string name="nwg_status_error">Chyba</string>
+    <string name="nwg_traffic">Prijaté %1$s, odoslané %2$s</string>
+    <string name="nwg_handshake">Posledný handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">Zapnite Telos Network, aby sa tunely pripojili.</string>
+    <string name="nwg_new_title">Nový tunel</string>
+    <string name="nwg_edit_title">Upraviť tunel</string>
+    <string name="nwg_name">Názov</string>
+    <string name="nwg_private_key">Súkromný kľúč</string>
+    <string name="nwg_public_key">Verejný kľúč: %1$s</string>
+    <string name="nwg_generate">Vygenerovať</string>
+    <string name="nwg_addresses">Adresy (oddelené čiarkou)</string>
+    <string name="nwg_dns">Servery DNS (oddelené čiarkou)</string>
+    <string name="nwg_mtu">MTU (0 = automaticky)</string>
+    <string name="nwg_peer">Peer %1$d</string>
+    <string name="nwg_peer_public_key">Verejný kľúč peera</string>
+    <string name="nwg_preshared">Vopred zdieľaný kľúč (voliteľné)</string>
+    <string name="nwg_endpoint">Endpoint (hostiteľ:port)</string>
+    <string name="nwg_allowed_ips">Povolené IP adresy (oddelené čiarkou)</string>
+    <string name="nwg_keepalive">Persistent keepalive v sekundách (0 = vypnuté)</string>
+    <string name="nwg_add_peer">Pridať peer</string>
+    <string name="nwg_remove_peer">Odstrániť peer</string>
+    <string name="nwg_mobile_only">Iba v mobilných dátach</string>
+    <string name="nwg_lockdown">Blokovať aplikácie, kým tunel nefunguje</string>
+    <string name="nwg_save">Uložiť</string>
+    <string name="nwg_cancel">Zrušiť</string>
+    <string name="nwg_delete">Odstrániť</string>
+    <string name="nwg_share">Zdieľať konfiguráciu</string>
+    <string name="nwg_share_warning">Exportovaná konfigurácia obsahuje súkromný kľúč.</string>
+    <string name="nwg_import">Importovať</string>
+    <string name="nwg_qr_not_found">Na tomto obrázku sa nenašiel žiadny QR kód</string>
+    <string name="nwg_err_syntax">Konfigurácia obsahuje syntaktickú chybu: %1$s</string>
+    <string name="nwg_err_missing">Konfigurácia je neúplná: chýba %1$s</string>
+    <string name="nwg_err_invalid_key">Neplatný kľúč: %1$s</string>
+    <string name="nwg_err_invalid_value">Neplatná hodnota: %1$s</string>
+    <string name="nwg_err_invalid_name">Zadajte názov s dĺžkou najviac 64 znakov</string>
+    <string name="nwg_err_not_found">Tunel už neexistuje</string>
+    <string name="nwg_err_storage">Konfiguráciu sa nepodarilo bezpečne uložiť: %1$s</string>
+    <string name="nwg_err_other">Konfiguráciu sa nepodarilo uložiť</string>
+    <string name="nwg_apps_title">Aplikácie a tunely</string>
+    <string name="nwg_search">Hľadať aplikácie</string>
+    <string name="nwg_show_system">Zobraziť systémové aplikácie</string>
+    <string name="nwg_selected">Vybrané: %1$d</string>
+    <string name="nwg_assign_selected">Priradiť vybraným aplikáciám</string>
+    <string name="nwg_clear_selection">Zrušiť výber</string>
+    <string name="nwg_select_all">Vybrať všetky zobrazené</string>
+</resources>

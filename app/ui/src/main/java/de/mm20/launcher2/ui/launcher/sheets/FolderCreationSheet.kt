@@ -40,7 +40,7 @@ fun FolderCreationSheet(
                 .navigationBarsPadding()
         ) {
             Text(
-                text = "New Folder",
+                text = stringResource(R.string.hc_new_folder),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
@@ -48,7 +48,7 @@ fun FolderCreationSheet(
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
-                label = { Text("Folder Name") },
+                label = { Text(stringResource(R.string.hf_folder_name)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -60,9 +60,9 @@ fun FolderCreationSheet(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(text = "Use as Cover", style = MaterialTheme.typography.bodyLarge)
+                    Text(text = stringResource(R.string.hf_folder_use_as_cover), style = MaterialTheme.typography.bodyLarge)
                     Text(
-                        text = "Tap launches first app, swipe up opens folder",
+                        text = stringResource(R.string.hf_folder_cover_hint),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -82,7 +82,7 @@ fun FolderCreationSheet(
                     enabled = name.isNotBlank(),
                     modifier = Modifier.padding(start = 8.dp)
                 ) {
-                    Text("Create")
+                    Text(stringResource(R.string.hf_files_create))
                 }
             }
         }

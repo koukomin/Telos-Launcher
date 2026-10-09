@@ -4,6 +4,9 @@ package de.mm20.launcher2.freeze.providers
 import android.app.admin.DevicePolicyManager
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
+import android.os.IBinder
+import android.os.IInterface
 import android.util.Log
 import com.rosan.dhizuku.api.Dhizuku
 import com.rosan.dhizuku.api.DhizukuRequestPermissionListener
@@ -16,10 +19,6 @@ import kotlin.coroutines.resume
 internal class DhizukuProvider(private val context: Context) : PrivilegedAccessProvider {
 
     override suspend fun isAvailable(): Boolean {
-        // The freeze calls below are not implemented yet (they would need a Dhizuku user service). Reporting
-        // the backend as available would make "System default" pick it over a backend that works and claim
-        // success without freezing anything, so it stays unavailable until it can really freeze.
-        if (!IMPLEMENTED) return false
         return try {
             Dhizuku.init(context)
             Dhizuku.getVersionCode() > 0
@@ -31,7 +30,7 @@ internal class DhizukuProvider(private val context: Context) : PrivilegedAccessP
     override suspend fun hasPermission(): Boolean {
         if (!isAvailable()) return false
         return try {
-            Dhizuku.isPermissionGranted()
+            Dhizuku.isPermissionGranted() && getDhizukuPolicyManager() != null
         } catch (e: Exception) {
             false
         }
@@ -57,17 +56,24 @@ internal class DhizukuProvider(private val context: Context) : PrivilegedAccessP
     override suspend fun setPackagesSuspended(
         packageNames: List<String>,
         suspended: Boolean,
-        userId: Int, // Currently unused in DeviceOwner/Dhizuku contexts but kept for interface consistency
+        userId: Int, // Dhizuku acts on the current user only
     ): Set<String> = withContext(Dispatchers.IO) {
+        if (packageNames.isEmpty() || Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return@withContext emptySet()
         if (!hasPermission()) return@withContext emptySet()
-        val successSet = mutableSetOf<String>()
         try {
-            // Placeholder: Implementing deep Dhizuku IPC bounds requires Dhizuku UserService binding.
-            // Nothing is changed, so nothing is reported as done.
-        } catch (e: Exception) {
-            Log.e("DhizukuProvider", "setPackagesSuspended failed", e)
+            val dpm = getDhizukuPolicyManager() ?: return@withContext emptySet()
+            val admin = Dhizuku.getOwnerComponent()
+            // Returns the packages that could NOT be changed.
+            val failed = dpm.setPackagesSuspended(admin, packageNames.toTypedArray(), suspended)
+                ?.toSet() ?: return@withContext emptySet()
+            packageNames.filter { it !in failed }.toSet()
+        } catch (e: SecurityException) {
+            Log.e(TAG, "setPackagesSuspended denied", e)
+            emptySet()
+        } catch (e: Throwable) {
+            Log.e(TAG, "setPackagesSuspended failed", e)
+            emptySet()
         }
-        successSet
     }
 
     override suspend fun setPackagesEnabled(
@@ -75,18 +81,53 @@ internal class DhizukuProvider(private val context: Context) : PrivilegedAccessP
         enabled: Boolean,
         userId: Int,
     ): Set<String> = withContext(Dispatchers.IO) {
-        if (!hasPermission()) return@withContext emptySet()
+        if (packageNames.isEmpty() || !hasPermission()) return@withContext emptySet()
         val successSet = mutableSetOf<String>()
         try {
-           // Placeholder: Implementing deep Dhizuku IPC bounds requires Dhizuku UserService binding.
-        } catch (e: Exception) {
-           Log.e("DhizukuProvider", "setApplicationHidden failed", e)
+            val dpm = getDhizukuPolicyManager() ?: return@withContext emptySet()
+            val admin = Dhizuku.getOwnerComponent()
+            for (pkg in packageNames) {
+                try {
+                    // "Disabled" means hidden for a device owner. true is returned only if the state changed.
+                    if (dpm.setApplicationHidden(admin, pkg, !enabled)) successSet.add(pkg)
+                } catch (e: SecurityException) {
+                    Log.e(TAG, "setApplicationHidden denied for $pkg", e)
+                } catch (e: Exception) {
+                    Log.e(TAG, "setApplicationHidden failed for $pkg", e)
+                }
+            }
+        } catch (e: Throwable) {
+            Log.e(TAG, "setPackagesEnabled failed", e)
         }
         successSet
     }
 
+    /**
+     * A DevicePolicyManager whose binder goes through Dhizuku, so calls run with the Dhizuku device owner's
+     * identity. Uses a fresh context so the shared DevicePolicyManager instance is not touched. Needs reflection
+     * on DevicePolicyManager.mService and IDevicePolicyManager.Stub (hidden API), returns null if that fails.
+     */
+    private fun getDhizukuPolicyManager(): DevicePolicyManager? {
+        return try {
+            val ctx = context.createPackageContext(context.packageName, 0)
+            val dpm = ctx.getSystemService(Context.DEVICE_POLICY_SERVICE) as? DevicePolicyManager ?: return null
+            val field = DevicePolicyManager::class.java.getDeclaredField("mService")
+            field.isAccessible = true
+            val original = field.get(dpm) as? IInterface ?: return null
+            val wrapped = Dhizuku.binderWrapper(original.asBinder())
+            val stub = Class.forName("android.app.admin.IDevicePolicyManager\$Stub")
+                .getMethod("asInterface", IBinder::class.java)
+                .invoke(null, wrapped)
+            field.set(dpm, stub)
+            dpm
+        } catch (e: Throwable) {
+            Log.e(TAG, "Could not create Dhizuku DevicePolicyManager", e)
+            null
+        }
+    }
+
     private companion object {
-        const val IMPLEMENTED = false
+        const val TAG = "DhizukuProvider"
     }
 
     override suspend fun forceStopPackage(packageName: String, userId: Int): Boolean = false

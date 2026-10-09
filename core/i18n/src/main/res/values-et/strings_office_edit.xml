@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">dokument</string>
+    <string name="od_saved">Salvestatud</string>
+    <string name="od_save_failed">Salvestamine ebaõnnestus</string>
+    <string name="od_nothing_to_show">Selles failis pole midagi kuvada. Kasuta valikut „Ava rakendusega“, et see avada teises rakenduses.</string>
+    <string name="od_pdf_protected">See PDF on parooliga kaitstud.</string>
+    <string name="od_cannot_open">Seda faili ei saa siin avada (%1$s). Kasuta valikut „Ava rakendusega“.</string>
+    <string name="od_legacy_failed">Seda vana Office’i faili ei õnnestunud lugeda. Kasuta valikut „Ava rakendusega“, et see avada teises rakenduses.</string>
+    <string name="od_text_too_big">See fail on suurem kui 2 MB. Seda näidatakse ainult lugemiseks ja seda ei muudeta kunagi.</string>
+    <string name="od_edit_copy">Muuda esimest 2 MB koopiana</string>
+    <string name="od_copy_hint">Sa muudad esimese 2 MB koopiat. Salvestamisel luuakse uus fail; originaal ei muutu.</string>
+    <string name="od_pdf_tools">PDF-i tööriistad</string>
+    <string name="od_search_pdf">Otsi PDF-ist</string>
+    <string name="od_search_hint">Otsi teksti</string>
+    <string name="od_searching">Otsin… lehekülg %1$d</string>
+    <string name="od_no_results">Tulemusi pole</string>
+    <string name="od_no_text_layer">Selles PDF-is pole otsitavat teksti (näiteks on see skannitud).</string>
+    <string name="od_results_count">Tulemusi: %1$d</string>
+    <string name="od_go_to_page">Mine leheküljele</string>
+    <string name="od_page_range">Lehekülg (1 kuni %1$d)</string>
+    <string name="od_go">Mine</string>
+    <string name="od_layout_note">Kuvatakse tekst ja struktuur. Lehe küljendust ja fonte ei taasteta.</string>
+    <string name="od_slides_note">Kuvatakse pealkirjad, tekst ja pildid. Slaidide küljendust ja kujundust ei taasteta.</string>
+    <string name="od_legacy_readonly">Vana binaarne Office’i fail (.doc, .xls, .ppt): ainult lugemiseks. Tekst ja väärtused eraldatakse nii hästi kui võimalik.</string>
+    <string name="od_convert_note">Teisendamisel luuakse uus fail. Vana faili vorming, pildid ja manustatud objektid üle ei kanta. Originaal jääb muutmata.</string>
+    <string name="od_convert_action">Teisenda vormingusse .%1$s ja muuda</string>
+    <string name="od_convert_failed">Seda faili ei õnnestunud teisendada.</string>
+    <string name="od_converted">Teisendatud. Nüüd muudad uut faili.</string>
+    <string name="od_discard_title">Kas loobuda muudatustest?</string>
+    <string name="od_discard_text">Sinu muudatusi pole salvestatud.</string>
+    <string name="od_discard">Loobu</string>
+    <string name="od_keep_editing">Jätka muutmist</string>
+    <string name="od_save_copy">Salvesta koopiana</string>
+    <string name="od_saved_copy">Salvestatud uue failina.</string>
+    <string name="od_undo_save">Võta viimane salvestus tagasi</string>
+    <string name="od_undo_done">Taastati versioon enne viimast salvestust.</string>
+    <string name="od_undo_failed">Eelmist versiooni ei õnnestunud taastada.</string>
+    <string name="od_bold">Paks</string>
+    <string name="od_italic">Kursiiv</string>
+    <string name="od_add_paragraph">Lisa lõik allapoole</string>
+    <string name="od_delete_paragraph">Kustuta lõik</string>
+    <string name="od_table_cell">Tabeli lahter</string>
+    <string name="od_add_row">Lisa rida</string>
+    <string name="od_edit_cell">Muuda lahtrit %1$s</string>
+    <string name="od_cell_value">Väärtus</string>
+    <string name="od_cell_hint">Tekst, arv või valem, mis algab märgiga =</string>
+    <string name="od_formula_replaced">See lahter sisaldab valemit (%1$s). Uus väärtus asendab selle.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Leht %1$d</string>
+    <string name="od_slide_of">Slaid %1$d / %2$d</string>
+    <string name="od_delete_slide">Kustuta slaid</string>
+    <string name="od_title_box">Pealkiri</string>
+    <string name="od_text_box_n">Tekstikast %1$d</string>
+    <string name="od_no_slides">Slaide pole</string>
+    <string name="od_image">Pilt</string>
+</resources>

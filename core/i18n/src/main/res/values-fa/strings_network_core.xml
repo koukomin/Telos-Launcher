@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">اعلان‌های Telos Network</string>
+    <string name="net_notif_title">Telos Network روشن است</string>
+    <string name="net_notif_text">اتصال‌ها در حال پالایش هستند.</string>
+    <string name="net_notif_blocked">اتصال‌های مسدودشده: %1$d</string>
+    <string name="net_notif_stop">خاموش کردن</string>
+    <string name="net_alert_stopped_title">Telos Network خاموش شد</string>
+    <string name="net_alert_crashed">موتور شبکه به‌طور ناگهانی متوقف شد. دسترسی به اینترنت تحت تأثیر قرار نگرفته است.</string>
+    <string name="net_alert_revoked">یک VPN دیگر کنترل را به دست گرفت. دسترسی به اینترنت تحت تأثیر قرار نگرفته است.</string>
+    <string name="net_alert_start_failed">Telos Network نتوانست راه‌اندازی شود. دسترسی به اینترنت تحت تأثیر قرار نگرفته است.</string>
+    <string name="net_error_permission">برای راه‌اندازی VPN مجوز لازم است.</string>
+    <string name="net_error_start_failed">راه‌اندازی ممکن نشد: %1$s</string>
+    <string name="net_error_unknown">خطای ناشناخته</string>
+    <string name="net_app_system">سیستم Android</string>
+    <string name="net_app_unknown">برنامهٔ ناشناخته (%1$d)</string>
+    <string name="net_dns_system">DNS شبکه (سیستم)</string>
+</resources>

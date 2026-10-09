@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">έγγραφο</string>
+    <string name="od_saved">Αποθηκεύτηκε</string>
+    <string name="od_save_failed">Δεν ήταν δυνατή η αποθήκευση</string>
+    <string name="od_nothing_to_show">Δεν υπάρχει τίποτα για εμφάνιση σε αυτό το αρχείο. Χρησιμοποιήστε «Άνοιγμα με» για να το ανοίξετε σε άλλη εφαρμογή.</string>
+    <string name="od_pdf_protected">Αυτό το PDF προστατεύεται με κωδικό πρόσβασης.</string>
+    <string name="od_cannot_open">Αυτό το αρχείο δεν μπορεί να ανοίξει εδώ (%1$s). Χρησιμοποιήστε «Άνοιγμα με».</string>
+    <string name="od_legacy_failed">Αυτό το παλιό αρχείο Office δεν μπόρεσε να διαβαστεί. Χρησιμοποιήστε «Άνοιγμα με» για να το ανοίξετε σε άλλη εφαρμογή.</string>
+    <string name="od_text_too_big">Αυτό το αρχείο είναι μεγαλύτερο από 2 MB. Εμφανίζεται μόνο για ανάγνωση και δεν τροποποιείται ποτέ.</string>
+    <string name="od_edit_copy">Επεξεργασία των πρώτων 2 MB ως αντίγραφο</string>
+    <string name="od_copy_hint">Επεξεργάζεστε ένα αντίγραφο των πρώτων 2 MB. Η αποθήκευση δημιουργεί νέο αρχείο· το πρωτότυπο δεν αλλάζει.</string>
+    <string name="od_pdf_tools">Εργαλεία PDF</string>
+    <string name="od_search_pdf">Αναζήτηση στο PDF</string>
+    <string name="od_search_hint">Αναζήτηση κειμένου</string>
+    <string name="od_searching">Αναζήτηση… σελίδα %1$d</string>
+    <string name="od_no_results">Κανένα αποτέλεσμα</string>
+    <string name="od_no_text_layer">Αυτό το PDF δεν περιέχει κείμενο που να μπορεί να αναζητηθεί (π.χ. σάρωση).</string>
+    <string name="od_results_count">Αποτελέσματα: %1$d</string>
+    <string name="od_go_to_page">Μετάβαση σε σελίδα</string>
+    <string name="od_page_range">Σελίδα (1 έως %1$d)</string>
+    <string name="od_go">Μετάβαση</string>
+    <string name="od_layout_note">Εμφανίζονται το κείμενο και η δομή. Η διάταξη της σελίδας και οι γραμματοσειρές δεν αναπαράγονται.</string>
+    <string name="od_slides_note">Εμφανίζονται οι τίτλοι, το κείμενο και οι εικόνες. Η διάταξη και ο σχεδιασμός των διαφανειών δεν αναπαράγονται.</string>
+    <string name="od_legacy_readonly">Παλιό δυαδικό αρχείο Office (.doc, .xls, .ppt): μόνο για ανάγνωση. Το κείμενο και οι τιμές εξάγονται όσο είναι δυνατόν.</string>
+    <string name="od_convert_note">Η μετατροπή δημιουργεί νέο αρχείο. Η μορφοποίηση, οι εικόνες και τα ενσωματωμένα αντικείμενα του παλιού αρχείου δεν μεταφέρονται. Το πρωτότυπο παραμένει αμετάβλητο.</string>
+    <string name="od_convert_action">Μετατροπή σε .%1$s και επεξεργασία</string>
+    <string name="od_convert_failed">Δεν ήταν δυνατή η μετατροπή αυτού του αρχείου.</string>
+    <string name="od_converted">Η μετατροπή ολοκληρώθηκε. Τώρα επεξεργάζεστε το νέο αρχείο.</string>
+    <string name="od_discard_title">Απόρριψη αλλαγών;</string>
+    <string name="od_discard_text">Οι αλλαγές σας δεν έχουν αποθηκευτεί.</string>
+    <string name="od_discard">Απόρριψη</string>
+    <string name="od_keep_editing">Συνέχεια επεξεργασίας</string>
+    <string name="od_save_copy">Αποθήκευση ως αντίγραφο</string>
+    <string name="od_saved_copy">Αποθηκεύτηκε ως νέο αρχείο.</string>
+    <string name="od_undo_save">Αναίρεση τελευταίας αποθήκευσης</string>
+    <string name="od_undo_done">Η έκδοση πριν από την τελευταία αποθήκευση επαναφέρθηκε.</string>
+    <string name="od_undo_failed">Δεν ήταν δυνατή η επαναφορά της προηγούμενης έκδοσης.</string>
+    <string name="od_bold">Έντονα</string>
+    <string name="od_italic">Πλάγια</string>
+    <string name="od_add_paragraph">Προσθήκη παραγράφου από κάτω</string>
+    <string name="od_delete_paragraph">Διαγραφή παραγράφου</string>
+    <string name="od_table_cell">Κελί πίνακα</string>
+    <string name="od_add_row">Προσθήκη γραμμής</string>
+    <string name="od_edit_cell">Επεξεργασία κελιού %1$s</string>
+    <string name="od_cell_value">Τιμή</string>
+    <string name="od_cell_hint">Κείμενο, αριθμός ή τύπος που αρχίζει με =</string>
+    <string name="od_formula_replaced">Αυτό το κελί περιέχει έναν τύπο (%1$s). Μια νέα τιμή τον αντικαθιστά.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Φύλλο %1$d</string>
+    <string name="od_slide_of">Διαφάνεια %1$d από %2$d</string>
+    <string name="od_delete_slide">Διαγραφή διαφάνειας</string>
+    <string name="od_title_box">Τίτλος</string>
+    <string name="od_text_box_n">Πλαίσιο κειμένου %1$d</string>
+    <string name="od_no_slides">Δεν υπάρχουν διαφάνειες</string>
+    <string name="od_image">Εικόνα</string>
+</resources>

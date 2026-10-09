@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">Ara</string>
+    <string name="ts_clear">Temizle</string>
+    <string name="ts_no_results">“%1$s” için sonuç yok</string>
+</resources>

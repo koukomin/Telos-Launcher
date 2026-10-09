@@ -72,7 +72,7 @@
     <string name="preference_smartspacer_enable">Ενεργοποίηση ενσωμάτωσης Smartspacer</string>
     <string name="preference_smartspacer_integration">Smartspacer</string>
     <string name="preference_smartspacer_integration_description">Το Smartspacer είναι ένα δωρεάν widget At a Glance ανοιχτού κώδικα. Αν είναι εγκατεστημένο, μπορεί να ενσωματωθεί στη δυναμική ζώνη του widget ρολογιού</string>
-    <string name="preference_tasks_integration">Tasks</string>
+    <string name="preference_tasks_integration">Εργασίες</string>
     <string name="preference_tasks_integration_description">Το Tasks είναι μια δωρεάν εφαρμογή λίστας εργασιών και υπενθυμίσεων ανοιχτού κώδικα. Αν είναι εγκατεστημένο, το %1$s μπορεί να εμφανίζει και να αναζητά τις εργασίες σας από την εφαρμογή Tasks.</string>
     <string name="preference_tasks_integration_ready">Η ενσωμάτωση Tasks έχει ρυθμιστεί πλήρως και είναι έτοιμη για χρήση.</string>
     <string name="preference_theme_day_start">Το φωτεινό θέμα ξεκινά στις</string>

@@ -47,6 +47,10 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
         link: '/docs/developer-guide/project-structure/telos-files',
       },
       {
+        text: 'Telos Network internals',
+        link: '/docs/developer-guide/project-structure/telos-network',
+      },
+      {
         text: 'Protection and optimization',
         link: '/docs/developer-guide/project-structure/protection-and-performance',
       },

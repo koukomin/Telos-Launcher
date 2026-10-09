@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Pesquisar notas</string>
+    <string name="tsp_search_calls">Pesquisar chamadas</string>
+    <string name="tsp_search_favorites">Pesquisar favoritos</string>
+    <string name="tsp_search_contacts">Pesquisar contactos</string>
+    <string name="tsp_search_messages">Pesquisar mensagens</string>
+    <string name="tsp_search_in_conversation">Pesquisar na conversa</string>
+    <string name="tsp_search_events">Pesquisar eventos</string>
+    <string name="tsp_search_recordings">Pesquisar gravações</string>
+    <string name="tsp_search_screenshots">Pesquisar capturas de ecrã</string>
+    <string name="tsp_search_call_recordings">Pesquisar gravações de chamadas</string>
+    <string name="tsp_search_groups">Pesquisar grupos</string>
+</resources>

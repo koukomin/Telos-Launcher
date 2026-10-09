@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Notificări Telos Network</string>
+    <string name="net_notif_title">Telos Network este activat</string>
+    <string name="net_notif_text">Conexiunile sunt filtrate.</string>
+    <string name="net_notif_blocked">Conexiuni blocate: %1$d</string>
+    <string name="net_notif_stop">Dezactivează</string>
+    <string name="net_alert_stopped_title">Telos Network a fost dezactivat</string>
+    <string name="net_alert_crashed">Motorul de rețea s-a oprit neașteptat. Accesul la internet nu este afectat.</string>
+    <string name="net_alert_revoked">Un alt VPN a preluat controlul. Accesul la internet nu este afectat.</string>
+    <string name="net_alert_start_failed">Telos Network nu a putut porni. Accesul la internet nu este afectat.</string>
+    <string name="net_error_permission">Este necesară permisiunea pentru configurarea unui VPN.</string>
+    <string name="net_error_start_failed">Nu s-a putut porni: %1$s</string>
+    <string name="net_error_unknown">eroare necunoscută</string>
+    <string name="net_app_system">Sistemul Android</string>
+    <string name="net_app_unknown">Aplicație necunoscută (%1$d)</string>
+    <string name="net_dns_system">DNS-ul rețelei (sistem)</string>
+</resources>

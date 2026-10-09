@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Telos Network की सूचनाएँ</string>
+    <string name="net_notif_title">Telos Network चालू है</string>
+    <string name="net_notif_text">कनेक्शन फ़िल्टर किए जा रहे हैं।</string>
+    <string name="net_notif_blocked">अवरोधित कनेक्शन: %1$d</string>
+    <string name="net_notif_stop">बंद करें</string>
+    <string name="net_alert_stopped_title">Telos Network बंद हो गया</string>
+    <string name="net_alert_crashed">नेटवर्क इंजन अचानक रुक गया। इंटरनेट एक्सेस प्रभावित नहीं है।</string>
+    <string name="net_alert_revoked">किसी दूसरे VPN ने कार्यभार संभाल लिया। इंटरनेट एक्सेस प्रभावित नहीं है।</string>
+    <string name="net_alert_start_failed">Telos Network शुरू नहीं हो सका। इंटरनेट एक्सेस प्रभावित नहीं है।</string>
+    <string name="net_error_permission">VPN सेट अप करने के लिए अनुमति आवश्यक है।</string>
+    <string name="net_error_start_failed">शुरू नहीं हो सका: %1$s</string>
+    <string name="net_error_unknown">अज्ञात त्रुटि</string>
+    <string name="net_app_system">Android सिस्टम</string>
+    <string name="net_app_unknown">अज्ञात ऐप (%1$d)</string>
+    <string name="net_dns_system">नेटवर्क DNS (सिस्टम)</string>
+</resources>

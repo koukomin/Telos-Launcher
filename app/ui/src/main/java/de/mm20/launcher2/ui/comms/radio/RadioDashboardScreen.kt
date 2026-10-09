@@ -143,11 +143,24 @@ fun RadioDashboardScreen() {
 
         when (selectedTabIndex) {
             0 -> {
+                var collectionQuery by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf("") }
+                val shownFavorites = androidx.compose.runtime.remember(favorites, collectionQuery) {
+                    de.mm20.launcher2.comms.search.TelosSearch.filter(favorites, collectionQuery) { listOf(it.name) }
+                }
+                Column(modifier = Modifier.fillMaxSize()) {
+                if (favorites.isNotEmpty()) {
+                    de.mm20.launcher2.ui.component.TelosSearchBar(
+                        collectionQuery, { collectionQuery = it }, stringResource(R.string.tsm_search_my_stations)
+                    )
+                }
                 LazyColumn(
                     contentPadding = PaddingValues(16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                     modifier = Modifier.fillMaxSize()
                 ) {
+                    if (shownFavorites.isEmpty() && favorites.isNotEmpty() && collectionQuery.isNotBlank()) {
+                        item { de.mm20.launcher2.ui.component.SearchEmptyState(collectionQuery) }
+                    }
                     if (favorites.isEmpty()) {
                         item {
                             Text(
@@ -158,7 +171,7 @@ fun RadioDashboardScreen() {
                             )
                         }
                     }
-                    items(favorites, key = { it.id }) { station ->
+                    items(shownFavorites, key = { it.id }) { station ->
                         StationRow(
                             station = station,
                             isFavorite = true,
@@ -168,12 +181,13 @@ fun RadioDashboardScreen() {
                         )
                     }
                 }
+                }
             }
 
             1 -> {
                 Column(modifier = Modifier.fillMaxSize()) {
-                    de.mm20.launcher2.ui.media.MediaSearchBar(
-                        searchQuery, { viewModel.updateSearchQuery(it) }, "Search by station name"
+                    de.mm20.launcher2.ui.component.TelosSearchBar(
+                        searchQuery, { viewModel.updateSearchQuery(it) }, stringResource(R.string.tsm_search_radio_browser)
                     )
                     if (isSearching) {
                         androidx.compose.material3.LinearProgressIndicator(Modifier.fillMaxWidth().padding(horizontal = 16.dp))

@@ -1,6 +1,8 @@
 package de.mm20.launcher2.ui.comms
 
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.SearchEmptyState
+import de.mm20.launcher2.ui.component.TelosSearchBar
 import androidx.compose.ui.res.stringResource
 import android.provider.ContactsContract
 import androidx.compose.foundation.clickable
@@ -8,7 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -58,11 +62,17 @@ fun ContactGroupsScreen() {
             out
         }
     }
+    var groupQuery by androidx.compose.runtime.saveable.rememberSaveable { androidx.compose.runtime.mutableStateOf("") }
+    val shownGroups = de.mm20.launcher2.comms.search.TelosSearch.filter(groups.value, groupQuery) { listOf(it.title) }
     PreferenceScreen(title = { Text(stringResource(R.string.hc_groups)) }) {
+        if (groups.value.isNotEmpty()) {
+            item { TelosSearchBar(groupQuery, { groupQuery = it }, stringResource(R.string.tsp_search_groups)) }
+            if (shownGroups.isEmpty() && groupQuery.isNotBlank()) item { SearchEmptyState(groupQuery) }
+        }
         if (groups.value.isEmpty()) {
             item { Text(stringResource(R.string.hc_no_contact_groups_on_this_device), modifier = Modifier.padding(16.dp)) }
         }
-        groups.value.forEach { group ->
+        shownGroups.forEach { group ->
             item {
                 ListItem(
                     headlineContent = { Text(group.title.ifBlank { "Untitled" }) },

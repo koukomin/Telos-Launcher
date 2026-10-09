@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">পিছনে</string>
+    <string name="nwg_add">টানেল যোগ করুন</string>
+    <string name="nwg_add_new">নতুন তৈরি করুন</string>
+    <string name="nwg_add_file">.conf ফাইল আমদানি করুন</string>
+    <string name="nwg_add_qr">QR কোডের ছবি থেকে আমদানি করুন</string>
+    <string name="nwg_add_paste">কনফিগারেশন টেক্সট পেস্ট করুন</string>
+    <string name="nwg_system_default">সিস্টেম ডিফল্ট</string>
+    <string name="nwg_system_default_summary">নিজস্ব সেটিং নেই এমন অ্যাপ এই টানেল ব্যবহার করে। সিস্টেম ডিফল্ট না থাকলে সেগুলি সরাসরি সংযোগ করে।</string>
+    <string name="nwg_none">কোনোটি নয় (সরাসরি)</string>
+    <string name="nwg_direct">সরাসরি (প্রক্সি ছাড়া)</string>
+    <string name="nwg_apps">অ্যাপ অনুযায়ী নির্ধারণ</string>
+    <string name="nwg_apps_summary">প্রতিটি অ্যাপ কোন টানেল ব্যবহার করবে তা বেছে নিন</string>
+    <string name="nwg_configs">টানেল</string>
+    <string name="nwg_empty">এখনও কোনো টানেল নেই। + বোতাম দিয়ে একটি যোগ করুন।</string>
+    <string name="nwg_status_off">বন্ধ</string>
+    <string name="nwg_status_connecting">সংযোগ হচ্ছে</string>
+    <string name="nwg_status_up">সংযুক্ত</string>
+    <string name="nwg_status_down">সাড়া দিচ্ছে না</string>
+    <string name="nwg_status_error">ত্রুটি</string>
+    <string name="nwg_traffic">%1$s গ্রহণ করা হয়েছে, %2$s পাঠানো হয়েছে</string>
+    <string name="nwg_handshake">সর্বশেষ handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">টানেল সংযুক্ত করতে Telos Network চালু করুন।</string>
+    <string name="nwg_new_title">নতুন টানেল</string>
+    <string name="nwg_edit_title">টানেল সম্পাদনা</string>
+    <string name="nwg_name">নাম</string>
+    <string name="nwg_private_key">ব্যক্তিগত কী</string>
+    <string name="nwg_public_key">সর্বজনীন কী: %1$s</string>
+    <string name="nwg_generate">তৈরি করুন</string>
+    <string name="nwg_addresses">ঠিকানা (কমা দিয়ে আলাদা)</string>
+    <string name="nwg_dns">DNS সার্ভার (কমা দিয়ে আলাদা)</string>
+    <string name="nwg_mtu">MTU (0 = স্বয়ংক্রিয়)</string>
+    <string name="nwg_peer">পিয়ার %1$d</string>
+    <string name="nwg_peer_public_key">পিয়ারের সর্বজনীন কী</string>
+    <string name="nwg_preshared">আগে থেকে ভাগ করা কী (ঐচ্ছিক)</string>
+    <string name="nwg_endpoint">Endpoint (হোস্ট:পোর্ট)</string>
+    <string name="nwg_allowed_ips">অনুমোদিত IP (কমা দিয়ে আলাদা)</string>
+    <string name="nwg_keepalive">Persistent keepalive সেকেন্ডে (0 = বন্ধ)</string>
+    <string name="nwg_add_peer">পিয়ার যোগ করুন</string>
+    <string name="nwg_remove_peer">পিয়ার সরান</string>
+    <string name="nwg_mobile_only">শুধু মোবাইল ডেটায়</string>
+    <string name="nwg_lockdown">টানেল বন্ধ থাকলে অ্যাপ ব্লক করুন</string>
+    <string name="nwg_save">সংরক্ষণ</string>
+    <string name="nwg_cancel">বাতিল</string>
+    <string name="nwg_delete">মুছুন</string>
+    <string name="nwg_share">কনফিগারেশন শেয়ার করুন</string>
+    <string name="nwg_share_warning">রপ্তানি করা কনফিগারেশনে ব্যক্তিগত কী আছে।</string>
+    <string name="nwg_import">আমদানি</string>
+    <string name="nwg_qr_not_found">এই ছবিতে কোনো QR কোড পাওয়া যায়নি</string>
+    <string name="nwg_err_syntax">কনফিগারেশনে সিনট্যাক্স ত্রুটি আছে: %1$s</string>
+    <string name="nwg_err_missing">কনফিগারেশন অসম্পূর্ণ: %1$s নেই</string>
+    <string name="nwg_err_invalid_key">অবৈধ কী: %1$s</string>
+    <string name="nwg_err_invalid_value">অবৈধ মান: %1$s</string>
+    <string name="nwg_err_invalid_name">সর্বোচ্চ ৬৪ অক্ষরের একটি নাম লিখুন</string>
+    <string name="nwg_err_not_found">টানেলটি আর নেই</string>
+    <string name="nwg_err_storage">কনফিগারেশন নিরাপদে সংরক্ষণ করা যায়নি: %1$s</string>
+    <string name="nwg_err_other">কনফিগারেশন সংরক্ষণ করা যায়নি</string>
+    <string name="nwg_apps_title">অ্যাপ ও টানেল</string>
+    <string name="nwg_search">অ্যাপ খুঁজুন</string>
+    <string name="nwg_show_system">সিস্টেম অ্যাপ দেখান</string>
+    <string name="nwg_selected">%1$d টি নির্বাচিত</string>
+    <string name="nwg_assign_selected">নির্বাচিত অ্যাপে নির্ধারণ করুন</string>
+    <string name="nwg_clear_selection">নির্বাচন মুছুন</string>
+    <string name="nwg_select_all">প্রদর্শিত সব নির্বাচন করুন</string>
+</resources>

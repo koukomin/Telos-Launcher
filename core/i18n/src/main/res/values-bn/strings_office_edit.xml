@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">নথি</string>
+    <string name="od_saved">সংরক্ষিত হয়েছে</string>
+    <string name="od_save_failed">সংরক্ষণ করা যায়নি</string>
+    <string name="od_nothing_to_show">এই ফাইলে দেখানোর মতো কিছু নেই। অন্য অ্যাপে খুলতে “এর মাধ্যমে খুলুন” ব্যবহার করুন।</string>
+    <string name="od_pdf_protected">এই PDF পাসওয়ার্ড দিয়ে সুরক্ষিত।</string>
+    <string name="od_cannot_open">এই ফাইল এখানে খোলা যাচ্ছে না (%1$s)। “এর মাধ্যমে খুলুন” ব্যবহার করুন।</string>
+    <string name="od_legacy_failed">এই পুরোনো Office ফাইলটি পড়া যায়নি। অন্য অ্যাপে খুলতে “এর মাধ্যমে খুলুন” ব্যবহার করুন।</string>
+    <string name="od_text_too_big">এই ফাইল ২ MB-এর চেয়ে বড়। এটি শুধু পড়ার জন্য দেখানো হয় এবং কখনও বদলানো হয় না।</string>
+    <string name="od_edit_copy">প্রথম ২ MB কপি হিসেবে সম্পাদনা করুন</string>
+    <string name="od_copy_hint">আপনি প্রথম ২ MB-এর একটি কপি সম্পাদনা করছেন। সংরক্ষণ করলে নতুন ফাইল তৈরি হয়; আসল ফাইল বদলায় না।</string>
+    <string name="od_pdf_tools">PDF টুল</string>
+    <string name="od_search_pdf">PDF-এ খুঁজুন</string>
+    <string name="od_search_hint">লেখা খুঁজুন</string>
+    <string name="od_searching">খোঁজা হচ্ছে… পৃষ্ঠা %1$d</string>
+    <string name="od_no_results">কোনো ফলাফল নেই</string>
+    <string name="od_no_text_layer">এই PDF-এ খোঁজার মতো লেখা নেই (যেমন, এটি স্ক্যান করা)।</string>
+    <string name="od_results_count">ফলাফল: %1$d</string>
+    <string name="od_go_to_page">পৃষ্ঠায় যান</string>
+    <string name="od_page_range">পৃষ্ঠা (১ থেকে %1$d)</string>
+    <string name="od_go">যান</string>
+    <string name="od_layout_note">লেখা ও কাঠামো দেখানো হয়। পৃষ্ঠার বিন্যাস ও ফন্ট পুনরায় তৈরি করা হয় না।</string>
+    <string name="od_slides_note">শিরোনাম, লেখা ও ছবি দেখানো হয়। স্লাইডের বিন্যাস ও নকশা পুনরায় তৈরি করা হয় না।</string>
+    <string name="od_legacy_readonly">পুরোনো বাইনারি Office ফাইল (.doc, .xls, .ppt): শুধু পড়ার জন্য। লেখা ও মান যতটা সম্ভব বের করা হয়।</string>
+    <string name="od_convert_note">রূপান্তর করলে নতুন ফাইল তৈরি হয়। পুরোনো ফাইলের ফরম্যাটিং, ছবি ও এমবেড করা বস্তু নেওয়া হয় না। আসল ফাইল অপরিবর্তিত থাকে।</string>
+    <string name="od_convert_action">.%1$s-এ রূপান্তর করে সম্পাদনা করুন</string>
+    <string name="od_convert_failed">এই ফাইল রূপান্তর করা যায়নি।</string>
+    <string name="od_converted">রূপান্তর হয়েছে। এখন আপনি নতুন ফাইল সম্পাদনা করছেন।</string>
+    <string name="od_discard_title">পরিবর্তন বাতিল করবেন?</string>
+    <string name="od_discard_text">আপনার সম্পাদনা সংরক্ষিত হয়নি।</string>
+    <string name="od_discard">বাতিল করুন</string>
+    <string name="od_keep_editing">সম্পাদনা চালিয়ে যান</string>
+    <string name="od_save_copy">কপি হিসেবে সংরক্ষণ করুন</string>
+    <string name="od_saved_copy">নতুন ফাইল হিসেবে সংরক্ষিত হয়েছে।</string>
+    <string name="od_undo_save">শেষ সংরক্ষণ পূর্বাবস্থায় ফেরান</string>
+    <string name="od_undo_done">শেষ সংরক্ষণের আগের সংস্করণ ফিরিয়ে আনা হয়েছে।</string>
+    <string name="od_undo_failed">আগের সংস্করণ ফিরিয়ে আনা যায়নি।</string>
+    <string name="od_bold">গাঢ়</string>
+    <string name="od_italic">বাঁকা</string>
+    <string name="od_add_paragraph">নিচে অনুচ্ছেদ যোগ করুন</string>
+    <string name="od_delete_paragraph">অনুচ্ছেদ মুছুন</string>
+    <string name="od_table_cell">টেবিলের ঘর</string>
+    <string name="od_add_row">সারি যোগ করুন</string>
+    <string name="od_edit_cell">%1$s ঘর সম্পাদনা করুন</string>
+    <string name="od_cell_value">মান</string>
+    <string name="od_cell_hint">লেখা, সংখ্যা বা = দিয়ে শুরু হওয়া সূত্র</string>
+    <string name="od_formula_replaced">এই ঘরে একটি সূত্র আছে (%1$s)। নতুন মান সেটির জায়গা নেবে।</string>
+    <string name="od_ok">ঠিক আছে</string>
+    <string name="od_sheet_n">শিট %1$d</string>
+    <string name="od_slide_of">স্লাইড %1$d / %2$d</string>
+    <string name="od_delete_slide">স্লাইড মুছুন</string>
+    <string name="od_title_box">শিরোনাম</string>
+    <string name="od_text_box_n">টেক্সট বক্স %1$d</string>
+    <string name="od_no_slides">কোনো স্লাইড নেই</string>
+    <string name="od_image">ছবি</string>
+</resources>

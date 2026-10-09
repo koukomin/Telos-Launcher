@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Известия на Telos Network</string>
+    <string name="net_notif_title">Telos Network е включена</string>
+    <string name="net_notif_text">Връзките се филтрират.</string>
+    <string name="net_notif_blocked">Блокирани връзки: %1$d</string>
+    <string name="net_notif_stop">Изключване</string>
+    <string name="net_alert_stopped_title">Telos Network е изключена</string>
+    <string name="net_alert_crashed">Мрежовият модул спря неочаквано. Достъпът до интернет не е засегнат.</string>
+    <string name="net_alert_revoked">Друг VPN пое управлението. Достъпът до интернет не е засегнат.</string>
+    <string name="net_alert_start_failed">Telos Network не можа да стартира. Достъпът до интернет не е засегнат.</string>
+    <string name="net_error_permission">Необходимо е разрешение за настройване на VPN.</string>
+    <string name="net_error_start_failed">Неуспешно стартиране: %1$s</string>
+    <string name="net_error_unknown">неизвестна грешка</string>
+    <string name="net_app_system">Системата Android</string>
+    <string name="net_app_unknown">Непознато приложение (%1$d)</string>
+    <string name="net_dns_system">DNS на мрежата (системен)</string>
+</resources>

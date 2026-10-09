@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">ค้นหาโน้ต</string>
+    <string name="tsp_search_calls">ค้นหาการโทร</string>
+    <string name="tsp_search_favorites">ค้นหารายการโปรด</string>
+    <string name="tsp_search_contacts">ค้นหารายชื่อติดต่อ</string>
+    <string name="tsp_search_messages">ค้นหาข้อความ</string>
+    <string name="tsp_search_in_conversation">ค้นหาในการสนทนา</string>
+    <string name="tsp_search_events">ค้นหากิจกรรม</string>
+    <string name="tsp_search_recordings">ค้นหาการบันทึกเสียง</string>
+    <string name="tsp_search_screenshots">ค้นหาภาพหน้าจอ</string>
+    <string name="tsp_search_call_recordings">ค้นหาการบันทึกการโทร</string>
+    <string name="tsp_search_groups">ค้นหากลุ่ม</string>
+</resources>

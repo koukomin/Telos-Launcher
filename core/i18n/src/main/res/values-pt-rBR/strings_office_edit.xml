@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">documento</string>
+    <string name="od_saved">Salvo</string>
+    <string name="od_save_failed">Não foi possível salvar</string>
+    <string name="od_nothing_to_show">Não há nada para mostrar neste arquivo. Use “Abrir com” para abri-lo em outro app.</string>
+    <string name="od_pdf_protected">Este PDF está protegido por senha.</string>
+    <string name="od_cannot_open">Este arquivo não pode ser aberto aqui (%1$s). Use “Abrir com”.</string>
+    <string name="od_legacy_failed">Não foi possível ler este arquivo antigo do Office. Use “Abrir com” para abri-lo em outro app.</string>
+    <string name="od_text_too_big">Este arquivo tem mais de 2 MB. Ele é mostrado somente para leitura e nunca é alterado.</string>
+    <string name="od_edit_copy">Editar os primeiros 2 MB como cópia</string>
+    <string name="od_copy_hint">Você está editando uma cópia dos primeiros 2 MB. Ao salvar, um novo arquivo é criado; o original não é alterado.</string>
+    <string name="od_pdf_tools">Ferramentas de PDF</string>
+    <string name="od_search_pdf">Pesquisar no PDF</string>
+    <string name="od_search_hint">Pesquisar texto</string>
+    <string name="od_searching">Pesquisando… página %1$d</string>
+    <string name="od_no_results">Nenhum resultado</string>
+    <string name="od_no_text_layer">Este PDF não tem texto pesquisável (por exemplo, uma digitalização).</string>
+    <string name="od_results_count">Resultados: %1$d</string>
+    <string name="od_go_to_page">Ir para a página</string>
+    <string name="od_page_range">Página (de 1 a %1$d)</string>
+    <string name="od_go">Ir</string>
+    <string name="od_layout_note">O texto e a estrutura são mostrados. O layout da página e as fontes não são reproduzidos.</string>
+    <string name="od_slides_note">Títulos, texto e imagens são mostrados. O layout e o design dos slides não são reproduzidos.</string>
+    <string name="od_legacy_readonly">Arquivo binário antigo do Office (.doc, .xls, .ppt): somente leitura. O texto e os valores são extraídos na medida do possível.</string>
+    <string name="od_convert_note">A conversão cria um novo arquivo. A formatação, as imagens e os objetos incorporados do arquivo antigo não são mantidos. O original permanece inalterado.</string>
+    <string name="od_convert_action">Converter para .%1$s e editar</string>
+    <string name="od_convert_failed">Não foi possível converter este arquivo.</string>
+    <string name="od_converted">Convertido. Você está editando o novo arquivo.</string>
+    <string name="od_discard_title">Descartar alterações?</string>
+    <string name="od_discard_text">Suas alterações não foram salvas.</string>
+    <string name="od_discard">Descartar</string>
+    <string name="od_keep_editing">Continuar editando</string>
+    <string name="od_save_copy">Salvar como cópia</string>
+    <string name="od_saved_copy">Salvo como novo arquivo.</string>
+    <string name="od_undo_save">Desfazer o último salvamento</string>
+    <string name="od_undo_done">A versão anterior ao último salvamento foi restaurada.</string>
+    <string name="od_undo_failed">Não foi possível restaurar a versão anterior.</string>
+    <string name="od_bold">Negrito</string>
+    <string name="od_italic">Itálico</string>
+    <string name="od_add_paragraph">Adicionar parágrafo abaixo</string>
+    <string name="od_delete_paragraph">Excluir parágrafo</string>
+    <string name="od_table_cell">Célula da tabela</string>
+    <string name="od_add_row">Adicionar linha</string>
+    <string name="od_edit_cell">Editar célula %1$s</string>
+    <string name="od_cell_value">Valor</string>
+    <string name="od_cell_hint">Texto, número ou fórmula começando com =</string>
+    <string name="od_formula_replaced">Esta célula contém uma fórmula (%1$s). Um novo valor a substitui.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Planilha %1$d</string>
+    <string name="od_slide_of">Slide %1$d de %2$d</string>
+    <string name="od_delete_slide">Excluir slide</string>
+    <string name="od_title_box">Título</string>
+    <string name="od_text_box_n">Caixa de texto %1$d</string>
+    <string name="od_no_slides">Nenhum slide</string>
+    <string name="od_image">Imagem</string>
+</resources>

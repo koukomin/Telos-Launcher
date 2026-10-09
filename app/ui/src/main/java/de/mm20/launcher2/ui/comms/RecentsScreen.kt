@@ -127,13 +127,7 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
         }
         if (searchQuery.isBlank()) byType
         else byType.filter { call ->
-            val dummy = de.mm20.launcher2.comms.model.DialerContact(
-                id = call.id,
-                displayName = call.displayName ?: call.phoneNumber,
-                phoneNumbers = listOf(call.phoneNumber),
-            )
-            ContactSearch.search(searchQuery, listOf(dummy)).isNotEmpty() ||
-                GreekFold.contains(call.displayName.orEmpty(), searchQuery)
+            de.mm20.launcher2.comms.search.TelosSearch.matches(searchQuery, call.displayName, call.phoneNumber)
         }
     }
     val collapsed = remember(filtered) { collapseRecents(filtered) }
@@ -203,7 +197,9 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
             }
         }
 
-        if (filtered.isEmpty()) {
+        if (filtered.isEmpty() && searchQuery.isNotBlank()) {
+            de.mm20.launcher2.ui.component.SearchEmptyState(searchQuery)
+        } else if (filtered.isEmpty()) {
             val isDefaultDialer = remember(context) {
                 val pkg = context.packageName
                 val tm = context.getSystemService(android.telecom.TelecomManager::class.java)

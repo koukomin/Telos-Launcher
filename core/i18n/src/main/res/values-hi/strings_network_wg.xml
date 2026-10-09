@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nwg_title">WireGuard</string>
+    <string name="nwg_back">वापस</string>
+    <string name="nwg_add">टनल जोड़ें</string>
+    <string name="nwg_add_new">नया बनाएँ</string>
+    <string name="nwg_add_file">.conf फ़ाइल आयात करें</string>
+    <string name="nwg_add_qr">QR कोड की छवि से आयात करें</string>
+    <string name="nwg_add_paste">कॉन्फ़िगरेशन टेक्स्ट चिपकाएँ</string>
+    <string name="nwg_system_default">सिस्टम डिफ़ॉल्ट</string>
+    <string name="nwg_system_default_summary">जिन ऐप्स की अपनी सेटिंग नहीं है, वे इस टनल का उपयोग करते हैं। सिस्टम डिफ़ॉल्ट न होने पर वे सीधे कनेक्ट होते हैं।</string>
+    <string name="nwg_none">कोई नहीं (सीधा)</string>
+    <string name="nwg_direct">सीधा (प्रॉक्सी के बिना)</string>
+    <string name="nwg_apps">ऐप के अनुसार असाइनमेंट</string>
+    <string name="nwg_apps_summary">चुनें कि हर ऐप कौन-सा टनल उपयोग करे</string>
+    <string name="nwg_configs">टनल</string>
+    <string name="nwg_empty">अभी कोई टनल नहीं है। + बटन से एक जोड़ें।</string>
+    <string name="nwg_status_off">बंद</string>
+    <string name="nwg_status_connecting">कनेक्ट हो रहा है</string>
+    <string name="nwg_status_up">कनेक्ट हो गया</string>
+    <string name="nwg_status_down">जवाब नहीं दे रहा</string>
+    <string name="nwg_status_error">त्रुटि</string>
+    <string name="nwg_traffic">%1$s प्राप्त हुआ, %2$s भेजा गया</string>
+    <string name="nwg_handshake">अंतिम handshake: %1$s</string>
+    <string name="nwg_vpn_off_hint">टनल कनेक्ट करने के लिए Telos Network चालू करें।</string>
+    <string name="nwg_new_title">नया टनल</string>
+    <string name="nwg_edit_title">टनल संपादित करें</string>
+    <string name="nwg_name">नाम</string>
+    <string name="nwg_private_key">निजी कुंजी</string>
+    <string name="nwg_public_key">सार्वजनिक कुंजी: %1$s</string>
+    <string name="nwg_generate">बनाएँ</string>
+    <string name="nwg_addresses">पते (अल्पविराम से अलग)</string>
+    <string name="nwg_dns">DNS सर्वर (अल्पविराम से अलग)</string>
+    <string name="nwg_mtu">MTU (0 = स्वचालित)</string>
+    <string name="nwg_peer">पीयर %1$d</string>
+    <string name="nwg_peer_public_key">पीयर की सार्वजनिक कुंजी</string>
+    <string name="nwg_preshared">पहले से साझा की गई कुंजी (वैकल्पिक)</string>
+    <string name="nwg_endpoint">Endpoint (होस्ट:पोर्ट)</string>
+    <string name="nwg_allowed_ips">अनुमत IP (अल्पविराम से अलग)</string>
+    <string name="nwg_keepalive">Persistent keepalive सेकंड में (0 = बंद)</string>
+    <string name="nwg_add_peer">पीयर जोड़ें</string>
+    <string name="nwg_remove_peer">पीयर हटाएँ</string>
+    <string name="nwg_mobile_only">केवल मोबाइल डेटा पर</string>
+    <string name="nwg_lockdown">टनल बंद होने पर ऐप्स को ब्लॉक करें</string>
+    <string name="nwg_save">सहेजें</string>
+    <string name="nwg_cancel">रद्द करें</string>
+    <string name="nwg_delete">हटाएँ</string>
+    <string name="nwg_share">कॉन्फ़िगरेशन साझा करें</string>
+    <string name="nwg_share_warning">निर्यात किए गए कॉन्फ़िगरेशन में निजी कुंजी शामिल है।</string>
+    <string name="nwg_import">आयात करें</string>
+    <string name="nwg_qr_not_found">इस छवि में कोई QR कोड नहीं मिला</string>
+    <string name="nwg_err_syntax">कॉन्फ़िगरेशन में सिंटैक्स त्रुटि है: %1$s</string>
+    <string name="nwg_err_missing">कॉन्फ़िगरेशन अधूरा है: %1$s गायब है</string>
+    <string name="nwg_err_invalid_key">अमान्य कुंजी: %1$s</string>
+    <string name="nwg_err_invalid_value">अमान्य मान: %1$s</string>
+    <string name="nwg_err_invalid_name">अधिकतम 64 अक्षरों का नाम दर्ज करें</string>
+    <string name="nwg_err_not_found">यह टनल अब मौजूद नहीं है</string>
+    <string name="nwg_err_storage">कॉन्फ़िगरेशन सुरक्षित रूप से सहेजा नहीं जा सका: %1$s</string>
+    <string name="nwg_err_other">कॉन्फ़िगरेशन सहेजा नहीं जा सका</string>
+    <string name="nwg_apps_title">ऐप्स और टनल</string>
+    <string name="nwg_search">ऐप्स खोजें</string>
+    <string name="nwg_show_system">सिस्टम ऐप्स दिखाएँ</string>
+    <string name="nwg_selected">%1$d चुने गए</string>
+    <string name="nwg_assign_selected">चुने गए ऐप्स को असाइन करें</string>
+    <string name="nwg_clear_selection">चयन साफ़ करें</string>
+    <string name="nwg_select_all">दिखाए गए सभी चुनें</string>
+</resources>

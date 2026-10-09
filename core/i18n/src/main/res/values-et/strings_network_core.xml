@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Telos Networki teavitused</string>
+    <string name="net_notif_title">Telos Network on sees</string>
+    <string name="net_notif_text">Ühendusi filtreeritakse.</string>
+    <string name="net_notif_blocked">Blokeeritud ühendused: %1$d</string>
+    <string name="net_notif_stop">Lülita välja</string>
+    <string name="net_alert_stopped_title">Telos Network lülitati välja</string>
+    <string name="net_alert_crashed">Võrgumootor peatus ootamatult. Interneti kasutamist see ei mõjuta.</string>
+    <string name="net_alert_revoked">Teine VPN võttis üle. Interneti kasutamist see ei mõjuta.</string>
+    <string name="net_alert_start_failed">Telos Networki käivitamine ebaõnnestus. Interneti kasutamist see ei mõjuta.</string>
+    <string name="net_error_permission">VPN-i seadistamiseks on vaja luba.</string>
+    <string name="net_error_start_failed">Käivitamine ebaõnnestus: %1$s</string>
+    <string name="net_error_unknown">tundmatu viga</string>
+    <string name="net_app_system">Androidi süsteem</string>
+    <string name="net_app_unknown">Tundmatu rakendus (%1$d)</string>
+    <string name="net_dns_system">Võrgu DNS (süsteemne)</string>
+</resources>

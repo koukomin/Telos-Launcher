@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Fógraí Telos Network</string>
+    <string name="net_notif_title">Tá Telos Network ar siúl</string>
+    <string name="net_notif_text">Tá naisc á scagadh.</string>
+    <string name="net_notif_blocked">Naisc bhlocáilte: %1$d</string>
+    <string name="net_notif_stop">Cas as</string>
+    <string name="net_alert_stopped_title">Cuireadh Telos Network as</string>
+    <string name="net_alert_crashed">Stop an t-inneall líonra gan choinne. Níl tionchar ar rochtain idirlín.</string>
+    <string name="net_alert_revoked">Ghlac VPN eile seilbh. Níl tionchar ar rochtain idirlín.</string>
+    <string name="net_alert_start_failed">Níorbh fhéidir Telos Network a thosú. Níl tionchar ar rochtain idirlín.</string>
+    <string name="net_error_permission">Tá cead de dhíth chun VPN a shocrú.</string>
+    <string name="net_error_start_failed">Níorbh fhéidir tosú: %1$s</string>
+    <string name="net_error_unknown">earráid anaithnid</string>
+    <string name="net_app_system">Córas Android</string>
+    <string name="net_app_unknown">Aip anaithnid (%1$d)</string>
+    <string name="net_dns_system">DNS an líonra (córas)</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="ts_search">جستجو</string>
+    <string name="ts_clear">پاک کردن</string>
+    <string name="ts_no_results">نتیجه‌ای برای «%1$s» یافت نشد</string>
+</resources>

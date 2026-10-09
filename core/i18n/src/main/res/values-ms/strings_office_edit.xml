@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="od_default_name">dokumen</string>
+    <string name="od_saved">Disimpan</string>
+    <string name="od_save_failed">Tidak dapat disimpan</string>
+    <string name="od_nothing_to_show">Tiada apa-apa untuk dipaparkan dalam fail ini. Gunakan “Buka dengan” untuk membukanya dalam apl lain.</string>
+    <string name="od_pdf_protected">PDF ini dilindungi kata laluan.</string>
+    <string name="od_cannot_open">Fail ini tidak boleh dibuka di sini (%1$s). Gunakan “Buka dengan”.</string>
+    <string name="od_legacy_failed">Fail Office lama ini tidak dapat dibaca. Gunakan “Buka dengan” untuk membukanya dalam apl lain.</string>
+    <string name="od_text_too_big">Fail ini lebih besar daripada 2 MB. Ia dipaparkan baca sahaja dan tidak pernah diubah.</string>
+    <string name="od_edit_copy">Edit 2 MB pertama sebagai salinan</string>
+    <string name="od_copy_hint">Anda sedang mengedit salinan 2 MB pertama. Menyimpan akan mencipta fail baharu; fail asal tidak berubah.</string>
+    <string name="od_pdf_tools">Alat PDF</string>
+    <string name="od_search_pdf">Cari dalam PDF</string>
+    <string name="od_search_hint">Cari teks</string>
+    <string name="od_searching">Mencari… halaman %1$d</string>
+    <string name="od_no_results">Tiada hasil</string>
+    <string name="od_no_text_layer">PDF ini tidak mempunyai teks yang boleh dicari (contohnya imbasan).</string>
+    <string name="od_results_count">Hasil: %1$d</string>
+    <string name="od_go_to_page">Pergi ke halaman</string>
+    <string name="od_page_range">Halaman (1 hingga %1$d)</string>
+    <string name="od_go">Pergi</string>
+    <string name="od_layout_note">Teks dan struktur dipaparkan. Reka letak halaman dan fon tidak dihasilkan semula.</string>
+    <string name="od_slides_note">Tajuk, teks dan gambar dipaparkan. Reka letak dan reka bentuk slaid tidak dihasilkan semula.</string>
+    <string name="od_legacy_readonly">Fail Office binari lama (.doc, .xls, .ppt): baca sahaja. Teks dan nilai diekstrak sebaik mungkin.</string>
+    <string name="od_convert_note">Penukaran mencipta fail baharu. Pemformatan, gambar dan objek terbenam daripada fail lama tidak dibawa bersama. Fail asal kekal tidak berubah.</string>
+    <string name="od_convert_action">Tukar kepada .%1$s dan edit</string>
+    <string name="od_convert_failed">Fail ini tidak dapat ditukar.</string>
+    <string name="od_converted">Ditukar. Anda kini sedang mengedit fail baharu.</string>
+    <string name="od_discard_title">Buang perubahan?</string>
+    <string name="od_discard_text">Suntingan anda belum disimpan.</string>
+    <string name="od_discard">Buang</string>
+    <string name="od_keep_editing">Teruskan mengedit</string>
+    <string name="od_save_copy">Simpan sebagai salinan</string>
+    <string name="od_saved_copy">Disimpan sebagai fail baharu.</string>
+    <string name="od_undo_save">Buat asal simpanan terakhir</string>
+    <string name="od_undo_done">Versi sebelum simpanan terakhir telah dipulihkan.</string>
+    <string name="od_undo_failed">Versi sebelumnya tidak dapat dipulihkan.</string>
+    <string name="od_bold">Tebal</string>
+    <string name="od_italic">Condong</string>
+    <string name="od_add_paragraph">Tambah perenggan di bawah</string>
+    <string name="od_delete_paragraph">Padam perenggan</string>
+    <string name="od_table_cell">Sel jadual</string>
+    <string name="od_add_row">Tambah baris</string>
+    <string name="od_edit_cell">Edit sel %1$s</string>
+    <string name="od_cell_value">Nilai</string>
+    <string name="od_cell_hint">Teks, nombor atau formula yang bermula dengan =</string>
+    <string name="od_formula_replaced">Sel ini mengandungi formula (%1$s). Nilai baharu akan menggantikannya.</string>
+    <string name="od_ok">OK</string>
+    <string name="od_sheet_n">Helaian %1$d</string>
+    <string name="od_slide_of">Slaid %1$d daripada %2$d</string>
+    <string name="od_delete_slide">Padam slaid</string>
+    <string name="od_title_box">Tajuk</string>
+    <string name="od_text_box_n">Kotak teks %1$d</string>
+    <string name="od_no_slides">Tiada slaid</string>
+    <string name="od_image">Gambar</string>
+</resources>

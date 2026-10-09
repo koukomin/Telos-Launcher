@@ -1,6 +1,7 @@
 // === TELOS_PENDING_REVIEW_START: smart_freeze_ui_and_actions ===
 package de.mm20.launcher2.ui.settings.freeze
 
+import androidx.compose.ui.res.stringResource
 import de.mm20.launcher2.search.GreekFold
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
@@ -85,22 +86,22 @@ fun SmartFreezeDashboardScreen() {
                         }
                     },
                     icon = { Icon(painterResource(R.drawable.ac_unit_24px), contentDescription = null) },
-                    text = { Text("Toggle Freeze (${selectedApps.size})") }
+                    text = { Text(stringResource(R.string.hf_freeze_toggle, selectedApps.size)) }
                 )
             }
         }
     ) { contentPadding ->
         Box(modifier = Modifier.padding(contentPadding).fillMaxSize()) {
-            PreferenceScreen(title = "Smart Freeze Dashboard") {
+            PreferenceScreen(title = stringResource(R.string.hc_smart_freeze_dashboard)) {
                 item {
                     Card(
                         modifier = Modifier.fillMaxWidth().padding(16.dp),
                         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
                     ) {
                         Column(modifier = Modifier.padding(16.dp)) {
-                            Text("Backend Status", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondaryContainer)
+                            Text(stringResource(R.string.hf_freeze_backend_status), style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSecondaryContainer)
                             Text(
-                                text = if (activeBackend != null) "Connected via ${activeBackend?.name}" else "Disconnected",
+                                text = if (activeBackend != null) stringResource(R.string.hf_freeze_connected_via, activeBackend?.name.orEmpty()) else stringResource(R.string.hf_freeze_disconnected),
                                 modifier = Modifier.padding(vertical = 8.dp),
                                 color = MaterialTheme.colorScheme.onSecondaryContainer
                             )
@@ -108,7 +109,7 @@ fun SmartFreezeDashboardScreen() {
                                 Button(onClick = {
                                     scope.launch { freezeManager.requestPermission() }
                                 }) {
-                                    Text("Grant Permission")
+                                    Text(stringResource(R.string.hf_freeze_grant))
                                 }
                             }
                         }
@@ -117,16 +118,16 @@ fun SmartFreezeDashboardScreen() {
                 item {
                     Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), horizontalArrangement = Arrangement.SpaceBetween) {
                         Column {
-                            Text("Frozen Apps", style = MaterialTheme.typography.labelSmall)
+                            Text(stringResource(R.string.hf_freeze_frozen_apps), style = MaterialTheme.typography.labelSmall)
                             Text("${apps.count { freezeManager.isFrozen(it.componentName.packageName) }}", style = MaterialTheme.typography.titleLarge)
                         }
                         Column {
-                            Text("Auto-Freeze List", style = MaterialTheme.typography.labelSmall)
+                            Text(stringResource(R.string.hf_freeze_auto_list), style = MaterialTheme.typography.labelSmall)
                             Text("${candidates.size}", style = MaterialTheme.typography.titleLarge)
                         }
                         Column {
-                            Text("Last Execution", style = MaterialTheme.typography.labelSmall)
-                            Text("Monitoring", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.primary)
+                            Text(stringResource(R.string.hf_freeze_last_execution), style = MaterialTheme.typography.labelSmall)
+                            Text(stringResource(R.string.hf_freeze_monitoring), style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.primary)
                         }
                     }
                 }
@@ -134,7 +135,7 @@ fun SmartFreezeDashboardScreen() {
                     OutlinedTextField(
                         value = searchQuery,
                         onValueChange = { searchQuery = it },
-                        label = { Text("Search Apps") },
+                        label = { Text(stringResource(R.string.hf_freeze_search_apps)) },
                         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
                         singleLine = true,
                         leadingIcon = { Icon(painterResource(R.drawable.search_24px), contentDescription = null) }
@@ -190,11 +191,11 @@ fun SmartFreezeDashboardScreen() {
                             
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(app.label, style = MaterialTheme.typography.bodyLarge)
-                                Text(if (isFrozen) "Frozen" else "Active", color = if (isFrozen) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
+                                Text(if (isFrozen) stringResource(R.string.hf_freeze_frozen) else stringResource(R.string.hf_freeze_active), color = if (isFrozen) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
                             }
                             
                             Column(horizontalAlignment = Alignment.End) {
-                                Text("Auto-Freeze", style = MaterialTheme.typography.labelSmall)
+                                Text(stringResource(R.string.hf_freeze_auto), style = MaterialTheme.typography.labelSmall)
                                 Switch(
                                     checked = isCandidate,
                                     onCheckedChange = { freezeManager.setAutoFreezeCandidate(pkg, it) },

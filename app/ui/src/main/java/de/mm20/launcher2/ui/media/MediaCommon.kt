@@ -59,7 +59,7 @@ fun MediaFrame(
     }
 }
 
-/** Rounded search field with readable text in light and dark mode. */
+/** Rounded search field with readable text in light and dark mode (see [TelosSearchBar]). */
 @Composable
 fun MediaSearchBar(
     value: String,
@@ -67,31 +67,7 @@ fun MediaSearchBar(
     placeholder: String,
     modifier: Modifier = Modifier,
 ) {
-    TextField(
-        value = value,
-        onValueChange = onValueChange,
-        modifier = modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-        placeholder = { Text(placeholder) },
-        singleLine = true,
-        shape = RoundedCornerShape(28.dp),
-        leadingIcon = { Icon(painterResource(R.drawable.search_24px), contentDescription = null) },
-        trailingIcon = {
-            if (value.isNotEmpty()) {
-                IconButton(onClick = { onValueChange("") }) {
-                    Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.hc_clear))
-                }
-            }
-        },
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
-            focusedTextColor = MaterialTheme.colorScheme.onSurface,
-            unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-            focusedIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
-            unfocusedIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
-            disabledIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
-        ),
-    )
+    de.mm20.launcher2.ui.component.TelosSearchBar(value, onValueChange, placeholder, modifier)
 }
 
 /** Playback notifications need the notification permission on Android 13 and newer. */

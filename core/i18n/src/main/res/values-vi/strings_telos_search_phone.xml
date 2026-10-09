@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="tsp_search_notes">Tìm ghi chú</string>
+    <string name="tsp_search_calls">Tìm cuộc gọi</string>
+    <string name="tsp_search_favorites">Tìm mục yêu thích</string>
+    <string name="tsp_search_contacts">Tìm liên hệ</string>
+    <string name="tsp_search_messages">Tìm tin nhắn</string>
+    <string name="tsp_search_in_conversation">Tìm trong cuộc trò chuyện</string>
+    <string name="tsp_search_events">Tìm sự kiện</string>
+    <string name="tsp_search_recordings">Tìm bản ghi âm</string>
+    <string name="tsp_search_screenshots">Tìm ảnh chụp màn hình</string>
+    <string name="tsp_search_call_recordings">Tìm bản ghi cuộc gọi</string>
+    <string name="tsp_search_groups">Tìm nhóm</string>
+</resources>

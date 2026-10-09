@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_channel_service">Telos Network</string>
+    <string name="net_channel_alerts">Alertes de Telos Network</string>
+    <string name="net_notif_title">Telos Network est activé</string>
+    <string name="net_notif_text">Les connexions sont filtrées.</string>
+    <string name="net_notif_blocked">Connexions bloquées : %1$d</string>
+    <string name="net_notif_stop">Désactiver</string>
+    <string name="net_alert_stopped_title">Telos Network a été désactivé</string>
+    <string name="net_alert_crashed">Le moteur réseau s\'est arrêté de façon inattendue. L\'accès à Internet n\'est pas affecté.</string>
+    <string name="net_alert_revoked">Un autre VPN a pris le relais. L\'accès à Internet n\'est pas affecté.</string>
+    <string name="net_alert_start_failed">Telos Network n\'a pas pu démarrer. L\'accès à Internet n\'est pas affecté.</string>
+    <string name="net_error_permission">Une autorisation est nécessaire pour configurer un VPN.</string>
+    <string name="net_error_start_failed">Démarrage impossible : %1$s</string>
+    <string name="net_error_unknown">erreur inconnue</string>
+    <string name="net_app_system">Système Android</string>
+    <string name="net_app_unknown">Application inconnue (%1$d)</string>
+    <string name="net_dns_system">DNS du réseau (système)</string>
+</resources>
