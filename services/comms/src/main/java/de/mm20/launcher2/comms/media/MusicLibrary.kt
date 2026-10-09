@@ -63,7 +63,7 @@ object MusicLibrary {
                     )
                 }
             }
-        }
+        }.onFailure { if (it is kotlinx.coroutines.CancellationException) throw it }
         tracks
     }
 }

@@ -103,6 +103,12 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         reloadConnections()
     }
 
+    override fun onCleared() {
+        // files fetched from a server, an archive or a vault (decrypted!) must not stay in the cache
+        runCatching { File(context.cacheDir, "remote_open").deleteRecursively() }
+        super.onCleared()
+    }
+
     private fun loadSort(): SortSpec = SortSpec(
         key = runCatching { SortKey.valueOf(prefs.getString("sortKey", "Name")!!) }.getOrDefault(SortKey.Name),
         ascending = prefs.getBoolean("sortAsc", true),

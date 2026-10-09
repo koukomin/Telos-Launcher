@@ -37,6 +37,8 @@ fun AppInfoSheet(
         val permissions by viewModel.permissions.collectAsStateWithLifecycle()
         val icon by viewModel.icon.collectAsStateWithLifecycle()
         val isShizukuAvailable by viewModel.isShizukuAvailable.collectAsStateWithLifecycle()
+        val isFrozen by viewModel.isFrozen.collectAsStateWithLifecycle()
+        val canFreeze by viewModel.canFreeze.collectAsStateWithLifecycle()
 
         val iconSize = 64.dp
         val iconSizePx = iconSize.toPixels()
@@ -86,8 +88,8 @@ fun AppInfoSheet(
                 )
                 ActionButton(
                     icon = R.drawable.ac_unit_24px,
-                    label = stringResource(R.string.hf_appinfo_freeze),
-                    enabled = isShizukuAvailable,
+                    label = stringResource(if (isFrozen) R.string.menu_unfreeze else R.string.hf_appinfo_freeze),
+                    enabled = canFreeze || isFrozen,
                     onClick = { viewModel.freeze() }
                 )
                 ActionButton(

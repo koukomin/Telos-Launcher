@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_freeze_filter_user">User</string>
+    <string name="au_freeze_filter_system">System</string>
+    <string name="au_freeze_kbps">%1$d KB/s</string>
+</resources>

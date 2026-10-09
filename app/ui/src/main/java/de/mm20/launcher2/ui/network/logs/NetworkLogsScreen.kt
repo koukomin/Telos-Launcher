@@ -43,6 +43,7 @@ import android.text.format.Formatter
 import de.mm20.launcher2.network.api.AppDirectory
 import de.mm20.launcher2.network.api.BlocklistController
 import de.mm20.launcher2.network.api.ConnectionLogEntry
+import de.mm20.launcher2.network.api.ConnectionType
 import de.mm20.launcher2.network.api.DecisionReason
 import de.mm20.launcher2.network.api.DnsLogEntry
 import de.mm20.launcher2.network.api.DomainRule
@@ -122,20 +123,24 @@ fun NetworkLogsScreen() {
         if (uri != null) {
             scope.launch {
                 val text = logs.exportCsv(exportDns, filter.copy(query = query.ifBlank { null }, limit = Int.MAX_VALUE))
-                withContext(Dispatchers.IO) {
+                val written = withContext(Dispatchers.IO) {
                     try {
-                        context.contentResolver.openOutputStream(uri)?.use { it.write(text.toByteArray()) }
+                        context.contentResolver.openOutputStream(uri)?.use { it.write(text.toByteArray()); true } ?: false
                     } catch (e: Exception) {
-                        // the target refused the write
+                        false
                     }
                 }
-                Toast.makeText(context, context.getString(R.string.hc_done), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    context.getString(if (written) R.string.hc_done else R.string.au_netui_export_failed),
+                    Toast.LENGTH_SHORT,
+                ).show()
             }
         }
     }
 
     PreferenceScreen(
-        title = { Text(stringResource(R.string.netfw_l_title)) },
+        title = stringResource(R.string.netfw_l_title),
         topBarActions = {
             Box {
                 IconButton(onClick = { menu = true }) {
@@ -301,7 +306,7 @@ fun NetworkLogsScreen() {
                 stringResource(R.string.netfw_l_d_app) to directory.labelFor(e.uid),
                 stringResource(R.string.netfw_l_d_destination) to "${e.domain?.let { "$it, " } ?: ""}${e.destIp}:${e.destPort} (${e.protocol.name.uppercase()})",
                 stringResource(R.string.netfw_l_d_reason) to (if (e.verdict == Verdict.Block) stringResource(R.string.netfw_l_blocked) else stringResource(R.string.netfw_l_allowed)) + ": " + reasonText(e.reason),
-                stringResource(R.string.netfw_l_d_network) to e.network.name,
+                stringResource(R.string.netfw_l_d_network) to networkText(e.network),
                 stringResource(R.string.netfw_l_d_lists) to e.blocklists.joinToString(", "),
                 stringResource(R.string.netfw_l_d_traffic) to if (e.bytesReceived + e.bytesSent > 0) "↓ ${Formatter.formatShortFileSize(context, e.bytesReceived)}  ↑ ${Formatter.formatShortFileSize(context, e.bytesSent)}" else "",
                 stringResource(R.string.netfw_l_d_time) to formatDateTime(context, e.timeMs),
@@ -328,6 +333,18 @@ fun NetworkLogsScreen() {
         )
     }
 }
+
+@Composable
+private fun networkText(type: ConnectionType): String = stringResource(
+    when (type) {
+        ConnectionType.Wifi -> R.string.netfw_t_wifi
+        ConnectionType.Mobile -> R.string.netfw_t_mobile
+        ConnectionType.Vpn -> R.string.netfw_t_vpn
+        ConnectionType.Ethernet -> R.string.au_netui_net_ethernet
+        ConnectionType.Other -> R.string.au_netui_net_other
+        ConnectionType.None -> R.string.au_netui_net_none
+    }
+)
 
 @Composable
 private fun EmptyLog(query: String = "") {

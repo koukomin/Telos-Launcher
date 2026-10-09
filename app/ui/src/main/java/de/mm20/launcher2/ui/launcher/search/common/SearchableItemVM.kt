@@ -122,7 +122,9 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     val isSuspended = searchable.flatMapLatest { searchable ->
         if (searchable !is Application) flowOf(false)
         else appRepository.findOne(searchable.componentName.packageName, searchable.user)
-            .map { it?.isSuspended == true }
+            // Also covers apps frozen by disabling them (not just FLAG_SUSPENDED), so the toolbar
+            // offers "Unfreeze" for those as well.
+            .map { it?.isSuspended == true || freezeManager.isFrozen(searchable.componentName.packageName) }
             .distinctUntilChanged()
     }.stateIn(viewModelScope, SharingStarted.Lazily, false)
 
@@ -232,7 +234,9 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                     kotlinx.coroutines.delay(300)
                     if (searchable.launch(context, bundle)) {
                         reportUsage(searchable)
-                    } else {
+                    } else if (!freezeManager.isFrozen(searchable.componentName.packageName)) {
+                        // Only reset if the app really is unavailable; if unfreezing failed (backend
+                        // gone, permission revoked) the favorite must be kept.
                         favoritesService.reset(searchable)
                     }
                 }

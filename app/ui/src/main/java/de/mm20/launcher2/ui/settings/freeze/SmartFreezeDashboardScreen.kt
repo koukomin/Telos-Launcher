@@ -23,6 +23,7 @@ import de.mm20.launcher2.applications.AppRepository
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
+import de.mm20.launcher2.ui.component.TelosSearchBar
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import kotlinx.serialization.Serializable
 import org.koin.compose.koinInject
@@ -32,11 +33,11 @@ import de.mm20.launcher2.icons.IconService
 @Serializable
 data object SmartFreezeDashboardRoute : NavKey
 
-private enum class FreezeFilter(val label: String) {
-    All("All"),
-    User("User"),
-    System("System"),
-    Frozen("Frozen"),
+private enum class FreezeFilter(@androidx.annotation.StringRes val labelRes: Int) {
+    All(R.string.filter_all),
+    User(R.string.au_freeze_filter_user),
+    System(R.string.au_freeze_filter_system),
+    Frozen(R.string.hf_freeze_frozen),
 }
 
 @Composable
@@ -50,12 +51,28 @@ fun SmartFreezeDashboardScreen() {
     val candidates by freezeManager.autoFreezeCandidates.collectAsStateWithLifecycle(emptySet())
     val activeBackend by freezeManager.activeBackend.collectAsStateWithLifecycle()
     
+    val stats by freezeManager.stats.collectAsStateWithLifecycle(emptyMap())
+    val lastFrozenAt = stats.values.maxOfOrNull { it.lastFrozenAt ?: 0L } ?: 0L
+
+    // Bumped after every freeze/unfreeze so the live OS state shown below is re-read.
+    var stateVersion by remember { mutableIntStateOf(0) }
+
+    LaunchedEffect(Unit) {
+        try {
+            freezeManager.refreshBackendState()
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            android.util.Log.w("SmartFreezeDashboard", "backend refresh failed", e)
+        }
+    }
+
     var searchQuery by remember { mutableStateOf("") }
     var currentFilter by remember { mutableStateOf(FreezeFilter.All) }
     
     val selectedApps = remember { mutableStateMapOf<String, Boolean>() }
     
-    val filteredApps = remember(apps, searchQuery, currentFilter, freezeManager) {
+    val filteredApps = remember(apps, searchQuery, currentFilter, freezeManager, stateVersion) {
         apps.filter { app ->
             val pkg = app.componentName.packageName
             val matchesQuery = GreekFold.contains(app.label, searchQuery)
@@ -78,11 +95,19 @@ fun SmartFreezeDashboardScreen() {
             ) {
                 ExtendedFloatingActionButton(
                     onClick = {
+                        val toggle = selectedApps.keys.toList()
                         scope.launch {
-                            selectedApps.keys.forEach { pkg ->
-                                if (freezeManager.isFrozen(pkg)) freezeManager.unfreeze(pkg) else freezeManager.freeze(pkg)
+                            try {
+                                toggle.forEach { pkg ->
+                                    if (freezeManager.isFrozen(pkg)) freezeManager.unfreeze(pkg) else freezeManager.freeze(pkg)
+                                }
+                            } catch (e: kotlinx.coroutines.CancellationException) {
+                                throw e
+                            } catch (e: Exception) {
+                                android.util.Log.w("SmartFreezeDashboard", "toggle failed", e)
                             }
                             selectedApps.clear()
+                            stateVersion++
                         }
                     },
                     icon = { Icon(painterResource(R.drawable.ac_unit_24px), contentDescription = null) },
@@ -107,7 +132,17 @@ fun SmartFreezeDashboardScreen() {
                             )
                             if (activeBackend == null) {
                                 Button(onClick = {
-                                    scope.launch { freezeManager.requestPermission() }
+                                    scope.launch {
+                                        try {
+                                            freezeManager.refreshBackendState()
+                                            freezeManager.requestPermission()
+                                            freezeManager.refreshBackendState()
+                                        } catch (e: kotlinx.coroutines.CancellationException) {
+                                            throw e
+                                        } catch (e: Exception) {
+                                            android.util.Log.w("SmartFreezeDashboard", "permission request failed", e)
+                                        }
+                                    }
                                 }) {
                                     Text(stringResource(R.string.hf_freeze_grant))
                                 }
@@ -119,7 +154,7 @@ fun SmartFreezeDashboardScreen() {
                     Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), horizontalArrangement = Arrangement.SpaceBetween) {
                         Column {
                             Text(stringResource(R.string.hf_freeze_frozen_apps), style = MaterialTheme.typography.labelSmall)
-                            Text("${apps.count { freezeManager.isFrozen(it.componentName.packageName) }}", style = MaterialTheme.typography.titleLarge)
+                            Text("${remember(apps, stateVersion) { apps.count { freezeManager.isFrozen(it.componentName.packageName) } }}", style = MaterialTheme.typography.titleLarge)
                         }
                         Column {
                             Text(stringResource(R.string.hf_freeze_auto_list), style = MaterialTheme.typography.labelSmall)
@@ -127,18 +162,18 @@ fun SmartFreezeDashboardScreen() {
                         }
                         Column {
                             Text(stringResource(R.string.hf_freeze_last_execution), style = MaterialTheme.typography.labelSmall)
-                            Text(stringResource(R.string.hf_freeze_monitoring), style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.primary)
+                            Text(
+                                if (lastFrozenAt > 0L) android.text.format.DateUtils.getRelativeTimeSpanString(lastFrozenAt).toString()
+                                else stringResource(R.string.hf_freeze_monitoring),
+                                style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.primary)
                         }
                     }
                 }
                 item {
-                    OutlinedTextField(
+                    TelosSearchBar(
                         value = searchQuery,
                         onValueChange = { searchQuery = it },
-                        label = { Text(stringResource(R.string.hf_freeze_search_apps)) },
-                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
-                        singleLine = true,
-                        leadingIcon = { Icon(painterResource(R.drawable.search_24px), contentDescription = null) }
+                        placeholder = stringResource(R.string.hf_freeze_search_apps),
                     )
                     LazyRow(
                         modifier = Modifier.fillMaxWidth(),
@@ -149,7 +184,7 @@ fun SmartFreezeDashboardScreen() {
                             FilterChip(
                                 selected = currentFilter == filter,
                                 onClick = { currentFilter = filter },
-                                label = { Text(filter.label) }
+                                label = { Text(stringResource(filter.labelRes)) }
                             )
                         }
                     }
@@ -158,7 +193,7 @@ fun SmartFreezeDashboardScreen() {
                 items(filteredApps.size, key = { filteredApps[it].key }) { index ->
                     val app = filteredApps[index]
                     val pkg = app.componentName.packageName
-                    val isFrozen = freezeManager.isFrozen(pkg)
+                    val isFrozen = remember(pkg, stateVersion, apps) { freezeManager.isFrozen(pkg) }
                     val isCandidate = candidates.contains(pkg)
                     val isSelected = selectedApps.containsKey(pkg)
                     val icon by iconService.getIcon(app, 48.dp.value.toInt()).collectAsStateWithLifecycle(null)

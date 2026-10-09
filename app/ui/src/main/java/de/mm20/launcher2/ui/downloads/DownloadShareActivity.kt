@@ -49,29 +49,31 @@ class DownloadShareActivity : Activity() {
     }
 
     /** Copies a shared .torrent file into the cache and returns its file: address, null if it is not one */
-    private fun copyTorrentFile(uri: Uri): String? = try {
+    private fun copyTorrentFile(uri: Uri): String? {
         val dir = File(cacheDir, "torrent-inbox").apply { mkdirs() }
         // old copies are not needed any more
         dir.listFiles()?.filter { System.currentTimeMillis() - it.lastModified() > 24 * 3600 * 1000L }?.forEach { it.delete() }
         val target = File(dir, "${System.nanoTime()}.torrent")
-        val input = if (uri.scheme == "file") File(uri.path!!).inputStream() else contentResolver.openInputStream(uri)
-        var total = 0L
-        input?.use { i -> target.outputStream().use { o ->
-            val buf = ByteArray(16 * 1024)
-            while (true) {
-                val n = i.read(buf)
-                if (n < 0) break
-                total += n
-                if (total > 8L * 1024 * 1024) throw java.io.IOException("too large")
-                o.write(buf, 0, n)
-            }
-        } } ?: throw java.io.IOException("not readable")
-        // a torrent file is a bencoded dictionary
-        if (target.length() < 10 || target.inputStream().use { it.read() } != 'd'.code) { target.delete(); null }
-        else Uri.fromFile(target).toString()
-    } catch (e: Exception) {
-        // an unreadable, oversized or half written copy must not stay in the cache
-        runCatching { File(cacheDir, "torrent-inbox").listFiles()?.filter { it.length() == 0L || it.length() > 8L * 1024 * 1024 }?.forEach { it.delete() } }
-        null
+        return try {
+            val input = if (uri.scheme == "file") File(uri.path!!).inputStream() else contentResolver.openInputStream(uri)
+            var total = 0L
+            input?.use { i -> target.outputStream().use { o ->
+                val buf = ByteArray(16 * 1024)
+                while (true) {
+                    val n = i.read(buf)
+                    if (n < 0) break
+                    total += n
+                    if (total > 8L * 1024 * 1024) throw java.io.IOException("too large")
+                    o.write(buf, 0, n)
+                }
+            } } ?: throw java.io.IOException("not readable")
+            // a torrent file is a bencoded dictionary
+            if (target.length() < 10 || target.inputStream().use { it.read() } != 'd'.code) { target.delete(); null }
+            else Uri.fromFile(target).toString()
+        } catch (e: Exception) {
+            // an unreadable, oversized or half written copy must not stay in the cache
+            target.delete()
+            null
+        }
     }
 }

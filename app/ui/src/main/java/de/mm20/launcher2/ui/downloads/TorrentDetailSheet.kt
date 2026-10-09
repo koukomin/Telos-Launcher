@@ -77,7 +77,8 @@ internal fun TorrentDetailSheet(
     val running = task.state.isActive
 
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
-        Column(Modifier.padding(horizontal = 20.dp).navigationBarsPadding(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        // the tabs have a fixed height: on a small screen or in landscape the sheet has to scroll
+        Column(Modifier.verticalScroll(rememberScrollState()).padding(horizontal = 20.dp).navigationBarsPadding(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(task.displayName, style = MaterialTheme.typography.titleLarge, maxLines = 2)
             Text(
                 torrentStateLabel(task) + torrentProgressSuffix(task),
@@ -163,7 +164,7 @@ private fun PeersTab(task: DownloadTask, controller: TorrentController) {
     Column {
         Text(stringResource(R.string.dl_t_flags_legend), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         LazyColumn(Modifier.fillMaxWidth().height(320.dp)) {
-            items(peers, key = { it.ip }) { p -> PeerItem(p) }
+            items(peers) { p -> PeerItem(p) }
         }
     }
 }
@@ -190,7 +191,7 @@ private fun TrackersTab(task: DownloadTask, controller: TorrentController, onAdd
             )
         } else {
             LazyColumn(Modifier.fillMaxWidth().height(280.dp)) {
-                items(trackers, key = { it.url }) { t -> TrackerItem(t) }
+                items(trackers) { t -> TrackerItem(t) }
             }
         }
         TextButton(onClick = onAdd, enabled = task.state.isActive) { Text(stringResource(R.string.dl_t_add_tracker)) }

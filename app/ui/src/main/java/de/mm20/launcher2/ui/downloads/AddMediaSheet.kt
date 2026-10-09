@@ -36,6 +36,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -70,23 +71,23 @@ internal fun AddMediaSheet(initialUrl: String, manager: DownloadManager, onDismi
     val scope = rememberCoroutineScope()
     val settings = manager.settings.current
 
-    var url by remember { mutableStateOf(initialUrl) }
+    var url by rememberSaveable { mutableStateOf(initialUrl) }
     var info by remember { mutableStateOf<MediaInfo?>(null) }
     var analyzing by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
     var selected by remember { mutableStateOf<Set<String>>(emptySet()) }
-    var heightCap by remember { mutableStateOf(0) }
-    var audioOnly by remember { mutableStateOf(false) }
-    var audioFormat by remember { mutableStateOf("mp3") }
-    var container by remember { mutableStateOf("") }
+    var heightCap by rememberSaveable { mutableStateOf(0) }
+    var audioOnly by rememberSaveable { mutableStateOf(false) }
+    var audioFormat by rememberSaveable { mutableStateOf("mp3") }
+    var container by rememberSaveable { mutableStateOf("") }
     var subtitles by remember { mutableStateOf(SubtitleMode.Off) }
-    var subLangs by remember { mutableStateOf("en.*") }
-    var embedThumb by remember { mutableStateOf(false) }
-    var embedMeta by remember { mutableStateOf(false) }
-    var sponsor by remember { mutableStateOf(false) }
+    var subLangs by rememberSaveable { mutableStateOf("en.*") }
+    var embedThumb by rememberSaveable { mutableStateOf(false) }
+    var embedMeta by rememberSaveable { mutableStateOf(false) }
+    var sponsor by rememberSaveable { mutableStateOf(false) }
     var useCookies by remember { mutableStateOf(false) }
     var cookiesVersion by remember { mutableStateOf(0) }
-    var folder by remember { mutableStateOf<String?>(null) }
+    var folder by rememberSaveable { mutableStateOf<String?>(null) }
 
     val folderPicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri: Uri? ->
         if (uri != null) {

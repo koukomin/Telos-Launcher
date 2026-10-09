@@ -295,7 +295,8 @@ fun DownloadsSettingsScreen() {
                 }
             },
             confirmButton = {
-                TextButton(onClick = {
+                // a proxy without host or with a wrong port would be ignored; do not store it
+                TextButton(enabled = type == ProxyType.None || (host.isNotBlank() && port.toIntOrNull() in 1..65535), onClick = {
                     store.update { it.copy(proxyType = type, proxyHost = host.trim(), proxyPort = port.toIntOrNull() ?: 0) }
                     editProxy = false
                 }) { Text(stringResource(R.string.dl_save)) }

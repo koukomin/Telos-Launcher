@@ -55,6 +55,7 @@ class MusicPlayerService : MediaSessionService() {
         scrobbler?.release()
         scrobbler = null
         MusicSleepTimer.onExpire = null
+        MusicSleepTimer.cancel() // no timer without a player to stop
         mediaSession?.run {
             player.release()
             release()

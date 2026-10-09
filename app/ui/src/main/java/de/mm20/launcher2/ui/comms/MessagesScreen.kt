@@ -133,7 +133,7 @@ fun MessagesScreen(
     }
 
     // something was shared to Telos Messages: write to that number (once, not again after going back)
-    var initialHandled by remember { mutableStateOf(false) }
+    var initialHandled by remember(initialNumber) { mutableStateOf(false) }
     LaunchedEffect(initialNumber, all) {
         if (all == null || initialHandled) return@LaunchedEffect
         if (initialNumber.isNotBlank() && open == null) open = conversationFor(initialNumber)
