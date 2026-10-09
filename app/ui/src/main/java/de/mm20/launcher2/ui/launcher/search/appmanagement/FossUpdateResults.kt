@@ -21,6 +21,9 @@ fun LazyListScope.FossUpdateResults(
     onDismiss: (Application) -> Unit,
     reverse: Boolean,
 ) {
+    // Lazy list keys must be unique
+    @Suppress("NAME_SHADOWING")
+    val updates = updates.distinctBy { it.key }
     if (updates.isEmpty()) return
 
     item(key = "foss_updates_header") {

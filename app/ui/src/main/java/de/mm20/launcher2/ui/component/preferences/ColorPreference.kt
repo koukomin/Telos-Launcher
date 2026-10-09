@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -19,7 +20,7 @@ fun ColorPreference(
     value: Color?,
     onValueChanged: (Color?) -> Unit = {}
 ) {
-    var showDialog by remember { mutableStateOf(false) }
+    var showDialog by rememberSaveable { mutableStateOf(false) }
     Preference(
         title = title,
         summary = summary,
@@ -30,7 +31,8 @@ fun ColorPreference(
                     shape = CircleShape,
                     modifier = Modifier
                         .padding(vertical = 12.dp)
-                        .size(36.dp)
+                        .size(36.dp),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
                 ) {}
             }
         },
@@ -40,6 +42,9 @@ fun ColorPreference(
     )
     if (showDialog) {
         var color by remember(value) { mutableStateOf(value ?: Color.Black) }
+        // Only commit a colour the user actually picked; "OK" on an untouched dialog must not
+        // turn an unset (default) colour into black
+        var changed by remember(value) { mutableStateOf(false) }
         AlertDialog(
             onDismissRequest = { showDialog = false },
             title = {
@@ -54,13 +59,14 @@ fun ColorPreference(
                 ) {
                     val state = rememberHsvColorPickerState(value ?: Color.Black) {
                         color = it
+                        changed = true
                     }
                     HsvColorPicker(state = state)
                 }
             },
             confirmButton = {
                 TextButton(onClick = {
-                    onValueChanged(color)
+                    if (changed) onValueChanged(color)
                     showDialog = false
                 }) {
                     Text(stringResource(android.R.string.ok))

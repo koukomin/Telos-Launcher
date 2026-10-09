@@ -37,15 +37,24 @@ class RestoreBackupSheetVM : ViewModel(), KoinComponent {
         restoreUri = uri
         state.value = RestoreBackupState.Parsing
         viewModelScope.launch {
-            val metadata = backupManager.readBackupMeta(uri)
+            val metadata = try {
+                backupManager.readBackupMeta(uri)
+            } catch (e: Exception) {
+                if (e is kotlinx.coroutines.CancellationException) throw e
+                android.util.Log.e("MM20", "Could not read backup", e)
+                null
+            }
             if (metadata == null) {
+                this@RestoreBackupSheetVM.metadata.value = null
+                compatibility.value = null
+                selected.value = emptySet()
                 state.value = RestoreBackupState.InvalidFile
             } else {
-                state.value = RestoreBackupState.Ready
                 compatibility.value = backupManager.checkCompatibility(metadata)
+                this@RestoreBackupSheetVM.metadata.value = metadata
+                selected.value = metadata.groups
+                state.value = RestoreBackupState.Ready
             }
-            this@RestoreBackupSheetVM.metadata.value = metadata
-            selected.value = metadata?.groups ?: emptySet()
         }
     }
 
