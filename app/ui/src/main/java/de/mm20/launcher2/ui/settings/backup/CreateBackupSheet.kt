@@ -93,6 +93,20 @@ fun CreateBackupSheet(
                         modifier = Modifier.size(48.dp)
                     )
                 }
+            } else if (it == CreateBackupState.Failed) {
+                Column(
+                    modifier = Modifier.fillMaxWidth().navigationBarsPadding(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    LargeMessage(
+                        icon = R.drawable.error_48px,
+                        text = stringResource(R.string.au3_sysa_backup_failed)
+                    )
+                    Button(
+                        onClick = viewModel::retry,
+                        modifier = Modifier.padding(top = 16.dp),
+                    ) { Text(stringResource(R.string.au3_sysa_try_again)) }
+                }
             } else if (it == CreateBackupState.BackedUp) {
                 LargeMessage(
                     modifier = Modifier.aspectRatio(1f),

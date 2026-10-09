@@ -104,6 +104,24 @@ fun RestoreBackupSheet(
                         )
                     }
 
+                    RestoreBackupState.Failed -> {
+                        LargeMessage(
+                            modifier = Modifier.navigationBarsPadding(),
+                            icon = R.drawable.error_48px,
+                            text = stringResource(id = R.string.au3_sysa_restore_failed)
+                        )
+                    }
+
+                    RestoreBackupState.RestoredPartially -> {
+                        LargeMessage(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .navigationBarsPadding(),
+                            icon = R.drawable.warning_24px,
+                            text = stringResource(id = R.string.au3_sysa_restore_partial)
+                        )
+                    }
+
                     RestoreBackupState.Ready -> {
                         val metadata by viewModel.metadata
 

@@ -128,7 +128,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                 },
             )
         },
-        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/customization/color-schemes",
+        helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/customization/color-schemes",
     ) {
         if (theme == null || previewShapes == null) return@PreferenceScreen
         val baseShape = theme!!.baseShape

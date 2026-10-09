@@ -38,7 +38,7 @@ fun FeedIntegrationSettingsScreen() {
     val providers = remember { viewModel.getFeedProviders(context) }
     PreferenceScreen(
         title = stringResource(R.string.preference_feed_integration),
-        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/integrations/feed"
+        helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/integrations/feed"
     ) {
         if (providers.isEmpty()) {
             item {

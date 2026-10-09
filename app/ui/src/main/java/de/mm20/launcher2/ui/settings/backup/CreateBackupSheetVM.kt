@@ -27,6 +27,11 @@ class CreateBackupSheetVM : ViewModel(), KoinComponent {
         selected.value = BackupGroup.entries.toSet()
     }
 
+    /** Back to the choice of parts after a failed backup */
+    fun retry() {
+        state.value = CreateBackupState.Ready
+    }
+
     fun reset() {
         state.value = CreateBackupState.Ready
         selectAll()
@@ -40,7 +45,8 @@ class CreateBackupSheetVM : ViewModel(), KoinComponent {
                 state.value = CreateBackupState.BackedUp
             } catch (e: Exception) {
                 if (e is kotlinx.coroutines.CancellationException) throw e
-                state.value = CreateBackupState.Ready
+                android.util.Log.e("MM20", "Backup failed", e)
+                state.value = CreateBackupState.Failed
             }
         }
     }
@@ -50,4 +56,5 @@ enum class CreateBackupState {
     Ready,
     BackingUp,
     BackedUp,
+    Failed,
 }

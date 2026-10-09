@@ -253,8 +253,17 @@ abstract class SharedLauncherActivity(
                                 NavBarEffects(modifier = Modifier.fillMaxSize())
                             }
 
+                            // Kept across config changes: a new instance would lose its edit mode
+                            // (and with it the scaffold lock it set) and its scroll position.
+                            val widgetHomeTarget = activeContextProfile?.widgetScreenTargetOverride
+                                ?: WidgetScreenTarget.Default
+                            val widgetHomeComponent = remember(widgetHomeTarget) {
+                                ClockAndWidgetsHomeComponent(target = widgetHomeTarget)
+                            }
+
                             val config = remember(
                                 mode,
+                                widgetHomeComponent,
                                 reverseSearchResults,
                                 bottomSearchBar,
                                 fixedSearchBar,
@@ -429,10 +438,7 @@ abstract class SharedLauncherActivity(
 
                                     val config = ScaffoldConfiguration(
                                         homeComponent = if (widgetsOnHomeScreen == true) {
-                                            ClockAndWidgetsHomeComponent(
-                                                target = activeContextProfile?.widgetScreenTargetOverride
-                                                    ?: WidgetScreenTarget.Default,
-                                            )
+                                            widgetHomeComponent
                                         } else {
                                             ClockHomeComponent
                                         },

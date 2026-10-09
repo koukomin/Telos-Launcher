@@ -92,7 +92,7 @@ fun LauncherSearchBar(
                                 if (sheetManager.hiddenItemsSheetShown.value) R.drawable.visibility_off_24px_filled
                                 else R.drawable.visibility_off_24px
                             ),
-                            contentDescription = null
+                            contentDescription = stringResource(R.string.preference_hidden_items)
                         )
                     }
                 }

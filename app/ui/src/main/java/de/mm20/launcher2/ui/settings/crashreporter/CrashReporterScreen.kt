@@ -36,7 +36,7 @@ fun CrashReporterScreen() {
     val showCrashes by viewModel.showCrashes
     PreferenceScreen(
         title = stringResource(R.string.preference_crash_reporter),
-        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/troubleshooting/crashreporter"
+        helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/troubleshooting/crashreporter"
     ) {
         reports?.let {
             item {

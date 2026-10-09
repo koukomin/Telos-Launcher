@@ -68,7 +68,7 @@ internal class LauncherSettingsComponent(
                         IconButton(onClick = {}) {
                             Icon(
                                 painter = painterResource(R.drawable.arrow_back_24px),
-                                contentDescription = "Back"
+                                contentDescription = null
                             )
                         }
                     },

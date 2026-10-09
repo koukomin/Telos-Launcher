@@ -39,7 +39,7 @@ fun PluginsSettingsScreen() {
     val disabledPackages by viewModel.disabledPluginPackages.collectAsState(emptyList())
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_plugins),
-        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/concepts/plugins"
+        helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/concepts/plugins"
     ) {
         when {
             pluginPackages?.isEmpty() == true -> {

@@ -71,7 +71,7 @@ fun WeatherIntegrationSettingsScreen() {
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_weatherwidget),
-        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/integrations/weather"
+        helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/integrations/weather"
     ) {
         item {
             PreferenceCategory {

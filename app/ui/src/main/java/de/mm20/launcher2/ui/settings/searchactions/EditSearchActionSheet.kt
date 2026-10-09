@@ -540,7 +540,7 @@ fun CustomizeWebSearch(viewModel: EditSearchActionSheetVM) {
                                             .build()
                                             .launchUrl(
                                                 context,
-                                                Uri.parse("https://kvaesitso.mm20.de/docs/user-guide/search/quickactions#web-search")
+                                                Uri.parse("https://koukomin.github.io/Telos-Launcher/docs/user-guide/search/quickactions#web-search")
                                             )
                                     },
                                 color = MaterialTheme.colorScheme.secondary,
