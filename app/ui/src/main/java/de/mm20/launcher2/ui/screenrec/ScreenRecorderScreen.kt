@@ -185,7 +185,10 @@ fun ScreenRecorderScreen() {
                         }
                         Text(stringResource(R.string.screenrec_start), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 12.dp))
                     }
-                    ScreenRecStatus.Countdown -> Text(state.countdown.toString(), fontSize = 72.sp, fontWeight = FontWeight.Light)
+                    ScreenRecStatus.Countdown -> {
+                        Text(state.countdown.toString(), fontSize = 72.sp, fontWeight = FontWeight.Light)
+                        TextButton(onClick = { ScreenRecorderService.stop(context) }) { Text(stringResource(R.string.voice_cancel)) }
+                    }
                     ScreenRecStatus.Recording, ScreenRecStatus.Paused -> {
                         Text(
                             stringResource(if (state.status == ScreenRecStatus.Paused) R.string.screenrec_paused else R.string.screenrec_recording),
@@ -203,7 +206,8 @@ fun ScreenRecorderScreen() {
                                 )
                             }
                             Box(
-                                Modifier.size(72.dp).clip(CircleShape).background(Brush.verticalGradient(listOf(Color(0xFFFF7A6E), Color(0xFFE53935)))).clickable { ScreenRecorderService.stop(context) },
+                                Modifier.size(72.dp).clip(CircleShape).background(Brush.verticalGradient(listOf(Color(0xFFFF7A6E), Color(0xFFE53935))))
+                                    .clickable(onClickLabel = stringResource(R.string.voice_stop)) { ScreenRecorderService.stop(context) },
                                 contentAlignment = Alignment.Center,
                             ) { Box(Modifier.size(24.dp).clip(RoundedCornerShape(5.dp)).background(Color.White)) }
                         }
@@ -285,7 +289,7 @@ private fun RecordingRow(rec: ScreenRecording, onDelete: () -> Unit) {
                     runCatching {
                         context.startActivity(
                             Intent.createChooser(
-                                Intent(Intent.ACTION_SEND).setType("video/mp4").putExtra(Intent.EXTRA_STREAM, rec.uri).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION),
+                                Intent(Intent.ACTION_SEND).setType("video/mp4").putExtra(Intent.EXTRA_STREAM, de.mm20.launcher2.ui.screenshot.ScreenshotController.shareableUri(context, rec.uri)).addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION),
                                 null,
                             ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         )
@@ -378,8 +382,8 @@ fun ScreenRecorderSettingsScreen() {
                     title = stringResource(R.string.screenrec_countdown_setting),
                     items = listOf(
                         ListPreferenceItem(stringResource(R.string.screenrec_countdown_none), 0),
-                        ListPreferenceItem("3 s", 3),
-                        ListPreferenceItem("5 s", 5),
+                        ListPreferenceItem(stringResource(R.string.au_capture_seconds, 3), 3),
+                        ListPreferenceItem(stringResource(R.string.au_capture_seconds, 5), 5),
                     ),
                     value = countdown,
                     onValueChanged = { countdown = it; settings.countdown = it },

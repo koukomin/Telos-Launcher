@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_store_msg_link_unreadable">This link could not be read</string>
+    <string name="au_store_msg_app_added">App added</string>
+    <string name="au_store_msg_already_listed">Already in your list</string>
+    <string name="au_store_msg_unsupported">This app is not supported</string>
+    <string name="au_store_msg_updates_available">Updates available: %1$d</string>
+    <string name="au_store_msg_up_to_date_unreachable">Up to date. Sources that could not be reached: %1$d</string>
+    <string name="au_store_msg_all_up_to_date">Everything is up to date</string>
+    <string name="au_store_msg_source_unreachable">Could not reach the source of %1$s</string>
+    <string name="au_store_msg_exported">Exported (Obtainium format)</string>
+    <string name="au_store_msg_export_failed">Export failed</string>
+    <string name="au_store_msg_read_failed">Could not read the file</string>
+    <string name="au_store_msg_imported_added">%1$d added</string>
+    <string name="au_store_msg_imported_skipped">%1$d already there</string>
+    <string name="au_store_msg_imported_unsupported">%1$d not supported</string>
+    <string name="au_store_msg_not_obtainium">This is not an Obtainium export file</string>
+    <string name="au_store_msg_add_failed">Could not add this address</string>
+    <string name="au_store_msg_install_failed">Installation failed</string>
+    <string name="au_store_msg_installed_found">%1$d of %2$d found and added</string>
+    <string name="au_store_pinned">Pinned</string>
+    <string name="au_store_version_available">v%1$s available</string>
+    <string name="au_store_action_page">Page</string>
+    <string name="au_store_action_update">Update</string>
+    <string name="au_store_src_direct">Direct download</string>
+    <string name="au_store_src_play">Play Store</string>
+    <string name="au_store_hours_short">%1$d h</string>
+    <string name="au_store_no_installed_candidates">There are no other apps to add</string>
+</resources>

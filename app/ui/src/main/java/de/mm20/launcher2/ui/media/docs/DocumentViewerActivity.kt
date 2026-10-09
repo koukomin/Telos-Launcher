@@ -243,7 +243,11 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
     val office = (state as? DocState.Office)?.controller
     BackHandler(enabled = editing || office?.editing == true) {
         if (office != null) { if (office.isDirty) confirmDiscard = true else office.discard() }
-        else editing = false
+        else {
+            val t = state as? DocState.Text
+            // unsaved text edits are not thrown away silently
+            if (t != null && editText != t.text) confirmDiscard = true else editing = false
+        }
     }
 
     fun savedMessage() { message = context.getString(R.string.od_saved) }
@@ -439,12 +443,12 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
         }
     }
 
-    if (confirmDiscard && office != null) {
+    if (confirmDiscard && (office != null || editing)) {
         AlertDialog(
             onDismissRequest = { confirmDiscard = false },
             title = { Text(stringResource(R.string.od_discard_title)) },
             text = { Text(stringResource(R.string.od_discard_text)) },
-            confirmButton = { TextButton(onClick = { confirmDiscard = false; office.discard() }) { Text(stringResource(R.string.od_discard)) } },
+            confirmButton = { TextButton(onClick = { confirmDiscard = false; if (office != null) office.discard() else editing = false }) { Text(stringResource(R.string.od_discard)) } },
             dismissButton = { TextButton(onClick = { confirmDiscard = false }) { Text(stringResource(R.string.od_keep_editing)) } },
         )
     }

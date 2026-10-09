@@ -103,9 +103,9 @@ internal class IslandProvider(private val context: Context) {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
 
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) ==
-            PackageManager.PERMISSION_GRANTED
-        ) {
+        // areNotificationsEnabled() covers POST_NOTIFICATIONS on API 33+ and the per-app switch below it
+        // (checkSelfPermission(POST_NOTIFICATIONS) reports "denied" on API 26-32 even when notifications work).
+        if (NotificationManagerCompat.from(context).areNotificationsEnabled()) {
             NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)
         } else {
             // Not granted - degrade silently, same as every other best-effort privileged

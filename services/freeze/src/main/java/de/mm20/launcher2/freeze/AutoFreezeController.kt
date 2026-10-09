@@ -234,9 +234,9 @@ class AutoFreezeController internal constructor(
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .build()
 
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) ==
-            PackageManager.PERMISSION_GRANTED
-        ) {
+        // areNotificationsEnabled() covers POST_NOTIFICATIONS on API 33+ and the per-app switch below it
+        // (checkSelfPermission(POST_NOTIFICATIONS) reports "denied" on API 26-32 even when notifications work).
+        if (NotificationManagerCompat.from(context).areNotificationsEnabled()) {
             NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, notification)
         }
     }
