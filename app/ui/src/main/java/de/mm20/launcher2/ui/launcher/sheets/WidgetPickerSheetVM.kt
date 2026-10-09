@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher.sheets
 import de.mm20.launcher2.services.widgets.WidgetsService
 import android.appwidget.AppWidgetProviderInfo
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import androidx.annotation.StringRes
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -87,8 +88,10 @@ class WidgetPickerSheetVM(
             widgets.filter {
                 if (filter1x1) {
                     // Check if widget fits in 1x1. Standard cell size is roughly 70-80dp.
-                    // Most 1x1 widgets declare min size < 100dp.
-                    it.minWidth < 100 && it.minHeight < 100
+                    // Most 1x1 widgets declare min size < 100dp. AppWidgetProviderInfo reports
+                    // its sizes in pixels, so convert before comparing.
+                    val density = Resources.getSystem().displayMetrics.density
+                    it.minWidth / density < 100 && it.minHeight / density < 100
                 } else true
             }.let { filtered ->
                 if (query.isBlank()) return@combine filtered

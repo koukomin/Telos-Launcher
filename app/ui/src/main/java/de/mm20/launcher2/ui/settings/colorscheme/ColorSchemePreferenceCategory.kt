@@ -16,13 +16,16 @@ import androidx.compose.material3.FilledTonalIconToggleButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.IconToggleButton
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
 
@@ -60,7 +63,7 @@ fun ColorSchemePreferenceCategory(
                 ) {
                     Icon(
                         painterResource(R.drawable.light_mode_24px),
-                        null
+                        stringResource(R.string.preference_theme_light)
                     )
                 }
                 FilledTonalIconToggleButton(
@@ -69,7 +72,7 @@ fun ColorSchemePreferenceCategory(
                 ) {
                     Icon(
                         painterResource(R.drawable.dark_mode_24px),
-                        null
+                        stringResource(R.string.preference_theme_dark)
                     )
                 }
             }
@@ -97,7 +100,13 @@ fun ColorSchemePreferenceCategory(
                         .padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    preview()
+                    // MaterialTheme alone does not update LocalContentColor, so plain text in the
+                    // preview would otherwise use the colour of the surrounding (real) theme.
+                    CompositionLocalProvider(
+                        LocalContentColor provides MaterialTheme.colorScheme.onSurface
+                    ) {
+                        preview()
+                    }
                 }
             }
             colorPreferences()

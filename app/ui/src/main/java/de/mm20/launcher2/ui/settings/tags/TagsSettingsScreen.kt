@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.settings.tags
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
@@ -12,11 +13,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -41,10 +44,11 @@ fun TagsSettingsScreen() {
     val viewModel: TagsSettingsScreenVM = viewModel()
 
     val tags by remember { viewModel.tags }.collectAsState(emptyList())
+    var tagToDelete by rememberSaveable { mutableStateOf<String?>(null) }
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_tags),
-        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/concepts/tags"
+        helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/concepts/tags"
     ) {
         item {
             PreferenceCategory {
@@ -66,7 +70,10 @@ fun TagsSettingsScreen() {
                         },
                         controls = {
                             IconButton(onClick = { showMenu = true }) {
-                                Icon(painterResource(R.drawable.more_vert_24px), null)
+                                Icon(
+                                    painterResource(R.drawable.more_vert_24px),
+                                    stringResource(R.string.au3_searchset_more_options)
+                                )
                             }
                             DropdownMenuPopup(
                                 expanded = showMenu,
@@ -98,7 +105,7 @@ fun TagsSettingsScreen() {
                                             )
                                         },
                                         onClick = {
-                                            viewModel.deleteTag(tag)
+                                            tagToDelete = tag
                                             showMenu = false
                                         }
                                     )
@@ -154,6 +161,25 @@ fun TagsSettingsScreen() {
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
         }
+    }
+    tagToDelete?.let { deleting ->
+        AlertDialog(
+            onDismissRequest = { tagToDelete = null },
+            text = { Text(stringResource(R.string.au3_searchset_tag_delete_confirm, deleting)) },
+            dismissButton = {
+                TextButton(onClick = { tagToDelete = null }) {
+                    Text(stringResource(android.R.string.cancel))
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.deleteTag(deleting)
+                    tagToDelete = null
+                }) {
+                    Text(stringResource(R.string.menu_delete))
+                }
+            },
+        )
     }
     EditTagSheet(
         expanded = viewModel.editTag.value != null,

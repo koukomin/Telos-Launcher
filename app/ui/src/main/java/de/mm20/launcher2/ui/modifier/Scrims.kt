@@ -28,43 +28,41 @@ fun Modifier.verticalScrims(
     if (top == 0.dp && bottom == 0.dp) return this
 
     return drawWithCache {
+        val topColors = if (top > 0.dp) createColors(
+            1f - amount,
+            top.roundToPx() + 1,
+        ) else emptyList()
+        val bottomColors = if (bottom > 0.dp) createColors(
+            1f - amount,
+            bottom.roundToPx() + 1,
+            reverse = true
+        ) else emptyList()
+
+        val topSteps = if (top > 0.dp) createColorSteps(
+            size.height,
+            top.toPx() * 1.3f,
+            top.roundToPx() + 1
+        ) else emptyList()
+        val bottomSteps = if (bottom > 0.dp) createColorSteps(
+            size.height,
+            bottom.toPx() * 1.3f,
+            bottom.roundToPx() + 1,
+            reverse = true
+        ) else emptyList()
+
+        val paint = Paint().apply {
+            shader = LinearGradientShader(
+                Offset.Zero,
+                Offset(0f, size.height),
+                colors = topColors + bottomColors,
+                colorStops = topSteps + bottomSteps
+            )
+        }
+        val rect = Rect(0f, 0f, size.width, size.height)
         onDrawWithContent {
-            val topColors = if (top > 0.dp) createColors(
-                1f - amount,
-                top.roundToPx() + 1,
-            ) else emptyList()
-            val bottomColors = if (bottom > 0.dp) createColors(
-                1f - amount,
-                bottom.roundToPx() + 1,
-                reverse = true
-            ) else emptyList()
-
-            val topSteps = if (top > 0.dp) createColorSteps(
-                size.height,
-                top.toPx() * 1.3f,
-                top.roundToPx() + 1
-            ) else emptyList()
-            val bottomSteps = if (bottom > 0.dp) createColorSteps(
-                size.height,
-                bottom.toPx() * 1.3f,
-                bottom.roundToPx() + 1,
-                reverse = true
-            ) else emptyList()
-
-            val paint = Paint().apply {
-                shader = LinearGradientShader(
-                    Offset.Zero,
-                    Offset(0f, size.height),
-                    colors = topColors + bottomColors,
-                    colorStops = topSteps + bottomSteps
-                )
-            }
             drawContent()
             drawIntoCanvas {
-                it.drawRect(
-                    Rect(0f, 0f, size.width, size.height),
-                    paint
-                )
+                it.drawRect(rect, paint)
             }
         }
     }

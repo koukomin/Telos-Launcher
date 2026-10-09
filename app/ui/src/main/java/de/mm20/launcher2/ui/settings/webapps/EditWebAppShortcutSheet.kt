@@ -39,6 +39,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -81,18 +82,18 @@ fun EditWebAppShortcutSheet(
         expanded = expanded,
         onDismissRequest = onDismiss,
     ) {
-        var label by remember(existing) { mutableStateOf(existing?.label ?: "") }
+        var label by rememberSaveable(existing) { mutableStateOf(existing?.label ?: "") }
         // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===
-        var url by remember(existing) { mutableStateOf(existing?.url ?: "https://") }
+        var url by rememberSaveable(existing) { mutableStateOf(existing?.url ?: "https://") }
         // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
-        var iconUri by remember(existing) { mutableStateOf(existing?.iconUri) }
-        var faviconUrl by remember(existing) { mutableStateOf(existing?.faviconUrl) }
-        var rendererPackage by remember(existing) { mutableStateOf(existing?.rendererPackage) }
-        var showInGrid by remember(existing) { mutableStateOf(existing?.showInGrid ?: true) }
-        var showInPanel by remember(existing) { mutableStateOf(existing?.showInPanel ?: false) }
+        var iconUri by rememberSaveable(existing) { mutableStateOf(existing?.iconUri) }
+        var faviconUrl by rememberSaveable(existing) { mutableStateOf(existing?.faviconUrl) }
+        var rendererPackage by rememberSaveable(existing) { mutableStateOf(existing?.rendererPackage) }
+        var showInGrid by rememberSaveable(existing) { mutableStateOf(existing?.showInGrid ?: true) }
+        var showInPanel by rememberSaveable(existing) { mutableStateOf(existing?.showInPanel ?: false) }
         var iconSource by remember(existing) { mutableStateOf(existing?.iconSource ?: WebAppShortcut.IconSource.Website) }
-        var customCss by remember(existing) { mutableStateOf(existing?.customCss ?: "") }
-        var notificationsEnabled by remember(existing) { mutableStateOf(existing?.notificationsEnabled ?: false) }
+        var customCss by rememberSaveable(existing) { mutableStateOf(existing?.customCss ?: "") }
+        var notificationsEnabled by rememberSaveable(existing) { mutableStateOf(existing?.notificationsEnabled ?: false) }
         var groupId by remember(existing, groups) { 
             mutableStateOf(existing?.let { e -> groups.find { it.appKeys.contains(e.key) }?.id }) 
         }
@@ -266,7 +267,7 @@ fun EditWebAppShortcutSheet(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = stringResource(R.string.preference_screen_dock),
+                    text = stringResource(R.string.preference_screen_web_apps_panel),
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.weight(1f),
                 )
@@ -443,7 +444,8 @@ fun EditWebAppShortcutSheet(
                     Text(stringResource(android.R.string.cancel))
                 }
                 TextButton(
-                    enabled = label.isNotBlank() && url.isNotBlank(),
+                    enabled = label.isNotBlank() &&
+                        url.trim().removePrefix("https://").removePrefix("http://").isNotBlank(),
                     onClick = {
                         onSave(
                             label.trim(), url.trim(), iconUri, faviconUrl, rendererPackage,

@@ -48,7 +48,8 @@ suspend fun resolveDefaultSystemApps(
             // what the repository indexes under and what upsert() below stores. A hand-rolled
             // key here would silently point at a searchable that's never actually in the DB.
             val app = appRepository.findOne(pkg, Process.myUserHandle()).first()
-            if (app != null) {
+            // The same app can handle several of the intents (e.g. a messaging app that also dials)
+            if (app != null && items.none { it is DockItem.Searchable && it.key == app.key }) {
                 searchableRepository.upsert(app)
                 items.add(DockItem.Searchable(app.key))
             }

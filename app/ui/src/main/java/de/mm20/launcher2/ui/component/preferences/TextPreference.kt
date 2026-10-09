@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.component.preferences
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.stringResource
 
 @Composable
@@ -13,7 +14,7 @@ fun TextPreference(
     onValueChanged: (String) -> Unit,
     placeholder: String? = null
 ) {
-    var showDialog by remember { mutableStateOf(false) }
+    var showDialog by rememberSaveable { mutableStateOf(false) }
     Preference(
         title = title,
         summary = summary,
@@ -22,7 +23,7 @@ fun TextPreference(
     )
 
     if (showDialog) {
-        var textFieldValue by remember { mutableStateOf(value) }
+        var textFieldValue by rememberSaveable { mutableStateOf(value) }
         AlertDialog(
             onDismissRequest = { showDialog = false },
             title = {

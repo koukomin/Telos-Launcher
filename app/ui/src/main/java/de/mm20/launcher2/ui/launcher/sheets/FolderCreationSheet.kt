@@ -14,7 +14,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,8 +30,8 @@ fun FolderCreationSheet(
     onCreate: (name: String, isCover: Boolean) -> Unit
 ) {
     DismissableBottomSheet(expanded = expanded, onDismissRequest = onDismiss) {
-        var name by remember { mutableStateOf("") }
-        var isCover by remember { mutableStateOf(false) }
+        var name by rememberSaveable { mutableStateOf("") }
+        var isCover by rememberSaveable { mutableStateOf(false) }
 
         Column(
             modifier = Modifier
@@ -78,7 +78,7 @@ fun FolderCreationSheet(
                     Text(stringResource(android.R.string.cancel))
                 }
                 Button(
-                    onClick = { onCreate(name, isCover) },
+                    onClick = { onCreate(name.trim(), isCover) },
                     enabled = name.isNotBlank(),
                     modifier = Modifier.padding(start = 8.dp)
                 ) {

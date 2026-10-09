@@ -218,6 +218,14 @@ fun WebAppsSettingsScreen() {
         }
         item {
             PreferenceCategory(title = stringResource(R.string.web_apps_panel_items)) {
+                if (shortcuts.isEmpty()) {
+                    Text(
+                        text = stringResource(R.string.au3_secplug_web_apps_empty),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                    )
+                }
                 for (shortcut in shortcuts) {
                     Preference(
                         icon = {
@@ -323,7 +331,7 @@ fun WebAppsSettingsScreen() {
     )
 
     if (showCreateGroupDialog) {
-        var groupName by remember { mutableStateOf("") }
+        var groupName by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf("") }
         AlertDialog(
             onDismissRequest = { showCreateGroupDialog = false },
             title = { Text(stringResource(R.string.web_app_group_create_title)) },
@@ -356,7 +364,7 @@ fun WebAppsSettingsScreen() {
     }
 
     if (groupToRename != null) {
-        var groupName by remember { mutableStateOf(groupToRename!!.name) }
+        var groupName by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(groupToRename!!.name) }
         AlertDialog(
             onDismissRequest = { groupToRename = null },
             title = { Text(stringResource(R.string.web_app_group_rename_title)) },

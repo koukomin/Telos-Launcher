@@ -56,13 +56,13 @@ fun LazyListScope.AppResults(
                 verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top,
             ) {
                 PrimaryScrollableTabRow(
-                    selectedTabIndex = selectedProfileIndex,
+                    selectedTabIndex = selectedProfileIndex.coerceIn(0, profiles.lastIndex),
                     containerColor = Color.Transparent,
                     edgePadding = 16.dp,
                     divider = {}
                 ) {
                     for ((i, profile) in profiles.withIndex()) {
-                        val selected = selectedProfileIndex == profiles.indexOf(profile)
+                        val selected = selectedProfileIndex.coerceIn(0, profiles.lastIndex) == i
                         LeadingIconTab(
                             selected = selected,
                             text = {
@@ -103,7 +103,7 @@ fun LazyListScope.AppResults(
                     HorizontalDivider()
                 }
 
-                val profileType = profiles[selectedProfileIndex].type
+                val profileType = profiles[selectedProfileIndex.coerceIn(0, profiles.lastIndex)].type
                 if (profileType != Profile.Type.Personal) {
                     if (isProfileLocked) {
                         Column(
@@ -143,7 +143,7 @@ fun LazyListScope.AppResults(
                                     modifier = Modifier.padding(top = 32.dp),
                                     onClick = {
                                         onProfileLockChange?.invoke(
-                                            profiles[selectedProfileIndex],
+                                            profiles[selectedProfileIndex.coerceIn(0, profiles.lastIndex)],
                                             false
                                         )
                                     },
@@ -172,7 +172,7 @@ fun LazyListScope.AppResults(
                                 .fillMaxWidth(),
                             onClick = {
                                 onProfileLockChange?.invoke(
-                                    profiles[selectedProfileIndex],
+                                    profiles[selectedProfileIndex.coerceIn(0, profiles.lastIndex)],
                                     true
                                 )
                             },

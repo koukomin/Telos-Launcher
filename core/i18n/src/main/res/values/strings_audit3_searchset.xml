@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au3_searchset_intent_query">Query</string>
+    <string name="au3_searchset_intent_data">Data</string>
+    <string name="au3_searchset_intent_string_extra">String extra</string>
+    <string name="au3_searchset_intent_extra_key">Extra key</string>
+    <string name="au3_searchset_intent_data_template">Data template</string>
+    <string name="au3_searchset_intent_extra_template">String extra template</string>
+    <string name="au3_searchset_intent_data_template_hint">The URI template that is used to construct the intent\'s data URI. Use ‘${1}’ as a placeholder for the actual search term</string>
+    <string name="au3_searchset_intent_extra_template_hint">The template that is used to construct the string that is passed to the intent as a string extra. Use ‘${1}’ as a placeholder for the actual search term</string>
+    <string name="au3_searchset_intent_base">Base intent</string>
+    <string name="au3_searchset_intent_action">Action</string>
+    <string name="au3_searchset_intent_category">Category</string>
+    <string name="au3_searchset_intent_type">Type</string>
+    <string name="au3_searchset_intent_package">Package</string>
+    <string name="au3_searchset_intent_class_name">Class name</string>
+    <string name="au3_searchset_intent_extras">Extras</string>
+    <string name="au3_searchset_intent_key">Key</string>
+    <string name="au3_searchset_icon_monochrome">Monochrome</string>
+    <string name="au3_searchset_type_string">String</string>
+    <string name="au3_searchset_type_integer">Integer</string>
+    <string name="au3_searchset_type_long">Long</string>
+    <string name="au3_searchset_type_float">Float</string>
+    <string name="au3_searchset_type_double">Double</string>
+    <string name="au3_searchset_type_boolean">Boolean</string>
+    <string name="au3_searchset_more_options">More options</string>
+    <string name="au3_searchset_tag_delete_confirm">Delete the tag “%1$s”? The items assigned to it are not deleted.</string>
+</resources>

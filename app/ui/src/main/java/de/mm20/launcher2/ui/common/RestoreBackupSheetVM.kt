@@ -37,15 +37,24 @@ class RestoreBackupSheetVM : ViewModel(), KoinComponent {
         restoreUri = uri
         state.value = RestoreBackupState.Parsing
         viewModelScope.launch {
-            val metadata = backupManager.readBackupMeta(uri)
+            val metadata = try {
+                backupManager.readBackupMeta(uri)
+            } catch (e: Exception) {
+                if (e is kotlinx.coroutines.CancellationException) throw e
+                android.util.Log.e("MM20", "Could not read backup", e)
+                null
+            }
             if (metadata == null) {
+                this@RestoreBackupSheetVM.metadata.value = null
+                compatibility.value = null
+                selected.value = emptySet()
                 state.value = RestoreBackupState.InvalidFile
             } else {
-                state.value = RestoreBackupState.Ready
                 compatibility.value = backupManager.checkCompatibility(metadata)
+                this@RestoreBackupSheetVM.metadata.value = metadata
+                selected.value = metadata.groups
+                state.value = RestoreBackupState.Ready
             }
-            this@RestoreBackupSheetVM.metadata.value = metadata
-            selected.value = metadata?.groups ?: emptySet()
         }
     }
 
@@ -55,12 +64,12 @@ class RestoreBackupSheetVM : ViewModel(), KoinComponent {
         viewModelScope.launch {
             state.value = RestoreBackupState.Restoring
             try {
-                backupManager.restore(uri, selected.value)
-                state.value = RestoreBackupState.Restored
+                val failed = backupManager.restore(uri, selected.value)
+                state.value = if (failed == 0) RestoreBackupState.Restored else RestoreBackupState.RestoredPartially
             } catch (e: Exception) {
                 if (e is kotlinx.coroutines.CancellationException) throw e
                 android.util.Log.e("MM20", "Restore failed", e)
-                state.value = RestoreBackupState.InvalidFile
+                state.value = RestoreBackupState.Failed
             }
         }
     }
@@ -72,4 +81,7 @@ enum class RestoreBackupState {
     Ready,
     Restoring,
     Restored,
+    /** Restored, but at least one part could not be restored */
+    RestoredPartially,
+    Failed,
 }

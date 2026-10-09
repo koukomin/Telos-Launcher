@@ -287,18 +287,25 @@ internal class PluginServiceImpl(
     }
 
     private fun getSignature(packageName: String): String? {
-        val signature = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            val pi = context.packageManager.getPackageInfo(
-                packageName,
-                PackageManager.GET_SIGNING_CERTIFICATES
-            )
-            pi.signingInfo?.apkContentsSigners?.firstOrNull()
-        } else {
-            val pi = context.packageManager.getPackageInfo(
-                packageName,
-                PackageManager.GET_SIGNATURES
-            )
-            pi.signatures?.firstOrNull()
+        val signature = try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                val pi = context.packageManager.getPackageInfo(
+                    packageName,
+                    PackageManager.GET_SIGNING_CERTIFICATES
+                )
+                pi.signingInfo?.apkContentsSigners?.firstOrNull()
+            } else {
+                @Suppress("DEPRECATION")
+                val pi = context.packageManager.getPackageInfo(
+                    packageName,
+                    PackageManager.GET_SIGNATURES
+                )
+                @Suppress("DEPRECATION")
+                pi.signatures?.firstOrNull()
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            // the package was uninstalled while the plugin list was being built
+            null
         }
         return if (signature != null) {
             val digest = MessageDigest.getInstance("SHA")

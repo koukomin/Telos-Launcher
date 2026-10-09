@@ -27,7 +27,14 @@ object CrashReporter {
                 f.lastModified() > now - 7 * 24 * 60 * 60 * 1000L
             }?.sortedByDescending { it.lastModified() }
         }
-        return files?.map { CrashReport.fromFile(it, false) } ?: emptyList()
+        return files?.mapNotNull {
+            try {
+                CrashReport.fromFile(it, false)
+            } catch (e: Exception) {
+                // Unreadable, empty or foreign file in the report directory: skip it
+                null
+            }
+        } ?: emptyList()
     }
 
     suspend fun getCrashReport(filePath: String): CrashReport {

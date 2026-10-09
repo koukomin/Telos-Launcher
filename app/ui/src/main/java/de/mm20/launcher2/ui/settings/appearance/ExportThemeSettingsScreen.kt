@@ -200,7 +200,7 @@ fun ExportThemeSettingsScreen() {
                                     shape = MenuDefaults.standaloneItemShape,
                                     text = { Text(stringResource(R.string.save_as_file)) },
                                     onClick = {
-                                        fileChooserLauncher.launch("${viewModel.themeName}.kvtheme")
+                                        fileChooserLauncher.launch("${viewModel.fileBaseName}.kvtheme")
                                         showDropdown = false
                                     },
                                     leadingIcon = {

@@ -401,7 +401,7 @@ private fun WebAppScreen(
                     IconButton(onClick = { showMenu = true }) {
                         Icon(
                             painterResource(R.drawable.more_vert_24px),
-                            contentDescription = null,
+                            contentDescription = stringResource(R.string.action_more_actions),
                         )
                     }
                     DropdownMenuPopup(
@@ -473,6 +473,11 @@ private fun WebAppScreen(
                     }
                 },
                 update = { container ->
+                    // Zoom controls setting applies live to every already created WebView
+                    webViewEntries.values.forEach {
+                        it.settings.setSupportZoom(zoomControlsEnabled)
+                        it.settings.builtInZoomControls = zoomControlsEnabled
+                    }
                     val key = activeKey
                     val isNewWebView = key !in webViewEntries
                     val wv = webViewEntries.getOrPut(key) {

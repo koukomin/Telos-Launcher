@@ -20,17 +20,24 @@ class WeatherLocationSearchDialogVM: ViewModel(), KoinComponent {
 
     private var debounceSearchJob: Job? = null
     suspend fun searchLocation(query: String) {
+        debounceSearchJob?.cancelAndJoin()
         if (query.isBlank()) {
             locationResults.value = emptyList()
             isSearchingLocation.value = false
             return
         }
-        debounceSearchJob?.cancelAndJoin()
         withContext(coroutineContext) {
             debounceSearchJob = launch {
                 isSearchingLocation.value = true
-                delay(1000)
-                locationResults.value = repository.searchLocations(query).first()
+                try {
+                    delay(1000)
+                    locationResults.value = repository.searchLocations(query).first()
+                } catch (e: kotlinx.coroutines.CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    // Offline or provider error: show "location not found" instead of crashing
+                    locationResults.value = emptyList()
+                }
                 isSearchingLocation.value = false
             }
         }

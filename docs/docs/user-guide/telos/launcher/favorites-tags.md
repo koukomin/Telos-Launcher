@@ -90,7 +90,7 @@ A tag can have an **icon** or an **emoji**.
 | Rename | Open the tag and change the name |
 | Merge | Rename a tag to the name of another one. Telos asks, then merges the contents |
 | Duplicate | The menu on the tag |
-| Delete | The menu on the tag. A tag with no items is deleted when you save it |
+| Delete | The menu on the tag. Telos asks for confirmation first. A tag with no items is deleted when you save it |
 
 ### Auto-organize
 
@@ -114,7 +114,7 @@ Details that matter:
 
 A pinned tag works as a folder of anything you tagged, not only apps, and its panel says "Nothing tagged
 yet" when empty. For a classic home screen folder, use Settings > Grid and icons > **Create folder**
-(pick at least two apps). It places the folder in the dock, and **Folder covers** shows its first icon
+(pick at least two apps). It places the folder in the dock (with the automatic dock, the folder simply shows among your favorites and the dock does not turn into a custom dock), and **Folder covers** shows its first icon
 as a fading lid while it opens.
 
 ## Hiding instead of removing

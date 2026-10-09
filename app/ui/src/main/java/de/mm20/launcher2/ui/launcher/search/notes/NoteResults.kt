@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher.search.notes
 
 import android.content.Intent
+import de.mm20.launcher2.ktx.tryStartActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,7 +25,7 @@ fun LazyListScope.NoteResults(notes: List<Note>, reverse: Boolean) {
             ListItemSurface(isFirst = index == 0, isLast = index == notes.lastIndex, reverse = reverse) {
                 Column(
                     Modifier.fillMaxWidth().clickable {
-                        context.startActivity(Intent().apply {
+                        context.tryStartActivity(Intent().apply {
                             setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
                             putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_NOTES)
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

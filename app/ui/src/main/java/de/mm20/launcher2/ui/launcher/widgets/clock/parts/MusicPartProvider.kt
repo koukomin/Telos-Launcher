@@ -157,6 +157,7 @@ class MusicPartProvider : PartProvider, KoinComponent {
                                 try {
                                     musicService.openPlayer()?.sendWithBackgroundPermission(context)
                                 } catch (e: PendingIntent.CanceledException) {
+                                    CrashReporter.logException(e)
                                 }
                             },
                             onLongClick = {
@@ -222,7 +223,7 @@ class MusicPartProvider : PartProvider, KoinComponent {
                                 }
                             }
                         }
-                        if (supportedActions.skipToPrevious) {
+                        if (supportedActions.skipToNext) {
                             IconButton(onClick = { musicService.next() }) {
                                 Icon(
                                     painterResource(R.drawable.skip_next_24px),

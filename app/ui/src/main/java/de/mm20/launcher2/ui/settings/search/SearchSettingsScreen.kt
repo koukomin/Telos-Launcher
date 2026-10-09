@@ -208,7 +208,7 @@ fun SearchSettingsScreen() {
                         PreferenceWithSwitch(
                             title = stringResource(R.string.preference_search_calendar),
                             summary = stringResource(R.string.preference_search_calendar_summary),
-                            switchValue = calendar == true,
+                            switchValue = calendar == true && hasCalendarPermission == true,
                             onSwitchChanged = {
                                 viewModel.setCalendarSearch(it)
                             },

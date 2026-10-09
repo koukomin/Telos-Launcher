@@ -297,6 +297,7 @@ format) and one part per component.
 | Cloud account logins (Nextcloud, ownCloud) | Not stored in the backup |
 | Plugin enable state and plugin allow lists | Plugin enablement is rebuilt by scanning; allow lists live in the plugin app |
 | Messages and phone secrets | Telos Phone and Messages passwords and keys (TMDB, subtitle API, SIP and remote phonebook passwords) are blanked, as are hidden and protected numbers and the last dial pad digits |
+| Custom lock PIN hash | A backup file must not carry something that can be brute-forced offline; a restore keeps the device's own PIN lock |
 | Wallpaper, installed icon packs, app data of other apps | Not part of the launcher database |
 
 ::: tip Secrets and restore
@@ -307,7 +308,7 @@ this device. A SIP or remote phonebook account that has no password after restor
 
 ### Compatibility check
 
-The backup format is `1.9`. A restore compares it with the current format.
+The backup format is `1.11`. A restore compares it with the current format.
 
 | Backup format | Result |
 | --- | --- |
@@ -475,7 +476,7 @@ The crash guard that switches off repeatedly crashing media apps is described on
 | --- | --- | --- |
 | Version | About | App version |
 | Build information | About > Build information | Build type, version details, signature hash, and the Features list (weather provider availability: Met No, OpenWeatherMap) |
-| License | About | The app license (GPL-3.0, except the plugin SDK and shared core, which are Apache-2.0) |
+| License | About | The app license (GPL-3.0, except the plugin SDK and shared core, which are Apache-2.0). The open source licenses screen also lists the Telos third-party libraries (Media3, sshj, smbj, Commons Net and Compress, PdfBox-Android, ZXing, libtorrent4j, youtubedl-android, RethinkDNS, Transistor, Shizuku API and others) |
 | GitHub link | About > Links | Project repository |
 | Open source libraries | About | List of third-party libraries with descriptions |
 

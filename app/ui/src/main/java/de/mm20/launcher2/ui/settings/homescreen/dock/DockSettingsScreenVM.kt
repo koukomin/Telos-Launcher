@@ -147,6 +147,8 @@ class DockSettingsScreenVM : ViewModel(), KoinComponent {
         val current = dockPages.value.toMutableList()
         if (page !in current.indices) return
         val pageItems = current[page].toMutableList()
+        // Pad so that dragging onto/from empty trailing slots works (the list is stored sparse).
+        while (pageItems.size < dockRows.value * dockColumns.value) pageItems.add(DockItem.Searchable(""))
         if (from !in pageItems.indices || to !in pageItems.indices) return
 
         val item = pageItems.removeAt(from)

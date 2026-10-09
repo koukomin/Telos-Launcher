@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -37,7 +38,7 @@ fun SipSettings() {
     val snap by settings.snapshot.collectAsStateWithLifecycle(null)
     val registration by SipEngine.registration.collectAsStateWithLifecycle()
     val error by SipEngine.lastError.collectAsStateWithLifecycle()
-    var showDialog by remember { mutableStateOf(false) }
+    var showDialog by rememberSaveable { mutableStateOf(false) }
     val current = snap ?: return
     val context = androidx.compose.ui.platform.LocalContext.current
 
@@ -60,12 +61,14 @@ fun SipSettings() {
     }
 
     val status = when {
-        !SipEngine.available -> "SIP is not available in this build or on this device (needs Android 9 or newer)"
-        !current.sipEnabled -> "Switched off"
-        registration == SipRegistration.Registered -> "Registered, ready for calls"
-        registration == SipRegistration.Registering -> "Connecting…"
-        registration == SipRegistration.Failed -> "Registration failed" + if (error.isNotBlank()) ": $error" else ""
-        else -> "Starting…"
+        !SipEngine.available -> stringResource(R.string.au3_commsfreeze_sip_unavailable)
+        !current.sipEnabled -> stringResource(R.string.au3_commsfreeze_sip_off)
+        registration == SipRegistration.Registered -> stringResource(R.string.au3_commsfreeze_sip_registered)
+        registration == SipRegistration.Registering -> stringResource(R.string.au3_commsfreeze_sip_connecting)
+        registration == SipRegistration.Failed ->
+            if (error.isNotBlank()) stringResource(R.string.au3_commsfreeze_sip_failed_error, error)
+            else stringResource(R.string.au3_commsfreeze_sip_failed)
+        else -> stringResource(R.string.au3_commsfreeze_sip_starting)
     }
 
     PreferenceCategory(title = stringResource(R.string.hc_sip_voip_account)) {
@@ -78,16 +81,16 @@ fun SipSettings() {
         )
         Preference(
             title = stringResource(R.string.hc_account),
-            summary = if (current.sipUser.isBlank()) "Not configured"
+            summary = if (current.sipUser.isBlank()) stringResource(R.string.au3_commsfreeze_not_configured)
             else "${current.sipUser} @ ${current.sipDomain}",
             onClick = { showDialog = true },
         )
         ListPreference(
             title = stringResource(R.string.hc_outgoing_calls),
             items = listOf(
-                "Never, receive calls only" to "off",
-                "Offer a SIP button when calling" to "choose",
-                "Use SIP by default" to "default",
+                stringResource(R.string.au3_commsfreeze_sip_out_off) to "off",
+                stringResource(R.string.au3_commsfreeze_sip_out_choose) to "choose",
+                stringResource(R.string.au3_commsfreeze_sip_out_default) to "default",
             ),
             value = current.sipOutgoing,
             onValueChanged = { settings.setSipOutgoing(it) },

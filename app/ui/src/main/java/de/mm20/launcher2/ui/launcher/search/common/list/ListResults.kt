@@ -33,6 +33,9 @@ fun <T : SavableSearchable> LazyListScope.ListResults(
     reverse: Boolean = false,
     selectedIndex: Int = -1,
 ) {
+    // Lazy list keys must be unique; a duplicate key would crash the whole search list
+    @Suppress("NAME_SHADOWING")
+    val items = items.distinctBy { it.key }
     if (before != null) {
         item(
             key = "$key-before",

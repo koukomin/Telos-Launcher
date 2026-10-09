@@ -115,7 +115,7 @@ fun MainSettingsScreen() {
                     }
                 )
                 Preference(
-                    icon = R.drawable.apps_24px,
+                    icon = R.drawable.widgets_24px,
                     title = stringResource(R.string.hc_floating_launcher),
                     summary = stringResource(R.string.hc_floating_panel_with_quick_access_to_your),
                     onClick = {

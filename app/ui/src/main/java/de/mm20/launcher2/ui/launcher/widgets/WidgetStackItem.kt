@@ -61,7 +61,7 @@ fun WidgetStackItem(
                     enabled = page > 0,
                     onClick = { scope.launch { pagerState.animateScrollToPage(page - 1) } },
                 ) {
-                    Icon(painterResource(R.drawable.chevron_backward_24px), null)
+                    Icon(painterResource(R.drawable.chevron_backward_24px), stringResource(R.string.au3_launcher2_previous))
                 }
                 TextButton(
                     modifier = Modifier.weight(1f),
@@ -81,7 +81,7 @@ fun WidgetStackItem(
                     enabled = page < widgets.lastIndex,
                     onClick = { scope.launch { pagerState.animateScrollToPage(page + 1) } },
                 ) {
-                    Icon(painterResource(R.drawable.chevron_forward_24px), null)
+                    Icon(painterResource(R.drawable.chevron_forward_24px), stringResource(R.string.action_next))
                 }
                 AnimatedVisibility(editMode) {
                     Row {

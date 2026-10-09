@@ -25,7 +25,7 @@ fun UnitConverterSettingsScreen() {
 
     PreferenceScreen(
         title = stringResource(R.string.preference_search_unitconverter),
-        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/search/unit-converter"
+        helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/search/unit-converter"
     ) {
         item {
             PreferenceCategory {

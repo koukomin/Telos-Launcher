@@ -369,7 +369,7 @@ Frozen apps can show a snowflake badge or turn gray (a style choice in the Freez
 | Setting | Where | Default | Effect |
 | --- | --- | --- | --- |
 | Charging animation | Home screen > Animations | On | Bubbles rising from the navigation bar while charging. The intensity grows with the charging current |
-| Reduce animations | Advanced settings > Performance | Off | Instant transitions |
+| Reduce animations | Advanced settings > Performance | Off | Instant transitions, and the bounce is switched off |
 | Animation speed | Performance | 1.0 | 0.5 to 2.0 in steps of 0.25. Hidden while Reduce animations is on |
 | Bounce physics | Performance | no bounce (100 percent damping) | Slider 0 to 100 in steps of 10. Lower values overshoot after a gesture |
 | Search debounce | Performance | Off (0 ms) | 0 to 500 ms in steps of 50 before search runs |
@@ -460,7 +460,7 @@ Settings > Language and region.
 | Setting | Default | Effect |
 | --- | --- | --- |
 | Language | System default | Opens the Android per-app language screen. Android 13 or newer, disabled below that. About 45 translation folders ship, including Greek and German |
-| Form of address | not set | Only shown while the language is French or Spanish. Neutral, feminine or masculine |
+| Form of address | not set | Shown for every language that ships feminine and masculine variants (Arabic, Belarusian, Catalan, Czech, Greek, Spanish, French, Hebrew, Hindi, Italian, Polish, Portuguese, Romanian, Russian, Ukrainian). Neutral, feminine or masculine |
 | Transliteration | Automatic | Which transliterator normalizes text for search. Needs Android 10 and more than two choices; also can be turned off |
 | Time format | System | System, 12-hour or 24-hour |
 | Measurement system | System | System, Metric, UK or US |

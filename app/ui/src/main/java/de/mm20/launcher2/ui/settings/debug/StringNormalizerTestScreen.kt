@@ -13,7 +13,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.ui.R
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.search.StringNormalizer
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -27,7 +29,7 @@ data object StringNormalizerTestRoute: NavKey
 @Composable
 fun StringNormalizerTestScreen() {
     PreferenceScreen(
-        title = "String normalization test"
+        title = stringResource(R.string.au3_sysb_normalizer_title)
     ) {
         item {
             val normalizer: StringNormalizer = koinInject()

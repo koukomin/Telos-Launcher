@@ -113,7 +113,7 @@ fun AppLockGateScreen(
             .background(MaterialTheme.colorScheme.surfaceContainer),
         contentAlignment = Alignment.Center,
     ) {
-        if (!instant) {
+        if (!instant || !authAvailable) {
             Column(
                 modifier = Modifier.padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,

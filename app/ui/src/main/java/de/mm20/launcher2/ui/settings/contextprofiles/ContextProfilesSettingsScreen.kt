@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.settings.contextprofiles
 
+import android.app.TimePickerDialog
+import android.text.format.DateFormat
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -79,8 +82,10 @@ fun ContextProfilesSettingsScreen() {
     val hasNotificationPolicyPermission by viewModel.hasNotificationPolicyPermission.collectAsStateWithLifecycle(null)
     val hasWriteSettingsPermission by viewModel.hasWriteSettingsPermission.collectAsStateWithLifecycle(null)
 
-    var editingProfile by remember { mutableStateOf<ContextProfile?>(null) }
-    var showNewProfileSheet by remember { mutableStateOf(false) }
+    var editingProfileId by rememberSaveable { mutableStateOf<String?>(null) }
+    var showNewProfileSheet by rememberSaveable { mutableStateOf(false) }
+    // a stable id for the profile being created, otherwise every recomposition would reset the sheet
+    var newProfileId by rememberSaveable { mutableStateOf(UUID.randomUUID().toString()) }
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_context_profiles)) {
         item {
@@ -103,13 +108,16 @@ fun ContextProfilesSettingsScreen() {
                             title = profile.name,
                             summary = triggerSummary(profile.trigger) +
                                     if (isManuallyActive) " · " + stringResource(R.string.context_profile_active_now) else "",
-                            onClick = { editingProfile = profile },
+                            onClick = { editingProfileId = profile.id },
                         )
                     }
                     Preference(
                         icon = R.drawable.add_24px,
                         title = stringResource(R.string.context_profile_add),
-                        onClick = { showNewProfileSheet = true },
+                        onClick = {
+                            newProfileId = UUID.randomUUID().toString()
+                            showNewProfileSheet = true
+                        },
                     )
                 }
             }
@@ -118,7 +126,7 @@ fun ContextProfilesSettingsScreen() {
 
     if (showNewProfileSheet) {
         ContextProfileEditSheet(
-            profile = ContextProfile(id = UUID.randomUUID().toString(), name = ""),
+            profile = remember(newProfileId) { ContextProfile(id = newProfileId, name = "") },
             isNew = true,
             manuallyActive = false,
             hasLocationPermission = hasLocationPermission,
@@ -137,7 +145,7 @@ fun ContextProfilesSettingsScreen() {
         )
     }
 
-    val profileBeingEdited = editingProfile
+    val profileBeingEdited = profiles.firstOrNull { it.id == editingProfileId }
     if (profileBeingEdited != null) {
         ContextProfileEditSheet(
             profile = profileBeingEdited,
@@ -155,12 +163,12 @@ fun ContextProfilesSettingsScreen() {
             onSave = { viewModel.saveProfile(it) },
             onDelete = {
                 viewModel.deleteProfile(profileBeingEdited.id)
-                editingProfile = null
+                editingProfileId = null
             },
             onSetManuallyActive = {
                 viewModel.setManualOverride(if (it) profileBeingEdited.id else null)
             },
-            onDismiss = { editingProfile = null },
+            onDismiss = { editingProfileId = null },
         )
     }
 }
@@ -273,15 +281,33 @@ private fun ContextProfileEditSheet(
                     )
                     when (val trigger = current.trigger) {
                         is ContextProfileTrigger.TimeWindow -> {
-                            Text(
-                                stringResource(
-                                    R.string.context_profile_trigger_time_summary,
-                                    "%02d:%02d".format(trigger.startHour, trigger.startMinute),
-                                    "%02d:%02d".format(trigger.endHour, trigger.endMinute),
-                                ),
-                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            val pickerContext = LocalContext.current
+                            fun pickTime(hour: Int, minute: Int, onPicked: (Int, Int) -> Unit) {
+                                TimePickerDialog(
+                                    pickerContext,
+                                    { _, h, m -> onPicked(h, m) },
+                                    hour,
+                                    minute,
+                                    DateFormat.is24HourFormat(pickerContext),
+                                ).show()
+                            }
+                            Preference(
+                                title = stringResource(R.string.au3_commsfreeze_start_time),
+                                summary = "%02d:%02d".format(trigger.startHour, trigger.startMinute),
+                                onClick = {
+                                    pickTime(trigger.startHour, trigger.startMinute) { h, m ->
+                                        current = current.copy(trigger = trigger.copy(startHour = h, startMinute = m))
+                                    }
+                                },
+                            )
+                            Preference(
+                                title = stringResource(R.string.au3_commsfreeze_end_time),
+                                summary = "%02d:%02d".format(trigger.endHour, trigger.endMinute),
+                                onClick = {
+                                    pickTime(trigger.endHour, trigger.endMinute) { h, m ->
+                                        current = current.copy(trigger = trigger.copy(endHour = h, endMinute = m))
+                                    }
+                                },
                             )
                         }
 
@@ -390,6 +416,27 @@ private fun ContextProfileEditSheet(
                         value = current.gestureOverrides.swipeDown,
                         onValueChanged = {
                             current = current.copy(gestureOverrides = current.gestureOverrides.copy(swipeDown = it))
+                        },
+                    )
+                    GestureOverrideRow(
+                        title = stringResource(R.string.preference_gesture_swipe_left),
+                        value = current.gestureOverrides.swipeLeft,
+                        onValueChanged = {
+                            current = current.copy(gestureOverrides = current.gestureOverrides.copy(swipeLeft = it))
+                        },
+                    )
+                    GestureOverrideRow(
+                        title = stringResource(R.string.preference_gesture_swipe_right),
+                        value = current.gestureOverrides.swipeRight,
+                        onValueChanged = {
+                            current = current.copy(gestureOverrides = current.gestureOverrides.copy(swipeRight = it))
+                        },
+                    )
+                    GestureOverrideRow(
+                        title = stringResource(R.string.preference_gesture_long_press),
+                        value = current.gestureOverrides.longPress,
+                        onValueChanged = {
+                            current = current.copy(gestureOverrides = current.gestureOverrides.copy(longPress = it))
                         },
                     )
                     GestureOverrideRow(

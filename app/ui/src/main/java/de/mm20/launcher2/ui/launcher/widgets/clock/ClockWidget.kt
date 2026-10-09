@@ -49,6 +49,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -272,68 +274,86 @@ fun Clock(
 
     val isTwentyFourHours = timeFormat.isTwentyFourHours(context)
 
-    when (style) {
-        is ClockWidgetStyle.Digital1 -> DigitalClock1(
-            time = time,
-            compact = compact,
-            showSeconds = showSeconds,
-            twentyFourHours = isTwentyFourHours,
-            monospaced = monospaced,
-            useThemeColor = useThemeColor,
-            darkColors = darkColors,
-            style = style,
-        )
+    // Graphical watch faces have no text, so describe the time for screen readers
+    val describeTime = style is ClockWidgetStyle.Binary ||
+            style is ClockWidgetStyle.Analog ||
+            style is ClockWidgetStyle.Orbit ||
+            style is ClockWidgetStyle.Segment
+    val timeDescription = if (describeTime) {
+        android.text.format.DateFormat.format(
+            if (isTwentyFourHours) "HH:mm" else "h:mm a",
+            time
+        ).toString()
+    } else ""
 
-        is ClockWidgetStyle.Digital2 -> DigitalClock2(
-            time = time,
-            compact = compact,
-            showSeconds = showSeconds,
-            twentyFourHours = isTwentyFourHours,
-            monospaced = monospaced,
-            useThemeColor = useThemeColor,
-            darkColors = darkColors,
-        )
+    Box(
+        modifier = if (describeTime) {
+            Modifier.semantics(mergeDescendants = true) { contentDescription = timeDescription }
+        } else Modifier
+    ) {
+        when (style) {
+            is ClockWidgetStyle.Digital1 -> DigitalClock1(
+                time = time,
+                compact = compact,
+                showSeconds = showSeconds,
+                twentyFourHours = isTwentyFourHours,
+                monospaced = monospaced,
+                useThemeColor = useThemeColor,
+                darkColors = darkColors,
+                style = style,
+            )
 
-        is ClockWidgetStyle.Binary -> BinaryClock(
-            time = time,
-            compact = compact,
-            showSeconds = showSeconds,
-            twentyFourHours = isTwentyFourHours,
-            useThemeColor = useThemeColor,
-            darkColors = darkColors,
-        )
+            is ClockWidgetStyle.Digital2 -> DigitalClock2(
+                time = time,
+                compact = compact,
+                showSeconds = showSeconds,
+                twentyFourHours = isTwentyFourHours,
+                monospaced = monospaced,
+                useThemeColor = useThemeColor,
+                darkColors = darkColors,
+            )
 
-        is ClockWidgetStyle.Analog -> AnalogClock(
-            time,
-            compact,
-            showSeconds,
-            useThemeColor,
-            darkColors,
-            style
-        )
+            is ClockWidgetStyle.Binary -> BinaryClock(
+                time = time,
+                compact = compact,
+                showSeconds = showSeconds,
+                twentyFourHours = isTwentyFourHours,
+                useThemeColor = useThemeColor,
+                darkColors = darkColors,
+            )
 
-        is ClockWidgetStyle.Orbit -> OrbitClock(
-            time = time,
-            compact = compact,
-            showSeconds = showSeconds,
-            twentyFourHours = isTwentyFourHours,
-            monospaced = monospaced,
-            useThemeColor = useThemeColor,
-            darkColors = darkColors,
-        )
+            is ClockWidgetStyle.Analog -> AnalogClock(
+                time,
+                compact,
+                showSeconds,
+                useThemeColor,
+                darkColors,
+                style
+            )
 
-        is ClockWidgetStyle.Segment -> SegmentClock(
-            time = time,
-            compact = compact,
-            showSeconds = showSeconds,
-            twentyFourHours = isTwentyFourHours,
-            useThemeColor = useThemeColor,
-            darkColors = darkColors,
-        )
+            is ClockWidgetStyle.Orbit -> OrbitClock(
+                time = time,
+                compact = compact,
+                showSeconds = showSeconds,
+                twentyFourHours = isTwentyFourHours,
+                monospaced = monospaced,
+                useThemeColor = useThemeColor,
+                darkColors = darkColors,
+            )
 
-        is ClockWidgetStyle.Custom -> CustomClock(style, compact, useThemeColor, darkColors)
-        is ClockWidgetStyle.Empty -> {}
-        else -> {}
+            is ClockWidgetStyle.Segment -> SegmentClock(
+                time = time,
+                compact = compact,
+                showSeconds = showSeconds,
+                twentyFourHours = isTwentyFourHours,
+                useThemeColor = useThemeColor,
+                darkColors = darkColors,
+            )
+
+            is ClockWidgetStyle.Custom -> CustomClock(style, compact, useThemeColor, darkColors)
+            is ClockWidgetStyle.Empty -> {}
+            else -> {}
+        }
     }
 }
 
@@ -445,7 +465,7 @@ fun ConfigureClockWidgetSheet(
                 ) {
                     Icon(
                         painterResource(R.drawable.auto_awesome_24dp),
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.preference_system_bar_icons_auto),
                     )
                 }
                 ToggleButton(
@@ -458,7 +478,7 @@ fun ConfigureClockWidgetSheet(
                 ) {
                     Icon(
                         painterResource(R.drawable.light_mode_24px),
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.preference_system_bar_icons_dark),
                     )
                 }
                 ToggleButton(
@@ -471,7 +491,7 @@ fun ConfigureClockWidgetSheet(
                 ) {
                     Icon(
                         painterResource(R.drawable.dark_mode_24px),
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.preference_system_bar_icons_light),
                     )
                 }
             }
@@ -546,7 +566,7 @@ fun ConfigureClockWidgetSheet(
                         onClick = {
                             showDropdown = true
                         },
-                        enabled = fillHeight == true,
+                        enabled = fillHeight == true || widgetsOnHome == false,
                     )
                     DropdownMenuPopup(
                         expanded = showDropdown,

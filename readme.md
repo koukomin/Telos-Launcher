@@ -275,7 +275,7 @@ A clock, a search bar, an optional dock and, if you want them, widgets. Settings
 
 - **Dock:** seeded once on first start with the device's default apps. **Custom dock** slots hold an app or a widget; 1 to 4 rows, 1 to 10 columns (1 x 5 default); **multiple docks** (up to 5, swipe to switch, default dock choice); own grid (3 to 12 columns, 32 to 64 dp icons); background plate (color, opacity default 30 percent, shadow); page indicator; **shutters** (swipe up on a dock icon to launch a second app, activity or shortcut). Dock icons are always circles.
 - **Search bar:** transparent, solid or hidden with live preview, light or dark content, separate colors while the drawer is open, top or bottom, fixed bar, remember scroll position. The menu button offers Wallpaper, Settings, Add widget, Help; with text it clears the field.
-- **Wallpaper** (Appearance): photo or video, system wallpaper picker, dim for dark theme, blur behind the search view (Android 12+, radius 4 to 64, default 32).
+- **Wallpaper** (Appearance): photo or video, system wallpaper picker, dim for dark theme, blur behind the drawer and other full pages (Android 12+, radius 4 to 64, default 32).
 - **Video wallpaper** (experimental): a playlist of videos; scaling Fit, Fill or Stretch; brightness 0 to 2; zoom 0.5 to 5; position; speed 0.25 to 3; start behavior Resume, Restart or Random frame; parallax with strength; stored option for theme colors from the video; pause in Battery Saver (on), on thermal throttling (on) and in desktop mode (off).
 - **Other:** lock desktop, fixed portrait rotation, charging animation (bubbles from the navigation bar), status and navigation bar icon color auto, light or dark, hide status bar, hide navigation bar, **Create folder** (two or more apps) and folder covers, edit button.
 
@@ -361,7 +361,7 @@ Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/doc
 - **Badges:** notification badges (dot or count, color), cloud, suspended or frozen apps, shortcut and plugin badges; work profile, hidden item and Store update badges are always on. Frozen apps can be grayscale or carry a snowflake.
 - **Motion:** charging animation, reduce animations, animation speed 0.5 to 2.0, bounce physics.
 - **Per-item customization:** long-press and tap Customize for a new label (the original name still matches), icon (including icon pack, themed or text icon), tags, **Show in**, a shutter app, or web app settings.
-- **Language and region:** 35 languages (see [Languages](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/languages)), per-app language on Android 13+, form of address (French, Spanish), transliteration, time format, measurement system, calendar systems, currency order.
+- **Language and region:** 35 languages (see [Languages](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/languages)), per-app language on Android 13+, form of address (for every language with feminine and masculine variants: Arabic, Belarusian, Catalan, Czech, Greek, Spanish, French, Hebrew, Hindi, Italian, Polish, Portuguese, Romanian, Russian, Ukrainian), transliteration, time format, measurement system, calendar systems, currency order.
 - **Accessibility and comfort:** text size, high contrast and black and white schemes, reduce animations, label options, fixed rotation.
 - **Limitation:** fallback icon packs are supported by the icon service but have **no setting**, so only a single icon pack is usable. Several other values are stored without a screen (Wikipedia images, dock background blur, legacy surface settings).
 
@@ -411,14 +411,15 @@ Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/doc
 
 **Settings > Advanced settings > Backup and restore** writes and reads a plain ZIP archive (not encrypted).
 
-Backup and restore ask first **what** to include: **Launcher** (settings and the rest of the table), **Notes** and **Calendar** (the local calendars as `.ics`), each with a checkbox and an **All** button. On restore only the parts that the file contains are offered, and unticked parts are not touched.
+Backup and restore ask first **what** to include: **Launcher** (settings and the rest of the table), **Notes**, **Calendar** (the local calendars as `.ics`) and **Downloads** (download list and settings), each with a checkbox and an **All** button. On restore only the parts that the file contains are offered, and unticked parts are not touched.
 
 | Included | Not included |
 | --- | --- |
-| Settings, favorites and saved items (usage weights, pin position, visibility), custom icons, labels and tags, widgets, quick actions, custom color, shape, transparency and typography themes, Telos Notes, local calendars of Telos Calendar (their own parts) | Cloud logins (Nextcloud, ownCloud, notes sync), calendars of accounts (the account has them), plugin enable state, wallpaper, icon packs, intruder photos, passwords and API keys of the Telos apps, hidden and protected call numbers |
+| Settings, favorites and saved items (usage weights, pin position, visibility), custom icons, labels and tags, widgets, quick actions, custom color, shape, transparency and typography themes, Telos Notes, local calendars of Telos Calendar, download list and settings of Telos Downloads (their own parts) | Cloud logins (Nextcloud, ownCloud, notes sync), calendars of accounts (the account has them), plugin enable state, wallpaper, icon packs, intruder photos, passwords and API keys of the Telos apps, hidden and protected call numbers, the custom lock PIN hash (a restore keeps the device's own PIN lock) |
 
 - Restore wipes saved favorites first, then imports the file; secrets already on the device are kept. A SIP or phonebook account without a password after restore is switched off.
-- Format `1.9`: same version restores fully, a different minor version restores with a warning, a different major version is refused. Archive entries that would unpack outside the restore folder are ignored.
+- A failed backup shows an error with **Try again**. If some parts of a restore fail, the other parts are still restored and a warning is shown.
+- Format `1.11`: same version restores fully, a different minor version restores with a warning, a different major version is refused. Archive entries that would unpack outside the restore folder are ignored.
 
 ### Profiles
 
@@ -515,7 +516,7 @@ Telos stays light by doing little at startup and by disabling what you do not us
 
 | Setting (Settings > Advanced > Performance) | Default | Range |
 | --- | --- | --- |
-| Reduce animations | Off | On or off |
+| Reduce animations | Off | On or off (also switches the bounce off) |
 | Animation speed | 1.0 | 0.5 to 2.0 |
 | Bounce physics | No bounce | 0 to 100 percent |
 | Search delay | Off (0 ms) | 0 to 500 ms |
@@ -560,7 +561,8 @@ A complete phone app inside the launcher. Its layout follows [Right Dialer](http
 
 - Per-call SIM choice, per-number default SIM, last-used SIM, same SIM as last call to the number, fixed SIM 1 or SIM 2
 - SIM badges in call history with configurable colors for SIM 1 and SIM 2
-- Outgoing caller ID masking (CLIR) with regional prefixes and emergency-number bypass
+- Outgoing caller ID masking (CLIR) with regional prefixes (a blank custom prefix sends `#31#`) and emergency-number bypass
+- Vibrate on answer and on hangup: one short pulse when an outgoing call is answered and one when a call ends
 
 **In-call experience**
 

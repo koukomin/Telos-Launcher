@@ -7,12 +7,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.ui.UiSettings
+import de.mm20.launcher2.themes.DefaultThemeId
 import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.themes.colors.Colors
 import de.mm20.launcher2.themes.toLegacyJson
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
@@ -45,6 +47,12 @@ class ColorSchemesSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     fun delete(colors: Colors) {
+        viewModelScope.launch {
+            // Don't leave a dangling selection that silently falls back to the default.
+            if (uiSettings.colorsId.first() == colors.id) {
+                uiSettings.setColorsId(DefaultThemeId)
+            }
+        }
         themeRepository.colors.delete(colors)
     }
 

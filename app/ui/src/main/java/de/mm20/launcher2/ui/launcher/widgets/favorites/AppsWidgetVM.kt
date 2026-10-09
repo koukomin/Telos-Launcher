@@ -44,9 +44,16 @@ class AppsWidgetVM : FavoritesVM() {
     }
 
     fun updateWidget(widget: AppsWidget) {
-        selectTag(null)
-        if (widget.config.customTags) {
-            selectTag(widget.config.tagList.firstOrNull())
+        val old = this.widget.value
+        val tagSelectionChanged = old == null ||
+                old.id != widget.id ||
+                old.config.customTags != widget.config.customTags ||
+                old.config.tagList != widget.config.tagList
+        if (tagSelectionChanged) {
+            selectTag(null)
+            if (widget.config.customTags) {
+                selectTag(widget.config.tagList.firstOrNull())
+            }
         }
 
         this.widget.value = widget

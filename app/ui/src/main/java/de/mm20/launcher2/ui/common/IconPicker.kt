@@ -257,6 +257,12 @@ fun IconPicker(
                 )
             }
 
+            if (!isSearching && iconResults.isEmpty() && query.isNotBlank()) {
+                item(span = { GridItemSpan(columns) }) {
+                    de.mm20.launcher2.ui.component.SearchEmptyState(query = query.trim())
+                }
+            }
+
             if (isSearching) {
                 item(span = { GridItemSpan(columns) }) {
                     Box(

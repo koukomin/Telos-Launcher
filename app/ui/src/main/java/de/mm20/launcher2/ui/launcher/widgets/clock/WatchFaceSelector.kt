@@ -154,7 +154,7 @@ fun WatchFaceSelector(
                             modifier = Modifier
                                 .padding(4.dp)
                         ) {
-                            Icon(painterResource(R.drawable.tune_24px), null)
+                            Icon(painterResource(R.drawable.tune_24px), stringResource(R.string.settings))
                             DropdownMenuPopup(
                                 expanded = showStyleSettings,
                                 onDismissRequest = { showStyleSettings = false }) {
@@ -290,7 +290,7 @@ fun WatchFaceSelector(
                                                         null
                                                     )
                                                 },
-                                                text = { Text("Reset") },
+                                                text = { Text(stringResource(R.string.au3_launcher2_reset)) },
                                                 onClick = {
                                                     val widgetId = selected.widgetId
                                                     if (widgetId != null) {
@@ -393,7 +393,7 @@ fun WatchFaceSelector(
                                 )
                             }
                         }) {
-                        Icon(painterResource(R.drawable.chevron_backward_24px), null)
+                        Icon(painterResource(R.drawable.chevron_backward_24px), stringResource(R.string.au3_launcher2_previous))
                     }
                     var showStyleDropdown by remember { mutableStateOf(false) }
                     TextButton(
@@ -469,7 +469,7 @@ fun WatchFaceSelector(
                                 )
                             }
                         }) {
-                        Icon(painterResource(R.drawable.chevron_forward_24px), null)
+                        Icon(painterResource(R.drawable.chevron_forward_24px), stringResource(R.string.action_next))
                     }
                 }
             }
@@ -653,7 +653,7 @@ private fun ResizeCustomWidget(
                     .offset(y = 64.dp),
                 onClick = onExit
             ) {
-                Icon(painterResource(R.drawable.check_24px), null)
+                Icon(painterResource(R.drawable.check_24px), stringResource(R.string.action_done))
             }
         }
     }

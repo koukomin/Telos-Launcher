@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -68,7 +69,10 @@ fun AppInfoSheet(
             )
 
             Text(
-                text = "${currentApp.versionName} (${currentApp.componentName.packageName})",
+                text = listOfNotNull(
+                    currentApp.versionName?.takeIf { it.isNotBlank() },
+                    "(${currentApp.componentName.packageName})"
+                ).joinToString(" "),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.secondary
             )
@@ -104,7 +108,9 @@ fun AppInfoSheet(
                     text = stringResource(R.string.hf_appinfo_shizuku_missing),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.padding(top = 8.dp).clickable { viewModel.requestShizukuPermission() }
+                    modifier = Modifier
+                    .clickable(role = Role.Button) { viewModel.requestShizukuPermission() }
+                    .padding(vertical = 12.dp)
                 )
             }
 
@@ -117,6 +123,14 @@ fun AppInfoSheet(
                 modifier = Modifier.align(Alignment.Start).padding(bottom = 8.dp)
             )
 
+            if (permissions.isEmpty()) {
+                Text(
+                    text = stringResource(R.string.au3_launcher3_no_permissions),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.align(Alignment.Start)
+                )
+            }
             permissions.forEach { permission ->
                 PermissionItem(permission)
             }
@@ -133,11 +147,14 @@ private fun ActionButton(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.clickable(enabled = enabled, onClick = onClick).padding(8.dp)
+        modifier = Modifier
+            .heightIn(min = 48.dp)
+            .clickable(enabled = enabled, role = Role.Button, onClick = onClick)
+            .padding(8.dp)
     ) {
         Icon(
             painter = painterResource(icon),
-            contentDescription = label,
+            contentDescription = null,
             tint = if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
         )
         Text(
@@ -158,8 +175,11 @@ private fun PermissionItem(permission: AppInfoSheetVM.PermissionInfo) {
     ) {
         Icon(
             painter = painterResource(if (permission.isGranted) R.drawable.check_24px else R.drawable.close_24px),
-            contentDescription = null,
-            tint = if (permission.isGranted) Color(0xFF4CAF50) else Color(0xFFF44336),
+            contentDescription = stringResource(
+                if (permission.isGranted) R.string.au3_launcher3_permission_granted
+                else R.string.au3_launcher3_permission_denied
+            ),
+            tint = if (permission.isGranted) Color(0xFF4CAF50) else MaterialTheme.colorScheme.error,
             modifier = Modifier.size(16.dp)
         )
         Spacer(modifier = Modifier.width(8.dp))

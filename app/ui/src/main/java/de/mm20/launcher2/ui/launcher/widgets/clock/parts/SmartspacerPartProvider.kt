@@ -167,6 +167,7 @@ class SmartspacerPartProvider : PartProvider {
                                 },
                                 onClick = {
                                     state.launchIntent(state.settingsIntent)
+                                    this@ComposePopupFactory.state = null
                                 }
                             )
 
@@ -192,6 +193,7 @@ class SmartspacerPartProvider : PartProvider {
                                 },
                                 onClick = {
                                     state.launchIntent(state.feedbackIntent)
+                                    this@ComposePopupFactory.state = null
                                 }
                             )
 
@@ -217,6 +219,7 @@ class SmartspacerPartProvider : PartProvider {
                                 },
                                 onClick = {
                                     state.launchIntent(state.aboutIntent)
+                                    this@ComposePopupFactory.state = null
                                 }
                             )
 
@@ -242,6 +245,7 @@ class SmartspacerPartProvider : PartProvider {
                                 },
                                 onClick = {
                                     state.dismissAction(state.target)
+                                    this@ComposePopupFactory.state = null
                                 }
                             )
 

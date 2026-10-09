@@ -26,6 +26,8 @@ fun CustomLockDialog(
     confirmTitle: String? = null,
     onConfirm: (String) -> Unit,
     onDismiss: () -> Unit,
+    errorMessage: String? = null,
+    onPinChanged: () -> Unit = {},
 ) {
     var pin by remember { mutableStateOf("") }
     var confirmPin by remember { mutableStateOf("") }
@@ -41,6 +43,7 @@ fun CustomLockDialog(
                     value = if (isConfirming) confirmPin else pin,
                     onValueChange = {
                         showError = false
+                        onPinChanged()
                         if (it.length <= 8) {
                             if (isConfirming) confirmPin = it else pin = it
                         }
@@ -48,9 +51,11 @@ fun CustomLockDialog(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
                     visualTransformation = PasswordVisualTransformation(),
                     singleLine = true,
-                    isError = showError,
+                    isError = showError || errorMessage != null,
                     supportingText = if (showError) {
                         { Text(stringResource(R.string.custom_lock_error_mismatch)) }
+                    } else if (errorMessage != null) {
+                        { Text(errorMessage) }
                     } else null
                 )
             }

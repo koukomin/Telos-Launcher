@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -44,7 +45,7 @@ data object DeviceOwnerSetupRoute : NavKey
 fun DeviceOwnerSetupScreen() {
     val viewModel: DeviceOwnerSetupScreenVM = viewModel()
     val isDeviceOwner by viewModel.isDeviceOwner.collectAsStateWithLifecycle()
-    var understood by remember { mutableStateOf(false) }
+    var understood by rememberSaveable { mutableStateOf(false) }
 
     // The user runs the adb command elsewhere and comes back: re-check without needing a tap.
     LifecycleResumeEffect(Unit) {

@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.R
@@ -86,7 +87,10 @@ fun ColumnScope.SearchBarActions(
                     }
                 ) {
 
-                    Icon(painterResource(R.drawable.edit_24px), contentDescription = null)
+                    Icon(
+                        painterResource(R.drawable.edit_24px),
+                        contentDescription = stringResource(R.string.preference_screen_search_actions)
+                    )
                 }
             }
         }

@@ -35,6 +35,8 @@ fun SearchResultGrid(
      * row should read as centered, not stuck to the start. */
     centerRows: Boolean = false,
 ) {
+    @Suppress("NAME_SHADOWING")
+    val columns = columns.coerceAtLeast(1)
     AnimatedContent(
         items to transitionKey,
         modifier = modifier

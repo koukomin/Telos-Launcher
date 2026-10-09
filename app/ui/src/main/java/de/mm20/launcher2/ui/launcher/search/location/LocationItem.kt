@@ -116,6 +116,8 @@ import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
+import de.mm20.launcher2.ui.locals.LocalTimeFormat
+import de.mm20.launcher2.ui.utils.isTwentyFourHours
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.modifier.scale
@@ -196,6 +198,8 @@ fun LocationItem(
                         Text(
                             text = location.labelOverride ?: location.label,
                             style = MaterialTheme.typography.titleSmall,
+                            maxLines = 1,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
                             modifier = Modifier
                                 .sharedBounds(
                                     rememberSharedContentState("label"),
@@ -221,7 +225,10 @@ fun LocationItem(
                                     sublabel,
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.secondary,
+                                    maxLines = 1,
+                                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
                                     modifier = Modifier
+                                        .weight(1f, fill = false)
                                         .sharedElement(
                                             rememberSharedContentState("sublabel"),
                                             this@AnimatedContent
@@ -231,6 +238,8 @@ fun LocationItem(
                             if (!isOpenString.isNullOrBlank()) {
                                 Text(
                                     " • $isOpenString",
+                                    maxLines = 1,
+                                    softWrap = false,
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.secondary,
                                     modifier = Modifier.animateEnterExit()
@@ -486,14 +495,14 @@ fun LocationItem(
                                 }
                             )
                         }
-                        if (location.phoneNumber != null) {
+                        if (!location.phoneNumber.isNullOrBlank()) {
                             AssistChip(
                                 modifier = Modifier.padding(end = 12.dp),
                                 onClick = {
                                     context.tryStartActivity(
                                         Intent(
                                             Intent.ACTION_DIAL,
-                                            "tel:${location.phoneNumber}".toUri()
+                                            Uri.fromParts("tel", location.phoneNumber, null)
                                         )
                                     )
                                 },
@@ -507,7 +516,7 @@ fun LocationItem(
                             )
                         }
 
-                        if (location.websiteUrl != null) {
+                        if (!location.websiteUrl.isNullOrBlank()) {
                             AssistChip(
                                 modifier = Modifier.padding(end = 12.dp),
                                 onClick = {
@@ -1082,7 +1091,7 @@ fun LineTypeIcon(
             null -> R.drawable.commute_20px
         }
     ),
-    contentDescription = lineType?.name, // TODO localize (maybe) with ?.let{ stringResource("departure_line_type_$it") }
+    contentDescription = null, // decorative: the line name is always shown next to the icon
     modifier = modifier,
     tint = tint
 )
@@ -1112,8 +1121,8 @@ fun LineFilterChip(
         avatar = {
             Box(
                 modifier = Modifier
-                    .background(color.atTone(if (dark) 80 else 40))
                     .clip(CircleShape)
+                    .background(color.atTone(if (dark) 80 else 40))
                     .requiredSize(
                         InputChipDefaults.AvatarSize * scale
                     )
@@ -1199,6 +1208,7 @@ fun DepartureRow(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
+    val twentyFourHours = LocalTimeFormat.current.isTwentyFourHours(context)
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -1244,7 +1254,7 @@ fun DepartureRow(
                 } else {
                     departure.time.format(
                         DateTimeFormatter.ofPattern(
-                            "HH:mm",
+                            if (twentyFourHours) "HH:mm" else "hh:mm a",
                             Locale.getDefault()
                         )
                     )
@@ -1259,7 +1269,6 @@ fun DepartureRow(
                         text = "+$delayMinutes",
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.error,
-                        fontSize = TextUnit(2f, TextUnitType.Em),
                     )
                 }
             }

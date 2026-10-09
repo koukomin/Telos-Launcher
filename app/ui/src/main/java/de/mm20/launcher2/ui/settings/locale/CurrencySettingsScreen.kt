@@ -308,7 +308,7 @@ private fun CurrencyPickerSheet(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
 ) {
-    val availableCurrencies = remember {
+    val allCurrencies = remember {
         val locales = ULocale.getAvailableLocales()
         val currencyCodes = mutableSetOf<String>()
 
@@ -331,6 +331,10 @@ private fun CurrencyPickerSheet(
         currencies.sortBy { it.displayName }
 
         currencies
+    }
+    // a currency that is already in the list cannot be added a second time
+    val availableCurrencies = remember(allCurrencies, selectedCurrencies) {
+        allCurrencies.filter { it.currencyCode !in selectedCurrencies }
     }
 
     DismissableBottomSheet(

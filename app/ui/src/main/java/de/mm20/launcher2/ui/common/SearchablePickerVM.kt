@@ -44,7 +44,8 @@ class SearchablePickerVM : ViewModel(), KoinComponent {
         searchJob = viewModelScope.launch {
             searchService.search(
                 query = query,
-                filters = SearchFilters(allowNetwork = true)
+                // Never hit the network just because the user is typing into a picker (online results are opt-in)
+                filters = SearchFilters(allowNetwork = false)
             ).collectLatest {
                 if (searchQuery != query) return@collectLatest
                 items = withContext(Dispatchers.Default) {

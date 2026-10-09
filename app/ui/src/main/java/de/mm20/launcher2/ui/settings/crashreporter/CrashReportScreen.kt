@@ -19,12 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.crashreporter.CrashReportType
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -34,24 +36,54 @@ data class CrashReportRoute(val fileName: String): NavKey
 fun CrashReportScreen(fileName: String) {
     val viewModel: CrashReportScreenVM = viewModel()
     val context = LocalContext.current
+    val backStack = LocalBackStack.current
     val crashReport by remember(fileName) { viewModel.getCrashReport(fileName) }.collectAsState(null)
+    val notFound by viewModel.notFound
     PreferenceScreen(
         title = when (crashReport?.type) {
-            CrashReportType.Exception -> "Exception"
-            CrashReportType.Crash -> "Crash"
+            CrashReportType.Exception -> stringResource(R.string.au3_sysb_crash_type_exception)
+            CrashReportType.Crash -> stringResource(R.string.au3_sysb_crash_type_crash)
             null -> ""
         },
         topBarActions = {
-            IconButton(onClick = { crashReport?.let { viewModel.shareCrashReport(context, it) } }) {
-                Icon(painterResource(R.drawable.share_24px), contentDescription = null)
-            }
-            if (crashReport?.type == CrashReportType.Crash) {
-                IconButton(onClick = { crashReport?.let { viewModel.createIssue(context, it) } }) {
-                    Icon(painterResource(R.drawable.bug_report_24px), contentDescription = null)
+            if (crashReport != null) {
+                IconButton(onClick = { crashReport?.let { viewModel.shareCrashReport(context, it) } }) {
+                    Icon(
+                        painterResource(R.drawable.share_24px),
+                        contentDescription = stringResource(R.string.menu_share)
+                    )
+                }
+                if (crashReport?.type == CrashReportType.Crash) {
+                    IconButton(onClick = { crashReport?.let { viewModel.createIssue(context, it) } }) {
+                        Icon(
+                            painterResource(R.drawable.bug_report_24px),
+                            contentDescription = stringResource(R.string.au3_sysb_crash_create_issue)
+                        )
+                    }
+                }
+                IconButton(onClick = {
+                    crashReport?.let {
+                        viewModel.deleteCrashReport(it)
+                        backStack.removeLastOrNull()
+                    }
+                }) {
+                    Icon(
+                        painterResource(R.drawable.delete_24px),
+                        contentDescription = stringResource(R.string.menu_delete)
+                    )
                 }
             }
         }
     ) {
+        if (notFound) {
+            item {
+                Text(
+                    text = stringResource(R.string.au3_sysb_crash_not_found),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        }
         item {
             Box(
                 modifier = Modifier
@@ -83,7 +115,7 @@ fun CrashReportScreen(fileName: String) {
                     .background(MaterialTheme.colorScheme.surfaceBright, MaterialTheme.shapes.medium)
                     .padding(12.dp),
             ) {
-                Text(text = "Device Information", style = MaterialTheme.typography.titleMedium)
+                Text(text = stringResource(R.string.au3_sysb_crash_device_info), style = MaterialTheme.typography.titleMedium)
                 val deviceInformation = remember { viewModel.getDeviceInformation(context) }
                 Text(
                     text = deviceInformation,

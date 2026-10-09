@@ -6,13 +6,13 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import de.mm20.launcher2.ui.R
 
 private val steps = listOf(
-    R.string.widgets_tutorial_add_title to R.string.widgets_tutorial_add_text,
+    R.string.widgets_tutorial_add_title to R.string.au3_launcher3_tutorial_add_text,
     R.string.widgets_tutorial_move_title to R.string.widgets_tutorial_move_text,
     R.string.widgets_tutorial_resize_title to R.string.widgets_tutorial_resize_text,
     R.string.widgets_tutorial_stack_title to R.string.widgets_tutorial_stack_text,
@@ -27,7 +27,7 @@ private val steps = listOf(
  */
 @Composable
 fun WidgetsTutorialOverlay(onFinished: () -> Unit) {
-    var step by remember { mutableIntStateOf(0) }
+    var step by rememberSaveable { mutableIntStateOf(0) }
     val (titleRes, textRes) = steps[step]
 
     AlertDialog(

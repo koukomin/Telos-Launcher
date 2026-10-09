@@ -8,6 +8,8 @@ import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -57,7 +59,7 @@ fun TagChip(
     val shape = MaterialTheme.shapes.small
 
     val transition = updateTransition(
-        if (dragged) 2 else 0 + if (selected) 1 else 0
+        (if (dragged) 2 else 0) + (if (selected) 1 else 0)
     )
 
     val backgroundColor by transition.animateColor(
@@ -110,6 +112,10 @@ fun TagChip(
             .shadow(elevation, shape, true)
             .border(borderWidth, borderColor, shape)
             .background(backgroundColor)
+            .then(
+                // Compact chips may show only an icon, so give screen readers the tag name
+                if (compact) Modifier.semantics { contentDescription = tag.tag } else Modifier
+            )
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick
@@ -162,7 +168,7 @@ fun TagChip(
                     }
                     .size(FilterChipDefaults.IconSize),
                 painter = painterResource(R.drawable.close_20px),
-                contentDescription = null,
+                contentDescription = androidx.compose.ui.res.stringResource(R.string.menu_remove),
             )
         }
     }

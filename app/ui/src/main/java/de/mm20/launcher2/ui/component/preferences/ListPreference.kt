@@ -2,12 +2,15 @@ package de.mm20.launcher2.ui.component.preferences
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.ui.semantics.Role
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,7 +35,7 @@ fun <T> ListPreference(
         )
     }
 ) {
-    var showDialog by remember { mutableStateOf(false) }
+    var showDialog by rememberSaveable { mutableStateOf(false) }
     Preference(
         title = title,
         summary = summary,
@@ -74,10 +77,14 @@ fun <T> ListPreference(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .clickable {
-                                        onValueChanged(it.value)
-                                        showDialog = false
-                                    }
+                                    .selectable(
+                                        selected = it.value == value,
+                                        role = Role.RadioButton,
+                                        onClick = {
+                                            onValueChanged(it.value)
+                                            showDialog = false
+                                        },
+                                    )
                                     .padding(
                                         start = 16.dp,
                                         top = 16.dp,

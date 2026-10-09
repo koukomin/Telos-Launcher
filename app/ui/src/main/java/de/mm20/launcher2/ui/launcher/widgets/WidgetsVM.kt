@@ -30,9 +30,22 @@ class WidgetsVM(
     // The "Favorites" widget duplicates the app grid/drawer's own Favorites section onto the
     // home screen, which favorites are meant to stay out of - filtered here (not deleted) so any
     // already-placed instance disappears without losing the underlying stored widget row.
-    val widgets = widgetRepository.get(parent = parentId)
+    private val allWidgets = widgetRepository.get(parent = parentId)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
+    val widgets = allWidgets
         .map { list -> list.filterNot { it is AppsWidget } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
+    /**
+     * [WidgetRepository.set] replaces every widget of this parent, so the hidden Favorites widgets
+     * have to be written back together with the visible ones, otherwise any add / move / stack
+     * operation would silently delete them.
+     */
+    private fun commit(visible: List<Widget>) {
+        val hidden = allWidgets.value.filter { it is AppsWidget }
+        widgetRepository.set(visible + hidden, parentId)
+    }
 
     /**
      * [widgets] grouped into home-screen slots: widgets sharing a non-null
@@ -50,7 +63,7 @@ class WidgetsVM(
         } else {
             widgets.add(index.coerceAtMost(widgets.size), widget)
         }
-        widgetRepository.set(widgets, parentId)
+        commit(widgets)
     }
 
     fun removeWidget(widget: Widget) {
@@ -77,7 +90,7 @@ class WidgetsVM(
         if (index > widgets.lastIndex) return
         val widget = widgets.removeAt(index)
         widgets.add(index - 1, widget)
-        widgetRepository.set(widgets, parentId)
+        commit(widgets)
     }
 
     fun moveDown(index: Int) {
@@ -85,7 +98,7 @@ class WidgetsVM(
         if (index < 0 || index >= widgets.lastIndex) return
         val widget = widgets.removeAt(index)
         widgets.add(index + 1, widget)
-        widgetRepository.set(widgets, parentId)
+        commit(widgets)
     }
 
     fun moveSlotUp(slotIndex: Int) {
@@ -93,7 +106,7 @@ class WidgetsVM(
         if (slotIndex < 1 || slotIndex > slots.lastIndex) return
         val slot = slots.removeAt(slotIndex)
         slots.add(slotIndex - 1, slot)
-        widgetRepository.set(slots.flatten(), parentId)
+        commit(slots.flatten())
     }
 
     fun moveSlotDown(slotIndex: Int) {
@@ -101,7 +114,7 @@ class WidgetsVM(
         if (slotIndex < 0 || slotIndex >= slots.lastIndex) return
         val slot = slots.removeAt(slotIndex)
         slots.add(slotIndex + 1, slot)
-        widgetRepository.set(slots.flatten(), parentId)
+        commit(slots.flatten())
     }
 
     /**
@@ -117,7 +130,7 @@ class WidgetsVM(
             widgets[targetIndex] = target.withStackId(stackId)
         }
         widgets.add(targetIndex + 1, newWidget.withStackId(stackId))
-        widgetRepository.set(widgets, parentId)
+        commit(widgets)
     }
 
     /**
@@ -140,7 +153,7 @@ class WidgetsVM(
             val i = remainingIndex[0]
             widgets[i] = widgets[i].withStackId(null)
         }
-        widgetRepository.set(widgets, parentId)
+        commit(widgets)
     }
 
     companion object : KoinComponent {

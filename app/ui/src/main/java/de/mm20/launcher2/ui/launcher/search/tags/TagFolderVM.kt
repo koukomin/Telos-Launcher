@@ -33,7 +33,7 @@ class TagFolderVM : ViewModel(), KoinComponent {
         this.tag = tag
         viewModelScope.launch {
             tagsService.getTaggedItems(tag).collect {
-                items.value = it
+                items.value = it.distinctBy { item -> item.key }
             }
         }
     }

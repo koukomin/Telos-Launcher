@@ -12,6 +12,9 @@ import de.mm20.launcher2.themes.presets.ThemePresetsRepository
 import de.mm20.launcher2.themes.shapes.Shapes
 import de.mm20.launcher2.themes.transparencies.Transparencies
 import de.mm20.launcher2.themes.typography.Typography
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
@@ -25,6 +28,8 @@ class PresetsSettingsScreenVM : ViewModel(), KoinComponent {
     private val themeRepository: ThemeRepository by inject()
     private val uiSettings: UiSettings by inject()
     private val performanceSettings: PerformanceSettings by inject()
+
+    private val installScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     private val _presets = MutableStateFlow<List<ThemeBundle>>(emptyList())
     val presets = _presets.asStateFlow()
@@ -41,7 +46,9 @@ class PresetsSettingsScreenVM : ViewModel(), KoinComponent {
      * a bundle could carry them.
      */
     fun install(bundle: ThemeBundle) {
-        viewModelScope.launch {
+        // The screen pops itself right after calling this, which clears the ViewModel and would
+        // cancel viewModelScope mid-install. Run in a scope that outlives the screen.
+        installScope.launch {
             bundle.colors?.let { installColors(it) }
             bundle.shapes?.let { installShapes(it) }
             bundle.transparencies?.let { installTransparencies(it) }

@@ -87,6 +87,12 @@ fun WidgetItem(
 
     var configure by rememberSaveable { mutableStateOf(false) }
 
+    // Battery, network, system, freeze, at a glance and plugin widgets have no options: for them
+    // the configure sheet would be empty, so the button is not offered.
+    val hasOptions = widget is WeatherWidget || widget is MusicWidget || widget is CalendarWidget ||
+            widget is AppsWidget || widget is NotesWidget || widget is RemindersWidget ||
+            widget is AppWidget
+
     var isDragged by remember { mutableStateOf(false) }
     val elevation by animateDpAsState(if (isDragged) 8.dp else 0.dp)
 
@@ -108,19 +114,21 @@ fun WidgetItem(
                 ) {
                     Icon(
                         painterResource(R.drawable.drag_indicator_24px),
-                        contentDescription = null,
-                        modifier = Modifier.draggable(
-                            state = draggableState,
-                            orientation = Orientation.Vertical,
-                            startDragImmediately = true,
-                            onDragStarted = {
-                                isDragged = true
-                            },
-                            onDragStopped = {
-                                isDragged = false
-                                onDragStopped()
-                            }
-                        )
+                        contentDescription = stringResource(R.string.au3_launcher3_drag_handle),
+                        modifier = Modifier
+                            .draggable(
+                                state = draggableState,
+                                orientation = Orientation.Vertical,
+                                startDragImmediately = true,
+                                onDragStarted = {
+                                    isDragged = true
+                                },
+                                onDragStopped = {
+                                    isDragged = false
+                                    onDragStopped()
+                                }
+                            )
+                            .padding(12.dp)
                     )
                     Text(
                         text = widget.getLabel(LocalContext.current),
@@ -131,13 +139,15 @@ fun WidgetItem(
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1
                     )
-                    IconButton(onClick = {
-                        configure = true
-                    }) {
-                        Icon(
-                            painterResource(R.drawable.tune_24px),
-                            contentDescription = stringResource(R.string.settings)
-                        )
+                    if (hasOptions) {
+                        IconButton(onClick = {
+                            configure = true
+                        }) {
+                            Icon(
+                                painterResource(R.drawable.tune_24px),
+                                contentDescription = stringResource(R.string.settings)
+                            )
+                        }
                     }
                     if (onAddToStack != null) {
                         IconButton(onClick = onAddToStack) {
@@ -254,7 +264,7 @@ fun WidgetItem(
         }
     }
     ConfigureWidgetSheet(
-        expanded = configure,
+        expanded = configure && hasOptions,
         widget = widget,
         onWidgetUpdated = onWidgetUpdate,
         onDismiss = { configure = false },

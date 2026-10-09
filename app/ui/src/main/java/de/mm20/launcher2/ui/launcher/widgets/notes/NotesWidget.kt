@@ -201,7 +201,10 @@ fun NotesWidget(
                                     viewModel.dismissNote()
                                 },
                             ) {
-                                Icon(painterResource(R.drawable.delete_24px), null)
+                                Icon(
+                                    painterResource(R.drawable.delete_24px),
+                                    stringResource(R.string.notes_widget_action_dismiss)
+                                )
                             }
                         }
                     }
@@ -378,14 +381,7 @@ fun NotesWidget(
         message = readWriteErrorSheetText,
         onDismiss = { readWriteErrorSheetText = null },
         onRelink = {
-            linkFileLauncher.launch(
-                context.getString(
-                    R.string.notes_widget_export_filename,
-                    ZonedDateTime.now().format(
-                        DateTimeFormatter.ISO_INSTANT
-                    )
-                )
-            )
+            linkFileLauncher.launch(getDefaultNoteFileName(context))
         },
         onUnlink = {
             viewModel.unlinkFile(context)
@@ -605,8 +601,9 @@ fun NoteReadWriteErrorSheet(
 fun getDefaultNoteFileName(context: Context): String {
     return context.getString(
         R.string.notes_widget_export_filename,
+        // No colons: many document providers reject or rewrite them in file names
         ZonedDateTime.now().format(
-            DateTimeFormatter.ISO_INSTANT
+            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm-ss", java.util.Locale.ROOT)
         )
     ) + ".md"
 }

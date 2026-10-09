@@ -242,7 +242,7 @@ and can carry per-item customization.
 | Browsing setting | Default | Applies to |
 | --- | --- | --- |
 | Block ads and trackers | On | Embedded browser only. A built-in host blocklist plus the block lists you switch on (domain rules only), not a full filter-list engine. Each web app can override it (global, on, off) |
-| Pinch to zoom | On | Embedded browser |
+| Pinch to zoom, zoom controls | On | Embedded browser. A change applies to open web apps immediately |
 | Strip tracking parameters from links | On | Embedded browser (utm_, fbclid, gclid and similar) |
 | Top bar position | Top | Navigation bar at the top or bottom |
 | Swipe to switch web apps | On | Swipe the top bar to move between your web apps |
@@ -263,7 +263,7 @@ the logins, so this only applies to web apps that open in the embedded browser; 
 external browser uses that browser's own sign-in.
 
 **Web Apps Panel.** A page that holds the web apps you choose. It is reached by the gesture that has the
-**Web Apps Panel** action (swipe right by default). The settings page **Enable Web Apps Panel** lets you
+**Web Apps Panel** action (swipe right by default). The settings page, with its **Web Apps Panel** checkbox, lets you
 pick the swipe direction (left or right) and the web apps in it, with drag to reorder.
 
 ## Assistant mode
@@ -282,7 +282,7 @@ Advanced > Context profiles. Turn on **Enable context profiles** first.
 | Trigger | Notes |
 | --- | --- |
 | Manual only | Use **Active now** on the profile |
-| Time of day | From and to |
+| Time of day | Editable start and end time |
 | WiFi network | By network name (SSID). Reading the name needs the location permission |
 | Bluetooth device | By exact device name. Needs the Bluetooth permission |
 | Battery Saver is on | While Battery Saver is active |

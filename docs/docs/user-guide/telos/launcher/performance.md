@@ -11,7 +11,7 @@ Settings > Advanced > **Performance** (summary: "Animations, search speed, cachi
 
 | Setting | Where | Default | Range | What it does |
 | --- | --- | --- | --- | --- |
-| Reduce animations | Performance > Animations | Off | On or off | Makes transitions instant. Covers most, but not all, motion |
+| Reduce animations | Performance > Animations | Off | On or off | Makes transitions instant and also switches the bounce off. Covers most, but not all, motion |
 | Animation speed | Same | 1.0 | 0.5 to 2.0 (steps of 0.25) | Scales the duration of fade and effect motion. Only shown while reduce animations is off |
 | Bounce physics | Same | No bounce | 0 to 100 percent | How much gesture release animations overshoot before settling |
 | Search delay | Performance > Search | Off (0 ms) | 0 to 500 ms (steps of 50) | Wait this long after the last keystroke before searching |

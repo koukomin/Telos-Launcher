@@ -97,6 +97,8 @@ fun WebsiteItem(
                                     ),
                                 text = website.description ?: website.url,
                                 style = MaterialTheme.typography.bodySmall,
+                                maxLines = 3,
+                                overflow = TextOverflow.Ellipsis,
                             )
                         }
                         if (!website.imageUrl.isNullOrEmpty()) {

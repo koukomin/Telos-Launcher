@@ -17,10 +17,10 @@ first one that is available, in this order.
 | 4 | Device owner | Telos set as device owner with `adb` (guided setup screen) | yes | no |
 | 5 | Island | The Island app, only for apps already in the Island profile | request only | no |
 
-::: warning Dhizuku is automatic only
+::: warning Dhizuku is experimental
 In the backend picker (**Settings > Advanced > Freeze Manager > Backend > Freeze backend**) you can choose **System
-default**, **Shizuku**, **Root**, **Island** or **Device owner** by hand. **Dhizuku** is used only when the picker is on
-System default and no Shizuku is available. Read the [Dhizuku note](#dhizuku) first.
+default**, **Shizuku**, **Dhizuku**, **Root**, **Island** or **Device owner** by hand. On System default, Dhizuku is used
+only when no Shizuku is available. Read the [Dhizuku note](#dhizuku) first.
 :::
 
 | Setting | Where | Default | Effect |
@@ -144,6 +144,8 @@ Shown only when Custom is selected.
 | Freeze when battery saver is on | Auto-freeze | off | Freezes when Battery Saver starts |
 | Exclusion strictness | Auto-freeze | Strict | **Strict** or **Relaxed**. Only affects the active media session check |
 
+The music, network and network threshold options apply to every profile; only the exclusion strictness is Custom-only. In the app info screen of an app, the **Freeze** action uses the selected backend and switches between **Freeze** and **Unfreeze**.
+
 The idle timeout counts from the moment the screen turns off. Turning the screen on again cancels it. A
 [context profile](../launcher/desktop-and-overlays#context-profiles) can override the freeze profile while it is active, without changing
 your own choice.
@@ -159,9 +161,9 @@ Before every automatic freeze these apps are skipped:
 | Apps with an ongoing notification or a foreground service | yes |
 | Android Auto / car mode is active | yes |
 | Apps with an active media session | only in Strict mode |
-| **Exclude apps playing music** | optional switch, on by default. Skips when the phone is playing audio |
-| **Exclude apps with network activity** | optional switch, on by default. Skips when the app moves more than the threshold |
-| **Network threshold** | 100 KB per second by default. Measured over half a second |
+| **Exclude apps playing music** | optional switch (all auto-freeze profiles, shown whenever auto-freeze is on), on by default. Skips when the phone is playing audio |
+| **Exclude apps with network activity** | optional switch (all auto-freeze profiles), on by default. Skips when the app moves more than the threshold |
+| **Network threshold** | (all auto-freeze profiles) 100 KB per second by default. Measured over half a second |
 
 The network check samples the app's traffic for half a second and compares it to the threshold. A device without
 traffic statistics skips this rule.

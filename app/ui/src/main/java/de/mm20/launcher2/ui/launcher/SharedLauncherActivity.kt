@@ -38,6 +38,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.preferences.ScreenOrientation
 import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.preferences.SystemBarColors
@@ -167,17 +168,17 @@ abstract class SharedLauncherActivity(
                         val wallpaperBlur by viewModel.wallpaperBlur.collectAsState()
                         val wallpaperBlurRadius by viewModel.wallpaperBlurRadius.collectAsState()
 
-                        val fixedRotation by viewModel.fixedRotation.collectAsState()
+                        val screenOrientation by viewModel.screenOrientation.collectAsState()
 
                         val backgroundColor = MaterialTheme.colorScheme.surfaceContainer
 
                         if (gestures == null || widgetsOnHomeScreen == null) return@ProvideCompositionLocals
 
-                        LaunchedEffect(fixedRotation) {
-                            requestedOrientation = if (fixedRotation) {
-                                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                            } else {
-                                ActivityInfo.SCREEN_ORIENTATION_USER
+                        LaunchedEffect(screenOrientation) {
+                            requestedOrientation = when (screenOrientation) {
+                                ScreenOrientation.Portrait -> ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                                ScreenOrientation.Landscape -> ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                                else -> ActivityInfo.SCREEN_ORIENTATION_USER
                             }
                         }
 
@@ -252,14 +253,25 @@ abstract class SharedLauncherActivity(
                                 NavBarEffects(modifier = Modifier.fillMaxSize())
                             }
 
+                            // Kept across config changes: a new instance would lose its edit mode
+                            // (and with it the scaffold lock it set) and its scroll position.
+                            val widgetHomeTarget = activeContextProfile?.widgetScreenTargetOverride
+                                ?: WidgetScreenTarget.Default
+                            val widgetHomeComponent = remember(widgetHomeTarget) {
+                                ClockAndWidgetsHomeComponent(target = widgetHomeTarget)
+                            }
+
                             val config = remember(
                                 mode,
+                                widgetHomeComponent,
                                 reverseSearchResults,
                                 bottomSearchBar,
                                 fixedSearchBar,
                                 gestures,
                                 searchBarStyle,
                                 darkSearchBar,
+                                darkSearchBarDrawer,
+                                disabledTelosApps,
                                 backgroundColor,
                                 lightStatus,
                                 lightNav,
@@ -426,10 +438,7 @@ abstract class SharedLauncherActivity(
 
                                     val config = ScaffoldConfiguration(
                                         homeComponent = if (widgetsOnHomeScreen == true) {
-                                            ClockAndWidgetsHomeComponent(
-                                                target = activeContextProfile?.widgetScreenTargetOverride
-                                                    ?: WidgetScreenTarget.Default,
-                                            )
+                                            widgetHomeComponent
                                         } else {
                                             ClockHomeComponent
                                         },

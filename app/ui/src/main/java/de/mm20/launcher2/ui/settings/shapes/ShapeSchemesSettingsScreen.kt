@@ -76,7 +76,7 @@ fun ShapeSchemesSettingsScreen() {
                                 IconButton(
                                     modifier = Modifier.padding(start = 12.dp),
                                     onClick = { showMenu = true }) {
-                                    Icon(painterResource(R.drawable.more_vert_24px), null)
+                                    Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions))
                                 }
                                 DropdownMenuPopup(
                                     expanded = showMenu,
@@ -127,7 +127,7 @@ fun ShapeSchemesSettingsScreen() {
                                     IconButton(
                                         modifier = Modifier.padding(start = 12.dp),
                                         onClick = { showMenu = true }) {
-                                        Icon(painterResource(R.drawable.more_vert_24px), null)
+                                        Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions))
                                     }
                                     DropdownMenuPopup(
                                         expanded = showMenu,
@@ -215,7 +215,7 @@ fun ShapeSchemesSettingsScreen() {
             text = {
                 Text(
                     stringResource(
-                        R.string.confirmation_delete_shapes_scheme,
+                        R.string.au3_appearance_confirm_delete_shapes,
                         deleteShapes!!.name
                     )
                 )
@@ -247,13 +247,13 @@ private fun ShapesPreview(theme: Shapes) {
     val baseShape = theme.baseShape
 
     val topStart =
-        (shape?.radii?.get(0)?.toFloat() ?: baseShape.radii?.get(0)?.toFloat() ?: 8f) / 3f * 2f
+        (shape?.radii?.getOrNull(0)?.toFloat() ?: baseShape.radii?.getOrNull(0)?.toFloat() ?: 8f) / 3f * 2f
     val topEnd =
-        (shape?.radii?.get(1)?.toFloat() ?: baseShape.radii?.get(1)?.toFloat() ?: 8f) / 3f * 2f
+        (shape?.radii?.getOrNull(1)?.toFloat() ?: baseShape.radii?.getOrNull(1)?.toFloat() ?: 8f) / 3f * 2f
     val bottomEnd =
-        (shape?.radii?.get(2)?.toFloat() ?: baseShape.radii?.get(2)?.toFloat() ?: 8f) / 3f * 2f
+        (shape?.radii?.getOrNull(2)?.toFloat() ?: baseShape.radii?.getOrNull(2)?.toFloat() ?: 8f) / 3f * 2f
     val bottomStart =
-        (shape?.radii?.get(3)?.toFloat() ?: baseShape.radii?.get(3)?.toFloat() ?: 8f) / 3f * 2f
+        (shape?.radii?.getOrNull(3)?.toFloat() ?: baseShape.radii?.getOrNull(3)?.toFloat() ?: 8f) / 3f * 2f
     Box(
         modifier = Modifier
             .size(32.dp)

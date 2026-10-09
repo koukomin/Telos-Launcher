@@ -88,7 +88,7 @@ fun SearchablePicker(
                                     onClick = {
                                         viewModel.onSearchQueryChanged("")
                                     }) {
-                                    Icon(painterResource(R.drawable.close_24px), null)
+                                    Icon(painterResource(R.drawable.close_24px), stringResource(R.string.action_clear))
                                 }
                             }
                         },
@@ -105,6 +105,11 @@ fun SearchablePicker(
                     )
                 }
             ) {
+            }
+        }
+        if (viewModel.items.isEmpty() && viewModel.searchQuery.isNotBlank()) {
+            item {
+                de.mm20.launcher2.ui.component.SearchEmptyState(query = viewModel.searchQuery.trim())
             }
         }
         itemsIndexed(viewModel.items) { i, it ->

@@ -54,14 +54,18 @@ fun FilterBarSettingsScreen() {
     val backStack = LocalBackStack.current
     val systemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(MaterialTheme.colorScheme.surface)
-    systemUiController.setNavigationBarColor(Color.Black)
+    systemUiController.setNavigationBarColor(Color.Transparent)
 
     val context = LocalContext.current
     val activity = LocalContext.current as? AppCompatActivity
 
+    val enabledItems by viewModel.filterBarItems.collectAsState()
+
     val listState = rememberLazyDragAndDropListState(
         onDragStart = {
-            it.key is KeyboardFilterBarItem
+            // Only enabled items can be reordered; disabled ones are just toggles
+            val key = it.key
+            key is KeyboardFilterBarItem && enabledItems?.contains(key) == true
         },
         onItemMove = { from, to ->
             val item =
@@ -71,8 +75,6 @@ fun FilterBarSettingsScreen() {
             viewModel.moveItem(item, toItem)
         }
     )
-
-    val enabledItems by viewModel.filterBarItems.collectAsState()
 
     val disabledItems by remember {
         derivedStateOf {
@@ -101,7 +103,7 @@ fun FilterBarSettingsScreen() {
                     }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = stringResource(R.string.menu_back)
                         )
                     }
                 },
@@ -142,10 +144,11 @@ fun FilterBarSettingsScreen() {
                     )
                 }
             }
-            for (i in 0 until KeyboardFilterBarItem.entries.size) {
-                val item = enabledItems!!.getOrNull(i) ?: disabledItems[i - enabledItems!!.size]
-                val prevItem = enabledItems!!.getOrNull(i - 1)
-                    ?: disabledItems.getOrNull(i - enabledItems!!.size - 1)
+            // distinct(): a duplicated stored entry would otherwise crash the list (duplicate keys)
+            val orderedItems = enabledItems!!.distinct() + disabledItems
+            for (i in orderedItems.indices) {
+                val item = orderedItems[i]
+                val prevItem = orderedItems.getOrNull(i - 1)
                 if (prevItem != null && prevItem.isCategory != item.isCategory) {
                     item(key = "divider-$i") {
                         HorizontalDivider()

@@ -89,7 +89,7 @@ fun OutlinedTagsInputField(
             }
             .onFocusChanged {
                 if (!it.hasFocus && value.isNotBlank()) {
-                    onTagsChange((tags + value).toImmutableList())
+                    onTagsChange(tags.withTag(value))
                     value = ""
                 } else if (it.hasFocus) {
                     scope.launch {
@@ -100,7 +100,7 @@ fun OutlinedTagsInputField(
         value = value, onValueChange = {
             val newTags = it.split(",")
             if (newTags.size > 1) {
-                onTagsChange(tags + newTags.dropLast(1).filter { it.isNotBlank() })
+                onTagsChange(newTags.dropLast(1).fold(tags) { acc, t -> acc.withTag(t) })
             }
             value = newTags.last()
             if (value.isNotBlank()) {
@@ -121,7 +121,7 @@ fun OutlinedTagsInputField(
         singleLine = true,
         keyboardActions = KeyboardActions(onDone = {
             if (value.isNotBlank()) {
-                onTagsChange(tags + value)
+                onTagsChange(tags.withTag(value))
                 value = ""
             }
         }),
@@ -166,7 +166,7 @@ fun OutlinedTagsInputField(
                                                     onTagsChange(tags.filterIndexed { index, _ -> index != i })
                                                 },
                                             painter = painterResource(R.drawable.close_20px),
-                                            contentDescription = null
+                                            contentDescription = androidx.compose.ui.res.stringResource(R.string.menu_remove)
                                         )
                                     },
                                 )
@@ -210,7 +210,7 @@ fun OutlinedTagsInputField(
                                                     },
                                                 text = { Text(completion) },
                                                 onClick = {
-                                                    onTagsChange(tags + completion)
+                                                    onTagsChange(tags.withTag(completion))
                                                     value = ""
                                                     completions = emptyList()
                                                 },
@@ -230,4 +230,10 @@ fun OutlinedTagsInputField(
         },
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary)
     )
+}
+
+/** Appends [tag] (trimmed) unless it is blank or already present. */
+private fun List<String>.withTag(tag: String): List<String> {
+    val trimmed = tag.trim()
+    return if (trimmed.isEmpty() || trimmed in this) this else this + trimmed
 }

@@ -134,7 +134,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                 }
             )
         },
-        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/customization/color-schemes",
+        helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/customization/color-schemes",
     ) {
         if (theme == null || previewColorScheme == null) return@PreferenceScreen
         val selectedColorScheme =
@@ -147,7 +147,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                 title = stringResource(R.string.preference_custom_colors_corepalette),
             ) {
                 CorePaletteColorPreference(
-                    title = "Primary",
+                    title = stringResource(R.string.au3_appearance_cs_primary),
                     value = theme?.corePalette?.primary,
                     onValueChange = {
                         viewModel.updateTheme(
@@ -161,7 +161,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                     defaultValue = systemPalette.primary,
                 )
                 CorePaletteColorPreference(
-                    title = "Secondary",
+                    title = stringResource(R.string.au3_appearance_cs_secondary),
                     value = theme?.corePalette?.secondary,
                     onValueChange = {
                         viewModel.updateTheme(
@@ -182,7 +182,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                     },
                 )
                 CorePaletteColorPreference(
-                    title = "Tertiary",
+                    title = stringResource(R.string.au3_appearance_cs_tertiary),
                     value = theme?.corePalette?.tertiary,
                     onValueChange = {
                         viewModel.updateTheme(
@@ -203,7 +203,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                     },
                 )
                 CorePaletteColorPreference(
-                    title = "Neutral",
+                    title = stringResource(R.string.au3_appearance_cs_neutral),
                     value = theme?.corePalette?.neutral,
                     onValueChange = {
                         viewModel.updateTheme(
@@ -224,7 +224,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                     },
                 )
                 CorePaletteColorPreference(
-                    title = "Neutral Variant",
+                    title = stringResource(R.string.au3_appearance_cs_neutral_variant),
                     value = theme?.corePalette?.neutralVariant,
                     onValueChange = {
                         viewModel.updateTheme(
@@ -245,7 +245,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                     },
                 )
                 CorePaletteColorPreference(
-                    title = "Error",
+                    title = stringResource(R.string.au3_appearance_cs_error),
                     value = theme?.corePalette?.error,
                     onValueChange = {
                         viewModel.updateTheme(
@@ -269,13 +269,13 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
         }
         item {
             ColorSchemePreferenceCategory(
-                title = "Primary colors",
+                title = stringResource(R.string.au3_appearance_cs_primary_colors),
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
                 onDarkModeChanged = { previewDarkTheme = it },
                 colorPreferences = {
                     ThemeColorPreference(
-                        title = "Primary",
+                        title = stringResource(R.string.au3_appearance_cs_primary),
                         value = selectedColorScheme.primary,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -298,7 +298,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.primary,
                     )
                     ThemeColorPreference(
-                        title = "On Primary",
+                        title = stringResource(R.string.au3_appearance_cs_on_primary),
                         value = selectedColorScheme.onPrimary,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -321,7 +321,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.onPrimary,
                     )
                     ThemeColorPreference(
-                        title = "Primary Container",
+                        title = stringResource(R.string.au3_appearance_cs_primary_container),
                         value = selectedColorScheme.primaryContainer,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -344,7 +344,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.primaryContainer,
                     )
                     ThemeColorPreference(
-                        title = "On Primary Container",
+                        title = stringResource(R.string.au3_appearance_cs_on_primary_container),
                         value = selectedColorScheme.onPrimaryContainer,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -374,7 +374,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         .padding(end = 16.dp)
                         .align(Alignment.CenterVertically),
                     onClick = { }) {
-                    Text("Button")
+                    Text(stringResource(R.string.au3_appearance_cs_button))
                 }
                 Switch(
                     modifier = Modifier
@@ -410,13 +410,13 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
         }
         item {
             ColorSchemePreferenceCategory(
-                title = "Secondary colors",
+                title = stringResource(R.string.au3_appearance_cs_secondary_colors),
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
                 onDarkModeChanged = { previewDarkTheme = it },
                 colorPreferences = {
                     ThemeColorPreference(
-                        title = "Secondary",
+                        title = stringResource(R.string.au3_appearance_cs_secondary),
                         value = selectedColorScheme.secondary,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -439,7 +439,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.secondary,
                     )
                     ThemeColorPreference(
-                        title = "On Secondary",
+                        title = stringResource(R.string.au3_appearance_cs_on_secondary),
                         value = selectedColorScheme.onSecondary,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -462,7 +462,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.onSecondary,
                     )
                     ThemeColorPreference(
-                        title = "Secondary Container",
+                        title = stringResource(R.string.au3_appearance_cs_secondary_container),
                         value = selectedColorScheme.secondaryContainer,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -485,7 +485,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.secondaryContainer,
                     )
                     ThemeColorPreference(
-                        title = "On Secondary Container",
+                        title = stringResource(R.string.au3_appearance_cs_on_secondary_container),
                         value = selectedColorScheme.onSecondaryContainer,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -510,7 +510,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                 },
             ) {
                 Text(
-                    "Headline",
+                    stringResource(R.string.au3_appearance_cs_headline),
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .align(Alignment.CenterVertically),
@@ -521,7 +521,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .align(Alignment.CenterVertically),
-                    label = { Text("Tag") },
+                    label = { Text(stringResource(R.string.au3_appearance_cs_tag)) },
                     leadingIcon = {
                         Icon(
                             painterResource(R.drawable.tag_20px),
@@ -544,13 +544,13 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
         }
         item {
             ColorSchemePreferenceCategory(
-                title = "Tertiary colors",
+                title = stringResource(R.string.au3_appearance_cs_tertiary_colors),
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
                 onDarkModeChanged = { previewDarkTheme = it },
                 colorPreferences = {
                     ThemeColorPreference(
-                        title = "Tertiary",
+                        title = stringResource(R.string.au3_appearance_cs_tertiary),
                         value = selectedColorScheme.tertiary,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -573,7 +573,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.tertiary,
                     )
                     ThemeColorPreference(
-                        title = "On Tertiary",
+                        title = stringResource(R.string.au3_appearance_cs_on_tertiary),
                         value = selectedColorScheme.onTertiary,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -596,7 +596,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.onTertiary,
                     )
                     ThemeColorPreference(
-                        title = "Tertiary Container",
+                        title = stringResource(R.string.au3_appearance_cs_tertiary_container),
                         value = selectedColorScheme.tertiaryContainer,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -619,7 +619,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.tertiaryContainer,
                     )
                     ThemeColorPreference(
-                        title = "On Tertiary Container",
+                        title = stringResource(R.string.au3_appearance_cs_on_tertiary_container),
                         value = selectedColorScheme.onTertiaryContainer,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -651,13 +651,13 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
         }
         item {
             ColorSchemePreferenceCategory(
-                title = "Surface colors",
+                title = stringResource(R.string.au3_appearance_cs_surface_colors),
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
                 onDarkModeChanged = { previewDarkTheme = it },
                 colorPreferences = {
                     ThemeColorPreference(
-                        title = "Surface Dim",
+                        title = stringResource(R.string.au3_appearance_cs_surface_dim),
                         value = selectedColorScheme.surfaceDim,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -680,7 +680,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.surfaceDim,
                     )
                     ThemeColorPreference(
-                        title = "Surface",
+                        title = stringResource(R.string.au3_appearance_cs_surface),
                         value = selectedColorScheme.surface,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -703,7 +703,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.surface,
                     )
                     ThemeColorPreference(
-                        title = "Surface Bright",
+                        title = stringResource(R.string.au3_appearance_cs_surface_bright),
                         value = selectedColorScheme.surfaceBright,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -726,7 +726,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.surfaceBright,
                     )
                     ThemeColorPreference(
-                        title = "Surface Tint",
+                        title = stringResource(R.string.au3_appearance_cs_surface_tint),
                         value = selectedColorScheme.surfaceTint,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -763,7 +763,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
-                            "Text",
+                            stringResource(R.string.au3_appearance_cs_text),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurface
                         )
@@ -782,7 +782,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
-                            "Text",
+                            stringResource(R.string.au3_appearance_cs_text),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurface
                         )
@@ -811,13 +811,13 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
         }
         item {
             ColorSchemePreferenceCategory(
-                title = "Surface container colors",
+                title = stringResource(R.string.au3_appearance_cs_surface_container_colors),
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
                 onDarkModeChanged = { previewDarkTheme = it },
                 colorPreferences = {
                     ThemeColorPreference(
-                        title = "Surface Container Lowest",
+                        title = stringResource(R.string.au3_appearance_cs_surface_container_lowest),
                         value = selectedColorScheme.surfaceContainerLowest,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -840,7 +840,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.surfaceContainerLowest,
                     )
                     ThemeColorPreference(
-                        title = "Surface Container Low",
+                        title = stringResource(R.string.au3_appearance_cs_surface_container_low),
                         value = selectedColorScheme.surfaceContainerLow,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -863,7 +863,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.surfaceContainerLow,
                     )
                     ThemeColorPreference(
-                        title = "Surface Container",
+                        title = stringResource(R.string.au3_appearance_cs_surface_container),
                         value = selectedColorScheme.surfaceContainer,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -886,7 +886,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.surfaceContainer,
                     )
                     ThemeColorPreference(
-                        title = "Surface Container High",
+                        title = stringResource(R.string.au3_appearance_cs_surface_container_high),
                         value = selectedColorScheme.surfaceContainerHigh,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -909,7 +909,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.surfaceContainerHigh,
                     )
                     ThemeColorPreference(
-                        title = "Surface Container Highest",
+                        title = stringResource(R.string.au3_appearance_cs_surface_container_highest),
                         value = selectedColorScheme.surfaceContainerHighest,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -932,7 +932,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.surfaceContainerHighest,
                     )
                     ThemeColorPreference(
-                        title = "Surface Variant",
+                        title = stringResource(R.string.au3_appearance_cs_surface_variant),
                         value = selectedColorScheme.surfaceVariant,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -961,7 +961,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         .padding(end = 16.dp)
                         .align(Alignment.CenterVertically)
                         .width(240.dp),
-                    text = "Banner",
+                    text = stringResource(R.string.au3_appearance_cs_banner),
                     icon = R.drawable.lock_24px,
                 )
                 Switch(
@@ -975,13 +975,13 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
         }
         item {
             ColorSchemePreferenceCategory(
-                title = "Content colors",
+                title = stringResource(R.string.au3_appearance_cs_content_colors),
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
                 onDarkModeChanged = { previewDarkTheme = it },
                 colorPreferences = {
                     ThemeColorPreference(
-                        title = "On Surface",
+                        title = stringResource(R.string.au3_appearance_cs_on_surface),
                         value = selectedColorScheme.onSurface,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -1006,7 +1006,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
 
 
                     ThemeColorPreference(
-                        title = "On Surface Variant",
+                        title = stringResource(R.string.au3_appearance_cs_on_surface_variant),
                         value = selectedColorScheme.onSurfaceVariant,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -1030,7 +1030,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                     )
 
                     ThemeColorPreference(
-                        title = "On Background",
+                        title = stringResource(R.string.au3_appearance_cs_on_background),
                         value = selectedColorScheme.onBackground,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -1067,7 +1067,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
-                            "Text",
+                            stringResource(R.string.au3_appearance_cs_text),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurface
                         )
@@ -1086,7 +1086,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
-                            "Text",
+                            stringResource(R.string.au3_appearance_cs_text),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurface
                         )
@@ -1118,7 +1118,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                             leadingIcon = {
                                 Icon(painterResource(R.drawable.open_in_new_24px), null)
                             },
-                            text = { Text("Menu") },
+                            text = { Text(stringResource(R.string.au3_appearance_cs_menu)) },
                             onClick = { })
                     }
                 }
@@ -1126,13 +1126,13 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
         }
         item {
             ColorSchemePreferenceCategory(
-                title = "Outline colors",
+                title = stringResource(R.string.au3_appearance_cs_outline_colors),
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
                 onDarkModeChanged = { previewDarkTheme = it },
                 colorPreferences = {
                     ThemeColorPreference(
-                        title = "Outline",
+                        title = stringResource(R.string.au3_appearance_cs_outline),
                         value = selectedColorScheme.outline,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -1155,7 +1155,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.outline,
                     )
                     ThemeColorPreference(
-                        title = "Outline Variant",
+                        title = stringResource(R.string.au3_appearance_cs_outline_variant),
                         value = selectedColorScheme.outlineVariant,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -1183,7 +1183,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .align(Alignment.CenterVertically),
-                    label = { Text("Tag") },
+                    label = { Text(stringResource(R.string.au3_appearance_cs_tag)) },
                     leadingIcon = {
                         Icon(
                             painterResource(R.drawable.tag_20px),
@@ -1199,7 +1199,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         .padding(end = 16.dp)
                         .align(Alignment.CenterVertically),
                     onClick = { }) {
-                    Text("Button")
+                    Text(stringResource(R.string.au3_appearance_cs_button))
                 }
                 OutlinedCard(
                     modifier = Modifier
@@ -1216,13 +1216,13 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
         }
         item {
             ColorSchemePreferenceCategory(
-                title = "Error colors",
+                title = stringResource(R.string.au3_appearance_cs_error_colors),
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
                 onDarkModeChanged = { previewDarkTheme = it },
                 colorPreferences = {
                     ThemeColorPreference(
-                        title = "Error",
+                        title = stringResource(R.string.au3_appearance_cs_error),
                         value = selectedColorScheme.error,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -1245,7 +1245,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.error,
                     )
                     ThemeColorPreference(
-                        title = "On Error",
+                        title = stringResource(R.string.au3_appearance_cs_on_error),
                         value = selectedColorScheme.onError,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -1268,7 +1268,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.onError,
                     )
                     ThemeColorPreference(
-                        title = "Error Container",
+                        title = stringResource(R.string.au3_appearance_cs_error_container),
                         value = selectedColorScheme.errorContainer,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -1291,7 +1291,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.errorContainer,
                     )
                     ThemeColorPreference(
-                        title = "On Error Container",
+                        title = stringResource(R.string.au3_appearance_cs_on_error_container),
                         value = selectedColorScheme.onErrorContainer,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -1320,19 +1320,19 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                     onValueChange = {},
                     isError = true,
                     readOnly = true,
-                    label = { Text("Error") }
+                    label = { Text(stringResource(R.string.au3_appearance_cs_error)) }
                 )
             }
         }
         item {
             ColorSchemePreferenceCategory(
-                title = "Inverse colors",
+                title = stringResource(R.string.au3_appearance_cs_inverse_colors),
                 previewColorScheme = previewColorScheme,
                 darkMode = previewDarkTheme,
                 onDarkModeChanged = { previewDarkTheme = it },
                 colorPreferences = {
                     ThemeColorPreference(
-                        title = "Inverse Surface",
+                        title = stringResource(R.string.au3_appearance_cs_inverse_surface),
                         value = selectedColorScheme.inverseSurface,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -1355,7 +1355,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.inverseSurface,
                     )
                     ThemeColorPreference(
-                        title = "Inverse Surface",
+                        title = stringResource(R.string.au3_appearance_cs_inverse_surface),
                         value = selectedColorScheme.inverseOnSurface,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -1378,7 +1378,7 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.inverseOnSurface,
                     )
                     ThemeColorPreference(
-                        title = "Inverse Primary",
+                        title = stringResource(R.string.au3_appearance_cs_inverse_primary),
                         value = selectedColorScheme.inversePrimary,
                         corePalette = mergedCorePalette,
                         onValueChange = {
@@ -1408,11 +1408,11 @@ fun ColorSchemeSettingsScreen(themeId: UUID) {
                             TextButton(
                                 colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.inversePrimary),
                                 onClick = { },
-                                content = { Text("Action") }
+                                content = { Text(stringResource(R.string.au3_appearance_cs_action)) }
                             )
                         },
                         content = {
-                            Text("Snackbar")
+                            Text(stringResource(R.string.au3_appearance_cs_snackbar))
                         }
                     )
                 }

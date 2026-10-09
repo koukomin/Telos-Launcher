@@ -142,7 +142,7 @@ fun TypographySettingsScreen(themeId: UUID) {
                 },
             )
         },
-        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/customization/color-schemes",
+        helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/customization/color-schemes",
     ) {
         if (theme == null || previewTypography == null) return@PreferenceScreen
 
@@ -213,7 +213,7 @@ fun TypographySettingsScreen(themeId: UUID) {
             }
         }
         item {
-            PreferenceCategory("Body") {
+            PreferenceCategory(stringResource(R.string.au3_appearance_typo_body)) {
                 TypographyPreview(previewTypography) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally
@@ -322,7 +322,7 @@ fun TypographySettingsScreen(themeId: UUID) {
             }
         }
         item {
-            PreferenceCategory("Label") {
+            PreferenceCategory(stringResource(R.string.au3_appearance_typo_label)) {
                 TypographyPreview(previewTypography) {
                     FilterChip(
                         modifier = Modifier
@@ -437,7 +437,7 @@ fun TypographySettingsScreen(themeId: UUID) {
             }
         }
         item {
-            PreferenceCategory("Title") {
+            PreferenceCategory(stringResource(R.string.au3_appearance_typo_title)) {
                 TypographyPreview(previewTypography) {
                     PrimaryTabRow(0, modifier = Modifier.width(300.dp)) {
                         LeadingIconTab(
@@ -557,7 +557,7 @@ fun TypographySettingsScreen(themeId: UUID) {
             }
         }
         item {
-            PreferenceCategory("Headline") {
+            PreferenceCategory(stringResource(R.string.au3_appearance_typo_headline)) {
                 TextStylePreference(
                     title = stringResource(R.string.hc_headline_small),
                     textStyle = previewTypography.headlineSmall,
@@ -654,7 +654,7 @@ fun TypographySettingsScreen(themeId: UUID) {
             }
         }
         item {
-            PreferenceCategory("Display") {
+            PreferenceCategory(stringResource(R.string.au3_appearance_typo_display)) {
                 TextStylePreference(
                     title = stringResource(R.string.hc_display_small),
                     textStyle = previewTypography.displaySmall,
@@ -761,7 +761,7 @@ private fun FontPreference(
     onValueChange: (ThemeFontFamily?) -> Unit = {},
 ) {
     val context = LocalContext.current
-    val fontManager = FontManager(context)
+    val fontManager = remember(context) { FontManager(context) }
 
     var showDialog by remember { mutableStateOf(false) }
     var showFontSettings by remember { mutableStateOf(false) }
@@ -996,7 +996,7 @@ private fun getFontName(context: Context, fontFamily: ThemeFontFamily?): String 
         is ThemeFontFamily.SansSerif -> "sans-serif"
         is ThemeFontFamily.Serif -> "serif"
         is ThemeFontFamily.Monospace -> "monospace"
-        null -> "default"
+        null -> context.getString(R.string.au3_appearance_font_default)
     }
 }
 

@@ -119,7 +119,7 @@ fun SearchActionsSettingsScreen() {
                     }) {
                         Icon(
                             painterResource(R.drawable.arrow_back_24px),
-                            contentDescription = "Back"
+                            contentDescription = stringResource(R.string.menu_back)
                         )
                     }
                 },
@@ -134,12 +134,12 @@ fun SearchActionsSettingsScreen() {
                             )
                             .build().launchUrl(
                                 context,
-                                Uri.parse("https://kvaesitso.mm20.de/docs/user-guide/search/quickactions")
+                                Uri.parse("https://koukomin.github.io/Telos-Launcher/docs/user-guide/search/quickactions")
                             )
                     }) {
                         Icon(
                             painterResource(R.drawable.help_24px),
-                            contentDescription = "Help"
+                            contentDescription = stringResource(R.string.help)
                         )
                     }
                 },

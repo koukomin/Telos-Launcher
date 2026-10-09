@@ -56,6 +56,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
@@ -305,6 +306,12 @@ fun WidgetPickerSheet(
             viewModel.filter1x1 = filter1x1
         }
 
+        // The view model outlives the sheet: start every opening with a clean search.
+        LaunchedEffect(Unit) {
+            viewModel.search("")
+            viewModel.expandedGroup.value = null
+        }
+
         val bindAppWidgetStarter =
             rememberLauncherForActivityResult(BindAndConfigureAppWidgetContract(density)) {
                 if (it != null) {
@@ -368,7 +375,7 @@ fun WidgetPickerSheet(
                                         modifier = Modifier.offset(16.dp),
                                         onClick = { viewModel.search("") }
                                     ) {
-                                        Icon(painterResource(R.drawable.close_24px), null)
+                                        Icon(painterResource(R.drawable.close_24px), stringResource(R.string.action_clear))
                                     }
                                 }
                             },
@@ -448,7 +455,7 @@ fun WidgetPickerSheet(
                 }
             }
             if (includeBuiltinWidgets) {
-                itemsIndexed(pluginWidgets, key = { _, it -> it.authority }) { i, it ->
+                itemsIndexed(pluginWidgets, key = { _, it -> "plugin:" + it.authority }) { i, it ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -484,10 +491,24 @@ fun WidgetPickerSheet(
                     }
                 }
             }
+            val hasBuiltIn = includeBuiltinWidgets && (builtIn.isNotEmpty() || pluginWidgets.isNotEmpty())
+            if (query.isNotBlank() && !hasBuiltIn && appWidgetGroups.isEmpty()) {
+                item(key = "empty") {
+                    Text(
+                        text = stringResource(R.string.au3_launcher3_widgets_none_found),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(32.dp)
+                    )
+                }
+            }
             for (group in appWidgetGroups) {
                 val expanded = viewModel.expandedGroup.value == group.packageName || expandAllGroups
                 item(
-                    key = group.packageName,
+                    key = "group:" + group.packageName,
                 ) {
                     val icon = remember(group.packageName) {
                         try {
@@ -498,6 +519,7 @@ fun WidgetPickerSheet(
                     }
                     Row(
                         modifier = Modifier
+                            .fillMaxWidth()
                             .clip(cardShape)
                             .background(MaterialTheme.colorScheme.surfaceBright)
                             .clickable(enabled = !expandAllGroups) {
@@ -559,7 +581,7 @@ fun WidgetPickerSheet(
                                 AsyncImage(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .height(it.minHeight.dp.coerceIn(60.dp, 200.dp))
+                                        .height((it.minHeight / density.density).dp.coerceIn(60.dp, 200.dp))
                                         .background(MaterialTheme.colorScheme.surfaceVariant)
                                         .padding(16.dp),
                                     model = previewImage, contentDescription = null

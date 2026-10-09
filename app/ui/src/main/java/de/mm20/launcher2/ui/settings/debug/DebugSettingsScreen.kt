@@ -33,7 +33,9 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import java.io.File
 import java.text.SimpleDateFormat
+import java.io.IOException
 import java.util.Date
+import java.util.Locale
 
 @Serializable
 data object DebugSettingsRoute : NavKey
@@ -78,16 +80,29 @@ fun DebugSettingsScreen() {
                     onClick = {
                         scope.launch {
                             dumpingHeap = true
-                            val df = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
+                            val df = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.ROOT)
                             val path = File(
-                                context.externalCacheDir,
-                                "kvaesitso-dump-${df.format(Date(System.currentTimeMillis()))}.hprof"
+                                context.externalCacheDir ?: context.cacheDir,
+                                "telos-dump-${df.format(Date(System.currentTimeMillis()))}.hprof"
                             ).absolutePath
                             delay(100)
-                            withContext(Dispatchers.Default) {
-                                Debug.dumpHprofData(path)
+                            val success = try {
+                                withContext(Dispatchers.Default) {
+                                    Debug.dumpHprofData(path)
+                                }
+                                true
+                            } catch (e: IOException) {
+                                false
                             }
                             dumpingHeap = false
+                            if (!success) {
+                                Toast.makeText(
+                                    context,
+                                    R.string.au3_sysb_dump_failed,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                return@launch
+                            }
                             context.tryStartActivity(
                                 Intent.createChooser(
                                     Intent(Intent.ACTION_SEND).apply {
@@ -133,8 +148,8 @@ fun DebugSettingsScreen() {
                     })
                 if (BuildConfig.DEBUG) {
                     Preference(
-                        title = "String normalization test",
-                        summary = "Test string transliteration and normalization",
+                        title = stringResource(R.string.au3_sysb_normalizer_title),
+                        summary = stringResource(R.string.au3_sysb_normalizer_summary),
                         onClick = {
                             backStack += StringNormalizerTestRoute
                         }

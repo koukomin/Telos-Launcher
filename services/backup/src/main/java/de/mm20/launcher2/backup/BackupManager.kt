@@ -37,22 +37,25 @@ class BackupManager(
         )
 
         withContext(Dispatchers.IO) {
-            // "wt": truncate, or an overwritten longer file keeps its old tail and is a corrupt zip
-            val outputStream = context.contentResolver.openOutputStream(uri, "wt") ?: return@withContext null
             val backupDir = File(context.cacheDir, "backup")
-            if (backupDir.exists()) {
-                backupDir.deleteRecursively()
-            }
-            backupDir.mkdirs()
-
-            val metaFile = File(backupDir, "meta")
-            meta.writeToFile(metaFile)
-
-            for (component in components) {
-                if (component.group in groups) component.backup(backupDir)
-            }
-
             try {
+                if (backupDir.exists()) {
+                    backupDir.deleteRecursively()
+                }
+                backupDir.mkdirs()
+
+                val metaFile = File(backupDir, "meta")
+                meta.writeToFile(metaFile)
+
+                // a component that fails fails the whole backup: a backup that silently lacks a part is worse
+                for (component in components) {
+                    if (component.group in groups) component.backup(backupDir)
+                }
+
+                // opened only now, so that a failing component does not leave an empty file behind
+                // "wt": truncate, or an overwritten longer file keeps its old tail and is a corrupt zip
+                val outputStream = context.contentResolver.openOutputStream(uri, "wt")
+                    ?: throw java.io.IOException("Cannot open $uri for writing")
                 outputStream.use { createArchive(backupDir, it) }
             } finally {
                 backupDir.deleteRecursively()
@@ -64,18 +67,23 @@ class BackupManager(
      * Restores a backup
      * @param groups the parts to restore, all that the backup contains by default. A part that the
      * backup does not contain is never touched.
+     * @return the number of components that could not be restored (0 if everything went well). The
+     * other components are restored regardless.
+     * @throws java.io.IOException if the file cannot be opened or unpacked
      */
     suspend fun restore(
         uri: Uri,
         groups: Set<BackupGroup>? = null,
-    ) {
+    ): Int {
         // async + await (instead of launch): a failure reaches the caller rather than crashing the
         // app through the uncaught exception handler
         val job = scope.async {
             withContext(Dispatchers.IO) {
+                var failed = 0
                 val restoreDir = File(context.cacheDir, "restore")
                 try {
-                val inputStream = context.contentResolver.openInputStream(uri) ?: return@withContext
+                val inputStream = context.contentResolver.openInputStream(uri)
+                    ?: throw java.io.IOException("Cannot open $uri for reading")
                 if (restoreDir.exists()) {
                     restoreDir.deleteRecursively()
                 }
@@ -86,14 +94,24 @@ class BackupManager(
                 val inBackup = readMetaFromDir(restoreDir)?.groups ?: setOf(BackupGroup.Launcher)
                 val chosen = if (groups == null) inBackup else groups intersect inBackup
                 for (component in components) {
-                    if (component.group in chosen) component.restore(restoreDir)
+                    if (component.group !in chosen) continue
+                    try {
+                        component.restore(restoreDir)
+                    } catch (e: CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        // one broken part must not keep the others from being restored
+                        android.util.Log.e("MM20", "Cannot restore ${component::class.java.simpleName}", e)
+                        failed++
+                    }
                 }
+                failed
                 } finally {
                     restoreDir.deleteRecursively()
                 }
             }
         }
-        job.await()
+        return job.await()
     }
 
     private suspend fun readMetaFromDir(dir: File): BackupMetadata? {

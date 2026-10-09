@@ -16,7 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import java.text.DecimalFormat
-import kotlin.math.floor
+import kotlin.math.ceil
 import kotlin.math.log
 import kotlin.math.roundToInt
 
@@ -83,7 +83,7 @@ fun SliderPreference(
                         onValueChange?.invoke(it)
                     },
                     valueRange = min..max,
-                    steps = step?.let { ((max - min) / it).toInt() - 1 } ?: 0,
+                    steps = step?.let { (((max - min) / it).roundToInt() - 1).coerceAtLeast(0) } ?: 0,
                     onValueChangeFinished = {
                         onValueChanged(sliderValue)
                     },
@@ -92,8 +92,8 @@ fun SliderPreference(
                     label(sliderValue)
                 } else {
                     val decimalPlaces = -log(step ?: 0.01f, 10f)
-                    val format = remember { DecimalFormat().apply {
-                        maximumFractionDigits = floor(decimalPlaces).toInt()
+                    val format = remember(step) { DecimalFormat().apply {
+                        maximumFractionDigits = ceil(decimalPlaces - 0.001f).toInt().coerceAtLeast(0)
                         minimumFractionDigits = 0
                     } }
                     Text(

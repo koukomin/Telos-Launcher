@@ -173,7 +173,7 @@ private fun PreferenceScreenTopBar(
             }) {
                 Icon(
                     painter = painterResource(R.drawable.arrow_back_24px),
-                    contentDescription = "Back"
+                    contentDescription = stringResource(R.string.menu_back)
                 )
             }
         },

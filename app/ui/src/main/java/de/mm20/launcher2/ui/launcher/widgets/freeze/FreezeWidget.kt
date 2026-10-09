@@ -17,7 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
 
@@ -30,6 +33,13 @@ fun FreezeWidget(widget: de.mm20.launcher2.widgets.FreezeWidget) {
 
     LaunchedEffect(candidates) {
         viewModel.refresh()
+    }
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    LaunchedEffect(lifecycle) {
+        // Apps can be frozen/unfrozen outside the launcher, so recount every time we come back
+        lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            viewModel.refresh()
+        }
     }
 
     Column(

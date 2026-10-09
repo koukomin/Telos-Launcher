@@ -35,6 +35,8 @@ another way, is not stopped by them.
 | Use separate lock | Off | Use a custom PIN instead of the device credential |
 | Set custom PIN | n/a | At least 4 digits, entered twice. Stored as a salted SHA-256 hash, which is light protection |
 
+A wrong custom PIN shows "Wrong PIN" after a delay of 1 second.
+
 Turning the lock off again needs the same authentication, so a stranger cannot simply disable it. If no
 screen lock or biometric is set up on the device, the protected pages say so and stay locked until you
 set one up in Android.
@@ -67,7 +69,7 @@ you to authenticate first.
 
 | Setting | Default | What it does |
 | --- | --- | --- |
-| Detection method | Both | Usage access only, accessibility service only, or both (recommended) |
+| Detection method | Both | Usage access only, accessibility service only, or both (hybrid, recommended). A change applies immediately |
 | Accessibility service | Off | Optional. Catches locked apps the instant they open instead of a moment later |
 | Auto-lock timing | Immediately | How long after leaving a locked app you can return without authenticating: immediately, 30 seconds, 1 minute, 5 minutes or 30 minutes. Each app can override it |
 | Stay unlocked until screen off | Off | Apps stay unlocked as long as the screen is on |
@@ -183,7 +185,7 @@ want, or tap **All**. On restore only the parts that the file contains are offer
 
 | Part | Included |
 | --- | --- |
-| Launcher settings | Yes, including App Lock lists and the custom PIN hash |
+| Launcher settings | Yes, including App Lock lists, but not the custom lock PIN hash |
 | Favorites, usage weights, visibility, hidden items | Yes |
 | Custom names, custom icons, tags | Yes |
 | Themes (colors, shapes, typography, transparency) | Yes |
@@ -196,11 +198,12 @@ want, or tap **All**. On restore only the parts that the file contains are offer
 | Intruder photos | No |
 | Passwords and API keys of the Telos apps | Removed from the file |
 | Hidden numbers and protected call numbers of Telos Phone | Removed from the file |
+| Custom lock PIN (hash) | No. A restore keeps the PIN lock of this device |
 
 The backup is a plain ZIP, **not encrypted**. Keep it somewhere private. The file records the app version,
 the device model and the time, and the restore screen shows them. Compatibility is checked by format
 version (currently 1.11): a different major version cannot be restored, a different minor version restores
-with a warning that some data may be lost.
+with a warning that some data may be lost. A failed backup shows an error with **Try again**. If some parts of a restore fail, the other parts are still restored and a warning tells you which failed.
 
 On restore, secrets that live on the device (passwords, keys, hidden numbers) are kept from the device,
 not taken from the file, and an account without its password is switched off.

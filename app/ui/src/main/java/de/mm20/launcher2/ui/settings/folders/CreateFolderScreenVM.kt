@@ -11,6 +11,7 @@ import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.searchable.VisibilityLevel
+import de.mm20.launcher2.ui.settings.homescreen.dock.DockSettingsScreenVM
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -57,9 +58,10 @@ class CreateFolderScreenVM : ViewModel(), KoinComponent {
             // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
 
             val dockPages = uiSettings.dockPages.first().toMutableList()
-            if (dockPages.isEmpty()) {
-                dockPages.add(mutableListOf())
-            }
+            // Auto dock (no custom pages): the folder is pinned, so it already shows up among the
+            // favorites the auto dock displays. Do not turn the auto dock into a custom one here.
+            if (dockPages.isEmpty()) return@launch
+            val capacity = uiSettings.dockRows.first() * uiSettings.dockColumns.first()
             var placed = false
             for (page in dockPages.indices) {
                 val items = dockPages[page].toMutableList()
@@ -71,12 +73,19 @@ class CreateFolderScreenVM : ViewModel(), KoinComponent {
                     dockPages[page] = items
                     placed = true
                     break
+                } else if (items.size < capacity) {
+                    // the stored page is sparse: slots past its end are empty
+                    items.add(DockItem.Searchable(folder.key))
+                    dockPages[page] = items
+                    placed = true
+                    break
                 }
             }
             if (!placed) {
-                val lastPage = dockPages.last().toMutableList()
-                lastPage.add(DockItem.Searchable(folder.key))
-                dockPages[dockPages.lastIndex] = lastPage
+                // every slot is taken: extend the dock with a new page (up to the maximum);
+                // otherwise leave the dock as it is, the folder stays reachable as a favorite
+                if (dockPages.size >= DockSettingsScreenVM.MAX_DOCKS) return@launch
+                dockPages.add(listOf(DockItem.Searchable(folder.key)))
             }
             uiSettings.setDockPages(dockPages)
         }

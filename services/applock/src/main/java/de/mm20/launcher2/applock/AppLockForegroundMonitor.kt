@@ -9,7 +9,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.isActive
@@ -32,8 +32,12 @@ class AppLockForegroundMonitor(
     private val usageStatsProvider: AppUsageStatsProvider,
     private val accessibilityBridge: AccessibilityForegroundBridge,
 ) {
-    fun foregroundPackageChanges(): Flow<String> = flow {
-        val mode = settings.detectionMode.first()
+    // Re-evaluated whenever the detection mode setting changes, so switching it applies live.
+    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    fun foregroundPackageChanges(): Flow<String> =
+        settings.detectionMode.distinctUntilChanged().flatMapLatest { mode -> sourcesFor(mode) }
+
+    private fun sourcesFor(mode: AppLockDetectionMode): Flow<String> = flow {
         val sources = buildList {
             if (mode == AppLockDetectionMode.Accessibility || mode == AppLockDetectionMode.Hybrid) {
                 add(accessibilityBridge.foregroundPackageChanges)

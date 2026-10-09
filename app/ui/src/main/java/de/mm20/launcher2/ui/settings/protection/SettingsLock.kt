@@ -204,6 +204,7 @@ fun ProtectedSettingsScreen(
 
     var unlocked by remember { mutableStateOf(false) }
     var showPinDialog by remember { mutableStateOf(false) }
+    var pinWrong by remember { mutableStateOf(false) }
     val activity = LocalContext.current as? FragmentActivity
     val promptTitle = stringResource(R.string.settings_lock_prompt_title)
     val scope = androidx.compose.runtime.rememberCoroutineScope()
@@ -214,12 +215,22 @@ fun ProtectedSettingsScreen(
             onConfirm = { pin ->
                 scope.launch {
                     if (viewModel.verifyCustomLock(pin)) {
+                        pinWrong = false
                         unlocked = true
                         showPinDialog = false
+                    } else {
+                        // Small delay slows down brute forcing the short PIN.
+                        kotlinx.coroutines.delay(1000)
+                        pinWrong = true
                     }
                 }
             },
-            onDismiss = { showPinDialog = false }
+            errorMessage = if (pinWrong) stringResource(R.string.au3_secplug_wrong_pin) else null,
+            onPinChanged = { pinWrong = false },
+            onDismiss = {
+                pinWrong = false
+                showPinDialog = false
+            }
         )
     }
 

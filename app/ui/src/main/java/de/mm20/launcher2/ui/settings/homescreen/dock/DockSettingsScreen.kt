@@ -73,6 +73,7 @@ fun DockSettingsScreen() {
     var showSearchablePicker by remember { mutableStateOf(false) }
     var showWidgetPicker by remember { mutableStateOf(false) }
     var showChoiceDialog by remember { mutableStateOf(false) }
+    var pendingSlotFilled by remember { mutableStateOf(false) }
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_dock)) {
         item {
@@ -120,6 +121,8 @@ fun DockSettingsScreen() {
                                             isDragged = isDragged,
                                             onClick = {
                                                 viewModel.pendingItemPos = Triple(pageIndex, index / columns, index % columns)
+                                                pendingSlotFilled = item != null &&
+                                                    !(item is DockItem.Searchable && item.key.isEmpty())
                                                 showChoiceDialog = true
                                             }
                                         )
@@ -207,8 +210,11 @@ fun DockSettingsScreen() {
             PreferenceCategory(title = stringResource(R.string.preference_category_grid_dock)) {
                 var override by remember { mutableStateOf(false) }
                 LaunchedEffect(dockGrid, grid) {
-                    override = dockGrid != null && grid != null &&
-                        (dockGrid!!.columnCount != grid!!.columnCount || dockGrid!!.iconSize != grid!!.iconSize)
+                    // Only ever switch the toggle ON from stored values; turning it off is the
+                    // user's decision (otherwise equal values would collapse the sliders mid-drag).
+                    if (dockGrid != null && grid != null &&
+                        dockGrid!!.iconSize != grid!!.iconSize
+                    ) override = true
                 }
                 SwitchPreference(
                     title = stringResource(R.string.preference_dock_grid_override),
@@ -218,18 +224,17 @@ fun DockSettingsScreen() {
                         if (!it) {
                             viewModel.setDockGridColumnCount(null)
                             viewModel.setDockGridIconSize(null)
+                        } else {
+                            grid?.let { g ->
+                                viewModel.setDockGridIconSize(g.iconSize)
+                            }
                         }
                     }
                 )
                 AnimatedVisibility(override && dockGrid != null) {
                     Column {
-                        SliderPreference(
-                            title = stringResource(R.string.preference_grid_column_count),
-                            value = dockGrid?.columnCount ?: 5,
-                            min = 3,
-                            max = 12,
-                            onValueChanged = { viewModel.setDockGridColumnCount(it) }
-                        )
+                        // Column count is not offered here: the dock's columns come from the
+                        // "Dock columns" slider above, a separate grid column override had no effect.
                         SliderPreference(
                             title = stringResource(R.string.preference_grid_icon_size),
                             value = dockGrid?.iconSize ?: 48,
@@ -316,11 +321,21 @@ fun DockSettingsScreen() {
                 }
             },
             dismissButton = {
-                TextButton(onClick = {
-                    showChoiceDialog = false
-                    showWidgetPicker = true
-                }) {
-                    Text(stringResource(R.string.dock_item_widget))
+                Row {
+                    if (pendingSlotFilled) {
+                        TextButton(onClick = {
+                            showChoiceDialog = false
+                            viewModel.pendingItemPos?.let { viewModel.setItem(it.first, it.second, it.third, null) }
+                        }) {
+                            Text(stringResource(R.string.dock_menu_remove))
+                        }
+                    }
+                    TextButton(onClick = {
+                        showChoiceDialog = false
+                        showWidgetPicker = true
+                    }) {
+                        Text(stringResource(R.string.dock_item_widget))
+                    }
                 }
             }
             // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===

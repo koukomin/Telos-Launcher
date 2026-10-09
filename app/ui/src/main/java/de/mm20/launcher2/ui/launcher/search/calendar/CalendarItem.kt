@@ -124,6 +124,7 @@ fun CalendarItem(
                                 text = calendar.labelOverride ?: calendar.label,
                                 style = MaterialTheme.typography.titleMedium,
                                 maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
                                 textDecoration = if (calendar.isCompleted == true) {
                                     TextDecoration.LineThrough
                                 } else {
@@ -170,7 +171,7 @@ fun CalendarItem(
 
                             if (secondaryCalendar != null) {
                                 Text(
-                                    modifier = modifier.padding(top = 2.dp),
+                                    modifier = Modifier.padding(top = 2.dp),
                                     text = calendar.formatTime(
                                         context,
                                         timeFormat,
@@ -333,6 +334,7 @@ fun CalendarItem(
                             text = calendar.labelOverride ?: calendar.label,
                             style = MaterialTheme.typography.titleSmall,
                             maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                             textDecoration = if (calendar.isCompleted == true) {
                                 TextDecoration.LineThrough
                             } else {

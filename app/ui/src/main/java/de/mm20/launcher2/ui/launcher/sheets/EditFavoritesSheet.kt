@@ -194,7 +194,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                 val tag = tagsListState.layoutInfo.visibleItemsInfo.find {
                     relCenter.x + scroll > it.offset && relCenter.x + scroll < it.offset + it.size - tagsSpacing
                 }
-                hoveredTag = tag?.index?.let { pinnedTags[it].tag }
+                hoveredTag = tag?.index?.let { pinnedTags.getOrNull(it)?.tag }
             } else {
                 hoveredTag = null
             }
@@ -316,7 +316,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                             if (showSettings) R.drawable.settings_24px_filled
                                             else R.drawable.settings_24px
                                         ),
-                                        contentDescription = null
+                                        contentDescription = stringResource(R.string.settings)
                                     )
                                 }
                             } else {
@@ -327,7 +327,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                     }) {
                                     Icon(
                                         painterResource(R.drawable.add_24px),
-                                        contentDescription = null
+                                        contentDescription = stringResource(R.string.au3_launcher3_add_shortcut)
                                     )
                                 }
                             }
@@ -490,7 +490,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                     }) {
                                     Icon(
                                         painterResource(R.drawable.add_24px),
-                                        contentDescription = null
+                                        contentDescription = stringResource(R.string.edit_favorites_dialog_new_tag)
                                     )
                                 }
                                 DropdownMenuPopup(
@@ -651,8 +651,9 @@ fun ShortcutPicker(viewModel: EditFavoritesSheetVM, paddingValues: PaddingValues
         rememberLauncherForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) {
             if (it.resultCode != Activity.RESULT_OK) {
                 viewModel.cancelPickShortcut()
+            } else {
+                viewModel.createShortcut(context, it.data)
             }
-            viewModel.createShortcut(context, it.data)
 
         }
 

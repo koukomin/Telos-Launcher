@@ -87,7 +87,10 @@ fun PluginWidget(widget: PluginWidget) {
                     if (item.value != null) {
                         Text(
                             text = item.value,
+                            modifier = Modifier.padding(start = 12.dp),
                             style = MaterialTheme.typography.titleSmall,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                         )
                     }
                 }

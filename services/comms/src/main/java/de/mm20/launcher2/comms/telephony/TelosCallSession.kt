@@ -22,6 +22,8 @@ object TelosCallSession {
     private var call: Call? = null
     private var ringingStartedAt = 0L
     private var answeredThisCall = false
+    // outgoing calls that did not yet connect, to vibrate once when the other side answers
+    private val pendingOutgoing = mutableSetOf<Call>()
     var lastEndedWasMissed: Boolean = false
         private set
     var lastEndedRingMs: Long = 0L
@@ -47,10 +49,13 @@ object TelosCallSession {
                     Call.STATE_ACTIVE -> {
                         answeredThisCall = true
                         AutoRedial.onConnected()
+                        if (pendingOutgoing.remove(call)) inCallService?.let { CallHaptics.onAnswered(it) }
                     }
                     Call.STATE_DISCONNECTED -> {
                         recordEnd(call)
+                        pendingOutgoing.remove(call)
                         val ctx = inCallService ?: return
+                        CallHaptics.onHangup(ctx)
                         AutoRedial.onDisconnected(ctx, call)
                     }
                 }
@@ -73,8 +78,9 @@ object TelosCallSession {
             ringingStartedAt = System.currentTimeMillis()
             answeredThisCall = false
             AutoRedial.onIncoming()
-        } else if (number.isNotEmpty()) {
-            AutoRedial.onOutgoing(number)
+        } else {
+            if (state != Call.STATE_ACTIVE) pendingOutgoing.add(newCall)
+            if (number.isNotEmpty()) AutoRedial.onOutgoing(number)
         }
         publish()
     }
@@ -92,6 +98,7 @@ object TelosCallSession {
     fun onCallRemoved(removed: Call) {
         callbacks.remove(removed)?.let { removed.unregisterCallback(it) }
         connectedAt.remove(removed)
+        pendingOutgoing.remove(removed)
         calls.remove(removed)
         call = pickPrimary()
         publish()

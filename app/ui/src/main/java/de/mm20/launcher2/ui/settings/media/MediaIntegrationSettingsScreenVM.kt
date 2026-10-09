@@ -78,7 +78,8 @@ class MediaIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun onAppChecked(app: AppListItem, checked: Boolean) {
         val list = appList.value.toMutableList()
-        val index = list.indexOf(app)
+        val index = list.indexOfFirst { it.packageName == app.packageName }
+        if (index < 0) return
         list[index] = app.copy(isChecked = checked)
         appList.value = list
         saveState()

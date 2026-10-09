@@ -210,7 +210,7 @@ fun FreezeSettingsScreen() {
                                         max = 120,
                                         step = 1,
                                         onValueChanged = { viewModel.setIdleTimeoutMinutes(it) },
-                                        label = { Text("$it") }
+                                        label = { Text(stringResource(R.string.au3_commsfreeze_minutes, it)) }
                                     )
                                 }
                                 SwitchPreference(
@@ -228,30 +228,30 @@ fun FreezeSettingsScreen() {
                                     value = exclusionStrictness ?: FreezeExclusionStrictness.Strict,
                                     onValueChanged = { viewModel.setExclusionStrictness(it) }
                                 )
-                                SwitchPreference(
-                                    title = stringResource(R.string.preference_freeze_exclude_music),
-                                    summary = stringResource(R.string.preference_freeze_exclude_music_summary),
-                                    value = excludeMusic == true,
-                                    onValueChanged = { viewModel.setExcludeMusic(it) }
-                                )
-                                SwitchPreference(
-                                    title = stringResource(R.string.preference_freeze_exclude_network),
-                                    summary = stringResource(R.string.preference_freeze_exclude_network_summary),
-                                    value = excludeNetwork == true,
-                                    onValueChanged = { viewModel.setExcludeNetwork(it) }
-                                )
-                                AnimatedVisibility(excludeNetwork == true) {
-                                    SliderPreference(
-                                        title = stringResource(R.string.preference_freeze_network_threshold),
-                                        value = networkThresholdKb ?: 100,
-                                        min = 1,
-                                        max = 1000,
-                                        step = 10,
-                                        onValueChanged = { viewModel.setNetworkThresholdKb(it) },
-                                        label = { Text(stringResource(R.string.au_freeze_kbps, it)) }
-                                    )
-                                }
                             }
+                        }
+                        SwitchPreference(
+                            title = stringResource(R.string.preference_freeze_exclude_music),
+                            summary = stringResource(R.string.preference_freeze_exclude_music_summary),
+                            value = excludeMusic == true,
+                            onValueChanged = { viewModel.setExcludeMusic(it) }
+                        )
+                        SwitchPreference(
+                            title = stringResource(R.string.preference_freeze_exclude_network),
+                            summary = stringResource(R.string.preference_freeze_exclude_network_summary),
+                            value = excludeNetwork == true,
+                            onValueChanged = { viewModel.setExcludeNetwork(it) }
+                        )
+                        AnimatedVisibility(excludeNetwork == true) {
+                            SliderPreference(
+                                title = stringResource(R.string.preference_freeze_network_threshold),
+                                value = networkThresholdKb ?: 100,
+                                min = 10,
+                                max = 1000,
+                                step = 10,
+                                onValueChanged = { viewModel.setNetworkThresholdKb(it) },
+                                label = { Text(stringResource(R.string.au_freeze_kbps, it)) }
+                            )
                         }
                     }
                 }

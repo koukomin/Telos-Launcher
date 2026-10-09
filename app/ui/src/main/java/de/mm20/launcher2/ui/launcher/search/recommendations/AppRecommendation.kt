@@ -127,8 +127,11 @@ object AppRecommendations {
     fun matchQuery(query: String): AppRecommendation? {
         val q = query.trim().lowercase()
         if (q.isEmpty()) return null
+        // Whole-word match: a plain substring match made "cloud" fire for "soundcloud" and
+        // "note" for "notebook", i.e. promotions appeared while looking for unrelated apps.
+        val words = q.split(Regex("[^\\p{L}\\p{N}]+")).filter { it.isNotEmpty() }
         val category = RecommendationCategory.entries.firstOrNull { cat ->
-            cat.keywords.any { q.contains(it) }
+            cat.keywords.any { it == q || words.contains(it) }
         } ?: return null
         return all.firstOrNull { it.category == category }
     }
