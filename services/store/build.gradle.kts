@@ -51,6 +51,8 @@ dependencies {
     implementation(libs.koin.android)
 
     implementation(project(":core:ktx"))
+    // SecretBox (Keystore encryption) for the GitHub token; services:comms depends only on core modules
+    implementation(project(":services:comms"))
     implementation(project(":core:base"))
     implementation(project(":core:crashreporter"))
 }
