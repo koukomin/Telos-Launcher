@@ -20,6 +20,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -48,7 +50,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -103,14 +107,18 @@ fun StoreDashboardScreen(initialLink: String = "") {
     val message by viewModel.message.collectAsStateWithLifecycle()
     val disabledTelos by viewModel.disabledTelosApps.collectAsStateWithLifecycle()
 
-    var tab by remember { mutableStateOf(0) }
+    var tab by rememberSaveable { mutableIntStateOf(0) }
     var showAdd by remember { mutableStateOf(false) }
     var addPrefill by remember { mutableStateOf("") }
     var showSettings by remember { mutableStateOf(false) }
     var showInstalled by remember { mutableStateOf(false) }
     var menuOpen by remember { mutableStateOf(false) }
 
+    // an address that opened the Store is handled once, not again after a rotation
+    var linkHandled by rememberSaveable(initialLink) { mutableStateOf(false) }
     LaunchedEffect(initialLink) {
+        if (linkHandled) return@LaunchedEffect
+        linkHandled = true
         viewModel.handleLink(initialLink) { url ->
             addPrefill = url
             showAdd = true
@@ -299,13 +307,13 @@ internal fun StoreItemRow(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp).clickable(onClick = onClick),
     ) {
         Row(Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-            AppIcon(item.packageName, item.displayName, 44)
+            AppIcon(item.packageName, item.displayName, 44, item.installedVersionCode)
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
                 Text(item.displayName, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 Text(item.versionLine(row.updateAvailable), style = MaterialTheme.typography.bodySmall, color = if (row.updateAvailable) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 Text(
-                    listOfNotNull(item.source.summary(), row.options.category.ifBlank { null }, if (row.options.trackOnly) "track only" else null, if (row.options.pinned) "pinned" else null).joinToString(" · "),
+                    listOfNotNull(item.source.summary(), row.options.category.ifBlank { null }, if (row.options.trackOnly) stringResource(R.string.hf_store_track_only) else null, if (row.options.pinned) stringResource(R.string.au_store_pinned) else null).joinToString(" · "),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
@@ -318,12 +326,13 @@ internal fun StoreItemRow(
     }
 }
 
+@Composable
 private fun StoreItem.versionLine(update: Boolean): String {
     val installed = installedVersionName ?: installedVersionCode?.toString()
     val latest = latestRelease?.version?.takeIf { it != "unknown" }
     return when {
-        installed == null && latest != null -> "v$latest available"
-        installed == null -> "Not installed"
+        installed == null && latest != null -> stringResource(R.string.au_store_version_available, latest)
+        installed == null -> stringResource(R.string.hf_store_not_installed)
         update && latest != null -> "v$installed → v$latest"
         else -> "v$installed"
     }
@@ -331,9 +340,9 @@ private fun StoreItem.versionLine(update: Boolean): String {
 
 /** The icon of the installed app, or a letter before it is installed */
 @Composable
-internal fun AppIcon(packageName: String, name: String, size: Int) {
+internal fun AppIcon(packageName: String, name: String, size: Int, installedVersion: Long? = null) {
     val context = LocalContext.current
-    val bitmap by androidx.compose.runtime.produceState<androidx.compose.ui.graphics.ImageBitmap?>(null, packageName) {
+    val bitmap by androidx.compose.runtime.produceState<androidx.compose.ui.graphics.ImageBitmap?>(null, packageName, installedVersion) {
         value = withContext(Dispatchers.IO) {
             runCatching {
                 val d: Drawable = context.packageManager.getApplicationIcon(packageName)
@@ -366,20 +375,25 @@ internal fun StoreActionButton(row: StoreRow, state: StoreInstallUiState, onClic
         StoreInstallUiState.Failed -> OutlinedButton(onClick = onClick) { Text(stringResource(R.string.hc_retry)) }
         StoreInstallUiState.Idle, StoreInstallUiState.Installed -> {
             val label = row.actionLabel()
-            if (label == "Open") OutlinedButton(onClick = onClick) { Text(label) } else Button(onClick = onClick) { Text(label) }
+            if (row.isOpenAction()) OutlinedButton(onClick = onClick) { Text(label) } else Button(onClick = onClick) { Text(label) }
         }
     }
 }
 
 /** "Install", "Update", "Open", or "Get" for apps that are only tracked (their page opens) */
+@Composable
 internal fun StoreRow.actionLabel(): String = when {
-    item.installedVersionCode == null && options.trackOnly -> "Page"
-    item.installedVersionCode == null -> "Install"
-    updateAvailable && options.trackOnly -> "Page"
-    updateAvailable -> "Update"
-    else -> "Open"
+    item.installedVersionCode == null && options.trackOnly -> stringResource(R.string.au_store_action_page)
+    item.installedVersionCode == null -> stringResource(R.string.hc_install)
+    updateAvailable && options.trackOnly -> stringResource(R.string.au_store_action_page)
+    updateAvailable -> stringResource(R.string.au_store_action_update)
+    else -> stringResource(R.string.hc_open)
 }
 
+/** The app is installed and current, so the button launches it */
+internal fun StoreRow.isOpenAction(): Boolean = item.installedVersionCode != null && !updateAvailable
+
+@Composable
 internal fun AppSource.summary(): String = when (this) {
     is AppSource.GitHub -> "$owner/$repo · GitHub"
     is AppSource.GitLab -> "$path · GitLab"
@@ -387,9 +401,9 @@ internal fun AppSource.summary(): String = when (this) {
     is AppSource.FDroid -> if (repoUrl.contains("izzysoft")) "IzzyOnDroid" else if (repoUrl.contains("f-droid.org")) "F-Droid" else repoUrl.substringAfter("://").substringBefore('/')
     is AppSource.SourceForge -> "$project · SourceForge"
     is AppSource.Html -> pageUrl.substringAfter("://").substringBefore('/')
-    is AppSource.DirectApk -> "Direct download"
-    is AppSource.AffiliatePlayStore -> "Play Store"
-    is AppSource.AffiliateDirect -> "Direct download"
+    is AppSource.DirectApk -> stringResource(R.string.au_store_src_direct)
+    is AppSource.AffiliatePlayStore -> stringResource(R.string.au_store_src_play)
+    is AppSource.AffiliateDirect -> stringResource(R.string.au_store_src_direct)
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -502,18 +516,20 @@ private fun AddAppDialog(viewModel: StoreViewModel, prefill: String, onDismiss: 
 
 @Composable
 private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit) {
+    val context = LocalContext.current
     val g by viewModel.global.collectAsStateWithLifecycle()
     var token by remember { mutableStateOf(g.githubToken) }
     val neverLabel = stringResource(R.string.hf_store_never)
     val dailyLabel = stringResource(R.string.hf_store_daily)
+    val hoursLabel = { h: Int -> context.getString(R.string.au_store_hours_short, h) }
     AlertDialog(
         onDismissRequest = { viewModel.setGlobal { it.copy(githubToken = token.trim()) }; onDismiss() },
         title = { Text(stringResource(R.string.hc_store_settings)) },
         text = {
-            Column {
+            Column(Modifier.verticalScroll(rememberScrollState())) {
                 Text(stringResource(R.string.hc_check_for_updates), style = MaterialTheme.typography.titleSmall)
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(vertical = 4.dp)) {
-                    items(listOf(0 to neverLabel, 1 to "1 h", 3 to "3 h", 6 to "6 h", 12 to "12 h", 24 to dailyLabel)) { (hours, label) ->
+                    items(listOf(0 to neverLabel, 1 to hoursLabel(1), 3 to hoursLabel(3), 6 to hoursLabel(6), 12 to hoursLabel(12), 24 to dailyLabel)) { (hours, label) ->
                         FilterChip(selected = g.checkIntervalHours == hours, onClick = { viewModel.setGlobal { it.copy(checkIntervalHours = hours) } }, label = { Text(label) })
                     }
                 }
@@ -569,6 +585,7 @@ private fun InstalledAppsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
                     CircularProgressIndicator(Modifier.padding(16.dp))
                 } else {
                     if (list.isEmpty() && iq.isNotBlank()) de.mm20.launcher2.ui.component.SearchEmptyState(iq.trim())
+                    else if (list.isEmpty()) Text(stringResource(R.string.au_store_no_installed_candidates), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(16.dp))
                     else LazyColumn(Modifier.height(320.dp)) {
                         items(list, key = { it.packageName }) { app ->
                             Row(
@@ -592,7 +609,7 @@ private fun InstalledAppsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
                 busy = true
                 val chosen = candidates.orEmpty().filter { it.packageName in selected }
                 viewModel.importInstalled(chosen) { found ->
-                    Toast.makeText(context, "$found of ${chosen.size} found and added", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, context.getString(R.string.au_store_msg_installed_found, found, chosen.size), Toast.LENGTH_LONG).show()
                     onDismiss()
                 }
             }) { Text(stringResource(R.string.hc_add_count, selected.size)) }

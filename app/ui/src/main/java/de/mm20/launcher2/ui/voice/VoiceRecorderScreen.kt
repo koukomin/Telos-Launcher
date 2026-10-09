@@ -201,6 +201,8 @@ fun VoiceRecorderScreen() {
     val recorder by VoiceRecorderEngine.state.collectAsState()
     val player = remember { VoicePlayer() }
     DisposableEffect(Unit) { onDispose { player.stop() } }
+    // readable copies of call recordings that were played or shared earlier must not stay in the cache
+    LaunchedEffect(Unit) { withContext(Dispatchers.IO) { runCatching { RecordingCrypto.clearSharedCopies(context) } } }
 
     var tab by rememberSaveable { mutableStateOf(0) } // 0 all, 1 call recordings
     var searching by rememberSaveable { mutableStateOf(false) }
@@ -443,7 +445,7 @@ private fun RecordButton(onClick: () -> Unit) {
             .shadow(20.dp, CircleShape, ambientColor = red, spotColor = red)
             .clip(CircleShape)
             .background(Brush.verticalGradient(listOf(Color(0xFFFF7A6E), red)))
-            .clickable(onClick = onClick),
+            .clickable(onClickLabel = stringResource(R.string.au_capture_record), onClick = onClick),
         contentAlignment = Alignment.Center,
     ) {
         Box(Modifier.size(24.dp).clip(CircleShape).background(Color.White))
@@ -544,7 +546,8 @@ private fun RecordingPage(state: VoiceRecorderState, onPauseResume: () -> Unit, 
                 Icon(painterResource(R.drawable.delete_24px), contentDescription = stringResource(R.string.voice_discard))
             }
             Box(
-                Modifier.size(80.dp).clip(CircleShape).background(Brush.verticalGradient(listOf(Color(0xFFFF7A6E), Color(0xFFE53935)))).clickable(onClick = onStop),
+                Modifier.size(80.dp).clip(CircleShape).background(Brush.verticalGradient(listOf(Color(0xFFFF7A6E), Color(0xFFE53935))))
+                    .clickable(onClickLabel = stringResource(R.string.voice_stop), onClick = onStop),
                 contentAlignment = Alignment.Center,
             ) {
                 Box(Modifier.size(28.dp).clip(RoundedCornerShape(6.dp)).background(Color.White))

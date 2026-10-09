@@ -83,14 +83,17 @@ object OAuth {
             while (System.currentTimeMillis() < deadline) {
                 val socket = try { server.accept() } catch (e: SocketTimeoutException) { break }
                 socket.use { s ->
-                    val line = s.getInputStream().bufferedReader().readLine().orEmpty() // GET /?code=...&state=... HTTP/1.1
+                    // a browser may open a connection and send nothing: do not wait for it forever
+                    s.soTimeout = 5_000
+                    val line = try { s.getInputStream().bufferedReader().readLine().orEmpty() } catch (e: java.io.IOException) { return@use } // GET /?code=...&state=... HTTP/1.1
                     val query = line.substringAfter(' ').substringBefore(' ').substringAfter('?', "")
                     val params = query.split('&').filter { it.contains('=') }.associate {
                         URLDecoder.decode(it.substringBefore('='), "UTF-8") to URLDecoder.decode(it.substringAfter('='), "UTF-8")
                     }
                     val ok = params["state"] == state && params["code"] != null
                     val body = if (ok) "Signed in. You can close this tab and go back to Telos." else (params["error_description"] ?: params["error"] ?: "Nothing to do here.")
-                    val html = "<html><body style=\"font-family:sans-serif;text-align:center;margin-top:20vh\"><h2>$body</h2></body></html>"
+                    val safeBody = body.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;")
+                    val html = "<html><body style=\"font-family:sans-serif;text-align:center;margin-top:20vh\"><h2>$safeBody</h2></body></html>"
                     s.getOutputStream().apply {
                         write("HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: ${html.toByteArray().size}\r\nConnection: close\r\n\r\n$html".toByteArray())
                         flush()

@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
@@ -122,16 +123,22 @@ fun MessagesScreen(
     var body by remember { mutableStateOf(initialBody) }
     var attachments by remember { mutableStateOf(initialAttachments.map { Uri.parse(it) }) }
 
-    // something was shared to Telos Messages: write to that number
-    LaunchedEffect(initialNumber, all) {
-        val list = all ?: return@LaunchedEffect
-        if (initialNumber.isNotBlank() && open == null) {
-            open = list.firstOrNull { c -> c.address.split(", ").any { PhoneNumbers.match(it, initialNumber) } }
-                ?: SmsConversation(-1, initialNumber, null, "", 0, 0)
-        }
+    fun isHidden(c: SmsConversation) = c.address.split(", ").any { HiddenContacts.matches(it, hidden) }
+    // an existing conversation with a number, or a new one. The history of a hidden contact stays
+    // closed while the hidden contacts are locked.
+    fun conversationFor(number: String): SmsConversation {
+        val existing = all?.firstOrNull { c -> c.address.split(", ").any { PhoneNumbers.match(it, number) } }
+        return if (existing != null && (unlocked || !isHidden(existing))) existing
+        else SmsConversation(-1, number, null, "", 0, 0)
     }
 
-    fun isHidden(c: SmsConversation) = c.address.split(", ").any { HiddenContacts.matches(it, hidden) }
+    // something was shared to Telos Messages: write to that number (once, not again after going back)
+    var initialHandled by remember { mutableStateOf(false) }
+    LaunchedEffect(initialNumber, all) {
+        if (all == null || initialHandled) return@LaunchedEffect
+        if (initialNumber.isNotBlank() && open == null) open = conversationFor(initialNumber)
+        initialHandled = true
+    }
     var listQuery by remember { mutableStateOf("") }
     // message texts per thread, loaded in the background while a search is active
     val bodies = remember { androidx.compose.runtime.mutableStateMapOf<Long, List<String>>() }
@@ -191,7 +198,7 @@ fun MessagesScreen(
         when {
             shown == null -> Box(Modifier.fillMaxSize())
             shown.isEmpty() && listQuery.isNotBlank() -> SearchEmptyState(listQuery)
-            shown.isEmpty() -> EmptyCommsTab("No conversations", "Your messages appear here.")
+            shown.isEmpty() -> EmptyCommsTab(stringResource(R.string.au_messages_no_conversations), stringResource(R.string.au_messages_no_conversations_hint))
             else -> LazyColumn(Modifier.fillMaxSize()) {
                 items(shown, key = { it.threadId.toString() + it.address }) { c ->
                     ListItem(
@@ -217,8 +224,7 @@ fun MessagesScreen(
                 TextButton(enabled = number.isNotBlank(), onClick = {
                     val n = number.trim()
                     newMessage = false
-                    open = all?.firstOrNull { c -> c.address.split(", ").any { PhoneNumbers.match(it, n) } }
-                        ?: SmsConversation(-1, n, null, "", 0, 0)
+                    open = conversationFor(n)
                 }) { Text(stringResource(R.string.hc_write)) }
             },
             dismissButton = { TextButton(onClick = { newMessage = false }) { Text(stringResource(R.string.hc_cancel)) } },
@@ -257,7 +263,7 @@ private fun ThreadView(
     }
     val addresses = conversation.address.split(", ").filter { it.isNotBlank() }
 
-    Column(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize().imePadding()) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
             TextButton(onClick = onBack) { Text(stringResource(R.string.hc_back)) }
             Text(conversation.name ?: conversation.address, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
@@ -290,14 +296,14 @@ private fun ThreadView(
                             m.attachments.forEach { a ->
                                 if (a.mimeType.startsWith("image/") || a.mimeType.startsWith("video/")) {
                                     AsyncImage(
-                                        model = a.uri, contentDescription = null, contentScale = ContentScale.Fit,
+                                        model = a.uri, contentDescription = stringResource(R.string.au_messages_attachment), contentScale = ContentScale.Fit,
                                         modifier = Modifier.fillMaxWidth().heightIn(max = 240.dp),
                                     )
-                                } else Text("[${a.mimeType}]", style = MaterialTheme.typography.labelSmall)
+                                } else Text(stringResource(R.string.au_messages_attachment) + " (${a.mimeType})", style = MaterialTheme.typography.labelSmall)
                             }
                             if (m.body.isNotBlank()) Text(m.body)
                             Text(
-                                shortDate(m.date) + if (m.failed) " · not sent" else "",
+                                shortDate(m.date) + if (m.failed) " · " + stringResource(R.string.au_messages_not_sent) else "",
                                 style = MaterialTheme.typography.labelSmall,
                                 color = if (m.failed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -309,12 +315,14 @@ private fun ThreadView(
         if (failed) Text(stringResource(R.string.hc_the_message_could_not_be_sent), color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(horizontal = 16.dp))
         if (attachments.isNotEmpty()) {
             Row(Modifier.padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically) {
-                Text("${attachments.size} attached", modifier = Modifier.weight(1f), style = MaterialTheme.typography.labelMedium)
+                Text(stringResource(R.string.au_messages_attached_count, attachments.size), modifier = Modifier.weight(1f), style = MaterialTheme.typography.labelMedium)
                 TextButton(onClick = { onAttachments(emptyList()) }) { Text(stringResource(R.string.hc_remove)) }
             }
         }
         Row(Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
-            if (isDefault) TextButton(onClick = { picker.launch("image/*") }) { Text("+") }
+            if (isDefault) IconButton(onClick = { picker.launch("image/*") }) {
+                Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.au_messages_attach))
+            }
             OutlinedTextField(body, onBody, modifier = Modifier.weight(1f), placeholder = { Text(stringResource(R.string.hc_message)) })
             TextButton(
                 enabled = body.isNotBlank() || attachments.isNotEmpty(),
@@ -322,6 +330,7 @@ private fun ThreadView(
                     val asMms = attachments.isNotEmpty() || addresses.size > 1
                     val text = body
                     val picked = attachments
+                    failed = false
                     // message store, attachment reading and the carrier hand-over are not main thread work
                     sendScope.launch {
                         val ok = withContext(Dispatchers.IO) {

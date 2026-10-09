@@ -178,7 +178,7 @@ fun ScreenRecorderScreen() {
                                 .shadow(20.dp, CircleShape, ambientColor = Color(0xFFE53935), spotColor = Color(0xFFE53935))
                                 .clip(CircleShape)
                                 .background(Brush.verticalGradient(listOf(Color(0xFFFF7A6E), Color(0xFFE53935))))
-                                .clickable(onClick = ::start),
+                                .clickable(onClickLabel = stringResource(R.string.screenrec_start), onClick = ::start),
                             contentAlignment = Alignment.Center,
                         ) {
                             Icon(painterResource(R.drawable.ic_glyph_screen_recorder), contentDescription = stringResource(R.string.screenrec_start), tint = Color.White, modifier = Modifier.size(40.dp))

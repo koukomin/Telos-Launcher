@@ -6,6 +6,7 @@
     <string name="au_store_msg_unsupported">This app is not supported</string>
     <string name="au_store_msg_updates_available">Updates available: %1$d</string>
     <string name="au_store_msg_up_to_date_unreachable">Up to date. Sources that could not be reached: %1$d</string>
+    <string name="au_store_msg_check_failed">The check for updates failed</string>
     <string name="au_store_msg_all_up_to_date">Everything is up to date</string>
     <string name="au_store_msg_source_unreachable">Could not reach the source of %1$s</string>
     <string name="au_store_msg_exported">Exported (Obtainium format)</string>

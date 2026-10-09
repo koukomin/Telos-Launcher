@@ -32,6 +32,7 @@ object ScheduledSmsStore {
         list(context).forEach { schedule(context, it.copy(atEpochMs = maxOf(it.atEpochMs, now + 5_000))) }
     }
 
+    @Synchronized
     fun add(context: Context, number: String, body: String, atEpochMs: Long): ScheduledSms {
         val item = ScheduledSms(System.currentTimeMillis(), number, body, atEpochMs)
         val next = list(context) + item
@@ -40,6 +41,7 @@ object ScheduledSmsStore {
         return item
     }
 
+    @Synchronized
     fun remove(context: Context, id: Long) {
         // a removed message must not go out when its alarm fires
         list(context).firstOrNull { it.id == id }?.let { item ->
@@ -95,7 +97,11 @@ class ScheduledSmsReceiver : BroadcastReceiver() {
         val body = intent.getStringExtra("body").orEmpty()
         val id = intent.getLongExtra("id", 0L)
         // when it could not be sent (no permission) it stays in the list instead of vanishing
-        if (QuickSms.send(context, number, body)) ScheduledSmsStore.remove(context, id)
+        val granted = androidx.core.content.ContextCompat.checkSelfPermission(context, android.Manifest.permission.SEND_SMS) ==
+            android.content.pm.PackageManager.PERMISSION_GRANTED
+        // SmsThreads keeps the sent message in the conversation (system store or Telos' own copy), QuickSms only sends
+        val sent = if (granted) SmsThreads.send(context, number, body) else QuickSms.send(context, number, body)
+        if (sent) ScheduledSmsStore.remove(context, id)
     }
 }
 

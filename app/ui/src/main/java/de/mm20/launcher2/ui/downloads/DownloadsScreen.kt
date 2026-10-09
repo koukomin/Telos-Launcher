@@ -111,8 +111,12 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
     var menu by remember { mutableStateOf(false) }
 
     // links that arrive while the screen is open (the app is opened again by a share)
+    // remembered across rotation: a sheet the user already closed must not open again
+    var handledInitial by rememberSaveable { mutableStateOf("") }
     LaunchedEffect(initialUrls) {
-        if (initialUrls.isNotEmpty()) {
+        val key = initialUrls.joinToString("\n")
+        if (initialUrls.isNotEmpty() && key != handledInitial) {
+            handledInitial = key
             addUrls = initialUrls.joinToString("\n")
             if (initialIsTorrent) showAddTorrent = true else showAdd = true
         }
@@ -199,7 +203,7 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
                 Icon(painterResource(R.drawable.search_24px), stringResource(R.string.dl_search))
             }
             IconButton(onClick = { menu = true }) {
-                Icon(painterResource(R.drawable.more_vert_24px), null)
+                Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions))
             }
             DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                 DropdownMenuItem(text = { Text(stringResource(R.string.dl_pause_all)) }, onClick = { menu = false; manager.pauseAll() })
@@ -425,6 +429,8 @@ private fun SwipeableTaskCard(task: DownloadTask, manager: DownloadManager, onOp
     )
     SwipeToDismissBox(
         state = state,
+        // a finished download has nothing to pause or resume
+        enableDismissFromStartToEnd = task.state != DownloadState.Completed,
         backgroundContent = {
             val toEnd = state.dismissDirection == SwipeToDismissBoxValue.StartToEnd
             Box(
@@ -517,7 +523,7 @@ private fun TaskCard(task: DownloadTask, manager: DownloadManager, onOpenDetails
                 }
             }
             Box {
-                IconButton(onClick = { menu = true }) { Icon(painterResource(R.drawable.more_vert_24px), null) }
+                IconButton(onClick = { menu = true }) { Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions)) }
                 DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                     if (task.state == DownloadState.Completed) {
                         DropdownMenuItem(text = { Text(stringResource(R.string.dl_open)) }, onClick = {

@@ -43,9 +43,15 @@ object SmsStore {
         }.getOrNull()
     }
 
-    fun setType(context: Context, uri: Uri, type: Int) {
+    /** [keepFailed]: a message of several parts reports once per part; one failed part keeps the whole message failed */
+    fun setType(context: Context, uri: Uri, type: Int, keepFailed: Boolean = false) {
         runCatching {
-            context.contentResolver.update(uri, ContentValues().apply { put(Telephony.Sms.TYPE, type) }, null, null)
+            val values = ContentValues().apply { put(Telephony.Sms.TYPE, type) }
+            if (keepFailed) {
+                context.contentResolver.update(uri, values, "${Telephony.Sms.TYPE} != ?", arrayOf(Telephony.Sms.MESSAGE_TYPE_FAILED.toString()))
+            } else {
+                context.contentResolver.update(uri, values, null, null)
+            }
         }
     }
 

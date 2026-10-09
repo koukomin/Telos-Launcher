@@ -145,7 +145,8 @@ class FtpRemoteClient(private val connection: RemoteConnection) : RemoteClient {
     override fun delete(path: String): Boolean = withClient { c ->
         val target = abs(path)
         val children = c.listFiles(target)
-        if (children != null && children.isNotEmpty() || c.changeWorkingDirectory(target)) {
+        // a plain file can list as itself, so only a folder that can be entered counts as one
+        if (c.changeWorkingDirectory(target)) {
             c.changeWorkingDirectory("/")
             children?.filter { it.name != "." && it.name != ".." }?.forEach { delete(path.trimEnd('/') + "/" + it.name) }
             c.removeDirectory(target)

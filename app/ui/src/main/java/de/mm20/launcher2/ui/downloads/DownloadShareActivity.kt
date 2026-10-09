@@ -70,6 +70,8 @@ class DownloadShareActivity : Activity() {
         if (target.length() < 10 || target.inputStream().use { it.read() } != 'd'.code) { target.delete(); null }
         else Uri.fromFile(target).toString()
     } catch (e: Exception) {
+        // an unreadable, oversized or half written copy must not stay in the cache
+        runCatching { File(cacheDir, "torrent-inbox").listFiles()?.filter { it.length() == 0L || it.length() > 8L * 1024 * 1024 }?.forEach { it.delete() } }
         null
     }
 }

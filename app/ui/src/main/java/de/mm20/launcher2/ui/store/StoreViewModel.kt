@@ -198,7 +198,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
                 _checking.value = false
             }
             _message.value = when {
-                summary == null -> str(R.string.au_store_msg_source_unreachable, "")
+                summary == null -> str(R.string.au_store_msg_check_failed)
                 summary.updates.isNotEmpty() -> str(R.string.au_store_msg_updates_available, summary.updates.size)
                 summary.failed > 0 -> str(R.string.au_store_msg_up_to_date_unreachable, summary.failed)
                 else -> str(R.string.au_store_msg_all_up_to_date)

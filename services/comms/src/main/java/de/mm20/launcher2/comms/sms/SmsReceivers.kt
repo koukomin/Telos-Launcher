@@ -43,7 +43,7 @@ class SmsSentReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val row = intent.data ?: return
         val type = if (resultCode == Activity.RESULT_OK) Telephony.Sms.MESSAGE_TYPE_SENT else Telephony.Sms.MESSAGE_TYPE_FAILED
-        SmsStore.setType(context, row, type)
+        SmsStore.setType(context, row, type, keepFailed = type == Telephony.Sms.MESSAGE_TYPE_SENT)
     }
 }
 
@@ -85,7 +85,8 @@ class MmsDownloadedReceiver : BroadcastReceiver(), KoinComponent {
                     val address = message.from ?: from ?: "MMS"
                     val text = message.parts.firstOrNull { it.contentType.startsWith("text/plain") }
                         ?.let { String(it.data, Charsets.UTF_8) }
-                        ?: if (message.parts.any { it.contentType.startsWith("image/") }) "Picture" else "Multimedia message"
+                        ?: if (message.parts.any { it.contentType.startsWith("image/") }) SmsText.get(context, "au_messages_picture", "Picture")
+                        else SmsText.get(context, "au_messages_mms", "Multimedia message")
                     SmsNotifier.incoming(context, settings, address, text)
                 }
             } finally {

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_planner_delete_series_title">Delete repeating event?</string>
+    <string name="au_planner_delete_series_message">This event repeats. Deleting it removes all of its occurrences from the calendar.</string>
+    <string name="au_planner_open_settings">Open settings</string>
+    <string name="au_planner_archived">Note archived</string>
+    <string name="au_planner_unarchived">Note moved back to notes</string>
+    <string name="au_planner_undo">Undo</string>
+</resources>

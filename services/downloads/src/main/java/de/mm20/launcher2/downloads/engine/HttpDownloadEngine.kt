@@ -160,7 +160,11 @@ class HttpDownloadEngine : DownloadEngine {
             // HTTP/2 would carry all connections of a download over one TCP connection
             .protocols(listOf(Protocol.HTTP_1_1))
             .connectionPool(ConnectionPool(32, 1, TimeUnit.MINUTES))
-        if (s.proxyType != ProxyType.None && s.proxyHost.isNotBlank() && s.proxyPort in 1..65535) {
+        if (s.proxyType != ProxyType.None) {
+            // a proxy that is switched on but incomplete must not silently send the traffic around it
+            if (s.proxyHost.isBlank() || s.proxyPort !in 1..65535) {
+                throw DownloadException(ErrorKind.Validation, "The proxy settings are incomplete", false)
+            }
             val type = if (s.proxyType == ProxyType.Socks) Proxy.Type.SOCKS else Proxy.Type.HTTP
             b.proxy(Proxy(type, InetSocketAddress.createUnresolved(s.proxyHost.trim(), s.proxyPort)))
         }

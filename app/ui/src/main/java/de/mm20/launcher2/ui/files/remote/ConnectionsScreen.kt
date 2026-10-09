@@ -131,6 +131,9 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
     val scope = rememberCoroutineScope()
     var c by remember { mutableStateOf(initial) }
     var status by remember { mutableStateOf<String?>(null) }
+    var statusOk by remember { mutableStateOf(false) }
+    val connectingText = stringResource(R.string.au_files_connecting)
+    val cloudName = stringResource(R.string.au_files_cloud_default_name)
     var busy by remember { mutableStateOf(false) }
     val type = c.type
 
@@ -145,13 +148,13 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
                     val picker = androidx.activity.compose.rememberLauncherForActivityResult(androidx.activity.result.contract.ActivityResultContracts.OpenDocumentTree()) { uri ->
                         if (uri != null) {
                             context.contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-                            c = c.copy(host = uri.toString(), name = c.name.ifBlank { Uri.decode(uri.toString()).substringAfterLast(':').substringAfterLast('/').ifBlank { "Cloud" } })
+                            c = c.copy(host = uri.toString(), name = c.name.ifBlank { Uri.decode(uri.toString()).substringAfterLast(':').substringAfterLast('/').ifBlank { cloudName } })
                         }
                     }
                     Text(if (c.host.isBlank()) stringResource(R.string.hf_remote_no_folder) else Uri.decode(c.host).substringAfter("tree/"), style = MaterialTheme.typography.bodySmall, maxLines = 2)
                     OutlinedButton(onClick = { picker.launch(null) }) { Text(if (c.host.isBlank()) stringResource(R.string.hf_remote_choose_folder) else stringResource(R.string.hf_remote_choose_other_folder)) }
                 } else if (!type.cloud) {
-                    Field(stringResource(R.string.hc_server), c.host, "cloud.example.com") { c = c.copy(host = it) }
+                    Field(stringResource(R.string.hc_server), c.host, "cloud.example.com") { c = c.copy(host = it, fingerprint = if (it == c.host) c.fingerprint else "") }
                     Field(stringResource(R.string.hf_remote_port), if (c.port > 0) c.port.toString() else "", type.defaultPort.toString()) { c = c.copy(port = it.filter(Char::isDigit).toIntOrNull() ?: 0) }
                     Field(stringResource(R.string.hc_user_name), c.user) { c = c.copy(user = it) }
                     Field(if (type == RemoteType.Sftp && c.privateKey.isNotBlank()) stringResource(R.string.hf_remote_key_password) else stringResource(R.string.hc_password), c.password, password = true) { c = c.copy(password = it) }
@@ -170,9 +173,9 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
                         if (c.fingerprint.isNotEmpty()) Text(stringResource(R.string.hc_server_key, c.fingerprint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 } else {
-                    CloudFields(c, onChange = { c = it }, onStatus = { status = it })
+                    CloudFields(c, onChange = { c = it }, onStatus = { text, ok -> status = text; statusOk = ok })
                 }
-                status?.let { Text(it, color = if (it.startsWith("Connected")) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error) }
+                status?.let { Text(it, color = if (statusOk) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error) }
             }
         },
         confirmButton = { TextButton(enabled = c.name.isNotBlank() && !busy && (type != RemoteType.System || c.host.isNotBlank()), onClick = { onSave(c) }) { Text(stringResource(R.string.hc_save)) } },
@@ -180,16 +183,17 @@ private fun ConnectionEditor(initial: RemoteConnection, isNew: Boolean, onSave: 
             Row {
                 if (!isNew) TextButton(onClick = onDelete) { Text(stringResource(R.string.hc_delete), color = MaterialTheme.colorScheme.error) }
                 TextButton(enabled = !busy, onClick = {
-                    busy = true; status = "Connecting…"
+                    busy = true; statusOk = true; status = connectingText
                     scope.launch {
                         val result = withContext(Dispatchers.IO) {
                             runCatching {
                                 // a saved fingerprint is only remembered with a saved connection: test with the draft as it is
-                                ClientFactory.create(context, c).use { it.list("/").size }
+                                ClientFactory.create(context, c, persist = false).use { it.list("/").size }
                             }
                         }
                         busy = false
-                        status = result.fold({ "Connected, $it items in the start folder" }, { "Could not connect: ${it.message}" })
+                        statusOk = result.isSuccess
+                        status = result.fold({ context.getString(R.string.au_files_connected_items, it) }, { context.getString(R.string.au_files_connect_failed, it.message.orEmpty()) })
                     }
                 }) { Text(stringResource(R.string.hc_test)) }
                 TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) }

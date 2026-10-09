@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_messages_no_conversations">No conversations</string>
+    <string name="au_messages_no_conversations_hint">Your messages appear here.</string>
+    <string name="au_messages_not_sent">not sent</string>
+    <string name="au_messages_attached_count">%1$d attached</string>
+    <string name="au_messages_attach">Attach pictures or videos</string>
+    <string name="au_messages_attachment">Attachment</string>
+    <string name="au_messages_picture">Picture</string>
+    <string name="au_messages_mms">Multimedia message</string>
+    <string name="au_messages_scheduled_empty_title">No scheduled messages</string>
+    <string name="au_messages_scheduled_empty_hint">Messages you schedule appear here until they are sent.</string>
+    <string name="au_messages_scheduled_fill_fields">Enter a number and a message to schedule it.</string>
+    <string name="au_messages_scheduled_past">Pick a time in the future.</string>
+    <string name="au_messages_scheduled_saved">Message scheduled</string>
+    <string name="au_messages_scheduled_permission">Telos needs permission to send text messages at the scheduled time.</string>
+</resources>
