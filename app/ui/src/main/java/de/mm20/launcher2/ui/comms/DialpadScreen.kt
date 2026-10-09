@@ -43,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
@@ -104,14 +105,28 @@ fun DialpadScreen(initialNumber: String = "") {
     val sipOffered = sipEnabled && sipMode != "off" &&
         sipRegistration == de.mm20.launcher2.comms.sip.SipRegistration.Registered
 
+    val vaultTitle = stringResource(R.string.hc_hidden_contacts)
     LaunchedEffect(vaultUnlocked) {
-        if (vaultUnlocked) backStack.add(HiddenContactsRoute)
+        if (vaultUnlocked) {
+            // consume the event: coming back to this screen must not open the hidden contacts again
+            viewModel.onVaultNavigated()
+            backStack.add(HiddenContactsRoute)
+        }
     }
     LaunchedEffect(vaultAuthRequested) {
         if (!vaultAuthRequested) return@LaunchedEffect
-        val activity = context as? androidx.fragment.app.FragmentActivity ?: return@LaunchedEffect
-        val ok = de.mm20.launcher2.comms.AuthManager().authenticateNative(activity, "Hidden contacts")
-        if (ok) viewModel.onVaultAuthSuccess()
+        val activity = context as? androidx.fragment.app.FragmentActivity
+        if (activity == null) {
+            viewModel.onVaultAuthHandled()
+            return@LaunchedEffect
+        }
+        val ok = de.mm20.launcher2.comms.AuthManager().authenticateNative(activity, vaultTitle)
+        if (ok) viewModel.onVaultAuthSuccess() else viewModel.onVaultAuthHandled()
+    }
+    val keySize = when {
+        LocalConfiguration.current.screenHeightDp < 480 -> 46.dp
+        LocalConfiguration.current.screenHeightDp < 700 -> 60.dp
+        else -> 78.dp
     }
 
     val toneGenerator = remember {
@@ -272,6 +287,7 @@ fun DialpadScreen(initialNumber: String = "") {
                             else -> key.latin
                         }.ifEmpty { if (key.digit == "0") "+" else "" }
                         DialpadKey(
+                            size = keySize,
                             digit = key.digit,
                             sublabel = if (hideLetters) "" else letters,
                             onClick = { onDigit(key.digit, long = false) },
@@ -345,36 +361,28 @@ fun DialpadScreen(initialNumber: String = "") {
                     }
                 }
                 Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
-                    IconButton(
-                        onClick = {
-                            if (input.isNotEmpty()) {
-                                if (vibrate) haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                                viewModel.onBackspace()
-                            }
-                        },
+                    Box(
                         modifier = Modifier
                             .size(56.dp)
+                            .clip(CircleShape)
                             .alpha(if (input.isNotEmpty()) 1f else 0f)
                             .combinedClickable(
-                                interactionSource = remember { MutableInteractionSource() },
-                                indication = null,
+                                enabled = input.isNotEmpty(),
+                                role = androidx.compose.ui.semantics.Role.Button,
                                 onClick = {
-                                    if (input.isNotEmpty()) {
-                                        if (vibrate) haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                                        viewModel.onBackspace()
-                                    }
+                                    if (vibrate) haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                                    viewModel.onBackspace()
                                 },
                                 onLongClick = {
-                                    if (input.isNotEmpty()) {
-                                        if (vibrate) haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                                        viewModel.onClear()
-                                    }
+                                    if (vibrate) haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                    viewModel.onClear()
                                 },
                             ),
+                        contentAlignment = Alignment.Center,
                     ) {
                         Icon(
                             painterResource(R.drawable.rd_ic_backspace),
-                            contentDescription = null,
+                            contentDescription = stringResource(R.string.au_phonea_backspace),
                             tint = MaterialTheme.colorScheme.onSurface,
                         )
                     }
@@ -387,6 +395,7 @@ fun DialpadScreen(initialNumber: String = "") {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun DialpadKey(
+    size: androidx.compose.ui.unit.Dp,
     digit: String,
     sublabel: String,
     onClick: () -> Unit,
@@ -394,9 +403,10 @@ private fun DialpadKey(
 ) {
     Box(
         modifier = Modifier
-            .size(78.dp)
+            .size(size)
             .clip(CircleShape)
             .combinedClickable(
+                role = androidx.compose.ui.semantics.Role.Button,
                 onClick = onClick,
                 onLongClick = onLongClick,
             ),
@@ -405,15 +415,15 @@ private fun DialpadKey(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = digit,
-                fontSize = 36.sp,
+                fontSize = if (size >= 70.dp) 36.sp else if (size >= 56.dp) 28.sp else 22.sp,
                 fontWeight = FontWeight.Normal,
-                lineHeight = 38.sp,
+                lineHeight = if (size >= 70.dp) 38.sp else if (size >= 56.dp) 30.sp else 24.sp,
                 color = MaterialTheme.colorScheme.onSurface,
             )
             Text(
                 text = sublabel.ifEmpty { " " },
-                fontSize = 12.sp,
-                lineHeight = 12.sp,
+                fontSize = if (size >= 56.dp) 12.sp else 9.sp,
+                lineHeight = if (size >= 56.dp) 12.sp else 9.sp,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f),
                 textAlign = TextAlign.Center,
             )
@@ -459,7 +469,7 @@ private fun T9ContactRow(
         IconButton(onClick = onCall) {
             Icon(
                 painterResource(R.drawable.rd_ic_phone_green_vector),
-                contentDescription = null,
+                contentDescription = stringResource(R.string.search_action_call),
                 tint = RdGreenCall,
             )
         }

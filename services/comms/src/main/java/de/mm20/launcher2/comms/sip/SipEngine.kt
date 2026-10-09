@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.tutpro.baresip.Api
 import com.tutpro.baresip.BaresipService
+import de.mm20.launcher2.i18n.R as I18nR
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.io.File
@@ -26,6 +27,8 @@ data class SipCall(
     val peer: String = "",
     val uap: Long = 0,
     val callp: Long = 0,
+    /** When the call was answered (epoch ms), 0 while it is not established */
+    val establishedAt: Long = 0,
 )
 
 /**
@@ -55,6 +58,9 @@ object SipEngine : BaresipService.Listener {
     @Volatile private var addresses = ""
     @Volatile private var nameservers = ""
     @Volatile private var restartWith: Pair<Context, SipAccount>? = null
+    @Volatile private var appContext: Context? = null
+
+    private fun text(id: Int): String = appContext?.getString(id).orEmpty()
 
     /** True once the account is registered and calls can be placed */
     val isReady: Boolean get() = _registration.value == SipRegistration.Registered
@@ -66,6 +72,7 @@ object SipEngine : BaresipService.Listener {
      */
     fun start(context: Context, account: SipAccount, linkAddresses: String = "", dns: String = "") {
         if (!available) return
+        appContext = context.applicationContext
         if (running) {
             // A different account (or none) is already running: restart once it has stopped
             restartWith = context to account
@@ -203,7 +210,7 @@ object SipEngine : BaresipService.Listener {
         val name = if (cleanName.isNotBlank()) "\"$cleanName\" " else ""
         if (!isValidDomain(account.domain)) {
             _registration.value = SipRegistration.Failed
-            _lastError.value = "The SIP server address is not valid"
+            _lastError.value = text(I18nR.string.au_phoneb_sip_err_bad_server)
             return
         }
         // the password is quoted so that characters such as ; or > cannot break the account line
@@ -212,7 +219,7 @@ object SipEngine : BaresipService.Listener {
         uap = Api.ua_alloc(line)
         if (uap != 0L) Api.ua_register(uap) else {
             _registration.value = SipRegistration.Failed
-            _lastError.value = "Could not create the SIP account"
+            _lastError.value = text(I18nR.string.au_phoneb_sip_err_account)
         }
     }
 
@@ -239,14 +246,31 @@ object SipEngine : BaresipService.Listener {
             }
             // A SIP INVITE arrived: callp is the SIP message, accept it to create the call
             "incoming call" -> Api.ua_accept(uap, callp)
-            "call incoming" -> _call.value = SipCall(SipCallState.Incoming, ev.getOrElse(1) { "" }, uap, callp)
+            "call incoming" -> {
+                if (_call.value.state != SipCallState.None && _call.value.callp != callp) {
+                    // already in a call: the second one is declined and must not replace the first
+                    Api.ua_hangup(uap, callp, 486, "Busy Here")
+                } else {
+                    _call.value = SipCall(SipCallState.Incoming, ev.getOrElse(1) { "" }, uap, callp)
+                }
+            }
             "call ringing" -> _call.value = _call.value.copy(state = SipCallState.Ringing)
-            "call established" -> _call.value = _call.value.copy(state = SipCallState.Established)
+            "call established" -> {
+                val c = _call.value
+                _call.value = c.copy(
+                    state = SipCallState.Established,
+                    establishedAt = if (c.establishedAt > 0) c.establishedAt else System.currentTimeMillis(),
+                )
+            }
             "call closed" -> {
                 val c = _call.value
                 if (c.callp == callp || c.callp == 0L) {
                     if (callp != 0L) Api.call_destroy(callp)
+                    // the microphone must not stay muted for the next call
+                    Api.calls_mute(false)
                     _call.value = SipCall()
+                } else if (callp != 0L) {
+                    Api.call_destroy(callp)
                 }
             }
         }

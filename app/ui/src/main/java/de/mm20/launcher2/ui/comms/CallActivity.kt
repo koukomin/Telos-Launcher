@@ -18,10 +18,10 @@ import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCompositionLocals
 import de.mm20.launcher2.ui.theme.LauncherTheme
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.inject
 
 class CallActivity : BaseActivity(), SensorEventListener {
@@ -40,40 +40,52 @@ class CallActivity : BaseActivity(), SensorEventListener {
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
                 WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
         )
-        val snap = runBlocking { commsSettings.snapshot.first() }
-        if (snap.secureCallScreen) window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
-        pocketMode = snap.pocketMode
-        proximitySpeaker = snap.proximitySpeaker
-        if (snap.raiseToAnswer || snap.flipToDecline || snap.rainMode) {
-            gestures = CallGestureTracker(
-                raiseToAnswer = snap.raiseToAnswer,
-                flipToDecline = snap.flipToDecline,
-                rainMode = snap.rainMode,
-                onAnswer = { TelosCallSession.answer() },
-                onDecline = { TelosCallSession.reject() },
-            )
-        }
-        inCallNotes = snap.inCallNotes
-        // keeps the value up to date, so that onStop does not have to wait for the datastore
-        lifecycleScope.launch { commsSettings.inCallNotes.collect { inCallNotes = it } }
         enableEdgeToEdge()
-        setContent {
-            ProvideCompositionLocals {
-                LauncherTheme {
-                    CallScreen(onFinished = {
-                        CallNotification.cancel(this)
-                        finish()
-                    })
-                }
-            }
-        }
         if (!TelosCallSession.ui.value.hasCall) {
             finish()
+            return
+        }
+        // The settings are read without blocking the main thread. Nothing is drawn before they are
+        // applied, so that the secure flag is already set when the first frame shows.
+        lifecycleScope.launch {
+            val snap = commsSettings.snapshot.first()
+            if (snap.secureCallScreen) window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+            pocketMode = snap.pocketMode
+            proximitySpeaker = snap.proximitySpeaker
+            if (snap.raiseToAnswer || snap.flipToDecline || snap.rainMode) {
+                gestures = CallGestureTracker(
+                    raiseToAnswer = snap.raiseToAnswer,
+                    flipToDecline = snap.flipToDecline,
+                    rainMode = snap.rainMode,
+                    onAnswer = { TelosCallSession.answer() },
+                    onDecline = { TelosCallSession.reject() },
+                )
+            }
+            inCallNotes = snap.inCallNotes
+            setContent {
+                ProvideCompositionLocals {
+                    LauncherTheme {
+                        CallScreen(onFinished = {
+                            CallNotification.cancel(this@CallActivity)
+                            finish()
+                        })
+                    }
+                }
+            }
+            // the sensors may have been due already in onStart
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) registerSensors()
+            // keeps the value up to date, so that onStop does not have to wait for the datastore
+            commsSettings.inCallNotes.collect { inCallNotes = it }
         }
     }
 
     override fun onStart() {
         super.onStart()
+        registerSensors()
+    }
+
+    private fun registerSensors() {
+        sensorManager?.unregisterListener(this)
         val needSensors = pocketMode || proximitySpeaker || gestures != null
         if (needSensors) {
             sensorManager = getSystemService(SensorManager::class.java)
@@ -91,11 +103,18 @@ class CallActivity : BaseActivity(), SensorEventListener {
     override fun onStop() {
         sensorManager?.unregisterListener(this)
         val notesOn = inCallNotes
-        if (notesOn && TelosCallSession.ui.value.hasCall && Settings.canDrawOverlays(this)) {
-            startService(
-                Intent(this, FloatingNotesService::class.java)
-                    .putExtra("number", TelosCallSession.ui.value.number)
-            )
+        // not while the screen is only rotating
+        if (notesOn && !isChangingConfigurations && TelosCallSession.ui.value.hasCall &&
+            Settings.canDrawOverlays(this)
+        ) {
+            try {
+                startService(
+                    Intent(this, FloatingNotesService::class.java)
+                        .putExtra("number", TelosCallSession.ui.value.number)
+                )
+            } catch (_: IllegalStateException) {
+                // background start not allowed
+            }
         }
         super.onStop()
     }

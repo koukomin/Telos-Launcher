@@ -282,6 +282,7 @@
         <activity
             android:name=".media.docs.pdf.PdfToolsActivity"
             android:exported="false"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboardHidden|uiMode|density|fontScale|locale|layoutDirection"
             android:icon="@drawable/ic_app_photos_full"
             android:label="@string/pdft_title"
             android:windowSoftInputMode="adjustResize"

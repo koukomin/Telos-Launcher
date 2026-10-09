@@ -345,7 +345,10 @@ object SubtitleFiles {
     private fun safe(s: String) = s.replace(Regex("[^A-Za-z0-9._-]"), "_").take(60)
 
     /** Downloads (or finds in the cache) the subtitle and returns the UTF-8 file */
-    suspend fun fetch(context: Context, provider: SubtitleProvider, r: SubtitleResult, videoKey: String?): File {
+    suspend fun fetch(context: Context, provider: SubtitleProvider, r: SubtitleResult, videoKey: String?): File =
+        kotlinx.coroutines.withContext(Dispatchers.IO) { fetchBlocking(context, provider, r, videoKey) }
+
+    private suspend fun fetchBlocking(context: Context, provider: SubtitleProvider, r: SubtitleResult, videoKey: String?): File {
         val cached = File(dir(context), "${safe(r.provider)}-${safe(r.id)}.${safe(r.language)}.${safe(r.format.ifBlank { "srt" })}")
         if (cached.exists() && cached.length() > 0) {
             remember(context, videoKey, cached)

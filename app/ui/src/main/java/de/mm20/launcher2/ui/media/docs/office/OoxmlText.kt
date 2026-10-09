@@ -36,7 +36,7 @@ internal object OoxmlText {
         for (r in all) {
             if (r !== template && !hasObject(r)) r.parentNode.removeChild(r)
         }
-        if (!word) p.elements().filter { it.namespaceURI == ns && it.localName == "br" }.forEach { p.removeChild(it) }
+        if (!word) p.elements().filter { it.namespaceURI == ns && (it.localName == "br" || it.localName == "fld") }.forEach { p.removeChild(it) }
         // wrappers that lost all their runs
         p.elements().filter { it.namespaceURI == ns && it.localName in containers && it.elements().none { c -> c.localName == "r" || c.localName == "sdtContent" } }
             .forEach { p.removeChild(it) }
@@ -46,7 +46,7 @@ internal object OoxmlText {
         }
         val keep = run.child(ns, "rPr")
         for (c in run.elements()) if (c !== keep) run.removeChild(c)
-        val lines = text.split("\n")
+        val lines = xmlSafe(text).split("\n")
         if (word) {
             lines.forEachIndexed { li, line ->
                 if (li > 0) run.appendChild(doc.createElementNS(ns, "$prefix:br"))
@@ -68,7 +68,8 @@ internal object OoxmlText {
                     parent.insertBefore(br, anchor.nextSibling); anchor = br
                     parent.insertBefore(target, anchor.nextSibling); anchor = target
                 }
-                if (line.isNotEmpty()) target.appendChild(textEl(doc, ns, prefix, line, false))
+                // a:r must always hold an a:t, also when the line is empty
+                target.appendChild(textEl(doc, ns, prefix, line, false))
             }
         }
     }
