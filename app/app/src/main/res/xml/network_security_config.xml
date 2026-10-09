@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Plain http stays allowed on purpose: radio streams, NAS / WebDAV / FTP servers in the home network, torrent web seeds
+  and web apps for sites without https all need it. The services the launcher itself talks to are https only, so a
+  man in the middle cannot downgrade them to http.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">github.com</domain>
+        <domain includeSubdomains="true">githubusercontent.com</domain>
+        <domain includeSubdomains="true">f-droid.org</domain>
+        <domain includeSubdomains="true">izzysoft.de</domain>
+        <domain includeSubdomains="true">sourceforge.net</domain>
+        <domain includeSubdomains="true">opensubtitles.org</domain>
+        <domain includeSubdomains="true">opensubtitles.com</domain>
+        <domain includeSubdomains="true">podnapisi.net</domain>
+        <domain includeSubdomains="true">openweathermap.org</domain>
+        <domain includeSubdomains="true">open-meteo.com</domain>
+        <domain includeSubdomains="true">yr.no</domain>
+        <domain includeSubdomains="true">listenbrainz.org</domain>
+        <domain includeSubdomains="true">audioscrobbler.com</domain>
+        <domain includeSubdomains="true">themoviedb.org</domain>
+        <domain includeSubdomains="true">trakt.tv</domain>
+        <domain includeSubdomains="true">radio-browser.info</domain>
+        <domain includeSubdomains="true">wikipedia.org</domain>
+        <domain includeSubdomains="true">openstreetmap.org</domain>
+        <domain includeSubdomains="true">easylist.to</domain>
+        <domain includeSubdomains="true">abuse.ch</domain>
+        <domain includeSubdomains="true">yoyo.org</domain>
+        <domain includeSubdomains="true">spamhaus.org</domain>
+        <domain includeSubdomains="true">dns.google</domain>
+        <domain includeSubdomains="true">cloudflare-dns.com</domain>
+        <domain includeSubdomains="true">nextdns.io</domain>
+        <domain includeSubdomains="true">controld.com</domain>
+        <domain includeSubdomains="true">cleanbrowsing.org</domain>
+        <domain includeSubdomains="true">libredns.gr</domain>
+        <domain includeSubdomains="true">dns0.eu</domain>
+        <domain includeSubdomains="true">rethinkdns.com</domain>
+    </domain-config>
+</network-security-config>
