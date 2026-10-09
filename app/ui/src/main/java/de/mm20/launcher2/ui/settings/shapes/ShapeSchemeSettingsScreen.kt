@@ -204,7 +204,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                         ) {
                             DropdownMenuItem(
                                 leadingIcon = {
-                                    Icon(painterResource(R.drawable.more_vert_24px), null)
+                                    Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.action_more_actions))
                                 },
                                 text = { Text(stringResource(R.string.hc_menu)) },
                                 onClick = { })
@@ -232,7 +232,7 @@ fun ShapeSchemeSettingsScreen(themeId: UUID) {
                     FilterChip(
                         onClick = {},
                         label = {
-                            Text("Chip")
+                            Text(stringResource(R.string.typo_preview_short1))
                         },
                         selected = false,
                     )
@@ -402,13 +402,13 @@ fun ShapePreference(
 
     val f = min(1f, factor)
     val topStart =
-        (shape?.radii?.get(0)?.div(factor) ?: baseShape.radii?.get(0)?.toFloat() ?: 12f) * f
+        (shape?.radii?.getOrNull(0)?.div(factor) ?: baseShape.radii?.getOrNull(0)?.toFloat() ?: 12f) * f
     val topEnd =
-        (shape?.radii?.get(1)?.div(factor) ?: baseShape.radii?.get(1)?.toFloat() ?: 12f) * f
+        (shape?.radii?.getOrNull(1)?.div(factor) ?: baseShape.radii?.getOrNull(1)?.toFloat() ?: 12f) * f
     val bottomEnd =
-        (shape?.radii?.get(2)?.div(factor) ?: baseShape.radii?.get(2)?.toFloat() ?: 12f) * f
+        (shape?.radii?.getOrNull(2)?.div(factor) ?: baseShape.radii?.getOrNull(2)?.toFloat() ?: 12f) * f
     val bottomStart =
-        (shape?.radii?.get(3)?.div(factor) ?: baseShape.radii?.get(3)?.toFloat() ?: 12f) * f
+        (shape?.radii?.getOrNull(3)?.div(factor) ?: baseShape.radii?.getOrNull(3)?.toFloat() ?: 12f) * f
 
     Row(
         modifier = Modifier
@@ -466,17 +466,17 @@ fun ShapePreference(
 
     val maxRadius = (24 * factor).toInt()
 
-    val baseTopStart = ((baseShape.radii?.get(0) ?: 12) * factor).toInt()
-    val baseTopEnd = ((baseShape.radii?.get(1) ?: 12) * factor).toInt()
-    val baseBottomEnd = ((baseShape.radii?.get(2) ?: 12) * factor).toInt()
-    val baseBottomStart = ((baseShape.radii?.get(3) ?: 12) * factor).toInt()
+    val baseTopStart = ((baseShape.radii?.getOrNull(0) ?: 12) * factor).toInt()
+    val baseTopEnd = ((baseShape.radii?.getOrNull(1) ?: 12) * factor).toInt()
+    val baseBottomEnd = ((baseShape.radii?.getOrNull(2) ?: 12) * factor).toInt()
+    val baseBottomStart = ((baseShape.radii?.getOrNull(3) ?: 12) * factor).toInt()
 
 
     var currentCornerStyle by remember(shape) { mutableStateOf(shape?.corners) }
-    var currentTopStart by remember(shape) { mutableStateOf(shape?.radii?.get(0)) }
-    var currentTopEnd by remember(shape) { mutableStateOf(shape?.radii?.get(1)) }
-    var currentBottomEnd by remember(shape) { mutableStateOf(shape?.radii?.get(2)) }
-    var currentBottomStart by remember(shape) { mutableStateOf(shape?.radii?.get(3)) }
+    var currentTopStart by remember(shape) { mutableStateOf(shape?.radii?.getOrNull(0)) }
+    var currentTopEnd by remember(shape) { mutableStateOf(shape?.radii?.getOrNull(1)) }
+    var currentBottomEnd by remember(shape) { mutableStateOf(shape?.radii?.getOrNull(2)) }
+    var currentBottomStart by remember(shape) { mutableStateOf(shape?.radii?.getOrNull(3)) }
 
     DismissableBottomSheet(
         expanded = showDialog,
@@ -604,7 +604,7 @@ fun ShapePreference(
                         currentTopStart = it.toInt()
                     },
                     valueRange = 0f..maxRadius.toFloat(),
-                    steps = maxRadius + 1
+                    steps = (maxRadius - 1).coerceAtLeast(0)
                 )
                 Text(
                     text = actualTopStart.toString(),
@@ -629,7 +629,7 @@ fun ShapePreference(
                         currentTopEnd = it.toInt()
                     },
                     valueRange = 0f..maxRadius.toFloat(),
-                    steps = maxRadius + 1,
+                    steps = (maxRadius - 1).coerceAtLeast(0),
                 )
                 Text(
                     text = actualTopEnd.toString(),
@@ -656,7 +656,7 @@ fun ShapePreference(
                         currentBottomEnd = it.toInt()
                     },
                     valueRange = 0f..maxRadius.toFloat(),
-                    steps = maxRadius + 1,
+                    steps = (maxRadius - 1).coerceAtLeast(0),
                 )
                 Text(
                     text = actualBottomEnd.toString(),
@@ -683,7 +683,7 @@ fun ShapePreference(
                         currentBottomStart = it.toInt()
                     },
                     valueRange = 0f..maxRadius.toFloat(),
-                    steps = maxRadius + 1,
+                    steps = (maxRadius - 1).coerceAtLeast(0),
                 )
                 Text(
                     text = actualBottomStart.toString(),

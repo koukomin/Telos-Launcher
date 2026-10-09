@@ -25,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -120,7 +121,8 @@ fun IntruderPhotosScreen() {
                     for (photo in row) {
                         AsyncImage(
                             model = photo.uri,
-                            contentDescription = null,
+                            contentDescription = DateFormat.getDateTimeInstance()
+                                .format(Date(photo.lastModified)),
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
                                 .weight(1f)
@@ -163,14 +165,14 @@ private fun IntruderPhotoViewerDialog(
                     Icon(
                         painter = painterResource(R.drawable.close_24px),
                         contentDescription = stringResource(android.R.string.cancel),
-                        tint = MaterialTheme.colorScheme.onSurface,
+                        tint = Color.White,
                     )
                 }
                 IconButton(onClick = onDelete) {
                     Icon(
                         painter = painterResource(R.drawable.delete_24px),
                         contentDescription = stringResource(R.string.intruder_photo_delete),
-                        tint = MaterialTheme.colorScheme.onSurface,
+                        tint = Color.White,
                     )
                 }
             }
@@ -186,7 +188,7 @@ private fun IntruderPhotoViewerDialog(
                 text = DateFormat.getDateTimeInstance().format(Date(photo.lastModified)),
                 style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = Color.White,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),

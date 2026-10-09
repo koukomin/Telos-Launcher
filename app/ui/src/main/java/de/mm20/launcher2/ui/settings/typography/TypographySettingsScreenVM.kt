@@ -2,6 +2,10 @@ package de.mm20.launcher2.ui.settings.typography
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import de.mm20.launcher2.themes.DefaultThemeId
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.first
+import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.themes.typography.Typography
@@ -36,6 +40,12 @@ class TypographySettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     fun delete(typography: Typography) {
+        viewModelScope.launch {
+            // Don't leave a dangling selection that silently falls back to the default.
+            if (uiSettings.typographyId.first() == typography.id) {
+                uiSettings.setTypographyId(DefaultThemeId)
+            }
+        }
         themeRepository.typographies.delete(typography)
     }
 

@@ -8,6 +8,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import android.telecom.TelecomManager
 import androidx.core.content.getSystemService
@@ -97,7 +98,7 @@ fun CommsSettingsScreen() {
     val batterySaverLte by viewModel.batterySaverLte.collectAsStateWithLifecycle()
     val settingsScope = rememberCoroutineScope()
     val hiderUnlocked by de.mm20.launcher2.comms.privacy.PrivacySession.hiderUnlocked.collectAsStateWithLifecycle()
-    var showPinDialog by remember { mutableStateOf(false) }
+    var showPinDialog by rememberSaveable { mutableStateOf(false) }
     
     val context = LocalContext.current
     val backStack = LocalBackStack.current
@@ -105,8 +106,8 @@ fun CommsSettingsScreen() {
         if (granted) viewModel.setAutoRecordCalls(true)
     }
     var backupPassword by remember { mutableStateOf("") }
-    var pendingExportUri by remember { mutableStateOf<android.net.Uri?>(null) }
-    var showExportPassword by remember { mutableStateOf(false) }
+    var pendingExportUri by rememberSaveable { mutableStateOf<android.net.Uri?>(null) }
+    var showExportPassword by rememberSaveable { mutableStateOf(false) }
     var showImportPassword by remember { mutableStateOf(false) }
     var pendingImportText by remember { mutableStateOf<String?>(null) }
     val backupCreate = rememberLauncherForActivityResult(
@@ -144,8 +145,8 @@ fun CommsSettingsScreen() {
         }
     }
 
-    var showSpeedDialDialogFor by remember { mutableStateOf<Int?>(null) }
-    var showRejectSms by remember { mutableStateOf(false) }
+    var showSpeedDialDialogFor by rememberSaveable { mutableStateOf<Int?>(null) }
+    var showRejectSms by rememberSaveable { mutableStateOf(false) }
     if (showPinDialog) {
         var pin by remember { mutableStateOf("") }
         AlertDialog(
@@ -173,7 +174,7 @@ fun CommsSettingsScreen() {
         )
     }
     if (showRejectSms) {
-        var input by remember { mutableStateOf(rejectSmsTemplate) }
+        var input by rememberSaveable { mutableStateOf(rejectSmsTemplate) }
         AlertDialog(
             onDismissRequest = { showRejectSms = false },
             title = { Text(stringResource(R.string.hc_reject_with_sms)) },
@@ -203,9 +204,9 @@ fun CommsSettingsScreen() {
                 ListPreference(
                     title = stringResource(R.string.hc_t9_language_alphabet),
                     items = listOf(
-                        "Latin (English)" to "latin",
-                        "Greek" to "greek",
-                        "Cyrillic" to "cyrillic"
+                        stringResource(R.string.au3_commsfreeze_t9_latin) to "latin",
+                        stringResource(R.string.au3_commsfreeze_t9_greek) to "greek",
+                        stringResource(R.string.au3_commsfreeze_t9_cyrillic) to "cyrillic"
                     ),
                     value = t9Alphabet,
                     onValueChanged = { viewModel.setT9Alphabet(it) }
@@ -218,8 +219,8 @@ fun CommsSettingsScreen() {
                 ListPreference(
                     title = stringResource(R.string.hc_answer_style),
                     items = listOf(
-                        "Buttons" to "buttons",
-                        "Swipe" to "swipe",
+                        stringResource(R.string.au3_commsfreeze_answer_buttons) to "buttons",
+                        stringResource(R.string.au3_commsfreeze_answer_swipe) to "swipe",
                     ),
                     value = answerStyle,
                     onValueChanged = { viewModel.setAnswerStyle(it) }
@@ -227,8 +228,8 @@ fun CommsSettingsScreen() {
                 ListPreference(
                     title = stringResource(R.string.hc_sim_1_color),
                     items = listOf(
-                        "Green" to "green", "Blue" to "blue", "Orange" to "orange", "Red" to "red",
-                        "Purple" to "purple", "Pink" to "pink", "Teal" to "teal",
+                        stringResource(R.string.au3_commsfreeze_color_green) to "green", stringResource(R.string.au3_commsfreeze_color_blue) to "blue", stringResource(R.string.au3_commsfreeze_color_orange) to "orange", stringResource(R.string.au3_commsfreeze_color_red) to "red",
+                        stringResource(R.string.au3_commsfreeze_color_purple) to "purple", stringResource(R.string.au3_commsfreeze_color_pink) to "pink", stringResource(R.string.au3_commsfreeze_color_teal) to "teal",
                     ),
                     value = sim1Color,
                     onValueChanged = { viewModel.setSim1Color(it) }
@@ -236,8 +237,8 @@ fun CommsSettingsScreen() {
                 ListPreference(
                     title = stringResource(R.string.hc_sim_2_color),
                     items = listOf(
-                        "Green" to "green", "Blue" to "blue", "Orange" to "orange", "Red" to "red",
-                        "Purple" to "purple", "Pink" to "pink", "Teal" to "teal",
+                        stringResource(R.string.au3_commsfreeze_color_green) to "green", stringResource(R.string.au3_commsfreeze_color_blue) to "blue", stringResource(R.string.au3_commsfreeze_color_orange) to "orange", stringResource(R.string.au3_commsfreeze_color_red) to "red",
+                        stringResource(R.string.au3_commsfreeze_color_purple) to "purple", stringResource(R.string.au3_commsfreeze_color_pink) to "pink", stringResource(R.string.au3_commsfreeze_color_teal) to "teal",
                     ),
                     value = sim2Color,
                     onValueChanged = { viewModel.setSim2Color(it) }
@@ -354,7 +355,7 @@ fun CommsSettingsScreen() {
                 )
                 Preference(
                     title = stringResource(R.string.hc_reject_with_sms),
-                    summary = if (rejectSmsTemplate.isBlank()) "Off" else rejectSmsTemplate,
+                    summary = if (rejectSmsTemplate.isBlank()) stringResource(R.string.au3_commsfreeze_off) else rejectSmsTemplate,
                     onClick = { showRejectSms = true },
                 )
                 Preference(
@@ -384,9 +385,9 @@ fun CommsSettingsScreen() {
                 ListPreference(
                     title = stringResource(R.string.hc_biometric_before_placing_a_call),
                     items = listOf(
-                        "Off" to "none",
-                        "Every call" to "all",
-                        "Listed contacts only" to "listed",
+                        stringResource(R.string.au3_commsfreeze_off) to "none",
+                        stringResource(R.string.au3_commsfreeze_protect_all) to "all",
+                        stringResource(R.string.au3_commsfreeze_protect_listed) to "listed",
                     ),
                     value = callProtectMode,
                     onValueChanged = { if (it != null) viewModel.setCallProtectMode(it) },
@@ -455,6 +456,7 @@ fun CommsSettingsScreen() {
                 )
                 SwitchPreference(
                     title = stringResource(R.string.hc_volume_dnd_only_on_lock_screen),
+                    enabled = volumeDnd,
                     value = volumeDndLockOnly,
                     onValueChanged = { viewModel.setVolumeDndLockOnly(it) },
                 )
@@ -478,10 +480,10 @@ fun CommsSettingsScreen() {
                 ListPreference(
                     title = stringResource(R.string.hc_preferred_mode),
                     items = listOf(
-                        "System auto" to "auto",
-                        "4G / LTE only" to "lte",
-                        "5G + 4G" to "nr_lte",
-                        "5G only" to "nr",
+                        stringResource(R.string.au3_commsfreeze_net_auto) to "auto",
+                        stringResource(R.string.au3_commsfreeze_net_lte) to "lte",
+                        stringResource(R.string.au3_commsfreeze_net_nr_lte) to "nr_lte",
+                        stringResource(R.string.au3_commsfreeze_net_nr) to "nr",
                     ),
                     value = preferredNetworkMode,
                     onValueChanged = {
@@ -494,9 +496,9 @@ fun CommsSettingsScreen() {
                 ListPreference(
                     title = stringResource(R.string.hc_control_backend),
                     items = listOf(
-                        "Auto (Shizuku → Root)" to "auto",
-                        "Shizuku" to "shizuku",
-                        "Root" to "root",
+                        stringResource(R.string.au3_commsfreeze_backend_auto) to "auto",
+                        stringResource(R.string.au3_commsfreeze_backend_shizuku) to "shizuku",
+                        stringResource(R.string.au3_commsfreeze_backend_root) to "root",
                     ),
                     value = networkBackend,
                     onValueChanged = { if (it != null) viewModel.setNetworkBackend(it) },
@@ -557,10 +559,10 @@ fun CommsSettingsScreen() {
                 ListPreference(
                     title = stringResource(R.string.hc_delete_old_recordings),
                     items = listOf(
-                        "Never" to 0,
-                        "After 7 days" to 7,
-                        "After 30 days" to 30,
-                        "After 90 days" to 90,
+                        stringResource(R.string.au3_commsfreeze_never) to 0,
+                        stringResource(R.string.au3_commsfreeze_after_days, 7) to 7,
+                        stringResource(R.string.au3_commsfreeze_after_days, 30) to 30,
+                        stringResource(R.string.au3_commsfreeze_after_days, 90) to 90,
                     ),
                     value = recordingAutoDeleteDays,
                     onValueChanged = { viewModel.setRecordingAutoDeleteDays(it) }
@@ -568,10 +570,10 @@ fun CommsSettingsScreen() {
                 ListPreference(
                     title = stringResource(R.string.hc_recording_backend),
                     items = listOf(
-                        "Auto (Shizuku → Root → microphone)" to "auto",
-                        "Shizuku (fallback to microphone)" to "shizuku",
-                        "Root (fallback to microphone)" to "root",
-                        "Microphone only" to "unprivileged",
+                        stringResource(R.string.au3_commsfreeze_rec_auto) to "auto",
+                        stringResource(R.string.au3_commsfreeze_rec_shizuku) to "shizuku",
+                        stringResource(R.string.au3_commsfreeze_rec_root) to "root",
+                        stringResource(R.string.au3_commsfreeze_rec_mic) to "unprivileged",
                     ),
                     value = recordingBackend,
                     onValueChanged = { if (it != null) viewModel.setRecordingBackend(it) },
@@ -579,9 +581,9 @@ fun CommsSettingsScreen() {
                 ListPreference(
                     title = stringResource(R.string.hc_recording_quality),
                     items = listOf(
-                        "Compact (24 kbps)" to "COMPACT",
-                        "Balanced (48 kbps)" to "BALANCED",
-                        "High (96 kbps)" to "HIGH",
+                        stringResource(R.string.au3_commsfreeze_quality_compact) to "COMPACT",
+                        stringResource(R.string.au3_commsfreeze_quality_balanced) to "BALANCED",
+                        stringResource(R.string.au3_commsfreeze_quality_high) to "HIGH",
                     ),
                     value = recordingQuality,
                     onValueChanged = { if (it != null) viewModel.setRecordingQuality(it) }
@@ -656,35 +658,36 @@ fun CommsSettingsScreen() {
                     onValueChanged = { viewModel.setClirEnabled(it) }
                 )
                 if (clirEnabled) {
+                    var editClir by rememberSaveable { mutableStateOf(false) }
                     ListPreference(
                         title = stringResource(R.string.hc_clir_prefix),
                         items = listOf(
-                            "GSM #31#" to "#31#",
-                            "US/Canada *67" to "*67",
-                            "UK 141" to "141",
-                            "Japan 1831" to "1831",
-                            "Custom" to "custom",
+                            stringResource(R.string.au3_commsfreeze_clir_gsm) to "#31#",
+                            stringResource(R.string.au3_commsfreeze_clir_us) to "*67",
+                            stringResource(R.string.au3_commsfreeze_clir_uk) to "141",
+                            stringResource(R.string.au3_commsfreeze_clir_jp) to "1831",
+                            stringResource(R.string.au3_commsfreeze_clir_custom) to "custom",
                         ),
-                        value = when (clirPrefix) {
-                            "#31#", "*67", "141", "1831" -> clirPrefix
+                        // an empty prefix is sent as the GSM default #31#
+                        value = when (val effective = clirPrefix.ifBlank { "#31#" }) {
+                            "#31#", "*67", "141", "1831" -> effective
                             else -> "custom"
                         },
                         onValueChanged = { selected ->
                             when (selected) {
                                 null -> {}
-                                "custom" -> {}
+                                "custom" -> editClir = true
                                 else -> viewModel.setClirPrefix(selected)
                             }
                         }
                     )
-                    var editClir by remember { mutableStateOf(false) }
                     Preference(
                         title = stringResource(R.string.hc_custom_clir_prefix),
-                        summary = if (clirPrefix.isEmpty()) "Not set" else clirPrefix,
+                        summary = clirPrefix.ifBlank { "#31#" },
                         onClick = { editClir = true }
                     )
                     if (editClir) {
-                        var input by remember { mutableStateOf(clirPrefix) }
+                        var input by rememberSaveable { mutableStateOf(clirPrefix) }
                         AlertDialog(
                             onDismissRequest = { editClir = false },
                             title = { Text(stringResource(R.string.hc_custom_clir_prefix)) },
@@ -715,12 +718,17 @@ fun CommsSettingsScreen() {
         item {
             PreferenceCategory(title = stringResource(R.string.hc_default_phone_app)) {
                 val context = LocalContext.current
-                val isDefault = remember {
-                    de.mm20.launcher2.comms.telephony.TelosDialer.isDefaultDialer(context)
+                var isDefault by remember {
+                    mutableStateOf(de.mm20.launcher2.comms.telephony.TelosDialer.isDefaultDialer(context))
+                }
+                // the role dialog is a separate screen: re-check when coming back
+                androidx.lifecycle.compose.LifecycleResumeEffect(Unit) {
+                    isDefault = de.mm20.launcher2.comms.telephony.TelosDialer.isDefaultDialer(context)
+                    onPauseOrDispose { }
                 }
                 Preference(
                     title = stringResource(R.string.hc_set_telos_phone_as_default_dialer),
-                    summary = if (isDefault) "Telos Phone is the default phone app" else "Required for in-call UI, answer, and mute/speaker",
+                    summary = stringResource(if (isDefault) R.string.au3_commsfreeze_dialer_is_default else R.string.au3_commsfreeze_dialer_required),
                     onClick = {
                         (context as? android.app.Activity)?.let {
                             de.mm20.launcher2.comms.telephony.TelosDialer.requestDefaultDialer(it)
@@ -745,11 +753,11 @@ fun CommsSettingsScreen() {
                 ListPreference(
                     title = stringResource(R.string.hc_default_call_sim),
                     items = listOf(
-                        "Always Ask" to "ask",
-                        "Last used SIM" to "last",
-                        "Same SIM as last call to this number" to "log",
-                        "SIM 1" to "sim1",
-                        "SIM 2" to "sim2"
+                        stringResource(R.string.au3_commsfreeze_sim_ask) to "ask",
+                        stringResource(R.string.au3_commsfreeze_sim_last) to "last",
+                        stringResource(R.string.au3_commsfreeze_sim_log) to "log",
+                        stringResource(R.string.au3_commsfreeze_sim_1) to "sim1",
+                        stringResource(R.string.au3_commsfreeze_sim_2) to "sim2"
                     ),
                     value = defaultSim,
                     onValueChanged = { if (it != null) viewModel.setDefaultSim(it) }
@@ -763,7 +771,7 @@ fun CommsSettingsScreen() {
                     val number = speedDials[digit]
                     Preference(
                         title = stringResource(R.string.hc_slot_digit, digit),
-                        summary = number ?: "Not assigned",
+                        summary = number ?: stringResource(R.string.au3_commsfreeze_not_assigned),
                         onClick = { showSpeedDialDialogFor = digit }
                     )
                 }
@@ -772,7 +780,7 @@ fun CommsSettingsScreen() {
     }
 
     showSpeedDialDialogFor?.let { digit ->
-        var inputNumber by remember { mutableStateOf(speedDials[digit] ?: "") }
+        var inputNumber by rememberSaveable(digit) { mutableStateOf(speedDials[digit] ?: "") }
         AlertDialog(
             onDismissRequest = { showSpeedDialDialogFor = null },
             title = { Text(stringResource(R.string.hc_set_speed_dial_digit, digit)) },
@@ -880,7 +888,10 @@ fun CommsSettingsScreen() {
                             viewModel.importBackup(payload, pw) { ok ->
                                 Toast.makeText(
                                     context,
-                                    if (ok) "Backup restored" else "Wrong password or corrupt file",
+                                    context.getString(
+                                        if (ok) R.string.au3_commsfreeze_backup_restored
+                                        else R.string.au3_commsfreeze_backup_failed
+                                    ),
                                     Toast.LENGTH_SHORT,
                                 ).show()
                             }

@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,6 +34,7 @@ import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.serialization.Serializable
 
@@ -53,8 +55,9 @@ fun CreateFolderScreen() {
     val backStack = LocalBackStack.current
 
     val apps by viewModel.apps.collectAsStateWithLifecycle(emptyList())
-    var folderName by remember { mutableStateOf("") }
-    val selected = remember { mutableStateOf(setOf<String>()) }
+    val iconSizePx = 40.dp.toPixels().toInt()
+    var folderName by rememberSaveable { mutableStateOf("") }
+    val selected = rememberSaveable { mutableStateOf(setOf<String>()) }
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_create_folder),
@@ -97,7 +100,7 @@ fun CreateFolderScreen() {
             )
         }
         items(apps, key = { it.key }) { app ->
-            val icon by viewModel.getIcon(app, 40.dp.value.toInt()).collectAsStateWithLifecycle(null)
+            val icon by viewModel.getIcon(app, iconSizePx).collectAsStateWithLifecycle(null)
             AppCheckRow(
                 app = app,
                 icon = icon,
@@ -135,7 +138,7 @@ private fun AppCheckRow(
         )
         // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
         Text(
-            text = app.label,
+            text = app.labelOverride ?: app.label,
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.weight(1f),
         )

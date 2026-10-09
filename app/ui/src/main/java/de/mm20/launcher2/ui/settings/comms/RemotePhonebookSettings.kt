@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -35,9 +36,13 @@ fun RemotePhonebookSettings() {
     val host by settings.remotePhonebookHost.collectAsStateWithLifecycle("fritz.box")
     val user by settings.remotePhonebookUser.collectAsStateWithLifecycle("")
     val passwordEnc by settings.remotePhonebookPasswordEnc.collectAsStateWithLifecycle("")
-    var showDialog by remember { mutableStateOf(false) }
+    var showDialog by rememberSaveable { mutableStateOf(false) }
     var busy by remember { mutableStateOf(false) }
     var status by remember { mutableStateOf<String?>(null) }
+    val syncingText = stringResource(R.string.au3_commsfreeze_syncing)
+    val resources = androidx.compose.ui.platform.LocalContext.current.resources
+    val syncedText: (Int) -> String = { resources.getString(R.string.au3_commsfreeze_synced_count, it) }
+    val failedText: (String) -> String = { resources.getString(R.string.au3_commsfreeze_sync_failed, it) }
 
     PreferenceCategory(title = stringResource(R.string.hc_remote_phonebook_fritz_box)) {
         SwitchPreference(
@@ -51,23 +56,23 @@ fun RemotePhonebookSettings() {
         )
         Preference(
             title = stringResource(R.string.hc_connection),
-            summary = if (user.isBlank()) "Not configured" else "$user @ $host",
+            summary = if (user.isBlank()) stringResource(R.string.au3_commsfreeze_not_configured) else "$user @ $host",
             onClick = { showDialog = true },
         )
         Preference(
             title = stringResource(R.string.hc_sync_now),
             summary = status ?: RemotePhonebook.lastSyncMillis.takeIf { it > 0 }?.let {
-                "Last sync: " + DateFormat.getDateTimeInstance().format(Date(it))
-            } ?: "Never synced",
+                stringResource(R.string.au3_commsfreeze_last_sync, DateFormat.getDateTimeInstance().format(Date(it)))
+            } ?: stringResource(R.string.au3_commsfreeze_never_synced),
             onClick = {
                 if (busy || !enabled || user.isBlank()) return@Preference
                 busy = true
-                status = "Syncing…"
+                status = syncingText
                 scope.launch {
                     val result = RemotePhonebook.sync(host, user, SecretBox.decrypt(passwordEnc))
                     status = result.fold(
-                        onSuccess = { "$it contacts synced" },
-                        onFailure = { "Failed: ${it.message}" },
+                        onSuccess = { syncedText(it) },
+                        onFailure = { failedText(it.message.orEmpty()) },
                     )
                     busy = false
                 }

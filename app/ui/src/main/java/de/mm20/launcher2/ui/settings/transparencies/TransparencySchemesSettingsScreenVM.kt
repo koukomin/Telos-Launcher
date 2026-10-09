@@ -2,6 +2,10 @@ package de.mm20.launcher2.ui.settings.transparencies
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import de.mm20.launcher2.themes.DefaultThemeId
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.first
+import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.themes.transparencies.Transparencies
@@ -36,6 +40,12 @@ class TransparencySchemesSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     fun delete(transparencies: Transparencies) {
+        viewModelScope.launch {
+            // Don't leave a dangling selection that silently falls back to the default.
+            if (uiSettings.transparenciesId.first() == transparencies.id) {
+                uiSettings.setTransparenciesId(DefaultThemeId)
+            }
+        }
         themeRepository.transparencies.delete(transparencies)
     }
 

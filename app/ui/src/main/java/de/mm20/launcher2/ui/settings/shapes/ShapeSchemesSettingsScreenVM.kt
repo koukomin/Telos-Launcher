@@ -2,6 +2,10 @@ package de.mm20.launcher2.ui.settings.shapes
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
+import de.mm20.launcher2.themes.DefaultThemeId
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.first
+import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.themes.shapes.Shapes
@@ -36,6 +40,12 @@ class ShapeSchemesSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     fun delete(shapes: Shapes) {
+        viewModelScope.launch {
+            // Don't leave a dangling selection that silently falls back to the default.
+            if (uiSettings.shapesId.first() == shapes.id) {
+                uiSettings.setShapesId(DefaultThemeId)
+            }
+        }
         themeRepository.shapes.delete(shapes)
     }
 
