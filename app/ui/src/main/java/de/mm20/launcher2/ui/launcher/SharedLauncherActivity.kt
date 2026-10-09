@@ -153,6 +153,11 @@ abstract class SharedLauncherActivity(
                         val reverseSearchResults by viewModel.reverseSearchResults.collectAsState()
                         val fixedSearchBar by viewModel.fixedSearchBar.collectAsState()
                         val gestures by viewModel.gestureState.collectAsState()
+                        // Telos apps switched off in the Store: their gestures do nothing (and update at once)
+                        val disabledTelosApps by remember {
+                            org.koin.mp.KoinPlatform.getKoin()
+                                .get<de.mm20.launcher2.preferences.comms.CommsSettings>().disabledVirtualApps
+                        }.collectAsState(emptySet())
                         val searchBarStyle by viewModel.searchBarStyle.collectAsState()
                         val searchBarColor by viewModel.searchBarColor.collectAsState()
                         val searchBarColorDrawer by viewModel.searchBarColorDrawer.collectAsState()
@@ -375,7 +380,7 @@ abstract class SharedLauncherActivity(
                                             is GestureAction.TelosApp -> org.koin.mp.KoinPlatform.getKoin()
                                                 .getAll<de.mm20.launcher2.search.VirtualAppProvider>()
                                                 .flatMap { it.getVirtualApps() }
-                                                .firstOrNull { it.key == action.key }
+                                                .firstOrNull { it.key == action.key && it.key !in disabledTelosApps }
                                                 ?.let { app ->
                                                     ScaffoldGesture(
                                                         component = LaunchComponent(this@SharedLauncherActivity, app),
@@ -390,7 +395,7 @@ abstract class SharedLauncherActivity(
                                                 val installed = org.koin.mp.KoinPlatform.getKoin()
                                                     .getAll<de.mm20.launcher2.search.VirtualAppProvider>()
                                                     .flatMap { it.getVirtualApps() }
-                                                    .any { it.key == action.key }
+                                                    .any { it.key == action.key && it.key !in disabledTelosApps }
                                                 if (!installed) null else TelosAppPageComponent.forKey(action.key)?.let { component ->
                                                     ScaffoldGesture(
                                                         component = component,
