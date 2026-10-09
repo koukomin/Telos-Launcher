@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,6 +44,11 @@ import java.util.Date
 @Serializable
 data object NotesRoute : NavKey
 
+private val noteSaver = Saver<Note?, String>(
+    save = { it?.toJson()?.toString() ?: "" },
+    restore = { s -> if (s.isEmpty()) null else runCatching { Note.fromJson(org.json.JSONObject(s)) }.getOrNull() },
+)
+
 private fun noteColor(i: Int, fallback: Color): Color =
     NotesStore.Colors.getOrNull(i)?.takeIf { it != 0 }?.let { Color(it).copy(alpha = 0.85f) } ?: fallback
 
@@ -58,7 +64,8 @@ fun NotesScreen() {
     val label by vm.label.collectAsState()
     val syncing by vm.syncing.collectAsState()
     val message by vm.message.collectAsState()
-    var editing by remember { mutableStateOf<Note?>(null) }
+    // saved with the instance state, so that a rotation does not throw away the note that is being written
+    var editing by rememberSaveable(stateSaver = noteSaver) { mutableStateOf<Note?>(null) }
     var showSync by rememberSaveable { mutableStateOf(false) }
     var menu by remember { mutableStateOf(false) }
     var searching by rememberSaveable { mutableStateOf(false) }
@@ -76,6 +83,8 @@ fun NotesScreen() {
             else -> stringResource(R.string.notes_sync_failed, it.substringAfter(':'))
         }
     }
+    // a label filter whose notes are all gone has no chip left to switch it off
+    LaunchedEffect(labels, label) { if (label != null && label !in labels) vm.label.value = null }
     LaunchedEffect(text) { if (text != null) { snack.showSnackbar(text); vm.message.value = null } }
 
     BackHandler(enabled = editing != null || searching || filter != NotesFilter.Notes) {
@@ -114,7 +123,7 @@ fun NotesScreen() {
                         Icon(painterResource(if (searching) R.drawable.close_24px else R.drawable.search_24px), stringResource(R.string.notes_search))
                     }
                     if (syncing) CircularProgressIndicator(Modifier.size(24.dp)) else Box {
-                        IconButton(onClick = { menu = true }) { Icon(painterResource(R.drawable.more_vert_24px), null) }
+                        IconButton(onClick = { menu = true }) { Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.notes_title)) }
                         DropdownMenu(menu, { menu = false }) {
                             DropdownMenuItem(text = { Text(stringResource(R.string.notes_sync_now)) }, onClick = { menu = false; vm.syncNow() })
                             DropdownMenuItem(text = { Text(stringResource(R.string.notes_sync_settings)) }, onClick = { menu = false; showSync = true })
@@ -173,7 +182,7 @@ private fun NoteEditor(note: Note, labels: List<String>, onChange: (Note) -> Uni
     var colors by remember { mutableStateOf(false) }
     var labelDialog by remember { mutableStateOf(false) }
     val context = LocalContext.current
-    Column(Modifier.fillMaxSize().background(bg)) {
+    Column(Modifier.fillMaxSize().background(bg).imePadding()) {
         Row(Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onClose) { Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.notes_back), tint = fg) }
             Spacer(Modifier.weight(1f))

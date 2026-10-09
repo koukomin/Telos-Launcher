@@ -55,6 +55,7 @@ class ScreenRecorderService : Service() {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private var timer: Job? = null
+    private var countdownJob: Job? = null
     private var projection: MediaProjection? = null
     private var recorder: MediaRecorder? = null
     private var display: VirtualDisplay? = null
@@ -93,7 +94,7 @@ class ScreenRecorderService : Service() {
                 if (data == null) {
                     fail()
                 } else {
-                    scope.launch { countdownAndRecord(resultCode, data) }
+                    countdownJob = scope.launch { countdownAndRecord(resultCode, data) }
                 }
             }
         }
@@ -253,6 +254,8 @@ class ScreenRecorderService : Service() {
 
     /** Stops the recording and keeps it */
     private fun finishRecording() {
+        countdownJob?.cancel()
+        countdownJob = null
         val status = ScreenRecorderState.state.value.status
         if (status == ScreenRecStatus.Idle) {
             stopSelf()

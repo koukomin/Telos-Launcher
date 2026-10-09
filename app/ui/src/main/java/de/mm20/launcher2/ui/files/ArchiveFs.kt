@@ -48,6 +48,7 @@ class ArchiveFs(private val archive: File) : Fs {
     override val isRemote = true // copied by streaming, never as plain files
 
     private val items: List<ArchiveItem> by lazy { index() }
+    private val stamp: Long = archive.lastModified() + archive.length()
 
     private val kind: String get() {
         val n = archive.name.lowercase()
@@ -211,7 +212,13 @@ class ArchiveFs(private val archive: File) : Fs {
 
     companion object {
         private val cache = ConcurrentHashMap<String, ArchiveFs>()
-        fun of(archive: String): ArchiveFs = cache.getOrPut(archive) { ArchiveFs(File(archive)) }
+        fun of(archive: String): ArchiveFs {
+            val file = File(archive)
+            val cached = cache[archive]
+            // the index is read once: a changed archive file needs a new one
+            if (cached != null && cached.stamp == file.lastModified() + file.length()) return cached
+            return ArchiveFs(file).also { cache[archive] = it }
+        }
         fun forget(archive: String) { cache.remove(archive) }
     }
 }

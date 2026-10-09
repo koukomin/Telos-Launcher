@@ -86,7 +86,13 @@ class AutoFreezeController internal constructor(
         )
 
         scope.launch {
-            freezeManager.refreshBackendState()
+            try {
+                freezeManager.refreshBackendState()
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                android.util.Log.w("AutoFreezeController", "backend refresh failed", e)
+            }
         }
 
         // Keep the "ready to freeze" notification in sync with the candidate list itself (e.g.
@@ -96,7 +102,13 @@ class AutoFreezeController internal constructor(
         // already wakes up for, which covers the common cases.
         scope.launch {
             settings.candidates.collect {
-                updateUnfrozenNotification()
+                try {
+                    updateUnfrozenNotification()
+                } catch (e: kotlinx.coroutines.CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    android.util.Log.w("AutoFreezeController", "notification update failed", e)
+                }
             }
         }
     }
@@ -155,14 +167,22 @@ class AutoFreezeController internal constructor(
     }
 
     private suspend fun freezeCandidates() {
-        val freezable = freezableCandidates()
-        if (freezable.isEmpty()) return
-        freezeManager.refreshBackendState()
-        // Not freeze(): this runs from a background trigger (screen-off/idle/battery-saver, no
-        // foreground activity), and Island's freeze mechanism needs a foreground context to
-        // launch its Activity - see FreezeManager.freezeInBackground.
-        freezeManager.freezeInBackground(freezable)
-        updateUnfrozenNotification()
+        // A backend that dies (Shizuku binder gone, root denied, ...) must not crash the launcher
+        // from this background scope.
+        try {
+            val freezable = freezableCandidates()
+            if (freezable.isEmpty()) return
+            freezeManager.refreshBackendState()
+            // Not freeze(): this runs from a background trigger (screen-off/idle/battery-saver, no
+            // foreground activity), and Island's freeze mechanism needs a foreground context to
+            // launch its Activity - see FreezeManager.freezeInBackground.
+            freezeManager.freezeInBackground(freezable)
+            updateUnfrozenNotification()
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            android.util.Log.w("AutoFreezeController", "auto freeze failed", e)
+        }
     }
 
     /**

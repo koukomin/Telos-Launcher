@@ -17,6 +17,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.calculateCentroid
 import androidx.compose.foundation.gestures.calculatePan
 import androidx.compose.foundation.gestures.calculateZoom
 import androidx.compose.ui.input.pointer.positionChanged
@@ -96,8 +97,16 @@ private fun ZoomableImage(uri: Uri, onTap: () -> Unit) {
             .pointerInput(Unit) {
                 detectTapGestures(
                     onTap = { onTap() },
-                    onDoubleTap = {
-                        if (scale > 1f) { scale = 1f; offset = androidx.compose.ui.geometry.Offset.Zero } else scale = 2.5f
+                    onDoubleTap = { tap ->
+                        if (scale > 1f) { scale = 1f; offset = androidx.compose.ui.geometry.Offset.Zero } else {
+                            // zoom in around the tapped point
+                            val c = androidx.compose.ui.geometry.Offset(size.width / 2f, size.height / 2f)
+                            val maxX = size.width * 1.5f / 2f
+                            val maxY = size.height * 1.5f / 2f
+                            val raw = (tap - c) * (1f - 2.5f)
+                            scale = 2.5f
+                            offset = androidx.compose.ui.geometry.Offset(raw.x.coerceIn(-maxX, maxX), raw.y.coerceIn(-maxY, maxY))
+                        }
                     },
                 )
             }
@@ -111,15 +120,18 @@ private fun ZoomableImage(uri: Uri, onTap: () -> Unit) {
                         if (event.changes.size >= 2 || scale > 1f) {
                             val zoom = event.calculateZoom()
                             val pan = event.calculatePan()
-                            scale = (scale * zoom).coerceIn(1f, 8f)
+                            val centroid = event.calculateCentroid(useCurrent = true)
+                            val newScale = (scale * zoom).coerceIn(1f, 8f)
+                            val f = newScale / scale
+                            // the layer scales around its centre: keep the point between the fingers where it is
+                            val c = androidx.compose.ui.geometry.Offset(size.width / 2f, size.height / 2f)
+                            scale = newScale
                             offset = if (scale > 1f) {
                                 // the photo cannot be dragged out of the screen
                                 val maxX = size.width * (scale - 1f) / 2f
                                 val maxY = size.height * (scale - 1f) / 2f
-                                androidx.compose.ui.geometry.Offset(
-                                    (offset.x + pan.x).coerceIn(-maxX, maxX),
-                                    (offset.y + pan.y).coerceIn(-maxY, maxY),
-                                )
+                                val raw = (centroid - c) * (1f - f) + offset * f + pan
+                                androidx.compose.ui.geometry.Offset(raw.x.coerceIn(-maxX, maxX), raw.y.coerceIn(-maxY, maxY))
                             } else androidx.compose.ui.geometry.Offset.Zero
                             event.changes.forEach { if (it.positionChanged()) it.consume() }
                         }

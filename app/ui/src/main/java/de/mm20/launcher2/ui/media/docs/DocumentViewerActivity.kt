@@ -161,8 +161,11 @@ private class PdfDoc(val file: File) {
 
     @Synchronized
     fun render(page: Int, width: Int): Bitmap = renderer.openPage(page).use { p ->
-        val height = (width * p.height / p.width.toFloat()).toInt().coerceAtLeast(1)
-        Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888).also {
+        // a zoomed page must not need more than ~16 megapixels (64 MB), or several visible pages run out of memory
+        val ratio = p.height / p.width.toFloat()
+        val w = minOf(width.toFloat(), kotlin.math.sqrt(16_000_000f / ratio)).toInt().coerceAtLeast(1)
+        val height = (w * ratio).toInt().coerceAtLeast(1)
+        Bitmap.createBitmap(w, height, Bitmap.Config.ARGB_8888).also {
             it.eraseColor(AndroidColor.WHITE)
             p.render(it, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
         }

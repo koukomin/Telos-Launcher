@@ -92,7 +92,7 @@ fun ScheduledSmsScreen() {
                             { _, h, min ->
                                 cal.set(Calendar.HOUR_OF_DAY, h)
                                 cal.set(Calendar.MINUTE, min)
-                                if (number.isNotBlank() && body.isNotBlank()) {
+                                if (number.isNotBlank() && body.isNotBlank() && cal.timeInMillis > System.currentTimeMillis()) {
                                     ScheduledSmsStore.add(context, number, body, cal.timeInMillis)
                                     items = ScheduledSmsStore.list(context)
                                 }

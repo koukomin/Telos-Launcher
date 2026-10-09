@@ -14,7 +14,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.comms.intent.MessengerIntentUtils
 import de.mm20.launcher2.comms.overlay.CallOverlayIntents
@@ -25,8 +27,6 @@ import de.mm20.launcher2.preferences.comms.CommsSettings
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCompositionLocals
 import de.mm20.launcher2.ui.theme.LauncherTheme
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.inject
 
 class MissedCallPopupActivity : BaseActivity() {
@@ -37,14 +37,14 @@ class MissedCallPopupActivity : BaseActivity() {
         val name = intent.getStringExtra(CallOverlayIntents.EXTRA_NAME)
         val number = intent.getStringExtra(CallOverlayIntents.EXTRA_NUMBER).orEmpty()
         val ringMs = intent.getLongExtra(CallOverlayIntents.EXTRA_RING_MS, 0L)
-        val template = runBlocking { commsSettings.rejectSmsTemplate.first() }
         setContent {
             ProvideCompositionLocals {
                 LauncherTheme {
+                    val template by commsSettings.rejectSmsTemplate.collectAsStateWithLifecycle("")
                     Surface(tonalElevation = 6.dp) {
                         Column(Modifier.padding(20.dp).fillMaxWidth()) {
                             Text(
-                                text = name?.ifBlank { null } ?: number.ifBlank { "Unknown" },
+                                text = name?.ifBlank { null } ?: number.ifBlank { stringResource(R.string.widget_name_unknown) },
                                 style = MaterialTheme.typography.titleLarge,
                             )
                             if (ringMs > 0) {

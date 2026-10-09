@@ -79,7 +79,7 @@ class CalendarViewModel(app: android.app.Application) : AndroidViewModel(app) {
                 events.value = repo.events(first.minusDays(7), month.value.atEndOfMonth().plusDays(7), cals)
                 calendars.value = cals
                 upcoming.value = repo.events(LocalDate.now(), LocalDate.now().plusDays(30), cals)
-            } catch (e: SecurityException) { }
+            } catch (e: Exception) { if (e is kotlinx.coroutines.CancellationException) throw e }
         }
     }
 
@@ -263,12 +263,16 @@ private fun CalendarContent(vm: CalendarViewModel) {
                 LazyColumn(contentPadding = PaddingValues(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     byDay.forEach { (day, evs) ->
                         item(key = "h$day") { Text(day.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(top = 8.dp)) }
-                        items(evs.sortedBy { it.begin }, key = { "$day-${it.id}-${it.begin}" }) { ev -> EventRow(ev, false) {} }
+                        items(evs.sortedBy { it.begin }, key = { "$day-${it.id}-${it.begin}" }) { ev -> EventRow(ev, writable.any { it.id == ev.calendarId }) { openEvent(ev) } }
                     }
                 }
                 return@Scaffold
             }
-            MonthGrid(month, selected, events, onSelect = { vm.selected.value = it })
+            MonthGrid(month, selected, events, onSelect = {
+                vm.selected.value = it
+                // a day of the previous or next month shown in the grid: move to that month
+                if (YearMonth.from(it) != month) vm.go(YearMonth.from(it))
+            })
             HorizontalDivider(Modifier.padding(vertical = 8.dp))
             val dayEvents = events.filter { selected in it.firstDay..it.lastDay }.sortedWith(compareByDescending<CalEvent> { it.allDay }.thenBy { it.begin })
             Text(selected.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)), style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(horizontal = 16.dp))
@@ -310,7 +314,7 @@ private fun MonthGrid(month: YearMonth, selected: LocalDate, events: List<CalEve
                     Column(
                         Modifier.weight(1f).height(48.dp).padding(2.dp).clip(RoundedCornerShape(12.dp))
                             .background(if (day == selected) MaterialTheme.colorScheme.primaryContainer else Color.Transparent)
-                            .clickable { onSelect(day); if (!inMonth) { } },
+                            .clickable { onSelect(day) },
                         horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center,
                     ) {
                         Text(day.dayOfMonth.toString(), style = MaterialTheme.typography.bodyMedium,
@@ -358,7 +362,7 @@ private fun EventEditor(d: Draft, writable: List<DeviceCalendar>, all: List<Devi
     val reminders = listOf(null, 0, 10, 30, 60, 1440)
     val cal = all.firstOrNull { it.id == d.calendarId }
 
-    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface).verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface).imePadding().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onDismiss) { Icon(painterResource(R.drawable.close_24px), stringResource(R.string.cal_cancel)) }
             Text(stringResource(if (d.id == null) R.string.cal_new_event else R.string.cal_edit_event), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))

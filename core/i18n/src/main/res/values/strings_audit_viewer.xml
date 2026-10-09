@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_viewer_yesterday">Yesterday</string>
+    <string name="au_viewer_other">Other</string>
+    <string name="au_viewer_items">%1$d items</string>
+    <string name="au_viewer_location">Location: %1$s</string>
+    <string name="au_viewer_metadata_unsupported">This file format does not support metadata changes</string>
+    <string name="au_viewer_saved_to_telos">Saved to Pictures/Telos</string>
+    <string name="au_viewer_save_failed">Saving failed</string>
+    <string name="au_viewer_saving">Saving…</string>
+    <string name="au_viewer_save_copy">Save copy</string>
+    <string name="au_viewer_filter_original">Original</string>
+    <string name="au_viewer_filter_mono">Mono</string>
+    <string name="au_viewer_filter_sepia">Sepia</string>
+    <string name="au_viewer_filter_warm">Warm</string>
+    <string name="au_viewer_filter_cool">Cool</string>
+    <string name="au_viewer_filter_invert">Invert</string>
+    <string name="au_viewer_aspect_free">Free</string>
+    <string name="au_viewer_exif_date_taken">Date taken</string>
+    <string name="au_viewer_exif_make">Camera make</string>
+    <string name="au_viewer_exif_model">Camera model</string>
+    <string name="au_viewer_exif_lens">Lens</string>
+    <string name="au_viewer_exif_exposure">Exposure</string>
+    <string name="au_viewer_exif_aperture">Aperture</string>
+    <string name="au_viewer_exif_iso">ISO</string>
+    <string name="au_viewer_exif_focal_length">Focal length</string>
+    <string name="au_viewer_exif_software">Software</string>
+    <string name="au_viewer_exif_artist">Artist</string>
+    <string name="au_viewer_exif_description">Description</string>
+    <string name="au_viewer_exif_copyright">Copyright</string>
+</resources>

@@ -159,6 +159,8 @@ class MusicViewModel : ViewModel() {
         val item = c.currentMediaItem
         if (item == null) {
             _nowPlaying.value = null
+            _lyrics.value = null
+            lyricsKey = ""
             return
         }
         val md = c.mediaMetadata
@@ -189,8 +191,16 @@ class MusicViewModel : ViewModel() {
     fun loadLibrary(context: Context) {
         viewModelScope.launch {
             _loading.value = true
-            _tracks.value = MusicLibrary.load(context)
-            _loading.value = false
+            try {
+                _tracks.value = MusicLibrary.load(context)
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                // e.g. the audio permission was revoked: show an empty library instead of crashing
+                _tracks.value = emptyList()
+            } finally {
+                _loading.value = false
+            }
         }
     }
 
