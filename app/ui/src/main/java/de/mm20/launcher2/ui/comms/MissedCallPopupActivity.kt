@@ -77,10 +77,10 @@ class MissedCallPopupActivity : BaseActivity() {
                                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                     TextButton(onClick = {
                                         tryStartActivity(MessengerIntentUtils.whatsApp(number))
-                                    }) { Text("WhatsApp") }
+                                    }) { Text(stringResource(R.string.action_whatsapp)) }
                                     TextButton(onClick = {
                                         tryStartActivity(MessengerIntentUtils.telegram(number))
-                                    }) { Text("Telegram") }
+                                    }) { Text(stringResource(R.string.action_telegram)) }
                                 }
                             }
                         }

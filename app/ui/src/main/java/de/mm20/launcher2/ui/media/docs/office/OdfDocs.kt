@@ -75,7 +75,8 @@ internal abstract class OdfBase(file: File) : OfficeDoc(file) {
     private val keepers = setOf("bookmark", "bookmark-start", "bookmark-end", "note", "annotation", "annotation-end", "reference-mark", "reference-mark-start", "reference-mark-end")
 
     /** Replaces the text of a text:p / text:h, keeping pictures, bookmarks and footnotes and the style of the first formatted span. */
-    protected fun setOdfText(p: Element, text: String) {
+    protected fun setOdfText(p: Element, rawText: String) {
+        val text = xmlSafe(rawText)
         var spanStyle: String? = null
         for (c in p.elements()) if (c.isEl(NS_TEXT, "span") && c.textContent.isNotEmpty()) { spanStyle = c.attr(NS_TEXT, "style-name"); break }
         var c = p.firstChild
@@ -240,6 +241,7 @@ internal class OdtDoc(file: File) : OdfBase(file) {
     override fun blocks(): List<OfficeBlock> {
         cache?.let { return it }
         paras = ArrayList()
+        truncated = false
         val out = ArrayList<OfficeBlock>()
         root.child(NS_OFFICE, "body")?.child(NS_OFFICE, "text")?.let { walk(it, out, 0, null, false) }
         cache = out
@@ -251,7 +253,10 @@ internal class OdtDoc(file: File) : OdfBase(file) {
         for (c in container.elements()) {
             val m = if (first) marker else null
             when {
-                c.isEl(NS_TEXT, "p") || c.isEl(NS_TEXT, "h") -> { out += para(c, indent, m, inTable); first = false }
+                c.isEl(NS_TEXT, "p") || c.isEl(NS_TEXT, "h") -> {
+                    if (paras.size < MAX_BLOCKS) out += para(c, indent, m, inTable) else truncated = true
+                    first = false
+                }
                 c.isEl(NS_TEXT, "list") -> {
                     val style = c.attr(NS_TEXT, "style-name")
                     var n = 0
@@ -372,7 +377,9 @@ internal class OdsDoc(file: File) : OdfBase(file) {
             val values = HashMap<Long, String>(); val formulas = HashMap<Long, String>()
             var maxRow = -1; var maxCol = -1
             var r = 0
+            var truncated = false
             for (row in rowEls(t)) {
+                if (r >= MAX_SHEET_ROWS) { truncated = true; break }
                 val rr = rep(row, "number-rows-repeated")
                 var col = 0
                 var rowHas = false
@@ -382,7 +389,7 @@ internal class OdsDoc(file: File) : OdfBase(file) {
                     val text = cellText(cell)
                     val f = cell.attr(NS_TABLE, "formula")?.removePrefix("of:")
                     if (text.isNotEmpty() || f != null) {
-                        for (k in 0 until minOf(cr, 100)) cells += Triple(col + k, text, f)
+                        for (k in 0 until minOf(cr, 100)) if (col + k < MAX_SHEET_COLS) cells += Triple(col + k, text, f) else truncated = true
                         rowHas = true
                     }
                     col += cr
@@ -398,7 +405,7 @@ internal class OdsDoc(file: File) : OdfBase(file) {
                 }
                 r += rr
             }
-            OfficeSheet(t.attr(NS_TABLE, "name").orEmpty(), maxRow + 1, maxCol + 1, values, formulas, false)
+            OfficeSheet(t.attr(NS_TABLE, "name").orEmpty(), maxRow + 1, maxCol + 1, values, formulas, false, truncated)
         }
         cache = out
         return out
@@ -490,8 +497,7 @@ internal class OdsDoc(file: File) : OdfBase(file) {
         remove.forEach { cell.removeAttributeNode(it) }
         cell.children(NS_TEXT, "p").forEach { cell.removeChild(it) }
         if (text.isEmpty()) return
-        val isNumber = Regex("""-?\d+(\.\d+)?([eE][+-]?\d+)?""").matches(text.trim())
-        if (isNumber) {
+        if (isPlainNumber(text)) {
             cell.setAttributeNS(NS_OFFICE, "office:value-type", "float")
             cell.setAttributeNS(NS_OFFICE, "office:value", text.trim())
         } else cell.setAttributeNS(NS_OFFICE, "office:value-type", "string")

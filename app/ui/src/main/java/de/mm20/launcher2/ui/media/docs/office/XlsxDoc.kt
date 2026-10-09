@@ -44,7 +44,7 @@ internal class XlsxDoc(file: File) : OfficeDoc(file) {
         val rels = readRels(z, "xl/_rels/workbook.xml.rels", "xl/")
         val sheets = workbook.documentElement.child(NS_S, "sheets")?.children(NS_S, "sheet").orEmpty()
         for ((i, s) in sheets.withIndex()) {
-            names += s.getAttribute("name").ifEmpty { "Sheet ${i + 1}" }
+            names += s.getAttribute("name")
             paths += rels[s.attr(NS_REL, "id").orEmpty()].orEmpty()
         }
     }
@@ -64,12 +64,16 @@ internal class XlsxDoc(file: File) : OfficeDoc(file) {
             var maxRow = -1; var maxCol = -1
             val sheetData = sheetDoc(i)?.documentElement?.child(NS_S, "sheetData")
             var rowNo = -1
+            var truncated = false
             for (row in sheetData?.children(NS_S, "row").orEmpty()) {
                 rowNo = row.getAttribute("r").toIntOrNull()?.minus(1) ?: (rowNo + 1)
+                if (rowNo >= MAX_SHEET_ROWS) { truncated = true; break }
                 var colNo = -1
                 for (c in row.children(NS_S, "c")) {
                     val ref = c.getAttribute("r")
                     colNo = if (ref.isNotEmpty()) colIndex(ref) else colNo + 1
+                    if (colNo < 0) continue
+                    if (colNo >= MAX_SHEET_COLS) { truncated = true; continue }
                     val t = c.getAttribute("t")
                     val v = c.child(NS_S, "v")?.textContent.orEmpty()
                     val text = when (t) {
@@ -88,7 +92,7 @@ internal class XlsxDoc(file: File) : OfficeDoc(file) {
                     if (colNo > maxCol) maxCol = colNo
                 }
             }
-            OfficeSheet(names[i], maxRow + 1, maxCol + 1, values, formulas, true)
+            OfficeSheet(names[i], maxRow + 1, maxCol + 1, values, formulas, true, truncated)
         }
         cache = out
         return out
@@ -101,17 +105,25 @@ internal class XlsxDoc(file: File) : OfficeDoc(file) {
         rowEl.removeAttribute("spans")
         val cell = findOrCreate(rowEl, NS_S, "c", col + 1, d) { c -> c.getAttribute("r").let { if (it.isEmpty()) 0 else colIndex(it) + 1 } }
         cell.setAttribute("r", colName(col) + (row + 1))
+        // a shared formula that is replaced must not leave cells behind that point to it: they keep their last value
+        cell.child(NS_S, "f")?.let { old ->
+            if (old.getAttribute("t") == "shared" && old.hasAttribute("ref")) {
+                val si = old.getAttribute("si")
+                sheetData.descendants(NS_S, "f").filter { it !== old && it.getAttribute("t") == "shared" && it.getAttribute("si") == si }
+                    .forEach { it.parentNode.removeChild(it) }
+            }
+        }
         // current content goes
         cell.removeAttribute("t")
         for (n in listOf("f", "v", "is")) cell.removeAll(NS_S, n)
-        val value = text
+        val value = xmlSafe(text)
         val prefix = cell.prefix?.let { "$it:" } ?: ""
         if (value.length > 1 && value.startsWith("=")) {
             val f = d.createElementNS(NS_S, prefix + "f")
             f.textContent = value.substring(1)
             cell.insertBefore(f, cell.firstChild)
         } else if (value.isNotEmpty()) {
-            if (Regex("""-?\d+(\.\d+)?([eE][+-]?\d+)?""").matches(value.trim())) {
+            if (isPlainNumber(value)) {
                 val v = d.createElementNS(NS_S, prefix + "v"); v.textContent = value.trim(); cell.appendChild(v)
             } else {
                 cell.setAttribute("t", "inlineStr")
@@ -167,6 +179,23 @@ internal class XlsxDoc(file: File) : OfficeDoc(file) {
             }
             replace["xl/workbook.xml"] = OfficeXml.serialize(workbook, true)
         }
-        ZipRewrite.rewrite(file, dst, replace)
+        var remove = emptySet<String>()
+        if (edited.isNotEmpty() && z.getEntry("xl/calcChain.xml") != null) {
+            // the calculation chain lists formula cells; a stale chain makes Excel offer a repair, it is rebuilt on load
+            remove = setOf("xl/calcChain.xml")
+            runCatching {
+                z.bytes("[Content_Types].xml")?.let { b ->
+                    val d = OfficeXml.parse(b)
+                    d.documentElement.elements().filter { it.getAttribute("PartName") == "/xl/calcChain.xml" }.forEach { it.parentNode.removeChild(it) }
+                    replace["[Content_Types].xml"] = OfficeXml.serialize(d, true)
+                }
+                z.bytes("xl/_rels/workbook.xml.rels")?.let { b ->
+                    val d = OfficeXml.parse(b)
+                    d.documentElement.elements().filter { it.getAttribute("Type").endsWith("/calcChain") }.forEach { it.parentNode.removeChild(it) }
+                    replace["xl/_rels/workbook.xml.rels"] = OfficeXml.serialize(d, true)
+                }
+            }.onFailure { remove = emptySet(); replace.remove("[Content_Types].xml"); replace.remove("xl/_rels/workbook.xml.rels") }
+        }
+        ZipRewrite.rewrite(file, dst, replace, remove = remove)
     }
 }

@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.appcompat.app.AppCompatActivity
 import de.mm20.launcher2.comms.model.CallLogEntry
+import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.comms.repository.CallLogRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -65,18 +67,19 @@ class RecentsViewModel : ViewModel(), KoinComponent {
         viewModelScope.launch { callLogRepository.deleteById(call.id) }
     }
 
-    fun export(context: Context) {
-        val text = recents.value.joinToString("\n") { call ->
+    fun export(context: Context, calls: List<CallLogEntry>) {
+        if (calls.isEmpty()) return
+        val format = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault())
+        val text = calls.joinToString("\n") { call ->
             val name = call.displayName ?: call.phoneNumber
-            val whenStr = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault())
-                .format(java.util.Date(call.timestamp))
+            val whenStr = format.format(java.util.Date(call.timestamp))
             "$whenStr\t${call.type}\t$name\t${call.phoneNumber}"
         }
         val intent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
             putExtra(Intent.EXTRA_TEXT, text)
-            putExtra(Intent.EXTRA_SUBJECT, "Call history")
+            putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.au_phonea_export_subject))
         }
-        context.startActivity(Intent.createChooser(intent, "Export"))
+        context.tryStartActivity(Intent.createChooser(intent, context.getString(R.string.hc_export)))
     }
 }

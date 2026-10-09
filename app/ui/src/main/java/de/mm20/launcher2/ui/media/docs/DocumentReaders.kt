@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.media.docs
 
 import android.text.Html
 import android.util.Xml
+import de.mm20.launcher2.ui.media.docs.office.resolvePath
 import org.xmlpull.v1.XmlPullParser
 import java.io.File
 import java.io.InputStream
@@ -32,14 +33,49 @@ object DocumentTypes {
     fun supports(name: String) = isPdf(name) || isOffice(name) || isText(name)
 }
 
+/** Thrown for password protected documents. */
+class EncryptedDocumentException : SecurityException("password protected")
+
+/** Headings that Telos adds itself (sheet and slide numbers), supplied by the caller so that they are translated. */
+class DocLabels(val sheet: (Int) -> String = { "Sheet $it" }, val slide: (Int) -> String = { "Slide $it" })
+
 /** Reads the text and tables of Office and OpenDocument files, and of EPUB and RTF. The page layout is not reproduced. */
 object DocumentReaders {
 
-    fun read(file: File, name: String): List<DocBlock> = when (DocumentTypes.ext(name)) {
+    /** Decodes a text file: UTF-8 or UTF-16 with byte order mark, UTF-8 without one, otherwise Windows-1253 (Greek) as the common legacy encoding. */
+    fun decodeText(bytes: ByteArray): String {
+        fun has(vararg b: Int) = bytes.size >= b.size && b.indices.all { (bytes[it].toInt() and 0xFF) == b[it] }
+        return when {
+            has(0xEF, 0xBB, 0xBF) -> String(bytes, 3, bytes.size - 3, Charsets.UTF_8)
+            has(0xFF, 0xFE) -> String(bytes, 2, bytes.size - 2, Charsets.UTF_16LE)
+            has(0xFE, 0xFF) -> String(bytes, 2, bytes.size - 2, Charsets.UTF_16BE)
+            else -> {
+                val decoder = Charsets.UTF_8.newDecoder()
+                    .onMalformedInput(java.nio.charset.CodingErrorAction.REPORT)
+                    .onUnmappableCharacter(java.nio.charset.CodingErrorAction.REPORT)
+                runCatching { decoder.decode(java.nio.ByteBuffer.wrap(bytes)).toString() }
+                    .getOrElse { String(bytes, runCatching { charset("windows-1253") }.getOrDefault(Charsets.ISO_8859_1)) }
+            }
+        }
+    }
+
+    private fun checkEncrypted(file: File, ext: String) {
+        if (ext !in setOf("docx", "xlsx", "pptx", "odt", "ods", "odp")) return
+        val head = ByteArray(8)
+        val n = file.inputStream().use { it.read(head) }
+        // password protected OOXML files are OLE2 containers, not ZIP packages
+        if (n == 8 && (head[0].toInt() and 0xFF) == 0xD0 && (head[1].toInt() and 0xFF) == 0xCF) throw EncryptedDocumentException()
+        if (ext.startsWith("od")) {
+            val manifest = runCatching { ZipFile(file).use { z -> z.stream("META-INF/manifest.xml")?.use { it.readBytes().toString(Charsets.UTF_8) } } }.getOrNull()
+            if (manifest != null && manifest.contains("encryption-data")) throw EncryptedDocumentException()
+        }
+    }
+
+    fun read(file: File, name: String, labels: DocLabels = DocLabels()): List<DocBlock> = when (DocumentTypes.ext(name).also { checkEncrypted(file, it) }) {
         "docx" -> docx(file)
-        "xlsx" -> xlsx(file)
-        "pptx" -> pptx(file)
-        "odt", "ods", "odp" -> odf(file)
+        "xlsx" -> xlsx(file, labels)
+        "pptx" -> pptx(file, labels)
+        "odt", "ods", "odp" -> odf(file, labels)
         "rtf" -> listOf(DocBlock.Paragraph(rtf(file.readText(Charsets.ISO_8859_1))))
         "epub" -> epub(file)
         else -> emptyList()
@@ -48,6 +84,12 @@ object DocumentReaders {
     private fun parser(input: InputStream): XmlPullParser = Xml.newPullParser().apply {
         setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false)
         setInput(input, "UTF-8")
+    }
+
+    /** Attribute by local name, whatever prefix the file uses for its namespace. */
+    private fun attrLocal(p: XmlPullParser, attr: String): String {
+        for (i in 0 until p.attributeCount) if (local(p.getAttributeName(i)) == attr) return p.getAttributeValue(i).orEmpty()
+        return ""
     }
 
     private fun local(name: String?) = name?.substringAfter(':').orEmpty()
@@ -67,22 +109,26 @@ object DocumentReaders {
         var row = mutableListOf<String>()
         var cell = StringBuilder()
         var inText = false
+        var inPPr = false
         var e = p.eventType
-        while (e != XmlPullParser.END_DOCUMENT) {
+        while (e != XmlPullParser.END_DOCUMENT && out.size < 20000) {
             when (e) {
                 XmlPullParser.START_TAG -> when (local(p.name)) {
                     "tbl" -> { if (tableDepth == 0) rows = mutableListOf(); tableDepth++ }
                     "tr" -> if (tableDepth == 1) row = mutableListOf()
                     "tc" -> if (tableDepth == 1) cell = StringBuilder()
                     "p" -> { text = StringBuilder(); style = "" }
-                    "pStyle" -> style = p.getAttributeValue(null, "w:val").orEmpty()
+                    "pPr" -> inPPr = true
+                    "pStyle" -> style = attrLocal(p, "val")
                     "t" -> inText = true
-                    "tab" -> text.append('\t')
+                    // w:tab inside w:pPr/w:tabs only defines a tab stop
+                    "tab" -> if (!inPPr) text.append('\t')
                     "br" -> text.append('\n')
                 }
                 XmlPullParser.TEXT -> if (inText) text.append(p.text)
                 XmlPullParser.END_TAG -> when (local(p.name)) {
                     "t" -> inText = false
+                    "pPr" -> inPPr = false
                     "p" -> {
                         val t = text.toString()
                         if (tableDepth > 0) { if (tableDepth == 1) { if (cell.isNotEmpty()) cell.append('\n'); cell.append(t) } }
@@ -107,18 +153,19 @@ object DocumentReaders {
 
     // ---- Excel ----
 
-    private fun xlsx(file: File): List<DocBlock> = ZipFile(file).use { zip ->
+    private fun xlsx(file: File, labels: DocLabels): List<DocBlock> = ZipFile(file).use { zip ->
         val shared = mutableListOf<String>()
         zip.stream("xl/sharedStrings.xml")?.use { s ->
             val p = parser(s)
             var current = StringBuilder()
             var inT = false
+            var inPhonetic = false
             var e = p.eventType
             while (e != XmlPullParser.END_DOCUMENT) {
                 when (e) {
-                    XmlPullParser.START_TAG -> when (local(p.name)) { "si" -> current = StringBuilder(); "t" -> inT = true }
-                    XmlPullParser.TEXT -> if (inT) current.append(p.text)
-                    XmlPullParser.END_TAG -> when (local(p.name)) { "t" -> inT = false; "si" -> shared += current.toString() }
+                    XmlPullParser.START_TAG -> when (local(p.name)) { "si" -> current = StringBuilder(); "t" -> inT = true; "rPh" -> inPhonetic = true }
+                    XmlPullParser.TEXT -> if (inT && !inPhonetic) current.append(p.text)
+                    XmlPullParser.END_TAG -> when (local(p.name)) { "t" -> inT = false; "rPh" -> inPhonetic = false; "si" -> shared += current.toString() }
                 }
                 e = p.next()
             }
@@ -136,7 +183,7 @@ object DocumentReaders {
             .sortedBy { it.removePrefix("xl/worksheets/sheet").removeSuffix(".xml").toIntOrNull() ?: 0 }.toList()
         val out = mutableListOf<DocBlock>()
         sheets.forEachIndexed { index, entry ->
-            out += DocBlock.Heading(names.getOrNull(index) ?: "Sheet ${index + 1}", 2)
+            out += DocBlock.Heading(names.getOrNull(index)?.ifEmpty { null } ?: labels.sheet(index + 1), 2)
             val rows = mutableListOf<List<String>>()
             zip.stream(entry)!!.use { s ->
                 val p = parser(s)
@@ -165,7 +212,7 @@ object DocumentReaders {
                                 "b" -> if (value.toString().trim() == "1") "TRUE" else "FALSE"
                                 else -> value.toString()
                             }
-                            "row" -> {
+                            "row" -> if (rows.size < 3000) {
                                 val width = (cells.keys.maxOrNull() ?: -1) + 1
                                 rows += List(minOf(width, 60)) { cells[it].orEmpty() }
                             }
@@ -187,12 +234,12 @@ object DocumentReaders {
 
     // ---- PowerPoint ----
 
-    private fun pptx(file: File): List<DocBlock> = ZipFile(file).use { zip ->
+    private fun pptx(file: File, labels: DocLabels): List<DocBlock> = ZipFile(file).use { zip ->
         val slides = zip.entries().asSequence().map { it.name }.filter { it.startsWith("ppt/slides/slide") && it.endsWith(".xml") }
             .sortedBy { it.removePrefix("ppt/slides/slide").removeSuffix(".xml").toIntOrNull() ?: 0 }.toList()
         val out = mutableListOf<DocBlock>()
         slides.forEachIndexed { i, entry ->
-            out += DocBlock.Heading("Slide ${i + 1}", 2)
+            out += DocBlock.Heading(labels.slide(i + 1), 2)
             val p = parser(zip.stream(entry)!!)
             var text = StringBuilder()
             var inT = false
@@ -214,7 +261,7 @@ object DocumentReaders {
 
     // ---- OpenDocument (text, spreadsheet, presentation) ----
 
-    private fun odf(file: File): List<DocBlock> = ZipFile(file).use { zip ->
+    private fun odf(file: File, labels: DocLabels): List<DocBlock> = ZipFile(file).use { zip ->
         val input = zip.stream("content.xml") ?: return emptyList()
         val p = parser(input)
         val out = mutableListOf<DocBlock>()
@@ -232,7 +279,7 @@ object DocumentReaders {
                     "table:table" -> { if (tableDepth == 0) { rows = mutableListOf(); p.getAttributeValue(null, "table:name")?.let { out += DocBlock.Heading(it, 2) } }; tableDepth++ }
                     "table:table-row" -> if (tableDepth == 1) row = mutableListOf()
                     "table:table-cell" -> if (tableDepth == 1) cell = StringBuilder()
-                    "draw:page" -> { slide++; out += DocBlock.Heading("Slide $slide", 2) }
+                    "draw:page" -> { slide++; out += DocBlock.Heading(labels.slide(slide), 2) }
                     "text:h" -> { text = StringBuilder(); headingLevel = p.getAttributeValue(null, "text:outline-level")?.toIntOrNull() ?: 1 }
                     "text:p" -> { text = StringBuilder(); headingLevel = 0 }
                     "text:s" -> text.append(' ')
@@ -248,8 +295,8 @@ object DocumentReaders {
                         text = StringBuilder()
                     }
                     "table:table-cell" -> if (tableDepth == 1) row.add(cell.toString().trim())
-                    "table:table-row" -> if (tableDepth == 1 && row.any { it.isNotEmpty() }) rows.add(row)
-                    "table:table" -> { tableDepth--; if (tableDepth == 0 && rows.isNotEmpty()) out += DocBlock.Table(rows.take(3000)) }
+                    "table:table-row" -> if (tableDepth == 1 && rows.size < 3000 && row.any { it.isNotEmpty() }) rows.add(row)
+                    "table:table" -> { tableDepth--; if (tableDepth == 0 && rows.isNotEmpty()) out += DocBlock.Table(rows) }
                 }
             }
             e = p.next()
@@ -261,11 +308,17 @@ object DocumentReaders {
 
     fun rtf(raw: String): String {
         val out = StringBuilder()
+        // \'xx escapes are bytes of the document code page (\ansicpgN, for example 1253 for Greek)
+        val codepage = Regex("""\\ansicpg(\d{3,5})""").find(raw.take(4000))?.groupValues?.get(1)
+        val charset = runCatching { charset(if (codepage == "65001") "UTF-8" else "windows-$codepage") }.getOrDefault(Charsets.ISO_8859_1)
+        val pending = java.io.ByteArrayOutputStream()
+        fun flushBytes() { if (pending.size() > 0) { out.append(String(pending.toByteArray(), charset)); pending.reset() } }
         var depth = 0
         var skipDepth = -1
         var i = 0
         while (i < raw.length) {
             val c = raw[i]
+            if (!(c == '\\' && raw.getOrNull(i + 1) == '\'')) flushBytes()
             when {
                 c == '{' -> {
                     depth++
@@ -281,7 +334,7 @@ object DocumentReaders {
                     when {
                         next == '\'' -> {
                             val hex = raw.substring(i + 2, minOf(i + 4, raw.length))
-                            if (skipDepth < 0) hex.toIntOrNull(16)?.let { out.append(it.toChar()) }
+                            if (skipDepth < 0) hex.toIntOrNull(16)?.let { pending.write(it) }
                             i += 4
                         }
                         next != null && !next.isLetter() -> { if (skipDepth < 0 && (next == '\\' || next == '{' || next == '}')) out.append(next); i += 2 }
@@ -305,6 +358,7 @@ object DocumentReaders {
                 else -> { if (skipDepth < 0) out.append(c); i++ }
             }
         }
+        flushBytes()
         return out.toString().trim()
     }
 
@@ -338,9 +392,12 @@ object DocumentReaders {
         val out = mutableListOf<DocBlock>()
         for (id in spine) {
             val href = manifest[id] ?: continue
-            val entry = (if (base.isEmpty()) href else "$base/$href").substringBefore('#')
-            val html = zip.stream(entry)?.bufferedReader()?.readText() ?: continue
-            val text = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT).toString().trim()
+            // hrefs are relative to the package file, may contain ../ and are URL encoded
+            val entry = resolvePath(if (base.isEmpty()) "" else "$base/", android.net.Uri.decode(href.substringBefore('#')))
+            val ze = zip.getEntry(entry) ?: continue
+            if (ze.size > 8L * 1024 * 1024 || out.size >= 20000) continue
+            val html = zip.getInputStream(ze).bufferedReader().use { it.readText() }
+            val text = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT).toString().replace("\uFFFC", "").trim()
             text.split(Regex("\n{2,}")).map { it.trim() }.filter { it.isNotEmpty() }.forEach { out += DocBlock.Paragraph(it) }
         }
         out

@@ -79,7 +79,7 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
     val context = LocalContext.current
     val backStack = LocalBackStack.current
     var filter by remember { mutableStateOf(RecentsFilter.All) }
-    var cabCall by remember { mutableStateOf<CallLogEntry?>(null) }
+    var cabCall by remember { mutableStateOf<GroupedRecent?>(null) }
     var pendingCall by remember { mutableStateOf<String?>(null) }
     val tapToCall by viewModel.tapToCall.collectAsStateWithLifecycle()
     val confirmBeforeCall by viewModel.confirmBeforeCall.collectAsStateWithLifecycle()
@@ -137,7 +137,7 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
             modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
             horizontalArrangement = Arrangement.End,
         ) {
-            IconButton(onClick = { viewModel.export(context) }) {
+            IconButton(onClick = { viewModel.export(context, filtered) }) {
                 Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.hc_export))
             }
         }
@@ -210,7 +210,7 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
                 message = if (isDefaultDialer) {
                     stringResource(R.string.recents_empty_msg)
                 } else {
-                    "Call history stays empty until Telos is the default Phone app, or until call-log permission is granted."
+                    stringResource(R.string.au_phonea_history_empty_hint)
                 },
             )
         } else {
@@ -236,11 +236,11 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
                             }
                         },
                         onSms = { context.tryStartActivity(MessengerIntentUtils.sms(group.call.phoneNumber)) },
-                        onDelete = { viewModel.delete(group.call) },
+                        onDelete = { group.calls.forEach { viewModel.delete(it) } },
                         onDetails = {
                             backStack.add(ContactDetailsRoute(phoneNumber = group.call.phoneNumber))
                         },
-                        onLongPress = { cabCall = group.call },
+                        onLongPress = { cabCall = group },
                     )
                 }
             }
@@ -261,9 +261,10 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
                 },
             )
         }
-        cabCall?.let { selected ->
+        cabCall?.let { selectedGroup ->
+            val selected = selectedGroup.call
             CommsCabSheet(
-                title = selected.displayName ?: selected.phoneNumber,
+                title = selected.displayName?.ifBlank { null } ?: selected.phoneNumber,
                 actions = listOf(
                     CommsCabAction(R.drawable.rd_ic_phone_green_vector, stringResource(R.string.search_action_call)) {
                         viewModel.dial(context, selected.phoneNumber)
@@ -275,7 +276,7 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
                         backStack.add(ContactDetailsRoute(phoneNumber = selected.phoneNumber))
                     },
                     CommsCabAction(R.drawable.delete_24px, stringResource(R.string.comms_clear_history_confirm), destructive = true) {
-                        viewModel.delete(selected)
+                        selectedGroup.calls.forEach { viewModel.delete(it) }
                     },
                 ),
                 onDismiss = { cabCall = null },
@@ -299,14 +300,13 @@ internal fun RecentCallRow(
     onLongPress: () -> Unit = {},
 ) {
     val missed = call.type == CallType.Missed || call.type == CallType.Rejected
-    val nameColor = if (missed) RdRedCall else MaterialTheme.colorScheme.onSurface
+    val nameColor = if (missed) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
     val typeIcon = when (call.type) {
         CallType.Outgoing -> R.drawable.rd_ic_call_made_vector
         CallType.Missed, CallType.Rejected -> R.drawable.rd_ic_call_missed_vector
         else -> R.drawable.rd_ic_call_received_vector
     }
-    val typeTint = if (missed) RdRedCall else RdGreenCall
-
+    
     val dismissState = rememberSwipeToDismissBoxState(
         confirmValueChange = { value ->
             when (value) {
@@ -315,8 +315,10 @@ internal fun RecentCallRow(
                     false
                 }
                 SwipeToDismissBoxValue.EndToStart -> {
+                    // the row leaves the list when the call log changes; if deleting is not
+                    // allowed it springs back instead of staying dismissed
                     onDelete()
-                    true
+                    false
                 }
                 else -> false
             }
@@ -429,7 +431,7 @@ internal fun RecentCallRow(
                 maxLines = 1,
                 modifier = Modifier.padding(start = 8.dp),
             )
-            IconButton(onClick = onDetails, modifier = Modifier.padding(end = 8.dp).size(42.dp)) {
+            IconButton(onClick = onDetails, modifier = Modifier.padding(end = 4.dp)) {
                 Icon(
                     painterResource(R.drawable.info_24px),
                     contentDescription = stringResource(R.string.contact_details_title),
@@ -440,16 +442,16 @@ internal fun RecentCallRow(
     }
 }
 
-private data class GroupedRecent(val call: CallLogEntry, val count: Int)
+private data class GroupedRecent(val call: CallLogEntry, val count: Int, val calls: List<CallLogEntry>)
 
 private fun collapseRecents(recents: List<CallLogEntry>): List<GroupedRecent> {
     val out = mutableListOf<GroupedRecent>()
     for (call in recents) {
         val last = out.lastOrNull()
         if (last != null && PhoneNumbers.match(last.call.phoneNumber, call.phoneNumber)) {
-            out[out.lastIndex] = last.copy(count = last.count + 1)
+            out[out.lastIndex] = last.copy(count = last.count + 1, calls = last.calls + call)
         } else {
-            out += GroupedRecent(call, 1)
+            out += GroupedRecent(call, 1, listOf(call))
         }
     }
     return out

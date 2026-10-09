@@ -28,5 +28,4 @@
     <string name="au_phonea_blocked">Blocked</string>
     <string name="au_phonea_action_failed">Couldn\'t save the change. Check the contacts permission.</string>
     <string name="au_phonea_qr_too_large">This contact has too much data for a QR code.</string>
-    <string name="au_phonea_loading">Loading</string>
 </resources>

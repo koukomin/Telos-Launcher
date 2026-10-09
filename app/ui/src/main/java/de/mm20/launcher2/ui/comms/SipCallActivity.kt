@@ -3,16 +3,19 @@ package de.mm20.launcher2.ui.comms
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,6 +40,7 @@ class SipCallActivity : BaseActivity() {
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
                 WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
         )
+        enableEdgeToEdge()
         setContent {
             ProvideCompositionLocals {
                 LauncherTheme {
@@ -59,28 +63,31 @@ class SipCallActivity : BaseActivity() {
 private fun SipCallScreen(call: de.mm20.launcher2.comms.sip.SipCall) {
     val context = LocalContext.current
     val audio = remember { SipAudio(context) }
-    var muted by remember { mutableStateOf(false) }
-    var speaker by remember { mutableStateOf(false) }
-    var keypad by remember { mutableStateOf(false) }
+    // survive a rotation of the screen
+    var muted by rememberSaveable { mutableStateOf(false) }
+    var speaker by rememberSaveable { mutableStateOf(false) }
+    var keypad by rememberSaveable { mutableStateOf(false) }
     var seconds by remember { mutableIntStateOf(0) }
 
     val number = SipUri.user(call.peer)
     val name = remember(number) { SipUri.displayName(context, number) }
 
-    LaunchedEffect(call.state) {
-        seconds = 0
+    // counted from the moment the call was answered, so it does not restart when the screen is recreated
+    LaunchedEffect(call.state, call.establishedAt) {
         while (call.state == SipCallState.Established) {
-            delay(1000)
-            seconds++
+            seconds = if (call.establishedAt > 0) {
+                ((System.currentTimeMillis() - call.establishedAt) / 1000).toInt().coerceAtLeast(0)
+            } else 0
+            delay(500)
         }
     }
 
     val status = when (call.state) {
-        SipCallState.Incoming -> "Incoming SIP call"
-        SipCallState.Outgoing -> "Calling…"
-        SipCallState.Ringing -> "Ringing…"
+        SipCallState.Incoming -> stringResource(R.string.au_phoneb_sip_incoming)
+        SipCallState.Outgoing -> stringResource(R.string.comms_calling)
+        SipCallState.Ringing -> stringResource(R.string.au_phoneb_ringing)
         SipCallState.Established -> "%d:%02d".format(seconds / 60, seconds % 60)
-        SipCallState.None -> "Call ended"
+        SipCallState.None -> stringResource(R.string.au_phoneb_call_ended)
     }
 
     Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface) {
@@ -122,25 +129,29 @@ private fun SipCallScreen(call: de.mm20.launcher2.comms.sip.SipCall) {
 
             if (call.state == SipCallState.Established) {
                 Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
-                    ToggleButton(R.drawable.mic_off_24px, "Mute", muted) {
+                    ToggleButton(R.drawable.mic_off_24px, stringResource(R.string.comms_mute), muted) {
                         muted = !muted
                         SipEngine.setMuted(muted)
                     }
-                    ToggleButton(R.drawable.volume_up_24px, "Speaker", speaker) {
+                    ToggleButton(R.drawable.volume_up_24px, stringResource(R.string.comms_speaker), speaker) {
                         speaker = !speaker
                         audio.setSpeaker(speaker)
                     }
-                    ToggleButton(R.drawable.dialpad_24px, "Keypad", keypad) { keypad = !keypad }
+                    ToggleButton(R.drawable.dialpad_24px, stringResource(R.string.comms_keypad), keypad) { keypad = !keypad }
                 }
                 Spacer(Modifier.height(32.dp))
             }
 
             Row(horizontalArrangement = Arrangement.spacedBy(64.dp), verticalAlignment = Alignment.CenterVertically) {
-                RoundCallButton(Color(0xFFD32F2F), R.drawable.rd_ic_phone_down_red_vector, "Hang up") {
+                RoundCallButton(
+                    RdRedCall,
+                    R.drawable.rd_ic_phone_down_red_vector,
+                    stringResource(if (call.state == SipCallState.Incoming) R.string.comms_reject else R.string.comms_hangup),
+                ) {
                     SipEngine.hangUp()
                 }
                 if (call.state == SipCallState.Incoming) {
-                    RoundCallButton(RdCallGreen, R.drawable.rd_ic_phone_green_vector, "Answer") {
+                    RoundCallButton(RdCallGreen, R.drawable.rd_ic_phone_green_vector, stringResource(R.string.comms_answer)) {
                         SipEngine.answer()
                     }
                 }

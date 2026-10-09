@@ -7,6 +7,8 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.gestures.draggable
 import android.Manifest
+import android.widget.Toast
+import androidx.compose.foundation.layout.systemBarsPadding
 import android.content.pm.PackageManager
 import android.provider.ContactsContract
 import androidx.core.content.ContextCompat
@@ -70,7 +72,7 @@ fun CallScreen(onFinished: () -> Unit) {
     val commsSettings: CommsSettings = koinInject()
     val autoRecord by commsSettings.autoRecordCalls.collectAsStateWithLifecycle(false)
     val qualityKey by commsSettings.recordingQuality.collectAsStateWithLifecycle("BALANCED")
-    val rejectSms by commsSettings.rejectSmsTemplate.collectAsStateWithLifecycle("I'll call you back")
+    val rejectSms by commsSettings.rejectSmsTemplate.collectAsStateWithLifecycle("")
     val notesEnabled by commsSettings.inCallNotes.collectAsStateWithLifecycle(true)
     val notesMap by commsSettings.callerNotes.collectAsStateWithLifecycle(emptyMap())
     val context = LocalContext.current
@@ -116,7 +118,7 @@ fun CallScreen(onFinished: () -> Unit) {
             onFinished()
         }
     }
-    LaunchedEffect(state.connectedAtEpochMs) {
+    LaunchedEffect(state.connectedAtEpochMs, state.active) {
         while (true) {
             val current = TelosCallSession.ui.value
             if (!current.active || current.connectedAtEpochMs == null) {
@@ -133,8 +135,10 @@ fun CallScreen(onFinished: () -> Unit) {
     val maskHidden by commsSettings.maskHiddenIncoming.collectAsStateWithLifecycle(true)
     val hiddenIncoming = state.incoming && maskHidden &&
         de.mm20.launcher2.comms.privacy.HiddenContacts.matches(state.number, hiddenMap)
-    val displayName = if (hiddenIncoming) "Private"
-    else state.name ?: state.number.ifEmpty { "Unknown" }
+    val privateLabel = stringResource(R.string.au_phoneb_private_caller)
+    val unknownLabel = stringResource(R.string.widget_name_unknown)
+    val displayName = if (hiddenIncoming) privateLabel
+    else state.name ?: state.number.ifEmpty { unknownLabel }
     val status = when {
         state.incoming -> stringResource(R.string.comms_incoming_call)
         state.connecting -> stringResource(R.string.comms_calling)
@@ -155,6 +159,7 @@ fun CallScreen(onFinished: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .systemBarsPadding()
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -185,91 +190,137 @@ fun CallScreen(onFinished: () -> Unit) {
 
         if (showKeypad && !state.incoming) {
             InCallKeypad(onDigit = { TelosCallSession.playDtmf(it) })
-            Spacer(Modifier.height(16.dp))
+            // the controls are hidden while the keypad is open: this is the way back to them
+            TextButton(onClick = { showKeypad = false }) { Text(stringResource(R.string.hc_close)) }
+            Spacer(Modifier.height(8.dp))
         } else if (!state.incoming) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-            ) {
-                CallControl(
-                    icon = if (state.muted) R.drawable.rd_ic_microphone_off_vector else R.drawable.mic_24px,
-                    label = stringResource(R.string.comms_mute),
-                    selected = state.muted,
-                    onClick = { TelosCallSession.toggleMute() },
+            val muteLabel = stringResource(R.string.comms_mute)
+            val keypadLabel = stringResource(R.string.comms_keypad)
+            val speakerLabel = stringResource(R.string.comms_speaker)
+            val bluetoothLabel = stringResource(R.string.au_phoneb_bluetooth)
+            val holdLabel = stringResource(R.string.comms_hold)
+            val recordLabel = stringResource(
+                if (recording) R.string.au_phoneb_recording_short else R.string.au_phoneb_record
+            )
+            val addLabel = stringResource(R.string.comms_add_call)
+            val mergeLabel = stringResource(R.string.comms_merge)
+            val swapLabel = stringResource(R.string.comms_swap)
+            val noteLabel = stringResource(R.string.hc_note)
+            val micNeeded = stringResource(R.string.au_phoneb_mic_needed)
+            val recordFailed = stringResource(R.string.au_phoneb_record_failed)
+            val controls = buildList {
+                add(
+                    CallControlSpec(
+                        icon = if (state.muted) R.drawable.rd_ic_microphone_off_vector else R.drawable.mic_24px,
+                        label = muteLabel,
+                        selected = state.muted,
+                        onClick = { TelosCallSession.toggleMute() },
+                    )
                 )
-                CallControl(
-                    icon = R.drawable.dialpad_24px,
-                    label = stringResource(R.string.comms_keypad),
-                    selected = showKeypad,
-                    onClick = { showKeypad = !showKeypad },
+                add(
+                    CallControlSpec(
+                        icon = R.drawable.dialpad_24px,
+                        label = keypadLabel,
+                        selected = showKeypad,
+                        onClick = { showKeypad = !showKeypad },
+                    )
                 )
-                CallControl(
-                    icon = if (state.speaker) R.drawable.volume_up_24px else R.drawable.volume_off_24px,
-                    label = stringResource(R.string.comms_speaker),
-                    selected = state.speaker,
-                    onClick = { TelosCallSession.toggleSpeaker() },
+                add(
+                    CallControlSpec(
+                        icon = if (state.speaker) R.drawable.volume_up_24px else R.drawable.volume_off_24px,
+                        label = speakerLabel,
+                        selected = state.speaker,
+                        onClick = { TelosCallSession.toggleSpeaker() },
+                    )
                 )
-                CallControl(
-                    icon = R.drawable.rd_ic_bluetooth_audio_vector,
-                    label = "BT",
-                    selected = state.bluetooth,
-                    onClick = { TelosCallSession.cycleAudioRoute() },
+                add(
+                    CallControlSpec(
+                        icon = R.drawable.rd_ic_bluetooth_audio_vector,
+                        label = bluetoothLabel,
+                        selected = state.bluetooth,
+                        onClick = { TelosCallSession.cycleAudioRoute() },
+                    )
                 )
-                CallControl(
-                    icon = R.drawable.rd_ic_pause_vector,
-                    label = stringResource(R.string.comms_hold),
-                    selected = state.onHold,
-                    onClick = { TelosCallSession.toggleHold() },
+                add(
+                    CallControlSpec(
+                        icon = R.drawable.rd_ic_pause_vector,
+                        label = holdLabel,
+                        selected = state.onHold,
+                        onClick = { TelosCallSession.toggleHold() },
+                    )
                 )
-                CallControl(
-                    icon = if (recording) R.drawable.mic_24px else R.drawable.mic_off_24px,
-                    label = if (recording) "REC" else "Record",
-                    selected = recording,
-                    onClick = {
-                        val hasMic = ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) ==
-                            PackageManager.PERMISSION_GRANTED
-                        if (!hasMic) return@CallControl
-                        recordScope.launch {
-                            if (recording) RecordingCoordinator.stop()
-                            else RecordingCoordinator.start(
-                                context,
-                                state.number,
-                                RecordingQuality.fromKey(qualityKey),
-                            )
-                        }
-                    },
+                add(
+                    CallControlSpec(
+                        icon = if (recording) R.drawable.mic_24px else R.drawable.mic_off_24px,
+                        label = recordLabel,
+                        selected = recording,
+                        onClick = {
+                            val hasMic = ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) ==
+                                PackageManager.PERMISSION_GRANTED
+                            if (!hasMic) {
+                                Toast.makeText(context, micNeeded, Toast.LENGTH_SHORT).show()
+                            } else {
+                                recordScope.launch {
+                                    if (recording) RecordingCoordinator.stop()
+                                    else if (!RecordingCoordinator.start(
+                                            context,
+                                            state.number,
+                                            RecordingQuality.fromKey(qualityKey),
+                                        )
+                                    ) {
+                                        Toast.makeText(context, recordFailed, Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            }
+                        },
+                    )
                 )
-            }
-            Spacer(Modifier.height(16.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-            ) {
-                CallControl(
-                    icon = R.drawable.rd_ic_add_call_vector,
-                    label = stringResource(R.string.comms_add_call),
-                    selected = false,
-                    onClick = { TelosCallSession.addCall(context) },
+                add(
+                    CallControlSpec(
+                        icon = R.drawable.rd_ic_add_call_vector,
+                        label = addLabel,
+                        selected = false,
+                        onClick = { TelosCallSession.addCall(context) },
+                    )
                 )
-                CallControl(
-                    icon = R.drawable.rd_ic_call_merge_vector,
-                    label = stringResource(R.string.comms_merge),
-                    selected = state.canMerge,
-                    onClick = { TelosCallSession.merge() },
+                add(
+                    CallControlSpec(
+                        icon = R.drawable.rd_ic_call_merge_vector,
+                        label = mergeLabel,
+                        selected = state.canMerge,
+                        onClick = { TelosCallSession.merge() },
+                    )
                 )
-                CallControl(
-                    icon = R.drawable.rd_ic_call_swap_vector,
-                    label = stringResource(R.string.comms_swap),
-                    selected = state.canSwap,
-                    onClick = { TelosCallSession.swap() },
+                add(
+                    CallControlSpec(
+                        icon = R.drawable.rd_ic_call_swap_vector,
+                        label = swapLabel,
+                        selected = state.canSwap,
+                        onClick = { TelosCallSession.swap() },
+                    )
                 )
                 if (notesEnabled) {
-                    CallControl(
-                        icon = R.drawable.rd_ic_note,
-                        label = stringResource(R.string.hc_note),
-                        selected = showNotes,
-                        onClick = { showNotes = true },
+                    add(
+                        CallControlSpec(
+                            icon = R.drawable.rd_ic_note,
+                            label = noteLabel,
+                            selected = showNotes,
+                            onClick = { showNotes = true },
+                        )
                     )
+                }
+            }
+            // four per row: six 56 dp buttons in one row do not fit on a 360 dp wide screen
+            controls.chunked(4).forEach { rowItems ->
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                ) {
+                    rowItems.forEach { c ->
+                        Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                            CallControl(c.icon, c.label, c.selected, c.onClick)
+                        }
+                    }
+                    repeat(4 - rowItems.size) { Spacer(Modifier.weight(1f)) }
                 }
             }
             if (state.canSwap && state.secondNumber.isNotBlank()) {
@@ -317,12 +368,9 @@ fun CallScreen(onFinished: () -> Unit) {
             ) {
             var remindOpen by remember { mutableStateOf(false) }
             Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
-                Text(
-                    text = stringResource(R.string.hc_remind_me),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.clickable { remindOpen = true }.padding(8.dp),
-                )
+                TextButton(onClick = { remindOpen = true }) {
+                    Text(stringResource(R.string.hc_remind_me), style = MaterialTheme.typography.labelLarge)
+                }
             }
             if (remindOpen) {
                 AlertDialog(
@@ -348,18 +396,13 @@ fun CallScreen(onFinished: () -> Unit) {
                 )
             }
             if (rejectSms.isNotBlank()) {
-                Text(
-                    text = stringResource(R.string.hc_reject_sms),
-                    style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier
-                        .clickable {
-                            val number = state.number
-                            TelosCallSession.reject()
-                            de.mm20.launcher2.comms.sms.QuickSms.send(context, number, rejectSms)
-                        }
-                        .padding(8.dp),
-                )
+                TextButton(onClick = {
+                    val number = state.number
+                    TelosCallSession.reject()
+                    de.mm20.launcher2.comms.sms.QuickSms.send(context, number, rejectSms)
+                }) {
+                    Text(stringResource(R.string.hc_reject_sms), style = MaterialTheme.typography.labelLarge)
+                }
             }
             if (answerStyle == "swipe") {
                 SwipeAnswer(
@@ -416,6 +459,13 @@ fun CallScreen(onFinished: () -> Unit) {
     }
 }
 
+private class CallControlSpec(
+    val icon: Int,
+    val label: String,
+    val selected: Boolean,
+    val onClick: () -> Unit,
+)
+
 @Composable
 private fun CallControl(icon: Int, label: String, selected: Boolean, onClick: () -> Unit) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -451,13 +501,15 @@ private fun InCallKeypad(onDigit: (Char) -> Unit) {
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
                 row.forEach { key ->
-                    Text(
-                        text = key,
-                        style = MaterialTheme.typography.headlineSmall,
+                    Box(
                         modifier = Modifier
-                            .padding(12.dp)
+                            .size(64.dp)
+                            .clip(CircleShape)
                             .clickable { onDigit(key.first()) },
-                    )
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(text = key, style = MaterialTheme.typography.headlineSmall)
+                    }
                 }
             }
         }
@@ -480,7 +532,7 @@ private fun SwipeAnswer(onAnswer: () -> Unit, onReject: () -> Unit) {
             .fillMaxWidth(0.85f)
             .height(72.dp)
             .clip(CircleShape)
-            .background(Color.White.copy(alpha = 0.18f)),
+            .background(MaterialTheme.colorScheme.surfaceContainerHighest),
         contentAlignment = Alignment.Center,
     ) {
         val maxPx = with(density) { ((maxWidth - thumb) / 2).toPx() }
@@ -496,7 +548,7 @@ private fun SwipeAnswer(onAnswer: () -> Unit, onReject: () -> Unit) {
                 .offset { androidx.compose.ui.unit.IntOffset(offsetX.toInt(), 0) }
                 .size(thumb)
                 .clip(CircleShape)
-                .background(Color.White)
+                .background(MaterialTheme.colorScheme.onSurface)
                 .draggable(
                     orientation = androidx.compose.foundation.gestures.Orientation.Horizontal,
                     state = androidx.compose.foundation.gestures.rememberDraggableState { delta ->
