@@ -62,7 +62,7 @@ internal fun encodeQr(payload: String, size: Int): Bitmap? {
 /** Escapes the characters that have a meaning inside a vCard text value */
 private fun vcardText(value: String): String = value
     .replace("\\", "\\\\")
-    .replace(";", "\;")
+    .replace(";", "\\;")
     .replace(",", "\\,")
     .replace("\r\n", "\\n")
     .replace("\n", "\\n")
