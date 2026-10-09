@@ -95,7 +95,7 @@ internal object FileActions {
             }
             else -> {
                 val uri = uriFor(context, entry.path, rootMode) ?: run { toast("Cannot open this file"); return }
-                // documents open in Telos Photos
+                // documents open in Telos Viewer
                 if (de.mm20.launcher2.ui.media.docs.DocumentTypes.supports(entry.name)) {
                     context.startActivity(
                         Intent(context, de.mm20.launcher2.ui.media.docs.DocumentViewerActivity::class.java)

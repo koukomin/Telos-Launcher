@@ -59,7 +59,7 @@ from Telos Store.
 | **Telos Network** | VPN based firewall and DNS filter on the Rethink engine: DNS servers, firewall per app and connection type, blocklists with exceptions, WireGuard per app, logs. Off until you turn it on, early version | [Network](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/network/) |
 | **Telos Voice Recorder** | Voice recordings with search, pause and call recordings | [Voice Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/voice-recorder/) |
 | **Telos Calculator** | Standard and scientific calculator, VAT, unit and currency converter, history | [Calculator](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calculator/) |
-| **Telos Photos** | Gallery, EXIF tools, editor and a document viewer | [Photos](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
+| **Telos Viewer** | Gallery, EXIF tools, photo editor, document viewer and editor, PDF tools | [Viewer](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
 | **Telos Music** | Local library, lyrics, scrobbling, tag editor | [Music](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/music/) |
 | **Telos Video** | Library, player, web streams, torrents, subtitles, Trakt | [Video](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/video/) |
 | **Telos Radio** | Internet radio with station search and sleep timer | [Radio](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/radio/) |
@@ -70,14 +70,14 @@ from Telos Store.
 
 - **They look like normal apps.** Each has an icon in the app grid and shows up in search.
 - **They can be switched on and off.** In Telos Store "install" shows an app's icon and "remove" hides it. Telos Store itself cannot be removed.
-- **Switched-off apps cost nothing.** For Radio, Music, Video and Photos the services and screens are disabled, so they use no memory or CPU and are not offered in "Open with". Phone and Messages are never touched.
-- **They are guarded against crashes.** Radio, Music, Video and Photos are switched off automatically when they crash or hang twice within a day, with a notification that points to the Store. Installing the app again resets the counter. Phone and Messages are never switched off, because Android needs them.
+- **Switched-off apps cost nothing.** For Radio, Music, Video and Viewer the services and screens are disabled, so they use no memory or CPU and are not offered in "Open with". Phone and Messages are never touched.
+- **They are guarded against crashes.** Radio, Music, Video and Viewer are switched off automatically when they crash or hang twice within a day, with a notification that points to the Store. Installing the app again resets the counter. Phone and Messages are never switched off, because Android needs them.
 - **They appear in the share menu**, each under its own name and icon and only while installed:
 
 | Share target | Accepts |
 | --- | --- |
 | Telos Messages | text, pictures, videos, `sms:` links |
-| Telos Photos | pictures |
+| Telos Viewer | pictures |
 | Telos Video | videos, magnet links, torrent files |
 | Telos Store | `obtainium:` links |
 | Telos Phone | `tel:` links |
@@ -118,7 +118,7 @@ and custom names are matched; file contents, message texts and note bodies are n
 | Source | What it finds | Min. text | Online? | Default |
 | --- | --- | --- | --- | --- |
 | Apps | Installed apps of every profile (personal, work, private space) | 1 | No | On |
-| Telos apps | Phone, Messages, Radio, Music, Video, Photos, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder, Notes, Calendar, Downloads, Store, while switched on | 1 | No | On |
+| Telos apps | Phone, Messages, Radio, Music, Video, Viewer, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder, Notes, Calendar, Downloads, Store, while switched on | 1 | No | On |
 | Web apps | Web app shortcuts shown in the grid | 1 | No | On |
 | Activity by component name | One app entry for a typed `package/class` | 1 | No | On |
 | App shortcuts | Shortcuts that apps publish (needs Telos as default home app) | 3 | No | On |
@@ -542,7 +542,7 @@ Each app below is a virtual app. Full pages with troubleshooting tables are in t
 
 ### Search inside the Telos apps
 
-Every Telos app has the same modern search bar (a rounded field with a clear button and room for filters), and each search is limited to what the app is about: Phone searches contacts, call history or messages, Video only videos, Music songs, albums and artists, Radio stations, Photos pictures, Files the files of the folder you are in, Store apps, Network its apps, DNS providers, rules and logs, and so on. Matching understands Greek with and without accents and the final sigma, and Greeklish in both directions (`giorgos`, `yiorgos` and `Γιώργος` find each other). Phone numbers match without spaces or dashes. The matching is deliberately loose, so occasional extra results are possible.
+Every Telos app has the same modern search bar (a rounded field with a clear button and room for filters), and each search is limited to what the app is about: Phone searches contacts, call history or messages, Video only videos, Music songs, albums and artists, Radio stations, Viewer pictures and documents, Files the files of the folder you are in, Store apps, Network its apps, DNS providers, rules and logs, and so on. Matching understands Greek with and without accents and the final sigma, and Greeklish in both directions (`giorgos`, `yiorgos` and `Γιώργος` find each other). Phone numbers match without spaces or dashes. The matching is deliberately loose, so occasional extra results are possible.
 
 ### Telos Phone
 
@@ -657,7 +657,7 @@ A file manager for your phone, network storages and cloud storages. The layout f
 - Home page with storage overview (free space, SD cards and USB drives), quick access to Downloads, Camera, Pictures, Music, Movies and Documents, favorites, and saved connections
 - Breadcrumb path bar, storage drawer, list and adaptive grid view with picture thumbnails and type colors, sorting by name, date, size or type, folders first, hidden files toggle
 - Search in the current folder (recursive on local storage, up to 300 results)
-- Files open in the right app: pictures in Telos Photos, videos in Telos Video, PDF, text, code and RTF in the Photos document viewer, everything else through Android's chooser
+- Files open in the right app: pictures in Telos Viewer, videos in Telos Video, PDF, text, code and RTF in the Telos Viewer document viewer, everything else through Android's chooser
 
 **File operations**
 
@@ -797,7 +797,7 @@ A voice recorder with a list, search and a service that keeps recording with the
 
 **Status and limitations:** recordings are in the private storage of Telos and not encrypted (call recordings are), no AI assistant, transcription, markers, trimming or WAV.
 
-### Telos Photos
+### Telos Viewer
 
 A photo gallery, a metadata (EXIF) tool, a simple photo editor and a document viewer in one app. No cloud, no account and no network features of its own. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/).
 
@@ -941,7 +941,7 @@ An app installer and updater that works like [Obtainium](https://github.com/Imra
 
 **Managing the Telos apps**
 
-- The Telos apps (Phone, Messages, Radio, Music, Video, Photos, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder) are listed with what each one does; "installing" one shows its icon in the app grid and in search, "removing" hides it. Telos Store itself cannot be removed.
+- The Telos apps (Phone, Messages, Radio, Music, Video, Viewer, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder) are listed with what each one does; "installing" one shows its icon in the app grid and in search, "removing" hides it. Telos Store itself cannot be removed.
 - Crash guard: an app that crashes (or hangs) twice within a day is switched off automatically, with a notification pointing to the Store; "installing" it again resets the counter.
 
 **Status and limitations:** Only the listed sources: APKMirror, Uptodown, Aptoide, APKPure, the Play Store, Huawei, Tencent, RuStore and Telegram entries are skipped when importing. Split APKs and apps that need a login are not supported, direct APK links have no version check, and silent installs need Shizuku or root. Installing APKs from outside an app store means you trust the source.

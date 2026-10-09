@@ -85,9 +85,9 @@ object TelosApps {
         ),
         TelosApp(
             key = "telos_photos_app://photos",
-            name = "Telos Photos",
-            description = "A gallery and photo editor with a privacy focus.",
-            features = listOf("Albums and a date timeline", "EXIF viewer, editor and remover", "Share without metadata", "Crop, rotate, filters"),
+            name = "Telos Viewer",
+            description = "A gallery, photo editor and viewer for documents: PDF, Office and OpenDocument files, with a privacy focus.",
+            features = listOf("Albums and a date timeline", "EXIF viewer, editor and remover", "Crop, rotate, filters", "PDF, Word, Excel and PowerPoint viewing and editing", "20 PDF tools"),
             iconRes = de.mm20.launcher2.base.R.drawable.ic_glyph_photos,
             route = SettingsDeepLinkContract.ROUTE_PHOTOS,
         ),

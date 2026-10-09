@@ -1,6 +1,6 @@
 # PDF tools
 
-Telos Photos contains a set of 20 PDF tools. They run **entirely on your device**: no upload, no account, no
+Telos Viewer contains a set of 20 PDF tools. They run **entirely on your device**: no upload, no account, no
 network. The feature set and the tool logic are adapted from
 [PaperKnife+](https://github.com/potatameister/PaperKnifePlus) (GPL-3.0-or-later). PDF processing uses
 [PdfBox-Android](https://github.com/TomRoush/PdfBox-Android) (Apache-2.0).
@@ -10,7 +10,7 @@ network. The feature set and the tool logic are adapted from
 | From | What happens |
 | --- | --- |
 | The **PDF tools** button in the [document viewer](./documents) | The tools open with the PDF you are looking at |
-| The Telos Photos start screen | The tool list opens empty; add files first |
+| The Telos Viewer start screen | The tool list opens empty; add files first |
 
 Add one or more PDFs with **Add PDF** (or pictures with **Add images**). The list shows the page count and size of
 each file. A file that cannot be parsed is marked as damaged and only the **Repair** tool accepts it. A

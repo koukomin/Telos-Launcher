@@ -103,7 +103,7 @@ import java.io.File
 private const val TEXT_EDIT_LIMIT = 2 * 1024 * 1024
 
 /**
- * Telos Photos as a viewer for documents: PDF pages (with search and page jump), text files (that can be edited), and
+ * Telos Viewer as a viewer for documents: PDF pages (with search and page jump), text files (that can be edited), and
  * Word, Excel, PowerPoint and OpenDocument files (preview and editing, old binary formats read-only or converted).
  * The page layout and fonts of Office files are not reproduced.
  */

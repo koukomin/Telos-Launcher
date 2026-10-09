@@ -329,7 +329,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
         )
         val GUARDED_NAMES = mapOf(
             "telos_radio_app://radio" to "Telos Radio", "telos_music_app://music" to "Telos Music",
-            "telos_video_app://video" to "Telos Video", "telos_photos_app://photos" to "Telos Photos",
+            "telos_video_app://video" to "Telos Video", "telos_photos_app://photos" to "Telos Viewer",
             "telos_downloads_app://downloads" to "Telos Downloads",
         )
     }

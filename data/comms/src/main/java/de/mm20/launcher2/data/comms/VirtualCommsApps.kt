@@ -289,7 +289,7 @@ internal class VirtualVideoApp(context: Context) : Application {
 internal class VirtualPhotosApp(context: Context) : Application {
 
     override val key: String = "$Domain://photos"
-    override val label: String = "Telos Photos"
+    override val label: String = "Telos Viewer"
     override val labelOverride: String? = null
     override val domain: String = Domain
     override val score: ResultScore = ResultScore.Unspecified

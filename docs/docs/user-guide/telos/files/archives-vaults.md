@@ -40,7 +40,7 @@ path contains `..` are ignored, so an archive can never reach outside itself.
 
 ::: tip Documents inside the archive dialog
 A `docx`, `xlsx`, `pptx`, `odt`, `ods` or `epub` file asks the archive question first. Pick **Open with...** and
-choose Telos Photos to read it as a document, see [Photos documents](../photos/documents).
+choose Telos Viewer to read it as a document, see [Photos documents](../photos/documents).
 :::
 
 ### Zip and extract

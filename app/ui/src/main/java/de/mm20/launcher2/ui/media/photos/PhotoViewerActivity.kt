@@ -61,7 +61,7 @@ class PhotoViewerActivity : BaseActivity() {
         @Suppress("DEPRECATION")
         val uris = intent.getStringArrayListExtra(EXTRA_URIS)?.map { Uri.parse(it) }
             ?: intent.data?.let { listOf(it) }
-            // a picture shared to Telos Photos
+            // a picture shared to Telos Viewer
             ?: intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)?.let { listOf(it) }
         if (uris.isNullOrEmpty()) {
             finish()
