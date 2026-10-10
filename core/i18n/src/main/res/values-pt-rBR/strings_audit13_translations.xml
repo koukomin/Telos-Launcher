@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Canais gregos adicionais</string>
+    <string name="au13_tvextra_playlists_summary">Adiciona streams e canais das listas públicas Free-TV e greektvm3u, carregadas do GitHub neste dispositivo quando você abre a TV. Só é usado quando a Grécia está selecionada. Se não for possível carregá-las, nada é exibido.</string>
+    <string name="au13_tvextra_epg_title">Guia de programação</string>
+    <string name="au13_tvextra_epg_summary">Mostra o que está passando agora e em seguida nos canais gregos (guia XMLTV de ext.greektv.app ou epgshare01.online, atualizado no máximo a cada 6 horas). Só é usado quando a Grécia está selecionada.</string>
+    <string name="au13_tvextra_marker">Extra</string>
+    <string name="au13_tvextra_marker_description">Este canal vem de uma fonte adicional opcional e pode ser menos confiável</string>
+    <string name="au13_tvextraui_disclaimer_extra">Para os canais gregos, o Telos TV também pode usar fontes adicionais opcionais: listas públicas (raw.githubusercontent.com) e um guia de programação (ext.greektv.app, epgshare01.online). Elas só são contatadas quando a Grécia está selecionada e a chave correspondente está ativada, e apenas enquanto a TV está aberta. Você pode desativá-las na lista de países.</string>
+    <string name="au13_tvextraui_now_line">Agora: %1$s</string>
+    <string name="au13_tvextraui_player_now">Agora: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Em seguida: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Este canal está temporariamente offline</string>
+    <string name="au13_tvextraui_offline_hint">Tentamos todos os streams disponíveis e procuramos uma lista atualizada. Tente novamente mais tarde.</string>
+    <string name="au13_tvextraui_offline_back">Voltar</string>
+    <string name="au13_tvextraui_static_description">Chuvisco de TV: sem sinal</string>
+</resources>

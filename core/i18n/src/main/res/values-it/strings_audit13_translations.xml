@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Canali greci aggiuntivi</string>
+    <string name="au13_tvextra_playlists_summary">Aggiunge stream e canali dalle playlist pubbliche Free-TV e greektvm3u, caricate da GitHub su questo dispositivo quando apri TV. Usato solo quando è selezionata la Grecia. Se non è possibile caricarle, non viene mostrato nulla.</string>
+    <string name="au13_tvextra_epg_title">Guida ai programmi</string>
+    <string name="au13_tvextra_epg_summary">Mostra cosa è in onda ora e dopo per i canali greci (guida XMLTV da ext.greektv.app o epgshare01.online, aggiornata al massimo ogni 6 ore). Usato solo quando è selezionata la Grecia.</string>
+    <string name="au13_tvextra_marker">Extra</string>
+    <string name="au13_tvextra_marker_description">Questo canale proviene da una fonte aggiuntiva facoltativa e potrebbe essere meno affidabile</string>
+    <string name="au13_tvextraui_disclaimer_extra">Per i canali greci Telos TV può usare anche fonti aggiuntive facoltative: playlist pubbliche (raw.githubusercontent.com) e una guida ai programmi (ext.greektv.app, epgshare01.online). Vengono contattate solo quando è selezionata la Grecia e l\'interruttore corrispondente è attivo, e solo mentre TV è aperta. Puoi disattivarle nell\'elenco dei paesi.</string>
+    <string name="au13_tvextraui_now_line">Ora: %1$s</string>
+    <string name="au13_tvextraui_player_now">Ora: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Dopo: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Questo canale è temporaneamente offline</string>
+    <string name="au13_tvextraui_offline_hint">Abbiamo provato tutti gli stream disponibili e cercato una lista aggiornata. Riprova più tardi.</string>
+    <string name="au13_tvextraui_offline_back">Indietro</string>
+    <string name="au13_tvextraui_static_description">Neve TV: nessun segnale</string>
+</resources>

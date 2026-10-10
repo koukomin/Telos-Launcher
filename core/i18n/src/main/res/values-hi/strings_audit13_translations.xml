@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">अतिरिक्त ग्रीक चैनल</string>
+    <string name="au13_tvextra_playlists_summary">सार्वजनिक प्लेलिस्ट Free-TV और greektvm3u से स्ट्रीम और चैनल जोड़ता है, जो TV खोलने पर GitHub से इस डिवाइस पर लोड होते हैं। केवल तब उपयोग होता है जब ग्रीस चुना गया हो। लोड न हो पाने पर कुछ नहीं दिखाया जाता।</string>
+    <string name="au13_tvextra_epg_title">कार्यक्रम गाइड</string>
+    <string name="au13_tvextra_epg_summary">ग्रीक चैनलों पर अभी और आगे क्या आ रहा है, यह दिखाता है (ext.greektv.app या epgshare01.online से XMLTV गाइड, अधिकतम हर 6 घंटे में रीफ़्रेश)। केवल तब उपयोग होता है जब ग्रीस चुना गया हो।</string>
+    <string name="au13_tvextra_marker">अतिरिक्त</string>
+    <string name="au13_tvextra_marker_description">यह चैनल एक वैकल्पिक अतिरिक्त स्रोत से आता है और कम भरोसेमंद हो सकता है</string>
+    <string name="au13_tvextraui_disclaimer_extra">ग्रीक चैनलों के लिए Telos TV वैकल्पिक अतिरिक्त स्रोत भी उपयोग कर सकता है: सार्वजनिक प्लेलिस्ट (raw.githubusercontent.com) और कार्यक्रम गाइड (ext.greektv.app, epgshare01.online)। इनसे केवल तभी संपर्क किया जाता है जब ग्रीस चुना गया हो और संबंधित स्विच चालू हो, और केवल तब तक जब TV खुला हो। आप इन्हें देशों की सूची में बंद कर सकते हैं।</string>
+    <string name="au13_tvextraui_now_line">अभी: %1$s</string>
+    <string name="au13_tvextraui_player_now">अभी: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">आगे: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">यह चैनल अस्थायी रूप से ऑफ़लाइन है</string>
+    <string name="au13_tvextraui_offline_hint">हमने सभी उपलब्ध स्ट्रीम आज़माईं और अपडेट की गई सूची की जाँच की। कृपया बाद में पुनः प्रयास करें।</string>
+    <string name="au13_tvextraui_offline_back">वापस</string>
+    <string name="au13_tvextraui_static_description">टीवी स्नो: कोई सिग्नल नहीं</string>
+</resources>

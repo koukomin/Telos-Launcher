@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Dodatni grčki kanali</string>
+    <string name="au13_tvextra_playlists_summary">Dodaje streamove i kanale iz javnih popisa za reprodukciju Free-TV i greektvm3u, koji se pri otvaranju TV-a učitavaju s GitHuba na ovaj uređaj. Koristi se samo kada je odabrana Grčka. Ako se ne mogu učitati, ništa se ne prikazuje.</string>
+    <string name="au13_tvextra_epg_title">Programski vodič</string>
+    <string name="au13_tvextra_epg_summary">Prikazuje što se emitira sada i što slijedi na grčkim kanalima (XMLTV vodič s ext.greektv.app ili epgshare01.online, osvježava se najviše svakih 6 sati). Koristi se samo kada je odabrana Grčka.</string>
+    <string name="au13_tvextra_marker">Dodatno</string>
+    <string name="au13_tvextra_marker_description">Ovaj kanal dolazi iz neobveznog dodatnog izvora i može biti manje pouzdan</string>
+    <string name="au13_tvextraui_disclaimer_extra">Za grčke kanale Telos TV može koristiti i neobvezne dodatne izvore: javne popise za reprodukciju (raw.githubusercontent.com) i programski vodič (ext.greektv.app, epgshare01.online). Kontaktiraju se samo kada je odabrana Grčka i odgovarajući prekidač je uključen, te samo dok je TV otvoren. Možete ih isključiti u popisu zemalja.</string>
+    <string name="au13_tvextraui_now_line">Sada: %1$s</string>
+    <string name="au13_tvextraui_player_now">Sada: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Sljedeće: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Ovaj kanal je privremeno izvan mreže</string>
+    <string name="au13_tvextraui_offline_hint">Isprobali smo sve dostupne streamove i provjerili postoji li ažuriran popis. Pokušajte ponovno kasnije.</string>
+    <string name="au13_tvextraui_offline_back">Natrag</string>
+    <string name="au13_tvextraui_static_description">TV šum: nema signala</string>
+</resources>

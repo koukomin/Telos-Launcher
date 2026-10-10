@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Επιπλέον ελληνικά κανάλια</string>
+    <string name="au13_tvextra_playlists_summary">Προσθέτει ροές και κανάλια από τις δημόσιες λίστες Free-TV και greektvm3u, που φορτώνονται από το GitHub σε αυτή τη συσκευή όταν ανοίγετε την τηλεόραση. Χρησιμοποιείται μόνο όταν είναι επιλεγμένη η Ελλάδα. Αν δεν είναι δυνατή η φόρτωση, δεν εμφανίζεται τίποτα.</string>
+    <string name="au13_tvextra_epg_title">Πρόγραμμα</string>
+    <string name="au13_tvextra_epg_summary">Εμφανίζει τι παίζει τώρα και στη συνέχεια στα ελληνικά κανάλια (οδηγός XMLTV από ext.greektv.app ή epgshare01.online, ανανέωση το πολύ κάθε 6 ώρες). Χρησιμοποιείται μόνο όταν είναι επιλεγμένη η Ελλάδα.</string>
+    <string name="au13_tvextra_marker">Επιπλέον</string>
+    <string name="au13_tvextra_marker_description">Αυτό το κανάλι προέρχεται από μια προαιρετική επιπλέον πηγή και ενδέχεται να είναι λιγότερο αξιόπιστο</string>
+    <string name="au13_tvextraui_disclaimer_extra">Για τα ελληνικά κανάλια, το Telos TV μπορεί να χρησιμοποιήσει και προαιρετικές επιπλέον πηγές: δημόσιες λίστες (raw.githubusercontent.com) και πρόγραμμα (ext.greektv.app, epgshare01.online). Η επικοινωνία γίνεται μόνο όταν είναι επιλεγμένη η Ελλάδα και ο αντίστοιχος διακόπτης είναι ενεργός, και μόνο όσο η τηλεόραση είναι ανοιχτή. Μπορείτε να τις απενεργοποιήσετε στη λίστα χωρών.</string>
+    <string name="au13_tvextraui_now_line">Τώρα: %1$s</string>
+    <string name="au13_tvextraui_player_now">Τώρα: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Στη συνέχεια: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Αυτό το κανάλι είναι προσωρινά εκτός λειτουργίας</string>
+    <string name="au13_tvextraui_offline_hint">Δοκιμάσαμε όλες τις διαθέσιμες ροές και ελέγξαμε για ενημερωμένη λίστα. Δοκιμάστε ξανά αργότερα.</string>
+    <string name="au13_tvextraui_offline_back">Πίσω</string>
+    <string name="au13_tvextraui_static_description">Παράσιτα τηλεόρασης: κανένα σήμα</string>
+</resources>

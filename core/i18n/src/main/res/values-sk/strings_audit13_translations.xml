@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Ďalšie grécke kanály</string>
+    <string name="au13_tvextra_playlists_summary">Pridáva streamy a kanály z verejných playlistov Free-TV a greektvm3u, ktoré sa po otvorení TV načítajú z GitHubu do tohto zariadenia. Používa sa, len keď je vybrané Grécko. Ak sa ich nepodarí načítať, nezobrazí sa nič.</string>
+    <string name="au13_tvextra_epg_title">Programový sprievodca</string>
+    <string name="au13_tvextra_epg_summary">Zobrazuje, čo beží teraz a čo bude nasledovať na gréckych kanáloch (sprievodca XMLTV z ext.greektv.app alebo epgshare01.online, obnovovaný najviac každých 6 hodín). Používa sa, len keď je vybrané Grécko.</string>
+    <string name="au13_tvextra_marker">Navyše</string>
+    <string name="au13_tvextra_marker_description">Tento kanál pochádza z voliteľného doplnkového zdroja a môže byť menej spoľahlivý</string>
+    <string name="au13_tvextraui_disclaimer_extra">Pri gréckych kanáloch môže Telos TV používať aj voliteľné doplnkové zdroje: verejné playlisty (raw.githubusercontent.com) a programového sprievodcu (ext.greektv.app, epgshare01.online). Kontaktujú sa, len keď je vybrané Grécko a príslušný prepínač je zapnutý, a to iba pri otvorenej TV. Môžete ich vypnúť v zozname krajín.</string>
+    <string name="au13_tvextraui_now_line">Teraz: %1$s</string>
+    <string name="au13_tvextraui_player_now">Teraz: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Potom: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Tento kanál je dočasne offline</string>
+    <string name="au13_tvextraui_offline_hint">Vyskúšali sme všetky dostupné streamy a skontrolovali aktualizovaný zoznam. Skúste to znova neskôr.</string>
+    <string name="au13_tvextraui_offline_back">Späť</string>
+    <string name="au13_tvextraui_static_description">Šum TV: žiadny signál</string>
+</resources>

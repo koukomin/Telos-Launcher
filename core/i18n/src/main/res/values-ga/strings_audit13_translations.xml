@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Cainéil bhreise Ghréagacha</string>
+    <string name="au13_tvextra_playlists_summary">Cuireann sé sruthanna agus cainéil leis ó na seinmliostaí poiblí Free-TV agus greektvm3u, a luchtaítear ó GitHub ar an ngléas seo nuair a osclaíonn tú TV. Úsáidtear é nuair atá an Ghréig roghnaithe amháin. Ní thaispeántar aon rud mura féidir iad a luchtú.</string>
+    <string name="au13_tvextra_epg_title">Treoir chlár</string>
+    <string name="au13_tvextra_epg_summary">Taispeánann sé cad atá ar siúl anois agus ar ball ar chainéil Ghréagacha (treoir XMLTV ó ext.greektv.app nó epgshare01.online, athnuaite uair amháin gach 6 uair an chloig ar a mhéad). Úsáidtear é nuair atá an Ghréig roghnaithe amháin.</string>
+    <string name="au13_tvextra_marker">Breise</string>
+    <string name="au13_tvextra_marker_description">Tagann an cainéal seo ó fhoinse bhreise roghnach agus d\'fhéadfadh sé a bheith níos lú iontaofa</string>
+    <string name="au13_tvextraui_disclaimer_extra">Le haghaidh cainéil Ghréagacha, féadfaidh Telos TV foinsí breise roghnacha a úsáid freisin: seinmliostaí poiblí (raw.githubusercontent.com) agus treoir chlár (ext.greektv.app, epgshare01.online). Ní dhéantar teagmháil leo ach nuair atá an Ghréig roghnaithe agus an lasc comhfhreagrach air, agus ach amháin cé go bhfuil TV oscailte. Is féidir leat iad a mhúchadh sa liosta tíortha.</string>
+    <string name="au13_tvextraui_now_line">Anois: %1$s</string>
+    <string name="au13_tvextraui_player_now">Anois: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Ar ball: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Tá an cainéal seo as líne go sealadach</string>
+    <string name="au13_tvextraui_offline_hint">Rinneamar iarracht ar gach sruth atá ar fáil agus d\'fhéachamar le haghaidh liosta nuashonraithe. Bain triail eile as níos déanaí.</string>
+    <string name="au13_tvextraui_offline_back">Ar ais</string>
+    <string name="au13_tvextraui_static_description">Callóid theilifíse: gan comhartha</string>
+</resources>

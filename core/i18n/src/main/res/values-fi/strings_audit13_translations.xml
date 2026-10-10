@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Lisäkanavat Kreikasta</string>
+    <string name="au13_tvextra_playlists_summary">Lisää suoratoistoja ja kanavia julkisista Free-TV- ja greektvm3u-soittolistoista, jotka ladataan GitHubista tälle laitteelle, kun avaat TV:n. Käytössä vain, kun Kreikka on valittuna. Mitään ei näytetä, jos niitä ei voi ladata.</string>
+    <string name="au13_tvextra_epg_title">Ohjelmaopas</string>
+    <string name="au13_tvextra_epg_summary">Näyttää, mitä kreikkalaisilla kanavilla on nyt ja seuraavaksi (XMLTV-opas osoitteesta ext.greektv.app tai epgshare01.online, päivitetään enintään 6 tunnin välein). Käytössä vain, kun Kreikka on valittuna.</string>
+    <string name="au13_tvextra_marker">Lisä</string>
+    <string name="au13_tvextra_marker_description">Tämä kanava tulee valinnaisesta lisälähteestä, eikä se välttämättä ole yhtä luotettava</string>
+    <string name="au13_tvextraui_disclaimer_extra">Kreikkalaisille kanaville Telos TV voi käyttää myös valinnaisia lisälähteitä: julkisia soittolistoja (raw.githubusercontent.com) ja ohjelmaopasta (ext.greektv.app, epgshare01.online). Niihin otetaan yhteyttä vain, kun Kreikka on valittuna ja vastaava kytkin on päällä, ja vain TV:n ollessa auki. Voit poistaa ne käytöstä maaluettelossa.</string>
+    <string name="au13_tvextraui_now_line">Nyt: %1$s</string>
+    <string name="au13_tvextraui_player_now">Nyt: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Seuraavaksi: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Tämä kanava on tilapäisesti pois käytöstä</string>
+    <string name="au13_tvextraui_offline_hint">Kokeilimme kaikkia saatavilla olevia lähetyksiä ja tarkistimme päivitetyn luettelon. Yritä myöhemmin uudelleen.</string>
+    <string name="au13_tvextraui_offline_back">Takaisin</string>
+    <string name="au13_tvextraui_static_description">TV-kohina: ei signaalia</string>
+</resources>

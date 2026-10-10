@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Zusätzliche griechische Sender</string>
+    <string name="au13_tvextra_playlists_summary">Fügt Streams und Sender aus den öffentlichen Playlists Free-TV und greektvm3u hinzu, die beim Öffnen von TV auf diesem Gerät von GitHub geladen werden. Wird nur verwendet, wenn Griechenland ausgewählt ist. Können sie nicht geladen werden, wird nichts angezeigt.</string>
+    <string name="au13_tvextra_epg_title">Programmführer</string>
+    <string name="au13_tvextra_epg_summary">Zeigt für griechische Sender an, was gerade läuft und was als Nächstes kommt (XMLTV-Guide von ext.greektv.app oder epgshare01.online, höchstens alle 6 Stunden aktualisiert). Wird nur verwendet, wenn Griechenland ausgewählt ist.</string>
+    <string name="au13_tvextra_marker">Extra</string>
+    <string name="au13_tvextra_marker_description">Dieser Sender stammt aus einer optionalen Zusatzquelle und ist möglicherweise weniger zuverlässig</string>
+    <string name="au13_tvextraui_disclaimer_extra">Für griechische Sender kann Telos TV auch optionale Zusatzquellen nutzen: öffentliche Playlists (raw.githubusercontent.com) und einen Programmführer (ext.greektv.app, epgshare01.online). Sie werden nur kontaktiert, wenn Griechenland ausgewählt und der zugehörige Schalter aktiviert ist, und nur solange TV geöffnet ist. Du kannst sie in der Länderliste deaktivieren.</string>
+    <string name="au13_tvextraui_now_line">Jetzt: %1$s</string>
+    <string name="au13_tvextraui_player_now">Jetzt: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Als Nächstes: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Dieser Sender ist vorübergehend offline</string>
+    <string name="au13_tvextraui_offline_hint">Wir haben alle verfügbaren Streams ausprobiert und nach einer aktualisierten Liste gesucht. Versuche es später erneut.</string>
+    <string name="au13_tvextraui_offline_back">Zurück</string>
+    <string name="au13_tvextraui_static_description">Fernsehrauschen: kein Signal</string>
+</resources>

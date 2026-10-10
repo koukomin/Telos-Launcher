@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Допълнителни гръцки канали</string>
+    <string name="au13_tvextra_playlists_summary">Добавя потоци и канали от публичните плейлисти Free-TV и greektvm3u, които се зареждат от GitHub на това устройство при отваряне на ТВ. Използва се само когато е избрана Гърция. Ако не могат да се заредят, нищо не се показва.</string>
+    <string name="au13_tvextra_epg_title">Телевизионна програма</string>
+    <string name="au13_tvextra_epg_summary">Показва какво върви сега и след това по гръцките канали (XMLTV програма от ext.greektv.app или epgshare01.online, обновявана най-много на всеки 6 часа). Използва се само когато е избрана Гърция.</string>
+    <string name="au13_tvextra_marker">Допълн.</string>
+    <string name="au13_tvextra_marker_description">Този канал идва от по желание допълнителен източник и може да е по-малко надежден</string>
+    <string name="au13_tvextraui_disclaimer_extra">За гръцките канали Telos TV може да използва и по желание допълнителни източници: публични плейлисти (raw.githubusercontent.com) и телевизионна програма (ext.greektv.app, epgshare01.online). Връзка с тях се осъществява само когато е избрана Гърция и съответният превключвател е включен, и само докато ТВ е отворена. Можете да ги изключите в списъка с държави.</string>
+    <string name="au13_tvextraui_now_line">Сега: %1$s</string>
+    <string name="au13_tvextraui_player_now">Сега: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Следва: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Този канал временно е офлайн</string>
+    <string name="au13_tvextraui_offline_hint">Опитахме всички налични потоци и проверихме за обновен списък. Опитайте отново по-късно.</string>
+    <string name="au13_tvextraui_offline_back">Назад</string>
+    <string name="au13_tvextraui_static_description">Телевизионен шум: няма сигнал</string>
+</resources>

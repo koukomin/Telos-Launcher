@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">További görög csatornák</string>
+    <string name="au13_tvextra_playlists_summary">Adatfolyamokat és csatornákat ad hozzá a nyilvános Free-TV és greektvm3u lejátszási listákból, amelyeket a TV megnyitásakor tölt be a GitHubról erre az eszközre. Csak akkor használatos, ha Görögország van kiválasztva. Ha nem tölthetők be, semmi nem jelenik meg.</string>
+    <string name="au13_tvextra_epg_title">Műsorfüzet</string>
+    <string name="au13_tvextra_epg_summary">Megmutatja, mi megy most és mi következik a görög csatornákon (XMLTV-műsorfüzet az ext.greektv.app vagy az epgshare01.online oldalról, legfeljebb 6 óránként frissítve). Csak akkor használatos, ha Görögország van kiválasztva.</string>
+    <string name="au13_tvextra_marker">Extra</string>
+    <string name="au13_tvextra_marker_description">Ez a csatorna egy opcionális kiegészítő forrásból származik, és kevésbé lehet megbízható</string>
+    <string name="au13_tvextraui_disclaimer_extra">A görög csatornákhoz a Telos TV opcionális kiegészítő forrásokat is használhat: nyilvános lejátszási listákat (raw.githubusercontent.com) és műsorfüzetet (ext.greektv.app, epgshare01.online). Csak akkor kapcsolódik hozzájuk, ha Görögország van kiválasztva és a megfelelő kapcsoló be van kapcsolva, és csak amíg a TV meg van nyitva. Az országlistában kikapcsolhatod őket.</string>
+    <string name="au13_tvextraui_now_line">Most: %1$s</string>
+    <string name="au13_tvextraui_player_now">Most: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Következő: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Ez a csatorna átmenetileg offline</string>
+    <string name="au13_tvextraui_offline_hint">Kipróbáltuk az összes elérhető adatfolyamot, és ellenőriztük, van-e frissített lista. Próbáld újra később.</string>
+    <string name="au13_tvextraui_offline_back">Vissza</string>
+    <string name="au13_tvextraui_static_description">TV-zaj: nincs jel</string>
+</resources>

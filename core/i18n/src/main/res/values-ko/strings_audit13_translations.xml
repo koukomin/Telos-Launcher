@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">추가 그리스 채널</string>
+    <string name="au13_tvextra_playlists_summary">공개 재생목록 Free-TV 및 greektvm3u의 스트림과 채널을 추가합니다. TV를 열면 GitHub에서 이 기기로 불러옵니다. 그리스를 선택한 경우에만 사용됩니다. 불러올 수 없으면 아무것도 표시되지 않습니다.</string>
+    <string name="au13_tvextra_epg_title">프로그램 가이드</string>
+    <string name="au13_tvextra_epg_summary">그리스 채널의 현재 방송과 다음 방송을 표시합니다(ext.greektv.app 또는 epgshare01.online의 XMLTV 가이드, 최대 6시간마다 새로고침). 그리스를 선택한 경우에만 사용됩니다.</string>
+    <string name="au13_tvextra_marker">추가</string>
+    <string name="au13_tvextra_marker_description">이 채널은 선택적 추가 소스에서 제공되며 안정성이 낮을 수 있습니다</string>
+    <string name="au13_tvextraui_disclaimer_extra">그리스 채널의 경우 Telos TV는 선택적 추가 소스도 사용할 수 있습니다: 공개 재생목록(raw.githubusercontent.com)과 프로그램 가이드(ext.greektv.app, epgshare01.online). 그리스를 선택하고 해당 스위치가 켜져 있으며 TV가 열려 있는 동안에만 연결합니다. 국가 목록에서 끌 수 있습니다.</string>
+    <string name="au13_tvextraui_now_line">지금: %1$s</string>
+    <string name="au13_tvextraui_player_now">지금: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">다음: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">이 채널은 일시적으로 오프라인입니다</string>
+    <string name="au13_tvextraui_offline_hint">사용 가능한 모든 스트림을 시도하고 업데이트된 목록을 확인했습니다. 나중에 다시 시도하세요.</string>
+    <string name="au13_tvextraui_offline_back">뒤로</string>
+    <string name="au13_tvextraui_static_description">TV 노이즈: 신호 없음</string>
+</resources>

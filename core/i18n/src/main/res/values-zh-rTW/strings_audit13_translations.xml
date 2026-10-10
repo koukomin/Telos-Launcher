@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">額外希臘頻道</string>
+    <string name="au13_tvextra_playlists_summary">從公開播放清單 Free-TV 和 greektvm3u 新增串流和頻道，在您開啟電視時從 GitHub 載入到此裝置。僅在選擇希臘時使用。如果無法載入，則不顯示任何內容。</string>
+    <string name="au13_tvextra_epg_title">節目指南</string>
+    <string name="au13_tvextra_epg_summary">顯示希臘頻道目前和接下來播出的節目（XMLTV 指南來自 ext.greektv.app 或 epgshare01.online，最多每 6 小時重新整理一次）。僅在選擇希臘時使用。</string>
+    <string name="au13_tvextra_marker">額外</string>
+    <string name="au13_tvextra_marker_description">此頻道來自選用的額外來源，可能不夠可靠</string>
+    <string name="au13_tvextraui_disclaimer_extra">對於希臘頻道，Telos TV 還可以使用選用的額外來源：公開播放清單（raw.githubusercontent.com）和節目指南（ext.greektv.app、epgshare01.online）。僅在選擇希臘且對應開關已開啟時，並且僅在電視處於開啟狀態時才會連線至這些來源。您可以在國家清單中將其關閉。</string>
+    <string name="au13_tvextraui_now_line">現在：%1$s</string>
+    <string name="au13_tvextraui_player_now">現在：%1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">接下來：%1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">此頻道暫時離線</string>
+    <string name="au13_tvextraui_offline_hint">我們已嘗試所有可用的串流，並檢查了更新的清單。請稍後再試。</string>
+    <string name="au13_tvextraui_offline_back">返回</string>
+    <string name="au13_tvextraui_static_description">電視雪花雜訊：無訊號</string>
+</resources>

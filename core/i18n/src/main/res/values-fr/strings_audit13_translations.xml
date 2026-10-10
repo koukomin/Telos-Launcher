@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Chaînes grecques supplémentaires</string>
+    <string name="au13_tvextra_playlists_summary">Ajoute des flux et des chaînes issus des listes publiques Free-TV et greektvm3u, chargées depuis GitHub sur cet appareil à l\'ouverture de TV. Utilisé uniquement lorsque la Grèce est sélectionnée. Rien n\'est affiché si elles ne peuvent pas être chargées.</string>
+    <string name="au13_tvextra_epg_title">Guide des programmes</string>
+    <string name="au13_tvextra_epg_summary">Affiche ce qui est diffusé maintenant et ensuite sur les chaînes grecques (guide XMLTV depuis ext.greektv.app ou epgshare01.online, actualisé toutes les 6 heures au plus). Utilisé uniquement lorsque la Grèce est sélectionnée.</string>
+    <string name="au13_tvextra_marker">Extra</string>
+    <string name="au13_tvextra_marker_description">Cette chaîne provient d\'une source supplémentaire facultative et peut être moins fiable</string>
+    <string name="au13_tvextraui_disclaimer_extra">Pour les chaînes grecques, Telos TV peut aussi utiliser des sources supplémentaires facultatives : des listes publiques (raw.githubusercontent.com) et un guide des programmes (ext.greektv.app, epgshare01.online). Elles ne sont contactées que lorsque la Grèce est sélectionnée et que l\'option correspondante est activée, et uniquement tant que TV est ouverte. Vous pouvez les désactiver dans la liste des pays.</string>
+    <string name="au13_tvextraui_now_line">Maintenant : %1$s</string>
+    <string name="au13_tvextraui_player_now">Maintenant : %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Ensuite : %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Cette chaîne est temporairement hors ligne</string>
+    <string name="au13_tvextraui_offline_hint">Nous avons essayé tous les flux disponibles et vérifié s\'il existait une liste à jour. Réessayez plus tard.</string>
+    <string name="au13_tvextraui_offline_back">Retour</string>
+    <string name="au13_tvextraui_static_description">Neige TV : aucun signal</string>
+</resources>

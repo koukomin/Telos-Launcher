@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">追加のギリシャ語チャンネル</string>
+    <string name="au13_tvextra_playlists_summary">公開プレイリスト Free-TV と greektvm3u からストリームとチャンネルを追加します。TV を開くと、GitHub からこのデバイスに読み込まれます。ギリシャを選択している場合のみ使用されます。読み込めない場合は何も表示されません。</string>
+    <string name="au13_tvextra_epg_title">番組表</string>
+    <string name="au13_tvextra_epg_summary">ギリシャのチャンネルの現在と次の番組を表示します（ext.greektv.app または epgshare01.online の XMLTV 番組表、更新は最大 6 時間ごと）。ギリシャを選択している場合のみ使用されます。</string>
+    <string name="au13_tvextra_marker">追加</string>
+    <string name="au13_tvextra_marker_description">このチャンネルは任意の追加ソースから提供されており、信頼性が低い場合があります</string>
+    <string name="au13_tvextraui_disclaimer_extra">ギリシャのチャンネルでは、Telos TV は任意の追加ソースも利用できます：公開プレイリスト（raw.githubusercontent.com）と番組表（ext.greektv.app、epgshare01.online）。これらには、ギリシャが選択され、対応するスイッチがオンで、かつ TV を開いている間のみ接続します。国のリストでオフにできます。</string>
+    <string name="au13_tvextraui_now_line">現在：%1$s</string>
+    <string name="au13_tvextraui_player_now">現在：%1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">次：%1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">このチャンネルは一時的にオフラインです</string>
+    <string name="au13_tvextraui_offline_hint">利用可能なすべてのストリームを試し、更新されたリストを確認しました。後でもう一度お試しください。</string>
+    <string name="au13_tvextraui_offline_back">戻る</string>
+    <string name="au13_tvextraui_static_description">テレビのスノーノイズ：信号なし</string>
+</resources>

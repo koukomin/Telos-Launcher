@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Extra Griekse zenders</string>
+    <string name="au13_tvextra_playlists_summary">Voegt streams en zenders toe uit de openbare afspeellijsten Free-TV en greektvm3u, die op dit apparaat van GitHub worden geladen wanneer je TV opent. Wordt alleen gebruikt als Griekenland is geselecteerd. Als ze niet geladen kunnen worden, wordt niets getoond.</string>
+    <string name="au13_tvextra_epg_title">Programmagids</string>
+    <string name="au13_tvextra_epg_summary">Toont wat er nu en straks op de Griekse zenders is (XMLTV-gids van ext.greektv.app of epgshare01.online, hoogstens elke 6 uur vernieuwd). Wordt alleen gebruikt als Griekenland is geselecteerd.</string>
+    <string name="au13_tvextra_marker">Extra</string>
+    <string name="au13_tvextra_marker_description">Deze zender komt uit een optionele extra bron en is mogelijk minder betrouwbaar</string>
+    <string name="au13_tvextraui_disclaimer_extra">Voor Griekse zenders kan Telos TV ook optionele extra bronnen gebruiken: openbare afspeellijsten (raw.githubusercontent.com) en een programmagids (ext.greektv.app, epgshare01.online). Ze worden alleen benaderd als Griekenland is geselecteerd en de bijbehorende schakelaar aan staat, en alleen terwijl TV open is. Je kunt ze uitschakelen in de landenlijst.</string>
+    <string name="au13_tvextraui_now_line">Nu: %1$s</string>
+    <string name="au13_tvextraui_player_now">Nu: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Straks: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Deze zender is tijdelijk offline</string>
+    <string name="au13_tvextraui_offline_hint">We hebben alle beschikbare streams geprobeerd en gezocht naar een bijgewerkte lijst. Probeer het later opnieuw.</string>
+    <string name="au13_tvextraui_offline_back">Terug</string>
+    <string name="au13_tvextraui_static_description">TV-sneeuw: geen signaal</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Дополнительные греческие каналы</string>
+    <string name="au13_tvextra_playlists_summary">Добавляет потоки и каналы из открытых плейлистов Free-TV и greektvm3u, которые загружаются с GitHub на это устройство при открытии ТВ. Используется только при выбранной Греции. Если загрузить их не удалось, ничего не отображается.</string>
+    <string name="au13_tvextra_epg_title">Телепрограмма</string>
+    <string name="au13_tvextra_epg_summary">Показывает, что идёт сейчас и что дальше на греческих каналах (программа XMLTV с ext.greektv.app или epgshare01.online, обновляется не чаще чем раз в 6 часов). Используется только при выбранной Греции.</string>
+    <string name="au13_tvextra_marker">Доп.</string>
+    <string name="au13_tvextra_marker_description">Этот канал взят из необязательного дополнительного источника и может работать менее надёжно</string>
+    <string name="au13_tvextraui_disclaimer_extra">Для греческих каналов Telos TV может также использовать необязательные дополнительные источники: открытые плейлисты (raw.githubusercontent.com) и телепрограмму (ext.greektv.app, epgshare01.online). Обращение к ним происходит только при выбранной Греции и включённом соответствующем переключателе, и только пока открыт ТВ. Их можно отключить в списке стран.</string>
+    <string name="au13_tvextraui_now_line">Сейчас: %1$s</string>
+    <string name="au13_tvextraui_player_now">Сейчас: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Далее: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Этот канал временно недоступен</string>
+    <string name="au13_tvextraui_offline_hint">Мы попробовали все доступные потоки и проверили наличие обновлённого списка. Повторите попытку позже.</string>
+    <string name="au13_tvextraui_offline_back">Назад</string>
+    <string name="au13_tvextraui_static_description">Помехи ТВ: нет сигнала</string>
+</resources>
