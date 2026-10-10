@@ -239,6 +239,12 @@ private fun PlayerContent(
         }
     }
 
+    // notification with play / pause / previous / next (also on the lock screen and Bluetooth)
+    DisposableEffect(player) {
+        VideoSession.attach(context, player)
+        onDispose { VideoSession.detach(context, player) }
+    }
+
     DisposableEffect(player) {
         val listener = object : Player.Listener {
             override fun onIsPlayingChanged(isPlaying: Boolean) {

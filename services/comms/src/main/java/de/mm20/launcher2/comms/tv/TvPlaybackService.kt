@@ -72,8 +72,7 @@ class TvPlaybackService : MediaSessionService(), KoinComponent {
                 .build()
         )
         scope.launch {
-            combine(controller.player, settings.keepPlayingInBackground) { p, keep -> if (keep) p else null }
-                .collect { onPlayer(it) }
+            controller.player.collect { onPlayer(it) }
         }
         scope.launch {
             combine(controller.isPlaying, controller.isBuffering, controller.reconnecting) { playing, buffering, reconnecting ->
