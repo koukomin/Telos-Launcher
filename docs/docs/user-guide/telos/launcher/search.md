@@ -22,7 +22,7 @@ All search settings live in **Settings > Search**. Some sources open their own s
 | Files | Local files, Nextcloud, ownCloud and file plugins | Storage permission (local) or an account (cloud) | Cloud only | Local on |
 | Places | OpenStreetMap places near you, plus place plugins | Location permission | Yes | On |
 | Websites | A preview card for a URL you type | Network | Yes | On |
-| Radio stations | Your favorite Telos Radio stations whose name matches (up to 5); a tap plays the stream at once, a second tap stops it. Needs Telos Radio to be installed | Local | Yes | Off |
+| Radio stations | Your favorite Telos Radio stations whose name matches (up to 5); a tap plays the stream at once, a second tap pauses it; same-name stations are all shown with logo and host. Needs Telos Radio to be installed | Local | Yes | Off |
 | Wikipedia | Articles | Network | Yes | On |
 | Calculator | The result of an expression | Nothing | No | On |
 | Unit converter | Units and currencies | Nothing (currencies download rates) | Rates only | On |

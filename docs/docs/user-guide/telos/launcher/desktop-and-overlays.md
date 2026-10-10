@@ -224,6 +224,9 @@ These settings apply to the embedded browser only, not to Custom Tabs (Settings 
   Deleting a web app deletes its data. If the installed WebView does not support profiles, storage is shared, the
   per-web-app cookie modes are ignored and the sheet says so. Web apps created before this update start with empty
   storage, so sign in again once. Custom Tabs web apps are not affected. Cookies are never part of backups.
+- **Several accounts of one site:** web apps may share the same URL (for example several Facebook logins), each with its own
+  isolated storage. In Settings > Web app shortcuts, the **Duplicate** button on a web app clones it (same URL and
+  options, copied custom icon, same folder, name with " 2" added) with a new empty profile.
 
 ### Block lists
 

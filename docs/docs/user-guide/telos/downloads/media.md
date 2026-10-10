@@ -57,7 +57,7 @@ yt-dlp can use cookies. Two ways, in the add sheet and in the settings:
 
 - **Import cookies.txt**: pick a file in the Netscape format (browser extensions export it). It is kept in the private storage of the app
   and is **not** part of a backup.
-- **Take the cookies of the Telos browser for this site**: copies the cookies that the web view of the [web apps](../launcher/desktop-and-overlays.md#web-apps) holds for the host of the
+- **Take the cookies of the Telos browser for this site**: pick **All / default** or one specific web app (each web app now has its own cookies, so choose the one where you are signed in). Without WebView profile support only the shared cookies exist. It copies the cookies that the web view of the [web apps](../launcher/desktop-and-overlays.md#web-apps) holds for the host of the
   link. Log in to the site in a Telos web app first. This is a best effort: the web view hands over names and values only, and the site may
   want more. Nothing about it was tested on a device.
 
