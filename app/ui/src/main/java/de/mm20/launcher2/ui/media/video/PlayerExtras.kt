@@ -210,6 +210,17 @@ internal fun PlaybackMenu(
                     Text(stringResource(R.string.vn_match_frame_rate), modifier = Modifier.weight(1f))
                     Switch(checked = matchFps, onCheckedChange = onMatchFps)
                 }
+                var resumeAfter by remember { mutableStateOf(de.mm20.launcher2.comms.media.video.VideoPrefs.resumeAfterVideo(context)) }
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 4.dp)) {
+                    Text(stringResource(R.string.au9_playback_resume_after_video), modifier = Modifier.weight(1f))
+                    Switch(
+                        checked = resumeAfter,
+                        onCheckedChange = {
+                            resumeAfter = it
+                            de.mm20.launcher2.comms.media.video.VideoPrefs.setResumeAfterVideo(context, it)
+                        },
+                    )
+                }
 
                 val audio = groups.filter { it.type == C.TRACK_TYPE_AUDIO }
                 if (audio.size > 1) {

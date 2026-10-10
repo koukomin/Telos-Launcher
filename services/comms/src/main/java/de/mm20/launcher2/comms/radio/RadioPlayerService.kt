@@ -20,6 +20,7 @@ import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
+import de.mm20.launcher2.comms.media.PlaybackCoordinator
 import de.mm20.launcher2.comms.repository.RadioRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +43,9 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
 
     // Nothing keeps the service (and the decoder) alive after the radio has been paused for a while
     private val idleStop = Runnable {
-        if (player?.isPlaying != true && player?.playWhenReady != true) pauseAllPlayersAndStopSelf()
+        if (PlaybackCoordinator.isWaiting(this, PlaybackCoordinator.KIND_RADIO)) {
+            handler.postDelayed(idleStop, IDLE_STOP_MS) // a video paused the radio, it may continue
+        } else if (player?.isPlaying != true && player?.playWhenReady != true) pauseAllPlayersAndStopSelf()
     }
 
     override fun onCreate() {
@@ -75,12 +78,33 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
                 lastRecordedTitle = ""
             }
 
+            override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
+                if (!playWhenReady && reason == Player.PLAY_WHEN_READY_CHANGE_REASON_AUDIO_FOCUS_LOSS) {
+                    PlaybackCoordinator.onFocusLoss(this@RadioPlayerService, PlaybackCoordinator.KIND_RADIO)
+                }
+            }
+
             override fun onIsPlayingChanged(isPlaying: Boolean) {
                 handler.removeCallbacks(idleStop)
                 if (!isPlaying) handler.postDelayed(idleStop, IDLE_STOP_MS)
             }
         })
 
+        PlaybackCoordinator.register(
+            PlaybackCoordinator.KIND_RADIO,
+            PlaybackCoordinator.Participant(
+                isPlaying = { exo.isPlaying || exo.playWhenReady },
+                pause = { exo.pause() },
+                resume = {
+                    // a live stream: reconnect to the station instead of playing stale buffered audio
+                    if (exo.mediaItemCount > 0) {
+                        exo.seekToDefaultPosition()
+                        exo.prepare()
+                        exo.play()
+                    }
+                },
+            )
+        )
         scrobbler = de.mm20.launcher2.comms.scrobble.RadioScrobbleTracker(this, exo).also { it.attach() }
         RadioSleepTimer.onExpire = { player?.pause() }
         handler.postDelayed(idleStop, IDLE_STOP_MS)
@@ -165,6 +189,7 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
     }
 
     override fun onDestroy() {
+        PlaybackCoordinator.unregister(PlaybackCoordinator.KIND_RADIO)
         handler.removeCallbacks(idleStop)
         scrobbler?.release()
         scrobbler = null

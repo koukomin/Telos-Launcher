@@ -142,7 +142,16 @@ private fun PlayerContent(
     val titles = media.titles
     val startIndex = media.startIndex
 
+    // music and radio pause while the video plays; the main process decides about resuming them
+    fun videoState(state: String) {
+        de.mm20.launcher2.comms.media.video.PlayerBridge.send(
+            context.applicationContext,
+            de.mm20.launcher2.comms.media.video.PlayerBridge.ACTION_VIDEO,
+        ) { putString("state", state) }
+    }
+
     val player = remember {
+        videoState("started")
         // FFmpeg software decoders (AC3, E-AC3, DTS, TrueHD, ...) take over where the phone has no decoder
         val renderers = io.github.anilbeesetti.nextlib.media3ext.ffdecoder.NextRenderersFactory(context)
             .setExtensionRendererMode(androidx.media3.exoplayer.DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
@@ -223,6 +232,7 @@ private fun PlayerContent(
         val listener = object : Player.Listener {
             override fun onIsPlayingChanged(isPlaying: Boolean) {
                 onPlayingChanged(isPlaying)
+                if (isPlaying) videoState("started")
                 scrobble(if (isPlaying) "start" else "pause")
             }
 
@@ -250,12 +260,13 @@ private fun PlayerContent(
             scrobble("stop")
             player.removeListener(listener)
             player.release()
+            videoState("stopped")
         }
     }
     LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) { saveProgress() }
     // there is no service behind the player: when the screen is left (and it is not the picture-in-picture
     // window), sound must not go on in the background
-    LifecycleEventEffect(Lifecycle.Event.ON_STOP) { player.pause() }
+    LifecycleEventEffect(Lifecycle.Event.ON_STOP) { player.pause(); videoState("stopped") }
 
     var playbackError by remember { mutableStateOf(false) }
     DisposableEffect(player) {

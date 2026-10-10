@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
  */
 object PlayerBridge {
     const val ACTION_RESUME = "de.mm20.launcher2.video.BRIDGE_RESUME"
+    const val ACTION_VIDEO = "de.mm20.launcher2.video.BRIDGE_VIDEO"
     const val ACTION_SCROBBLE = "de.mm20.launcher2.video.BRIDGE_SCROBBLE"
 
     fun send(context: Context, action: String, extras: Bundle.() -> Unit) {
@@ -34,6 +35,13 @@ class PlayerBridgeReceiver : BroadcastReceiver() {
             PlayerBridge.ACTION_RESUME -> {
                 val uri = intent.getStringExtra("uri") ?: return
                 ResumeStore.save(context, Uri.parse(uri), intent.getLongExtra("pos", 0L), intent.getLongExtra("dur", 0L))
+            }
+            PlayerBridge.ACTION_VIDEO -> {
+                val app = context.applicationContext
+                when (intent.getStringExtra("state")) {
+                    "started" -> de.mm20.launcher2.comms.media.PlaybackCoordinator.onVideoStarted(app)
+                    "stopped" -> de.mm20.launcher2.comms.media.PlaybackCoordinator.onVideoStopped(app)
+                }
             }
             PlayerBridge.ACTION_SCROBBLE -> {
                 val action = intent.getStringExtra("action") ?: return
