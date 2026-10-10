@@ -184,7 +184,10 @@ class TvPlayerController(
         scope.launch {
             preferredUrl = runCatching { repository.preferredStream(channel.id) }.getOrNull()
             if (generation != id) return@launch
-            ordered = TvFailover.order(channel.streams, preferredUrl, settings.badStreams(), System.currentTimeMillis())
+            // the optional extra sources may have been merged into the index after this channel object was made
+            val latest = if (channel.isCustom) channel else catalog.index.value?.channel(channel.id) ?: channel
+            if (latest.streams.size != channel.streams.size) _channel.value = latest
+            ordered = TvFailover.order(latest.streams, preferredUrl, settings.badStreams(), System.currentTimeMillis())
             tryNext(id)
         }
         scope.launch { runCatching { repository.markPlayed(channel.id) } }

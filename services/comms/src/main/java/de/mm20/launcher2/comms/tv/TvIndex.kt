@@ -8,7 +8,7 @@ import java.util.Locale
  * not closed or replaced, not blocklisted, with at least one stream). Immutable, safe to use from any thread.
  * Searching walks all channels (roughly 10 thousand), so call [search] off the main thread.
  */
-class TvIndex(channels: List<TvChannel>, private val categoryNames: Map<String, String> = emptyMap()) {
+class TvIndex(channels: List<TvChannel>, internal val categoryNames: Map<String, String> = emptyMap()) {
 
     /** All channels sorted by name */
     val all: List<TvChannel> = channels.sortedBy { it.name.lowercase() }

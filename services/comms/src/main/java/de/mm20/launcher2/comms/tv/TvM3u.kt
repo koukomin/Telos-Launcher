@@ -1,7 +1,11 @@
 package de.mm20.launcher2.comms.tv
 
 /** One playable entry of an M3U playlist */
-data class TvM3uEntry(val name: String, val url: String, val logo: String, val group: String)
+data class TvM3uEntry(
+    val name: String, val url: String, val logo: String, val group: String,
+    /** tvg-id and tvg-name attributes (empty when absent); used by the optional extra sources */
+    val tvgId: String = "", val tvgName: String = "",
+)
 
 /**
  * Parser for IPTV playlists (#EXTINF with tvg-logo and group-title). Tolerant: unknown lines and
@@ -22,6 +26,8 @@ object TvM3u {
         var pendingName: String? = null
         var pendingLogo = ""
         var pendingGroup = ""
+        var pendingId = ""
+        var pendingTvgName = ""
         for (rawLine in text.lineSequence()) {
             val line = rawLine.trim().trimStart('﻿')
             if (line.isEmpty()) continue
@@ -33,16 +39,20 @@ object TvM3u {
                 var logo = ""
                 var group = ""
                 var tvgName = ""
+                var tvgId = ""
                 for (m in ATTR.findAll(attrs)) {
                     when (m.groupValues[1].lowercase()) {
                         "tvg-logo" -> logo = m.groupValues[2]
                         "group-title" -> group = m.groupValues[2]
                         "tvg-name" -> tvgName = m.groupValues[2]
+                        "tvg-id" -> tvgId = m.groupValues[2]
                     }
                 }
                 if (pendingName.isNullOrBlank()) pendingName = tvgName
                 pendingLogo = logo
                 pendingGroup = group
+                pendingId = tvgId.trim().take(TvLimits.MAX_NAME)
+                pendingTvgName = tvgName.trim().take(TvLimits.MAX_NAME)
                 continue
             }
             if (line.startsWith("#")) continue
@@ -51,9 +61,13 @@ object TvM3u {
             val name = pendingName
             val logo = pendingLogo
             val group = pendingGroup
+            val id = pendingId
+            val tvgNm = pendingTvgName
             pendingName = null
             pendingLogo = ""
             pendingGroup = ""
+            pendingId = ""
+            pendingTvgName = ""
             if (url == null) {
                 skipped++
                 continue
@@ -69,6 +83,8 @@ object TvM3u {
                     url = url,
                     logo = TvUrls.sanitize(logo).orEmpty(),
                     group = group.trim().take(TvLimits.MAX_GROUP),
+                    tvgId = id,
+                    tvgName = tvgNm,
                 )
             )
         }

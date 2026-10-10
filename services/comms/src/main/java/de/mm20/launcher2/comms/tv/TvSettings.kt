@@ -19,12 +19,18 @@ class TvSettings(context: Context) {
     private val _countries = MutableStateFlow<List<String>>(emptyList())
     private val _languages = MutableStateFlow<List<String>>(emptyList())
     private val _disclaimerShown = MutableStateFlow(false)
+    private val _extraPlaylists = MutableStateFlow(true)
+    private val _epg = MutableStateFlow(true)
 
     /** Countries whose channels are shown; empty means "use the suggestion for the locale" */
     val selectedCountries: StateFlow<List<String>> get() = _countries
     /** Optional language filter; empty means no filter */
     val selectedLanguages: StateFlow<List<String>> get() = _languages
     val disclaimerShown: StateFlow<Boolean> get() = _disclaimerShown
+    /** Optional extra Greek playlists (Free-TV, greektvm3u); default on, only active when Greece is selected (see [TvExtraSources]) */
+    val extraPlaylistsEnabled: StateFlow<Boolean> get() = _extraPlaylists
+    /** Optional programme guide (EPG); default on, only active when Greece is selected */
+    val epgEnabled: StateFlow<Boolean> get() = _epg
 
     private var bad: Map<String, Long> = emptyMap()
 
@@ -33,6 +39,8 @@ class TvSettings(context: Context) {
         _countries.value = j.optJSONArray("countries").toStrings().map { TvIndex.normalizeCountry(it) }.distinct()
         _languages.value = j.optJSONArray("languages").toStrings().map { it.lowercase() }.distinct()
         _disclaimerShown.value = j.optBoolean("disclaimer", false)
+        _extraPlaylists.value = j.optBoolean("extraPlaylists", true)
+        _epg.value = j.optBoolean("epg", true)
         val b = j.optJSONObject("bad")
         bad = buildMap {
             if (b != null) {
@@ -56,6 +64,19 @@ class TvSettings(context: Context) {
         _languages.value = clean
         save()
     }
+
+    fun setExtraPlaylistsEnabled(enabled: Boolean) {
+        _extraPlaylists.value = enabled
+        save()
+    }
+
+    fun setEpgEnabled(enabled: Boolean) {
+        _epg.value = enabled
+        save()
+    }
+
+    /** True when the selected countries include Greece (the extra sources are Greek only) */
+    fun greeceSelected(): Boolean = "GR" in _countries.value
 
     fun setDisclaimerShown(shown: Boolean) {
         _disclaimerShown.value = shown
@@ -87,12 +108,17 @@ class TvSettings(context: Context) {
         .put("countries", JSONArray(_countries.value))
         .put("languages", JSONArray(_languages.value))
         .put("disclaimer", _disclaimerShown.value)
+        .put("extraPlaylists", _extraPlaylists.value)
+        .put("epg", _epg.value)
 
     fun restoreJson(j: JSONObject) {
         setSelectedCountries(j.optJSONArray("countries").toStrings())
         setSelectedLanguages(j.optJSONArray("languages").toStrings())
         // the disclaimer is never switched off by a backup, only on
         if (j.optBoolean("disclaimer", false)) setDisclaimerShown(true)
+        // older backups have no such keys: keep the current value
+        if (j.has("extraPlaylists")) setExtraPlaylistsEnabled(j.optBoolean("extraPlaylists", true))
+        if (j.has("epg")) setEpgEnabled(j.optBoolean("epg", true))
     }
 
     private fun readLocked(): JSONObject = synchronized(lock) {
@@ -106,6 +132,8 @@ class TvSettings(context: Context) {
                     .put("countries", JSONArray(_countries.value))
                     .put("languages", JSONArray(_languages.value))
                     .put("disclaimer", _disclaimerShown.value)
+                    .put("extraPlaylists", _extraPlaylists.value)
+                    .put("epg", _epg.value)
                 val b = JSONObject()
                 for ((k, v) in bad) b.put(k, v)
                 j.put("bad", b)

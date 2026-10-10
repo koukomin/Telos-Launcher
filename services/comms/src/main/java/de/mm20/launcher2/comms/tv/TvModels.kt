@@ -7,6 +7,8 @@ data class TvStream(
     val userAgent: String = "",
     val referrer: String = "",
     val title: String = "",
+    /** Label of the optional extra source this stream comes from ("Free-TV", "greektvm3u"); empty for the iptv-org catalog */
+    val source: String = "",
 )
 
 /**
@@ -27,6 +29,8 @@ data class TvChannel(
     val isCustom: Boolean = false,
     /** Only for custom channels: the group-title of the playlist or the group the user typed */
     val group: String = "",
+    /** True for channels that exist only in the optional extra Greek playlists (see [TvExtraSources]); the UI may mark them */
+    val isExtra: Boolean = false,
 )
 
 data class TvCountry(val code: String, val name: String, val flag: String, val channelCount: Int)

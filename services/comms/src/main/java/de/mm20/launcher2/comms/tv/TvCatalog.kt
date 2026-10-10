@@ -36,6 +36,12 @@ class TvCatalog(context: Context) {
     private val scope = containedScope(Dispatchers.IO)
 
     private val _index = MutableStateFlow<TvIndex?>(null)
+    private var baseIndex: TvIndex? = null
+    private var extras: TvExtraMerge.Extras? = null
+    private var extrasBad: () -> Map<String, Long> = { emptyMap() }
+
+    /** Set by the Koin module: called (never blocking) when TV is opened, to load the optional extra sources */
+    @Volatile var openHook: (() -> Unit)? = null
     private val _status = MutableStateFlow(TvRefreshStatus())
 
     /** The current index; null until [open] (or a refresh) has produced one */
@@ -55,6 +61,7 @@ class TvCatalog(context: Context) {
      * returned immediately). Returns null when there is neither a cache nor a connection.
      */
     suspend fun open(): TvIndex? {
+        runCatching { openHook?.invoke() }
         if (_index.value == null) loadFromDisk()
         if (_index.value == null) {
             refresh()
@@ -62,6 +69,31 @@ class TvCatalog(context: Context) {
             refreshInBackgroundIfStale()
         }
         return _index.value
+    }
+
+    /**
+     * Adds (or, with null, removes) the streams and channels of the optional extra sources to [index].
+     * Used by [TvExtraSources]; the merge is repeated whenever the catalog is rebuilt.
+     */
+    fun setExtras(value: TvExtraMerge.Extras?, bad: () -> Map<String, Long>) {
+        synchronized(this) {
+            extras = value
+            extrasBad = bad
+            val base = baseIndex ?: return
+            _index.value = merged(base)
+        }
+    }
+
+    private fun merged(base: TvIndex): TvIndex {
+        val e = extras ?: return base
+        return runCatching { TvExtraMerge.merge(base, e, extrasBad(), System.currentTimeMillis()) }.getOrDefault(base)
+    }
+
+    private fun publish(built: TvIndex) {
+        synchronized(this) {
+            baseIndex = built
+            _index.value = merged(built)
+        }
     }
 
     /**
@@ -110,10 +142,10 @@ class TvCatalog(context: Context) {
             var rebuilt = true
             if (updated || _index.value == null) {
                 val built = withContext(Dispatchers.Default) { buildFromDisk() }
-                val old = _index.value
+                val old = baseIndex
                 val usable = built != null && built.size > 0 && (old == null || built.size * 5 >= old.size)
                 if (usable) {
-                    _index.value = built
+                    publish(built!!)
                 } else {
                     // data that cannot be used: keep the old index
                     rebuilt = false
@@ -150,7 +182,7 @@ class TvCatalog(context: Context) {
                 buildFromDisk()
             }
             if (built != null && built.size > 0) {
-                _index.value = built
+                publish(built)
                 val s = meta[STREAMS]
                 _status.update {
                     it.copy(lastCheckedAt = s?.checkedAt ?: 0L, lastChangedAt = s?.changedAt ?: 0L)
