@@ -5,12 +5,21 @@ application of your own.
 
 ## Set up
 
-1. Sign in at trakt.tv, open `trakt.tv/oauth/applications` and choose **New Application**. Enter any name and the
-   redirect address `urn:ietf:wg:oauth:2.0:oob`, then save.
+1. Sign in at trakt.tv, open `trakt.tv/oauth/applications` and choose **New Application**. Enter any name and, as the
+   redirect address, exactly `telos-trakt://callback` (the dialog shows it with a **Copy address** button). Save it.
 2. In Telos Video open the gear icon (**Video services**) and tap **Trakt scrobbling**.
-3. Enter the **client id** and **client secret**, then tap **Sign in**. Telos shows a code and the address
-   `trakt.tv/activate` (with **Copy code** and **Open**). Enter the code there and wait until the dialog says you are signed in.
+3. Enter the **client id** and **client secret** of your Trakt application and tap **Sign in with browser**. The browser
+   opens trakt.tv: log in and approve there (Telos never sees your Trakt password) and you return to Telos, which says you
+   are signed in. The pending sign-in lasts 10 minutes and survives Telos being closed in the meantime.
 4. Switch on **Scrobble to Trakt**.
+
+**Use a code instead** is the fallback: Telos shows a code and the address `trakt.tv/activate` (with **Copy code** and
+**Open**); enter the code there. This path can keep the older redirect address `urn:ietf:wg:oauth:2.0:oob`.
+
+Messages: *Sign in was denied on Trakt* (you pressed Deny), *The sign in answer did not match this request and was
+ignored* (the answer did not carry the secret state of your request, so it was discarded) and *The sign in took longer than
+10 minutes* (start again). The redirect address is a custom scheme, so the secret state and the client secret protect the
+exchange. You must create your own Trakt application; no client secret is built into Telos.
 
 ## What is sent
 
