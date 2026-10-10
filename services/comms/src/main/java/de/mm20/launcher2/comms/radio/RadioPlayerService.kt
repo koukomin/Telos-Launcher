@@ -42,7 +42,7 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
     private val handler = Handler(Looper.getMainLooper())
 
     // Nothing keeps the service (and the decoder) alive after the radio has been paused for a while
-    private val idleStop = Runnable {
+    private val idleStop: Runnable = Runnable {
         if (PlaybackCoordinator.isWaiting(this, PlaybackCoordinator.KIND_RADIO)) {
             handler.postDelayed(idleStop, IDLE_STOP_MS) // a video paused the radio, it may continue
         } else if (player?.isPlaying != true && player?.playWhenReady != true) pauseAllPlayersAndStopSelf()

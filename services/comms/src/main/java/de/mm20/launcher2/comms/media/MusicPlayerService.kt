@@ -22,7 +22,7 @@ class MusicPlayerService : MediaSessionService() {
     private val handler = Handler(Looper.getMainLooper())
 
     // Nothing keeps the service (and the decoder) alive after music has been paused for a while
-    private val idleStop = Runnable {
+    private val idleStop: Runnable = Runnable {
         val p = mediaSession?.player
         if (de.mm20.launcher2.comms.media.PlaybackCoordinator.isWaiting(this, PlaybackCoordinator.KIND_MUSIC)) {
             handler.postDelayed(idleStop, IDLE_STOP_MS) // a video paused the music, it may continue
