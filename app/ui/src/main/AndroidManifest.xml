@@ -392,6 +392,21 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
 
+        <!-- Redirect of the Trakt sign in in the browser; the state is verified before anything is stored -->
+        <activity
+            android:name=".media.video.TraktCallbackActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="telos-trakt" android:host="callback" />
+            </intent-filter>
+        </activity>
+
         <!-- The same player in its own process, see IsolatedVideoPlayerActivity -->
         <activity
             android:name=".media.video.IsolatedVideoPlayerActivity"

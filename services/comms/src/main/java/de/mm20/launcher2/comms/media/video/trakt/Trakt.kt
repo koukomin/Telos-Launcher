@@ -116,6 +116,66 @@ object Trakt {
         }
     }
 
+    // ---- sign in with the browser (authorization code flow) ----
+
+    /** The redirect address the user enters in their Trakt application. */
+    const val REDIRECT_URI = "telos-trakt://callback"
+    private const val PENDING_MS = 10 * 60 * 1000L
+
+    sealed class WebResult {
+        object Connected : WebResult()
+        object Denied : WebResult()
+        object StateMismatch : WebResult()
+        object Expired : WebResult()
+        object Failed : WebResult()
+    }
+
+    /**
+     * Stores a fresh random state (encrypted, valid for 10 minutes, so it survives the app being
+     * killed while the browser is open) and returns the address to open in the browser.
+     */
+    fun beginWebLogin(context: Context, clientId: String): String {
+        val bytes = ByteArray(32).also { java.security.SecureRandom().nextBytes(it) }
+        val state = bytes.joinToString("") { "%02x".format(it) }
+        prefs(context).edit()
+            .putString("pending_state", SecretBox.encrypt(state))
+            .putLong("pending_until", System.currentTimeMillis() + PENDING_MS)
+            .apply()
+        return "https://trakt.tv/oauth/authorize?response_type=code" +
+            "&client_id=" + java.net.URLEncoder.encode(clientId.trim(), "UTF-8") +
+            "&redirect_uri=" + java.net.URLEncoder.encode(REDIRECT_URI, "UTF-8") +
+            "&state=" + state
+    }
+
+    /** Handles the redirect from trakt.tv. Blocking: call it off the main thread. */
+    fun finishWebLogin(context: Context, code: String?, state: String?, error: String?): WebResult {
+        val p = prefs(context)
+        val stored = SecretBox.decrypt(p.getString("pending_state", "").orEmpty())
+        val until = p.getLong("pending_until", 0)
+        if (stored.isBlank()) return WebResult.StateMismatch
+        // missing or different state: rejected, the pending login stays (a stranger cannot cancel it)
+        if (state.isNullOrEmpty() ||
+            !java.security.MessageDigest.isEqual(stored.toByteArray(), state.toByteArray())
+        ) return WebResult.StateMismatch
+        // the state matches: it is single use from here on
+        p.edit().remove("pending_state").remove("pending_until").apply()
+        if (System.currentTimeMillis() > until) return WebResult.Expired
+        if (error != null) return if (error == "access_denied") WebResult.Denied else WebResult.Failed
+        if (code.isNullOrBlank()) return WebResult.Failed
+        val l = login(context)
+        if (l.clientId.isBlank() || l.clientSecret.isBlank()) return WebResult.Failed
+        val r = runCatching {
+            request(
+                context, "POST", "/oauth/token",
+                JSONObject().put("code", code).put("client_id", l.clientId).put("client_secret", l.clientSecret)
+                    .put("redirect_uri", REDIRECT_URI).put("grant_type", "authorization_code"),
+                l.clientId,
+            )
+        }.getOrNull()
+        if (r == null || r.code != 200) return WebResult.Failed
+        return runCatching { saveTokens(context, JSONObject(r.body)); WebResult.Connected }.getOrDefault(WebResult.Failed)
+    }
+
     // ---- sign in with the device code ----
 
     suspend fun startDeviceLogin(clientId: String): TraktDeviceCode = withContext(Dispatchers.IO) {

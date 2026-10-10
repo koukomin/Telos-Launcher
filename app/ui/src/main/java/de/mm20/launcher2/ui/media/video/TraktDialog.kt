@@ -55,6 +55,8 @@ internal fun TraktDialog(onDismiss: () -> Unit) {
     var code by remember { mutableStateOf<TraktDeviceCode?>(null) }
     var message by remember { mutableStateOf("") }
     var job by remember { mutableStateOf<Job?>(null) }
+    var waitingBrowser by remember { mutableStateOf(false) }
+    var useCode by remember { mutableStateOf(false) }
 
     // the stored login is decrypted with the keystore: not on the main thread
     suspend fun reload() {
@@ -66,6 +68,20 @@ internal fun TraktDialog(onDismiss: () -> Unit) {
         reload()
         login?.let { clientId = it.clientId; secret = it.clientSecret }
     }
+    // coming back from the browser: the redirect may have stored the login meanwhile
+    val lifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle
+    androidx.compose.runtime.DisposableEffect(lifecycle) {
+        val obs = androidx.lifecycle.LifecycleEventObserver { _, e ->
+            if (e == androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+                scope.launch {
+                    reload()
+                    if (login?.connected == true && waitingBrowser) { waitingBrowser = false; message = context.getString(R.string.au_video_trakt_connected) }
+                }
+            }
+        }
+        lifecycle.addObserver(obs)
+        onDispose { lifecycle.removeObserver(obs) }
+    }
     val l = login ?: return
 
     AlertDialog(
@@ -73,7 +89,7 @@ internal fun TraktDialog(onDismiss: () -> Unit) {
         title = { Text(stringResource(R.string.au7_trakt_title)) },
         text = {
             Column(verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp), modifier = Modifier.verticalScroll(rememberScrollState())) {
-                Text(stringResource(R.string.au7_trakt_howto), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(stringResource(R.string.au8_traktweb_howto), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Text(stringResource(R.string.au7_trakt_privacy), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 if (l.connected) {
                     Text(stringResource(R.string.au7_trakt_signed_in), style = MaterialTheme.typography.titleSmall)
@@ -101,8 +117,33 @@ internal fun TraktDialog(onDismiss: () -> Unit) {
                         secret, { secret = it }, label = { Text(stringResource(R.string.hc_client_secret)) }, singleLine = true,
                         visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(),
                     )
+                    Text(stringResource(R.string.au8_traktweb_redirect_label), style = MaterialTheme.typography.labelMedium)
+                    Text(Trakt.REDIRECT_URI, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.primary)
+                    TextButton(onClick = { copyCode(context, Trakt.REDIRECT_URI) }) { Text(stringResource(R.string.au8_traktweb_copy_redirect)) }
+                    androidx.compose.material3.Button(
+                        enabled = clientId.isNotBlank() && secret.isNotBlank(),
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = {
+                            scope.launch {
+                                val url = withContext(Dispatchers.IO) {
+                                    Trakt.saveApp(context, clientId, secret)
+                                    Trakt.beginWebLogin(context, clientId)
+                                }
+                                val ok = runCatching {
+                                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                                }.isSuccess
+                                waitingBrowser = ok
+                                message = context.getString(if (ok) R.string.au8_traktweb_waiting_browser else R.string.au8_traktweb_no_browser)
+                            }
+                        },
+                    ) { Text(stringResource(R.string.au8_traktweb_sign_in_browser)) }
+                    if (!useCode && code == null) {
+                        TextButton(onClick = { useCode = true }) { Text(stringResource(R.string.au8_traktweb_use_code)) }
+                    }
                     val pending = code
-                    if (pending == null) {
+                    if (!useCode && pending == null) {
+                        // device code sign in is hidden until asked for
+                    } else if (pending == null) {
                         TextButton(enabled = clientId.isNotBlank() && secret.isNotBlank(), onClick = {
                             message = context.getString(R.string.au_video_trakt_contacting)
                             job = scope.launch {
