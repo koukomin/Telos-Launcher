@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Kinnita</string>
+    <string name="au4_confirms_cancel">Tühista</string>
+    <string name="au4_confirms_nc_title">Kas logida Nextcloudist välja?</string>
+    <string name="au4_confirms_nc_message">Teie Nextcloudi konto eemaldatakse sellest käivitajast. Saate igal ajal uuesti sisse logida.</string>
+    <string name="au4_confirms_oc_title">Kas logida ownCloudist välja?</string>
+    <string name="au4_confirms_oc_message">Teie ownCloudi konto eemaldatakse sellest käivitajast. Saate igal ajal uuesti sisse logida.</string>
+    <string name="au4_confirms_plugin_title">Kas desinstallida plugin?</string>
+    <string name="au4_confirms_plugin_message">Plugina rakendus desinstallitakse teie seadmest.</string>
+    <string name="au4_confirms_counts_title">Kas lähtestada loendurid?</string>
+    <string name="au4_confirms_counts_message">Kõik blokeerimisloendi blokeerimisloendurid seatakse tagasi nulli.</string>
+    <string name="au4_confirms_bulk_title">Kas rakendada kõikidele kuvatud rakendustele?</string>
+    <string name="au4_confirms_bulk_block_all">Kas blokeerida kõigi %1$d rakenduse juurdepääs võrku?</string>
+    <string name="au4_confirms_bulk_allow_all">Kas lubada kõigi %1$d rakenduse juurdepääs võrku?</string>
+    <string name="au4_confirms_bulk_block_wifi">Kas blokeerida %1$d rakenduse juurdepääs Wi-Fi-le?</string>
+    <string name="au4_confirms_bulk_block_mobile">Kas blokeerida %1$d rakenduse juurdepääs mobiilsidevõrgule?</string>
+    <string name="au4_noteslink_link_existing">Seo olemasolev fail</string>
+    <string name="au4_noteslink_create_new">Loo uus fail</string>
+    <string name="au4_noteslink_cancel">Tühista</string>
+    <string name="au4_settingsnew1_redial_attempts">Taasvalimiskatsete arv</string>
+    <string name="au4_settingsnew1_redial_delay">Viivitus katsete vahel</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Veaaruandja</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Salvesta selle seadme veaaruanded ja logitud vead. Väljalülitatuna ei salvestata midagi; rakendus töötab siiski tavapäraselt.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Kustuta kõik aruanded</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Eemalda kõik salvestatud veaaruanded ja vealogid</string>
+    <string name="au4_torrentproxy_note_http">Torrentid kasutavad puhvertserverit partnerite, jälgijate ja hostinimede otsinguks. HTTP-puhvertserver ei saa edastada UDP-liiklust, mistõttu DHT ja uTP lülitatakse välja ning kohalik avastamine, UPnP ja NAT-PMP on puhvertserveri kasutamise ajal välja lülitatud.</string>
+    <string name="au4_torrentproxy_note_socks">Torrentid kasutavad puhvertserverit partnerite, jälgijate ja hostinimede otsinguks. Kohalik avastamine, UPnP ja NAT-PMP on puhvertserveri kasutamise ajal välja lülitatud. DHT ja uTP töötavad ainult siis, kui teie SOCKS5-puhvertserver toetab UDP-d.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Vaikimisi (mobiil)</string>
+    <string name="au4_webapps2_user_agent_desktop">Töölaud</string>
+    <string name="au4_webapps2_user_agent_custom">Kohandatud</string>
+    <string name="au4_webapps2_user_agent_custom_title">Kohandatud user agent</string>
+    <string name="au4_webapps2_user_agent_custom_hint">User agenti sõne</string>
+    <string name="au4_webapps2_cookies">Luba küpsised</string>
+    <string name="au4_webapps2_cookies_summary">Veebirakenduste veebisaidid saavad küpsiseid salvestada. Lülitage välja, et blokeerida kõik küpsised; võib juhtuda, et te ei püsi sisse logituna.</string>
+    <string name="au4_webapps2_third_party_cookies">Luba kolmanda osapoole küpsised</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Luba teistelt saitidelt pärit manustatud sisul küpsiseid määrata. Privaatsuse huvides vaikimisi keelatud.</string>
+    <string name="au4_webapps2_clear_cookies">Tühjenda küpsised ja saidiandmed</string>
+    <string name="au4_webapps2_clear_cookies_summary">Logib teid välja kõigist veebirakendustest ja eemaldab vahemällu salvestatud saidiandmed</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Kas eemaldada kõik veebirakenduste küpsised ja saidiandmed?</string>
+    <string name="au4_webapps2_clear_cookies_done">Küpsised ja saidiandmed tühjendatud</string>
+    <string name="au4_webapps2_clear_cookies_action">Tühjenda</string>
+</resources>

@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Odbij pozive iz drugih zemalja osim vaše matične zemlje</string>
     <string name="au2_callsec_home_country">Matična zemlja</string>
     <string name="au2_callsec_home_country_auto">Automatski (SIM, mreža, jezik)</string>
-    <string name="au2_dlsec_torrent_proxy">Torrenti ne mogu koristiti proxy; isključite proxy za preuzimanje torrenta</string>
-    <string name="au2_dlsec_torrent_proxy_note">Torrenti ne koriste proxy. Dok je proxy uključen, torrenti i magnet poveznice neće se preuzimati.</string>
     <string name="au2_dlsec_ftps_anyhost">Prihvati certifikat za drugi naziv hosta</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Manje sigurno: certifikatu poslužitelja vjeruje se čak i ako je izdan za drugi naziv hosta</string>
     <string name="au2_dlsec_ftps_hostname_failed">Certifikat poslužitelja ne odgovara nazivu hosta %1$s. Ako vjerujete ovom poslužitelju, uključite „Prihvati certifikat za drugi naziv hosta” u vezi.</string>

@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Respinge apelurile din alte țări decât țara ta de origine</string>
     <string name="au2_callsec_home_country">Țara de origine</string>
     <string name="au2_callsec_home_country_auto">Automat (SIM, rețea, limbă)</string>
-    <string name="au2_dlsec_torrent_proxy">Torrentele nu pot folosi un proxy; dezactivează proxy-ul pentru a descărca torrente</string>
-    <string name="au2_dlsec_torrent_proxy_note">Torrentele nu folosesc proxy-ul. Cât timp un proxy este activ, torrentele și linkurile magnet nu se vor descărca.</string>
     <string name="au2_dlsec_ftps_anyhost">Acceptă un certificat pentru alt nume de gazdă</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Mai puțin sigur: certificatul serverului este considerat de încredere chiar dacă a fost emis pentru alt nume de gazdă</string>
     <string name="au2_dlsec_ftps_hostname_failed">Certificatul serverului nu se potrivește cu numele de gazdă %1$s. Dacă ai încredere în acest server, activează „Acceptă un certificat pentru alt nume de gazdă” în conexiune.</string>

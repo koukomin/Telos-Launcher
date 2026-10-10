@@ -333,7 +333,6 @@
     <string name="floating_launcher_file_dock">文件暂存区</string>
     <string name="floating_launcher_file_dock_empty">将文本、图片或文件拖到标签上，可在此临时存放。</string>
     <string name="floating_launcher_file_dock_copied">已复制</string>
-    <string name="floating_launcher_zone_apps_empty">没有已安装的应用。</string>
     <string name="floating_launcher_zone_apps_summary">您在此添加的应用会显示在此区域的面板中。您也可以将应用图标从主屏幕或应用标签页拖到此区域来添加。</string>
     <string name="preference_category_grid_home">主屏幕网格</string>
     <string name="preference_category_grid_drawer">搜索抽屉网格</string>

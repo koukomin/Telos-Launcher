@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">पुष्टि करें</string>
+    <string name="au4_confirms_cancel">रद्द करें</string>
+    <string name="au4_confirms_nc_title">Nextcloud से साइन आउट करें?</string>
+    <string name="au4_confirms_nc_message">आपका Nextcloud खाता इस लॉन्चर से हटा दिया जाएगा। आप कभी भी दोबारा साइन इन कर सकते हैं।</string>
+    <string name="au4_confirms_oc_title">ownCloud से साइन आउट करें?</string>
+    <string name="au4_confirms_oc_message">आपका ownCloud खाता इस लॉन्चर से हटा दिया जाएगा। आप कभी भी दोबारा साइन इन कर सकते हैं।</string>
+    <string name="au4_confirms_plugin_title">प्लगइन अनइंस्टॉल करें?</string>
+    <string name="au4_confirms_plugin_message">प्लगइन ऐप आपके डिवाइस से अनइंस्टॉल कर दिया जाएगा।</string>
+    <string name="au4_confirms_counts_title">गिनती रीसेट करें?</string>
+    <string name="au4_confirms_counts_message">ब्लॉकलिस्ट की सभी ब्लॉक गिनतियाँ शून्य पर लौटा दी जाएँगी।</string>
+    <string name="au4_confirms_bulk_title">दिखाए गए सभी ऐप्स पर लागू करें?</string>
+    <string name="au4_confirms_bulk_block_all">%1$d ऐप्स की सभी नेटवर्क पहुँच ब्लॉक करें?</string>
+    <string name="au4_confirms_bulk_allow_all">%1$d ऐप्स की सभी नेटवर्क पहुँच की अनुमति दें?</string>
+    <string name="au4_confirms_bulk_block_wifi">%1$d ऐप्स की Wi-Fi पहुँच ब्लॉक करें?</string>
+    <string name="au4_confirms_bulk_block_mobile">%1$d ऐप्स की मोबाइल डेटा पहुँच ब्लॉक करें?</string>
+    <string name="au4_noteslink_link_existing">मौजूदा फ़ाइल लिंक करें</string>
+    <string name="au4_noteslink_create_new">नई फ़ाइल बनाएँ</string>
+    <string name="au4_noteslink_cancel">रद्द करें</string>
+    <string name="au4_settingsnew1_redial_attempts">पुनः डायल के प्रयास</string>
+    <string name="au4_settingsnew1_redial_delay">प्रयासों के बीच विलंब</string>
+    <string name="au4_settingsnew1_seconds">%1$d सेकंड</string>
+    <string name="au4_settingsnew1_crash_enable">क्रैश रिपोर्टर</string>
+    <string name="au4_settingsnew1_crash_enable_summary">क्रैश रिपोर्ट और दर्ज की गई त्रुटियाँ इस डिवाइस पर सहेजें। बंद होने पर कुछ भी रिकॉर्ड नहीं होता; ऐप सामान्य रूप से काम करता रहता है।</string>
+    <string name="au4_settingsnew1_crash_delete_all">सभी रिपोर्ट हटाएँ</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">सहेजी गई सभी क्रैश रिपोर्ट और त्रुटि लॉग हटाएँ</string>
+    <string name="au4_torrentproxy_note_http">टोरेंट पीयर, ट्रैकर और होस्ट नाम खोजने के लिए प्रॉक्सी का उपयोग करते हैं। HTTP प्रॉक्सी UDP ट्रैफ़िक नहीं ले जा सकती, इसलिए DHT और uTP बंद कर दिए जाते हैं, और प्रॉक्सी चालू रहने पर लोकल डिस्कवरी, UPnP और NAT-PMP भी बंद रहते हैं।</string>
+    <string name="au4_torrentproxy_note_socks">टोरेंट पीयर, ट्रैकर और होस्ट नाम खोजने के लिए प्रॉक्सी का उपयोग करते हैं। प्रॉक्सी चालू रहने पर लोकल डिस्कवरी, UPnP और NAT-PMP बंद रहते हैं। DHT और uTP केवल तभी काम करते हैं जब आपकी SOCKS5 प्रॉक्सी UDP का समर्थन करती हो।</string>
+    <string name="au4_webapps2_user_agent">यूज़र एजेंट</string>
+    <string name="au4_webapps2_user_agent_default">डिफ़ॉल्ट (मोबाइल)</string>
+    <string name="au4_webapps2_user_agent_desktop">डेस्कटॉप</string>
+    <string name="au4_webapps2_user_agent_custom">कस्टम</string>
+    <string name="au4_webapps2_user_agent_custom_title">कस्टम यूज़र एजेंट</string>
+    <string name="au4_webapps2_user_agent_custom_hint">यूज़र एजेंट स्ट्रिंग</string>
+    <string name="au4_webapps2_cookies">कुकीज़ स्वीकार करें</string>
+    <string name="au4_webapps2_cookies_summary">वेब ऐप्स में वेबसाइटें कुकीज़ सहेज सकती हैं। सभी कुकीज़ ब्लॉक करने के लिए बंद करें; हो सकता है आप साइन इन न रह पाएँ।</string>
+    <string name="au4_webapps2_third_party_cookies">थर्ड-पार्टी कुकीज़ स्वीकार करें</string>
+    <string name="au4_webapps2_third_party_cookies_summary">अन्य साइटों की एम्बेड की गई सामग्री को कुकीज़ सेट करने दें। गोपनीयता के लिए डिफ़ॉल्ट रूप से बंद है।</string>
+    <string name="au4_webapps2_clear_cookies">कुकीज़ और साइट डेटा साफ़ करें</string>
+    <string name="au4_webapps2_clear_cookies_summary">आपको सभी वेब ऐप्स से साइन आउट कर देता है और कैश किया गया साइट डेटा हटा देता है</string>
+    <string name="au4_webapps2_clear_cookies_confirm">वेब ऐप्स की सभी कुकीज़ और साइट डेटा हटाएँ?</string>
+    <string name="au4_webapps2_clear_cookies_done">कुकीज़ और साइट डेटा साफ़ किया गया</string>
+    <string name="au4_webapps2_clear_cookies_action">साफ़ करें</string>
+</resources>

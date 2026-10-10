@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">拒绝来自本国以外的来电</string>
     <string name="au2_callsec_home_country">所在国家/地区</string>
     <string name="au2_callsec_home_country_auto">自动（SIM 卡、网络、语言）</string>
-    <string name="au2_dlsec_torrent_proxy">种子无法使用代理；请关闭代理以下载种子</string>
-    <string name="au2_dlsec_torrent_proxy_note">种子不使用代理。开启代理时，种子和磁力链接将无法下载。</string>
     <string name="au2_dlsec_ftps_anyhost">接受其他主机名的证书</string>
     <string name="au2_dlsec_ftps_anyhost_summary">安全性较低：即使服务器证书是为其他主机名签发的，也会信任该证书</string>
     <string name="au2_dlsec_ftps_hostname_failed">服务器证书与主机名 %1$s 不匹配。如果您信任此服务器，请在连接设置中开启“接受其他主机名的证书”。</string>

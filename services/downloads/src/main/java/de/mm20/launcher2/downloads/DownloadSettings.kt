@@ -55,6 +55,15 @@ data class DownloadSettingsValues(
             ProxyType.None -> null
         }
 
+    fun torrentProxy() = de.mm20.launcher2.comms.media.video.torrent.TorrentProxy(
+        when (proxyType) {
+            ProxyType.None -> de.mm20.launcher2.comms.media.video.torrent.TorrentProxyType.None
+            ProxyType.Http -> de.mm20.launcher2.comms.media.video.torrent.TorrentProxyType.Http
+            ProxyType.Socks -> de.mm20.launcher2.comms.media.video.torrent.TorrentProxyType.Socks5
+        },
+        proxyHost, proxyPort,
+    )
+
     val effectiveUserAgent: String get() = userAgent.ifBlank { DEFAULT_USER_AGENT }
 
     companion object {

@@ -68,6 +68,8 @@ fun CommsSettingsScreen() {
     val confirmBeforeCall by viewModel.confirmBeforeCall.collectAsStateWithLifecycle()
     val tapToCall by viewModel.tapToCall.collectAsStateWithLifecycle()
     val autoRedial by viewModel.autoRedial.collectAsStateWithLifecycle()
+    val autoRedialAttempts by viewModel.autoRedialAttempts.collectAsStateWithLifecycle()
+    val autoRedialDelaySec by viewModel.autoRedialDelaySec.collectAsStateWithLifecycle()
     val autoOpenDialpad by viewModel.autoOpenDialpad.collectAsStateWithLifecycle()
     val rejectSmsTemplate by viewModel.rejectSmsTemplate.collectAsStateWithLifecycle()
     val secureCallScreen by viewModel.secureCallScreen.collectAsStateWithLifecycle()
@@ -319,6 +321,26 @@ fun CommsSettingsScreen() {
                     value = autoRedial,
                     onValueChanged = { viewModel.setAutoRedial(it) },
                 )
+                if (autoRedial) {
+                    de.mm20.launcher2.ui.component.preferences.SliderPreference(
+                        title = stringResource(R.string.au4_settingsnew1_redial_attempts),
+                        value = autoRedialAttempts.coerceIn(1, 10),
+                        min = 1,
+                        max = 10,
+                        step = 1,
+                        onValueChanged = { viewModel.setAutoRedialAttempts(it) },
+                        label = { Text(it.toString()) },
+                    )
+                    de.mm20.launcher2.ui.component.preferences.SliderPreference(
+                        title = stringResource(R.string.au4_settingsnew1_redial_delay),
+                        value = autoRedialDelaySec.coerceIn(3, 60),
+                        min = 3,
+                        max = 60,
+                        step = 1,
+                        onValueChanged = { viewModel.setAutoRedialDelaySec(it) },
+                        label = { Text(stringResource(R.string.au4_settingsnew1_seconds, it)) },
+                    )
+                }
                 SwitchPreference(
                     title = stringResource(R.string.hc_pocket_mode),
                     summary = stringResource(R.string.hc_ignore_taps_on_incoming_calls_when_the_p),

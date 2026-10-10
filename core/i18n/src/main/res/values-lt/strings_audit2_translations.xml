@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Atmesti skambučius iš kitų šalių nei jūsų gyvenamoji šalis</string>
     <string name="au2_callsec_home_country">Gyvenamoji šalis</string>
     <string name="au2_callsec_home_country_auto">Automatiškai (SIM, tinklas, kalba)</string>
-    <string name="au2_dlsec_torrent_proxy">Torentai negali naudoti tarpinio serverio; norėdami atsisiųsti torentus, išjunkite tarpinį serverį</string>
-    <string name="au2_dlsec_torrent_proxy_note">Torentai nenaudoja tarpinio serverio. Kol tarpinis serveris įjungtas, torentai ir magnet nuorodos nebus atsisiunčiami.</string>
     <string name="au2_dlsec_ftps_anyhost">Priimti kito pagrindinio kompiuterio pavadinimo sertifikatą</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Mažiau saugu: serverio sertifikatu pasitikima, net jei jis išduotas kitam pagrindinio kompiuterio pavadinimui</string>
     <string name="au2_dlsec_ftps_hostname_failed">Serverio sertifikatas neatitinka pagrindinio kompiuterio pavadinimo %1$s. Jei pasitikite šiuo serveriu, ryšio nustatymuose įjunkite \"Priimti kito pagrindinio kompiuterio pavadinimo sertifikatą\".</string>

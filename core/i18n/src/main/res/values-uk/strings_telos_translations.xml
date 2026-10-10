@@ -760,7 +760,6 @@
     <string name="floating_launcher_file_dock">Док файлів</string>
     <string name="floating_launcher_file_dock_empty">Перетягніть текст, зображення або файли на вкладку, щоб тимчасово тримати їх тут.</string>
     <string name="floating_launcher_file_dock_copied">Скопійовано</string>
-    <string name="floating_launcher_zone_apps_empty">Немає встановлених застосунків.</string>
     <string name="floating_launcher_zone_apps_summary">Додані тут застосунки з’являються на панелі цієї зони. Щоб додати застосунок, також можна перетягнути його значок із головного екрана або вкладки застосунків на цю зону.</string>
     <string name="preference_nextcloud_signin">Увійти в Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Увійдіть, щоб шукати на вашому сервері Nextcloud</string>

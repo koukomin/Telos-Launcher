@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">確認</string>
+    <string name="au4_confirms_cancel">取消</string>
+    <string name="au4_confirms_nc_title">登出 Nextcloud？</string>
+    <string name="au4_confirms_nc_message">你的 Nextcloud 帳戶將從此啟動器中移除。你可以隨時重新登入。</string>
+    <string name="au4_confirms_oc_title">登出 ownCloud？</string>
+    <string name="au4_confirms_oc_message">你的 ownCloud 帳戶將從此啟動器中移除。你可以隨時重新登入。</string>
+    <string name="au4_confirms_plugin_title">解除安裝外掛程式？</string>
+    <string name="au4_confirms_plugin_message">外掛程式應用程式將從你的裝置中解除安裝。</string>
+    <string name="au4_confirms_counts_title">重設計數？</string>
+    <string name="au4_confirms_counts_message">所有封鎖清單的封鎖計數器都將歸零。</string>
+    <string name="au4_confirms_bulk_title">套用至所有顯示的應用程式？</string>
+    <string name="au4_confirms_bulk_block_all">要封鎖 %1$d 個應用程式的所有網路存取嗎？</string>
+    <string name="au4_confirms_bulk_allow_all">要允許 %1$d 個應用程式的所有網路存取嗎？</string>
+    <string name="au4_confirms_bulk_block_wifi">要封鎖 %1$d 個應用程式使用 Wi-Fi 嗎？</string>
+    <string name="au4_confirms_bulk_block_mobile">要封鎖 %1$d 個應用程式使用行動數據嗎？</string>
+    <string name="au4_noteslink_link_existing">連結現有檔案</string>
+    <string name="au4_noteslink_create_new">建立新檔案</string>
+    <string name="au4_noteslink_cancel">取消</string>
+    <string name="au4_settingsnew1_redial_attempts">重撥次數</string>
+    <string name="au4_settingsnew1_redial_delay">重試間隔</string>
+    <string name="au4_settingsnew1_seconds">%1$d 秒</string>
+    <string name="au4_settingsnew1_crash_enable">當機回報器</string>
+    <string name="au4_settingsnew1_crash_enable_summary">在此裝置上儲存當機報告和已記錄的錯誤。關閉後不會記錄任何內容，應用程式仍可正常運作。</string>
+    <string name="au4_settingsnew1_crash_delete_all">刪除所有報告</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">移除所有已儲存的當機報告和錯誤記錄</string>
+    <string name="au4_torrentproxy_note_http">種子下載使用代理伺服器連線對等節點、Tracker 和解析主機名稱。HTTP 代理伺服器無法傳輸 UDP 流量，因此 DHT 和 uTP 會被關閉；啟用代理伺服器期間，本機探索、UPnP 和 NAT-PMP 也會被關閉。</string>
+    <string name="au4_torrentproxy_note_socks">種子下載使用代理伺服器連線對等節點、Tracker 和解析主機名稱。啟用代理伺服器期間，本機探索、UPnP 和 NAT-PMP 會被關閉。僅當你的 SOCKS5 代理伺服器支援 UDP 時，DHT 和 uTP 才能運作。</string>
+    <string name="au4_webapps2_user_agent">使用者代理</string>
+    <string name="au4_webapps2_user_agent_default">預設（行動版）</string>
+    <string name="au4_webapps2_user_agent_desktop">桌面版</string>
+    <string name="au4_webapps2_user_agent_custom">自訂</string>
+    <string name="au4_webapps2_user_agent_custom_title">自訂使用者代理</string>
+    <string name="au4_webapps2_user_agent_custom_hint">使用者代理字串</string>
+    <string name="au4_webapps2_cookies">接受 Cookie</string>
+    <string name="au4_webapps2_cookies_summary">網頁應用程式中的網站可以儲存 Cookie。關閉後將封鎖所有 Cookie，你可能無法保持登入狀態。</string>
+    <string name="au4_webapps2_third_party_cookies">接受第三方 Cookie</string>
+    <string name="au4_webapps2_third_party_cookies_summary">允許來自其他網站的嵌入內容設定 Cookie。基於隱私考量，預設為停用。</string>
+    <string name="au4_webapps2_clear_cookies">清除 Cookie 和網站資料</string>
+    <string name="au4_webapps2_clear_cookies_summary">將登出所有網頁應用程式，並移除快取的網站資料</string>
+    <string name="au4_webapps2_clear_cookies_confirm">要移除網頁應用程式的所有 Cookie 和網站資料嗎？</string>
+    <string name="au4_webapps2_clear_cookies_done">Cookie 和網站資料已清除</string>
+    <string name="au4_webapps2_clear_cookies_action">清除</string>
+</resources>

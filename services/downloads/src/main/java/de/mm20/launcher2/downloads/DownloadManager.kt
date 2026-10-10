@@ -267,6 +267,7 @@ class DownloadManager(
         val c = monitor.conditions.value
         val now = System.currentTimeMillis()
         globalLimiter.bytesPerSecond = s.speedLimitKBps * 1024L
+        de.mm20.launcher2.comms.media.video.torrent.TorrentSession.setProxy(context, s.torrentProxy())
 
         val clock = currentClock()
         val reason = QueueRules.blockReason(c, s.queue, clock)
@@ -278,15 +279,6 @@ class DownloadManager(
                 jobs[t.id]?.cancel()
             }
         } else {
-            if (s.proxyType != de.mm20.launcher2.downloads.ProxyType.None) {
-                // libtorrent does not use the proxy: running torrents are paused, so nothing goes around it
-                val msg = context.getString(de.mm20.launcher2.i18n.R.string.au2_dlsec_torrent_proxy)
-                for (t in all.filter { it.state.isActive && it.type == DownloadType.Torrent }) {
-                    stopTargets[t.id] = DownloadState.Paused
-                    store.update(t.id) { it.copy(error = msg, errorKind = ErrorKind.Validation) }
-                    jobs[t.id]?.cancel()
-                }
-            }
             for (t in QueueRules.pickNext(all, now, c, s.queue, clock) { task -> engines.any { it.supports(task) } }) startTask(t)
         }
 

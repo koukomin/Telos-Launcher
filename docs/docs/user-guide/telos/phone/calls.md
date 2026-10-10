@@ -133,6 +133,8 @@ Disturb access**. The accessibility service only reads volume key presses.
 | Setting | Where | Default | Effect |
 | --- | --- | --- | --- |
 | Auto redial | Calling | off | Retries an outgoing call that ended busy, missed or rejected |
+| Redial attempts | Calling (shown when auto redial is on) | 3 | 1 to 10 attempts |
+| Delay between attempts | Calling (shown when auto redial is on) | 5 s | 3 to 60 seconds |
 | Attempts | stored value | 3 (1 to 10) | Number of retries |
 | Delay | stored value | 5 s (3 to 60) | Pause before each retry |
 

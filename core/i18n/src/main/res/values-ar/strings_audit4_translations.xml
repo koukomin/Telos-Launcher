@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">تأكيد</string>
+    <string name="au4_confirms_cancel">إلغاء</string>
+    <string name="au4_confirms_nc_title">تسجيل الخروج من Nextcloud؟</string>
+    <string name="au4_confirms_nc_message">ستتم إزالة حساب Nextcloud الخاص بك من هذا المشغّل. يمكنك تسجيل الدخول مجددًا في أي وقت.</string>
+    <string name="au4_confirms_oc_title">تسجيل الخروج من ownCloud؟</string>
+    <string name="au4_confirms_oc_message">ستتم إزالة حساب ownCloud الخاص بك من هذا المشغّل. يمكنك تسجيل الدخول مجددًا في أي وقت.</string>
+    <string name="au4_confirms_plugin_title">إلغاء تثبيت الإضافة؟</string>
+    <string name="au4_confirms_plugin_message">سيتم إلغاء تثبيت تطبيق الإضافة من جهازك.</string>
+    <string name="au4_confirms_counts_title">إعادة تعيين العدادات؟</string>
+    <string name="au4_confirms_counts_message">ستُعاد جميع عدادات الحظر في قائمة الحظر إلى الصفر.</string>
+    <string name="au4_confirms_bulk_title">تطبيق على جميع التطبيقات المعروضة؟</string>
+    <string name="au4_confirms_bulk_block_all">حظر جميع اتصالات الشبكة لـ %1$d من التطبيقات؟</string>
+    <string name="au4_confirms_bulk_allow_all">السماح بجميع اتصالات الشبكة لـ %1$d من التطبيقات؟</string>
+    <string name="au4_confirms_bulk_block_wifi">حظر الوصول إلى Wi-Fi لـ %1$d من التطبيقات؟</string>
+    <string name="au4_confirms_bulk_block_mobile">حظر الوصول إلى بيانات الجوال لـ %1$d من التطبيقات؟</string>
+    <string name="au4_noteslink_link_existing">ربط ملف موجود</string>
+    <string name="au4_noteslink_create_new">إنشاء ملف جديد</string>
+    <string name="au4_noteslink_cancel">إلغاء</string>
+    <string name="au4_settingsnew1_redial_attempts">محاولات إعادة الاتصال</string>
+    <string name="au4_settingsnew1_redial_delay">المهلة بين المحاولات</string>
+    <string name="au4_settingsnew1_seconds">%1$d ث</string>
+    <string name="au4_settingsnew1_crash_enable">مُبلّغ الأعطال</string>
+    <string name="au4_settingsnew1_crash_enable_summary">حفظ تقارير الأعطال والأخطاء المسجّلة على هذا الجهاز. عند الإيقاف لا يُسجَّل شيء، ويستمر التطبيق في العمل بشكل طبيعي.</string>
+    <string name="au4_settingsnew1_crash_delete_all">حذف جميع التقارير</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">إزالة جميع تقارير الأعطال وسجلات الأخطاء المحفوظة</string>
+    <string name="au4_torrentproxy_note_http">تستخدم التورنتات الوكيل للاتصال بالأقران والمتتبعات وللبحث عن أسماء المضيفين. لا يمكن لوكيل HTTP نقل حركة UDP، لذا يتم إيقاف DHT وuTP، كما يتم إيقاف الاكتشاف المحلي وUPnP وNAT-PMP أثناء تشغيل الوكيل.</string>
+    <string name="au4_torrentproxy_note_socks">تستخدم التورنتات الوكيل للاتصال بالأقران والمتتبعات وللبحث عن أسماء المضيفين. يتم إيقاف الاكتشاف المحلي وUPnP وNAT-PMP أثناء تشغيل الوكيل. يعمل DHT وuTP فقط إذا كان وكيل SOCKS5 لديك يدعم UDP.</string>
+    <string name="au4_webapps2_user_agent">وكيل المستخدم (User agent)</string>
+    <string name="au4_webapps2_user_agent_default">الافتراضي (جوال)</string>
+    <string name="au4_webapps2_user_agent_desktop">سطح المكتب</string>
+    <string name="au4_webapps2_user_agent_custom">مخصص</string>
+    <string name="au4_webapps2_user_agent_custom_title">وكيل مستخدم مخصص</string>
+    <string name="au4_webapps2_user_agent_custom_hint">سلسلة وكيل المستخدم</string>
+    <string name="au4_webapps2_cookies">قبول ملفات تعريف الارتباط</string>
+    <string name="au4_webapps2_cookies_summary">يمكن للمواقع في تطبيقات الويب تخزين ملفات تعريف الارتباط. أوقف هذا الخيار لحظر جميع ملفات تعريف الارتباط؛ وقد لا تتمكن من البقاء مسجّلًا للدخول.</string>
+    <string name="au4_webapps2_third_party_cookies">قبول ملفات تعريف الارتباط من جهات خارجية</string>
+    <string name="au4_webapps2_third_party_cookies_summary">السماح للمحتوى المضمّن من مواقع أخرى بتعيين ملفات تعريف الارتباط. معطّل افتراضيًا حفاظًا على الخصوصية.</string>
+    <string name="au4_webapps2_clear_cookies">مسح ملفات تعريف الارتباط وبيانات المواقع</string>
+    <string name="au4_webapps2_clear_cookies_summary">يؤدي إلى تسجيل خروجك من جميع تطبيقات الويب وإزالة بيانات المواقع المخزّنة مؤقتًا</string>
+    <string name="au4_webapps2_clear_cookies_confirm">إزالة جميع ملفات تعريف الارتباط وبيانات المواقع الخاصة بتطبيقات الويب؟</string>
+    <string name="au4_webapps2_clear_cookies_done">تم مسح ملفات تعريف الارتباط وبيانات المواقع</string>
+    <string name="au4_webapps2_clear_cookies_action">مسح</string>
+</resources>

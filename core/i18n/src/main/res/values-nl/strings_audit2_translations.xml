@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Oproepen uit andere landen dan je thuisland weigeren</string>
     <string name="au2_callsec_home_country">Thuisland</string>
     <string name="au2_callsec_home_country_auto">Automatisch (SIM, netwerk, taal)</string>
-    <string name="au2_dlsec_torrent_proxy">Torrents kunnen geen proxy gebruiken; schakel de proxy uit om torrents te downloaden</string>
-    <string name="au2_dlsec_torrent_proxy_note">Torrents gebruiken de proxy niet. Zolang een proxy aanstaat, worden torrents en magnetlinks niet gedownload.</string>
     <string name="au2_dlsec_ftps_anyhost">Certificaat voor een andere hostnaam accepteren</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Minder veilig: het servercertificaat wordt vertrouwd, ook als het voor een andere hostnaam is uitgegeven</string>
     <string name="au2_dlsec_ftps_hostname_failed">Het certificaat van de server komt niet overeen met de hostnaam %1$s. Als je deze server vertrouwt, schakel dan \"Certificaat voor een andere hostnaam accepteren\" in bij de verbinding.</string>

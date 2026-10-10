@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Confirmă</string>
+    <string name="au4_confirms_cancel">Anulează</string>
+    <string name="au4_confirms_nc_title">Deconectare de la Nextcloud?</string>
+    <string name="au4_confirms_nc_message">Contul dvs. Nextcloud va fi eliminat din acest launcher. Vă puteți conecta din nou oricând.</string>
+    <string name="au4_confirms_oc_title">Deconectare de la ownCloud?</string>
+    <string name="au4_confirms_oc_message">Contul dvs. ownCloud va fi eliminat din acest launcher. Vă puteți conecta din nou oricând.</string>
+    <string name="au4_confirms_plugin_title">Dezinstalați pluginul?</string>
+    <string name="au4_confirms_plugin_message">Aplicația pluginului va fi dezinstalată de pe dispozitiv.</string>
+    <string name="au4_confirms_counts_title">Resetați contoarele?</string>
+    <string name="au4_confirms_counts_message">Toate contoarele de blocări ale listei de blocare vor fi readuse la zero.</string>
+    <string name="au4_confirms_bulk_title">Aplicați pentru toate aplicațiile afișate?</string>
+    <string name="au4_confirms_bulk_block_all">Blocați tot accesul la rețea pentru %1$d aplicații?</string>
+    <string name="au4_confirms_bulk_allow_all">Permiteți tot accesul la rețea pentru %1$d aplicații?</string>
+    <string name="au4_confirms_bulk_block_wifi">Blocați accesul Wi-Fi pentru %1$d aplicații?</string>
+    <string name="au4_confirms_bulk_block_mobile">Blocați accesul la datele mobile pentru %1$d aplicații?</string>
+    <string name="au4_noteslink_link_existing">Asociază un fișier existent</string>
+    <string name="au4_noteslink_create_new">Creează un fișier nou</string>
+    <string name="au4_noteslink_cancel">Anulează</string>
+    <string name="au4_settingsnew1_redial_attempts">Încercări de reapelare</string>
+    <string name="au4_settingsnew1_redial_delay">Întârziere între încercări</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Raportor de erori fatale</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Salvează pe acest dispozitiv rapoartele de oprire forțată și erorile înregistrate. Când este dezactivat, nu se înregistrează nimic; aplicația funcționează în continuare normal.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Șterge toate rapoartele</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Elimină toate rapoartele de oprire forțată și jurnalele de erori salvate</string>
+    <string name="au4_torrentproxy_note_http">Torrentele folosesc proxy-ul pentru parteneri, trackere și căutări de nume de gazdă. Un proxy HTTP nu poate transporta trafic UDP, așa că DHT și uTP sunt dezactivate, iar descoperirea locală, UPnP și NAT-PMP sunt dezactivate cât timp un proxy este activ.</string>
+    <string name="au4_torrentproxy_note_socks">Torrentele folosesc proxy-ul pentru parteneri, trackere și căutări de nume de gazdă. Descoperirea locală, UPnP și NAT-PMP sunt dezactivate cât timp un proxy este activ. DHT și uTP funcționează doar dacă proxy-ul SOCKS5 acceptă UDP.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Implicit (mobil)</string>
+    <string name="au4_webapps2_user_agent_desktop">Desktop</string>
+    <string name="au4_webapps2_user_agent_custom">Personalizat</string>
+    <string name="au4_webapps2_user_agent_custom_title">User agent personalizat</string>
+    <string name="au4_webapps2_user_agent_custom_hint">Șir user agent</string>
+    <string name="au4_webapps2_cookies">Acceptă cookie-uri</string>
+    <string name="au4_webapps2_cookies_summary">Site-urile din aplicațiile web pot stoca cookie-uri. Dezactivați pentru a bloca toate cookie-urile; este posibil să nu rămâneți conectat.</string>
+    <string name="au4_webapps2_third_party_cookies">Acceptă cookie-uri de la terți</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Permite conținutului încorporat de pe alte site-uri să seteze cookie-uri. Dezactivat implicit pentru confidențialitate.</string>
+    <string name="au4_webapps2_clear_cookies">Șterge cookie-urile și datele site-urilor</string>
+    <string name="au4_webapps2_clear_cookies_summary">Vă deconectează din toate aplicațiile web și elimină datele site-urilor din cache</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Eliminați toate cookie-urile și datele site-urilor din aplicațiile web?</string>
+    <string name="au4_webapps2_clear_cookies_done">Cookie-urile și datele site-urilor au fost șterse</string>
+    <string name="au4_webapps2_clear_cookies_action">Șterge</string>
+</resources>

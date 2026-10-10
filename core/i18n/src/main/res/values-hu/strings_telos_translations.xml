@@ -333,7 +333,6 @@
     <string name="floating_launcher_file_dock">Fájldokk</string>
     <string name="floating_launcher_file_dock_empty">Húzz szöveget, képeket vagy fájlokat egy fülre, hogy ideiglenesen itt tartsd őket.</string>
     <string name="floating_launcher_file_dock_copied">Másolva</string>
-    <string name="floating_launcher_zone_apps_empty">Nincs telepített alkalmazás.</string>
     <string name="floating_launcher_zone_apps_summary">Az itt hozzáadott alkalmazások megjelennek ennek a zónának a panelén. Hozzáadhatsz egy alkalmazást úgy is, hogy a kezdőképernyőről vagy az alkalmazások lapról ráhúzod az ikonját erre a zónára.</string>
     <string name="preference_category_grid_home">Kezdőképernyő rácsa</string>
     <string name="preference_category_grid_drawer">Keresési fiók rácsa</string>

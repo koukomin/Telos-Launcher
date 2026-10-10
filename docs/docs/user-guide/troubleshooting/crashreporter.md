@@ -4,6 +4,10 @@ When the launcher crashes, a notification is posted. When you tap on that notifi
 
 The crash reporter lists crashes and exceptions of the last 7 days. When there are none, it shows an empty state. The detail screen of an entry has **Share**, **Report on GitHub** (crashes only) and **Delete**.
 
+## Switching it off
+
+The **Crash reporter** switch at the top of the screen (on by default) controls whether crashes and handled exceptions are saved on the device. Reports never leave the device and are not part of backups. When it is off, nothing is recorded and the app still behaves and crashes as usual. **Delete all reports** removes every saved report.
+
 ## Crashes
 
 Crashes are marked with the <span class="material-symbols-rounded">error</span> icon. Crashes are unexpected errors that were not handled by launcher. They are often a consequence of bugs and should therefore be reported. You can click the <span class="material-symbols-rounded">bug_report</span> icon in the top right corner to create a new issue on GitHub. Make sure to fill in additional information like steps to reproduce (if possible) or what you were trying to do that lead to the crash.

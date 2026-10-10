@@ -19,6 +19,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.AlertDialog
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -96,10 +101,25 @@ fun OwncloudSettingsScreen() {
                         color = MaterialTheme.colorScheme.onSecondaryContainer,
                         style = MaterialTheme.typography.bodyLarge,
                     )
+                    var confirmSignOut by remember { mutableStateOf(false) }
+                    if (confirmSignOut) {
+                        AlertDialog(
+                            onDismissRequest = { confirmSignOut = false },
+                            title = { Text(stringResource(R.string.au4_confirms_oc_title)) },
+                            text = { Text(stringResource(R.string.au4_confirms_oc_message)) },
+                            confirmButton = {
+                                TextButton(onClick = {
+                                    confirmSignOut = false
+                                    viewModel.signOut()
+                                }) { Text(stringResource(R.string.au4_confirms_confirm)) }
+                            },
+                            dismissButton = { TextButton(onClick = { confirmSignOut = false }) { Text(stringResource(R.string.au4_confirms_cancel)) } },
+                        )
+                    }
                     Button(
                         modifier = Modifier.padding(top = 32.dp),
                         onClick = {
-                            viewModel.signOut()
+                            confirmSignOut = true
                         },
                         contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
                     ) {

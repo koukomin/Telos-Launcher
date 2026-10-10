@@ -19,6 +19,20 @@ object CrashReporter {
         Log.e("MM20", Log.getStackTraceString(e))
     }
 
+    fun isEnabled(): Boolean = CrashReporter.isEnabled()
+
+    fun setEnabled(context: Context, enabled: Boolean) {
+        CrashReporter.setEnabled(context, enabled)
+    }
+
+    /** Deletes all stored crash reports and exception logs. */
+    suspend fun deleteAllReports() {
+        withContext(Dispatchers.IO) {
+            val path = CrashReporter.getCrashReportPath()?.takeIf { it.isNotEmpty() } ?: CrashUtil.getDefaultPath()
+            File(path).listFiles()?.forEach { runCatching { it.delete() } }
+        }
+    }
+
     suspend fun getCrashReports(): List<CrashReport> {
         val files = withContext(Dispatchers.IO) {
             val now = System.currentTimeMillis()

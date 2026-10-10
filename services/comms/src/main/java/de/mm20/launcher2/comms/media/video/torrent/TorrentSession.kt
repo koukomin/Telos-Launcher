@@ -41,6 +41,10 @@ object TorrentSession {
             appContext = context.applicationContext
             prefs = appContext!!.getSharedPreferences("telos_torrent_session", Context.MODE_PRIVATE)
             _config.value = read(prefs!!)
+            proxy = TorrentProxy(
+                runCatching { TorrentProxyType.valueOf(prefs!!.getString("proxyType", "")!!) }.getOrDefault(TorrentProxyType.None),
+                prefs!!.getString("proxyHost", "").orEmpty(), prefs!!.getInt("proxyPort", 0),
+            )
         }
     }
 
@@ -57,6 +61,25 @@ object TorrentSession {
         if (sm != null) apply(sm, next, startup = false)
     }
 
+    @Volatile private var proxy = TorrentProxy()
+    val currentProxy: TorrentProxy get() = proxy
+
+    /**
+     * Sets the proxy for peers, trackers and host name lookups. Stored, and applied to the running session at once.
+     * With an incomplete proxy [acquire] refuses to start and a running session is pointed at a dead end, so nothing leaks.
+     */
+    fun setProxy(context: Context, p: TorrentProxy) {
+        init(context)
+        val clean = p.copy(host = p.host.trim())
+        synchronized(lock) {
+            if (clean == proxy) return
+            proxy = clean
+            prefs!!.edit().putString("proxyType", clean.type.name).putString("proxyHost", clean.host).putInt("proxyPort", clean.port).apply()
+        }
+        val sm = synchronized(lock) { manager }
+        if (sm != null) apply(sm, _config.value, startup = false)
+    }
+
     val isRunning: Boolean get() = synchronized(lock) { manager != null }
 
     /** The running session or null; never starts one */
@@ -66,6 +89,7 @@ object TorrentSession {
     fun acquire(context: Context, owner: Any): SessionManager {
         init(context)
         synchronized(lock) {
+            if (!proxy.valid) throw IllegalStateException("The proxy settings are incomplete")
             owners.add(owner)
             manager?.let { return it }
             runCatching { stopThread?.join(8000) }
@@ -159,6 +183,36 @@ object TorrentSession {
         p.setInteger(settings_pack.int_types.active_limit.swigValue(), c.activeLimit())
         p.setInteger(settings_pack.int_types.connections_limit.swigValue(), c.maxConnections)
         p.listenInterfaces(c.listenInterfaces())
+        fillProxy(p, proxy)
+    }
+
+    private fun fillProxy(p: SettingsPack, px: TorrentProxy) {
+        if (!px.enabled) {
+            p.setInteger(settings_pack.int_types.proxy_type.swigValue(), settings_pack.proxy_type_t.none.swigValue())
+            p.setBoolean(settings_pack.bool_types.anonymous_mode.swigValue(), false)
+            return
+        }
+        // an incomplete proxy (only reachable while a session runs) points at a closed local port: nothing goes around it
+        val ok = px.valid
+        val type = if (ok && px.type == TorrentProxyType.Http) settings_pack.proxy_type_t.http else settings_pack.proxy_type_t.socks5
+        p.setInteger(settings_pack.int_types.proxy_type.swigValue(), type.swigValue())
+        p.setString(settings_pack.string_types.proxy_hostname.swigValue(), if (ok) px.host else "127.0.0.1")
+        p.setInteger(settings_pack.int_types.proxy_port.swigValue(), if (ok) px.port else 1)
+        p.setBoolean(settings_pack.bool_types.proxy_peer_connections.swigValue(), true)
+        p.setBoolean(settings_pack.bool_types.proxy_tracker_connections.swigValue(), true)
+        p.setBoolean(settings_pack.bool_types.proxy_hostnames.swigValue(), true)
+        // anonymous mode: no identifying client data, no listen port announced to trackers
+        p.setBoolean(settings_pack.bool_types.anonymous_mode.swigValue(), true)
+        // these talk to the local network or the router directly, around the proxy
+        p.setBoolean(settings_pack.bool_types.enable_lsd.swigValue(), false)
+        p.setBoolean(settings_pack.bool_types.enable_upnp.swigValue(), false)
+        p.setBoolean(settings_pack.bool_types.enable_natpmp.swigValue(), false)
+        if (!ok || px.type == TorrentProxyType.Http) {
+            // an HTTP proxy cannot carry UDP: DHT and uTP would go around it (SOCKS5 relays UDP)
+            p.setBoolean(settings_pack.bool_types.enable_dht.swigValue(), false)
+            p.setBoolean(settings_pack.bool_types.enable_incoming_utp.swigValue(), false)
+            p.setBoolean(settings_pack.bool_types.enable_outgoing_utp.swigValue(), false)
+        }
     }
 
     private fun read(sp: SharedPreferences): TorrentConfig {

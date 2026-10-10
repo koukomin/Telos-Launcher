@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">رفض المكالمات الواردة من دول غير بلدك</string>
     <string name="au2_callsec_home_country">بلدك</string>
     <string name="au2_callsec_home_country_auto">تلقائي (SIM، الشبكة، اللغة)</string>
-    <string name="au2_dlsec_torrent_proxy">لا يمكن للتورنت استخدام وكيل؛ أوقف الوكيل لتنزيل التورنت</string>
-    <string name="au2_dlsec_torrent_proxy_note">لا يستخدم التورنت الوكيل. أثناء تشغيل الوكيل، لن يتم تنزيل ملفات التورنت وروابط magnet.</string>
     <string name="au2_dlsec_ftps_anyhost">قبول شهادة لاسم مضيف آخر</string>
     <string name="au2_dlsec_ftps_anyhost_summary">أقل أمانًا: يتم الوثوق بشهادة الخادم حتى لو صدرت لاسم مضيف مختلف</string>
     <string name="au2_dlsec_ftps_hostname_failed">شهادة الخادم لا تطابق اسم المضيف %1$s. إذا كنت تثق بهذا الخادم، فشغّل \"قبول شهادة لاسم مضيف آخر\" في الاتصال.</string>

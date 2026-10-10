@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Bevestigen</string>
+    <string name="au4_confirms_cancel">Annuleren</string>
+    <string name="au4_confirms_nc_title">Afmelden bij Nextcloud?</string>
+    <string name="au4_confirms_nc_message">Je Nextcloud-account wordt van deze launcher verwijderd. Je kunt op elk moment weer inloggen.</string>
+    <string name="au4_confirms_oc_title">Afmelden bij ownCloud?</string>
+    <string name="au4_confirms_oc_message">Je ownCloud-account wordt van deze launcher verwijderd. Je kunt op elk moment weer inloggen.</string>
+    <string name="au4_confirms_plugin_title">Plug-in verwijderen?</string>
+    <string name="au4_confirms_plugin_message">De plug-in-app wordt van je apparaat verwijderd.</string>
+    <string name="au4_confirms_counts_title">Tellers resetten?</string>
+    <string name="au4_confirms_counts_message">Alle tellers van de blokkeerlijst worden op nul gezet.</string>
+    <string name="au4_confirms_bulk_title">Toepassen op alle getoonde apps?</string>
+    <string name="au4_confirms_bulk_block_all">Alle netwerktoegang blokkeren voor %1$d apps?</string>
+    <string name="au4_confirms_bulk_allow_all">Alle netwerktoegang toestaan voor %1$d apps?</string>
+    <string name="au4_confirms_bulk_block_wifi">Wi-Fi-toegang blokkeren voor %1$d apps?</string>
+    <string name="au4_confirms_bulk_block_mobile">Toegang tot mobiele data blokkeren voor %1$d apps?</string>
+    <string name="au4_noteslink_link_existing">Bestaand bestand koppelen</string>
+    <string name="au4_noteslink_create_new">Nieuw bestand maken</string>
+    <string name="au4_noteslink_cancel">Annuleren</string>
+    <string name="au4_settingsnew1_redial_attempts">Aantal belpogingen</string>
+    <string name="au4_settingsnew1_redial_delay">Wachttijd tussen pogingen</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Crashrapportage</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Sla crashrapporten en vastgelegde fouten op dit apparaat op. Als dit uit staat, wordt niets vastgelegd; de app werkt gewoon door.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Alle rapporten verwijderen</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Verwijder alle opgeslagen crashrapporten en foutlogboeken</string>
+    <string name="au4_torrentproxy_note_http">Torrents gebruiken de proxy voor peers, trackers en hostnaam-opzoekingen. Een HTTP-proxy kan geen UDP-verkeer doorgeven, dus DHT en uTP worden uitgeschakeld. Lokale detectie, UPnP en NAT-PMP worden uitgeschakeld zolang een proxy actief is.</string>
+    <string name="au4_torrentproxy_note_socks">Torrents gebruiken de proxy voor peers, trackers en hostnaam-opzoekingen. Lokale detectie, UPnP en NAT-PMP worden uitgeschakeld zolang een proxy actief is. DHT en uTP werken alleen als je SOCKS5-proxy UDP ondersteunt.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Standaard (mobiel)</string>
+    <string name="au4_webapps2_user_agent_desktop">Desktop</string>
+    <string name="au4_webapps2_user_agent_custom">Aangepast</string>
+    <string name="au4_webapps2_user_agent_custom_title">Aangepaste user agent</string>
+    <string name="au4_webapps2_user_agent_custom_hint">User-agent-tekenreeks</string>
+    <string name="au4_webapps2_cookies">Cookies accepteren</string>
+    <string name="au4_webapps2_cookies_summary">Websites in web-apps kunnen cookies opslaan. Zet uit om alle cookies te blokkeren; je blijft dan mogelijk niet ingelogd.</string>
+    <string name="au4_webapps2_third_party_cookies">Cookies van derden accepteren</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Sta toe dat ingesloten content van andere sites cookies plaatst. Standaard uitgeschakeld voor de privacy.</string>
+    <string name="au4_webapps2_clear_cookies">Cookies en sitegegevens wissen</string>
+    <string name="au4_webapps2_clear_cookies_summary">Logt je uit bij alle web-apps en verwijdert opgeslagen sitegegevens</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Alle cookies en sitegegevens van web-apps verwijderen?</string>
+    <string name="au4_webapps2_clear_cookies_done">Cookies en sitegegevens gewist</string>
+    <string name="au4_webapps2_clear_cookies_action">Wissen</string>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Patvirtinti</string>
+    <string name="au4_confirms_cancel">Atšaukti</string>
+    <string name="au4_confirms_nc_title">Atsijungti nuo Nextcloud?</string>
+    <string name="au4_confirms_nc_message">Jūsų Nextcloud paskyra bus pašalinta iš šios paleidyklės. Prisijungti iš naujo galite bet kada.</string>
+    <string name="au4_confirms_oc_title">Atsijungti nuo ownCloud?</string>
+    <string name="au4_confirms_oc_message">Jūsų ownCloud paskyra bus pašalinta iš šios paleidyklės. Prisijungti iš naujo galite bet kada.</string>
+    <string name="au4_confirms_plugin_title">Pašalinti papildinį?</string>
+    <string name="au4_confirms_plugin_message">Papildinio programa bus pašalinta iš jūsų įrenginio.</string>
+    <string name="au4_confirms_counts_title">Nustatyti skaitiklius iš naujo?</string>
+    <string name="au4_confirms_counts_message">Visi blokavimo sąrašo skaitikliai bus nustatyti į nulį.</string>
+    <string name="au4_confirms_bulk_title">Taikyti visoms rodomoms programoms?</string>
+    <string name="au4_confirms_bulk_block_all">Blokuoti visą tinklo prieigą %1$d programoms?</string>
+    <string name="au4_confirms_bulk_allow_all">Leisti visą tinklo prieigą %1$d programoms?</string>
+    <string name="au4_confirms_bulk_block_wifi">Blokuoti Wi-Fi prieigą %1$d programoms?</string>
+    <string name="au4_confirms_bulk_block_mobile">Blokuoti mobiliojo ryšio duomenų prieigą %1$d programoms?</string>
+    <string name="au4_noteslink_link_existing">Susieti esamą failą</string>
+    <string name="au4_noteslink_create_new">Sukurti naują failą</string>
+    <string name="au4_noteslink_cancel">Atšaukti</string>
+    <string name="au4_settingsnew1_redial_attempts">Pakartotinio skambinimo bandymai</string>
+    <string name="au4_settingsnew1_redial_delay">Pauzė tarp bandymų</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Klaidų pranešimo įrankis</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Įrašyti strigčių ataskaitas ir registruotas klaidas šiame įrenginyje. Išjungus niekas neįrašoma; programa vis tiek veikia įprastai.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Ištrinti visas ataskaitas</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Pašalinti visas įrašytas strigčių ataskaitas ir klaidų žurnalus</string>
+    <string name="au4_torrentproxy_note_http">Torrentai naudoja tarpinį serverį siųstuvams, sekikliams ir pagrindinių kompiuterių vardų paieškai. HTTP tarpinis serveris negali perduoti UDP srauto, todėl DHT ir uTP išjungiami, o vietinis aptikimas, UPnP ir NAT-PMP išjungiami, kol įjungtas tarpinis serveris.</string>
+    <string name="au4_torrentproxy_note_socks">Torrentai naudoja tarpinį serverį siųstuvams, sekikliams ir pagrindinių kompiuterių vardų paieškai. Vietinis aptikimas, UPnP ir NAT-PMP išjungiami, kol įjungtas tarpinis serveris. DHT ir uTP veikia tik tada, jei jūsų SOCKS5 tarpinis serveris palaiko UDP.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Numatytasis (mobilusis)</string>
+    <string name="au4_webapps2_user_agent_desktop">Staliniam kompiuteriui</string>
+    <string name="au4_webapps2_user_agent_custom">Pasirinktinis</string>
+    <string name="au4_webapps2_user_agent_custom_title">Pasirinktinis user agent</string>
+    <string name="au4_webapps2_user_agent_custom_hint">User agent eilutė</string>
+    <string name="au4_webapps2_cookies">Priimti slapukus</string>
+    <string name="au4_webapps2_cookies_summary">Žiniatinklio programų svetainės gali saugoti slapukus. Išjunkite, kad užblokuotumėte visus slapukus; galite nebegalėti likti prisijungę.</string>
+    <string name="au4_webapps2_third_party_cookies">Priimti trečiųjų šalių slapukus</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Leisti kitų svetainių įterptajam turiniui nustatyti slapukus. Privatumo sumetimais pagal numatytuosius nustatymus išjungta.</string>
+    <string name="au4_webapps2_clear_cookies">Išvalyti slapukus ir svetainių duomenis</string>
+    <string name="au4_webapps2_clear_cookies_summary">Atjungia nuo visų žiniatinklio programų ir pašalina talpykloje esančius svetainių duomenis</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Pašalinti visus žiniatinklio programų slapukus ir svetainių duomenis?</string>
+    <string name="au4_webapps2_clear_cookies_done">Slapukai ir svetainių duomenys išvalyti</string>
+    <string name="au4_webapps2_clear_cookies_action">Išvalyti</string>
+</resources>

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Potwierdź</string>
+    <string name="au4_confirms_cancel">Anuluj</string>
+    <string name="au4_confirms_nc_title">Wylogować z Nextcloud?</string>
+    <string name="au4_confirms_nc_message">Twoje konto Nextcloud zostanie usunięte z tego launchera. Możesz zalogować się ponownie w dowolnym momencie.</string>
+    <string name="au4_confirms_oc_title">Wylogować z ownCloud?</string>
+    <string name="au4_confirms_oc_message">Twoje konto ownCloud zostanie usunięte z tego launchera. Możesz zalogować się ponownie w dowolnym momencie.</string>
+    <string name="au4_confirms_plugin_title">Odinstalować wtyczkę?</string>
+    <string name="au4_confirms_plugin_message">Aplikacja wtyczki zostanie odinstalowana z urządzenia.</string>
+    <string name="au4_confirms_counts_title">Zresetować liczniki?</string>
+    <string name="au4_confirms_counts_message">Wszystkie liczniki blokad zostaną wyzerowane.</string>
+    <string name="au4_confirms_bulk_title">Zastosować do wszystkich wyświetlanych aplikacji?</string>
+    <string name="au4_confirms_bulk_block_all">Zablokować cały dostęp do sieci dla %1$d aplikacji?</string>
+    <string name="au4_confirms_bulk_allow_all">Zezwolić na cały dostęp do sieci dla %1$d aplikacji?</string>
+    <string name="au4_confirms_bulk_block_wifi">Zablokować dostęp do Wi-Fi dla %1$d aplikacji?</string>
+    <string name="au4_confirms_bulk_block_mobile">Zablokować dostęp do danych mobilnych dla %1$d aplikacji?</string>
+    <string name="au4_noteslink_link_existing">Połącz istniejący plik</string>
+    <string name="au4_noteslink_create_new">Utwórz nowy plik</string>
+    <string name="au4_noteslink_cancel">Anuluj</string>
+    <string name="au4_settingsnew1_redial_attempts">Liczba prób ponownego połączenia</string>
+    <string name="au4_settingsnew1_redial_delay">Opóźnienie między próbami</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Raportowanie awarii</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Zapisuj raporty o awariach i zarejestrowane błędy na tym urządzeniu. Gdy wyłączone, nic nie jest zapisywane; aplikacja działa normalnie.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Usuń wszystkie raporty</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Usuń wszystkie zapisane raporty o awariach i dzienniki błędów</string>
+    <string name="au4_torrentproxy_note_http">Torrenty używają serwera proxy do łączenia z peerami, trackerami i rozpoznawania nazw hostów. Proxy HTTP nie przesyła ruchu UDP, więc DHT i uTP są wyłączone, a wykrywanie lokalne, UPnP i NAT-PMP są wyłączone, gdy proxy jest włączone.</string>
+    <string name="au4_torrentproxy_note_socks">Torrenty używają serwera proxy do łączenia z peerami, trackerami i rozpoznawania nazw hostów. Wykrywanie lokalne, UPnP i NAT-PMP są wyłączone, gdy proxy jest włączone. DHT i uTP działają tylko wtedy, gdy Twoje proxy SOCKS5 obsługuje UDP.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Domyślny (mobilny)</string>
+    <string name="au4_webapps2_user_agent_desktop">Komputer</string>
+    <string name="au4_webapps2_user_agent_custom">Niestandardowy</string>
+    <string name="au4_webapps2_user_agent_custom_title">Niestandardowy user agent</string>
+    <string name="au4_webapps2_user_agent_custom_hint">Ciąg user agent</string>
+    <string name="au4_webapps2_cookies">Akceptuj pliki cookie</string>
+    <string name="au4_webapps2_cookies_summary">Strony w aplikacjach internetowych mogą zapisywać pliki cookie. Wyłącz, aby zablokować wszystkie pliki cookie; możesz nie pozostać zalogowany.</string>
+    <string name="au4_webapps2_third_party_cookies">Akceptuj pliki cookie stron trzecich</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Zezwalaj osadzonym treściom z innych witryn na ustawianie plików cookie. Domyślnie wyłączone ze względu na prywatność.</string>
+    <string name="au4_webapps2_clear_cookies">Wyczyść pliki cookie i dane witryn</string>
+    <string name="au4_webapps2_clear_cookies_summary">Wylogowuje ze wszystkich aplikacji internetowych i usuwa zapisane dane witryn</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Usunąć wszystkie pliki cookie i dane witryn aplikacji internetowych?</string>
+    <string name="au4_webapps2_clear_cookies_done">Wyczyszczono pliki cookie i dane witryn</string>
+    <string name="au4_webapps2_clear_cookies_action">Wyczyść</string>
+</resources>

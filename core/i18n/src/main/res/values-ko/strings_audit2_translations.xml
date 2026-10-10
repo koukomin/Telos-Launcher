@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">자국 외 국가에서 온 전화 거부</string>
     <string name="au2_callsec_home_country">자국</string>
     <string name="au2_callsec_home_country_auto">자동 (SIM, 네트워크, 언어)</string>
-    <string name="au2_dlsec_torrent_proxy">토렌트는 프록시를 사용할 수 없습니다. 토렌트를 다운로드하려면 프록시를 끄세요</string>
-    <string name="au2_dlsec_torrent_proxy_note">토렌트는 프록시를 사용하지 않습니다. 프록시가 켜져 있는 동안에는 토렌트와 마그넷 링크를 다운로드할 수 없습니다.</string>
     <string name="au2_dlsec_ftps_anyhost">다른 호스트 이름의 인증서 허용</string>
     <string name="au2_dlsec_ftps_anyhost_summary">보안 수준 낮음: 서버 인증서가 다른 호스트 이름용으로 발급되었더라도 신뢰합니다</string>
     <string name="au2_dlsec_ftps_hostname_failed">서버의 인증서가 호스트 이름 %1$s과(와) 일치하지 않습니다. 이 서버를 신뢰한다면 연결 설정에서 \"다른 호스트 이름의 인증서 허용\"을 켜세요.</string>

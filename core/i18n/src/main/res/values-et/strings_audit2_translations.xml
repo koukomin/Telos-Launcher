@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Lükka tagasi kõned muudest riikidest kui sinu koduriik</string>
     <string name="au2_callsec_home_country">Koduriik</string>
     <string name="au2_callsec_home_country_auto">Automaatne (SIM, võrk, keel)</string>
-    <string name="au2_dlsec_torrent_proxy">Torrentid ei saa kasutada puhverserverit; torrentite allalaadimiseks lülita puhverserver välja</string>
-    <string name="au2_dlsec_torrent_proxy_note">Torrentid ei kasuta puhverserverit. Kui puhverserver on sees, torrenteid ja magnetlinke alla ei laadita.</string>
     <string name="au2_dlsec_ftps_anyhost">Nõustu teise hostinime sertifikaadiga</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Vähem turvaline: serveri sertifikaati usaldatakse ka siis, kui see on välja antud teisele hostinimele</string>
     <string name="au2_dlsec_ftps_hostname_failed">Serveri sertifikaat ei vasta hostinimele %1$s. Kui usaldad seda serverit, lülita ühenduse seadetes sisse \"Nõustu teise hostinime sertifikaadiga\".</string>

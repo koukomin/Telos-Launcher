@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">確認</string>
+    <string name="au4_confirms_cancel">キャンセル</string>
+    <string name="au4_confirms_nc_title">Nextcloud からサインアウトしますか？</string>
+    <string name="au4_confirms_nc_message">お使いの Nextcloud アカウントはこのランチャーから削除されます。いつでも再度サインインできます。</string>
+    <string name="au4_confirms_oc_title">ownCloud からサインアウトしますか？</string>
+    <string name="au4_confirms_oc_message">お使いの ownCloud アカウントはこのランチャーから削除されます。いつでも再度サインインできます。</string>
+    <string name="au4_confirms_plugin_title">プラグインをアンインストールしますか？</string>
+    <string name="au4_confirms_plugin_message">プラグインアプリがデバイスからアンインストールされます。</string>
+    <string name="au4_confirms_counts_title">カウントをリセットしますか？</string>
+    <string name="au4_confirms_counts_message">ブロックリストのすべてのブロックカウンターが 0 に戻ります。</string>
+    <string name="au4_confirms_bulk_title">表示中のすべてのアプリに適用しますか？</string>
+    <string name="au4_confirms_bulk_block_all">%1$d 個のアプリのすべてのネットワークアクセスをブロックしますか？</string>
+    <string name="au4_confirms_bulk_allow_all">%1$d 個のアプリのすべてのネットワークアクセスを許可しますか？</string>
+    <string name="au4_confirms_bulk_block_wifi">%1$d 個のアプリの Wi-Fi アクセスをブロックしますか？</string>
+    <string name="au4_confirms_bulk_block_mobile">%1$d 個のアプリのモバイルデータアクセスをブロックしますか？</string>
+    <string name="au4_noteslink_link_existing">既存のファイルをリンク</string>
+    <string name="au4_noteslink_create_new">新しいファイルを作成</string>
+    <string name="au4_noteslink_cancel">キャンセル</string>
+    <string name="au4_settingsnew1_redial_attempts">再発信の回数</string>
+    <string name="au4_settingsnew1_redial_delay">再試行の間隔</string>
+    <string name="au4_settingsnew1_seconds">%1$d 秒</string>
+    <string name="au4_settingsnew1_crash_enable">クラッシュレポーター</string>
+    <string name="au4_settingsnew1_crash_enable_summary">クラッシュレポートと記録されたエラーをこのデバイスに保存します。オフにすると何も記録されませんが、アプリは通常どおり動作します。</string>
+    <string name="au4_settingsnew1_crash_delete_all">すべてのレポートを削除</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">保存されたすべてのクラッシュレポートとエラーログを削除します</string>
+    <string name="au4_torrentproxy_note_http">トレントはピア、トラッカー、ホスト名の解決にプロキシを使用します。HTTP プロキシは UDP 通信を扱えないため、DHT と uTP は無効になります。プロキシの使用中は、ローカル探索、UPnP、NAT-PMP も無効になります。</string>
+    <string name="au4_torrentproxy_note_socks">トレントはピア、トラッカー、ホスト名の解決にプロキシを使用します。プロキシの使用中は、ローカル探索、UPnP、NAT-PMP は無効になります。DHT と uTP は、お使いの SOCKS5 プロキシが UDP に対応している場合のみ動作します。</string>
+    <string name="au4_webapps2_user_agent">ユーザーエージェント</string>
+    <string name="au4_webapps2_user_agent_default">デフォルト（モバイル）</string>
+    <string name="au4_webapps2_user_agent_desktop">デスクトップ</string>
+    <string name="au4_webapps2_user_agent_custom">カスタム</string>
+    <string name="au4_webapps2_user_agent_custom_title">カスタムユーザーエージェント</string>
+    <string name="au4_webapps2_user_agent_custom_hint">ユーザーエージェント文字列</string>
+    <string name="au4_webapps2_cookies">Cookie を受け入れる</string>
+    <string name="au4_webapps2_cookies_summary">ウェブアプリ内のウェブサイトが Cookie を保存できます。オフにするとすべての Cookie をブロックしますが、サインインを維持できない場合があります。</string>
+    <string name="au4_webapps2_third_party_cookies">サードパーティ Cookie を受け入れる</string>
+    <string name="au4_webapps2_third_party_cookies_summary">他のサイトの埋め込みコンテンツによる Cookie の設定を許可します。プライバシー保護のため、デフォルトでは無効です。</string>
+    <string name="au4_webapps2_clear_cookies">Cookie とサイトデータを消去</string>
+    <string name="au4_webapps2_clear_cookies_summary">すべてのウェブアプリからサインアウトし、キャッシュされたサイトデータを削除します</string>
+    <string name="au4_webapps2_clear_cookies_confirm">ウェブアプリのすべての Cookie とサイトデータを削除しますか？</string>
+    <string name="au4_webapps2_clear_cookies_done">Cookie とサイトデータを消去しました</string>
+    <string name="au4_webapps2_clear_cookies_action">消去</string>
+</resources>

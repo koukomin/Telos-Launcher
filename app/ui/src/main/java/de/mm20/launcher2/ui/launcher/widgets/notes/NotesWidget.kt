@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuGroup
@@ -111,6 +112,37 @@ fun NotesWidget(
         it ?: return@rememberLauncherForActivityResult
         viewModel.linkFile(context, it)
     }
+    val linkExistingFileLauncher = rememberLauncherForActivityResult(
+        LinkExistingFileContract()
+    ) {
+        it ?: return@rememberLauncherForActivityResult
+        viewModel.linkFile(context, it)
+    }
+    var showLinkChooser by remember { mutableStateOf(false) }
+    if (showLinkChooser) {
+        AlertDialog(
+            onDismissRequest = { showLinkChooser = false },
+            title = { Text(stringResource(R.string.note_widget_link_file)) },
+            text = {
+                Column {
+                    TextButton(onClick = {
+                        showLinkChooser = false
+                        linkExistingFileLauncher.launch(arrayOf("text/*", "application/octet-stream"))
+                    }) { Text(stringResource(R.string.au4_noteslink_link_existing)) }
+                    TextButton(onClick = {
+                        showLinkChooser = false
+                        linkFileLauncher.launch(getDefaultNoteFileName(context))
+                    }) { Text(stringResource(R.string.au4_noteslink_create_new)) }
+                }
+            },
+            confirmButton = {},
+            dismissButton = {
+                TextButton(onClick = { showLinkChooser = false }) {
+                    Text(stringResource(R.string.au4_noteslink_cancel))
+                }
+            },
+        )
+    }
 
     val text by viewModel.noteText
     if (viewModel.linkedFileConflict.value) {
@@ -172,9 +204,7 @@ fun NotesWidget(
                         IconButton(
                             onClick = {
                                 if (widget.config.linkedFile == null) {
-                                    linkFileLauncher.launch(
-                                        getDefaultNoteFileName(context)
-                                    )
+                                    showLinkChooser = true
                                 } else {
                                     viewModel.unlinkFile(context)
                                 }
@@ -212,6 +242,15 @@ fun NotesWidget(
             }
         }
 
+        AnimatedVisibility(
+            text.text.isBlank() && (viewModel.linkedFileReadError.value ||
+                viewModel.linkedFileSavingState.value == LinkedFileSavingState.Error)
+        ) {
+            Row(modifier = Modifier.padding(start = 4.dp, end = 4.dp, bottom = 4.dp)) {
+                NoteFileErrorChip(viewModel, onShow = { readWriteErrorSheetText = it })
+            }
+        }
+
         AnimatedVisibility(text.text.isNotBlank()) {
             var showMenu by remember { mutableStateOf(false) }
             Row(
@@ -220,39 +259,7 @@ fun NotesWidget(
                     .padding(start = 4.dp, end = 4.dp, bottom = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                if (viewModel.linkedFileSavingState.value == LinkedFileSavingState.Error) {
-                    TextButton(
-                        colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
-                        onClick = {
-                            readWriteErrorSheetText =
-                                context.getString(R.string.note_widget_file_write_error_description)
-                        }) {
-                        Icon(
-                            modifier = Modifier
-                                .padding(end = ButtonDefaults.IconSpacing)
-                                .size(ButtonDefaults.IconSize),
-                            painter = painterResource(R.drawable.error_20px),
-                            contentDescription = null,
-                        )
-                        Text(stringResource(R.string.note_widget_file_write_error))
-                    }
-                } else if (viewModel.linkedFileReadError.value) {
-                    TextButton(
-                        colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
-                        onClick = {
-                            readWriteErrorSheetText =
-                                context.getString(R.string.note_widget_file_read_error_description)
-                        }) {
-                        Icon(
-                            modifier = Modifier
-                                .padding(end = ButtonDefaults.IconSpacing)
-                                .size(ButtonDefaults.IconSize),
-                            painter = painterResource(R.drawable.error_20px),
-                            contentDescription = null,
-                        )
-                        Text(stringResource(R.string.note_widget_file_read_error))
-                    }
-                }
+                NoteFileErrorChip(viewModel, onShow = { readWriteErrorSheetText = it })
                 Spacer(modifier = Modifier.weight(1f))
                 Box {
                     Tooltip(
@@ -320,7 +327,7 @@ fun NotesWidget(
                                         Icon(painterResource(R.drawable.link_24px), null)
                                     },
                                     onClick = {
-                                        linkFileLauncher.launch(getDefaultNoteFileName(context))
+                                        showLinkChooser = true
                                         showMenu = false
                                     },
                                 )
@@ -381,12 +388,55 @@ fun NotesWidget(
         message = readWriteErrorSheetText,
         onDismiss = { readWriteErrorSheetText = null },
         onRelink = {
-            linkFileLauncher.launch(getDefaultNoteFileName(context))
+            showLinkChooser = true
         },
         onUnlink = {
             viewModel.unlinkFile(context)
         }
     )
+}
+
+private class LinkExistingFileContract : ActivityResultContracts.OpenDocument() {
+    override fun createIntent(context: Context, input: Array<String>): Intent {
+        return super.createIntent(context, input).apply {
+            addFlags(
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION or
+                    Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
+            )
+        }
+    }
+}
+
+@Composable
+private fun NoteFileErrorChip(viewModel: NotesWidgetVM, onShow: (String) -> Unit) {
+    val context = LocalContext.current
+    val isWrite = viewModel.linkedFileSavingState.value == LinkedFileSavingState.Error
+    if (!isWrite && !viewModel.linkedFileReadError.value) return
+    TextButton(
+        colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+        onClick = {
+            onShow(
+                context.getString(
+                    if (isWrite) R.string.note_widget_file_write_error_description
+                    else R.string.note_widget_file_read_error_description
+                )
+            )
+        }) {
+        Icon(
+            modifier = Modifier
+                .padding(end = ButtonDefaults.IconSpacing)
+                .size(ButtonDefaults.IconSize),
+            painter = painterResource(R.drawable.error_20px),
+            contentDescription = null,
+        )
+        Text(
+            stringResource(
+                if (isWrite) R.string.note_widget_file_write_error
+                else R.string.note_widget_file_read_error
+            )
+        )
+    }
 }
 
 @Composable

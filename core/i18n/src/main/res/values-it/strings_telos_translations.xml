@@ -333,7 +333,6 @@
     <string name="floating_launcher_file_dock">File Dock</string>
     <string name="floating_launcher_file_dock_empty">Trascina testo, immagini o file su una linguetta per tenerli qui temporaneamente.</string>
     <string name="floating_launcher_file_dock_copied">Copiato</string>
-    <string name="floating_launcher_zone_apps_empty">Nessuna app installata.</string>
     <string name="floating_launcher_zone_apps_summary">Le app che aggiungi qui compaiono nel pannello di questa zona. Puoi anche trascinare l\'icona di un\'app dalla home o dalla scheda app su questa zona per aggiungerla.</string>
     <string name="preference_category_grid_home">Griglia della schermata home</string>
     <string name="preference_category_grid_drawer">Griglia del cassetto di ricerca</string>

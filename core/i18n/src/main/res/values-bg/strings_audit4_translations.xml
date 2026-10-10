@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Потвърждаване</string>
+    <string name="au4_confirms_cancel">Отказ</string>
+    <string name="au4_confirms_nc_title">Изход от Nextcloud?</string>
+    <string name="au4_confirms_nc_message">Вашият акаунт в Nextcloud ще бъде премахнат от този лаунчър. Можете да влезете отново по всяко време.</string>
+    <string name="au4_confirms_oc_title">Изход от ownCloud?</string>
+    <string name="au4_confirms_oc_message">Вашият акаунт в ownCloud ще бъде премахнат от този лаунчър. Можете да влезете отново по всяко време.</string>
+    <string name="au4_confirms_plugin_title">Деинсталиране на добавката?</string>
+    <string name="au4_confirms_plugin_message">Приложението на добавката ще бъде деинсталирано от устройството ви.</string>
+    <string name="au4_confirms_counts_title">Нулиране на броячите?</string>
+    <string name="au4_confirms_counts_message">Всички броячи на блокиранията в списъка за блокиране ще бъдат върнати на нула.</string>
+    <string name="au4_confirms_bulk_title">Прилагане към всички показани приложения?</string>
+    <string name="au4_confirms_bulk_block_all">Блокиране на целия мрежов достъп за %1$d приложения?</string>
+    <string name="au4_confirms_bulk_allow_all">Разрешаване на целия мрежов достъп за %1$d приложения?</string>
+    <string name="au4_confirms_bulk_block_wifi">Блокиране на достъпа до Wi-Fi за %1$d приложения?</string>
+    <string name="au4_confirms_bulk_block_mobile">Блокиране на достъпа до мобилни данни за %1$d приложения?</string>
+    <string name="au4_noteslink_link_existing">Свързване на съществуващ файл</string>
+    <string name="au4_noteslink_create_new">Създаване на нов файл</string>
+    <string name="au4_noteslink_cancel">Отказ</string>
+    <string name="au4_settingsnew1_redial_attempts">Опити за повторно набиране</string>
+    <string name="au4_settingsnew1_redial_delay">Забавяне между опитите</string>
+    <string name="au4_settingsnew1_seconds">%1$d сек</string>
+    <string name="au4_settingsnew1_crash_enable">Докладване на сривове</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Запазване на отчети за сривове и записани грешки на това устройство. Когато е изключено, нищо не се записва; приложението продължава да работи нормално.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Изтриване на всички отчети</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Премахване на всички запазени отчети за сривове и дневници на грешки</string>
+    <string name="au4_torrentproxy_note_http">Торентите използват прокси за пирове, тракери и търсене на имена на хостове. HTTP прокси не може да пренася UDP трафик, затова DHT и uTP са изключени, а локалното откриване, UPnP и NAT-PMP са изключени, докато проксито е включено.</string>
+    <string name="au4_torrentproxy_note_socks">Торентите използват прокси за пирове, тракери и търсене на имена на хостове. Локалното откриване, UPnP и NAT-PMP са изключени, докато проксито е включено. DHT и uTP работят само ако вашето SOCKS5 прокси поддържа UDP.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">По подразбиране (мобилен)</string>
+    <string name="au4_webapps2_user_agent_desktop">Настолен</string>
+    <string name="au4_webapps2_user_agent_custom">Персонализиран</string>
+    <string name="au4_webapps2_user_agent_custom_title">Персонализиран user agent</string>
+    <string name="au4_webapps2_user_agent_custom_hint">Низ на user agent</string>
+    <string name="au4_webapps2_cookies">Приемане на бисквитки</string>
+    <string name="au4_webapps2_cookies_summary">Уебсайтовете в уеб приложенията могат да съхраняват бисквитки. Изключете, за да блокирате всички бисквитки; може да не останете влезли в профила си.</string>
+    <string name="au4_webapps2_third_party_cookies">Приемане на бисквитки от трети страни</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Позволява на вграденото съдържание от други сайтове да задава бисквитки. По подразбиране е изключено за по-добра поверителност.</string>
+    <string name="au4_webapps2_clear_cookies">Изчистване на бисквитки и данни на сайтове</string>
+    <string name="au4_webapps2_clear_cookies_summary">Изключва ви от всички уеб приложения и премахва кешираните данни на сайтове</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Да се премахнат ли всички бисквитки и данни на сайтове на уеб приложенията?</string>
+    <string name="au4_webapps2_clear_cookies_done">Бисквитките и данните на сайтове са изчистени</string>
+    <string name="au4_webapps2_clear_cookies_action">Изчистване</string>
+</resources>

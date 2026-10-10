@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au4_confirms_confirm">Confirm</string>
+    <string name="au4_confirms_cancel">Cancel</string>
+    <string name="au4_confirms_nc_title">Sign out of Nextcloud?</string>
+    <string name="au4_confirms_nc_message">Your Nextcloud account will be removed from this launcher. You can sign in again at any time.</string>
+    <string name="au4_confirms_oc_title">Sign out of ownCloud?</string>
+    <string name="au4_confirms_oc_message">Your ownCloud account will be removed from this launcher. You can sign in again at any time.</string>
+    <string name="au4_confirms_plugin_title">Uninstall plugin?</string>
+    <string name="au4_confirms_plugin_message">The plugin app will be uninstalled from your device.</string>
+    <string name="au4_confirms_counts_title">Reset counts?</string>
+    <string name="au4_confirms_counts_message">All blocklist block counters will be set back to zero.</string>
+    <string name="au4_confirms_bulk_title">Apply to all shown apps?</string>
+    <string name="au4_confirms_bulk_block_all">Block all network access for %1$d apps?</string>
+    <string name="au4_confirms_bulk_allow_all">Allow all network access for %1$d apps?</string>
+    <string name="au4_confirms_bulk_block_wifi">Block Wi-Fi access for %1$d apps?</string>
+    <string name="au4_confirms_bulk_block_mobile">Block mobile data access for %1$d apps?</string>
+</resources>

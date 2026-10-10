@@ -363,7 +363,6 @@
     <string name="floating_launcher_file_dock">Fildock</string>
     <string name="floating_launcher_file_dock_empty">Træk tekst, billeder eller filer over på en fane for at opbevare dem midlertidigt her.</string>
     <string name="floating_launcher_file_dock_copied">Kopieret</string>
-    <string name="floating_launcher_zone_apps_empty">Ingen apps installeret.</string>
     <string name="floating_launcher_zone_apps_summary">Apps, du tilføjer her, vises i denne zones panel. Du kan også trække et app-ikon fra startskærmen eller appfanen over på denne zone for at tilføje det.</string>
     <string name="preference_category_grid_home">Gitter på startskærm</string>
     <string name="preference_category_grid_drawer">Gitter i søgeskuffe</string>

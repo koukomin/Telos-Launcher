@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Diúltaigh do ghlaonna ó thíortha seachas do thír dhúchais</string>
     <string name="au2_callsec_home_country">Tír dhúchais</string>
     <string name="au2_callsec_home_country_auto">Uathoibríoch (SIM, líonra, teanga)</string>
-    <string name="au2_dlsec_torrent_proxy">Ní féidir le torrents seachfhreastalaí a úsáid; múch an seachfhreastalaí chun torrents a íoslódáil</string>
-    <string name="au2_dlsec_torrent_proxy_note">Ní úsáideann torrents an seachfhreastalaí. Cé go bhfuil seachfhreastalaí ar siúl, ní íoslódálfar torrents ná naisc maighnéid.</string>
     <string name="au2_dlsec_ftps_anyhost">Glac le teastas d\'óstainm eile</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Níos lú slándála: tugtar iontaoibh do theastas an fhreastalaí fiú má eisíodh é d\'óstainm eile</string>
     <string name="au2_dlsec_ftps_hostname_failed">Ní hionann teastas an fhreastalaí agus an t-óstainm %1$s. Má theastaíonn uait iontaoibh a thabhairt don fhreastalaí seo, cuir \"Glac le teastas d\'óstainm eile\" ar siúl sa nasc.</string>

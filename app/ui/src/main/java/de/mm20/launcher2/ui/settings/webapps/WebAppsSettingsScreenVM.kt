@@ -67,6 +67,37 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setSwipeToSwitchEnabled(enabled: Boolean) = browsingSettings.setSwipeToSwitchEnabled(enabled)
 
+    val userAgentMode = browsingSettings.userAgentMode
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "default")
+
+    fun setUserAgentMode(mode: String) = browsingSettings.setUserAgentMode(mode)
+
+    val customUserAgent = browsingSettings.customUserAgent
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
+
+    fun setCustomUserAgent(userAgent: String) =
+        browsingSettings.setCustomUserAgent(WebAppUserAgents.sanitize(userAgent))
+
+    val cookiesEnabled = browsingSettings.cookiesEnabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+
+    fun setCookiesEnabled(enabled: Boolean) = browsingSettings.setCookiesEnabled(enabled)
+
+    val thirdPartyCookiesEnabled = browsingSettings.thirdPartyCookiesEnabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+    fun setThirdPartyCookiesEnabled(enabled: Boolean) =
+        browsingSettings.setThirdPartyCookiesEnabled(enabled)
+
+    /** Removes all cookies and web storage of the embedded web app renderer. */
+    fun clearCookiesAndSiteData(onDone: () -> Unit) {
+        android.webkit.CookieManager.getInstance().removeAllCookies { _ ->
+            android.webkit.CookieManager.getInstance().flush()
+        }
+        android.webkit.WebStorage.getInstance().deleteAllData()
+        onDone()
+    }
+
     val groupsEnabled = browsingSettings.groupsEnabled
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 

@@ -371,7 +371,6 @@
     <string name="floating_launcher_file_dock">Dok plików</string>
     <string name="floating_launcher_file_dock_empty">Przeciągnij tekst, obrazy lub pliki na zakładkę, aby tymczasowo je tu przechować.</string>
     <string name="floating_launcher_file_dock_copied">Skopiowano</string>
-    <string name="floating_launcher_zone_apps_empty">Brak zainstalowanych aplikacji.</string>
     <string name="floating_launcher_zone_apps_summary">Dodane tu aplikacje pojawiają się w panelu tej strefy. Możesz też przeciągnąć ikonę aplikacji z ekranu głównego lub karty aplikacji na tę strefę, aby ją dodać.</string>
     <string name="preference_category_grid_home">Siatka ekranu głównego</string>
     <string name="preference_category_grid_drawer">Siatka szuflady wyszukiwania</string>

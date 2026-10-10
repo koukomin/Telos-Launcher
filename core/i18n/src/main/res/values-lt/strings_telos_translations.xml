@@ -442,7 +442,6 @@
     <string name="floating_launcher_file_dock">Failų dokas</string>
     <string name="floating_launcher_file_dock_empty">Nuvilkite tekstą, paveikslėlius ar failus ant skirtuko, kad laikinai juos čia laikytumėte.</string>
     <string name="floating_launcher_file_dock_copied">Nukopijuota</string>
-    <string name="floating_launcher_zone_apps_empty">Neįdiegta programų.</string>
     <string name="floating_launcher_zone_apps_summary">Čia pridėtos programos rodomos šios zonos skydelyje. Taip pat galite nuvilkti programos piktogramą iš pradžios ekrano ar programų skirtuko ant šios zonos, kad ją pridėtumėte.</string>
     <string name="preference_category_grid_home">Pradžios ekrano tinklelis</string>
     <string name="preference_category_grid_drawer">Paieškos stalčiaus tinklelis</string>

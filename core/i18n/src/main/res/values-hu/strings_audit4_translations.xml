@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Megerősítés</string>
+    <string name="au4_confirms_cancel">Mégse</string>
+    <string name="au4_confirms_nc_title">Kijelentkezés a Nextcloudból?</string>
+    <string name="au4_confirms_nc_message">A Nextcloud-fiókja el lesz távolítva ebből az indítóból. Bármikor újra bejelentkezhet.</string>
+    <string name="au4_confirms_oc_title">Kijelentkezés az ownCloudból?</string>
+    <string name="au4_confirms_oc_message">Az ownCloud-fiókja el lesz távolítva ebből az indítóból. Bármikor újra bejelentkezhet.</string>
+    <string name="au4_confirms_plugin_title">Eltávolítja a beépülő modult?</string>
+    <string name="au4_confirms_plugin_message">A beépülő modul alkalmazása el lesz távolítva az eszközről.</string>
+    <string name="au4_confirms_counts_title">Visszaállítja a számlálókat?</string>
+    <string name="au4_confirms_counts_message">A tiltólista összes blokkolásszámlálója nullázva lesz.</string>
+    <string name="au4_confirms_bulk_title">Alkalmazza az összes megjelenített alkalmazásra?</string>
+    <string name="au4_confirms_bulk_block_all">Letiltja a teljes hálózati hozzáférést %1$d alkalmazás számára?</string>
+    <string name="au4_confirms_bulk_allow_all">Engedélyezi a teljes hálózati hozzáférést %1$d alkalmazás számára?</string>
+    <string name="au4_confirms_bulk_block_wifi">Letiltja a Wi-Fi-hozzáférést %1$d alkalmazás számára?</string>
+    <string name="au4_confirms_bulk_block_mobile">Letiltja a mobiladat-hozzáférést %1$d alkalmazás számára?</string>
+    <string name="au4_noteslink_link_existing">Meglévő fájl csatolása</string>
+    <string name="au4_noteslink_create_new">Új fájl létrehozása</string>
+    <string name="au4_noteslink_cancel">Mégse</string>
+    <string name="au4_settingsnew1_redial_attempts">Újrahívási kísérletek</string>
+    <string name="au4_settingsnew1_redial_delay">Kísérletek közötti késleltetés</string>
+    <string name="au4_settingsnew1_seconds">%1$d mp</string>
+    <string name="au4_settingsnew1_crash_enable">Összeomlás-jelentő</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Az összeomlási jelentések és naplózott hibák mentése ezen az eszközön. Kikapcsolt állapotban semmi sem kerül rögzítésre; az alkalmazás ettől függetlenül normálisan működik.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Összes jelentés törlése</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Minden mentett összeomlási jelentés és hibanapló eltávolítása</string>
+    <string name="au4_torrentproxy_note_http">A torrentek a proxyt használják a partnerekhez, trackerekhez és állomásnév-feloldáshoz. A HTTP-proxy nem tud UDP-forgalmat szállítani, ezért a DHT és az uTP ki van kapcsolva, a helyi felderítés, az UPnP és a NAT-PMP pedig ki van kapcsolva, amíg a proxy be van kapcsolva.</string>
+    <string name="au4_torrentproxy_note_socks">A torrentek a proxyt használják a partnerekhez, trackerekhez és állomásnév-feloldáshoz. A helyi felderítés, az UPnP és a NAT-PMP ki van kapcsolva, amíg a proxy be van kapcsolva. A DHT és az uTP csak akkor működik, ha a SOCKS5-proxy támogatja az UDP-t.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Alapértelmezett (mobil)</string>
+    <string name="au4_webapps2_user_agent_desktop">Asztali</string>
+    <string name="au4_webapps2_user_agent_custom">Egyéni</string>
+    <string name="au4_webapps2_user_agent_custom_title">Egyéni user agent</string>
+    <string name="au4_webapps2_user_agent_custom_hint">User agent karakterlánc</string>
+    <string name="au4_webapps2_cookies">Cookie-k elfogadása</string>
+    <string name="au4_webapps2_cookies_summary">A webalkalmazásokban megnyitott webhelyek tárolhatnak cookie-kat. Kapcsolja ki az összes cookie letiltásához; előfordulhat, hogy nem marad bejelentkezve.</string>
+    <string name="au4_webapps2_third_party_cookies">Harmadik féltől származó cookie-k elfogadása</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Engedélyezi, hogy más webhelyekről beágyazott tartalmak cookie-kat állítsanak be. Az adatvédelem érdekében alapértelmezés szerint ki van kapcsolva.</string>
+    <string name="au4_webapps2_clear_cookies">Cookie-k és webhelyadatok törlése</string>
+    <string name="au4_webapps2_clear_cookies_summary">Kijelentkezteti az összes webalkalmazásból, és eltávolítja a gyorsítótárazott webhelyadatokat</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Eltávolítja a webalkalmazások összes cookie-ját és webhelyadatát?</string>
+    <string name="au4_webapps2_clear_cookies_done">A cookie-k és webhelyadatok törölve</string>
+    <string name="au4_webapps2_clear_cookies_action">Törlés</string>
+</resources>

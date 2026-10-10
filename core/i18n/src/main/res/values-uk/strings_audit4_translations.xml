@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Підтвердити</string>
+    <string name="au4_confirms_cancel">Скасувати</string>
+    <string name="au4_confirms_nc_title">Вийти з Nextcloud?</string>
+    <string name="au4_confirms_nc_message">Ваш обліковий запис Nextcloud буде видалено з цього лаунчера. Ви можете увійти знову в будь-який час.</string>
+    <string name="au4_confirms_oc_title">Вийти з ownCloud?</string>
+    <string name="au4_confirms_oc_message">Ваш обліковий запис ownCloud буде видалено з цього лаунчера. Ви можете увійти знову в будь-який час.</string>
+    <string name="au4_confirms_plugin_title">Видалити плагін?</string>
+    <string name="au4_confirms_plugin_message">Застосунок плагіна буде видалено з вашого пристрою.</string>
+    <string name="au4_confirms_counts_title">Скинути лічильники?</string>
+    <string name="au4_confirms_counts_message">Усі лічильники блокувань зі списку блокування буде скинуто до нуля.</string>
+    <string name="au4_confirms_bulk_title">Застосувати до всіх показаних застосунків?</string>
+    <string name="au4_confirms_bulk_block_all">Заблокувати весь мережевий доступ для %1$d застосунків?</string>
+    <string name="au4_confirms_bulk_allow_all">Дозволити весь мережевий доступ для %1$d застосунків?</string>
+    <string name="au4_confirms_bulk_block_wifi">Заблокувати доступ до Wi-Fi для %1$d застосунків?</string>
+    <string name="au4_confirms_bulk_block_mobile">Заблокувати доступ до мобільних даних для %1$d застосунків?</string>
+    <string name="au4_noteslink_link_existing">Прив’язати наявний файл</string>
+    <string name="au4_noteslink_create_new">Створити новий файл</string>
+    <string name="au4_noteslink_cancel">Скасувати</string>
+    <string name="au4_settingsnew1_redial_attempts">Спроби повторного набору</string>
+    <string name="au4_settingsnew1_redial_delay">Затримка між спробами</string>
+    <string name="au4_settingsnew1_seconds">%1$d с</string>
+    <string name="au4_settingsnew1_crash_enable">Звітування про збої</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Зберігати звіти про збої та зареєстровані помилки на цьому пристрої. Коли вимкнено, нічого не записується; застосунок працює як зазвичай.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Видалити всі звіти</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Видалити всі збережені звіти про збої та журнали помилок</string>
+    <string name="au4_torrentproxy_note_http">Торенти використовують проксі для пірів, трекерів і пошуку імен вузлів. HTTP-проксі не може передавати UDP-трафік, тому DHT і uTP вимкнено, а локальне виявлення, UPnP і NAT-PMP вимкнено, доки проксі ввімкнено.</string>
+    <string name="au4_torrentproxy_note_socks">Торенти використовують проксі для пірів, трекерів і пошуку імен вузлів. Локальне виявлення, UPnP і NAT-PMP вимкнено, доки проксі ввімкнено. DHT і uTP працюють, лише якщо ваш SOCKS5-проксі підтримує UDP.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Типовий (мобільний)</string>
+    <string name="au4_webapps2_user_agent_desktop">Комп’ютер</string>
+    <string name="au4_webapps2_user_agent_custom">Власний</string>
+    <string name="au4_webapps2_user_agent_custom_title">Власний user agent</string>
+    <string name="au4_webapps2_user_agent_custom_hint">Рядок user agent</string>
+    <string name="au4_webapps2_cookies">Приймати файли cookie</string>
+    <string name="au4_webapps2_cookies_summary">Вебсайти у вебзастосунках можуть зберігати файли cookie. Вимкніть, щоб заблокувати всі файли cookie; ви можете не залишатися в системі.</string>
+    <string name="au4_webapps2_third_party_cookies">Приймати сторонні файли cookie</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Дозволити вбудованому вмісту з інших сайтів встановлювати файли cookie. Для конфіденційності типово вимкнено.</string>
+    <string name="au4_webapps2_clear_cookies">Очистити файли cookie та дані сайтів</string>
+    <string name="au4_webapps2_clear_cookies_summary">Виконує вихід з усіх вебзастосунків і видаляє кешовані дані сайтів</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Видалити всі файли cookie та дані сайтів вебзастосунків?</string>
+    <string name="au4_webapps2_clear_cookies_done">Файли cookie та дані сайтів очищено</string>
+    <string name="au4_webapps2_clear_cookies_action">Очистити</string>
+</resources>

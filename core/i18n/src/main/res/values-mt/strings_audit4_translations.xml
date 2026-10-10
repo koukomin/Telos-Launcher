@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Ikkonferma</string>
+    <string name="au4_confirms_cancel">Ikkanċella</string>
+    <string name="au4_confirms_nc_title">Oħroġ minn Nextcloud?</string>
+    <string name="au4_confirms_nc_message">Il-kont tiegħek ta\' Nextcloud se jitneħħa minn dan il-launcher. Tista\' tidħol mill-ġdid fi kwalunkwe ħin.</string>
+    <string name="au4_confirms_oc_title">Oħroġ minn ownCloud?</string>
+    <string name="au4_confirms_oc_message">Il-kont tiegħek ta\' ownCloud se jitneħħa minn dan il-launcher. Tista\' tidħol mill-ġdid fi kwalunkwe ħin.</string>
+    <string name="au4_confirms_plugin_title">Ineħħi l-plugin?</string>
+    <string name="au4_confirms_plugin_message">L-app tal-plugin se tiġi diżinstallata mill-apparat tiegħek.</string>
+    <string name="au4_confirms_counts_title">Irrisettja l-għadd?</string>
+    <string name="au4_confirms_counts_message">Il-kontijiet kollha tal-blokki tal-lista tal-imblukkar se jiġu rrisettjati għal żero.</string>
+    <string name="au4_confirms_bulk_title">Applika għall-applikazzjonijiet kollha murija?</string>
+    <string name="au4_confirms_bulk_block_all">Timblokka l-aċċess kollu tan-network għal %1$d applikazzjonijiet?</string>
+    <string name="au4_confirms_bulk_allow_all">Tippermetti l-aċċess kollu tan-network għal %1$d applikazzjonijiet?</string>
+    <string name="au4_confirms_bulk_block_wifi">Timblokka l-aċċess għal Wi-Fi għal %1$d applikazzjonijiet?</string>
+    <string name="au4_confirms_bulk_block_mobile">Timblokka l-aċċess għad-dejta mobbli għal %1$d applikazzjonijiet?</string>
+    <string name="au4_noteslink_link_existing">Orbot fajl eżistenti</string>
+    <string name="au4_noteslink_create_new">Oħloq fajl ġdid</string>
+    <string name="au4_noteslink_cancel">Ikkanċella</string>
+    <string name="au4_settingsnew1_redial_attempts">Tentattivi ta\' sejħa mill-ġdid</string>
+    <string name="au4_settingsnew1_redial_delay">Dewmien bejn it-tentattivi</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Rapporter tal-ineffiċjenzi</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Issejvja r-rapporti tal-ineffiċjenzi u l-iżbalji rreġistrati fuq dan l-apparat. Meta jkun mitfi, ma jiġi rreġistrat xejn; l-app xorta taħdem normalment.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Ħassar ir-rapporti kollha</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Neħħi r-rapporti kollha tal-ineffiċjenzi u r-reġistri tal-iżbalji ssejvjati</string>
+    <string name="au4_torrentproxy_note_http">It-torrents jużaw il-proxy għall-peers, it-trackers u t-tiftix tal-ismijiet tal-host. Proxy HTTP ma jistax iġorr traffiku UDP, għalhekk DHT u uTP jintfew, u l-iskoperta lokali, UPnP u NAT-PMP jintfew waqt li proxy jkun mixgħul.</string>
+    <string name="au4_torrentproxy_note_socks">It-torrents jużaw il-proxy għall-peers, it-trackers u t-tiftix tal-ismijiet tal-host. L-iskoperta lokali, UPnP u NAT-PMP jintfew waqt li proxy jkun mixgħul. DHT u uTP jaħdmu biss jekk il-proxy SOCKS5 tiegħek jappoġġja UDP.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Default (mobbli)</string>
+    <string name="au4_webapps2_user_agent_desktop">Desktop</string>
+    <string name="au4_webapps2_user_agent_custom">Personalizzat</string>
+    <string name="au4_webapps2_user_agent_custom_title">User agent personalizzat</string>
+    <string name="au4_webapps2_user_agent_custom_hint">Sekwenza tal-user agent</string>
+    <string name="au4_webapps2_cookies">Aċċetta l-cookies</string>
+    <string name="au4_webapps2_cookies_summary">Is-siti web fl-applikazzjonijiet tal-web jistgħu jaħżnu cookies. Itfi biex timblokka l-cookies kollha; jista\' jkun li ma tkunx tista\' tibqa\' dieħel.</string>
+    <string name="au4_webapps2_third_party_cookies">Aċċetta cookies ta\' partijiet terzi</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Ippermetti li kontenut inkorporat minn siti oħra jistabbilixxi cookies. Diżattivat b\'mod awtomatiku għall-privatezza.</string>
+    <string name="au4_webapps2_clear_cookies">Ikklirja l-cookies u d-dejta tas-siti</string>
+    <string name="au4_webapps2_clear_cookies_summary">Toħroġ minn kull applikazzjoni tal-web u tneħħi d-dejta tas-siti maħżuna fil-cache</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Tneħħi l-cookies u d-dejta tas-siti kollha tal-applikazzjonijiet tal-web?</string>
+    <string name="au4_webapps2_clear_cookies_done">Cookies u dejta tas-siti ikklirjati</string>
+    <string name="au4_webapps2_clear_cookies_action">Ikklirja</string>
+</resources>

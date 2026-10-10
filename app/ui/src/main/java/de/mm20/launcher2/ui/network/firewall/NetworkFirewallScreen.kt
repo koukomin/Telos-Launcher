@@ -93,6 +93,7 @@ fun NetworkFirewallScreen() {
     var expanded by rememberSaveable { mutableStateOf<Int?>(null) }
     var menu by remember { mutableStateOf(false) }
     var confirmReset by remember { mutableStateOf(false) }
+    var pendingBulk by remember { mutableStateOf<Int?>(null) }
 
     // the usage access permission is granted in the Android settings: look again when coming back
     val lifecycle = LocalLifecycleOwner.current.lifecycle
@@ -124,6 +125,31 @@ fun NetworkFirewallScreen() {
         }
     }
 
+    pendingBulk?.let { kind ->
+        AlertDialog(
+            onDismissRequest = { pendingBulk = null },
+            title = { Text(stringResource(R.string.au4_confirms_bulk_title)) },
+            text = { Text(stringResource(when (kind) {
+                0 -> R.string.au4_confirms_bulk_block_all
+                1 -> R.string.au4_confirms_bulk_allow_all
+                2 -> R.string.au4_confirms_bulk_block_wifi
+                else -> R.string.au4_confirms_bulk_block_mobile
+            }, shown.size)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    pendingBulk = null
+                    when (kind) {
+                        0 -> bulk { it.copy(blockAll = true) }
+                        1 -> bulk { it.copy(blockAll = false) }
+                        2 -> bulk { it.copy(blockWifi = true) }
+                        else -> bulk { it.copy(blockMobile = true) }
+                    }
+                }) { Text(stringResource(R.string.au4_confirms_confirm)) }
+            },
+            dismissButton = { TextButton(onClick = { pendingBulk = null }) { Text(stringResource(R.string.au4_confirms_cancel)) } },
+        )
+    }
+
     if (confirmReset) {
         AlertDialog(
             onDismissRequest = { confirmReset = false },
@@ -153,10 +179,10 @@ fun NetworkFirewallScreen() {
                         color = MaterialTheme.colorScheme.secondary,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                     )
-                    DropdownMenuItem(text = { Text(stringResource(R.string.netfw_bulk_block_all)) }, onClick = { menu = false; bulk { it.copy(blockAll = true) } })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.netfw_bulk_allow_all)) }, onClick = { menu = false; bulk { it.copy(blockAll = false) } })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.netfw_bulk_block_wifi)) }, onClick = { menu = false; bulk { it.copy(blockWifi = true) } })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.netfw_bulk_block_mobile)) }, onClick = { menu = false; bulk { it.copy(blockMobile = true) } })
+                    DropdownMenuItem(text = { Text(stringResource(R.string.netfw_bulk_block_all)) }, onClick = { menu = false; pendingBulk = 0 })
+                    DropdownMenuItem(text = { Text(stringResource(R.string.netfw_bulk_allow_all)) }, onClick = { menu = false; pendingBulk = 1 })
+                    DropdownMenuItem(text = { Text(stringResource(R.string.netfw_bulk_block_wifi)) }, onClick = { menu = false; pendingBulk = 2 })
+                    DropdownMenuItem(text = { Text(stringResource(R.string.netfw_bulk_block_mobile)) }, onClick = { menu = false; pendingBulk = 3 })
                     DropdownMenuItem(
                         text = { Text(stringResource(R.string.netfw_bulk_reset)) },
                         onClick = { menu = false; confirmReset = true },

@@ -1424,7 +1424,6 @@
     <string name="floating_launcher_file_dock">Файлов док</string>
     <string name="floating_launcher_file_dock_empty">Плъзнете текст, изображения или файлове върху раздел, за да ги задържите тук временно.</string>
     <string name="floating_launcher_file_dock_copied">Копирано</string>
-    <string name="floating_launcher_zone_apps_empty">Няма инсталирани приложения.</string>
     <string name="floating_launcher_zone_apps_summary">Приложенията, които добавите тук, се показват в панела на тази зона. Можете също да плъзнете иконата на приложение от началния екран или от раздела с приложения върху тази зона, за да го добавите.</string>
     <string name="preference_nextcloud_signin">Вход в Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Вход за търсене в сървъра ви на Nextcloud</string>

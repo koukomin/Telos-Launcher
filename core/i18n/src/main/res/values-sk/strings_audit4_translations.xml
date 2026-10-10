@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Potvrdiť</string>
+    <string name="au4_confirms_cancel">Zrušiť</string>
+    <string name="au4_confirms_nc_title">Odhlásiť sa z Nextcloudu?</string>
+    <string name="au4_confirms_nc_message">Váš účet Nextcloud bude z tohto launchera odstránený. Kedykoľvek sa môžete prihlásiť znova.</string>
+    <string name="au4_confirms_oc_title">Odhlásiť sa z ownCloudu?</string>
+    <string name="au4_confirms_oc_message">Váš účet ownCloud bude z tohto launchera odstránený. Kedykoľvek sa môžete prihlásiť znova.</string>
+    <string name="au4_confirms_plugin_title">Odinštalovať plugin?</string>
+    <string name="au4_confirms_plugin_message">Aplikácia pluginu bude odinštalovaná z vášho zariadenia.</string>
+    <string name="au4_confirms_counts_title">Obnoviť počítadlá?</string>
+    <string name="au4_confirms_counts_message">Všetky počítadlá blokovaní budú vynulované.</string>
+    <string name="au4_confirms_bulk_title">Použiť na všetky zobrazené aplikácie?</string>
+    <string name="au4_confirms_bulk_block_all">Zablokovať všetok prístup k sieti pre %1$d aplikácií?</string>
+    <string name="au4_confirms_bulk_allow_all">Povoliť všetok prístup k sieti pre %1$d aplikácií?</string>
+    <string name="au4_confirms_bulk_block_wifi">Zablokovať prístup k Wi-Fi pre %1$d aplikácií?</string>
+    <string name="au4_confirms_bulk_block_mobile">Zablokovať prístup k mobilným dátam pre %1$d aplikácií?</string>
+    <string name="au4_noteslink_link_existing">Prepojiť existujúci súbor</string>
+    <string name="au4_noteslink_create_new">Vytvoriť nový súbor</string>
+    <string name="au4_noteslink_cancel">Zrušiť</string>
+    <string name="au4_settingsnew1_redial_attempts">Počet pokusov o opätovné vytočenie</string>
+    <string name="au4_settingsnew1_redial_delay">Oneskorenie medzi pokusmi</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Hlásenie pádov</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Ukladať hlásenia o pádoch a zaznamenané chyby v tomto zariadení. Keď je vypnuté, nič sa nezaznamenáva; aplikácia sa správa normálne.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Odstrániť všetky hlásenia</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Odstrániť všetky uložené hlásenia o pádoch a protokoly chýb</string>
+    <string name="au4_torrentproxy_note_http">Torrenty používajú proxy pre peerov, trackery a preklad názvov hostiteľov. Proxy HTTP neprenáša prevádzku UDP, preto sú DHT a uTP vypnuté a miestne vyhľadávanie, UPnP a NAT-PMP sú vypnuté, kým je proxy zapnutá.</string>
+    <string name="au4_torrentproxy_note_socks">Torrenty používajú proxy pre peerov, trackery a preklad názvov hostiteľov. Miestne vyhľadávanie, UPnP a NAT-PMP sú vypnuté, kým je proxy zapnutá. DHT a uTP fungujú, iba ak vaša proxy SOCKS5 podporuje UDP.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Predvolený (mobilný)</string>
+    <string name="au4_webapps2_user_agent_desktop">Počítač</string>
+    <string name="au4_webapps2_user_agent_custom">Vlastný</string>
+    <string name="au4_webapps2_user_agent_custom_title">Vlastný user agent</string>
+    <string name="au4_webapps2_user_agent_custom_hint">Reťazec user agent</string>
+    <string name="au4_webapps2_cookies">Povoliť vloženému obsahu z iných webov nastavovať cookies. Z dôvodu súkromia je predvolene vypnuté.</string>
+    <string name="au4_webapps2_cookies_summary">Weby vo webových aplikáciách môžu ukladať cookies. Vypnutím zablokujete všetky cookies; prihlásenie sa nemusí zachovať.</string>
+    <string name="au4_webapps2_third_party_cookies">Prijímať cookies tretích strán</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Povoliť vlo(nutnému obsahu z iných webov nastavovať cookies. Z dôvodu súkromia je predvolene vypnuté.</string>
+    <string name="au4_webapps2_clear_cookies">Vymazať cookies a údaje webov</string>
+    <string name="au4_webapps2_clear_cookies_summary">Odhlási vás zo všetkých webových aplikácií a odstráni údaje webov z vyrovnávacej pamäte</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Odstrániť všetky cookies a údaje webov webových aplikácií?</string>
+    <string name="au4_webapps2_clear_cookies_done">Cookies a údaje webov boli vymazané</string>
+    <string name="au4_webapps2_clear_cookies_action">Vymazať</string>
+</resources>

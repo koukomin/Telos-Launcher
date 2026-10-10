@@ -49,7 +49,7 @@ Android widgets have extra options: **Borderless**, **Background card** and **Us
 | Calendar | Events of the day, with previous and next day buttons | Calendar permission | Calendars, hide completed tasks, Tasks |
 | Reminders | Tasks from the Tasks app | Tasks permission | None |
 | Media | Playing media with controls | Notification access | Interactive progress bar |
-| Note | A free text note | Nothing | Link to a file |
+| Note | A free text note | Nothing | Link to an existing or new file |
 | Battery | Charge level and charging state | Nothing | None |
 | Network | Wi-Fi, mobile data, Ethernet, or no connection | Nothing | None |
 | System | RAM and storage usage | Nothing | None |
@@ -78,8 +78,13 @@ replacement for the weather or calendar widget.
 
 ### Note widget
 
-The note widget keeps its text in the launcher. **Link to file** currently creates a new
-text file (the system "create document" dialog) and links the note to it; it cannot pick an existing file yet.
+The note widget keeps its text in the launcher. **Link to file** offers two choices.
+**Link existing file** lets you pick a text file that is already on your device or in a cloud or sync folder
+(for example one kept in sync by Syncthing or Nextcloud); Telos reads its content into the note and writes your
+edits back to the same file. **Create new file** makes a new Markdown file through the system "create document"
+dialog and links the note to it. Linked files are read and written as UTF-8 text, and files larger than 2 MiB are
+not loaded (the note shows a read-error indicator instead). If the file cannot be read or written, the error
+indicator is shown even when the note is empty, with options to relink or unlink.
 Once linked, the note is kept in sync with that file. If the file and the last saved note differ, Telos asks
 which version to keep (**Conflict**). If the file cannot be written, a copy stays in the launcher's own
 storage. Other actions: new note, share, save, dismiss with undo. See also the existing

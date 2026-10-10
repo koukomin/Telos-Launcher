@@ -333,7 +333,6 @@
     <string name="floating_launcher_file_dock">Dock de arquivos</string>
     <string name="floating_launcher_file_dock_empty">Arraste texto, imagens ou arquivos para uma aba para mantê-los aqui temporariamente.</string>
     <string name="floating_launcher_file_dock_copied">Copiado</string>
-    <string name="floating_launcher_zone_apps_empty">Nenhum app instalado.</string>
     <string name="floating_launcher_zone_apps_summary">Os apps que você adicionar aqui aparecem no painel desta zona. Você também pode arrastar o ícone de um app da tela inicial ou da aba de apps para esta zona para adicioná-lo.</string>
     <string name="preference_category_grid_home">Grade da tela inicial</string>
     <string name="preference_category_grid_drawer">Grade da gaveta de busca</string>

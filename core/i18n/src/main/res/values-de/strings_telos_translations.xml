@@ -228,7 +228,6 @@
     <string name="dynamic_island_call">Anruf läuft</string>
     <string name="dynamic_island_media_playing">Wiedergabe</string>
     <string name="dynamic_island_charging_percent">Laden %1$d%%</string>
-    <string name="floating_launcher_zone_apps_empty">Keine Apps installiert.</string>
     <string name="floating_launcher_zone_apps_summary">Hier hinzugefügte Apps erscheinen im Panel dieser Zone. Du kannst auch ein App-Symbol vom Startbildschirm oder aus dem Apps-Reiter auf diese Zone ziehen, um es hinzuzufügen.</string>
     <string name="preference_dock_grid_override">Dock-Raster überschreiben</string>
     <string name="preference_category_grid_folders">Ordner</string>

@@ -436,7 +436,6 @@
     <string name="floating_launcher_file_dock">Dock de fișiere</string>
     <string name="floating_launcher_file_dock_empty">Trage text, imagini sau fișiere pe o filă pentru a le păstra aici temporar.</string>
     <string name="floating_launcher_file_dock_copied">Copiat</string>
-    <string name="floating_launcher_zone_apps_empty">Nicio aplicație instalată.</string>
     <string name="floating_launcher_zone_apps_summary">Aplicațiile adăugate aici apar în panoul acestei zone. Poți trage și o pictogramă de aplicație de pe ecranul principal sau din fila de aplicații pe această zonă pentru a o adăuga.</string>
     <string name="preference_category_grid_home">Grila ecranului principal</string>
     <string name="preference_category_grid_drawer">Grila listei de căutare</string>

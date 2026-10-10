@@ -67,7 +67,7 @@ Menu > **Settings**.
 | Default folder | A folder you pick, or `Downloads/Telos` |
 | When a download finishes | Nothing, open or share the file. Works while the Downloads screen is open; the notification always has **Open** and **Share** |
 | User agent | Empty means a browser-like default |
-| Proxy | HTTP or SOCKS host and port for HTTP and media downloads. **Torrents and magnet links do not use the proxy:** while a proxy is on they do not start (and running ones are paused) with a message, so no torrent traffic bypasses it |
+| Proxy | HTTP or SOCKS host and port for HTTP and media downloads. **Torrents and magnet links use the proxy too** (Telos Downloads and Telos Video streaming): for peers, trackers and host name lookups, with anonymous mode on and local discovery, UPnP and NAT-PMP off. With an HTTP proxy, DHT and uTP are also off because HTTP cannot carry UDP; with SOCKS5 they work only if the proxy supports UDP. Proxy user name and password are not supported. If the host or port is missing, torrents stop with a validation error instead of connecting directly |
 | Schedule | Only download between two times of day on the days you tick (also over midnight, for example 22:00 to 07:00; the days are the days the window starts on). Outside the window downloads wait in the queue and a banner says so; they start at the opening time |
 | Extract archives | Unpacks finished **zip** files into a folder named like the file, next to it (the **Extract here** action does it for one download). Limits: 20 000 files and 20 GB per archive, unsafe paths (`..`) are dropped. tar.gz, 7z and rar are not supported |
 | Detect links in the clipboard | Off by default, see above |

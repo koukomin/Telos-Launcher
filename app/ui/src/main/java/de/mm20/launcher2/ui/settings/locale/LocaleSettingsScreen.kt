@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.core.app.GrammaticalInflectionManagerCompat
 import androidx.core.net.toUri
+import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
@@ -63,6 +64,22 @@ fun LocaleSettingsScreen() {
     // keyed on the current language so that a change in the system's app language settings shows up
     val selectedLocale = remember(currentLocale) {
         AppCompatDelegate.getApplicationLocales().get(0)
+    }
+
+    // Language picker for Android < 13 (newer versions use the system per-app language settings).
+    // Lists every language the app ships resources for, with its native name.
+    val systemDefaultLabel = stringResource(R.string.preference_value_system_default)
+    val languageItems: List<Pair<String, String>> = remember(systemDefaultLabel) {
+        if (isAtLeastApiLevel(33)) return@remember emptyList()
+        val tags = resources.assets.locales
+            .filter { it.isNotBlank() }
+            .distinct()
+        val named = tags.map { tag ->
+            val l = java.util.Locale.forLanguageTag(tag)
+            val name = l.getDisplayName(l).replaceFirstChar { c -> c.uppercase(l) }
+            name to tag
+        }.sortedBy { it.first.lowercase() }
+        listOf(systemDefaultLabel to "") + named
     }
 
     val transliterators: List<Pair<String, String?>> = remember(locales) {
@@ -129,24 +146,38 @@ fun LocaleSettingsScreen() {
     ) {
         item {
             PreferenceCategory {
-                Preference(
-                    icon = R.drawable.flag_24px,
-                    title = stringResource(R.string.preference_language),
-                    summary = if (selectedLocale == null) {
-                        stringResource(R.string.preference_value_system_default)
-                    } else {
-                        selectedLocale.getDisplayName(selectedLocale)
-                            .replaceFirstChar { it.uppercase(selectedLocale) }
-                    },
-                    enabled = isAtLeastApiLevel(33),
-                    onClick = {
-                        context.tryStartActivity(
-                            Intent(android.provider.Settings.ACTION_APP_LOCALE_SETTINGS).apply {
-                                setData("package:${context.packageName}".toUri())
-                            }
-                        )
-                    }
-                )
+                if (isAtLeastApiLevel(33)) {
+                    Preference(
+                        icon = R.drawable.flag_24px,
+                        title = stringResource(R.string.preference_language),
+                        summary = if (selectedLocale == null) {
+                            stringResource(R.string.preference_value_system_default)
+                        } else {
+                            selectedLocale.getDisplayName(selectedLocale)
+                                .replaceFirstChar { it.uppercase(selectedLocale) }
+                        },
+                        onClick = {
+                            context.tryStartActivity(
+                                Intent(android.provider.Settings.ACTION_APP_LOCALE_SETTINGS).apply {
+                                    setData("package:${context.packageName}".toUri())
+                                }
+                            )
+                        }
+                    )
+                } else {
+                    ListPreference(
+                        icon = R.drawable.flag_24px,
+                        title = stringResource(R.string.preference_language),
+                        value = selectedLocale?.toLanguageTag() ?: "",
+                        items = languageItems,
+                        onValueChanged = {
+                            AppCompatDelegate.setApplicationLocales(
+                                if (it.isNullOrEmpty()) LocaleListCompat.getEmptyLocaleList()
+                                else LocaleListCompat.forLanguageTags(it)
+                            )
+                        },
+                    )
+                }
                 if (currentLocale?.language in languagesWithFormOfAddress) {
                     ListPreference(
                         icon = R.drawable.wc_24px,

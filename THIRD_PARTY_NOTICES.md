@@ -25,6 +25,9 @@ based on" table in `readme.md`.
 | [firestack](https://github.com/celzero/firestack) | MPL-2.0 | Copyright (c) Celzero / The Rethink DNS Open Source Project; used unchanged as a Maven dependency |
 | [WireGuard](https://www.wireguard.com) | see project | Implemented inside firestack; WireGuard is a registered trademark of Jason A. Donenfeld |
 | [Transistor](https://codeberg.org/y20k/transistor) | MIT | Copyright (c) 2015-22 - Y20K.org (full notice below) |
+| [TagLib](https://github.com/taglib/taglib) | LGPL-2.1 / MPL-1.1 | Audio tag library bundled by the Kyant0 wrapper below |
+| [SQLCipher](https://github.com/sqlcipher/sqlcipher) | BSD-style (Zetetic) | Copyright (c) 2025 ZETETIC LLC. Encrypted database for Telos Phone data |
+| [Dhizuku-API](https://github.com/iamr0s/Dhizuku-API) | MIT | Copyright (c) 2023 R0S. Device-owner delegation for freeze |
 | [TagLib wrapper (Kyant0/taglib)](https://github.com/Kyant0/taglib) | Apache-2.0 | Copyright 2025 Kyant. Bundles TagLib (LGPL-2.1 / MPL-1.1 upstream) |
 | [PaperKnife+](https://github.com/potatameister/PaperKnifePlus) | GPL-3.0-or-later | Copyright (C) potatameister and PaperKnife+ contributors. PDF tools of Telos Viewer (feature set, tool logic) adapted from it |
 | [PdfBox-Android](https://github.com/TomRoush/PdfBox-Android) | Apache-2.0 | Copyright the Apache PDFBox authors and Tom Roush; used unchanged as a Maven dependency |

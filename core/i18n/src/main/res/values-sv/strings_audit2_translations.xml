@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Avvisa samtal från andra länder än ditt hemland</string>
     <string name="au2_callsec_home_country">Hemland</string>
     <string name="au2_callsec_home_country_auto">Automatiskt (SIM, nätverk, språk)</string>
-    <string name="au2_dlsec_torrent_proxy">Torrenter kan inte använda proxy; stäng av proxyn för att ladda ned torrenter</string>
-    <string name="au2_dlsec_torrent_proxy_note">Torrenter använder inte proxyn. När en proxy är på laddas inga torrenter eller magnetlänkar ned.</string>
     <string name="au2_dlsec_ftps_anyhost">Acceptera certifikat för ett annat värdnamn</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Mindre säkert: serverns certifikat godkänns även om det utfärdats för ett annat värdnamn</string>
     <string name="au2_dlsec_ftps_hostname_failed">Serverns certifikat matchar inte värdnamnet %1$s. Om du litar på servern, aktivera \"Acceptera certifikat för ett annat värdnamn\" i anslutningen.</string>

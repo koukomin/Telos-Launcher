@@ -1424,7 +1424,6 @@
     <string name="floating_launcher_file_dock">Dok súborov</string>
     <string name="floating_launcher_file_dock_empty">Presunutím textu, obrázkov alebo súborov na kartu ich tu dočasne podržíte.</string>
     <string name="floating_launcher_file_dock_copied">Skopírované</string>
-    <string name="floating_launcher_zone_apps_empty">Nie sú nainštalované žiadne aplikácie.</string>
     <string name="floating_launcher_zone_apps_summary">Aplikácie, ktoré tu pridáte, sa zobrazia v paneli tejto zóny. Aplikáciu môžete pridať aj presunutím jej ikony z domovskej obrazovky alebo karty aplikácií na túto zónu.</string>
     <string name="preference_nextcloud_signin">Prihlásiť sa do Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Prihláste sa a vyhľadávajte na svojom serveri Nextcloud</string>

@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">自国以外からの着信を拒否</string>
     <string name="au2_callsec_home_country">自国</string>
     <string name="au2_callsec_home_country_auto">自動（SIM、ネットワーク、言語）</string>
-    <string name="au2_dlsec_torrent_proxy">トレントではプロキシを使用できません。トレントをダウンロードするにはプロキシをオフにしてください</string>
-    <string name="au2_dlsec_torrent_proxy_note">トレントはプロキシを使用しません。プロキシがオンの間は、トレントとマグネットリンクをダウンロードできません。</string>
     <string name="au2_dlsec_ftps_anyhost">別のホスト名の証明書を受け入れる</string>
     <string name="au2_dlsec_ftps_anyhost_summary">安全性が低下します：サーバー証明書が別のホスト名向けに発行されていても信頼されます</string>
     <string name="au2_dlsec_ftps_hostname_failed">サーバーの証明書がホスト名 %1$s と一致しません。このサーバーを信頼する場合は、接続設定で「別のホスト名の証明書を受け入れる」をオンにしてください。</string>

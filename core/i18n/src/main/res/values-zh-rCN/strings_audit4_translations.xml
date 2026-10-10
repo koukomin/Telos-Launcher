@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">确认</string>
+    <string name="au4_confirms_cancel">取消</string>
+    <string name="au4_confirms_nc_title">退出 Nextcloud 登录？</string>
+    <string name="au4_confirms_nc_message">你的 Nextcloud 账户将从此启动器中移除。你可以随时重新登录。</string>
+    <string name="au4_confirms_oc_title">退出 ownCloud 登录？</string>
+    <string name="au4_confirms_oc_message">你的 ownCloud 账户将从此启动器中移除。你可以随时重新登录。</string>
+    <string name="au4_confirms_plugin_title">卸载插件？</string>
+    <string name="au4_confirms_plugin_message">插件应用将从你的设备中卸载。</string>
+    <string name="au4_confirms_counts_title">重置计数？</string>
+    <string name="au4_confirms_counts_message">所有拦截列表的拦截计数器都将归零。</string>
+    <string name="au4_confirms_bulk_title">应用于所有显示的应用？</string>
+    <string name="au4_confirms_bulk_block_all">要阻止 %1$d 个应用的所有网络访问吗？</string>
+    <string name="au4_confirms_bulk_allow_all">要允许 %1$d 个应用的所有网络访问吗？</string>
+    <string name="au4_confirms_bulk_block_wifi">要阻止 %1$d 个应用使用 Wi-Fi 吗？</string>
+    <string name="au4_confirms_bulk_block_mobile">要阻止 %1$d 个应用使用移动数据吗？</string>
+    <string name="au4_noteslink_link_existing">链接现有文件</string>
+    <string name="au4_noteslink_create_new">创建新文件</string>
+    <string name="au4_noteslink_cancel">取消</string>
+    <string name="au4_settingsnew1_redial_attempts">重拨次数</string>
+    <string name="au4_settingsnew1_redial_delay">重试间隔</string>
+    <string name="au4_settingsnew1_seconds">%1$d 秒</string>
+    <string name="au4_settingsnew1_crash_enable">崩溃报告器</string>
+    <string name="au4_settingsnew1_crash_enable_summary">在此设备上保存崩溃报告和已记录的错误。关闭后不会记录任何内容，应用仍可正常运行。</string>
+    <string name="au4_settingsnew1_crash_delete_all">删除所有报告</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">移除所有已保存的崩溃报告和错误日志</string>
+    <string name="au4_torrentproxy_note_http">种子下载使用代理连接对等节点、Tracker 和解析主机名。HTTP 代理无法传输 UDP 流量，因此 DHT 和 uTP 会被关闭；启用代理期间，本地发现、UPnP 和 NAT-PMP 也会被关闭。</string>
+    <string name="au4_torrentproxy_note_socks">种子下载使用代理连接对等节点、Tracker 和解析主机名。启用代理期间，本地发现、UPnP 和 NAT-PMP 会被关闭。仅当你的 SOCKS5 代理支持 UDP 时，DHT 和 uTP 才能工作。</string>
+    <string name="au4_webapps2_user_agent">用户代理</string>
+    <string name="au4_webapps2_user_agent_default">默认（移动版）</string>
+    <string name="au4_webapps2_user_agent_desktop">桌面版</string>
+    <string name="au4_webapps2_user_agent_custom">自定义</string>
+    <string name="au4_webapps2_user_agent_custom_title">自定义用户代理</string>
+    <string name="au4_webapps2_user_agent_custom_hint">用户代理字符串</string>
+    <string name="au4_webapps2_cookies">接受 Cookie</string>
+    <string name="au4_webapps2_cookies_summary">网页应用中的网站可以存储 Cookie。关闭后将阻止所有 Cookie，你可能无法保持登录状态。</string>
+    <string name="au4_webapps2_third_party_cookies">接受第三方 Cookie</string>
+    <string name="au4_webapps2_third_party_cookies_summary">允许来自其他网站的嵌入内容设置 Cookie。出于隐私考虑，默认禁用。</string>
+    <string name="au4_webapps2_clear_cookies">清除 Cookie 和网站数据</string>
+    <string name="au4_webapps2_clear_cookies_summary">将退出所有网页应用的登录，并移除缓存的网站数据</string>
+    <string name="au4_webapps2_clear_cookies_confirm">要移除网页应用的所有 Cookie 和网站数据吗？</string>
+    <string name="au4_webapps2_clear_cookies_done">Cookie 和网站数据已清除</string>
+    <string name="au4_webapps2_clear_cookies_action">清除</string>
+</resources>

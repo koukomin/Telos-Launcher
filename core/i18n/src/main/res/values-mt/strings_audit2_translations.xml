@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Irrifjuta sejħiet minn pajjiżi oħra għajr il-pajjiż tiegħek</string>
     <string name="au2_callsec_home_country">Pajjiż tad-dar</string>
     <string name="au2_callsec_home_country_auto">Awtomatiku (SIM, netwerk, lingwa)</string>
-    <string name="au2_dlsec_torrent_proxy">It-torrents ma jistgħux jużaw proxy; itfi l-proxy biex tniżżel it-torrents</string>
-    <string name="au2_dlsec_torrent_proxy_note">It-torrents ma jużawx il-proxy. Waqt li l-proxy huwa mixgħul, it-torrents u r-rabtiet magnet ma jitniżżlux.</string>
     <string name="au2_dlsec_ftps_anyhost">Aċċetta ċertifikat għal isem ieħor tal-host</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Inqas sigur: iċ-ċertifikat tas-server jiġi fdat anki jekk inħareġ għal isem differenti tal-host</string>
     <string name="au2_dlsec_ftps_hostname_failed">Iċ-ċertifikat tas-server ma jaqbilx mal-isem tal-host %1$s. Jekk tafda dan is-server, ixgħel \"Aċċetta ċertifikat għal isem ieħor tal-host\" fil-konnessjoni.</string>

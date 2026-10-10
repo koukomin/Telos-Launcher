@@ -1424,7 +1424,6 @@
     <string name="floating_launcher_file_dock">Sidrišče datotek</string>
     <string name="floating_launcher_file_dock_empty">Povlecite besedilo, slike ali datoteke na zavihek, da jih tukaj začasno hranite.</string>
     <string name="floating_launcher_file_dock_copied">Kopirano</string>
-    <string name="floating_launcher_zone_apps_empty">Nobena aplikacija ni nameščena.</string>
     <string name="floating_launcher_zone_apps_summary">Aplikacije, ki jih dodate tukaj, se prikažejo v plošči tega območja. Dodate jih lahko tudi tako, da ikono aplikacije z domačega zaslona ali zavihka aplikacij povlečete na to območje.</string>
     <string name="preference_nextcloud_signin">Prijava v Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Prijavite se za iskanje po strežniku Nextcloud</string>

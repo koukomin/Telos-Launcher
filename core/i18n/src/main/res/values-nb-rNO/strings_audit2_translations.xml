@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Avvis anrop fra andre land enn hjemlandet ditt</string>
     <string name="au2_callsec_home_country">Hjemland</string>
     <string name="au2_callsec_home_country_auto">Automatisk (SIM, nettverk, språk)</string>
-    <string name="au2_dlsec_torrent_proxy">Torrenter kan ikke bruke proxy; slå av proxyen for å laste ned torrenter</string>
-    <string name="au2_dlsec_torrent_proxy_note">Torrenter bruker ikke proxyen. Mens en proxy er på, lastes ikke torrenter og magnetlenker ned.</string>
     <string name="au2_dlsec_ftps_anyhost">Godta sertifikat for et annet vertsnavn</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Mindre sikkert: serversertifikatet blir stolt på selv om det er utstedt for et annet vertsnavn</string>
     <string name="au2_dlsec_ftps_hostname_failed">Serverens sertifikat samsvarer ikke med vertsnavnet %1$s. Hvis du stoler på denne serveren, slå på «Godta sertifikat for et annet vertsnavn» i tilkoblingen.</string>

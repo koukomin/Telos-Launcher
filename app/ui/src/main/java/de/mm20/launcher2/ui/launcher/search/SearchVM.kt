@@ -332,7 +332,7 @@ class SearchVM : ViewModel(), KoinComponent {
                         appResults.updateItems(apps)
                         workAppResults.updateItems(workApps)
                         privateSpaceAppResults.updateItems(privateApps)
-                        webAppShortcutResults.updateItems(results.webAppShortcuts)
+                        webAppShortcutResults.updateItems(results.webAppShortcuts?.distinctBy { it.key })
                         hiddenResults.updateItems(hiddenItems)
 
                         val updates = (apps + workApps + privateApps).filter { 
@@ -432,8 +432,8 @@ class SearchVM : ViewModel(), KoinComponent {
                         webAppShortcutResults.updateItems(
                             results.webAppShortcuts?.filterNot { hiddenKeys.contains(it.key) }?.applyRanking(query)
                         )
-                        calculatorResults.updateItems(results.calculators)
-                        unitConverterResults.updateItems(results.unitConverters)
+                        calculatorResults.updateItems(results.calculators?.distinctBy { it.term to it.solution })
+                        unitConverterResults.updateItems(results.unitConverters?.distinctBy { it.dimension to it.inputValue })
 
                         if (results.searchActions != null) {
                             searchActionResults.updateItems(results.searchActions!!)

@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Zavrni klice iz drugih držav, ne iz domače države</string>
     <string name="au2_callsec_home_country">Domača država</string>
     <string name="au2_callsec_home_country_auto">Samodejno (SIM, omrežje, jezik)</string>
-    <string name="au2_dlsec_torrent_proxy">Torrenti ne morejo uporabljati proxyja; za prenos torrentov izklopite proxy</string>
-    <string name="au2_dlsec_torrent_proxy_note">Torrenti ne uporabljajo proxyja. Dokler je proxy vklopljen, se torrenti in povezave magnet ne prenesejo.</string>
     <string name="au2_dlsec_ftps_anyhost">Sprejmi potrdilo za drugo ime gostitelja</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Manj varno: potrdilu strežnika se zaupa, tudi če je bilo izdano za drugo ime gostitelja</string>
     <string name="au2_dlsec_ftps_hostname_failed">Potrdilo strežnika se ne ujema z imenom gostitelja %1$s. Če temu strežniku zaupate, vklopite »Sprejmi potrdilo za drugo ime gostitelja« v povezavi.</string>

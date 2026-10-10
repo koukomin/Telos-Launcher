@@ -355,7 +355,6 @@
     <string name="floating_launcher_file_dock">Dock de ficheiros</string>
     <string name="floating_launcher_file_dock_empty">Arraste texto, imagens ou ficheiros para um separador para os manter aqui temporariamente.</string>
     <string name="floating_launcher_file_dock_copied">Copiado</string>
-    <string name="floating_launcher_zone_apps_empty">Nenhuma aplicação instalada.</string>
     <string name="floating_launcher_zone_apps_summary">As aplicações que adicionar aqui aparecem no painel desta zona. Também pode arrastar o ícone de uma aplicação do ecrã principal ou do separador de aplicações para esta zona para a adicionar.</string>
     <string name="preference_category_grid_home">Grelha do ecrã principal</string>
     <string name="preference_category_grid_drawer">Grelha da gaveta de pesquisa</string>

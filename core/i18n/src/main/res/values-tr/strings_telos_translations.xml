@@ -334,7 +334,6 @@
     <string name="floating_launcher_file_dock">Dosya Dock\'u</string>
     <string name="floating_launcher_file_dock_empty">Metni, görselleri veya dosyaları geçici olarak burada tutmak için bir sekmenin üzerine sürükleyin.</string>
     <string name="floating_launcher_file_dock_copied">Kopyalandı</string>
-    <string name="floating_launcher_zone_apps_empty">Yüklü uygulama yok.</string>
     <string name="floating_launcher_zone_apps_summary">Buraya eklediğiniz uygulamalar bu bölgenin panelinde görünür. Eklemek için ana ekrandan veya uygulamalar sekmesinden bir uygulama simgesini bu bölgenin üzerine de sürükleyebilirsiniz.</string>
     <string name="preference_category_grid_home">Ana ekran ızgarası</string>
     <string name="preference_category_grid_drawer">Arama çekmecesi ızgarası</string>

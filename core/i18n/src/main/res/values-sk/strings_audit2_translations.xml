@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Odmietať hovory z iných krajín, než je vaša domovská krajina</string>
     <string name="au2_callsec_home_country">Domovská krajina</string>
     <string name="au2_callsec_home_country_auto">Automaticky (SIM, sieť, jazyk)</string>
-    <string name="au2_dlsec_torrent_proxy">Torrenty nemôžu používať proxy; ak chcete sťahovať torrenty, vypnite proxy</string>
-    <string name="au2_dlsec_torrent_proxy_note">Torrenty proxy nepoužívajú. Kým je proxy zapnuté, torrenty a odkazy magnet sa nestiahnu.</string>
     <string name="au2_dlsec_ftps_anyhost">Prijať certifikát pre iný názov hostiteľa</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Menej bezpečné: certifikát servera je dôveryhodný, aj keď bol vydaný pre iný názov hostiteľa</string>
     <string name="au2_dlsec_ftps_hostname_failed">Certifikát servera nezodpovedá názvu hostiteľa %1$s. Ak tomuto serveru dôverujete, zapnite v pripojení „Prijať certifikát pre iný názov hostiteľa“.</string>

@@ -73,7 +73,7 @@ class NotesWidgetVM(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 context.contentResolver.openInputStream(uri).use {
-                    val text = it?.bufferedReader()?.readText()
+                    val text = it?.let { stream -> readCapped(stream) }
                     if (text != widget.config.storedText) {
                         when {
                             widget.config.lastSyncSuccessful -> {
@@ -115,6 +115,51 @@ class NotesWidgetVM(
         }
     }
 
+    /**
+     * Reads at most [MaxLinkedFileBytes] bytes as UTF-8. Larger files are rejected (instead of
+     * truncated) because the note would otherwise be written back truncated.
+     */
+    private fun readCapped(stream: java.io.InputStream): String {
+        val out = java.io.ByteArrayOutputStream()
+        val buffer = ByteArray(8192)
+        while (true) {
+            val n = stream.read(buffer)
+            if (n < 0) break
+            out.write(buffer, 0, n)
+            if (out.size() > MaxLinkedFileBytes) {
+                throw java.io.IOException("Linked file is too large")
+            }
+        }
+        var text = String(out.toByteArray(), Charsets.UTF_8)
+        if (text.startsWith("\uFEFF")) text = text.substring(1)
+        return text
+    }
+
+    private fun writeTruncating(context: Context, uri: Uri, text: String) {
+        val bytes = text.toByteArray(Charsets.UTF_8)
+        val resolver = context.contentResolver
+        try {
+            val stream = resolver.openOutputStream(uri, "wt")
+                ?: throw java.io.IOException("Cannot open $uri")
+            stream.use { it.write(bytes) }
+        } catch (e: Exception) {
+            // Some providers only support "w", which may not truncate: truncate explicitly
+            val pfd = resolver.openFileDescriptor(uri, "w")
+                ?: throw java.io.IOException("Cannot open $uri")
+            pfd.use {
+                java.io.FileOutputStream(it.fileDescriptor).use { fos ->
+                    fos.write(bytes)
+                    fos.flush()
+                    try {
+                        fos.channel.truncate(bytes.size.toLong())
+                    } catch (_: Exception) {
+                        // Not truncatable (e.g. pipe); nothing more we can do
+                    }
+                }
+            }
+        }
+    }
+
     private var updateJob: Job? = null
     fun setText(context: Context, text: TextFieldValue) {
         noteText.value = text
@@ -148,12 +193,7 @@ class NotesWidgetVM(
         return withContext(Dispatchers.IO) {
             writeSemaphore.acquire()
             try {
-                val outputStream = context.contentResolver.openOutputStream(uri, "wt")
-                outputStream?.use {
-                    it.bufferedWriter().use {
-                        it.write(text)
-                    }
-                }
+                writeTruncating(context, uri, text)
             } catch (e: Exception) {
                 linkedFileSavingState.value = LinkedFileSavingState.Error
                 CrashReporter.logException(e)
@@ -275,6 +315,8 @@ class NotesWidgetVM(
 
 
     companion object : KoinComponent {
+        private const val MaxLinkedFileBytes = 2 * 1024 * 1024
+
         val Factory = viewModelFactory {
             initializer {
                 NotesWidgetVM(get())

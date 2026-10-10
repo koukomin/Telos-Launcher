@@ -1424,7 +1424,6 @@
     <string name="floating_launcher_file_dock">Duga Comhad</string>
     <string name="floating_launcher_file_dock_empty">Tarraing téacs, íomhánna nó comhaid ar chluaisín chun iad a choinneáil anseo go sealadach.</string>
     <string name="floating_launcher_file_dock_copied">Cóipeáilte</string>
-    <string name="floating_launcher_zone_apps_empty">Níl aon aip suiteáilte.</string>
     <string name="floating_launcher_zone_apps_summary">Taispeántar aipeanna a chuireann tú leis anseo i bpainéal an chrios seo. Is féidir leat deilbhín aipe a tharraingt ón scáileán baile nó ón táb aipeanna ar an gcrios seo chun é a chur leis.</string>
     <string name="preference_nextcloud_signin">Logáil isteach i Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Logáil isteach chun do fhreastalaí Nextcloud a chuardach</string>

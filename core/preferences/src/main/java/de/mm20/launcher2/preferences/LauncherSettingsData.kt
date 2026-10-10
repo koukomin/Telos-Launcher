@@ -694,6 +694,12 @@ data class WebAppBrowsingGroup(
     val webAppSwipeToSwitchEnabled: Boolean = true,
     val webAppGroupsEnabled: Boolean = false,
     val webAppGroups: List<WebAppGroup> = emptyList(),
+    /** One of "default", "desktop", "custom". Unknown values are treated as "default". */
+    val webAppUserAgentMode: String = "default",
+    val webAppCustomUserAgent: String = "",
+    /** Whether the embedded renderer accepts cookies at all. */
+    val webAppCookiesEnabled: Boolean = true,
+    val webAppThirdPartyCookiesEnabled: Boolean = false,
 )
 
 @Serializable

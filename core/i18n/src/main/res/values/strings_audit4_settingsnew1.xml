@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au4_settingsnew1_redial_attempts">Redial attempts</string>
+    <string name="au4_settingsnew1_redial_delay">Delay between attempts</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Crash reporter</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Save crash reports and logged errors on this device. When off, nothing is recorded; the app still behaves normally.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Delete all reports</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Remove every saved crash report and error log</string>
+</resources>

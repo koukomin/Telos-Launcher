@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">নিশ্চিত করুন</string>
+    <string name="au4_confirms_cancel">বাতিল করুন</string>
+    <string name="au4_confirms_nc_title">Nextcloud থেকে সাইন আউট করবেন?</string>
+    <string name="au4_confirms_nc_message">আপনার Nextcloud অ্যাকাউন্ট এই লঞ্চার থেকে সরিয়ে ফেলা হবে। আপনি যেকোনো সময় আবার সাইন ইন করতে পারবেন।</string>
+    <string name="au4_confirms_oc_title">ownCloud থেকে সাইন আউট করবেন?</string>
+    <string name="au4_confirms_oc_message">আপনার ownCloud অ্যাকাউন্ট এই লঞ্চার থেকে সরিয়ে ফেলা হবে। আপনি যেকোনো সময় আবার সাইন ইন করতে পারবেন।</string>
+    <string name="au4_confirms_plugin_title">প্লাগইন আনইনস্টল করবেন?</string>
+    <string name="au4_confirms_plugin_message">প্লাগইন অ্যাপটি আপনার ডিভাইস থেকে আনইনস্টল করা হবে।</string>
+    <string name="au4_confirms_counts_title">গণনা রিসেট করবেন?</string>
+    <string name="au4_confirms_counts_message">ব্লকলিস্টের সব ব্লক কাউন্টার শূন্যে ফিরিয়ে আনা হবে।</string>
+    <string name="au4_confirms_bulk_title">প্রদর্শিত সব অ্যাপে প্রয়োগ করবেন?</string>
+    <string name="au4_confirms_bulk_block_all">%1$d টি অ্যাপের সব নেটওয়ার্ক অ্যাক্সেস ব্লক করবেন?</string>
+    <string name="au4_confirms_bulk_allow_all">%1$d টি অ্যাপের সব নেটওয়ার্ক অ্যাক্সেসের অনুমতি দেবেন?</string>
+    <string name="au4_confirms_bulk_block_wifi">%1$d টি অ্যাপের Wi-Fi অ্যাক্সেস ব্লক করবেন?</string>
+    <string name="au4_confirms_bulk_block_mobile">%1$d টি অ্যাপের মোবাইল ডেটা অ্যাক্সেস ব্লক করবেন?</string>
+    <string name="au4_noteslink_link_existing">বিদ্যমান ফাইল লিঙ্ক করুন</string>
+    <string name="au4_noteslink_create_new">নতুন ফাইল তৈরি করুন</string>
+    <string name="au4_noteslink_cancel">বাতিল করুন</string>
+    <string name="au4_settingsnew1_redial_attempts">পুনরায় ডায়াল করার চেষ্টা</string>
+    <string name="au4_settingsnew1_redial_delay">চেষ্টার মধ্যে বিরতি</string>
+    <string name="au4_settingsnew1_seconds">%1$d সে.</string>
+    <string name="au4_settingsnew1_crash_enable">ক্র্যাশ রিপোর্টার</string>
+    <string name="au4_settingsnew1_crash_enable_summary">ক্র্যাশ রিপোর্ট ও লগ করা ত্রুটি এই ডিভাইসে সংরক্ষণ করুন। বন্ধ থাকলে কিছুই রেকর্ড হয় না; অ্যাপ স্বাভাবিকভাবেই কাজ করবে।</string>
+    <string name="au4_settingsnew1_crash_delete_all">সব রিপোর্ট মুছুন</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">সংরক্ষিত সব ক্র্যাশ রিপোর্ট ও ত্রুটির লগ সরিয়ে ফেলুন</string>
+    <string name="au4_torrentproxy_note_http">টরেন্ট পিয়ার, ট্র্যাকার ও হোস্ট নাম খোঁজার জন্য প্রক্সি ব্যবহার করে। HTTP প্রক্সি UDP ট্র্যাফিক বহন করতে পারে না, তাই DHT ও uTP বন্ধ থাকে, এবং প্রক্সি চালু থাকলে লোকাল ডিসকভারি, UPnP ও NAT-PMP-ও বন্ধ থাকে।</string>
+    <string name="au4_torrentproxy_note_socks">টরেন্ট পিয়ার, ট্র্যাকার ও হোস্ট নাম খোঁজার জন্য প্রক্সি ব্যবহার করে। প্রক্সি চালু থাকলে লোকাল ডিসকভারি, UPnP ও NAT-PMP বন্ধ থাকে। আপনার SOCKS5 প্রক্সি UDP সমর্থন করলেই কেবল DHT ও uTP কাজ করে।</string>
+    <string name="au4_webapps2_user_agent">ইউজার এজেন্ট</string>
+    <string name="au4_webapps2_user_agent_default">ডিফল্ট (মোবাইল)</string>
+    <string name="au4_webapps2_user_agent_desktop">ডেস্কটপ</string>
+    <string name="au4_webapps2_user_agent_custom">কাস্টম</string>
+    <string name="au4_webapps2_user_agent_custom_title">কাস্টম ইউজার এজেন্ট</string>
+    <string name="au4_webapps2_user_agent_custom_hint">ইউজার এজেন্ট স্ট্রিং</string>
+    <string name="au4_webapps2_cookies">কুকি গ্রহণ করুন</string>
+    <string name="au4_webapps2_cookies_summary">ওয়েব অ্যাপের ওয়েবসাইটগুলো কুকি সংরক্ষণ করতে পারে। সব কুকি ব্লক করতে বন্ধ করুন; আপনি সাইন ইন থাকতে নাও পারেন।</string>
+    <string name="au4_webapps2_third_party_cookies">থার্ড-পার্টি কুকি গ্রহণ করুন</string>
+    <string name="au4_webapps2_third_party_cookies_summary">অন্য সাইট থেকে এমবেড করা কনটেন্টকে কুকি সেট করার অনুমতি দিন। গোপনীয়তার জন্য ডিফল্টভাবে বন্ধ থাকে।</string>
+    <string name="au4_webapps2_clear_cookies">কুকি ও সাইট ডেটা মুছুন</string>
+    <string name="au4_webapps2_clear_cookies_summary">আপনাকে সব ওয়েব অ্যাপ থেকে সাইন আউট করে এবং ক্যাশ করা সাইট ডেটা সরিয়ে ফেলে</string>
+    <string name="au4_webapps2_clear_cookies_confirm">ওয়েব অ্যাপের সব কুকি ও সাইট ডেটা সরিয়ে ফেলবেন?</string>
+    <string name="au4_webapps2_clear_cookies_done">কুকি ও সাইট ডেটা মুছে ফেলা হয়েছে</string>
+    <string name="au4_webapps2_clear_cookies_action">মুছুন</string>
+</resources>

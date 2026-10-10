@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Más országokból érkező hívások elutasítása a saját országon kívül</string>
     <string name="au2_callsec_home_country">Saját ország</string>
     <string name="au2_callsec_home_country_auto">Automatikus (SIM, hálózat, nyelv)</string>
-    <string name="au2_dlsec_torrent_proxy">A torrentek nem használhatnak proxyt; torrentek letöltéséhez kapcsolja ki a proxyt</string>
-    <string name="au2_dlsec_torrent_proxy_note">A torrentek nem használják a proxyt. Amíg a proxy be van kapcsolva, a torrentek és a magnet linkek nem töltődnek le.</string>
     <string name="au2_dlsec_ftps_anyhost">Tanúsítvány elfogadása másik állomásnévhez</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Kevésbé biztonságos: a kiszolgáló tanúsítványában akkor is megbízunk, ha másik állomásnévre állították ki</string>
     <string name="au2_dlsec_ftps_hostname_failed">A kiszolgáló tanúsítványa nem egyezik a(z) %1$s állomásnévvel. Ha megbízik ebben a kiszolgálóban, kapcsolja be a „Tanúsítvány elfogadása másik állomásnévhez” beállítást a kapcsolatnál.</string>

@@ -6,4 +6,7 @@
     <string name="apache_license_name" translatable="false">Apache license 2.0</string>
     <string name="gpl3_name" translatable="false">GNU General Public License Version 3</string>
     <string name="open_font_license_name" translatable="false">SIL OPEN FONT LICENSE</string>
+    <string name="mpl2_license_name" translatable="false">Mozilla Public License 2.0</string>
+    <string name="lgpl21_license_name" translatable="false">GNU Lesser General Public License Version 2.1</string>
+    <string name="sqlcipher_license_name" translatable="false">BSD-style license (Zetetic)</string>
 </resources>
