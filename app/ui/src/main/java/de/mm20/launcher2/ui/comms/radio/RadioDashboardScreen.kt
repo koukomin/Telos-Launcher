@@ -43,6 +43,7 @@ fun RadioDashboardScreen() {
     val viewModel: RadioDashboardScreenVM = viewModel()
     val playerViewModel: RadioViewModel = viewModel()
     val context = LocalContext.current
+    val backStack = de.mm20.launcher2.ui.locals.LocalBackStack.current
     // the player connects to the radio service here too, not only in the mini player
     LaunchedEffect(Unit) { playerViewModel.initialize(context) }
 
@@ -118,6 +119,13 @@ fun RadioDashboardScreen() {
                 Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
             }
             DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.hc_scrobbling)) },
+                    onClick = {
+                        menuOpen = false
+                        backStack.add(de.mm20.launcher2.ui.settings.comms.ScrobbleSettingsRoute)
+                    },
+                )
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.hc_import_playlist_m3u_pls)) },
                     onClick = {

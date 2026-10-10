@@ -110,13 +110,12 @@ fun MusicScreen() {
             .sortedBy { it.title.lowercase() }
     }
 
-    var showScrobble by remember { mutableStateOf(false) }
+    val backStack = de.mm20.launcher2.ui.locals.LocalBackStack.current
     de.mm20.launcher2.ui.media.MediaFrame(stringResource(R.string.au_music_title), askNotifications = true, guardKey = "telos_music_app://music", actions = {
-        IconButton(onClick = { showScrobble = true }) {
+        IconButton(onClick = { backStack.add(de.mm20.launcher2.ui.settings.comms.ScrobbleSettingsRoute) }) {
             Icon(painterResource(R.drawable.settings_24px), contentDescription = stringResource(R.string.hc_scrobbling))
         }
     }) {
-    if (showScrobble) ScrobbleDialog { showScrobble = false }
     Box(Modifier.fillMaxSize()) {
         Column(Modifier.fillMaxSize()) {
             if (!hasPermission) {

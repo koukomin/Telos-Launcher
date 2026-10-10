@@ -37,6 +37,7 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
     private var player: ExoPlayer? = null
     private var mediaSession: MediaSession? = null
     private var lastRecordedTitle = ""
+    private var scrobbler: de.mm20.launcher2.comms.scrobble.RadioScrobbleTracker? = null
     private val handler = Handler(Looper.getMainLooper())
 
     // Nothing keeps the service (and the decoder) alive after the radio has been paused for a while
@@ -80,6 +81,7 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
             }
         })
 
+        scrobbler = de.mm20.launcher2.comms.scrobble.RadioScrobbleTracker(this, exo).also { it.attach() }
         RadioSleepTimer.onExpire = { player?.pause() }
         handler.postDelayed(idleStop, IDLE_STOP_MS)
 
@@ -164,6 +166,8 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
 
     override fun onDestroy() {
         handler.removeCallbacks(idleStop)
+        scrobbler?.release()
+        scrobbler = null
         RadioSleepTimer.onExpire = null
         scope.cancel()
         mediaSession?.run {

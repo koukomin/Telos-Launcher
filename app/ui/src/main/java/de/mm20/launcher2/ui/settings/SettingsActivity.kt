@@ -365,6 +365,9 @@ class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.comms.ScheduledSmsRoute> {
                 de.mm20.launcher2.ui.comms.ScheduledSmsScreen()
             }
+            entry<de.mm20.launcher2.ui.settings.comms.ScrobbleSettingsRoute> {
+                de.mm20.launcher2.ui.settings.comms.ScrobbleSettingsScreen()
+            }
             entry<CreateFolderRoute> {
                 CreateFolderScreen()
             }

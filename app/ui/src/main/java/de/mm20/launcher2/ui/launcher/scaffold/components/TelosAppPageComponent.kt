@@ -85,6 +85,9 @@ internal object TelosPages {
         entry<HiddenContactsRoute> { HiddenContactsScreen() }
         entry<ContactGroupsRoute> { ContactGroupsScreen() }
         entry<ScheduledSmsRoute> { ScheduledSmsScreen() }
+        entry<de.mm20.launcher2.ui.settings.comms.ScrobbleSettingsRoute> {
+            de.mm20.launcher2.ui.settings.comms.ScrobbleSettingsScreen()
+        }
         entry<de.mm20.launcher2.ui.files.remote.ConnectionsRoute> {
             de.mm20.launcher2.ui.files.remote.ConnectionsScreen()
         }
