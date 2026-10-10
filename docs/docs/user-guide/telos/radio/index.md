@@ -209,3 +209,7 @@ you search for.
 The cellular network mode switcher in the [phone settings](../phone/calls#cellular-network-mode) is unrelated to
 internet radio.
 :::
+
+## Station grid, sharing and import
+
+The collection is a grid of station cards with filter chips (All, Recently played, Added by me, From Radio Browser) and a Recently played shelf. The playing station shows an equalizer and a card tinted from its logo (static with reduced animations). Long-press a card for **Share**, Rename or Remove. A shared station contains a `telos-radio://add` link: opening it in Telos shows "Add station X to Telos Radio?" with the name and address editable, and nothing is played or fetched before you confirm. Telos Radio also accepts shared stream and playlist links (`.m3u`, `.pls`, `.mp3`, `.aac`, `icy://`), http and https only. Backups include the optional last played time.

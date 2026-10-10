@@ -178,3 +178,7 @@ The folder icon in the top bar opens an optional action (Android 11 or newer). I
 that would move, and only after **Move files** and a second Android permission dialog it moves them within MediaStore,
 from `Movies/` or `Download/` to `Movies/Movies/<Title (Year)>/` and `Movies/Series/<Show>/Season NN/`. Files are never
 deleted or changed, watch progress is kept, and subtitle files next to the videos are not moved. Nothing happens unless you start it.
+
+## Home, shelves and sharing
+
+The **Library** tab is a home: category chips (Movies, Series, Other, Recent, Unwatched, Folders, shown only when they have items), **Continue watching** (2 to 95 percent, with the time left), **Recently added**, Movies and Series posters. The detail header is tinted with the poster colour (needs the TMDB posters option). Long-press a video for mark watched, **Share** and delete: local files are copied for sharing (confirmation above 50 MB), web and magnet items share their link, items on network storages cannot be shared. Telos Video also opens web video links, magnet links and `.torrent` links or files shared to it.

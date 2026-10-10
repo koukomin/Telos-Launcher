@@ -122,3 +122,9 @@ Android 13 and later ask for the notification permission when Music opens.
 | Controls missing in the notification | Allow notifications for Telos |
 | Album shows twice | The files have different album ids. Fix the tags so they match, then rescan |
 | Search finds nothing in Greek | The text must exist in title, artist or album. Accents and capitals are ignored |
+
+## Home, Now Playing and sharing
+
+The first tab is **Home**: genre chips (from the tags of your files, Android 11 or newer), **Quick picks** (a grid of album tiles from what you played recently or most, and the newest albums) and shelves for recently played, albums, artists and decades. The play history is kept only on the device. The other tabs are Songs, Albums and Artists.
+**Now Playing** has large rounded artwork, a background gradient taken from the artwork colour and a handle that opens **Up next**, **Lyrics** and **Related**. Reduced animations switch the colour animation off.
+Long-press a song (or use its more icon) for **Play** and **Share** (the audio file); albums and artists share a list of titles.
