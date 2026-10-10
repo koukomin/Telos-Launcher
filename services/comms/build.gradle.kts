@@ -84,5 +84,7 @@ dependencies {
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.session)
     implementation(libs.androidx.media3.common)
+    implementation(libs.androidx.media3.hls)
+    implementation(libs.androidx.media3.dash)
     // === TELOS_PENDING_REVIEW_END: sms_and_radio_engine ===
 }

@@ -15,4 +15,10 @@ val commsModule = module {
     single { CommsBackupManager(get(), get()) }
     single<VaultSmsRouter> { VaultSmsRouterImpl(get()) }
     single(createdAtStart = true) { NetworkAutomationWatcher(androidContext(), get()) }
+    // Telos TV: all lazy (nothing is created or downloaded until TV is opened). TvRepository comes from :data:comms.
+    single { de.mm20.launcher2.comms.tv.TvCatalog(androidContext()) }
+    single { de.mm20.launcher2.comms.tv.TvSettings(androidContext()) }
+    single { de.mm20.launcher2.comms.tv.TvLibrary(get(), get()) }
+    single { de.mm20.launcher2.comms.tv.TvBackup(get(), get()) }
+    single { de.mm20.launcher2.comms.tv.TvPlayerController(androidContext(), get(), get(), get()) }
 }

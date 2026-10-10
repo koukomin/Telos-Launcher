@@ -33,6 +33,7 @@ val dataCommsModule = module {
     }
     single { RadioBrowserClient(get()) }
     single<RadioRepository> { RadioRepositoryImpl(androidContext(), get()) }
+    single<de.mm20.launcher2.comms.tv.TvRepository> { de.mm20.launcher2.data.comms.tv.TvRepositoryImpl(androidContext()) }
 
     // === TELOS_PENDING_REVIEW_START: virtual_app_koin_fix ===
     factory<VirtualAppProvider>(org.koin.core.qualifier.named("commsVirtualAppProvider")) { CommsVirtualAppProvider(androidContext()) }
