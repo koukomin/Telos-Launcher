@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="au2_dlsec_torrent_proxy">Torrents cannot use a proxy; turn the proxy off to download torrents</string>
-    <string name="au2_dlsec_torrent_proxy_note">Torrents do not use the proxy. While a proxy is on, torrents and magnet links will not download.</string>
     <string name="au2_dlsec_ftps_anyhost">Accept a certificate for another host name</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Less secure: the server certificate is trusted even if it was issued for a different host name</string>
     <string name="au2_dlsec_ftps_hostname_failed">The certificate of the server does not match the host name %1$s. If you trust this server, turn on \"Accept a certificate for another host name\" in the connection.</string>

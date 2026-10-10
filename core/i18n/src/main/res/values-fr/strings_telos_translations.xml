@@ -324,7 +324,6 @@
     <string name="floating_launcher_file_dock">Dock de fichiers</string>
     <string name="floating_launcher_file_dock_empty">Faites glisser du texte, des images ou des fichiers sur un onglet pour les garder ici temporairement.</string>
     <string name="floating_launcher_file_dock_copied">Copié</string>
-    <string name="floating_launcher_zone_apps_empty">Aucune app installée.</string>
     <string name="floating_launcher_zone_apps_summary">Les apps que vous ajoutez ici apparaissent dans le panneau de cette zone. Vous pouvez aussi faire glisser l\'icône d\'une app depuis l\'écran d\'accueil ou l\'onglet des apps vers cette zone pour l\'ajouter.</string>
     <string name="preference_category_grid_home">Grille de l\'écran d\'accueil</string>
     <string name="preference_category_grid_drawer">Grille du tiroir de recherche</string>

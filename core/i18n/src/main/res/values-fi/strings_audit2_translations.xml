@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Hylkää puhelut muista maista kuin kotimaastasi</string>
     <string name="au2_callsec_home_country">Kotimaa</string>
     <string name="au2_callsec_home_country_auto">Automaattinen (SIM, verkko, kieli)</string>
-    <string name="au2_dlsec_torrent_proxy">Torrentit eivät voi käyttää välityspalvelinta; poista välityspalvelin käytöstä ladataksesi torrentteja</string>
-    <string name="au2_dlsec_torrent_proxy_note">Torrentit eivät käytä välityspalvelinta. Kun välityspalvelin on käytössä, torrentteja ja magnet-linkkejä ei ladata.</string>
     <string name="au2_dlsec_ftps_anyhost">Hyväksy toisen isäntänimen varmenne</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Heikompi turvallisuus: palvelimen varmenne hyväksytään, vaikka se olisi myönnetty toiselle isäntänimelle</string>
     <string name="au2_dlsec_ftps_hostname_failed">Palvelimen varmenne ei vastaa isäntänimeä %1$s. Jos luotat tähän palvelimeen, ota yhteydessä käyttöön \"Hyväksy toisen isäntänimen varmenne\".</string>

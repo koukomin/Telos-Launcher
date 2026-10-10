@@ -333,7 +333,6 @@
     <string name="floating_launcher_file_dock">檔案暫存區</string>
     <string name="floating_launcher_file_dock_empty">將文字、圖片或檔案拖曳到標籤上，即可暫時存放在此。</string>
     <string name="floating_launcher_file_dock_copied">已複製</string>
-    <string name="floating_launcher_zone_apps_empty">未安裝任何應用程式。</string>
     <string name="floating_launcher_zone_apps_summary">您在此新增的應用程式會顯示在此區域的面板中。您也可以將主畫面或應用程式分頁中的應用程式圖示拖曳到此區域來新增。</string>
     <string name="preference_category_grid_home">主畫面網格</string>
     <string name="preference_category_grid_drawer">搜尋抽屜網格</string>

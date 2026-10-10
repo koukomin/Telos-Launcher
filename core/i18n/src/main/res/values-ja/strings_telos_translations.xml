@@ -768,7 +768,6 @@
     <string name="floating_launcher_file_dock">ファイルドック</string>
     <string name="floating_launcher_file_dock_empty">テキスト、画像、ファイルをタブにドラッグすると、ここに一時的に保管されます。</string>
     <string name="floating_launcher_file_dock_copied">コピーしました</string>
-    <string name="floating_launcher_zone_apps_empty">インストールされているアプリがありません。</string>
     <string name="floating_launcher_zone_apps_summary">ここに追加したアプリは、このゾーンのパネルに表示されます。ホーム画面やアプリタブからアプリアイコンをこのゾーンにドラッグして追加することもできます。</string>
     <string name="preference_nextcloud_signin">Nextcloudにログイン</string>
     <string name="preference_nextcloud_signin_summary">ログインして、Nextcloudサーバーを検索します</string>

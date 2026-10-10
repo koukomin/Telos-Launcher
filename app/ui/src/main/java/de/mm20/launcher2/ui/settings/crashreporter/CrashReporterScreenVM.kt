@@ -29,6 +29,20 @@ class CrashReporterScreenVM: ViewModel() {
         }
     }
 
+    val enabled = mutableStateOf(CrashReporter.isEnabled())
+
+    fun setEnabled(context: android.content.Context, value: Boolean) {
+        CrashReporter.setEnabled(context, value)
+        enabled.value = value
+    }
+
+    fun deleteAll() {
+        viewModelScope.launch {
+            CrashReporter.deleteAllReports()
+            reload()
+        }
+    }
+
     val showExceptions = mutableStateOf(false)
     val showCrashes = mutableStateOf(true)
 

@@ -1424,7 +1424,6 @@
     <string name="floating_launcher_file_dock">Failu doka</string>
     <string name="floating_launcher_file_dock_empty">Velc tekstu, attēlus vai failus uz cilni, lai īslaicīgi tos šeit turētu.</string>
     <string name="floating_launcher_file_dock_copied">Nokopēts</string>
-    <string name="floating_launcher_zone_apps_empty">Nav instalētu lietotņu.</string>
     <string name="floating_launcher_zone_apps_summary">Šeit pievienotās lietotnes parādās šīs zonas panelī. Lai pievienotu, vari arī pavilkt lietotnes ikonu no sākuma ekrāna vai lietotņu cilnes uz šo zonu.</string>
     <string name="preference_nextcloud_signin">Pierakstīties Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Pierakstīties, lai meklētu savā Nextcloud serverī</string>

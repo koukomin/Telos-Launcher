@@ -755,7 +755,6 @@
     <string name="floating_launcher_file_dock">Fildocka</string>
     <string name="floating_launcher_file_dock_empty">Dra text, bilder eller filer till en flik för att tillfälligt förvara dem här.</string>
     <string name="floating_launcher_file_dock_copied">Kopierad</string>
-    <string name="floating_launcher_zone_apps_empty">Inga appar installerade.</string>
     <string name="floating_launcher_zone_apps_summary">Appar du lägger till här visas i den här zonens panel. Du kan också dra en appikon från startskärmen eller apparfliken till zonen för att lägga till den.</string>
     <string name="preference_enforce_icon_shape">Tvinga form</string>
     <string name="preference_enforce_icon_shape_summary">Använd formen på alla ikoner, även sådana som normalt inte stöder det</string>

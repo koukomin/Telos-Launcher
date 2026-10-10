@@ -556,7 +556,6 @@
     <string name="floating_launcher_file_dock">Failidokk</string>
     <string name="floating_launcher_file_dock_empty">Lohista tekst, pildid või failid sakile, et neid siin ajutiselt hoida.</string>
     <string name="floating_launcher_file_dock_copied">Kopeeritud</string>
-    <string name="floating_launcher_zone_apps_empty">Rakendusi pole paigaldatud.</string>
     <string name="floating_launcher_zone_apps_summary">Siin lisatud rakendused kuvatakse selle ala paneelil. Rakenduse saad lisada ka lohistades selle ikooni avalehelt või rakenduste saagilt sellele alale.</string>
     <string name="preference_nextcloud_signin">Logi sisse Nextcloudi</string>
     <string name="preference_nextcloud_signin_summary">Logi sisse, et otsida oma Nextcloudi serverist</string>

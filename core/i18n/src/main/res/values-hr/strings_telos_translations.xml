@@ -1424,7 +1424,6 @@
     <string name="floating_launcher_file_dock">Dock za datoteke</string>
     <string name="floating_launcher_file_dock_empty">Povucite tekst, slike ili datoteke na karticu da ih privremeno zadržite ovdje.</string>
     <string name="floating_launcher_file_dock_copied">Kopirano</string>
-    <string name="floating_launcher_zone_apps_empty">Nema instaliranih aplikacija.</string>
     <string name="floating_launcher_zone_apps_summary">Aplikacije koje ovdje dodate pojavljuju se u ploči ove zone. Možete i povući ikonu aplikacije s početnog zaslona ili kartice aplikacija na ovu zonu da je dodate.</string>
     <string name="preference_nextcloud_signin">Prijava u Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Prijavite se za pretraživanje svog Nextcloud poslužitelja</string>

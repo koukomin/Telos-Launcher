@@ -336,7 +336,6 @@
     <string name="floating_launcher_file_dock">Файловый док</string>
     <string name="floating_launcher_file_dock_empty">Перетащите текст, изображения или файлы на вкладку, чтобы временно хранить их здесь.</string>
     <string name="floating_launcher_file_dock_copied">Скопировано</string>
-    <string name="floating_launcher_zone_apps_empty">Нет установленных приложений.</string>
     <string name="floating_launcher_zone_apps_summary">Добавленные здесь приложения появятся в панели этой зоны. Также можно перетащить значок приложения с главного экрана или со вкладки приложений на эту зону.</string>
     <string name="preference_category_grid_home">Сетка главного экрана</string>
     <string name="preference_category_grid_drawer">Сетка панели поиска</string>

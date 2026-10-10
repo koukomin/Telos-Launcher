@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Отклонять звонки из других стран, кроме вашей</string>
     <string name="au2_callsec_home_country">Родная страна</string>
     <string name="au2_callsec_home_country_auto">Автоматически (SIM, сеть, язык)</string>
-    <string name="au2_dlsec_torrent_proxy">Торренты не работают через прокси; отключите прокси, чтобы загружать торренты</string>
-    <string name="au2_dlsec_torrent_proxy_note">Торренты не используют прокси. Пока прокси включён, торренты и magnet-ссылки не загружаются.</string>
     <string name="au2_dlsec_ftps_anyhost">Принимать сертификат для другого имени хоста</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Менее безопасно: сертификат сервера считается доверенным, даже если выдан для другого имени хоста</string>
     <string name="au2_dlsec_ftps_hostname_failed">Сертификат сервера не соответствует имени хоста %1$s. Если вы доверяете этому серверу, включите «Принимать сертификат для другого имени хоста» в настройках подключения.</string>

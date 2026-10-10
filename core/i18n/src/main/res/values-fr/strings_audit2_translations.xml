@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Rejeter les appels provenant d\'autres pays que le vôtre</string>
     <string name="au2_callsec_home_country">Pays d\'origine</string>
     <string name="au2_callsec_home_country_auto">Automatique (SIM, réseau, langue)</string>
-    <string name="au2_dlsec_torrent_proxy">Les torrents ne peuvent pas utiliser de proxy ; désactivez le proxy pour télécharger des torrents</string>
-    <string name="au2_dlsec_torrent_proxy_note">Les torrents n\'utilisent pas le proxy. Tant qu\'un proxy est activé, les torrents et les liens magnet ne seront pas téléchargés.</string>
     <string name="au2_dlsec_ftps_anyhost">Accepter un certificat pour un autre nom d\'hôte</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Moins sûr : le certificat du serveur est approuvé même s\'il a été émis pour un autre nom d\'hôte</string>
     <string name="au2_dlsec_ftps_hostname_failed">Le certificat du serveur ne correspond pas au nom d\'hôte %1$s. Si vous faites confiance à ce serveur, activez « Accepter un certificat pour un autre nom d\'hôte » dans la connexion.</string>

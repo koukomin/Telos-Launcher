@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Kendi ülkeniz dışındaki ülkelerden gelen aramaları reddet</string>
     <string name="au2_callsec_home_country">Ana ülke</string>
     <string name="au2_callsec_home_country_auto">Otomatik (SIM, ağ, dil)</string>
-    <string name="au2_dlsec_torrent_proxy">Torrentler proxy kullanamaz; torrent indirmek için proxy\'yi kapatın</string>
-    <string name="au2_dlsec_torrent_proxy_note">Torrentler proxy kullanmaz. Proxy açıkken torrentler ve magnet bağlantıları indirilmez.</string>
     <string name="au2_dlsec_ftps_anyhost">Başka bir ana makine adı için verilen sertifikayı kabul et</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Daha az güvenli: sunucu sertifikası farklı bir ana makine adı için verilmiş olsa bile güvenilir sayılır</string>
     <string name="au2_dlsec_ftps_hostname_failed">Sunucunun sertifikası %1$s ana makine adıyla eşleşmiyor. Bu sunucuya güveniyorsanız bağlantıda \"Başka bir ana makine adı için verilen sertifikayı kabul et\" seçeneğini açın.</string>

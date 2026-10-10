@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Noraidīt zvanus no citām valstīm, nevis jūsu mītnes valsts</string>
     <string name="au2_callsec_home_country">Mītnes valsts</string>
     <string name="au2_callsec_home_country_auto">Automātiski (SIM, tīkls, valoda)</string>
-    <string name="au2_dlsec_torrent_proxy">Torrenti nevar izmantot starpniekserveri; lai lejupielādētu torrentus, izslēdziet starpniekserveri</string>
-    <string name="au2_dlsec_torrent_proxy_note">Torrenti neizmanto starpniekserveri. Kamēr starpniekserveris ir ieslēgts, torrenti un magnētsaites netiks lejupielādēti.</string>
     <string name="au2_dlsec_ftps_anyhost">Pieņemt sertifikātu citam resursdatora nosaukumam</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Mazāk drošs: servera sertifikātam uzticas, pat ja tas izdots citam resursdatora nosaukumam</string>
     <string name="au2_dlsec_ftps_hostname_failed">Servera sertifikāts neatbilst resursdatora nosaukumam %1$s. Ja uzticaties šim serverim, savienojumā ieslēdziet \"Pieņemt sertifikātu citam resursdatora nosaukumam\".</string>

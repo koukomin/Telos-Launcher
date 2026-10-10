@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">अपने देश के अलावा अन्य देशों की कॉल अस्वीकार करें</string>
     <string name="au2_callsec_home_country">अपना देश</string>
     <string name="au2_callsec_home_country_auto">स्वचालित (SIM, नेटवर्क, भाषा)</string>
-    <string name="au2_dlsec_torrent_proxy">टोरेंट प्रॉक्सी का उपयोग नहीं कर सकते; टोरेंट डाउनलोड करने के लिए प्रॉक्सी बंद करें</string>
-    <string name="au2_dlsec_torrent_proxy_note">टोरेंट प्रॉक्सी का उपयोग नहीं करते। प्रॉक्सी चालू रहने पर टोरेंट और मैग्नेट लिंक डाउनलोड नहीं होंगे।</string>
     <string name="au2_dlsec_ftps_anyhost">किसी अन्य होस्ट नाम का प्रमाणपत्र स्वीकार करें</string>
     <string name="au2_dlsec_ftps_anyhost_summary">कम सुरक्षित: सर्वर प्रमाणपत्र किसी अन्य होस्ट नाम के लिए जारी होने पर भी भरोसेमंद माना जाएगा</string>
     <string name="au2_dlsec_ftps_hostname_failed">सर्वर का प्रमाणपत्र होस्ट नाम %1$s से मेल नहीं खाता। यदि आप इस सर्वर पर भरोसा करते हैं, तो कनेक्शन में \"किसी अन्य होस्ट नाम का प्रमाणपत्र स्वीकार करें\" चालू करें।</string>

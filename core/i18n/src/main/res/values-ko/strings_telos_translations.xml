@@ -553,7 +553,6 @@
     <string name="floating_launcher_file_dock">파일 독</string>
     <string name="floating_launcher_file_dock_empty">텍스트, 이미지 또는 파일을 탭으로 드래그하면 여기에 임시로 보관해요.</string>
     <string name="floating_launcher_file_dock_copied">복사됨</string>
-    <string name="floating_launcher_zone_apps_empty">설치된 앱이 없어요.</string>
     <string name="floating_launcher_zone_apps_summary">여기에 추가한 앱이 이 영역의 패널에 표시돼요. 홈 화면이나 앱 탭에서 앱 아이콘을 이 영역으로 드래그하여 추가할 수도 있어요.</string>
     <string name="preference_enforce_icon_shape">모양 강제 적용</string>
     <string name="preference_enforce_icon_shape_summary">일반적으로 모양을 지원하지 않는 아이콘을 포함한 모든 아이콘에 모양을 적용해요</string>

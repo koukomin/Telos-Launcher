@@ -105,8 +105,6 @@ import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsRoute
 import de.mm20.launcher2.ui.settings.floating.FloatingLauncherSettingsScreen
 import de.mm20.launcher2.ui.settings.dynamicisland.DynamicIslandSettingsRoute
 import de.mm20.launcher2.ui.settings.dynamicisland.DynamicIslandSettingsScreen
-import de.mm20.launcher2.ui.settings.floating.FloatingLauncherZoneAppsRoute
-import de.mm20.launcher2.ui.settings.floating.FloatingLauncherZoneAppsScreen
 import de.mm20.launcher2.ui.settings.homescreen.dock.DockSettingsRoute
 import de.mm20.launcher2.ui.settings.homescreen.dock.DockSettingsScreen
 import de.mm20.launcher2.ui.settings.homescreen.wallpaper.WallpaperSettingsRoute
@@ -515,9 +513,6 @@ class SettingsActivity : BaseActivity() {
             }
             entry<FloatingLauncherSettingsRoute> {
                 FloatingLauncherSettingsScreen()
-            }
-            entry<FloatingLauncherZoneAppsRoute> {
-                FloatingLauncherZoneAppsScreen(it.zone)
             }
             entry<WebAppsSettingsRoute> {
                 WebAppsSettingsScreen()

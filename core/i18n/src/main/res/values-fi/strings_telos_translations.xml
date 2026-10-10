@@ -381,7 +381,6 @@
     <string name="floating_launcher_file_dock">Tiedostotelakka</string>
     <string name="floating_launcher_file_dock_empty">Vedä tekstiä, kuvia tai tiedostoja välilehdelle säilyttääksesi ne tässä tilapäisesti.</string>
     <string name="floating_launcher_file_dock_copied">Kopioitu</string>
-    <string name="floating_launcher_zone_apps_empty">Ei asennettuja sovelluksia.</string>
     <string name="floating_launcher_zone_apps_summary">Tähän lisäämäsi sovellukset näkyvät tämän alueen paneelissa. Voit myös lisätä sovelluksen vetämällä sen kuvakkeen aloitusnäytöltä tai sovellusvälilehdeltä tälle alueelle.</string>
     <string name="preference_category_grid_home">Aloitusnäytön ruudukko</string>
     <string name="preference_category_grid_drawer">Hakulaatikon ruudukko</string>

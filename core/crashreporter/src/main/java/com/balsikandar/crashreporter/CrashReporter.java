@@ -60,6 +60,38 @@ public class CrashReporter {
         CrashUtil.logException(exception);
     }
 
+    private static final String PREFS = "telos_crash_reporter";
+    private static final String KEY_ENABLED = "enabled";
+    private static volatile Boolean enabledCache = null;
+
+    /**
+     * Local on/off switch (default on). Mirrored in plain SharedPreferences so that the
+     * uncaught exception handler can read it synchronously without DataStore.
+     */
+    public static boolean isEnabled() {
+        Boolean cached = enabledCache;
+        if (cached != null) return cached;
+        boolean value = true;
+        try {
+            if (applicationContext != null) {
+                value = applicationContext.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+                        .getBoolean(KEY_ENABLED, true);
+            }
+        } catch (Throwable ignored) {
+        }
+        enabledCache = value;
+        return value;
+    }
+
+    public static void setEnabled(Context context, boolean enabled) {
+        enabledCache = enabled;
+        try {
+            context.getApplicationContext().getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+                    .edit().putBoolean(KEY_ENABLED, enabled).apply();
+        } catch (Throwable ignored) {
+        }
+    }
+
     public static void disableNotification() {
         isNotificationEnabled = false;
     }

@@ -145,6 +145,13 @@ class CommsSettingsScreenVM : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
     fun setAutoRedial(enabled: Boolean) = commsSettings.setAutoRedial(enabled)
 
+    val autoRedialAttempts = commsSettings.autoRedialAttempts
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 3)
+    fun setAutoRedialAttempts(count: Int) = commsSettings.setAutoRedialAttempts(count)
+    val autoRedialDelaySec = commsSettings.autoRedialDelaySec
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 5)
+    fun setAutoRedialDelaySec(sec: Int) = commsSettings.setAutoRedialDelaySec(sec)
+
     val autoOpenDialpad = commsSettings.autoOpenDialpad
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
     fun setAutoOpenDialpad(enabled: Boolean) = commsSettings.setAutoOpenDialpad(enabled)

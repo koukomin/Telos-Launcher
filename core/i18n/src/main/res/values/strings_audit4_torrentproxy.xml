@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au4_torrentproxy_note_http">Torrents use the proxy for peers, trackers and host name lookups. An HTTP proxy cannot carry UDP traffic, so DHT and uTP are switched off, and local discovery, UPnP and NAT-PMP are switched off while a proxy is on.</string>
+    <string name="au4_torrentproxy_note_socks">Torrents use the proxy for peers, trackers and host name lookups. Local discovery, UPnP and NAT-PMP are switched off while a proxy is on. DHT and uTP work only if your SOCKS5 proxy supports UDP.</string>
+</resources>

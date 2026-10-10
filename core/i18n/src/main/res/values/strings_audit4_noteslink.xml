@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au4_noteslink_link_existing">Link existing file</string>
+    <string name="au4_noteslink_create_new">Create new file</string>
+    <string name="au4_noteslink_cancel">Cancel</string>
+</resources>

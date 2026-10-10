@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Afvis opkald fra andre lande end dit hjemland</string>
     <string name="au2_callsec_home_country">Hjemland</string>
     <string name="au2_callsec_home_country_auto">Automatisk (SIM, netværk, sprog)</string>
-    <string name="au2_dlsec_torrent_proxy">Torrents kan ikke bruge en proxy; slå proxyen fra for at downloade torrents</string>
-    <string name="au2_dlsec_torrent_proxy_note">Torrents bruger ikke proxyen. Mens en proxy er slået til, downloades torrents og magnetlinks ikke.</string>
     <string name="au2_dlsec_ftps_anyhost">Accepter et certifikat til et andet værtsnavn</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Mindre sikkert: serverens certifikat godkendes, selv om det er udstedt til et andet værtsnavn</string>
     <string name="au2_dlsec_ftps_hostname_failed">Serverens certifikat matcher ikke værtsnavnet %1$s. Hvis du stoler på serveren, så slå \"Accepter et certifikat til et andet værtsnavn\" til i forbindelsen.</string>

@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">Anrufe aus anderen Ländern als deinem Heimatland abweisen</string>
     <string name="au2_callsec_home_country">Heimatland</string>
     <string name="au2_callsec_home_country_auto">Automatisch (SIM, Netz, Sprache)</string>
-    <string name="au2_dlsec_torrent_proxy">Torrents können keinen Proxy verwenden; schalte den Proxy aus, um Torrents herunterzuladen</string>
-    <string name="au2_dlsec_torrent_proxy_note">Torrents verwenden den Proxy nicht. Solange ein Proxy aktiv ist, werden Torrents und Magnet-Links nicht heruntergeladen.</string>
     <string name="au2_dlsec_ftps_anyhost">Zertifikat für anderen Hostnamen akzeptieren</string>
     <string name="au2_dlsec_ftps_anyhost_summary">Weniger sicher: Das Serverzertifikat wird auch dann vertraut, wenn es für einen anderen Hostnamen ausgestellt wurde</string>
     <string name="au2_dlsec_ftps_hostname_failed">Das Zertifikat des Servers passt nicht zum Hostnamen %1$s. Wenn du diesem Server vertraust, aktiviere in der Verbindung „Zertifikat für anderen Hostnamen akzeptieren“.</string>

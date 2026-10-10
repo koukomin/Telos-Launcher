@@ -324,7 +324,6 @@
     <string name="floating_launcher_file_dock">Dock de archivos</string>
     <string name="floating_launcher_file_dock_empty">Arrastra texto, imágenes o archivos a una pestaña para guardarlos aquí temporalmente.</string>
     <string name="floating_launcher_file_dock_copied">Copiado</string>
-    <string name="floating_launcher_zone_apps_empty">No hay apps instaladas.</string>
     <string name="floating_launcher_zone_apps_summary">Las apps que añadas aquí aparecen en el panel de esta zona. También puedes arrastrar el icono de una app desde la pantalla de inicio o la pestaña de apps a esta zona para añadirla.</string>
     <string name="preference_category_grid_home">Cuadrícula de la pantalla de inicio</string>
     <string name="preference_category_grid_drawer">Cuadrícula del cajón de búsqueda</string>

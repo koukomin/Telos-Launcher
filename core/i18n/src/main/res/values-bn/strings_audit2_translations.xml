@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">নিজের দেশ ছাড়া অন্য দেশের কল প্রত্যাখ্যান করুন</string>
     <string name="au2_callsec_home_country">নিজের দেশ</string>
     <string name="au2_callsec_home_country_auto">স্বয়ংক্রিয় (SIM, নেটওয়ার্ক, ভাষা)</string>
-    <string name="au2_dlsec_torrent_proxy">টরেন্ট প্রক্সি ব্যবহার করতে পারে না; টরেন্ট ডাউনলোড করতে প্রক্সি বন্ধ করুন</string>
-    <string name="au2_dlsec_torrent_proxy_note">টরেন্ট প্রক্সি ব্যবহার করে না। প্রক্সি চালু থাকলে টরেন্ট ও ম্যাগনেট লিংক ডাউনলোড হবে না।</string>
     <string name="au2_dlsec_ftps_anyhost">অন্য হোস্ট নামের সার্টিফিকেট গ্রহণ করুন</string>
     <string name="au2_dlsec_ftps_anyhost_summary">কম নিরাপদ: সার্ভার সার্টিফিকেট অন্য হোস্ট নামের জন্য ইস্যু করা হলেও তা বিশ্বাস করা হবে</string>
     <string name="au2_dlsec_ftps_hostname_failed">সার্ভারের সার্টিফিকেট হোস্ট নাম %1$s-এর সাথে মেলে না। আপনি এই সার্ভারকে বিশ্বাস করলে কানেকশনে \"অন্য হোস্ট নামের সার্টিফিকেট গ্রহণ করুন\" চালু করুন।</string>

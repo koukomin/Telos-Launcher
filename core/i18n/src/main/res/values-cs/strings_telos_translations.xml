@@ -333,7 +333,6 @@
     <string name="floating_launcher_file_dock">Dok souborů</string>
     <string name="floating_launcher_file_dock_empty">Přetažením textu, obrázků nebo souborů na záložku je zde dočasně uložíte.</string>
     <string name="floating_launcher_file_dock_copied">Zkopírováno</string>
-    <string name="floating_launcher_zone_apps_empty">Nejsou nainstalovány žádné aplikace.</string>
     <string name="floating_launcher_zone_apps_summary">Aplikace, které sem přidáte, se zobrazí v panelu této zóny. Aplikaci přidáte také přetažením její ikony z plochy nebo karty aplikací na tuto zónu.</string>
     <string name="preference_category_grid_home">Mřížka plochy</string>
     <string name="preference_category_grid_drawer">Mřížka vyhledávacího panelu</string>

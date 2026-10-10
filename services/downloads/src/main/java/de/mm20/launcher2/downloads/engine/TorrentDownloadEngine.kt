@@ -64,10 +64,12 @@ class TorrentDownloadEngine(
     override fun supports(task: DownloadTask) = task.type == DownloadType.Torrent
 
     override suspend fun execute(task: DownloadTask, session: EngineSession) {
-        // fail closed: libtorrent has no proxy support here, so it would bypass a configured proxy
-        if (session.settings.proxyType != de.mm20.launcher2.downloads.ProxyType.None) {
-            throw DownloadException(ErrorKind.Validation, context.getString(de.mm20.launcher2.i18n.R.string.au2_dlsec_torrent_proxy), false)
+        // an incomplete proxy must not send the torrent around it
+        val st = session.settings
+        if (st.proxyType != de.mm20.launcher2.downloads.ProxyType.None && (st.proxyHost.isBlank() || st.proxyPort !in 1..65535)) {
+            throw DownloadException(ErrorKind.Validation, "The proxy settings are incomplete", false)
         }
+        TorrentSession.setProxy(context, st.torrentProxy())
         val files = session.files
         val owner = "download:${task.id}"
         val meta = files.torrentMetaDir(task.id)

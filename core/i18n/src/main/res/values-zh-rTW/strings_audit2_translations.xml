@@ -7,8 +7,6 @@
     <string name="au2_callsec_block_international_summary">拒接本國以外的來電</string>
     <string name="au2_callsec_home_country">所在國家/地區</string>
     <string name="au2_callsec_home_country_auto">自動（SIM 卡、網路、語言）</string>
-    <string name="au2_dlsec_torrent_proxy">種子無法使用 Proxy；請關閉 Proxy 以下載種子</string>
-    <string name="au2_dlsec_torrent_proxy_note">種子不使用 Proxy。開啟 Proxy 時，種子與磁力連結將無法下載。</string>
     <string name="au2_dlsec_ftps_anyhost">接受其他主機名稱的憑證</string>
     <string name="au2_dlsec_ftps_anyhost_summary">安全性較低：即使伺服器憑證是為其他主機名稱簽發的，也會信任該憑證</string>
     <string name="au2_dlsec_ftps_hostname_failed">伺服器憑證與主機名稱 %1$s 不相符。如果您信任此伺服器，請在連線設定中開啟「接受其他主機名稱的憑證」。</string>

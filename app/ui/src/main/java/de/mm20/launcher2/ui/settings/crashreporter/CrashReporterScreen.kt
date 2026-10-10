@@ -21,7 +21,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.crashreporter.CrashReportType
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.serialization.Serializable
 
@@ -35,11 +37,26 @@ fun CrashReporterScreen() {
     val reports by viewModel.reports
     val showExceptions by viewModel.showExceptions
     val showCrashes by viewModel.showCrashes
+    val reporterEnabled by viewModel.enabled
+    val context = LocalContext.current
     LaunchedEffect(Unit) { viewModel.reload() }
     PreferenceScreen(
         title = stringResource(R.string.preference_crash_reporter),
         helpUrl = "https://koukomin.github.io/Telos-Launcher/docs/user-guide/troubleshooting/crashreporter"
     ) {
+        item {
+            SwitchPreference(
+                title = stringResource(R.string.au4_settingsnew1_crash_enable),
+                summary = stringResource(R.string.au4_settingsnew1_crash_enable_summary),
+                value = reporterEnabled,
+                onValueChanged = { viewModel.setEnabled(context, it) },
+            )
+            Preference(
+                title = stringResource(R.string.au4_settingsnew1_crash_delete_all),
+                summary = stringResource(R.string.au4_settingsnew1_crash_delete_all_summary),
+                onClick = { viewModel.deleteAll() },
+            )
+        }
         reports?.let {
             item {
                 Row(

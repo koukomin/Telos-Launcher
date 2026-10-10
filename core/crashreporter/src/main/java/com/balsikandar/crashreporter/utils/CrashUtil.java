@@ -62,6 +62,7 @@ public class CrashUtil {
     }
 
     public static void logException(final Exception exception) {
+        if (!CrashReporter.isEnabled()) return;
 
         new Thread(new Runnable() {
             @Override

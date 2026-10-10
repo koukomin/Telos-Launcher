@@ -1305,7 +1305,6 @@
     <string name="floating_launcher_file_dock">फ़ाइल डॉक</string>
     <string name="floating_launcher_file_dock_empty">टेक्स्ट, छवियाँ या फ़ाइलें अस्थायी रूप से यहाँ रखने के लिए उन्हें टैब पर खींचें।</string>
     <string name="floating_launcher_file_dock_copied">कॉपी किया गया</string>
-    <string name="floating_launcher_zone_apps_empty">कोई ऐप इंस्टॉल नहीं है।</string>
     <string name="floating_launcher_zone_apps_summary">यहाँ जोड़े गए ऐप्स इस क्षेत्र के पैनल में दिखते हैं। आप होम स्क्रीन या ऐप्स टैब से किसी ऐप आइकन को इस क्षेत्र पर खींचकर भी जोड़ सकते हैं।</string>
     <string name="preference_nextcloud_signin">Nextcloud में साइन इन करें</string>
     <string name="preference_nextcloud_signin_summary">अपने Nextcloud सर्वर में खोजने के लिए साइन इन करें</string>

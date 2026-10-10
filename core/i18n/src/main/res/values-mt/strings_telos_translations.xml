@@ -1424,7 +1424,6 @@
     <string name="floating_launcher_file_dock">File Dock</string>
     <string name="floating_launcher_file_dock_empty">Kaxkar test, immaġini jew fajls fuq tab biex iżżommhom hawn temporanjament.</string>
     <string name="floating_launcher_file_dock_copied">Ikkupjat</string>
-    <string name="floating_launcher_zone_apps_empty">L-ebda app installata.</string>
     <string name="floating_launcher_zone_apps_summary">L-apps li żżid hawn jidhru fil-panel ta\' din iż-żona. Tista\' wkoll tkaxkar ikona ta\' app mill-iskrin tal-home jew mit-tab tal-apps fuq din iż-żona biex iżżidha.</string>
     <string name="preference_nextcloud_signin">Idħol f\'Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Idħol biex tfittex fis-server Nextcloud tiegħek</string>

@@ -333,7 +333,6 @@
     <string name="floating_launcher_file_dock">Bestandsdock</string>
     <string name="floating_launcher_file_dock_empty">Sleep tekst, afbeeldingen of bestanden naar een tab om ze hier tijdelijk vast te houden.</string>
     <string name="floating_launcher_file_dock_copied">Gekopieerd</string>
-    <string name="floating_launcher_zone_apps_empty">Geen apps geïnstalleerd.</string>
     <string name="floating_launcher_zone_apps_summary">Apps die je hier toevoegt, verschijnen in het paneel van deze zone. Je kunt ook een app-pictogram van het startscherm of het appstabblad naar deze zone slepen om het toe te voegen.</string>
     <string name="preference_category_grid_home">Raster van het startscherm</string>
     <string name="preference_category_grid_drawer">Raster van het zoekoverzicht</string>

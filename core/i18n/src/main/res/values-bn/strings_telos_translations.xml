@@ -554,7 +554,6 @@
     <string name="floating_launcher_file_dock">ফাইল ডক</string>
     <string name="floating_launcher_file_dock_empty">টেক্সট, ছবি বা ফাইল এখানে সাময়িকভাবে রাখতে ট্যাবে টেনে আনুন।</string>
     <string name="floating_launcher_file_dock_copied">কপি করা হয়েছে</string>
-    <string name="floating_launcher_zone_apps_empty">কোনো অ্যাপ ইনস্টল করা নেই।</string>
     <string name="floating_launcher_zone_apps_summary">এখানে যোগ করা অ্যাপ এই জোনের প্যানেলে দেখা যায়। হোম স্ক্রিন বা অ্যাপ ট্যাব থেকে অ্যাপ আইকন এই জোনে টেনে এনেও যোগ করতে পারেন।</string>
     <string name="preference_nextcloud_signin">Nextcloud-এ সাইন ইন করুন</string>
     <string name="preference_nextcloud_signin_summary">আপনার Nextcloud সার্ভারে সার্চ করতে সাইন ইন করুন</string>

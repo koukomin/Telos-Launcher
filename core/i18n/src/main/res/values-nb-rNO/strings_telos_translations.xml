@@ -384,7 +384,6 @@
     <string name="floating_launcher_file_dock">Fildock</string>
     <string name="floating_launcher_file_dock_empty">Dra tekst, bilder eller filer til en fane for å oppbevare dem midlertidig her.</string>
     <string name="floating_launcher_file_dock_copied">Kopiert</string>
-    <string name="floating_launcher_zone_apps_empty">Ingen apper installert.</string>
     <string name="floating_launcher_zone_apps_summary">Apper du legger til her vises i denne sonens panel. Du kan også dra et appikon fra startskjermen eller appfanen til denne sonen for å legge det til.</string>
     <string name="preference_enforce_icon_shape_summary">Bruk formen på alle ikoner, også de som normalt ikke støtter det</string>
     <string name="preference_category_grid_home">Rutenett på startskjermen</string>

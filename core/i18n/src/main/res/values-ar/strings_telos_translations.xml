@@ -333,7 +333,6 @@
     <string name="floating_launcher_file_dock">رصيف الملفات</string>
     <string name="floating_launcher_file_dock_empty">اسحب نصوصًا أو صورًا أو ملفات إلى علامة تبويب لحفظها هنا مؤقتًا.</string>
     <string name="floating_launcher_file_dock_copied">تم النسخ</string>
-    <string name="floating_launcher_zone_apps_empty">لا توجد تطبيقات مثبّتة.</string>
     <string name="floating_launcher_zone_apps_summary">التطبيقات التي تضيفها هنا تظهر في لوحة هذه المنطقة. يمكنك أيضًا سحب أيقونة تطبيق من الشاشة الرئيسية أو علامة تبويب التطبيقات إلى هذه المنطقة لإضافته.</string>
     <string name="preference_category_grid_home">شبكة الشاشة الرئيسية</string>
     <string name="preference_category_grid_drawer">شبكة درج البحث</string>
