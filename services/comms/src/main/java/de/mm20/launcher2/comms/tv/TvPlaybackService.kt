@@ -52,7 +52,8 @@ class TvPlaybackService : MediaSessionService(), KoinComponent {
         override fun run() {
             val now = SystemClock.elapsedRealtime()
             if (TvBackgroundPolicy.shouldStopAfterIdle(
-                    controller.isPlaying.value, controller.isBuffering.value, idleSince, now
+                    controller.isPlaying.value, controller.isBuffering.value, idleSince, now,
+                    reconnecting = controller.reconnecting.value,
                 )
             ) {
                 controller.stop()
@@ -75,7 +76,9 @@ class TvPlaybackService : MediaSessionService(), KoinComponent {
                 .collect { onPlayer(it) }
         }
         scope.launch {
-            combine(controller.isPlaying, controller.isBuffering) { playing, buffering -> playing || buffering }
+            combine(controller.isPlaying, controller.isBuffering, controller.reconnecting) { playing, buffering, reconnecting ->
+                playing || buffering || reconnecting
+            }
                 .collect { active ->
                     handler.removeCallbacks(idleCheck)
                     if (active) {

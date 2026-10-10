@@ -15,8 +15,14 @@ object TvBackgroundPolicy {
      * True when the service should stop and release TV: nothing is playing or loading and it has been
      * that way since [idleSince] (elapsed millis, or -1 when it is playing / loading now).
      */
-    fun shouldStopAfterIdle(playing: Boolean, buffering: Boolean, idleSince: Long, now: Long): Boolean =
-        !playing && !buffering && idleSince >= 0 && now - idleSince >= IDLE_STOP_MS
+    fun shouldStopAfterIdle(
+        playing: Boolean,
+        buffering: Boolean,
+        idleSince: Long,
+        now: Long,
+        reconnecting: Boolean = false,
+    ): Boolean =
+        !playing && !buffering && !reconnecting && idleSince >= 0 && now - idleSince >= IDLE_STOP_MS
 
     /** Android 13 and newer need the notification permission to show the playback notification */
     fun needsNotificationPermission(sdk: Int, granted: Boolean): Boolean = sdk >= 33 && !granted

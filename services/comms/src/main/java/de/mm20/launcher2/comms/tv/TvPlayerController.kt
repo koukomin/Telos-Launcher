@@ -6,6 +6,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -25,6 +28,7 @@ import de.mm20.launcher2.applock.SettingsDeepLinkContract
 import de.mm20.launcher2.base.containedScope
 import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.comms.media.PlaybackCoordinator
+import de.mm20.launcher2.comms.media.ReconnectPolicy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -96,6 +100,26 @@ class TvPlayerController(
     val isRecovering: StateFlow<Boolean> get() = _recovering
     /** Status of the catalog download, for a Refresh button and a "last updated" text */
     val refreshStatus: StateFlow<TvRefreshStatus> get() = catalog.refreshStatus
+    /** True while the connection is lost and the controller tries to get the same stream back (no error, no failover) */
+    val reconnecting: StateFlow<Boolean> get() = _reconnecting
+    /** True while [reconnecting] and the device is offline (UI: "Waiting for the connection…") */
+    val waitingForNetwork: StateFlow<Boolean> get() = _waiting
+
+    private val _reconnecting = MutableStateFlow(false)
+    private val _waiting = MutableStateFlow(false)
+    private val connectivity = app.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+    private val reconnectPolicy = ReconnectPolicy()
+    private var currentStream: TvStream? = null
+    private var droppedWhileOffline = false
+    private var netCallbackRegistered = false
+
+    private val retryRunnable = Runnable { retryCurrent() }
+
+    private val netCallback = object : ConnectivityManager.NetworkCallback() {
+        override fun onAvailable(network: Network) { handler.post { onNetworkChanged() } }
+        override fun onLost(network: Network) { handler.post { onNetworkChanged() } }
+        override fun onCapabilitiesChanged(network: Network, caps: NetworkCapabilities) { handler.post { onNetworkChanged() } }
+    }
 
     private var queue: List<TvChannel> = emptyList()
     private var generation = 0
@@ -221,6 +245,10 @@ class TvPlayerController(
 
     /** Pauses; the picture stays. */
     fun pause() {
+        if (_reconnecting.value) {
+            cancelReconnect()
+            _buffering.value = false
+        }
         exo?.pause()
     }
 
@@ -244,6 +272,8 @@ class TvPlayerController(
     fun stop() {
         generation++
         handler.removeCallbacks(timeout)
+        cancelReconnect()
+        currentStream = null
         // the service drops its session when the player flow goes null, before the player is released
         _player.value = null
         exo?.let { runCatching { it.release() } }
@@ -272,6 +302,10 @@ class TvPlayerController(
 
     private fun startChannel(channel: TvChannel) {
         handler.removeCallbacks(timeout)
+        cancelReconnect()
+        reconnectPolicy.reset()
+        currentStream = null
+        droppedWhileOffline = false
         val id = ++generation
         tried.clear()
         catalogChecked = channel.isCustom
@@ -303,7 +337,7 @@ class TvPlayerController(
         }
         scope.launch { runCatching { repository.markPlayed(channel.id) } }
         // a catalog older than 24 hours is refreshed quietly, playback does not wait for it
-        if (!channel.isCustom) catalog.refreshInBackgroundIfStale()
+        if (!channel.isCustom && queryOnline()) catalog.refreshInBackgroundIfStale()
     }
 
     private fun tryNext(id: Int) {
@@ -311,6 +345,11 @@ class TvPlayerController(
         when (val d = TvFailover.next(ordered, tried, catalogChecked)) {
             is TvFailover.Decision.TryStream -> startStream(d.stream)
             TvFailover.Decision.CheckCatalog -> {
+                if (currentStream != null && !queryOnline()) {
+                    // offline: no catalog check, wait for the network and retry the same stream
+                    enterWait()
+                    return
+                }
                 _recovering.value = true
                 _buffering.value = true
                 scope.launch {
@@ -327,17 +366,27 @@ class TvPlayerController(
                     tryNext(id)
                 }
             }
-            TvFailover.Decision.GiveUp -> giveUp(
-                if (ordered.isEmpty()) TvPlayerError.NO_STREAMS else TvPlayerError.ALL_STREAMS_FAILED
-            )
+            TvFailover.Decision.GiveUp -> {
+                if (ordered.isNotEmpty() && currentStream != null && !TvReconnectDecision.giveUpAsError(queryOnline())) {
+                    enterWait()
+                } else {
+                    giveUp(if (ordered.isEmpty()) TvPlayerError.NO_STREAMS else TvPlayerError.ALL_STREAMS_FAILED)
+                }
+            }
         }
     }
 
-    private fun startStream(stream: TvStream) {
+    private fun startStream(stream: TvStream, retry: Boolean = false) {
         val p = ensurePlayer()
         tried.add(stream.url)
         currentUrl = stream.url
-        everReady = false
+        currentStream = stream
+        if (!retry) {
+            everReady = false
+            reconnects = 0
+            droppedWhileOffline = false
+            reconnectPolicy.reset()
+        }
         liveWindowRetried = false
         _streamIndex.value = _channel.value?.streams?.indexOfFirst { it.url == stream.url } ?: -1
         httpFactory.setUserAgent(stream.userAgent.ifBlank { DEFAULT_USER_AGENT })
@@ -375,18 +424,105 @@ class TvPlayerController(
         handler.removeCallbacks(timeout)
         val url = currentUrl
         if (url.isEmpty()) return
-        if (everReady && reconnects < MAX_RECONNECTS) {
-            // it played before: reconnect once more before treating it as dead
-            reconnects++
-            tried.remove(url)
-        } else {
-            settings.markBad(url)
+        // already waiting for the network: late errors of the dead connection change nothing
+        if (_waiting.value) return
+        when (TvReconnectDecision.decide(queryOnline(), everReady || droppedWhileOffline, reconnects, MAX_RECONNECTS)) {
+            TvReconnectDecision.Action.WAIT_FOR_NETWORK -> enterWait()
+            TvReconnectDecision.Action.RETRY_SAME -> {
+                // it played before (or was cut by going offline): reconnect to the same stream with backoff
+                reconnectPolicy.onError(ReconnectPolicy.Kind.NETWORK)
+                if (reconnectPolicy.attempts <= 1) reconnects = 0
+                reconnects++
+                startReconnecting()
+                _waiting.value = false
+                handler.removeCallbacks(retryRunnable)
+                handler.postDelayed(retryRunnable, reconnectPolicy.delayMs(true) ?: 1_000L)
+            }
+            TvReconnectDecision.Action.FAIL_OVER -> {
+                cancelReconnect()
+                settings.markBad(url)
+                runCatching { exo?.stop() }
+                tryNext(generation)
+            }
         }
-        runCatching { exo?.stop() }
-        tryNext(generation)
+    }
+
+    private fun queryOnline(): Boolean {
+        val cm = connectivity ?: return true
+        return runCatching {
+            val caps = cm.getNetworkCapabilities(cm.activeNetwork)
+            TvReconnectDecision.isOnline(
+                hasNetwork = caps != null,
+                hasInternet = caps?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true,
+                validated = caps?.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED) == true,
+            )
+        }.getOrDefault(true)
+    }
+
+    /** Starts the reconnect state (spinner, service stays alive) and listens to the default network until it ends */
+    private fun startReconnecting() {
+        handler.removeCallbacks(timeout)
+        _reconnecting.value = true
+        _buffering.value = true
+        _playing.value = false
+        if (!netCallbackRegistered) {
+            netCallbackRegistered = runCatching { connectivity?.registerDefaultNetworkCallback(netCallback) }.isSuccess &&
+                connectivity != null
+        }
+    }
+
+    /** Offline: nothing is tried or marked, the stream is retried as soon as the network is back */
+    private fun enterWait() {
+        droppedWhileOffline = true
+        handler.removeCallbacks(retryRunnable)
+        _error.value = null
+        _recovering.value = false
+        startReconnecting()
+        _waiting.value = true
+    }
+
+    private fun onNetworkChanged() {
+        if (!_reconnecting.value) return
+        val online = queryOnline()
+        if (online && _waiting.value) {
+            _waiting.value = false
+            handler.removeCallbacks(retryRunnable)
+            handler.post(retryRunnable) // back online: the same stream, right away
+        } else if (!online && !_waiting.value) {
+            handler.removeCallbacks(retryRunnable)
+            handler.removeCallbacks(timeout)
+            droppedWhileOffline = true
+            _waiting.value = true
+        }
+    }
+
+    private fun retryCurrent() {
+        if (!_reconnecting.value) return
+        val stream = currentStream
+        if (stream == null) {
+            cancelReconnect()
+            return
+        }
+        if (!queryOnline()) {
+            _waiting.value = true
+            return
+        }
+        startStream(stream, retry = true)
+    }
+
+    /** Ends the reconnect state without touching the player (user stop / pause / switch, or the stream plays again) */
+    private fun cancelReconnect() {
+        handler.removeCallbacks(retryRunnable)
+        if (netCallbackRegistered) {
+            netCallbackRegistered = false
+            runCatching { connectivity?.unregisterNetworkCallback(netCallback) }
+        }
+        _reconnecting.value = false
+        _waiting.value = false
     }
 
     private fun giveUp(reason: TvPlayerError) {
+        cancelReconnect()
         handler.removeCallbacks(timeout)
         runCatching { exo?.stop() }
         _error.value = reason
@@ -423,15 +559,25 @@ class TvPlayerController(
                 Player.STATE_READY -> {
                     handler.removeCallbacks(timeout)
                     _buffering.value = false
+                    reconnectPolicy.onReady()
+                    droppedWhileOffline = false
+                    if (_reconnecting.value) cancelReconnect()
                     if (!everReady) {
                         everReady = true
                         _recovering.value = false
                         settings.clearBad(currentUrl)
                     }
                 }
-                Player.STATE_BUFFERING -> _buffering.value = true
+                Player.STATE_BUFFERING -> {
+                    _buffering.value = true
+                    // a picture that played and then stalls for too long counts as a lost connection
+                    if (everReady && !_reconnecting.value) {
+                        handler.removeCallbacks(timeout)
+                        handler.postDelayed(timeout, STALL_TIMEOUT_MS)
+                    }
+                }
                 Player.STATE_ENDED -> if (currentUrl.isNotEmpty()) onStreamFailed()
-                else -> _buffering.value = false
+                else -> _buffering.value = _reconnecting.value
             }
         }
 
@@ -451,6 +597,11 @@ class TvPlayerController(
         }
 
         override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
+            // an explicit pause ends the reconnect loop (our own retries never switch playWhenReady off)
+            if (!playWhenReady && _reconnecting.value) {
+                cancelReconnect()
+                _buffering.value = false
+            }
             if (!playWhenReady && reason == Player.PLAY_WHEN_READY_CHANGE_REASON_AUDIO_FOCUS_LOSS) {
                 // something else plays now (radio, music, a video): do not fight for the focus
                 handler.removeCallbacks(timeout)
@@ -477,6 +628,7 @@ class TvPlayerController(
     companion object {
         const val DEFAULT_USER_AGENT = "Telos TV"
         private const val MAX_RECONNECTS = 3
+        private const val STALL_TIMEOUT_MS = 15_000L
         private const val LEAVE_DELAY_MS = 700L
     }
 }

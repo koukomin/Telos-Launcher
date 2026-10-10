@@ -94,6 +94,8 @@ fun TvPlayerDialog(
     val buffering by controller.isBuffering.collectAsStateWithLifecycle()
     val recovering by controller.isRecovering.collectAsStateWithLifecycle()
     val error by controller.error.collectAsStateWithLifecycle()
+    val reconnecting by controller.reconnecting.collectAsStateWithLifecycle()
+    val waitingForNetwork by controller.waitingForNetwork.collectAsStateWithLifecycle()
     val streamIndex by controller.streamIndex.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val epgKey = rememberTvEpgKey(viewModel, refresh = false)
@@ -151,7 +153,7 @@ fun TvPlayerDialog(
             )
 
             // no picture and nothing left to try: analog TV noise
-            if (error != null) {
+            if (error != null && !reconnecting) {
                 TvStatic(Modifier.fillMaxSize(), reduceAnimations = reduceAnimations)
             }
 
@@ -177,14 +179,21 @@ fun TvPlayerDialog(
             )
 
             if (current != null) {
-                val showStatus = error != null || recovering || (buffering && !playing)
+                val showStatus = error != null || reconnecting || recovering || (buffering && !playing)
                 if (showStatus) {
                     Column(
                         Modifier.align(Alignment.Center).padding(32.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
-                        if (error != null) {
+                        if (reconnecting) {
+                            CircularProgressIndicator(color = Color.White)
+                            Text(
+                                stringResource(if (waitingForNetwork) R.string.au16_reconnect_waiting else R.string.au16_reconnect_label),
+                                color = Color.White,
+                                style = MaterialTheme.typography.bodyMedium,
+                            )
+                        } else if (error != null) {
                             OfflinePanel(onRetry = { controller.resume() }, onBack = onMinimize)
                         } else {
                             CircularProgressIndicator(color = Color.White)

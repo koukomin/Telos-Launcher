@@ -25,6 +25,12 @@ class TvBackgroundPolicyTest {
         assertFalse(TvBackgroundPolicy.shouldStopAfterIdle(false, false, -1, 1000 + m))
     }
 
+    @Test fun noIdleStopWhileReconnecting() {
+        val m = TvBackgroundPolicy.IDLE_STOP_MS
+        assertFalse(TvBackgroundPolicy.shouldStopAfterIdle(false, false, 1000, 1000 + m, reconnecting = true))
+        assertTrue(TvBackgroundPolicy.shouldStopAfterIdle(false, false, 1000, 1000 + m, reconnecting = false))
+    }
+
     @Test fun notificationPermission() {
         assertTrue(TvBackgroundPolicy.needsNotificationPermission(33, false))
         assertFalse(TvBackgroundPolicy.needsNotificationPermission(33, true))
