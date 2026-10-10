@@ -309,6 +309,45 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
         )
     }
 
+    /**
+     * Clones [shortcut] (same URL and options) as a new web app with a fresh id, so it gets its own
+     * empty browser profile - this is how several accounts of the same site are set up. The custom
+     * icon file is copied so that deleting or replacing one icon never affects the other.
+     */
+    fun duplicate(shortcut: WebAppShortcut) {
+        viewModelScope.launch {
+            val iconCopy = shortcut.iconUri?.let { path ->
+                withContext(Dispatchers.IO) {
+                    runCatching {
+                        val src = File(path)
+                        if (path.startsWith(context.filesDir.absolutePath) && src.isFile) {
+                            val dst = File(context.filesDir, "webappshortcut_${UUID.randomUUID()}")
+                            src.copyTo(dst)
+                            dst.absolutePath
+                        } else path
+                    }.getOrDefault(path)
+                }
+            }
+            val copy = webAppShortcutRepository.create(
+                label = shortcut.label + " 2",
+                url = shortcut.url,
+                iconUri = iconCopy,
+                faviconUrl = shortcut.faviconUrl,
+                rendererPackage = shortcut.rendererPackage,
+                showInGrid = shortcut.showInGrid,
+                showInPanel = shortcut.showInPanel,
+                order = shortcut.order,
+                iconSource = shortcut.iconSource,
+                customCss = shortcut.customCss,
+                notificationsEnabled = shortcut.notificationsEnabled,
+                adBlockMode = shortcut.adBlockMode,
+                cookieOptions = shortcut.cookieOptions,
+            )
+            val groupId = browsingSettings.groups.first().find { it.appKeys.contains(shortcut.key) }?.id
+            if (groupId != null) assignToGroup(copy.key, groupId)
+        }
+    }
+
     /** Deletes the web app everywhere: storage, search, panel and folders. */
     fun delete(shortcut: WebAppShortcut) {
         panelManager.delete(shortcut)

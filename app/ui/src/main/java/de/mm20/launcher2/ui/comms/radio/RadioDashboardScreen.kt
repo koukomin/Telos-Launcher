@@ -197,7 +197,8 @@ fun RadioDashboardScreen() {
                             station = station,
                             isFavorite = true,
                             onFavoriteClick = { viewModel.toggleFavorite(station) },
-                            onClick = { playerViewModel.playStation(station) },
+                            onClick = { playerViewModel.toggleStation(station) },
+                            player = playerViewModel,
                             onLongClick = { editTarget = station },
                         )
                     }
@@ -241,7 +242,8 @@ fun RadioDashboardScreen() {
                                 station = station,
                                 isFavorite = isFavorite,
                                 onFavoriteClick = { viewModel.toggleFavorite(station) },
-                                onClick = { playerViewModel.playStation(station) }
+                                onClick = { playerViewModel.toggleStation(station) },
+                                player = playerViewModel,
                             )
                         }
                     }
@@ -404,6 +406,7 @@ private fun StationRow(
     isFavorite: Boolean,
     onFavoriteClick: () -> Unit,
     onClick: () -> Unit,
+    player: RadioViewModel,
     onLongClick: (() -> Unit)? = null,
 ) {
     LauncherCard(
@@ -458,6 +461,8 @@ private fun StationRow(
                     overflow = TextOverflow.Ellipsis
                 )
             }
+
+            de.mm20.launcher2.ui.comms.RadioPlayButton(station, player)
 
             // Favorite Button
             IconButton(onClick = onFavoriteClick) {

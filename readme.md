@@ -763,7 +763,7 @@ A download manager for links. [Docs](https://koukomin.github.io/Telos-Launcher/d
 - HTTP and HTTPS downloads with up to 16 connections per file (byte ranges); an idle connection takes over half of the biggest part that is left
 - Resume after a restart or a lost network, checked against size, ETag and Last-Modified; mirrors, redirects, file name from Content-Disposition
 - Queue with a limit of parallel downloads, priorities, retry with backoff, Wi-Fi only, pause on low battery, speed limit (global and per download)
-- Custom headers, user agent, referer, cookies, HTTP or SOCKS proxy (also used by torrents), torrents through a Telos Network WireGuard proxy (local HTTP proxy, fails closed, untested on a device), checksum check (MD5, SHA-1, SHA-256)
+- Custom headers, user agent, referer, cookies, HTTP or SOCKS proxy (also used by torrents), torrents through a Telos Network WireGuard proxy (local HTTP proxy, applied at app start so Telos Video uses it without opening Downloads, fails closed with a message, untested on a device), checksum check (MD5, SHA-1, SHA-256)
 - Saves to a folder you choose (system folder picker) or to `Downloads/Telos`; categories Video, Audio, Documents, Archives, Programs, Other
 - List with filters All, Active, Queued, Completed, Failed, search, swipe actions, details with one bar per connection, batch add, link from the clipboard, a share target for links
 - Foreground service with a progress notification, pause and cancel; open or share when finished

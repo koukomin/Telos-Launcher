@@ -45,6 +45,26 @@ object WebAppProfiles {
         }
     }
 
+    /**
+     * The cookie header ("a=b; c=d") that the web app [shortcutKey] holds for exactly [url], or
+     * null if there is none. Falls back to the shared default CookieManager when profiles are
+     * unsupported. Main thread only. The value is returned to the caller and never logged.
+     */
+    fun cookieHeaderFor(shortcutKey: String, url: String): String? {
+        return try {
+            if (!isSupported()) {
+                CookieManager.getInstance().getCookie(url)
+            } else {
+                val name = profileName(shortcutKey)
+                val store = ProfileStore.getInstance()
+                if (!store.allProfileNames.contains(name)) return null
+                store.getProfile(name)?.cookieManager?.getCookie(url)
+            }
+        } catch (e: Throwable) {
+            null
+        }
+    }
+
     /** Removes cookies and web storage of a single web app. */
     fun clear(shortcutKey: String, onDone: () -> Unit = {}) {
         if (!isSupported()) {

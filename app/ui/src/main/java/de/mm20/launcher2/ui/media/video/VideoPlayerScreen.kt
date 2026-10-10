@@ -80,7 +80,11 @@ fun VideoPlayerScreen(
                         startIndex = opened.startPosition,
                     )
                 }
-                .onFailure { error = it.message ?: context.getString(R.string.au_video_torrent_failed) }
+                .onFailure {
+                    error = if (it is de.mm20.launcher2.comms.media.video.torrent.TorrentRouteNotReadyException) {
+                        context.getString(R.string.au6_wgvideo_route_not_ready)
+                    } else it.message ?: context.getString(R.string.au_video_torrent_failed)
+                }
         }
         LaunchedEffect(torrentSource) {
             while (true) {

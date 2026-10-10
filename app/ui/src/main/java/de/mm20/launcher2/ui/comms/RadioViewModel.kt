@@ -37,6 +37,18 @@ class RadioViewModel : ViewModel(), KoinComponent {
     private val _isPlaying = MutableStateFlow(false)
     val isPlaying: StateFlow<Boolean> = _isPlaying
 
+    /** Media id (= station id) of the item that is loaded in the player, empty when none */
+    private val _stationId = MutableStateFlow("")
+    val stationId: StateFlow<String> = _stationId
+
+    /** True while the player should be playing (also while it is still buffering) */
+    private val _playWhenReady = MutableStateFlow(false)
+    val playWhenReady: StateFlow<Boolean> = _playWhenReady
+
+    /** True while a station is starting (resolving the stream) or the player is buffering */
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
     private val _stationName = MutableStateFlow("")
     val stationName: StateFlow<String> = _stationName
 
@@ -102,6 +114,15 @@ class RadioViewModel : ViewModel(), KoinComponent {
                 override fun onIsPlayingChanged(isPlaying: Boolean) {
                     _isPlaying.value = isPlaying
                     if (isPlaying) _error.value = null
+                    refreshPlaybackState()
+                }
+
+                override fun onPlaybackStateChanged(playbackState: Int) {
+                    refreshPlaybackState()
+                }
+
+                override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
+                    refreshPlaybackState()
                 }
 
                 override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
@@ -122,6 +143,7 @@ class RadioViewModel : ViewModel(), KoinComponent {
             // Sync initial state
             _isPlaying.value = controller.isPlaying
             refreshMetadata()
+            refreshPlaybackState()
         }, MoreExecutors.directExecutor())
     }
 
@@ -129,9 +151,19 @@ class RadioViewModel : ViewModel(), KoinComponent {
      * Streams that announce the current track replace the title of the media item with it, so the
      * station name always comes from the item and the track from the player.
      */
+    private fun refreshPlaybackState() {
+        val controller = mediaController ?: return
+        _playWhenReady.value = controller.playWhenReady && controller.currentMediaItem != null &&
+            controller.playbackState != Player.STATE_IDLE && controller.playbackState != Player.STATE_ENDED
+        _isLoading.value = controller.currentMediaItem != null && controller.playWhenReady &&
+            controller.playbackState == Player.STATE_BUFFERING
+        if (controller.isPlaying) _isLoading.value = false
+    }
+
     private fun refreshMetadata() {
         val controller = mediaController ?: return
         val item = controller.currentMediaItem
+        _stationId.value = item?.mediaId.orEmpty()
         val station = item?.mediaMetadata?.title?.toString().orEmpty()
         val track = controller.mediaMetadata.title?.toString()?.trim().orEmpty()
         _stationName.value = station
@@ -148,9 +180,21 @@ class RadioViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    /**
+     * Tap on a station row or its button: pauses/resumes it when it is the loaded one, starts it otherwise.
+     * Streams are live, so pausing keeps the player and the notification and play continues with live audio.
+     */
+    fun toggleStation(station: RadioStation) {
+        if (_stationId.value == station.id && _isVisible.value && mediaController != null) togglePlayPause()
+        else playStation(station)
+    }
+
     fun stop() {
         mediaController?.stop()
         _isVisible.value = false
+        _playWhenReady.value = false
+        _isLoading.value = false
+        _stationId.value = ""
         RadioSleepTimer.cancel()
     }
 
@@ -164,6 +208,9 @@ class RadioViewModel : ViewModel(), KoinComponent {
         _error.value = null
         // a second tap while the first station is still being resolved must not start both
         playJob?.cancel()
+        _isLoading.value = true
+        _playWhenReady.value = true
+        _stationId.value = station.id
         playJob = viewModelScope.launch {
             // playlist links (.pls, .m3u) are opened to find the real stream first
             val resolved = StreamResolver.resolve(station.streamUrl)
@@ -203,6 +250,7 @@ class RadioViewModel : ViewModel(), KoinComponent {
             startCurrentStream()
         } else {
             _error.value = R.string.au_radio_cannot_play
+            _isLoading.value = false
         }
     }
     // === TELOS_PENDING_REVIEW_END: radio_browser_ktor ===

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au6_wgvideo_route_not_ready">The torrent could not start: it is set to use a WireGuard tunnel of Telos Network, and that tunnel is not ready. Turn on Telos Network and the tunnel, or change the setting in Telos Downloads. Nothing was sent.</string>
+</resources>

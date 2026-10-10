@@ -315,6 +315,12 @@ fun WebAppsSettingsScreen() {
                                     )
                                     Text(stringResource(R.string.preference_screen_web_apps_panel), style = MaterialTheme.typography.labelSmall)
                                 }
+                                IconButton(onClick = { viewModel.duplicate(shortcut) }) {
+                                    Icon(
+                                        painterResource(R.drawable.content_copy_24px),
+                                        contentDescription = stringResource(R.string.duplicate),
+                                    )
+                                }
                                 IconButton(onClick = { shortcutToDelete = shortcut }) {
                                     Icon(
                                         painterResource(R.drawable.delete_24px),

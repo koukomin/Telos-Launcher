@@ -49,10 +49,12 @@ class TorrentProxyGate(
     val blocked: Boolean get() = _route.value is TorrentRoute.WireguardBlocked
 
     init {
+        // decided before anything can start, then kept in sync; independent of the Downloads screen and manager
+        applyNow()
         scope.launch {
             combine(settings.values, wireguard.state) { s, w -> compute(s, w) }.collect { (route, proxy) ->
                 _route.value = route
-                TorrentSession.setProxy(context, proxy)
+                TorrentSession.setRoute(context, route is TorrentRoute.Wireguard || route is TorrentRoute.WireguardBlocked, proxy)
             }
         }
     }
@@ -61,7 +63,7 @@ class TorrentProxyGate(
     fun applyNow(): TorrentRoute {
         val (route, proxy) = compute(settings.current, wireguard.state.value)
         _route.value = route
-        TorrentSession.setProxy(context, proxy)
+        TorrentSession.setRoute(context, route is TorrentRoute.Wireguard || route is TorrentRoute.WireguardBlocked, proxy)
         return route
     }
 

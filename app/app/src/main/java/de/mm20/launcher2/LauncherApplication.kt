@@ -278,6 +278,8 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
         launch(Dispatchers.Default) { guardVirtualApps() }
         // Telos Downloads: queue the downloads that were running when the process ended
         launch(Dispatchers.Default) {
+            // the torrent route (WireGuard / proxy) is applied from the start, also for Telos Video without Telos Downloads
+            runCatching { get<de.mm20.launcher2.downloads.TorrentProxyGate>() }
             runCatching { get<de.mm20.launcher2.downloads.DownloadManager>().start() }
             runCatching { get<de.mm20.launcher2.downloads.media.MediaRuntime>().scheduleAutoUpdate() }
         }
