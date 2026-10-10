@@ -10,6 +10,8 @@ data class RadioStation(
     val nameManuallySet: Boolean = false,
     /** Fallback streams that are tried when the main stream fails */
     val alternateStreams: List<String> = emptyList(),
+    /** Epoch millis of the last time the user played this saved station, 0 when never */
+    val lastPlayedAt: Long = 0L,
 )
 
 data class RadioHistoryEntry(

@@ -36,6 +36,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.ui.graphics.Color
+import de.mm20.launcher2.ui.common.share.ShareActions
+import de.mm20.launcher2.ui.common.share.ShareMenuItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.koin.compose.koinInject
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -51,7 +59,7 @@ import kotlinx.serialization.Serializable
 data object MusicRoute : NavKey
 
 /** A group of tracks shown on its own page (an album or an artist) */
-private data class TrackGroup(val title: String, val subtitle: String, val tracks: List<MusicTrack>)
+internal data class TrackGroup(val title: String, val subtitle: String, val tracks: List<MusicTrack>)
 
 @Composable
 fun MusicScreen(
@@ -89,6 +97,18 @@ fun MusicScreen(
         if (hasPermission) viewModel.loadLibrary(context)
     }
 
+    val history by viewModel.history.collectAsStateWithLifecycle()
+    val performanceSettings = koinInject<de.mm20.launcher2.preferences.ui.PerformanceSettings>()
+    val reduceAnimations by performanceSettings.reduceAnimations.collectAsState(false)
+    val scope = rememberCoroutineScope()
+    val shareFailed = stringResource(R.string.au9_share_failed)
+    var genre by rememberSaveable { mutableStateOf<String?>(null) }
+    fun shareTrack(t: MusicTrack) = shareAudio(context, scope, t.uri, t.title, shareFailed)
+    fun shareGroup(g: TrackGroup) {
+        val text = (listOf(listOf(g.title, g.subtitle).filter { it.isNotBlank() }.joinToString(" - ")) +
+            g.tracks.mapIndexed { i, t -> "${i + 1}. ${t.title}" }).joinToString("\n")
+        if (!ShareActions.shareText(context, text, g.title)) Toast.makeText(context, shareFailed, Toast.LENGTH_SHORT).show()
+    }
     var tab by rememberSaveable { mutableStateOf(0) }
     var query by rememberSaveable { mutableStateOf("") }
     var group by remember { mutableStateOf<TrackGroup?>(null) }
@@ -109,6 +129,7 @@ fun MusicScreen(
     val filtered = remember(tracks, query) {
         de.mm20.launcher2.comms.search.TelosSearch.filter(tracks, query) { listOf(it.title, it.artist, it.album) }
     }
+    val homeTracks = remember(filtered, genre) { if (genre == null) filtered else filtered.filter { it.genre.trim() == genre } }
     val unknownAlbum = stringResource(R.string.au_music_unknown_album)
     val unknownArtist = stringResource(R.string.au_music_unknown_artist)
     val songsFormat = stringResource(R.string.au_music_songs_count)
@@ -151,15 +172,18 @@ fun MusicScreen(
                         IconButton(onClick = { group = null }) {
                             Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back))
                         }
-                        Column {
+                        Column(Modifier.weight(1f)) {
                             Text(current.title, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
                             Text(current.subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
+                        IconButton(onClick = { shareGroup(current) }) {
+                            Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.menu_share))
+                        }
                     }
-                    TrackList(current.tracks, nowPlaying?.mediaId, onPlay = { i -> viewModel.play(current.tracks, i) })
+                    TrackList(current.tracks, nowPlaying?.mediaId, onPlay = { i -> viewModel.play(current.tracks, i) }, onShare = { shareTrack(it) })
                 } else {
                     TabRow(selectedTabIndex = tab) {
-                        listOf(stringResource(R.string.au_music_tab_songs), stringResource(R.string.hc_albums), stringResource(R.string.au_music_tab_artists)).forEachIndexed { i, title ->
+                        listOf(stringResource(R.string.au10_music_tab_home), stringResource(R.string.au_music_tab_songs), stringResource(R.string.hc_albums), stringResource(R.string.au_music_tab_artists)).forEachIndexed { i, title ->
                             Tab(selected = tab == i, onClick = { tab = i }, text = { Text(title) })
                         }
                     }
@@ -169,8 +193,21 @@ fun MusicScreen(
                             Text(stringResource(R.string.hc_no_music_found_on_this_device), color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         filtered.isEmpty() && query.isNotBlank() -> de.mm20.launcher2.ui.component.SearchEmptyState(query)
-                        tab == 0 -> TrackList(filtered, nowPlaying?.mediaId, onPlay = { i -> viewModel.play(filtered, i) })
-                        tab == 1 -> LazyVerticalGrid(
+                        tab == 0 -> MusicHome(
+                            allTracks = tracks,
+                            tracks = homeTracks,
+                            history = history,
+                            genre = genre,
+                            onGenre = { genre = it },
+                            onOpenGroup = { group = it },
+                            onShareGroup = { shareGroup(it) },
+                            onPlay = { l, i -> viewModel.play(l, i) },
+                            unknownAlbum = unknownAlbum,
+                            unknownArtist = unknownArtist,
+                            songsFormat = songsFormat,
+                        )
+                        tab == 1 -> TrackList(filtered, nowPlaying?.mediaId, onPlay = { i -> viewModel.play(filtered, i) }, onShare = { shareTrack(it) })
+                        tab == 2 -> LazyVerticalGrid(
                             columns = GridCells.Fixed(2),
                             contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 96.dp),
                             horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -178,7 +215,7 @@ fun MusicScreen(
                             modifier = Modifier.fillMaxSize(),
                         ) {
                             gridItems(albums) { album ->
-                                Column(Modifier.clickable { group = album }) {
+                                Column(Modifier.combinedClickable(onLongClick = { shareGroup(album) }, onClick = { group = album })) {
                                     Cover(album.tracks.first(), Modifier.fillMaxWidth().aspectRatio(1f))
                                     Text(album.title, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 6.dp))
                                     Text(album.subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
@@ -188,7 +225,7 @@ fun MusicScreen(
                         else -> LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
                             itemsIndexed(artists) { _, artist ->
                                 Row(
-                                    modifier = Modifier.fillMaxWidth().clickable { group = artist }.padding(horizontal = 16.dp, vertical = 10.dp),
+                                    modifier = Modifier.fillMaxWidth().combinedClickable(onLongClick = { shareGroup(artist) }, onClick = { group = artist }).padding(horizontal = 16.dp, vertical = 10.dp),
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
                                     Cover(artist.tracks.first(), Modifier.size(48.dp).clip(RoundedCornerShape(24.dp)))
@@ -206,48 +243,40 @@ fun MusicScreen(
 
         nowPlaying?.takeIf { !inHub }?.let { np ->
             val isPlaying by viewModel.isPlaying.collectAsStateWithLifecycle()
-            Surface(
-                shape = RoundedCornerShape(16.dp),
-                color = MaterialTheme.colorScheme.surfaceVariant,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(12.dp)
-                    .fillMaxWidth()
-                    .clickable { showNowPlaying = true },
-            ) {
-                Row(Modifier.padding(horizontal = 12.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-                    ArtOrNote(np.artUri?.toString(), Modifier.size(44.dp).clip(RoundedCornerShape(8.dp)))
-                    Column(Modifier.weight(1f).padding(horizontal = 12.dp)) {
-                        Text(np.title, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                        Text(np.artist, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    }
-                    IconButton(onClick = { viewModel.togglePlayPause() }) {
-                        Icon(painterResource(if (isPlaying) R.drawable.pause_24px else R.drawable.play_arrow_24px), contentDescription = stringResource(if (isPlaying) R.string.au_music_pause else R.string.hc_play))
-                    }
-                    IconButton(onClick = { viewModel.next() }) {
-                        Icon(painterResource(R.drawable.skip_next_24px), contentDescription = stringResource(R.string.hc_next))
-                    }
-                }
-            }
+            ArtTintedMiniPlayer(
+                title = np.title,
+                artist = np.artist,
+                artUrl = tracks.firstOrNull { it.id.toString() == np.mediaId }?.albumArtUri?.toString() ?: np.artUri?.toString(),
+                isPlaying = isPlaying,
+                onToggle = { viewModel.togglePlayPause() },
+                onNext = { viewModel.next() },
+                onClick = { showNowPlaying = true },
+                modifier = Modifier.align(Alignment.BottomCenter).padding(12.dp),
+                reduceAnimations = reduceAnimations,
+            )
         }
 
         AnimatedVisibility(
             visible = showNowPlaying && nowPlaying != null,
-            enter = slideInVertically { it },
-            exit = slideOutVertically { it },
+            enter = if (reduceAnimations) androidx.compose.animation.EnterTransition.None else slideInVertically { it },
+            exit = if (reduceAnimations) androidx.compose.animation.ExitTransition.None else slideOutVertically { it },
         ) {
-            NowPlayingScreen(viewModel, onClose = { showNowPlaying = false })
+            NowPlayingScreen(viewModel, tracks, reduceAnimations, onClose = { showNowPlaying = false })
         }
     }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun TrackList(list: List<MusicTrack>, currentId: String?, onPlay: (Int) -> Unit) {
+private fun TrackList(list: List<MusicTrack>, currentId: String?, onPlay: (Int) -> Unit, onShare: (MusicTrack) -> Unit) {
+    var menuFor by remember { mutableStateOf<Long?>(null) }
     LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
         itemsIndexed(list, key = { _, t -> t.id }) { index, track ->
             Row(
-                modifier = Modifier.fillMaxWidth().clickable { onPlay(index) }.padding(horizontal = 16.dp, vertical = 8.dp),
+                modifier = Modifier.fillMaxWidth()
+                    .combinedClickable(onLongClick = { menuFor = track.id }, onClick = { onPlay(index) })
+                    .padding(start = 16.dp, top = 8.dp, bottom = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Cover(track, Modifier.size(48.dp).clip(RoundedCornerShape(8.dp)))
@@ -268,8 +297,33 @@ private fun TrackList(list: List<MusicTrack>, currentId: String?, onPlay: (Int) 
                     )
                 }
                 Text(formatDuration(track.durationMs), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Box {
+                    IconButton(onClick = { menuFor = track.id }) {
+                        Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.au10_music_more))
+                    }
+                    DropdownMenu(expanded = menuFor == track.id, onDismissRequest = { menuFor = null }) {
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.hc_play)) },
+                            onClick = { menuFor = null; onPlay(index) },
+                        )
+                        ShareMenuItem(onClick = { menuFor = null; onShare(track) })
+                    }
+                }
             }
         }
+    }
+}
+
+/** Shares the audio file behind [uri] (a copy in cache/share) */
+internal fun shareAudio(context: android.content.Context, scope: kotlinx.coroutines.CoroutineScope, uri: android.net.Uri?, title: String, failedText: String) {
+    if (uri == null) return
+    scope.launch {
+        val ok = withContext(Dispatchers.IO) {
+            val mime = context.contentResolver.getType(uri) ?: "audio/*"
+            val ext = android.webkit.MimeTypeMap.getSingleton().getExtensionFromMimeType(mime) ?: "audio"
+            ShareActions.shareFile(context, uri, mime, "${title.ifBlank { "audio" }}.$ext")
+        }
+        if (!ok) Toast.makeText(context, failedText, Toast.LENGTH_SHORT).show()
     }
 }
 
@@ -277,7 +331,7 @@ private fun TrackList(list: List<MusicTrack>, currentId: String?, onPlay: (Int) 
 private fun Cover(track: MusicTrack, modifier: Modifier) = ArtOrNote(track.albumArtUri.toString(), modifier)
 
 @Composable
-private fun ArtOrNote(url: String?, modifier: Modifier) {
+internal fun ArtOrNote(url: String?, modifier: Modifier) {
     Box(modifier.background(MaterialTheme.colorScheme.secondaryContainer), contentAlignment = Alignment.Center) {
         Icon(painterResource(R.drawable.music_note_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onSecondaryContainer)
         if (url != null) {

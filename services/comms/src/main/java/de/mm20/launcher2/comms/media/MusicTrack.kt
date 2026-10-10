@@ -13,6 +13,8 @@ data class MusicTrack(
     val trackNumber: Int,
     val year: Int,
     val dateAddedSeconds: Long,
+    /** Genre tag from the media store (Android 11 and newer), empty when unknown */
+    val genre: String = "",
 ) {
     /** Album cover as exposed by the media store */
     val albumArtUri: Uri

@@ -218,6 +218,7 @@ class RadioViewModel : ViewModel(), KoinComponent {
                 .ifEmpty { listOf(station.streamUrl) }
             streamIndex = 0
             startCurrentStream()
+            runCatching { repository.markPlayed(station.id) }
             runCatching { repository.countClick(station.id) }
         }
     }

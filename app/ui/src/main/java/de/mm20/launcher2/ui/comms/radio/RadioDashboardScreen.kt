@@ -181,36 +181,31 @@ fun RadioDashboardScreen() {
                         collectionQuery, { collectionQuery = it }, stringResource(R.string.tsm_search_my_stations)
                     )
                 }
-                LazyColumn(
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    item { RadioRecordingsEntry() }
-                    if (shownFavorites.isEmpty() && favorites.isNotEmpty() && collectionQuery.isNotBlank()) {
-                        item { de.mm20.launcher2.ui.component.SearchEmptyState(collectionQuery) }
-                    }
-                    if (favorites.isEmpty()) {
-                        item {
-                            Text(
-                                text = stringResource(R.string.hc_no_stations_yet_search_for_a_station_add),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier.padding(16.dp)
-                            )
+                var chip by rememberSaveable { mutableStateOf(RadioChip.All) }
+                RadioHome(
+                    favorites = shownFavorites,
+                    player = playerViewModel,
+                    chip = chip,
+                    onChip = { chip = it },
+                    onLongClick = { editTarget = it },
+                    modifier = Modifier.fillMaxSize(),
+                    header = {
+                        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                            RadioRecordingsEntry()
+                            if (shownFavorites.isEmpty() && favorites.isNotEmpty() && collectionQuery.isNotBlank()) {
+                                de.mm20.launcher2.ui.component.SearchEmptyState(collectionQuery)
+                            }
+                            if (favorites.isEmpty()) {
+                                Text(
+                                    text = stringResource(R.string.hc_no_stations_yet_search_for_a_station_add),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.padding(16.dp)
+                                )
+                            }
                         }
-                    }
-                    items(shownFavorites, key = { it.id }) { station ->
-                        StationRow(
-                            station = station,
-                            isFavorite = true,
-                            onFavoriteClick = { viewModel.toggleFavorite(station) },
-                            onClick = { playerViewModel.toggleStation(station) },
-                            player = playerViewModel,
-                            onLongClick = { editTarget = station },
-                        )
-                    }
-                }
+                    },
+                )
                 }
             }
 
@@ -252,6 +247,7 @@ fun RadioDashboardScreen() {
                                 onFavoriteClick = { viewModel.toggleFavorite(station) },
                                 onClick = { playerViewModel.toggleStation(station) },
                                 player = playerViewModel,
+                                onLongClick = { editTarget = station },
                             )
                         }
                     }
@@ -369,19 +365,33 @@ fun RadioDashboardScreen() {
         var renaming by remember(station.id) { mutableStateOf(false) }
         var newName by remember(station.id) { mutableStateOf(station.name) }
         if (!renaming) {
+            val saved = favorites.any { it.id == station.id }
             AlertDialog(
                 onDismissRequest = { editTarget = null },
                 title = { Text(station.name) },
-                text = { Text(station.streamUrl) },
-                confirmButton = {
-                    TextButton(onClick = { renaming = true }) { Text(stringResource(R.string.hc_rename)) }
+                text = {
+                    Column {
+                        Text(station.streamUrl, style = MaterialTheme.typography.bodySmall, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                        TextButton(onClick = {
+                            de.mm20.launcher2.ui.comms.radio.RadioShare.share(context, station)
+                            editTarget = null
+                        }) { Text(stringResource(R.string.au10_radio_share)) }
+                        if (saved) {
+                            TextButton(onClick = { renaming = true }) { Text(stringResource(R.string.hc_rename)) }
+                            TextButton(onClick = {
+                                viewModel.deleteStation(station.id)
+                                editTarget = null
+                            }) { Text(stringResource(R.string.hc_remove)) }
+                        } else {
+                            TextButton(onClick = {
+                                viewModel.toggleFavorite(station)
+                                editTarget = null
+                            }) { Text(stringResource(R.string.hc_favorite)) }
+                        }
+                    }
                 },
-                dismissButton = {
-                    TextButton(onClick = {
-                        viewModel.deleteStation(station.id)
-                        editTarget = null
-                    }) { Text(stringResource(R.string.hc_remove)) }
-                },
+                confirmButton = {},
+                dismissButton = { TextButton(onClick = { editTarget = null }) { Text(stringResource(R.string.hc_close)) } },
             )
         } else {
             AlertDialog(

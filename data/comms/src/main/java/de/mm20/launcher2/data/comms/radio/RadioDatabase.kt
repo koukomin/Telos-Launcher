@@ -18,6 +18,7 @@ data class RadioStationEntity(
     /** Fallback streams, one URL per line */
     @ColumnInfo(defaultValue = "''") val alternateStreams: String = "",
     @ColumnInfo(defaultValue = "0") val addedAt: Long = 0L,
+    @ColumnInfo(defaultValue = "0") val lastPlayedAt: Long = 0L,
 )
 
 @Entity(tableName = "radio_history")
@@ -52,6 +53,9 @@ interface RadioStationDao {
     @Query("UPDATE favorite_stations SET name = :name, nameManuallySet = 1 WHERE id = :id")
     suspend fun rename(id: String, name: String)
 
+    @Query("UPDATE favorite_stations SET lastPlayedAt = :at WHERE id = :id")
+    suspend fun markPlayed(id: String, at: Long)
+
     @Query("SELECT * FROM radio_history ORDER BY playedAt DESC LIMIT 300")
     fun observeHistory(): Flow<List<RadioHistoryEntity>>
 
@@ -67,7 +71,7 @@ interface RadioStationDao {
 
 @Database(
     entities = [RadioStationEntity::class, RadioHistoryEntity::class],
-    version = 2,
+    version = 3,
     exportSchema = false,
 )
 abstract class RadioDatabase : RoomDatabase() {
@@ -95,6 +99,12 @@ abstract class RadioDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE favorite_stations ADD COLUMN lastPlayedAt INTEGER NOT NULL DEFAULT 0")
+            }
+        }
+
         fun getDatabase(context: Context): RadioDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -102,7 +112,7 @@ abstract class RadioDatabase : RoomDatabase() {
                     RadioDatabase::class.java,
                     "telos_radio.db"
                 )
-                    .addMigrations(MIGRATION_1_2)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                     .build()
                 INSTANCE = instance
                 instance

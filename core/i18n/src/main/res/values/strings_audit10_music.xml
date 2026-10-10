@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au10_music_tab_home">Home</string>
+    <string name="au10_music_genre_all">All</string>
+    <string name="au10_music_quick_picks">Quick picks</string>
+    <string name="au10_music_recent">Recently played</string>
+    <string name="au10_music_decades">Decades</string>
+    <string name="au10_music_decade_format">%1$ds</string>
+    <string name="au10_music_up_next">Up next</string>
+    <string name="au10_music_lyrics">Lyrics</string>
+    <string name="au10_music_related">Related</string>
+    <string name="au10_music_more">More options</string>
+    <string name="au10_music_queue_empty">Nothing queued after this track</string>
+    <string name="au10_music_open_sheet">Up next, lyrics and related</string>
+</resources>

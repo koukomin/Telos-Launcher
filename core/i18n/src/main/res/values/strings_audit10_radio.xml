@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au10_radio_share">Share</string>
+    <string name="au10_radio_invalid_link">This link does not contain a valid radio station</string>
+    <string name="au10_radio_add_title">Add station %1$s to Telos Radio?</string>
+    <string name="au10_radio_name">Name</string>
+    <string name="au10_radio_stream_url">Stream address (http or https)</string>
+    <string name="au10_radio_already_added">This station is already in your collection</string>
+    <string name="au10_radio_chip_all">All</string>
+    <string name="au10_radio_chip_recent">Recently played</string>
+    <string name="au10_radio_chip_mine">Added by me</string>
+    <string name="au10_radio_chip_browser">From Radio Browser</string>
+    <string name="au10_radio_recent_title">Recently played</string>
+</resources>

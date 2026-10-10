@@ -28,9 +28,10 @@ class RadioRepositoryImpl(
         streamContent = streamContent,
         nameManuallySet = nameManuallySet,
         alternateStreams = alternateStreams.lines().filter { it.isNotBlank() },
+        lastPlayedAt = lastPlayedAt,
     )
 
-    private fun RadioStation.toEntity(addedAt: Long) = RadioStationEntity(
+    private fun RadioStation.toEntity(addedAt: Long, lastPlayed: Long = lastPlayedAt) = RadioStationEntity(
         id = id,
         name = name,
         streamUrl = streamUrl,
@@ -40,6 +41,7 @@ class RadioRepositoryImpl(
         nameManuallySet = nameManuallySet,
         alternateStreams = alternateStreams.joinToString("\n"),
         addedAt = addedAt,
+        lastPlayedAt = lastPlayed,
     )
 
     override fun observeFavorites(): Flow<List<RadioStation>> {
@@ -61,11 +63,15 @@ class RadioRepositoryImpl(
 
     override suspend fun saveStation(station: RadioStation) {
         val existing = dao.getStation(station.id)
-        dao.insert(station.toEntity(existing?.addedAt ?: System.currentTimeMillis()))
+        dao.insert(station.toEntity(existing?.addedAt ?: System.currentTimeMillis(), existing?.lastPlayedAt ?: station.lastPlayedAt))
     }
 
     override suspend fun renameStation(id: String, name: String) {
         if (name.isNotBlank()) dao.rename(id, name.trim())
+    }
+
+    override suspend fun markPlayed(id: String) {
+        dao.markPlayed(id, System.currentTimeMillis())
     }
 
     override suspend fun deleteStation(id: String) {
@@ -112,6 +118,7 @@ class RadioRepositoryImpl(
                     .put("nameManuallySet", s.nameManuallySet)
                     .put("alternateStreams", JSONArray(s.alternateStreams.lines().filter { it.isNotBlank() }))
                     .put("addedAt", s.addedAt)
+                    .put("lastPlayedAt", s.lastPlayedAt)
             )
         }
         return JSONObject().put("version", 1).put("stations", array).toString(2)
@@ -138,6 +145,7 @@ class RadioRepositoryImpl(
                     alternateStreams = (0 until (alternates?.length() ?: 0))
                         .joinToString("\n") { alternates!!.getString(it) },
                     addedAt = o.optLong("addedAt", System.currentTimeMillis()),
+                    lastPlayedAt = o.optLong("lastPlayedAt", 0L),
                 )
             )
             restored++
