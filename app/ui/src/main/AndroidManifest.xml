@@ -275,6 +275,11 @@
                 <data android:mimeType="application/msword" />
                 <data android:mimeType="application/vnd.ms-excel" />
                 <data android:mimeType="application/vnd.ms-powerpoint" />
+                <data android:mimeType="application/vnd.google-apps.document" />
+                <data android:mimeType="application/vnd.google-apps.spreadsheet" />
+                <data android:mimeType="application/vnd.google-apps.presentation" />
+                <data android:mimeType="application/vnd.google-apps.drawing" />
+                <data android:mimeType="application/vnd.google-apps.form" />
             </intent-filter>
         </activity>
 

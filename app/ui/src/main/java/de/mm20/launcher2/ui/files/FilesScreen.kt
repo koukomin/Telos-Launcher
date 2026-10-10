@@ -88,6 +88,14 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.runtime.collectAsState
+import de.mm20.launcher2.preferences.ui.PerformanceSettings
+import org.koin.compose.koinInject
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
@@ -145,6 +153,18 @@ fun FilesScreen() {
     var menuOpen by remember { mutableStateOf(false) }
     var addMenu by remember { mutableStateOf(false) }
     var dialog by remember { mutableStateOf<FilesDialog?>(null) }
+    var viewMenu by remember { mutableStateOf(false) }
+    val performanceSettings: PerformanceSettings = koinInject()
+    val reduceFlow = remember(performanceSettings) { performanceSettings.reduceAnimations }
+    val reduceAnimations by reduceFlow.collectAsState(false)
+    val listState = rememberLazyListState()
+    val gridState = rememberLazyGridState()
+    val gridMode = vm.viewMode != 0
+    // the place in the folder stays when the view changes; a new folder starts at the top
+    LaunchedEffect(gridMode) {
+        if (gridMode) gridState.scrollToItem(listState.firstVisibleItemIndex) else listState.scrollToItem(gridState.firstVisibleItemIndex)
+    }
+    LaunchedEffect(vm.path) { listState.scrollToItem(0); gridState.scrollToItem(0) }
 
     BackHandler(drawer.isOpen) { scope.launch { drawer.close() } }
     BackHandler(!drawer.isOpen) {
@@ -162,7 +182,7 @@ fun FilesScreen() {
                 de.mm20.launcher2.ui.files.vault.VaultPath.isVaultFolder(java.io.File(entry.path)) ->
                 if (de.mm20.launcher2.ui.files.vault.VaultSessions.isUnlocked(entry.path)) vm.open(de.mm20.launcher2.ui.files.vault.VaultPath.build(entry.path, "/")) else dialog = FilesDialog.Unlock(entry)
             entry.isDir -> vm.open(entry.path)
-            ArchivePath.canOpen(entry.name) && !RemotePath.isRemote(entry.path) && !ArchivePath.isArchive(entry.path) -> dialog = FilesDialog.Archive(entry)
+            ArchivePath.canOpen(entry.name) && !de.mm20.launcher2.ui.media.docs.DocumentTypes.supports(entry.name) && !RemotePath.isRemote(entry.path) && !ArchivePath.isArchive(entry.path) -> dialog = FilesDialog.Archive(entry)
             RemotePath.isRemote(entry.path) && entry.kind == FileKind.Video -> FileActions.playRemoteVideo(context, entry, vm.entries)
             (RemotePath.isRemote(entry.path) || ArchivePath.isArchive(entry.path) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(entry.path)) -> vm.download(entry) { file ->
                 FileActions.open(context, FsEntry(file.path, file.name, false, file.length(), file.lastModified()), emptyList(), false)
@@ -207,6 +227,9 @@ fun FilesScreen() {
                             onCompress = { dialog = FilesDialog.Compress(vm.selectedEntries()) },
                             onProperties = { vm.selectedEntries().singleOrNull()?.let { dialog = FilesDialog.Properties(it) } },
                             onBookmark = { vm.selectedEntries().singleOrNull()?.let { vm.toggleBookmark(it.path); vm.clearSelection() } },
+                            onOpenAsArchive = vm.selectedEntries().singleOrNull()
+                                ?.takeIf { !it.isDir && de.mm20.launcher2.ui.media.docs.DocumentTypes.supports(it.name) && ArchivePath.canOpen(it.name) && !RemotePath.isRemote(it.path) && !ArchivePath.isArchive(it.path) }
+                                ?.let { archive -> { dialog = FilesDialog.Archive(archive); vm.clearSelection() } },
                         )
                         searching -> SearchBar(
                             query = vm.query,
@@ -224,12 +247,33 @@ fun FilesScreen() {
                                 if (vm.path != null) IconButton(onClick = { searching = true }) {
                                     Icon(painterResource(Icons.search_24px), contentDescription = stringResource(R.string.hc_search))
                                 }
+                                if (vm.path != null) Box {
+                                    IconButton(onClick = { viewMenu = true }) {
+                                        Icon(
+                                            painterResource(when (vm.viewMode) { 1 -> Icons.apps_24px; 2 -> Icons.dashboard_2_24px; else -> Icons.table_rows_24px }),
+                                            contentDescription = stringResource(R.string.au22_files_view_mode),
+                                        )
+                                    }
+                                    DropdownMenu(expanded = viewMenu, onDismissRequest = { viewMenu = false }) {
+                                        listOf(
+                                            Triple(0, R.string.au22_files_view_list, Icons.table_rows_24px),
+                                            Triple(1, R.string.au22_files_view_grid_medium, Icons.apps_24px),
+                                            Triple(2, R.string.au22_files_view_grid_large, Icons.dashboard_2_24px),
+                                        ).forEach { (mode, label, icon) ->
+                                            DropdownMenuItem(
+                                                text = { Text(stringResource(label)) },
+                                                leadingIcon = { Icon(painterResource(icon), contentDescription = null) },
+                                                trailingIcon = { if (vm.viewMode == mode) Icon(painterResource(Icons.check_24px), contentDescription = null) },
+                                                onClick = { viewMenu = false; vm.setViewMode(mode) },
+                                            )
+                                        }
+                                    }
+                                }
                                 Box {
                                     IconButton(onClick = { menuOpen = true }) {
                                         Icon(painterResource(Icons.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
                                     }
                                     DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
-                                        DropdownMenuItem(text = { Text(if (vm.grid) stringResource(R.string.hf_files_list_view) else stringResource(R.string.hf_files_grid_view)) }, onClick = { menuOpen = false; vm.toggleGrid() })
                                         DropdownMenuItem(text = { Text(stringResource(R.string.hc_sort_by_2)) }, onClick = { menuOpen = false; dialog = FilesDialog.Sort })
                                         DropdownMenuItem(text = { Text(if (vm.showHidden) stringResource(R.string.hf_files_hide_hidden) else stringResource(R.string.hf_files_show_hidden)) }, onClick = { menuOpen = false; vm.toggleHidden() })
                                         vm.path?.takeIf { de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it) }?.let { vp ->
@@ -288,21 +332,32 @@ fun FilesScreen() {
                         if (shown.isEmpty() && !vm.loading) {
                             if (vm.query.isNotBlank()) de.mm20.launcher2.ui.component.SearchEmptyState(vm.query.trim(), Modifier.fillMaxSize())
                             else EmptyPage(stringResource(R.string.hf_files_folder_empty))
-                        } else if (vm.grid) {
-                            LazyVerticalGrid(
-                                columns = GridCells.Adaptive(112.dp),
-                                contentPadding = PaddingValues(12.dp, 4.dp, 12.dp, 96.dp),
-                                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                                verticalArrangement = Arrangement.spacedBy(10.dp),
-                            ) {
-                                gridItems(shown, key = { it.path }) { e ->
-                                    GridCell(e, e.path in vm.selection, { onOpenEntry(e) }, { vm.toggleSelected(e) })
-                                }
-                            }
                         } else {
-                            LazyColumn(contentPadding = PaddingValues(bottom = 96.dp)) {
-                                items(shown, key = { it.path }) { e ->
-                                    FileRow(e, e.path in vm.selection, vm.rootMode, { onOpenEntry(e) }, { vm.toggleSelected(e) })
+                            val unique = remember(shown) { shown.distinctBy { it.path } }
+                            Crossfade(targetState = gridMode, animationSpec = if (reduceAnimations) snap() else tween(200), label = "filesView") { isGrid ->
+                                if (isGrid) {
+                                    val large = vm.viewMode == 2
+                                    LazyVerticalGrid(
+                                        state = gridState,
+                                        columns = GridCells.Adaptive(if (large) 156.dp else 104.dp),
+                                        contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 96.dp),
+                                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                        verticalArrangement = Arrangement.spacedBy(if (large) 16.dp else 12.dp),
+                                    ) {
+                                        gridItems(unique, key = { it.path }) { e ->
+                                            FileTile(
+                                                e, e.path in vm.selection, selecting, large, reduceAnimations,
+                                                onClick = { onOpenEntry(e) }, onLongClick = { vm.toggleSelected(e) },
+                                                modifier = if (reduceAnimations) Modifier else Modifier.animateItem(),
+                                            )
+                                        }
+                                    }
+                                } else {
+                                    LazyColumn(state = listState, contentPadding = PaddingValues(bottom = 96.dp)) {
+                                        items(unique, key = { it.path }) { e ->
+                                            FileRow(e, e.path in vm.selection, vm.rootMode, { onOpenEntry(e) }, { vm.toggleSelected(e) })
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -626,6 +681,7 @@ private fun Detail(label: String, value: String) {
 private fun SelectionBar(
     count: Int, single: FsEntry?, onClose: () -> Unit, onSelectAll: () -> Unit, onCopy: () -> Unit, onCut: () -> Unit,
     onDelete: () -> Unit, onShare: () -> Unit, onRename: () -> Unit, onCompress: () -> Unit, onProperties: () -> Unit, onBookmark: () -> Unit,
+    onOpenAsArchive: (() -> Unit)? = null,
 ) {
     var more by remember { mutableStateOf(false) }
     TopAppBar(
@@ -642,6 +698,7 @@ private fun SelectionBar(
                     DropdownMenuItem(text = { Text(stringResource(R.string.hc_select_all)) }, onClick = { more = false; onSelectAll() })
                     DropdownMenuItem(text = { Text(stringResource(R.string.hc_share)) }, onClick = { more = false; onShare() })
                     DropdownMenuItem(text = { Text(stringResource(R.string.au21_arch_compress)) }, onClick = { more = false; onCompress() })
+                    if (onOpenAsArchive != null) DropdownMenuItem(text = { Text(stringResource(R.string.au22_files_open_as_archive)) }, onClick = { more = false; onOpenAsArchive() })
                     if (single != null) {
                         DropdownMenuItem(text = { Text(stringResource(R.string.hc_rename)) }, onClick = { more = false; onRename() })
                         DropdownMenuItem(text = { Text(stringResource(R.string.hc_properties)) }, onClick = { more = false; onProperties() })

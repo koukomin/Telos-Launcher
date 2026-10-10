@@ -68,14 +68,14 @@ data object ViewerRoute : NavKey
 /** Categories of the library (the chips). [exts] are the file extensions that belong to it. */
 internal enum class DocCategory(val labelRes: Int, val exts: Set<String>) {
     All(R.string.au20_viewer_cat_all, emptySet()),
-    Documents(R.string.au20_viewer_cat_documents, setOf("doc", "docx", "odt", "rtf", "txt", "md", "markdown")),
+    Documents(R.string.au20_viewer_cat_documents, setOf("doc", "docx", "odt", "rtf", "txt", "md", "markdown", "gdoc")),
     Pdf(R.string.au20_viewer_cat_pdf, setOf("pdf")),
-    Sheets(R.string.au20_viewer_cat_sheets, setOf("xls", "xlsx", "ods", "csv", "tsv")),
-    Slides(R.string.au20_viewer_cat_slides, setOf("ppt", "pptx", "odp")),
+    Sheets(R.string.au20_viewer_cat_sheets, setOf("xls", "xlsx", "ods", "csv", "tsv", "gsheet")),
+    Slides(R.string.au20_viewer_cat_slides, setOf("ppt", "pptx", "odp", "gslides")),
     Ebooks(R.string.au20_viewer_cat_ebooks, setOf("epub")),
     Other(
         R.string.au20_viewer_cat_other,
-        setOf("json", "xml", "html", "htm", "log", "yml", "yaml", "ini", "conf", "srt", "vtt", "gpx", "kml", "tex"),
+        setOf("json", "xml", "html", "htm", "log", "yml", "yaml", "ini", "conf", "srt", "vtt", "gpx", "kml", "tex", "gdraw", "gform", "gsite"),
     );
 
     companion object {
@@ -291,9 +291,9 @@ private fun describe(context: Context, uri: Uri): Pair<String, Long> {
 
 private fun tileColor(ext: String): Color = when (ext) {
     "pdf" -> Color(0xFFD32F2F)
-    "doc", "docx", "odt", "rtf" -> Color(0xFF1565C0)
-    "xls", "xlsx", "ods", "csv", "tsv" -> Color(0xFF2E7D32)
-    "ppt", "pptx", "odp" -> Color(0xFFC2410C)
+    "doc", "docx", "odt", "rtf", "gdoc" -> Color(0xFF1565C0)
+    "xls", "xlsx", "ods", "csv", "tsv", "gsheet" -> Color(0xFF2E7D32)
+    "ppt", "pptx", "odp", "gslides" -> Color(0xFFC2410C)
     "epub" -> Color(0xFF6A1B9A)
     else -> Color(0xFF546E7A)
 }

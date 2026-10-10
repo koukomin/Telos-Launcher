@@ -54,8 +54,10 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
 
     var sort by mutableStateOf(loadSort())
         private set
-    var grid by mutableStateOf(prefs.getBoolean("grid", false))
+    /** 0 = list, 1 = grid with medium previews, 2 = grid with large previews; kept for all folders */
+    var viewMode by mutableStateOf(prefs.getInt("viewMode", if (prefs.getBoolean("grid", false)) 1 else 0).coerceIn(0, 2))
         private set
+    val grid: Boolean get() = viewMode != 0
     var showHidden by mutableStateOf(prefs.getBoolean("hidden", false))
         private set
 
@@ -258,7 +260,11 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         prefs.edit().putString("sortKey", spec.key.name).putBoolean("sortAsc", spec.ascending).putBoolean("foldersFirst", spec.foldersFirst).apply()
     }
 
-    fun toggleGrid() { grid = !grid; prefs.edit().putBoolean("grid", grid).apply() }
+    fun toggleGrid() = setViewMode(if (viewMode == 0) 1 else 0)
+    fun setViewMode(mode: Int) {
+        viewMode = mode.coerceIn(0, 2)
+        prefs.edit().putInt("viewMode", viewMode).putBoolean("grid", viewMode != 0).apply()
+    }
     fun toggleHidden() { showHidden = !showHidden; prefs.edit().putBoolean("hidden", showHidden).apply() }
 
     // ---- selection ----
