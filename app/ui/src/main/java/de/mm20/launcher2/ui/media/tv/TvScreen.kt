@@ -118,6 +118,7 @@ fun TvScreen() {
     var deleteTarget by remember { mutableStateOf<TvChannel?>(null) }
     var showCountries by rememberSaveable { mutableStateOf(false) }
     var menuOpen by remember { mutableStateOf(false) }
+    var showPlayback by rememberSaveable { mutableStateOf(false) }
 
     fun toast(text: String) = Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
 
@@ -166,6 +167,10 @@ fun TvScreen() {
                         Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
                     }
                     DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.au15_tvbg_menu_playback)) },
+                            onClick = { menuOpen = false; showPlayback = true },
+                        )
                         DropdownMenuItem(
                             text = { Text(stringResource(R.string.au12_tvui_import_m3u)) },
                             onClick = {
@@ -223,6 +228,9 @@ fun TvScreen() {
 
     if (showCountries) {
         TvCountrySheet(vm, onDismiss = { showCountries = false })
+    }
+    if (showPlayback) {
+        TvPlaybackSheet(vm, onDismiss = { showPlayback = false })
     }
     edit?.let { target ->
         TvChannelDialog(vm, target.channel, onDismiss = { edit = null })
@@ -784,6 +792,40 @@ private fun TvCountrySheet(vm: TvViewModel, onDismiss: () -> Unit) {
                             )
                         }
                     }
+                }
+            }
+        }
+    }
+}
+
+/** "Keep playing in the background"; asks for the notification permission (Android 13+) when it is switched on */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun TvPlaybackSheet(vm: TvViewModel, onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    val keep by vm.keepInBackground.collectAsStateWithLifecycle()
+    val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { }
+    ModalBottomSheet(onDismissRequest = onDismiss) {
+        Column(Modifier.fillMaxWidth().navigationBarsPadding().padding(bottom = 16.dp)) {
+            Text(
+                stringResource(R.string.au15_tvbg_menu_playback),
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+            )
+            ExtraSwitchRow(
+                stringResource(R.string.au15_tvbg_title),
+                stringResource(R.string.au15_tvbg_summary),
+                keep,
+            ) { on ->
+                vm.setKeepInBackground(on)
+                if (on && de.mm20.launcher2.comms.tv.TvBackgroundPolicy.needsNotificationPermission(
+                        android.os.Build.VERSION.SDK_INT,
+                        androidx.core.content.ContextCompat.checkSelfPermission(
+                            context, android.Manifest.permission.POST_NOTIFICATIONS
+                        ) == android.content.pm.PackageManager.PERMISSION_GRANTED,
+                    )
+                ) {
+                    permissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
                 }
             }
         }

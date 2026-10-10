@@ -72,6 +72,10 @@ class TvViewModel : ViewModel(), KoinComponent {
 
     val extraPlaylistsEnabled: StateFlow<Boolean> get() = settings.extraPlaylistsEnabled
     val epgEnabled: StateFlow<Boolean> get() = settings.epgEnabled
+    /** Keep playing with the screen off / when the app is left (foreground service with notification) */
+    val keepInBackground: StateFlow<Boolean> get() = settings.keepPlayingInBackground
+
+    fun setKeepInBackground(enabled: Boolean) = settings.setKeepPlayingInBackground(enabled)
     val epgVersion: StateFlow<Int> get() = epg.epgVersion
     private val homeHint = MutableStateFlow("")
 

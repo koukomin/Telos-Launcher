@@ -155,6 +155,14 @@
             </intent-filter>
         </service>
         <service
+            android:name=".tv.TvPlaybackService"
+            android:exported="true"
+            android:foregroundServiceType="mediaPlayback">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaSessionService" />
+            </intent-filter>
+        </service>
+        <service
             android:name=".radio.RadioRecordingService"
             android:exported="false"
             android:foregroundServiceType="mediaPlayback" />
