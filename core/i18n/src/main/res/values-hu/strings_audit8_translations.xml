@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">A Trakthoz saját alkalmazás szükséges. Jelentkezz be a trakt.tv oldalon, nyisd meg a trakt.tv/oauth/applications oldalt, válaszd a New Application lehetőséget, adj meg tetszőleges nevet, átirányítási címnek pedig pontosan az alább látható címet add meg. Mentsd el, majd add meg itt a client id-t és a client secretet, és koppints a Bejelentkezés böngészővel gombra. A bejelentkezést és a jóváhagyást magán a trakt.tv-n végzed; a Telos soha nem látja a Trakt-jelszavadat.</string>
+    <string name="au8_traktweb_redirect_label">Átirányítási cím a Trakt-alkalmazásodhoz</string>
+    <string name="au8_traktweb_copy_redirect">Cím másolása</string>
+    <string name="au8_traktweb_sign_in_browser">Bejelentkezés böngészővel</string>
+    <string name="au8_traktweb_use_code">Kód használata helyette</string>
+    <string name="au8_traktweb_waiting_browser">Várakozás a jóváhagyásra a böngészőben…</string>
+    <string name="au8_traktweb_denied">A Trakt elutasította a bejelentkezést</string>
+    <string name="au8_traktweb_state_mismatch">A bejelentkezési válasz nem egyezett ezzel a kéréssel, ezért figyelmen kívül lett hagyva</string>
+    <string name="au8_traktweb_expired">A bejelentkezés több mint 10 percig tartott. Próbáld újra</string>
+    <string name="au8_traktweb_no_browser">Nem található böngésző a trakt.tv megnyitásához</string>
+</resources>

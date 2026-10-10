@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">يتطلب Trakt تطبيقًا خاصًا بك. سجّل الدخول إلى trakt.tv، وافتح trakt.tv/oauth/applications، واختر New Application، وأدخل أي اسم، وأدخل في خانة عنوان إعادة التوجيه العنوان الظاهر أدناه تمامًا. احفظه، ثم أدخل هنا معرّف العميل وسر العميل الخاصين به، واضغط على تسجيل الدخول عبر المتصفح. تسجّل الدخول وتوافق على trakt.tv نفسه؛ ولا يرى Telos كلمة مرور Trakt الخاصة بك أبدًا.</string>
+    <string name="au8_traktweb_redirect_label">عنوان إعادة التوجيه لتطبيق Trakt الخاص بك</string>
+    <string name="au8_traktweb_copy_redirect">نسخ العنوان</string>
+    <string name="au8_traktweb_sign_in_browser">تسجيل الدخول عبر المتصفح</string>
+    <string name="au8_traktweb_use_code">استخدام رمز بدلًا من ذلك</string>
+    <string name="au8_traktweb_waiting_browser">في انتظار موافقتك في المتصفح…</string>
+    <string name="au8_traktweb_denied">تم رفض تسجيل الدخول على Trakt</string>
+    <string name="au8_traktweb_state_mismatch">لم تتطابق استجابة تسجيل الدخول مع هذا الطلب وتم تجاهلها</string>
+    <string name="au8_traktweb_expired">استغرق تسجيل الدخول أكثر من 10 دقائق. حاول مرة أخرى</string>
+    <string name="au8_traktweb_no_browser">لم يتم العثور على متصفح لفتح trakt.tv</string>
+</resources>

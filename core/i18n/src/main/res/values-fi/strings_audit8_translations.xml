@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt vaatii oman sovelluksen. Kirjaudu sisään osoitteessa trakt.tv, avaa trakt.tv/oauth/applications, valitse New Application, anna mikä tahansa nimi ja uudelleenohjausosoitteeksi täsmälleen alla näkyvä osoite. Tallenna se, syötä sitten sen asiakastunnus ja asiakassalaisuus tähän ja napauta Kirjaudu selaimella. Kirjaudut ja hyväksyt itse trakt.tv-sivustolla; Telos ei koskaan näe Trakt-salasanaasi.</string>
+    <string name="au8_traktweb_redirect_label">Trakt-sovelluksesi uudelleenohjausosoite</string>
+    <string name="au8_traktweb_copy_redirect">Kopioi osoite</string>
+    <string name="au8_traktweb_sign_in_browser">Kirjaudu selaimella</string>
+    <string name="au8_traktweb_use_code">Käytä koodia sen sijaan</string>
+    <string name="au8_traktweb_waiting_browser">Odotetaan hyväksyntääsi selaimessa…</string>
+    <string name="au8_traktweb_denied">Kirjautuminen evättiin Traktissa</string>
+    <string name="au8_traktweb_state_mismatch">Kirjautumisvastaus ei vastannut tätä pyyntöä, ja se ohitettiin</string>
+    <string name="au8_traktweb_expired">Kirjautuminen kesti yli 10 minuuttia. Yritä uudelleen</string>
+    <string name="au8_traktweb_no_browser">Selainta trakt.tv:n avaamiseen ei löytynyt</string>
+</resources>

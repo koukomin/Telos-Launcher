@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt benötigt eine eigene Anwendung. Melde dich auf trakt.tv an, öffne trakt.tv/oauth/applications, wähle New Application, gib einen beliebigen Namen ein und trage als Weiterleitungsadresse genau die unten angezeigte Adresse ein. Speichere sie, gib dann hier Client-ID und Client-Secret ein und tippe auf Im Browser anmelden. Du meldest dich direkt auf trakt.tv an und bestätigst dort; Telos sieht dein Trakt-Passwort nie.</string>
+    <string name="au8_traktweb_redirect_label">Weiterleitungsadresse für deine Trakt-Anwendung</string>
+    <string name="au8_traktweb_copy_redirect">Adresse kopieren</string>
+    <string name="au8_traktweb_sign_in_browser">Im Browser anmelden</string>
+    <string name="au8_traktweb_use_code">Stattdessen Code verwenden</string>
+    <string name="au8_traktweb_waiting_browser">Warte auf deine Bestätigung im Browser…</string>
+    <string name="au8_traktweb_denied">Die Anmeldung wurde bei Trakt abgelehnt</string>
+    <string name="au8_traktweb_state_mismatch">Die Anmeldeantwort passte nicht zu dieser Anfrage und wurde ignoriert</string>
+    <string name="au8_traktweb_expired">Die Anmeldung hat länger als 10 Minuten gedauert. Versuche es erneut</string>
+    <string name="au8_traktweb_no_browser">Kein Browser zum Öffnen von trakt.tv gefunden</string>
+</resources>

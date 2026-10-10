@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt ir nepieciešama sava lietotne. Piesakies vietnē trakt.tv, atver trakt.tv/oauth/applications, izvēlies New Application, ievadi jebkuru nosaukumu un kā novirzīšanas adresi — tieši tālāk redzamo adresi. Saglabā to, pēc tam ievadi šeit tās klienta ID un klienta noslēpumu un pieskaries Pieteikties ar pārlūku. Pieteikšanos un apstiprināšanu veic pašā trakt.tv; Telos nekad neredz tavu Trakt paroli.</string>
+    <string name="au8_traktweb_redirect_label">Tavas Trakt lietotnes novirzīšanas adrese</string>
+    <string name="au8_traktweb_copy_redirect">Kopēt adresi</string>
+    <string name="au8_traktweb_sign_in_browser">Pieteikties ar pārlūku</string>
+    <string name="au8_traktweb_use_code">Tā vietā izmantot kodu</string>
+    <string name="au8_traktweb_waiting_browser">Gaida, kamēr apstiprināsi pārlūkā…</string>
+    <string name="au8_traktweb_denied">Trakt noraidīja pieteikšanos</string>
+    <string name="au8_traktweb_state_mismatch">Pieteikšanās atbilde neatbilda šim pieprasījumam, un tā tika ignorēta</string>
+    <string name="au8_traktweb_expired">Pieteikšanās ilga ilgāk par 10 minūtēm. Mēģini vēlreiz</string>
+    <string name="au8_traktweb_no_browser">Nav atrasts pārlūks, lai atvērtu trakt.tv</string>
+</resources>

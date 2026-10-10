@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt wymaga własnej aplikacji. Zaloguj się na trakt.tv, otwórz trakt.tv/oauth/applications, wybierz New Application, wpisz dowolną nazwę, a jako adres przekierowania podaj dokładnie adres wyświetlony poniżej. Zapisz, następnie wpisz tutaj jej client id i client secret i dotknij Zaloguj przez przeglądarkę. Logujesz się i zatwierdzasz na samym trakt.tv; Telos nigdy nie widzi Twojego hasła do Trakt.</string>
+    <string name="au8_traktweb_redirect_label">Adres przekierowania dla Twojej aplikacji Trakt</string>
+    <string name="au8_traktweb_copy_redirect">Kopiuj adres</string>
+    <string name="au8_traktweb_sign_in_browser">Zaloguj przez przeglądarkę</string>
+    <string name="au8_traktweb_use_code">Użyj kodu</string>
+    <string name="au8_traktweb_waiting_browser">Oczekiwanie na zatwierdzenie w przeglądarce…</string>
+    <string name="au8_traktweb_denied">Trakt odrzucił logowanie</string>
+    <string name="au8_traktweb_state_mismatch">Odpowiedź logowania nie pasowała do tego żądania i została zignorowana</string>
+    <string name="au8_traktweb_expired">Logowanie trwało dłużej niż 10 minut. Spróbuj ponownie</string>
+    <string name="au8_traktweb_no_browser">Nie znaleziono przeglądarki do otwarcia trakt.tv</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt necesita una aplicación propia. Inicia sesión en trakt.tv, abre trakt.tv/oauth/applications, elige New Application, introduce cualquier nombre y, como dirección de redirección, exactamente la dirección que se muestra abajo. Guárdala, introduce aquí su client id y client secret y toca Iniciar sesión con el navegador. Inicias sesión y apruebas en el propio trakt.tv; Telos nunca ve tu contraseña de Trakt.</string>
+    <string name="au8_traktweb_redirect_label">Dirección de redirección para tu aplicación de Trakt</string>
+    <string name="au8_traktweb_copy_redirect">Copiar dirección</string>
+    <string name="au8_traktweb_sign_in_browser">Iniciar sesión con el navegador</string>
+    <string name="au8_traktweb_use_code">Usar un código en su lugar</string>
+    <string name="au8_traktweb_waiting_browser">Esperando tu aprobación en el navegador…</string>
+    <string name="au8_traktweb_denied">Trakt denegó el inicio de sesión</string>
+    <string name="au8_traktweb_state_mismatch">La respuesta de inicio de sesión no coincidía con esta solicitud y se ignoró</string>
+    <string name="au8_traktweb_expired">El inicio de sesión tardó más de 10 minutos. Inténtalo de nuevo</string>
+    <string name="au8_traktweb_no_browser">No se encontró ningún navegador para abrir trakt.tv</string>
+</resources>

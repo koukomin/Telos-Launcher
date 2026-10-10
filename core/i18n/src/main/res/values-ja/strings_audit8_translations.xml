@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt には独自のアプリケーションが必要です。trakt.tv にサインインし、trakt.tv/oauth/applications を開いて New Application を選択し、任意の名前を入力して、リダイレクトアドレスには下に表示されているアドレスをそのまま入力します。保存したら、そのクライアント ID とクライアントシークレットをここに入力し、「ブラウザでサインイン」をタップしてください。ログインと承認は trakt.tv 上で行われ、Telos があなたの Trakt パスワードを見ることはありません。</string>
+    <string name="au8_traktweb_redirect_label">Trakt アプリケーションのリダイレクトアドレス</string>
+    <string name="au8_traktweb_copy_redirect">アドレスをコピー</string>
+    <string name="au8_traktweb_sign_in_browser">ブラウザでサインイン</string>
+    <string name="au8_traktweb_use_code">代わりにコードを使用</string>
+    <string name="au8_traktweb_waiting_browser">ブラウザでの承認を待っています…</string>
+    <string name="au8_traktweb_denied">Trakt でサインインが拒否されました</string>
+    <string name="au8_traktweb_state_mismatch">サインインの応答がこのリクエストと一致しなかったため、無視されました</string>
+    <string name="au8_traktweb_expired">サインインに 10 分以上かかりました。もう一度お試しください</string>
+    <string name="au8_traktweb_no_browser">trakt.tv を開くブラウザが見つかりません</string>
+</resources>

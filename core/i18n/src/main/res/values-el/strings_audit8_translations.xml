@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Το Trakt απαιτεί τη δική σας εφαρμογή. Συνδεθείτε στο trakt.tv, ανοίξτε το trakt.tv/oauth/applications, επιλέξτε New Application, εισαγάγετε οποιοδήποτε όνομα και, ως διεύθυνση ανακατεύθυνσης, ακριβώς τη διεύθυνση που εμφανίζεται παρακάτω. Αποθηκεύστε την και εισαγάγετε εδώ το client id και το client secret της και πατήστε Σύνδεση μέσω προγράμματος περιήγησης. Συνδέεστε και εγκρίνετε στο ίδιο το trakt.tv· το Telos δεν βλέπει ποτέ τον κωδικό πρόσβασής σας στο Trakt.</string>
+    <string name="au8_traktweb_redirect_label">Διεύθυνση ανακατεύθυνσης για την εφαρμογή σας στο Trakt</string>
+    <string name="au8_traktweb_copy_redirect">Αντιγραφή διεύθυνσης</string>
+    <string name="au8_traktweb_sign_in_browser">Σύνδεση μέσω προγράμματος περιήγησης</string>
+    <string name="au8_traktweb_use_code">Χρήση κωδικού</string>
+    <string name="au8_traktweb_waiting_browser">Αναμονή για την έγκρισή σας στο πρόγραμμα περιήγησης…</string>
+    <string name="au8_traktweb_denied">Η σύνδεση απορρίφθηκε από το Trakt</string>
+    <string name="au8_traktweb_state_mismatch">Η απάντηση σύνδεσης δεν ταίριαζε με αυτό το αίτημα και αγνοήθηκε</string>
+    <string name="au8_traktweb_expired">Η σύνδεση διήρκεσε πάνω από 10 λεπτά. Δοκιμάστε ξανά</string>
+    <string name="au8_traktweb_no_browser">Δεν βρέθηκε πρόγραμμα περιήγησης για το άνοιγμα του trakt.tv</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Teastaíonn aip dá chuid féin ó Trakt. Sínigh isteach ag trakt.tv, oscail trakt.tv/oauth/applications, roghnaigh New Application, cuir isteach ainm ar bith agus, mar sheoladh athsheolta, an seoladh a thaispeántar thíos go beacht. Sábháil é, ansin cuir isteach a aitheantas cliaint agus a rún cliaint anseo agus tapáil Sínigh isteach leis an mbrabhsálaí. Déanann tú logáil isteach agus ceadú ar trakt.tv féin; ní fheiceann Telos do phasfhocal Trakt choíche.</string>
+    <string name="au8_traktweb_redirect_label">Seoladh athsheolta do aipe Trakt</string>
+    <string name="au8_traktweb_copy_redirect">Cóipeáil an seoladh</string>
+    <string name="au8_traktweb_sign_in_browser">Sínigh isteach leis an mbrabhsálaí</string>
+    <string name="au8_traktweb_use_code">Úsáid cód ina ionad</string>
+    <string name="au8_traktweb_waiting_browser">Ag fanacht leat chun ceadú sa bhrabhsálaí…</string>
+    <string name="au8_traktweb_denied">Diúltaíodh don síniú isteach ar Trakt</string>
+    <string name="au8_traktweb_state_mismatch">Níor mheaitseáil freagra an tsínithe isteach leis an iarratas seo agus rinneadh neamhaird air</string>
+    <string name="au8_traktweb_expired">Thóg an síniú isteach níos mó ná 10 nóiméad. Bain triail eile as</string>
+    <string name="au8_traktweb_no_browser">Níor aimsíodh brabhsálaí chun trakt.tv a oscailt</string>
+</resources>
