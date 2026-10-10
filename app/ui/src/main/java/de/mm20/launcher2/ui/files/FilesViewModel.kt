@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.ensureActive
 import kotlin.coroutines.coroutineContext
 import kotlinx.coroutines.withContext
+import de.mm20.launcher2.helper.ArchiveFormats
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.files.remote.ConnectionStore
 import de.mm20.launcher2.ui.files.remote.RemoteConnection
@@ -29,6 +30,9 @@ data class StorageVolume(val name: String, val path: String, val total: Long, va
 data class ClipboardState(val paths: List<String>, val cut: Boolean, val rootMode: Boolean)
 
 data class TaskState(val title: String, val progress: Float?, val cancel: CancelFlag)
+
+/** An archive that needs a password; [retry] runs again once the password was accepted. [browsing] is true when the user is looking inside it. */
+data class ArchivePrompt(val archive: String, val browsing: Boolean, val retry: () -> Unit)
 
 class FilesViewModel(application: Application) : AndroidViewModel(application) {
     private val context: Context get() = getApplication()
@@ -74,6 +78,12 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     var rootMounted by mutableStateOf<Boolean?>(null)
         private set
 
+    /** Set while an archive waits for its password: the screen shows the password dialog. */
+    var archivePrompt by mutableStateOf<ArchivePrompt?>(null)
+        private set
+    // archives whose password dialog was cancelled: they are not asked again while the user stays inside
+    private val promptDeclined = mutableSetOf<String>()
+
     var bookmarks by mutableStateOf(prefs.getStringSet("bookmarks", emptySet())!!.sorted())
         private set
     var volumes by mutableStateOf<List<StorageVolume>>(emptyList())
@@ -107,6 +117,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         // files fetched from a server, an archive or a vault (decrypted!) must not stay in the cache
         runCatching { File(context.cacheDir, "remote_open").deleteRecursively() }
         runCatching { File(context.cacheDir, "share_dl").deleteRecursively() }
+        ArchiveSessions.clearAll() // archive passwords only live in memory, as long as the file manager is open
         super.onCleared()
     }
 
@@ -137,7 +148,18 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
 
     // ---- browsing ----
 
+    /** Forgets the password of an archive the user is leaving */
+    private fun leaveArchive(oldPath: String?, newPath: String?) {
+        if (oldPath == null || !ArchivePath.isArchive(oldPath)) return
+        val archive = ArchivePath.archiveOf(oldPath)
+        if (newPath != null && ArchivePath.isArchive(newPath) && ArchivePath.archiveOf(newPath) == archive) return
+        ArchiveSessions.clear(archive)
+        promptDeclined.remove(archive)
+        if (archivePrompt?.archive == archive && archivePrompt?.browsing == true) archivePrompt = null
+    }
+
     fun open(newPath: String?) {
+        leaveArchive(path, newPath)
         selection = emptySet()
         searchResults = null
         query = ""
@@ -155,9 +177,58 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             val result = withContext(Dispatchers.IO) { runCatching { fs.list(dir) } }
             if (path != dir) return@launch
             loading = false
-            result.onSuccess { entries = it; error = null }
-                .onFailure { entries = emptyList(); error = it.message?.takeIf { m -> m != "Cannot open this folder" } ?: s(R.string.au_files_cannot_open_folder) }
+            result.onSuccess {
+                entries = it; error = null
+                if (ArchivePath.isArchive(dir)) askIfEncrypted(ArchivePath.archiveOf(dir))
+            }.onFailure {
+                entries = emptyList()
+                if (it is ArchiveCryptoException && ArchivePath.isArchive(dir)) {
+                    // a 7z with encrypted file names cannot even be listed without its password
+                    error = s(R.string.au21_arch_password_needed)
+                    archivePrompt = ArchivePrompt(ArchivePath.archiveOf(dir), true) { load(dir) }
+                } else {
+                    error = it.message?.takeIf { m -> m != "Cannot open this folder" } ?: s(R.string.au_files_cannot_open_folder)
+                }
+            }
         }
+    }
+
+    /** Asks for the password when the archive that was just opened has encrypted files and none is known yet */
+    private fun askIfEncrypted(archive: String) {
+        if (ArchiveSessions.has(archive) || archive in promptDeclined || archivePrompt != null) return
+        viewModelScope.launch {
+            val encrypted = withContext(Dispatchers.IO) { runCatching { ArchiveFs.of(archive).hasEncrypted }.getOrDefault(false) }
+            val current = path
+            if (encrypted && archivePrompt == null && !ArchiveSessions.has(archive) && current != null && ArchivePath.isArchive(current) && ArchivePath.archiveOf(current) == archive) {
+                archivePrompt = ArchivePrompt(archive, true) { }
+            }
+        }
+    }
+
+    /** Tries [password] on the archive of the open prompt. On success it is kept in memory for this archive only and the waiting action continues. */
+    fun unlockArchive(password: CharArray, onError: (String) -> Unit, onDone: () -> Unit) {
+        val prompt = archivePrompt ?: return
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) { runCatching { ArchiveFs.checkPassword(File(prompt.archive), password) } }
+            result.onSuccess {
+                ArchiveSessions.set(prompt.archive, password)
+                archivePrompt = null
+                onDone()
+                prompt.retry()
+            }.onFailure {
+                onError(when (it) {
+                    is ArchiveWrongPasswordException -> s(R.string.au21_arch_wrong_password)
+                    is ArchivePasswordRequiredException -> s(R.string.au21_arch_password_needed)
+                    else -> it.message ?: s(R.string.au21_arch_failed)
+                })
+            }
+        }
+    }
+
+    fun cancelArchivePrompt() {
+        val prompt = archivePrompt ?: return
+        if (prompt.browsing) promptDeclined += prompt.archive
+        archivePrompt = null
     }
 
     /** One step up. Returns false when already at the top (the home page). */
@@ -287,7 +358,14 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
             task = null
-            message = result.getOrElse { if (cancel.cancelled) s(R.string.au_files_cancelled) else it.message ?: s(R.string.au_files_failed) }
+            message = result.getOrElse {
+                when {
+                    cancel.cancelled -> s(R.string.au_files_cancelled)
+                    it is ArchiveWrongPasswordException -> s(R.string.au21_arch_wrong_password)
+                    it is ArchivePasswordRequiredException -> s(R.string.au21_arch_password_needed)
+                    else -> it.message ?: s(R.string.au_files_failed)
+                }
+            }
             selection = emptySet()
             reload()
         }
@@ -430,7 +508,15 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                 }
             }
             task = null
-            result.onSuccess { then(target) }.onFailure { target.delete(); message = if (cancel.cancelled) s(R.string.au_files_cancelled) else it.message ?: s(R.string.au_files_download_failed) }
+            result.onSuccess { then(target) }.onFailure {
+                target.delete()
+                if (it is ArchiveCryptoException && ArchivePath.isArchive(entry.path)) {
+                    // an encrypted file in an archive: ask for the password, then fetch it again
+                    archivePrompt = ArchivePrompt(ArchivePath.archiveOf(entry.path), false) { download(entry, then) }
+                } else {
+                    message = if (cancel.cancelled) s(R.string.au_files_cancelled) else it.message ?: s(R.string.au_files_download_failed)
+                }
+            }
         }
     }
 
@@ -474,14 +560,25 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         step(0, emptyList())
     }
 
-    fun compress(items: List<FsEntry>, zipName: String) {
+    /**
+     * Packs [items] into a new archive next to them. [password] (zip only) encrypts the files with AES-256;
+     * it is used for this one task and not kept.
+     */
+    fun compress(items: List<FsEntry>, zipName: String, format: CompressFormat = CompressFormat.Zip, password: CharArray? = null) {
         val dir = path ?: return
         val files = items.map { File(it.path) }
         val total = files.sumOf { FsOps.sizeOf(it) }
+        val secret = password?.takeIf { format.supportsPassword && it.isNotEmpty() }
         runTask(s(R.string.au_files_compressing), total) { cancel, progress ->
-            val target = File(dir, local.freeName(dir, if (zipName.endsWith(".zip")) zipName else "$zipName.zip"))
+            val name = ArchiveFormats.freeName(ArchiveFormats.withExtension(zipName, format.extension)) { File(dir, it).exists() }
+            val target = File(dir, name)
             try {
-                FsOps.zip(files, target, cancel, progress)
+                when {
+                    format == CompressFormat.Zip && secret != null -> ArchiveWriter.zipEncrypted(files, target, secret, cancel, progress)
+                    format == CompressFormat.Zip -> FsOps.zip(files, target, cancel, progress)
+                    format == CompressFormat.SevenZ -> ArchiveWriter.sevenZ(files, target, cancel, progress)
+                    else -> ArchiveWriter.tarGz(files, target, cancel, progress)
+                }
             } catch (e: Exception) {
                 target.delete(); throw e
             }
@@ -489,19 +586,32 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    /** Unpacks an archive into a folder next to it (zip, 7z, tar, ...). */
+    /** Unpacks an archive into a folder next to it. Asks for the password first when the archive is encrypted. */
     fun extract(entry: FsEntry) {
         val dir = path ?: return
         val archiveFs = ArchiveFs(File(entry.path))
-        runTask(s(R.string.au_files_extracting), null) { cancel, progress ->
-            val target = File(dir, local.freeName(dir, ArchivePath.baseName(entry.name)))
-            try {
-                archiveFs.extractAll(target, cancel, progress)
-            } catch (e: Exception) {
-                target.deleteRecursively() // a half unpacked folder helps nobody
-                throw e
+        viewModelScope.launch {
+            val needsPassword = !ArchiveSessions.has(entry.path) && withContext(Dispatchers.IO) {
+                try { archiveFs.hasEncrypted } catch (e: ArchiveCryptoException) { true } catch (e: Exception) { false }
             }
-            s(R.string.au_files_extracted, target.name)
+            if (needsPassword) {
+                archivePrompt = ArchivePrompt(entry.path, false) { extract(entry) }
+                return@launch
+            }
+            runTask(s(R.string.au_files_extracting), null) { cancel, progress ->
+                val target = File(dir, local.freeName(dir, ArchivePath.baseName(entry.name)))
+                try {
+                    archiveFs.extractAll(target, cancel, progress)
+                } catch (e: Exception) {
+                    target.deleteRecursively() // a half unpacked folder helps nobody
+                    throw e
+                } finally {
+                    // unpacking from the file list does not keep the password; inside an open archive it stays until the user leaves
+                    val current = path
+                    if (current == null || !ArchivePath.isArchive(current) || ArchivePath.archiveOf(current) != entry.path) ArchiveSessions.clear(entry.path)
+                }
+                s(R.string.au_files_extracted, target.name)
+            }
         }
     }
 

@@ -48,6 +48,8 @@ sshj = "0.41.1"
 smbj = "0.15.0"
 commons-net = "3.13.0"
 commons-compress = "1.28.0"
+zip4j = "2.11.6"
+tukaani-xz = "1.10"
 bouncycastle = "1.84"
 pdfbox-android = "2.0.27.0"
 zxing = "3.5.3"
@@ -156,6 +158,8 @@ sshj = { group = "com.hierynomus", name = "sshj", version.ref = "sshj" }
 smbj = { group = "com.hierynomus", name = "smbj", version.ref = "smbj" }
 commons-net = { group = "commons-net", name = "commons-net", version.ref = "commons-net" }
 commons-compress = { group = "org.apache.commons", name = "commons-compress", version.ref = "commons-compress" }
+zip4j = { group = "net.lingala.zip4j", name = "zip4j", version.ref = "zip4j" }
+tukaani-xz = { group = "org.tukaani", name = "xz", version.ref = "tukaani-xz" }
 bouncycastle = { group = "org.bouncycastle", name = "bcprov-jdk18on", version.ref = "bouncycastle" }
 pdfbox-android = { group = "com.tom-roush", name = "pdfbox-android", version.ref = "pdfbox-android" }
 coil-core = { group = "io.coil-kt", name = "coil", version.ref = "coil" }

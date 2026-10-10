@@ -1,7 +1,7 @@
 # Archives and Cryptomator vaults
 
-Archives open like folders in Telos Files, and you can pack folders into zip files or unpack archives next to
-themselves. [Cryptomator](https://cryptomator.org) vaults on the phone's storage can be unlocked and **read**.
+Archives open like folders in Telos Files, and you can pack folders into zip, 7z or tar.gz archives (zip with an
+optional password) or unpack archives next to themselves. Password-protected zip and 7z archives can be opened. [Cryptomator](https://cryptomator.org) vaults on the phone's storage can be unlocked and **read**.
 
 ## Archives
 
@@ -9,13 +9,15 @@ themselves. [Cryptomator](https://cryptomator.org) vaults on the phone's storage
 
 | Group | Extensions | Notes |
 | --- | --- | --- |
-| zip family | `zip jar apk` | Read through a random-access index |
-| 7-Zip | `7z` | Entries are read in order |
-| tar family | `tar tar.gz tgz tar.bz2 tar.xz` | Entries are read in order, the compression is handled for you |
+| zip family | `zip jar apk` | Read through a random-access index. Password-protected zips (ZipCrypto and AES-128/192/256) work |
+| 7-Zip | `7z` | Entries are read in order. Password-protected 7z (AES-256), also with encrypted file names, work |
+| tar family | `tar tar.gz tgz taz tar.bz2 tbz tbz2 tar.xz txz tar.lzma tlz tar.Z` | Entries are read in order, the compression is handled for you |
+| other archives | `cpio ar a deb arj` | Entries are read in order. A `deb` package shows its `control` and `data` members. Encrypted `arj` is not supported |
+| single compressed files | `gz bz2 xz lzma Z` | Shown as a folder with the one unpacked file in it |
 | zip-based documents | `epub docx xlsx pptx odt ods` | Offered like archives. See the note on documents below |
 
-`rar`, `iso`, `cab`, `gz`, `bz2` and `xz` on their own are shown with an archive icon but are **not** opened inside
-Telos. Use **Open with...** for them.
+`rar`, `ace`, `iso`, `cab`, `lzh`, `lha`, `rpm`, `wim`, `chm`, `squashfs`, `dmg`, `vhd`, `msi` and `zst` are shown with
+an archive icon but are **not** opened inside Telos. Use **Open with...** for them. See the limits below for why.
 
 ### Open an archive
 
@@ -43,22 +45,44 @@ A `docx`, `xlsx`, `pptx`, `odt`, `ods` or `epub` file asks the archive question 
 choose Telos Viewer to read it as a document, see [Photos documents](../photos/documents).
 :::
 
+### Passwords
+
+When a zip or 7z archive has encrypted files, Telos asks for the password when you open it with **Browse** (or when you
+tap **Extract here**, or open an encrypted file). The dialog has a masked field with a **Show** / **Hide** button.
+A wrong password shows "Wrong password" and the dialog stays open, **Cancel** keeps the archive closed (a zip still
+lists its file names; a 7z with encrypted file names cannot be listed without the password).
+
+- The password is only kept in memory, for the archive you are inside. It is dropped when you leave the archive and
+  when the file manager is closed. It is never written to disk.
+- **Extract here** from the file list uses the password for that one extraction only.
+- A password you enter is checked by reading the start of the first encrypted file. For the old ZipCrypto
+  encryption this check is weak (about 1 in 256 wrong passwords look right), so a wrong password can show up later as an
+  error while unpacking.
+
 ### Zip and extract
 
 | Task | Steps | Result |
 | --- | --- | --- |
-| Compress to zip | Select one or more entries, More > **Compress to zip**, confirm or edit the name | A `.zip` in the current folder, with a free name if one exists. A progress bar and **Cancel** are shown. A failed or cancelled run deletes the half-written zip |
+| Compress | Select one or more entries, More > **Compress...**, edit the name, pick the format **ZIP**, **7z** or **tar.gz** | A `.zip`, `.7z` or `.tar.gz` in the current folder, with a free name if one exists. A progress bar and **Cancel** are shown. A failed or cancelled run deletes the half-written archive |
+| Compress with a password | Pick **ZIP**, enter a password (and repeat it) | The files are encrypted with **AES-256**. File names stay visible. Telos never writes the weak ZipCrypto encryption. The password cannot be recovered |
 | Extract here | Tap an archive > **Extract here** | A folder next to the archive, named like the file up to its first dot, with a free name if it exists. For example `holiday.photos.zip` becomes `holiday` |
 
 Compress works on local files and folders. It keeps folders and file dates. The suggested name is the first
-selected entry's name without extension.
+selected entry's name without extension. 7z (LZMA2) and tar.gz are created without a password; only zip can be
+protected. RAR cannot be created: the format may only be read by free software.
 
 Extraction works for every supported archive type through the same streaming code as copying out of an archive. It
 never overwrites: if the target folder exists a numbered name is used.
 
 ### Limits
 
-- Password-protected archives are not supported and fail to open.
+- **RAR is not opened.** Reading RAR needs the 7-Zip engine (7-Zip-JBinding) as a native library, which is not part of
+  Telos yet. RAR could only ever be read, never created.
+- **ACE cannot be supported.** Neither 7-Zip nor any free library reads `ace`; the only reader is a closed-source tool.
+  Telos does not pretend to open it.
+- `iso`, `cab`, `lzh`, `rpm`, `wim`, `chm`, `squashfs`, `dmg`, `vhd` and `msi` are read by 7-Zip but not by the
+  libraries Telos uses, so they stay **Open with...**.
+- Multi-part (split) archives and encrypted `arj` are not supported.
 - `7z` and `tar` need to read through the archive to find an entry, so opening a file near the end of a large archive
   is slow. Extracting a big archive takes time proportional to its size.
 - Archives are read only. There is no way to add a file to an existing archive.

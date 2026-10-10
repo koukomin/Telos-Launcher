@@ -125,6 +125,10 @@ dependencies {
     implementation(libs.smbj)
     implementation(libs.commons.net)
     implementation(libs.commons.compress)
+    // optional dependency of commons-compress, needed for .xz, .tar.xz and the LZMA/LZMA2 of 7z archives
+    implementation(libs.tukaani.xz)
+    // password-protected zip files (ZipCrypto and AES): reading, and creating AES-256 zips
+    implementation(libs.zip4j)
     implementation(libs.bouncycastle)
     // Telos PDF tools (adapted from PaperKnife+): PDF editing
     implementation(libs.pdfbox.android)

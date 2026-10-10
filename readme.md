@@ -671,7 +671,7 @@ A file manager for your phone, network storages and cloud storages. The layout f
 
 **File operations**
 
-- Multi-select, copy, cut and paste with progress and cancel, rename, delete (permanent, no trash), new folder and file, share, compress to zip
+- Multi-select, copy, cut and paste with progress and cancel, rename, delete (permanent, no trash), new folder and file, share, compress to zip, 7z or tar.gz (zip with an optional AES-256 password)
 - Properties with permissions and on-demand MD5, SHA-1 and SHA-256 checksums
 - Copy between any two storages (local, network, cloud); nothing is ever overwritten, a free name is used
 
@@ -690,7 +690,7 @@ A file manager for your phone, network storages and cloud storages. The layout f
 <details>
 <summary><b>Archives, Cryptomator vaults and the root explorer</b></summary>
 
-- **Archives:** zip, jar, apk, 7z and tar (also gz, bz2, xz) open like folders (read only). **Extract here** unpacks next to the archive, **Compress to zip** packs local files. Epub and Office files are zip-based and offer the same dialog. Password-protected archives are not supported, `rar`, `iso` and `cab` are not opened inside Telos, and only local archives can be opened.
+- **Archives:** zip, jar, apk, 7z, tar (also tar.gz, tar.bz2, tar.xz, tar.lzma), cpio, ar/deb, arj and single gz, bz2, xz, lzma and Z files open like folders (read only). **Extract here** unpacks next to the archive, **Compress...** packs local files into zip, 7z or tar.gz. Epub and Office files are zip-based and offer the same dialog. Password-protected zip (ZipCrypto and AES) and 7z archives ask for the password in a dialog; it is kept in memory only while you are inside the archive, and new zips can be protected with AES-256. `rar`, `ace`, `iso`, `cab` and the other formats only 7-Zip reads are not opened inside Telos (ACE is not readable by any free library), and only local archives can be opened.
 - **Cryptomator vaults** (experimental, read only): vault formats 7 and 8 in a local folder can be unlocked and read. Files opened from a vault are decrypted into a temporary cache, which **Lock vault** removes. The password is not stored. gocryptfs, EncFS and VeraCrypt are not supported.
 - **Root explorer** (optional, untested): a superuser mode for system folders. Off until you switch it on and tick "I understand the risks". Shows permissions, owners and links, a warning banner in system folders, extra confirmation for deleting system files, changing permissions in octal, and making `/system` writable or read-only. Writing into root paths from remote storages or archives is not supported.
 
@@ -1102,7 +1102,7 @@ adapted, the original license is respected.
 | [OpenSubtitles](https://www.opensubtitles.com) | API terms | Subtitle search and download in Telos Video |
 | [TagLib wrapper (Kyant0/taglib)](https://github.com/Kyant0/taglib) | Apache-2.0 | Reading and writing audio tags; it bundles [TagLib](https://taglib.org/) (LGPL-2.1 / MPL-1.1 upstream) |
 | [Solid Explorer](https://play.google.com/store/apps/details?id=pl.solidexplorer2) and [MiXplorer](https://forum.xda-developers.com/t/app-2-2-mixplorer-v6-x-released-fully-featured-file-manager.1523691/) | proprietary / freeware | Layout and feature ideas for Telos Files (no code) |
-| [sshj](https://github.com/hierynomus/sshj), [smbj](https://github.com/hierynomus/smbj), [Apache Commons Net](https://commons.apache.org/proper/commons-net/), [Apache Commons Compress](https://commons.apache.org/proper/commons-compress/), [OkHttp](https://square.github.io/okhttp/), [Bouncy Castle](https://www.bouncycastle.org/) | Apache-2.0 / MIT | SFTP, SMB, FTP, archives, WebDAV and cloud HTTP, cryptography (libraries) |
+| [sshj](https://github.com/hierynomus/sshj), [smbj](https://github.com/hierynomus/smbj), [Apache Commons Net](https://commons.apache.org/proper/commons-net/), [Apache Commons Compress](https://commons.apache.org/proper/commons-compress/), [Zip4j](https://github.com/srikanth-lingala/zip4j), [XZ for Java](https://tukaani.org/xz/java.html), [OkHttp](https://square.github.io/okhttp/), [Bouncy Castle](https://www.bouncycastle.org/) | Apache-2.0 / MIT / 0BSD | SFTP, SMB, FTP, archives (password-protected zip, xz and LZMA), WebDAV and cloud HTTP, cryptography (libraries) |
 | [Cryptomator](https://cryptomator.org) vault format | specification (GPL-3.0 reference code, none used) | Reading Cryptomator vaults, implemented from the published format description |
 | AVM FRITZ!Box [TR-064](https://avm.de/service/schnittstellen/) | specification | Remote phonebook |
 

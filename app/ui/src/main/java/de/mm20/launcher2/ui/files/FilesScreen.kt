@@ -313,6 +313,7 @@ fun FilesScreen() {
     }
 
     FilesDialogs(vm, dialog) { dialog = null }
+    vm.archivePrompt?.let { ArchivePasswordDialog(vm, it) }
 }
 
 // ---------------------------------------------------------------- dialogs
@@ -339,9 +340,7 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
         FilesDialog.NewFolder -> NameDialog(stringResource(R.string.hc_new_folder), "", stringResource(R.string.hf_files_create), onDismiss) { vm.newFolder(it); onDismiss() }
         FilesDialog.NewFile -> NameDialog(stringResource(R.string.hc_new_file), "", stringResource(R.string.hf_files_create), onDismiss) { vm.newFile(it); onDismiss() }
         is FilesDialog.Rename -> NameDialog(stringResource(R.string.hc_rename), dialog.entry.name, stringResource(R.string.hc_rename), onDismiss) { vm.rename(dialog.entry, it); onDismiss() }
-        is FilesDialog.Compress -> NameDialog(stringResource(R.string.hc_compress_to_zip), dialog.entries.first().name.substringBeforeLast('.'), stringResource(R.string.hf_files_compress_action), onDismiss) {
-            vm.compress(dialog.entries, it); vm.clearSelection(); onDismiss()
-        }
+        is FilesDialog.Compress -> CompressDialog(vm, dialog.entries, onDismiss)
         is FilesDialog.Delete -> {
             val system = dialog.entries.any { FileActions.isSystemPath(it.path, vm.rootMode) }
             AlertDialog(
@@ -385,6 +384,100 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
         is FilesDialog.Unlock -> UnlockVaultDialog(vm, dialog.entry, onDismiss)
         is FilesDialog.Properties -> PropertiesDialog(vm, dialog.entry, onDismiss)
     }
+}
+
+/** Asks for the password of an encrypted archive. A wrong password keeps the dialog open. */
+@Composable
+private fun ArchivePasswordDialog(vm: FilesViewModel, prompt: ArchivePrompt) {
+    var password by remember(prompt) { mutableStateOf("") }
+    var visible by remember(prompt) { mutableStateOf(false) }
+    var error by remember(prompt) { mutableStateOf<String?>(null) }
+    var busy by remember(prompt) { mutableStateOf(false) }
+    AlertDialog(
+        onDismissRequest = { if (!busy) vm.cancelArchivePrompt() },
+        title = { Text(stringResource(R.string.au21_arch_pw_title)) },
+        text = {
+            Column {
+                Text(stringResource(R.string.au21_arch_pw_info, nameOf(prompt.archive)))
+                OutlinedTextField(
+                    password, { password = it; error = null }, label = { Text(stringResource(R.string.hc_password)) }, singleLine = true,
+                    visualTransformation = if (visible) androidx.compose.ui.text.input.VisualTransformation.None else androidx.compose.ui.text.input.PasswordVisualTransformation(),
+                    trailingIcon = { TextButton(onClick = { visible = !visible }) { Text(stringResource(if (visible) R.string.au21_arch_hide else R.string.au21_arch_show)) } },
+                    isError = error != null, supportingText = error?.let { { Text(it) } },
+                    modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(enabled = password.isNotEmpty() && !busy, onClick = {
+                busy = true
+                vm.unlockArchive(password.toCharArray(), onError = { error = it; busy = false }, onDone = { busy = false })
+            }) { Text(if (busy) stringResource(R.string.au21_arch_checking) else stringResource(R.string.au21_arch_ok)) }
+        },
+        dismissButton = { TextButton(enabled = !busy, onClick = { vm.cancelArchivePrompt() }) { Text(stringResource(R.string.hc_cancel)) } },
+    )
+}
+
+/** Name, format (zip, 7z, tar.gz) and, for zip, an optional AES-256 password */
+@Composable
+private fun CompressDialog(vm: FilesViewModel, entries: List<FsEntry>, onDismiss: () -> Unit) {
+    var name by remember { mutableStateOf(entries.first().name.substringBeforeLast('.')) }
+    var format by remember { mutableStateOf(CompressFormat.Zip) }
+    var password by remember { mutableStateOf("") }
+    var repeat by remember { mutableStateOf("") }
+    var visible by remember { mutableStateOf(false) }
+    val mismatch = format.supportsPassword && password.isNotEmpty() && password != repeat
+    val hide = if (visible) androidx.compose.ui.text.input.VisualTransformation.None else androidx.compose.ui.text.input.PasswordVisualTransformation()
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.au21_arch_compress)) },
+        text = {
+            Column(Modifier.verticalScroll(rememberScrollState())) {
+                OutlinedTextField(name, { name = it }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                Text(stringResource(R.string.au21_arch_format), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 12.dp))
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                    CompressFormat.values().forEach { f ->
+                        Row(Modifier.clickable { format = f }, verticalAlignment = Alignment.CenterVertically) {
+                            androidx.compose.material3.RadioButton(selected = format == f, onClick = { format = f })
+                            Text(stringResource(when (f) {
+                                CompressFormat.Zip -> R.string.au21_arch_fmt_zip
+                                CompressFormat.SevenZ -> R.string.au21_arch_fmt_7z
+                                CompressFormat.TarGz -> R.string.au21_arch_fmt_targz
+                            }))
+                        }
+                    }
+                }
+                if (format.supportsPassword) {
+                    OutlinedTextField(
+                        password, { password = it }, label = { Text(stringResource(R.string.au21_arch_pw_optional)) }, singleLine = true,
+                        visualTransformation = hide,
+                        trailingIcon = { TextButton(onClick = { visible = !visible }) { Text(stringResource(if (visible) R.string.au21_arch_hide else R.string.au21_arch_show)) } },
+                        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                    )
+                    if (password.isNotEmpty()) {
+                        OutlinedTextField(
+                            repeat, { repeat = it }, label = { Text(stringResource(R.string.au21_arch_pw_repeat)) }, singleLine = true,
+                            visualTransformation = hide,
+                            isError = mismatch, supportingText = if (mismatch) { { Text(stringResource(R.string.au21_arch_pw_mismatch)) } } else null,
+                            modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                        )
+                    }
+                    Text(stringResource(R.string.au21_arch_zip_note), style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 8.dp))
+                } else {
+                    Text(stringResource(R.string.au21_arch_no_pw_note), style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 12.dp))
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(enabled = name.isNotBlank() && '/' !in name && !mismatch, onClick = {
+                val secret = if (format.supportsPassword && password.isNotEmpty()) password.toCharArray() else null
+                vm.compress(entries, name.trim(), format, secret)
+                vm.clearSelection()
+                onDismiss()
+            }) { Text(stringResource(R.string.hf_files_compress_action)) }
+        },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
+    )
 }
 
 @Composable
@@ -548,7 +641,7 @@ private fun SelectionBar(
                 DropdownMenu(expanded = more, onDismissRequest = { more = false }) {
                     DropdownMenuItem(text = { Text(stringResource(R.string.hc_select_all)) }, onClick = { more = false; onSelectAll() })
                     DropdownMenuItem(text = { Text(stringResource(R.string.hc_share)) }, onClick = { more = false; onShare() })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.hc_compress_to_zip)) }, onClick = { more = false; onCompress() })
+                    DropdownMenuItem(text = { Text(stringResource(R.string.au21_arch_compress)) }, onClick = { more = false; onCompress() })
                     if (single != null) {
                         DropdownMenuItem(text = { Text(stringResource(R.string.hc_rename)) }, onClick = { more = false; onRename() })
                         DropdownMenuItem(text = { Text(stringResource(R.string.hc_properties)) }, onClick = { more = false; onProperties() })

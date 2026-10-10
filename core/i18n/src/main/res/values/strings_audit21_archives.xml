@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au21_arch_wrong_password">Wrong password</string>
+    <string name="au21_arch_password_needed">This archive is password-protected</string>
+    <string name="au21_arch_failed">Could not open the archive</string>
+    <string name="au21_arch_pw_title">Password required</string>
+    <string name="au21_arch_pw_info">%1$s is password-protected. Enter its password to open or unpack it. The password is only kept in memory while you are inside the archive and is never saved.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Checking…</string>
+    <string name="au21_arch_show">Show</string>
+    <string name="au21_arch_hide">Hide</string>
+    <string name="au21_arch_compress">Compress…</string>
+    <string name="au21_arch_format">Format</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Password (AES-256, optional)</string>
+    <string name="au21_arch_pw_repeat">Repeat password</string>
+    <string name="au21_arch_pw_mismatch">The passwords do not match</string>
+    <string name="au21_arch_zip_note">With a password, the files are encrypted with AES-256. File names stay visible. Telos never writes the weak ZipCrypto encryption. The password cannot be recovered, so keep it safe.</string>
+    <string name="au21_arch_no_pw_note">7z and tar.gz archives are created without a password.</string>
+</resources>
