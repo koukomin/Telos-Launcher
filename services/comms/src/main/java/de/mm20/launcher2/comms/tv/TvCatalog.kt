@@ -64,6 +64,16 @@ class TvCatalog(context: Context) {
         return _index.value
     }
 
+    /**
+     * Loads the cached catalog from disk if no index is loaded yet. Never uses the network and never
+     * refreshes (for places such as launcher search that must not trigger a download). Returns the
+     * index, or null when there is no usable cache.
+     */
+    suspend fun loadCachedOnly(): TvIndex? {
+        if (_index.value == null) loadFromDisk()
+        return _index.value
+    }
+
     /** True when the catalog was never checked or the last check is older than 24 hours */
     fun isStale(now: Long = System.currentTimeMillis()): Boolean =
         TvFailover.isStale(_status.value.lastCheckedAt, now)

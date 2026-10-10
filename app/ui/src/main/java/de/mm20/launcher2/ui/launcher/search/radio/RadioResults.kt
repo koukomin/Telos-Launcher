@@ -33,6 +33,8 @@ import de.mm20.launcher2.ui.comms.RadioPlayButton
 import de.mm20.launcher2.ui.comms.RadioViewModel
 import de.mm20.launcher2.ui.comms.radioStationSubtitle
 import de.mm20.launcher2.ui.launcher.search.common.list.ListItemSurface
+import de.mm20.launcher2.ui.launcher.search.tv.MediaTypeIcon
+import de.mm20.launcher2.ui.launcher.search.tv.MediaTypeLabel
 
 /**
  * Favorite stations of Telos Radio that match the search. A tap starts the station right away
@@ -55,28 +57,35 @@ fun LazyListScope.RadioResults(stations: List<RadioStation>, reverse: Boolean) {
                     Modifier.fillMaxWidth().clickable { player.toggleStation(station) }.padding(horizontal = 16.dp, vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Box(
-                        Modifier.size(40.dp).clip(CircleShape).background(MaterialTheme.colorScheme.surfaceVariant),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        if (station.faviconUrl.isNotBlank()) {
-                            AsyncImage(model = station.faviconUrl, contentDescription = null, modifier = Modifier.fillMaxSize())
-                        } else {
-                            Icon(
-                                painter = painterResource(R.drawable.music_note_24px),
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
+                    Box(Modifier.size(44.dp)) {
+                        Box(
+                            Modifier.size(40.dp).clip(CircleShape).background(MaterialTheme.colorScheme.surfaceVariant),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            if (station.faviconUrl.isNotBlank()) {
+                                AsyncImage(model = station.faviconUrl, contentDescription = null, modifier = Modifier.fillMaxSize())
+                            } else {
+                                Icon(
+                                    painter = painterResource(R.drawable.music_note_24px),
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
                         }
+                        MediaTypeIcon(R.drawable.radio_24px, Modifier.align(Alignment.BottomEnd))
                     }
                     Column(Modifier.weight(1f).padding(horizontal = 16.dp)) {
-                        Text(
-                            station.name,
-                            style = MaterialTheme.typography.titleSmall,
-                            color = if (active) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                        )
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                station.name,
+                                style = MaterialTheme.typography.titleSmall,
+                                color = if (active) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier.weight(1f, fill = false),
+                            )
+                            MediaTypeLabel(stringResource(R.string.au12_tvsearch_badge_radio), Modifier.padding(start = 8.dp))
+                        }
                         if (subtitle.isNotEmpty()) {
                             Text(
                                 subtitle,

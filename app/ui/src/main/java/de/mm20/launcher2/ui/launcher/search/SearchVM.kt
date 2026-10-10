@@ -145,6 +145,16 @@ class SearchVM : ViewModel(), KoinComponent {
     private val radioRepository: de.mm20.launcher2.comms.repository.RadioRepository by inject()
     private val commsSettings: de.mm20.launcher2.preferences.comms.CommsSettings by inject()
     private var radioJob: Job? = null
+    /** Favorite, custom and recent TV channels that match the query (only when enabled and Telos Media is not removed) */
+    val tvResults = mutableStateListOf<de.mm20.launcher2.comms.tv.TvChannel>()
+    private val tvLibrary: de.mm20.launcher2.comms.tv.TvLibrary by inject()
+    private val tvCatalog: de.mm20.launcher2.comms.tv.TvCatalog by inject()
+    private val tvPlayer: de.mm20.launcher2.comms.tv.TvPlayerController by inject()
+    private var tvJob: Job? = null
+
+    fun playTvChannel(channel: de.mm20.launcher2.comms.tv.TvChannel) {
+        tvPlayer.play(channel)
+    }
     val unitConverterResults = mutableStateListOf<UnitConverter>()
     val searchActionResults = mutableStateListOf<SearchAction>()
     val locationResults = mutableStateListOf<Location>()
@@ -251,6 +261,34 @@ class SearchVM : ViewModel(), KoinComponent {
                         de.mm20.launcher2.comms.search.TelosSearch.filter(favorites, query) { listOf(it.name) }.take(5)
                     } else emptyList()
                 }.collectLatest { radioResults.updateItems(it) }
+            }
+        }
+        tvJob?.cancel()
+        tvResults.clear()
+        if (query.isNotBlank()) {
+            tvJob = viewModelScope.launch {
+                combine(
+                    searchUiSettings.tvChannelsInSearch,
+                    commsSettings.disabledVirtualApps,
+                ) { enabled, disabled -> enabled && "telos_media_app://media" !in disabled }
+                    .distinctUntilChanged()
+                    .collectLatest { active ->
+                        if (!active) {
+                            tvResults.updateItems(emptyList())
+                            return@collectLatest
+                        }
+                        // local storage only: never downloads the catalog
+                        tvCatalog.loadCachedOnly()
+                        combine(
+                            tvLibrary.observeFavorites(),
+                            tvLibrary.observeCustomChannels(),
+                            tvLibrary.observeRecents(),
+                        ) { favorites, custom, recents ->
+                            val pool = (favorites + custom + recents).distinctBy { it.id }
+                            de.mm20.launcher2.comms.search.TelosSearch
+                                .filter(pool, query) { listOf(it.name) + it.altNames }.take(5)
+                        }.collectLatest { tvResults.updateItems(it) }
+                    }
             }
         }
         if (query.length >= 2 && this.filters.value.tools) {

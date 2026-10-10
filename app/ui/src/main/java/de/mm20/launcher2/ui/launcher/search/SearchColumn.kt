@@ -49,6 +49,7 @@ import de.mm20.launcher2.ui.launcher.search.apps.AppResults
 import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorResults
 import de.mm20.launcher2.ui.launcher.search.notes.NoteResults
 import de.mm20.launcher2.ui.launcher.search.radio.RadioResults
+import de.mm20.launcher2.ui.launcher.search.tv.TvResults
 import de.mm20.launcher2.ui.launcher.search.calendar.CalendarResults
 import de.mm20.launcher2.ui.launcher.search.contacts.ContactResults
 import de.mm20.launcher2.ui.launcher.search.favorites.SearchFavorites
@@ -349,6 +350,8 @@ fun SearchColumn(
                     NoteResults(viewModel.noteResults, reverse = reverse)
 
                     RadioResults(viewModel.radioResults, reverse = reverse)
+
+                    TvResults(viewModel.tvResults, reverse = reverse, onPlay = viewModel::playTvChannel)
 
                     CalendarResults(
                         events = events,
