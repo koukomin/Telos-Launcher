@@ -245,7 +245,7 @@ private fun ArtCard(url: String?, title: String, subtitle: String, reduce: Boole
 @Composable
 private fun GenrePill(label: String, selected: Boolean, reduce: Boolean, onClick: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
-    val spec = if (reduce) snap<Color>() else tween(200)
+    val spec = if (reduce) snap<Color>() else tween<Color>(200)
     val bg by animateColorAsState(if (selected) scheme.primary else scheme.surfaceContainerHigh, spec, label = "pillBg")
     val fg by animateColorAsState(if (selected) scheme.onPrimary else scheme.onSurface, spec, label = "pillFg")
     Box(
