@@ -98,10 +98,10 @@ fun MediaHubScreen(initialSpace: String = "") {
     val context = LocalContext.current
     val settings: CommsSettings = koinInject()
     val backStack = LocalBackStack.current
-    val disabled by settings.disabledVirtualApps.collectAsState(emptySet())
 
-    // spaces whose app was removed in the Store are not offered (all of them if none is left)
-    val available = MediaSpace.entries.filter { it.appKey !in disabled }.ifEmpty { MediaSpace.entries.toList() }
+    // All four spaces are always offered: Telos Media is one app, and hiding the older Music or Radio entries
+    // in the Store only removes their icons (they are hidden by default), never the space itself
+    val available = MediaSpace.entries.toList()
 
     var space by rememberSaveable { mutableStateOf(initialSpace) }
     LaunchedEffect(Unit) {
