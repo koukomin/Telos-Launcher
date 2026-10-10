@@ -94,7 +94,7 @@ fun TvStatic(modifier: Modifier = Modifier, reduceAnimations: Boolean = false) {
                 fillNoise(pixels, Random.nextInt())
                 bitmaps[0].setPixels(pixels, 0, NOISE_W, 0, 0, NOISE_W, NOISE_H)
             }
-            frame = 0
+            frame += 2 // redraw with the new pixels (the frame index is even, so image 0 is used)
             return@LaunchedEffect
         }
         lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {

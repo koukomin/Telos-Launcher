@@ -444,7 +444,7 @@ private fun TvFavoritesBody(
             header("h:rec", { stringResource(R.string.au12_tvui_shelf_recents) })
             item(key = "s:rec", span = { GridItemSpan(maxLineSpan) }) {
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(vertical = 4.dp)) {
-                    items(recents, key = { it.id }) { ch ->
+                    items(recents.distinctBy { it.id }, key = { it.id }) { ch ->
                         TvChannelCard(
                             ch, playing = ch.id == playingId, favorite = ch.id in favoriteIds,
                             reduceAnimations = reduceAnimations, actions = actionsFor(ch),
@@ -459,7 +459,7 @@ private fun TvFavoritesBody(
             header("h:cus", { stringResource(R.string.au12_tvui_shelf_custom) })
             item(key = "s:cus", span = { GridItemSpan(maxLineSpan) }) {
                 LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(vertical = 4.dp)) {
-                    items(custom, key = { it.id }) { ch ->
+                    items(custom.distinctBy { it.id }, key = { it.id }) { ch ->
                         TvChannelCard(
                             ch, playing = ch.id == playingId, favorite = ch.id in favoriteIds,
                             reduceAnimations = reduceAnimations, actions = actionsFor(ch),
@@ -530,7 +530,7 @@ private fun TvHomeBody(
                         TvEmptyState(R.drawable.search_24px, stringResource(R.string.au12_tvui_no_results), null)
                     }
                 }
-                items(results, key = { "r:" + it.id }) { ch ->
+                items(results.distinctBy { it.id }, key = { "r:" + it.id }) { ch ->
                     TvChannelCard(
                         ch, playing = ch.id == playingId, favorite = ch.id in favoriteIds,
                         reduceAnimations = reduceAnimations, actions = actionsFor(ch),
@@ -546,7 +546,7 @@ private fun TvHomeBody(
                         header("h:rec", { stringResource(R.string.au12_tvui_shelf_recents) })
                         item(key = "s:rec", span = { GridItemSpan(maxLineSpan) }) {
                             LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                items(recents, key = { it.id }) { ch ->
+                                items(recents.distinctBy { it.id }, key = { it.id }) { ch ->
                                     TvChannelCard(
                                         ch, playing = ch.id == playingId, favorite = ch.id in favoriteIds,
                                         reduceAnimations = reduceAnimations, actions = actionsFor(ch),
@@ -561,7 +561,7 @@ private fun TvHomeBody(
                         header("h:cus", { stringResource(R.string.au12_tvui_shelf_custom) })
                         item(key = "s:cus", span = { GridItemSpan(maxLineSpan) }) {
                             LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                items(custom, key = { it.id }) { ch ->
+                                items(custom.distinctBy { it.id }, key = { it.id }) { ch ->
                                     TvChannelCard(
                                         ch, playing = ch.id == playingId, favorite = ch.id in favoriteIds,
                                         reduceAnimations = reduceAnimations, actions = actionsFor(ch),

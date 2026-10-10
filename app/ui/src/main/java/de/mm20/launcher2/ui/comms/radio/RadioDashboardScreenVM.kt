@@ -16,6 +16,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -32,9 +33,11 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
     private val repository: RadioRepository by inject()
 
     val favorites = repository.observeFavorites()
+        .catch { emit(emptyList()) } // a database that cannot be opened must not crash the screen
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     val history = repository.observeHistory()
+        .catch { emit(emptyList()) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     private val _searchQuery = MutableStateFlow("")
@@ -87,17 +90,15 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
     }
 
     fun toggleFavorite(station: RadioStation) {
-        viewModelScope.launch {
-            repository.toggleFavorite(station)
-        }
+        viewModelScope.launch { runCatching { repository.toggleFavorite(station) } }
     }
 
     fun renameStation(id: String, name: String) {
-        viewModelScope.launch { repository.renameStation(id, name) }
+        viewModelScope.launch { runCatching { repository.renameStation(id, name) } }
     }
 
     fun deleteStation(id: String) {
-        viewModelScope.launch { repository.deleteStation(id) }
+        viewModelScope.launch { runCatching { repository.deleteStation(id) } }
     }
 
     /** Adds a station from a stream or playlist address typed by the user */
@@ -113,7 +114,7 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
             val station = RadioStation(
                 id = "local-" + UUID.randomUUID(),
                 name = name.trim().ifBlank { resolved.playlistName.ifBlank { host } },
-                streamUrl = resolved.urls.first(),
+                streamUrl = resolved.urls.firstOrNull() ?: url,
                 faviconUrl = "",
                 streamContent = resolved.mimeType,
                 nameManuallySet = name.isNotBlank(),
@@ -162,7 +163,7 @@ class RadioDashboardScreenVM : ViewModel(), KoinComponent {
     }
 
     fun clearHistory() {
-        viewModelScope.launch { repository.clearHistory() }
+        viewModelScope.launch { runCatching { repository.clearHistory() } }
     }
 
     private suspend fun readText(context: Context, uri: Uri): String = withContext(Dispatchers.IO) {

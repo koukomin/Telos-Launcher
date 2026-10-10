@@ -113,6 +113,7 @@ abstract class RadioDatabase : RoomDatabase() {
                     "telos_radio.db"
                 )
                     .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                    .fallbackToDestructiveMigrationOnDowngrade() // an older build opening a newer file would crash otherwise
                     .build()
                 INSTANCE = instance
                 instance

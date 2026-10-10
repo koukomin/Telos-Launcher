@@ -96,8 +96,15 @@ class RadioViewModel : ViewModel(), KoinComponent {
     fun initialize(context: Context) {
         if (mediaController != null || connecting) return
         connecting = true
-        val sessionToken = SessionToken(context, ComponentName(context, RadioPlayerService::class.java))
-        val controllerFuture = MediaController.Builder(context, sessionToken).buildAsync()
+        // a failing connection (service missing, background start refused) must not crash the screen: the player just stays unavailable
+        val controllerFuture = runCatching {
+            val sessionToken = SessionToken(context, ComponentName(context, RadioPlayerService::class.java))
+            MediaController.Builder(context, sessionToken).buildAsync()
+        }.getOrNull()
+        if (controllerFuture == null) {
+            connecting = false
+            return
+        }
         this.controllerFuture = controllerFuture
 
         controllerFuture.addListener({
