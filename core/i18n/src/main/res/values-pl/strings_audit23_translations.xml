@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">To archiwum RAR jest zaszyfrowane. Telos potrafi odczytywać archiwa RAR, ale nie może ich odszyfrować. Otwórz je w aplikacji RAR.</string>
+    <string name="au23_rar_unavailable">Ta wersja Telos nie może otwierać archiwów RAR. Obsługa RAR jest dostępna tylko w wersji standardowej, nie w wersji F-Droid.</string>
+    <string name="au23_rp_title">Podglądy plików w pamięci chmurowej i sieciowej</string>
+    <string name="au23_rp_note">Po włączeniu widok obrazów pobiera obrazy i dokumenty z pamięci chmurowej lub sieciowej do pamięci podręcznej tego telefonu (do wybranego rozmiaru), aby wyświetlić ich podgląd. Ładowane są tylko widoczne kafelki. Zaszyfrowane skarbce nigdy nie mają podglądu. Domyślnie wyłączone, aby oszczędzać dane i chronić prywatność.</string>
+    <string name="au23_rp_max_size">Maksymalny rozmiar pliku do podglądu: %1$s</string>
+    <string name="au23_rp_max_size_hint">Sugerowane: 2 MB. Większe pliki zachowują kolorowy kafelek typu.</string>
+    <string name="au23_rp_wifi_only">Tylko przez Wi-Fi lub sieci bez limitu danych</string>
+    <string name="au23_rp_wifi_only_desc">Brak pobierania podglądów przez dane komórkowe i inne połączenia z limitem danych.</string>
+    <string name="au23_rp_clear">Wyczyść pamięć podręczną podglądów</string>
+    <string name="au23_rp_cache_size">Pamięć podręczna podglądów: %1$s</string>
+</resources>

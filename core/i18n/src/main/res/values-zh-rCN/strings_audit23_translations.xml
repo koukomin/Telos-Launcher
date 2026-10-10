@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">此 RAR 压缩包已加密。Telos 可以读取 RAR 压缩包，但无法解密。请改用 RAR 应用打开。</string>
+    <string name="au23_rar_unavailable">此版本的 Telos 无法打开 RAR 压缩包。仅标准版包含 RAR 支持，F-Droid 版不包含。</string>
+    <string name="au23_rp_title">云端和网络存储中文件的预览</string>
+    <string name="au23_rp_note">开启后，图片视图会将云端或网络存储中的图片和文档下载到本机缓存（不超过您选择的大小）以绘制预览。仅加载可见的磁贴。加密保险库永远不会被预览。为节省流量和保护隐私，默认关闭。</string>
+    <string name="au23_rp_max_size">预览的最大文件大小：%1$s</string>
+    <string name="au23_rp_max_size_hint">建议：2 MB。更大的文件将保留彩色的类型磁贴。</string>
+    <string name="au23_rp_wifi_only">仅限 Wi-Fi 或不计流量的网络</string>
+    <string name="au23_rp_wifi_only_desc">不会通过移动数据或其他计费网络下载预览。</string>
+    <string name="au23_rp_clear">清除预览缓存</string>
+    <string name="au23_rp_cache_size">预览缓存：%1$s</string>
+</resources>

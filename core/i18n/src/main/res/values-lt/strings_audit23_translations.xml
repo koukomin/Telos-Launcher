@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Šis RAR archyvas užšifruotas. Telos gali skaityti RAR archyvus, bet negali jų iššifruoti. Atidarykite jį RAR programa.</string>
+    <string name="au23_rar_unavailable">Ši Telos versija negali atidaryti RAR archyvų. RAR palaikymas įtrauktas tik į standartinę versiją, o ne į F-Droid versiją.</string>
+    <string name="au23_rp_title">Debesies ir tinklo saugyklų failų peržiūros</string>
+    <string name="au23_rp_note">Kai įjungta, paveikslėlių rodinys atsisiunčia debesies ar tinklo saugyklos paveikslėlius ir dokumentus į šio telefono talpyklą (iki pasirinkto dydžio), kad nupieštų jų peržiūrą. Įkeliami tik matomi langeliai. Užšifruoti saugyklų failai niekada nerodomi peržiūroje. Pagal numatytuosius nustatymus išjungta, kad būtų taupomi duomenys ir saugoma privatumas.</string>
+    <string name="au23_rp_max_size">Didžiausias peržiūrų failo dydis: %1$s</string>
+    <string name="au23_rp_max_size_hint">Siūloma: 2 MB. Didesni failai lieka su spalvotu failo tipo langeliu.</string>
+    <string name="au23_rp_wifi_only">Tik per Wi-Fi arba neribojamuose tinkluose</string>
+    <string name="au23_rp_wifi_only_desc">Peržiūros neatsisiunčiamos per mobiliojo ryšio duomenis ar kitus ribojamus ryšius.</string>
+    <string name="au23_rp_clear">Išvalyti peržiūrų talpyklą</string>
+    <string name="au23_rp_cache_size">Peržiūrų talpykla: %1$s</string>
+</resources>

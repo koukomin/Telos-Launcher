@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Dieses RAR-Archiv ist verschlüsselt. Telos kann RAR-Archive lesen, aber nicht entschlüsseln. Öffne es stattdessen mit einer RAR-App.</string>
+    <string name="au23_rar_unavailable">Diese Version von Telos kann keine RAR-Archive öffnen. RAR-Unterstützung ist nur in der Standardversion enthalten, nicht in der F-Droid-Version.</string>
+    <string name="au23_rp_title">Vorschauen für Dateien in Cloud- und Netzwerkspeichern</string>
+    <string name="au23_rp_note">Wenn aktiviert, lädt die Bildansicht Bilder und Dokumente eines Cloud- oder Netzwerkspeichers in den Cache dieses Telefons (bis zur gewählten Größe), um deren Vorschau zu zeichnen. Es werden nur sichtbare Kacheln geladen. Verschlüsselte Tresore werden nie als Vorschau angezeigt. Standardmäßig aus, um Daten zu sparen und aus Datenschutzgründen.</string>
+    <string name="au23_rp_max_size">Maximale Dateigröße für Vorschauen: %1$s</string>
+    <string name="au23_rp_max_size_hint">Empfohlen: 2 MB. Größere Dateien behalten die farbige Typkachel.</string>
+    <string name="au23_rp_wifi_only">Nur im WLAN (Wi-Fi) oder in nicht getakteten Netzwerken</string>
+    <string name="au23_rp_wifi_only_desc">Keine Vorschau-Downloads über mobile Daten oder andere getaktete Verbindungen.</string>
+    <string name="au23_rp_clear">Vorschau-Cache leeren</string>
+    <string name="au23_rp_cache_size">Vorschau-Cache: %1$s</string>
+</resources>

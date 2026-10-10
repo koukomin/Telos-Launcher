@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">See RAR-arhiiv on krüptitud. Telos oskab RAR-arhiive lugeda, kuid ei saa neid dekrüpteerida. Ava see hoopis RAR-rakendusega.</string>
+    <string name="au23_rar_unavailable">Telose see järk ei saa RAR-arhiive avada. RAR-i tugi on ainult tavaversioonis, mitte F-Droidi versioonis.</string>
+    <string name="au23_rp_title">Pilve- ja võrgusalvestuse failide eelvaated</string>
+    <string name="au23_rp_note">Sisselülitatuna laadib pildivaade pilve- või võrgusalvestuse pildid ja dokumendid selle telefoni vahemällu (kuni valitud suuruseni), et eelvaadet kuvada. Laaditakse ainult nähtavad paanid. Krüptitud hoidlaid ei eelvaadata kunagi. Vaikimisi väljas, et säästa andmemahtu ja kaitsta privaatsust.</string>
+    <string name="au23_rp_max_size">Eelvaadete maksimaalne failisuurus: %1$s</string>
+    <string name="au23_rp_max_size_hint">Soovitus: 2 MB. Suuremad failid jäävad värvilise failitüübi paani juurde.</string>
+    <string name="au23_rp_wifi_only">Ainult Wi-Fi või piiranguteta võrkudes</string>
+    <string name="au23_rp_wifi_only_desc">Eelvaateid ei laadita alla mobiilandmeside ega muu piiratud ühenduse kaudu.</string>
+    <string name="au23_rp_clear">Tühjenda eelvaadete vahemälu</string>
+    <string name="au23_rp_cache_size">Eelvaadete vahemälu: %1$s</string>
+</resources>
