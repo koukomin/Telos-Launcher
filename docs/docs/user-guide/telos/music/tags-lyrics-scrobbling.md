@@ -73,7 +73,7 @@ ListenBrainz server must use https (http only for a server in your own network).
 
 | Service | What you enter | Notes |
 | --- | --- | --- |
-| [Last.fm](https://www.last.fm) | Your own API key and shared secret (free, from `last.fm/api/account/create`), user name, password | The password is only used to sign in and is not stored. A session key is kept instead |
+| [Last.fm](https://www.last.fm) | Your own API key and shared secret (free, from `last.fm/api/account/create`); **Sign in with browser** (set the Callback URL of your Last.fm API account to `telos-lastfm://callback`, shown in the app with a Copy button) or **Use password instead** with user name and password | The password is only used to sign in and is not stored. A session key is kept instead |
 | [Libre.fm](https://libre.fm) | User name and password | Only an MD5 hash of the password is stored, because the protocol needs it |
 | [ListenBrainz](https://listenbrainz.org) | User token from your profile page, optional server address | The server defaults to `https://api.listenbrainz.org`. Use your own server for self-hosted instances |
 
@@ -163,3 +163,7 @@ Nothing is sent when no service is connected and switched on.
 | "Could not save the tags" | The format is not supported by the tag library, or write permission was denied |
 | No lyrics | Check the title and artist tags and your network connection |
 | Lyrics line is out of sync | The lyrics are for another version of the song. Nothing can be adjusted in the app |
+
+### Last.fm browser sign-in
+
+Last.fm opens in the browser, you log in and approve there, and you return to Telos; only the session key and the user name are stored (encrypted), the password is never seen. Last.fm sends no verification value back, so the answer is accepted only within 10 minutes of tapping the button, and only once. During that window another app could send a forged callback; it could only link a token that was authorized for your own API key.

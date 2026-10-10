@@ -14,6 +14,7 @@ based on" table in `readme.md`.
 | [Thor](https://github.com/trinadhthatakula/Thor) | GPL-3.0-or-later | Copyright (c) 2025-2026 Trinadh Thatakula |
 | [Undead Wallpaper](https://github.com/maocide/UndeadWallpaper) | GPL-3.0 | The Undead Wallpaper authors |
 | [Obtainium](https://github.com/ImranR98/Obtainium) | GPL-3.0 | The Obtainium authors |
+| [iptv-org (API and database)](https://github.com/iptv-org/api) | Unlicense (public domain) | Data only, downloaded at run time (channel list, logos, stream addresses); nothing is bundled. The streams belong to third parties |
 | [Gopeed](https://github.com/GopeedLab/gopeed) | GPL-3.0 | Design ideas only for Telos Downloads, no code copied (copyright: the Gopeed authors) |
 | [Ketch](https://github.com/linroid/Ketch) | Apache-2.0 | Design ideas only for Telos Downloads, no code copied (copyright: the Ketch authors) |
 | [LibreTorrent](https://github.com/proninyaroslav/libretorrent) | GPL-3.0-or-later | Design ideas only for the torrent part of Telos Downloads (feature set and screens), no code copied (copyright: the LibreTorrent authors) |
