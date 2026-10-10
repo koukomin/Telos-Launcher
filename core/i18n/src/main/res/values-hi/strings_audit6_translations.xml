@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au6_radio2_pause">%1$s रोकें</string>
+    <string name="au6_radio2_loading">%1$s लोड हो रहा है</string>
+    <string name="au6_webapps4_cookie_source_default">सभी / डिफ़ॉल्ट</string>
+    <string name="au6_wgvideo_route_not_ready">टोरेंट शुरू नहीं हो सका: इसे Telos Network की WireGuard टनल का उपयोग करने के लिए सेट किया गया है, और वह टनल तैयार नहीं है। Telos Network और टनल चालू करें, या Telos Downloads में सेटिंग बदलें। कुछ भी नहीं भेजा गया।</string>
+</resources>

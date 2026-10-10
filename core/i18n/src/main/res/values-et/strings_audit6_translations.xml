@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au6_radio2_pause">Peata %1$s</string>
+    <string name="au6_radio2_loading">Laadimine: %1$s</string>
+    <string name="au6_webapps4_cookie_source_default">Kõik / vaikimisi</string>
+    <string name="au6_wgvideo_route_not_ready">Torrentit ei õnnestunud käivitada: see on seatud kasutama Telos Networki WireGuardi tunnelit ja tunnel ei ole valmis. Lülita Telos Network ja tunnel sisse või muuda seadet rakenduses Telos Downloads. Midagi ei saadetud.</string>
+</resources>

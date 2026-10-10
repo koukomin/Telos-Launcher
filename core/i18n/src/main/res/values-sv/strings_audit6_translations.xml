@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au6_radio2_pause">Pausa %1$s</string>
+    <string name="au6_radio2_loading">Läser in %1$s</string>
+    <string name="au6_webapps4_cookie_source_default">Alla / standard</string>
+    <string name="au6_wgvideo_route_not_ready">Torrenten kunde inte starta: den är inställd på att använda en WireGuard-tunnel i Telos Network, och tunneln är inte redo. Aktivera Telos Network och tunneln, eller ändra inställningen i Telos Downloads. Inget skickades.</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au6_radio2_pause">إيقاف %1$s مؤقتًا</string>
+    <string name="au6_radio2_loading">جارٍ تحميل %1$s</string>
+    <string name="au6_webapps4_cookie_source_default">الكل / الافتراضي</string>
+    <string name="au6_wgvideo_route_not_ready">تعذر بدء التورنت: تم ضبطه لاستخدام نفق WireGuard الخاص بـ Telos Network، والنفق غير جاهز. شغّل Telos Network والنفق، أو غيّر الإعداد في Telos Downloads. لم يتم إرسال أي شيء.</string>
+</resources>

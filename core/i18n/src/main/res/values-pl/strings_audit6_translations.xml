@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au6_radio2_pause">Wstrzymaj %1$s</string>
+    <string name="au6_radio2_loading">Wczytywanie %1$s</string>
+    <string name="au6_webapps4_cookie_source_default">Wszystkie / domyślne</string>
+    <string name="au6_wgvideo_route_not_ready">Nie udało się uruchomić torrenta: jest skonfigurowany do użycia tunelu WireGuard sieci Telos Network, a tunel nie jest gotowy. Włącz Telos Network i tunel lub zmień ustawienie w Telos Downloads. Nic nie zostało wysłane.</string>
+</resources>

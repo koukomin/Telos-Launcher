@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au6_radio2_pause">Pristabdyti: %1$s</string>
+    <string name="au6_radio2_loading">Įkeliama: %1$s</string>
+    <string name="au6_webapps4_cookie_source_default">Visi / numatytasis</string>
+    <string name="au6_wgvideo_route_not_ready">Nepavyko paleisti torento: jis nustatytas naudoti Telos Network WireGuard tunelį, o tunelis nėra paruoštas. Įjunkite Telos Network ir tunelį arba pakeiskite nustatymą programoje Telos Downloads. Nieko nebuvo išsiųsta.</string>
+</resources>

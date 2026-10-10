@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au6_radio2_pause">%1$s duraklat</string>
+    <string name="au6_radio2_loading">%1$s yükleniyor</string>
+    <string name="au6_webapps4_cookie_source_default">Tümü / varsayılan</string>
+    <string name="au6_wgvideo_route_not_ready">Torrent başlatılamadı: WireGuard üzerinden Telos Network tüneli kullanacak şekilde ayarlanmış ve bu tünel hazır değil. Telos Network\'ü ve tüneli açın ya da ayarı Telos Downloads\'ta değiştirin. Hiçbir şey gönderilmedi.</string>
+</resources>

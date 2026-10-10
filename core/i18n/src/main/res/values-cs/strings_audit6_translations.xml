@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au6_radio2_pause">Pozastavit %1$s</string>
+    <string name="au6_radio2_loading">Načítání %1$s</string>
+    <string name="au6_webapps4_cookie_source_default">Vše / výchozí</string>
+    <string name="au6_wgvideo_route_not_ready">Torrent se nepodařilo spustit: je nastaven na použití tunelu WireGuard sítě Telos Network a tento tunel není připraven. Zapněte Telos Network a tunel nebo změňte nastavení v Telos Downloads. Nic nebylo odesláno.</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au6_radio2_pause">%1$s szüneteltetése</string>
+    <string name="au6_radio2_loading">%1$s betöltése</string>
+    <string name="au6_webapps4_cookie_source_default">Összes / alapértelmezett</string>
+    <string name="au6_wgvideo_route_not_ready">A torrent nem indult el: úgy van beállítva, hogy a Telos Network WireGuard-alagútját használja, de az alagút nem áll készen. Kapcsolja be a Telos Networköt és az alagutat, vagy módosítsa a beállítást a Telos Downloadsban. Semmi nem lett elküldve.</string>
+</resources>
