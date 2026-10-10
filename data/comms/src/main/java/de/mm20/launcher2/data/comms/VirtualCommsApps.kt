@@ -295,7 +295,7 @@ internal class VirtualVideoApp(context: Context) : Application {
 internal class VirtualPhotosApp(context: Context) : Application {
 
     override val key: String = "$Domain://photos"
-    override val label: String = "Telos Viewer"
+    override val label: String = "Telos Photos"
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -343,6 +343,60 @@ internal class VirtualPhotosApp(context: Context) : Application {
 
     companion object {
         const val Domain = "telos_photos_app"
+    }
+}
+
+internal class VirtualViewerApp(context: Context) : Application {
+
+    override val key: String = "$Domain://viewer"
+    override val label: String = "Telos Viewer"
+    override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
+    override val domain: String = Domain
+    override val score: ResultScore = ResultScore.Unspecified
+
+    override val componentName: ComponentName = ComponentName(
+        context.packageName,
+        "de.mm20.launcher2.comms.VirtualViewerApp",
+    )
+    override val isSuspended: Boolean = false
+    override val user: UserHandle = Process.myUserHandle()
+    override val versionName: String? = null
+
+    override val canUninstall: Boolean = false
+    override fun uninstall(context: Context) {}
+    override fun openAppDetails(context: Context) {}
+
+    override val canShareApk: Boolean = false
+
+    override fun overrideLabel(label: String): SavableSearchable = this
+
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return try {
+            val intent = Intent().apply {
+                setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_VIEWER)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent, options)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_viewer_fg) ?: return null
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(drawable, 1f),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF3F6BE8.toInt()), 1f),
+        )
+    }
+
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
+
+    companion object {
+        const val Domain = "telos_viewer_app"
     }
 }
 
@@ -895,6 +949,7 @@ internal class CommsVirtualAppProvider(private val context: Context) : VirtualAp
         VirtualMusicApp(context),
         VirtualVideoApp(context),
         VirtualPhotosApp(context),
+        VirtualViewerApp(context),
         VirtualFilesApp(context),
         VirtualCalculatorApp(context),
         VirtualVoiceRecorderApp(context),

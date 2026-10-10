@@ -251,7 +251,7 @@
         <activity
             android:name=".media.docs.DocumentViewerActivity"
             android:exported="true"
-            android:icon="@drawable/ic_app_photos_full"
+            android:icon="@drawable/ic_app_viewer_full"
             android:label="Telos Viewer"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
@@ -373,7 +373,7 @@
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboardHidden|uiMode|density|fontScale|locale|layoutDirection"
             android:exported="true"
             android:icon="@drawable/ic_app_photos_full"
-            android:label="Telos Viewer"
+            android:label="Telos Photos"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
