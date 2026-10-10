@@ -472,7 +472,7 @@ private fun StationRow(
             // Favorite Button
             IconButton(onClick = onFavoriteClick) {
                 Icon(
-                    painter = painterResource(R.drawable.star_24px),
+                    painter = painterResource(if (isFavorite) R.drawable.star_24px_filled else R.drawable.star_24px),
                     contentDescription = stringResource(R.string.hc_favorite),
                     tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                 )

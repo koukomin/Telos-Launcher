@@ -1,11 +1,19 @@
 package de.mm20.launcher2.comms.tv
 
+import android.app.Activity
+import android.app.Application
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.core.content.ContextCompat
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
 import androidx.media3.common.MimeTypes
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
@@ -13,7 +21,9 @@ import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.datasource.DefaultHttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
+import de.mm20.launcher2.applock.SettingsDeepLinkContract
 import de.mm20.launcher2.base.containedScope
+import de.mm20.launcher2.i18n.R as I18nR
 import de.mm20.launcher2.comms.media.PlaybackCoordinator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,6 +46,11 @@ import kotlinx.coroutines.launch
  * takes the audio focus, TV pauses and the coordinator forgets TV. Audio focus and noisy-audio pausing
  * are handled by ExoPlayer. The ExoPlayer exists only between [play] and [stop], so nothing holds a wake
  * lock or a decoder while TV is closed.
+ *
+ * Background: with [TvSettings.keepPlayingInBackground] off, leaving the app (the activity that hosts
+ * Telos Media stops) or switching the screen off pauses playback (it never stops it; the user resumes).
+ * With it on, playback goes on and [TvPlaybackService] (started here) shows the notification and the
+ * media session around this same ExoPlayer; only the video track is switched off while in the background.
  *
  * All functions must be called on the main thread; the flows can be collected anywhere.
  */
@@ -96,6 +111,99 @@ class TvPlayerController(
 
     private val timeout = Runnable { onStreamFailed() }
 
+    // ---- leaving the app / screen off ----
+    private var inBackground = false
+    private val hostActivities = HashSet<Activity>()
+    private var callbacksRegistered = false
+    private var screenReceiver: BroadcastReceiver? = null
+    private val backgroundCheck = Runnable {
+        if (hostActivities.isEmpty() && !inBackground) {
+            inBackground = true
+            onLeftApp()
+        }
+    }
+
+    private val activityCallbacks = object : Application.ActivityLifecycleCallbacks {
+        private fun isHost(a: Activity) = a.javaClass.name == SettingsDeepLinkContract.ACTIVITY_CLASS_NAME
+        override fun onActivityStarted(activity: Activity) {
+            if (!isHost(activity)) return
+            hostActivities.add(activity)
+            handler.removeCallbacks(backgroundCheck)
+            if (inBackground) {
+                inBackground = false
+                applyVideoDisabled()
+            }
+        }
+        override fun onActivityStopped(activity: Activity) {
+            if (!isHost(activity)) return
+            hostActivities.remove(activity)
+            // a short delay so that a rotation (stop, then start of the new activity) is not "leaving"
+            if (hostActivities.isEmpty()) handler.postDelayed(backgroundCheck, LEAVE_DELAY_MS)
+        }
+        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
+        override fun onActivityResumed(activity: Activity) {}
+        override fun onActivityPaused(activity: Activity) {}
+        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
+        override fun onActivityDestroyed(activity: Activity) {}
+    }
+
+    init {
+        // switching the setting on while playing starts the service, switching it off ends it (the service watches it too)
+        scope.launch {
+            settings.keepPlayingInBackground.collect {
+                if (exo != null) {
+                    if (it) startServiceIfEnabled()
+                    applyVideoDisabled()
+                }
+            }
+        }
+    }
+
+    private fun onLeftApp() {
+        if (exo == null) return
+        if (TvBackgroundPolicy.pauseWhenLeaving(settings.keepPlayingInBackground.value)) pause() else applyVideoDisabled()
+    }
+
+    /** Video track off while in the background with background playback on (saves data), on again otherwise */
+    private fun applyVideoDisabled() {
+        val p = exo ?: return
+        val off = TvBackgroundPolicy.videoDisabled(settings.keepPlayingInBackground.value, inBackground)
+        val params = p.trackSelectionParameters
+        if (params.disabledTrackTypes.contains(C.TRACK_TYPE_VIDEO) == off) return
+        p.trackSelectionParameters = params.buildUpon().setTrackTypeDisabled(C.TRACK_TYPE_VIDEO, off).build()
+    }
+
+    private fun startServiceIfEnabled() {
+        if (!settings.keepPlayingInBackground.value) return
+        // started from the foreground; Media3 promotes it to a foreground service once the session plays
+        runCatching { app.startService(Intent(app, TvPlaybackService::class.java)) }
+    }
+
+    private fun registerLeaveWatchers() {
+        if (!callbacksRegistered) {
+            callbacksRegistered = true
+            (app as? Application)?.registerActivityLifecycleCallbacks(activityCallbacks)
+            // TV is started from the foreground
+            inBackground = false
+        }
+        if (screenReceiver == null) {
+            val r = object : BroadcastReceiver() {
+                override fun onReceive(context: Context?, intent: Intent?) {
+                    if (exo != null && TvBackgroundPolicy.pauseWhenLeaving(settings.keepPlayingInBackground.value)) pause()
+                }
+            }
+            val ok = runCatching {
+                ContextCompat.registerReceiver(app, r, IntentFilter(Intent.ACTION_SCREEN_OFF), ContextCompat.RECEIVER_NOT_EXPORTED)
+            }.isSuccess
+            if (ok) screenReceiver = r
+        }
+    }
+
+    private fun unregisterScreenReceiver() {
+        screenReceiver?.let { runCatching { app.unregisterReceiver(it) } }
+        screenReceiver = null
+    }
+
     /**
      * Plays [channel]. [list] is the list the channel was picked from, used by [next] and [previous]
      * (if it does not contain the channel, next and previous do nothing).
@@ -136,9 +244,11 @@ class TvPlayerController(
     fun stop() {
         generation++
         handler.removeCallbacks(timeout)
+        // the service drops its session when the player flow goes null, before the player is released
+        _player.value = null
         exo?.let { runCatching { it.release() } }
         exo = null
-        _player.value = null
+        unregisterScreenReceiver()
         _channel.value = null
         _playing.value = false
         _buffering.value = false
@@ -180,6 +290,7 @@ class TvPlayerController(
         }
         activateCoordinator()
         ensurePlayer().stop()
+        startServiceIfEnabled()
         _buffering.value = true
         scope.launch {
             preferredUrl = runCatching { repository.preferredStream(channel.id) }.getOrNull()
@@ -236,6 +347,14 @@ class TvPlayerController(
         val item = MediaItem.Builder()
             .setUri(stream.url)
             .setMediaId(_channel.value?.id ?: stream.url)
+            // shown by the notification, the lock screen and Bluetooth displays
+            .setMediaMetadata(
+                MediaMetadata.Builder()
+                    .setTitle(_channel.value?.name)
+                    .setArtist(app.getString(I18nR.string.au15_tvbg_live))
+                    .setArtworkUri(_channel.value?.logoUrl?.takeIf { it.startsWith("http") }?.let { android.net.Uri.parse(it) })
+                    .build()
+            )
             .apply {
                 val lower = stream.url.lowercase()
                 when {
@@ -292,6 +411,8 @@ class TvPlayerController(
             .build()
         p.addListener(listener)
         exo = p
+        registerLeaveWatchers()
+        applyVideoDisabled()
         _player.value = p
         return p
     }
@@ -356,5 +477,6 @@ class TvPlayerController(
     companion object {
         const val DEFAULT_USER_AGENT = "Telos TV"
         private const val MAX_RECONNECTS = 3
+        private const val LEAVE_DELAY_MS = 700L
     }
 }
