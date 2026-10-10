@@ -1,7 +1,7 @@
 # Archives and Cryptomator vaults
 
 Archives open like folders in Telos Files, and you can pack folders into zip, 7z or tar.gz archives (zip with an
-optional password) or unpack archives next to themselves. Password-protected zip and 7z archives can be opened. [Cryptomator](https://cryptomator.org) vaults on the phone's storage can be unlocked and **read**.
+optional password) or unpack archives next to themselves. Password-protected zip and 7z archives can be opened. RAR archives (RAR 3, 4 and 5) can be browsed and unpacked in the standard version, but not encrypted ones. [Cryptomator](https://cryptomator.org) vaults on the phone's storage can be unlocked and **read**.
 
 ## Archives
 
@@ -12,11 +12,12 @@ optional password) or unpack archives next to themselves. Password-protected zip
 | zip family | `zip jar apk` | Read through a random-access index. Password-protected zips (ZipCrypto and AES-128/192/256) work |
 | 7-Zip | `7z` | Entries are read in order. Password-protected 7z (AES-256), also with encrypted file names, work |
 | tar family | `tar tar.gz tgz taz tar.bz2 tbz tbz2 tar.xz txz tar.lzma tlz tar.Z` | Entries are read in order, the compression is handled for you |
+| RAR | `rar` | Entries are read in order (RAR 3, 4 and RAR5, also solid). **Standard version only**, see the RAR section below. Encrypted RAR is not supported |
 | other archives | `cpio ar a deb arj` | Entries are read in order. A `deb` package shows its `control` and `data` members. Encrypted `arj` is not supported |
 | single compressed files | `gz bz2 xz lzma Z` | Shown as a folder with the one unpacked file in it |
 | zip-based documents | `epub docx xlsx pptx odt ods` | Offered like archives. See the note on documents below |
 
-`rar`, `ace`, `iso`, `cab`, `lzh`, `lha`, `rpm`, `wim`, `chm`, `squashfs`, `dmg`, `vhd`, `msi` and `zst` are shown with
+`ace`, `iso`, `cab`, `lzh`, `lha`, `rpm`, `wim`, `chm`, `squashfs`, `dmg`, `vhd`, `msi` and `zst` are shown with
 an archive icon but are **not** opened inside Telos. Use **Open with...** for them. See the limits below for why.
 
 ### Open an archive
@@ -59,6 +60,28 @@ lists its file names; a 7z with encrypted file names cannot be listed without th
   encryption this check is weak (about 1 in 256 wrong passwords look right), so a wrong password can show up later as an
   error while unpacking.
 
+### RAR
+
+RAR archives open like any other archive (**Browse**, **Extract here**, open or copy single files). Telos only
+**reads** RAR; creating RAR is not possible, the format may only be written by the RAR tools.
+
+- **Formats:** RAR 3 and 4 (`Rar!` with version 1.5 to 4) and RAR5. Solid archives work, but opening a file in the middle
+  of a big solid archive reads everything before it.
+- **Encrypted RAR is not supported.** The reader (libarchive) cannot decrypt RAR, neither the files nor the file names.
+  Telos shows "This RAR archive is encrypted..." and does not ask for a password. Use a RAR app for those files.
+  Nothing about RAR is ever stored.
+- **Split RAR** (`.part1.rar`, `.part2.rar`, `.r00`): not supported. A later volume (`part2` and up) is not offered
+  as an archive.
+- Symbolic links, hard links and special files inside a RAR are not listed and not unpacked.
+- **Cancel** during **Extract here** takes effect between two files, not in the middle of a very large file.
+- **Standard version and F-Droid version:** RAR is read by [libarchive](https://libarchive.org) through
+  `me.zhanghai.android.libarchive`, which ships prebuilt native code (about 1.8 MB for 32-bit and 2.4 MB for 64-bit ARM before compression, so the
+  APK grows by a few MB). F-Droid does not accept prebuilt binaries, so the `fdroid` flavor is built without it: there
+  `.rar` files are not offered as archives and stay **Open with...**.
+- **Licence:** libarchive is BSD-2-Clause and has its own RAR reader, written from the public format description. The
+  UnRAR source code of RARLAB (and the Java port junrar) has a licence that forbids using it to build a RAR
+  compressor and is not compatible with the GPL, so Telos does not use it. See `THIRD_PARTY_NOTICES.md`.
+
 ### Zip and extract
 
 | Task | Steps | Result |
@@ -76,8 +99,7 @@ never overwrites: if the target folder exists a numbered name is used.
 
 ### Limits
 
-- **RAR is not opened.** Reading RAR needs the 7-Zip engine (7-Zip-JBinding) as a native library, which is not part of
-  Telos yet. RAR could only ever be read, never created.
+- **RAR** is read in the standard version only, never encrypted, split or created. See the RAR section above.
 - **ACE cannot be supported.** Neither 7-Zip nor any free library reads `ace`; the only reader is a closed-source tool.
   Telos does not pretend to open it.
 - `iso`, `cab`, `lzh`, `rpm`, `wim`, `chm`, `squashfs`, `dmg`, `vhd` and `msi` are read by 7-Zip but not by the

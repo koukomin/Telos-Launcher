@@ -26,6 +26,14 @@ android {
         signingConfig = signingConfigs.getByName("debug")
     }
 
+    // Same flavors as :app:app. The "default" flavor adds the RAR reader (prebuilt native library, see RarBackend),
+    // the "fdroid" flavor does not ship prebuilt binaries and gets a stub with the same API.
+    flavorDimensions += "variant"
+    productFlavors {
+        create("default") { dimension = "variant" }
+        create("fdroid") { dimension = "variant" }
+    }
+
     buildTypes {
         release {
             proguardFiles(
@@ -129,6 +137,8 @@ dependencies {
     implementation(libs.tukaani.xz)
     // password-protected zip files (ZipCrypto and AES): reading, and creating AES-256 zips
     implementation(libs.zip4j)
+    // RAR and RAR5 (read only, no decryption): libarchive with prebuilt native code, not for F-Droid
+    "defaultImplementation"(libs.libarchive.android)
     implementation(libs.bouncycastle)
     // Telos PDF tools (adapted from PaperKnife+): PDF editing
     implementation(libs.pdfbox.android)

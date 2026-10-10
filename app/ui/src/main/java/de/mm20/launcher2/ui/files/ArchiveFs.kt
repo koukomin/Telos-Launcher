@@ -37,7 +37,12 @@ object ArchivePath {
     fun baseName(name: String): String = ArchiveFormats.baseName(name)
 
     /** Whether Telos can open this file as a folder */
-    fun canOpen(name: String): Boolean = ArchiveFormats.canOpen(name)
+    fun canOpen(name: String): Boolean {
+        if (!ArchiveFormats.canOpen(name)) return false
+        // RAR needs the reader of the "default" flavor; a later volume of a split RAR is not an archive on its own
+        if (ArchiveFormats.kindOf(name) == ArchiveKind.Rar) return RarBackend.isAvailable && !ArchiveFormats.isRarContinuation(name)
+        return true
+    }
 }
 
 private class ArchiveItem(val path: String, val isDir: Boolean, val size: Long, val modified: Long, val encrypted: Boolean = false)
@@ -82,7 +87,7 @@ private class CryptZip(archive: File, password: CharArray, private val clean: (S
     override fun close() { runCatching { zip.close() } }
 }
 
-/** An archive file shown as a read-only folder: zip, jar, apk, 7z, tar and compressed tar, cpio, ar/deb, arj and single compressed files. */
+/** An archive file shown as a read-only folder: zip, jar, apk, 7z, rar (default flavor only, no encryption), tar and compressed tar, cpio, ar/deb, arj and single compressed files. */
 class ArchiveFs(private val archive: File) : Fs {
     override val isRoot = false
     override val isRemote = true // copied by streaming, never as plain files
@@ -189,6 +194,12 @@ class ArchiveFs(private val archive: File) : Fs {
             k == ArchiveKind.Zip -> ZipFile.builder().setFile(archive).get().use { z ->
                 for (e in z.entries) add(e.name, e.isDirectory, e.size, e.time, e.generalPurposeBit.usesEncryption())
             }
+            k == ArchiveKind.Rar -> RarBackend.open(archive).use { r ->
+                while (true) {
+                    val e = r.next() ?: break
+                    if (!e.isLink) add(e.path, e.isDir, e.size, e.modified, e.encrypted)
+                }
+            }
             k.isSingleFile -> add(singleName(), false, -1, archive.lastModified())
             else -> sequentialStream().use { s ->
                 var e: ArchiveEntry? = s.nextEntry
@@ -281,6 +292,19 @@ class ArchiveFs(private val archive: File) : Fs {
                     e = try { z.nextEntry } catch (x: IOException) { throw guard(x) }
                 }
             }
+            k == ArchiveKind.Rar -> RarBackend.open(archive).use { r ->
+                while (true) {
+                    if (cancel.cancelled) throw IOException("Cancelled")
+                    val e = r.next() ?: break
+                    if (e.isLink) continue // links and special files are never unpacked
+                    val dest = destination(e.path) ?: continue
+                    if (e.isDir) { dest.mkdirs(); continue }
+                    if (e.encrypted) throw ArchiveRarEncryptedException()
+                    dest.parentFile?.mkdirs()
+                    r.copyCurrentTo(dest) // cancelling takes effect between two files
+                    progress(dest.length())
+                }
+            }
             k.isSingleFile -> {
                 val dest = destination(singleName())
                 if (dest != null) singleStream().use { input -> write(dest) { input.read(it) } }
@@ -337,6 +361,7 @@ class ArchiveFs(private val archive: File) : Fs {
                 }
                 return GuardedStream(raw, map7z(encrypted, pw))
             }
+            k == ArchiveKind.Rar -> return openRar(wanted)
             k.isSingleFile -> {
                 if (wanted != singleName()) throw IOException("Not found in the archive")
                 return singleStream()
@@ -349,6 +374,27 @@ class ArchiveFs(private val archive: File) : Fs {
                 return object : java.io.FilterInputStream(s) { override fun close() { s.close() } }
             }
         }
+    }
+
+    /** The data of one file of a RAR: reads the archive up to that file. The stream closes the reader. */
+    private fun openRar(wanted: String): InputStream {
+        val r = RarBackend.open(archive)
+        var found: InputStream? = null
+        try {
+            var e = r.next()
+            while (e != null) {
+                if (!e.isLink && !e.isDir && clean(e.path) == wanted) {
+                    if (e.encrypted) throw ArchiveRarEncryptedException()
+                    found = r.openCurrent()
+                    break
+                }
+                e = r.next()
+            }
+        } catch (x: Throwable) {
+            r.close(); throw x
+        }
+        if (found == null) { r.close(); throw IOException("Not found in the archive") }
+        return found
     }
 
     /**

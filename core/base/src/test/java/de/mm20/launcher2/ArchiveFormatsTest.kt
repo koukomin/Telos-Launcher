@@ -22,14 +22,31 @@ class ArchiveFormatsTest {
         assertEquals(ArchiveKind.Arj, ArchiveFormats.kindOf("a.arj"))
     }
 
+    @Test fun rar() {
+        assertEquals(ArchiveKind.Rar, ArchiveFormats.kindOf("a.rar"))
+        assertEquals(ArchiveKind.Rar, ArchiveFormats.kindOf("A.RAR"))
+        assertTrue(ArchiveFormats.canOpen("a.rar"))
+        assertNull(ArchiveFormats.kindOf(".rar"))
+        assertEquals("a", ArchiveFormats.baseName("a.rar"))
+        assertEquals("backup", ArchiveFormats.baseName("backup.part1.rar"))
+        assertEquals("backup", ArchiveFormats.baseName("backup.part01.RAR"))
+        assertEquals("my.part", ArchiveFormats.baseName("my.part.rar"))
+        assertTrue(ArchiveFormats.isRarContinuation("backup.part2.rar"))
+        assertTrue(ArchiveFormats.isRarContinuation("backup.PART03.rar"))
+        assertFalse(ArchiveFormats.isRarContinuation("backup.part1.rar"))
+        assertFalse(ArchiveFormats.isRarContinuation("backup.rar"))
+        assertFalse(ArchiveFormats.isRarContinuation("backup.part2.zip"))
+        assertFalse(ArchiveKind.Rar.isSingleFile)
+        assertFalse(ArchiveKind.Rar.isTar)
+    }
+
     @Test fun notOpened() {
-        assertNull(ArchiveFormats.kindOf("a.rar"))
         assertNull(ArchiveFormats.kindOf("a.ace"))
         assertNull(ArchiveFormats.kindOf("a.iso"))
         assertNull(ArchiveFormats.kindOf("photo.jpg"))
         assertNull(ArchiveFormats.kindOf(".zip"))
-        assertFalse(ArchiveFormats.canOpen("a.rar"))
-        assertTrue(ArchiveFormats.isKnownUnsupported("a.RAR"))
+        assertTrue(ArchiveFormats.isKnownUnsupported("a.iso"))
+        assertFalse(ArchiveFormats.isKnownUnsupported("a.RAR"))
         assertTrue(ArchiveFormats.isKnownUnsupported("a.ace"))
         assertFalse(ArchiveFormats.isKnownUnsupported("a.zip"))
     }

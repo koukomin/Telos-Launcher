@@ -37,6 +37,13 @@ data class ArchivePrompt(val archive: String, val browsing: Boolean, val retry: 
 class FilesViewModel(application: Application) : AndroidViewModel(application) {
     private val context: Context get() = getApplication()
     private fun s(id: Int, vararg args: Any): String = context.getString(id, *args)
+
+    /** The message for a RAR that cannot be read (encrypted, or no RAR reader in this build), or null for any other error */
+    private fun rarMessage(t: Throwable): String? = when (t) {
+        is ArchiveRarEncryptedException -> s(R.string.au23_rar_encrypted)
+        is ArchiveRarUnavailableException -> s(R.string.au23_rar_unavailable)
+        else -> null
+    }
     private val prefs = context.getSharedPreferences("telos_files", Context.MODE_PRIVATE)
     private val local = LocalFs()
     private val root = RootFs()
@@ -189,7 +196,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                     error = s(R.string.au21_arch_password_needed)
                     archivePrompt = ArchivePrompt(ArchivePath.archiveOf(dir), true) { load(dir) }
                 } else {
-                    error = it.message?.takeIf { m -> m != "Cannot open this folder" } ?: s(R.string.au_files_cannot_open_folder)
+                    error = rarMessage(it) ?: it.message?.takeIf { m -> m != "Cannot open this folder" } ?: s(R.string.au_files_cannot_open_folder)
                 }
             }
         }
@@ -369,6 +376,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                     cancel.cancelled -> s(R.string.au_files_cancelled)
                     it is ArchiveWrongPasswordException -> s(R.string.au21_arch_wrong_password)
                     it is ArchivePasswordRequiredException -> s(R.string.au21_arch_password_needed)
+                    rarMessage(it) != null -> rarMessage(it)!!
                     else -> it.message ?: s(R.string.au_files_failed)
                 }
             }
@@ -520,7 +528,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                     // an encrypted file in an archive: ask for the password, then fetch it again
                     archivePrompt = ArchivePrompt(ArchivePath.archiveOf(entry.path), false) { download(entry, then) }
                 } else {
-                    message = if (cancel.cancelled) s(R.string.au_files_cancelled) else it.message ?: s(R.string.au_files_download_failed)
+                    message = if (cancel.cancelled) s(R.string.au_files_cancelled) else rarMessage(it) ?: it.message ?: s(R.string.au_files_download_failed)
                 }
             }
         }

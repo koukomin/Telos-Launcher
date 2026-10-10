@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au23_rar_encrypted">This RAR archive is encrypted. Telos can read RAR archives but cannot decrypt them. Open it with a RAR app instead.</string>
+    <string name="au23_rar_unavailable">This build of Telos cannot open RAR archives. RAR support is only included in the standard version, not in the F-Droid version.</string>
+</resources>

@@ -2,7 +2,7 @@ package de.mm20.launcher2.helper
 
 /** How Telos Files reads an archive (or a single compressed file) as a virtual folder. */
 enum class ArchiveKind {
-    Zip, SevenZ, Tar, TarGz, TarBz2, TarXz, TarLzma, TarZ, Cpio, Ar, Arj, Gz, Bz2, Xz, Lzma, Z;
+    Zip, SevenZ, Tar, TarGz, TarBz2, TarXz, TarLzma, TarZ, Cpio, Ar, Arj, Rar, Gz, Bz2, Xz, Lzma, Z;
 
     /** A plain compressed file (not an archive): shown as a folder holding one file */
     val isSingleFile: Boolean get() = this == Gz || this == Bz2 || this == Xz || this == Lzma || this == Z
@@ -27,11 +27,22 @@ object ArchiveFormats {
         ".cpio" to ArchiveKind.Cpio,
         ".ar" to ArchiveKind.Ar, ".a" to ArchiveKind.Ar, ".deb" to ArchiveKind.Ar,
         ".arj" to ArchiveKind.Arj,
+        ".rar" to ArchiveKind.Rar,
         ".gz" to ArchiveKind.Gz, ".bz2" to ArchiveKind.Bz2, ".xz" to ArchiveKind.Xz, ".lzma" to ArchiveKind.Lzma, ".z" to ArchiveKind.Z,
     )
 
     /** Formats that other tools read, but Telos does not: they stay "Open with...". ACE is not possible in any free library. */
-    private val unsupported = setOf("rar", "iso", "cab", "ace", "lzh", "lha", "rpm", "wim", "chm", "squashfs", "dmg", "vhd", "msi", "zst", "br")
+    private val unsupported = setOf("iso", "cab", "ace", "lzh", "lha", "rpm", "wim", "chm", "squashfs", "dmg", "vhd", "msi", "zst", "br")
+
+    private val rarPart = Regex("\\.part0*\\d+$", RegexOption.IGNORE_CASE)
+
+    /** "backup.part2.rar", "backup.part03.rar": a later volume of a split RAR. Telos reads single archives, so these cannot be opened on their own. */
+    fun isRarContinuation(name: String): Boolean {
+        val n = name.lowercase()
+        if (!n.endsWith(".rar")) return false
+        val m = Regex("\\.part0*(\\d+)$").find(n.dropLast(4)) ?: return false
+        return (m.groupValues[1].toIntOrNull() ?: 0) > 1
+    }
 
     /** The way [name] is read, or null when Telos cannot open it as a folder */
     fun kindOf(name: String): ArchiveKind? {
@@ -41,7 +52,7 @@ object ArchiveFormats {
 
     fun canOpen(name: String): Boolean = kindOf(name) != null
 
-    /** An archive format that Telos recognises but cannot open (rar, iso, ace, ...) */
+    /** An archive format that Telos recognises but cannot open (iso, ace, ...) */
     fun isKnownUnsupported(name: String): Boolean =
         name.substringAfterLast('.', "").lowercase() in unsupported
 
@@ -49,7 +60,11 @@ object ArchiveFormats {
     fun baseName(name: String): String {
         val n = name.lowercase()
         val suffix = suffixes.firstOrNull { n.endsWith(it.first) && n.length > it.first.length }?.first
-        if (suffix != null) return name.dropLast(suffix.length)
+        if (suffix != null) {
+            val base = name.dropLast(suffix.length)
+            // "backup.part1.rar" -> "backup": the first volume of a split RAR
+            return if (suffix == ".rar") base.replace(rarPart, "").ifEmpty { base } else base
+        }
         return name.substringBeforeLast('.', name).ifEmpty { name }
     }
 

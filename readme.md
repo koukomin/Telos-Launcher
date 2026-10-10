@@ -691,7 +691,7 @@ A file manager for your phone, network storages and cloud storages. The layout f
 <details>
 <summary><b>Archives, Cryptomator vaults and the root explorer</b></summary>
 
-- **Archives:** zip, jar, apk, 7z, tar (also tar.gz, tar.bz2, tar.xz, tar.lzma), cpio, ar/deb, arj and single gz, bz2, xz, lzma and Z files open like folders (read only). **Extract here** unpacks next to the archive, **Compress...** packs local files into zip, 7z or tar.gz. Epub and Office files are zip-based and offer the same dialog. Password-protected zip (ZipCrypto and AES) and 7z archives ask for the password in a dialog; it is kept in memory only while you are inside the archive, and new zips can be protected with AES-256. `rar`, `ace`, `iso`, `cab` and the other formats only 7-Zip reads are not opened inside Telos (ACE is not readable by any free library), and only local archives can be opened.
+- **Archives:** zip, jar, apk, 7z, tar (also tar.gz, tar.bz2, tar.xz, tar.lzma), cpio, ar/deb, arj, rar (RAR 3, 4 and 5, not encrypted or split, standard version only) and single gz, bz2, xz, lzma and Z files open like folders (read only). **Extract here** unpacks next to the archive, **Compress...** packs local files into zip, 7z or tar.gz. Epub and Office files are zip-based and offer the same dialog. Password-protected zip (ZipCrypto and AES) and 7z archives ask for the password in a dialog; it is kept in memory only while you are inside the archive, and new zips can be protected with AES-256. `ace`, `iso`, `cab` and the other formats only 7-Zip reads are not opened inside Telos (ACE is not readable by any free library), and only local archives can be opened.
 - **Cryptomator vaults** (experimental, read only): vault formats 7 and 8 in a local folder can be unlocked and read. Files opened from a vault are decrypted into a temporary cache, which **Lock vault** removes. The password is not stored. gocryptfs, EncFS and VeraCrypt are not supported.
 - **Root explorer** (optional, untested): a superuser mode for system folders. Off until you switch it on and tick "I understand the risks". Shows permissions, owners and links, a warning banner in system folders, extra confirmation for deleting system files, changing permissions in octal, and making `/system` writable or read-only. Writing into root paths from remote storages or archives is not supported.
 
@@ -1067,6 +1067,7 @@ adapted, the original license is respected.
 
 | Project | License | What Telos uses it for |
 | --- | --- | --- |
+| [libarchive](https://libarchive.org) with [libarchive-android](https://github.com/zhanghai/libarchive-android) | BSD-2-Clause, Apache-2.0 | RAR and RAR5 reading in Telos Files (standard version only, prebuilt library, used unchanged) |
 | [Kvaesitso](https://github.com/MM2-0/Kvaesitso) | GPL-3.0 | The whole launcher, plugin SDK and architecture |
 | [Right Dialer (Goodwy/Dialer)](https://github.com/Goodwy/Dialer) | GPL-3.0 | Phone app layout and look: recents, contacts, dialpad, call screens |
 | [Secure Dialer](https://github.com/Secure-Phone-apps/Secure-Dialer) | GPL-3.0 | Privacy features: biometric lock, secure call screen, call screening, callback reminders |
