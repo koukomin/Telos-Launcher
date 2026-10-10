@@ -99,8 +99,8 @@ object EpisodeParser {
 
     /** A standalone 19xx / 20xx number: not part of a longer digit run. */
     private val yearToken = Regex("(?<!\\d)((?:19|20)\\d{2})(?!\\d)")
-    private val dateAfter = Regex("^[-_./ ]\\d{1,2}[-_./ ]\\d{1,2}(?!\\d)")
-    private val dateBefore = Regex("(?<!\\d)\\d{1,2}[-_./]\\d{1,2}[-_./]$")
+    private val dateAfter = Regex("^[-_./]\\d{2}[-_./]\\d{2}(?!\\d)")
+    private val dateBefore = Regex("(?<!\\d)\\d{2}[-_./]\\d{2}[-_./]$")
 
     /** File name shapes written by cameras, messengers and screen recorders. */
     private val appShapes = listOf(
@@ -123,7 +123,7 @@ object EpisodeParser {
     private val blockedFolders = listOf(
         "viber", "whatsapp", "telegram", "messenger", "facebook", "instagram", "snapchat", "signal",
         "camera", "dcim", "screenshots", "screen recordings", "screen_recordings", "screenrecorder",
-        "screen recorder", "screenrecord", "telos", "tiktok", "twitter", "line/", "wechat", "imo",
+        "screen recorder", "screenrecord", "telos", "tiktok", "twitter", "wechat",
     )
 
     fun isBlockedFolder(folder: String): Boolean {
@@ -163,7 +163,7 @@ object EpisodeParser {
             if (dateAfter.containsMatchIn(base.substring(end))) continue
             if (dateBefore.containsMatchIn(base.substring(0, start))) continue
             val title = clean(base.substring(0, start))
-            if (!realTitle(title)) return plain
+            if (!realTitle(title)) continue
             return ParsedName(title, null, null, y)
         }
         return plain

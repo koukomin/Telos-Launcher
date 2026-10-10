@@ -136,10 +136,10 @@ fun VideoScreen() {
         ResumeStore.continueWatching(context).mapNotNull { uri -> items.firstOrNull { it.uri.toString() == uri } }.take(10)
     }
     // the file names are parsed once per library, not on every letter typed in the search field
-    val parsedNames = remember(items) { items.associate { it.id to EpisodeParser.parse(it.fileName) } }
+    val parsedNames = remember(items) { items.associate { it.id to EpisodeParser.parse(it.fileName, it.locationHint) } }
     val series = remember(filtered, parsedNames) {
         filtered.mapNotNull { item ->
-            val parsed = parsedNames[item.id] ?: EpisodeParser.parse(item.fileName)
+            val parsed = parsedNames[item.id] ?: EpisodeParser.parse(item.fileName, item.locationHint)
             if (parsed.isEpisode) Triple(parsed.title.lowercase(), parsed, item) else null
         }.groupBy { it.first }.values.map { list ->
             val name = list.first().second.title
@@ -149,7 +149,7 @@ fun VideoScreen() {
     }
     val movies = remember(filtered, parsedNames) {
         filtered.mapNotNull { item ->
-            val parsed = parsedNames[item.id] ?: EpisodeParser.parse(item.fileName)
+            val parsed = parsedNames[item.id] ?: EpisodeParser.parse(item.fileName, item.locationHint)
             if (parsed.isEpisode || parsed.year == null) null else Triple(parsed.title.lowercase() + "|" + parsed.year, parsed, item)
         }.groupBy { it.first }.values.map { list ->
             val parsed = list.first().second
@@ -159,7 +159,7 @@ fun VideoScreen() {
     // neither an episode nor a film with a year in its name: not recognised
     val others = remember(filtered, parsedNames) {
         filtered.filter { item ->
-            val parsed = parsedNames[item.id] ?: EpisodeParser.parse(item.fileName)
+            val parsed = parsedNames[item.id] ?: EpisodeParser.parse(item.fileName, item.locationHint)
             !parsed.isEpisode && parsed.year == null
         }
     }
@@ -390,7 +390,7 @@ private fun DetailPage(
         label = "detailTint",
     )
     val surface = MaterialTheme.colorScheme.surface
-    val parsed = remember(shown) { shown.map { EpisodeParser.parse(it.fileName) } }
+    val parsed = remember(shown) { shown.map { EpisodeParser.parse(it.fileName, it.locationHint) } }
     val seasons = remember(parsed) { if (group.series) parsed.mapNotNull { it.season }.distinct().sorted() else emptyList() }
     var seasonIndex by rememberSaveable(group.title) { mutableStateOf(0) }
     val season = seasons.getOrNull(seasonIndex.coerceIn(0, (seasons.size - 1).coerceAtLeast(0)))
@@ -542,7 +542,7 @@ internal fun VideoRow(video: VideoItem, number: Int? = null, onClick: () -> Unit
     var menu by remember { mutableStateOf(false) }
     val seen = remember(video.uri, libraryVersion.intValue) { ResumeStore.isWatched(context, video.uri) }
     val watched = seen || remember(video.uri, traktVersion.intValue) {
-        de.mm20.launcher2.comms.media.video.trakt.Trakt.isWatched(context, EpisodeParser.parse(video.fileName))
+        de.mm20.launcher2.comms.media.video.trakt.Trakt.isWatched(context, EpisodeParser.parse(video.fileName, video.locationHint))
     }
     Row(
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).fillMaxWidth().clip(RoundedCornerShape(20.dp))
