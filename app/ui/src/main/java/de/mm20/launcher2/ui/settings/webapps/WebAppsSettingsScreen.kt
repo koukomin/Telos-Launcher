@@ -356,8 +356,8 @@ fun WebAppsSettingsScreen() {
     EditWebAppShortcutSheet(
         expanded = createShortcut,
         existing = null,
-        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode ->
-            viewModel.save(null, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode)
+        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode, cookieOptions ->
+            viewModel.save(null, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode, cookieOptions)
         },
         onDismiss = { viewModel.dismissDialogs() },
         onImportIcon = { uri, sizePx -> viewModel.importIcon(uri, sizePx) },
@@ -367,8 +367,8 @@ fun WebAppsSettingsScreen() {
     EditWebAppShortcutSheet(
         expanded = editShortcut != null,
         existing = editShortcut,
-        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode ->
-            viewModel.save(editShortcut, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode)
+        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode, cookieOptions ->
+            viewModel.save(editShortcut, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode, cookieOptions)
         },
         onDismiss = { viewModel.dismissDialogs() },
         onImportIcon = { uri, sizePx -> viewModel.importIcon(uri, sizePx) },

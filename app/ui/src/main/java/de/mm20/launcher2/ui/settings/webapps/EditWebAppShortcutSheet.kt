@@ -58,6 +58,7 @@ import de.mm20.launcher2.ui.component.BottomSheet
 import de.mm20.launcher2.ui.component.DismissableBottomSheet
 import de.mm20.launcher2.ui.component.withPrivateKeyboard
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.webapp.WebAppProfiles
 import de.mm20.launcher2.webappshortcuts.CustomTabsBrowsers
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -68,7 +69,7 @@ private enum class IconPickerTab { IconPack, Photo, Favicon }
 fun EditWebAppShortcutSheet(
     expanded: Boolean,
     existing: WebAppShortcut?,
-    onSave: (label: String, url: String, iconUri: String?, faviconUrl: String?, rendererPackage: String?, showInGrid: Boolean, showInPanel: Boolean, iconSource: WebAppShortcut.IconSource, customCss: String?, notificationsEnabled: Boolean, groupId: String?, adBlockMode: WebAppShortcut.AdBlockMode) -> Unit,
+    onSave: (label: String, url: String, iconUri: String?, faviconUrl: String?, rendererPackage: String?, showInGrid: Boolean, showInPanel: Boolean, iconSource: WebAppShortcut.IconSource, customCss: String?, notificationsEnabled: Boolean, groupId: String?, adBlockMode: WebAppShortcut.AdBlockMode, cookieOptions: WebAppShortcut.CookieOptions) -> Unit,
     onDismiss: () -> Unit,
     onImportIcon: suspend (uri: Uri, sizePx: Int) -> String?,
     onFindFavicon: suspend (url: String) -> String?,
@@ -99,6 +100,10 @@ fun EditWebAppShortcutSheet(
         }
         var adBlockMode by remember(existing) { mutableStateOf(existing?.adBlockMode ?: WebAppShortcut.AdBlockMode.Global) }
         var showAdBlockMenu by remember { mutableStateOf(false) }
+        var cookieOptions by remember(existing) { mutableStateOf(existing?.cookieOptions ?: WebAppShortcut.CookieOptions()) }
+        var showCookieMenu by remember { mutableStateOf(false) }
+        var showThirdPartyMenu by remember { mutableStateOf(false) }
+        val profilesSupported = remember { WebAppProfiles.isSupported() }
         var findingFavicon by remember { mutableStateOf(false) }
         var showRendererMenu by remember { mutableStateOf(false) }
         var showIconSourceMenu by remember { mutableStateOf(false) }
@@ -390,6 +395,93 @@ fun EditWebAppShortcutSheet(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
+            val cookieLabels = mapOf(
+                WebAppShortcut.CookieMode.Global to stringResource(R.string.web_app_shortcut_ad_block_global),
+                WebAppShortcut.CookieMode.Accept to stringResource(R.string.au5_webapps3_cookie_accept),
+                WebAppShortcut.CookieMode.Block to stringResource(R.string.au5_webapps3_cookie_block),
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(R.string.au4_webapps2_cookies),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.weight(1f),
+                )
+                TextButton(onClick = { showCookieMenu = true }) {
+                    Text(cookieLabels.getValue(cookieOptions.cookies))
+                }
+                DropdownMenuPopup(
+                    expanded = showCookieMenu,
+                    onDismissRequest = { showCookieMenu = false },
+                ) {
+                    DropdownMenuGroup(shapes = MenuDefaults.groupShapes()) {
+                        for ((mode, text) in cookieLabels) {
+                            DropdownMenuItem(
+                                text = { Text(text) },
+                                onClick = {
+                                    cookieOptions = cookieOptions.copy(cookies = mode)
+                                    showCookieMenu = false
+                                },
+                            )
+                        }
+                    }
+                }
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(R.string.au4_webapps2_third_party_cookies),
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.weight(1f),
+                )
+                TextButton(onClick = { showThirdPartyMenu = true }) {
+                    Text(cookieLabels.getValue(cookieOptions.thirdPartyCookies))
+                }
+                DropdownMenuPopup(
+                    expanded = showThirdPartyMenu,
+                    onDismissRequest = { showThirdPartyMenu = false },
+                ) {
+                    DropdownMenuGroup(shapes = MenuDefaults.groupShapes()) {
+                        for ((mode, text) in cookieLabels) {
+                            DropdownMenuItem(
+                                text = { Text(text) },
+                                onClick = {
+                                    cookieOptions = cookieOptions.copy(thirdPartyCookies = mode)
+                                    showThirdPartyMenu = false
+                                },
+                            )
+                        }
+                    }
+                }
+            }
+            Text(
+                text = stringResource(
+                    if (profilesSupported) R.string.au5_webapps3_cookies_isolated
+                    else R.string.au5_webapps3_cookies_unsupported
+                ),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            if (existing != null) {
+                TextButton(onClick = {
+                    WebAppProfiles.clear(existing.key) {
+                        android.widget.Toast.makeText(
+                            context,
+                            context.getString(R.string.au5_webapps3_clear_done),
+                            android.widget.Toast.LENGTH_SHORT,
+                        ).show()
+                    }
+                }) {
+                    Text(stringResource(R.string.au5_webapps3_clear_this))
+                }
+            }
+
             if (groupsEnabled && groups.isNotEmpty()) {
                 Row(
                     modifier = Modifier
@@ -450,7 +542,7 @@ fun EditWebAppShortcutSheet(
                         onSave(
                             label.trim(), url.trim(), iconUri, faviconUrl, rendererPackage,
                             showInGrid, showInPanel, iconSource, customCss.trim().ifBlank { null },
-                            notificationsEnabled, groupId, adBlockMode
+                            notificationsEnabled, groupId, adBlockMode, cookieOptions
                         )
                     }
                 ) {

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au5_webapps3_cookie_accept">Accept</string>
+    <string name="au5_webapps3_cookie_block">Block</string>
+    <string name="au5_webapps3_cookies_isolated">Cookies and site data of this web app are stored separately from all other web apps. \"Use global\" follows the cookie settings of the web apps screen.</string>
+    <string name="au5_webapps3_cookies_unsupported">The installed WebView does not support separate storage per web app. Cookies and site data are shared between all web apps and the global cookie settings apply.</string>
+    <string name="au5_webapps3_clear_this">Clear cookies and site data of this web app</string>
+    <string name="au5_webapps3_clear_done">Cookies and site data cleared</string>
+</resources>

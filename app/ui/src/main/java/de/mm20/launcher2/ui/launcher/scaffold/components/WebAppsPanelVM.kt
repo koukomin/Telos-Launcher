@@ -73,8 +73,9 @@ class WebAppsPanelVM : ViewModel(), KoinComponent {
         customCss: String? = null,
         notificationsEnabled: Boolean = false,
         adBlockMode: WebAppShortcut.AdBlockMode = WebAppShortcut.AdBlockMode.Global,
+        cookieOptions: WebAppShortcut.CookieOptions = WebAppShortcut.CookieOptions(),
     ) {
-        manager.createAndAdd(label, url, iconUri, faviconUrl, rendererPackage, customCss, notificationsEnabled, adBlockMode)
+        manager.createAndAdd(label, url, iconUri, faviconUrl, rendererPackage, customCss, notificationsEnabled, adBlockMode, cookieOptions)
     }
 
     suspend fun findFavicon(url: String): String? = manager.findFavicon(url)

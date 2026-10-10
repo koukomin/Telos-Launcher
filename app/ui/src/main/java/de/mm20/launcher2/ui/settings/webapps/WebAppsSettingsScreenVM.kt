@@ -89,13 +89,9 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
     fun setThirdPartyCookiesEnabled(enabled: Boolean) =
         browsingSettings.setThirdPartyCookiesEnabled(enabled)
 
-    /** Removes all cookies and web storage of the embedded web app renderer. */
+    /** Removes all cookies and web storage of every web app (all profiles). */
     fun clearCookiesAndSiteData(onDone: () -> Unit) {
-        android.webkit.CookieManager.getInstance().removeAllCookies { _ ->
-            android.webkit.CookieManager.getInstance().flush()
-        }
-        android.webkit.WebStorage.getInstance().deleteAllData()
-        onDone()
+        de.mm20.launcher2.ui.webapp.WebAppProfiles.clearAll(onDone)
     }
 
     val groupsEnabled = browsingSettings.groupsEnabled
@@ -273,19 +269,20 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
         notificationsEnabled: Boolean,
         groupId: String?,
         adBlockMode: WebAppShortcut.AdBlockMode,
+        cookieOptions: WebAppShortcut.CookieOptions,
     ) {
         val oldIconUri = existing?.iconUri
         val shortcut = if (existing != null) {
             webAppShortcutRepository.update(
                 existing, label, url, iconUri, faviconUrl, rendererPackage,
                 showInGrid, showInPanel, existing.order, iconSource, customCss,
-                notificationsEnabled, adBlockMode,
+                notificationsEnabled, adBlockMode, cookieOptions,
             )
         } else {
             webAppShortcutRepository.create(
                 label, url, iconUri, faviconUrl, rendererPackage,
                 showInGrid, showInPanel, 0, iconSource, customCss,
-                notificationsEnabled, adBlockMode,
+                notificationsEnabled, adBlockMode, cookieOptions,
             )
         }
         assignToGroup(shortcut.key, groupId)

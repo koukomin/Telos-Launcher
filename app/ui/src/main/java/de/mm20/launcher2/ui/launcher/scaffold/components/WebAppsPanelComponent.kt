@@ -287,8 +287,8 @@ internal object WebAppsPanelComponent : ScaffoldComponent() {
         EditWebAppShortcutSheet(
             expanded = showCreateSheet,
             existing = null,
-            onSave = { label, url, iconUri, faviconUrl, rendererPackage, _, _, _, customCss, notificationsEnabled, _, adBlockMode ->
-                viewModel.createAndAdd(label, url, iconUri, faviconUrl, rendererPackage, customCss, notificationsEnabled, adBlockMode)
+            onSave = { label, url, iconUri, faviconUrl, rendererPackage, _, _, _, customCss, notificationsEnabled, _, adBlockMode, cookieOptions ->
+                viewModel.createAndAdd(label, url, iconUri, faviconUrl, rendererPackage, customCss, notificationsEnabled, adBlockMode, cookieOptions)
                 showCreateSheet = false
             },
             onDismiss = { showCreateSheet = false },

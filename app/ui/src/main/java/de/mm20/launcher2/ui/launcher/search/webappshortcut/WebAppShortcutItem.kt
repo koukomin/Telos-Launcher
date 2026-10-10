@@ -176,11 +176,11 @@ fun WebAppShortcutItem(
         EditWebAppShortcutSheet(
             expanded = showEditSheet,
             existing = shortcut,
-            onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode ->
+            onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode, cookieOptions ->
                 webAppShortcutRepository.update(
                     shortcut, label, url, iconUri, faviconUrl, rendererPackage,
                     showInGrid, showInPanel, shortcut.order, iconSource, customCss,
-                    notificationsEnabled, adBlockMode,
+                    notificationsEnabled, adBlockMode, cookieOptions,
                 )
                 val browsingSettings: de.mm20.launcher2.preferences.ui.WebAppBrowsingSettings = org.koin.java.KoinJavaComponent.getKoin().get()
                 kotlinx.coroutines.MainScope().launch {
