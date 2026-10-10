@@ -50,7 +50,7 @@ from Telos Store.
 | **The launcher** | Unified search, home screen, widgets, favorites and tags, themes, plugins, desktop mode, overlays, protection | [Launcher](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/) |
 | **Telos Phone** | Dialer, recents, contacts, dual SIM, call recording, call screening, SIP | [Phone](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/phone/) |
 | **Telos Messages** | SMS and MMS conversations, default SMS app, scheduled messages | [Messages](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/messages/) |
-| **Telos Files** | File manager with network and cloud storages, archives, Cryptomator vaults | [Files](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/) |
+| **Telos Files** | File manager with network and cloud storages (optional size-limited previews, off by default), archives, Cryptomator vaults | [Files](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/) |
 | **Telos Screenshot** | Full, partial and scrolling screenshots with an editor | [Screenshot](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/screenshot/) |
 | **Telos Screen Recorder** | Screen to video with microphone, pause and countdown | [Screen Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/screen-recorder/) |
 | **Telos Notes** | Notes with labels, sync with a Markdown folder or Nextcloud Notes, Keep and Evernote import | [Notes](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/notes/) |

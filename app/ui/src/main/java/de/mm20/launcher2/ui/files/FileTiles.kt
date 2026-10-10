@@ -77,6 +77,11 @@ internal fun FileTile(
     // runs while the tile is on screen and is cancelled when it scrolls away
     LaunchedEffect(key, eligible) {
         if (eligible && bitmap == null) bitmap = FileThumbs.load(context, e, req)
+        if (!eligible && bitmap == null && de.mm20.launcher2.ui.files.remote.RemotePath.isRemote(e.path)) {
+            // pictures and documents on cloud and network storages: only when the user turned previews on
+            val local = de.mm20.launcher2.ui.files.remote.RemotePreviews.localFor(context, e)
+            if (local != null) bitmap = FileThumbs.load(context, e.copy(path = local.path), req)
+        }
     }
     val fade by animateFloatAsState(
         if (bitmap != null) 1f else 0f,
