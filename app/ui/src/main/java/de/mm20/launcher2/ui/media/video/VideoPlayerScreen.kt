@@ -181,11 +181,16 @@ private fun PlayerContent(
 
     // Trakt.tv: report what is played (only when the user signed in and switched it on)
     val traktScope = remember { kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.SupervisorJob() + kotlinx.coroutines.Dispatchers.IO) }
-    fun scrobble(action: String, finished: Boolean = false) {
-        val item = player.currentMediaItem ?: return
+    // last Trakt action and the item it was about, so a stop is not sent twice
+    val traktState = remember { arrayOfNulls<Any>(2) }
+    fun scrobble(action: String, finished: Boolean = false, forItem: MediaItem? = null) {
+        val item = forItem ?: player.currentMediaItem ?: return
+        if (action == "stop" && traktState[0] == "stop" && traktState[1] == item.mediaId) return
         val duration = player.duration
-        if (duration <= 0) return
-        val progress = if (finished) 100f else player.currentPosition * 100f / duration
+        if (duration <= 0 && !finished) return
+        val progress = if (finished || duration <= 0) 100f else (player.currentPosition * 100f / duration).coerceIn(0f, 100f)
+        traktState[0] = action
+        traktState[1] = item.mediaId
         val name = item.mediaMetadata.title?.toString().orEmpty()
         val parsedName = cleanTitle(name) + ".x"
         val appContext = context.applicationContext
@@ -197,7 +202,7 @@ private fun PlayerContent(
             return
         }
         val parsed = EpisodeParser.parse(parsedName)
-        traktScope.launch { de.mm20.launcher2.comms.media.video.trakt.Trakt.scrobble(appContext, action, parsed, progress) }
+        traktScope.launch { runCatching { de.mm20.launcher2.comms.media.video.trakt.Trakt.scrobble(appContext, action, parsed, progress) } }
     }
 
     // the item that was saved last: when the player moves on by itself, this one has been played to the end
@@ -227,6 +232,12 @@ private fun PlayerContent(
 
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                 if (reason == Player.MEDIA_ITEM_TRANSITION_REASON_AUTO) {
+                    // Trakt: the episode that ended is done, the next one starts
+                    traktState[1]?.let { id -> if (id != mediaItem?.mediaId) {
+                        val prev = (0 until player.mediaItemCount).map { player.getMediaItemAt(it) }.firstOrNull { it.mediaId == id }
+                        if (prev != null) scrobble("stop", finished = true, forItem = prev)
+                    } }
+                    scrobble("start")
                     // player.currentMediaItem is the next one now: the episode that ended counts as watched
                     lastSavedId?.let { id -> if (id != mediaItem?.mediaId) ResumeStore.save(context, Uri.parse(id), lastSavedDuration, lastSavedDuration) }
                     saveProgress()

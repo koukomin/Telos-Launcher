@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au7_vidfolders_tab_other">Other</string>
+    <string name="au7_vidfolders_no_other">All videos are recognised as films or episodes</string>
+    <string name="au7_vidfolders_season">Season %1$d</string>
+    <string name="au7_vidfolders_action">Organise into Movies and Series folders</string>
+    <string name="au7_vidfolders_title">Organise video files</string>
+    <string name="au7_vidfolders_unsupported">Moving files needs Android 11 or newer.</string>
+    <string name="au7_vidfolders_nothing">There is nothing to organise. Only recognised films and episodes in the Movies or Download folder are moved.</string>
+    <string name="au7_vidfolders_confirm">Telos will move %1$d films into Movies/Movies/Title (Year) and %2$d episodes into Movies/Series/Show/Season NN. Files are only moved, never deleted or changed, and watch progress is kept. Subtitle files next to the videos are not moved. Android will ask once more for permission to change these files. Examples:</string>
+    <string name="au7_vidfolders_move">Move files</string>
+    <string name="au7_vidfolders_done">%1$d videos moved</string>
+    <string name="au7_vidfolders_partial">%1$d videos moved, %2$d could not be moved</string>
+    <string name="au7_vidfolders_failed">The files could not be moved</string>
+</resources>

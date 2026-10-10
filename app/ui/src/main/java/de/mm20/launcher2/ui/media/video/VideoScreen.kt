@@ -145,12 +145,21 @@ fun VideoScreen() {
     val movies = remember(filtered, parsedNames) {
         filtered.mapNotNull { item ->
             val parsed = parsedNames[item.id] ?: EpisodeParser.parse(item.fileName)
-            if (parsed.isEpisode) null else Triple(parsed.title.lowercase() + "|" + parsed.year, parsed, item)
+            if (parsed.isEpisode || parsed.year == null) null else Triple(parsed.title.lowercase() + "|" + parsed.year, parsed, item)
         }.groupBy { it.first }.values.map { list ->
             val parsed = list.first().second
             VideoGroup(parsed.title, parsed.year?.toString() ?: context.getString(R.string.au_video_files_count, list.size), list.map { it.third }, series = false, year = parsed.year)
         }.sortedBy { it.title.lowercase() }
     }
+    // neither an episode nor a film with a year in its name: not recognised
+    val others = remember(filtered, parsedNames) {
+        filtered.filter { item ->
+            val parsed = parsedNames[item.id] ?: EpisodeParser.parse(item.fileName)
+            !parsed.isEpisode && parsed.year == null
+        }
+    }
+    var showOrganize by remember { mutableStateOf(false) }
+    if (showOrganize) VideoOrganizeDialog(items) { showOrganize = false; if (it) viewModel.load(context) }
     LaunchedEffect(Unit) {
         de.mm20.launcher2.comms.media.video.trakt.Trakt.refreshWatched(context)
         traktVersion.intValue++
@@ -230,6 +239,9 @@ fun VideoScreen() {
         IconButton(onClick = { showOpen = true }) {
             Icon(painterResource(R.drawable.link_24px), contentDescription = stringResource(R.string.hc_play_from_the_web))
         }
+        IconButton(onClick = { showOrganize = true }) {
+            Icon(painterResource(R.drawable.folder_24px), contentDescription = stringResource(R.string.au7_vidfolders_action))
+        }
         IconButton(onClick = { showServices = true }) {
             Icon(painterResource(R.drawable.settings_24px), contentDescription = stringResource(R.string.hc_video_services))
         }
@@ -303,12 +315,13 @@ fun VideoScreen() {
                     }
                 }
             }
-            VideoList(shown) { index -> openPlayer(context, shown, index) }
+            if (current.series) SeasonedVideoList(shown) { index -> openPlayer(context, shown, index) }
+            else VideoList(shown) { index -> openPlayer(context, shown, index) }
             return@Column
         }
 
-        TabRow(selectedTabIndex = tab) {
-            listOf(R.string.au_video_tab_library, R.string.au_video_tab_movies, R.string.au_video_tab_series, R.string.au_video_tab_folders).forEachIndexed { i, title ->
+        PrimaryScrollableTabRow(selectedTabIndex = tab, edgePadding = 0.dp) {
+            listOf(R.string.au_video_tab_library, R.string.au_video_tab_movies, R.string.au_video_tab_series, R.string.au7_vidfolders_tab_other, R.string.au_video_tab_folders).forEachIndexed { i, title ->
                 Tab(selected = tab == i, onClick = { tab = i }, text = { Text(stringResource(title)) })
             }
         }
@@ -336,6 +349,11 @@ fun VideoScreen() {
             }
             tab == 1 -> PosterGrid(movies, metas, stringResource(R.string.au_video_no_movies)) { group = it }
             tab == 2 -> PosterGrid(series, metas, stringResource(R.string.au_video_no_series)) { group = it }
+            tab == 3 -> if (others.isEmpty()) {
+                Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
+                    Text(stringResource(R.string.au7_vidfolders_no_other), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            } else VideoList(others) { index -> openPlayer(context, others, index) }
             else -> GroupList(folders, "") { group = it }
         }
     }
@@ -372,6 +390,26 @@ private fun GroupList(groups: List<VideoGroup>, emptyText: String, onOpen: (Vide
 private fun VideoList(list: List<VideoItem>, onPlay: (Int) -> Unit) {
     LazyColumn(contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize()) {
         items(list.size, key = { list[it].uri.toString() }) { index -> VideoRow(list[index]) { onPlay(index) } }
+    }
+}
+
+/** The episodes of a series, under a heading per season */
+@Composable
+private fun SeasonedVideoList(list: List<VideoItem>, onPlay: (Int) -> Unit) {
+    val seasons = remember(list) { list.map { EpisodeParser.parse(it.fileName).season } }
+    LazyColumn(contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize()) {
+        list.indices.forEach { index ->
+            if (index == 0 || seasons[index] != seasons[index - 1]) {
+                item(key = "season-$index") {
+                    Text(
+                        stringResource(R.string.au7_vidfolders_season, seasons[index] ?: 0),
+                        style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier.padding(16.dp, 12.dp, 16.dp, 4.dp),
+                    )
+                }
+            }
+            item(key = list[index].uri.toString()) { VideoRow(list[index]) { onPlay(index) } }
+        }
     }
 }
 
