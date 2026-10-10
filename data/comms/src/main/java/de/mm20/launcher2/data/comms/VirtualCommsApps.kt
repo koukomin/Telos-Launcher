@@ -9,7 +9,7 @@ import android.os.Process
 import android.os.UserHandle
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
 import de.mm20.launcher2.search.Application
-import de.mm20.launcher2.search.NullSerializer
+import de.mm20.launcher2.search.VirtualAppSerializer
 import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.TelosAppKeywords
 import de.mm20.launcher2.search.SavableSearchable
@@ -68,7 +68,7 @@ internal class VirtualPhoneApp(context: Context) : Application {
         )
     }
 
-    override fun getSerializer(): SearchableSerializer = NullSerializer()
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_phone_app"
@@ -123,7 +123,7 @@ internal class VirtualMessagesApp(context: Context) : Application {
         )
     }
 
-    override fun getSerializer(): SearchableSerializer = NullSerializer()
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_messages_app"
@@ -177,7 +177,7 @@ internal class VirtualRadioApp(context: Context) : Application {
         )
     }
 
-    override fun getSerializer(): SearchableSerializer = NullSerializer()
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_radio_app"
@@ -231,7 +231,7 @@ internal class VirtualMusicApp(context: Context) : Application {
         )
     }
 
-    override fun getSerializer(): SearchableSerializer = NullSerializer()
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_music_app"
@@ -285,7 +285,7 @@ internal class VirtualVideoApp(context: Context) : Application {
         )
     }
 
-    override fun getSerializer(): SearchableSerializer = NullSerializer()
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_video_app"
@@ -339,7 +339,7 @@ internal class VirtualPhotosApp(context: Context) : Application {
         )
     }
 
-    override fun getSerializer(): SearchableSerializer = NullSerializer()
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_photos_app"
@@ -393,7 +393,7 @@ internal class VirtualFilesApp(context: Context) : Application {
         )
     }
 
-    override fun getSerializer(): SearchableSerializer = NullSerializer()
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_files_app"
@@ -447,7 +447,7 @@ internal class VirtualCalculatorApp(context: Context) : Application {
         )
     }
 
-    override fun getSerializer(): SearchableSerializer = NullSerializer()
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_calculator_app"
@@ -501,7 +501,7 @@ internal class VirtualVoiceRecorderApp(context: Context) : Application {
         )
     }
 
-    override fun getSerializer(): SearchableSerializer = NullSerializer()
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_voice_recorder_app"
@@ -555,7 +555,7 @@ internal class VirtualScreenRecorderApp(context: Context) : Application {
         )
     }
 
-    override fun getSerializer(): SearchableSerializer = NullSerializer()
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_screen_recorder_app"
@@ -609,7 +609,7 @@ internal class VirtualScreenshotApp(context: Context) : Application {
         )
     }
 
-    override fun getSerializer(): SearchableSerializer = NullSerializer()
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_screenshot_app"
@@ -663,7 +663,7 @@ internal class VirtualNotesApp(context: Context) : Application {
         )
     }
 
-    override fun getSerializer(): SearchableSerializer = NullSerializer()
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_notes_app"
@@ -717,7 +717,7 @@ internal class VirtualCalendarApp(context: Context) : Application {
         )
     }
 
-    override fun getSerializer(): SearchableSerializer = NullSerializer()
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_calendar_app"
@@ -771,7 +771,7 @@ internal class VirtualDownloadsApp(context: Context) : Application {
         )
     }
 
-    override fun getSerializer(): SearchableSerializer = NullSerializer()
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_downloads_app"
@@ -825,7 +825,7 @@ internal class VirtualMediaApp(context: Context) : Application {
         )
     }
 
-    override fun getSerializer(): SearchableSerializer = NullSerializer()
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_media_app"
@@ -879,7 +879,7 @@ internal class VirtualNetworkApp(context: Context) : Application {
         )
     }
 
-    override fun getSerializer(): SearchableSerializer = NullSerializer()
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_network_app"

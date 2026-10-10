@@ -9,6 +9,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -156,7 +157,7 @@ fun ClockWidget(
         } else {
             var configure by remember { mutableStateOf(false) }
             Column(modifier = modifier) {
-                Box(
+                BoxWithConstraints(
                     modifier = Modifier
                         .then(if (fillScreenHeight) Modifier.weight(1f) else Modifier)
                         .fillMaxWidth()
@@ -167,6 +168,9 @@ fun ClockWidget(
                         else -> Alignment.BottomCenter
                     }
                 ) {
+                    // Landscape / split screen / desktop windows: when the area is too short for
+                    // the large clock, use the single-line variant of the selected face.
+                    val shrinkClock = shouldUseCompactClock(maxHeight.value)
                     CompositionLocalProvider(
                         LocalContentColor provides contentColor
                     ) {
@@ -184,7 +188,7 @@ fun ClockWidget(
                                         viewModel.launchClockApp(context)
                                     }
                                 ) {
-                                    Clock(clockStyle, false, darkColors)
+                                    Clock(clockStyle, shrinkClock, darkColors)
                                 }
 
                                 if (partProvider != null) {
