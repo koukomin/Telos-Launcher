@@ -14,12 +14,13 @@ The library reads every video Android has indexed, newest added first, with no m
 | **Library** | "Continue watching" (up to 10 videos you stopped part-way) above "All videos", newest first. Each row shows a progress bar and a watched mark |
 | **Movies** | Poster grid of titles detected from file names. Files of the same title and year are grouped |
 | **Series** | Poster grid of shows, recognised from names like `Show.S01E02.mkv` or `Show 1x02`, with "N episodes" |
+| **Other** | Videos recognised as neither a movie (a year in the name) nor an episode, so a file like `Inception.mkv` is listed here |
 | **Folders** | Videos grouped by the folder they are in ("Other" when there is none), with "N videos" |
 
 - **Search videos** filters the current list.
 - Tap a movie, series or folder to open its detail view: a back arrow, the poster, title and description, the button
-  **Add to Trakt watchlist**, and the files. Tap a file to play. A series lists its episodes sorted by season and
-  episode.
+  **Add to Trakt watchlist**, and the files. Tap a file to play. A series lists its episodes under **Season N**
+  headings.
 - Progress marks and watched marks: a video with more than 2 percent watched shows a bar, and a title that Trakt
   reported as watched shows a mark.
 - Without the video permission the screen shows an **Allow** button. "No videos found on this device" and
@@ -170,3 +171,10 @@ See [overview](./#getting-started-and-permissions). The player itself does no ne
 | No sound for a track | Pick another audio track in the options. FFmpeg handles many audio codecs |
 | Picture in picture does not start | Only a playing video enters it, and the phone must support it |
 | The player crashes the launcher | Turn on **Play in a separate process** |
+
+## Organise into Movies and Series folders
+
+The folder icon in the top bar opens an optional action (Android 11 or newer). It lists the recognised films and episodes
+that would move, and only after **Move files** and a second Android permission dialog it moves them within MediaStore,
+from `Movies/` or `Download/` to `Movies/Movies/<Title (Year)>/` and `Movies/Series/<Show>/Season NN/`. Files are never
+deleted or changed, watch progress is kept, and subtitle files next to the videos are not moved. Nothing happens unless you start it.

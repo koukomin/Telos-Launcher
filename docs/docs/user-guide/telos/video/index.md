@@ -78,7 +78,7 @@ One dialog with the sections Posters and descriptions, Subtitles, Torrents, Play
 | Subtitle size, colour, edge, match frame rate, picture size | Playback options | normal, white, outline, on, fit | Remembered between videos |
 | Languages | Video services | `en` | Comma separated codes, most wanted first |
 | Download subtitles automatically | Video services | off | Fetches a subtitle without asking |
-| Trakt | Video services | not connected | Client id and secret, connect, scrobbling switch, sign out |
+| Trakt | Video services > Trakt scrobbling | not connected, scrobbling off | Client id and secret, sign in, scrobbling switch, queue, sign out. See [Trakt scrobbling](trakt.md) |
 | Torrents: Only on Wi-Fi | Video services | on | Refuses to start a torrent on mobile data |
 | Play in a separate process | Video services | off <Badge type="warning" text="experimental" /> | A player crash does not close the launcher |
 

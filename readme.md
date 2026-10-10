@@ -856,7 +856,7 @@ A music player for the songs stored on your phone. It plays local files only: th
 **Scrobbling**
 
 - [Last.fm](https://www.last.fm), [Libre.fm](https://libre.fm) and [ListenBrainz](https://listenbrainz.org), each switched on separately, with an offline queue of up to 500 scrobbles for when you are offline (the queue is sent with the next successful scrobble)
-- A "now playing" message, and a scrobble after half the song or 4 minutes. Secrets are stored encrypted with a Keystore key.
+- A "now playing" message, and a scrobble after half the song or 4 minutes. Separate switches for music and radio; **Telos Radio** scrobbles the current track of stations that announce it (after 60 seconds of listening). A Scrobbling screen (Music top bar, Radio menu, Comms settings > Tools) with a queue count and Clear queue; servers must use https, redirects are not followed. Secrets are stored encrypted with a Keystore key.
 
 **Tag editor**
 
@@ -891,8 +891,9 @@ A video library and player. It plays the videos on your phone, web streams, and 
 - **Peer block lists:** optional IP block lists for torrents (Spamhaus DROP, FireHOL level 1, Naunter BT_BlockLists which its author no longer actively maintains, or your own list by https address or file in p2p, ipfilter.dat, CIDR or netset format), downloaded only after you switch them on, updated automatically (off, daily, weekly) and applied to the one torrent session shared with Telos Downloads. It reduces unwanted peers but does not hide your IP address.
 - **Torrents:** magnet links, `.torrent` addresses and files open in Telos Video from any app or browser. The video downloads in order while it plays, through a local-only address, on Wi-Fi only by default, and everything is deleted when the player closes. Only play content you are allowed to watch: torrent networks show your IP address to other peers.
 - **Subtitles:** external files (SRT, VTT, ASS / SSA, TTML), embedded tracks, and online search or automatic download **without an account** from OpenSubtitles (old REST API, by file hash and by name) and Podnapisi, plus [OpenSubtitles.com](https://www.opensubtitles.com) with your own key as an optional source. Sources can be switched on and off and ordered; results are ranked by your language order and match, converted to UTF-8, and remembered per video. Also for torrents. Subtitle requests follow at most 5 redirects and refuse redirects to loopback, link-local or private addresses unless the first address was one too.
-- **Trakt.tv:** sign in with a device code, scrobbling of movies and episodes, watched marks in the library, add titles to the watchlist (your own Trakt application).
+- **Trakt.tv:** sign in with a device code, scrobbling (off by default) of recognized movies and episodes only, failed stops queued and retried, watched marks in the library, add titles to the watchlist (your own Trakt application).
 - **Separate player process (experimental):** Video services > Play in a separate process, so a crash of the player does not close the launcher.
+- **Video library:** tabs Library, Movies (year in the name), Series (seasons), Other and Folders; an optional, confirmed action to organise recognized files into Movies and Series folders (Android 11+).
 - **Video services dialog:** TMDB key, subtitle sources, OpenSubtitles User-Agent, optional OpenSubtitles.com key and account, network folders, languages, automatic subtitles, torrents Wi-Fi only, separate process, Trakt. Keys and passwords are encrypted with the Android Keystore.
 
 </details>
@@ -1090,7 +1091,7 @@ adapted, the original license is respected.
 | [Nova Video Player](https://github.com/nova-video-player/aos-AVP) | Apache-2.0 | Feature inspiration for Telos Video: playing and scanning videos from network shares, library marks, subtitle search. Re-implemented with Media3, no code and none of its prebuilt binaries were copied |
 | [OpenSubtitles](https://www.opensubtitles.com) and [Podnapisi](https://www.podnapisi.net) | service terms | Subtitle search and download in Telos Video (old OpenSubtitles REST API without an account, the file hash algorithm is the published one) |
 | [Trakt.tv](https://trakt.tv) | API terms | Scrobbling and watched marks in Telos Video |
-| [Last.fm](https://www.last.fm/api), [Libre.fm](https://libre.fm) and [ListenBrainz](https://listenbrainz.org) | open APIs | Scrobbling in Telos Music |
+| [Last.fm](https://www.last.fm/api), [Libre.fm](https://libre.fm) and [ListenBrainz](https://listenbrainz.org) | open APIs | Scrobbling in Telos Music and Telos Radio |
 | [libtorrent4j](https://github.com/aldenml/libtorrent4j) and [libtorrent](https://www.libtorrent.org) | MIT / BSD-3-Clause | The torrent session of Telos: streaming in Telos Video and torrent downloads in Telos Downloads |
 | [StevenBlack/hosts](https://github.com/StevenBlack/hosts), [AdGuard DNS filter](https://github.com/AdguardTeam/AdGuardSDNSFilter), [Peter Lowe's list](https://pgl.yoyo.org/adservers/), [OISD](https://oisd.nl), [EasyList](https://easylist.to), [URLhaus](https://urlhaus.abuse.ch), [Naunter/BT_BlockLists](https://github.com/Naunter/BT_BlockLists), [Spamhaus DROP](https://www.spamhaus.org/drop/), [FireHOL level 1](https://iplists.firehol.org/?ipset=firehol_level1) | MIT, GPL-3.0, see notice, GPL-3.0, GPL-3.0 / CC BY-SA 3.0, abuse.ch terms, Unlicense, free with credit to The Spamhaus Project, mixed (see notice) | Optional block lists for web apps and torrents. Not bundled: downloaded from their own servers only when you switch them on |
 | [TMDB](https://www.themoviedb.org) | API terms | Posters and descriptions in Telos Video (not endorsed or certified by TMDB) |
