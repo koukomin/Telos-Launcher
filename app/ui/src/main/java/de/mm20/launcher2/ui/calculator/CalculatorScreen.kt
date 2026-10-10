@@ -596,6 +596,14 @@ private fun VatPage(vm: CalculatorViewModel, onBack: () -> Unit, onUseInCalculat
     val context = LocalContext.current
     // prefilled once on entry from the calculator result / typed number; the user can edit it freely afterwards
     var amountText by rememberSaveable { mutableStateOf(vm.vatPrefill()?.toDisplay() ?: "") }
+    // Coming from the calculator with a value: show the amount WITH VAT first (Add VAT mode, e.g. 100 -> 124), once on entry
+    var modeApplied by rememberSaveable { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        if (!modeApplied) {
+            modeApplied = true
+            if (amountText.isNotEmpty()) vm.updateVatRemove(false)
+        }
+    }
     val amount = remember(amountText) { CalcEngine.evaluateOrNull(amountText, true) }
     val result = amount?.let { vm.vat(it) }
     val remove = vm.vatRemove
