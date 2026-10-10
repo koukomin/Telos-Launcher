@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">Os títulos das faixas e os artistas são enviados para o serviço que escolher, e apenas enquanto um serviço tiver sessão iniciada e estiver ativado. Nada é enviado antes disso.</string>
+    <string name="au7_scrobble_what">O que registar</string>
+    <string name="au7_scrobble_music_title">Registar música</string>
+    <string name="au7_scrobble_music_summary">Músicas reproduzidas no Telos Music, após metade da música ou 4 minutos</string>
+    <string name="au7_scrobble_radio_title">Registar rádio</string>
+    <string name="au7_scrobble_radio_summary">A faixa atual de uma estação, depois de ouvida durante um minuto. Só funciona com estações que anunciam a faixa.</string>
+    <string name="au7_scrobble_status_active">A enviar para %1$s</string>
+    <string name="au7_scrobble_status_no_service">Nada é enviado: nenhum serviço tem sessão iniciada e ativado</string>
+    <string name="au7_scrobble_status_no_source">Nada é enviado: ative o scrobbling de música ou rádio</string>
+    <string name="au7_scrobble_sign_in">Testar ligação e iniciar sessão</string>
+    <string name="au7_scrobble_lb_ok">O token é válido para %1$s</string>
+    <string name="au7_scrobble_https">O endereço do servidor tem de começar por https:// (http só é permitido para um servidor na sua própria rede)</string>
+    <string name="au7_scrobble_switch_on">Ativado</string>
+    <string name="au7_scrobble_queue">Fila</string>
+    <string name="au7_scrobble_queue_count">%1$d scrobbles à espera de serem enviados</string>
+    <string name="au7_scrobble_queue_empty">Nenhum scrobble em espera</string>
+    <string name="au7_scrobble_queue_clear">Limpar fila</string>
+    <string name="au7_scrobble_queue_cleared">Fila limpa</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm e ListenBrainz para o Telos Music e o Telos Radio</string>
+    <string name="au7_trakt_open_settings">Scrobbling do Trakt</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">O Trakt precisa de uma aplicação sua. Inicie sessão em trakt.tv, abra trakt.tv/oauth/applications, escolha New Application, introduza um nome qualquer e o endereço de redirecionamento urn:ietf:wg:oauth:2.0:oob, guarde-a e introduza aqui o client id e o client secret.</string>
+    <string name="au7_trakt_privacy">Enquanto o scrobbling estiver ativado, os títulos dos filmes e episódios que vê e o ponto em que ficou são enviados para o Trakt. Só são enviados vídeos reconhecidos como filme ou episódio.</string>
+    <string name="au7_trakt_signed_in">Sessão iniciada no Trakt</string>
+    <string name="au7_trakt_switch">Registar no Trakt</string>
+    <string name="au7_trakt_queue">%1$d scrobbles à espera de serem enviados</string>
+    <string name="au7_trakt_clear_queue">Limpar fila</string>
+    <string name="au7_trakt_sign_in">Iniciar sessão</string>
+    <string name="au7_trakt_sign_out">Terminar sessão</string>
+    <string name="au7_trakt_copy">Copiar código</string>
+    <string name="au7_trakt_waiting">A aguardar que introduza o código em %1$s…</string>
+    <string name="au7_vidfolders_tab_other">Outros</string>
+    <string name="au7_vidfolders_no_other">Todos os vídeos são reconhecidos como filmes ou episódios</string>
+    <string name="au7_vidfolders_season">Temporada %1$d</string>
+    <string name="au7_vidfolders_action">Organizar em pastas de Filmes e Séries</string>
+    <string name="au7_vidfolders_title">Organizar ficheiros de vídeo</string>
+    <string name="au7_vidfolders_unsupported">Mover ficheiros requer Android 11 ou posterior.</string>
+    <string name="au7_vidfolders_nothing">Não há nada para organizar. Só são movidos os filmes e episódios reconhecidos nas pastas Movies ou Download.</string>
+    <string name="au7_vidfolders_confirm">O Telos vai mover %1$d filmes para Movies/Movies/Title (Year) e %2$d episódios para Movies/Series/Show/Season NN. Os ficheiros são apenas movidos, nunca apagados nem alterados, e o progresso de visualização é mantido. Os ficheiros de legendas junto dos vídeos não são movidos. O Android pedirá mais uma vez permissão para alterar estes ficheiros. Exemplos:</string>
+    <string name="au7_vidfolders_move">Mover ficheiros</string>
+    <string name="au7_vidfolders_done">%1$d vídeos movidos</string>
+    <string name="au7_vidfolders_partial">%1$d vídeos movidos, %2$d não puderam ser movidos</string>
+    <string name="au7_vidfolders_failed">Não foi possível mover os ficheiros</string>
+</resources>

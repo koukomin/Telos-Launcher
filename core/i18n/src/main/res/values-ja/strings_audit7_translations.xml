@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">曲名とアーティスト名は、選択したサービスにのみ、サービスにサインインしてオンにしている間だけ送信されます。それ以前は何も送信されません。</string>
+    <string name="au7_scrobble_what">スクロブルする対象</string>
+    <string name="au7_scrobble_music_title">音楽をスクロブル</string>
+    <string name="au7_scrobble_music_summary">Telos Music で再生した曲。曲の半分または 4 分再生後</string>
+    <string name="au7_scrobble_radio_title">ラジオをスクロブル</string>
+    <string name="au7_scrobble_radio_summary">局の現在のトラック。1 分間聴いた後。トラック情報を配信する局でのみ動作します。</string>
+    <string name="au7_scrobble_status_active">%1$s に送信中</string>
+    <string name="au7_scrobble_status_no_service">何も送信されません：サインインしてオンにしているサービスがありません</string>
+    <string name="au7_scrobble_status_no_source">何も送信されません：音楽またはラジオのスクロブルをオンにしてください</string>
+    <string name="au7_scrobble_sign_in">接続をテストしてサインイン</string>
+    <string name="au7_scrobble_lb_ok">トークンは %1$s に対して有効です</string>
+    <string name="au7_scrobble_https">サーバーのアドレスは https:// で始める必要があります（http は自分のネットワーク内のサーバーにのみ許可されます）</string>
+    <string name="au7_scrobble_switch_on">オン</string>
+    <string name="au7_scrobble_queue">キュー</string>
+    <string name="au7_scrobble_queue_count">%1$d 件のスクロブルが送信待ちです</string>
+    <string name="au7_scrobble_queue_empty">送信待ちのスクロブルはありません</string>
+    <string name="au7_scrobble_queue_clear">キューを消去</string>
+    <string name="au7_scrobble_queue_cleared">キューを消去しました</string>
+    <string name="au7_scrobble_settings_summary">Telos Music と Telos Radio 向けの Last.fm、Libre.fm、ListenBrainz</string>
+    <string name="au7_trakt_open_settings">Trakt スクロブル</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt には独自のアプリケーションが必要です。trakt.tv にサインインし、trakt.tv/oauth/applications を開いて New Application を選び、任意の名前とリダイレクトアドレス urn:ietf:wg:oauth:2.0:oob を入力して保存し、その client id と client secret をここに入力してください。</string>
+    <string name="au7_trakt_privacy">スクロブルがオンの間、視聴した映画やエピソードのタイトルと視聴の進行状況が Trakt に送信されます。映画またはエピソードとして認識された動画のみ送信されます。</string>
+    <string name="au7_trakt_signed_in">Trakt にサインイン済み</string>
+    <string name="au7_trakt_switch">Trakt にスクロブル</string>
+    <string name="au7_trakt_queue">%1$d 件のスクロブルが送信待ちです</string>
+    <string name="au7_trakt_clear_queue">キューを消去</string>
+    <string name="au7_trakt_sign_in">サインイン</string>
+    <string name="au7_trakt_sign_out">サインアウト</string>
+    <string name="au7_trakt_copy">コードをコピー</string>
+    <string name="au7_trakt_waiting">%1$s でコードを入力するのを待っています…</string>
+    <string name="au7_vidfolders_tab_other">その他</string>
+    <string name="au7_vidfolders_no_other">すべての動画が映画またはエピソードとして認識されています</string>
+    <string name="au7_vidfolders_season">シーズン %1$d</string>
+    <string name="au7_vidfolders_action">Movies と Series フォルダーに整理</string>
+    <string name="au7_vidfolders_title">動画ファイルを整理</string>
+    <string name="au7_vidfolders_unsupported">ファイルの移動には Android 11 以降が必要です。</string>
+    <string name="au7_vidfolders_nothing">整理するものはありません。Movies または Download フォルダー内の認識済みの映画とエピソードのみ移動されます。</string>
+    <string name="au7_vidfolders_confirm">Telos は映画 %1$d 本を Movies/Movies/Title (Year) に、エピソード %2$d 件を Movies/Series/Show/Season NN に移動します。ファイルは移動されるだけで、削除や変更は行われず、視聴の進行状況も保持されます。動画の隣にある字幕ファイルは移動されません。これらのファイルを変更するため、Android がもう一度権限を確認します。例：</string>
+    <string name="au7_vidfolders_move">ファイルを移動</string>
+    <string name="au7_vidfolders_done">%1$d 本の動画を移動しました</string>
+    <string name="au7_vidfolders_partial">%1$d 本の動画を移動しました。%2$d 本は移動できませんでした</string>
+    <string name="au7_vidfolders_failed">ファイルを移動できませんでした</string>
+</resources>

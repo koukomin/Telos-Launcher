@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">Naslovi pjesama i izvođači šalju se odabranoj usluzi, i to samo dok je neka usluga prijavljena i uključena. Prije toga ne šalje se ništa.</string>
+    <string name="au7_scrobble_what">Što scrobblati</string>
+    <string name="au7_scrobble_music_title">Scrobblanje glazbe</string>
+    <string name="au7_scrobble_music_summary">Pjesme reproducirane u Telos Music, nakon polovice pjesme ili 4 minute</string>
+    <string name="au7_scrobble_radio_title">Scrobblanje radija</string>
+    <string name="au7_scrobble_radio_summary">Trenutačna pjesma postaje nakon jedne minute slušanja. Radi samo s postajama koje objavljuju pjesmu.</string>
+    <string name="au7_scrobble_status_active">Slanje usluzi %1$s</string>
+    <string name="au7_scrobble_status_no_service">Ništa se ne šalje: nijedna usluga nije prijavljena i uključena</string>
+    <string name="au7_scrobble_status_no_source">Ništa se ne šalje: uključite scrobblanje glazbe ili radija</string>
+    <string name="au7_scrobble_sign_in">Testiraj vezu i prijavi se</string>
+    <string name="au7_scrobble_lb_ok">Token vrijedi za %1$s</string>
+    <string name="au7_scrobble_https">Adresa poslužitelja mora počinjati s https:// (http je dopušten samo za poslužitelj u vašoj mreži)</string>
+    <string name="au7_scrobble_switch_on">Uključeno</string>
+    <string name="au7_scrobble_queue">Red čekanja</string>
+    <string name="au7_scrobble_queue_count">Scrobbleva koji čekaju slanje: %1$d</string>
+    <string name="au7_scrobble_queue_empty">Nijedan scrobble ne čeka</string>
+    <string name="au7_scrobble_queue_clear">Očisti red čekanja</string>
+    <string name="au7_scrobble_queue_cleared">Red čekanja očišćen</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm i ListenBrainz za Telos Music i Telos Radio</string>
+    <string name="au7_trakt_open_settings">Scrobblanje na Trakt</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt zahtijeva vlastitu aplikaciju. Prijavite se na trakt.tv, otvorite trakt.tv/oauth/applications, odaberite New Application, unesite bilo koji naziv i adresu preusmjeravanja urn:ietf:wg:oauth:2.0:oob, spremite je i ovdje unesite njezin client id i client secret.</string>
+    <string name="au7_trakt_privacy">Dok je scrobblanje uključeno, naslovi filmova i epizoda koje gledate i dokle ste stigli šalju se na Trakt. Šalju se samo videozapisi prepoznati kao film ili epizoda.</string>
+    <string name="au7_trakt_signed_in">Prijavljeni na Trakt</string>
+    <string name="au7_trakt_switch">Scrobblaj na Trakt</string>
+    <string name="au7_trakt_queue">Scrobbleva koji čekaju slanje: %1$d</string>
+    <string name="au7_trakt_clear_queue">Očisti red čekanja</string>
+    <string name="au7_trakt_sign_in">Prijava</string>
+    <string name="au7_trakt_sign_out">Odjava</string>
+    <string name="au7_trakt_copy">Kopiraj kod</string>
+    <string name="au7_trakt_waiting">Čekanje da unesete kod na %1$s…</string>
+    <string name="au7_vidfolders_tab_other">Ostalo</string>
+    <string name="au7_vidfolders_no_other">Svi videozapisi prepoznati su kao filmovi ili epizode</string>
+    <string name="au7_vidfolders_season">Sezona %1$d</string>
+    <string name="au7_vidfolders_action">Organiziraj u mape Movies i Series</string>
+    <string name="au7_vidfolders_title">Organiziraj videodatoteke</string>
+    <string name="au7_vidfolders_unsupported">Premještanje datoteka zahtijeva Android 11 ili noviji.</string>
+    <string name="au7_vidfolders_nothing">Nema se što organizirati. Premještaju se samo prepoznati filmovi i epizode u mapi Movies ili Download.</string>
+    <string name="au7_vidfolders_confirm">Telos će premjestiti %1$d filmova u Movies/Movies/Title (Year) i %2$d epizoda u Movies/Series/Show/Season NN. Datoteke se samo premještaju, nikad brišu ni mijenjaju, a napredak gledanja se čuva. Datoteke titlova uz videozapise ne premještaju se. Android će još jednom zatražiti dopuštenje za izmjenu tih datoteka. Primjeri:</string>
+    <string name="au7_vidfolders_move">Premjesti datoteke</string>
+    <string name="au7_vidfolders_done">Premješteno videozapisa: %1$d</string>
+    <string name="au7_vidfolders_partial">Premješteno videozapisa: %1$d, nije moguće premjestiti: %2$d</string>
+    <string name="au7_vidfolders_failed">Datoteke nije bilo moguće premjestiti</string>
+</resources>

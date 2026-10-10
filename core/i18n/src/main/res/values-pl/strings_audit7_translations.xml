@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">Tytuły utworów i wykonawcy są wysyłani do wybranej usługi, i tylko wtedy, gdy jesteś zalogowany do usługi i jest ona włączona. Wcześniej nic nie jest wysyłane.</string>
+    <string name="au7_scrobble_what">Co scrobblować</string>
+    <string name="au7_scrobble_music_title">Scrobblowanie muzyki</string>
+    <string name="au7_scrobble_music_summary">Utwory odtworzone w Telos Music, po połowie utworu lub 4 minutach</string>
+    <string name="au7_scrobble_radio_title">Scrobblowanie radia</string>
+    <string name="au7_scrobble_radio_summary">Bieżący utwór stacji, po jednej minucie słuchania. Działa tylko ze stacjami, które podają utwór.</string>
+    <string name="au7_scrobble_status_active">Wysyłanie do: %1$s</string>
+    <string name="au7_scrobble_status_no_service">Nic nie jest wysyłane: żadna usługa nie jest zalogowana i włączona</string>
+    <string name="au7_scrobble_status_no_source">Nic nie jest wysyłane: włącz scrobblowanie muzyki lub radia</string>
+    <string name="au7_scrobble_sign_in">Sprawdź połączenie i zaloguj się</string>
+    <string name="au7_scrobble_lb_ok">Token jest ważny dla: %1$s</string>
+    <string name="au7_scrobble_https">Adres serwera musi zaczynać się od https:// (http jest dozwolone tylko dla serwera w Twojej sieci)</string>
+    <string name="au7_scrobble_switch_on">Włączone</string>
+    <string name="au7_scrobble_queue">Kolejka</string>
+    <string name="au7_scrobble_queue_count">Scrobbli oczekujących na wysłanie: %1$d</string>
+    <string name="au7_scrobble_queue_empty">Brak oczekujących scrobbli</string>
+    <string name="au7_scrobble_queue_clear">Wyczyść kolejkę</string>
+    <string name="au7_scrobble_queue_cleared">Kolejka wyczyszczona</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm i ListenBrainz dla Telos Music i Telos Radio</string>
+    <string name="au7_trakt_open_settings">Scrobblowanie Trakt</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt wymaga własnej aplikacji. Zaloguj się na trakt.tv, otwórz trakt.tv/oauth/applications, wybierz New Application, wpisz dowolną nazwę i adres przekierowania urn:ietf:wg:oauth:2.0:oob, zapisz ją i wpisz tutaj jej client id oraz client secret.</string>
+    <string name="au7_trakt_privacy">Gdy scrobblowanie jest włączone, tytuły oglądanych filmów i odcinków oraz postęp oglądania są wysyłane do Trakt. Wysyłane są tylko wideo rozpoznane jako film lub odcinek.</string>
+    <string name="au7_trakt_signed_in">Zalogowano do Trakt</string>
+    <string name="au7_trakt_switch">Scrobbluj do Trakt</string>
+    <string name="au7_trakt_queue">Scrobbli oczekujących na wysłanie: %1$d</string>
+    <string name="au7_trakt_clear_queue">Wyczyść kolejkę</string>
+    <string name="au7_trakt_sign_in">Zaloguj się</string>
+    <string name="au7_trakt_sign_out">Wyloguj się</string>
+    <string name="au7_trakt_copy">Kopiuj kod</string>
+    <string name="au7_trakt_waiting">Oczekiwanie na wpisanie kodu na %1$s…</string>
+    <string name="au7_vidfolders_tab_other">Inne</string>
+    <string name="au7_vidfolders_no_other">Wszystkie wideo zostały rozpoznane jako filmy lub odcinki</string>
+    <string name="au7_vidfolders_season">Sezon %1$d</string>
+    <string name="au7_vidfolders_action">Uporządkuj w folderach Filmy i Seriale</string>
+    <string name="au7_vidfolders_title">Uporządkuj pliki wideo</string>
+    <string name="au7_vidfolders_unsupported">Przenoszenie plików wymaga Androida 11 lub nowszego.</string>
+    <string name="au7_vidfolders_nothing">Nie ma nic do uporządkowania. Przenoszone są tylko rozpoznane filmy i odcinki z folderu Movies lub Download.</string>
+    <string name="au7_vidfolders_confirm">Telos przeniesie filmy (%1$d) do Movies/Movies/Title (Year) oraz odcinki (%2$d) do Movies/Series/Show/Season NN. Pliki są tylko przenoszone, nigdy usuwane ani zmieniane, a postęp oglądania zostaje zachowany. Pliki napisów obok wideo nie są przenoszone. Android jeszcze raz poprosi o zgodę na zmianę tych plików. Przykłady:</string>
+    <string name="au7_vidfolders_move">Przenieś pliki</string>
+    <string name="au7_vidfolders_done">Przeniesiono wideo: %1$d</string>
+    <string name="au7_vidfolders_partial">Przeniesiono wideo: %1$d, nie udało się przenieść: %2$d</string>
+    <string name="au7_vidfolders_failed">Nie udało się przenieść plików</string>
+</resources>

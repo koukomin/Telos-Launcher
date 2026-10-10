@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">曲目標題和藝人會傳送到你選擇的服務，且僅在已登入並開啟某項服務時傳送。在此之前不會傳送任何內容。</string>
+    <string name="au7_scrobble_what">要 Scrobble 的內容</string>
+    <string name="au7_scrobble_music_title">Scrobble 音樂</string>
+    <string name="au7_scrobble_music_summary">在 Telos Music 中播放的歌曲，播放到一半或 4 分鐘後</string>
+    <string name="au7_scrobble_radio_title">Scrobble 廣播</string>
+    <string name="au7_scrobble_radio_summary">電台的目前曲目，收聽一分鐘後。僅適用於會公布曲目的電台。</string>
+    <string name="au7_scrobble_status_active">正在傳送到 %1$s</string>
+    <string name="au7_scrobble_status_no_service">不會傳送任何內容：沒有已登入並開啟的服務</string>
+    <string name="au7_scrobble_status_no_source">不會傳送任何內容：請開啟音樂或廣播 Scrobble</string>
+    <string name="au7_scrobble_sign_in">測試連線並登入</string>
+    <string name="au7_scrobble_lb_ok">權杖對 %1$s 有效</string>
+    <string name="au7_scrobble_https">伺服器位址必須以 https:// 開頭（僅允許對你自己網路中的伺服器使用 http）</string>
+    <string name="au7_scrobble_switch_on">已開啟</string>
+    <string name="au7_scrobble_queue">佇列</string>
+    <string name="au7_scrobble_queue_count">有 %1$d 筆 Scrobble 等待傳送</string>
+    <string name="au7_scrobble_queue_empty">沒有等待傳送的 Scrobble</string>
+    <string name="au7_scrobble_queue_clear">清除佇列</string>
+    <string name="au7_scrobble_queue_cleared">佇列已清除</string>
+    <string name="au7_scrobble_settings_summary">適用於 Telos Music 和 Telos Radio 的 Last.fm、Libre.fm 和 ListenBrainz</string>
+    <string name="au7_trakt_open_settings">Trakt Scrobble</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt 需要你自己的應用程式。請登入 trakt.tv，開啟 trakt.tv/oauth/applications，選擇 New Application，輸入任意名稱和重新導向位址 urn:ietf:wg:oauth:2.0:oob，儲存後在此輸入其 client id 和 client secret。</string>
+    <string name="au7_trakt_privacy">開啟 Scrobble 後，你觀看的電影和影集的標題以及觀看進度會傳送到 Trakt。僅傳送被辨識為電影或影集的影片。</string>
+    <string name="au7_trakt_signed_in">已登入 Trakt</string>
+    <string name="au7_trakt_switch">Scrobble 到 Trakt</string>
+    <string name="au7_trakt_queue">有 %1$d 筆 Scrobble 等待傳送</string>
+    <string name="au7_trakt_clear_queue">清除佇列</string>
+    <string name="au7_trakt_sign_in">登入</string>
+    <string name="au7_trakt_sign_out">登出</string>
+    <string name="au7_trakt_copy">複製代碼</string>
+    <string name="au7_trakt_waiting">正在等待你在 %1$s 輸入代碼…</string>
+    <string name="au7_vidfolders_tab_other">其他</string>
+    <string name="au7_vidfolders_no_other">所有影片均已辨識為電影或影集</string>
+    <string name="au7_vidfolders_season">第 %1$d 季</string>
+    <string name="au7_vidfolders_action">整理到 Movies 和 Series 資料夾</string>
+    <string name="au7_vidfolders_title">整理影片檔案</string>
+    <string name="au7_vidfolders_unsupported">移動檔案需要 Android 11 或更新版本。</string>
+    <string name="au7_vidfolders_nothing">沒有需要整理的內容。僅會移動 Movies 或 Download 資料夾中已辨識的電影和影集。</string>
+    <string name="au7_vidfolders_confirm">Telos 會將 %1$d 部電影移動到 Movies/Movies/Title (Year)，將 %2$d 集影集移動到 Movies/Series/Show/Season NN。檔案只會被移動，絕不會被刪除或修改，並且會保留觀看進度。影片旁邊的字幕檔案不會被移動。Android 會再次要求修改這些檔案的權限。範例：</string>
+    <string name="au7_vidfolders_move">移動檔案</string>
+    <string name="au7_vidfolders_done">已移動 %1$d 部影片</string>
+    <string name="au7_vidfolders_partial">已移動 %1$d 部影片，%2$d 部無法移動</string>
+    <string name="au7_vidfolders_failed">無法移動檔案</string>
+</resources>

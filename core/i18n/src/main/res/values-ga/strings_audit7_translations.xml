@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">Seoltar teidil agus ainmneacha ealaíontóirí chuig an tseirbhís a roghnaíonn tú, agus ach amháin nuair atá seirbhís sínithe isteach agus casta air. Ní sheoltar aon rud roimhe sin.</string>
+    <string name="au7_scrobble_what">Cad atá le scrobláil</string>
+    <string name="au7_scrobble_music_title">Scrobláil ceol</string>
+    <string name="au7_scrobble_music_summary">Amhráin a seinneadh in Telos Music, tar éis leath den amhrán nó 4 nóiméad</string>
+    <string name="au7_scrobble_radio_title">Scrobláil raidió</string>
+    <string name="au7_scrobble_radio_summary">Rian reatha stáisiúin, tar éis é a chloisteáil ar feadh nóiméid. Ní oibríonn sé ach le stáisiúin a fhógraíonn an rian.</string>
+    <string name="au7_scrobble_status_active">Á sheoladh chuig %1$s</string>
+    <string name="au7_scrobble_status_no_service">Ní sheoltar aon rud: níl aon seirbhís sínithe isteach agus casta air</string>
+    <string name="au7_scrobble_status_no_source">Ní sheoltar aon rud: cas air scrobláil ceoil nó raidió</string>
+    <string name="au7_scrobble_sign_in">Triail an nasc agus sínigh isteach</string>
+    <string name="au7_scrobble_lb_ok">Tá an comhartha bailí do %1$s</string>
+    <string name="au7_scrobble_https">Caithfidh seoladh an fhreastalaí tosú le https:// (ní cheadaítear http ach le freastalaí i do líonra féin)</string>
+    <string name="au7_scrobble_switch_on">Casta air</string>
+    <string name="au7_scrobble_queue">Scuaine</string>
+    <string name="au7_scrobble_queue_count">Tá %1$d scrobláil ag fanacht le seoladh</string>
+    <string name="au7_scrobble_queue_empty">Níl aon scrobláil ag fanacht</string>
+    <string name="au7_scrobble_queue_clear">Glan an scuaine</string>
+    <string name="au7_scrobble_queue_cleared">Glanadh an scuaine</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm agus ListenBrainz do Telos Music agus Telos Radio</string>
+    <string name="au7_trakt_open_settings">Scrobláil Trakt</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Teastaíonn feidhmchlár de do chuid féin ó Trakt. Sínigh isteach ar trakt.tv, oscail trakt.tv/oauth/applications, roghnaigh New Application, cuir isteach ainm ar bith agus an seoladh athsheolta urn:ietf:wg:oauth:2.0:oob, sábháil é, agus cuir isteach a client id agus a client secret anseo.</string>
+    <string name="au7_trakt_privacy">Le linn scrobláil, seoltar teidil na scannán agus na n-eipeasóidí a fhéachann tú orthu, agus cé chomh fada is a chuaigh tú, chuig Trakt. Ní sheoltar ach físeáin a aithnítear mar scannán nó eipeasóid.</string>
+    <string name="au7_trakt_signed_in">Sínithe isteach i Trakt</string>
+    <string name="au7_trakt_switch">Scrobláil chuig Trakt</string>
+    <string name="au7_trakt_queue">Tá %1$d scrobláil ag fanacht le seoladh</string>
+    <string name="au7_trakt_clear_queue">Glan an scuaine</string>
+    <string name="au7_trakt_sign_in">Sínigh isteach</string>
+    <string name="au7_trakt_sign_out">Sínigh amach</string>
+    <string name="au7_trakt_copy">Cóipeáil an cód</string>
+    <string name="au7_trakt_waiting">Ag fanacht go gcuirfidh tú isteach an cód ag %1$s…</string>
+    <string name="au7_vidfolders_tab_other">Eile</string>
+    <string name="au7_vidfolders_no_other">Aithnítear gach físeán mar scannán nó eipeasóid</string>
+    <string name="au7_vidfolders_season">Séasúr %1$d</string>
+    <string name="au7_vidfolders_action">Eagraigh i bhfillteáin Movies agus Series</string>
+    <string name="au7_vidfolders_title">Eagraigh comhaid físe</string>
+    <string name="au7_vidfolders_unsupported">Teastaíonn Android 11 nó níos nuaí chun comhaid a bhogadh.</string>
+    <string name="au7_vidfolders_nothing">Níl aon rud le heagrú. Ní bhogtar ach scannáin agus eipeasóidí aitheanta san fhillteán Movies nó Download.</string>
+    <string name="au7_vidfolders_confirm">Bogfaidh Telos %1$d scannán isteach i Movies/Movies/Title (Year) agus %2$d eipeasóid isteach i Movies/Series/Show/Season NN. Ní dhéantar comhaid a bhogadh ach amháin, ní scriostar ná athraítear iad choíche, agus coinnítear dul chun cinn féachana. Ní bhogtar comhaid fotheideal in aice leis na físeáin. Iarrfaidh Android cead uair amháin eile chun na comhaid seo a athrú. Samplaí:</string>
+    <string name="au7_vidfolders_move">Bog comhaid</string>
+    <string name="au7_vidfolders_done">Bogadh %1$d físeán</string>
+    <string name="au7_vidfolders_partial">Bogadh %1$d físeán, níorbh fhéidir %2$d a bhogadh</string>
+    <string name="au7_vidfolders_failed">Níorbh fhéidir na comhaid a bhogadh</string>
+</resources>

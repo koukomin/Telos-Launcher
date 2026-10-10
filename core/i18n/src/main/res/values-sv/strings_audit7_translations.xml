@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">Låttitlar och artister skickas till den tjänst du väljer, och bara medan en tjänst är inloggad och påslagen. Inget skickas innan dess.</string>
+    <string name="au7_scrobble_what">Vad som ska scrobblas</string>
+    <string name="au7_scrobble_music_title">Scrobbla musik</string>
+    <string name="au7_scrobble_music_summary">Låtar som spelats i Telos Music, efter halva låten eller 4 minuter</string>
+    <string name="au7_scrobble_radio_title">Scrobbla radio</string>
+    <string name="au7_scrobble_radio_summary">Stationens aktuella låt, efter att den lyssnats på i en minut. Fungerar bara med stationer som anger låten.</string>
+    <string name="au7_scrobble_status_active">Skickar till %1$s</string>
+    <string name="au7_scrobble_status_no_service">Inget skickas: ingen tjänst är inloggad och påslagen</string>
+    <string name="au7_scrobble_status_no_source">Inget skickas: slå på scrobbling av musik eller radio</string>
+    <string name="au7_scrobble_sign_in">Testa anslutningen och logga in</string>
+    <string name="au7_scrobble_lb_ok">Token är giltig för %1$s</string>
+    <string name="au7_scrobble_https">Serveradressen måste börja med https:// (http tillåts bara för en server i ditt eget nätverk)</string>
+    <string name="au7_scrobble_switch_on">Påslagen</string>
+    <string name="au7_scrobble_queue">Kö</string>
+    <string name="au7_scrobble_queue_count">%1$d scrobblar väntar på att skickas</string>
+    <string name="au7_scrobble_queue_empty">Inga scrobblar väntar</string>
+    <string name="au7_scrobble_queue_clear">Rensa kön</string>
+    <string name="au7_scrobble_queue_cleared">Kön har rensats</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm och ListenBrainz för Telos Music och Telos Radio</string>
+    <string name="au7_trakt_open_settings">Trakt-scrobbling</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt kräver en egen applikation. Logga in på trakt.tv, öppna trakt.tv/oauth/applications, välj New Application, ange valfritt namn och omdirigeringsadressen urn:ietf:wg:oauth:2.0:oob, spara den och ange dess client id och client secret här.</string>
+    <string name="au7_trakt_privacy">Medan scrobbling är påslagen skickas titlarna på de filmer och avsnitt du tittar på, och hur långt du kommit, till Trakt. Bara videor som känns igen som film eller avsnitt skickas.</string>
+    <string name="au7_trakt_signed_in">Inloggad på Trakt</string>
+    <string name="au7_trakt_switch">Scrobbla till Trakt</string>
+    <string name="au7_trakt_queue">%1$d scrobblar väntar på att skickas</string>
+    <string name="au7_trakt_clear_queue">Rensa kön</string>
+    <string name="au7_trakt_sign_in">Logga in</string>
+    <string name="au7_trakt_sign_out">Logga ut</string>
+    <string name="au7_trakt_copy">Kopiera kod</string>
+    <string name="au7_trakt_waiting">Väntar på att du anger koden på %1$s…</string>
+    <string name="au7_vidfolders_tab_other">Övrigt</string>
+    <string name="au7_vidfolders_no_other">Alla videor känns igen som filmer eller avsnitt</string>
+    <string name="au7_vidfolders_season">Säsong %1$d</string>
+    <string name="au7_vidfolders_action">Organisera i mapparna Movies och Series</string>
+    <string name="au7_vidfolders_title">Organisera videofiler</string>
+    <string name="au7_vidfolders_unsupported">Att flytta filer kräver Android 11 eller senare.</string>
+    <string name="au7_vidfolders_nothing">Det finns inget att organisera. Bara igenkända filmer och avsnitt i mappen Movies eller Download flyttas.</string>
+    <string name="au7_vidfolders_confirm">Telos flyttar %1$d filmer till Movies/Movies/Title (Year) och %2$d avsnitt till Movies/Series/Show/Season NN. Filer flyttas bara, raderas eller ändras aldrig, och visningsframsteg bevaras. Undertextfiler bredvid videorna flyttas inte. Android frågar en gång till om tillstånd att ändra dessa filer. Exempel:</string>
+    <string name="au7_vidfolders_move">Flytta filer</string>
+    <string name="au7_vidfolders_done">%1$d videor flyttade</string>
+    <string name="au7_vidfolders_partial">%1$d videor flyttade, %2$d kunde inte flyttas</string>
+    <string name="au7_vidfolders_failed">Filerna kunde inte flyttas</string>
+</resources>

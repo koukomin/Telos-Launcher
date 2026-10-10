@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">Οι τίτλοι κομματιών και οι καλλιτέχνες αποστέλλονται στην υπηρεσία που επιλέγετε, μόνο όσο υπάρχει συνδεδεμένη και ενεργή υπηρεσία. Τίποτα δεν αποστέλλεται πριν από αυτό.</string>
+    <string name="au7_scrobble_what">Τι θα καταγράφεται</string>
+    <string name="au7_scrobble_music_title">Scrobble μουσικής</string>
+    <string name="au7_scrobble_music_summary">Τραγούδια που παίχτηκαν στο Telos Music, μετά το μισό του τραγουδιού ή τα 4 λεπτά</string>
+    <string name="au7_scrobble_radio_title">Scrobble ραδιοφώνου</string>
+    <string name="au7_scrobble_radio_summary">Το τρέχον κομμάτι ενός σταθμού, αφού ακουστεί για ένα λεπτό. Λειτουργεί μόνο με σταθμούς που ανακοινώνουν το κομμάτι.</string>
+    <string name="au7_scrobble_status_active">Αποστολή σε %1$s</string>
+    <string name="au7_scrobble_status_no_service">Δεν αποστέλλεται τίποτα: καμία υπηρεσία δεν είναι συνδεδεμένη και ενεργή</string>
+    <string name="au7_scrobble_status_no_source">Δεν αποστέλλεται τίποτα: ενεργοποιήστε το scrobbling μουσικής ή ραδιοφώνου</string>
+    <string name="au7_scrobble_sign_in">Δοκιμή σύνδεσης και είσοδος</string>
+    <string name="au7_scrobble_lb_ok">Το διακριτικό είναι έγκυρο για %1$s</string>
+    <string name="au7_scrobble_https">Η διεύθυνση του διακομιστή πρέπει να αρχίζει με https:// (το http επιτρέπεται μόνο για διακομιστή στο δίκτυό σας)</string>
+    <string name="au7_scrobble_switch_on">Ενεργό</string>
+    <string name="au7_scrobble_queue">Ουρά</string>
+    <string name="au7_scrobble_queue_count">%1$d scrobbles περιμένουν αποστολή</string>
+    <string name="au7_scrobble_queue_empty">Κανένα scrobble δεν περιμένει</string>
+    <string name="au7_scrobble_queue_clear">Εκκαθάριση ουράς</string>
+    <string name="au7_scrobble_queue_cleared">Η ουρά εκκαθαρίστηκε</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm και ListenBrainz για το Telos Music και το Telos Radio</string>
+    <string name="au7_trakt_open_settings">Scrobbling Trakt</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Το Trakt απαιτεί δική σας εφαρμογή. Συνδεθείτε στο trakt.tv, ανοίξτε το trakt.tv/oauth/applications, επιλέξτε New Application, εισαγάγετε οποιοδήποτε όνομα και τη διεύθυνση ανακατεύθυνσης urn:ietf:wg:oauth:2.0:oob, αποθηκεύστε την και εισαγάγετε εδώ το client id και το client secret της.</string>
+    <string name="au7_trakt_privacy">Όσο το scrobbling είναι ενεργό, οι τίτλοι των ταινιών και των επεισοδίων που παρακολουθείτε και η πρόοδός σας αποστέλλονται στο Trakt. Αποστέλλονται μόνο βίντεο που αναγνωρίζονται ως ταινία ή επεισόδιο.</string>
+    <string name="au7_trakt_signed_in">Συνδεδεμένοι στο Trakt</string>
+    <string name="au7_trakt_switch">Scrobble στο Trakt</string>
+    <string name="au7_trakt_queue">%1$d scrobbles περιμένουν αποστολή</string>
+    <string name="au7_trakt_clear_queue">Εκκαθάριση ουράς</string>
+    <string name="au7_trakt_sign_in">Σύνδεση</string>
+    <string name="au7_trakt_sign_out">Αποσύνδεση</string>
+    <string name="au7_trakt_copy">Αντιγραφή κωδικού</string>
+    <string name="au7_trakt_waiting">Αναμονή μέχρι να εισαγάγετε τον κωδικό στο %1$s…</string>
+    <string name="au7_vidfolders_tab_other">Άλλα</string>
+    <string name="au7_vidfolders_no_other">Όλα τα βίντεο αναγνωρίζονται ως ταινίες ή επεισόδια</string>
+    <string name="au7_vidfolders_season">Σεζόν %1$d</string>
+    <string name="au7_vidfolders_action">Οργάνωση σε φακέλους Ταινιών και Σειρών</string>
+    <string name="au7_vidfolders_title">Οργάνωση αρχείων βίντεο</string>
+    <string name="au7_vidfolders_unsupported">Η μετακίνηση αρχείων απαιτεί Android 11 ή νεότερο.</string>
+    <string name="au7_vidfolders_nothing">Δεν υπάρχει τίποτα προς οργάνωση. Μετακινούνται μόνο αναγνωρισμένες ταινίες και επεισόδια στους φακέλους Movies ή Download.</string>
+    <string name="au7_vidfolders_confirm">Το Telos θα μετακινήσει %1$d ταινίες στο Movies/Movies/Title (Year) και %2$d επεισόδια στο Movies/Series/Show/Season NN. Τα αρχεία μόνο μετακινούνται, δεν διαγράφονται ούτε αλλάζουν, και η πρόοδος παρακολούθησης διατηρείται. Τα αρχεία υποτίτλων δίπλα στα βίντεο δεν μετακινούνται. Το Android θα ζητήσει άλλη μία φορά άδεια για την αλλαγή αυτών των αρχείων. Παραδείγματα:</string>
+    <string name="au7_vidfolders_move">Μετακίνηση αρχείων</string>
+    <string name="au7_vidfolders_done">%1$d βίντεο μετακινήθηκαν</string>
+    <string name="au7_vidfolders_partial">%1$d βίντεο μετακινήθηκαν, %2$d δεν ήταν δυνατό να μετακινηθούν</string>
+    <string name="au7_vidfolders_failed">Δεν ήταν δυνατή η μετακίνηση των αρχείων</string>
+</resources>

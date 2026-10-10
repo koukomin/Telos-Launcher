@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">Nummertitels en artiesten worden verzonden naar de dienst die je kiest, en alleen zolang je bent aangemeld bij een dienst en deze is ingeschakeld. Daarvoor wordt niets verzonden.</string>
+    <string name="au7_scrobble_what">Wat te scrobbelen</string>
+    <string name="au7_scrobble_music_title">Muziek scrobbelen</string>
+    <string name="au7_scrobble_music_summary">Nummers afgespeeld in Telos Music, na de helft van het nummer of 4 minuten</string>
+    <string name="au7_scrobble_radio_title">Radio scrobbelen</string>
+    <string name="au7_scrobble_radio_summary">Het huidige nummer van een zender, nadat het een minuut is beluisterd. Werkt alleen met zenders die het nummer doorgeven.</string>
+    <string name="au7_scrobble_status_active">Verzenden naar %1$s</string>
+    <string name="au7_scrobble_status_no_service">Er wordt niets verzonden: geen dienst is aangemeld en ingeschakeld</string>
+    <string name="au7_scrobble_status_no_source">Er wordt niets verzonden: schakel scrobbelen van muziek of radio in</string>
+    <string name="au7_scrobble_sign_in">Verbinding testen en aanmelden</string>
+    <string name="au7_scrobble_lb_ok">Token is geldig voor %1$s</string>
+    <string name="au7_scrobble_https">Het serveradres moet beginnen met https:// (http is alleen toegestaan voor een server in je eigen netwerk)</string>
+    <string name="au7_scrobble_switch_on">Ingeschakeld</string>
+    <string name="au7_scrobble_queue">Wachtrij</string>
+    <string name="au7_scrobble_queue_count">%1$d scrobbles wachten om te worden verzonden</string>
+    <string name="au7_scrobble_queue_empty">Geen scrobbles in de wachtrij</string>
+    <string name="au7_scrobble_queue_clear">Wachtrij wissen</string>
+    <string name="au7_scrobble_queue_cleared">Wachtrij gewist</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm en ListenBrainz voor Telos Music en Telos Radio</string>
+    <string name="au7_trakt_open_settings">Trakt-scrobbelen</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt heeft een eigen applicatie nodig. Meld je aan op trakt.tv, open trakt.tv/oauth/applications, kies New Application, voer een willekeurige naam en het omleidingsadres urn:ietf:wg:oauth:2.0:oob in, sla op en voer hier de client-id en het client secret in.</string>
+    <string name="au7_trakt_privacy">Zolang scrobbelen is ingeschakeld, worden de titels van de films en afleveringen die je bekijkt en hoever je bent gekomen naar Trakt verzonden. Alleen video’s die als film of aflevering worden herkend, worden verzonden.</string>
+    <string name="au7_trakt_signed_in">Aangemeld bij Trakt</string>
+    <string name="au7_trakt_switch">Scrobbelen naar Trakt</string>
+    <string name="au7_trakt_queue">%1$d scrobbles wachten om te worden verzonden</string>
+    <string name="au7_trakt_clear_queue">Wachtrij wissen</string>
+    <string name="au7_trakt_sign_in">Aanmelden</string>
+    <string name="au7_trakt_sign_out">Afmelden</string>
+    <string name="au7_trakt_copy">Code kopiëren</string>
+    <string name="au7_trakt_waiting">Wachten tot je de code invoert op %1$s…</string>
+    <string name="au7_vidfolders_tab_other">Overig</string>
+    <string name="au7_vidfolders_no_other">Alle video’s worden herkend als films of afleveringen</string>
+    <string name="au7_vidfolders_season">Seizoen %1$d</string>
+    <string name="au7_vidfolders_action">Ordenen in mappen voor Films en Series</string>
+    <string name="au7_vidfolders_title">Videobestanden ordenen</string>
+    <string name="au7_vidfolders_unsupported">Voor het verplaatsen van bestanden is Android 11 of nieuwer nodig.</string>
+    <string name="au7_vidfolders_nothing">Er is niets te ordenen. Alleen herkende films en afleveringen in de map Movies of Download worden verplaatst.</string>
+    <string name="au7_vidfolders_confirm">Telos verplaatst %1$d films naar Movies/Movies/Title (Year) en %2$d afleveringen naar Movies/Series/Show/Season NN. Bestanden worden alleen verplaatst, nooit verwijderd of gewijzigd, en de kijkvoortgang blijft behouden. Ondertitelbestanden naast de video’s worden niet verplaatst. Android vraagt nog eenmaal om toestemming om deze bestanden te wijzigen. Voorbeelden:</string>
+    <string name="au7_vidfolders_move">Bestanden verplaatsen</string>
+    <string name="au7_vidfolders_done">%1$d video’s verplaatst</string>
+    <string name="au7_vidfolders_partial">%1$d video’s verplaatst, %2$d konden niet worden verplaatst</string>
+    <string name="au7_vidfolders_failed">De bestanden konden niet worden verplaatst</string>
+</resources>

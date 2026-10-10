@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">Dainų pavadinimai ir atlikėjai siunčiami jūsų pasirinktai paslaugai, ir tik kai paslauga yra prisijungta ir įjungta. Anksčiau nesiunčiama nieko.</string>
+    <string name="au7_scrobble_what">Ką skroblinti</string>
+    <string name="au7_scrobble_music_title">Skroblinti muziką</string>
+    <string name="au7_scrobble_music_summary">Telos Music grotos dainos, praėjus pusei dainos arba 4 minutėms</string>
+    <string name="au7_scrobble_radio_title">Skroblinti radiją</string>
+    <string name="au7_scrobble_radio_summary">Dabartinė stoties daina, išklausius ją minutę. Veikia tik su stotimis, kurios skelbia dainą.</string>
+    <string name="au7_scrobble_status_active">Siunčiama į %1$s</string>
+    <string name="au7_scrobble_status_no_service">Nieko nesiunčiama: nė viena paslauga neprisijungta ir neįjungta</string>
+    <string name="au7_scrobble_status_no_source">Nieko nesiunčiama: įjunkite muzikos arba radijo skroblinimą</string>
+    <string name="au7_scrobble_sign_in">Išbandyti ryšį ir prisijungti</string>
+    <string name="au7_scrobble_lb_ok">Prieigos raktas galioja vartotojui %1$s</string>
+    <string name="au7_scrobble_https">Serverio adresas turi prasidėti https:// (http leidžiamas tik jūsų tinklo serveriui)</string>
+    <string name="au7_scrobble_switch_on">Įjungta</string>
+    <string name="au7_scrobble_queue">Eilė</string>
+    <string name="au7_scrobble_queue_count">Siuntimo laukia %1$d skroblų</string>
+    <string name="au7_scrobble_queue_empty">Nė vienas skroblas nelaukia</string>
+    <string name="au7_scrobble_queue_clear">Išvalyti eilę</string>
+    <string name="au7_scrobble_queue_cleared">Eilė išvalyta</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm ir ListenBrainz programoms Telos Music ir Telos Radio</string>
+    <string name="au7_trakt_open_settings">Trakt skroblinimas</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt reikia jūsų pačių programos. Prisijunkite trakt.tv, atidarykite trakt.tv/oauth/applications, pasirinkite New Application, įveskite bet kokį pavadinimą ir nukreipimo adresą urn:ietf:wg:oauth:2.0:oob, išsaugokite ir čia įveskite jos client id bei client secret.</string>
+    <string name="au7_trakt_privacy">Kol skroblinimas įjungtas, žiūrimų filmų ir serijų pavadinimai bei tai, kiek peržiūrėjote, siunčiami į Trakt. Siunčiami tik vaizdo įrašai, atpažinti kaip filmas ar serija.</string>
+    <string name="au7_trakt_signed_in">Prisijungta prie Trakt</string>
+    <string name="au7_trakt_switch">Skroblinti į Trakt</string>
+    <string name="au7_trakt_queue">Siuntimo laukia %1$d skroblų</string>
+    <string name="au7_trakt_clear_queue">Išvalyti eilę</string>
+    <string name="au7_trakt_sign_in">Prisijungti</string>
+    <string name="au7_trakt_sign_out">Atsijungti</string>
+    <string name="au7_trakt_copy">Kopijuoti kodą</string>
+    <string name="au7_trakt_waiting">Laukiama, kol įvesite kodą adresu %1$s…</string>
+    <string name="au7_vidfolders_tab_other">Kita</string>
+    <string name="au7_vidfolders_no_other">Visi vaizdo įrašai atpažinti kaip filmai ar serijos</string>
+    <string name="au7_vidfolders_season">%1$d sezonas</string>
+    <string name="au7_vidfolders_action">Tvarkyti į aplankus Movies ir Series</string>
+    <string name="au7_vidfolders_title">Tvarkyti vaizdo failus</string>
+    <string name="au7_vidfolders_unsupported">Failams perkelti reikia Android 11 ar naujesnės versijos.</string>
+    <string name="au7_vidfolders_nothing">Nėra ką tvarkyti. Perkeliami tik atpažinti filmai ir serijos aplanke Movies arba Download.</string>
+    <string name="au7_vidfolders_confirm">Telos perkels %1$d filmų į Movies/Movies/Title (Year) ir %2$d serijų į Movies/Series/Show/Season NN. Failai tik perkeliami, niekada netrinami ir nekeičiami, o žiūrėjimo eiga išsaugoma. Šalia vaizdo įrašų esantys subtitrų failai neperkeliami. Android dar kartą paprašys leidimo keisti šiuos failus. Pavyzdžiai:</string>
+    <string name="au7_vidfolders_move">Perkelti failus</string>
+    <string name="au7_vidfolders_done">Perkelta vaizdo įrašų: %1$d</string>
+    <string name="au7_vidfolders_partial">Perkelta vaizdo įrašų: %1$d, nepavyko perkelti: %2$d</string>
+    <string name="au7_vidfolders_failed">Nepavyko perkelti failų</string>
+</resources>

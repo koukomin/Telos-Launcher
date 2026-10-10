@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">গানের শিরোনাম ও শিল্পীর নাম আপনার বেছে নেওয়া পরিষেবায় পাঠানো হয়, এবং শুধু তখনই যখন কোনো পরিষেবায় সাইন ইন করা আছে ও সেটি চালু আছে। তার আগে কিছুই পাঠানো হয় না।</string>
+    <string name="au7_scrobble_what">কী স্ক্রবল করবেন</string>
+    <string name="au7_scrobble_music_title">সংগীত স্ক্রবল করুন</string>
+    <string name="au7_scrobble_music_summary">Telos Music-এ চালানো গান, গানের অর্ধেক বা ৪ মিনিটের পরে</string>
+    <string name="au7_scrobble_radio_title">রেডিও স্ক্রবল করুন</string>
+    <string name="au7_scrobble_radio_summary">স্টেশনের বর্তমান ট্র্যাক, এক মিনিট শোনার পরে। শুধু সেই স্টেশনগুলোতে কাজ করে যেগুলো ট্র্যাক ঘোষণা করে।</string>
+    <string name="au7_scrobble_status_active">%1$s-এ পাঠানো হচ্ছে</string>
+    <string name="au7_scrobble_status_no_service">কিছুই পাঠানো হচ্ছে না: কোনো পরিষেবায় সাইন ইন করা ও চালু করা নেই</string>
+    <string name="au7_scrobble_status_no_source">কিছুই পাঠানো হচ্ছে না: সংগীত বা রেডিও স্ক্রবলিং চালু করুন</string>
+    <string name="au7_scrobble_sign_in">সংযোগ পরীক্ষা করুন ও সাইন ইন করুন</string>
+    <string name="au7_scrobble_lb_ok">টোকেনটি %1$s-এর জন্য বৈধ</string>
+    <string name="au7_scrobble_https">সার্ভারের ঠিকানা অবশ্যই https:// দিয়ে শুরু হতে হবে (http শুধু আপনার নিজের নেটওয়ার্কের সার্ভারের জন্য অনুমোদিত)</string>
+    <string name="au7_scrobble_switch_on">চালু</string>
+    <string name="au7_scrobble_queue">সারি</string>
+    <string name="au7_scrobble_queue_count">%1$dটি স্ক্রবল পাঠানোর অপেক্ষায় আছে</string>
+    <string name="au7_scrobble_queue_empty">কোনো স্ক্রবল অপেক্ষায় নেই</string>
+    <string name="au7_scrobble_queue_clear">সারি মুছুন</string>
+    <string name="au7_scrobble_queue_cleared">সারি মুছে ফেলা হয়েছে</string>
+    <string name="au7_scrobble_settings_summary">Telos Music ও Telos Radio-এর জন্য Last.fm, Libre.fm এবং ListenBrainz</string>
+    <string name="au7_trakt_open_settings">Trakt স্ক্রবলিং</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt-এর জন্য আপনার নিজের একটি অ্যাপ্লিকেশন দরকার। trakt.tv-তে সাইন ইন করুন, trakt.tv/oauth/applications খুলুন, New Application বেছে নিন, যেকোনো নাম ও রিডাইরেক্ট ঠিকানা urn:ietf:wg:oauth:2.0:oob লিখুন, সংরক্ষণ করুন, এবং এর client id ও client secret এখানে লিখুন।</string>
+    <string name="au7_trakt_privacy">স্ক্রবলিং চালু থাকলে, আপনি যে সিনেমা ও পর্ব দেখেন তাদের শিরোনাম এবং কতদূর দেখেছেন তা Trakt-এ পাঠানো হয়। শুধু সিনেমা বা পর্ব হিসেবে শনাক্ত করা ভিডিও পাঠানো হয়।</string>
+    <string name="au7_trakt_signed_in">Trakt-এ সাইন ইন করা আছে</string>
+    <string name="au7_trakt_switch">Trakt-এ স্ক্রবল করুন</string>
+    <string name="au7_trakt_queue">%1$dটি স্ক্রবল পাঠানোর অপেক্ষায় আছে</string>
+    <string name="au7_trakt_clear_queue">সারি মুছুন</string>
+    <string name="au7_trakt_sign_in">সাইন ইন</string>
+    <string name="au7_trakt_sign_out">সাইন আউট</string>
+    <string name="au7_trakt_copy">কোড কপি করুন</string>
+    <string name="au7_trakt_waiting">আপনি %1$s-এ কোড লেখা পর্যন্ত অপেক্ষা করা হচ্ছে…</string>
+    <string name="au7_vidfolders_tab_other">অন্যান্য</string>
+    <string name="au7_vidfolders_no_other">সব ভিডিও সিনেমা বা পর্ব হিসেবে শনাক্ত করা হয়েছে</string>
+    <string name="au7_vidfolders_season">সিজন %1$d</string>
+    <string name="au7_vidfolders_action">Movies ও Series ফোল্ডারে সাজান</string>
+    <string name="au7_vidfolders_title">ভিডিও ফাইল সাজান</string>
+    <string name="au7_vidfolders_unsupported">ফাইল সরাতে Android 11 বা তার নতুন সংস্করণ লাগে।</string>
+    <string name="au7_vidfolders_nothing">সাজানোর মতো কিছু নেই। শুধু Movies বা Download ফোল্ডারের শনাক্ত করা সিনেমা ও পর্ব সরানো হয়।</string>
+    <string name="au7_vidfolders_confirm">Telos %1$dটি সিনেমা Movies/Movies/Title (Year)-এ এবং %2$dটি পর্ব Movies/Series/Show/Season NN-এ সরাবে। ফাইল শুধু সরানো হয়, কখনো মোছা বা পরিবর্তন করা হয় না, এবং দেখার অগ্রগতি রাখা হয়। ভিডিওর পাশের সাবটাইটেল ফাইল সরানো হয় না। এই ফাইলগুলো পরিবর্তনের জন্য Android আরও একবার অনুমতি চাইবে। উদাহরণ:</string>
+    <string name="au7_vidfolders_move">ফাইল সরান</string>
+    <string name="au7_vidfolders_done">%1$dটি ভিডিও সরানো হয়েছে</string>
+    <string name="au7_vidfolders_partial">%1$dটি ভিডিও সরানো হয়েছে, %2$dটি সরানো যায়নি</string>
+    <string name="au7_vidfolders_failed">ফাইলগুলো সরানো যায়নি</string>
+</resources>

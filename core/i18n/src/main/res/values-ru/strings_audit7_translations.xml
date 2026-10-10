@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">Названия треков и исполнители отправляются выбранному вами сервису, и только пока вход в сервис выполнен и он включён. До этого ничего не отправляется.</string>
+    <string name="au7_scrobble_what">Что скробблить</string>
+    <string name="au7_scrobble_music_title">Скробблинг музыки</string>
+    <string name="au7_scrobble_music_summary">Песни, воспроизведённые в Telos Music, после половины песни или 4 минут</string>
+    <string name="au7_scrobble_radio_title">Скробблинг радио</string>
+    <string name="au7_scrobble_radio_summary">Текущий трек станции после одной минуты прослушивания. Работает только со станциями, которые сообщают название трека.</string>
+    <string name="au7_scrobble_status_active">Отправка в %1$s</string>
+    <string name="au7_scrobble_status_no_service">Ничего не отправляется: ни в один сервис не выполнен вход и не включён</string>
+    <string name="au7_scrobble_status_no_source">Ничего не отправляется: включите скробблинг музыки или радио</string>
+    <string name="au7_scrobble_sign_in">Проверить соединение и войти</string>
+    <string name="au7_scrobble_lb_ok">Токен действителен для %1$s</string>
+    <string name="au7_scrobble_https">Адрес сервера должен начинаться с https:// (http разрешён только для сервера в вашей сети)</string>
+    <string name="au7_scrobble_switch_on">Включено</string>
+    <string name="au7_scrobble_queue">Очередь</string>
+    <string name="au7_scrobble_queue_count">Скробблов в очереди на отправку: %1$d</string>
+    <string name="au7_scrobble_queue_empty">Нет скробблов в очереди</string>
+    <string name="au7_scrobble_queue_clear">Очистить очередь</string>
+    <string name="au7_scrobble_queue_cleared">Очередь очищена</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm и ListenBrainz для Telos Music и Telos Radio</string>
+    <string name="au7_trakt_open_settings">Скробблинг в Trakt</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Для Trakt нужно собственное приложение. Войдите на trakt.tv, откройте trakt.tv/oauth/applications, выберите New Application, введите любое имя и адрес перенаправления urn:ietf:wg:oauth:2.0:oob, сохраните и введите здесь его client id и client secret.</string>
+    <string name="au7_trakt_privacy">Пока скробблинг включён, названия фильмов и серий, которые вы смотрите, и место просмотра отправляются в Trakt. Отправляются только видео, распознанные как фильм или серия.</string>
+    <string name="au7_trakt_signed_in">Вход в Trakt выполнен</string>
+    <string name="au7_trakt_switch">Скробблить в Trakt</string>
+    <string name="au7_trakt_queue">Скробблов в очереди на отправку: %1$d</string>
+    <string name="au7_trakt_clear_queue">Очистить очередь</string>
+    <string name="au7_trakt_sign_in">Войти</string>
+    <string name="au7_trakt_sign_out">Выйти</string>
+    <string name="au7_trakt_copy">Копировать код</string>
+    <string name="au7_trakt_waiting">Ожидание ввода кода на %1$s…</string>
+    <string name="au7_vidfolders_tab_other">Другое</string>
+    <string name="au7_vidfolders_no_other">Все видео распознаны как фильмы или серии</string>
+    <string name="au7_vidfolders_season">Сезон %1$d</string>
+    <string name="au7_vidfolders_action">Разложить по папкам «Фильмы» и «Сериалы»</string>
+    <string name="au7_vidfolders_title">Упорядочить видеофайлы</string>
+    <string name="au7_vidfolders_unsupported">Для перемещения файлов нужен Android 11 или новее.</string>
+    <string name="au7_vidfolders_nothing">Упорядочивать нечего. Перемещаются только распознанные фильмы и серии из папки Movies или Download.</string>
+    <string name="au7_vidfolders_confirm">Telos переместит фильмов: %1$d в Movies/Movies/Title (Year) и серий: %2$d в Movies/Series/Show/Season NN. Файлы только перемещаются, никогда не удаляются и не изменяются, а прогресс просмотра сохраняется. Файлы субтитров рядом с видео не перемещаются. Android ещё раз запросит разрешение на изменение этих файлов. Примеры:</string>
+    <string name="au7_vidfolders_move">Переместить файлы</string>
+    <string name="au7_vidfolders_done">Перемещено видео: %1$d</string>
+    <string name="au7_vidfolders_partial">Перемещено видео: %1$d, не удалось переместить: %2$d</string>
+    <string name="au7_vidfolders_failed">Не удалось переместить файлы</string>
+</resources>

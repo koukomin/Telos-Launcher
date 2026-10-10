@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">Kappaleiden nimet ja esittäjät lähetetään valitsemallesi palvelulle, ja vain kun jokin palvelu on kirjautunut sisään ja kytketty päälle. Mitään ei lähetetä ennen sitä.</string>
+    <string name="au7_scrobble_what">Mitä scrobblataan</string>
+    <string name="au7_scrobble_music_title">Scrobblaa musiikki</string>
+    <string name="au7_scrobble_music_summary">Telos Musicissa soitetut kappaleet, kun kappaleesta on kulunut puolet tai 4 minuuttia</string>
+    <string name="au7_scrobble_radio_title">Scrobblaa radio</string>
+    <string name="au7_scrobble_radio_summary">Aseman nykyinen kappale, kun sitä on kuunneltu minuutin ajan. Toimii vain asemilla, jotka ilmoittavat kappaleen.</string>
+    <string name="au7_scrobble_status_active">Lähetetään palveluun %1$s</string>
+    <string name="au7_scrobble_status_no_service">Mitään ei lähetetä: yhtään palvelua ei ole kirjattu sisään ja kytketty päälle</string>
+    <string name="au7_scrobble_status_no_source">Mitään ei lähetetä: kytke musiikin tai radion scrobblaus päälle</string>
+    <string name="au7_scrobble_sign_in">Testaa yhteys ja kirjaudu sisään</string>
+    <string name="au7_scrobble_lb_ok">Tunnus on voimassa käyttäjälle %1$s</string>
+    <string name="au7_scrobble_https">Palvelimen osoitteen on alettava https://-etuliitteellä (http on sallittu vain oman verkkosi palvelimelle)</string>
+    <string name="au7_scrobble_switch_on">Päällä</string>
+    <string name="au7_scrobble_queue">Jono</string>
+    <string name="au7_scrobble_queue_count">%1$d scrobblea odottaa lähetystä</string>
+    <string name="au7_scrobble_queue_empty">Yksikään scrobble ei odota</string>
+    <string name="au7_scrobble_queue_clear">Tyhjennä jono</string>
+    <string name="au7_scrobble_queue_cleared">Jono tyhjennetty</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm ja ListenBrainz Telos Musicille ja Telos Radiolle</string>
+    <string name="au7_trakt_open_settings">Trakt-scrobblaus</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt vaatii oman sovelluksen. Kirjaudu osoitteessa trakt.tv, avaa trakt.tv/oauth/applications, valitse New Application, anna mikä tahansa nimi ja uudelleenohjausosoite urn:ietf:wg:oauth:2.0:oob, tallenna se ja anna sen client id ja client secret tässä.</string>
+    <string name="au7_trakt_privacy">Kun scrobblaus on päällä, katsomiesi elokuvien ja jaksojen nimet sekä se, kuinka pitkälle pääsit, lähetetään Traktiin. Vain elokuviksi tai jaksoiksi tunnistetut videot lähetetään.</string>
+    <string name="au7_trakt_signed_in">Kirjauduttu Traktiin</string>
+    <string name="au7_trakt_switch">Scrobblaa Traktiin</string>
+    <string name="au7_trakt_queue">%1$d scrobblea odottaa lähetystä</string>
+    <string name="au7_trakt_clear_queue">Tyhjennä jono</string>
+    <string name="au7_trakt_sign_in">Kirjaudu sisään</string>
+    <string name="au7_trakt_sign_out">Kirjaudu ulos</string>
+    <string name="au7_trakt_copy">Kopioi koodi</string>
+    <string name="au7_trakt_waiting">Odotetaan, että syötät koodin osoitteessa %1$s…</string>
+    <string name="au7_vidfolders_tab_other">Muut</string>
+    <string name="au7_vidfolders_no_other">Kaikki videot tunnistetaan elokuviksi tai jaksoiksi</string>
+    <string name="au7_vidfolders_season">Kausi %1$d</string>
+    <string name="au7_vidfolders_action">Järjestä Movies- ja Series-kansioihin</string>
+    <string name="au7_vidfolders_title">Järjestä videotiedostot</string>
+    <string name="au7_vidfolders_unsupported">Tiedostojen siirtäminen vaatii Android 11:n tai uudemman.</string>
+    <string name="au7_vidfolders_nothing">Ei mitään järjestettävää. Vain Movies- tai Download-kansion tunnistetut elokuvat ja jaksot siirretään.</string>
+    <string name="au7_vidfolders_confirm">Telos siirtää %1$d elokuvaa kansioon Movies/Movies/Title (Year) ja %2$d jaksoa kansioon Movies/Series/Show/Season NN. Tiedostot vain siirretään, niitä ei koskaan poisteta tai muuteta, ja katseluedistyminen säilyy. Videoiden vieressä olevia tekstitystiedostoja ei siirretä. Android pyytää vielä kerran lupaa näiden tiedostojen muuttamiseen. Esimerkkejä:</string>
+    <string name="au7_vidfolders_move">Siirrä tiedostot</string>
+    <string name="au7_vidfolders_done">%1$d videota siirretty</string>
+    <string name="au7_vidfolders_partial">%1$d videota siirretty, %2$d ei voitu siirtää</string>
+    <string name="au7_vidfolders_failed">Tiedostoja ei voitu siirtää</string>
+</resources>

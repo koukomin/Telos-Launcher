@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">गानों के शीर्षक और कलाकार आपके चुने हुए सेवा को भेजे जाते हैं, और केवल तभी जब किसी सेवा में साइन इन हो और वह चालू हो। उससे पहले कुछ नहीं भेजा जाता।</string>
+    <string name="au7_scrobble_what">क्या स्क्रॉबल करना है</string>
+    <string name="au7_scrobble_music_title">संगीत स्क्रॉबल करें</string>
+    <string name="au7_scrobble_music_summary">Telos Music में चलाए गए गाने, गाने का आधा हिस्सा या 4 मिनट बाद</string>
+    <string name="au7_scrobble_radio_title">रेडियो स्क्रॉबल करें</string>
+    <string name="au7_scrobble_radio_summary">स्टेशन का मौजूदा ट्रैक, एक मिनट सुनने के बाद। यह केवल उन स्टेशनों के साथ काम करता है जो ट्रैक की घोषणा करते हैं।</string>
+    <string name="au7_scrobble_status_active">%1$s को भेजा जा रहा है</string>
+    <string name="au7_scrobble_status_no_service">कुछ नहीं भेजा जा रहा: कोई सेवा साइन इन और चालू नहीं है</string>
+    <string name="au7_scrobble_status_no_source">कुछ नहीं भेजा जा रहा: संगीत या रेडियो स्क्रॉबलिंग चालू करें</string>
+    <string name="au7_scrobble_sign_in">कनेक्शन जाँचें और साइन इन करें</string>
+    <string name="au7_scrobble_lb_ok">टोकन %1$s के लिए मान्य है</string>
+    <string name="au7_scrobble_https">सर्वर का पता https:// से शुरू होना चाहिए (http केवल आपके अपने नेटवर्क के सर्वर के लिए अनुमत है)</string>
+    <string name="au7_scrobble_switch_on">चालू</string>
+    <string name="au7_scrobble_queue">कतार</string>
+    <string name="au7_scrobble_queue_count">%1$d स्क्रॉबल भेजे जाने की प्रतीक्षा में हैं</string>
+    <string name="au7_scrobble_queue_empty">कोई स्क्रॉबल प्रतीक्षा में नहीं है</string>
+    <string name="au7_scrobble_queue_clear">कतार साफ़ करें</string>
+    <string name="au7_scrobble_queue_cleared">कतार साफ़ की गई</string>
+    <string name="au7_scrobble_settings_summary">Telos Music और Telos Radio के लिए Last.fm, Libre.fm और ListenBrainz</string>
+    <string name="au7_trakt_open_settings">Trakt स्क्रॉबलिंग</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt को आपके अपने ऐप्लिकेशन की ज़रूरत होती है। trakt.tv पर साइन इन करें, trakt.tv/oauth/applications खोलें, New Application चुनें, कोई भी नाम और रीडायरेक्ट पता urn:ietf:wg:oauth:2.0:oob दर्ज करें, उसे सहेजें, और उसका client id और client secret यहाँ दर्ज करें।</string>
+    <string name="au7_trakt_privacy">स्क्रॉबलिंग चालू होने पर, आप जो फ़िल्में और एपिसोड देखते हैं उनके शीर्षक और आप कितना देख चुके हैं, Trakt को भेजे जाते हैं। केवल वही वीडियो भेजे जाते हैं जिन्हें फ़िल्म या एपिसोड के रूप में पहचाना गया हो।</string>
+    <string name="au7_trakt_signed_in">Trakt में साइन इन है</string>
+    <string name="au7_trakt_switch">Trakt पर स्क्रॉबल करें</string>
+    <string name="au7_trakt_queue">%1$d स्क्रॉबल भेजे जाने की प्रतीक्षा में हैं</string>
+    <string name="au7_trakt_clear_queue">कतार साफ़ करें</string>
+    <string name="au7_trakt_sign_in">साइन इन करें</string>
+    <string name="au7_trakt_sign_out">साइन आउट करें</string>
+    <string name="au7_trakt_copy">कोड कॉपी करें</string>
+    <string name="au7_trakt_waiting">%1$s पर आपके कोड दर्ज करने की प्रतीक्षा है…</string>
+    <string name="au7_vidfolders_tab_other">अन्य</string>
+    <string name="au7_vidfolders_no_other">सभी वीडियो फ़िल्म या एपिसोड के रूप में पहचाने गए हैं</string>
+    <string name="au7_vidfolders_season">सीज़न %1$d</string>
+    <string name="au7_vidfolders_action">Movies और Series फ़ोल्डर में व्यवस्थित करें</string>
+    <string name="au7_vidfolders_title">वीडियो फ़ाइलें व्यवस्थित करें</string>
+    <string name="au7_vidfolders_unsupported">फ़ाइलें ले जाने के लिए Android 11 या उसके बाद का संस्करण ज़रूरी है।</string>
+    <string name="au7_vidfolders_nothing">व्यवस्थित करने के लिए कुछ नहीं है। केवल Movies या Download फ़ोल्डर की पहचानी गई फ़िल्में और एपिसोड ही ले जाए जाते हैं।</string>
+    <string name="au7_vidfolders_confirm">Telos %1$d फ़िल्मों को Movies/Movies/Title (Year) में और %2$d एपिसोड को Movies/Series/Show/Season NN में ले जाएगा। फ़ाइलें केवल ले जाई जाती हैं, कभी हटाई या बदली नहीं जातीं, और देखने की प्रगति सुरक्षित रहती है। वीडियो के बगल की सबटाइटल फ़ाइलें नहीं ले जाई जातीं। इन फ़ाइलों को बदलने के लिए Android एक बार फिर अनुमति माँगेगा। उदाहरण:</string>
+    <string name="au7_vidfolders_move">फ़ाइलें ले जाएँ</string>
+    <string name="au7_vidfolders_done">%1$d वीडियो ले जाए गए</string>
+    <string name="au7_vidfolders_partial">%1$d वीडियो ले जाए गए, %2$d नहीं ले जाए जा सके</string>
+    <string name="au7_vidfolders_failed">फ़ाइलें नहीं ले जाई जा सकीं</string>
+</resources>
