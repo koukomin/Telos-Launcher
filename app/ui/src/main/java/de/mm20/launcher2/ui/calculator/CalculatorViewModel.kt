@@ -28,6 +28,19 @@ data class VatResult(val net: BigDecimal, val vat: BigDecimal, val gross: BigDec
 /** One page of the converter: a converter and the units it knows */
 class ConverterCategory(val converter: Converter, val units: List<MeasureUnit>)
 
+/**
+ * Which amount the VAT page starts with: the evaluated [result] of the expression first, else the last number
+ * in the [typed] expression. Null (leave the VAT page as it is) when neither is a usable non-zero number.
+ * The value is rounded to 2 decimals and returned as a plain string with '.' as decimal separator.
+ */
+fun pickVatAmount(result: Double?, typed: String): String? {
+    val value = result?.takeIf { it.isFinite() && it != 0.0 }
+        ?: Regex("[0-9]+(?:[.,][0-9]+)?|[.,][0-9]+").findAll(typed).lastOrNull()?.value
+            ?.replace(',', '.')?.toDoubleOrNull()?.takeIf { it.isFinite() && it != 0.0 }
+        ?: return null
+    return BigDecimal(value).setScale(2, RoundingMode.HALF_UP).stripTrailingZeros().toPlainString()
+}
+
 class CalculatorViewModel(application: Application) : AndroidViewModel(application), KoinComponent {
 
     private val prefs = application.getSharedPreferences("telos_calculator", 0)
@@ -181,6 +194,9 @@ class CalculatorViewModel(application: Application) : AndroidViewModel(applicati
         expression = text.replace('-', '−')
         justEvaluated = true
     }
+
+    /** Amount to prefill the VAT page with, or null when the display is empty or zero */
+    fun vatPrefill(): String? = pickVatAmount(currentValue(), expression)
 
     fun replaceExpression(text: String) {
         expression = text

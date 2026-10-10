@@ -594,7 +594,8 @@ private fun money(value: java.math.BigDecimal): String = String.format(Locale.ge
 @Composable
 private fun VatPage(vm: CalculatorViewModel, onBack: () -> Unit, onUseInCalculator: (String) -> Unit) {
     val context = LocalContext.current
-    var amountText by rememberSaveable { mutableStateOf("") }
+    // prefilled once on entry from the calculator result / typed number; the user can edit it freely afterwards
+    var amountText by rememberSaveable { mutableStateOf(vm.vatPrefill()?.toDisplay() ?: "") }
     val amount = remember(amountText) { CalcEngine.evaluateOrNull(amountText, true) }
     val result = amount?.let { vm.vat(it) }
     val remove = vm.vatRemove

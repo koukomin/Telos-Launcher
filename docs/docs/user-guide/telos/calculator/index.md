@@ -40,6 +40,8 @@ With a keyboard attached you can also type functions: `sin(30)`, `sqrt(16)`, `lo
 
 Open **VAT** with the receipt icon in the top row, next to the scientific toggle and the unit converter, or use the two chips under the display of the calculator.
 
+Tapping the VAT icon while the calculator shows something opens the page with the amount already filled: the result of the calculation if there is one (for example `12+8` gives 20), otherwise the number you typed. With an empty or zero display the page starts empty. You can edit the amount freely.
+
 1. Type the **VAT rate** (24 by default, with chips for 24, 13, 6 and 0). The rate is remembered.
 2. Choose **Add VAT** (the amount you type is without VAT) or **Remove VAT** (the amount you type already includes VAT).
 3. Type the amount. It can be a calculation such as `12.5*3`.
