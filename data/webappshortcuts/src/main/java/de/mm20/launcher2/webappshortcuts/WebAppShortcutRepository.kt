@@ -44,6 +44,7 @@ interface WebAppShortcutRepository : SearchableRepository<WebAppShortcut> {
         customCss: String? = null,
         notificationsEnabled: Boolean = false,
         adBlockMode: WebAppShortcut.AdBlockMode? = null,
+        cookieOptions: WebAppShortcut.CookieOptions? = null,
     ): WebAppShortcut
 
     fun update(
@@ -60,6 +61,7 @@ interface WebAppShortcutRepository : SearchableRepository<WebAppShortcut> {
         customCss: String? = null,
         notificationsEnabled: Boolean = false,
         adBlockMode: WebAppShortcut.AdBlockMode? = null,
+        cookieOptions: WebAppShortcut.CookieOptions? = null,
     ): WebAppShortcut
 
     fun delete(shortcut: WebAppShortcut)
@@ -101,6 +103,7 @@ internal class WebAppShortcutRepositoryImpl(
         customCss: String?,
         notificationsEnabled: Boolean,
         adBlockMode: WebAppShortcut.AdBlockMode?,
+        cookieOptions: WebAppShortcut.CookieOptions?,
     ): WebAppShortcut {
         val shortcut = WebAppShortcutImpl(
             id = UUID.randomUUID().toString(),
@@ -117,6 +120,7 @@ internal class WebAppShortcutRepositoryImpl(
             iconSource = iconSource,
             notificationsEnabled = notificationsEnabled,
             adBlockMode = adBlockMode ?: WebAppShortcut.AdBlockMode.Global,
+            cookieOptions = cookieOptions ?: WebAppShortcut.CookieOptions(),
         )
         savableSearchableRepository.insert(shortcut)
         return shortcut
@@ -136,6 +140,7 @@ internal class WebAppShortcutRepositoryImpl(
         customCss: String?,
         notificationsEnabled: Boolean,
         adBlockMode: WebAppShortcut.AdBlockMode?,
+        cookieOptions: WebAppShortcut.CookieOptions?,
     ): WebAppShortcut {
         shortcut as WebAppShortcutImpl
         val updated = shortcut.copy(
@@ -151,6 +156,7 @@ internal class WebAppShortcutRepositoryImpl(
             iconSource = iconSource,
             notificationsEnabled = notificationsEnabled,
             adBlockMode = adBlockMode ?: shortcut.adBlockMode,
+            cookieOptions = cookieOptions ?: shortcut.cookieOptions,
         )
         savableSearchableRepository.update(updated)
         return updated

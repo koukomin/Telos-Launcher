@@ -41,6 +41,13 @@ private val languagesWithFormOfAddress = setOf(
     "ar", "be", "ca", "cs", "el", "es", "fr", "he", "iw", "hi", "it", "pl", "pt", "ro", "ru", "uk",
 )
 
+/** Languages with translations in core/i18n (values-xx folders), plus English (source language). */
+private val supportedLanguageTags = listOf(
+    "en", "el", "de", "es", "fr", "it", "pt", "pt-BR", "ru", "tr", "nl", "pl", "cs", "sk", "sl",
+    "hr", "bg", "ro", "hu", "da", "sv", "fi", "et", "lv", "lt", "ga", "mt", "uk", "nb",
+    "zh-CN", "zh-TW", "ja", "ko", "ar", "hi", "bn",
+)
+
 @Composable
 fun LocaleSettingsScreen() {
     val context = LocalContext.current
@@ -67,14 +74,12 @@ fun LocaleSettingsScreen() {
     }
 
     // Language picker for Android < 13 (newer versions use the system per-app language settings).
-    // Lists every language the app ships resources for, with its native name.
+    // Lists only the languages Telos ships (the values-xx folders of core/i18n) plus English, with
+    // their native names. AppCompat recreates the activities after setApplicationLocales.
     val systemDefaultLabel = stringResource(R.string.preference_value_system_default)
     val languageItems: List<Pair<String, String>> = remember(systemDefaultLabel) {
         if (isAtLeastApiLevel(33)) return@remember emptyList()
-        val tags = resources.assets.locales
-            .filter { it.isNotBlank() }
-            .distinct()
-        val named = tags.map { tag ->
+        val named = supportedLanguageTags.map { tag ->
             val l = java.util.Locale.forLanguageTag(tag)
             val name = l.getDisplayName(l).replaceFirstChar { c -> c.uppercase(l) }
             name to tag

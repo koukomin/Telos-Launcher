@@ -253,6 +253,24 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
             }
         }
 
+        // The crash reporter switch lives in the launcher settings (so it is part of backups) and
+        // is mirrored into SharedPreferences, which the crash handler reads synchronously. The
+        // mirror follows every change of the setting, including a restored backup.
+        launch(Dispatchers.Default) {
+            runCatching {
+                val uiSettings = get<de.mm20.launcher2.preferences.ui.UiSettings>()
+                val prefs = getSharedPreferences("telos_crash_reporter", MODE_PRIVATE)
+                // One-time migration: a switch turned off before it became a setting is kept off
+                if (!prefs.getBoolean("synced_to_settings", false)) {
+                    if (!prefs.getBoolean("enabled", true)) uiSettings.setCrashReporterEnabled(false)
+                    prefs.edit().putBoolean("synced_to_settings", true).apply()
+                }
+                uiSettings.crashReporterEnabled.collect {
+                    de.mm20.launcher2.crashreporter.CrashReporter.setEnabled(this@LauncherApplication, it)
+                }
+            }
+        }
+
         // enqueueUniquePeriodicWork + KEEP is idempotent, so it's safe to call this on every
         // process start rather than gating it behind a one-time setup step.
         launch(Dispatchers.Default) { runCatching { get<StoreUpdateScheduler>().enable() } }

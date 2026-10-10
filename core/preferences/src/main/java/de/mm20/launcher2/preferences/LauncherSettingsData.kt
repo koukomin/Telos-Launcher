@@ -321,6 +321,8 @@ data class SearchResultsGroup(
     val separateWorkProfile: Boolean = true,
     val rankingWeightFactor: WeightFactor = WeightFactor.Default,
     val hiddenItemsShowButton: Boolean = false,
+    /** Telos Radio: show the favorite stations that match the query as search results */
+    val radioStationsInSearch: Boolean = false,
 )
 
 @Serializable
@@ -340,6 +342,8 @@ data class IconsGroup(
 @Serializable
 data class MiscGroup(
     val easterEgg: Boolean = false,
+    /** Local crash reporter switch. Mirrored into SharedPreferences for the crash handler. */
+    val crashReporterEnabled: Boolean = true,
 )
 
 @Serializable
