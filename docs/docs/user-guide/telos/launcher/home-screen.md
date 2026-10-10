@@ -97,6 +97,8 @@ Behavior of the search itself (keyboard, launch on enter, filters) is described 
 
 ## Clock
 
+On short windows (landscape, split screen, desktop mode: when the clock area is under 300dp) the stacked clock automatically switches to its compact one-line variant, so it never covers the dock or the date. The seconds are not shown in that compact variant.
+
 The clock is always the first element. Its settings open from the clock itself.
 
 | Setting | Default | What it does |

@@ -52,3 +52,13 @@ The TV space plays live channels from the open [iptv-org](https://github.com/ipt
 - **What is on:** the programme guide (XMLTV, refreshed at most every 6 hours) adds a **Now:** line on the channel cards and, in the player, now and next with the times and a progress bar; tap the now line for the description. Without guide data nothing is shown.
 - **Offline channels:** when a channel cannot play, even after trying all its streams and checking for an updated list, the player shows animated TV static (a frozen frame with reduced animations) with "This channel is temporarily offline", **Retry** and **Back**; channels whose streams all fail get a small frozen static on their tile.
 - TV pauses music and radio when it starts. It contacts only `iptv-org.github.io` and the stream hosts.
+
+## TV: favorites, background playback, reconnecting
+
+- **Favorites first:** once you have favorites, the TV home shows them (a large **Continue watching** card, the favorites grid, then recently watched and your own channels). **Browse** has everything else (search, categories, countries, extra sources); the last view you used is remembered. Category names are shown in the app language.
+- **Keep playing in the background:** in the TV overflow menu, **Playback** has the switch (off by default). Off: leaving the app or turning the screen off pauses the channel and you resume it yourself. On: the channel keeps playing with the screen off or after leaving the app, with a notification (logo, name, "Live TV", play/pause, stop), lock-screen and Bluetooth controls, and the video switched off in the background to save data; it stops after 5 minutes without playback. Android 13 and newer asks for the notification permission. The switch is part of the TV backup.
+- **Reconnecting:** when the connection to a stream is lost, Telos Radio, web videos and TV keep trying until it is back (offline they just wait, online they retry after 1, 2, 4, 8 and then every 15 seconds), unless you press stop or pause. For TV, nothing is marked as broken and the offline static is not shown while the device is offline; the failover to other streams applies only while online.
+
+## Telos Media pill
+
+All four spaces are always offered in the pill; hiding the older Telos Music or Radio icons in the Store only removes those icons.
