@@ -59,7 +59,8 @@ from Telos Store.
 | **Telos Network** | VPN based firewall and DNS filter on the Rethink engine: DNS servers, firewall per app and connection type, blocklists with exceptions, WireGuard per app, logs. Off until you turn it on, early version | [Network](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/network/) |
 | **Telos Voice Recorder** | Voice recordings with search, pause and call recordings | [Voice Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/voice-recorder/) |
 | **Telos Calculator** | Standard and scientific calculator, VAT, unit and currency converter, history | [Calculator](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calculator/) |
-| **Telos Viewer** | Gallery, EXIF tools, photo editor, document viewer and editor, PDF tools | [Viewer](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
+| **Telos Photos** | Gallery, EXIF tools, photo editor | [Photos](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
+| **Telos Viewer** | Documents library (categories, search, recents), viewer and editor for PDF, Office, OpenDocument, text and EPUB, PDF tools | [Viewer](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/documents) | [Viewer](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
 | **Telos Media** | Music, Radio, TV and Video in one app: four spaces switched by a pill (the last one is remembered), a shared mini player for music and radio, the older apps open inside it, **TV** with live channels from iptv-org (country, language and category filters, favorites, recents, your own channels and M3U import, automatic failover to another or updated stream, optional extra Greek playlists and a Greek programme guide with now/next, favorites-first home with Browse and localized categories, optional background playback with a notification, automatic reconnecting when the connection is lost, and animated TV static for channels that are offline), music and radio pause while a video plays, Share from long-press menus (songs, albums, videos, radio stations with a Telos import link, contacts, notes, files, documents, installed APKs) | [Media](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/media/) |
 | **Telos Music** | Local library with a Home tab (genre chips, quick picks, shelves), artwork-tinted Now Playing, sharing, lyrics, scrobbling, tag editor | [Music](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/music/) |
 | **Telos Video** | Library, player, web streams, torrents, subtitles, Trakt | [Video](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/video/) |
@@ -78,7 +79,7 @@ from Telos Store.
 | Share target | Accepts |
 | --- | --- |
 | Telos Messages | text, pictures, videos, `sms:` links |
-| Telos Viewer | pictures |
+| Telos Photos | pictures |
 | Telos Video | videos, magnet links, torrent files |
 | Telos Store | `obtainium:` links |
 | Telos Phone | `tel:` links |
@@ -666,7 +667,7 @@ A file manager for your phone, network storages and cloud storages. The layout f
 - Home page with storage overview (free space, SD cards and USB drives), quick access to Downloads, Camera, Pictures, Music, Movies and Documents, favorites, and saved connections
 - Breadcrumb path bar, storage drawer, list and adaptive grid view with picture thumbnails and type colors, sorting by name, date, size or type, folders first, hidden files toggle
 - Search in the current folder (recursive on local storage, up to 300 results)
-- Files open in the right app: pictures in Telos Viewer, videos in Telos Video, PDF, text, code and RTF in the Telos Viewer document viewer, everything else through Android's chooser
+- Files open in the right app: pictures in Telos Photos, videos in Telos Video, PDF, text, code and RTF in the Telos Viewer document viewer, everything else through Android's chooser
 
 **File operations**
 
@@ -806,9 +807,9 @@ A voice recorder with a list, search and a service that keeps recording with the
 
 **Status and limitations:** recordings are in the private storage of Telos and not encrypted (call recordings are), no AI assistant, transcription, markers, trimming or WAV.
 
-### Telos Viewer
+### Telos Photos and Telos Viewer
 
-A photo gallery, a metadata (EXIF) tool, a simple photo editor and a document viewer in one app. No cloud, no account and no network features of its own. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/).
+**Telos Photos** is the photo gallery, a metadata (EXIF) tool and a simple photo editor, and opens on the photos. **Telos Viewer** is a separate app that opens on a **documents library**: category chips (All, Documents, PDF, Spreadsheets, Presentations, E-books, Other), search, sort by date, name or size, a Recent shelf (up to 50 files), "Open file…", and a long-press menu (Share, Open with, Info). It lists documents through the same all-files access as Telos Files and opens a single file without it; "Open with" from other apps keeps working. The two are described together below. No cloud, no account and no network features of its own. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/).
 
 **Gallery and viewer**
 
