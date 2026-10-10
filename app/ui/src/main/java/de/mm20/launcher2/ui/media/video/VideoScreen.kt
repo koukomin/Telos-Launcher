@@ -162,6 +162,7 @@ fun VideoScreen() {
     if (showOrganize) VideoOrganizeDialog(items) { showOrganize = false; if (it) viewModel.load(context) }
     LaunchedEffect(Unit) {
         de.mm20.launcher2.comms.media.video.trakt.Trakt.refreshWatched(context)
+        runCatching { de.mm20.launcher2.comms.media.video.trakt.Trakt.flushQueue(context) }
         traktVersion.intValue++
     }
     var pendingDelete by remember { mutableStateOf<VideoItem?>(null) }

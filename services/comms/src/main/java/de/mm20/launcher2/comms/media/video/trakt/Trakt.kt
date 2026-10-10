@@ -147,7 +147,7 @@ object Trakt {
             }
             when (r.code) {
                 200 -> {
-                    saveTokens(context, JSONObject(r.body))
+                    withContext(Dispatchers.IO) { saveTokens(context, JSONObject(r.body)) }
                     return
                 }
                 400 -> Unit // still waiting
