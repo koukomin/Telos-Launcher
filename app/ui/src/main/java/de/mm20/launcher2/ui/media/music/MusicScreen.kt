@@ -39,6 +39,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.lazy.items
 import de.mm20.launcher2.ui.common.share.ShareActions
 import de.mm20.launcher2.ui.common.share.ShareMenuItem
 import kotlinx.coroutines.Dispatchers
@@ -340,8 +346,9 @@ internal fun ArtOrNote(url: String?, modifier: Modifier) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun NowPlayingScreen(viewModel: MusicViewModel, onClose: () -> Unit) {
+private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack>, reduceAnimations: Boolean, onClose: () -> Unit) {
     val np by viewModel.nowPlaying.collectAsStateWithLifecycle()
     val isPlaying by viewModel.isPlaying.collectAsStateWithLifecycle()
     val position by viewModel.positionMs.collectAsStateWithLifecycle()
@@ -424,73 +431,171 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, onClose: () -> Unit) {
         )
     }
 
-    Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.surface) {
-        Column(
-            Modifier.fillMaxSize().padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+    val upNext by viewModel.upNext.collectAsStateWithLifecycle()
+    val shareFailed = stringResource(R.string.au9_share_failed)
+    var sheet by remember { mutableStateOf(false) }
+    var sheetTab by remember { mutableStateOf(0) }
+    val libTrack = remember(library, current.mediaId) { library.firstOrNull { it.id.toString() == current.mediaId } }
+    val artUrl = libTrack?.albumArtUri?.toString() ?: current.artUri?.toString()
+    val tint by rememberArtworkTint(artUrl, MaterialTheme.colorScheme.primaryContainer, reduceAnimations)
+    val top = tint.darkened(0.30f)
+    val bottom = tint.darkened(0.85f)
+    val white = Color.White
+    val soft = Color.White.copy(alpha = 0.70f)
+    val related = remember(library, current.mediaId) {
+        val t = libTrack
+        if (t == null) emptyList() else {
+            val artistMatch = library.filter { it.id != t.id && t.artist.isNotBlank() && it.artist == t.artist }
+            val genreMatch = library.filter { it.id != t.id && t.genre.isNotBlank() && it.genre == t.genre && it !in artistMatch }
+            (artistMatch + genreMatch).take(40)
+        }
+    }
+
+    if (sheet) {
+        ModalBottomSheet(
+            onDismissRequest = { sheet = false },
+            containerColor = bottom.copy(alpha = 0.96f),
+            contentColor = white,
         ) {
-            Row(Modifier.fillMaxWidth()) {
-                IconButton(onClick = onClose) {
-                    Icon(painterResource(R.drawable.keyboard_arrow_down_24px), contentDescription = stringResource(R.string.hc_close))
+            TabRow(selectedTabIndex = sheetTab, containerColor = Color.Transparent, contentColor = white) {
+                listOf(R.string.au10_music_up_next, R.string.au10_music_lyrics, R.string.au10_music_related).forEachIndexed { i, res ->
+                    Tab(selected = sheetTab == i, onClick = { sheetTab = i }, text = { Text(stringResource(res)) })
                 }
             }
-            if (showLyrics) {
-                LyricsView(lyrics, position, Modifier.fillMaxWidth().weight(1f))
-            } else {
-                ArtOrNote(current.artUri?.toString(), Modifier.fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(24.dp)))
-            }
-            Spacer(Modifier.height(24.dp))
-            Text(current.title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, maxLines = 2, overflow = TextOverflow.Ellipsis)
-            Text(current.artist, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
-            Spacer(Modifier.height(16.dp))
-            Slider(
-                value = dragging ?: (position.toFloat() / duration).coerceIn(0f, 1f),
-                onValueChange = { dragging = it },
-                onValueChangeFinished = {
-                    dragging?.let { viewModel.seekTo((it * duration).toLong()) }
-                    dragging = null
-                },
-            )
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(formatDuration(((dragging ?: (position.toFloat() / duration)) * duration).toLong()), style = MaterialTheme.typography.labelSmall)
-                Text(formatDuration(current.durationMs), style = MaterialTheme.typography.labelSmall)
-            }
-            Spacer(Modifier.height(8.dp))
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = { viewModel.toggleShuffle() }) {
-                    Icon(
-                        painterResource(R.drawable.shuffle_24px), contentDescription = stringResource(R.string.hc_shuffle),
-                        tint = if (shuffle) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-                IconButton(onClick = { viewModel.previous() }) {
-                    Icon(painterResource(R.drawable.skip_previous_24px), contentDescription = stringResource(R.string.hc_previous))
-                }
-                FilledIconButton(onClick = { viewModel.togglePlayPause() }, modifier = Modifier.size(64.dp)) {
-                    Icon(painterResource(if (isPlaying) R.drawable.pause_24px else R.drawable.play_arrow_24px), contentDescription = stringResource(if (isPlaying) R.string.au_music_pause else R.string.hc_play))
-                }
-                IconButton(onClick = { viewModel.next() }) {
-                    Icon(painterResource(R.drawable.skip_next_24px), contentDescription = stringResource(R.string.hc_next))
-                }
-                IconButton(onClick = { viewModel.cycleRepeat() }) {
-                    Icon(
-                        painterResource(if (repeat == Player.REPEAT_MODE_ONE) R.drawable.repeat_one_24px else R.drawable.repeat_24px),
-                        contentDescription = stringResource(R.string.hc_repeat),
-                        tint = if (repeat != Player.REPEAT_MODE_OFF) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
+            Box(Modifier.fillMaxWidth().heightIn(min = 280.dp, max = 460.dp).padding(horizontal = 16.dp)) {
+                when (sheetTab) {
+                    0 -> if (upNext.isEmpty()) {
+                        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { Text(stringResource(R.string.au10_music_queue_empty), color = soft) }
+                    } else LazyColumn(Modifier.fillMaxSize()) {
+                        items(upNext.size) { i ->
+                            val q = upNext[i]
+                            Column(Modifier.fillMaxWidth().clickable { viewModel.playQueueIndex(q.index) }.padding(vertical = 8.dp)) {
+                                Text(q.title, style = MaterialTheme.typography.bodyLarge, color = white, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                Text(q.artist, style = MaterialTheme.typography.bodySmall, color = soft, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            }
+                        }
+                    }
+                    1 -> LyricsView(lyrics, position, Modifier.fillMaxSize(), activeColor = white, inactiveColor = soft)
+                    else -> if (related.isEmpty()) {
+                        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { Text(stringResource(R.string.au10_music_queue_empty), color = soft) }
+                    } else LazyColumn(Modifier.fillMaxSize()) {
+                        items(related.size) { i ->
+                            val r = related[i]
+                            Row(Modifier.fillMaxWidth().clickable { viewModel.play(related, i) }.padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Cover(r, Modifier.size(44.dp).clip(RoundedCornerShape(8.dp)))
+                                Column(Modifier.padding(start = 12.dp)) {
+                                    Text(r.title, style = MaterialTheme.typography.bodyLarge, color = white, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                    Text(r.artist, style = MaterialTheme.typography.bodySmall, color = soft, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
-                TextButton(onClick = { showLyrics = !showLyrics }, enabled = lyrics != null || showLyrics) {
-                    Text(stringResource(if (showLyrics) R.string.au_music_show_cover else R.string.au_music_show_lyrics))
+        }
+    }
+
+    Box(
+        Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(top, bottom)))
+            .background(Color.Black.copy(alpha = 0.25f)),
+    ) {
+        CompositionLocalProvider(LocalContentColor provides white) {
+            Column(
+                Modifier.fillMaxSize().padding(horizontal = 24.dp, vertical = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = onClose) {
+                        Icon(painterResource(R.drawable.keyboard_arrow_down_24px), contentDescription = stringResource(R.string.hc_close))
+                    }
+                    Spacer(Modifier.weight(1f))
+                    IconButton(onClick = { shareAudio(context, scope, current.uri, current.title, shareFailed) }) {
+                        Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.menu_share))
+                    }
                 }
-                TextButton(onClick = { showSleep = true }) {
-                    Text(stringResource(if (sleepEndsAt > 0) R.string.au_music_sleep_active else R.string.au_music_sleep))
+                BoxWithConstraints(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
+                    if (showLyrics) {
+                        LyricsView(lyrics, position, Modifier.fillMaxSize(), activeColor = white, inactiveColor = soft)
+                    } else {
+                        val side = minOf(maxWidth, maxHeight)
+                        Surface(shape = RoundedCornerShape(24.dp), shadowElevation = 16.dp, color = Color.Transparent, modifier = Modifier.size(side)) {
+                            ArtOrNote(artUrl, Modifier.fillMaxSize().clip(RoundedCornerShape(24.dp)))
+                        }
+                    }
                 }
-                TextButton(onClick = {
-                    val uri = current.uri
-                    if (uri != null) scope.launch { editing = viewModel.readTags(context, uri) ?: TagEditor.Tags(title = current.title, artist = current.artist) }
-                }) { Text(stringResource(R.string.hc_edit)) }
+                Spacer(Modifier.height(20.dp))
+                Text(current.title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = white, maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.fillMaxWidth())
+                Text(current.artist, style = MaterialTheme.typography.bodyLarge, color = soft, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.fillMaxWidth())
+                Spacer(Modifier.height(12.dp))
+                Surface(shape = RoundedCornerShape(28.dp), color = Color.White.copy(alpha = 0.10f), contentColor = white, modifier = Modifier.fillMaxWidth()) {
+                    Column(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+                        Slider(
+                            value = dragging ?: (position.toFloat() / duration).coerceIn(0f, 1f),
+                            onValueChange = { dragging = it },
+                            onValueChangeFinished = {
+                                dragging?.let { viewModel.seekTo((it * duration).toLong()) }
+                                dragging = null
+                            },
+                            colors = SliderDefaults.colors(
+                                thumbColor = white,
+                                activeTrackColor = white,
+                                inactiveTrackColor = Color.White.copy(alpha = 0.30f),
+                            ),
+                        )
+                        Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                            Text(formatDuration(((dragging ?: (position.toFloat() / duration)) * duration).toLong()), style = MaterialTheme.typography.labelSmall, color = soft)
+                            Text(formatDuration(current.durationMs), style = MaterialTheme.typography.labelSmall, color = soft)
+                        }
+                        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
+                            IconButton(onClick = { viewModel.toggleShuffle() }) {
+                                Icon(painterResource(R.drawable.shuffle_24px), contentDescription = stringResource(R.string.hc_shuffle), tint = if (shuffle) white else soft)
+                            }
+                            IconButton(onClick = { viewModel.previous() }) {
+                                Icon(painterResource(R.drawable.skip_previous_24px), contentDescription = stringResource(R.string.hc_previous))
+                            }
+                            FilledIconButton(
+                                onClick = { viewModel.togglePlayPause() },
+                                modifier = Modifier.size(72.dp),
+                                shape = CircleShape,
+                                colors = IconButtonDefaults.filledIconButtonColors(containerColor = white, contentColor = bottom),
+                            ) {
+                                Icon(painterResource(if (isPlaying) R.drawable.pause_24px else R.drawable.play_arrow_24px), contentDescription = stringResource(if (isPlaying) R.string.au_music_pause else R.string.hc_play), modifier = Modifier.size(36.dp))
+                            }
+                            IconButton(onClick = { viewModel.next() }) {
+                                Icon(painterResource(R.drawable.skip_next_24px), contentDescription = stringResource(R.string.hc_next))
+                            }
+                            IconButton(onClick = { viewModel.cycleRepeat() }) {
+                                Icon(
+                                    painterResource(if (repeat == Player.REPEAT_MODE_ONE) R.drawable.repeat_one_24px else R.drawable.repeat_24px),
+                                    contentDescription = stringResource(R.string.hc_repeat),
+                                    tint = if (repeat != Player.REPEAT_MODE_OFF) white else soft,
+                                )
+                            }
+                        }
+                    }
+                }
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
+                    TextButton(onClick = { showLyrics = !showLyrics }, enabled = lyrics != null || showLyrics, colors = ButtonDefaults.textButtonColors(contentColor = white, disabledContentColor = soft)) {
+                        Text(stringResource(if (showLyrics) R.string.au_music_show_cover else R.string.au_music_show_lyrics))
+                    }
+                    TextButton(onClick = { showSleep = true }, colors = ButtonDefaults.textButtonColors(contentColor = white)) {
+                        Text(stringResource(if (sleepEndsAt > 0) R.string.au_music_sleep_active else R.string.au_music_sleep))
+                    }
+                    TextButton(onClick = {
+                        val uri = current.uri
+                        if (uri != null) scope.launch { editing = viewModel.readTags(context, uri) ?: TagEditor.Tags(title = current.title, artist = current.artist) }
+                    }, colors = ButtonDefaults.textButtonColors(contentColor = white)) { Text(stringResource(R.string.hc_edit)) }
+                }
+                // handle of the bottom sheet: tap or drag up for up next, lyrics and related
+                val openDescription = stringResource(R.string.au10_music_open_sheet)
+                Box(
+                    Modifier.fillMaxWidth().height(32.dp)
+                        .clickable(onClickLabel = openDescription) { sheet = true }
+                        .draggable(rememberDraggableState { }, Orientation.Vertical, onDragStopped = { v -> if (v < -300f) sheet = true }),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Box(Modifier.size(width = 40.dp, height = 4.dp).clip(CircleShape).background(soft))
+                }
             }
         }
     }
@@ -549,16 +654,22 @@ private fun TagEditDialog(
 }
 
 @Composable
-private fun LyricsView(lyrics: de.mm20.launcher2.comms.media.Lyrics?, positionMs: Long, modifier: Modifier) {
+private fun LyricsView(
+    lyrics: de.mm20.launcher2.comms.media.Lyrics?,
+    positionMs: Long,
+    modifier: Modifier,
+    activeColor: Color = MaterialTheme.colorScheme.primary,
+    inactiveColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+) {
     if (lyrics == null) {
         Box(modifier, contentAlignment = Alignment.Center) {
-            Text(stringResource(R.string.hc_no_lyrics_found), color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(stringResource(R.string.hc_no_lyrics_found), color = inactiveColor)
         }
         return
     }
     if (lyrics.synced.isEmpty()) {
         LazyColumn(modifier) {
-            item { Text(lyrics.plain, style = MaterialTheme.typography.bodyLarge) }
+            item { Text(lyrics.plain, style = MaterialTheme.typography.bodyLarge, color = activeColor) }
         }
         return
     }
@@ -573,8 +684,7 @@ private fun LyricsView(lyrics: de.mm20.launcher2.comms.media.Lyrics?, positionMs
                 text = line.text.ifBlank { "…" },
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = if (index == currentIndex) FontWeight.Bold else FontWeight.Normal,
-                color = if (index == currentIndex) MaterialTheme.colorScheme.primary
-                else MaterialTheme.colorScheme.onSurfaceVariant,
+                color = if (index == currentIndex) activeColor else inactiveColor,
                 modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp),
             )
         }
