@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au16_reconnect_label">Reconnecting…</string>
+    <string name="au16_reconnect_waiting">Waiting for the connection…</string>
+</resources>

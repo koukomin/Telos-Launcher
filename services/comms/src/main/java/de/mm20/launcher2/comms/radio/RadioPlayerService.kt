@@ -21,6 +21,9 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 import de.mm20.launcher2.comms.media.PlaybackCoordinator
+import de.mm20.launcher2.comms.media.StreamReconnector
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import de.mm20.launcher2.comms.repository.RadioRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,10 +43,14 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
     private var lastRecordedTitle = ""
     private var scrobbler: de.mm20.launcher2.comms.scrobble.RadioScrobbleTracker? = null
     private val handler = Handler(Looper.getMainLooper())
+    private var reconnector: StreamReconnector? = null
+    private var reconnectMirror: kotlinx.coroutines.Job? = null
 
     // Nothing keeps the service (and the decoder) alive after the radio has been paused for a while
     private val idleStop: Runnable = Runnable {
-        if (PlaybackCoordinator.isWaiting(this, PlaybackCoordinator.KIND_RADIO)) {
+        if (reconnecting.value) {
+            handler.postDelayed(idleStop, IDLE_STOP_MS) // the connection is being restored, the user did not stop
+        } else if (PlaybackCoordinator.isWaiting(this, PlaybackCoordinator.KIND_RADIO)) {
             handler.postDelayed(idleStop, IDLE_STOP_MS) // a video paused the radio, it may continue
         } else if (player?.isPlaying != true && player?.playWhenReady != true) pauseAllPlayersAndStopSelf()
     }
@@ -68,6 +75,16 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
             .setWakeMode(C.WAKE_MODE_NETWORK)
             .build()
         player = exo
+
+        // keeps trying to reconnect when the stream is lost, until the user pauses or stops
+        val rc = StreamReconnector(this, exo, isLive = { true }).also { it.attach() }
+        reconnector = rc
+        reconnectMirror = scope.launch {
+            kotlinx.coroutines.flow.combine(rc.reconnecting, rc.waiting) { r, w -> r to w }.collect { (r, w) ->
+                _reconnecting.value = r
+                _waiting.value = w
+            }
+        }
 
         exo.addListener(object : Player.Listener {
             override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
@@ -126,6 +143,11 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
         override fun isCommandAvailable(command: Int): Boolean = availableCommands.contains(command)
         override fun hasNextMediaItem(): Boolean = true
         override fun hasPreviousMediaItem(): Boolean = true
+        override fun stop() {
+            reconnector?.cancel()
+            super.stop()
+        }
+
         override fun seekToNext() = skipStation(1)
         override fun seekToNextMediaItem() = skipStation(1)
         override fun seekToPrevious() = skipStation(-1)
@@ -177,6 +199,12 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
         }
     }
 
+    // The notification (and with it the foreground state) stays while the stream is reconnecting,
+    // although the player is idle after the error
+    override fun onUpdateNotification(session: MediaSession, startInForegroundRequired: Boolean) {
+        super.onUpdateNotification(session, startInForegroundRequired || reconnecting.value)
+    }
+
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? {
         return mediaSession
     }
@@ -186,11 +214,24 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
     companion object {
         const val USER_AGENT = "Telos Radio"
         private const val IDLE_STOP_MS = 5 * 60 * 1000L
+
+        private val _reconnecting = MutableStateFlow(false)
+        /** True while the radio stream is lost and being reconnected */
+        val reconnecting: StateFlow<Boolean> = _reconnecting
+
+        private val _waiting = MutableStateFlow(false)
+        /** True while reconnecting and the device is offline */
+        val waiting: StateFlow<Boolean> = _waiting
     }
 
     override fun onDestroy() {
         PlaybackCoordinator.unregister(PlaybackCoordinator.KIND_RADIO)
         handler.removeCallbacks(idleStop)
+        reconnectMirror?.cancel()
+        reconnector?.release()
+        reconnector = null
+        _reconnecting.value = false
+        _waiting.value = false
         scrobbler?.release()
         scrobbler = null
         RadioSleepTimer.onExpire = null

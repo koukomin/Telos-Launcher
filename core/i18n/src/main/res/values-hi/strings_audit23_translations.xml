@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">यह RAR आर्काइव एन्क्रिप्टेड है। Telos RAR आर्काइव पढ़ सकता है, लेकिन उन्हें डिक्रिप्ट नहीं कर सकता। इसके बजाय इसे किसी RAR ऐप से खोलें।</string>
+    <string name="au23_rar_unavailable">Telos का यह बिल्ड RAR आर्काइव नहीं खोल सकता। RAR सपोर्ट केवल मानक संस्करण में शामिल है, F-Droid संस्करण में नहीं।</string>
+    <string name="au23_rp_title">क्लाउड और नेटवर्क स्टोरेज की फ़ाइलों के पूर्वावलोकन</string>
+    <string name="au23_rp_note">चालू होने पर, चित्र दृश्य पूर्वावलोकन बनाने के लिए क्लाउड या नेटवर्क स्टोरेज के चित्र और दस्तावेज़ इस फ़ोन की कैश में (आपके चुने आकार तक) डाउनलोड करता है। केवल दिखाई देने वाली टाइलें लोड होती हैं। एन्क्रिप्टेड वॉल्ट का पूर्वावलोकन कभी नहीं होता। डेटा बचाने और निजता के लिए डिफ़ॉल्ट रूप से बंद है।</string>
+    <string name="au23_rp_max_size">पूर्वावलोकन के लिए अधिकतम फ़ाइल आकार: %1$s</string>
+    <string name="au23_rp_max_size_hint">सुझाव: 2 MB। बड़ी फ़ाइलें रंगीन प्रकार टाइल ही रखती हैं।</string>
+    <string name="au23_rp_wifi_only">केवल Wi-Fi या असीमित नेटवर्क पर</string>
+    <string name="au23_rp_wifi_only_desc">मोबाइल डेटा या अन्य सीमित कनेक्शन पर पूर्वावलोकन डाउनलोड नहीं होंगे।</string>
+    <string name="au23_rp_clear">पूर्वावलोकन कैश साफ़ करें</string>
+    <string name="au23_rp_cache_size">पूर्वावलोकन कैश: %1$s</string>
+</resources>

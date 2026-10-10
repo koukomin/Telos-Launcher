@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Neteisingas slaptažodis</string>
+    <string name="au21_arch_password_needed">Šis archyvas apsaugotas slaptažodžiu</string>
+    <string name="au21_arch_failed">Nepavyko atidaryti archyvo</string>
+    <string name="au21_arch_pw_title">Reikalingas slaptažodis</string>
+    <string name="au21_arch_pw_info">%1$s apsaugotas slaptažodžiu. Įveskite slaptažodį, kad atidarytumėte arba išpakuotumėte. Slaptažodis laikomas tik atmintyje, kol esate archyve, ir niekada nesaugomas.</string>
+    <string name="au21_arch_ok">Gerai</string>
+    <string name="au21_arch_checking">Tikrinama…</string>
+    <string name="au21_arch_show">Rodyti</string>
+    <string name="au21_arch_hide">Slėpti</string>
+    <string name="au21_arch_compress">Suspausti…</string>
+    <string name="au21_arch_format">Formatas</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Slaptažodis (AES-256, neprivalomas)</string>
+    <string name="au21_arch_pw_repeat">Pakartokite slaptažodį</string>
+    <string name="au21_arch_pw_mismatch">Slaptažodžiai nesutampa</string>
+    <string name="au21_arch_zip_note">Naudojant slaptažodį failai šifruojami AES-256. Failų pavadinimai lieka matomi. Telos niekada nenaudoja silpno ZipCrypto šifravimo. Slaptažodžio atkurti neįmanoma, todėl saugokite jį.</string>
+    <string name="au21_arch_no_pw_note">7z ir tar.gz archyvai kuriami be slaptažodžio.</string>
+    <string name="au22_files_open_as_archive">Atidaryti kaip archyvą</string>
+    <string name="au22_files_view_mode">Rodinio režimas</string>
+    <string name="au22_files_view_list">Sąrašas</string>
+    <string name="au22_files_view_grid_medium">Tinklelis, vidutinės peržiūros</string>
+    <string name="au22_files_view_grid_large">Tinklelis, didelės peržiūros</string>
+    <string name="au22_files_gshortcut_failed">Šios „Google Drive“ nuorodos atidaryti negalima</string>
+</resources>

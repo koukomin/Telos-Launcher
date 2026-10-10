@@ -19,9 +19,9 @@ are translated to Greek, in other languages they are English.
 
 ## The calculator page
 
-The top bar has three buttons: the **keypad switch** (the icon with `√ π e =` switches to the scientific keypad,
-the one with `+ − × =` switches back), the **unit converter** (four squares) and the **menu** (three dots) with
-**History**, **VAT** and **Copy result**.
+The top bar has four buttons: the **keypad switch** (the icon with `√ π e =` switches to the scientific keypad,
+the one with `+ − × =` switches back), the **VAT** (a receipt with a percent sign), the **unit converter** (four squares) and the **menu** (three dots) with
+**History** and **Copy result** (VAT has its own icon in the top row).
 
 | Part | Details |
 | --- | --- |
@@ -38,7 +38,9 @@ With a keyboard attached you can also type functions: `sin(30)`, `sqrt(16)`, `lo
 
 ## VAT
 
-Open **VAT** from the menu, or use the two chips under the display of the calculator.
+Open **VAT** with the receipt icon in the top row, next to the scientific toggle and the unit converter, or use the two chips under the display of the calculator.
+
+Tapping the VAT icon while the calculator shows something opens the page with the amount already filled: the result of the calculation if there is one (for example `12+8` gives 20), otherwise the number you typed. With an empty or zero display the page starts empty. You can edit the amount freely.
 
 1. Type the **VAT rate** (24 by default, with chips for 24, 13, 6 and 0). The rate is remembered.
 2. Choose **Add VAT** (the amount you type is without VAT) or **Remove VAT** (the amount you type already includes VAT).

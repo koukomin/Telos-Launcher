@@ -251,7 +251,7 @@
         <activity
             android:name=".media.docs.DocumentViewerActivity"
             android:exported="true"
-            android:icon="@drawable/ic_app_photos_full"
+            android:icon="@drawable/ic_app_viewer_full"
             android:label="Telos Viewer"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
@@ -275,6 +275,11 @@
                 <data android:mimeType="application/msword" />
                 <data android:mimeType="application/vnd.ms-excel" />
                 <data android:mimeType="application/vnd.ms-powerpoint" />
+                <data android:mimeType="application/vnd.google-apps.document" />
+                <data android:mimeType="application/vnd.google-apps.spreadsheet" />
+                <data android:mimeType="application/vnd.google-apps.presentation" />
+                <data android:mimeType="application/vnd.google-apps.drawing" />
+                <data android:mimeType="application/vnd.google-apps.form" />
             </intent-filter>
         </activity>
 
@@ -373,7 +378,7 @@
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboardHidden|uiMode|density|fontScale|locale|layoutDirection"
             android:exported="true"
             android:icon="@drawable/ic_app_photos_full"
-            android:label="Telos Viewer"
+            android:label="Telos Photos"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -480,6 +485,24 @@
             android:process=":player"
             android:supportsPictureInPicture="true"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
+
+        <service
+            android:name=".media.video.VideoPlaybackService"
+            android:exported="true"
+            android:foregroundServiceType="mediaPlayback">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaSessionService" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".media.video.IsolatedVideoPlaybackService"
+            android:exported="true"
+            android:foregroundServiceType="mediaPlayback"
+            android:process=":player">
+            <intent-filter>
+                <action android:name="androidx.media3.session.MediaSessionService" />
+            </intent-filter>
+        </service>
 
         <activity
             android:name=".media.video.VideoPlayerActivity"

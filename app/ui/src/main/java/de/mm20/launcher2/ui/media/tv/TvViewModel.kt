@@ -72,9 +72,17 @@ class TvViewModel : ViewModel(), KoinComponent {
 
     val extraPlaylistsEnabled: StateFlow<Boolean> get() = settings.extraPlaylistsEnabled
     val epgEnabled: StateFlow<Boolean> get() = settings.epgEnabled
+    /** Keep playing with the screen off / when the app is left (foreground service with notification) */
+    val keepInBackground: StateFlow<Boolean> get() = settings.keepPlayingInBackground
+
+    fun setKeepInBackground(enabled: Boolean) = settings.setKeepPlayingInBackground(enabled)
     val epgVersion: StateFlow<Int> get() = epg.epgVersion
-    val greeceSelected: StateFlow<Boolean> = settings.selectedCountries.map { "GR" in it }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, settings.greeceSelected())
+    private val homeHint = MutableStateFlow("")
+
+    /** Greece is selected, or nothing is selected yet and home country / locale / language is Greek (extras apply) */
+    val greeceSelected: StateFlow<Boolean> = combine(settings.selectedCountries, homeHint) { c, h ->
+        TvSettings.greeceActive(c, h, Locale.getDefault())
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, settings.greeceSelected())
 
     private val homeIsGreece = MutableStateFlow(false)
 
@@ -84,9 +92,12 @@ class TvViewModel : ViewModel(), KoinComponent {
 
     init {
         viewModelScope.launch {
-            homeIsGreece.value = withContext(Dispatchers.Default) {
+            val home = withContext(Dispatchers.Default) {
                 runCatching { HomeCountry.resolve(appContext, commsSettings.homeCountry.first()) }.getOrDefault("")
-            }.equals("GR", ignoreCase = true)
+            }
+            settings.homeCountryHint = home
+            homeHint.value = home
+            homeIsGreece.value = TvSettings.defaultCountry(home, Locale.getDefault()) == "GR"
         }
     }
 
@@ -167,14 +178,22 @@ class TvViewModel : ViewModel(), KoinComponent {
 
     /** First use: the home country becomes the selection (when the catalog has channels for it) */
     private suspend fun applyDefaults(idx: TvIndex) {
-        if (settings.selectedCountries.value.isNotEmpty()) return
-        val home = withContext(Dispatchers.Default) {
-            val configured = commsSettings.homeCountry.first()
-            HomeCountry.resolve(appContext, configured)
+        if (settings.selectedCountries.value.isEmpty()) {
+            val resolved = withContext(Dispatchers.Default) {
+                runCatching { HomeCountry.resolve(appContext, commsSettings.homeCountry.first()) }.getOrDefault("")
+            }
+            settings.homeCountryHint = resolved
+            homeHint.value = resolved
+            // home country, else locale country, else Greece for a Greek app language
+            val country = TvSettings.defaultCountry(resolved, Locale.getDefault())
+            // Greece is always selectable: the extra sources add Greek channels the catalog may lack
+            if (country.isNotBlank() && (country == "GR" || idx.byCountry(listOf(country)).isNotEmpty())) {
+                settings.setSelectedCountries(listOf(country))
+            }
         }
-        if (home.isNotBlank() && idx.byCountry(listOf(home)).isNotEmpty()) {
-            settings.setSelectedCountries(listOf(TvIndex.normalizeCountry(home)))
-        }
+        // the extras were requested when TV was opened, possibly before the country was known: load again,
+        // which republishes the index so the lists show the Greek channels without leaving TV
+        runCatching { extraSources.load() }
     }
 
     fun setQuery(q: String) { _query.value = q.take(100) }
@@ -213,7 +232,9 @@ class TvViewModel : ViewModel(), KoinComponent {
             f.countries.isNotEmpty() -> idx.byCountry(f.countries)
             else -> {
                 val appLang = Locale.getDefault().language
-                val home = HomeCountry.resolve(appContext, "")
+                val home = TvSettings.defaultCountry(
+                    runCatching { HomeCountry.resolve(appContext, "") }.getOrDefault(""), Locale.getDefault()
+                )
                 idx.suggestedForLocale(home, appLang, 400).ifEmpty { idx.all }
             }
         }
@@ -222,18 +243,19 @@ class TvViewModel : ViewModel(), KoinComponent {
             else base.filter { c -> c.languages.isEmpty() || c.languages.any { it in langs3 } }
         }
         f.category?.let { k -> base = base.filter { k in it.categories } }
+        // lazy list keys are the channel ids: a duplicate id would crash with "Key was already used"
         TvHome(
-            channels = base,
-            results = if (f.query.isEmpty()) null else idx.search(f.query, 200),
+            channels = base.distinctBy { it.id },
+            results = if (f.query.isEmpty()) null else idx.search(f.query, 200).distinctBy { it.id },
             countrySelected = f.countries.isNotEmpty(),
         )
     }.flowOn(Dispatchers.Default).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), TvHome())
 
-    val favorites: StateFlow<List<TvChannel>> = library.observeFavorites()
+    val favorites: StateFlow<List<TvChannel>> = library.observeFavorites().map { l -> l.distinctBy { it.id } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     val favoriteIds: StateFlow<Set<String>> = favorites.map { l -> l.mapTo(HashSet()) { it.id } as Set<String> }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
-    val recents: StateFlow<List<TvChannel>> = library.observeRecents()
+    val recents: StateFlow<List<TvChannel>> = library.observeRecents().map { l -> l.distinctBy { it.id } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     val customChannels: StateFlow<List<TvChannel>> = library.observeCustomChannels()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">このRARアーカイブは暗号化されています。TelosはRARアーカイブを読み取れますが、復号はできません。代わりにRARアプリで開いてください。</string>
+    <string name="au23_rar_unavailable">このビルドのTelosはRARアーカイブを開けません。RARのサポートは標準版のみに含まれ、F-Droid版には含まれません。</string>
+    <string name="au23_rp_title">クラウドやネットワークストレージ上のファイルのプレビュー</string>
+    <string name="au23_rp_note">オンにすると、画像ビューはクラウドまたはネットワークストレージの画像やドキュメントを、プレビュー描画のためにこの端末のキャッシュへ（選択したサイズまで）ダウンロードします。表示中のタイルのみ読み込まれます。暗号化されたボールトはプレビューされません。データ節約とプライバシーのため、初期設定ではオフです。</string>
+    <string name="au23_rp_max_size">プレビューの最大ファイルサイズ：%1$s</string>
+    <string name="au23_rp_max_size_hint">推奨：2 MB。これより大きいファイルは色付きの種類タイルのままになります。</string>
+    <string name="au23_rp_wifi_only">Wi-Fiまたは従量制でないネットワークのみ</string>
+    <string name="au23_rp_wifi_only_desc">モバイルデータなどの従量制接続ではプレビューをダウンロードしません。</string>
+    <string name="au23_rp_clear">プレビューのキャッシュを消去</string>
+    <string name="au23_rp_cache_size">プレビューのキャッシュ：%1$s</string>
+</resources>

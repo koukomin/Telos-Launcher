@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Nesprávné heslo</string>
+    <string name="au21_arch_password_needed">Tento archiv je chráněn heslem</string>
+    <string name="au21_arch_failed">Archiv se nepodařilo otevřít</string>
+    <string name="au21_arch_pw_title">Vyžadováno heslo</string>
+    <string name="au21_arch_pw_info">%1$s je chráněn heslem. Zadejte heslo pro otevření nebo rozbalení. Heslo se uchovává v paměti jen po dobu, kdy jste v archivu, a nikdy se neukládá.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Kontrola…</string>
+    <string name="au21_arch_show">Zobrazit</string>
+    <string name="au21_arch_hide">Skrýt</string>
+    <string name="au21_arch_compress">Komprimovat…</string>
+    <string name="au21_arch_format">Formát</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Heslo (AES-256, volitelné)</string>
+    <string name="au21_arch_pw_repeat">Zopakujte heslo</string>
+    <string name="au21_arch_pw_mismatch">Hesla se neshodují</string>
+    <string name="au21_arch_zip_note">S heslem se soubory šifrují pomocí AES-256. Názvy souborů zůstávají viditelné. Telos nikdy nepoužívá slabé šifrování ZipCrypto. Heslo nelze obnovit, proto si ho dobře uschovejte.</string>
+    <string name="au21_arch_no_pw_note">Archivy 7z a tar.gz se vytvářejí bez hesla.</string>
+    <string name="au22_files_open_as_archive">Otevřít jako archiv</string>
+    <string name="au22_files_view_mode">Režim zobrazení</string>
+    <string name="au22_files_view_list">Seznam</string>
+    <string name="au22_files_view_grid_medium">Mřížka, střední náhledy</string>
+    <string name="au22_files_view_grid_large">Mřížka, velké náhledy</string>
+    <string name="au22_files_gshortcut_failed">Tuto zkratku Disku Google nelze otevřít</string>
+</resources>

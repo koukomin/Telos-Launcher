@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Bu RAR arşivi şifrelenmiş. Telos RAR arşivlerini okuyabilir ancak şifrelerini çözemez. Bunun yerine bir RAR uygulamasıyla açın.</string>
+    <string name="au23_rar_unavailable">Telos\'un bu sürümü RAR arşivlerini açamaz. RAR desteği yalnızca standart sürümde bulunur, F-Droid sürümünde bulunmaz.</string>
+    <string name="au23_rp_title">Bulut ve ağ depolamalarındaki dosyalar için önizlemeler</string>
+    <string name="au23_rp_note">Açıkken resim görünümü, önizlemelerini çizmek için bir bulut veya ağ depolamasındaki resimleri ve belgeleri bu telefonun önbelleğine (seçtiğiniz boyuta kadar) indirir. Yalnızca görünen kutucuklar yüklenir. Şifrelenmiş kasalar asla önizlenmez. Veri tasarrufu ve gizlilik için varsayılan olarak kapalıdır.</string>
+    <string name="au23_rp_max_size">Önizlemeler için en büyük dosya boyutu: %1$s</string>
+    <string name="au23_rp_max_size_hint">Önerilen: 2 MB. Daha büyük dosyalar renkli tür kutucuğunu korur.</string>
+    <string name="au23_rp_wifi_only">Yalnızca Wi-Fi veya sınırsız ağlarda</string>
+    <string name="au23_rp_wifi_only_desc">Mobil veride veya diğer kotalı bağlantılarda önizleme indirilmez.</string>
+    <string name="au23_rp_clear">Önizleme önbelleğini temizle</string>
+    <string name="au23_rp_cache_size">Önizleme önbelleği: %1$s</string>
+</resources>

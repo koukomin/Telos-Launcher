@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">パスワードが正しくありません</string>
+    <string name="au21_arch_password_needed">このアーカイブはパスワードで保護されています</string>
+    <string name="au21_arch_failed">アーカイブを開けませんでした</string>
+    <string name="au21_arch_pw_title">パスワードが必要です</string>
+    <string name="au21_arch_pw_info">%1$s はパスワードで保護されています。開くか展開するには、パスワードを入力してください。パスワードはアーカイブ内にいる間のみメモリに保持され、保存されることはありません。</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">確認中…</string>
+    <string name="au21_arch_show">表示</string>
+    <string name="au21_arch_hide">非表示</string>
+    <string name="au21_arch_compress">圧縮…</string>
+    <string name="au21_arch_format">形式</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">パスワード（AES-256、任意）</string>
+    <string name="au21_arch_pw_repeat">パスワードを再入力</string>
+    <string name="au21_arch_pw_mismatch">パスワードが一致しません</string>
+    <string name="au21_arch_zip_note">パスワードを設定すると、ファイルは AES-256 で暗号化されます。ファイル名は表示されたままです。Telos は脆弱な ZipCrypto 暗号化を一切使用しません。パスワードは復元できないため、安全に保管してください。</string>
+    <string name="au21_arch_no_pw_note">7z と tar.gz のアーカイブはパスワードなしで作成されます。</string>
+    <string name="au22_files_open_as_archive">アーカイブとして開く</string>
+    <string name="au22_files_view_mode">表示モード</string>
+    <string name="au22_files_view_list">リスト</string>
+    <string name="au22_files_view_grid_medium">グリッド（中プレビュー）</string>
+    <string name="au22_files_view_grid_large">グリッド（大プレビュー）</string>
+    <string name="au22_files_gshortcut_failed">この Google ドライブのショートカットは開けません</string>
+</resources>

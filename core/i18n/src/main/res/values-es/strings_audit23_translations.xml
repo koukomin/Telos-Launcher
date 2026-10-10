@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Este archivo RAR está cifrado. Telos puede leer archivos RAR, pero no puede descifrarlos. Ábrelo con una aplicación RAR.</string>
+    <string name="au23_rar_unavailable">Esta versión de Telos no puede abrir archivos RAR. La compatibilidad con RAR solo se incluye en la versión estándar, no en la versión de F-Droid.</string>
+    <string name="au23_rp_title">Vistas previas de archivos en almacenamientos en la nube y de red</string>
+    <string name="au23_rp_note">Si está activado, la vista de imágenes descarga imágenes y documentos de un almacenamiento en la nube o de red en la caché de este teléfono (hasta el tamaño que elijas) para dibujar su vista previa. Solo se cargan los mosaicos visibles. Las cajas fuertes cifradas nunca se previsualizan. Desactivado por defecto para ahorrar datos y por privacidad.</string>
+    <string name="au23_rp_max_size">Tamaño máximo de archivo para vistas previas: %1$s</string>
+    <string name="au23_rp_max_size_hint">Sugerido: 2 MB. Los archivos más grandes conservan el mosaico de color del tipo.</string>
+    <string name="au23_rp_wifi_only">Solo con Wi-Fi o redes sin límite de datos</string>
+    <string name="au23_rp_wifi_only_desc">Sin descargas de vistas previas con datos móviles u otras conexiones de uso medido.</string>
+    <string name="au23_rp_clear">Borrar caché de vistas previas</string>
+    <string name="au23_rp_cache_size">Caché de vistas previas: %1$s</string>
+</resources>

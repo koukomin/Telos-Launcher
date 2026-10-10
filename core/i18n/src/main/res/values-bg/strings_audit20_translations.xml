@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Документи</string>
+    <string name="au20_viewer_count">%1$d файла</string>
+    <string name="au20_viewer_search_hint">Търсене в документите</string>
+    <string name="au20_viewer_cat_all">Всички</string>
+    <string name="au20_viewer_cat_documents">Документи</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Електронни таблици</string>
+    <string name="au20_viewer_cat_slides">Презентации</string>
+    <string name="au20_viewer_cat_ebooks">Електронни книги</string>
+    <string name="au20_viewer_cat_other">Други</string>
+    <string name="au20_viewer_recent">Скорошни</string>
+    <string name="au20_viewer_clear_recent">Изчистване</string>
+    <string name="au20_viewer_remove_recent">Премахване от скорошните</string>
+    <string name="au20_viewer_open_file">Отваряне на файл…</string>
+    <string name="au20_viewer_sort">Сортиране</string>
+    <string name="au20_viewer_sort_date">Дата</string>
+    <string name="au20_viewer_sort_name">Име</string>
+    <string name="au20_viewer_sort_size">Размер</string>
+    <string name="au20_viewer_share">Споделяне</string>
+    <string name="au20_viewer_open_with">Отваряне с</string>
+    <string name="au20_viewer_info">Информация</string>
+    <string name="au20_viewer_info_name">Име</string>
+    <string name="au20_viewer_info_folder">Папка</string>
+    <string name="au20_viewer_info_type">Тип</string>
+    <string name="au20_viewer_info_size">Размер</string>
+    <string name="au20_viewer_info_date">Дата</string>
+    <string name="au20_viewer_empty_title">Няма намерени документи</string>
+    <string name="au20_viewer_empty_text">Документите на телефона ви се показват тук. Използвайте Отваряне на файл… за файл другаде.</string>
+    <string name="au20_viewer_access_title">Разрешете достъп до файловете си</string>
+    <string name="au20_viewer_access_text">За да покаже документите на телефона ви, Telos Viewer се нуждае от достъп до всички файлове. Можете да отворите и отделен файл без него.</string>
+    <string name="au20_viewer_access_button">Разрешаване на достъп</string>
+    <string name="au20_viewer_share_failed">Споделянето е неуспешно</string>
+    <string name="au20_viewer_open_failed">Няма приложение, което да отвори този файл</string>
+</resources>

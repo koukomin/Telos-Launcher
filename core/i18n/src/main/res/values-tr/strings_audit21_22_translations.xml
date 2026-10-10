@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Yanlış parola</string>
+    <string name="au21_arch_password_needed">Bu arşiv parola korumalı</string>
+    <string name="au21_arch_failed">Arşiv açılamadı</string>
+    <string name="au21_arch_pw_title">Parola gerekli</string>
+    <string name="au21_arch_pw_info">%1$s parola korumalı. Açmak veya çıkarmak için parolasını girin. Parola yalnızca arşivin içindeyken bellekte tutulur ve asla kaydedilmez.</string>
+    <string name="au21_arch_ok">Tamam</string>
+    <string name="au21_arch_checking">Denetleniyor…</string>
+    <string name="au21_arch_show">Göster</string>
+    <string name="au21_arch_hide">Gizle</string>
+    <string name="au21_arch_compress">Sıkıştır…</string>
+    <string name="au21_arch_format">Biçim</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Parola (AES-256, isteğe bağlı)</string>
+    <string name="au21_arch_pw_repeat">Parolayı tekrarla</string>
+    <string name="au21_arch_pw_mismatch">Parolalar eşleşmiyor</string>
+    <string name="au21_arch_zip_note">Parola ile dosyalar AES-256 ile şifrelenir. Dosya adları görünür kalır. Telos zayıf ZipCrypto şifrelemesini asla kullanmaz. Parola kurtarılamaz, bu yüzden güvenli bir yerde saklayın.</string>
+    <string name="au21_arch_no_pw_note">7z ve tar.gz arşivleri parolasız oluşturulur.</string>
+    <string name="au22_files_open_as_archive">Arşiv olarak aç</string>
+    <string name="au22_files_view_mode">Görünüm modu</string>
+    <string name="au22_files_view_list">Liste</string>
+    <string name="au22_files_view_grid_medium">Izgara, orta önizlemeler</string>
+    <string name="au22_files_view_grid_large">Izgara, büyük önizlemeler</string>
+    <string name="au22_files_gshortcut_failed">Bu Google Drive kısayolu açılamıyor</string>
+</resources>

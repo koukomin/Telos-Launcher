@@ -50,7 +50,7 @@ from Telos Store.
 | **The launcher** | Unified search, home screen, widgets, favorites and tags, themes, plugins, desktop mode, overlays, protection | [Launcher](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/) |
 | **Telos Phone** | Dialer, recents, contacts, dual SIM, call recording, call screening, SIP | [Phone](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/phone/) |
 | **Telos Messages** | SMS and MMS conversations, default SMS app, scheduled messages | [Messages](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/messages/) |
-| **Telos Files** | File manager with network and cloud storages, archives, Cryptomator vaults | [Files](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/) |
+| **Telos Files** | File manager with network and cloud storages (optional size-limited previews, off by default), archives, Cryptomator vaults | [Files](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/) |
 | **Telos Screenshot** | Full, partial and scrolling screenshots with an editor | [Screenshot](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/screenshot/) |
 | **Telos Screen Recorder** | Screen to video with microphone, pause and countdown | [Screen Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/screen-recorder/) |
 | **Telos Notes** | Notes with labels, sync with a Markdown folder or Nextcloud Notes, Keep and Evernote import | [Notes](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/notes/) |
@@ -59,8 +59,9 @@ from Telos Store.
 | **Telos Network** | VPN based firewall and DNS filter on the Rethink engine: DNS servers, firewall per app and connection type, blocklists with exceptions, WireGuard per app, logs. Off until you turn it on, early version | [Network](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/network/) |
 | **Telos Voice Recorder** | Voice recordings with search, pause and call recordings | [Voice Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/voice-recorder/) |
 | **Telos Calculator** | Standard and scientific calculator, VAT, unit and currency converter, history | [Calculator](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calculator/) |
-| **Telos Viewer** | Gallery, EXIF tools, photo editor, document viewer and editor, PDF tools | [Viewer](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
-| **Telos Media** | Music, Radio, TV and Video in one app: four spaces switched by a pill (the last one is remembered), a shared mini player for music and radio, the older apps open inside it, **TV** with live channels from iptv-org (country, language and category filters, favorites, recents, your own channels and M3U import, automatic failover to another or updated stream, optional extra Greek playlists and a Greek programme guide with now/next, and animated TV static for channels that are offline), music and radio pause while a video plays, Share from long-press menus (songs, albums, videos, radio stations with a Telos import link, contacts, notes, files, documents, installed APKs) | [Media](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/media/) |
+| **Telos Photos** | Gallery, EXIF tools, photo editor | [Photos](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
+| **Telos Viewer** | Documents library (categories, search, recents), viewer and editor for PDF, Office, OpenDocument, text and EPUB, PDF tools | [Viewer](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/documents) | [Viewer](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
+| **Telos Media** | Music, Radio, TV and Video in one app: four spaces switched by a pill (the last one is remembered), a shared mini player for music and radio, the older apps open inside it, **TV** with live channels from iptv-org (country, language and category filters, favorites, recents, your own channels and M3U import, automatic failover to another or updated stream, optional extra Greek playlists and a Greek programme guide with now/next, favorites-first home with Browse and localized categories, optional background playback with a notification, automatic reconnecting when the connection is lost, and animated TV static for channels that are offline), music and radio pause while a video plays, Share from long-press menus (songs, albums, videos, radio stations with a Telos import link, contacts, notes, files, documents, installed APKs) | [Media](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/media/) |
 | **Telos Music** | Local library with a Home tab (genre chips, quick picks, shelves), artwork-tinted Now Playing, sharing, lyrics, scrobbling, tag editor | [Music](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/music/) |
 | **Telos Video** | Library, player, web streams, torrents, subtitles, Trakt | [Video](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/video/) |
 | **Telos Radio** | Internet radio with station search, sleep timer and stream recording | [Radio](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/radio/) |
@@ -78,7 +79,7 @@ from Telos Store.
 | Share target | Accepts |
 | --- | --- |
 | Telos Messages | text, pictures, videos, `sms:` links |
-| Telos Viewer | pictures |
+| Telos Photos | pictures |
 | Telos Video | videos, magnet links, torrent files |
 | Telos Store | `obtainium:` links |
 | Telos Phone | `tel:` links |
@@ -194,7 +195,7 @@ Conversion units: length (m, km, dm, cm, mm, in, ft, yd, mi, nmi), mass (kg, g, 
 - Text is lower-cased and accent-stripped; ae, oe and ss are expanded; a **transliterator** (Settings > Language and region) lets non-Latin names match Latin input.
 - Places sort by distance when a location is cached. Quick actions keep their configured order. The empty-search drawer is alphabetical per profile (frozen apps can go last). Duplicates by item key are removed.
 
-**Radio stations** (optional, off by default): favorite Telos Radio stations whose name matches show as results with their logo and a host/type line (same-name stations are all shown), and play with one tap; a play/pause button with a loading ring sits next to the name here and in the Radio station lists. **Group order, top to bottom:** favorites (empty query only), pending store updates, apps, web apps, app shortcuts, unit converter, calculator, events, reminders, contacts, places, Wikipedia, websites, files, documents, images, video, music, recommended app. **Arrangement of search results** can reverse it for a bottom search bar.
+**Radio stations** (optional, off by default; Telos Radio and web videos also reconnect automatically when the connection to a stream is lost): favorite Telos Radio stations whose name matches show as results with their logo and a host/type line (same-name stations are all shown), and play with one tap; a play/pause button with a loading ring sits next to the name here and in the Radio station lists. **Group order, top to bottom:** favorites (empty query only), pending store updates, apps, web apps, app shortcuts, unit converter, calculator, events, reminders, contacts, places, Wikipedia, websites, files, documents, images, video, music, recommended app. **Arrangement of search results** can reverse it for a bottom search bar.
 
 **Filters** (funnel button; a dot means one is active):
 
@@ -666,11 +667,12 @@ A file manager for your phone, network storages and cloud storages. The layout f
 - Home page with storage overview (free space, SD cards and USB drives), quick access to Downloads, Camera, Pictures, Music, Movies and Documents, favorites, and saved connections
 - Breadcrumb path bar, storage drawer, list and adaptive grid view with picture thumbnails and type colors, sorting by name, date, size or type, folders first, hidden files toggle
 - Search in the current folder (recursive on local storage, up to 300 results)
-- Files open in the right app: pictures in Telos Viewer, videos in Telos Video, PDF, text, code and RTF in the Telos Viewer document viewer, everything else through Android's chooser
+- **Grid views with large previews** (images, video frames, PDF first pages, thumbnails inside ODF and Office files, EPUB covers, APK icons, audio covers, folder collages), remembered; documents open immediately in Telos Viewer; Google Drive shortcut files (`gdoc`, `gsheet`, `gslides`) open in the Google app or the browser
+- Files open in the right app: pictures in Telos Photos, videos in Telos Video, PDF, text, code and RTF in the Telos Viewer document viewer, everything else through Android's chooser
 
 **File operations**
 
-- Multi-select, copy, cut and paste with progress and cancel, rename, delete (permanent, no trash), new folder and file, share, compress to zip
+- Multi-select, copy, cut and paste with progress and cancel, rename, delete (permanent, no trash), new folder and file, share, compress to zip, 7z or tar.gz (zip with an optional AES-256 password)
 - Properties with permissions and on-demand MD5, SHA-1 and SHA-256 checksums
 - Copy between any two storages (local, network, cloud); nothing is ever overwritten, a free name is used
 
@@ -689,7 +691,7 @@ A file manager for your phone, network storages and cloud storages. The layout f
 <details>
 <summary><b>Archives, Cryptomator vaults and the root explorer</b></summary>
 
-- **Archives:** zip, jar, apk, 7z and tar (also gz, bz2, xz) open like folders (read only). **Extract here** unpacks next to the archive, **Compress to zip** packs local files. Epub and Office files are zip-based and offer the same dialog. Password-protected archives are not supported, `rar`, `iso` and `cab` are not opened inside Telos, and only local archives can be opened.
+- **Archives:** zip, jar, apk, 7z, tar (also tar.gz, tar.bz2, tar.xz, tar.lzma), cpio, ar/deb, arj, rar (RAR 3, 4 and 5, not encrypted or split, standard version only) and single gz, bz2, xz, lzma and Z files open like folders (read only). **Extract here** unpacks next to the archive, **Compress...** packs local files into zip, 7z or tar.gz. Epub and Office files are zip-based and offer the same dialog. Password-protected zip (ZipCrypto and AES) and 7z archives ask for the password in a dialog; it is kept in memory only while you are inside the archive, and new zips can be protected with AES-256. `ace`, `iso`, `cab` and the other formats only 7-Zip reads are not opened inside Telos (ACE is not readable by any free library), and only local archives can be opened.
 - **Cryptomator vaults** (experimental, read only): vault formats 7 and 8 in a local folder can be unlocked and read. Files opened from a vault are decrypted into a temporary cache, which **Lock vault** removes. The password is not stored. gocryptfs, EncFS and VeraCrypt are not supported.
 - **Root explorer** (optional, untested): a superuser mode for system folders. Off until you switch it on and tick "I understand the risks". Shows permissions, owners and links, a warning banner in system folders, extra confirmation for deleting system files, changing permissions in octal, and making `/system` writable or read-only. Writing into root paths from remote storages or archives is not supported.
 
@@ -806,9 +808,9 @@ A voice recorder with a list, search and a service that keeps recording with the
 
 **Status and limitations:** recordings are in the private storage of Telos and not encrypted (call recordings are), no AI assistant, transcription, markers, trimming or WAV.
 
-### Telos Viewer
+### Telos Photos and Telos Viewer
 
-A photo gallery, a metadata (EXIF) tool, a simple photo editor and a document viewer in one app. No cloud, no account and no network features of its own. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/).
+**Telos Photos** is the photo gallery, a metadata (EXIF) tool and a simple photo editor, and opens on the photos. **Telos Viewer** is a separate app that opens on a **documents library**: category chips (All, Documents, PDF, Spreadsheets, Presentations, E-books, Other), search, sort by date, name or size, a Recent shelf (up to 50 files), "Open file…", and a long-press menu (Share, Open with, Info). It lists documents through the same all-files access as Telos Files and opens a single file without it; "Open with" from other apps keeps working. The two are described together below. No cloud, no account and no network features of its own. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/).
 
 **Gallery and viewer**
 
@@ -1065,6 +1067,7 @@ adapted, the original license is respected.
 
 | Project | License | What Telos uses it for |
 | --- | --- | --- |
+| [libarchive](https://libarchive.org) with [libarchive-android](https://github.com/zhanghai/libarchive-android) | BSD-2-Clause, Apache-2.0 | RAR and RAR5 reading in Telos Files (standard version only, prebuilt library, used unchanged) |
 | [Kvaesitso](https://github.com/MM2-0/Kvaesitso) | GPL-3.0 | The whole launcher, plugin SDK and architecture |
 | [Right Dialer (Goodwy/Dialer)](https://github.com/Goodwy/Dialer) | GPL-3.0 | Phone app layout and look: recents, contacts, dialpad, call screens |
 | [Secure Dialer](https://github.com/Secure-Phone-apps/Secure-Dialer) | GPL-3.0 | Privacy features: biometric lock, secure call screen, call screening, callback reminders |
@@ -1101,7 +1104,7 @@ adapted, the original license is respected.
 | [OpenSubtitles](https://www.opensubtitles.com) | API terms | Subtitle search and download in Telos Video |
 | [TagLib wrapper (Kyant0/taglib)](https://github.com/Kyant0/taglib) | Apache-2.0 | Reading and writing audio tags; it bundles [TagLib](https://taglib.org/) (LGPL-2.1 / MPL-1.1 upstream) |
 | [Solid Explorer](https://play.google.com/store/apps/details?id=pl.solidexplorer2) and [MiXplorer](https://forum.xda-developers.com/t/app-2-2-mixplorer-v6-x-released-fully-featured-file-manager.1523691/) | proprietary / freeware | Layout and feature ideas for Telos Files (no code) |
-| [sshj](https://github.com/hierynomus/sshj), [smbj](https://github.com/hierynomus/smbj), [Apache Commons Net](https://commons.apache.org/proper/commons-net/), [Apache Commons Compress](https://commons.apache.org/proper/commons-compress/), [OkHttp](https://square.github.io/okhttp/), [Bouncy Castle](https://www.bouncycastle.org/) | Apache-2.0 / MIT | SFTP, SMB, FTP, archives, WebDAV and cloud HTTP, cryptography (libraries) |
+| [sshj](https://github.com/hierynomus/sshj), [smbj](https://github.com/hierynomus/smbj), [Apache Commons Net](https://commons.apache.org/proper/commons-net/), [Apache Commons Compress](https://commons.apache.org/proper/commons-compress/), [Zip4j](https://github.com/srikanth-lingala/zip4j), [XZ for Java](https://tukaani.org/xz/java.html), [OkHttp](https://square.github.io/okhttp/), [Bouncy Castle](https://www.bouncycastle.org/) | Apache-2.0 / MIT / 0BSD | SFTP, SMB, FTP, archives (password-protected zip, xz and LZMA), WebDAV and cloud HTTP, cryptography (libraries) |
 | [Cryptomator](https://cryptomator.org) vault format | specification (GPL-3.0 reference code, none used) | Reading Cryptomator vaults, implemented from the published format description |
 | AVM FRITZ!Box [TR-064](https://avm.de/service/schnittstellen/) | specification | Remote phonebook |
 

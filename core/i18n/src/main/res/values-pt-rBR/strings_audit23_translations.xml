@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Este arquivo RAR está criptografado. O Telos consegue ler arquivos RAR, mas não consegue descriptografá-los. Abra-o com um app RAR.</string>
+    <string name="au23_rar_unavailable">Esta versão do Telos não consegue abrir arquivos RAR. O suporte a RAR só está incluído na versão padrão, não na versão F-Droid.</string>
+    <string name="au23_rp_title">Prévias de arquivos em armazenamentos na nuvem e de rede</string>
+    <string name="au23_rp_note">Quando ativado, a visualização de imagens baixa imagens e documentos de um armazenamento na nuvem ou de rede para o cache deste celular (até o tamanho escolhido) para desenhar a prévia. Somente os blocos visíveis são carregados. Cofres criptografados nunca têm prévia. Desativado por padrão para economizar dados e por privacidade.</string>
+    <string name="au23_rp_max_size">Tamanho máximo de arquivo para prévias: %1$s</string>
+    <string name="au23_rp_max_size_hint">Sugerido: 2 MB. Arquivos maiores mantêm o bloco colorido do tipo.</string>
+    <string name="au23_rp_wifi_only">Somente em Wi-Fi ou redes sem limite de dados</string>
+    <string name="au23_rp_wifi_only_desc">Sem download de prévias em dados móveis ou outras conexões com limite de dados.</string>
+    <string name="au23_rp_clear">Limpar cache de prévias</string>
+    <string name="au23_rp_cache_size">Cache de prévias: %1$s</string>
+</resources>

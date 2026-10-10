@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Грешна парола</string>
+    <string name="au21_arch_password_needed">Този архив е защитен с парола</string>
+    <string name="au21_arch_failed">Архивът не можа да бъде отворен</string>
+    <string name="au21_arch_pw_title">Необходима е парола</string>
+    <string name="au21_arch_pw_info">%1$s е защитен с парола. Въведете паролата, за да го отворите или разархивирате. Паролата се пази в паметта само докато сте в архива и никога не се запазва.</string>
+    <string name="au21_arch_ok">ОК</string>
+    <string name="au21_arch_checking">Проверка…</string>
+    <string name="au21_arch_show">Показване</string>
+    <string name="au21_arch_hide">Скриване</string>
+    <string name="au21_arch_compress">Компресиране…</string>
+    <string name="au21_arch_format">Формат</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Парола (AES-256, по избор)</string>
+    <string name="au21_arch_pw_repeat">Повторете паролата</string>
+    <string name="au21_arch_pw_mismatch">Паролите не съвпадат</string>
+    <string name="au21_arch_zip_note">При използване на парола файловете се криптират с AES-256. Имената на файловете остават видими. Telos никога не използва слабото криптиране ZipCrypto. Паролата не може да бъде възстановена, затова я пазете на сигурно място.</string>
+    <string name="au21_arch_no_pw_note">Архивите 7z и tar.gz се създават без парола.</string>
+    <string name="au22_files_open_as_archive">Отваряне като архив</string>
+    <string name="au22_files_view_mode">Режим на показване</string>
+    <string name="au22_files_view_list">Списък</string>
+    <string name="au22_files_view_grid_medium">Мрежа, средни визуализации</string>
+    <string name="au22_files_view_grid_large">Мрежа, големи визуализации</string>
+    <string name="au22_files_gshortcut_failed">Този пряк път към Google Drive не може да бъде отворен</string>
+</resources>

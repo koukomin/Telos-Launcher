@@ -234,6 +234,16 @@ reinstall you add them again.
 - Google Drive delete is permanent.
 - Timeouts: 20 seconds to connect, 60 to 90 seconds for transfers.
 
+## Previews on cloud and network storages
+
+In the picture view (grid), tiles of cloud and network storages show the coloured type tile by default. In **Settings > Integrations > Cloud and network storage** you can turn on **Previews for files on cloud and network storages**.
+
+- Off by default, to save data and for privacy. When on, a picture (JPG, PNG, WebP, GIF, HEIC) or document (PDF, ODT, ODS, ODP, DOCX, XLSX, PPTX, EPUB) is downloaded into the cache of this phone to draw its preview, only while its tile is visible, two at a time.
+- **Maximum file size for previews**: 256 KB to 10 MB, suggested 2 MB. Bigger files and files of unknown size keep the type tile.
+- **Only on Wi-Fi or unmetered networks** (on by default): nothing is downloaded on mobile data.
+- **Clear preview cache** deletes the downloaded copies and shows their size. The cache is limited to 100 MB (oldest copies go first) and is not part of backups.
+- Encrypted vaults are never previewed. Servers' own thumbnails (Dropbox, Google Drive, OneDrive) are not used yet.
+
 ## Troubleshooting
 
 | Problem | Try this |

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Documenten</string>
+    <string name="au20_viewer_count">%1$d bestanden</string>
+    <string name="au20_viewer_search_hint">Documenten zoeken</string>
+    <string name="au20_viewer_cat_all">Alles</string>
+    <string name="au20_viewer_cat_documents">Documenten</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Spreadsheets</string>
+    <string name="au20_viewer_cat_slides">Presentaties</string>
+    <string name="au20_viewer_cat_ebooks">E-books</string>
+    <string name="au20_viewer_cat_other">Overig</string>
+    <string name="au20_viewer_recent">Recent</string>
+    <string name="au20_viewer_clear_recent">Wissen</string>
+    <string name="au20_viewer_remove_recent">Verwijderen uit recent</string>
+    <string name="au20_viewer_open_file">Bestand openen…</string>
+    <string name="au20_viewer_sort">Sorteren</string>
+    <string name="au20_viewer_sort_date">Datum</string>
+    <string name="au20_viewer_sort_name">Naam</string>
+    <string name="au20_viewer_sort_size">Grootte</string>
+    <string name="au20_viewer_share">Delen</string>
+    <string name="au20_viewer_open_with">Openen met</string>
+    <string name="au20_viewer_info">Info</string>
+    <string name="au20_viewer_info_name">Naam</string>
+    <string name="au20_viewer_info_folder">Map</string>
+    <string name="au20_viewer_info_type">Type</string>
+    <string name="au20_viewer_info_size">Grootte</string>
+    <string name="au20_viewer_info_date">Datum</string>
+    <string name="au20_viewer_empty_title">Geen documenten gevonden</string>
+    <string name="au20_viewer_empty_text">Documenten op je telefoon verschijnen hier. Gebruik Bestand openen… voor een bestand op een andere plek.</string>
+    <string name="au20_viewer_access_title">Toegang tot je bestanden toestaan</string>
+    <string name="au20_viewer_access_text">Om de documenten op je telefoon weer te geven, heeft Telos Viewer toegang tot alle bestanden nodig. Je kunt ook zonder die toegang één bestand openen.</string>
+    <string name="au20_viewer_access_button">Toegang toestaan</string>
+    <string name="au20_viewer_share_failed">Delen mislukt</string>
+    <string name="au20_viewer_open_failed">Geen app kan dit bestand openen</string>
+</resources>

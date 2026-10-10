@@ -63,7 +63,8 @@ object PlaybackCoordinator {
     fun onVideoStarted(context: Context) {
         videoActive = true
         val now = SystemClock.elapsedRealtime()
-        for ((kind, p) in participants) {
+        // a snapshot: pausing a player may re-enter the coordinator while it is iterated
+        for ((kind, p) in participants.entries.map { it.key to it.value }) {
             if (p.isPlaying()) {
                 runCatching { p.pause() }
                 mark(context, kind)

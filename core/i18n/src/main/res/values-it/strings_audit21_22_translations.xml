@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Password errata</string>
+    <string name="au21_arch_password_needed">Questo archivio è protetto da password</string>
+    <string name="au21_arch_failed">Impossibile aprire l\'archivio</string>
+    <string name="au21_arch_pw_title">Password richiesta</string>
+    <string name="au21_arch_pw_info">%1$s è protetto da password. Inserisci la password per aprirlo o estrarlo. La password viene mantenuta in memoria solo finché ti trovi nell\'archivio e non viene mai salvata.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Verifica in corso…</string>
+    <string name="au21_arch_show">Mostra</string>
+    <string name="au21_arch_hide">Nascondi</string>
+    <string name="au21_arch_compress">Comprimi…</string>
+    <string name="au21_arch_format">Formato</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Password (AES-256, facoltativa)</string>
+    <string name="au21_arch_pw_repeat">Ripeti la password</string>
+    <string name="au21_arch_pw_mismatch">Le password non corrispondono</string>
+    <string name="au21_arch_zip_note">Con una password, i file vengono cifrati con AES-256. I nomi dei file restano visibili. Telos non usa mai la debole cifratura ZipCrypto. La password non può essere recuperata, quindi conservala al sicuro.</string>
+    <string name="au21_arch_no_pw_note">Gli archivi 7z e tar.gz vengono creati senza password.</string>
+    <string name="au22_files_open_as_archive">Apri come archivio</string>
+    <string name="au22_files_view_mode">Modalità di visualizzazione</string>
+    <string name="au22_files_view_list">Elenco</string>
+    <string name="au22_files_view_grid_medium">Griglia, anteprime medie</string>
+    <string name="au22_files_view_grid_large">Griglia, anteprime grandi</string>
+    <string name="au22_files_gshortcut_failed">Impossibile aprire questo collegamento di Google Drive</string>
+</resources>

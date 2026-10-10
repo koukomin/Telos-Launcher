@@ -420,6 +420,7 @@ internal class AppRepositoryImpl(
                     getActivityByComponentName(componentName)?.let { appResults.add(it) }
 
                     // Also search virtual apps
+                    val foldedQuery = de.mm20.launcher2.search.GreekFold.fold(query)
                     virtualApps.forEach { vApp ->
                         val score = ResultScore.from(
                             query = normalizedQuery,
@@ -427,6 +428,12 @@ internal class AppRepositoryImpl(
                                 vApp.keywords.map { stringNormalizer.normalize(it) }
                         )
                         if (score.score >= 0.8f) {
+                            appResults.add(vApp)
+                        } else if (foldedQuery.length >= 2 && (
+                                de.mm20.launcher2.search.GreekFold.matches(vApp.label, foldedQuery) ||
+                                    vApp.keywords.any { de.mm20.launcher2.search.GreekFold.matches(it, foldedQuery) })
+                        ) {
+                            // Greek / accent-less / Greeklish spelling ("Τηλέφωνο", "tilefono", "klhseis")
                             appResults.add(vApp)
                         }
                     }

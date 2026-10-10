@@ -332,6 +332,9 @@ class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.media.photos.PhotosRoute> {
                 de.mm20.launcher2.ui.media.photos.PhotosScreen()
             }
+            entry<de.mm20.launcher2.ui.media.docs.ViewerRoute> {
+                de.mm20.launcher2.ui.media.docs.ViewerScreen()
+            }
             entry<de.mm20.launcher2.ui.media.hub.MediaHubRoute> {
                 de.mm20.launcher2.ui.media.hub.MediaHubScreen(it.space)
             }
@@ -691,6 +694,7 @@ class SettingsActivity : BaseActivity() {
                 intent.getStringExtra(SettingsDeepLinkContract.EXTRA_MEDIA_SPACE).orEmpty()
             )
             ROUTE_PHOTOS -> de.mm20.launcher2.ui.media.photos.PhotosRoute
+            SettingsDeepLinkContract.ROUTE_VIEWER -> de.mm20.launcher2.ui.media.docs.ViewerRoute
             ROUTE_FILES -> de.mm20.launcher2.ui.files.FilesRoute
             ROUTE_NETWORK -> de.mm20.launcher2.ui.network.NetworkRoute
             ROUTE_CALCULATOR -> de.mm20.launcher2.ui.calculator.CalculatorRoute

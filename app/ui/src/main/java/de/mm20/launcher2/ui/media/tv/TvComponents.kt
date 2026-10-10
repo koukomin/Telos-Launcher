@@ -37,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.sp
@@ -154,8 +155,11 @@ fun TvChannelCard(
     actions: TvCardActions,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    logoHeight: Dp = 72.dp,
 ) {
     var menu by remember { mutableStateOf(false) }
+    val pressSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
+    val cardShape = RoundedCornerShape(20.dp)
     val info = LocalTvCardInfo.current
     val nowTitle = remember(info.key, channel.id) { info.nowNext(channel.id)?.current?.title }
     val offline = remember(info.badUrls, channel.id) {
@@ -165,11 +169,19 @@ fun TvChannelCard(
         Column(
             Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(16.dp))
-                .combinedClickable(onClick = onClick, onLongClick = { menu = true })
-                .padding(4.dp),
+                .tvPressScale(pressSource, reduceAnimations)
+                .shadow(2.dp, cardShape)
+                .clip(cardShape)
+                .background(MaterialTheme.colorScheme.surfaceContainerLow)
+                .combinedClickable(
+                    interactionSource = pressSource,
+                    indication = androidx.compose.foundation.LocalIndication.current,
+                    onClick = onClick,
+                    onLongClick = { menu = true },
+                )
+                .padding(6.dp),
         ) {
-            Box(Modifier.fillMaxWidth().height(72.dp)) {
+            Box(Modifier.fillMaxWidth().height(logoHeight)) {
                 TvLogo(channel, Modifier.fillMaxSize())
                 if (offline) {
                     TvStaticMini(Modifier.fillMaxSize().clip(RoundedCornerShape(16.dp)).alpha(0.6f))

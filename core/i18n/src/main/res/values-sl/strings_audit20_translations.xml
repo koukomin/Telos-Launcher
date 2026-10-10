@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Dokumenti</string>
+    <string name="au20_viewer_count">Datotek: %1$d</string>
+    <string name="au20_viewer_search_hint">Išči po dokumentih</string>
+    <string name="au20_viewer_cat_all">Vse</string>
+    <string name="au20_viewer_cat_documents">Dokumenti</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Preglednice</string>
+    <string name="au20_viewer_cat_slides">Predstavitve</string>
+    <string name="au20_viewer_cat_ebooks">E-knjige</string>
+    <string name="au20_viewer_cat_other">Drugo</string>
+    <string name="au20_viewer_recent">Nedavno</string>
+    <string name="au20_viewer_clear_recent">Počisti</string>
+    <string name="au20_viewer_remove_recent">Odstrani iz nedavnih</string>
+    <string name="au20_viewer_open_file">Odpri datoteko…</string>
+    <string name="au20_viewer_sort">Razvrsti</string>
+    <string name="au20_viewer_sort_date">Datum</string>
+    <string name="au20_viewer_sort_name">Ime</string>
+    <string name="au20_viewer_sort_size">Velikost</string>
+    <string name="au20_viewer_share">Deli</string>
+    <string name="au20_viewer_open_with">Odpri z</string>
+    <string name="au20_viewer_info">Podatki</string>
+    <string name="au20_viewer_info_name">Ime</string>
+    <string name="au20_viewer_info_folder">Mapa</string>
+    <string name="au20_viewer_info_type">Vrsta</string>
+    <string name="au20_viewer_info_size">Velikost</string>
+    <string name="au20_viewer_info_date">Datum</string>
+    <string name="au20_viewer_empty_title">Ni najdenih dokumentov</string>
+    <string name="au20_viewer_empty_text">Dokumenti v telefonu se prikažejo tukaj. Za datoteko drugje uporabite Odpri datoteko…</string>
+    <string name="au20_viewer_access_title">Dovoli dostop do datotek</string>
+    <string name="au20_viewer_access_text">Za prikaz dokumentov v telefonu Telos Viewer potrebuje dostop do vseh datotek. Posamezno datoteko lahko odprete tudi brez njega.</string>
+    <string name="au20_viewer_access_button">Dovoli dostop</string>
+    <string name="au20_viewer_share_failed">Deljenje ni uspelo</string>
+    <string name="au20_viewer_open_failed">Nobena aplikacija ne more odpreti te datoteke</string>
+</resources>

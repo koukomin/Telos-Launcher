@@ -43,6 +43,9 @@ val dataStoreModule = module {
     // === TELOS_PENDING_REVIEW_START: virtual_app_koin_fix ===
     factory<VirtualAppProvider>(org.koin.core.qualifier.named("storeVirtualAppProvider")) { StoreVirtualAppProvider(context = androidContext()) }
     // === TELOS_PENDING_REVIEW_END: virtual_app_koin_fix ===
+    factory<de.mm20.launcher2.search.SearchableDeserializer>(org.koin.core.qualifier.named(VirtualStoreApp.Domain)) {
+        de.mm20.launcher2.search.VirtualAppDeserializer(VirtualStoreApp.Domain) { getAll<VirtualAppProvider>() }
+    }
 
     single<de.mm20.launcher2.store.updater.StoreUpdater> {
         de.mm20.launcher2.data.store.updater.StoreUpdaterImpl(

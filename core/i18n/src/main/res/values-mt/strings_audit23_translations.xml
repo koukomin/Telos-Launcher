@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Dan l-arkivju RAR huwa ċifrat. Telos jista\' jaqra arkivji RAR imma ma jistax jiddeċifrahom. Iftaħ b\'app RAR minfloku.</string>
+    <string name="au23_rar_unavailable">Dan il-bini ta\' Telos ma jistax jiftaħ arkivji RAR. L-appoġġ RAR huwa inkluż biss fil-verżjoni standard, mhux fil-verżjoni F-Droid.</string>
+    <string name="au23_rp_title">Previewijiet għal fajls fuq ħażniet tal-cloud u tan-netwerk</string>
+    <string name="au23_rp_note">Meta jkun attivat, il-veduta tat-tpinġijiet tniżżel stampi u dokumenti minn ħażna tal-cloud jew tan-netwerk fil-cache ta\' dan it-telefon (sal-qies li tagħżel) biex tfassal il-previewijiet tagħhom. Jitgħabbew biss it-tiles li jidhru. Il-vaults ċifrati qatt ma jkollhom preview. Mhux attivat awtomatikament biex jiġu ssejvjati d-data u għall-privatezza.</string>
+    <string name="au23_rp_max_size">Qies massimu tal-fajl għall-previewijiet: %1$s</string>
+    <string name="au23_rp_max_size_hint">Issuġġerit: 2 MB. Fajls akbar jżommu t-tile kkulurit tat-tip.</string>
+    <string name="au23_rp_wifi_only">Biss fuq Wi-Fi jew netwerks mhux imkejlin</string>
+    <string name="au23_rp_wifi_only_desc">Ebda tniżżil ta\' previewijiet fuq data mobbli jew konnessjonijiet oħra mkejla.</string>
+    <string name="au23_rp_clear">Neħħi l-cache tal-previewijiet</string>
+    <string name="au23_rp_cache_size">Cache tal-previewijiet: %1$s</string>
+</resources>

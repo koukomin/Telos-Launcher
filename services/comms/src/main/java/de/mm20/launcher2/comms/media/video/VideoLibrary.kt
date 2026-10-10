@@ -17,7 +17,12 @@ data class VideoItem(
     val sizeBytes: Long,
     val folder: String,
     val dateAddedSeconds: Long,
-)
+    /** MediaStore RELATIVE_PATH (API 29+) or the file path, used to recognise messenger and camera folders. */
+    val relativePath: String = "",
+) {
+    /** Folder text the parser checks against its built-in blacklist (bucket name plus path). */
+    val locationHint: String get() = "$relativePath/$folder"
+}
 
 /** Reads the videos on the device from the Android media store. */
 object VideoLibrary {
@@ -35,6 +40,8 @@ object VideoLibrary {
             MediaStore.Video.Media.SIZE,
             MediaStore.Video.Media.BUCKET_DISPLAY_NAME,
             MediaStore.Video.Media.DATE_ADDED,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) MediaStore.Video.Media.RELATIVE_PATH
+            else MediaStore.Video.Media.DATA,
         )
         val items = mutableListOf<VideoItem>()
         runCatching {
@@ -51,6 +58,10 @@ object VideoLibrary {
                 val sizeCol = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE)
                 val bucketCol = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.BUCKET_DISPLAY_NAME)
                 val addedCol = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATE_ADDED)
+                val pathCol = cursor.getColumnIndex(
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) MediaStore.Video.Media.RELATIVE_PATH
+                    else MediaStore.Video.Media.DATA
+                )
                 while (cursor.moveToNext()) {
                     val id = cursor.getLong(idCol)
                     val fileName = cursor.getString(nameCol).orEmpty()
@@ -63,6 +74,7 @@ object VideoLibrary {
                         sizeBytes = cursor.getLong(sizeCol),
                         folder = cursor.getString(bucketCol).orEmpty(),
                         dateAddedSeconds = cursor.getLong(addedCol),
+                        relativePath = if (pathCol >= 0) cursor.getString(pathCol).orEmpty() else "",
                     )
                 }
             }
@@ -84,12 +96,55 @@ data class ParsedName(
 object EpisodeParser {
     private val sxe = Regex("^(.*?)[ ._-]+[sS](\\d{1,2})[ ._-]*[eE](\\d{1,3})")
     private val nxm = Regex("^(.*?)[ ._-]+(\\d{1,2})[xX](\\d{2,3})")
-    private val year = Regex("^(.*?)[ ._(\\[-]+((?:19|20)\\d{2})(?!\\d)")
+
+    /** A standalone 19xx / 20xx number: not part of a longer digit run. */
+    private val yearToken = Regex("(?<!\\d)((?:19|20)\\d{2})(?!\\d)")
+    private val dateAfter = Regex("^[-_./]\\d{2}[-_./]\\d{2}(?!\\d)")
+    private val dateBefore = Regex("(?<!\\d)\\d{2}[-_./]\\d{2}[-_./]$")
+
+    /** File name shapes written by cameras, messengers and screen recorders. */
+    private val appShapes = listOf(
+        Regex("^(vid|img|pxl|mov|pti|ptt|aud|mvi|dsc|trim|clip)[-_ ]?\\d{6,}", RegexOption.IGNORE_CASE),
+        Regex("-wa\\d+", RegexOption.IGNORE_CASE),
+        Regex("^video[-_ ]?\\d{4}[-_.]\\d{2}[-_.]\\d{2}", RegexOption.IGNORE_CASE),
+        Regex("^\\d{8}[-_ ]\\d{4,6}"),
+        Regex("^\\d{4}[-_.]\\d{2}[-_.]\\d{2}"),
+        Regex("^(screen[-_ ]?recording|screenrecorder|screen[-_ ]?record|screenshot|signal|telegram|viber|messenger|fb_vid|fb_img|snapchat|instagram|received_|whatsapp)", RegexOption.IGNORE_CASE),
+    )
+
+    private val genericWords = setOf(
+        "video", "videos", "vid", "img", "pxl", "mov", "clip", "movie", "screenrecording", "screenrecorder",
+        "screen", "recording", "record", "recorder", "camera", "cam", "whatsapp", "wa", "viber", "telegram",
+        "messenger", "facebook", "instagram", "snapchat", "signal", "received", "mvi", "pti", "ptt", "aud",
+        "trim", "untitled", "new", "output", "tmp", "file", "capture", "screenshot", "fb", "vod", "reel", "story",
+    )
+
+    /** Folders (bucket name, relative path or file path) that never hold movies or series. */
+    private val blockedFolders = listOf(
+        "viber", "whatsapp", "telegram", "messenger", "facebook", "instagram", "snapchat", "signal",
+        "camera", "dcim", "screenshots", "screen recordings", "screen_recordings", "screenrecorder",
+        "screen recorder", "screenrecord", "telos", "tiktok", "twitter", "wechat",
+    )
+
+    fun isBlockedFolder(folder: String): Boolean {
+        if (folder.isBlank()) return false
+        val f = folder.lowercase().replace('\\', '/')
+        return blockedFolders.any { f.contains(it) }
+    }
 
     private fun clean(raw: String) = raw.replace('.', ' ').replace('_', ' ').trim(' ', '-', '(', '[')
 
-    fun parse(fileName: String): ParsedName {
+    private fun realTitle(title: String): Boolean {
+        if (title.count { it.isLetter() } < 2) return false
+        val words = title.lowercase().split(Regex("[^\\p{L}]+")).filter { it.isNotEmpty() }
+        return words.any { it !in genericWords }
+    }
+
+    /** [folder] is the bucket / relative path of the file, when known. */
+    fun parse(fileName: String, folder: String = ""): ParsedName {
         val base = fileName.substringBeforeLast('.')
+        val plain = ParsedName(clean(base), null, null, null)
+        if (isBlockedFolder(folder)) return plain
         (sxe.find(base) ?: nxm.find(base))?.let { m ->
             return ParsedName(
                 title = clean(m.groupValues[1]),
@@ -98,10 +153,20 @@ object EpisodeParser {
                 year = null,
             )
         }
-        year.find(base)?.let { m ->
-            return ParsedName(clean(m.groupValues[1]), null, null, m.groupValues[2].toInt())
+        if (appShapes.any { it.containsMatchIn(base) }) return plain
+        val maxYear = java.util.Calendar.getInstance().get(java.util.Calendar.YEAR) + 1
+        for (m in yearToken.findAll(base)) {
+            val y = m.groupValues[1].toInt()
+            if (y < 1900 || y > maxYear) continue
+            val start = m.range.first
+            val end = m.range.last + 1
+            if (dateAfter.containsMatchIn(base.substring(end))) continue
+            if (dateBefore.containsMatchIn(base.substring(0, start))) continue
+            val title = clean(base.substring(0, start))
+            if (!realTitle(title)) continue
+            return ParsedName(title, null, null, y)
         }
-        return ParsedName(clean(base), null, null, null)
+        return plain
     }
 }
 

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Dokumenti</string>
+    <string name="au20_viewer_count">%1$d faili</string>
+    <string name="au20_viewer_search_hint">Meklēt dokumentos</string>
+    <string name="au20_viewer_cat_all">Visi</string>
+    <string name="au20_viewer_cat_documents">Dokumenti</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Izklājlapas</string>
+    <string name="au20_viewer_cat_slides">Prezentācijas</string>
+    <string name="au20_viewer_cat_ebooks">E-grāmatas</string>
+    <string name="au20_viewer_cat_other">Citi</string>
+    <string name="au20_viewer_recent">Nesenie</string>
+    <string name="au20_viewer_clear_recent">Notīrīt</string>
+    <string name="au20_viewer_remove_recent">Noņemt no nesenajiem</string>
+    <string name="au20_viewer_open_file">Atvērt failu…</string>
+    <string name="au20_viewer_sort">Kārtot</string>
+    <string name="au20_viewer_sort_date">Datums</string>
+    <string name="au20_viewer_sort_name">Nosaukums</string>
+    <string name="au20_viewer_sort_size">Izmērs</string>
+    <string name="au20_viewer_share">Kopīgot</string>
+    <string name="au20_viewer_open_with">Atvērt ar</string>
+    <string name="au20_viewer_info">Informācija</string>
+    <string name="au20_viewer_info_name">Nosaukums</string>
+    <string name="au20_viewer_info_folder">Mape</string>
+    <string name="au20_viewer_info_type">Veids</string>
+    <string name="au20_viewer_info_size">Izmērs</string>
+    <string name="au20_viewer_info_date">Datums</string>
+    <string name="au20_viewer_empty_title">Dokumenti nav atrasti</string>
+    <string name="au20_viewer_empty_text">Tālrunī esošie dokumenti parādās šeit. Izmantojiet Atvērt failu…, lai atvērtu failu citur.</string>
+    <string name="au20_viewer_access_title">Atļaut piekļuvi failiem</string>
+    <string name="au20_viewer_access_text">Lai parādītu tālrunī esošos dokumentus, Telos Viewer nepieciešama piekļuve visiem failiem. Atsevišķu failu var atvērt arī bez tās.</string>
+    <string name="au20_viewer_access_button">Atļaut piekļuvi</string>
+    <string name="au20_viewer_share_failed">Kopīgošana neizdevās</string>
+    <string name="au20_viewer_open_failed">Neviena lietotne nevar atvērt šo failu</string>
+</resources>

@@ -55,7 +55,7 @@ private fun planMoves(context: Context, items: List<VideoItem>): List<OrganizeMo
     for (item in local) {
         val current = paths[item.id] ?: continue
         if (!(current.startsWith("Movies/") || current.startsWith("Download/"))) continue
-        val parsed = EpisodeParser.parse(item.fileName)
+        val parsed = EpisodeParser.parse(item.fileName, item.locationHint)
         val title = cleanName(titleCase(parsed.title))
         if (title.isBlank()) continue
         val target = when {

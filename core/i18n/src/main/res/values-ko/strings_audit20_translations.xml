@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">문서</string>
+    <string name="au20_viewer_count">파일 %1$d개</string>
+    <string name="au20_viewer_search_hint">문서 검색</string>
+    <string name="au20_viewer_cat_all">전체</string>
+    <string name="au20_viewer_cat_documents">문서</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">스프레드시트</string>
+    <string name="au20_viewer_cat_slides">프레젠테이션</string>
+    <string name="au20_viewer_cat_ebooks">전자책</string>
+    <string name="au20_viewer_cat_other">기타</string>
+    <string name="au20_viewer_recent">최근</string>
+    <string name="au20_viewer_clear_recent">지우기</string>
+    <string name="au20_viewer_remove_recent">최근 항목에서 삭제</string>
+    <string name="au20_viewer_open_file">파일 열기…</string>
+    <string name="au20_viewer_sort">정렬</string>
+    <string name="au20_viewer_sort_date">날짜</string>
+    <string name="au20_viewer_sort_name">이름</string>
+    <string name="au20_viewer_sort_size">크기</string>
+    <string name="au20_viewer_share">공유</string>
+    <string name="au20_viewer_open_with">연결 앱</string>
+    <string name="au20_viewer_info">정보</string>
+    <string name="au20_viewer_info_name">이름</string>
+    <string name="au20_viewer_info_folder">폴더</string>
+    <string name="au20_viewer_info_type">유형</string>
+    <string name="au20_viewer_info_size">크기</string>
+    <string name="au20_viewer_info_date">날짜</string>
+    <string name="au20_viewer_empty_title">문서를 찾을 수 없음</string>
+    <string name="au20_viewer_empty_text">휴대전화의 문서가 여기에 표시됩니다. 다른 위치의 파일은 파일 열기…를 사용하세요.</string>
+    <string name="au20_viewer_access_title">파일 접근 허용</string>
+    <string name="au20_viewer_access_text">휴대전화의 문서를 나열하려면 Telos Viewer가 모든 파일에 접근할 수 있어야 합니다. 허용하지 않아도 개별 파일은 열 수 있습니다.</string>
+    <string name="au20_viewer_access_button">접근 허용</string>
+    <string name="au20_viewer_share_failed">공유하지 못했습니다</string>
+    <string name="au20_viewer_open_failed">이 파일을 열 수 있는 앱이 없습니다</string>
+</resources>

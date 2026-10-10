@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Falsches Passwort</string>
+    <string name="au21_arch_password_needed">Dieses Archiv ist passwortgeschützt</string>
+    <string name="au21_arch_failed">Das Archiv konnte nicht geöffnet werden</string>
+    <string name="au21_arch_pw_title">Passwort erforderlich</string>
+    <string name="au21_arch_pw_info">%1$s ist passwortgeschützt. Gib das Passwort ein, um es zu öffnen oder zu entpacken. Das Passwort wird nur im Arbeitsspeicher gehalten, solange du dich im Archiv befindest, und nie gespeichert.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Wird geprüft…</string>
+    <string name="au21_arch_show">Anzeigen</string>
+    <string name="au21_arch_hide">Verbergen</string>
+    <string name="au21_arch_compress">Komprimieren…</string>
+    <string name="au21_arch_format">Format</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Passwort (AES-256, optional)</string>
+    <string name="au21_arch_pw_repeat">Passwort wiederholen</string>
+    <string name="au21_arch_pw_mismatch">Die Passwörter stimmen nicht überein</string>
+    <string name="au21_arch_zip_note">Mit Passwort werden die Dateien mit AES-256 verschlüsselt. Dateinamen bleiben sichtbar. Telos verwendet nie die schwache ZipCrypto-Verschlüsselung. Das Passwort lässt sich nicht wiederherstellen, bewahre es daher sicher auf.</string>
+    <string name="au21_arch_no_pw_note">7z- und tar.gz-Archive werden ohne Passwort erstellt.</string>
+    <string name="au22_files_open_as_archive">Als Archiv öffnen</string>
+    <string name="au22_files_view_mode">Ansicht</string>
+    <string name="au22_files_view_list">Liste</string>
+    <string name="au22_files_view_grid_medium">Raster, mittlere Vorschau</string>
+    <string name="au22_files_view_grid_large">Raster, große Vorschau</string>
+    <string name="au22_files_gshortcut_failed">Diese Google-Drive-Verknüpfung kann nicht geöffnet werden</string>
+</resources>
