@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Confirmar</string>
+    <string name="au4_confirms_cancel">Cancelar</string>
+    <string name="au4_confirms_nc_title">¿Cerrar sesión en Nextcloud?</string>
+    <string name="au4_confirms_nc_message">Tu cuenta de Nextcloud se eliminará de este launcher. Puedes volver a iniciar sesión en cualquier momento.</string>
+    <string name="au4_confirms_oc_title">¿Cerrar sesión en ownCloud?</string>
+    <string name="au4_confirms_oc_message">Tu cuenta de ownCloud se eliminará de este launcher. Puedes volver a iniciar sesión en cualquier momento.</string>
+    <string name="au4_confirms_plugin_title">¿Desinstalar el complemento?</string>
+    <string name="au4_confirms_plugin_message">La aplicación del complemento se desinstalará de tu dispositivo.</string>
+    <string name="au4_confirms_counts_title">¿Restablecer contadores?</string>
+    <string name="au4_confirms_counts_message">Todos los contadores de bloqueos de la lista de bloqueo volverán a cero.</string>
+    <string name="au4_confirms_bulk_title">¿Aplicar a todas las aplicaciones mostradas?</string>
+    <string name="au4_confirms_bulk_block_all">¿Bloquear todo el acceso a la red para %1$d aplicaciones?</string>
+    <string name="au4_confirms_bulk_allow_all">¿Permitir todo el acceso a la red para %1$d aplicaciones?</string>
+    <string name="au4_confirms_bulk_block_wifi">¿Bloquear el acceso Wi-Fi para %1$d aplicaciones?</string>
+    <string name="au4_confirms_bulk_block_mobile">¿Bloquear el acceso a datos móviles para %1$d aplicaciones?</string>
+    <string name="au4_noteslink_link_existing">Vincular archivo existente</string>
+    <string name="au4_noteslink_create_new">Crear archivo nuevo</string>
+    <string name="au4_noteslink_cancel">Cancelar</string>
+    <string name="au4_settingsnew1_redial_attempts">Intentos de rellamada</string>
+    <string name="au4_settingsnew1_redial_delay">Retraso entre intentos</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Informe de fallos</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Guarda en este dispositivo los informes de fallos y los errores registrados. Si está desactivado, no se registra nada; la aplicación sigue funcionando con normalidad.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Eliminar todos los informes</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Elimina todos los informes de fallos y registros de errores guardados</string>
+    <string name="au4_torrentproxy_note_http">Los torrents usan el proxy para pares, trackers y resolución de nombres de host. Un proxy HTTP no puede transportar tráfico UDP, por lo que DHT y uTP se desactivan; el descubrimiento local, UPnP y NAT-PMP se desactivan mientras haya un proxy activo.</string>
+    <string name="au4_torrentproxy_note_socks">Los torrents usan el proxy para pares, trackers y resolución de nombres de host. El descubrimiento local, UPnP y NAT-PMP se desactivan mientras haya un proxy activo. DHT y uTP solo funcionan si tu proxy SOCKS5 admite UDP.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Predeterminado (móvil)</string>
+    <string name="au4_webapps2_user_agent_desktop">Escritorio</string>
+    <string name="au4_webapps2_user_agent_custom">Personalizado</string>
+    <string name="au4_webapps2_user_agent_custom_title">User agent personalizado</string>
+    <string name="au4_webapps2_user_agent_custom_hint">Cadena de user agent</string>
+    <string name="au4_webapps2_cookies">Aceptar cookies</string>
+    <string name="au4_webapps2_cookies_summary">Los sitios web de las aplicaciones web pueden almacenar cookies. Desactívalo para bloquear todas las cookies; es posible que no puedas mantener la sesión iniciada.</string>
+    <string name="au4_webapps2_third_party_cookies">Aceptar cookies de terceros</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Permite que el contenido incrustado de otros sitios establezca cookies. Desactivado de forma predeterminada por privacidad.</string>
+    <string name="au4_webapps2_clear_cookies">Borrar cookies y datos de sitios</string>
+    <string name="au4_webapps2_clear_cookies_summary">Cierra tu sesión en todas las aplicaciones web y elimina los datos de sitios en caché</string>
+    <string name="au4_webapps2_clear_cookies_confirm">¿Eliminar todas las cookies y datos de sitios de las aplicaciones web?</string>
+    <string name="au4_webapps2_clear_cookies_done">Cookies y datos de sitios borrados</string>
+    <string name="au4_webapps2_clear_cookies_action">Borrar</string>
+</resources>

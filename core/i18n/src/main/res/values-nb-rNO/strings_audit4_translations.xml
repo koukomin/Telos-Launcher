@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Bekreft</string>
+    <string name="au4_confirms_cancel">Avbryt</string>
+    <string name="au4_confirms_nc_title">Logge ut av Nextcloud?</string>
+    <string name="au4_confirms_nc_message">Nextcloud-kontoen din fjernes fra denne launcheren. Du kan logge inn igjen når som helst.</string>
+    <string name="au4_confirms_oc_title">Logge ut av ownCloud?</string>
+    <string name="au4_confirms_oc_message">ownCloud-kontoen din fjernes fra denne launcheren. Du kan logge inn igjen når som helst.</string>
+    <string name="au4_confirms_plugin_title">Avinstallere programtillegget?</string>
+    <string name="au4_confirms_plugin_message">Programtilleggsappen avinstalleres fra enheten din.</string>
+    <string name="au4_confirms_counts_title">Tilbakestille tellerne?</string>
+    <string name="au4_confirms_counts_message">Alle tellere for blokkeringslisten settes tilbake til null.</string>
+    <string name="au4_confirms_bulk_title">Bruke på alle viste apper?</string>
+    <string name="au4_confirms_bulk_block_all">Blokkere all nettverkstilgang for %1$d apper?</string>
+    <string name="au4_confirms_bulk_allow_all">Tillate all nettverkstilgang for %1$d apper?</string>
+    <string name="au4_confirms_bulk_block_wifi">Blokkere Wi-Fi-tilgang for %1$d apper?</string>
+    <string name="au4_confirms_bulk_block_mobile">Blokkere mobildatatilgang for %1$d apper?</string>
+    <string name="au4_noteslink_link_existing">Koble til eksisterende fil</string>
+    <string name="au4_noteslink_create_new">Opprett ny fil</string>
+    <string name="au4_noteslink_cancel">Avbryt</string>
+    <string name="au4_settingsnew1_redial_attempts">Antall nye oppringingsforsøk</string>
+    <string name="au4_settingsnew1_redial_delay">Pause mellom forsøk</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Krasjrapportering</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Lagre krasjrapporter og loggførte feil på denne enheten. Når dette er av, registreres ingenting; appen fungerer fortsatt som vanlig.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Slett alle rapporter</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Fjern alle lagrede krasjrapporter og feillogger</string>
+    <string name="au4_torrentproxy_note_http">Torrenter bruker proxyen til peers, trackere og oppslag av vertsnavn. En HTTP-proxy kan ikke frakte UDP-trafikk, så DHT og uTP slås av, og lokal oppdagelse, UPnP og NAT-PMP slås av mens en proxy er på.</string>
+    <string name="au4_torrentproxy_note_socks">Torrenter bruker proxyen til peers, trackere og oppslag av vertsnavn. Lokal oppdagelse, UPnP og NAT-PMP slås av mens en proxy er på. DHT og uTP fungerer bare hvis SOCKS5-proxyen din støtter UDP.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Standard (mobil)</string>
+    <string name="au4_webapps2_user_agent_desktop">Skrivebord</string>
+    <string name="au4_webapps2_user_agent_custom">Egendefinert</string>
+    <string name="au4_webapps2_user_agent_custom_title">Egendefinert user agent</string>
+    <string name="au4_webapps2_user_agent_custom_hint">User agent-streng</string>
+    <string name="au4_webapps2_cookies">Godta informasjonskapsler</string>
+    <string name="au4_webapps2_cookies_summary">Nettsteder i nettapper kan lagre informasjonskapsler. Slå av for å blokkere alle informasjonskapsler; du kan miste innloggingen.</string>
+    <string name="au4_webapps2_third_party_cookies">Godta tredjeparts informasjonskapsler</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Tillat innebygd innhold fra andre nettsteder å sette informasjonskapsler. Av som standard av hensyn til personvernet.</string>
+    <string name="au4_webapps2_clear_cookies">Tøm informasjonskapsler og nettstedsdata</string>
+    <string name="au4_webapps2_clear_cookies_summary">Logger deg ut av alle nettapper og fjerner bufrede nettstedsdata</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Fjerne alle informasjonskapsler og nettstedsdata i nettapper?</string>
+    <string name="au4_webapps2_clear_cookies_done">Informasjonskapsler og nettstedsdata er tømt</string>
+    <string name="au4_webapps2_clear_cookies_action">Tøm</string>
+</resources>

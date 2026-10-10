@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Confirmar</string>
+    <string name="au4_confirms_cancel">Cancelar</string>
+    <string name="au4_confirms_nc_title">Sair do Nextcloud?</string>
+    <string name="au4_confirms_nc_message">Sua conta do Nextcloud será removida deste launcher. Você pode entrar novamente a qualquer momento.</string>
+    <string name="au4_confirms_oc_title">Sair do ownCloud?</string>
+    <string name="au4_confirms_oc_message">Sua conta do ownCloud será removida deste launcher. Você pode entrar novamente a qualquer momento.</string>
+    <string name="au4_confirms_plugin_title">Desinstalar o plugin?</string>
+    <string name="au4_confirms_plugin_message">O app do plugin será desinstalado do seu dispositivo.</string>
+    <string name="au4_confirms_counts_title">Redefinir contadores?</string>
+    <string name="au4_confirms_counts_message">Todos os contadores de bloqueios da lista de bloqueio serão zerados.</string>
+    <string name="au4_confirms_bulk_title">Aplicar a todos os apps exibidos?</string>
+    <string name="au4_confirms_bulk_block_all">Bloquear todo o acesso à rede de %1$d apps?</string>
+    <string name="au4_confirms_bulk_allow_all">Permitir todo o acesso à rede de %1$d apps?</string>
+    <string name="au4_confirms_bulk_block_wifi">Bloquear o acesso Wi-Fi de %1$d apps?</string>
+    <string name="au4_confirms_bulk_block_mobile">Bloquear o acesso a dados móveis de %1$d apps?</string>
+    <string name="au4_noteslink_link_existing">Vincular arquivo existente</string>
+    <string name="au4_noteslink_create_new">Criar novo arquivo</string>
+    <string name="au4_noteslink_cancel">Cancelar</string>
+    <string name="au4_settingsnew1_redial_attempts">Tentativas de rediscagem</string>
+    <string name="au4_settingsnew1_redial_delay">Atraso entre tentativas</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Relatório de falhas</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Salva neste dispositivo os relatórios de falhas e os erros registrados. Quando desativado, nada é gravado; o app continua funcionando normalmente.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Excluir todos os relatórios</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Remove todos os relatórios de falhas e registros de erros salvos</string>
+    <string name="au4_torrentproxy_note_http">Os torrents usam o proxy para peers, trackers e resolução de nomes de host. Um proxy HTTP não consegue transportar tráfego UDP, então DHT e uTP são desativados, e a descoberta local, o UPnP e o NAT-PMP ficam desativados enquanto um proxy estiver ativo.</string>
+    <string name="au4_torrentproxy_note_socks">Os torrents usam o proxy para peers, trackers e resolução de nomes de host. A descoberta local, o UPnP e o NAT-PMP ficam desativados enquanto um proxy estiver ativo. DHT e uTP só funcionam se o seu proxy SOCKS5 oferecer suporte a UDP.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Padrão (celular)</string>
+    <string name="au4_webapps2_user_agent_desktop">Computador</string>
+    <string name="au4_webapps2_user_agent_custom">Personalizado</string>
+    <string name="au4_webapps2_user_agent_custom_title">User agent personalizado</string>
+    <string name="au4_webapps2_user_agent_custom_hint">String de user agent</string>
+    <string name="au4_webapps2_cookies">Aceitar cookies</string>
+    <string name="au4_webapps2_cookies_summary">Sites em web apps podem armazenar cookies. Desative para bloquear todos os cookies; talvez você não consiga continuar conectado.</string>
+    <string name="au4_webapps2_third_party_cookies">Aceitar cookies de terceiros</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Permite que conteúdo incorporado de outros sites defina cookies. Desativado por padrão por privacidade.</string>
+    <string name="au4_webapps2_clear_cookies">Limpar cookies e dados de sites</string>
+    <string name="au4_webapps2_clear_cookies_summary">Desconecta você de todos os web apps e remove os dados de sites em cache</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Remover todos os cookies e dados de sites dos web apps?</string>
+    <string name="au4_webapps2_clear_cookies_done">Cookies e dados de sites limpos</string>
+    <string name="au4_webapps2_clear_cookies_action">Limpar</string>
+</resources>

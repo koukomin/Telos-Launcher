@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Confirmer</string>
+    <string name="au4_confirms_cancel">Annuler</string>
+    <string name="au4_confirms_nc_title">Se déconnecter de Nextcloud ?</string>
+    <string name="au4_confirms_nc_message">Votre compte Nextcloud sera supprimé de ce launcher. Vous pourrez vous reconnecter à tout moment.</string>
+    <string name="au4_confirms_oc_title">Se déconnecter d\'ownCloud ?</string>
+    <string name="au4_confirms_oc_message">Votre compte ownCloud sera supprimé de ce launcher. Vous pourrez vous reconnecter à tout moment.</string>
+    <string name="au4_confirms_plugin_title">Désinstaller le plugin ?</string>
+    <string name="au4_confirms_plugin_message">L\'application du plugin sera désinstallée de votre appareil.</string>
+    <string name="au4_confirms_counts_title">Réinitialiser les compteurs ?</string>
+    <string name="au4_confirms_counts_message">Tous les compteurs de blocage de la liste de blocage seront remis à zéro.</string>
+    <string name="au4_confirms_bulk_title">Appliquer à toutes les applications affichées ?</string>
+    <string name="au4_confirms_bulk_block_all">Bloquer tout l\'accès réseau pour %1$d applications ?</string>
+    <string name="au4_confirms_bulk_allow_all">Autoriser tout l\'accès réseau pour %1$d applications ?</string>
+    <string name="au4_confirms_bulk_block_wifi">Bloquer l\'accès Wi-Fi pour %1$d applications ?</string>
+    <string name="au4_confirms_bulk_block_mobile">Bloquer l\'accès aux données mobiles pour %1$d applications ?</string>
+    <string name="au4_noteslink_link_existing">Lier un fichier existant</string>
+    <string name="au4_noteslink_create_new">Créer un nouveau fichier</string>
+    <string name="au4_noteslink_cancel">Annuler</string>
+    <string name="au4_settingsnew1_redial_attempts">Tentatives de rappel</string>
+    <string name="au4_settingsnew1_redial_delay">Délai entre les tentatives</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Rapport de plantage</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Enregistre les rapports de plantage et les erreurs journalisées sur cet appareil. Lorsque cette option est désactivée, rien n\'est enregistré ; l\'application fonctionne normalement.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Supprimer tous les rapports</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Supprime tous les rapports de plantage et journaux d\'erreurs enregistrés</string>
+    <string name="au4_torrentproxy_note_http">Les torrents utilisent le proxy pour les pairs, les trackers et la résolution des noms d\'hôte. Un proxy HTTP ne peut pas transporter de trafic UDP : DHT et uTP sont donc désactivés, et la découverte locale, UPnP et NAT-PMP sont désactivés tant qu\'un proxy est actif.</string>
+    <string name="au4_torrentproxy_note_socks">Les torrents utilisent le proxy pour les pairs, les trackers et la résolution des noms d\'hôte. La découverte locale, UPnP et NAT-PMP sont désactivés tant qu\'un proxy est actif. DHT et uTP ne fonctionnent que si votre proxy SOCKS5 prend en charge UDP.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Par défaut (mobile)</string>
+    <string name="au4_webapps2_user_agent_desktop">Ordinateur</string>
+    <string name="au4_webapps2_user_agent_custom">Personnalisé</string>
+    <string name="au4_webapps2_user_agent_custom_title">User agent personnalisé</string>
+    <string name="au4_webapps2_user_agent_custom_hint">Chaîne user agent</string>
+    <string name="au4_webapps2_cookies">Accepter les cookies</string>
+    <string name="au4_webapps2_cookies_summary">Les sites web des applications web peuvent stocker des cookies. Désactivez pour bloquer tous les cookies ; vous risquez de ne pas rester connecté.</string>
+    <string name="au4_webapps2_third_party_cookies">Accepter les cookies tiers</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Autorise le contenu intégré d\'autres sites à définir des cookies. Désactivé par défaut pour protéger votre vie privée.</string>
+    <string name="au4_webapps2_clear_cookies">Effacer les cookies et les données de sites</string>
+    <string name="au4_webapps2_clear_cookies_summary">Vous déconnecte de toutes les applications web et supprime les données de sites en cache</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Supprimer tous les cookies et données de sites des applications web ?</string>
+    <string name="au4_webapps2_clear_cookies_done">Cookies et données de sites effacés</string>
+    <string name="au4_webapps2_clear_cookies_action">Effacer</string>
+</resources>

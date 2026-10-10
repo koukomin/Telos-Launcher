@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Подтвердить</string>
+    <string name="au4_confirms_cancel">Отмена</string>
+    <string name="au4_confirms_nc_title">Выйти из Nextcloud?</string>
+    <string name="au4_confirms_nc_message">Ваша учётная запись Nextcloud будет удалена из этого лаунчера. Вы можете войти снова в любое время.</string>
+    <string name="au4_confirms_oc_title">Выйти из ownCloud?</string>
+    <string name="au4_confirms_oc_message">Ваша учётная запись ownCloud будет удалена из этого лаунчера. Вы можете войти снова в любое время.</string>
+    <string name="au4_confirms_plugin_title">Удалить плагин?</string>
+    <string name="au4_confirms_plugin_message">Приложение плагина будет удалено с вашего устройства.</string>
+    <string name="au4_confirms_counts_title">Сбросить счётчики?</string>
+    <string name="au4_confirms_counts_message">Все счётчики блокировок будут обнулены.</string>
+    <string name="au4_confirms_bulk_title">Применить ко всем показанным приложениям?</string>
+    <string name="au4_confirms_bulk_block_all">Заблокировать весь доступ к сети для приложений: %1$d?</string>
+    <string name="au4_confirms_bulk_allow_all">Разрешить весь доступ к сети для приложений: %1$d?</string>
+    <string name="au4_confirms_bulk_block_wifi">Заблокировать доступ к Wi-Fi для приложений: %1$d?</string>
+    <string name="au4_confirms_bulk_block_mobile">Заблокировать доступ к мобильным данным для приложений: %1$d?</string>
+    <string name="au4_noteslink_link_existing">Привязать существующий файл</string>
+    <string name="au4_noteslink_create_new">Создать новый файл</string>
+    <string name="au4_noteslink_cancel">Отмена</string>
+    <string name="au4_settingsnew1_redial_attempts">Число попыток повторного набора</string>
+    <string name="au4_settingsnew1_redial_delay">Задержка между попытками</string>
+    <string name="au4_settingsnew1_seconds">%1$d с</string>
+    <string name="au4_settingsnew1_crash_enable">Отчёты о сбоях</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Сохранять отчёты о сбоях и записанные ошибки на этом устройстве. Если выключено, ничего не записывается; приложение работает как обычно.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Удалить все отчёты</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Удалить все сохранённые отчёты о сбоях и журналы ошибок</string>
+    <string name="au4_torrentproxy_note_http">Торренты используют прокси для пиров, трекеров и поиска имён хостов. HTTP-прокси не передаёт трафик UDP, поэтому DHT и uTP отключены, а локальное обнаружение, UPnP и NAT-PMP отключаются, пока включён прокси.</string>
+    <string name="au4_torrentproxy_note_socks">Торренты используют прокси для пиров, трекеров и поиска имён хостов. Локальное обнаружение, UPnP и NAT-PMP отключаются, пока включён прокси. DHT и uTP работают только если ваш прокси SOCKS5 поддерживает UDP.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">По умолчанию (мобильный)</string>
+    <string name="au4_webapps2_user_agent_desktop">Компьютер</string>
+    <string name="au4_webapps2_user_agent_custom">Свой</string>
+    <string name="au4_webapps2_user_agent_custom_title">Свой user agent</string>
+    <string name="au4_webapps2_user_agent_custom_hint">Строка user agent</string>
+    <string name="au4_webapps2_cookies">Принимать cookie</string>
+    <string name="au4_webapps2_cookies_summary">Сайты в веб-приложениях могут сохранять cookie. Выключите, чтобы блокировать все cookie; тогда вход в аккаунты может не сохраняться.</string>
+    <string name="au4_webapps2_third_party_cookies">Принимать сторонние cookie</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Разрешить встроенному содержимому других сайтов устанавливать cookie. По умолчанию отключено для защиты конфиденциальности.</string>
+    <string name="au4_webapps2_clear_cookies">Очистить cookie и данные сайтов</string>
+    <string name="au4_webapps2_clear_cookies_summary">Выполняет выход из всех веб-приложений и удаляет кэшированные данные сайтов</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Удалить все cookie и данные сайтов веб-приложений?</string>
+    <string name="au4_webapps2_clear_cookies_done">Cookie и данные сайтов очищены</string>
+    <string name="au4_webapps2_clear_cookies_action">Очистить</string>
+</resources>

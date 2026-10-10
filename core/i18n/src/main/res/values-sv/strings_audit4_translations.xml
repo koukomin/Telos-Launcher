@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Bekräfta</string>
+    <string name="au4_confirms_cancel">Avbryt</string>
+    <string name="au4_confirms_nc_title">Logga ut från Nextcloud?</string>
+    <string name="au4_confirms_nc_message">Ditt Nextcloud-konto tas bort från denna startskärm. Du kan logga in igen när som helst.</string>
+    <string name="au4_confirms_oc_title">Logga ut från ownCloud?</string>
+    <string name="au4_confirms_oc_message">Ditt ownCloud-konto tas bort från denna startskärm. Du kan logga in igen när som helst.</string>
+    <string name="au4_confirms_plugin_title">Avinstallera tillägget?</string>
+    <string name="au4_confirms_plugin_message">Tilläggsappen avinstalleras från enheten.</string>
+    <string name="au4_confirms_counts_title">Återställ räknare?</string>
+    <string name="au4_confirms_counts_message">Alla blockeringsräknare för blockeringslistan nollställs.</string>
+    <string name="au4_confirms_bulk_title">Tillämpa på alla visade appar?</string>
+    <string name="au4_confirms_bulk_block_all">Blockera all nätverksåtkomst för %1$d appar?</string>
+    <string name="au4_confirms_bulk_allow_all">Tillåt all nätverksåtkomst för %1$d appar?</string>
+    <string name="au4_confirms_bulk_block_wifi">Blockera Wi-Fi-åtkomst för %1$d appar?</string>
+    <string name="au4_confirms_bulk_block_mobile">Blockera åtkomst till mobildata för %1$d appar?</string>
+    <string name="au4_noteslink_link_existing">Länka befintlig fil</string>
+    <string name="au4_noteslink_create_new">Skapa ny fil</string>
+    <string name="au4_noteslink_cancel">Avbryt</string>
+    <string name="au4_settingsnew1_redial_attempts">Omringningsförsök</string>
+    <string name="au4_settingsnew1_redial_delay">Fördröjning mellan försök</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Kraschrapportering</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Spara kraschrapporter och loggade fel på den här enheten. När den är avstängd registreras ingenting; appen fungerar ändå som vanligt.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Radera alla rapporter</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Ta bort alla sparade kraschrapporter och felloggar</string>
+    <string name="au4_torrentproxy_note_http">Torrenter använder proxyn för peers, trackers och uppslag av värdnamn. En HTTP-proxy kan inte hantera UDP-trafik, så DHT och uTP är avstängda, och lokal identifiering, UPnP och NAT-PMP är avstängda när en proxy är aktiv.</string>
+    <string name="au4_torrentproxy_note_socks">Torrenter använder proxyn för peers, trackers och uppslag av värdnamn. Lokal identifiering, UPnP och NAT-PMP är avstängda när en proxy är aktiv. DHT och uTP fungerar bara om din SOCKS5-proxy stöder UDP.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Standard (mobil)</string>
+    <string name="au4_webapps2_user_agent_desktop">Dator</string>
+    <string name="au4_webapps2_user_agent_custom">Anpassad</string>
+    <string name="au4_webapps2_user_agent_custom_title">Anpassad user agent</string>
+    <string name="au4_webapps2_user_agent_custom_hint">User agent-sträng</string>
+    <string name="au4_webapps2_cookies">Acceptera cookies</string>
+    <string name="au4_webapps2_cookies_summary">Webbplatser i webbappar kan lagra cookies. Stäng av för att blockera alla cookies; du kanske inte förblir inloggad.</string>
+    <string name="au4_webapps2_third_party_cookies">Acceptera cookies från tredje part</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Tillåt inbäddat innehåll från andra webbplatser att sätta cookies. Avstängt som standard av integritetsskäl.</string>
+    <string name="au4_webapps2_clear_cookies">Rensa cookies och webbplatsdata</string>
+    <string name="au4_webapps2_clear_cookies_summary">Loggar ut dig från alla webbappar och tar bort cachad webbplatsdata</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Ta bort alla cookies och all webbplatsdata för webbappar?</string>
+    <string name="au4_webapps2_clear_cookies_done">Cookies och webbplatsdata rensade</string>
+    <string name="au4_webapps2_clear_cookies_action">Rensa</string>
+</resources>

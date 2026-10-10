@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">확인</string>
+    <string name="au4_confirms_cancel">취소</string>
+    <string name="au4_confirms_nc_title">Nextcloud에서 로그아웃하시겠습니까?</string>
+    <string name="au4_confirms_nc_message">Nextcloud 계정이 이 런처에서 제거됩니다. 언제든지 다시 로그인할 수 있습니다.</string>
+    <string name="au4_confirms_oc_title">ownCloud에서 로그아웃하시겠습니까?</string>
+    <string name="au4_confirms_oc_message">ownCloud 계정이 이 런처에서 제거됩니다. 언제든지 다시 로그인할 수 있습니다.</string>
+    <string name="au4_confirms_plugin_title">플러그인을 제거하시겠습니까?</string>
+    <string name="au4_confirms_plugin_message">플러그인 앱이 기기에서 제거됩니다.</string>
+    <string name="au4_confirms_counts_title">카운트를 초기화하시겠습니까?</string>
+    <string name="au4_confirms_counts_message">차단 목록의 모든 차단 카운터가 0으로 초기화됩니다.</string>
+    <string name="au4_confirms_bulk_title">표시된 모든 앱에 적용하시겠습니까?</string>
+    <string name="au4_confirms_bulk_block_all">앱 %1$d개의 모든 네트워크 접근을 차단하시겠습니까?</string>
+    <string name="au4_confirms_bulk_allow_all">앱 %1$d개의 모든 네트워크 접근을 허용하시겠습니까?</string>
+    <string name="au4_confirms_bulk_block_wifi">앱 %1$d개의 Wi-Fi 접근을 차단하시겠습니까?</string>
+    <string name="au4_confirms_bulk_block_mobile">앱 %1$d개의 모바일 데이터 접근을 차단하시겠습니까?</string>
+    <string name="au4_noteslink_link_existing">기존 파일 연결</string>
+    <string name="au4_noteslink_create_new">새 파일 만들기</string>
+    <string name="au4_noteslink_cancel">취소</string>
+    <string name="au4_settingsnew1_redial_attempts">재시도 횟수</string>
+    <string name="au4_settingsnew1_redial_delay">시도 간 대기 시간</string>
+    <string name="au4_settingsnew1_seconds">%1$d초</string>
+    <string name="au4_settingsnew1_crash_enable">오류 보고기</string>
+    <string name="au4_settingsnew1_crash_enable_summary">이 기기에 비정상 종료 보고서와 기록된 오류를 저장합니다. 끄면 아무것도 기록되지 않으며, 앱은 정상적으로 동작합니다.</string>
+    <string name="au4_settingsnew1_crash_delete_all">모든 보고서 삭제</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">저장된 모든 비정상 종료 보고서와 오류 로그를 삭제합니다</string>
+    <string name="au4_torrentproxy_note_http">토렌트는 피어, 트래커, 호스트 이름 조회에 프록시를 사용합니다. HTTP 프록시는 UDP 트래픽을 전달할 수 없으므로 DHT와 uTP가 꺼지며, 프록시를 사용하는 동안 로컬 검색, UPnP, NAT-PMP도 꺼집니다.</string>
+    <string name="au4_torrentproxy_note_socks">토렌트는 피어, 트래커, 호스트 이름 조회에 프록시를 사용합니다. 프록시를 사용하는 동안 로컬 검색, UPnP, NAT-PMP는 꺼집니다. DHT와 uTP는 SOCKS5 프록시가 UDP를 지원하는 경우에만 작동합니다.</string>
+    <string name="au4_webapps2_user_agent">사용자 에이전트</string>
+    <string name="au4_webapps2_user_agent_default">기본값(모바일)</string>
+    <string name="au4_webapps2_user_agent_desktop">데스크톱</string>
+    <string name="au4_webapps2_user_agent_custom">사용자 지정</string>
+    <string name="au4_webapps2_user_agent_custom_title">사용자 지정 사용자 에이전트</string>
+    <string name="au4_webapps2_user_agent_custom_hint">사용자 에이전트 문자열</string>
+    <string name="au4_webapps2_cookies">쿠키 허용</string>
+    <string name="au4_webapps2_cookies_summary">웹 앱의 웹사이트가 쿠키를 저장할 수 있습니다. 끄면 모든 쿠키가 차단되며 로그인 상태를 유지하지 못할 수 있습니다.</string>
+    <string name="au4_webapps2_third_party_cookies">서드 파티 쿠키 허용</string>
+    <string name="au4_webapps2_third_party_cookies_summary">다른 사이트의 포함된 콘텐츠가 쿠키를 설정하도록 허용합니다. 개인정보 보호를 위해 기본적으로 꺼져 있습니다.</string>
+    <string name="au4_webapps2_clear_cookies">쿠키 및 사이트 데이터 삭제</string>
+    <string name="au4_webapps2_clear_cookies_summary">모든 웹 앱에서 로그아웃하고 캐시된 사이트 데이터를 삭제합니다</string>
+    <string name="au4_webapps2_clear_cookies_confirm">웹 앱의 모든 쿠키와 사이트 데이터를 삭제하시겠습니까?</string>
+    <string name="au4_webapps2_clear_cookies_done">쿠키 및 사이트 데이터를 삭제했습니다</string>
+    <string name="au4_webapps2_clear_cookies_action">삭제</string>
+</resources>

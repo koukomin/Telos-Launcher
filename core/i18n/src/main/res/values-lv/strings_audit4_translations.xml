@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Apstiprināt</string>
+    <string name="au4_confirms_cancel">Atcelt</string>
+    <string name="au4_confirms_nc_title">Vai izrakstīties no Nextcloud?</string>
+    <string name="au4_confirms_nc_message">Jūsu Nextcloud konts tiks noņemts no šī palaidēja. Jūs varat pierakstīties atkārtoti jebkurā laikā.</string>
+    <string name="au4_confirms_oc_title">Vai izrakstīties no ownCloud?</string>
+    <string name="au4_confirms_oc_message">Jūsu ownCloud konts tiks noņemts no šī palaidēja. Jūs varat pierakstīties atkārtoti jebkurā laikā.</string>
+    <string name="au4_confirms_plugin_title">Vai atinstalēt spraudni?</string>
+    <string name="au4_confirms_plugin_message">Spraudņa lietotne tiks atinstalēta no jūsu ierīces.</string>
+    <string name="au4_confirms_counts_title">Vai atiestatīt skaitītājus?</string>
+    <string name="au4_confirms_counts_message">Visi bloķēšanas saraksta skaitītāji tiks atiestatīti uz nulli.</string>
+    <string name="au4_confirms_bulk_title">Vai lietot visām parādītajām lietotnēm?</string>
+    <string name="au4_confirms_bulk_block_all">Vai bloķēt visu piekļuvi tīklam %1$d lietotnēm?</string>
+    <string name="au4_confirms_bulk_allow_all">Vai atļaut visu piekļuvi tīklam %1$d lietotnēm?</string>
+    <string name="au4_confirms_bulk_block_wifi">Vai bloķēt piekļuvi Wi-Fi %1$d lietotnēm?</string>
+    <string name="au4_confirms_bulk_block_mobile">Vai bloķēt piekļuvi mobilajiem datiem %1$d lietotnēm?</string>
+    <string name="au4_noteslink_link_existing">Saistīt esošu failu</string>
+    <string name="au4_noteslink_create_new">Izveidot jaunu failu</string>
+    <string name="au4_noteslink_cancel">Atcelt</string>
+    <string name="au4_settingsnew1_redial_attempts">Atkārtotas sastādīšanas mēģinājumi</string>
+    <string name="au4_settingsnew1_redial_delay">Aizkave starp mēģinājumiem</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Kļūdu ziņotājs</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Saglabāt avāriju pārskatus un reģistrētās kļūdas šajā ierīcē. Ja izslēgts, nekas netiek ierakstīts; lietotne joprojām darbojas normāli.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Dzēst visus pārskatus</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Noņemt visus saglabātos avāriju pārskatus un kļūdu žurnālus</string>
+    <string name="au4_torrentproxy_note_http">Torrenti izmanto starpniekserveri vienādranga mezgliem, trakeriem un resursdatoru nosaukumu meklēšanai. HTTP starpniekserveris nevar pārraidīt UDP datplūsmu, tāpēc DHT un uTP tiek izslēgti, un lokālā atklāšana, UPnP un NAT-PMP ir izslēgti, kamēr starpniekserveris ir ieslēgts.</string>
+    <string name="au4_torrentproxy_note_socks">Torrenti izmanto starpniekserveri vienādranga mezgliem, trakeriem un resursdatoru nosaukumu meklēšanai. Lokālā atklāšana, UPnP un NAT-PMP ir izslēgti, kamēr starpniekserveris ir ieslēgts. DHT un uTP darbojas tikai tad, ja jūsu SOCKS5 starpniekserveris atbalsta UDP.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Noklusējums (mobilais)</string>
+    <string name="au4_webapps2_user_agent_desktop">Darbvirsma</string>
+    <string name="au4_webapps2_user_agent_custom">Pielāgots</string>
+    <string name="au4_webapps2_user_agent_custom_title">Pielāgots user agent</string>
+    <string name="au4_webapps2_user_agent_custom_hint">User agent virkne</string>
+    <string name="au4_webapps2_cookies">Pieņemt sīkfailus</string>
+    <string name="au4_webapps2_cookies_summary">Tīmekļa lietotņu vietnes var glabāt sīkfailus. Izslēdziet, lai bloķētu visus sīkfailus; iespējams, nevarēsiet palikt pierakstījies.</string>
+    <string name="au4_webapps2_third_party_cookies">Pieņemt trešo pušu sīkfailus</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Atļaut citu vietņu iegultajam saturam iestatīt sīkfailus. Privātuma dēļ pēc noklusējuma atspējots.</string>
+    <string name="au4_webapps2_clear_cookies">Notīrīt sīkfailus un vietņu datus</string>
+    <string name="au4_webapps2_clear_cookies_summary">Izrakstīs jūs no visām tīmekļa lietotnēm un noņems kešatmiņā saglabātos vietņu datus</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Vai noņemt visus tīmekļa lietotņu sīkfailus un vietņu datus?</string>
+    <string name="au4_webapps2_clear_cookies_done">Sīkfaili un vietņu dati notīrīti</string>
+    <string name="au4_webapps2_clear_cookies_action">Notīrīt</string>
+</resources>

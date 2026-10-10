@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Potrdi</string>
+    <string name="au4_confirms_cancel">Prekliči</string>
+    <string name="au4_confirms_nc_title">Odjava iz Nextclouda?</string>
+    <string name="au4_confirms_nc_message">Vaš račun Nextcloud bo odstranjen iz tega zaganjalnika. Kadar koli se lahko znova prijavite.</string>
+    <string name="au4_confirms_oc_title">Odjava iz ownClouda?</string>
+    <string name="au4_confirms_oc_message">Vaš račun ownCloud bo odstranjen iz tega zaganjalnika. Kadar koli se lahko znova prijavite.</string>
+    <string name="au4_confirms_plugin_title">Odstranim vtičnik?</string>
+    <string name="au4_confirms_plugin_message">Aplikacija vtičnika bo odstranjena iz naprave.</string>
+    <string name="au4_confirms_counts_title">Ponastavim števce?</string>
+    <string name="au4_confirms_counts_message">Vsi števci blokad bodo ponastavljeni na nič.</string>
+    <string name="au4_confirms_bulk_title">Uporabim za vse prikazane aplikacije?</string>
+    <string name="au4_confirms_bulk_block_all">Blokiram ves dostop do omrežja za toliko aplikacij: %1$d?</string>
+    <string name="au4_confirms_bulk_allow_all">Dovolim ves dostop do omrežja za toliko aplikacij: %1$d?</string>
+    <string name="au4_confirms_bulk_block_wifi">Blokiram dostop do Wi-Fi za toliko aplikacij: %1$d?</string>
+    <string name="au4_confirms_bulk_block_mobile">Blokiram dostop do mobilnih podatkov za toliko aplikacij: %1$d?</string>
+    <string name="au4_noteslink_link_existing">Poveži obstoječo datoteko</string>
+    <string name="au4_noteslink_create_new">Ustvari novo datoteko</string>
+    <string name="au4_noteslink_cancel">Prekliči</string>
+    <string name="au4_settingsnew1_redial_attempts">Število poskusov ponovnega klica</string>
+    <string name="au4_settingsnew1_redial_delay">Zamik med poskusi</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Poročanje o zrušitvah</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Shranjuj poročila o zrušitvah in zabeležene napake v tej napravi. Ko je izklopljeno, se nič ne beleži; aplikacija deluje normalno.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Izbriši vsa poročila</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Odstrani vsa shranjena poročila o zrušitvah in dnevnike napak</string>
+    <string name="au4_torrentproxy_note_http">Torrenti uporabljajo posredniški strežnik za soležnike, sledilnike in razreševanje imen gostiteljev. Posredniški strežnik HTTP ne more prenašati prometa UDP, zato sta DHT in uTP izklopljena, lokalno odkrivanje, UPnP in NAT-PMP pa so izklopljeni, dokler je posredniški strežnik vklopljen.</string>
+    <string name="au4_torrentproxy_note_socks">Torrenti uporabljajo posredniški strežnik za soležnike, sledilnike in razreševanje imen gostiteljev. Lokalno odkrivanje, UPnP in NAT-PMP so izklopljeni, dokler je posredniški strežnik vklopljen. DHT in uTP delujeta le, če vaš posredniški strežnik SOCKS5 podpira UDP.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Privzeto (mobilno)</string>
+    <string name="au4_webapps2_user_agent_desktop">Namizje</string>
+    <string name="au4_webapps2_user_agent_custom">Po meri</string>
+    <string name="au4_webapps2_user_agent_custom_title">User agent po meri</string>
+    <string name="au4_webapps2_user_agent_custom_hint">Niz user agent</string>
+    <string name="au4_webapps2_cookies">Sprejmi piškotke</string>
+    <string name="au4_webapps2_cookies_summary">Spletna mesta v spletnih aplikacijah lahko shranjujejo piškotke. Izklopite za blokiranje vseh piškotkov; morda ne boste ostali prijavljeni.</string>
+    <string name="au4_webapps2_third_party_cookies">Sprejmi piškotke tretjih oseb</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Dovoli vdelani vsebini z drugih mest nastavljanje piškotkov. Zaradi zasebnosti je privzeto izklopljeno.</string>
+    <string name="au4_webapps2_clear_cookies">Počisti piškotke in podatke mest</string>
+    <string name="au4_webapps2_clear_cookies_summary">Odjavi vas iz vseh spletnih aplikacij in odstrani predpomnjene podatke mest</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Odstranim vse piškotke in podatke mest spletnih aplikacij?</string>
+    <string name="au4_webapps2_clear_cookies_done">Piškotki in podatki mest so počiščeni</string>
+    <string name="au4_webapps2_clear_cookies_action">Počisti</string>
+</resources>

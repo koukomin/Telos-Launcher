@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Bekræft</string>
+    <string name="au4_confirms_cancel">Annuller</string>
+    <string name="au4_confirms_nc_title">Log ud af Nextcloud?</string>
+    <string name="au4_confirms_nc_message">Din Nextcloud-konto fjernes fra denne launcher. Du kan logge ind igen når som helst.</string>
+    <string name="au4_confirms_oc_title">Log ud af ownCloud?</string>
+    <string name="au4_confirms_oc_message">Din ownCloud-konto fjernes fra denne launcher. Du kan logge ind igen når som helst.</string>
+    <string name="au4_confirms_plugin_title">Afinstaller plugin?</string>
+    <string name="au4_confirms_plugin_message">Plugin-appen afinstalleres fra din enhed.</string>
+    <string name="au4_confirms_counts_title">Nulstil tællere?</string>
+    <string name="au4_confirms_counts_message">Alle blokeringstællere for blokeringslisten sættes tilbage til nul.</string>
+    <string name="au4_confirms_bulk_title">Anvend på alle viste apps?</string>
+    <string name="au4_confirms_bulk_block_all">Bloker al netværksadgang for %1$d apps?</string>
+    <string name="au4_confirms_bulk_allow_all">Tillad al netværksadgang for %1$d apps?</string>
+    <string name="au4_confirms_bulk_block_wifi">Bloker Wi-Fi-adgang for %1$d apps?</string>
+    <string name="au4_confirms_bulk_block_mobile">Bloker adgang til mobildata for %1$d apps?</string>
+    <string name="au4_noteslink_link_existing">Link eksisterende fil</string>
+    <string name="au4_noteslink_create_new">Opret ny fil</string>
+    <string name="au4_noteslink_cancel">Annuller</string>
+    <string name="au4_settingsnew1_redial_attempts">Genopkaldsforsøg</string>
+    <string name="au4_settingsnew1_redial_delay">Forsinkelse mellem forsøg</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Nedbrudsrapportering</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Gem nedbrudsrapporter og loggede fejl på denne enhed. Når den er slået fra, registreres intet; appen fungerer stadig normalt.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Slet alle rapporter</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Fjern alle gemte nedbrudsrapporter og fejllogge</string>
+    <string name="au4_torrentproxy_note_http">Torrents bruger proxyen til peers, trackere og opslag af værtsnavne. En HTTP-proxy kan ikke bære UDP-trafik, så DHT og uTP er slået fra, og lokal registrering, UPnP og NAT-PMP er slået fra, mens en proxy er aktiv.</string>
+    <string name="au4_torrentproxy_note_socks">Torrents bruger proxyen til peers, trackere og opslag af værtsnavne. Lokal registrering, UPnP og NAT-PMP er slået fra, mens en proxy er aktiv. DHT og uTP fungerer kun, hvis din SOCKS5-proxy understøtter UDP.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Standard (mobil)</string>
+    <string name="au4_webapps2_user_agent_desktop">Skrivebord</string>
+    <string name="au4_webapps2_user_agent_custom">Brugerdefineret</string>
+    <string name="au4_webapps2_user_agent_custom_title">Brugerdefineret user agent</string>
+    <string name="au4_webapps2_user_agent_custom_hint">User agent-streng</string>
+    <string name="au4_webapps2_cookies">Acceptér cookies</string>
+    <string name="au4_webapps2_cookies_summary">Websteder i webapps kan gemme cookies. Slå fra for at blokere alle cookies; du forbliver muligvis ikke logget ind.</string>
+    <string name="au4_webapps2_third_party_cookies">Acceptér tredjepartscookies</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Tillad indlejret indhold fra andre websteder at sætte cookies. Slået fra som standard af hensyn til privatlivet.</string>
+    <string name="au4_webapps2_clear_cookies">Ryd cookies og webstedsdata</string>
+    <string name="au4_webapps2_clear_cookies_summary">Logger dig ud af alle webapps og fjerner cachelagrede webstedsdata</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Fjern alle cookies og webstedsdata fra webapps?</string>
+    <string name="au4_webapps2_clear_cookies_done">Cookies og webstedsdata ryddet</string>
+    <string name="au4_webapps2_clear_cookies_action">Ryd</string>
+</resources>

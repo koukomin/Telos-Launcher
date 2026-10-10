@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Vahvista</string>
+    <string name="au4_confirms_cancel">Peruuta</string>
+    <string name="au4_confirms_nc_title">Kirjaudutaanko ulos Nextcloudista?</string>
+    <string name="au4_confirms_nc_message">Nextcloud-tilisi poistetaan tästä käynnistimestä. Voit kirjautua sisään uudelleen milloin tahansa.</string>
+    <string name="au4_confirms_oc_title">Kirjaudutaanko ulos ownCloudista?</string>
+    <string name="au4_confirms_oc_message">ownCloud-tilisi poistetaan tästä käynnistimestä. Voit kirjautua sisään uudelleen milloin tahansa.</string>
+    <string name="au4_confirms_plugin_title">Poistetaanko lisäosa?</string>
+    <string name="au4_confirms_plugin_message">Lisäosasovellus poistetaan laitteeltasi.</string>
+    <string name="au4_confirms_counts_title">Nollataanko laskurit?</string>
+    <string name="au4_confirms_counts_message">Kaikki estolistan estolaskurit nollataan.</string>
+    <string name="au4_confirms_bulk_title">Käytetäänkö kaikkiin näytettyihin sovelluksiin?</string>
+    <string name="au4_confirms_bulk_block_all">Estetäänkö kaikki verkkoyhteydet %1$d sovellukselta?</string>
+    <string name="au4_confirms_bulk_allow_all">Sallitaanko kaikki verkkoyhteydet %1$d sovellukselle?</string>
+    <string name="au4_confirms_bulk_block_wifi">Estetäänkö Wi-Fi-yhteys %1$d sovellukselta?</string>
+    <string name="au4_confirms_bulk_block_mobile">Estetäänkö mobiilidatayhteys %1$d sovellukselta?</string>
+    <string name="au4_noteslink_link_existing">Yhdistä olemassa oleva tiedosto</string>
+    <string name="au4_noteslink_create_new">Luo uusi tiedosto</string>
+    <string name="au4_noteslink_cancel">Peruuta</string>
+    <string name="au4_settingsnew1_redial_attempts">Uudelleenyritykset</string>
+    <string name="au4_settingsnew1_redial_delay">Viive yritysten välillä</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Kaatumisraportointi</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Tallenna kaatumisraportit ja kirjatut virheet tälle laitteelle. Kun asetus on pois päältä, mitään ei tallenneta; sovellus toimii silti normaalisti.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Poista kaikki raportit</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Poista kaikki tallennetut kaatumisraportit ja virhelokit</string>
+    <string name="au4_torrentproxy_note_http">Torrentit käyttävät välityspalvelinta vertaisiin, seurantapalvelimiin ja isäntänimien hakuun. HTTP-välityspalvelin ei voi välittää UDP-liikennettä, joten DHT ja uTP ovat pois käytöstä, ja paikallinen etsintä, UPnP ja NAT-PMP ovat pois käytöstä, kun välityspalvelin on käytössä.</string>
+    <string name="au4_torrentproxy_note_socks">Torrentit käyttävät välityspalvelinta vertaisiin, seurantapalvelimiin ja isäntänimien hakuun. Paikallinen etsintä, UPnP ja NAT-PMP ovat pois käytöstä, kun välityspalvelin on käytössä. DHT ja uTP toimivat vain, jos SOCKS5-välityspalvelimesi tukee UDP:tä.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Oletus (mobiili)</string>
+    <string name="au4_webapps2_user_agent_desktop">Työpöytä</string>
+    <string name="au4_webapps2_user_agent_custom">Mukautettu</string>
+    <string name="au4_webapps2_user_agent_custom_title">Mukautettu user agent</string>
+    <string name="au4_webapps2_user_agent_custom_hint">User agent -merkkijono</string>
+    <string name="au4_webapps2_cookies">Hyväksy evästeet</string>
+    <string name="au4_webapps2_cookies_summary">Verkkosovellusten verkkosivut voivat tallentaa evästeitä. Poista käytöstä estääksesi kaikki evästeet; et ehkä pysy kirjautuneena.</string>
+    <string name="au4_webapps2_third_party_cookies">Hyväksy kolmannen osapuolen evästeet</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Salli muilta sivustoilta upotetun sisällön asettaa evästeitä. Pois käytöstä oletuksena yksityisyyden vuoksi.</string>
+    <string name="au4_webapps2_clear_cookies">Tyhjennä evästeet ja sivustotiedot</string>
+    <string name="au4_webapps2_clear_cookies_summary">Kirjaa sinut ulos kaikista verkkosovelluksista ja poistaa välimuistissa olevat sivustotiedot</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Poistetaanko kaikki verkkosovellusten evästeet ja sivustotiedot?</string>
+    <string name="au4_webapps2_clear_cookies_done">Evästeet ja sivustotiedot tyhjennetty</string>
+    <string name="au4_webapps2_clear_cookies_action">Tyhjennä</string>
+</resources>

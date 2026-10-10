@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au4_confirms_confirm">Deimhnigh</string>
+    <string name="au4_confirms_cancel">Cealaigh</string>
+    <string name="au4_confirms_nc_title">Logáil amach as Nextcloud?</string>
+    <string name="au4_confirms_nc_message">Bainfear do chuntas Nextcloud den lainseálaí seo. Is féidir leat logáil isteach arís am ar bith.</string>
+    <string name="au4_confirms_oc_title">Logáil amach as ownCloud?</string>
+    <string name="au4_confirms_oc_message">Bainfear do chuntas ownCloud den lainseálaí seo. Is féidir leat logáil isteach arís am ar bith.</string>
+    <string name="au4_confirms_plugin_title">Díshuiteáil an breiseán?</string>
+    <string name="au4_confirms_plugin_message">Díshuiteofar aip an bhreiseáin ó do ghléas.</string>
+    <string name="au4_confirms_counts_title">Athshocraigh na comhaireamh?</string>
+    <string name="au4_confirms_counts_message">Athshocrófar gach comhaireamh bloic de liosta blocála go nialas.</string>
+    <string name="au4_confirms_bulk_title">Cuir i bhfeidhm ar gach aip a thaispeántar?</string>
+    <string name="au4_confirms_bulk_block_all">Bac gach rochtain ar an líonra do %1$d aip?</string>
+    <string name="au4_confirms_bulk_allow_all">Ceadaigh gach rochtain ar an líonra do %1$d aip?</string>
+    <string name="au4_confirms_bulk_block_wifi">Bac rochtain Wi-Fi do %1$d aip?</string>
+    <string name="au4_confirms_bulk_block_mobile">Bac rochtain sonraí soghluaiste do %1$d aip?</string>
+    <string name="au4_noteslink_link_existing">Nasc comhad atá ann cheana</string>
+    <string name="au4_noteslink_create_new">Cruthaigh comhad nua</string>
+    <string name="au4_noteslink_cancel">Cealaigh</string>
+    <string name="au4_settingsnew1_redial_attempts">Iarrachtaí athdhiailithe</string>
+    <string name="au4_settingsnew1_redial_delay">Moill idir iarrachtaí</string>
+    <string name="au4_settingsnew1_seconds">%1$d s</string>
+    <string name="au4_settingsnew1_crash_enable">Tuairisceoir tuairteanna</string>
+    <string name="au4_settingsnew1_crash_enable_summary">Sábháil tuarascálacha tuairte agus earráidí logáilte ar an ngléas seo. Nuair a bheidh sé múchta, ní thaifeadtar tada; oibríonn an aip go gnáth fós.</string>
+    <string name="au4_settingsnew1_crash_delete_all">Scrios gach tuarascáil</string>
+    <string name="au4_settingsnew1_crash_delete_all_summary">Bain gach tuarascáil tuairte agus logchomhad earráidí sábháilte</string>
+    <string name="au4_torrentproxy_note_http">Úsáideann torrains an seachfhreastalaí le haghaidh piaraí, rianairí agus cuardach ainmneacha óstach. Ní féidir le seachfhreastalaí HTTP trácht UDP a iompar, mar sin múchtar DHT agus uTP, agus múchtar fionnachtain áitiúil, UPnP agus NAT-PMP agus seachfhreastalaí ar siúl.</string>
+    <string name="au4_torrentproxy_note_socks">Úsáideann torrains an seachfhreastalaí le haghaidh piaraí, rianairí agus cuardach ainmneacha óstach. Múchtar fionnachtain áitiúil, UPnP agus NAT-PMP agus seachfhreastalaí ar siúl. Ní oibríonn DHT agus uTP ach amháin má thacaíonn do sheachfhreastalaí SOCKS5 le UDP.</string>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Réamhshocrú (soghluaiste)</string>
+    <string name="au4_webapps2_user_agent_desktop">Deasc</string>
+    <string name="au4_webapps2_user_agent_custom">Saincheaptha</string>
+    <string name="au4_webapps2_user_agent_custom_title">User agent saincheaptha</string>
+    <string name="au4_webapps2_user_agent_custom_hint">Teaghrán user agent</string>
+    <string name="au4_webapps2_cookies">Glac le fianáin</string>
+    <string name="au4_webapps2_cookies_summary">Is féidir le suíomhanna gréasáin in aipeanna gréasáin fianáin a stóráil. Múch chun gach fianán a bhac; b\'fhéidir nach mbeidh tú in ann fanacht logáilte isteach.</string>
+    <string name="au4_webapps2_third_party_cookies">Glac le fianáin tríú páirtí</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Lig d\'ábhar leabaithe ó shuíomhanna eile fianáin a shocrú. Díchumasaithe de réir réamhshocraithe ar mhaithe le príobháideacht.</string>
+    <string name="au4_webapps2_clear_cookies">Glan fianáin agus sonraí suímh</string>
+    <string name="au4_webapps2_clear_cookies_summary">Logálann tú amach as gach aip ghréasáin agus bainfidh sé sonraí suímh i dtaisce</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Bain gach fianán agus sonraí suímh d\'aipeanna gréasáin?</string>
+    <string name="au4_webapps2_clear_cookies_done">Glanadh fianáin agus sonraí suímh</string>
+    <string name="au4_webapps2_clear_cookies_action">Glan</string>
+</resources>
