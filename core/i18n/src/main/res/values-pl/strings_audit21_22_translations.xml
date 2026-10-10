@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Nieprawidłowe hasło</string>
+    <string name="au21_arch_password_needed">To archiwum jest chronione hasłem</string>
+    <string name="au21_arch_failed">Nie można otworzyć archiwum</string>
+    <string name="au21_arch_pw_title">Wymagane hasło</string>
+    <string name="au21_arch_pw_info">%1$s jest chronione hasłem. Wprowadź hasło, aby je otworzyć lub rozpakować. Hasło jest przechowywane w pamięci tylko podczas przeglądania archiwum i nigdy nie jest zapisywane.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Sprawdzanie…</string>
+    <string name="au21_arch_show">Pokaż</string>
+    <string name="au21_arch_hide">Ukryj</string>
+    <string name="au21_arch_compress">Kompresuj…</string>
+    <string name="au21_arch_format">Format</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Hasło (AES-256, opcjonalne)</string>
+    <string name="au21_arch_pw_repeat">Powtórz hasło</string>
+    <string name="au21_arch_pw_mismatch">Hasła nie są zgodne</string>
+    <string name="au21_arch_zip_note">W przypadku hasła pliki są szyfrowane algorytmem AES-256. Nazwy plików pozostają widoczne. Telos nigdy nie używa słabego szyfrowania ZipCrypto. Hasła nie można odzyskać, dlatego przechowuj je bezpiecznie.</string>
+    <string name="au21_arch_no_pw_note">Archiwa 7z i tar.gz są tworzone bez hasła.</string>
+    <string name="au22_files_open_as_archive">Otwórz jako archiwum</string>
+    <string name="au22_files_view_mode">Tryb widoku</string>
+    <string name="au22_files_view_list">Lista</string>
+    <string name="au22_files_view_grid_medium">Siatka, średnie podglądy</string>
+    <string name="au22_files_view_grid_large">Siatka, duże podglądy</string>
+    <string name="au22_files_gshortcut_failed">Nie można otworzyć tego skrótu Dysku Google</string>
+</resources>

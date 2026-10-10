@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Hibás jelszó</string>
+    <string name="au21_arch_password_needed">Ez az archívum jelszóval védett</string>
+    <string name="au21_arch_failed">Az archívumot nem sikerült megnyitni</string>
+    <string name="au21_arch_pw_title">Jelszó szükséges</string>
+    <string name="au21_arch_pw_info">A(z) %1$s jelszóval védett. Adja meg a jelszót a megnyitáshoz vagy kicsomagoláshoz. A jelszót csak addig őrizzük a memóriában, amíg az archívumban van, és soha nem mentjük el.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Ellenőrzés…</string>
+    <string name="au21_arch_show">Megjelenítés</string>
+    <string name="au21_arch_hide">Elrejtés</string>
+    <string name="au21_arch_compress">Tömörítés…</string>
+    <string name="au21_arch_format">Formátum</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Jelszó (AES-256, nem kötelező)</string>
+    <string name="au21_arch_pw_repeat">Jelszó megismétlése</string>
+    <string name="au21_arch_pw_mismatch">A jelszavak nem egyeznek</string>
+    <string name="au21_arch_zip_note">Jelszóval a fájlok AES-256 titkosítással készülnek. A fájlnevek láthatók maradnak. A Telos soha nem használja a gyenge ZipCrypto titkosítást. A jelszó nem állítható helyre, ezért őrizze meg biztonságosan.</string>
+    <string name="au21_arch_no_pw_note">A 7z és tar.gz archívumok jelszó nélkül jönnek létre.</string>
+    <string name="au22_files_open_as_archive">Megnyitás archívumként</string>
+    <string name="au22_files_view_mode">Nézet</string>
+    <string name="au22_files_view_list">Lista</string>
+    <string name="au22_files_view_grid_medium">Rács, közepes előnézetek</string>
+    <string name="au22_files_view_grid_large">Rács, nagy előnézetek</string>
+    <string name="au22_files_gshortcut_failed">Ez a Google Drive-parancsikon nem nyitható meg</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">كلمة المرور غير صحيحة</string>
+    <string name="au21_arch_password_needed">هذا الأرشيف محمي بكلمة مرور</string>
+    <string name="au21_arch_failed">تعذّر فتح الأرشيف</string>
+    <string name="au21_arch_pw_title">كلمة المرور مطلوبة</string>
+    <string name="au21_arch_pw_info">%1$s محمي بكلمة مرور. أدخل كلمة المرور لفتحه أو فك ضغطه. تُحفظ كلمة المرور في الذاكرة فقط أثناء وجودك داخل الأرشيف ولا يتم حفظها أبدًا.</string>
+    <string name="au21_arch_ok">حسنًا</string>
+    <string name="au21_arch_checking">جارٍ التحقق…</string>
+    <string name="au21_arch_show">إظهار</string>
+    <string name="au21_arch_hide">إخفاء</string>
+    <string name="au21_arch_compress">ضغط…</string>
+    <string name="au21_arch_format">الصيغة</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">كلمة المرور (AES-256، اختيارية)</string>
+    <string name="au21_arch_pw_repeat">أعد إدخال كلمة المرور</string>
+    <string name="au21_arch_pw_mismatch">كلمتا المرور غير متطابقتين</string>
+    <string name="au21_arch_zip_note">عند تعيين كلمة مرور، تُشفَّر الملفات باستخدام AES-256. تبقى أسماء الملفات مرئية. لا يستخدم Telos أبدًا تشفير ZipCrypto الضعيف. لا يمكن استرداد كلمة المرور، لذا احتفظ بها في مكان آمن.</string>
+    <string name="au21_arch_no_pw_note">تُنشأ أرشيفات 7z وtar.gz بدون كلمة مرور.</string>
+    <string name="au22_files_open_as_archive">فتح كأرشيف</string>
+    <string name="au22_files_view_mode">وضع العرض</string>
+    <string name="au22_files_view_list">قائمة</string>
+    <string name="au22_files_view_grid_medium">شبكة، معاينات متوسطة</string>
+    <string name="au22_files_view_grid_large">شبكة، معاينات كبيرة</string>
+    <string name="au22_files_gshortcut_failed">لا يمكن فتح اختصار Google Drive هذا</string>
+</resources>

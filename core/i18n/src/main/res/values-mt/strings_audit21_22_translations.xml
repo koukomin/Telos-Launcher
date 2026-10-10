@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Password ħażina</string>
+    <string name="au21_arch_password_needed">Dan l-arkivju huwa protett b\'password</string>
+    <string name="au21_arch_failed">Ma nstabx possibbli li jinfetaħ l-arkivju</string>
+    <string name="au21_arch_pw_title">Password meħtieġa</string>
+    <string name="au21_arch_pw_info">%1$s huwa protett b\'password. Daħħal il-password tiegħu biex tiftaħ jew tneħħi mill-pakkett. Il-password tinżamm biss fil-memorja waqt li tkun fl-arkivju u qatt ma tiġi ssejvjata.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Qed jiġi vverifikat…</string>
+    <string name="au21_arch_show">Uri</string>
+    <string name="au21_arch_hide">Aħbi</string>
+    <string name="au21_arch_compress">Ikkompressa…</string>
+    <string name="au21_arch_format">Format</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Password (AES-256, mhux obbligatorja)</string>
+    <string name="au21_arch_pw_repeat">Erġa\' ddaħħal il-password</string>
+    <string name="au21_arch_pw_mismatch">Il-passwords ma jaqblux</string>
+    <string name="au21_arch_zip_note">B\'password, il-fajls jiġu kriptati b\'AES-256. L-ismijiet tal-fajls jibqgħu viżibbli. Telos qatt ma jikteb il-kriptaġġ dgħajjef ZipCrypto. Il-password ma tistax tiġi rkuprata, mela żommha f\'lok sigur.</string>
+    <string name="au21_arch_no_pw_note">L-arkivji 7z u tar.gz jinħolqu mingħajr password.</string>
+    <string name="au22_files_open_as_archive">Iftaħ bħala arkivju</string>
+    <string name="au22_files_view_mode">Mod ta\' veduta</string>
+    <string name="au22_files_view_list">Lista</string>
+    <string name="au22_files_view_grid_medium">Griglja, previews medji</string>
+    <string name="au22_files_view_grid_large">Griglja, previews kbar</string>
+    <string name="au22_files_gshortcut_failed">Din ix-shortcut ta\' Google Drive ma tistax tinfetaħ</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Mot de passe incorrect</string>
+    <string name="au21_arch_password_needed">Cette archive est protégée par un mot de passe</string>
+    <string name="au21_arch_failed">Impossible d\'ouvrir l\'archive</string>
+    <string name="au21_arch_pw_title">Mot de passe requis</string>
+    <string name="au21_arch_pw_info">%1$s est protégé par un mot de passe. Saisissez-le pour l\'ouvrir ou l\'extraire. Le mot de passe n\'est conservé en mémoire que tant que vous êtes dans l\'archive et n\'est jamais enregistré.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Vérification…</string>
+    <string name="au21_arch_show">Afficher</string>
+    <string name="au21_arch_hide">Masquer</string>
+    <string name="au21_arch_compress">Compresser…</string>
+    <string name="au21_arch_format">Format</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Mot de passe (AES-256, facultatif)</string>
+    <string name="au21_arch_pw_repeat">Répéter le mot de passe</string>
+    <string name="au21_arch_pw_mismatch">Les mots de passe ne correspondent pas</string>
+    <string name="au21_arch_zip_note">Avec un mot de passe, les fichiers sont chiffrés en AES-256. Les noms de fichiers restent visibles. Telos n\'utilise jamais le chiffrement ZipCrypto, jugé faible. Le mot de passe est irrécupérable, conservez-le donc précieusement.</string>
+    <string name="au21_arch_no_pw_note">Les archives 7z et tar.gz sont créées sans mot de passe.</string>
+    <string name="au22_files_open_as_archive">Ouvrir comme archive</string>
+    <string name="au22_files_view_mode">Mode d\'affichage</string>
+    <string name="au22_files_view_list">Liste</string>
+    <string name="au22_files_view_grid_medium">Grille, aperçus moyens</string>
+    <string name="au22_files_view_grid_large">Grille, grands aperçus</string>
+    <string name="au22_files_gshortcut_failed">Ce raccourci Google Drive ne peut pas être ouvert</string>
+</resources>

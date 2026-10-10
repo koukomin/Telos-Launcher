@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Nepareiza parole</string>
+    <string name="au21_arch_password_needed">Šis arhīvs ir aizsargāts ar paroli</string>
+    <string name="au21_arch_failed">Neizdevās atvērt arhīvu</string>
+    <string name="au21_arch_pw_title">Nepieciešama parole</string>
+    <string name="au21_arch_pw_info">%1$s ir aizsargāts ar paroli. Ievadiet paroli, lai to atvērtu vai izsaiņotu. Parole tiek glabāta tikai atmiņā, kamēr atrodaties arhīvā, un nekad netiek saglabāta.</string>
+    <string name="au21_arch_ok">Labi</string>
+    <string name="au21_arch_checking">Notiek pārbaude…</string>
+    <string name="au21_arch_show">Rādīt</string>
+    <string name="au21_arch_hide">Paslēpt</string>
+    <string name="au21_arch_compress">Saspiest…</string>
+    <string name="au21_arch_format">Formāts</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Parole (AES-256, neobligāta)</string>
+    <string name="au21_arch_pw_repeat">Atkārtojiet paroli</string>
+    <string name="au21_arch_pw_mismatch">Paroles nesakrīt</string>
+    <string name="au21_arch_zip_note">Ar paroli faili tiek šifrēti ar AES-256. Failu nosaukumi paliek redzami. Telos nekad neizmanto vājo ZipCrypto šifrēšanu. Paroli nevar atgūt, tāpēc glabājiet to drošībā.</string>
+    <string name="au21_arch_no_pw_note">7z un tar.gz arhīvi tiek izveidoti bez paroles.</string>
+    <string name="au22_files_open_as_archive">Atvērt kā arhīvu</string>
+    <string name="au22_files_view_mode">Skata režīms</string>
+    <string name="au22_files_view_list">Saraksts</string>
+    <string name="au22_files_view_grid_medium">Režģis, vidēji priekšskatījumi</string>
+    <string name="au22_files_view_grid_large">Režģis, lieli priekšskatījumi</string>
+    <string name="au22_files_gshortcut_failed">Šo Google Drive saīsni nevar atvērt</string>
+</resources>

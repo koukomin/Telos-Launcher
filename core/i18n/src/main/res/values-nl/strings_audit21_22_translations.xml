@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Onjuist wachtwoord</string>
+    <string name="au21_arch_password_needed">Dit archief is met een wachtwoord beveiligd</string>
+    <string name="au21_arch_failed">Kan het archief niet openen</string>
+    <string name="au21_arch_pw_title">Wachtwoord vereist</string>
+    <string name="au21_arch_pw_info">%1$s is met een wachtwoord beveiligd. Voer het wachtwoord in om het te openen of uit te pakken. Het wachtwoord wordt alleen in het geheugen bewaard zolang u in het archief bent en wordt nooit opgeslagen.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Controleren…</string>
+    <string name="au21_arch_show">Tonen</string>
+    <string name="au21_arch_hide">Verbergen</string>
+    <string name="au21_arch_compress">Comprimeren…</string>
+    <string name="au21_arch_format">Indeling</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Wachtwoord (AES-256, optioneel)</string>
+    <string name="au21_arch_pw_repeat">Wachtwoord herhalen</string>
+    <string name="au21_arch_pw_mismatch">De wachtwoorden komen niet overeen</string>
+    <string name="au21_arch_zip_note">Met een wachtwoord worden de bestanden versleuteld met AES-256. Bestandsnamen blijven zichtbaar. Telos gebruikt nooit de zwakke ZipCrypto-versleuteling. Het wachtwoord kan niet worden hersteld, bewaar het dus goed.</string>
+    <string name="au21_arch_no_pw_note">7z- en tar.gz-archieven worden zonder wachtwoord gemaakt.</string>
+    <string name="au22_files_open_as_archive">Openen als archief</string>
+    <string name="au22_files_view_mode">Weergavemodus</string>
+    <string name="au22_files_view_list">Lijst</string>
+    <string name="au22_files_view_grid_medium">Raster, middelgrote voorvertoningen</string>
+    <string name="au22_files_view_grid_large">Raster, grote voorvertoningen</string>
+    <string name="au22_files_gshortcut_failed">Deze Google Drive-snelkoppeling kan niet worden geopend</string>
+</resources>

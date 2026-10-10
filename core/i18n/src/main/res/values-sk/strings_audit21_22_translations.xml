@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Nesprávne heslo</string>
+    <string name="au21_arch_password_needed">Tento archív je chránený heslom</string>
+    <string name="au21_arch_failed">Archív sa nepodarilo otvoriť</string>
+    <string name="au21_arch_pw_title">Vyžaduje sa heslo</string>
+    <string name="au21_arch_pw_info">%1$s je chránený heslom. Zadajte heslo na otvorenie alebo rozbalenie. Heslo sa uchováva v pamäti len dovtedy, kým ste v archíve, a nikdy sa neukladá.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Kontrola…</string>
+    <string name="au21_arch_show">Zobraziť</string>
+    <string name="au21_arch_hide">Skryť</string>
+    <string name="au21_arch_compress">Komprimovať…</string>
+    <string name="au21_arch_format">Formát</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Heslo (AES-256, voliteľné)</string>
+    <string name="au21_arch_pw_repeat">Zopakujte heslo</string>
+    <string name="au21_arch_pw_mismatch">Heslá sa nezhodujú</string>
+    <string name="au21_arch_zip_note">S heslom sa súbory šifrujú pomocou AES-256. Názvy súborov zostávajú viditeľné. Telos nikdy nepoužíva slabé šifrovanie ZipCrypto. Heslo sa nedá obnoviť, preto si ho dobre uschovajte.</string>
+    <string name="au21_arch_no_pw_note">Archívy 7z a tar.gz sa vytvárajú bez hesla.</string>
+    <string name="au22_files_open_as_archive">Otvoriť ako archív</string>
+    <string name="au22_files_view_mode">Režim zobrazenia</string>
+    <string name="au22_files_view_list">Zoznam</string>
+    <string name="au22_files_view_grid_medium">Mriežka, stredné ukážky</string>
+    <string name="au22_files_view_grid_large">Mriežka, veľké ukážky</string>
+    <string name="au22_files_gshortcut_failed">Túto skratku Disku Google nemožno otvoriť</string>
+</resources>

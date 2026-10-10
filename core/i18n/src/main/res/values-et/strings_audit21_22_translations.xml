@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Vale parool</string>
+    <string name="au21_arch_password_needed">See arhiiv on parooliga kaitstud</string>
+    <string name="au21_arch_failed">Arhiivi avamine ebaõnnestus</string>
+    <string name="au21_arch_pw_title">Parool on nõutav</string>
+    <string name="au21_arch_pw_info">%1$s on parooliga kaitstud. Selle avamiseks või lahtipakkimiseks sisesta parool. Parooli hoitakse mälus ainult seni, kuni oled arhiivis, ja seda ei salvestata kunagi.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Kontrollimine…</string>
+    <string name="au21_arch_show">Kuva</string>
+    <string name="au21_arch_hide">Peida</string>
+    <string name="au21_arch_compress">Paki kokku…</string>
+    <string name="au21_arch_format">Vorming</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Parool (AES-256, valikuline)</string>
+    <string name="au21_arch_pw_repeat">Korda parooli</string>
+    <string name="au21_arch_pw_mismatch">Paroolid ei ühti</string>
+    <string name="au21_arch_zip_note">Parooli korral krüpteeritakse failid AES-256-ga. Failinimed jäävad nähtavaks. Telos ei kasuta kunagi nõrka ZipCrypto krüpteerimist. Parooli ei saa taastada, seega hoia seda kindlas kohas.</string>
+    <string name="au21_arch_no_pw_note">7z- ja tar.gz-arhiivid luuakse ilma paroolita.</string>
+    <string name="au22_files_open_as_archive">Ava arhiivina</string>
+    <string name="au22_files_view_mode">Vaaterežiim</string>
+    <string name="au22_files_view_list">Loend</string>
+    <string name="au22_files_view_grid_medium">Ruudustik, keskmised eelvaated</string>
+    <string name="au22_files_view_grid_large">Ruudustik, suured eelvaated</string>
+    <string name="au22_files_gshortcut_failed">Seda Google Drive\'i otseteed ei saa avada</string>
+</resources>

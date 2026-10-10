@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Forkert adgangskode</string>
+    <string name="au21_arch_password_needed">Arkivet er beskyttet med adgangskode</string>
+    <string name="au21_arch_failed">Arkivet kunne ikke åbnes</string>
+    <string name="au21_arch_pw_title">Adgangskode påkrævet</string>
+    <string name="au21_arch_pw_info">%1$s er beskyttet med adgangskode. Indtast adgangskoden for at åbne eller udpakke det. Adgangskoden gemmes kun i hukommelsen, mens du er i arkivet, og bliver aldrig gemt permanent.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Kontrollerer…</string>
+    <string name="au21_arch_show">Vis</string>
+    <string name="au21_arch_hide">Skjul</string>
+    <string name="au21_arch_compress">Komprimer…</string>
+    <string name="au21_arch_format">Format</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Adgangskode (AES-256, valgfri)</string>
+    <string name="au21_arch_pw_repeat">Gentag adgangskode</string>
+    <string name="au21_arch_pw_mismatch">Adgangskoderne er ikke ens</string>
+    <string name="au21_arch_zip_note">Med en adgangskode krypteres filerne med AES-256. Filnavne forbliver synlige. Telos skriver aldrig den svage ZipCrypto-kryptering. Adgangskoden kan ikke gendannes, så opbevar den sikkert.</string>
+    <string name="au21_arch_no_pw_note">7z- og tar.gz-arkiver oprettes uden adgangskode.</string>
+    <string name="au22_files_open_as_archive">Åbn som arkiv</string>
+    <string name="au22_files_view_mode">Visningstilstand</string>
+    <string name="au22_files_view_list">Liste</string>
+    <string name="au22_files_view_grid_medium">Gitter, mellemstore forhåndsvisninger</string>
+    <string name="au22_files_view_grid_large">Gitter, store forhåndsvisninger</string>
+    <string name="au22_files_gshortcut_failed">Denne Google Drive-genvej kan ikke åbnes</string>
+</resources>

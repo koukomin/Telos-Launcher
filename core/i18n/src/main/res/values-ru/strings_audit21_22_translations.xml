@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Неверный пароль</string>
+    <string name="au21_arch_password_needed">Этот архив защищён паролем</string>
+    <string name="au21_arch_failed">Не удалось открыть архив</string>
+    <string name="au21_arch_pw_title">Требуется пароль</string>
+    <string name="au21_arch_pw_info">%1$s защищён паролем. Введите пароль, чтобы открыть или распаковать его. Пароль хранится в памяти только пока вы находитесь в архиве и никогда не сохраняется.</string>
+    <string name="au21_arch_ok">ОК</string>
+    <string name="au21_arch_checking">Проверка…</string>
+    <string name="au21_arch_show">Показать</string>
+    <string name="au21_arch_hide">Скрыть</string>
+    <string name="au21_arch_compress">Сжать…</string>
+    <string name="au21_arch_format">Формат</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Пароль (AES-256, необязательно)</string>
+    <string name="au21_arch_pw_repeat">Повторите пароль</string>
+    <string name="au21_arch_pw_mismatch">Пароли не совпадают</string>
+    <string name="au21_arch_zip_note">При использовании пароля файлы шифруются алгоритмом AES-256. Имена файлов остаются видимыми. Telos никогда не использует слабое шифрование ZipCrypto. Пароль нельзя восстановить, поэтому храните его надёжно.</string>
+    <string name="au21_arch_no_pw_note">Архивы 7z и tar.gz создаются без пароля.</string>
+    <string name="au22_files_open_as_archive">Открыть как архив</string>
+    <string name="au22_files_view_mode">Режим просмотра</string>
+    <string name="au22_files_view_list">Список</string>
+    <string name="au22_files_view_grid_medium">Сетка, средние превью</string>
+    <string name="au22_files_view_grid_large">Сетка, крупные превью</string>
+    <string name="au22_files_gshortcut_failed">Этот ярлык Google Диска не может быть открыт</string>
+</resources>
