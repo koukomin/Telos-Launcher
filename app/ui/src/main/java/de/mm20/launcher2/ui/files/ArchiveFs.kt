@@ -1,13 +1,24 @@
 package de.mm20.launcher2.ui.files
 
 import android.net.Uri
+import de.mm20.launcher2.helper.ArchiveFormats
+import de.mm20.launcher2.helper.ArchiveKind
+import net.lingala.zip4j.exception.ZipException
+import net.lingala.zip4j.model.FileHeader
+import net.lingala.zip4j.model.enums.EncryptionMethod
+import org.apache.commons.compress.PasswordRequiredException
 import org.apache.commons.compress.archivers.ArchiveEntry
 import org.apache.commons.compress.archivers.ArchiveInputStream
 import org.apache.commons.compress.archivers.ArchiveStreamFactory
+import org.apache.commons.compress.archivers.cpio.CpioArchiveEntry
+import org.apache.commons.compress.archivers.sevenz.SevenZArchiveEntry
 import org.apache.commons.compress.archivers.sevenz.SevenZFile
+import org.apache.commons.compress.archivers.sevenz.SevenZMethod
+import org.apache.commons.compress.archivers.tar.TarArchiveEntry
 import org.apache.commons.compress.archivers.zip.ZipFile
 import org.apache.commons.compress.compressors.CompressorStreamFactory
 import java.io.BufferedInputStream
+import java.io.Closeable
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
