@@ -667,6 +667,7 @@ A file manager for your phone, network storages and cloud storages. The layout f
 - Home page with storage overview (free space, SD cards and USB drives), quick access to Downloads, Camera, Pictures, Music, Movies and Documents, favorites, and saved connections
 - Breadcrumb path bar, storage drawer, list and adaptive grid view with picture thumbnails and type colors, sorting by name, date, size or type, folders first, hidden files toggle
 - Search in the current folder (recursive on local storage, up to 300 results)
+- **Grid views with large previews** (images, video frames, PDF first pages, thumbnails inside ODF and Office files, EPUB covers, APK icons, audio covers, folder collages), remembered; documents open immediately in Telos Viewer; Google Drive shortcut files (`gdoc`, `gsheet`, `gslides`) open in the Google app or the browser
 - Files open in the right app: pictures in Telos Photos, videos in Telos Video, PDF, text, code and RTF in the Telos Viewer document viewer, everything else through Android's chooser
 
 **File operations**
