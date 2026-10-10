@@ -1,5 +1,7 @@
 # Telos Radio
 
+
+Favorite stations can also be played straight from launcher search: switch on **Radio stations** in Settings > Search, then tap a matching result to play it with the same player and notification (tap again to stop).
 Internet radio with your own station collection. Its behavior and logic follow the
 [Transistor](https://codeberg.org/y20k/transistor) project (compared with version 4.3.9). Transistor is MIT licensed
 and credited in the project's third-party notices.

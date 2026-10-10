@@ -26,4 +26,8 @@ The screen *Per-app assignment* (hub entry *WireGuard per app*) lists your apps 
 The tunnel is used only after the firewall allowed a connection. DNS questions of the apps are not sent through the tunnel; they go out directly to the DNS server you chose.
 
 
+## Torrents through a WireGuard config
+
+In Settings > Downloads > Network > Proxy, **Torrents through Telos Network WireGuard** lets Telos Downloads and Telos Video send torrent traffic through one of your configs. Telos opens a local HTTP proxy bridged to that config; it exists only while Telos Network is on and the config is connected, otherwise torrents wait and nothing connects directly. It carries TCP only (no DHT or uTP), and other apps on the device could use the local proxy while it runs.
+
 A VPN does not make you anonymous: the provider of the tunnel sees your traffic. Only use configurations from providers you trust.

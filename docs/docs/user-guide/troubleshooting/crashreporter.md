@@ -6,7 +6,7 @@ The crash reporter lists crashes and exceptions of the last 7 days. When there a
 
 ## Switching it off
 
-The **Crash reporter** switch at the top of the screen (on by default) controls whether crashes and handled exceptions are saved on the device. Reports never leave the device and are not part of backups. When it is off, nothing is recorded and the app still behaves and crashes as usual. **Delete all reports** removes every saved report.
+The **Crash reporter** switch at the top of the screen (on by default) controls whether crashes and handled exceptions are saved on the device. Reports never leave the device. Only the switch itself is part of launcher backups; the reports are not. When it is off, nothing is recorded and the app still behaves and crashes as usual. **Delete all reports** removes every saved report.
 
 ## Crashes
 
