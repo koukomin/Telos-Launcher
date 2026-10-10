@@ -73,6 +73,15 @@ object PlaybackCoordinator {
         }
     }
 
+    /**
+     * The video (live TV) lost audio focus to something else that now plays: forget the pause marker
+     * instead of resuming, so the one that took over is not disturbed.
+     */
+    fun onVideoSuperseded(context: Context) {
+        videoActive = false
+        prefs(context).edit().clear().apply()
+    }
+
     fun onVideoStopped(context: Context) {
         videoActive = false
         val kind = markedKind(context)
