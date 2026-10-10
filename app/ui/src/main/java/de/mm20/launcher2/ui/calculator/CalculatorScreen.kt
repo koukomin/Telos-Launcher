@@ -211,7 +211,7 @@ private fun CalculatorPage(vm: CalculatorViewModel, onUnits: () -> Unit, onVat: 
     var menu by remember { mutableStateOf(false) }
 
     val topBar: @Composable () -> Unit = {
-        // top bar: scientific or standard keys, unit converter, more
+        // top bar: scientific or standard keys, VAT, unit converter, more
         Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
             Spacer(Modifier.weight(1f))
             if (!landscape) {
@@ -226,6 +226,9 @@ private fun CalculatorPage(vm: CalculatorViewModel, onUnits: () -> Unit, onVat: 
                     )
                 }
             }
+            IconButton(onClick = onVat) {
+                Icon(painterResource(R.drawable.ic_calc_vat), contentDescription = stringResource(R.string.calculator_vat))
+            }
             IconButton(onClick = onUnits) {
                 Icon(painterResource(R.drawable.ic_calc_grid), contentDescription = stringResource(R.string.calculator_unit_converter))
             }
@@ -235,7 +238,6 @@ private fun CalculatorPage(vm: CalculatorViewModel, onUnits: () -> Unit, onVat: 
                 }
                 DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                     DropdownMenuItem(text = { Text(stringResource(R.string.calculator_history)) }, onClick = { menu = false; showHistory = true })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.calculator_vat)) }, onClick = { menu = false; onVat() })
                     DropdownMenuItem(
                         text = { Text(stringResource(R.string.calculator_copy_result)) },
                         onClick = {
