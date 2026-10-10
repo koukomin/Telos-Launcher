@@ -21,6 +21,7 @@ class TvSettings(context: Context) {
     private val _disclaimerShown = MutableStateFlow(false)
     private val _extraPlaylists = MutableStateFlow(true)
     private val _epg = MutableStateFlow(true)
+    private val _background = MutableStateFlow(false)
 
     /** Countries whose channels are shown; empty means "use the suggestion for the locale" */
     val selectedCountries: StateFlow<List<String>> get() = _countries
@@ -31,6 +32,8 @@ class TvSettings(context: Context) {
     val extraPlaylistsEnabled: StateFlow<Boolean> get() = _extraPlaylists
     /** Optional programme guide (EPG); default on, only active when Greece is selected */
     val epgEnabled: StateFlow<Boolean> get() = _epg
+    /** Keep playing with the screen off / when the app is left (foreground service with notification); default off */
+    val keepPlayingInBackground: StateFlow<Boolean> get() = _background
 
     private var bad: Map<String, Long> = emptyMap()
 
@@ -41,6 +44,7 @@ class TvSettings(context: Context) {
         _disclaimerShown.value = j.optBoolean("disclaimer", false)
         _extraPlaylists.value = j.optBoolean("extraPlaylists", true)
         _epg.value = j.optBoolean("epg", true)
+        _background.value = j.optBoolean("background", false)
         val b = j.optJSONObject("bad")
         bad = buildMap {
             if (b != null) {
@@ -72,6 +76,11 @@ class TvSettings(context: Context) {
 
     fun setEpgEnabled(enabled: Boolean) {
         _epg.value = enabled
+        save()
+    }
+
+    fun setKeepPlayingInBackground(enabled: Boolean) {
+        _background.value = enabled
         save()
     }
 
@@ -119,6 +128,7 @@ class TvSettings(context: Context) {
         .put("disclaimer", _disclaimerShown.value)
         .put("extraPlaylists", _extraPlaylists.value)
         .put("epg", _epg.value)
+        .put("background", _background.value)
 
     fun restoreJson(j: JSONObject) {
         setSelectedCountries(j.optJSONArray("countries").toStrings())
@@ -128,6 +138,7 @@ class TvSettings(context: Context) {
         // older backups have no such keys: keep the current value
         if (j.has("extraPlaylists")) setExtraPlaylistsEnabled(j.optBoolean("extraPlaylists", true))
         if (j.has("epg")) setEpgEnabled(j.optBoolean("epg", true))
+        if (j.has("background")) setKeepPlayingInBackground(j.optBoolean("background", false))
     }
 
     private fun readLocked(): JSONObject = synchronized(lock) {
@@ -143,6 +154,7 @@ class TvSettings(context: Context) {
                     .put("disclaimer", _disclaimerShown.value)
                     .put("extraPlaylists", _extraPlaylists.value)
                     .put("epg", _epg.value)
+                    .put("background", _background.value)
                 val b = JSONObject()
                 for ((k, v) in bad) b.put(k, v)
                 j.put("bad", b)

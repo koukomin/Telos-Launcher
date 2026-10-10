@@ -11,13 +11,14 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -68,6 +69,7 @@ fun RadioDashboardScreen() {
     var menuOpen by remember { mutableStateOf(false) }
     var showAdd by remember { mutableStateOf(false) }
     var showSleep by remember { mutableStateOf(false) }
+    var showNowPlaying by rememberSaveable { mutableStateOf(false) }
     var editTarget by remember { mutableStateOf<RadioStation?>(null) }
 
     LaunchedEffect(message) {
@@ -159,7 +161,7 @@ fun RadioDashboardScreen() {
     }) {
     Column(modifier = Modifier.fillMaxSize()) {
     Column(modifier = Modifier.weight(1f).fillMaxWidth()) {
-        TabRow(selectedTabIndex = selectedTabIndex) {
+        TabRow(selectedTabIndex = selectedTabIndex, containerColor = Color.Transparent, divider = {}) {
             tabs.forEachIndexed { index, title ->
                 Tab(
                     selected = selectedTabIndex == index,
@@ -196,12 +198,7 @@ fun RadioDashboardScreen() {
                                 de.mm20.launcher2.ui.component.SearchEmptyState(collectionQuery)
                             }
                             if (favorites.isEmpty()) {
-                                Text(
-                                    text = stringResource(R.string.hc_no_stations_yet_search_for_a_station_add),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    modifier = Modifier.padding(16.dp)
-                                )
+                                RadioEmptyState(stringResource(R.string.hc_no_stations_yet_search_for_a_station_add))
                             }
                         }
                     },
@@ -214,8 +211,11 @@ fun RadioDashboardScreen() {
                     de.mm20.launcher2.ui.component.TelosSearchBar(
                         searchQuery, { viewModel.updateSearchQuery(it) }, stringResource(R.string.tsm_search_radio_browser)
                     )
-                    if (isSearching) {
-                        androidx.compose.material3.LinearProgressIndicator(Modifier.fillMaxWidth().padding(horizontal = 16.dp))
+                    val reduceAnim by org.koin.compose.koinInject<de.mm20.launcher2.preferences.ui.PerformanceSettings>().reduceAnimations.collectAsState(false)
+                    if (isSearching && searchResults.isEmpty()) {
+                        RadioRowsSkeleton(reduceAnim, Modifier.padding(horizontal = 20.dp, vertical = 8.dp))
+                    } else if (isSearching) {
+                        androidx.compose.material3.LinearProgressIndicator(Modifier.fillMaxWidth().padding(horizontal = 20.dp))
                     }
                     searchError?.let {
                         Text(
@@ -226,17 +226,12 @@ fun RadioDashboardScreen() {
                         )
                     }
                     if (!isSearching && searchError == null && searchQuery.isNotBlank() && searchResults.isEmpty()) {
-                        Text(
-                            text = stringResource(R.string.hc_no_stations_found),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
-                        )
+                        RadioEmptyState(stringResource(R.string.hc_no_stations_found))
                     }
 
                     LazyColumn(
-                        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                        contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
                         modifier = Modifier.fillMaxSize()
                     ) {
                         items(searchResults.distinctBy { it.id }, key = { it.id }) { station ->
@@ -297,10 +292,20 @@ fun RadioDashboardScreen() {
         }
     }
     if (!de.mm20.launcher2.ui.media.LocalInMediaHub.current) de.mm20.launcher2.ui.comms.RadioMiniPlayer()
+    else RadioNowPlayingBar(favorites, onOpen = { showNowPlaying = true })
     }
     }
 
     RadioRecordingResultEffect()
+
+    if (showNowPlaying) {
+        RadioNowPlayingSheet(
+            onDismiss = { showNowPlaying = false },
+            stations = (favorites + searchResults).distinctBy { it.id },
+            favoriteIds = favorites.map { it.id }.toSet(),
+            onToggleFavorite = { viewModel.toggleFavorite(it) },
+        )
+    }
 
     if (showAdd) {
         var name by remember { mutableStateOf("") }
@@ -427,53 +432,35 @@ private fun StationRow(
     player: RadioViewModel,
     onLongClick: (() -> Unit)? = null,
 ) {
-    LauncherCard(
+    val reduce by org.koin.compose.koinInject<de.mm20.launcher2.preferences.ui.PerformanceSettings>().reduceAnimations.collectAsState(false)
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .combinedClickable(onClick = onClick, onLongClick = onLongClick)
+            .pressScale(reduce, onClick = onClick, onLongClick = onLongClick)
+            .clip(RoundedCornerShape(20.dp))
+            .background(MaterialTheme.colorScheme.surfaceContainerLow)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.spacedBy(14.dp)
         ) {
-            // Favicon
-            Box(
-                modifier = Modifier
-                    .size(48.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.surfaceVariant),
-                contentAlignment = Alignment.Center
-            ) {
-                if (station.faviconUrl.isNotBlank()) {
-                    AsyncImage(
-                        model = station.faviconUrl,
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                } else {
-                    Icon(
-                        painter = painterResource(R.drawable.music_note_24px),
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
+            RadioLogo(station, Modifier.size(56.dp), corner = 14.dp, pad = 6.dp)
 
             // Details
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = station.name,
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = FontWeight.SemiBold,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = station.streamUrl,
-                    style = MaterialTheme.typography.bodySmall,
+                    text = de.mm20.launcher2.ui.comms.radioStationSubtitle(station),
+                    style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
