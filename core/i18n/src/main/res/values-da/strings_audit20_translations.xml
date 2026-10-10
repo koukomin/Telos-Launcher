@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Dokumenter</string>
+    <string name="au20_viewer_count">%1$d filer</string>
+    <string name="au20_viewer_search_hint">Søg i dokumenter</string>
+    <string name="au20_viewer_cat_all">Alle</string>
+    <string name="au20_viewer_cat_documents">Dokumenter</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Regneark</string>
+    <string name="au20_viewer_cat_slides">Præsentationer</string>
+    <string name="au20_viewer_cat_ebooks">E-bøger</string>
+    <string name="au20_viewer_cat_other">Andet</string>
+    <string name="au20_viewer_recent">Seneste</string>
+    <string name="au20_viewer_clear_recent">Ryd</string>
+    <string name="au20_viewer_remove_recent">Fjern fra seneste</string>
+    <string name="au20_viewer_open_file">Åbn fil…</string>
+    <string name="au20_viewer_sort">Sortér</string>
+    <string name="au20_viewer_sort_date">Dato</string>
+    <string name="au20_viewer_sort_name">Navn</string>
+    <string name="au20_viewer_sort_size">Størrelse</string>
+    <string name="au20_viewer_share">Del</string>
+    <string name="au20_viewer_open_with">Åbn med</string>
+    <string name="au20_viewer_info">Info</string>
+    <string name="au20_viewer_info_name">Navn</string>
+    <string name="au20_viewer_info_folder">Mappe</string>
+    <string name="au20_viewer_info_type">Type</string>
+    <string name="au20_viewer_info_size">Størrelse</string>
+    <string name="au20_viewer_info_date">Dato</string>
+    <string name="au20_viewer_empty_title">Ingen dokumenter fundet</string>
+    <string name="au20_viewer_empty_text">Dokumenter på din telefon vises her. Brug Åbn fil… til en fil et andet sted.</string>
+    <string name="au20_viewer_access_title">Giv adgang til dine filer</string>
+    <string name="au20_viewer_access_text">For at vise dokumenterne på din telefon skal Telos Viewer have adgang til alle filer. Du kan også åbne en enkelt fil uden.</string>
+    <string name="au20_viewer_access_button">Tillad adgang</string>
+    <string name="au20_viewer_share_failed">Deling mislykkedes</string>
+    <string name="au20_viewer_open_failed">Ingen app kan åbne denne fil</string>
+</resources>

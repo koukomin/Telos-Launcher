@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">নথি</string>
+    <string name="au20_viewer_count">%1$dটি ফাইল</string>
+    <string name="au20_viewer_search_hint">নথি অনুসন্ধান করুন</string>
+    <string name="au20_viewer_cat_all">সব</string>
+    <string name="au20_viewer_cat_documents">নথি</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">স্প্রেডশিট</string>
+    <string name="au20_viewer_cat_slides">উপস্থাপনা</string>
+    <string name="au20_viewer_cat_ebooks">ই-বুক</string>
+    <string name="au20_viewer_cat_other">অন্যান্য</string>
+    <string name="au20_viewer_recent">সাম্প্রতিক</string>
+    <string name="au20_viewer_clear_recent">মুছুন</string>
+    <string name="au20_viewer_remove_recent">সাম্প্রতিক থেকে সরান</string>
+    <string name="au20_viewer_open_file">ফাইল খুলুন…</string>
+    <string name="au20_viewer_sort">সাজান</string>
+    <string name="au20_viewer_sort_date">তারিখ</string>
+    <string name="au20_viewer_sort_name">নাম</string>
+    <string name="au20_viewer_sort_size">আকার</string>
+    <string name="au20_viewer_share">শেয়ার করুন</string>
+    <string name="au20_viewer_open_with">এর মাধ্যমে খুলুন</string>
+    <string name="au20_viewer_info">তথ্য</string>
+    <string name="au20_viewer_info_name">নাম</string>
+    <string name="au20_viewer_info_folder">ফোল্ডার</string>
+    <string name="au20_viewer_info_type">ধরন</string>
+    <string name="au20_viewer_info_size">আকার</string>
+    <string name="au20_viewer_info_date">তারিখ</string>
+    <string name="au20_viewer_empty_title">কোনো নথি পাওয়া যায়নি</string>
+    <string name="au20_viewer_empty_text">আপনার ফোনের নথি এখানে দেখা যায়। অন্য কোথাও থাকা ফাইলের জন্য ফাইল খুলুন… ব্যবহার করুন।</string>
+    <string name="au20_viewer_access_title">আপনার ফাইলে অ্যাক্সেসের অনুমতি দিন</string>
+    <string name="au20_viewer_access_text">আপনার ফোনের নথি তালিকাভুক্ত করতে Telos Viewer-এর সব ফাইলে অ্যাক্সেস দরকার। এটি ছাড়াও আপনি একটি ফাইল খুলতে পারেন।</string>
+    <string name="au20_viewer_access_button">অ্যাক্সেসের অনুমতি দিন</string>
+    <string name="au20_viewer_share_failed">শেয়ার করা যায়নি</string>
+    <string name="au20_viewer_open_failed">কোনো অ্যাপ এই ফাইলটি খুলতে পারে না</string>
+</resources>

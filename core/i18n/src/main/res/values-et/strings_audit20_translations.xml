@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Dokumendid</string>
+    <string name="au20_viewer_count">%1$d faili</string>
+    <string name="au20_viewer_search_hint">Otsi dokumente</string>
+    <string name="au20_viewer_cat_all">Kõik</string>
+    <string name="au20_viewer_cat_documents">Dokumendid</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Tabelid</string>
+    <string name="au20_viewer_cat_slides">Esitlused</string>
+    <string name="au20_viewer_cat_ebooks">E-raamatud</string>
+    <string name="au20_viewer_cat_other">Muu</string>
+    <string name="au20_viewer_recent">Hiljutised</string>
+    <string name="au20_viewer_clear_recent">Tühjenda</string>
+    <string name="au20_viewer_remove_recent">Eemalda hiljutistest</string>
+    <string name="au20_viewer_open_file">Ava fail…</string>
+    <string name="au20_viewer_sort">Sorteeri</string>
+    <string name="au20_viewer_sort_date">Kuupäev</string>
+    <string name="au20_viewer_sort_name">Nimi</string>
+    <string name="au20_viewer_sort_size">Suurus</string>
+    <string name="au20_viewer_share">Jaga</string>
+    <string name="au20_viewer_open_with">Ava rakendusega</string>
+    <string name="au20_viewer_info">Teave</string>
+    <string name="au20_viewer_info_name">Nimi</string>
+    <string name="au20_viewer_info_folder">Kaust</string>
+    <string name="au20_viewer_info_type">Tüüp</string>
+    <string name="au20_viewer_info_size">Suurus</string>
+    <string name="au20_viewer_info_date">Kuupäev</string>
+    <string name="au20_viewer_empty_title">Dokumente ei leitud</string>
+    <string name="au20_viewer_empty_text">Telefoni dokumendid kuvatakse siin. Mujal asuva faili jaoks kasuta valikut Ava fail….</string>
+    <string name="au20_viewer_access_title">Luba juurdepääs failidele</string>
+    <string name="au20_viewer_access_text">Telefoni dokumentide loetlemiseks vajab Telos Viewer juurdepääsu kõigile failidele. Üksiku faili saab avada ka ilma selleta.</string>
+    <string name="au20_viewer_access_button">Luba juurdepääs</string>
+    <string name="au20_viewer_share_failed">Jagamine ebaõnnestus</string>
+    <string name="au20_viewer_open_failed">Ükski rakendus ei saa seda faili avada</string>
+</resources>

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">文档</string>
+    <string name="au20_viewer_count">%1$d 个文件</string>
+    <string name="au20_viewer_search_hint">搜索文档</string>
+    <string name="au20_viewer_cat_all">全部</string>
+    <string name="au20_viewer_cat_documents">文档</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">电子表格</string>
+    <string name="au20_viewer_cat_slides">演示文稿</string>
+    <string name="au20_viewer_cat_ebooks">电子书</string>
+    <string name="au20_viewer_cat_other">其他</string>
+    <string name="au20_viewer_recent">最近</string>
+    <string name="au20_viewer_clear_recent">清除</string>
+    <string name="au20_viewer_remove_recent">从最近中移除</string>
+    <string name="au20_viewer_open_file">打开文件…</string>
+    <string name="au20_viewer_sort">排序</string>
+    <string name="au20_viewer_sort_date">日期</string>
+    <string name="au20_viewer_sort_name">名称</string>
+    <string name="au20_viewer_sort_size">大小</string>
+    <string name="au20_viewer_share">分享</string>
+    <string name="au20_viewer_open_with">打开方式</string>
+    <string name="au20_viewer_info">信息</string>
+    <string name="au20_viewer_info_name">名称</string>
+    <string name="au20_viewer_info_folder">文件夹</string>
+    <string name="au20_viewer_info_type">类型</string>
+    <string name="au20_viewer_info_size">大小</string>
+    <string name="au20_viewer_info_date">日期</string>
+    <string name="au20_viewer_empty_title">未找到文档</string>
+    <string name="au20_viewer_empty_text">手机上的文档会显示在这里。如需打开其他位置的文件，请使用“打开文件…”。</string>
+    <string name="au20_viewer_access_title">允许访问您的文件</string>
+    <string name="au20_viewer_access_text">要列出手机上的文档，Telos Viewer 需要访问所有文件。您也可以不授权而单独打开某个文件。</string>
+    <string name="au20_viewer_access_button">允许访问</string>
+    <string name="au20_viewer_share_failed">分享失败</string>
+    <string name="au20_viewer_open_failed">没有应用可以打开此文件</string>
+</resources>

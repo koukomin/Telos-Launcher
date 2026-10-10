@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Dokumentumok</string>
+    <string name="au20_viewer_count">%1$d fájl</string>
+    <string name="au20_viewer_search_hint">Dokumentumok keresése</string>
+    <string name="au20_viewer_cat_all">Mind</string>
+    <string name="au20_viewer_cat_documents">Dokumentumok</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Táblázatok</string>
+    <string name="au20_viewer_cat_slides">Prezentációk</string>
+    <string name="au20_viewer_cat_ebooks">E-könyvek</string>
+    <string name="au20_viewer_cat_other">Egyéb</string>
+    <string name="au20_viewer_recent">Legutóbbiak</string>
+    <string name="au20_viewer_clear_recent">Törlés</string>
+    <string name="au20_viewer_remove_recent">Eltávolítás a legutóbbiak közül</string>
+    <string name="au20_viewer_open_file">Fájl megnyitása…</string>
+    <string name="au20_viewer_sort">Rendezés</string>
+    <string name="au20_viewer_sort_date">Dátum</string>
+    <string name="au20_viewer_sort_name">Név</string>
+    <string name="au20_viewer_sort_size">Méret</string>
+    <string name="au20_viewer_share">Megosztás</string>
+    <string name="au20_viewer_open_with">Megnyitás ezzel</string>
+    <string name="au20_viewer_info">Információ</string>
+    <string name="au20_viewer_info_name">Név</string>
+    <string name="au20_viewer_info_folder">Mappa</string>
+    <string name="au20_viewer_info_type">Típus</string>
+    <string name="au20_viewer_info_size">Méret</string>
+    <string name="au20_viewer_info_date">Dátum</string>
+    <string name="au20_viewer_empty_title">Nem található dokumentum</string>
+    <string name="au20_viewer_empty_text">A telefonon lévő dokumentumok itt jelennek meg. Máshol lévő fájlhoz használja a Fájl megnyitása… lehetőséget.</string>
+    <string name="au20_viewer_access_title">Hozzáférés engedélyezése a fájlokhoz</string>
+    <string name="au20_viewer_access_text">A telefonon lévő dokumentumok listázásához a Telos Viewernek hozzáférésre van szüksége az összes fájlhoz. Egyetlen fájlt enélkül is megnyithat.</string>
+    <string name="au20_viewer_access_button">Hozzáférés engedélyezése</string>
+    <string name="au20_viewer_share_failed">A megosztás sikertelen</string>
+    <string name="au20_viewer_open_failed">Egyetlen alkalmazás sem tudja megnyitni ezt a fájlt</string>
+</resources>
