@@ -264,7 +264,7 @@ fun FilesScreen() {
                                                 text = { Text(stringResource(label)) },
                                                 leadingIcon = { Icon(painterResource(icon), contentDescription = null) },
                                                 trailingIcon = { if (vm.viewMode == mode) Icon(painterResource(Icons.check_24px), contentDescription = null) },
-                                                onClick = { viewMenu = false; vm.setViewMode(mode) },
+                                                onClick = { viewMenu = false; vm.updateViewMode(mode) },
                                             )
                                         }
                                     }

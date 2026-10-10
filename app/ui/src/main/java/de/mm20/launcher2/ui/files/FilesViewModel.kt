@@ -267,8 +267,8 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         prefs.edit().putString("sortKey", spec.key.name).putBoolean("sortAsc", spec.ascending).putBoolean("foldersFirst", spec.foldersFirst).apply()
     }
 
-    fun toggleGrid() = setViewMode(if (viewMode == 0) 1 else 0)
-    fun setViewMode(mode: Int) {
+    fun toggleGrid() = updateViewMode(if (viewMode == 0) 1 else 0)
+    fun updateViewMode(mode: Int) {
         viewMode = mode.coerceIn(0, 2)
         prefs.edit().putInt("viewMode", viewMode).putBoolean("grid", viewMode != 0).apply()
     }
