@@ -45,6 +45,16 @@ import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.lazy.items
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.text.style.TextAlign
 import de.mm20.launcher2.ui.common.share.ShareActions
 import de.mm20.launcher2.ui.common.share.ShareMenuItem
 import kotlinx.coroutines.Dispatchers
@@ -79,6 +89,7 @@ fun MusicScreen(
     val tracks by viewModel.tracks.collectAsStateWithLifecycle()
     val loading by viewModel.loading.collectAsStateWithLifecycle()
     val nowPlaying by viewModel.nowPlaying.collectAsStateWithLifecycle()
+    val playing by viewModel.isPlaying.collectAsStateWithLifecycle()
 
     val permission = if (Build.VERSION.SDK_INT >= 33) Manifest.permission.READ_MEDIA_AUDIO
     else Manifest.permission.READ_EXTERNAL_STORAGE
@@ -174,30 +185,26 @@ fun MusicScreen(
                 de.mm20.launcher2.ui.media.MediaSearchBar(query, { query = it }, stringResource(R.string.tsm_search_music))
                 val current = group
                 if (current != null) {
-                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
-                        IconButton(onClick = { group = null }) {
-                            Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back))
-                        }
-                        Column(Modifier.weight(1f)) {
-                            Text(current.title, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                            Text(current.subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        }
-                        IconButton(onClick = { shareGroup(current) }) {
-                            Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.menu_share))
-                        }
-                    }
-                    TrackList(current.tracks, nowPlaying?.mediaId, onPlay = { i -> viewModel.play(current.tracks, i) }, onShare = { shareTrack(it) })
+                    GroupPage(
+                        group = current,
+                        currentId = nowPlaying?.mediaId,
+                        isPlaying = playing,
+                        reduce = reduceAnimations,
+                        onBack = { group = null },
+                        onShare = { shareGroup(current) },
+                        onPlay = { i -> viewModel.play(current.tracks, i) },
+                        onShuffle = { viewModel.play(current.tracks.shuffled(), 0) },
+                        onShareTrack = { shareTrack(it) },
+                    )
                 } else {
-                    TabRow(selectedTabIndex = tab) {
+                    TabRow(selectedTabIndex = tab, containerColor = Color.Transparent, divider = {}) {
                         listOf(stringResource(R.string.au10_music_tab_home), stringResource(R.string.au_music_tab_songs), stringResource(R.string.hc_albums), stringResource(R.string.au_music_tab_artists)).forEachIndexed { i, title ->
-                            Tab(selected = tab == i, onClick = { tab = i }, text = { Text(title) })
+                            Tab(selected = tab == i, onClick = { tab = i }, text = { Text(title, fontWeight = if (tab == i) FontWeight.SemiBold else FontWeight.Normal) })
                         }
                     }
                     when {
-                        loading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
-                        tracks.isEmpty() -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            Text(stringResource(R.string.hc_no_music_found_on_this_device), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        }
+                        loading -> MusicHomeSkeleton(reduceAnimations)
+                        tracks.isEmpty() -> MusicEmptyState(stringResource(R.string.hc_no_music_found_on_this_device), Modifier.fillMaxSize())
                         filtered.isEmpty() && query.isNotBlank() -> de.mm20.launcher2.ui.component.SearchEmptyState(query)
                         tab == 0 -> MusicHome(
                             allTracks = tracks,
@@ -211,33 +218,34 @@ fun MusicScreen(
                             unknownAlbum = unknownAlbum,
                             unknownArtist = unknownArtist,
                             songsFormat = songsFormat,
+                            reduceAnimations = reduceAnimations,
                         )
-                        tab == 1 -> TrackList(filtered, nowPlaying?.mediaId, onPlay = { i -> viewModel.play(filtered, i) }, onShare = { shareTrack(it) })
+                        tab == 1 -> TrackList(filtered, nowPlaying?.mediaId, playing, reduceAnimations, headers = true, onPlay = { i -> viewModel.play(filtered, i) }, onShare = { shareTrack(it) })
                         tab == 2 -> LazyVerticalGrid(
                             columns = GridCells.Fixed(2),
-                            contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 96.dp),
+                            contentPadding = PaddingValues(20.dp, 8.dp, 20.dp, 112.dp),
                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                             verticalArrangement = Arrangement.spacedBy(12.dp),
                             modifier = Modifier.fillMaxSize(),
                         ) {
-                            gridItems(albums) { album ->
-                                Column(Modifier.combinedClickable(onLongClick = { shareGroup(album) }, onClick = { group = album })) {
-                                    Cover(album.tracks.first(), Modifier.fillMaxWidth().aspectRatio(1f))
-                                    Text(album.title, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 6.dp))
-                                    Text(album.subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            gridItems(albums, key = { it.tracks.first().albumId }) { album ->
+                                Column(Modifier.pressScale(reduceAnimations, onClick = { group = album }, onLongClick = { shareGroup(album) })) {
+                                    Cover(album.tracks.first(), Modifier.fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(20.dp)))
+                                    Text(album.title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 8.dp))
+                                    Text(album.subtitle, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                                 }
                             }
                         }
-                        else -> LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
-                            itemsIndexed(artists) { _, artist ->
+                        else -> LazyColumn(contentPadding = PaddingValues(bottom = 112.dp), modifier = Modifier.fillMaxSize()) {
+                            itemsIndexed(artists, key = { _, a -> a.title }) { _, artist ->
                                 Row(
-                                    modifier = Modifier.fillMaxWidth().combinedClickable(onLongClick = { shareGroup(artist) }, onClick = { group = artist }).padding(horizontal = 16.dp, vertical = 10.dp),
+                                    modifier = Modifier.fillMaxWidth().pressScale(reduceAnimations, onClick = { group = artist }, onLongClick = { shareGroup(artist) }).padding(horizontal = 20.dp, vertical = 8.dp),
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
-                                    Cover(artist.tracks.first(), Modifier.size(48.dp).clip(RoundedCornerShape(24.dp)))
-                                    Column(Modifier.padding(start = 12.dp)) {
-                                        Text(artist.title, style = MaterialTheme.typography.bodyLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                                        Text(artist.subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                    Cover(artist.tracks.first(), Modifier.size(56.dp).clip(CircleShape))
+                                    Column(Modifier.padding(start = 16.dp)) {
+                                        Text(artist.title, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                        Text(artist.subtitle, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                     }
                                 }
                             }
@@ -275,49 +283,166 @@ fun MusicScreen(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-private fun TrackList(list: List<MusicTrack>, currentId: String?, onPlay: (Int) -> Unit, onShare: (MusicTrack) -> Unit) {
-    var menuFor by remember { mutableStateOf<Long?>(null) }
-    LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
-        itemsIndexed(list, key = { _, t -> t.id }) { index, track ->
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .combinedClickable(onLongClick = { menuFor = track.id }, onClick = { onPlay(index) })
-                    .padding(start = 16.dp, top = 8.dp, bottom = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Cover(track, Modifier.size(48.dp).clip(RoundedCornerShape(8.dp)))
-                Column(Modifier.weight(1f).padding(start = 12.dp)) {
+private fun TrackList(
+    list: List<MusicTrack>,
+    currentId: String?,
+    isPlaying: Boolean,
+    reduce: Boolean,
+    headers: Boolean,
+    onPlay: (Int) -> Unit,
+    onShare: (MusicTrack) -> Unit,
+    header: (@Composable () -> Unit)? = null,
+) {
+    val sections = remember(list, headers) {
+        if (!headers) null else list.withIndex().groupBy { (_, t) ->
+            val c = t.title.trim().firstOrNull()?.uppercaseChar()
+            if (c != null && c.isLetter()) c.toString() else "#"
+        }
+    }
+    LazyColumn(contentPadding = PaddingValues(bottom = 112.dp), modifier = Modifier.fillMaxSize()) {
+        if (header != null) item(key = "header") { header() }
+        if (sections == null) {
+            itemsIndexed(list, key = { _, t -> t.id }) { index, track ->
+                TrackRow(track, index, currentId, isPlaying, reduce, onPlay, onShare)
+            }
+        } else {
+            sections.forEach { (letter, entries) ->
+                stickyHeader(key = "h_$letter") {
                     Text(
-                        track.title,
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = if (currentId != null && track.id.toString() == currentId) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                    Text(
-                        listOf(track.artist, track.album).filter { it.isNotBlank() }.joinToString(" · "),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
+                        letter,
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surface.copy(alpha = 0.92f)).padding(horizontal = 20.dp, vertical = 6.dp),
                     )
                 }
-                Text(formatDuration(track.durationMs), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Box {
-                    IconButton(onClick = { menuFor = track.id }) {
-                        Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.au10_music_more))
-                    }
-                    DropdownMenu(expanded = menuFor == track.id, onDismissRequest = { menuFor = null }) {
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.hc_play)) },
-                            onClick = { menuFor = null; onPlay(index) },
-                        )
-                        ShareMenuItem(onClick = { menuFor = null; onShare(track) })
-                    }
+                items(entries, key = { it.value.id }) { (index, track) ->
+                    TrackRow(track, index, currentId, isPlaying, reduce, onPlay, onShare)
                 }
             }
         }
     }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun TrackRow(
+    track: MusicTrack,
+    index: Int,
+    currentId: String?,
+    isPlaying: Boolean,
+    reduce: Boolean,
+    onPlay: (Int) -> Unit,
+    onShare: (MusicTrack) -> Unit,
+) {
+    var menu by remember { mutableStateOf(false) }
+    val haptic = LocalHapticFeedback.current
+    val active = currentId != null && track.id.toString() == currentId
+    val bg by animateColorAsState(
+        if (active) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent,
+        animationSpec = if (reduce) androidx.compose.animation.core.snap() else androidx.compose.animation.core.tween(200),
+        label = "rowBg",
+    )
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 2.dp)
+            .clip(RoundedCornerShape(20.dp)).background(bg)
+            .combinedClickable(
+                onLongClick = { haptic.performHapticFeedback(HapticFeedbackType.LongPress); menu = true },
+                onClick = { onPlay(index) },
+            )
+            .padding(start = 8.dp, top = 8.dp, bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(contentAlignment = Alignment.Center) {
+            Cover(track, Modifier.size(56.dp).clip(RoundedCornerShape(14.dp)))
+            if (active) {
+                Box(Modifier.size(56.dp).clip(RoundedCornerShape(14.dp)).background(Color.Black.copy(alpha = 0.45f)), contentAlignment = Alignment.Center) {
+                    EqualizerGlyph(Color.White, animate = isPlaying && !reduce)
+                }
+            }
+        }
+        Column(Modifier.weight(1f).padding(horizontal = 14.dp)) {
+            Text(
+                track.title,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = if (active) FontWeight.SemiBold else FontWeight.Normal,
+                color = if (active) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurface,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Text(
+                listOf(track.artist, track.album).filter { it.isNotBlank() }.joinToString(" · "),
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+        Text(formatDuration(track.durationMs), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Box {
+            IconButton(onClick = { menu = true }) {
+                Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.au10_music_more))
+            }
+            DropdownMenu(expanded = menu, onDismissRequest = { menu = false }, shape = RoundedCornerShape(16.dp)) {
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.hc_play)) },
+                    onClick = { menu = false; onPlay(index) },
+                )
+                ShareMenuItem(onClick = { menu = false; onShare(track) })
+            }
+        }
+    }
+}
+
+/** Album / artist page: hero with large artwork on an artwork-coloured gradient, play and shuffle, track list */
+@Composable
+private fun GroupPage(
+    group: TrackGroup,
+    currentId: String?,
+    isPlaying: Boolean,
+    reduce: Boolean,
+    onBack: () -> Unit,
+    onShare: () -> Unit,
+    onPlay: (Int) -> Unit,
+    onShuffle: () -> Unit,
+    onShareTrack: (MusicTrack) -> Unit,
+) {
+    val artUrl = group.tracks.firstOrNull()?.albumArtUri?.toString()
+    val tint by rememberArtworkTint(artUrl, MaterialTheme.colorScheme.primary, reduce)
+    val surface = MaterialTheme.colorScheme.surface
+    TrackList(group.tracks, currentId, isPlaying, reduce, headers = false, onPlay = onPlay, onShare = onShareTrack, header = {
+        Column(
+            Modifier.fillMaxWidth().background(Brush.verticalGradient(listOf(tint.copy(alpha = 0.55f), surface))).padding(bottom = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = onBack) {
+                    Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back))
+                }
+                Spacer(Modifier.weight(1f))
+                IconButton(onClick = onShare) {
+                    Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.menu_share))
+                }
+            }
+            Surface(shape = RoundedCornerShape(24.dp), shadowElevation = 12.dp, color = Color.Transparent, modifier = Modifier.size(220.dp)) {
+                ArtOrNote(artUrl, Modifier.fillMaxSize().clip(RoundedCornerShape(24.dp)))
+            }
+            Text(group.title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 0.dp).padding(top = 16.dp))
+            Text(group.subtitle, style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp))
+            Row(Modifier.padding(top = 16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                Button(onClick = { onPlay(0) }, shape = CircleShape, contentPadding = PaddingValues(horizontal = 28.dp, vertical = 14.dp)) {
+                    Icon(painterResource(R.drawable.play_arrow_24px), contentDescription = null)
+                    Spacer(Modifier.width(8.dp))
+                    Text(stringResource(R.string.hc_play))
+                }
+                FilledTonalButton(onClick = onShuffle, shape = CircleShape, contentPadding = PaddingValues(horizontal = 28.dp, vertical = 14.dp)) {
+                    Icon(painterResource(R.drawable.shuffle_24px), contentDescription = null)
+                    Spacer(Modifier.width(8.dp))
+                    Text(stringResource(R.string.hc_shuffle))
+                }
+            }
+        }
+    })
 }
 
 /** Shares the audio file behind [uri] (a copy in cache/share) */
@@ -455,6 +580,7 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
         ModalBottomSheet(
             onDismissRequest = { sheet = false },
             containerColor = bottom.copy(alpha = 0.96f),
+            shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
             contentColor = white,
         ) {
             TabRow(selectedTabIndex = sheetTab, containerColor = Color.Transparent, contentColor = white) {
@@ -517,17 +643,44 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
                     if (showLyrics) {
                         LyricsView(lyrics, position, Modifier.fillMaxSize(), activeColor = white, inactiveColor = soft)
                     } else {
-                        val side = minOf(maxWidth, maxHeight)
-                        Surface(shape = RoundedCornerShape(24.dp), shadowElevation = 16.dp, color = Color.Transparent, modifier = Modifier.size(side)) {
-                            ArtOrNote(artUrl, Modifier.fillMaxSize().clip(RoundedCornerShape(24.dp)))
+                        val side = minOf(maxWidth * 0.88f, maxHeight)
+                        val artScale by animateFloatAsState(
+                            if (isPlaying || reduceAnimations) 1f else 0.9f,
+                            animationSpec = spring(dampingRatio = 0.8f, stiffness = 400f),
+                            label = "artScale",
+                        )
+                        Surface(
+                            shape = RoundedCornerShape(28.dp),
+                            shadowElevation = 24.dp,
+                            color = Color.Transparent,
+                            modifier = Modifier.size(side).graphicsLayer { scaleX = artScale; scaleY = artScale },
+                        ) {
+                            ArtOrNote(artUrl, Modifier.fillMaxSize().clip(RoundedCornerShape(28.dp)))
                         }
                     }
                 }
                 Spacer(Modifier.height(20.dp))
                 Text(current.title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = white, maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.fillMaxWidth())
                 Text(current.artist, style = MaterialTheme.typography.bodyLarge, color = soft, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.fillMaxWidth())
+                val previewLine = lyrics?.synced?.takeIf { it.isNotEmpty() }?.let { l ->
+                    l.getOrNull(l.indexOfLast { it.timeMs <= position }.coerceAtLeast(0))?.text?.ifBlank { null }
+                }
+                if (!showLyrics && previewLine != null) {
+                    Text(
+                        previewLine,
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Medium,
+                        color = white,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.padding(top = 10.dp).fillMaxWidth().clip(RoundedCornerShape(16.dp))
+                            .background(Color.White.copy(alpha = 0.10f))
+                            .clickable { showLyrics = true }.padding(horizontal = 16.dp, vertical = 10.dp),
+                    )
+                }
                 Spacer(Modifier.height(12.dp))
-                Surface(shape = RoundedCornerShape(28.dp), color = Color.White.copy(alpha = 0.10f), contentColor = white, modifier = Modifier.fillMaxWidth()) {
+                Surface(shape = RoundedCornerShape(28.dp), color = Color.Transparent, contentColor = white, modifier = Modifier.fillMaxWidth()) {
                     Column(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
                         Slider(
                             value = dragging ?: (position.toFloat() / duration).coerceIn(0f, 1f),
@@ -541,30 +694,52 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
                                 activeTrackColor = white,
                                 inactiveTrackColor = Color.White.copy(alpha = 0.30f),
                             ),
+                            track = { state ->
+                                SliderDefaults.Track(
+                                    sliderState = state,
+                                    modifier = Modifier.requiredHeight(8.dp),
+                                    colors = SliderDefaults.colors(
+                                        activeTrackColor = white,
+                                        inactiveTrackColor = Color.White.copy(alpha = 0.30f),
+                                    ),
+                                )
+                            },
                         )
                         Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp), horizontalArrangement = Arrangement.SpaceBetween) {
                             Text(formatDuration(((dragging ?: (position.toFloat() / duration)) * duration).toLong()), style = MaterialTheme.typography.labelSmall, color = soft)
                             Text(formatDuration(current.durationMs), style = MaterialTheme.typography.labelSmall, color = soft)
                         }
                         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
-                            IconButton(onClick = { viewModel.toggleShuffle() }) {
+                            val toggleHaptic = LocalHapticFeedback.current
+                            IconButton(
+                                onClick = { toggleHaptic.performHapticFeedback(HapticFeedbackType.TextHandleMove); viewModel.toggleShuffle() },
+                                modifier = Modifier.clip(CircleShape).background(if (shuffle) Color.White.copy(alpha = 0.22f) else Color.Transparent),
+                            ) {
                                 Icon(painterResource(R.drawable.shuffle_24px), contentDescription = stringResource(R.string.hc_shuffle), tint = if (shuffle) white else soft)
                             }
                             IconButton(onClick = { viewModel.previous() }) {
                                 Icon(painterResource(R.drawable.skip_previous_24px), contentDescription = stringResource(R.string.hc_previous))
                             }
+                            val corner by androidx.compose.animation.core.animateDpAsState(
+                                if (isPlaying) 40.dp else 28.dp,
+                                animationSpec = if (reduceAnimations) androidx.compose.animation.core.snap() else spring(dampingRatio = 0.8f, stiffness = 400f),
+                                label = "playCorner",
+                            )
                             FilledIconButton(
                                 onClick = { viewModel.togglePlayPause() },
-                                modifier = Modifier.size(72.dp),
-                                shape = CircleShape,
+                                modifier = Modifier.size(80.dp),
+                                shape = RoundedCornerShape(corner),
                                 colors = IconButtonDefaults.filledIconButtonColors(containerColor = white, contentColor = bottom),
                             ) {
-                                Icon(painterResource(if (isPlaying) R.drawable.pause_24px else R.drawable.play_arrow_24px), contentDescription = stringResource(if (isPlaying) R.string.au_music_pause else R.string.hc_play), modifier = Modifier.size(36.dp))
+                                Icon(painterResource(if (isPlaying) R.drawable.pause_24px else R.drawable.play_arrow_24px), contentDescription = stringResource(if (isPlaying) R.string.au_music_pause else R.string.hc_play), modifier = Modifier.size(40.dp))
                             }
                             IconButton(onClick = { viewModel.next() }) {
                                 Icon(painterResource(R.drawable.skip_next_24px), contentDescription = stringResource(R.string.hc_next))
                             }
-                            IconButton(onClick = { viewModel.cycleRepeat() }) {
+                            IconButton(
+                                onClick = { toggleHaptic.performHapticFeedback(HapticFeedbackType.TextHandleMove); viewModel.cycleRepeat() },
+                                modifier = Modifier.clip(CircleShape).background(if (repeat != Player.REPEAT_MODE_OFF) Color.White.copy(alpha = 0.22f) else Color.Transparent),
+                            ) {
                                 Icon(
                                     painterResource(if (repeat == Player.REPEAT_MODE_ONE) R.drawable.repeat_one_24px else R.drawable.repeat_24px),
                                     contentDescription = stringResource(R.string.hc_repeat),

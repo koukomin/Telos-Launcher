@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -64,6 +65,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -204,13 +207,16 @@ fun TvScreen() {
                     Text(stringResource(R.string.hc_retry))
                 }
             }
-            else -> Column(
-                Modifier.fillMaxSize().padding(32.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                CircularProgressIndicator()
-                Text(stringResource(R.string.au12_tvui_loading), modifier = Modifier.padding(top = 16.dp))
+            else -> Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
+                TvSkeleton(reduceAnimations)
+                Row(
+                    Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
+                    Text(stringResource(R.string.au12_tvui_loading), modifier = Modifier.padding(start = 12.dp))
+                }
             }
         }
     }
@@ -300,8 +306,162 @@ private fun TvHomeContent(
     val playerOpen by vm.playerOpen.collectAsStateWithLifecycle()
     val bad = remember(key, playerOpen) { vm.badStreamUrls() }
     val info = remember(key, bad) { TvCardInfo(key, { vm.nowNext(it) }, bad) }
+    val context = LocalContext.current
+    val favorites by vm.favorites.collectAsStateWithLifecycle()
+    // last used view; null = never chosen (Favorites when there is at least one favorite, otherwise Browse)
+    var stored by remember { mutableStateOf(readTvView(context)) }
+    val showFavorites = stored?.let { it == VIEW_FAVORITES } ?: favorites.isNotEmpty()
     CompositionLocalProvider(LocalTvCardInfo provides info) {
-        TvHomeBody(vm, reduceAnimations, onEdit, onDelete, onShowCountries)
+        Column(Modifier.fillMaxSize()) {
+            TvSegmentedControl(
+                selected = if (showFavorites) 0 else 1,
+                labels = listOf(
+                    stringResource(R.string.au14_tvhome_view_favorites),
+                    stringResource(R.string.au14_tvhome_view_browse),
+                ),
+                icons = listOf(R.drawable.star_24px_filled, R.drawable.travel_explore_24px),
+                reduceAnimations = reduceAnimations,
+                onSelect = {
+                    val v = if (it == 0) VIEW_FAVORITES else VIEW_BROWSE
+                    stored = v
+                    saveTvView(context, v)
+                },
+                modifier = Modifier
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+                    .semantics { contentDescription = context.getString(R.string.au14_tvhome_views_description) },
+            )
+            Box(Modifier.weight(1f).fillMaxWidth()) {
+                if (showFavorites) {
+                    TvFavoritesBody(vm, reduceAnimations, onEdit, onDelete) {
+                        stored = VIEW_BROWSE
+                        saveTvView(context, VIEW_BROWSE)
+                    }
+                } else {
+                    TvHomeBody(vm, reduceAnimations, onEdit, onDelete, onShowCountries)
+                }
+            }
+        }
+    }
+}
+
+private const val VIEW_FAVORITES = "favorites"
+private const val VIEW_BROWSE = "browse"
+
+private fun readTvView(context: android.content.Context): String? = try {
+    context.getSharedPreferences("telos_tv_ui", android.content.Context.MODE_PRIVATE)
+        .getString("view", null)?.takeIf { it == VIEW_FAVORITES || it == VIEW_BROWSE }
+} catch (e: Exception) { null }
+
+private fun saveTvView(context: android.content.Context, view: String) {
+    try {
+        context.getSharedPreferences("telos_tv_ui", android.content.Context.MODE_PRIVATE).edit().putString("view", view).apply()
+    } catch (_: Exception) {
+    }
+}
+
+/** Favorites first: hero "Continue watching", big favorites grid, then Recently watched and Your channels */
+@Composable
+private fun TvFavoritesBody(
+    vm: TvViewModel,
+    reduceAnimations: Boolean,
+    onEdit: (TvChannel) -> Unit,
+    onDelete: (TvChannel) -> Unit,
+    onBrowse: () -> Unit,
+) {
+    val context = LocalContext.current
+    val favorites by vm.favorites.collectAsStateWithLifecycle()
+    val favoriteIds by vm.favoriteIds.collectAsStateWithLifecycle()
+    val recents by vm.recents.collectAsStateWithLifecycle()
+    val custom by vm.customChannels.collectAsStateWithLifecycle()
+    val playingChannel by vm.controller.currentChannel.collectAsStateWithLifecycle()
+    val isPlaying by vm.controller.isPlaying.collectAsStateWithLifecycle()
+    val playingId = if (isPlaying) playingChannel?.id else null
+    val info = LocalTvCardInfo.current
+
+    fun actionsFor(ch: TvChannel, moveBefore: (() -> Unit)? = null, moveAfter: (() -> Unit)? = null) = TvCardActions(
+        onFavorite = { vm.setFavorite(ch.id, it) },
+        onShare = { ShareActions.shareText(context, shareText(ch)) },
+        onEdit = if (ch.isCustom) ({ onEdit(ch) }) else null,
+        onDelete = if (ch.isCustom) ({ onDelete(ch) }) else null,
+        onMoveBefore = moveBefore,
+        onMoveAfter = moveAfter,
+    )
+
+    val hero = recents.firstOrNull() ?: favorites.firstOrNull()
+    LazyVerticalGrid(
+        columns = GridCells.Adaptive(140.dp),
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 24.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        if (favorites.isEmpty()) {
+            item(key = "empty:fav", span = { GridItemSpan(maxLineSpan) }) {
+                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                    TvEmptyState(
+                        R.drawable.star_24px_outlined,
+                        stringResource(R.string.au14_tvhome_empty_favorites_title),
+                        stringResource(R.string.au14_tvhome_empty_favorites_text),
+                    )
+                    Button(onClick = onBrowse) { Text(stringResource(R.string.au14_tvhome_view_browse)) }
+                }
+            }
+        }
+        if (hero != null) {
+            item(key = "hero", span = { GridItemSpan(maxLineSpan) }) {
+                val now = remember(info.key, hero.id) { info.nowNext(hero.id)?.current?.title }
+                TvHeroCard(
+                    hero, now, reduceAnimations,
+                    onPlay = { vm.play(hero, if (hero.id in favoriteIds) favorites else recents) },
+                )
+            }
+        }
+        if (favorites.isNotEmpty()) {
+            header("h:fav", { stringResource(R.string.au12_tvui_shelf_favorites) })
+            itemsIndexed(favorites, key = { _, c -> "f:" + c.id }) { i, ch ->
+                TvChannelCard(
+                    ch, playing = ch.id == playingId, favorite = true,
+                    reduceAnimations = reduceAnimations,
+                    actions = actionsFor(
+                        ch,
+                        moveBefore = if (i > 0) ({ vm.moveFavorite(ch.id, i - 1) }) else null,
+                        moveAfter = if (i < favorites.lastIndex) ({ vm.moveFavorite(ch.id, i + 1) }) else null,
+                    ),
+                    onClick = { vm.play(ch, favorites) },
+                    logoHeight = 96.dp,
+                )
+            }
+        }
+        if (recents.isNotEmpty()) {
+            header("h:rec", { stringResource(R.string.au12_tvui_shelf_recents) })
+            item(key = "s:rec", span = { GridItemSpan(maxLineSpan) }) {
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(vertical = 4.dp)) {
+                    items(recents, key = { it.id }) { ch ->
+                        TvChannelCard(
+                            ch, playing = ch.id == playingId, favorite = ch.id in favoriteIds,
+                            reduceAnimations = reduceAnimations, actions = actionsFor(ch),
+                            onClick = { vm.play(ch, recents) },
+                            modifier = Modifier.width(120.dp),
+                        )
+                    }
+                }
+            }
+        }
+        if (custom.isNotEmpty()) {
+            header("h:cus", { stringResource(R.string.au12_tvui_shelf_custom) })
+            item(key = "s:cus", span = { GridItemSpan(maxLineSpan) }) {
+                LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp), contentPadding = PaddingValues(vertical = 4.dp)) {
+                    items(custom, key = { it.id }) { ch ->
+                        TvChannelCard(
+                            ch, playing = ch.id == playingId, favorite = ch.id in favoriteIds,
+                            reduceAnimations = reduceAnimations, actions = actionsFor(ch),
+                            onClick = { vm.play(ch, custom) },
+                            modifier = Modifier.width(120.dp),
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -330,6 +490,8 @@ private fun TvHomeBody(
     val playingId = if (isPlaying) playingChannel?.id else null
 
     var topHeight by remember { mutableStateOf(0.dp) }
+    val localizedCategories = categories.map { it to tvCategoryName(it.id, it.name) }
+        .sortedBy { it.second.lowercase(Locale.getDefault()) }
 
     fun actionsFor(
         ch: TvChannel,
@@ -349,19 +511,15 @@ private fun TvHomeBody(
             columns = GridCells.Adaptive(100.dp),
             modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = topHeight, bottom = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             val results = home.results
             if (results != null) {
                 header("h:results", { stringResource(R.string.au12_tvui_shelf_results) })
                 if (results.isEmpty()) {
                     item(key = "empty", span = { GridItemSpan(maxLineSpan) }) {
-                        Text(
-                            stringResource(R.string.au12_tvui_no_results),
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(16.dp),
-                        )
+                        TvEmptyState(R.drawable.search_24px, stringResource(R.string.au12_tvui_no_results), null)
                     }
                 }
                 items(results, key = { "r:" + it.id }) { ch ->
@@ -373,27 +531,10 @@ private fun TvHomeBody(
                 }
             } else {
                 if (category == null) {
-                    if (favorites.isNotEmpty()) {
-                        header("h:fav", { stringResource(R.string.au12_tvui_shelf_favorites) })
-                        item(key = "s:fav", span = { GridItemSpan(maxLineSpan) }) {
-                            LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                                itemsIndexed(favorites, key = { _, c -> c.id }) { i, ch ->
-                                    TvChannelCard(
-                                        ch, playing = ch.id == playingId, favorite = true,
-                                        reduceAnimations = reduceAnimations,
-                                        actions = actionsFor(
-                                            ch,
-                                            moveBefore = if (i > 0) ({ vm.moveFavorite(ch.id, i - 1) }) else null,
-                                            moveAfter = if (i < favorites.lastIndex) ({ vm.moveFavorite(ch.id, i + 1) }) else null,
-                                        ),
-                                        onClick = { vm.play(ch, favorites) },
-                                        modifier = Modifier.width(104.dp),
-                                    )
-                                }
-                            }
-                        }
+                    if (favorites.isEmpty()) {
+                        item(key = "hint:star", span = { GridItemSpan(maxLineSpan) }) { TvStarHint(Modifier.padding(vertical = 4.dp)) }
                     }
-                    if (recents.isNotEmpty()) {
+                    if (favorites.isEmpty() && recents.isNotEmpty()) {
                         header("h:rec", { stringResource(R.string.au12_tvui_shelf_recents) })
                         item(key = "s:rec", span = { GridItemSpan(maxLineSpan) }) {
                             LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -408,7 +549,7 @@ private fun TvHomeBody(
                             }
                         }
                     }
-                    if (custom.isNotEmpty()) {
+                    if (favorites.isEmpty() && custom.isNotEmpty()) {
                         header("h:cus", { stringResource(R.string.au12_tvui_shelf_custom) })
                         item(key = "s:cus", span = { GridItemSpan(maxLineSpan) }) {
                             LazyRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -426,7 +567,8 @@ private fun TvHomeBody(
                 }
                 val title: @Composable () -> String = {
                     when {
-                        category != null -> categories.firstOrNull { it.id == category }?.name
+                        category != null -> categories.firstOrNull { it.id == category }
+                            ?.let { tvCategoryName(it.id, it.name) }
                             ?: stringResource(R.string.au12_tvui_shelf_filtered)
                         countries.size == 1 -> stringResource(
                             R.string.au12_tvui_shelf_country, TvIndex.countryName(countries.first(), Locale.getDefault())
@@ -438,11 +580,7 @@ private fun TvHomeBody(
                 header("h:main", title)
                 if (home.channels.isEmpty()) {
                     item(key = "empty", span = { GridItemSpan(maxLineSpan) }) {
-                        Text(
-                            stringResource(R.string.au12_tvui_no_results),
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(16.dp),
-                        )
+                        TvEmptyState(R.drawable.search_24px, stringResource(R.string.au12_tvui_no_results), null)
                     }
                 }
                 items(home.channels, key = { "m:" + it.id }) { ch ->
@@ -459,7 +597,7 @@ private fun TvHomeBody(
         Column(
             Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.92f))
+                .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.88f))
                 .onSizeChanged { topHeight = with(density) { it.height.toDp() } }
                 .padding(top = 4.dp, bottom = 4.dp),
         ) {
@@ -492,11 +630,11 @@ private fun TvHomeBody(
                         label = { Text(stringResource(R.string.au12_tvui_chip_all)) },
                     )
                 }
-                items(categories, key = { "cat:" + it.id }) { c ->
+                items(localizedCategories, key = { "cat:" + it.first.id }) { (c, label) ->
                     FilterChip(
                         selected = category == c.id,
                         onClick = { vm.setCategory(if (category == c.id) null else c.id) },
-                        label = { Text(c.name, maxLines = 1) },
+                        label = { Text(label, maxLines = 1) },
                     )
                 }
             }
@@ -525,8 +663,8 @@ private fun androidx.compose.foundation.lazy.grid.LazyGridScope.header(key: Stri
     item(key = key, span = { GridItemSpan(maxLineSpan) }) {
         Text(
             title(),
-            style = MaterialTheme.typography.titleSmall,
-            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,

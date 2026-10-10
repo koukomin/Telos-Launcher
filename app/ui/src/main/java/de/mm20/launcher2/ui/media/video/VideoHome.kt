@@ -13,7 +13,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.painterResource
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -127,13 +131,16 @@ internal fun VideoHome(
     val chip = selected?.takeIf { it in chips }
     Column(Modifier.fillMaxSize()) {
         LazyRow(
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             items(chips) { c ->
                 FilterChip(
                     selected = chip == c,
                     onClick = { selected = if (chip == c) null else c },
+                    shape = CircleShape,
+                    border = null,
+                    colors = FilterChipDefaults.filterChipColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh),
                     label = {
                         Text(
                             stringResource(
@@ -160,38 +167,60 @@ internal fun VideoHome(
                 HomeChip.Recent -> VideoList(recent) { openPlayer(context, recent, it) }
                 HomeChip.Unwatched -> VideoList(unwatched) { openPlayer(context, unwatched, it) }
                 HomeChip.Folders -> GroupList(folders, empty, onOpenGroup)
-                null -> LazyColumn(contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize()) {
+                null -> LazyColumn(
+                    contentPadding = PaddingValues(bottom = 24.dp),
+                    verticalArrangement = Arrangement.spacedBy(24.dp),
+                    modifier = Modifier.fillMaxSize(),
+                ) {
                     if (showContinue && continueWatching.isNotEmpty()) {
-                        item(key = "h-continue") { ShelfTitle(stringResource(R.string.hc_continue_watching)) }
-                        item(key = "s-continue") {
-                            LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                items(continueWatching, key = { it.uri.toString() }) { v ->
-                                    WideCard(v) { openPlayer(context, continueWatching, continueWatching.indexOf(v)) }
+                        item(key = "hero") {
+                            HeroCard(continueWatching.first()) { openPlayer(context, continueWatching, 0) }
+                        }
+                        if (continueWatching.size > 1) {
+                            val rest = continueWatching.drop(1)
+                            item(key = "s-continue") {
+                                Column {
+                                    ShelfTitle(stringResource(R.string.hc_continue_watching))
+                                    LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                                        items(rest, key = { it.uri.toString() }) { v ->
+                                            WideCard(v) { openPlayer(context, continueWatching, continueWatching.indexOf(v)) }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
                     if (recent.isNotEmpty()) {
                         val shelf = recent.take(20)
-                        item(key = "h-recent") { ShelfTitle(stringResource(R.string.au10_video_recently_added)) }
                         item(key = "s-recent") {
-                            LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                items(shelf, key = { it.uri.toString() }) { v ->
-                                    WideCard(v, width = 200) { openPlayer(context, shelf, shelf.indexOf(v)) }
+                            Column {
+                                ShelfTitle(stringResource(R.string.au10_video_recently_added), onMore = { selected = HomeChip.Recent })
+                                LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                                    items(shelf, key = { it.uri.toString() }) { v ->
+                                        WideCard(v, width = 200) { openPlayer(context, shelf, shelf.indexOf(v)) }
+                                    }
                                 }
                             }
                         }
                     }
                     if (movies.isNotEmpty()) {
-                        item(key = "h-movies") { ShelfTitle(stringResource(R.string.au_video_tab_movies)) }
-                        item(key = "s-movies") { PosterShelf(movies.take(30), metas, onOpenGroup) }
+                        item(key = "s-movies") {
+                            Column {
+                                ShelfTitle(stringResource(R.string.au_video_tab_movies), onMore = { selected = HomeChip.Movies })
+                                PosterShelf(movies.take(30), metas, onOpenGroup)
+                            }
+                        }
                     }
                     if (series.isNotEmpty()) {
-                        item(key = "h-series") { ShelfTitle(stringResource(R.string.au_video_tab_series)) }
-                        item(key = "s-series") { PosterShelf(series.take(30), metas, onOpenGroup) }
+                        item(key = "s-series") {
+                            Column {
+                                ShelfTitle(stringResource(R.string.au_video_tab_series), onMore = { selected = HomeChip.Series })
+                                PosterShelf(series.take(30), metas, onOpenGroup)
+                            }
+                        }
                     }
                     if (movies.isEmpty() && series.isEmpty() && recent.isEmpty()) {
-                        item { Text(empty, modifier = Modifier.padding(24.dp), color = MaterialTheme.colorScheme.onSurfaceVariant) }
+                        item { VideoEmptyState(R.drawable.movie_24px, stringResource(R.string.au14_videoui_empty_title), empty, Modifier.height(320.dp)) }
                     }
                 }
             }
@@ -200,31 +229,102 @@ internal fun VideoHome(
 }
 
 @Composable
-private fun ShelfTitle(text: String) {
-    Text(text, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 8.dp))
+private fun ShelfTitle(text: String, onMore: (() -> Unit)? = null) {
+    Row(Modifier.fillMaxWidth().padding(start = 20.dp, end = 8.dp, bottom = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+        Text(text, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f))
+        if (onMore != null) TextButton(onClick = onMore) { Text(stringResource(R.string.au14_videoui_more)) }
+    }
+}
+
+/** The hero of the home: the video that was watched last, 16:9, with title, time left and a play button */
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun HeroCard(video: VideoItem, onPlay: () -> Unit) {
+    val context = LocalContext.current
+    var menu by remember { mutableStateOf(false) }
+    val progress = remember(video.uri, libraryVersion.intValue) { ResumeStore.progress(context, video.uri) }
+    val seen = remember(video.uri, libraryVersion.intValue) { ResumeStore.isWatched(context, video.uri) }
+    val shape = RoundedCornerShape(28.dp)
+    Box(
+        Modifier.padding(horizontal = 16.dp).fillMaxWidth().aspectRatio(16f / 9f)
+            .shadow(8.dp, shape).clip(shape).pressScale(onPlay) { menu = true },
+    ) {
+        VideoThumb(video, Modifier.matchParentSize())
+        Box(
+            Modifier.matchParentSize().background(
+                Brush.verticalGradient(listOf(Color.Black.copy(alpha = 0.1f), Color.Black.copy(alpha = 0.85f)))
+            )
+        )
+        Column(Modifier.align(Alignment.BottomStart).padding(20.dp, 20.dp, 20.dp, 24.dp)) {
+            Text(stringResource(R.string.hc_continue_watching), style = MaterialTheme.typography.labelMedium, color = Color.White.copy(alpha = 0.8f))
+            Text(video.title, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold, color = Color.White, maxLines = 2, overflow = TextOverflow.Ellipsis)
+            Row(Modifier.padding(top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                Button(onClick = onPlay, contentPadding = PaddingValues(start = 16.dp, end = 20.dp)) {
+                    Icon(painterResource(R.drawable.play_arrow_24px), contentDescription = null, modifier = Modifier.size(20.dp))
+                    Spacer(Modifier.width(6.dp))
+                    Text(stringResource(R.string.hc_play))
+                }
+                if (progress in 0.02f..0.95f && video.durationMs > 0) {
+                    Text(
+                        stringResource(R.string.au10_video_remaining, formatDuration((video.durationMs * (1f - progress)).toLong())),
+                        style = MaterialTheme.typography.labelLarge,
+                        color = Color.White,
+                        modifier = Modifier.padding(start = 12.dp),
+                    )
+                }
+            }
+        }
+        if (progress > 0.02f) {
+            LinearProgressIndicator(
+                progress = { progress.coerceAtMost(1f) },
+                modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(4.dp),
+                trackColor = Color.White.copy(alpha = 0.25f),
+            )
+        }
+        Box(Modifier.align(Alignment.TopEnd)) { VideoMenu(video, menu, seen) { menu = false } }
+    }
 }
 
 @Composable
 private fun PosterShelf(groups: List<VideoGroup>, metas: Map<String, VideoMeta?>, onOpen: (VideoGroup) -> Unit) {
-    LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+    LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         items(groups, key = { metaKey(it) }) { g ->
-            val meta = metas[metaKey(g)]
-            Column(Modifier.width(120.dp).clip(RoundedCornerShape(12.dp)).combinedClickable(onClick = { onOpen(g) })) {
-                if (meta?.posterUrl != null) {
-                    Poster(meta.posterUrl, Modifier.fillMaxWidth().aspectRatio(2f / 3f).clip(RoundedCornerShape(12.dp)))
-                } else {
-                    VideoThumb(g.items.first(), Modifier.fillMaxWidth().aspectRatio(2f / 3f).clip(RoundedCornerShape(12.dp)))
-                }
-                Text(
-                    meta?.title?.ifBlank { null } ?: g.title,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Medium,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(top = 6.dp),
-                )
-            }
+            PosterCard(g, metas[metaKey(g)], Modifier.width(124.dp), onOpen)
         }
+    }
+}
+
+/** A 2:3 poster with rating chip, watched badge and title; used by shelves and grids */
+@Composable
+internal fun PosterCard(g: VideoGroup, meta: VideoMeta?, modifier: Modifier, onOpen: (VideoGroup) -> Unit) {
+    val context = LocalContext.current
+    val watched = remember(g.items, libraryVersion.intValue) { g.items.isNotEmpty() && g.items.all { ResumeStore.isWatched(context, it.uri) } }
+    val shape = RoundedCornerShape(20.dp)
+    Column(modifier.pressScale({ onOpen(g) })) {
+        Box(Modifier.fillMaxWidth().aspectRatio(2f / 3f).shadow(4.dp, shape).clip(shape)) {
+            if (meta?.posterUrl != null) {
+                Poster(meta.posterUrl, Modifier.fillMaxSize())
+            } else {
+                VideoThumb(g.items.first(), Modifier.fillMaxSize())
+            }
+            meta?.rating?.takeIf { it > 0 }?.let { ImageChip("★ %.1f".format(it), Modifier.align(Alignment.BottomStart).padding(8.dp)) }
+            if (watched) WatchedBadge(Modifier.align(Alignment.TopEnd).padding(8.dp))
+        }
+        Text(
+            meta?.title?.ifBlank { null } ?: g.title,
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.SemiBold,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.padding(top = 8.dp, start = 2.dp),
+        )
+        Text(
+            listOfNotNull(meta?.year?.ifBlank { null }, g.subtitle.takeIf { meta?.year.isNullOrBlank() }).joinToString(" · "),
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            maxLines = 1,
+            modifier = Modifier.padding(start = 2.dp),
+        )
     }
 }
 
@@ -236,31 +336,34 @@ private fun WideCard(video: VideoItem, width: Int = 260, onClick: () -> Unit) {
     var menu by remember { mutableStateOf(false) }
     val progress = remember(video.uri, libraryVersion.intValue) { ResumeStore.progress(context, video.uri) }
     val seen = remember(video.uri, libraryVersion.intValue) { ResumeStore.isWatched(context, video.uri) }
-    Column(Modifier.width(width.dp).clip(RoundedCornerShape(12.dp)).combinedClickable(onClick = onClick, onLongClick = { menu = true })) {
-        Box {
-            VideoThumb(video, Modifier.fillMaxWidth().aspectRatio(16f / 9f).clip(RoundedCornerShape(12.dp)))
+    val shape = RoundedCornerShape(20.dp)
+    Column(Modifier.width(width.dp).pressScale(onClick) { menu = true }) {
+        Box(Modifier.shadow(4.dp, shape).clip(shape)) {
+            VideoThumb(video, Modifier.fillMaxWidth().aspectRatio(16f / 9f))
             if (progress > 0.02f) {
                 LinearProgressIndicator(
-                    progress = { progress },
+                    progress = { progress.coerceAtMost(1f) },
                     modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(4.dp),
                 )
             }
+            if (seen) WatchedBadge(Modifier.align(Alignment.TopEnd).padding(8.dp))
             VideoMenu(video, menu, seen) { menu = false }
         }
         Text(
             video.title,
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Medium,
+            style = MaterialTheme.typography.titleSmall,
+            fontWeight = FontWeight.SemiBold,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.padding(top = 6.dp),
+            modifier = Modifier.padding(top = 8.dp, start = 2.dp),
         )
         if (progress in 0.02f..0.95f && video.durationMs > 0) {
             Text(
                 stringResource(R.string.au10_video_remaining, formatDuration((video.durationMs * (1f - progress)).toLong())),
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,
+                modifier = Modifier.padding(start = 2.dp),
             )
         }
     }

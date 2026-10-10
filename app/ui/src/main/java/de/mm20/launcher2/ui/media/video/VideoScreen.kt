@@ -281,13 +281,13 @@ fun VideoScreen() {
     }
 
     de.mm20.launcher2.ui.media.MediaFrame(stringResource(R.string.au_video_title), guardKey = "telos_video_app://video", actions = {
-        IconButton(onClick = { showOpen = true }) {
+        FilledTonalIconButton(onClick = { showOpen = true }, colors = IconButtonDefaults.filledTonalIconButtonColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.9f))) {
             Icon(painterResource(R.drawable.link_24px), contentDescription = stringResource(R.string.hc_play_from_the_web))
         }
-        IconButton(onClick = { showOrganize = true }) {
+        FilledTonalIconButton(onClick = { showOrganize = true }, colors = IconButtonDefaults.filledTonalIconButtonColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.9f))) {
             Icon(painterResource(R.drawable.folder_24px), contentDescription = stringResource(R.string.au7_vidfolders_action))
         }
-        IconButton(onClick = { showServices = true }) {
+        FilledTonalIconButton(onClick = { showServices = true }, colors = IconButtonDefaults.filledTonalIconButtonColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.9f))) {
             Icon(painterResource(R.drawable.settings_24px), contentDescription = stringResource(R.string.hc_video_services))
         }
     }) {
@@ -331,55 +331,18 @@ fun VideoScreen() {
             val shown = remember(current, present) { current.items.filter { it.id in present } }
             LaunchedEffect(shown.isEmpty()) { if (shown.isEmpty()) group = null }
             val meta = metas[metaKey(current)]
-            val tint by produceState<androidx.compose.ui.graphics.Color?>(null, meta?.posterUrl) {
-                value = meta?.posterUrl?.let { PosterTint.of(context, it) }
-            }
-            TintedHeader(tint, Modifier.fillMaxWidth()) {
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
-                IconButton(onClick = { group = null }) {
-                    Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back))
-                }
-                if (meta?.posterUrl != null) {
-                    Poster(meta.posterUrl, Modifier.width(60.dp).height(90.dp).clip(RoundedCornerShape(8.dp)))
-                    Spacer(Modifier.width(12.dp))
-                }
-                Column(Modifier.weight(1f)) {
-                    Text(meta?.title?.ifBlank { null } ?: current.title, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
-                    Text(
-                        listOfNotNull(meta?.year?.ifBlank { null }, meta?.rating?.takeIf { it > 0 }?.let { "★ %.1f".format(it) }, current.subtitle).joinToString(" · "),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                    if (traktConnected) {
-                        val scope = androidx.compose.runtime.rememberCoroutineScope()
-                        TextButton(onClick = {
-                            scope.launch {
-                                val ok = de.mm20.launcher2.comms.media.video.trakt.Trakt.addToWatchlist(context, current.title, current.year, current.series)
-                                toast(context, context.getString(if (ok) R.string.au_video_watchlist_added else R.string.au_video_watchlist_failed))
-                            }
-                        }, contentPadding = PaddingValues(0.dp)) { Text(stringResource(R.string.hc_add_to_trakt_watchlist)) }
-                    }
-                    if (!meta?.overview.isNullOrBlank()) {
-                        Text(meta!!.overview, style = MaterialTheme.typography.bodySmall, maxLines = 4, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 4.dp))
-                    }
-                }
-            }
-            }
-            if (current.series) SeasonedVideoList(shown) { index -> openPlayer(context, shown, index) }
-            else VideoList(shown) { index -> openPlayer(context, shown, index) }
+            DetailPage(current, shown, meta, traktConnected, onBack = { group = null }) { index -> openPlayer(context, shown, index) }
             return@Column
         }
 
-        PrimaryScrollableTabRow(selectedTabIndex = tab, edgePadding = 0.dp) {
-            listOf(R.string.au_video_tab_library, R.string.au_video_tab_movies, R.string.au_video_tab_series, R.string.au7_vidfolders_tab_other, R.string.au_video_tab_folders).forEachIndexed { i, title ->
-                Tab(selected = tab == i, onClick = { tab = i }, text = { Text(stringResource(title)) })
-            }
-        }
+        PillTabs(
+            titles = listOf(R.string.au_video_tab_library, R.string.au_video_tab_movies, R.string.au_video_tab_series, R.string.au7_vidfolders_tab_other, R.string.au_video_tab_folders).map { stringResource(it) },
+            selected = tab,
+            onSelect = { tab = it },
+        )
         when {
-            loading -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
-            items.isEmpty() -> Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(stringResource(R.string.hc_no_videos_found_on_this_device), color = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
+            loading -> VideoSkeleton()
+            items.isEmpty() -> VideoEmptyState(R.drawable.movie_24px, stringResource(R.string.au14_videoui_empty_title), stringResource(R.string.hc_no_videos_found_on_this_device))
             filtered.isEmpty() && query.isNotBlank() -> de.mm20.launcher2.ui.component.SearchEmptyState(query)
             tab == 0 && query.isBlank() -> TintedHeader(null, Modifier.fillMaxSize()) {
                 VideoHome(items, continueWatching, movies, series, others, folders, metas, showContinue = true) { group = it }
@@ -392,9 +355,7 @@ fun VideoScreen() {
             tab == 1 -> PosterGrid(movies, metas, stringResource(R.string.au_video_no_movies)) { group = it }
             tab == 2 -> PosterGrid(series, metas, stringResource(R.string.au_video_no_series)) { group = it }
             tab == 3 -> if (others.isEmpty()) {
-                Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
-                    Text(stringResource(R.string.au7_vidfolders_no_other), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
+                VideoEmptyState(R.drawable.folder_24px, stringResource(R.string.au7_vidfolders_no_other), "")
             } else VideoList(others) { index -> openPlayer(context, others, index) }
             else -> GroupList(folders, "") { group = it }
         }
@@ -403,201 +364,3 @@ fun VideoScreen() {
     }
 }
 
-@Composable
-internal fun GroupList(groups: List<VideoGroup>, emptyText: String, onOpen: (VideoGroup) -> Unit) {
-    if (groups.isEmpty()) {
-        Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
-            Text(emptyText, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
-        return
-    }
-    LazyColumn(contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize()) {
-        items(groups.size) { index ->
-            val g = groups[index]
-            Row(
-                modifier = Modifier.fillMaxWidth().clickable { onOpen(g) }.padding(horizontal = 16.dp, vertical = 10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                VideoThumb(g.items.first(), Modifier.width(112.dp).height(63.dp).clip(RoundedCornerShape(8.dp)))
-                Column(Modifier.padding(start = 12.dp)) {
-                    Text(g.title, style = MaterialTheme.typography.bodyLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    Text(g.subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-            }
-        }
-    }
-}
-
-@Composable
-internal fun VideoList(list: List<VideoItem>, onPlay: (Int) -> Unit) {
-    LazyColumn(contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize()) {
-        items(list.size, key = { list[it].uri.toString() }) { index -> VideoRow(list[index]) { onPlay(index) } }
-    }
-}
-
-/** The episodes of a series, under a heading per season */
-@Composable
-private fun SeasonedVideoList(list: List<VideoItem>, onPlay: (Int) -> Unit) {
-    val seasons = remember(list) { list.map { EpisodeParser.parse(it.fileName).season } }
-    LazyColumn(contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize()) {
-        list.indices.forEach { index ->
-            if (index == 0 || seasons[index] != seasons[index - 1]) {
-                item(key = "season-$index") {
-                    Text(
-                        stringResource(R.string.au7_vidfolders_season, seasons[index] ?: 0),
-                        style = MaterialTheme.typography.titleSmall,
-                        modifier = Modifier.padding(16.dp, 12.dp, 16.dp, 4.dp),
-                    )
-                }
-            }
-            item(key = list[index].uri.toString()) { VideoRow(list[index]) { onPlay(index) } }
-        }
-    }
-}
-
-@Composable
-internal fun VideoRow(video: VideoItem, onClick: () -> Unit) {
-    val context = LocalContext.current
-    val progress = remember(video.uri, libraryVersion.intValue) { ResumeStore.progress(context, video.uri) }
-    val actions = LocalVideoActions.current
-    var menu by remember { mutableStateOf(false) }
-    val seen = remember(video.uri, libraryVersion.intValue) { ResumeStore.isWatched(context, video.uri) }
-    val watched = seen || remember(video.uri, traktVersion.intValue) {
-        de.mm20.launcher2.comms.media.video.trakt.Trakt.isWatched(context, EpisodeParser.parse(video.fileName))
-    }
-    @OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
-    Row(
-        modifier = Modifier.fillMaxWidth()
-            .combinedClickable(onClick = onClick, onLongClick = { menu = true })
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Box {
-            VideoThumb(video, Modifier.width(112.dp).height(63.dp).clip(RoundedCornerShape(8.dp)))
-            if (progress > 0.02f) {
-                LinearProgressIndicator(
-                    progress = { progress },
-                    modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(3.dp),
-                )
-            }
-        }
-        Column(Modifier.weight(1f).padding(start = 12.dp)) {
-            Text((if (watched) "✓ " else "") + video.title, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium, maxLines = 2, overflow = TextOverflow.Ellipsis)
-            VideoMenu(video, menu, seen) { menu = false }
-            Text(
-                formatDuration(video.durationMs) + " · " + video.folder.ifBlank { stringResource(R.string.au_video_other_folder) },
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-        }
-    }
-}
-
-/** The long-press menu of a video: watched mark, share, delete */
-@Composable
-internal fun VideoMenu(video: VideoItem, expanded: Boolean, seen: Boolean, onDismiss: () -> Unit) {
-    val context = LocalContext.current
-    val actions = LocalVideoActions.current
-    DropdownMenu(expanded = expanded, onDismissRequest = onDismiss) {
-        DropdownMenuItem(
-            text = { Text(stringResource(if (seen) R.string.vn_mark_unwatched else R.string.vn_mark_watched)) },
-            onClick = {
-                onDismiss()
-                if (seen) ResumeStore.markUnwatched(context, video.uri) else ResumeStore.markWatched(context, video.uri, video.durationMs)
-                libraryVersion.intValue++
-            },
-        )
-        de.mm20.launcher2.ui.common.share.ShareMenuItem(onClick = { onDismiss(); actions?.onShare?.invoke(video) })
-        if (video.id > 0) {
-            DropdownMenuItem(
-                text = { Text(stringResource(R.string.vn_delete_video)) },
-                onClick = { onDismiss(); actions?.onDelete?.invoke(video) },
-            )
-        }
-    }
-}
-
-@Composable
-internal fun VideoThumb(video: VideoItem, modifier: Modifier) {
-    val context = LocalContext.current
-    val bitmap by produceState<Bitmap?>(null, video.uri) {
-        value = withContext(Dispatchers.IO) {
-            runCatching {
-                if (Build.VERSION.SDK_INT >= 29) context.contentResolver.loadThumbnail(video.uri, Size(320, 180), null)
-                else null
-            }.getOrNull()
-        }
-    }
-    Box(modifier.background(MaterialTheme.colorScheme.secondaryContainer), contentAlignment = Alignment.Center) {
-        val b = bitmap
-        if (b == null) {
-            Icon(painterResource(R.drawable.play_circle_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onSecondaryContainer)
-        } else {
-            Image(b.asImageBitmap(), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
-        }
-    }
-}
-
-internal fun formatDuration(ms: Long): String {
-    val total = (ms / 1000).coerceAtLeast(0)
-    val h = total / 3600
-    val m = (total % 3600) / 60
-    val s = total % 60
-    return if (h > 0) "%d:%02d:%02d".format(h, m, s) else "%d:%02d".format(m, s)
-}
-
-@Composable
-internal fun Poster(url: String?, modifier: Modifier) {
-    Box(modifier.background(MaterialTheme.colorScheme.secondaryContainer), contentAlignment = Alignment.Center) {
-        if (url == null) {
-            Icon(painterResource(R.drawable.movie_24px), contentDescription = null, tint = MaterialTheme.colorScheme.onSecondaryContainer)
-        } else {
-            coil.compose.AsyncImage(model = url, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
-        }
-    }
-}
-
-@Composable
-internal fun PosterGrid(
-    groups: List<VideoGroup>,
-    metas: Map<String, de.mm20.launcher2.comms.media.video.VideoMeta?>,
-    emptyText: String,
-    onOpen: (VideoGroup) -> Unit,
-) {
-    if (groups.isEmpty()) {
-        Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
-            Text(emptyText, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        }
-        return
-    }
-    androidx.compose.foundation.lazy.grid.LazyVerticalGrid(
-        columns = androidx.compose.foundation.lazy.grid.GridCells.Adaptive(110.dp),
-        contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 24.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = Modifier.fillMaxSize(),
-    ) {
-        items(groups.size) { i ->
-            val g = groups[i]
-            val meta = metas[metaKey(g)]
-            Column(Modifier.clickable { onOpen(g) }) {
-                if (meta?.posterUrl != null) {
-                    Poster(meta.posterUrl, Modifier.fillMaxWidth().aspectRatio(2f / 3f).clip(RoundedCornerShape(12.dp)))
-                } else {
-                    VideoThumb(g.items.first(), Modifier.fillMaxWidth().aspectRatio(2f / 3f).clip(RoundedCornerShape(12.dp)))
-                }
-                Text(
-                    meta?.title?.ifBlank { null } ?: g.title,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Medium,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.padding(top = 6.dp),
-                )
-                Text(g.subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
-            }
-        }
-    }
-}
