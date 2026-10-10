@@ -70,6 +70,7 @@ class TvExtraSources(
                             val entries = if (text.length > TvM3u.MAX_CHARS) emptyList() else TvM3u.parse(text, MAX_ENTRIES).entries
                             if (entries.isEmpty()) parsed.remove(p.key) else parsed[p.key] = TvExtraMerge.Source(p.label, entries)
                         }
+                        Unit
                     }
                 }
                 PLAYLISTS.mapNotNull { parsed[it.key] }

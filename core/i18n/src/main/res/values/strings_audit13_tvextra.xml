@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Extra Greek channels</string>
+    <string name="au13_tvextra_playlists_summary">Adds streams and channels from the public Free-TV and greektvm3u playlists, loaded from GitHub on this device when you open TV. Only used when Greece is selected. Nothing is shown if they cannot be loaded.</string>
+    <string name="au13_tvextra_epg_title">Programme guide</string>
+    <string name="au13_tvextra_epg_summary">Shows what is on now and next for Greek channels (XMLTV guide from ext.greektv.app or epgshare01.online, refreshed at most every 6 hours). Only used when Greece is selected.</string>
+    <string name="au13_tvextra_marker">Extra</string>
+    <string name="au13_tvextra_marker_description">This channel comes from an optional extra source and may be less reliable</string>
+</resources>
