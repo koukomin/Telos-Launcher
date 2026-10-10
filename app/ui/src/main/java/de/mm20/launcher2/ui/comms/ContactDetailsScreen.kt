@@ -245,13 +245,7 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
     }
 
     fun share(context: Context, contact: DialerContact) {
-        val vcard = contactVcard(contact.displayName, contact.phoneNumbers, contact.emails)
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "text/x-vcard"
-            putExtra(Intent.EXTRA_TEXT, vcard)
-            putExtra(Intent.EXTRA_SUBJECT, contact.displayName)
-        }
-        context.tryStartActivity(Intent.createChooser(intent, null))
+        de.mm20.launcher2.ui.common.share.ShareActions.shareContactVcard(context, contact.displayName, contact.phoneNumbers, contact.emails)
     }
 
     fun setNote(number: String, note: String?) {

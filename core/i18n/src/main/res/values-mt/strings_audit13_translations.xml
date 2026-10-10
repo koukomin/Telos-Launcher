@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Kanali Griegi addizzjonali</string>
+    <string name="au13_tvextra_playlists_summary">Iżid stream u kanali mil-playlists pubbliċi Free-TV u greektvm3u, li jitgħabbew minn GitHub fuq dan l-apparat meta tiftaħ it-TV. Jintuża biss meta tintgħażel il-Greċja. Ma jintwera xejn jekk ma jistgħux jitgħabbew.</string>
+    <string name="au13_tvextra_epg_title">Gwida tal-programmi</string>
+    <string name="au13_tvextra_epg_summary">Turi x\'qed jixxandar issa u x\'jiġi wara fuq il-kanali Griegi (gwida XMLTV minn ext.greektv.app jew epgshare01.online, tiġi aġġornata mhux aktar minn kull 6 sigħat). Tintuża biss meta tintgħażel il-Greċja.</string>
+    <string name="au13_tvextra_marker">Addizzjonali</string>
+    <string name="au13_tvextra_marker_description">Dan il-kanal ġej minn sors addizzjonali fakultattiv u jista\' jkun inqas affidabbli</string>
+    <string name="au13_tvextraui_disclaimer_extra">Għall-kanali Griegi, Telos TV tista\' tuża wkoll sorsi addizzjonali fakultattivi: playlists pubbliċi (raw.githubusercontent.com) u gwida tal-programmi (ext.greektv.app, epgshare01.online). Jiġu kkuntattjati biss meta tintgħażel il-Greċja u l-prattika korrispondenti tkun mixgħula, u biss waqt li t-TV tkun miftuħa. Tista\' titfihom fil-lista tal-pajjiżi.</string>
+    <string name="au13_tvextraui_now_line">Issa: %1$s</string>
+    <string name="au13_tvextraui_player_now">Issa: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Li jmiss: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Dan il-kanal bla konnessjoni temporanjament</string>
+    <string name="au13_tvextraui_offline_hint">Ippruvajna l-istreams kollha disponibbli u ċċekkjajna għal lista aġġornata. Erġa\' pprova aktar tard.</string>
+    <string name="au13_tvextraui_offline_back">Lura</string>
+    <string name="au13_tvextraui_static_description">Storbju tat-TV: l-ebda sinjal</string>
+</resources>

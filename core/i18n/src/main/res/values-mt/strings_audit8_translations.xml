@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt teħtieġ applikazzjoni tiegħek stess. Idħol fuq trakt.tv, iftaħ trakt.tv/oauth/applications, agħżel New Application, daħħal xi isem u, bħala l-indirizz ta\' tidderieġi mill-ġdid, eżattament l-indirizz muri hawn taħt. Issejvjah, imbagħad daħħal hawn l-ID tal-klijent u s-sigriet tal-klijent tiegħu u ptoċċa Idħol bil-browser. Tidħol u tapprova fuq trakt.tv innifsu; Telos qatt ma jara l-password tiegħek ta\' Trakt.</string>
+    <string name="au8_traktweb_redirect_label">Indirizz ta\' tidderieġi mill-ġdid għall-applikazzjoni tiegħek ta\' Trakt</string>
+    <string name="au8_traktweb_copy_redirect">Ikkopja l-indirizz</string>
+    <string name="au8_traktweb_sign_in_browser">Idħol bil-browser</string>
+    <string name="au8_traktweb_use_code">Uża kodiċi minflok</string>
+    <string name="au8_traktweb_waiting_browser">Qed nistennew li tapprova fil-browser…</string>
+    <string name="au8_traktweb_denied">L-idħol ġie miċħud fuq Trakt</string>
+    <string name="au8_traktweb_state_mismatch">It-tweġiba tal-idħol ma qablitx ma\' din it-talba u ġiet injorata</string>
+    <string name="au8_traktweb_expired">L-idħol dam aktar minn 10 minuti. Erġa\' pprova</string>
+    <string name="au8_traktweb_no_browser">Ma nstab ebda browser biex jinfetaħ trakt.tv</string>
+</resources>

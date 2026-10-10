@@ -104,6 +104,8 @@ fun SearchSettingsScreen() {
     val unitConverter by viewModel.unitConverter.collectAsStateWithLifecycle(null)
     val wikipedia by viewModel.wikipedia.collectAsStateWithLifecycle(null)
     val websites by viewModel.websites.collectAsStateWithLifecycle(null)
+    val radioStations by viewModel.radioStationsInSearch.collectAsStateWithLifecycle(null)
+    val tvChannels by viewModel.tvChannelsInSearch.collectAsStateWithLifecycle(null)
 
 
     val autoFocus by viewModel.autoFocus.collectAsStateWithLifecycle(null)
@@ -294,6 +296,24 @@ fun SearchSettingsScreen() {
                     value = websites == true,
                     onValueChanged = {
                         viewModel.setWebsites(it)
+                    }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.au5_radiosearch_pref_title),
+                    summary = stringResource(R.string.au5_radiosearch_pref_summary),
+                    icon = R.drawable.music_note_24px,
+                    value = radioStations == true,
+                    onValueChanged = {
+                        viewModel.setRadioStationsInSearch(it)
+                    }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.au12_tvsearch_pref_title),
+                    summary = stringResource(R.string.au12_tvsearch_pref_summary),
+                    icon = R.drawable.tv_24px,
+                    value = tvChannels == true,
+                    onValueChanged = {
+                        viewModel.setTvChannelsInSearch(it)
                     }
                 )
                 GuardedPreference(

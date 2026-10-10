@@ -321,6 +321,10 @@ data class SearchResultsGroup(
     val separateWorkProfile: Boolean = true,
     val rankingWeightFactor: WeightFactor = WeightFactor.Default,
     val hiddenItemsShowButton: Boolean = false,
+    /** Telos Radio: show the favorite stations that match the query as search results */
+    val radioStationsInSearch: Boolean = false,
+    /** Telos Media TV: show favorite, custom and recent TV channels that match the query as search results */
+    val tvChannelsInSearch: Boolean = false,
 )
 
 @Serializable
@@ -340,6 +344,8 @@ data class IconsGroup(
 @Serializable
 data class MiscGroup(
     val easterEgg: Boolean = false,
+    /** Local crash reporter switch. Mirrored into SharedPreferences for the crash handler. */
+    val crashReporterEnabled: Boolean = true,
 )
 
 @Serializable
@@ -1273,6 +1279,8 @@ data class CommsGroup(
     val sim2Color: String = "blue",
     /** Keys of Telos virtual apps (Phone, Music, ...) that were removed in the Store, comma separated */
     val disabledVirtualApps: String = "",
+    /** Telos Media: the space that was open last (music, radio or video) */
+    val mediaHubSpace: String = "music",
     /** Telos Video: online services. Keys and passwords are encrypted with the Android Keystore. */
     val tmdbApiKeyEnc: String = "",
     val subtitleApiKeyEnc: String = "",

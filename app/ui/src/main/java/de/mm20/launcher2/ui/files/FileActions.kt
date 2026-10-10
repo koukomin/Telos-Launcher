@@ -129,6 +129,8 @@ internal object FileActions {
         } else {
             Intent(Intent.ACTION_SEND_MULTIPLE).setType("*/*").putParcelableArrayListExtra(Intent.EXTRA_STREAM, ArrayList(uris))
         }.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        // the grant for the receiver travels with the ClipData
+        intent.clipData = android.content.ClipData.newRawUri(null, uris[0]).also { clip -> for (i in 1 until uris.size) clip.addItem(android.content.ClipData.Item(uris[i])) }
         runCatching { context.startActivity(Intent.createChooser(intent, context.getString(R.string.hc_share)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
     }
 

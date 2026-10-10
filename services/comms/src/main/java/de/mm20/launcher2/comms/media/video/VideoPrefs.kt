@@ -94,6 +94,10 @@ object VideoPrefs {
     fun matchFrameRate(context: Context): Boolean = read(context).optBoolean("matchFps", true)
     fun setMatchFrameRate(context: Context, on: Boolean) = write(context) { put("matchFps", on) }
 
+    /** Continue music or radio after a video that paused it (off by default) */
+    fun resumeAfterVideo(context: Context): Boolean = read(context).optBoolean("resumeAfterVideo", false)
+    fun setResumeAfterVideo(context: Context, on: Boolean) = write(context) { put("resumeAfterVideo", on) }
+
     // --- network sources of the library ---
     fun networkSources(context: Context): List<String> {
         val array = read(context).optJSONArray("netSources") ?: return emptyList()

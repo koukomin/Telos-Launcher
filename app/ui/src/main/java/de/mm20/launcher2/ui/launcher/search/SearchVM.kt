@@ -140,6 +140,21 @@ class SearchVM : ViewModel(), KoinComponent {
     /** Telos Notes that match the query. They come straight from the notes store, not from the search service. */
     val noteResults = mutableStateListOf<de.mm20.launcher2.ui.notes.Note>()
     private val notesStore: de.mm20.launcher2.ui.notes.NotesStore by inject()
+    /** Favorite Telos Radio stations that match the query (only when enabled in the search settings and Telos Radio is not removed) */
+    val radioResults = mutableStateListOf<de.mm20.launcher2.comms.model.RadioStation>()
+    private val radioRepository: de.mm20.launcher2.comms.repository.RadioRepository by inject()
+    private val commsSettings: de.mm20.launcher2.preferences.comms.CommsSettings by inject()
+    private var radioJob: Job? = null
+    /** Favorite, custom and recent TV channels that match the query (only when enabled and Telos Media is not removed) */
+    val tvResults = mutableStateListOf<de.mm20.launcher2.comms.tv.TvChannel>()
+    private val tvLibrary: de.mm20.launcher2.comms.tv.TvLibrary by inject()
+    private val tvCatalog: de.mm20.launcher2.comms.tv.TvCatalog by inject()
+    private val tvPlayer: de.mm20.launcher2.comms.tv.TvPlayerController by inject()
+    private var tvJob: Job? = null
+
+    fun playTvChannel(channel: de.mm20.launcher2.comms.tv.TvChannel) {
+        tvPlayer.play(channel)
+    }
     val unitConverterResults = mutableStateListOf<UnitConverter>()
     val searchActionResults = mutableStateListOf<SearchAction>()
     val locationResults = mutableStateListOf<Location>()
@@ -233,6 +248,49 @@ class SearchVM : ViewModel(), KoinComponent {
         searchQuery.value = query
         isSearchEmpty.value = query.isEmpty()
         noteResults.clear()
+        radioJob?.cancel()
+        radioResults.clear()
+        if (query.isNotBlank()) {
+            radioJob = viewModelScope.launch {
+                combine(
+                    searchUiSettings.radioStationsInSearch,
+                    commsSettings.disabledVirtualApps,
+                    radioRepository.observeFavorites(),
+                ) { enabled, disabled, favorites ->
+                    if (enabled && "telos_radio_app://radio" !in disabled) {
+                        de.mm20.launcher2.comms.search.TelosSearch.filter(favorites, query) { listOf(it.name) }.take(5)
+                    } else emptyList()
+                }.collectLatest { radioResults.updateItems(it) }
+            }
+        }
+        tvJob?.cancel()
+        tvResults.clear()
+        if (query.isNotBlank()) {
+            tvJob = viewModelScope.launch {
+                combine(
+                    searchUiSettings.tvChannelsInSearch,
+                    commsSettings.disabledVirtualApps,
+                ) { enabled, disabled -> enabled && "telos_media_app://media" !in disabled }
+                    .distinctUntilChanged()
+                    .collectLatest { active ->
+                        if (!active) {
+                            tvResults.updateItems(emptyList())
+                            return@collectLatest
+                        }
+                        // local storage only: never downloads the catalog
+                        tvCatalog.loadCachedOnly()
+                        combine(
+                            tvLibrary.observeFavorites(),
+                            tvLibrary.observeCustomChannels(),
+                            tvLibrary.observeRecents(),
+                        ) { favorites, custom, recents ->
+                            val pool = (favorites + custom + recents).distinctBy { it.id }
+                            de.mm20.launcher2.comms.search.TelosSearch
+                                .filter(pool, query) { listOf(it.name) + it.altNames }.take(5)
+                        }.collectLatest { tvResults.updateItems(it) }
+                    }
+            }
+        }
         if (query.length >= 2 && this.filters.value.tools) {
             notesStore.load()
             val foldedQuery = GreekFold.fold(query)

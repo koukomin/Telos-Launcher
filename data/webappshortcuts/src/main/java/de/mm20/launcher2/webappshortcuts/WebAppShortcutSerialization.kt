@@ -26,6 +26,8 @@ class WebAppShortcutSerializer : SearchableSerializer {
             "iconSource" to searchable.iconSource.name,
             "notificationsEnabled" to searchable.notificationsEnabled,
             "adBlockMode" to searchable.adBlockMode.name,
+            "cookieMode" to searchable.cookieOptions.cookies.name,
+            "thirdPartyCookieMode" to searchable.cookieOptions.thirdPartyCookies.name,
         ).toString()
     }
 
@@ -51,6 +53,10 @@ class WebAppShortcutDeserializer : SearchableDeserializer {
             iconSource = runCatching { WebAppShortcut.IconSource.valueOf(json.optString("iconSource", "Website")) }.getOrDefault(WebAppShortcut.IconSource.Website),
             notificationsEnabled = json.optBoolean("notificationsEnabled", false),
             adBlockMode = runCatching { WebAppShortcut.AdBlockMode.valueOf(json.optString("adBlockMode", "Global")) }.getOrDefault(WebAppShortcut.AdBlockMode.Global),
+            cookieOptions = WebAppShortcut.CookieOptions(
+                cookies = runCatching { WebAppShortcut.CookieMode.valueOf(json.optString("cookieMode", "Global")) }.getOrDefault(WebAppShortcut.CookieMode.Global),
+                thirdPartyCookies = runCatching { WebAppShortcut.CookieMode.valueOf(json.optString("thirdPartyCookieMode", "Global")) }.getOrDefault(WebAppShortcut.CookieMode.Global),
+            ),
         )
     }
 }

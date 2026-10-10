@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">Dziesmu nosaukumi un izpildītāji tiek nosūtīti jūsu izvēlētajam pakalpojumam, un tikai tad, kad pakalpojums ir pierakstīts un ieslēgts. Pirms tam netiek sūtīts nekas.</string>
+    <string name="au7_scrobble_what">Ko skroblēt</string>
+    <string name="au7_scrobble_music_title">Skroblēt mūziku</string>
+    <string name="au7_scrobble_music_summary">Telos Music atskaņotās dziesmas pēc dziesmas pusi vai 4 minūtēm</string>
+    <string name="au7_scrobble_radio_title">Skroblēt radio</string>
+    <string name="au7_scrobble_radio_summary">Stacijas pašreizējā dziesma pēc vienas minūtes klausīšanās. Darbojas tikai ar stacijām, kas paziņo dziesmu.</string>
+    <string name="au7_scrobble_status_active">Sūta uz %1$s</string>
+    <string name="au7_scrobble_status_no_service">Netiek sūtīts nekas: neviens pakalpojums nav pierakstīts un ieslēgts</string>
+    <string name="au7_scrobble_status_no_source">Netiek sūtīts nekas: ieslēdziet mūzikas vai radio skroblēšanu</string>
+    <string name="au7_scrobble_sign_in">Pārbaudīt savienojumu un pierakstīties</string>
+    <string name="au7_scrobble_lb_ok">Token ir derīgs lietotājam %1$s</string>
+    <string name="au7_scrobble_https">Servera adresei jāsākas ar https:// (http ir atļauts tikai serverim jūsu pašu tīklā)</string>
+    <string name="au7_scrobble_switch_on">Ieslēgts</string>
+    <string name="au7_scrobble_queue">Rinda</string>
+    <string name="au7_scrobble_queue_count">Nosūtīšanu gaida %1$d skrobli</string>
+    <string name="au7_scrobble_queue_empty">Neviens skrobls negaida</string>
+    <string name="au7_scrobble_queue_clear">Notīrīt rindu</string>
+    <string name="au7_scrobble_queue_cleared">Rinda notīrīta</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm un ListenBrainz lietotnēm Telos Music un Telos Radio</string>
+    <string name="au7_trakt_open_settings">Trakt skroblēšana</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt nepieciešama jūsu pašu lietotne. Pierakstieties vietnē trakt.tv, atveriet trakt.tv/oauth/applications, izvēlieties New Application, ievadiet jebkuru nosaukumu un novirzīšanas adresi urn:ietf:wg:oauth:2.0:oob, saglabājiet to un šeit ievadiet tās client id un client secret.</string>
+    <string name="au7_trakt_privacy">Kamēr skroblēšana ir ieslēgta, Trakt tiek nosūtīti skatīto filmu un sēriju nosaukumi un tas, cik tālu esat noskatījies. Tiek sūtīti tikai video, kas atpazīti kā filma vai sērija.</string>
+    <string name="au7_trakt_signed_in">Pierakstīts Trakt</string>
+    <string name="au7_trakt_switch">Skroblēt uz Trakt</string>
+    <string name="au7_trakt_queue">Nosūtīšanu gaida %1$d skrobli</string>
+    <string name="au7_trakt_clear_queue">Notīrīt rindu</string>
+    <string name="au7_trakt_sign_in">Pierakstīties</string>
+    <string name="au7_trakt_sign_out">Izrakstīties</string>
+    <string name="au7_trakt_copy">Kopēt kodu</string>
+    <string name="au7_trakt_waiting">Gaida, kamēr ievadīsiet kodu vietnē %1$s…</string>
+    <string name="au7_vidfolders_tab_other">Citi</string>
+    <string name="au7_vidfolders_no_other">Visi video ir atpazīti kā filmas vai sērijas</string>
+    <string name="au7_vidfolders_season">%1$d. sezona</string>
+    <string name="au7_vidfolders_action">Sakārtot mapēs Movies un Series</string>
+    <string name="au7_vidfolders_title">Sakārtot video failus</string>
+    <string name="au7_vidfolders_unsupported">Failu pārvietošanai nepieciešams Android 11 vai jaunāks.</string>
+    <string name="au7_vidfolders_nothing">Nav ko sakārtot. Tiek pārvietotas tikai atpazītās filmas un sērijas mapē Movies vai Download.</string>
+    <string name="au7_vidfolders_confirm">Telos pārvietos %1$d filmas uz Movies/Movies/Title (Year) un %2$d sērijas uz Movies/Series/Show/Season NN. Faili tiek tikai pārvietoti, nekad netiek dzēsti vai mainīti, un skatīšanās progress tiek saglabāts. Subtitru faili blakus video netiek pārvietoti. Android vēlreiz pieprasīs atļauju mainīt šos failus. Piemēri:</string>
+    <string name="au7_vidfolders_move">Pārvietot failus</string>
+    <string name="au7_vidfolders_done">Pārvietoti video: %1$d</string>
+    <string name="au7_vidfolders_partial">Pārvietoti video: %1$d, nevarēja pārvietot: %2$d</string>
+    <string name="au7_vidfolders_failed">Failus nevarēja pārvietot</string>
+</resources>

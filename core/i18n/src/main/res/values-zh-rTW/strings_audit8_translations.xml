@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt 需要您自己的應用程式。請登入 trakt.tv，開啟 trakt.tv/oauth/applications，選擇 New Application，輸入任意名稱，並將下方顯示的位址原樣填入重新導向位址。儲存後，在此輸入其用戶端 ID 和用戶端密鑰，然後點一下「透過瀏覽器登入」。登入和授權都在 trakt.tv 上完成；Telos 絕不會看到您的 Trakt 密碼。</string>
+    <string name="au8_traktweb_redirect_label">您的 Trakt 應用程式的重新導向位址</string>
+    <string name="au8_traktweb_copy_redirect">複製位址</string>
+    <string name="au8_traktweb_sign_in_browser">透過瀏覽器登入</string>
+    <string name="au8_traktweb_use_code">改用代碼</string>
+    <string name="au8_traktweb_waiting_browser">正在等待您在瀏覽器中核准…</string>
+    <string name="au8_traktweb_denied">Trakt 拒絕了登入</string>
+    <string name="au8_traktweb_state_mismatch">登入回應與此要求不符，已被忽略</string>
+    <string name="au8_traktweb_expired">登入耗時超過 10 分鐘。請重試</string>
+    <string name="au8_traktweb_no_browser">找不到可開啟 trakt.tv 的瀏覽器</string>
+</resources>

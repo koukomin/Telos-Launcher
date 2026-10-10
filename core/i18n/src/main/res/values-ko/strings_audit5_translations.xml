@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">라디오 방송국</string>
+    <string name="au5_radiosearch_pref_summary">즐겨찾는 Telos Radio 방송국을 검색 결과에 표시하고 한 번의 탭으로 재생합니다</string>
+    <string name="au5_radiosearch_play">%1$s 재생</string>
+    <string name="au5_radiosearch_stop">%1$s 중지</string>
+    <string name="au5_webapps3_cookie_accept">수락</string>
+    <string name="au5_webapps3_cookie_block">차단</string>
+    <string name="au5_webapps3_cookies_isolated">이 웹 앱의 쿠키와 사이트 데이터는 다른 모든 웹 앱과 별도로 저장됩니다. \"전역 설정 사용\"은 웹 앱 화면의 쿠키 설정을 따릅니다.</string>
+    <string name="au5_webapps3_cookies_unsupported">설치된 WebView가 웹 앱별 개별 저장소를 지원하지 않습니다. 쿠키와 사이트 데이터는 모든 웹 앱이 공유하며 전역 쿠키 설정이 적용됩니다.</string>
+    <string name="au5_webapps3_clear_this">이 웹 앱의 쿠키 및 사이트 데이터 삭제</string>
+    <string name="au5_webapps3_clear_done">쿠키 및 사이트 데이터를 삭제했습니다</string>
+    <string name="au5_wgtorrent_title">Telos Network WireGuard를 통한 토렌트</string>
+    <string name="au5_wgtorrent_desc">토렌트(Telos Downloads 및 Telos Video)는 Telos Network에서 선택한 WireGuard 프록시를 통해서만 연결됩니다. Telos는 이를 위해 로컬 HTTP 프록시를 열며, 이 프록시는 Telos Network가 켜져 있고 프록시가 연결된 동안에만 존재합니다. 그렇지 않으면 토렌트는 대기하며 직접 연결되지 않습니다. 이 설정은 토렌트에 대해 위의 프록시를 대체합니다. HTTP 프록시는 TCP만 전달하므로 DHT와 uTP는 꺼집니다. 실행 중에는 이 기기의 다른 앱도 로컬 프록시를 사용할 수 있습니다.</string>
+    <string name="au5_wgtorrent_none">사용 안 함</string>
+    <string name="au5_wgtorrent_no_configs">Telos Network에 아직 WireGuard 프록시가 없습니다.</string>
+    <string name="au5_wgtorrent_summary">WireGuard를 통한 토렌트: %1$s</string>
+    <string name="au5_wgtorrent_removed">삭제된 프록시</string>
+    <string name="au5_wgtorrent_status_ready">토렌트가 Telos Network의 WireGuard 프록시 %1$s을(를) 사용합니다.</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">토렌트 대기 중: Telos Network가 실행되고 있지 않습니다.</string>
+    <string name="au5_wgtorrent_blocked_missing">토렌트 대기 중: 선택한 WireGuard 프록시가 더 이상 없습니다.</string>
+    <string name="au5_wgtorrent_blocked_disabled">토렌트 대기 중: 선택한 WireGuard 프록시가 꺼져 있습니다.</string>
+    <string name="au5_wgtorrent_blocked_down">토렌트 대기 중: 선택한 WireGuard 프록시가 연결되어 있지 않습니다.</string>
+    <string name="au5_wgtorrent_blocked_error">토렌트 대기 중: Telos Network가 로컬 프록시를 열 수 없습니다.</string>
+</resources>

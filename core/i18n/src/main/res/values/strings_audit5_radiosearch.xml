@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au5_radiosearch_pref_title">Radio stations</string>
+    <string name="au5_radiosearch_pref_summary">Show your favorite Telos Radio stations in search results and play them with one tap</string>
+    <string name="au5_radiosearch_play">Play %1$s</string>
+    <string name="au5_radiosearch_stop">Stop %1$s</string>
+</resources>

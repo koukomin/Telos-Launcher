@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt kendi uygulamanızı gerektirir. trakt.tv\'de oturum açın, trakt.tv/oauth/applications adresini açın, New Application\'ı seçin, istediğiniz bir ad girin ve yönlendirme adresi olarak aşağıda gösterilen adresi aynen girin. Kaydedin, ardından client id ve client secret değerlerini buraya girip Tarayıcıyla oturum aç\'a dokunun. Oturum açma ve onay işlemini trakt.tv üzerinde yaparsınız; Telos Trakt parolanızı hiçbir zaman görmez.</string>
+    <string name="au8_traktweb_redirect_label">Trakt uygulamanız için yönlendirme adresi</string>
+    <string name="au8_traktweb_copy_redirect">Adresi kopyala</string>
+    <string name="au8_traktweb_sign_in_browser">Tarayıcıyla oturum aç</string>
+    <string name="au8_traktweb_use_code">Bunun yerine kod kullan</string>
+    <string name="au8_traktweb_waiting_browser">Tarayıcıda onaylamanız bekleniyor…</string>
+    <string name="au8_traktweb_denied">Oturum açma Trakt tarafından reddedildi</string>
+    <string name="au8_traktweb_state_mismatch">Oturum açma yanıtı bu istekle eşleşmedi ve yok sayıldı</string>
+    <string name="au8_traktweb_expired">Oturum açma 10 dakikadan uzun sürdü. Tekrar deneyin</string>
+    <string name="au8_traktweb_no_browser">trakt.tv\'yi açacak tarayıcı bulunamadı</string>
+</resources>

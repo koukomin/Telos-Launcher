@@ -53,16 +53,16 @@ import kotlinx.serialization.Serializable
 data object VideoRoute : NavKey
 
 /** Raised when the watched marks from Trakt were refreshed, so the rows draw again */
-private val traktVersion = androidx.compose.runtime.mutableIntStateOf(0)
+internal val traktVersion = androidx.compose.runtime.mutableIntStateOf(0)
 
 /** Raised when watched marks or the list of videos changed, so the rows draw again */
-private val libraryVersion = androidx.compose.runtime.mutableIntStateOf(0)
+internal val libraryVersion = androidx.compose.runtime.mutableIntStateOf(0)
 
-private class VideoActions(val onDelete: (VideoItem) -> Unit)
+internal class VideoActions(val onDelete: (VideoItem) -> Unit, val onShare: (VideoItem) -> Unit)
 
-private val LocalVideoActions = androidx.compose.runtime.staticCompositionLocalOf<VideoActions?> { null }
+internal val LocalVideoActions = androidx.compose.runtime.staticCompositionLocalOf<VideoActions?> { null }
 
-private data class VideoGroup(
+internal data class VideoGroup(
     val title: String,
     val subtitle: String,
     val items: List<VideoItem>,
@@ -70,7 +70,7 @@ private data class VideoGroup(
     val year: Int? = null,
 )
 
-private fun metaKey(g: VideoGroup) = (if (g.series) "tv:" else "movie:") + g.title.lowercase() + ":" + g.year
+internal fun metaKey(g: VideoGroup) = (if (g.series) "tv:" else "movie:") + g.title.lowercase() + ":" + g.year
 
 internal fun openPlayer(context: Context, fullList: List<VideoItem>, fullIndex: Int) {
     // a whole library does not fit through an Intent (Binder limit): the player gets the videos around the chosen one
@@ -145,14 +145,24 @@ fun VideoScreen() {
     val movies = remember(filtered, parsedNames) {
         filtered.mapNotNull { item ->
             val parsed = parsedNames[item.id] ?: EpisodeParser.parse(item.fileName)
-            if (parsed.isEpisode) null else Triple(parsed.title.lowercase() + "|" + parsed.year, parsed, item)
+            if (parsed.isEpisode || parsed.year == null) null else Triple(parsed.title.lowercase() + "|" + parsed.year, parsed, item)
         }.groupBy { it.first }.values.map { list ->
             val parsed = list.first().second
             VideoGroup(parsed.title, parsed.year?.toString() ?: context.getString(R.string.au_video_files_count, list.size), list.map { it.third }, series = false, year = parsed.year)
         }.sortedBy { it.title.lowercase() }
     }
+    // neither an episode nor a film with a year in its name: not recognised
+    val others = remember(filtered, parsedNames) {
+        filtered.filter { item ->
+            val parsed = parsedNames[item.id] ?: EpisodeParser.parse(item.fileName)
+            !parsed.isEpisode && parsed.year == null
+        }
+    }
+    var showOrganize by remember { mutableStateOf(false) }
+    if (showOrganize) VideoOrganizeDialog(items) { showOrganize = false; if (it) viewModel.load(context) }
     LaunchedEffect(Unit) {
         de.mm20.launcher2.comms.media.video.trakt.Trakt.refreshWatched(context)
+        runCatching { de.mm20.launcher2.comms.media.video.trakt.Trakt.flushQueue(context) }
         traktVersion.intValue++
     }
     var pendingDelete by remember { mutableStateOf<VideoItem?>(null) }
@@ -182,7 +192,51 @@ fun VideoScreen() {
             }
         }.onFailure { toast(context, context.getString(R.string.vn_delete_failed)) }
     }
-    val videoActions = remember { VideoActions { confirmDelete = it } }
+    var confirmShare by remember { mutableStateOf<VideoItem?>(null) }
+    val shareScope = androidx.compose.runtime.rememberCoroutineScope()
+    fun performShare(video: VideoItem) {
+        val uri = video.uri
+        when (uri.scheme?.lowercase()) {
+            "http", "https", "magnet" -> {
+                if (!de.mm20.launcher2.ui.common.share.ShareActions.shareText(context, uri.toString(), video.title)) {
+                    toast(context, context.getString(R.string.au10_video_share_failed))
+                }
+            }
+            // a video on a network storage: its address is private, so only a public link could be shared
+            "rem" -> toast(context, context.getString(R.string.au10_video_share_remote_private))
+            else -> shareScope.launch {
+                val ok = withContext(Dispatchers.IO) {
+                    val name = video.fileName.ifBlank { video.title }
+                    val mime = de.mm20.launcher2.ui.common.share.ShareActions.mimeOf(name).takeIf { it.startsWith("video/") } ?: "video/*"
+                    if (uri.scheme == "file") {
+                        de.mm20.launcher2.ui.common.share.ShareActions.shareFile(context, java.io.File(uri.path.orEmpty()), mime, name)
+                    } else {
+                        de.mm20.launcher2.ui.common.share.ShareActions.shareFile(context, uri, mime, name)
+                    }
+                }
+                if (!ok) toast(context, context.getString(R.string.au10_video_share_failed))
+            }
+        }
+    }
+    val videoActions = remember {
+        VideoActions(
+            onDelete = { confirmDelete = it },
+            // big local videos are copied into the cache first: ask before
+            onShare = { v ->
+                if (v.sizeBytes > 50L * 1024 * 1024 && v.uri.scheme?.lowercase() in listOf("content", "file")) confirmShare = v
+                else performShare(v)
+            },
+        )
+    }
+    confirmShare?.let { video ->
+        AlertDialog(
+            onDismissRequest = { confirmShare = null },
+            title = { Text(stringResource(R.string.au10_video_share_large_title)) },
+            text = { Text(stringResource(R.string.au10_video_share_large_message, de.mm20.launcher2.ui.files.formatSize(video.sizeBytes))) },
+            confirmButton = { TextButton(onClick = { confirmShare = null; performShare(video) }) { Text(stringResource(R.string.au10_video_share_large_confirm)) } },
+            dismissButton = { TextButton(onClick = { confirmShare = null }) { Text(stringResource(R.string.hc_cancel)) } },
+        )
+    }
     confirmDelete?.let { video ->
         AlertDialog(
             onDismissRequest = { confirmDelete = null },
@@ -230,6 +284,9 @@ fun VideoScreen() {
         IconButton(onClick = { showOpen = true }) {
             Icon(painterResource(R.drawable.link_24px), contentDescription = stringResource(R.string.hc_play_from_the_web))
         }
+        IconButton(onClick = { showOrganize = true }) {
+            Icon(painterResource(R.drawable.folder_24px), contentDescription = stringResource(R.string.au7_vidfolders_action))
+        }
         IconButton(onClick = { showServices = true }) {
             Icon(painterResource(R.drawable.settings_24px), contentDescription = stringResource(R.string.hc_video_services))
         }
@@ -274,6 +331,10 @@ fun VideoScreen() {
             val shown = remember(current, present) { current.items.filter { it.id in present } }
             LaunchedEffect(shown.isEmpty()) { if (shown.isEmpty()) group = null }
             val meta = metas[metaKey(current)]
+            val tint by produceState<androidx.compose.ui.graphics.Color?>(null, meta?.posterUrl) {
+                value = meta?.posterUrl?.let { PosterTint.of(context, it) }
+            }
+            TintedHeader(tint, Modifier.fillMaxWidth()) {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
                 IconButton(onClick = { group = null }) {
                     Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back))
@@ -303,12 +364,14 @@ fun VideoScreen() {
                     }
                 }
             }
-            VideoList(shown) { index -> openPlayer(context, shown, index) }
+            }
+            if (current.series) SeasonedVideoList(shown) { index -> openPlayer(context, shown, index) }
+            else VideoList(shown) { index -> openPlayer(context, shown, index) }
             return@Column
         }
 
-        TabRow(selectedTabIndex = tab) {
-            listOf(R.string.au_video_tab_library, R.string.au_video_tab_movies, R.string.au_video_tab_series, R.string.au_video_tab_folders).forEachIndexed { i, title ->
+        PrimaryScrollableTabRow(selectedTabIndex = tab, edgePadding = 0.dp) {
+            listOf(R.string.au_video_tab_library, R.string.au_video_tab_movies, R.string.au_video_tab_series, R.string.au7_vidfolders_tab_other, R.string.au_video_tab_folders).forEachIndexed { i, title ->
                 Tab(selected = tab == i, onClick = { tab = i }, text = { Text(stringResource(title)) })
             }
         }
@@ -318,24 +381,21 @@ fun VideoScreen() {
                 Text(stringResource(R.string.hc_no_videos_found_on_this_device), color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             filtered.isEmpty() && query.isNotBlank() -> de.mm20.launcher2.ui.component.SearchEmptyState(query)
+            tab == 0 && query.isBlank() -> TintedHeader(null, Modifier.fillMaxSize()) {
+                VideoHome(items, continueWatching, movies, series, others, folders, metas, showContinue = true) { group = it }
+            }
             tab == 0 -> LazyColumn(contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize()) {
-                if (continueWatching.isNotEmpty() && query.isBlank()) {
-                    item {
-                        Text(stringResource(R.string.hc_continue_watching), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(16.dp, 8.dp))
-                    }
-                    items(continueWatching, key = { "c-" + it.uri }) { video ->
-                        VideoRow(video) { openPlayer(context, continueWatching, continueWatching.indexOf(video)) }
-                    }
-                    item {
-                        Text(stringResource(R.string.hc_all_videos), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(16.dp, 16.dp, 16.dp, 8.dp))
-                    }
-                }
                 items(filtered, key = { it.uri.toString() }) { video ->
                     VideoRow(video) { openPlayer(context, filtered, filtered.indexOf(video)) }
                 }
             }
             tab == 1 -> PosterGrid(movies, metas, stringResource(R.string.au_video_no_movies)) { group = it }
             tab == 2 -> PosterGrid(series, metas, stringResource(R.string.au_video_no_series)) { group = it }
+            tab == 3 -> if (others.isEmpty()) {
+                Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
+                    Text(stringResource(R.string.au7_vidfolders_no_other), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            } else VideoList(others) { index -> openPlayer(context, others, index) }
             else -> GroupList(folders, "") { group = it }
         }
     }
@@ -344,7 +404,7 @@ fun VideoScreen() {
 }
 
 @Composable
-private fun GroupList(groups: List<VideoGroup>, emptyText: String, onOpen: (VideoGroup) -> Unit) {
+internal fun GroupList(groups: List<VideoGroup>, emptyText: String, onOpen: (VideoGroup) -> Unit) {
     if (groups.isEmpty()) {
         Box(Modifier.fillMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
             Text(emptyText, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -369,14 +429,34 @@ private fun GroupList(groups: List<VideoGroup>, emptyText: String, onOpen: (Vide
 }
 
 @Composable
-private fun VideoList(list: List<VideoItem>, onPlay: (Int) -> Unit) {
+internal fun VideoList(list: List<VideoItem>, onPlay: (Int) -> Unit) {
     LazyColumn(contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize()) {
         items(list.size, key = { list[it].uri.toString() }) { index -> VideoRow(list[index]) { onPlay(index) } }
     }
 }
 
+/** The episodes of a series, under a heading per season */
 @Composable
-private fun VideoRow(video: VideoItem, onClick: () -> Unit) {
+private fun SeasonedVideoList(list: List<VideoItem>, onPlay: (Int) -> Unit) {
+    val seasons = remember(list) { list.map { EpisodeParser.parse(it.fileName).season } }
+    LazyColumn(contentPadding = PaddingValues(bottom = 24.dp), modifier = Modifier.fillMaxSize()) {
+        list.indices.forEach { index ->
+            if (index == 0 || seasons[index] != seasons[index - 1]) {
+                item(key = "season-$index") {
+                    Text(
+                        stringResource(R.string.au7_vidfolders_season, seasons[index] ?: 0),
+                        style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier.padding(16.dp, 12.dp, 16.dp, 4.dp),
+                    )
+                }
+            }
+            item(key = list[index].uri.toString()) { VideoRow(list[index]) { onPlay(index) } }
+        }
+    }
+}
+
+@Composable
+internal fun VideoRow(video: VideoItem, onClick: () -> Unit) {
     val context = LocalContext.current
     val progress = remember(video.uri, libraryVersion.intValue) { ResumeStore.progress(context, video.uri) }
     val actions = LocalVideoActions.current
@@ -403,22 +483,7 @@ private fun VideoRow(video: VideoItem, onClick: () -> Unit) {
         }
         Column(Modifier.weight(1f).padding(start = 12.dp)) {
             Text((if (watched) "✓ " else "") + video.title, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium, maxLines = 2, overflow = TextOverflow.Ellipsis)
-            DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
-                DropdownMenuItem(
-                    text = { Text(stringResource(if (seen) R.string.vn_mark_unwatched else R.string.vn_mark_watched)) },
-                    onClick = {
-                        menu = false
-                        if (seen) ResumeStore.markUnwatched(context, video.uri) else ResumeStore.markWatched(context, video.uri, video.durationMs)
-                        libraryVersion.intValue++
-                    },
-                )
-                if (video.id > 0) {
-                    DropdownMenuItem(
-                        text = { Text(stringResource(R.string.vn_delete_video)) },
-                        onClick = { menu = false; actions?.onDelete?.invoke(video) },
-                    )
-                }
-            }
+            VideoMenu(video, menu, seen) { menu = false }
             Text(
                 formatDuration(video.durationMs) + " · " + video.folder.ifBlank { stringResource(R.string.au_video_other_folder) },
                 style = MaterialTheme.typography.bodySmall,
@@ -430,8 +495,32 @@ private fun VideoRow(video: VideoItem, onClick: () -> Unit) {
     }
 }
 
+/** The long-press menu of a video: watched mark, share, delete */
 @Composable
-private fun VideoThumb(video: VideoItem, modifier: Modifier) {
+internal fun VideoMenu(video: VideoItem, expanded: Boolean, seen: Boolean, onDismiss: () -> Unit) {
+    val context = LocalContext.current
+    val actions = LocalVideoActions.current
+    DropdownMenu(expanded = expanded, onDismissRequest = onDismiss) {
+        DropdownMenuItem(
+            text = { Text(stringResource(if (seen) R.string.vn_mark_unwatched else R.string.vn_mark_watched)) },
+            onClick = {
+                onDismiss()
+                if (seen) ResumeStore.markUnwatched(context, video.uri) else ResumeStore.markWatched(context, video.uri, video.durationMs)
+                libraryVersion.intValue++
+            },
+        )
+        de.mm20.launcher2.ui.common.share.ShareMenuItem(onClick = { onDismiss(); actions?.onShare?.invoke(video) })
+        if (video.id > 0) {
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.vn_delete_video)) },
+                onClick = { onDismiss(); actions?.onDelete?.invoke(video) },
+            )
+        }
+    }
+}
+
+@Composable
+internal fun VideoThumb(video: VideoItem, modifier: Modifier) {
     val context = LocalContext.current
     val bitmap by produceState<Bitmap?>(null, video.uri) {
         value = withContext(Dispatchers.IO) {
@@ -451,7 +540,7 @@ private fun VideoThumb(video: VideoItem, modifier: Modifier) {
     }
 }
 
-private fun formatDuration(ms: Long): String {
+internal fun formatDuration(ms: Long): String {
     val total = (ms / 1000).coerceAtLeast(0)
     val h = total / 3600
     val m = (total % 3600) / 60
@@ -471,7 +560,7 @@ internal fun Poster(url: String?, modifier: Modifier) {
 }
 
 @Composable
-private fun PosterGrid(
+internal fun PosterGrid(
     groups: List<VideoGroup>,
     metas: Map<String, de.mm20.launcher2.comms.media.video.VideoMeta?>,
     emptyText: String,

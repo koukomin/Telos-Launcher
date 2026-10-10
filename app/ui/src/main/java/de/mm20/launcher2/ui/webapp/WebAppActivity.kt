@@ -314,6 +314,28 @@ private fun WebAppScreen(
     }
 
     val webViewEntries = remember { mutableMapOf<String, WebView>() }
+    // Cookie manager of each web app's own profile; a key is absent when profiles are unavailable
+    // (then the shared, process wide CookieManager and the global cookie settings apply).
+    val profileCookieManagers = remember { mutableMapOf<String, CookieManager>() }
+    val cookiesEnabledState = rememberUpdatedState(cookiesEnabled)
+    val thirdPartyCookiesEnabledState = rememberUpdatedState(thirdPartyCookiesEnabled)
+    fun applyCookiePolicy(key: String, webView: WebView) {
+        val profileManager = profileCookieManagers[key]
+        val manager = profileManager ?: CookieManager.getInstance()
+        val options = if (profileManager != null) shortcutForKey(key)?.cookieOptions else null
+        val accept = when (options?.cookies) {
+            WebAppShortcut.CookieMode.Accept -> true
+            WebAppShortcut.CookieMode.Block -> false
+            else -> cookiesEnabledState.value
+        }
+        val thirdParty = when (options?.thirdPartyCookies) {
+            WebAppShortcut.CookieMode.Accept -> true
+            WebAppShortcut.CookieMode.Block -> false
+            else -> thirdPartyCookiesEnabledState.value
+        }
+        manager.setAcceptCookie(accept)
+        manager.setAcceptThirdPartyCookies(webView, accept && thirdParty)
+    }
     var activeWebView by remember { mutableStateOf<WebView?>(null) }
     val activeKeyState = rememberUpdatedState(activeKey)
 
@@ -482,22 +504,24 @@ private fun WebAppScreen(
                     // Zoom controls setting applies live to every already created WebView
                     val resolvedUserAgent = de.mm20.launcher2.ui.settings.webapps.WebAppUserAgents
                         .resolve(userAgentMode, customUserAgent) ?: defaultUserAgent
-                    // Cookie policy is process wide (CookieManager); applied before any load.
-                    val cookieManager = CookieManager.getInstance()
-                    cookieManager.setAcceptCookie(cookiesEnabled)
-                    webViewEntries.values.forEach {
+                    // Cookie policy is applied per web app (own profile) before any load.
+                    webViewEntries.forEach { (entryKey, it) ->
                         it.settings.setSupportZoom(zoomControlsEnabled)
                         it.settings.builtInZoomControls = zoomControlsEnabled
                         if (it.settings.userAgentString != resolvedUserAgent) {
                             it.settings.userAgentString = resolvedUserAgent
                         }
-                        cookieManager.setAcceptThirdPartyCookies(it, cookiesEnabled && thirdPartyCookiesEnabled)
+                        applyCookiePolicy(entryKey, it)
                     }
                     val key = activeKey
                     val isNewWebView = key !in webViewEntries
                     val wv = webViewEntries.getOrPut(key) {
                         val keyNotificationsEnabled = notificationsEnabledForKey(key)
                         WebView(container.context).apply {
+                            // The profile must be chosen before anything else touches the WebView.
+                            WebAppProfiles.attach(this, shortcutForKey(key)?.key)?.let {
+                                profileCookieManagers[key] = it
+                            }
                             layoutParams = ViewGroup.LayoutParams(
                                 ViewGroup.LayoutParams.MATCH_PARENT,
                                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -510,7 +534,7 @@ private fun WebAppScreen(
                             settings.allowFileAccess = false
                             settings.allowContentAccess = false
                             settings.userAgentString = resolvedUserAgent
-                            cookieManager.setAcceptThirdPartyCookies(this, cookiesEnabled && thirdPartyCookiesEnabled)
+                            applyCookiePolicy(key, this)
 
                             if (keyNotificationsEnabled) {
                                 val bridgeKey = if (key == initialKey) shortcutKey else key
@@ -575,7 +599,7 @@ private fun WebAppScreen(
                                         .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                                         .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
                                     // getCookie() is null without cookies and addRequestHeader() throws on null
-                                    CookieManager.getInstance().getCookie(downloadUrl)?.let { request.addRequestHeader("cookie", it) }
+                                    (profileCookieManagers[key] ?: CookieManager.getInstance()).getCookie(downloadUrl)?.let { request.addRequestHeader("cookie", it) }
                                     context.getSystemService<DownloadManager>()?.enqueue(request)
                                     Toast.makeText(
                                         context,
@@ -627,11 +651,11 @@ private fun WebAppScreen(
         EditWebAppShortcutSheet(
             expanded = showEditSheet,
             existing = editTarget,
-            onSave = { newLabel, newUrl, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, newCustomCss, newNotificationsEnabled, newGroupId, newAdBlockMode ->
+            onSave = { newLabel, newUrl, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, newCustomCss, newNotificationsEnabled, newGroupId, newAdBlockMode, newCookieOptions ->
                 webAppShortcutRepository.update(
                     editTarget, newLabel, newUrl, iconUri, faviconUrl, rendererPackage,
                     showInGrid, showInPanel, editTarget.order, iconSource, newCustomCss,
-                    newNotificationsEnabled, newAdBlockMode,
+                    newNotificationsEnabled, newAdBlockMode, newCookieOptions,
                 )
                 val browsingSettings: de.mm20.launcher2.preferences.ui.WebAppBrowsingSettings = org.koin.java.KoinJavaComponent.getKoin().get()
                 kotlinx.coroutines.MainScope().launch {

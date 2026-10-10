@@ -275,6 +275,14 @@ fun RecentsScreen(searchQuery: String = "", showFilters: Boolean = false) {
                     CommsCabAction(R.drawable.info_24px, stringResource(R.string.contact_details_title)) {
                         backStack.add(ContactDetailsRoute(phoneNumber = selected.phoneNumber))
                     },
+                    CommsCabAction(R.drawable.share_24px, stringResource(R.string.search_action_share)) {
+                        de.mm20.launcher2.ui.common.share.ShareActions.shareContactVcard(
+                            context,
+                            selected.displayName?.ifBlank { null } ?: selected.phoneNumber,
+                            listOf(selected.phoneNumber),
+                            emptyList(),
+                        )
+                    },
                     CommsCabAction(R.drawable.delete_24px, stringResource(R.string.comms_clear_history_confirm), destructive = true) {
                         selectedGroup.calls.forEach { viewModel.delete(it) }
                     },

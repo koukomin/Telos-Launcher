@@ -440,6 +440,17 @@ class UiSettings internal constructor(
         }
     }
 
+    val crashReporterEnabled
+        get() = launcherDataStore.data.map {
+            it.misc.crashReporterEnabled
+        }.distinctUntilChanged()
+
+    fun setCrashReporterEnabled(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(misc = it.misc.copy(crashReporterEnabled = enabled))
+        }
+    }
+
     val rememberScrollPosition
         get() = launcherDataStore.data.map {
             it.searchBar.searchRememberScrollPosition

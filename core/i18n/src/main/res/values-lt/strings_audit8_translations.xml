@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt reikia jūsų pačių programėlės. Prisijunkite adresu trakt.tv, atidarykite trakt.tv/oauth/applications, pasirinkite New Application, įveskite bet kokį pavadinimą, o peradresavimo adresu nurodykite tiksliai žemiau rodomą adresą. Išsaugokite, tada čia įveskite jos kliento ID ir kliento paslaptį ir bakstelėkite Prisijungti naršykle. Prisijungiate ir patvirtinate pačiame trakt.tv; Telos niekada nemato jūsų Trakt slaptažodžio.</string>
+    <string name="au8_traktweb_redirect_label">Jūsų Trakt programėlės peradresavimo adresas</string>
+    <string name="au8_traktweb_copy_redirect">Kopijuoti adresą</string>
+    <string name="au8_traktweb_sign_in_browser">Prisijungti naršykle</string>
+    <string name="au8_traktweb_use_code">Vietoj to naudoti kodą</string>
+    <string name="au8_traktweb_waiting_browser">Laukiama, kol patvirtinsite naršyklėje…</string>
+    <string name="au8_traktweb_denied">Trakt atmetė prisijungimą</string>
+    <string name="au8_traktweb_state_mismatch">Prisijungimo atsakas neatitiko šios užklausos ir buvo ignoruotas</string>
+    <string name="au8_traktweb_expired">Prisijungimas truko ilgiau nei 10 minučių. Bandykite dar kartą</string>
+    <string name="au8_traktweb_no_browser">Nerasta naršyklės trakt.tv atidaryti</string>
+</resources>

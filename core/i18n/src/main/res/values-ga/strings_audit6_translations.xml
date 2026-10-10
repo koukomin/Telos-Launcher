@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au6_radio2_pause">Cuir %1$s ar sos</string>
+    <string name="au6_radio2_loading">Á luchtú %1$s</string>
+    <string name="au6_webapps4_cookie_source_default">Gach rud / réamhshocrú</string>
+    <string name="au6_wgvideo_route_not_ready">Níorbh fhéidir an torrent a thosú: tá sé socraithe chun tollán WireGuard de chuid Telos Network a úsáid, agus níl an tollán réidh. Cuir Telos Network agus an tollán air, nó athraigh an socrú in Telos Downloads. Níor seoladh aon rud.</string>
+</resources>

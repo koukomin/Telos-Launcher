@@ -16,7 +16,8 @@ object MusicLibrary {
         } else {
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         }
-        val projection = arrayOf(
+        val withGenre = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+        val projection = listOfNotNull(
             MediaStore.Audio.Media._ID,
             MediaStore.Audio.Media.TITLE,
             MediaStore.Audio.Media.ARTIST,
@@ -26,7 +27,8 @@ object MusicLibrary {
             MediaStore.Audio.Media.TRACK,
             MediaStore.Audio.Media.YEAR,
             MediaStore.Audio.Media.DATE_ADDED,
-        )
+            if (withGenre) MediaStore.Audio.Media.GENRE else null,
+        ).toTypedArray()
         val selection = "${MediaStore.Audio.Media.IS_MUSIC} != 0 AND ${MediaStore.Audio.Media.DURATION} > 0"
         val tracks = mutableListOf<MusicTrack>()
         runCatching {
@@ -46,6 +48,7 @@ object MusicLibrary {
                 val trackCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TRACK)
                 val yearCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.YEAR)
                 val addedCol = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_ADDED)
+                val genreCol = if (withGenre) cursor.getColumnIndex(MediaStore.Audio.Media.GENRE) else -1
                 while (cursor.moveToNext()) {
                     val id = cursor.getLong(idCol)
                     val artist = cursor.getString(artistCol).orEmpty()
@@ -60,6 +63,7 @@ object MusicLibrary {
                         trackNumber = cursor.getInt(trackCol) % 1000,
                         year = cursor.getInt(yearCol),
                         dateAddedSeconds = cursor.getLong(addedCol),
+                        genre = if (genreCol >= 0) cursor.getString(genreCol).orEmpty().trim() else "",
                     )
                 }
             }

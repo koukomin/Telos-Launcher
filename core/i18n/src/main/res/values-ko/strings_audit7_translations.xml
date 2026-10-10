@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">곡 제목과 아티스트는 선택한 서비스로만, 서비스에 로그인하고 켜져 있는 동안에만 전송됩니다. 그 전에는 아무것도 전송되지 않습니다.</string>
+    <string name="au7_scrobble_what">스크로블할 항목</string>
+    <string name="au7_scrobble_music_title">음악 스크로블</string>
+    <string name="au7_scrobble_music_summary">Telos Music에서 재생한 곡, 곡의 절반 또는 4분 재생 후</string>
+    <string name="au7_scrobble_radio_title">라디오 스크로블</string>
+    <string name="au7_scrobble_radio_summary">방송국의 현재 트랙, 1분간 청취한 후. 트랙을 알려 주는 방송국에서만 작동합니다.</string>
+    <string name="au7_scrobble_status_active">%1$s(으)로 전송 중</string>
+    <string name="au7_scrobble_status_no_service">아무것도 전송되지 않음: 로그인하고 켜져 있는 서비스가 없습니다</string>
+    <string name="au7_scrobble_status_no_source">아무것도 전송되지 않음: 음악 또는 라디오 스크로블을 켜세요</string>
+    <string name="au7_scrobble_sign_in">연결 테스트 및 로그인</string>
+    <string name="au7_scrobble_lb_ok">토큰이 %1$s에 유효합니다</string>
+    <string name="au7_scrobble_https">서버 주소는 https://로 시작해야 합니다 (http는 사용자의 네트워크 안에 있는 서버에서만 허용됩니다)</string>
+    <string name="au7_scrobble_switch_on">켜짐</string>
+    <string name="au7_scrobble_queue">대기열</string>
+    <string name="au7_scrobble_queue_count">스크로블 %1$d개가 전송 대기 중입니다</string>
+    <string name="au7_scrobble_queue_empty">대기 중인 스크로블이 없습니다</string>
+    <string name="au7_scrobble_queue_clear">대기열 비우기</string>
+    <string name="au7_scrobble_queue_cleared">대기열을 비웠습니다</string>
+    <string name="au7_scrobble_settings_summary">Telos Music 및 Telos Radio용 Last.fm, Libre.fm, ListenBrainz</string>
+    <string name="au7_trakt_open_settings">Trakt 스크로블</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt에는 직접 만든 애플리케이션이 필요합니다. trakt.tv에 로그인하고 trakt.tv/oauth/applications를 연 다음 New Application을 선택하고, 이름은 아무거나 입력하고 리디렉션 주소로 urn:ietf:wg:oauth:2.0:oob를 입력한 뒤 저장하고, 해당 client id와 client secret을 여기에 입력하세요.</string>
+    <string name="au7_trakt_privacy">스크로블이 켜져 있는 동안 시청하는 영화와 에피소드의 제목 및 시청 진행 상황이 Trakt로 전송됩니다. 영화 또는 에피소드로 인식된 동영상만 전송됩니다.</string>
+    <string name="au7_trakt_signed_in">Trakt에 로그인됨</string>
+    <string name="au7_trakt_switch">Trakt로 스크로블</string>
+    <string name="au7_trakt_queue">스크로블 %1$d개가 전송 대기 중입니다</string>
+    <string name="au7_trakt_clear_queue">대기열 비우기</string>
+    <string name="au7_trakt_sign_in">로그인</string>
+    <string name="au7_trakt_sign_out">로그아웃</string>
+    <string name="au7_trakt_copy">코드 복사</string>
+    <string name="au7_trakt_waiting">%1$s에서 코드를 입력할 때까지 대기 중…</string>
+    <string name="au7_vidfolders_tab_other">기타</string>
+    <string name="au7_vidfolders_no_other">모든 동영상이 영화 또는 에피소드로 인식되었습니다</string>
+    <string name="au7_vidfolders_season">시즌 %1$d</string>
+    <string name="au7_vidfolders_action">Movies 및 Series 폴더로 정리</string>
+    <string name="au7_vidfolders_title">동영상 파일 정리</string>
+    <string name="au7_vidfolders_unsupported">파일을 이동하려면 Android 11 이상이 필요합니다.</string>
+    <string name="au7_vidfolders_nothing">정리할 항목이 없습니다. Movies 또는 Download 폴더에서 인식된 영화와 에피소드만 이동됩니다.</string>
+    <string name="au7_vidfolders_confirm">Telos가 영화 %1$d편을 Movies/Movies/Title (Year)로, 에피소드 %2$d개를 Movies/Series/Show/Season NN으로 이동합니다. 파일은 이동만 되며 삭제되거나 변경되지 않고 시청 진행 상황도 유지됩니다. 동영상 옆의 자막 파일은 이동되지 않습니다. Android에서 이 파일을 변경할 권한을 한 번 더 요청합니다. 예시:</string>
+    <string name="au7_vidfolders_move">파일 이동</string>
+    <string name="au7_vidfolders_done">동영상 %1$d개를 이동했습니다</string>
+    <string name="au7_vidfolders_partial">동영상 %1$d개를 이동했고, %2$d개는 이동하지 못했습니다</string>
+    <string name="au7_vidfolders_failed">파일을 이동하지 못했습니다</string>
+</resources>

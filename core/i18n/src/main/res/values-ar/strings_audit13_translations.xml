@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">قنوات يونانية إضافية</string>
+    <string name="au13_tvextra_playlists_summary">يضيف بثوثًا وقنوات من قوائم التشغيل العامة Free-TV وgreektvm3u، ويتم تحميلها من GitHub على هذا الجهاز عند فتح التلفزيون. يُستخدم فقط عند اختيار اليونان. لا يظهر شيء إذا تعذّر تحميلها.</string>
+    <string name="au13_tvextra_epg_title">دليل البرامج</string>
+    <string name="au13_tvextra_epg_summary">يعرض ما يُبث الآن وما سيُبث لاحقًا على القنوات اليونانية (دليل XMLTV من ext.greektv.app أو epgshare01.online، ويُحدَّث مرة كل 6 ساعات على الأكثر). يُستخدم فقط عند اختيار اليونان.</string>
+    <string name="au13_tvextra_marker">إضافي</string>
+    <string name="au13_tvextra_marker_description">تأتي هذه القناة من مصدر إضافي اختياري وقد تكون أقل موثوقية</string>
+    <string name="au13_tvextraui_disclaimer_extra">بالنسبة للقنوات اليونانية، يمكن لـ Telos TV استخدام مصادر إضافية اختيارية: قوائم تشغيل عامة (raw.githubusercontent.com) ودليل برامج (ext.greektv.app وepgshare01.online). لا يتم الاتصال بها إلا عند اختيار اليونان وتفعيل المفتاح المقابل، وفقط أثناء فتح التلفزيون. يمكنك إيقافها من قائمة البلدان.</string>
+    <string name="au13_tvextraui_now_line">الآن: %1$s</string>
+    <string name="au13_tvextraui_player_now">الآن: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">التالي: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">هذه القناة غير متصلة مؤقتًا</string>
+    <string name="au13_tvextraui_offline_hint">جرّبنا جميع البثوث المتاحة وتحققنا من وجود قائمة محدّثة. حاول مرة أخرى لاحقًا.</string>
+    <string name="au13_tvextraui_offline_back">رجوع</string>
+    <string name="au13_tvextraui_static_description">تشويش التلفزيون: لا توجد إشارة</string>
+</resources>

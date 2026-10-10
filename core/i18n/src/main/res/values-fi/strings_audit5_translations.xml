@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">Radioasemat</string>
+    <string name="au5_radiosearch_pref_summary">Näytä suosikkiasemasi Telos Radiosta hakutuloksissa ja toista ne yhdellä napautuksella</string>
+    <string name="au5_radiosearch_play">Toista %1$s</string>
+    <string name="au5_radiosearch_stop">Pysäytä %1$s</string>
+    <string name="au5_webapps3_cookie_accept">Hyväksy</string>
+    <string name="au5_webapps3_cookie_block">Estä</string>
+    <string name="au5_webapps3_cookies_isolated">Tämän verkkosovelluksen evästeet ja sivustotiedot tallennetaan erillään kaikista muista verkkosovelluksista. ”Käytä yleistä” noudattaa verkkosovellusnäkymän evästeasetuksia.</string>
+    <string name="au5_webapps3_cookies_unsupported">Asennettu WebView ei tue erillistä tallennustilaa verkkosovellusta kohden. Evästeet ja sivustotiedot jaetaan kaikkien verkkosovellusten kesken, ja yleiset evästeasetukset ovat voimassa.</string>
+    <string name="au5_webapps3_clear_this">Tyhjennä tämän verkkosovelluksen evästeet ja sivustotiedot</string>
+    <string name="au5_webapps3_clear_done">Evästeet ja sivustotiedot tyhjennetty</string>
+    <string name="au5_wgtorrent_title">Torrentit Telos Networkin WireGuardin kautta</string>
+    <string name="au5_wgtorrent_desc">Torrentit (Telos Downloads ja Telos Video) yhdistävät vain Telos Networkin valitun WireGuard-välityspalvelimen kautta. Telos avaa sitä varten paikallisen HTTP-välityspalvelimen, joka on olemassa vain, kun Telos Network on päällä ja välityspalvelin yhdistetty. Muuten torrentit odottavat eikä mikään yhdistä suoraan. Tämä korvaa yllä olevan välityspalvelimen torrenteille. HTTP-välityspalvelin kuljettaa vain TCP:tä, joten DHT ja uTP ovat pois käytöstä. Sen ollessa käynnissä myös muut tämän laitteen sovellukset voivat käyttää paikallista välityspalvelinta.</string>
+    <string name="au5_wgtorrent_none">Ei käytössä</string>
+    <string name="au5_wgtorrent_no_configs">Telos Networkissa ei ole vielä WireGuard-välityspalvelinta.</string>
+    <string name="au5_wgtorrent_summary">Torrentit WireGuardin kautta: %1$s</string>
+    <string name="au5_wgtorrent_removed">poistettu välityspalvelin</string>
+    <string name="au5_wgtorrent_status_ready">Torrentit käyttävät Telos Networkin WireGuard-välityspalvelinta %1$s.</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">Torrentit odottavat: Telos Network ei ole käynnissä.</string>
+    <string name="au5_wgtorrent_blocked_missing">Torrentit odottavat: valittua WireGuard-välityspalvelinta ei ole enää olemassa.</string>
+    <string name="au5_wgtorrent_blocked_disabled">Torrentit odottavat: valittu WireGuard-välityspalvelin on pois päältä.</string>
+    <string name="au5_wgtorrent_blocked_down">Torrentit odottavat: valittu WireGuard-välityspalvelin ei ole yhdistetty.</string>
+    <string name="au5_wgtorrent_blocked_error">Torrentit odottavat: Telos Network ei voinut avata paikallista välityspalvelinta.</string>
+</resources>

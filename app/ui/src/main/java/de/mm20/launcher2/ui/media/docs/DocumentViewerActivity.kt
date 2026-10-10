@@ -409,6 +409,17 @@ private fun DocumentScreen(uri: Uri, name: String, onClose: () -> Unit) {
                             }
                             if (!editing && office?.editing != true) {
                                 DropdownMenuItem(text = { Text(stringResource(R.string.hc_open_with)) }, onClick = { menu = false; openWith() })
+                                de.mm20.launcher2.ui.common.share.ShareMenuItem(onClick = {
+                                    menu = false
+                                    val shareUri = curUri
+                                    val shareName = curName
+                                    scope.launch {
+                                        val ok = withContext(Dispatchers.IO) {
+                                            de.mm20.launcher2.ui.common.share.ShareActions.shareFile(context, shareUri, context.contentResolver.getType(shareUri), shareName)
+                                        }
+                                        if (!ok) message = context.getString(R.string.au9_share_failed)
+                                    }
+                                })
                             }
                         }
                     }

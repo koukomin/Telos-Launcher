@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au6_radio2_pause">%1$s を一時停止</string>
+    <string name="au6_radio2_loading">%1$s を読み込み中</string>
+    <string name="au6_webapps4_cookie_source_default">すべて / デフォルト</string>
+    <string name="au6_wgvideo_route_not_ready">トレントを開始できませんでした。Telos Network の WireGuard トンネルを使用する設定になっていますが、トンネルの準備ができていません。Telos Network とトンネルをオンにするか、Telos Downloads で設定を変更してください。何も送信されていません。</string>
+</resources>

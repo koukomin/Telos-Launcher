@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Papildu Grieķijas kanāli</string>
+    <string name="au13_tvextra_playlists_summary">Pievieno straumes un kanālus no publiskajiem atskaņošanas sarakstiem Free-TV un greektvm3u, kas tiek ielādēti no GitHub šajā ierīcē, kad atver TV. Tiek izmantots tikai tad, kad ir izvēlēta Grieķija. Ja tos nevar ielādēt, nekas netiek rādīts.</string>
+    <string name="au13_tvextra_epg_title">Programma</string>
+    <string name="au13_tvextra_epg_summary">Rāda, kas Grieķijas kanālos tiek rādīts tagad un kas sekos (XMLTV programma no ext.greektv.app vai epgshare01.online, atjaunina ne biežāk kā ik pēc 6 stundām). Tiek izmantots tikai tad, kad ir izvēlēta Grieķija.</string>
+    <string name="au13_tvextra_marker">Papildu</string>
+    <string name="au13_tvextra_marker_description">Šis kanāls nāk no izvēles papildu avota un var būt mazāk uzticams</string>
+    <string name="au13_tvextraui_disclaimer_extra">Grieķijas kanāliem Telos TV var izmantot arī izvēles papildu avotus: publiskus atskaņošanas sarakstus (raw.githubusercontent.com) un programmu (ext.greektv.app, epgshare01.online). Tie tiek izmantoti tikai tad, kad ir izvēlēta Grieķija un atbilstošais slēdzis ir ieslēgts, un tikai kamēr TV ir atvērts. Tos var izslēgt valstu sarakstā.</string>
+    <string name="au13_tvextraui_now_line">Tagad: %1$s</string>
+    <string name="au13_tvextraui_player_now">Tagad: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Nākamais: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Šis kanāls īslaicīgi nav pieejams</string>
+    <string name="au13_tvextraui_offline_hint">Mēs izmēģinājām visas pieejamās straumes un pārbaudījām, vai ir atjaunināts saraksts. Mēģini vēlāk vēlreiz.</string>
+    <string name="au13_tvextraui_offline_back">Atpakaļ</string>
+    <string name="au13_tvextraui_static_description">TV troksnis: nav signāla</string>
+</resources>

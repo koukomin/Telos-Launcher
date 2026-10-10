@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au6_radio2_pause">Začasno ustavi %1$s</string>
+    <string name="au6_radio2_loading">Nalaganje %1$s</string>
+    <string name="au6_webapps4_cookie_source_default">Vse / privzeto</string>
+    <string name="au6_wgvideo_route_not_ready">Torrenta ni bilo mogoče zagnati: nastavljen je za uporabo tunela WireGuard omrežja Telos Network, ta tunel pa ni pripravljen. Vklopite Telos Network in tunel ali spremenite nastavitev v Telos Downloads. Nič ni bilo poslano.</string>
+</resources>

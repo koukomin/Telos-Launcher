@@ -53,9 +53,10 @@ internal object TelosPages {
     fun rootRoute(key: String): NavKey? = when (key) {
         "telos_phone_app://phone" -> CommsDashboardRoute(initialTab = "recents")
         "telos_messages_app://messages" -> CommsDashboardRoute(initialTab = "messages")
-        "telos_radio_app://radio" -> de.mm20.launcher2.ui.comms.radio.RadioDashboardRoute
-        "telos_music_app://music" -> de.mm20.launcher2.ui.media.music.MusicRoute
-        "telos_video_app://video" -> de.mm20.launcher2.ui.media.video.VideoRoute
+        "telos_media_app://media" -> de.mm20.launcher2.ui.media.hub.MediaHubRoute()
+        "telos_radio_app://radio" -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("radio")
+        "telos_music_app://music" -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("music")
+        "telos_video_app://video" -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("video")
         "telos_photos_app://photos" -> de.mm20.launcher2.ui.media.photos.PhotosRoute
         "telos_files_app://files" -> de.mm20.launcher2.ui.files.FilesRoute
         "telos_calculator_app://calculator" -> de.mm20.launcher2.ui.calculator.CalculatorRoute
@@ -85,6 +86,9 @@ internal object TelosPages {
         entry<HiddenContactsRoute> { HiddenContactsScreen() }
         entry<ContactGroupsRoute> { ContactGroupsScreen() }
         entry<ScheduledSmsRoute> { ScheduledSmsScreen() }
+        entry<de.mm20.launcher2.ui.settings.comms.ScrobbleSettingsRoute> {
+            de.mm20.launcher2.ui.settings.comms.ScrobbleSettingsScreen()
+        }
         entry<de.mm20.launcher2.ui.files.remote.ConnectionsRoute> {
             de.mm20.launcher2.ui.files.remote.ConnectionsScreen()
         }
@@ -125,6 +129,9 @@ internal object TelosPages {
         }
         entry<de.mm20.launcher2.ui.media.photos.PhotosRoute> {
             de.mm20.launcher2.ui.media.photos.PhotosScreen()
+        }
+        entry<de.mm20.launcher2.ui.media.hub.MediaHubRoute> {
+            de.mm20.launcher2.ui.media.hub.MediaHubScreen(it.space)
         }
         entry<de.mm20.launcher2.ui.media.video.VideoRoute> {
             de.mm20.launcher2.ui.media.video.VideoScreen()

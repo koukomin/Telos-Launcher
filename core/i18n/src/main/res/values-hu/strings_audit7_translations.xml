@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">A számok címei és az előadók a kiválasztott szolgáltatásnak kerülnek elküldésre, és csak akkor, ha egy szolgáltatás be van jelentkezve és be van kapcsolva. Addig semmi nem kerül elküldésre.</string>
+    <string name="au7_scrobble_what">Mit scrobbleljen</string>
+    <string name="au7_scrobble_music_title">Zene scrobblolása</string>
+    <string name="au7_scrobble_music_summary">A Telos Musicban lejátszott dalok a dal felénél vagy 4 perc után</string>
+    <string name="au7_scrobble_radio_title">Rádió scrobblolása</string>
+    <string name="au7_scrobble_radio_summary">Az adó aktuális száma egy perc hallgatás után. Csak a számot bejelentő adókkal működik.</string>
+    <string name="au7_scrobble_status_active">Küldés ide: %1$s</string>
+    <string name="au7_scrobble_status_no_service">Semmi nem kerül elküldésre: nincs bejelentkezett és bekapcsolt szolgáltatás</string>
+    <string name="au7_scrobble_status_no_source">Semmi nem kerül elküldésre: kapcsolja be a zene vagy a rádió scrobblolását</string>
+    <string name="au7_scrobble_sign_in">Kapcsolat tesztelése és bejelentkezés</string>
+    <string name="au7_scrobble_lb_ok">A token érvényes ehhez: %1$s</string>
+    <string name="au7_scrobble_https">A szerver címének https://-sel kell kezdődnie (http csak a saját hálózatán lévő szerverhez engedélyezett)</string>
+    <string name="au7_scrobble_switch_on">Bekapcsolva</string>
+    <string name="au7_scrobble_queue">Várólista</string>
+    <string name="au7_scrobble_queue_count">%1$d scrobble vár elküldésre</string>
+    <string name="au7_scrobble_queue_empty">Nincs várakozó scrobble</string>
+    <string name="au7_scrobble_queue_clear">Várólista törlése</string>
+    <string name="au7_scrobble_queue_cleared">Várólista törölve</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm és ListenBrainz a Telos Music és a Telos Radio számára</string>
+    <string name="au7_trakt_open_settings">Trakt scrobblolás</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">A Trakt saját alkalmazást igényel. Jelentkezzen be a trakt.tv oldalon, nyissa meg a trakt.tv/oauth/applications oldalt, válassza a New Application lehetőséget, adjon meg tetszőleges nevet és az urn:ietf:wg:oauth:2.0:oob átirányítási címet, mentse, majd itt adja meg a client id és a client secret értékét.</string>
+    <string name="au7_trakt_privacy">Amíg a scrobblolás be van kapcsolva, a megtekintett filmek és epizódok címe, valamint az, hogy meddig jutott, elküldésre kerül a Trakt felé. Csak a filmként vagy epizódként felismert videók kerülnek elküldésre.</string>
+    <string name="au7_trakt_signed_in">Bejelentkezve a Traktba</string>
+    <string name="au7_trakt_switch">Scrobblolás a Traktba</string>
+    <string name="au7_trakt_queue">%1$d scrobble vár elküldésre</string>
+    <string name="au7_trakt_clear_queue">Várólista törlése</string>
+    <string name="au7_trakt_sign_in">Bejelentkezés</string>
+    <string name="au7_trakt_sign_out">Kijelentkezés</string>
+    <string name="au7_trakt_copy">Kód másolása</string>
+    <string name="au7_trakt_waiting">Várakozás, amíg megadja a kódot itt: %1$s…</string>
+    <string name="au7_vidfolders_tab_other">Egyéb</string>
+    <string name="au7_vidfolders_no_other">Minden videó filmként vagy epizódként van felismerve</string>
+    <string name="au7_vidfolders_season">%1$d. évad</string>
+    <string name="au7_vidfolders_action">Rendezés a Movies és Series mappákba</string>
+    <string name="au7_vidfolders_title">Videófájlok rendezése</string>
+    <string name="au7_vidfolders_unsupported">A fájlok áthelyezéséhez Android 11 vagy újabb szükséges.</string>
+    <string name="au7_vidfolders_nothing">Nincs mit rendezni. Csak a Movies vagy Download mappában lévő, felismert filmek és epizódok kerülnek áthelyezésre.</string>
+    <string name="au7_vidfolders_confirm">A Telos %1$d filmet helyez át a Movies/Movies/Title (Year) mappába, és %2$d epizódot a Movies/Series/Show/Season NN mappába. A fájlok csak áthelyezésre kerülnek, soha nem törlődnek és nem módosulnak, a megtekintési előrehaladás megmarad. A videók melletti feliratfájlok nem kerülnek áthelyezésre. Az Android még egyszer engedélyt kér e fájlok módosításához. Példák:</string>
+    <string name="au7_vidfolders_move">Fájlok áthelyezése</string>
+    <string name="au7_vidfolders_done">%1$d videó áthelyezve</string>
+    <string name="au7_vidfolders_partial">%1$d videó áthelyezve, %2$d nem helyezhető át</string>
+    <string name="au7_vidfolders_failed">A fájlokat nem sikerült áthelyezni</string>
+</resources>

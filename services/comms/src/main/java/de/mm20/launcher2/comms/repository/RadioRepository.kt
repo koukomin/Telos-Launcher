@@ -14,6 +14,9 @@ interface RadioRepository {
     suspend fun renameStation(id: String, name: String)
     suspend fun deleteStation(id: String)
 
+    /** Remembers that a saved station was played now (no-op for stations that are not saved) */
+    suspend fun markPlayed(id: String)
+
     /** Imports stations from M3U / PLS text. Returns how many new stations were added. */
     suspend fun importPlaylist(text: String): Int
     suspend fun exportM3u(): String

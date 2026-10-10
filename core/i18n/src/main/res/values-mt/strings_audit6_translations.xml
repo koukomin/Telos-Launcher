@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au6_radio2_pause">Waqqaf %1$s</string>
+    <string name="au6_radio2_loading">Qed jitgħabba %1$s</string>
+    <string name="au6_webapps4_cookie_source_default">Kollha / awtomatiku</string>
+    <string name="au6_wgvideo_route_not_ready">It-torrent ma setax jibda: huwa ssettjat biex juża tunnel WireGuard ta\' Telos Network, u t-tunnel mhuwiex lest. Ixgħel Telos Network u t-tunnel, jew biddel l-issettjar f\'Telos Downloads. Ma nbagħat xejn.</string>
+</resources>

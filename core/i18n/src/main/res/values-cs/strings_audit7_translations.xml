@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">Názvy skladeb a interpreti se odesílají vybrané službě, a to jen když je služba přihlášená a zapnutá. Dříve se nic neodesílá.</string>
+    <string name="au7_scrobble_what">Co scrobblovat</string>
+    <string name="au7_scrobble_music_title">Scrobblovat hudbu</string>
+    <string name="au7_scrobble_music_summary">Písně přehrané v Telos Music, po polovině písně nebo 4 minutách</string>
+    <string name="au7_scrobble_radio_title">Scrobblovat rádio</string>
+    <string name="au7_scrobble_radio_summary">Aktuální skladba stanice poté, co ji posloucháte minutu. Funguje jen se stanicemi, které skladbu oznamují.</string>
+    <string name="au7_scrobble_status_active">Odesílání do služby %1$s</string>
+    <string name="au7_scrobble_status_no_service">Nic se neodesílá: žádná služba není přihlášená a zapnutá</string>
+    <string name="au7_scrobble_status_no_source">Nic se neodesílá: zapněte scrobblování hudby nebo rádia</string>
+    <string name="au7_scrobble_sign_in">Otestovat připojení a přihlásit se</string>
+    <string name="au7_scrobble_lb_ok">Token je platný pro %1$s</string>
+    <string name="au7_scrobble_https">Adresa serveru musí začínat https:// (http je povoleno jen pro server ve vaší síti)</string>
+    <string name="au7_scrobble_switch_on">Zapnuto</string>
+    <string name="au7_scrobble_queue">Fronta</string>
+    <string name="au7_scrobble_queue_count">Počet scrobblů čekajících na odeslání: %1$d</string>
+    <string name="au7_scrobble_queue_empty">Žádné scrobbly nečekají</string>
+    <string name="au7_scrobble_queue_clear">Vyprázdnit frontu</string>
+    <string name="au7_scrobble_queue_cleared">Fronta vyprázdněna</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm a ListenBrainz pro Telos Music a Telos Radio</string>
+    <string name="au7_trakt_open_settings">Scrobblování Trakt</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt vyžaduje vlastní aplikaci. Přihlaste se na trakt.tv, otevřete trakt.tv/oauth/applications, zvolte New Application, zadejte libovolný název a adresu přesměrování urn:ietf:wg:oauth:2.0:oob, uložte ji a zde zadejte její client id a client secret.</string>
+    <string name="au7_trakt_privacy">Když je scrobblování zapnuté, odesílají se do Trakt názvy filmů a epizod, které sledujete, a jak daleko jste se dostali. Odesílají se jen videa rozpoznaná jako film nebo epizoda.</string>
+    <string name="au7_trakt_signed_in">Přihlášeno k Trakt</string>
+    <string name="au7_trakt_switch">Scrobblovat do Trakt</string>
+    <string name="au7_trakt_queue">Počet scrobblů čekajících na odeslání: %1$d</string>
+    <string name="au7_trakt_clear_queue">Vyprázdnit frontu</string>
+    <string name="au7_trakt_sign_in">Přihlásit se</string>
+    <string name="au7_trakt_sign_out">Odhlásit se</string>
+    <string name="au7_trakt_copy">Kopírovat kód</string>
+    <string name="au7_trakt_waiting">Čekání, až zadáte kód na %1$s…</string>
+    <string name="au7_vidfolders_tab_other">Ostatní</string>
+    <string name="au7_vidfolders_no_other">Všechna videa jsou rozpoznána jako filmy nebo epizody</string>
+    <string name="au7_vidfolders_season">Sezóna %1$d</string>
+    <string name="au7_vidfolders_action">Uspořádat do složek Filmy a Seriály</string>
+    <string name="au7_vidfolders_title">Uspořádat videosoubory</string>
+    <string name="au7_vidfolders_unsupported">Přesouvání souborů vyžaduje Android 11 nebo novější.</string>
+    <string name="au7_vidfolders_nothing">Není co uspořádat. Přesouvají se jen rozpoznané filmy a epizody ve složce Movies nebo Download.</string>
+    <string name="au7_vidfolders_confirm">Telos přesune filmy (%1$d) do Movies/Movies/Title (Year) a epizody (%2$d) do Movies/Series/Show/Season NN. Soubory se pouze přesouvají, nikdy se nemažou ani nemění, a postup sledování zůstane zachován. Soubory titulků vedle videí se nepřesouvají. Android ještě jednou požádá o povolení měnit tyto soubory. Příklady:</string>
+    <string name="au7_vidfolders_move">Přesunout soubory</string>
+    <string name="au7_vidfolders_done">Přesunutých videí: %1$d</string>
+    <string name="au7_vidfolders_partial">Přesunutých videí: %1$d, nepodařilo se přesunout: %2$d</string>
+    <string name="au7_vidfolders_failed">Soubory se nepodařilo přesunout</string>
+</resources>

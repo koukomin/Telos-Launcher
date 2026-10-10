@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">Радіостанції</string>
+    <string name="au5_radiosearch_pref_summary">Показуйте улюблені станції Telos Radio в результатах пошуку та відтворюйте їх одним дотиком</string>
+    <string name="au5_radiosearch_play">Відтворити: %1$s</string>
+    <string name="au5_radiosearch_stop">Зупинити: %1$s</string>
+    <string name="au5_webapps3_cookie_accept">Прийняти</string>
+    <string name="au5_webapps3_cookie_block">Блокувати</string>
+    <string name="au5_webapps3_cookies_isolated">Файли cookie та дані сайтів цього вебзастосунку зберігаються окремо від усіх інших вебзастосунків. Варіант «Використовувати глобальні» дотримується налаштувань cookie на екрані вебзастосунків.</string>
+    <string name="au5_webapps3_cookies_unsupported">Встановлений WebView не підтримує окреме сховище для кожного вебзастосунку. Файли cookie та дані сайтів спільні для всіх вебзастосунків, діють глобальні налаштування cookie.</string>
+    <string name="au5_webapps3_clear_this">Очистити файли cookie та дані сайтів цього вебзастосунку</string>
+    <string name="au5_webapps3_clear_done">Файли cookie та дані сайтів очищено</string>
+    <string name="au5_wgtorrent_title">Торренти через WireGuard у Telos Network</string>
+    <string name="au5_wgtorrent_desc">Торренти (Telos Downloads і Telos Video) підключаються лише через вибраний WireGuard-проксі Telos Network. Для цього Telos відкриває локальний HTTP-проксі, який існує лише поки Telos Network увімкнено, а проксі підключено. Інакше торренти очікують і нічого не підключається напряму. Це замінює проксі вище для торрентів. HTTP-проксі передає лише TCP, тому DHT і uTP вимкнено. Поки він працює, інші застосунки на цьому пристрої також можуть користуватися локальним проксі.</string>
+    <string name="au5_wgtorrent_none">Не використовується</string>
+    <string name="au5_wgtorrent_no_configs">У Telos Network ще немає WireGuard-проксі.</string>
+    <string name="au5_wgtorrent_summary">Торренти через WireGuard: %1$s</string>
+    <string name="au5_wgtorrent_removed">видалений проксі</string>
+    <string name="au5_wgtorrent_status_ready">Торренти використовують WireGuard-проксі %1$s з Telos Network.</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">Торренти очікують: Telos Network не працює.</string>
+    <string name="au5_wgtorrent_blocked_missing">Торренти очікують: вибраного WireGuard-проксі більше не існує.</string>
+    <string name="au5_wgtorrent_blocked_disabled">Торренти очікують: вибраний WireGuard-проксі вимкнено.</string>
+    <string name="au5_wgtorrent_blocked_down">Торренти очікують: вибраний WireGuard-проксі не підключено.</string>
+    <string name="au5_wgtorrent_blocked_error">Торренти очікують: Telos Network не зміг відкрити локальний проксі.</string>
+</resources>

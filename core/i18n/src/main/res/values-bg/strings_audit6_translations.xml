@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au6_radio2_pause">Пауза на %1$s</string>
+    <string name="au6_radio2_loading">Зареждане на %1$s</string>
+    <string name="au6_webapps4_cookie_source_default">Всички / по подразбиране</string>
+    <string name="au6_wgvideo_route_not_ready">Торентът не можа да стартира: настроен е да използва WireGuard тунел на Telos Network, а този тунел не е готов. Включете Telos Network и тунела или променете настройката в Telos Downloads. Нищо не беше изпратено.</string>
+</resources>

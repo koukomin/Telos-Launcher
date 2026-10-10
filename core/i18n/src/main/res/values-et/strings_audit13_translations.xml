@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Lisa-Kreeka kanalid</string>
+    <string name="au13_tvextra_playlists_summary">Lisab voogusid ja kanaleid avalikest esitusloenditest Free-TV ja greektvm3u, mis laaditakse GitHubist sellesse seadmesse, kui avad TV. Kasutatakse ainult siis, kui Kreeka on valitud. Kui neid ei saa laadida, ei kuvata midagi.</string>
+    <string name="au13_tvextra_epg_title">Saatekava</string>
+    <string name="au13_tvextra_epg_summary">Näitab Kreeka kanalite praegust ja järgmist saadet (XMLTV saatekava aadressilt ext.greektv.app või epgshare01.online, värskendatakse vähemalt iga 6 tunni järel). Kasutatakse ainult siis, kui Kreeka on valitud.</string>
+    <string name="au13_tvextra_marker">Lisa</string>
+    <string name="au13_tvextra_marker_description">See kanal pärineb valikulisest lisaallikast ja võib olla vähem usaldusväärne</string>
+    <string name="au13_tvextraui_disclaimer_extra">Kreeka kanalite jaoks võib Telos TV kasutada ka valikulisi lisaallikaid: avalikke esitusloendeid (raw.githubusercontent.com) ja saatekava (ext.greektv.app, epgshare01.online). Nendega ühendutakse ainult siis, kui Kreeka on valitud ja vastav lüliti on sees, ning ainult siis, kui TV on avatud. Saad need riikide loendis välja lülitada.</string>
+    <string name="au13_tvextraui_now_line">Praegu: %1$s</string>
+    <string name="au13_tvextraui_player_now">Praegu: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Järgmine: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">See kanal on ajutiselt võrguühenduseta</string>
+    <string name="au13_tvextraui_offline_hint">Proovisime kõiki saadaolevaid voogusid ja kontrollisime uuendatud loendit. Proovi hiljem uuesti.</string>
+    <string name="au13_tvextraui_offline_back">Tagasi</string>
+    <string name="au13_tvextraui_static_description">Teleri lumi: signaal puudub</string>
+</resources>

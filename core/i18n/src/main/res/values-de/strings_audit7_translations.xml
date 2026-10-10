@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">Titel und Interpreten werden an den von dir gewählten Dienst gesendet, und nur solange ein Dienst angemeldet und eingeschaltet ist. Vorher wird nichts gesendet.</string>
+    <string name="au7_scrobble_what">Was gescrobbelt wird</string>
+    <string name="au7_scrobble_music_title">Musik scrobbeln</string>
+    <string name="au7_scrobble_music_summary">In Telos Music gespielte Songs, nach der Hälfte des Songs oder nach 4 Minuten</string>
+    <string name="au7_scrobble_radio_title">Radio scrobbeln</string>
+    <string name="au7_scrobble_radio_summary">Der aktuelle Titel eines Senders, nachdem er eine Minute lang gehört wurde. Funktioniert nur bei Sendern, die den Titel mitsenden.</string>
+    <string name="au7_scrobble_status_active">Senden an %1$s</string>
+    <string name="au7_scrobble_status_no_service">Es wird nichts gesendet: Kein Dienst ist angemeldet und eingeschaltet</string>
+    <string name="au7_scrobble_status_no_source">Es wird nichts gesendet: Schalte das Scrobbeln von Musik oder Radio ein</string>
+    <string name="au7_scrobble_sign_in">Verbindung testen und anmelden</string>
+    <string name="au7_scrobble_lb_ok">Token ist gültig für %1$s</string>
+    <string name="au7_scrobble_https">Die Serveradresse muss mit https:// beginnen (http ist nur für einen Server in deinem eigenen Netzwerk erlaubt)</string>
+    <string name="au7_scrobble_switch_on">Eingeschaltet</string>
+    <string name="au7_scrobble_queue">Warteschlange</string>
+    <string name="au7_scrobble_queue_count">%1$d Scrobbles warten auf das Senden</string>
+    <string name="au7_scrobble_queue_empty">Keine Scrobbles in der Warteschlange</string>
+    <string name="au7_scrobble_queue_clear">Warteschlange leeren</string>
+    <string name="au7_scrobble_queue_cleared">Warteschlange geleert</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm und ListenBrainz für Telos Music und Telos Radio</string>
+    <string name="au7_trakt_open_settings">Trakt-Scrobbling</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt benötigt eine eigene Anwendung. Melde dich bei trakt.tv an, öffne trakt.tv/oauth/applications, wähle New Application, gib einen beliebigen Namen und die Weiterleitungsadresse urn:ietf:wg:oauth:2.0:oob ein, speichere sie und gib hier ihre Client-ID und ihr Client-Secret ein.</string>
+    <string name="au7_trakt_privacy">Solange das Scrobbeln eingeschaltet ist, werden die Titel der Filme und Episoden, die du ansiehst, und dein Fortschritt an Trakt gesendet. Es werden nur Videos gesendet, die als Film oder Episode erkannt wurden.</string>
+    <string name="au7_trakt_signed_in">Bei Trakt angemeldet</string>
+    <string name="au7_trakt_switch">Bei Trakt scrobbeln</string>
+    <string name="au7_trakt_queue">%1$d Scrobbles warten auf das Senden</string>
+    <string name="au7_trakt_clear_queue">Warteschlange leeren</string>
+    <string name="au7_trakt_sign_in">Anmelden</string>
+    <string name="au7_trakt_sign_out">Abmelden</string>
+    <string name="au7_trakt_copy">Code kopieren</string>
+    <string name="au7_trakt_waiting">Warte, bis du den Code unter %1$s eingibst…</string>
+    <string name="au7_vidfolders_tab_other">Andere</string>
+    <string name="au7_vidfolders_no_other">Alle Videos wurden als Filme oder Episoden erkannt</string>
+    <string name="au7_vidfolders_season">Staffel %1$d</string>
+    <string name="au7_vidfolders_action">In Ordner für Filme und Serien einsortieren</string>
+    <string name="au7_vidfolders_title">Videodateien organisieren</string>
+    <string name="au7_vidfolders_unsupported">Das Verschieben von Dateien erfordert Android 11 oder neuer.</string>
+    <string name="au7_vidfolders_nothing">Es gibt nichts zu organisieren. Nur erkannte Filme und Episoden im Ordner Movies oder Download werden verschoben.</string>
+    <string name="au7_vidfolders_confirm">Telos verschiebt %1$d Filme nach Movies/Movies/Title (Year) und %2$d Episoden nach Movies/Series/Show/Season NN. Dateien werden nur verschoben, nie gelöscht oder verändert, und der Wiedergabefortschritt bleibt erhalten. Untertiteldateien neben den Videos werden nicht verschoben. Android fragt noch einmal um Erlaubnis, diese Dateien zu ändern. Beispiele:</string>
+    <string name="au7_vidfolders_move">Dateien verschieben</string>
+    <string name="au7_vidfolders_done">%1$d Videos verschoben</string>
+    <string name="au7_vidfolders_partial">%1$d Videos verschoben, %2$d konnten nicht verschoben werden</string>
+    <string name="au7_vidfolders_failed">Die Dateien konnten nicht verschoben werden</string>
+</resources>

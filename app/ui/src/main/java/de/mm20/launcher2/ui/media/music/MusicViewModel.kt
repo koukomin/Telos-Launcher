@@ -37,7 +37,26 @@ data class NowPlaying(
     val durationMs: Long,
 )
 
+/** An entry of the play queue after the current track */
+data class QueueItem(val index: Int, val mediaId: String, val title: String, val artist: String)
+
 class MusicViewModel : ViewModel() {
+
+    private val _history = MutableStateFlow<Map<Long, MusicHistory.Entry>>(emptyMap())
+    val history: StateFlow<Map<Long, MusicHistory.Entry>> = _history
+    private var lastRecordedId = ""
+
+    private val _upNext = MutableStateFlow<List<QueueItem>>(emptyList())
+    val upNext: StateFlow<List<QueueItem>> = _upNext
+
+    /** Plays the queue entry at [index] */
+    fun playQueueIndex(index: Int) {
+        val c = controller ?: return
+        if (index in 0 until c.mediaItemCount) {
+            c.seekTo(index, 0L)
+            c.play()
+        }
+    }
 
     private var controller: MediaController? = null
     private var appContext: Context? = null
@@ -112,6 +131,7 @@ class MusicViewModel : ViewModel() {
         if (controller != null || connecting) return
         connecting = true
         appContext = context.applicationContext
+        _history.value = MusicHistory.load(context)
         val token = SessionToken(context, ComponentName(context, MusicPlayerService::class.java))
         val future = MediaController.Builder(context, token).buildAsync()
         this.future = future
@@ -161,6 +181,7 @@ class MusicViewModel : ViewModel() {
         val c = controller ?: return
         val item = c.currentMediaItem
         if (item == null) {
+            _upNext.value = emptyList()
             _nowPlaying.value = null
             _lyrics.value = null
             lyricsKey = ""
@@ -177,6 +198,16 @@ class MusicViewModel : ViewModel() {
             durationMs = c.duration.takeIf { it > 0 } ?: 0L,
         )
         _nowPlaying.value = playing
+        _upNext.value = (c.currentMediaItemIndex + 1 until c.mediaItemCount).take(100).map { i ->
+            val m = c.getMediaItemAt(i)
+            QueueItem(i, m.mediaId, m.mediaMetadata.title?.toString().orEmpty(), m.mediaMetadata.artist?.toString().orEmpty())
+        }
+        val id = item.mediaId
+        val ctx = appContext
+        if (ctx != null && id.isNotEmpty() && id != lastRecordedId) {
+            lastRecordedId = id
+            id.toLongOrNull()?.let { _history.value = MusicHistory.record(ctx, it) }
+        }
         loadLyrics(playing, md.albumTitle?.toString().orEmpty())
     }
 

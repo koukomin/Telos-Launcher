@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au5_wgtorrent_title">Torrents through Telos Network WireGuard</string>
+    <string name="au5_wgtorrent_desc">Torrents (Telos Downloads and Telos Video) connect only through the selected WireGuard proxy of Telos Network. Telos opens a local HTTP proxy for it, which exists only while Telos Network is on and the proxy is connected. Otherwise torrents wait and nothing connects directly. This replaces the proxy above for torrents. An HTTP proxy carries TCP only, so DHT and uTP are switched off. While it runs, other apps on this device could also use the local proxy.</string>
+    <string name="au5_wgtorrent_none">Not used</string>
+    <string name="au5_wgtorrent_no_configs">There is no WireGuard proxy in Telos Network yet.</string>
+    <string name="au5_wgtorrent_summary">Torrents via WireGuard: %1$s</string>
+    <string name="au5_wgtorrent_removed">removed proxy</string>
+    <string name="au5_wgtorrent_status_ready">Torrents use the WireGuard proxy %1$s of Telos Network.</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">Torrents wait: Telos Network is not running.</string>
+    <string name="au5_wgtorrent_blocked_missing">Torrents wait: the selected WireGuard proxy no longer exists.</string>
+    <string name="au5_wgtorrent_blocked_disabled">Torrents wait: the selected WireGuard proxy is switched off.</string>
+    <string name="au5_wgtorrent_blocked_down">Torrents wait: the selected WireGuard proxy is not connected.</string>
+    <string name="au5_wgtorrent_blocked_error">Torrents wait: Telos Network could not open the local proxy.</string>
+</resources>

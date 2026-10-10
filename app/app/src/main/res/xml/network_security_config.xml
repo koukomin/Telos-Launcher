@@ -9,6 +9,7 @@
     <domain-config cleartextTrafficPermitted="false">
         <domain includeSubdomains="true">github.com</domain>
         <domain includeSubdomains="true">githubusercontent.com</domain>
+        <domain includeSubdomains="true">iptv-org.github.io</domain>
         <domain includeSubdomains="true">f-droid.org</domain>
         <domain includeSubdomains="true">izzysoft.de</domain>
         <domain includeSubdomains="true">sourceforge.net</domain>

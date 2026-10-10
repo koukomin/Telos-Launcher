@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">Les titres et les artistes sont envoyés au service que vous choisissez, et uniquement tant qu’un service est connecté et activé. Rien n’est envoyé avant.</string>
+    <string name="au7_scrobble_what">Quoi scrobbler</string>
+    <string name="au7_scrobble_music_title">Scrobbler la musique</string>
+    <string name="au7_scrobble_music_summary">Morceaux lus dans Telos Music, après la moitié du morceau ou 4 minutes</string>
+    <string name="au7_scrobble_radio_title">Scrobbler la radio</string>
+    <string name="au7_scrobble_radio_summary">Le morceau en cours d’une station, après une minute d’écoute. Fonctionne uniquement avec les stations qui annoncent le morceau.</string>
+    <string name="au7_scrobble_status_active">Envoi vers %1$s</string>
+    <string name="au7_scrobble_status_no_service">Rien n’est envoyé : aucun service n’est connecté et activé</string>
+    <string name="au7_scrobble_status_no_source">Rien n’est envoyé : activez le scrobbling de la musique ou de la radio</string>
+    <string name="au7_scrobble_sign_in">Tester la connexion et se connecter</string>
+    <string name="au7_scrobble_lb_ok">Le jeton est valide pour %1$s</string>
+    <string name="au7_scrobble_https">L’adresse du serveur doit commencer par https:// (http n’est autorisé que pour un serveur de votre propre réseau)</string>
+    <string name="au7_scrobble_switch_on">Activé</string>
+    <string name="au7_scrobble_queue">File d’attente</string>
+    <string name="au7_scrobble_queue_count">%1$d scrobbles en attente d’envoi</string>
+    <string name="au7_scrobble_queue_empty">Aucun scrobble en attente</string>
+    <string name="au7_scrobble_queue_clear">Vider la file d’attente</string>
+    <string name="au7_scrobble_queue_cleared">File d’attente vidée</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm et ListenBrainz pour Telos Music et Telos Radio</string>
+    <string name="au7_trakt_open_settings">Scrobbling Trakt</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt nécessite votre propre application. Connectez-vous à trakt.tv, ouvrez trakt.tv/oauth/applications, choisissez New Application, saisissez un nom quelconque et l’adresse de redirection urn:ietf:wg:oauth:2.0:oob, enregistrez-la, puis saisissez ici son client id et son client secret.</string>
+    <string name="au7_trakt_privacy">Tant que le scrobbling est activé, les titres des films et épisodes que vous regardez, ainsi que votre progression, sont envoyés à Trakt. Seules les vidéos reconnues comme un film ou un épisode sont envoyées.</string>
+    <string name="au7_trakt_signed_in">Connecté à Trakt</string>
+    <string name="au7_trakt_switch">Scrobbler vers Trakt</string>
+    <string name="au7_trakt_queue">%1$d scrobbles en attente d’envoi</string>
+    <string name="au7_trakt_clear_queue">Vider la file d’attente</string>
+    <string name="au7_trakt_sign_in">Se connecter</string>
+    <string name="au7_trakt_sign_out">Se déconnecter</string>
+    <string name="au7_trakt_copy">Copier le code</string>
+    <string name="au7_trakt_waiting">En attente de la saisie du code sur %1$s…</string>
+    <string name="au7_vidfolders_tab_other">Autres</string>
+    <string name="au7_vidfolders_no_other">Toutes les vidéos sont reconnues comme films ou épisodes</string>
+    <string name="au7_vidfolders_season">Saison %1$d</string>
+    <string name="au7_vidfolders_action">Organiser dans les dossiers Films et Séries</string>
+    <string name="au7_vidfolders_title">Organiser les fichiers vidéo</string>
+    <string name="au7_vidfolders_unsupported">Le déplacement de fichiers nécessite Android 11 ou version ultérieure.</string>
+    <string name="au7_vidfolders_nothing">Rien à organiser. Seuls les films et épisodes reconnus dans le dossier Movies ou Download sont déplacés.</string>
+    <string name="au7_vidfolders_confirm">Telos va déplacer %1$d films vers Movies/Movies/Title (Year) et %2$d épisodes vers Movies/Series/Show/Season NN. Les fichiers sont uniquement déplacés, jamais supprimés ni modifiés, et la progression de lecture est conservée. Les fichiers de sous-titres à côté des vidéos ne sont pas déplacés. Android demandera encore une fois l’autorisation de modifier ces fichiers. Exemples :</string>
+    <string name="au7_vidfolders_move">Déplacer les fichiers</string>
+    <string name="au7_vidfolders_done">%1$d vidéos déplacées</string>
+    <string name="au7_vidfolders_partial">%1$d vidéos déplacées, %2$d n’ont pas pu être déplacées</string>
+    <string name="au7_vidfolders_failed">Les fichiers n’ont pas pu être déplacés</string>
+</resources>

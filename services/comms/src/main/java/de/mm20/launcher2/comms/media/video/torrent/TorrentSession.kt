@@ -41,7 +41,10 @@ object TorrentSession {
             appContext = context.applicationContext
             prefs = appContext!!.getSharedPreferences("telos_torrent_session", Context.MODE_PRIVATE)
             _config.value = read(prefs!!)
-            proxy = TorrentProxy(
+            wgRoute = prefs!!.getBoolean("wgRoute", false)
+            // a stored loopback proxy of an earlier session is never used: with a WireGuard route the proxy
+            // stays a dead end until the route is synced again (see setRoute)
+            proxy = if (wgRoute) TorrentProxy(TorrentProxyType.Http, "", 0) else TorrentProxy(
                 runCatching { TorrentProxyType.valueOf(prefs!!.getString("proxyType", "")!!) }.getOrDefault(TorrentProxyType.None),
                 prefs!!.getString("proxyHost", "").orEmpty(), prefs!!.getInt("proxyPort", 0),
             )
@@ -62,19 +65,37 @@ object TorrentSession {
     }
 
     @Volatile private var proxy = TorrentProxy()
+    /** The route is a WireGuard one (persisted: without a gate in this process the session must not start) */
+    @Volatile private var wgRoute = false
+    /** A gate of this process has set the route since the process started */
+    @Volatile private var wgSynced = false
     val currentProxy: TorrentProxy get() = proxy
 
     /**
      * Sets the proxy for peers, trackers and host name lookups. Stored, and applied to the running session at once.
      * With an incomplete proxy [acquire] refuses to start and a running session is pointed at a dead end, so nothing leaks.
      */
-    fun setProxy(context: Context, p: TorrentProxy) {
+    fun setProxy(context: Context, p: TorrentProxy) = setRoute(context, false, p)
+
+    /**
+     * Sets the route of all torrent traffic. [viaWireguard]: the proxy is the loopback proxy of a WireGuard config
+     * (or a dead end while that is not ready). Such a proxy is never written to disk, only the fact that the route is
+     * a WireGuard one, so a later process never starts with an old port. Called by the proxy gate of the launcher
+     * process, which runs from the start of the app, whatever screen is open.
+     */
+    fun setRoute(context: Context, viaWireguard: Boolean, p: TorrentProxy) {
         init(context)
         val clean = p.copy(host = p.host.trim())
         synchronized(lock) {
-            if (clean == proxy) return
+            val changed = clean != proxy || viaWireguard != wgRoute
+            wgRoute = viaWireguard
+            wgSynced = true
             proxy = clean
-            prefs!!.edit().putString("proxyType", clean.type.name).putString("proxyHost", clean.host).putInt("proxyPort", clean.port).apply()
+            if (!changed) return
+            val e = prefs!!.edit().putBoolean("wgRoute", viaWireguard)
+            if (viaWireguard) e.putString("proxyType", "").putString("proxyHost", "").putInt("proxyPort", 0)
+            else e.putString("proxyType", clean.type.name).putString("proxyHost", clean.host).putInt("proxyPort", clean.port)
+            e.apply()
         }
         val sm = synchronized(lock) { manager }
         if (sm != null) apply(sm, _config.value, startup = false)
@@ -88,7 +109,9 @@ object TorrentSession {
     /** Starts the session if needed and registers [owner]. Call from a background thread, starting takes a moment. */
     fun acquire(context: Context, owner: Any): SessionManager {
         init(context)
+        awaitRoute()
         synchronized(lock) {
+            if (wgRoute && !(wgSynced && proxy.valid)) throw TorrentRouteNotReadyException()
             if (!proxy.valid) throw IllegalStateException("The proxy settings are incomplete")
             owners.add(owner)
             manager?.let { return it }
@@ -105,6 +128,20 @@ object TorrentSession {
                 de.mm20.launcher2.comms.blocklist.BlockLists.applyToSession(sm)
             }.apply { name = "torrent-ip-filter"; isDaemon = true }.start()
             return sm
+        }
+    }
+
+    /**
+     * With a WireGuard route, waits a few seconds for the route to be ready (the tunnel may still be coming up, or the
+     * app has just started). Then [acquire] fails closed with [TorrentRouteNotReadyException] if it still is not.
+     */
+    private fun awaitRoute() {
+        if (!wgRoute) return
+        // the player process has no gate and no tunnel: nothing to wait for
+        if (de.mm20.launcher2.base.ProcessInfo.isolatedPlayer) return
+        val end = System.nanoTime() + 10_000_000_000L
+        while (!(wgSynced && proxy.valid) && wgRoute && System.nanoTime() < end) {
+            try { Thread.sleep(150) } catch (e: InterruptedException) { Thread.currentThread().interrupt(); return }
         }
     }
 
@@ -251,3 +288,6 @@ object TorrentSession {
             .apply()
     }
 }
+
+/** The torrent route is a WireGuard config of Telos Network and it is not ready: nothing may start (never a direct connection) */
+class TorrentRouteNotReadyException : IllegalStateException("The WireGuard route for torrents is not ready")

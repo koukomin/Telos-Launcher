@@ -106,6 +106,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     override fun onCleared() {
         // files fetched from a server, an archive or a vault (decrypted!) must not stay in the cache
         runCatching { File(context.cacheDir, "remote_open").deleteRecursively() }
+        runCatching { File(context.cacheDir, "share_dl").deleteRecursively() }
         super.onCleared()
     }
 
@@ -431,6 +432,46 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             task = null
             result.onSuccess { then(target) }.onFailure { target.delete(); message = if (cancel.cancelled) s(R.string.au_files_cancelled) else it.message ?: s(R.string.au_files_download_failed) }
         }
+    }
+
+    /** What of [entries] can be shared: files only, and never anything from a vault (those stay behind the unlock) */
+    fun shareable(entries: List<FsEntry>): List<FsEntry> =
+        entries.filter { !it.isDir && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it.path) }
+
+    /** Bytes that have to be fetched from a network or cloud storage (or an archive) before [entries] can be shared */
+    fun shareDownloadBytes(entries: List<FsEntry>): Long =
+        shareable(entries).filter { RemotePath.isRemote(it.path) || ArchivePath.isArchive(it.path) }.sumOf { it.size.coerceAtLeast(0L) }
+
+    /**
+     * Shares [entries]: local files straight away, files on network/cloud storages (and in archives) are
+     * downloaded into the cache first (with the progress bar), then handed out through the FileProvider.
+     */
+    fun shareEntries(entries: List<FsEntry>) {
+        val files = shareable(entries)
+        if (files.isEmpty()) {
+            message = s(R.string.au9_share_nothing)
+            return
+        }
+        val local = files.filter { !RemotePath.isRemote(it.path) && !ArchivePath.isArchive(it.path) }
+        val remote = files.filter { RemotePath.isRemote(it.path) || ArchivePath.isArchive(it.path) }
+        if (remote.isEmpty()) {
+            FileActions.share(context, local, rootMode)
+            return
+        }
+        val folder = File(File(context.cacheDir, "share_dl"), System.nanoTime().toString())
+        fun step(i: Int, done: List<FsEntry>) {
+            if (i >= remote.size) {
+                FileActions.share(context, local + done, rootMode)
+                return
+            }
+            download(remote[i]) { f ->
+                // every file gets its own folder, so two files with one name cannot overwrite each other
+                val target = File(File(folder, i.toString()).apply { mkdirs() }, f.name)
+                val moved = if (f.renameTo(target)) target else f
+                step(i + 1, done + FsEntry(moved.path, moved.name, false, moved.length(), moved.lastModified()))
+            }
+        }
+        step(0, emptyList())
     }
 
     fun compress(items: List<FsEntry>, zipName: String) {

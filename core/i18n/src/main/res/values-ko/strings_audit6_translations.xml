@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au6_radio2_pause">%1$s 일시중지</string>
+    <string name="au6_radio2_loading">%1$s 로드 중</string>
+    <string name="au6_webapps4_cookie_source_default">전체 / 기본값</string>
+    <string name="au6_wgvideo_route_not_ready">토렌트를 시작할 수 없습니다. Telos Network의 WireGuard 터널을 사용하도록 설정되어 있지만 터널이 준비되지 않았습니다. Telos Network와 터널을 켜거나 Telos Downloads에서 설정을 변경하세요. 아무것도 전송되지 않았습니다.</string>
+</resources>

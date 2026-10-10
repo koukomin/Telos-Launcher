@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">Posturi de radio</string>
+    <string name="au5_radiosearch_pref_summary">Afișați posturile Telos Radio preferate în rezultatele căutării și redați-le cu o singură atingere</string>
+    <string name="au5_radiosearch_play">Redă %1$s</string>
+    <string name="au5_radiosearch_stop">Oprește %1$s</string>
+    <string name="au5_webapps3_cookie_accept">Acceptă</string>
+    <string name="au5_webapps3_cookie_block">Blochează</string>
+    <string name="au5_webapps3_cookies_isolated">Cookie-urile și datele site-urilor acestei aplicații web sunt stocate separat de cele ale tuturor celorlalte aplicații web. „Folosește global” urmează setările pentru cookie-uri din ecranul aplicațiilor web.</string>
+    <string name="au5_webapps3_cookies_unsupported">WebView-ul instalat nu acceptă stocare separată pentru fiecare aplicație web. Cookie-urile și datele site-urilor sunt partajate între toate aplicațiile web și se aplică setările globale pentru cookie-uri.</string>
+    <string name="au5_webapps3_clear_this">Șterge cookie-urile și datele site-urilor acestei aplicații web</string>
+    <string name="au5_webapps3_clear_done">Cookie-urile și datele site-urilor au fost șterse</string>
+    <string name="au5_wgtorrent_title">Torente prin WireGuard din Telos Network</string>
+    <string name="au5_wgtorrent_desc">Torentele (Telos Downloads și Telos Video) se conectează doar prin proxy-ul WireGuard selectat din Telos Network. Telos deschide pentru aceasta un proxy HTTP local, care există doar cât timp Telos Network este pornit și proxy-ul este conectat. În caz contrar, torentele așteaptă și nimic nu se conectează direct. Acesta înlocuiește proxy-ul de mai sus pentru torente. Un proxy HTTP transportă doar TCP, deci DHT și uTP sunt dezactivate. Cât timp rulează, și alte aplicații de pe acest dispozitiv ar putea folosi proxy-ul local.</string>
+    <string name="au5_wgtorrent_none">Nefolosit</string>
+    <string name="au5_wgtorrent_no_configs">Nu există încă niciun proxy WireGuard în Telos Network.</string>
+    <string name="au5_wgtorrent_summary">Torente prin WireGuard: %1$s</string>
+    <string name="au5_wgtorrent_removed">proxy eliminat</string>
+    <string name="au5_wgtorrent_status_ready">Torentele folosesc proxy-ul WireGuard %1$s din Telos Network.</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">Torentele așteaptă: Telos Network nu rulează.</string>
+    <string name="au5_wgtorrent_blocked_missing">Torentele așteaptă: proxy-ul WireGuard selectat nu mai există.</string>
+    <string name="au5_wgtorrent_blocked_disabled">Torentele așteaptă: proxy-ul WireGuard selectat este dezactivat.</string>
+    <string name="au5_wgtorrent_blocked_down">Torentele așteaptă: proxy-ul WireGuard selectat nu este conectat.</string>
+    <string name="au5_wgtorrent_blocked_error">Torentele așteaptă: Telos Network nu a putut deschide proxy-ul local.</string>
+</resources>

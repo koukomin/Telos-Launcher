@@ -551,6 +551,11 @@ fun CommsSettingsScreen() {
                     onClick = { backStack.add(ContactGroupsRoute) },
                 )
                 Preference(
+                    title = stringResource(R.string.hc_scrobbling),
+                    summary = stringResource(R.string.au7_scrobble_settings_summary),
+                    onClick = { backStack.add(ScrobbleSettingsRoute) },
+                )
+                Preference(
                     title = stringResource(R.string.hc_scheduled_sms),
                     onClick = { backStack.add(ScheduledSmsRoute) },
                 )

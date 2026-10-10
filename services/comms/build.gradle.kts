@@ -81,8 +81,11 @@ dependencies {
     // === TELOS_PENDING_REVIEW_START: sms_and_radio_engine ===
     testImplementation(libs.bundles.tests)
     testImplementation("org.json:json:20240303")
+    testImplementation("net.sf.kxml:kxml2:2.3.0")
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.session)
     implementation(libs.androidx.media3.common)
+    implementation(libs.androidx.media3.hls)
+    implementation(libs.androidx.media3.dash)
     // === TELOS_PENDING_REVIEW_END: sms_and_radio_engine ===
 }

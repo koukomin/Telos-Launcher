@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Canale grecești suplimentare</string>
+    <string name="au13_tvextra_playlists_summary">Adaugă fluxuri și canale din listele publice Free-TV și greektvm3u, încărcate de pe GitHub pe acest dispozitiv când deschizi TV. Se folosește doar când este selectată Grecia. Dacă nu pot fi încărcate, nu se afișează nimic.</string>
+    <string name="au13_tvextra_epg_title">Ghid de programe</string>
+    <string name="au13_tvextra_epg_summary">Afișează ce rulează acum și ce urmează pe canalele grecești (ghid XMLTV de la ext.greektv.app sau epgshare01.online, reîmprospătat cel mult o dată la 6 ore). Se folosește doar când este selectată Grecia.</string>
+    <string name="au13_tvextra_marker">Extra</string>
+    <string name="au13_tvextra_marker_description">Acest canal provine dintr-o sursă suplimentară opțională și poate fi mai puțin fiabil</string>
+    <string name="au13_tvextraui_disclaimer_extra">Pentru canalele grecești, Telos TV poate folosi și surse suplimentare opționale: liste publice (raw.githubusercontent.com) și un ghid de programe (ext.greektv.app, epgshare01.online). Acestea sunt contactate doar când este selectată Grecia și comutatorul corespunzător este activat, și doar cât timp TV este deschis. Le poți dezactiva în lista de țări.</string>
+    <string name="au13_tvextraui_now_line">Acum: %1$s</string>
+    <string name="au13_tvextraui_player_now">Acum: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Urmează: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Acest canal este temporar offline</string>
+    <string name="au13_tvextraui_offline_hint">Am încercat toate fluxurile disponibile și am căutat o listă actualizată. Încearcă din nou mai târziu.</string>
+    <string name="au13_tvextraui_offline_back">Înapoi</string>
+    <string name="au13_tvextraui_static_description">Ninsoare TV: fără semnal</string>
+</resources>

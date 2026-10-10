@@ -36,6 +36,24 @@ class SearchUiSettings internal constructor(
         }
     }
 
+    val radioStationsInSearch
+        get() = launcherDataStore.data.map { it.searchResults.radioStationsInSearch }.distinctUntilChanged()
+
+    fun setRadioStationsInSearch(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(searchResults = it.searchResults.copy(radioStationsInSearch = enabled))
+        }
+    }
+
+    val tvChannelsInSearch
+        get() = launcherDataStore.data.map { it.searchResults.tvChannelsInSearch }.distinctUntilChanged()
+
+    fun setTvChannelsInSearch(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(searchResults = it.searchResults.copy(tvChannelsInSearch = enabled))
+        }
+    }
+
     val favorites
         get() = launcherDataStore.data.map { it.favorites.favoritesEnabled }.distinctUntilChanged()
 

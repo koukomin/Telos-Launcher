@@ -2,6 +2,7 @@ package de.mm20.launcher2.comms.media.video.trakt
 
 import android.content.Context
 import de.mm20.launcher2.comms.media.video.ParsedName
+import de.mm20.launcher2.comms.media.video.VideoMetadata
 import de.mm20.launcher2.comms.remote.SecretBox
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -51,7 +52,7 @@ object Trakt {
             accessToken = SecretBox.decrypt(p.getString("access", "").orEmpty()),
             refreshToken = SecretBox.decrypt(p.getString("refresh", "").orEmpty()),
             expiresAtSeconds = p.getLong("expires", 0),
-            enabled = p.getBoolean("enabled", true),
+            enabled = p.getBoolean("enabled", false),
         )
     }
 
@@ -67,7 +68,7 @@ object Trakt {
     }
 
     fun signOut(context: Context) {
-        prefs(context).edit().remove("access").remove("refresh").remove("expires").remove("watched").apply()
+        prefs(context).edit().remove("access").remove("refresh").remove("expires").remove("watched").remove("queue").apply()
         watchedCache = null
     }
 
@@ -115,6 +116,66 @@ object Trakt {
         }
     }
 
+    // ---- sign in with the browser (authorization code flow) ----
+
+    /** The redirect address the user enters in their Trakt application. */
+    const val REDIRECT_URI = "telos-trakt://callback"
+    private const val PENDING_MS = 10 * 60 * 1000L
+
+    sealed class WebResult {
+        object Connected : WebResult()
+        object Denied : WebResult()
+        object StateMismatch : WebResult()
+        object Expired : WebResult()
+        object Failed : WebResult()
+    }
+
+    /**
+     * Stores a fresh random state (encrypted, valid for 10 minutes, so it survives the app being
+     * killed while the browser is open) and returns the address to open in the browser.
+     */
+    fun beginWebLogin(context: Context, clientId: String): String {
+        val bytes = ByteArray(32).also { java.security.SecureRandom().nextBytes(it) }
+        val state = bytes.joinToString("") { "%02x".format(it) }
+        prefs(context).edit()
+            .putString("pending_state", SecretBox.encrypt(state))
+            .putLong("pending_until", System.currentTimeMillis() + PENDING_MS)
+            .apply()
+        return "https://trakt.tv/oauth/authorize?response_type=code" +
+            "&client_id=" + java.net.URLEncoder.encode(clientId.trim(), "UTF-8") +
+            "&redirect_uri=" + java.net.URLEncoder.encode(REDIRECT_URI, "UTF-8") +
+            "&state=" + state
+    }
+
+    /** Handles the redirect from trakt.tv. Blocking: call it off the main thread. */
+    fun finishWebLogin(context: Context, code: String?, state: String?, error: String?): WebResult {
+        val p = prefs(context)
+        val stored = SecretBox.decrypt(p.getString("pending_state", "").orEmpty())
+        val until = p.getLong("pending_until", 0)
+        if (stored.isBlank()) return WebResult.StateMismatch
+        // missing or different state: rejected, the pending login stays (a stranger cannot cancel it)
+        if (state.isNullOrEmpty() ||
+            !java.security.MessageDigest.isEqual(stored.toByteArray(), state.toByteArray())
+        ) return WebResult.StateMismatch
+        // the state matches: it is single use from here on
+        p.edit().remove("pending_state").remove("pending_until").apply()
+        if (System.currentTimeMillis() > until) return WebResult.Expired
+        if (error != null) return if (error == "access_denied") WebResult.Denied else WebResult.Failed
+        if (code.isNullOrBlank()) return WebResult.Failed
+        val l = login(context)
+        if (l.clientId.isBlank() || l.clientSecret.isBlank()) return WebResult.Failed
+        val r = runCatching {
+            request(
+                context, "POST", "/oauth/token",
+                JSONObject().put("code", code).put("client_id", l.clientId).put("client_secret", l.clientSecret)
+                    .put("redirect_uri", REDIRECT_URI).put("grant_type", "authorization_code"),
+                l.clientId,
+            )
+        }.getOrNull()
+        if (r == null || r.code != 200) return WebResult.Failed
+        return runCatching { saveTokens(context, JSONObject(r.body)); WebResult.Connected }.getOrDefault(WebResult.Failed)
+    }
+
     // ---- sign in with the device code ----
 
     suspend fun startDeviceLogin(clientId: String): TraktDeviceCode = withContext(Dispatchers.IO) {
@@ -146,7 +207,7 @@ object Trakt {
             }
             when (r.code) {
                 200 -> {
-                    saveTokens(context, JSONObject(r.body))
+                    withContext(Dispatchers.IO) { saveTokens(context, JSONObject(r.body)) }
                     return
                 }
                 400 -> Unit // still waiting
@@ -180,31 +241,123 @@ object Trakt {
 
     // ---- scrobbling ----
 
-    private fun media(parsed: ParsedName): JSONObject {
+    /** Only what the library recognises as an episode (show, season, number) or a movie (title and year) is reported. */
+    fun isRecognized(parsed: ParsedName): Boolean {
+        if (parsed.title.length < 2) return false
+        return if (parsed.isEpisode) true else parsed.year != null
+    }
+
+    private fun media(context: Context, parsed: ParsedName): JSONObject {
+        // the TMDB id is added when the library looked this title up already (no network here)
+        val tmdb = runCatching {
+            VideoMetadata.cached(context, parsed.isEpisode, parsed.title, if (parsed.isEpisode) null else parsed.year, true)?.tmdbId
+        }.getOrNull()?.takeIf { it > 0 }
+        fun ids() = JSONObject().put("tmdb", tmdb)
         return if (parsed.isEpisode) {
             JSONObject()
-                .put("show", JSONObject().put("title", parsed.title))
+                .put("show", JSONObject().put("title", parsed.title).apply { if (tmdb != null) put("ids", ids()) })
                 .put("episode", JSONObject().put("season", parsed.season).put("number", parsed.episode))
         } else {
             JSONObject().put(
                 "movie",
-                JSONObject().put("title", parsed.title).apply { parsed.year?.let { put("year", it) } },
+                JSONObject().put("title", parsed.title).apply {
+                    parsed.year?.let { put("year", it) }
+                    if (tmdb != null) put("ids", ids())
+                },
             )
         }
     }
 
-    /** action: start, pause or stop. Trakt marks the title as watched when it is stopped at 80 % or more. */
+    /**
+     * action: start, pause or stop. Trakt marks the title as watched when it is stopped at 80 % or more.
+     * A stop at 80 % or more that cannot be delivered is kept in a small queue and sent later.
+     * Videos that are not recognised as a movie or an episode are never sent.
+     */
     suspend fun scrobble(context: Context, action: String, parsed: ParsedName, progressPercent: Float): Boolean =
         withContext(Dispatchers.IO) {
             val l = login(context)
-            if (!l.enabled || !l.connected || parsed.title.isBlank()) return@withContext false
+            if (!l.enabled || !l.connected || !isRecognized(parsed)) return@withContext false
             val token = token(context) ?: return@withContext false
-            val body = media(parsed).put("progress", progressPercent.coerceIn(0f, 100f).toDouble())
+            val media = media(context, parsed)
+            val body = JSONObject(media.toString()).put("progress", progressPercent.coerceIn(0f, 100f).toDouble())
             val r = runCatching { request(context, "POST", "/scrobble/$action", body, l.clientId, token) }.getOrNull()
-            val ok = r != null && r.code in 200..299
+            // 409: Trakt already has this scrobble, nothing to retry
+            val ok = r != null && (r.code in 200..299 || r.code == 409)
             if (ok && action == "stop" && progressPercent >= 80f) markWatchedLocally(context, parsed)
+            if (action == "stop" && progressPercent >= 80f) {
+                if (!ok && (r == null || r.code >= 500 || r.code == 429 || r.code == 401)) {
+                    enqueue(context, media)
+                } else if (ok) {
+                    flushQueue(context)
+                }
+            }
             ok
         }
+
+    // ---- queue of stops that could not be sent (offline) ----
+
+    private const val MAX_QUEUE = 50
+
+    @Synchronized
+    private fun readQueue(context: Context): JSONArray =
+        runCatching { JSONArray(prefs(context).getString("queue", "[]")) }.getOrDefault(JSONArray())
+
+    @Synchronized
+    private fun writeQueue(context: Context, a: JSONArray) {
+        prefs(context).edit().putString("queue", a.toString()).apply()
+    }
+
+    private fun iso(ms: Long): String =
+        java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.000'Z'", java.util.Locale.US)
+            .apply { timeZone = java.util.TimeZone.getTimeZone("UTC") }.format(java.util.Date(ms))
+
+    @Synchronized
+    private fun enqueue(context: Context, media: JSONObject) {
+        val old = readQueue(context)
+        val out = JSONArray()
+        val start = (old.length() - (MAX_QUEUE - 1)).coerceAtLeast(0)
+        for (i in start until old.length()) out.put(old.get(i))
+        out.put(JSONObject().put("media", media).put("watched_at", iso(System.currentTimeMillis())))
+        writeQueue(context, out)
+    }
+
+    fun queueSize(context: Context): Int = readQueue(context).length()
+
+    fun clearQueue(context: Context) = writeQueue(context, JSONArray())
+
+    /** Sends the kept stops as history entries (with the time they were watched). Stops at the first failure. */
+    suspend fun flushQueue(context: Context) = withContext(Dispatchers.IO) {
+        val l = login(context)
+        if (!l.connected) return@withContext
+        val queue = readQueue(context)
+        if (queue.length() == 0) return@withContext
+        val token = token(context) ?: return@withContext
+        var sent = 0
+        for (i in 0 until queue.length()) {
+            val entry = queue.optJSONObject(i)
+            val media = entry?.optJSONObject("media")
+            if (entry == null || media == null) { sent++; continue }
+            val at = entry.optString("watched_at")
+            val body = JSONObject()
+            val movie = media.optJSONObject("movie")
+            if (movie != null) {
+                body.put("movies", JSONArray().put(JSONObject(movie.toString()).put("watched_at", at)))
+            } else {
+                val show = media.optJSONObject("show") ?: run { sent++; continue }
+                val ep = media.optJSONObject("episode") ?: run { sent++; continue }
+                val season = JSONObject().put("number", ep.optInt("season"))
+                    .put("episodes", JSONArray().put(JSONObject().put("number", ep.optInt("number")).put("watched_at", at)))
+                body.put("shows", JSONArray().put(JSONObject(show.toString()).put("seasons", JSONArray().put(season))))
+            }
+            val r = runCatching { request(context, "POST", "/sync/history", body, l.clientId, token) }.getOrNull()
+            if (r != null && (r.code in 200..299 || r.code in 400..499 && r.code != 401 && r.code != 429)) sent++ else break
+        }
+        if (sent > 0) {
+            val rest = JSONArray()
+            for (i in sent until queue.length()) rest.put(queue.get(i))
+            writeQueue(context, rest)
+        }
+    }
 
     // ---- watched marks ----
 

@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">تُرسَل عناوين المقاطع وأسماء الفنانين إلى الخدمة التي تختارها، وفقط أثناء تسجيل الدخول إلى خدمة وتشغيلها. لا يُرسَل أي شيء قبل ذلك.</string>
+    <string name="au7_scrobble_what">ما سيتم تسجيله (Scrobble)</string>
+    <string name="au7_scrobble_music_title">تسجيل الموسيقى (Scrobble)</string>
+    <string name="au7_scrobble_music_summary">الأغاني التي تُشغَّل في Telos Music، بعد نصف الأغنية أو 4 دقائق</string>
+    <string name="au7_scrobble_radio_title">تسجيل الراديو (Scrobble)</string>
+    <string name="au7_scrobble_radio_summary">المقطع الحالي لمحطة، بعد الاستماع إليه لمدة دقيقة. يعمل فقط مع المحطات التي تعلن عن المقطع.</string>
+    <string name="au7_scrobble_status_active">جارٍ الإرسال إلى %1$s</string>
+    <string name="au7_scrobble_status_no_service">لا يُرسَل أي شيء: لا توجد خدمة مسجَّل الدخول إليها ومُشغَّلة</string>
+    <string name="au7_scrobble_status_no_source">لا يُرسَل أي شيء: فعِّل تسجيل الموسيقى أو الراديو</string>
+    <string name="au7_scrobble_sign_in">اختبار الاتصال وتسجيل الدخول</string>
+    <string name="au7_scrobble_lb_ok">الرمز المميز صالح لـ %1$s</string>
+    <string name="au7_scrobble_https">يجب أن يبدأ عنوان الخادم بـ https:// (يُسمح بـ http فقط لخادم في شبكتك الخاصة)</string>
+    <string name="au7_scrobble_switch_on">قيد التشغيل</string>
+    <string name="au7_scrobble_queue">قائمة الانتظار</string>
+    <string name="au7_scrobble_queue_count">%1$d من عمليات التسجيل (Scrobble) في انتظار الإرسال</string>
+    <string name="au7_scrobble_queue_empty">لا توجد عمليات تسجيل في الانتظار</string>
+    <string name="au7_scrobble_queue_clear">مسح قائمة الانتظار</string>
+    <string name="au7_scrobble_queue_cleared">تم مسح قائمة الانتظار</string>
+    <string name="au7_scrobble_settings_summary">Last.fm وLibre.fm وListenBrainz لـ Telos Music وTelos Radio</string>
+    <string name="au7_trakt_open_settings">تسجيل Trakt (Scrobble)</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">يتطلب Trakt تطبيقًا خاصًا بك. سجِّل الدخول إلى trakt.tv، وافتح trakt.tv/oauth/applications، واختر New Application، وأدخل أي اسم وعنوان إعادة التوجيه urn:ietf:wg:oauth:2.0:oob، ثم احفظه وأدخل هنا client id وclient secret الخاصين به.</string>
+    <string name="au7_trakt_privacy">أثناء تشغيل التسجيل، تُرسَل إلى Trakt عناوين الأفلام والحلقات التي تشاهدها ومدى تقدمك فيها. تُرسَل فقط مقاطع الفيديو التي يتم التعرف عليها كفيلم أو حلقة.</string>
+    <string name="au7_trakt_signed_in">تم تسجيل الدخول إلى Trakt</string>
+    <string name="au7_trakt_switch">التسجيل (Scrobble) في Trakt</string>
+    <string name="au7_trakt_queue">%1$d من عمليات التسجيل (Scrobble) في انتظار الإرسال</string>
+    <string name="au7_trakt_clear_queue">مسح قائمة الانتظار</string>
+    <string name="au7_trakt_sign_in">تسجيل الدخول</string>
+    <string name="au7_trakt_sign_out">تسجيل الخروج</string>
+    <string name="au7_trakt_copy">نسخ الرمز</string>
+    <string name="au7_trakt_waiting">في انتظار إدخالك الرمز في %1$s…</string>
+    <string name="au7_vidfolders_tab_other">أخرى</string>
+    <string name="au7_vidfolders_no_other">تم التعرف على جميع مقاطع الفيديو كأفلام أو حلقات</string>
+    <string name="au7_vidfolders_season">الموسم %1$d</string>
+    <string name="au7_vidfolders_action">التنظيم في مجلدي Movies وSeries</string>
+    <string name="au7_vidfolders_title">تنظيم ملفات الفيديو</string>
+    <string name="au7_vidfolders_unsupported">يتطلب نقل الملفات Android 11 أو أحدث.</string>
+    <string name="au7_vidfolders_nothing">لا يوجد ما يمكن تنظيمه. يتم نقل الأفلام والحلقات المتعرَّف عليها فقط في مجلد Movies أو Download.</string>
+    <string name="au7_vidfolders_confirm">سيقوم Telos بنقل %1$d من الأفلام إلى Movies/Movies/Title (Year) و%2$d من الحلقات إلى Movies/Series/Show/Season NN. يتم نقل الملفات فقط، ولا تُحذف ولا تتغير أبدًا، ويُحتفظ بتقدم المشاهدة. لا تُنقل ملفات الترجمة المجاورة لمقاطع الفيديو. سيطلب Android إذنًا مرة أخرى لتغيير هذه الملفات. أمثلة:</string>
+    <string name="au7_vidfolders_move">نقل الملفات</string>
+    <string name="au7_vidfolders_done">تم نقل %1$d من مقاطع الفيديو</string>
+    <string name="au7_vidfolders_partial">تم نقل %1$d من مقاطع الفيديو، وتعذر نقل %2$d</string>
+    <string name="au7_vidfolders_failed">تعذر نقل الملفات</string>
+</resources>

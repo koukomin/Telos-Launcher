@@ -51,6 +51,20 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         searchUiSettings.setFavorites(favorites)
     }
 
+    val radioStationsInSearch = searchUiSettings.radioStationsInSearch
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setRadioStationsInSearch(enabled: Boolean) {
+        searchUiSettings.setRadioStationsInSearch(enabled)
+    }
+
+    val tvChannelsInSearch = searchUiSettings.tvChannelsInSearch
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setTvChannelsInSearch(enabled: Boolean) {
+        searchUiSettings.setTvChannelsInSearch(enabled)
+    }
+
     val allApps = searchUiSettings.allApps
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 

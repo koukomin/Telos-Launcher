@@ -34,6 +34,7 @@ nextlib = "1.7.1-0.9.0"
 # Careful, 2.10.0 seems to require some fixes, or jobs aren't executed
 androidx-work = "2.11.2"
 androidx-browser = "1.10.0"
+androidx-webkit = "1.14.0"
 androidx-palette = "1.0.0"
 androidx-room = "2.8.4"
 androidx-constraint-layout = "1.1.1"
@@ -114,6 +115,7 @@ androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "and
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
 androidx-work = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "androidx-work" }
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "androidx-browser" }
+androidx-webkit = { group = "androidx.webkit", name = "webkit", version.ref = "androidx-webkit" }
 androidx-palette = { group = "androidx.palette", name = "palette", version.ref = "androidx-palette" }
 
 androidx-media3-exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "media3" }

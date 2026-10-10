@@ -217,8 +217,16 @@ These settings apply to the embedded browser only, not to Custom Tabs (Settings 
 - **User agent:** Default (mobile), Desktop (a fixed desktop Chrome string, which can become outdated over time) or
   Custom (printable ASCII only, up to 512 characters).
 - **Accept cookies** (on by default) and **Accept third-party cookies** (off by default; unavailable while cookies are off).
-- **Clear cookies and site data** signs you out of all web apps. Cookie policy and clearing are process-wide, so they
-  also affect other Telos pages that use a WebView.
+- **Clear cookies and site data** signs you out of all web apps and clears every web app's storage.
+- **Per web app:** in a web app's edit sheet, below the ad blocker, **Cookies** and **Third-party cookies** can be set to
+  *Use global setting*, *Accept* or *Block*, and **Clear cookies and site data of this web app** wipes only that web app.
+  Each web app has its own cookies and site storage (WebView profiles), so one web app cannot read another's logins.
+  Deleting a web app deletes its data. If the installed WebView does not support profiles, storage is shared, the
+  per-web-app cookie modes are ignored and the sheet says so. Web apps created before this update start with empty
+  storage, so sign in again once. Custom Tabs web apps are not affected. Cookies are never part of backups.
+- **Several accounts of one site:** web apps may share the same URL (for example several Facebook logins), each with its own
+  isolated storage. In Settings > Web app shortcuts, the **Duplicate** button on a web app clones it (same URL and
+  options, copied custom icon, same folder, name with " 2" added) with a new empty profile.
 
 ### Block lists
 

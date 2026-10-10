@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au12_tvsearch_pref_title">TV channels</string>
+    <string name="au12_tvsearch_pref_summary">Show your favorite, custom and recently watched TV channels that match the search. A tap starts the channel in Telos Media.</string>
+    <string name="au12_tvsearch_badge_tv">TV</string>
+    <string name="au12_tvsearch_badge_radio">Radio</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt vyžaduje vlastnú aplikáciu. Prihláste sa na trakt.tv, otvorte trakt.tv/oauth/applications, vyberte New Application, zadajte ľubovoľný názov a ako adresu presmerovania zadajte presne adresu zobrazenú nižšie. Uložte ju, potom sem zadajte jej client id a client secret a ťuknite na Prihlásiť sa v prehliadači. Prihlásenie a schválenie prebieha priamo na trakt.tv; Telos nikdy nevidí vaše heslo k Trakt.</string>
+    <string name="au8_traktweb_redirect_label">Adresa presmerovania pre vašu aplikáciu Trakt</string>
+    <string name="au8_traktweb_copy_redirect">Kopírovať adresu</string>
+    <string name="au8_traktweb_sign_in_browser">Prihlásiť sa v prehliadači</string>
+    <string name="au8_traktweb_use_code">Použiť namiesto toho kód</string>
+    <string name="au8_traktweb_waiting_browser">Čaká sa na schválenie v prehliadači…</string>
+    <string name="au8_traktweb_denied">Trakt prihlásenie zamietol</string>
+    <string name="au8_traktweb_state_mismatch">Odpoveď prihlásenia nezodpovedala tejto požiadavke a bola ignorovaná</string>
+    <string name="au8_traktweb_expired">Prihlásenie trvalo dlhšie ako 10 minút. Skúste to znova</string>
+    <string name="au8_traktweb_no_browser">Nenašiel sa prehliadač na otvorenie trakt.tv</string>
+</resources>

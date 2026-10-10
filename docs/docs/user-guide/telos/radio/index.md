@@ -1,5 +1,7 @@
 # Telos Radio
 
+
+Favorite stations can also be played straight from launcher search: switch on **Radio stations** in Settings > Search, then tap a matching result to play it with the same player and notification (tap again to pause). Station rows here and in search have a round play/pause button with a loading ring while the stream starts; live streams are paused, not stopped, and stations with the same name are all listed, told apart by logo and a host/type line.
 Internet radio with your own station collection. Its behavior and logic follow the
 [Transistor](https://codeberg.org/y20k/transistor) project (compared with version 4.3.9). Transistor is MIT licensed
 and credited in the project's third-party notices.
@@ -207,3 +209,7 @@ you search for.
 The cellular network mode switcher in the [phone settings](../phone/calls#cellular-network-mode) is unrelated to
 internet radio.
 :::
+
+## Station grid, sharing and import
+
+The collection is a grid of station cards with filter chips (All, Recently played, Added by me, From Radio Browser) and a Recently played shelf. The playing station shows an equalizer and a card tinted from its logo (static with reduced animations). Long-press a card for **Share**, Rename or Remove. A shared station contains a `telos-radio://add` link: opening it in Telos shows "Add station X to Telos Radio?" with the name and address editable, and nothing is played or fetched before you confirm. Telos Radio also accepts shared stream and playlist links (`.m3u`, `.pls`, `.mp3`, `.aac`, `icy://`), http and https only. Backups include the optional last played time.

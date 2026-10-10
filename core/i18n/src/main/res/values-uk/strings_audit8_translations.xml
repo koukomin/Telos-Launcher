@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt потребує вашого власного застосунку. Увійдіть на trakt.tv, відкрийте trakt.tv/oauth/applications, виберіть New Application, введіть будь-яку назву та як адресу перенаправлення вкажіть точно ту адресу, що показана нижче. Збережіть його, потім введіть тут його ідентифікатор клієнта та секрет клієнта й торкніться Увійти через браузер. Вхід і підтвердження відбуваються на самому trakt.tv; Telos ніколи не бачить ваш пароль Trakt.</string>
+    <string name="au8_traktweb_redirect_label">Адреса перенаправлення для вашого застосунку Trakt</string>
+    <string name="au8_traktweb_copy_redirect">Копіювати адресу</string>
+    <string name="au8_traktweb_sign_in_browser">Увійти через браузер</string>
+    <string name="au8_traktweb_use_code">Натомість використати код</string>
+    <string name="au8_traktweb_waiting_browser">Очікуємо вашого підтвердження в браузері…</string>
+    <string name="au8_traktweb_denied">Trakt відхилив вхід</string>
+    <string name="au8_traktweb_state_mismatch">Відповідь на вхід не відповідала цьому запиту й була проігнорована</string>
+    <string name="au8_traktweb_expired">Вхід тривав довше 10 хвилин. Спробуйте ще раз</string>
+    <string name="au8_traktweb_no_browser">Не знайдено браузера для відкриття trakt.tv</string>
+</resources>

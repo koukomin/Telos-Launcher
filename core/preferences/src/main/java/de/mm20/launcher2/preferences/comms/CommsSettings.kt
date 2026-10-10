@@ -363,6 +363,14 @@ class CommsSettings internal constructor(
             data.comms.disabledVirtualApps.split(',').filter { it.isNotBlank() }.toSet()
         }
 
+    /** Telos Media: the space that was open last (music, radio or video) */
+    val mediaHubSpace
+        get() = dataStore.data.map { it.comms.mediaHubSpace }
+
+    fun setMediaHubSpace(space: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(mediaHubSpace = space)) }
+    }
+
     fun setVirtualAppEnabled(key: String, enabled: Boolean) {
         dataStore.update { data ->
             val current = data.comms.disabledVirtualApps.split(',').filter { it.isNotBlank() }.toMutableSet()

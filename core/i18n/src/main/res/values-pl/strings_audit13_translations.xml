@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Dodatkowe kanały greckie</string>
+    <string name="au13_tvextra_playlists_summary">Dodaje strumienie i kanały z publicznych list odtwarzania Free-TV i greektvm3u, ładowanych z GitHuba na to urządzenie po otwarciu TV. Używane tylko po wybraniu Grecji. Jeśli nie uda się ich załadować, nic nie jest wyświetlane.</string>
+    <string name="au13_tvextra_epg_title">Przewodnik programowy</string>
+    <string name="au13_tvextra_epg_summary">Pokazuje, co jest emitowane teraz i potem na kanałach greckich (przewodnik XMLTV z ext.greektv.app lub epgshare01.online, odświeżany najwyżej co 6 godzin). Używane tylko po wybraniu Grecji.</string>
+    <string name="au13_tvextra_marker">Dodatkowy</string>
+    <string name="au13_tvextra_marker_description">Ten kanał pochodzi z opcjonalnego dodatkowego źródła i może być mniej niezawodny</string>
+    <string name="au13_tvextraui_disclaimer_extra">W przypadku kanałów greckich Telos TV może korzystać także z opcjonalnych dodatkowych źródeł: publicznych list odtwarzania (raw.githubusercontent.com) i przewodnika programowego (ext.greektv.app, epgshare01.online). Łączy się z nimi tylko po wybraniu Grecji, gdy odpowiedni przełącznik jest włączony, i tylko gdy TV jest otwarte. Możesz je wyłączyć na liście krajów.</string>
+    <string name="au13_tvextraui_now_line">Teraz: %1$s</string>
+    <string name="au13_tvextraui_player_now">Teraz: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Następnie: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Ten kanał jest tymczasowo niedostępny</string>
+    <string name="au13_tvextraui_offline_hint">Wypróbowaliśmy wszystkie dostępne strumienie i sprawdziliśmy, czy jest zaktualizowana lista. Spróbuj ponownie później.</string>
+    <string name="au13_tvextraui_offline_back">Wstecz</string>
+    <string name="au13_tvextraui_static_description">Śnieżenie TV: brak sygnału</string>
+</resources>

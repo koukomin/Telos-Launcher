@@ -64,18 +64,22 @@ Tap **Lyrics** in the full player to replace the cover with the lyrics.
 
 ## Scrobbling
 
-Scrobbling reports what you listen to. Open the scrobble dialog with the button (a gear icon) in the top bar of the
-Music screen.
+Scrobbling reports what you listen to. Open the **Scrobbling** screen with the button (a gear icon) in the top bar of the
+Music screen, from the overflow menu of Telos Radio, or from Settings > Comms > Tools. The screen has separate switches
+**Scrobble music** (after an upgrade it is on only if a service was already active, otherwise off) and **Scrobble radio**
+(off), a status line, and the queue with **Clear queue**. Nothing is sent until a service is signed in and switched on.
+Track titles and artists go to the service you choose (opt-in network traffic). Redirects are not followed, and a
+ListenBrainz server must use https (http only for a server in your own network).
 
 | Service | What you enter | Notes |
 | --- | --- | --- |
-| [Last.fm](https://www.last.fm) | Your own API key and shared secret (free, from `last.fm/api/account/create`), user name, password | The password is only used to sign in and is not stored. A session key is kept instead |
+| [Last.fm](https://www.last.fm) | Your own API key and shared secret (free, from `last.fm/api/account/create`); **Sign in with browser** (set the Callback URL of your Last.fm API account to `telos-lastfm://callback`, shown in the app with a Copy button) or **Use password instead** with user name and password | The password is only used to sign in and is not stored. A session key is kept instead |
 | [Libre.fm](https://libre.fm) | User name and password | Only an MD5 hash of the password is stored, because the protocol needs it |
 | [ListenBrainz](https://listenbrainz.org) | User token from your profile page, optional server address | The server defaults to `https://api.listenbrainz.org`. Use your own server for self-hosted instances |
 
 ### Connect a service
 
-1. Open the scrobble dialog.
+1. Open the Scrobbling screen.
 2. Fill in the block of the service and tap **Connect Last.fm**, **Connect Libre.fm** or **Save ListenBrainz**.
 3. The status line says "Last.fm connected", "Libre.fm connected" or "ListenBrainz saved". A failure shows the
    reason, for example "login failed".
@@ -95,6 +99,14 @@ Music screen.
 The scrobble carries the artist, title, album, duration and the **time the song started** (computed from now minus
 the time played).
 
+### Telos Radio
+
+With **Scrobble radio** on, the current track of a station is reported when the stream announces it (ICY `StreamTitle` or
+the stream's artist and title; "Artist - Title" is split). "Now playing" is sent when a track starts and the scrobble after
+**60 seconds** of listening. Empty titles, titles equal to the station name and titles without an artist are ignored, and the
+same track is not scrobbled twice within 10 minutes. Stations that do not announce the track never scrobble. Libre.fm
+receives radio scrobbles with source `R` and no length.
+
 ### Offline queue
 
 - If a scrobble cannot be sent (for example no network), it is kept in a queue of up to **500** entries.
@@ -112,10 +124,10 @@ screen off.
 
 | Setting | Where | Default | Effect |
 | --- | --- | --- | --- |
-| Last.fm on or off | Scrobble dialog | off | Sends to Last.fm |
-| Libre.fm on or off | Scrobble dialog | off | Sends to Libre.fm (`turtle.libre.fm`) |
-| ListenBrainz on or off | Scrobble dialog | off | Sends to the ListenBrainz server |
-| ListenBrainz server | Scrobble dialog | `https://api.listenbrainz.org` | Trailing slashes are removed |
+| Last.fm on or off | Scrobbling screen | off | Sends to Last.fm |
+| Libre.fm on or off | Scrobbling screen | off | Sends to Libre.fm (`turtle.libre.fm`) |
+| ListenBrainz on or off | Scrobbling screen | off | Sends to the ListenBrainz server |
+| ListenBrainz server | Scrobbling screen | `https://api.listenbrainz.org` | Trailing slashes are removed |
 
 Secrets (shared secret, session key, password hash, token) are stored **encrypted with a Keystore key** on the
 device. The queue and the other fields are kept in the app's private preferences.
@@ -151,3 +163,7 @@ Nothing is sent when no service is connected and switched on.
 | "Could not save the tags" | The format is not supported by the tag library, or write permission was denied |
 | No lyrics | Check the title and artist tags and your network connection |
 | Lyrics line is out of sync | The lyrics are for another version of the song. Nothing can be adjusted in the app |
+
+### Last.fm browser sign-in
+
+Last.fm opens in the browser, you log in and approve there, and you return to Telos; only the session key and the user name are stored (encrypted), the password is never seen. Last.fm sends no verification value back, so the answer is accepted only within 10 minutes of tapping the button, and only once. During that window another app could send a forged callback; it could only link a token that was authorized for your own API key.

@@ -139,6 +139,8 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
     var userAgent by remember { mutableStateOf(with(de.mm20.launcher2.comms.media.video.VideoPrefs) { appContext.legacyUserAgent }) }
     var showNetwork by remember { mutableStateOf(false) }
     if (showNetwork) NetworkSourcesDialog { showNetwork = false }
+    var showTrakt by remember { mutableStateOf(false) }
+    if (showTrakt) TraktDialog { showTrakt = false }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -212,7 +214,9 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
                     Switch(checked = auto, onCheckedChange = { auto = it })
                 }
 
-                TraktSection()
+                TextButton(onClick = { showTrakt = true }, modifier = Modifier.padding(top = 8.dp)) {
+                    Text(stringResource(R.string.au7_trakt_open_settings))
+                }
 
                 Text(stringResource(R.string.vn_network_folders), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
                 TextButton(onClick = { showNetwork = true }) { Text(stringResource(R.string.vn_network_scan_title)) }
@@ -252,77 +256,4 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
 
 internal fun toast(context: Context, text: String) {
     Toast.makeText(context, text, Toast.LENGTH_LONG).show()
-}
-
-/** Trakt.tv sign in with the device code: create an app at trakt.tv/oauth/applications first. */
-@Composable
-private fun TraktSection() {
-    val context = LocalContext.current
-    val scope = androidx.compose.runtime.rememberCoroutineScope()
-    var login by remember { mutableStateOf(de.mm20.launcher2.comms.media.video.trakt.Trakt.login(context)) }
-    var clientId by remember { mutableStateOf(login.clientId) }
-    var secret by remember { mutableStateOf(login.clientSecret) }
-    var code by remember { mutableStateOf<de.mm20.launcher2.comms.media.video.trakt.TraktDeviceCode?>(null) }
-    var message by remember { mutableStateOf("") }
-
-    Text("Trakt.tv", style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
-    Text(
-        stringResource(R.string.hc_scrobbles_what_you_watch_marks_watched_v),
-        style = MaterialTheme.typography.bodySmall,
-        color = MaterialTheme.colorScheme.onSurfaceVariant,
-    )
-    if (login.connected) {
-        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 4.dp)) {
-            Text(stringResource(R.string.hc_connected_scrobbling), modifier = Modifier.weight(1f))
-            Switch(checked = login.enabled, onCheckedChange = {
-                de.mm20.launcher2.comms.media.video.trakt.Trakt.setEnabled(context, it)
-                login = de.mm20.launcher2.comms.media.video.trakt.Trakt.login(context)
-            })
-        }
-        TextButton(onClick = {
-            de.mm20.launcher2.comms.media.video.trakt.Trakt.signOut(context)
-            login = de.mm20.launcher2.comms.media.video.trakt.Trakt.login(context)
-        }) { Text(stringResource(R.string.hc_sign_out)) }
-    } else {
-        OutlinedTextField(clientId, { clientId = it }, label = { Text(stringResource(R.string.hc_client_id)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
-        OutlinedTextField(
-            secret, { secret = it }, label = { Text(stringResource(R.string.hc_client_secret)) }, singleLine = true,
-            visualTransformation = PasswordVisualTransformation(), modifier = Modifier.fillMaxWidth(),
-        )
-        val pending = code
-        if (pending == null) {
-            TextButton(enabled = clientId.isNotBlank() && secret.isNotBlank(), onClick = {
-                de.mm20.launcher2.comms.media.video.trakt.Trakt.saveApp(context, clientId, secret)
-                message = context.getString(R.string.au_video_trakt_contacting)
-                scope.launch {
-                    runCatching { de.mm20.launcher2.comms.media.video.trakt.Trakt.startDeviceLogin(clientId.trim()) }
-                        .onSuccess { c ->
-                            code = c
-                            message = ""
-                            runCatching {
-                                de.mm20.launcher2.comms.media.video.trakt.Trakt.finishDeviceLogin(context, clientId.trim(), secret.trim(), c)
-                            }.onSuccess {
-                                login = de.mm20.launcher2.comms.media.video.trakt.Trakt.login(context)
-                                message = context.getString(R.string.au_video_trakt_connected)
-                            }.onFailure { message = it.message ?: context.getString(R.string.au_video_trakt_signin_failed) }
-                            code = null
-                        }
-                        .onFailure { message = it.message ?: context.getString(R.string.au_video_trakt_unreachable) }
-                }
-            }) { Text(stringResource(R.string.hc_connect_trakt)) }
-        } else {
-            Text(
-                stringResource(R.string.au_video_trakt_open_and_enter, pending.verificationUrl),
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(top = 8.dp),
-            )
-            Text(pending.userCode, style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.primary)
-            TextButton(onClick = {
-                context.startActivity(
-                    Intent(Intent.ACTION_VIEW, android.net.Uri.parse(pending.verificationUrl)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                )
-            }) { Text(stringResource(R.string.hc_open_trakt_tv_activate)) }
-        }
-    }
-    if (message.isNotEmpty()) Text(message, style = MaterialTheme.typography.bodySmall)
 }

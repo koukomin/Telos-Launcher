@@ -49,6 +49,7 @@ class DownloadManager(
     val files: DownloadFiles,
     private val engines: List<DownloadEngine>,
     private val notifier: DownloadNotifier,
+    private val torrentProxy: TorrentProxyGate,
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private val jobs = ConcurrentHashMap<String, Job>()
@@ -73,6 +74,9 @@ class DownloadManager(
     private val _blockReason = MutableStateFlow<BlockReason?>(null)
     val blockReason: StateFlow<BlockReason?> = _blockReason
 
+    /** How torrents reach the internet; [TorrentRoute.WireguardBlocked] means torrents wait for Telos Network */
+    val torrentRoute: StateFlow<TorrentRoute> = torrentProxy.route
+
     /** True while the foreground service should run; the service stops itself when this turns false */
     private val _serviceWanted = MutableStateFlow(false)
     val serviceWanted: StateFlow<Boolean> = _serviceWanted
@@ -93,7 +97,7 @@ class DownloadManager(
         if (store.tasks.value.any { !it.state.isFinished }) monitor.start()
         scope.launch {
             merge(
-                store.tasks.map { }, settings.values.map { }, monitor.conditions.map { }, kicks,
+                store.tasks.map { }, settings.values.map { }, monitor.conditions.map { }, torrentProxy.route.map { }, kicks,
             ).collect { schedule() }
         }
     }
@@ -267,7 +271,8 @@ class DownloadManager(
         val c = monitor.conditions.value
         val now = System.currentTimeMillis()
         globalLimiter.bytesPerSecond = s.speedLimitKBps * 1024L
-        de.mm20.launcher2.comms.media.video.torrent.TorrentSession.setProxy(context, s.torrentProxy())
+        // torrents never start or keep running without the proxy that was chosen for them
+        val torrentsBlocked = torrentProxy.applyNow() is TorrentRoute.WireguardBlocked
 
         val clock = currentClock()
         val reason = QueueRules.blockReason(c, s.queue, clock)
@@ -279,7 +284,15 @@ class DownloadManager(
                 jobs[t.id]?.cancel()
             }
         } else {
-            for (t in QueueRules.pickNext(all, now, c, s.queue, clock) { task -> engines.any { it.supports(task) } }) startTask(t)
+            if (torrentsBlocked) {
+                for (t in all.filter { it.state.isActive && it.type == DownloadType.Torrent }) {
+                    stopTargets[t.id] = DownloadState.Queued
+                    jobs[t.id]?.cancel()
+                }
+            }
+            for (t in QueueRules.pickNext(all, now, c, s.queue, clock) { task ->
+                engines.any { it.supports(task) } && !(torrentsBlocked && task.type == DownloadType.Torrent)
+            }) startTask(t)
         }
 
         val after = store.tasks.value

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt vajab sinu enda rakendust. Logi sisse aadressil trakt.tv, ava trakt.tv/oauth/applications, vali New Application, sisesta suvaline nimi ja ümbersuunamisaadressiks täpselt allpool kuvatud aadress. Salvesta see, sisesta siia selle kliendi ID ja kliendisaladus ning puuduta Logi sisse brauseriga. Sisselogimine ja kinnitamine toimub trakt.tv enda lehel; Telos ei näe kunagi sinu Trakti parooli.</string>
+    <string name="au8_traktweb_redirect_label">Sinu Trakti rakenduse ümbersuunamisaadress</string>
+    <string name="au8_traktweb_copy_redirect">Kopeeri aadress</string>
+    <string name="au8_traktweb_sign_in_browser">Logi sisse brauseriga</string>
+    <string name="au8_traktweb_use_code">Kasuta selle asemel koodi</string>
+    <string name="au8_traktweb_waiting_browser">Ootan, et kinnitaksid brauseris…</string>
+    <string name="au8_traktweb_denied">Trakt lükkas sisselogimise tagasi</string>
+    <string name="au8_traktweb_state_mismatch">Sisselogimise vastus ei sobinud selle päringuga ja see jäeti tähelepanuta</string>
+    <string name="au8_traktweb_expired">Sisselogimine kestis üle 10 minuti. Proovi uuesti</string>
+    <string name="au8_traktweb_no_browser">trakt.tv avamiseks ei leitud brauserit</string>
+</resources>

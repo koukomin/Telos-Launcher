@@ -59,6 +59,7 @@ import java.util.concurrent.ConcurrentHashMap
 class TorrentDownloadEngine(
     private val context: Context,
     private val controller: TorrentController,
+    private val proxyGate: de.mm20.launcher2.downloads.TorrentProxyGate,
 ) : DownloadEngine {
 
     override fun supports(task: DownloadTask) = task.type == DownloadType.Torrent
@@ -66,10 +67,14 @@ class TorrentDownloadEngine(
     override suspend fun execute(task: DownloadTask, session: EngineSession) {
         // an incomplete proxy must not send the torrent around it
         val st = session.settings
-        if (st.proxyType != de.mm20.launcher2.downloads.ProxyType.None && (st.proxyHost.isBlank() || st.proxyPort !in 1..65535)) {
+        val wgChosen = st.torrentWgConfigId > 0
+        if (!wgChosen && st.proxyType != de.mm20.launcher2.downloads.ProxyType.None && (st.proxyHost.isBlank() || st.proxyPort !in 1..65535)) {
             throw DownloadException(ErrorKind.Validation, "The proxy settings are incomplete", false)
         }
-        TorrentSession.setProxy(context, st.torrentProxy())
+        // with a WireGuard proxy chosen the torrent waits (retries) until Telos Network provides it: no direct fallback
+        if (proxyGate.applyNow() is de.mm20.launcher2.downloads.TorrentRoute.WireguardBlocked) {
+            throw DownloadException(ErrorKind.Network, "The Telos Network WireGuard proxy is not available", true)
+        }
         val files = session.files
         val owner = "download:${task.id}"
         val meta = files.torrentMetaDir(task.id)

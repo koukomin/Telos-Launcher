@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Canales griegos adicionales</string>
+    <string name="au13_tvextra_playlists_summary">Añade streams y canales de las listas públicas Free-TV y greektvm3u, que se cargan desde GitHub en este dispositivo al abrir TV. Solo se usa cuando Grecia está seleccionada. Si no se pueden cargar, no se muestra nada.</string>
+    <string name="au13_tvextra_epg_title">Guía de programación</string>
+    <string name="au13_tvextra_epg_summary">Muestra qué se emite ahora y a continuación en los canales griegos (guía XMLTV de ext.greektv.app o epgshare01.online, actualizada como máximo cada 6 horas). Solo se usa cuando Grecia está seleccionada.</string>
+    <string name="au13_tvextra_marker">Extra</string>
+    <string name="au13_tvextra_marker_description">Este canal procede de una fuente adicional opcional y puede ser menos fiable</string>
+    <string name="au13_tvextraui_disclaimer_extra">Para los canales griegos, Telos TV también puede usar fuentes adicionales opcionales: listas públicas (raw.githubusercontent.com) y una guía de programación (ext.greektv.app, epgshare01.online). Solo se contactan cuando Grecia está seleccionada y el interruptor correspondiente está activado, y únicamente mientras TV está abierta. Puedes desactivarlas en la lista de países.</string>
+    <string name="au13_tvextraui_now_line">Ahora: %1$s</string>
+    <string name="au13_tvextraui_player_now">Ahora: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Después: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Este canal está temporalmente fuera de línea</string>
+    <string name="au13_tvextraui_offline_hint">Hemos probado todos los streams disponibles y buscado una lista actualizada. Inténtalo de nuevo más tarde.</string>
+    <string name="au13_tvextraui_offline_back">Atrás</string>
+    <string name="au13_tvextraui_static_description">Nieve de TV: sin señal</string>
+</resources>

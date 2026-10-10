@@ -15,6 +15,8 @@ data class ScrobbleTrack(
     val album: String,
     val durationSeconds: Int,
     val timestampSeconds: Long = System.currentTimeMillis() / 1000,
+    /** Name of the player that is reported to the service */
+    val player: String = "Telos Music",
 )
 
 /** Saved logins of the scrobbling services. Passwords are never stored, only session keys and tokens (encrypted). */
@@ -31,6 +33,10 @@ data class ScrobbleConfig(
     val listenbrainzEnabled: Boolean = false,
     val listenbrainzToken: String = "",
     val listenbrainzServer: String = "https://api.listenbrainz.org",
+    /** Scrobble what Telos Music plays */
+    val musicEnabled: Boolean = false,
+    /** Scrobble the current track of Telos Radio */
+    val radioEnabled: Boolean = false,
 ) {
     val any: Boolean get() = (lastfmEnabled && lastfmSession.isNotBlank()) ||
         (librefmEnabled && librefmPasswordHash.isNotBlank()) ||
@@ -45,7 +51,7 @@ object Scrobblers {
     fun load(context: Context): ScrobbleConfig {
         val p = prefs(context)
         fun secret(k: String) = SecretBox.decrypt(p.getString(k, "").orEmpty())
-        return ScrobbleConfig(
+        val c = ScrobbleConfig(
             lastfmEnabled = p.getBoolean("lastfm_on", false),
             lastfmKey = p.getString("lastfm_key", "").orEmpty(),
             lastfmSecret = secret("lastfm_secret"),
@@ -57,7 +63,10 @@ object Scrobblers {
             listenbrainzEnabled = p.getBoolean("lb_on", false),
             listenbrainzToken = secret("lb_token"),
             listenbrainzServer = p.getString("lb_server", "https://api.listenbrainz.org").orEmpty(),
+            radioEnabled = p.getBoolean("radio_on", false),
         )
+        // versions before the music switch scrobbled whenever a service was switched on
+        return c.copy(musicEnabled = if (p.contains("music_on")) p.getBoolean("music_on", false) else c.any)
     }
 
     fun save(context: Context, c: ScrobbleConfig) {
@@ -70,6 +79,8 @@ object Scrobblers {
             .putBoolean("librefm_on", c.librefmEnabled)
             .putString("librefm_user", c.librefmUser.trim())
             .putString("librefm_hash", SecretBox.encrypt(c.librefmPasswordHash))
+            .putBoolean("music_on", c.musicEnabled)
+            .putBoolean("radio_on", c.radioEnabled)
             .putBoolean("lb_on", c.listenbrainzEnabled)
             .putString("lb_token", SecretBox.encrypt(c.listenbrainzToken.trim()))
             .putString("lb_server", c.listenbrainzServer.trim().trimEnd('/').ifBlank { "https://api.listenbrainz.org" })
@@ -96,6 +107,9 @@ object Scrobblers {
         }.getOrDefault(JSONArray())
 
     @Synchronized
+    fun clearQueue(context: Context) = setQueue(context, JSONArray())
+
+    @Synchronized
     fun setQueue(context: Context, q: JSONArray) {
         val text = q.toString()
         val stored = runCatching { SecretBox.encrypt(text) }.getOrDefault(text)
@@ -111,8 +125,26 @@ object Scrobblers {
 
     internal fun enc(s: String): String = URLEncoder.encode(s, "UTF-8")
 
+    /**
+     * A server the user typed in must use https. Plain http is only accepted for a server in the own
+     * network (localhost, *.local, private addresses), e.g. a self-hosted ListenBrainz.
+     */
+    fun isAllowedServer(url: String): Boolean {
+        val u = runCatching { java.net.URI(url.trim()) }.getOrNull() ?: return false
+        val host = u.host?.lowercase() ?: return false
+        return when (u.scheme?.lowercase()) {
+            "https" -> true
+            "http" -> host == "localhost" || host.endsWith(".local") || host.endsWith(".lan") ||
+                Regex("""^(10\.|127\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)\d+\.\d+\.?\d*$""").matches(host) ||
+                host == "::1" || host == "[::1]"
+            else -> false
+        }
+    }
+
     internal fun post(url: String, form: String, headers: Map<String, String> = emptyMap(), json: Boolean = false): String {
         val c = URL(url).openConnection() as HttpURLConnection
+        // a redirect could send the login to another host
+        c.instanceFollowRedirects = false
         c.requestMethod = "POST"
         c.doOutput = true
         c.connectTimeout = 10000
@@ -131,12 +163,15 @@ object Scrobblers {
         }
     }
 
-    internal fun get(url: String): String {
+    internal fun get(url: String, headers: Map<String, String> = emptyMap()): String {
         val c = URL(url).openConnection() as HttpURLConnection
+        c.instanceFollowRedirects = false
+        headers.forEach { (k, v) -> c.setRequestProperty(k, v) }
         c.connectTimeout = 10000
         c.readTimeout = 15000
         c.setRequestProperty("User-Agent", "Telos Music/1.0 (https://github.com/koukomin/Telos-Launcher)")
         try {
+            if (c.responseCode !in 200..299) error("HTTP ${c.responseCode}")
             return c.inputStream.bufferedReader().use { it.readText() }
         } finally {
             c.disconnect()
@@ -173,6 +208,62 @@ class LastFm(private val key: String, private val secret: String, private val se
     }
 
     companion object {
+        /** The callback address the user enters in their Last.fm API account. */
+        const val CALLBACK_URI = "telos-lastfm://callback"
+        private const val PENDING_MS = 10 * 60 * 1000L
+
+        sealed class WebResult {
+            object Connected : WebResult()
+            object NotPending : WebResult()
+            object Expired : WebResult()
+            object Failed : WebResult()
+        }
+
+        /**
+         * Marks a web login as pending (encrypted, valid for 10 minutes, single use) and returns the
+         * address to open in the browser. Last.fm has no state parameter, so this marker is the only
+         * protection: a callback is ignored unless the user started a sign in a moment ago. It cannot
+         * tell the right callback from a forged one inside that window.
+         */
+        fun beginWebLogin(context: Context, key: String): String {
+            val bytes = ByteArray(16).also { java.security.SecureRandom().nextBytes(it) }
+            val marker = bytes.joinToString("") { "%02x".format(it) }
+            context.getSharedPreferences("scrobble", Context.MODE_PRIVATE).edit()
+                .putString("lf_pending", SecretBox.encrypt(marker))
+                .putLong("lf_pending_until", System.currentTimeMillis() + PENDING_MS)
+                .apply()
+            return "https://www.last.fm/api/auth/?api_key=" + Scrobblers.enc(key.trim()) +
+                "&cb=" + Scrobblers.enc(CALLBACK_URI)
+        }
+
+        /** Handles the redirect from last.fm. Blocking: call it off the main thread. */
+        fun finishWebLogin(context: Context, token: String?): WebResult {
+            val p = context.getSharedPreferences("scrobble", Context.MODE_PRIVATE)
+            val pending = SecretBox.decrypt(p.getString("lf_pending", "").orEmpty())
+            val until = p.getLong("lf_pending_until", 0)
+            if (pending.isBlank()) return WebResult.NotPending
+            // single use, whatever the callback contains
+            p.edit().remove("lf_pending").remove("lf_pending_until").apply()
+            if (System.currentTimeMillis() > until) return WebResult.Expired
+            if (token.isNullOrBlank() || token.length > 128) return WebResult.Failed
+            val c = Scrobblers.load(context)
+            if (c.lastfmKey.isBlank() || c.lastfmSecret.isBlank()) return WebResult.Failed
+            return runCatching {
+                val all = mapOf("method" to "auth.getSession", "token" to token, "api_key" to c.lastfmKey)
+                val sig = Scrobblers.md5(all.toSortedMap().entries.joinToString("") { it.key + it.value } + c.lastfmSecret)
+                val body = (all + ("api_sig" to sig) + ("format" to "json"))
+                    .entries.joinToString("&") { it.key + "=" + Scrobblers.enc(it.value) }
+                val session = JSONObject(Scrobblers.post("https://ws.audioscrobbler.com/2.0/", body)).optJSONObject("session")
+                val sk = session?.optString("key").orEmpty()
+                if (sk.isBlank()) return@runCatching WebResult.Failed
+                Scrobblers.save(
+                    context,
+                    Scrobblers.load(context).copy(lastfmSession = sk, lastfmUser = session?.optString("name").orEmpty(), lastfmEnabled = true),
+                )
+                WebResult.Connected
+            }.getOrDefault(WebResult.Failed)
+        }
+
         /** Returns the session key for a user name and password */
         fun login(key: String, secret: String, user: String, password: String): String {
             val params = mapOf("method" to "auth.getMobileSession", "username" to user, "password" to password)
@@ -207,9 +298,19 @@ class LibreFm(private val user: String, private val passwordHash: String) {
             "https://turtle.libre.fm/?hs=true&p=1.2&c=tst&v=1.0&u=${Scrobblers.enc(user)}&t=$ts&a=$token"
         ).lines()
         if (answer.firstOrNull()?.trim() != "OK" || answer.size < 4) throw IllegalStateException(answer.firstOrNull().orEmpty().takeIf { it.isNotBlank() })
+        val np = answer[2].trim()
+        val sub = answer[3].trim()
+        // the addresses come from the server's answer: only libre.fm itself
+        if (!isLibreFmUrl(np) || !isLibreFmUrl(sub)) throw IllegalStateException(null as String?)
         sessionId = answer[1].trim()
-        nowPlayingUrl = answer[2].trim()
-        submitUrl = answer[3].trim()
+        nowPlayingUrl = np
+        submitUrl = sub
+    }
+
+    private fun isLibreFmUrl(url: String): Boolean {
+        val u = runCatching { java.net.URI(url) }.getOrNull() ?: return false
+        val host = u.host?.lowercase() ?: return false
+        return u.scheme?.lowercase() in setOf("http", "https") && (host == "libre.fm" || host.endsWith(".libre.fm"))
     }
 
     private fun check(answer: String) {
@@ -224,7 +325,7 @@ class LibreFm(private val user: String, private val passwordHash: String) {
         check(
             Scrobblers.post(
                 nowPlayingUrl,
-                "s=$sessionId&a=${Scrobblers.enc(t.artist)}&t=${Scrobblers.enc(t.title)}&b=${Scrobblers.enc(t.album)}&l=${t.durationSeconds}&n=&m="
+                "s=$sessionId&a=${Scrobblers.enc(t.artist)}&t=${Scrobblers.enc(t.title)}&b=${Scrobblers.enc(t.album)}&l=${if (t.durationSeconds > 0) t.durationSeconds else ""}&n=&m="
             )
         )
     }
@@ -235,7 +336,7 @@ class LibreFm(private val user: String, private val passwordHash: String) {
             Scrobblers.post(
                 submitUrl,
                 "s=$sessionId&a[0]=${Scrobblers.enc(t.artist)}&t[0]=${Scrobblers.enc(t.title)}&i[0]=${t.timestampSeconds}" +
-                    "&o[0]=P&r[0]=&l[0]=${t.durationSeconds}&b[0]=${Scrobblers.enc(t.album)}&n[0]=&m[0]="
+                    "&o[0]=${if (t.durationSeconds > 0) "P" else "R"}&r[0]=&l[0]=${if (t.durationSeconds > 0) t.durationSeconds else ""}&b[0]=${Scrobblers.enc(t.album)}&n[0]=&m[0]="
             )
         )
     }
@@ -247,14 +348,23 @@ class ListenBrainz(private val token: String, private val server: String) {
         val meta = JSONObject()
             .put("artist_name", t.artist).put("track_name", t.title)
             .apply { if (t.album.isNotBlank()) put("release_name", t.album) }
-            .put("additional_info", JSONObject().put("media_player", "Telos Music").put("duration", t.durationSeconds))
+            .put("additional_info", JSONObject().put("media_player", t.player).apply { if (t.durationSeconds > 0) put("duration", t.durationSeconds) })
         val listen = JSONObject().put("track_metadata", meta)
         if (type == "single") listen.put("listened_at", t.timestampSeconds)
         return JSONObject().put("listen_type", type).put("payload", JSONArray().put(listen)).toString()
     }
 
     private fun send(type: String, t: ScrobbleTrack) {
+        if (!Scrobblers.isAllowedServer(server)) error("https")
         Scrobblers.post("$server/1/submit-listens", payload(type, t), mapOf("Authorization" to "Token $token"), json = true)
+    }
+
+    /** Checks the token and returns the user name it belongs to */
+    fun validate(): String {
+        if (!Scrobblers.isAllowedServer(server)) error("https")
+        val answer = JSONObject(Scrobblers.get("$server/1/validate-token", mapOf("Authorization" to "Token $token")))
+        if (!answer.optBoolean("valid")) throw IllegalStateException(answer.optString("message").takeIf { it.isNotBlank() })
+        return answer.optString("user_name")
     }
 
     fun nowPlaying(t: ScrobbleTrack) = send("playing_now", t)

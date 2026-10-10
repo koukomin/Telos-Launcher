@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au6_radio2_pause">暂停 %1$s</string>
+    <string name="au6_radio2_loading">正在加载 %1$s</string>
+    <string name="au6_webapps4_cookie_source_default">全部 / 默认</string>
+    <string name="au6_wgvideo_route_not_ready">无法启动该种子:它被设置为使用 Telos Network 的 WireGuard 隧道,但该隧道尚未就绪。请开启 Telos Network 和该隧道,或在 Telos Downloads 中更改设置。未发送任何数据。</string>
+</resources>

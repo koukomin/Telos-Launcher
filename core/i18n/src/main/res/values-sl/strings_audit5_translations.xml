@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">Radijske postaje</string>
+    <string name="au5_radiosearch_pref_summary">Prikažite priljubljene postaje Telos Radio v rezultatih iskanja in jih predvajajte z enim dotikom</string>
+    <string name="au5_radiosearch_play">Predvajaj %1$s</string>
+    <string name="au5_radiosearch_stop">Ustavi %1$s</string>
+    <string name="au5_webapps3_cookie_accept">Sprejmi</string>
+    <string name="au5_webapps3_cookie_block">Blokiraj</string>
+    <string name="au5_webapps3_cookies_isolated">Piškotki in podatki spletnih mest te spletne aplikacije so shranjeni ločeno od vseh drugih spletnih aplikacij. »Uporabi globalno« sledi nastavitvam piškotkov na zaslonu spletnih aplikacij.</string>
+    <string name="au5_webapps3_cookies_unsupported">Nameščeni WebView ne podpira ločenega shranjevanja za vsako spletno aplikacijo. Piškotki in podatki spletnih mest so skupni vsem spletnim aplikacijam, veljajo globalne nastavitve piškotkov.</string>
+    <string name="au5_webapps3_clear_this">Počisti piškotke in podatke spletnih mest te spletne aplikacije</string>
+    <string name="au5_webapps3_clear_done">Piškotki in podatki spletnih mest so počiščeni</string>
+    <string name="au5_wgtorrent_title">Torrenti prek WireGuard v Telos Network</string>
+    <string name="au5_wgtorrent_desc">Torrenti (Telos Downloads in Telos Video) se povezujejo samo prek izbranega posrednika WireGuard v Telos Network. Telos za to odpre lokalnega posrednika HTTP, ki obstaja le, dokler je Telos Network vklopljen in je posrednik povezan. Sicer torrenti čakajo in se nič ne povezuje neposredno. To za torrente nadomesti zgornjega posrednika. Posrednik HTTP prenaša samo TCP, zato sta DHT in uTP izklopljena. Medtem ko deluje, lahko lokalnega posrednika uporabljajo tudi druge aplikacije v tej napravi.</string>
+    <string name="au5_wgtorrent_none">Ni v uporabi</string>
+    <string name="au5_wgtorrent_no_configs">V Telos Network še ni posrednika WireGuard.</string>
+    <string name="au5_wgtorrent_summary">Torrenti prek WireGuard: %1$s</string>
+    <string name="au5_wgtorrent_removed">odstranjen posrednik</string>
+    <string name="au5_wgtorrent_status_ready">Torrenti uporabljajo posrednika WireGuard %1$s iz Telos Network.</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">Torrenti čakajo: Telos Network ne deluje.</string>
+    <string name="au5_wgtorrent_blocked_missing">Torrenti čakajo: izbrani posrednik WireGuard ne obstaja več.</string>
+    <string name="au5_wgtorrent_blocked_disabled">Torrenti čakajo: izbrani posrednik WireGuard je izklopljen.</string>
+    <string name="au5_wgtorrent_blocked_down">Torrenti čakajo: izbrani posrednik WireGuard ni povezan.</string>
+    <string name="au5_wgtorrent_blocked_error">Torrenti čakajo: Telos Network ni mogel odpreti lokalnega posrednika.</string>
+</resources>

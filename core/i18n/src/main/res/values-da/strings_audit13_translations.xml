@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Ekstra græske kanaler</string>
+    <string name="au13_tvextra_playlists_summary">Tilføjer streams og kanaler fra de offentlige afspilningslister Free-TV og greektvm3u, som hentes fra GitHub på denne enhed, når du åbner TV. Bruges kun, når Grækenland er valgt. Intet vises, hvis de ikke kan hentes.</string>
+    <string name="au13_tvextra_epg_title">Programoversigt</string>
+    <string name="au13_tvextra_epg_summary">Viser, hvad der sendes nu og næste gang på græske kanaler (XMLTV-oversigt fra ext.greektv.app eller epgshare01.online, opdateres højst hver 6. time). Bruges kun, når Grækenland er valgt.</string>
+    <string name="au13_tvextra_marker">Ekstra</string>
+    <string name="au13_tvextra_marker_description">Denne kanal kommer fra en valgfri ekstra kilde og er muligvis mindre pålidelig</string>
+    <string name="au13_tvextraui_disclaimer_extra">Til græske kanaler kan Telos TV også bruge valgfrie ekstra kilder: offentlige afspilningslister (raw.githubusercontent.com) og en programoversigt (ext.greektv.app, epgshare01.online). De kontaktes kun, når Grækenland er valgt, og den tilhørende kontakt er slået til, og kun mens TV er åbent. Du kan slå dem fra i landelisten.</string>
+    <string name="au13_tvextraui_now_line">Nu: %1$s</string>
+    <string name="au13_tvextraui_player_now">Nu: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Næste: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Denne kanal er midlertidigt offline</string>
+    <string name="au13_tvextraui_offline_hint">Vi har prøvet alle tilgængelige streams og søgt efter en opdateret liste. Prøv igen senere.</string>
+    <string name="au13_tvextraui_offline_back">Tilbage</string>
+    <string name="au13_tvextraui_static_description">TV-støj: intet signal</string>
+</resources>

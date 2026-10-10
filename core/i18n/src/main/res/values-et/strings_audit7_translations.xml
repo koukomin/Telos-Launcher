@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">Lugude pealkirjad ja esitajad saadetakse valitud teenusele ning ainult siis, kui mõni teenus on sisse logitud ja sisse lülitatud. Enne seda ei saadeta midagi.</string>
+    <string name="au7_scrobble_what">Mida scrobblida</string>
+    <string name="au7_scrobble_music_title">Scrobbli muusikat</string>
+    <string name="au7_scrobble_music_summary">Telos Musicus esitatud lood, kui on kuulatud pool lugu või 4 minutit</string>
+    <string name="au7_scrobble_radio_title">Scrobbli raadiot</string>
+    <string name="au7_scrobble_radio_summary">Jaama praegune lugu pärast ühte minutit kuulamist. Töötab ainult jaamadega, mis lugu teatavad.</string>
+    <string name="au7_scrobble_status_active">Saadetakse teenusele %1$s</string>
+    <string name="au7_scrobble_status_no_service">Midagi ei saadeta: ükski teenus pole sisse logitud ja sisse lülitatud</string>
+    <string name="au7_scrobble_status_no_source">Midagi ei saadeta: lülita sisse muusika või raadio scrobblimine</string>
+    <string name="au7_scrobble_sign_in">Testi ühendust ja logi sisse</string>
+    <string name="au7_scrobble_lb_ok">Luba on kehtiv kasutajale %1$s</string>
+    <string name="au7_scrobble_https">Serveri aadress peab algama https://-ga (http on lubatud ainult sinu enda võrgus oleva serveri jaoks)</string>
+    <string name="au7_scrobble_switch_on">Sees</string>
+    <string name="au7_scrobble_queue">Järjekord</string>
+    <string name="au7_scrobble_queue_count">%1$d scrobblit ootab saatmist</string>
+    <string name="au7_scrobble_queue_empty">Ükski scrobble ei oota</string>
+    <string name="au7_scrobble_queue_clear">Tühjenda järjekord</string>
+    <string name="au7_scrobble_queue_cleared">Järjekord tühjendatud</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm ja ListenBrainz rakenduste Telos Music ja Telos Radio jaoks</string>
+    <string name="au7_trakt_open_settings">Trakti scrobblimine</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt nõuab sinu enda rakendust. Logi sisse aadressil trakt.tv, ava trakt.tv/oauth/applications, vali New Application, sisesta suvaline nimi ja ümbersuunamisaadress urn:ietf:wg:oauth:2.0:oob, salvesta see ning sisesta siia selle client id ja client secret.</string>
+    <string name="au7_trakt_privacy">Kui scrobblimine on sees, saadetakse Traktile vaadatavate filmide ja episoodide pealkirjad ning see, kui kaugele jõudsid. Saadetakse ainult videod, mis tuvastatakse filmi või episoodina.</string>
+    <string name="au7_trakt_signed_in">Trakti sisse logitud</string>
+    <string name="au7_trakt_switch">Scrobbli Traktile</string>
+    <string name="au7_trakt_queue">%1$d scrobblit ootab saatmist</string>
+    <string name="au7_trakt_clear_queue">Tühjenda järjekord</string>
+    <string name="au7_trakt_sign_in">Logi sisse</string>
+    <string name="au7_trakt_sign_out">Logi välja</string>
+    <string name="au7_trakt_copy">Kopeeri kood</string>
+    <string name="au7_trakt_waiting">Ootan, kuni sisestad koodi aadressil %1$s…</string>
+    <string name="au7_vidfolders_tab_other">Muu</string>
+    <string name="au7_vidfolders_no_other">Kõik videod tuvastatakse filmide või episoodidena</string>
+    <string name="au7_vidfolders_season">%1$d. hooaeg</string>
+    <string name="au7_vidfolders_action">Korrasta kaustadesse Movies ja Series</string>
+    <string name="au7_vidfolders_title">Korrasta videofailid</string>
+    <string name="au7_vidfolders_unsupported">Failide teisaldamine nõuab Androidi versiooni 11 või uuemat.</string>
+    <string name="au7_vidfolders_nothing">Korrastada pole midagi. Teisaldatakse ainult kaustas Movies või Download olevad tuvastatud filmid ja episoodid.</string>
+    <string name="au7_vidfolders_confirm">Telos teisaldab %1$d filmi kausta Movies/Movies/Title (Year) ja %2$d episoodi kausta Movies/Series/Show/Season NN. Faile ainult teisaldatakse, neid ei kustutata ega muudeta ning vaatamise edenemine säilib. Videote kõrval olevaid subtiitrifaile ei teisaldata. Android küsib nende failide muutmiseks veel kord luba. Näited:</string>
+    <string name="au7_vidfolders_move">Teisalda failid</string>
+    <string name="au7_vidfolders_done">%1$d videot teisaldatud</string>
+    <string name="au7_vidfolders_partial">%1$d videot teisaldatud, %2$d ei õnnestunud teisaldada</string>
+    <string name="au7_vidfolders_failed">Faile ei õnnestunud teisaldada</string>
+</resources>

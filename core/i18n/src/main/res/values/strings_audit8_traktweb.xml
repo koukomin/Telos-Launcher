@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt needs an application of your own. Sign in at trakt.tv, open trakt.tv/oauth/applications, choose New Application, enter any name and, as the redirect address, exactly the address shown below. Save it, then enter its client id and client secret here and tap Sign in with browser. You log in and approve on trakt.tv itself; Telos never sees your Trakt password.</string>
+    <string name="au8_traktweb_redirect_label">Redirect address for your Trakt application</string>
+    <string name="au8_traktweb_copy_redirect">Copy address</string>
+    <string name="au8_traktweb_sign_in_browser">Sign in with browser</string>
+    <string name="au8_traktweb_use_code">Use a code instead</string>
+    <string name="au8_traktweb_waiting_browser">Waiting for you to approve in the browser…</string>
+    <string name="au8_traktweb_denied">Sign in was denied on Trakt</string>
+    <string name="au8_traktweb_state_mismatch">The sign in answer did not match this request and was ignored</string>
+    <string name="au8_traktweb_expired">The sign in took longer than 10 minutes. Try again</string>
+    <string name="au8_traktweb_no_browser">No browser found to open trakt.tv</string>
+</resources>

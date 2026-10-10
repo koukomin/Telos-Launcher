@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">Raadiojaamad</string>
+    <string name="au5_radiosearch_pref_summary">Kuva otsingutulemustes oma lemmikuid Telos Radio jaamu ja esita neid ühe puudutusega</string>
+    <string name="au5_radiosearch_play">Esita %1$s</string>
+    <string name="au5_radiosearch_stop">Peata %1$s</string>
+    <string name="au5_webapps3_cookie_accept">Nõustu</string>
+    <string name="au5_webapps3_cookie_block">Blokeeri</string>
+    <string name="au5_webapps3_cookies_isolated">Selle veebirakenduse küpsised ja saidiandmed salvestatakse eraldi kõigist teistest veebirakendustest. Valik „Kasuta üldist“ järgib veebirakenduste ekraani küpsiseseadeid.</string>
+    <string name="au5_webapps3_cookies_unsupported">Paigaldatud WebView ei toeta eraldi salvestust veebirakenduse kohta. Küpsised ja saidiandmed on kõigi veebirakenduste vahel jagatud ning kehtivad üldised küpsiseseaded.</string>
+    <string name="au5_webapps3_clear_this">Kustuta selle veebirakenduse küpsised ja saidiandmed</string>
+    <string name="au5_webapps3_clear_done">Küpsised ja saidiandmed kustutati</string>
+    <string name="au5_wgtorrent_title">Torrentid Telos Networki WireGuardi kaudu</string>
+    <string name="au5_wgtorrent_desc">Torrentid (Telos Downloads ja Telos Video) ühenduvad ainult Telos Networki valitud WireGuardi puhverserveri kaudu. Telos avab selleks kohaliku HTTP-puhverserveri, mis on olemas ainult siis, kui Telos Network on sisse lülitatud ja puhverserver ühendatud. Vastasel juhul torrentid ootavad ega ühendu otse. See asendab torrentide jaoks ülaltoodud puhverserveri. HTTP-puhverserver edastab ainult TCP-d, seega DHT ja uTP on välja lülitatud. Selle töötamise ajal võivad ka muud selle seadme rakendused kohalikku puhverserverit kasutada.</string>
+    <string name="au5_wgtorrent_none">Ei kasutata</string>
+    <string name="au5_wgtorrent_no_configs">Telos Networkis pole veel ühtegi WireGuardi puhverserverit.</string>
+    <string name="au5_wgtorrent_summary">Torrentid WireGuardi kaudu: %1$s</string>
+    <string name="au5_wgtorrent_removed">eemaldatud puhverserver</string>
+    <string name="au5_wgtorrent_status_ready">Torrentid kasutavad Telos Networki WireGuardi puhverserverit %1$s.</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">Torrentid ootavad: Telos Network ei tööta.</string>
+    <string name="au5_wgtorrent_blocked_missing">Torrentid ootavad: valitud WireGuardi puhverserverit enam pole.</string>
+    <string name="au5_wgtorrent_blocked_disabled">Torrentid ootavad: valitud WireGuardi puhverserver on välja lülitatud.</string>
+    <string name="au5_wgtorrent_blocked_down">Torrentid ootavad: valitud WireGuardi puhverserver pole ühendatud.</string>
+    <string name="au5_wgtorrent_blocked_error">Torrentid ootavad: Telos Network ei saanud kohalikku puhverserverit avada.</string>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au7_scrobble_note">Track titles and artists are sent to the service you choose, and only while a service is signed in and switched on. Nothing is sent before that.</string>
+    <string name="au7_scrobble_what">What to scrobble</string>
+    <string name="au7_scrobble_music_title">Scrobble music</string>
+    <string name="au7_scrobble_music_summary">Songs played in Telos Music, after half of the song or 4 minutes</string>
+    <string name="au7_scrobble_radio_title">Scrobble radio</string>
+    <string name="au7_scrobble_radio_summary">The current track of a station, after it was heard for one minute. Only works with stations that announce the track.</string>
+    <string name="au7_scrobble_status_active">Sending to %1$s</string>
+    <string name="au7_scrobble_status_no_service">Nothing is sent: no service is signed in and switched on</string>
+    <string name="au7_scrobble_status_no_source">Nothing is sent: switch on music or radio scrobbling</string>
+    <string name="au7_scrobble_sign_in">Test connection and sign in</string>
+    <string name="au7_scrobble_lb_ok">Token is valid for %1$s</string>
+    <string name="au7_scrobble_https">The server address must start with https:// (http is only allowed for a server in your own network)</string>
+    <string name="au7_scrobble_switch_on">Switched on</string>
+    <string name="au7_scrobble_queue">Queue</string>
+    <string name="au7_scrobble_queue_count">%1$d scrobbles are waiting to be sent</string>
+    <string name="au7_scrobble_queue_empty">No scrobbles are waiting</string>
+    <string name="au7_scrobble_queue_clear">Clear queue</string>
+    <string name="au7_scrobble_queue_cleared">Queue cleared</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm and ListenBrainz for Telos Music and Telos Radio</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt के लिए आपका अपना एप्लिकेशन ज़रूरी है। trakt.tv पर साइन इन करें, trakt.tv/oauth/applications खोलें, New Application चुनें, कोई भी नाम दर्ज करें और रीडायरेक्ट पते के रूप में नीचे दिखाया गया पता ज्यों का त्यों दर्ज करें। इसे सेव करें, फिर इसका क्लाइंट आईडी और क्लाइंट सीक्रेट यहाँ दर्ज करें और ब्राउज़र से साइन इन करें पर टैप करें। लॉग इन और अनुमति trakt.tv पर ही होती है; Telos आपका Trakt पासवर्ड कभी नहीं देखता।</string>
+    <string name="au8_traktweb_redirect_label">आपके Trakt एप्लिकेशन का रीडायरेक्ट पता</string>
+    <string name="au8_traktweb_copy_redirect">पता कॉपी करें</string>
+    <string name="au8_traktweb_sign_in_browser">ब्राउज़र से साइन इन करें</string>
+    <string name="au8_traktweb_use_code">इसके बजाय कोड का उपयोग करें</string>
+    <string name="au8_traktweb_waiting_browser">ब्राउज़र में आपकी स्वीकृति की प्रतीक्षा है…</string>
+    <string name="au8_traktweb_denied">Trakt पर साइन इन अस्वीकार कर दिया गया</string>
+    <string name="au8_traktweb_state_mismatch">साइन इन का उत्तर इस अनुरोध से मेल नहीं खाया और उसे अनदेखा कर दिया गया</string>
+    <string name="au8_traktweb_expired">साइन इन में 10 मिनट से अधिक समय लगा। फिर से कोशिश करें</string>
+    <string name="au8_traktweb_no_browser">trakt.tv खोलने के लिए कोई ब्राउज़र नहीं मिला</string>
+</resources>

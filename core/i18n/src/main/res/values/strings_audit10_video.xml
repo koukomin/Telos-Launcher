@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au10_video_chip_recent">Recent</string>
+    <string name="au10_video_chip_unwatched">Unwatched</string>
+    <string name="au10_video_recently_added">Recently added</string>
+    <string name="au10_video_remaining">%1$s left</string>
+    <string name="au10_video_nothing_here">Nothing here yet</string>
+    <string name="au10_video_share_large_title">Large video</string>
+    <string name="au10_video_share_large_message">This video is %1$s. A copy is made to share it. Continue?</string>
+    <string name="au10_video_share_large_confirm">Copy and share</string>
+    <string name="au10_video_share_remote_private">Videos on a network storage are private and cannot be shared as a link</string>
+    <string name="au10_video_share_failed">The video could not be shared</string>
+</resources>

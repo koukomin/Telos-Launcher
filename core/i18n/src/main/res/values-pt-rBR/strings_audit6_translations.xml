@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au6_radio2_pause">Pausar %1$s</string>
+    <string name="au6_radio2_loading">Carregando %1$s</string>
+    <string name="au6_webapps4_cookie_source_default">Todos / padrão</string>
+    <string name="au6_wgvideo_route_not_ready">Não foi possível iniciar o torrent: ele está configurado para usar um túnel WireGuard do Telos Network, e esse túnel não está pronto. Ative o Telos Network e o túnel, ou altere a configuração no Telos Downloads. Nada foi enviado.</string>
+</resources>

@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">Titlurile pieselor și artiștii sunt trimiși serviciului ales, doar cât timp un serviciu este conectat și activat. Înainte de aceasta nu se trimite nimic.</string>
+    <string name="au7_scrobble_what">Ce se scrobblează</string>
+    <string name="au7_scrobble_music_title">Scrobblează muzica</string>
+    <string name="au7_scrobble_music_summary">Piesele redate în Telos Music, după jumătate din piesă sau 4 minute</string>
+    <string name="au7_scrobble_radio_title">Scrobblează radioul</string>
+    <string name="au7_scrobble_radio_summary">Piesa curentă a unei stații, după un minut de ascultare. Funcționează doar cu stațiile care anunță piesa.</string>
+    <string name="au7_scrobble_status_active">Se trimite către %1$s</string>
+    <string name="au7_scrobble_status_no_service">Nu se trimite nimic: niciun serviciu nu este conectat și activat</string>
+    <string name="au7_scrobble_status_no_source">Nu se trimite nimic: activați scrobblingul pentru muzică sau radio</string>
+    <string name="au7_scrobble_sign_in">Testează conexiunea și conectează-te</string>
+    <string name="au7_scrobble_lb_ok">Tokenul este valid pentru %1$s</string>
+    <string name="au7_scrobble_https">Adresa serverului trebuie să înceapă cu https:// (http este permis doar pentru un server din propria rețea)</string>
+    <string name="au7_scrobble_switch_on">Activat</string>
+    <string name="au7_scrobble_queue">Coadă</string>
+    <string name="au7_scrobble_queue_count">%1$d scrobbleuri așteaptă să fie trimise</string>
+    <string name="au7_scrobble_queue_empty">Niciun scrobble nu așteaptă</string>
+    <string name="au7_scrobble_queue_clear">Golește coada</string>
+    <string name="au7_scrobble_queue_cleared">Coada a fost golită</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm și ListenBrainz pentru Telos Music și Telos Radio</string>
+    <string name="au7_trakt_open_settings">Scrobbling Trakt</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt necesită o aplicație proprie. Conectați-vă la trakt.tv, deschideți trakt.tv/oauth/applications, alegeți New Application, introduceți un nume oarecare și adresa de redirecționare urn:ietf:wg:oauth:2.0:oob, salvați și introduceți aici client id și client secret.</string>
+    <string name="au7_trakt_privacy">Cât timp scrobblingul este activ, titlurile filmelor și episoadelor pe care le urmăriți și punctul până la care ați ajuns sunt trimise către Trakt. Se trimit doar videoclipurile recunoscute ca film sau episod.</string>
+    <string name="au7_trakt_signed_in">Conectat la Trakt</string>
+    <string name="au7_trakt_switch">Scrobblează pe Trakt</string>
+    <string name="au7_trakt_queue">%1$d scrobbleuri așteaptă să fie trimise</string>
+    <string name="au7_trakt_clear_queue">Golește coada</string>
+    <string name="au7_trakt_sign_in">Conectare</string>
+    <string name="au7_trakt_sign_out">Deconectare</string>
+    <string name="au7_trakt_copy">Copiază codul</string>
+    <string name="au7_trakt_waiting">Se așteaptă introducerea codului la %1$s…</string>
+    <string name="au7_vidfolders_tab_other">Altele</string>
+    <string name="au7_vidfolders_no_other">Toate videoclipurile sunt recunoscute ca filme sau episoade</string>
+    <string name="au7_vidfolders_season">Sezonul %1$d</string>
+    <string name="au7_vidfolders_action">Organizează în folderele Movies și Series</string>
+    <string name="au7_vidfolders_title">Organizează fișierele video</string>
+    <string name="au7_vidfolders_unsupported">Mutarea fișierelor necesită Android 11 sau mai nou.</string>
+    <string name="au7_vidfolders_nothing">Nu este nimic de organizat. Sunt mutate doar filmele și episoadele recunoscute din folderul Movies sau Download.</string>
+    <string name="au7_vidfolders_confirm">Telos va muta %1$d filme în Movies/Movies/Title (Year) și %2$d episoade în Movies/Series/Show/Season NN. Fișierele sunt doar mutate, niciodată șterse sau modificate, iar progresul vizionării este păstrat. Fișierele de subtitrare de lângă videoclipuri nu sunt mutate. Android va cere încă o dată permisiunea de a modifica aceste fișiere. Exemple:</string>
+    <string name="au7_vidfolders_move">Mută fișierele</string>
+    <string name="au7_vidfolders_done">%1$d videoclipuri mutate</string>
+    <string name="au7_vidfolders_partial">%1$d videoclipuri mutate, %2$d nu au putut fi mutate</string>
+    <string name="au7_vidfolders_failed">Fișierele nu au putut fi mutate</string>
+</resources>

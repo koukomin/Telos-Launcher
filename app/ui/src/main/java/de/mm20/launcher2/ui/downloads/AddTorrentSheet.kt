@@ -156,7 +156,11 @@ internal fun AddTorrentSheet(initialText: String, manager: DownloadManager, onDi
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text(stringResource(R.string.dl_t_add_title), style = MaterialTheme.typography.titleLarge)
-            if (settings.proxyType != de.mm20.launcher2.downloads.ProxyType.None) {
+            val wgRoute by manager.torrentRoute.collectAsState()
+            val wgText = torrentWgStatusText(wgRoute)
+            if (wgText != null) {
+                Text(wgText, style = MaterialTheme.typography.bodyMedium)
+            } else if (settings.proxyType != de.mm20.launcher2.downloads.ProxyType.None) {
                 Text(
                     stringResource(if (settings.proxyType == de.mm20.launcher2.downloads.ProxyType.Http) R.string.au4_torrentproxy_note_http else R.string.au4_torrentproxy_note_socks),
                     style = MaterialTheme.typography.bodyMedium,

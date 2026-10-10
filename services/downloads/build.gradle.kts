@@ -60,6 +60,8 @@ dependencies {
     // The torrent engine runs in the one shared libtorrent session (TorrentSession in :services:comms)
     implementation(libs.libtorrent4j)
     implementation(project(":services:comms"))
+    // WireGuard proxies of Telos Network for torrents (TorrentProxyGate)
+    implementation(project(":services:network"))
 
     if (mediaRuntime) {
         implementation(libs.youtubedl.library)

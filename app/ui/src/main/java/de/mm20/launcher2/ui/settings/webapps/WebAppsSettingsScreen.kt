@@ -315,6 +315,12 @@ fun WebAppsSettingsScreen() {
                                     )
                                     Text(stringResource(R.string.preference_screen_web_apps_panel), style = MaterialTheme.typography.labelSmall)
                                 }
+                                IconButton(onClick = { viewModel.duplicate(shortcut) }) {
+                                    Icon(
+                                        painterResource(R.drawable.content_copy_24px),
+                                        contentDescription = stringResource(R.string.duplicate),
+                                    )
+                                }
                                 IconButton(onClick = { shortcutToDelete = shortcut }) {
                                     Icon(
                                         painterResource(R.drawable.delete_24px),
@@ -356,8 +362,8 @@ fun WebAppsSettingsScreen() {
     EditWebAppShortcutSheet(
         expanded = createShortcut,
         existing = null,
-        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode ->
-            viewModel.save(null, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode)
+        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode, cookieOptions ->
+            viewModel.save(null, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode, cookieOptions)
         },
         onDismiss = { viewModel.dismissDialogs() },
         onImportIcon = { uri, sizePx -> viewModel.importIcon(uri, sizePx) },
@@ -367,8 +373,8 @@ fun WebAppsSettingsScreen() {
     EditWebAppShortcutSheet(
         expanded = editShortcut != null,
         existing = editShortcut,
-        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode ->
-            viewModel.save(editShortcut, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode)
+        onSave = { label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode, cookieOptions ->
+            viewModel.save(editShortcut, label, url, iconUri, faviconUrl, rendererPackage, showInGrid, showInPanel, iconSource, customCss, notificationsEnabled, groupId, adBlockMode, cookieOptions)
         },
         onDismiss = { viewModel.dismissDialogs() },
         onImportIcon = { uri, sizePx -> viewModel.importIcon(uri, sizePx) },

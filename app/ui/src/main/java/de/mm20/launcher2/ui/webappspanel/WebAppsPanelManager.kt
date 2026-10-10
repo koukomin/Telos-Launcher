@@ -17,6 +17,7 @@ import de.mm20.launcher2.preferences.ui.WebAppsPanelSettings
 import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.ui.settings.webapps.WebAppIconPickerTarget
+import de.mm20.launcher2.ui.webapp.WebAppProfiles
 import de.mm20.launcher2.webappshortcuts.WebAppShortcutRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -119,6 +120,8 @@ class WebAppsPanelManager internal constructor(
      */
     fun delete(shortcut: WebAppShortcut) {
         webAppShortcutRepository.delete(shortcut)
+        // Drops this web app's isolated cookies and site data
+        WebAppProfiles.delete(shortcut)
         scope.launch {
             val groups = browsingSettings.groups.first()
             if (groups.any { it.appKeys.contains(shortcut.key) }) {
@@ -154,6 +157,7 @@ class WebAppsPanelManager internal constructor(
         customCss: String? = null,
         notificationsEnabled: Boolean = false,
         adBlockMode: WebAppShortcut.AdBlockMode = WebAppShortcut.AdBlockMode.Global,
+        cookieOptions: WebAppShortcut.CookieOptions = WebAppShortcut.CookieOptions(),
     ) {
         scope.launch {
             webAppShortcutRepository.create(
@@ -169,6 +173,7 @@ class WebAppsPanelManager internal constructor(
                 customCss = customCss,
                 notificationsEnabled = notificationsEnabled,
                 adBlockMode = adBlockMode,
+                cookieOptions = cookieOptions,
             )
         }
     }

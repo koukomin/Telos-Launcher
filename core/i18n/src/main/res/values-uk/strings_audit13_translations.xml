@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Додаткові грецькі канали</string>
+    <string name="au13_tvextra_playlists_summary">Додає потоки та канали з публічних плейлистів Free-TV і greektvm3u, які завантажуються з GitHub на цей пристрій, коли ви відкриваєте ТБ. Використовується лише за вибраної Греції. Якщо їх не вдається завантажити, нічого не показується.</string>
+    <string name="au13_tvextra_epg_title">Телепрограма</string>
+    <string name="au13_tvextra_epg_summary">Показує, що йде зараз і що буде далі на грецьких каналах (програма XMLTV з ext.greektv.app або epgshare01.online, оновлюється не частіше ніж раз на 6 годин). Використовується лише за вибраної Греції.</string>
+    <string name="au13_tvextra_marker">Додатково</string>
+    <string name="au13_tvextra_marker_description">Цей канал походить із додаткового необов\'язкового джерела і може бути менш надійним</string>
+    <string name="au13_tvextraui_disclaimer_extra">Для грецьких каналів Telos TV також може використовувати необов\'язкові додаткові джерела: публічні плейлисти (raw.githubusercontent.com) і телепрограму (ext.greektv.app, epgshare01.online). Звернення до них відбувається лише за вибраної Греції та ввімкненого відповідного перемикача, і лише поки відкрито ТБ. Їх можна вимкнути у списку країн.</string>
+    <string name="au13_tvextraui_now_line">Зараз: %1$s</string>
+    <string name="au13_tvextraui_player_now">Зараз: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Далі: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Цей канал тимчасово офлайн</string>
+    <string name="au13_tvextraui_offline_hint">Ми спробували всі доступні потоки та перевірили наявність оновленого списку. Спробуйте пізніше.</string>
+    <string name="au13_tvextraui_offline_back">Назад</string>
+    <string name="au13_tvextraui_static_description">Шум телевізора: немає сигналу</string>
+</resources>

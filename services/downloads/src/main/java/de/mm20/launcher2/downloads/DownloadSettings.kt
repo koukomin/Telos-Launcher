@@ -29,6 +29,11 @@ data class DownloadSettingsValues(
     val proxyType: ProxyType = ProxyType.None,
     val proxyHost: String = "",
     val proxyPort: Int = 0,
+    /**
+     * Id of a WireGuard config of Telos Network (0 = none). When set, torrents (Telos Downloads and Telos Video)
+     * go only through the local proxy of that config and never use [proxyType] or connect directly.
+     */
+    val torrentWgConfigId: Int = 0,
     val afterFinish: AfterFinish = AfterFinish.Nothing,
     /** Offer links found in the clipboard when the app comes to the foreground (off by default) */
     val detectClipboard: Boolean = false,
@@ -81,7 +86,7 @@ class DownloadSettings(context: Context) {
 
     private val KNOWN = setOf(
         "maxParallel", "connections", "speedLimitKBps", "wifiOnly", "pauseOnLowBattery", "lowBatteryPercent", "notifications",
-        "maxRetries", "userAgent", "proxyType", "proxyHost", "proxyPort", "afterFinish", "detectClipboard", "scheduleEnabled",
+        "maxRetries", "userAgent", "proxyType", "proxyHost", "proxyPort", "torrentWgConfigId", "afterFinish", "detectClipboard", "scheduleEnabled",
         "scheduleStartMinute", "scheduleEndMinute", "scheduleDays", "autoExtract",
     )
 
@@ -102,6 +107,7 @@ class DownloadSettings(context: Context) {
             .putString("proxyType", v.proxyType.name)
             .putString("proxyHost", v.proxyHost)
             .putInt("proxyPort", v.proxyPort)
+            .putInt("torrentWgConfigId", v.torrentWgConfigId)
             .putString("afterFinish", v.afterFinish.name)
             .putBoolean("detectClipboard", v.detectClipboard)
             .putBoolean("scheduleEnabled", v.scheduleEnabled)
@@ -155,6 +161,7 @@ class DownloadSettings(context: Context) {
                 proxyType = runCatching { ProxyType.valueOf(prefs.getString("proxyType", "None")!!) }.getOrDefault(ProxyType.None),
                 proxyHost = prefs.getString("proxyHost", "").orEmpty(),
                 proxyPort = prefs.getInt("proxyPort", 0),
+                torrentWgConfigId = prefs.getInt("torrentWgConfigId", 0),
                 afterFinish = runCatching { AfterFinish.valueOf(prefs.getString("afterFinish", "Nothing")!!) }.getOrDefault(AfterFinish.Nothing),
                 detectClipboard = prefs.getBoolean("detectClipboard", d.detectClipboard),
                 scheduleEnabled = prefs.getBoolean("scheduleEnabled", d.scheduleEnabled),
@@ -173,6 +180,7 @@ class DownloadSettings(context: Context) {
         lowBatteryPercent = v.lowBatteryPercent.coerceIn(5, 50),
         maxRetries = v.maxRetries.coerceIn(0, 20),
         proxyPort = v.proxyPort.coerceIn(0, 65535),
+        torrentWgConfigId = v.torrentWgConfigId.coerceAtLeast(0),
         scheduleStartMinute = v.scheduleStartMinute.coerceIn(0, 1439),
         scheduleEndMinute = v.scheduleEndMinute.coerceIn(0, 1439),
         scheduleDays = v.scheduleDays and 0b1111111,

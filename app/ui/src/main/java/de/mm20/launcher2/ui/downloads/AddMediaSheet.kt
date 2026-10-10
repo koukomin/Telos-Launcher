@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
@@ -21,6 +22,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +36,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -59,7 +63,10 @@ import de.mm20.launcher2.downloads.logic.LinkParser
 import de.mm20.launcher2.downloads.logic.MediaFormats
 import de.mm20.launcher2.downloads.logic.MediaInfo
 import de.mm20.launcher2.downloads.media.MediaRuntime
+import de.mm20.launcher2.search.WebAppShortcut
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.webapp.WebAppProfiles
+import de.mm20.launcher2.webappshortcuts.WebAppShortcutRepository
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
@@ -302,6 +309,7 @@ private fun SwitchRow(checked: Boolean, onChange: (Boolean) -> Unit, label: Int)
 @Composable
 internal fun MediaCookieControls(runtime: MediaRuntime, pageUrl: String?, onChanged: () -> Unit) {
     val context = LocalContext.current
+    val webAppRepository: WebAppShortcutRepository = koinInject()
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
         if (uri != null) {
             val text = runCatching {
@@ -315,8 +323,15 @@ internal fun MediaCookieControls(runtime: MediaRuntime, pageUrl: String?, onChan
     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         OutlinedButton(onClick = { picker.launch(arrayOf("text/plain", "text/*", "application/octet-stream")) }) { Text(stringResource(R.string.dl_m_cookies_import)) }
         if (pageUrl != null) {
-            OutlinedButton(onClick = {
-                val header = runCatching { android.webkit.CookieManager.getInstance().getCookie(pageUrl) }.getOrNull().orEmpty()
+            // Each web app has its own isolated cookies: the user picks which one is the cookie source.
+            // The cookies are read for pageUrl only, so they are never sent to another host.
+            val webApps by remember { webAppRepository.search("", false) }.collectAsState(emptyList())
+            var sourceMenu by remember { mutableStateOf(false) }
+            fun takeOver(webApp: WebAppShortcut?) {
+                val header = runCatching {
+                    if (webApp == null) android.webkit.CookieManager.getInstance().getCookie(pageUrl)
+                    else WebAppProfiles.cookieHeaderFor(webApp.key, pageUrl)
+                }.getOrNull().orEmpty()
                 val n = if (header.isBlank()) 0 else runtime.addCookieHeader(pageUrl, header)
                 Toast.makeText(
                     context,
@@ -324,7 +339,32 @@ internal fun MediaCookieControls(runtime: MediaRuntime, pageUrl: String?, onChan
                     Toast.LENGTH_LONG,
                 ).show()
                 onChanged()
-            }) { Text(stringResource(R.string.dl_m_cookies_browser)) }
+            }
+            Box {
+                OutlinedButton(onClick = {
+                    if (webApps.isEmpty() || !WebAppProfiles.isSupported()) takeOver(null) else sourceMenu = true
+                }) { Text(stringResource(R.string.dl_m_cookies_browser)) }
+                DropdownMenu(expanded = sourceMenu, onDismissRequest = { sourceMenu = false }) {
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.au6_webapps4_cookie_source_default)) },
+                        onClick = { sourceMenu = false; takeOver(null) },
+                    )
+                    for (app in webApps.sortedBy { it.label.lowercase() }) {
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                val model = app.iconUri ?: app.faviconUrl
+                                if (model != null) {
+                                    AsyncImage(model = model, contentDescription = null, modifier = Modifier.size(24.dp).clip(RoundedCornerShape(6.dp)))
+                                } else {
+                                    Icon(painterResource(R.drawable.language_24px), contentDescription = null, modifier = Modifier.size(24.dp))
+                                }
+                            },
+                            text = { Text(app.label, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                            onClick = { sourceMenu = false; takeOver(app) },
+                        )
+                    }
+                }
+            }
         }
         if (runtime.hasCookies) OutlinedButton(onClick = { runtime.clearCookies(); onChanged() }) { Text(stringResource(R.string.dl_m_cookies_clear)) }
     }

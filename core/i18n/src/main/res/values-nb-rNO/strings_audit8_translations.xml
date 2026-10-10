@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt krever en egen app. Logg inn på trakt.tv, åpne trakt.tv/oauth/applications, velg New Application, skriv inn et vilkårlig navn og, som omdirigeringsadresse, nøyaktig adressen som vises nedenfor. Lagre den, skriv deretter inn klient-ID-en og klienthemmeligheten her, og trykk på Logg inn med nettleser. Du logger inn og godkjenner på selve trakt.tv; Telos ser aldri Trakt-passordet ditt.</string>
+    <string name="au8_traktweb_redirect_label">Omdirigeringsadresse for Trakt-appen din</string>
+    <string name="au8_traktweb_copy_redirect">Kopier adresse</string>
+    <string name="au8_traktweb_sign_in_browser">Logg inn med nettleser</string>
+    <string name="au8_traktweb_use_code">Bruk en kode i stedet</string>
+    <string name="au8_traktweb_waiting_browser">Venter på at du godkjenner i nettleseren…</string>
+    <string name="au8_traktweb_denied">Innloggingen ble avvist på Trakt</string>
+    <string name="au8_traktweb_state_mismatch">Svaret på innloggingen passet ikke til denne forespørselen og ble ignorert</string>
+    <string name="au8_traktweb_expired">Innloggingen tok lengre tid enn 10 minutter. Prøv igjen</string>
+    <string name="au8_traktweb_no_browser">Fant ingen nettleser som kan åpne trakt.tv</string>
+</resources>

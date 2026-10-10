@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">Stacje radiowe</string>
+    <string name="au5_radiosearch_pref_summary">Pokazuj ulubione stacje Telos Radio w wynikach wyszukiwania i odtwarzaj je jednym dotknięciem</string>
+    <string name="au5_radiosearch_play">Odtwórz %1$s</string>
+    <string name="au5_radiosearch_stop">Zatrzymaj %1$s</string>
+    <string name="au5_webapps3_cookie_accept">Akceptuj</string>
+    <string name="au5_webapps3_cookie_block">Blokuj</string>
+    <string name="au5_webapps3_cookies_isolated">Pliki cookie i dane witryn tej aplikacji internetowej są przechowywane oddzielnie od pozostałych aplikacji internetowych. „Użyj globalnych” stosuje ustawienia plików cookie z ekranu aplikacji internetowych.</string>
+    <string name="au5_webapps3_cookies_unsupported">Zainstalowany WebView nie obsługuje osobnego przechowywania danych dla każdej aplikacji internetowej. Pliki cookie i dane witryn są współdzielone przez wszystkie aplikacje internetowe i obowiązują globalne ustawienia plików cookie.</string>
+    <string name="au5_webapps3_clear_this">Wyczyść pliki cookie i dane witryn tej aplikacji internetowej</string>
+    <string name="au5_webapps3_clear_done">Wyczyszczono pliki cookie i dane witryn</string>
+    <string name="au5_wgtorrent_title">Torrenty przez WireGuard w Telos Network</string>
+    <string name="au5_wgtorrent_desc">Torrenty (Telos Downloads i Telos Video) łączą się wyłącznie przez wybrane proxy WireGuard w Telos Network. Telos otwiera w tym celu lokalne proxy HTTP, które istnieje tylko wtedy, gdy Telos Network jest włączona, a proxy połączone. W przeciwnym razie torrenty czekają i nic nie łączy się bezpośrednio. Zastępuje to powyższe proxy dla torrentów. Proxy HTTP obsługuje tylko TCP, więc DHT i uTP są wyłączone. Gdy działa, inne aplikacje na tym urządzeniu również mogą korzystać z lokalnego proxy.</string>
+    <string name="au5_wgtorrent_none">Nieużywane</string>
+    <string name="au5_wgtorrent_no_configs">W Telos Network nie ma jeszcze proxy WireGuard.</string>
+    <string name="au5_wgtorrent_summary">Torrenty przez WireGuard: %1$s</string>
+    <string name="au5_wgtorrent_removed">usunięte proxy</string>
+    <string name="au5_wgtorrent_status_ready">Torrenty używają proxy WireGuard %1$s z Telos Network.</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">Torrenty czekają: Telos Network nie działa.</string>
+    <string name="au5_wgtorrent_blocked_missing">Torrenty czekają: wybrane proxy WireGuard już nie istnieje.</string>
+    <string name="au5_wgtorrent_blocked_disabled">Torrenty czekają: wybrane proxy WireGuard jest wyłączone.</string>
+    <string name="au5_wgtorrent_blocked_down">Torrenty czekają: wybrane proxy WireGuard nie jest połączone.</string>
+    <string name="au5_wgtorrent_blocked_error">Torrenty czekają: Telos Network nie mogła otworzyć lokalnego proxy.</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au9_share_note_text">Share as text</string>
+    <string name="au9_share_note_md">Share as Markdown file</string>
+    <string name="au9_share_unarchive">Move back to notes</string>
+    <string name="au9_share_failed">Sharing failed</string>
+    <string name="au9_share_apk_failed">The app file could not be read</string>
+    <string name="au9_share_nothing">Only files can be shared. Folders and files in a vault cannot.</string>
+    <string name="au9_share_large_title">Large download</string>
+    <string name="au9_share_large_message">To share this, %1$s are downloaded from the storage first. Continue?</string>
+    <string name="au9_share_large_confirm">Download and share</string>
+</resources>

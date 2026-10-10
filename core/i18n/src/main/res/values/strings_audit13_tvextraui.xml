@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au13_tvextraui_disclaimer_extra">For Greek channels Telos TV can also use optional extra sources: public playlists (raw.githubusercontent.com) and a programme guide (ext.greektv.app, epgshare01.online). They are contacted only when Greece is selected and the matching switch is on, and only while TV is open. You can turn them off in the country list.</string>
+    <string name="au13_tvextraui_now_line">Now: %1$s</string>
+    <string name="au13_tvextraui_player_now">Now: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Next: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">This channel is temporarily offline</string>
+    <string name="au13_tvextraui_offline_hint">We tried every available stream and checked for an updated list. Try again later.</string>
+    <string name="au13_tvextraui_offline_back">Back</string>
+    <string name="au13_tvextraui_static_description">TV static: no signal</string>
+</resources>

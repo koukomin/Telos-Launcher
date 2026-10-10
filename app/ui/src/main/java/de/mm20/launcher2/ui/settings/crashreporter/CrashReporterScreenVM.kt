@@ -8,8 +8,11 @@ import de.mm20.launcher2.crashreporter.CrashReport
 import de.mm20.launcher2.crashreporter.CrashReportType
 import de.mm20.launcher2.crashreporter.CrashReporter
 import kotlinx.coroutines.launch
+import org.koin.core.component.inject
 
-class CrashReporterScreenVM: ViewModel() {
+class CrashReporterScreenVM: ViewModel(), org.koin.core.component.KoinComponent {
+    private val uiSettings: de.mm20.launcher2.preferences.ui.UiSettings by inject()
+
     fun setShowCrashes(showCrashes: Boolean) {
         this.showCrashes.value = showCrashes
         updateReports()
@@ -32,8 +35,10 @@ class CrashReporterScreenVM: ViewModel() {
     val enabled = mutableStateOf(CrashReporter.isEnabled())
 
     fun setEnabled(context: android.content.Context, value: Boolean) {
+        // the SharedPreferences mirror is written right away; the setting is the source of truth
         CrashReporter.setEnabled(context, value)
         enabled.value = value
+        uiSettings.setCrashReporterEnabled(value)
     }
 
     fun deleteAll() {
@@ -67,6 +72,9 @@ class CrashReporterScreenVM: ViewModel() {
     }
 
     init {
+        viewModelScope.launch {
+            uiSettings.crashReporterEnabled.collect { enabled.value = it }
+        }
         reload()
     }
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au12_lastfmweb_howto">Create an API account at last.fm/api/account/create and enter exactly the callback URL shown below as its Callback URL. Then enter its API key and shared secret here and tap Sign in with browser. You log in and approve on last.fm itself; Telos never sees your Last.fm password.</string>
+    <string name="au12_lastfmweb_callback_label">Callback URL for your Last.fm API account</string>
+    <string name="au12_lastfmweb_copy_callback">Copy URL</string>
+    <string name="au12_lastfmweb_sign_in_browser">Sign in with browser</string>
+    <string name="au12_lastfmweb_use_password">Use password instead</string>
+    <string name="au12_lastfmweb_use_browser">Use browser sign in instead</string>
+    <string name="au12_lastfmweb_waiting">Waiting for you to approve in the browser…</string>
+    <string name="au12_lastfmweb_no_browser">No browser found to open last.fm</string>
+    <string name="au12_lastfmweb_not_pending">No Last.fm sign in was started in the app, the answer was ignored</string>
+    <string name="au12_lastfmweb_expired">The sign in took longer than 10 minutes. Try again</string>
+    <string name="au12_lastfmweb_failed">Last.fm sign in failed. Check the API key, the shared secret and the callback URL</string>
+    <string name="au12_lastfmweb_limit_note">Last.fm sends no verification value back, so the answer is only accepted for 10 minutes after you tapped the button, and only once.</string>
+</resources>

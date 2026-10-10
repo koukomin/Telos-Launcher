@@ -41,6 +41,10 @@ fun DownloadsSettingsScreen() {
     val context = LocalContext.current
     val store: DownloadSettings = koinInject()
     val s by store.values.collectAsState()
+    val wgController: de.mm20.launcher2.network.api.WireguardController = koinInject()
+    val wgConfigs by wgController.configs.collectAsState()
+    val torrentGate: de.mm20.launcher2.downloads.TorrentProxyGate = koinInject()
+    val torrentRoute by torrentGate.route.collectAsState()
     var editUserAgent by remember { mutableStateOf(false) }
     var editProxy by remember { mutableStateOf(false) }
     val runtime: MediaRuntime = koinInject()
@@ -242,7 +246,12 @@ fun DownloadsSettingsScreen() {
                         ProxyType.None -> stringResource(R.string.dl_proxy_none)
                         ProxyType.Http -> "HTTP ${s.proxyHost}:${s.proxyPort}"
                         ProxyType.Socks -> "SOCKS ${s.proxyHost}:${s.proxyPort}"
-                    },
+                    } + if (s.torrentWgConfigId > 0) {
+                        "\n" + stringResource(
+                            R.string.au5_wgtorrent_summary,
+                            wgConfigs.firstOrNull { it.id == s.torrentWgConfigId }?.name ?: stringResource(R.string.au5_wgtorrent_removed),
+                        )
+                    } else "",
                     onClick = { editProxy = true },
                 )
             }
@@ -274,6 +283,7 @@ fun DownloadsSettingsScreen() {
         var type by remember { mutableStateOf(s.proxyType) }
         var host by remember { mutableStateOf(s.proxyHost) }
         var port by remember { mutableStateOf(if (s.proxyPort > 0) s.proxyPort.toString() else "") }
+        var wgId by remember { mutableStateOf(s.torrentWgConfigId) }
         AlertDialog(
             onDismissRequest = { editProxy = false },
             title = { Text(stringResource(R.string.dl_proxy)) },
@@ -293,12 +303,34 @@ fun DownloadsSettingsScreen() {
                         OutlinedTextField(host, { host = it }, Modifier.fillMaxWidth(), singleLine = true, label = { Text(stringResource(R.string.dl_proxy_host)) })
                         OutlinedTextField(port, { port = it.filter(Char::isDigit).take(5) }, Modifier.fillMaxWidth(), singleLine = true, label = { Text(stringResource(R.string.dl_proxy_port)) })
                     }
+                    Text(stringResource(R.string.au5_wgtorrent_title), style = androidx.compose.material3.MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
+                    Text(stringResource(R.string.au5_wgtorrent_desc), style = androidx.compose.material3.MaterialTheme.typography.bodySmall, modifier = Modifier.padding(vertical = 8.dp))
+                    androidx.compose.foundation.layout.FlowRow {
+                        androidx.compose.material3.FilterChip(
+                            selected = wgId <= 0, onClick = { wgId = 0 },
+                            label = { Text(stringResource(R.string.au5_wgtorrent_none)) },
+                            modifier = Modifier.padding(end = 8.dp),
+                        )
+                        for (c in wgConfigs) {
+                            androidx.compose.material3.FilterChip(
+                                selected = wgId == c.id, onClick = { wgId = c.id },
+                                label = { Text(c.name) },
+                                modifier = Modifier.padding(end = 8.dp),
+                            )
+                        }
+                    }
+                    if (wgConfigs.isEmpty()) {
+                        Text(stringResource(R.string.au5_wgtorrent_no_configs), style = androidx.compose.material3.MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 8.dp))
+                    }
+                    torrentWgStatusText(torrentRoute)?.let {
+                        Text(it, style = androidx.compose.material3.MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 8.dp))
+                    }
                 }
             },
             confirmButton = {
                 // a proxy without host or with a wrong port would be ignored; do not store it
                 TextButton(enabled = type == ProxyType.None || (host.isNotBlank() && port.toIntOrNull() in 1..65535), onClick = {
-                    store.update { it.copy(proxyType = type, proxyHost = host.trim(), proxyPort = port.toIntOrNull() ?: 0) }
+                    store.update { it.copy(proxyType = type, proxyHost = host.trim(), proxyPort = port.toIntOrNull() ?: 0, torrentWgConfigId = wgId) }
                     editProxy = false
                 }) { Text(stringResource(R.string.dl_save)) }
             },

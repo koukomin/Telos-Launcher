@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au7_trakt_open_settings">Trakt scrobbling</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt needs an application of your own. Sign in at trakt.tv, open trakt.tv/oauth/applications, choose New Application, enter any name and the redirect address urn:ietf:wg:oauth:2.0:oob, save it, and enter its client id and client secret here.</string>
+    <string name="au7_trakt_privacy">While scrobbling is on, the titles of the movies and episodes you watch, and how far you got, are sent to Trakt. Only videos recognised as a movie or an episode are sent.</string>
+    <string name="au7_trakt_signed_in">Signed in to Trakt</string>
+    <string name="au7_trakt_switch">Scrobble to Trakt</string>
+    <string name="au7_trakt_queue">%1$d scrobbles waiting to be sent</string>
+    <string name="au7_trakt_clear_queue">Clear queue</string>
+    <string name="au7_trakt_sign_in">Sign in</string>
+    <string name="au7_trakt_sign_out">Sign out</string>
+    <string name="au7_trakt_copy">Copy code</string>
+    <string name="au7_trakt_waiting">Waiting until you enter the code at %1$s…</string>
+</resources>

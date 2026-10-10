@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt vereist een eigen applicatie. Meld je aan op trakt.tv, open trakt.tv/oauth/applications, kies New Application, voer een willekeurige naam in en gebruik als omleidingsadres precies het hieronder getoonde adres. Sla het op, voer hier de client id en client secret in en tik op Inloggen met browser. Je logt in en keurt goed op trakt.tv zelf; Telos ziet nooit je Trakt-wachtwoord.</string>
+    <string name="au8_traktweb_redirect_label">Omleidingsadres voor je Trakt-applicatie</string>
+    <string name="au8_traktweb_copy_redirect">Adres kopiëren</string>
+    <string name="au8_traktweb_sign_in_browser">Inloggen met browser</string>
+    <string name="au8_traktweb_use_code">In plaats daarvan een code gebruiken</string>
+    <string name="au8_traktweb_waiting_browser">Wachten tot je goedkeurt in de browser…</string>
+    <string name="au8_traktweb_denied">Inloggen is geweigerd door Trakt</string>
+    <string name="au8_traktweb_state_mismatch">Het inlogantwoord kwam niet overeen met dit verzoek en is genegeerd</string>
+    <string name="au8_traktweb_expired">Het inloggen duurde langer dan 10 minuten. Probeer het opnieuw</string>
+    <string name="au8_traktweb_no_browser">Geen browser gevonden om trakt.tv te openen</string>
+</resources>

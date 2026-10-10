@@ -22,9 +22,11 @@ class MusicPlayerService : MediaSessionService() {
     private val handler = Handler(Looper.getMainLooper())
 
     // Nothing keeps the service (and the decoder) alive after music has been paused for a while
-    private val idleStop = Runnable {
+    private val idleStop: Runnable = Runnable {
         val p = mediaSession?.player
-        if (p?.isPlaying != true && p?.playWhenReady != true) pauseAllPlayersAndStopSelf()
+        if (de.mm20.launcher2.comms.media.PlaybackCoordinator.isWaiting(this, PlaybackCoordinator.KIND_MUSIC)) {
+            handler.postDelayed(idleStop, IDLE_STOP_MS) // a video paused the music, it may continue
+        } else if (p?.isPlaying != true && p?.playWhenReady != true) pauseAllPlayersAndStopSelf()
     }
 
     override fun onCreate() {
@@ -48,6 +50,12 @@ class MusicPlayerService : MediaSessionService() {
                 }
             }
 
+            override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
+                if (!playWhenReady && reason == Player.PLAY_WHEN_READY_CHANGE_REASON_AUDIO_FOCUS_LOSS) {
+                    PlaybackCoordinator.onFocusLoss(this@MusicPlayerService, PlaybackCoordinator.KIND_MUSIC)
+                }
+            }
+
             override fun onEvents(player: Player, events: Player.Events) {
                 if (events.containsAny(
                         Player.EVENT_TIMELINE_CHANGED,
@@ -59,6 +67,14 @@ class MusicPlayerService : MediaSessionService() {
             }
         })
         restoreState(player)
+        PlaybackCoordinator.register(
+            PlaybackCoordinator.KIND_MUSIC,
+            PlaybackCoordinator.Participant(
+                isPlaying = { player.isPlaying || player.playWhenReady },
+                pause = { player.pause() },
+                resume = { if (player.mediaItemCount > 0) player.play() },
+            )
+        )
         handler.postDelayed(idleStop, IDLE_STOP_MS)
         mediaSession = MediaSession.Builder(this, player)
             .setBitmapLoader(AlbumArtBitmapLoader(this))
@@ -134,6 +150,7 @@ class MusicPlayerService : MediaSessionService() {
     }
 
     override fun onDestroy() {
+        PlaybackCoordinator.unregister(PlaybackCoordinator.KIND_MUSIC)
         mediaSession?.player?.let { saveState(it) }
         handler.removeCallbacks(idleStop)
         scrobbler?.release()

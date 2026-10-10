@@ -51,7 +51,9 @@ open class VideoPlayerActivity : AppCompatActivity() {
             }
         } else null
         val typed = intent.getStringExtra(EXTRA_SOURCE) ?: shared
-        val viewed = intent.data?.toString()
+        // a .torrent file shared to Telos Video arrives as a stream
+        @Suppress("DEPRECATION")
+        val viewed = (intent.data ?: if (intent.type == "application/x-bittorrent") intent.getParcelableExtra<Uri>(android.content.Intent.EXTRA_STREAM) else null)?.toString()
         val torrentCandidate = typed ?: viewed
         if (torrentCandidate != null &&
             (TorrentStreamer.isTorrent(torrentCandidate) || intent.type == "application/x-bittorrent" ||

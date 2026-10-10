@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au7_scrobble_note">It-titli tal-kanzunetti u l-artisti jintbagħtu lis-servizz li tagħżel, u biss waqt li servizz ikun illoggjat u mixgħul. Xejn ma jintbagħat qabel.</string>
+    <string name="au7_scrobble_what">X\'għandu jiġi scrobbled</string>
+    <string name="au7_scrobble_music_title">Scrobble tal-mużika</string>
+    <string name="au7_scrobble_music_summary">Kanzunetti mxegħlin f\'Telos Music, wara nofs il-kanzunetta jew 4 minuti</string>
+    <string name="au7_scrobble_radio_title">Scrobble tar-radju</string>
+    <string name="au7_scrobble_radio_summary">It-traċċa preżenti ta\' stazzjon, wara li tinstema\' għal minuta. Taħdem bissma\' stazzjonijiet li jħabbru t-traċċa.</string>
+    <string name="au7_scrobble_status_active">Qed jintbagħat lil %1$s</string>
+    <string name="au7_scrobble_status_no_service">Xejn ma jintbagħat: l-ebda servizz mhu illoggjat u mixgħul</string>
+    <string name="au7_scrobble_status_no_source">Xejn ma jintbagħat: ixgħel l-iscrobbling tal-mużika jew tar-radju</string>
+    <string name="au7_scrobble_sign_in">Ittestja l-konnessjoni u idħol</string>
+    <string name="au7_scrobble_lb_ok">It-token huwa validu għal %1$s</string>
+    <string name="au7_scrobble_https">L-indirizz tas-server irid jibda b\'https:// (http huwa permess biss għal server fin-netwerk tiegħek stess)</string>
+    <string name="au7_scrobble_switch_on">Mixgħul</string>
+    <string name="au7_scrobble_queue">Kju</string>
+    <string name="au7_scrobble_queue_count">%1$d scrobbles qed jistennew biex jintbagħtu</string>
+    <string name="au7_scrobble_queue_empty">L-ebda scrobble ma qed jistenna</string>
+    <string name="au7_scrobble_queue_clear">Ħassar il-kju</string>
+    <string name="au7_scrobble_queue_cleared">Il-kju tħassar</string>
+    <string name="au7_scrobble_settings_summary">Last.fm, Libre.fm u ListenBrainz għal Telos Music u Telos Radio</string>
+    <string name="au7_trakt_open_settings">Scrobbling ta\' Trakt</string>
+    <string name="au7_trakt_title">Trakt</string>
+    <string name="au7_trakt_howto">Trakt jeħtieġ applikazzjoni tiegħek stess. Idħol fuq trakt.tv, iftaħ trakt.tv/oauth/applications, agħżel New Application, daħħal kwalunkwe isem u l-indirizz ta\' tidderieġi urn:ietf:wg:oauth:2.0:oob, issejvjah, u daħħal hawn il-client id u l-client secret tiegħu.</string>
+    <string name="au7_trakt_privacy">Waqt li l-iscrobbling ikun mixgħul, it-titli tal-films u tal-episodji li tara, u kemm wasalt, jintbagħtu lil Trakt. Jintbagħtu biss il-vidjows li jiġu rikonoxxuti bħala film jew episodju.</string>
+    <string name="au7_trakt_signed_in">Illoggjat f\'Trakt</string>
+    <string name="au7_trakt_switch">Scrobble lil Trakt</string>
+    <string name="au7_trakt_queue">%1$d scrobbles qed jistennew biex jintbagħtu</string>
+    <string name="au7_trakt_clear_queue">Ħassar il-kju</string>
+    <string name="au7_trakt_sign_in">Idħol</string>
+    <string name="au7_trakt_sign_out">Oħroġ</string>
+    <string name="au7_trakt_copy">Ikkopja l-kodiċi</string>
+    <string name="au7_trakt_waiting">Qed nistenna sa ma tidħol il-kodiċi f\'%1$s…</string>
+    <string name="au7_vidfolders_tab_other">Oħrajn</string>
+    <string name="au7_vidfolders_no_other">Il-vidjows kollha huma rikonoxxuti bħala films jew episodji</string>
+    <string name="au7_vidfolders_season">Staġun %1$d</string>
+    <string name="au7_vidfolders_action">Organizza f\'folders Movies u Series</string>
+    <string name="au7_vidfolders_title">Organizza l-fajls tal-vidjo</string>
+    <string name="au7_vidfolders_unsupported">Il-bidla tal-post tal-fajls teħtieġ Android 11 jew aktar ġdid.</string>
+    <string name="au7_vidfolders_nothing">M\'hemm xejn x\'jiġi organizzat. Jiġu mċaqalqa biss il-films u l-episodji rikonoxxuti fil-folder Movies jew Download.</string>
+    <string name="au7_vidfolders_confirm">Telos ser iċaqlaq %1$d films għal Movies/Movies/Title (Year) u %2$d episodji għal Movies/Series/Show/Season NN. Il-fajls jiġu biss mċaqalqa, qatt mhu jitħassru jew jinbidlu, u l-progress tal-ħarsa jinżamm. Il-fajls tas-sottotitli ħdejn il-vidjows ma jiġux mċaqalqa. Android se jitlob għal darba oħra permess biex tibdel dawn il-fajls. Eżempji:</string>
+    <string name="au7_vidfolders_move">Ċaqlaq il-fajls</string>
+    <string name="au7_vidfolders_done">%1$d vidjows imċaqalqa</string>
+    <string name="au7_vidfolders_partial">%1$d vidjows imċaqalqa, %2$d ma setgħux jiġu mċaqalqa</string>
+    <string name="au7_vidfolders_failed">Il-fajls ma setgħux jiġu mċaqalqa</string>
+</resources>

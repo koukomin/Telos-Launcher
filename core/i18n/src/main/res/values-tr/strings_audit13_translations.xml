@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Ek Yunan kanalları</string>
+    <string name="au13_tvextra_playlists_summary">Herkese açık Free-TV ve greektvm3u oynatma listelerinden akışlar ve kanallar ekler; TV\'yi açtığınızda GitHub\'dan bu cihaza yüklenir. Yalnızca Yunanistan seçiliyken kullanılır. Yüklenemezlerse hiçbir şey gösterilmez.</string>
+    <string name="au13_tvextra_epg_title">Program rehberi</string>
+    <string name="au13_tvextra_epg_summary">Yunan kanallarında şu anda ve sonra neyin yayınlandığını gösterir (ext.greektv.app veya epgshare01.online üzerinden XMLTV rehberi, en fazla 6 saatte bir yenilenir). Yalnızca Yunanistan seçiliyken kullanılır.</string>
+    <string name="au13_tvextra_marker">Ek</string>
+    <string name="au13_tvextra_marker_description">Bu kanal isteğe bağlı bir ek kaynaktan geliyor ve daha az güvenilir olabilir</string>
+    <string name="au13_tvextraui_disclaimer_extra">Yunan kanalları için Telos TV isteğe bağlı ek kaynakları da kullanabilir: herkese açık oynatma listeleri (raw.githubusercontent.com) ve bir program rehberi (ext.greektv.app, epgshare01.online). Bunlara yalnızca Yunanistan seçiliyken, ilgili anahtar açıkken ve yalnızca TV açıkken bağlanılır. Bunları ülke listesinden kapatabilirsiniz.</string>
+    <string name="au13_tvextraui_now_line">Şimdi: %1$s</string>
+    <string name="au13_tvextraui_player_now">Şimdi: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Sonra: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Bu kanal geçici olarak çevrimdışı</string>
+    <string name="au13_tvextraui_offline_hint">Tüm kullanılabilir akışları denedik ve güncellenmiş bir liste olup olmadığına baktık. Daha sonra tekrar deneyin.</string>
+    <string name="au13_tvextraui_offline_back">Geri</string>
+    <string name="au13_tvextraui_static_description">TV paraziti: sinyal yok</string>
+</resources>

@@ -80,7 +80,11 @@ fun VideoPlayerScreen(
                         startIndex = opened.startPosition,
                     )
                 }
-                .onFailure { error = it.message ?: context.getString(R.string.au_video_torrent_failed) }
+                .onFailure {
+                    error = if (it is de.mm20.launcher2.comms.media.video.torrent.TorrentRouteNotReadyException) {
+                        context.getString(R.string.au6_wgvideo_route_not_ready)
+                    } else it.message ?: context.getString(R.string.au_video_torrent_failed)
+                }
         }
         LaunchedEffect(torrentSource) {
             while (true) {
@@ -138,7 +142,16 @@ private fun PlayerContent(
     val titles = media.titles
     val startIndex = media.startIndex
 
+    // music and radio pause while the video plays; the main process decides about resuming them
+    fun videoState(state: String) {
+        de.mm20.launcher2.comms.media.video.PlayerBridge.send(
+            context.applicationContext,
+            de.mm20.launcher2.comms.media.video.PlayerBridge.ACTION_VIDEO,
+        ) { putString("state", state) }
+    }
+
     val player = remember {
+        videoState("started")
         // FFmpeg software decoders (AC3, E-AC3, DTS, TrueHD, ...) take over where the phone has no decoder
         val renderers = io.github.anilbeesetti.nextlib.media3ext.ffdecoder.NextRenderersFactory(context)
             .setExtensionRendererMode(androidx.media3.exoplayer.DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
@@ -177,11 +190,16 @@ private fun PlayerContent(
 
     // Trakt.tv: report what is played (only when the user signed in and switched it on)
     val traktScope = remember { kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.SupervisorJob() + kotlinx.coroutines.Dispatchers.IO) }
-    fun scrobble(action: String, finished: Boolean = false) {
-        val item = player.currentMediaItem ?: return
+    // last Trakt action and the item it was about, so a stop is not sent twice
+    val traktState = remember { arrayOfNulls<Any>(2) }
+    fun scrobble(action: String, finished: Boolean = false, forItem: MediaItem? = null) {
+        val item = forItem ?: player.currentMediaItem ?: return
+        if (action == "stop" && traktState[0] == "stop" && traktState[1] == item.mediaId) return
         val duration = player.duration
-        if (duration <= 0) return
-        val progress = if (finished) 100f else player.currentPosition * 100f / duration
+        if (duration <= 0 && !finished) return
+        val progress = if (finished || duration <= 0) 100f else (player.currentPosition * 100f / duration).coerceIn(0f, 100f)
+        traktState[0] = action
+        traktState[1] = item.mediaId
         val name = item.mediaMetadata.title?.toString().orEmpty()
         val parsedName = cleanTitle(name) + ".x"
         val appContext = context.applicationContext
@@ -193,7 +211,7 @@ private fun PlayerContent(
             return
         }
         val parsed = EpisodeParser.parse(parsedName)
-        traktScope.launch { de.mm20.launcher2.comms.media.video.trakt.Trakt.scrobble(appContext, action, parsed, progress) }
+        traktScope.launch { runCatching { de.mm20.launcher2.comms.media.video.trakt.Trakt.scrobble(appContext, action, parsed, progress) } }
     }
 
     // the item that was saved last: when the player moves on by itself, this one has been played to the end
@@ -214,6 +232,7 @@ private fun PlayerContent(
         val listener = object : Player.Listener {
             override fun onIsPlayingChanged(isPlaying: Boolean) {
                 onPlayingChanged(isPlaying)
+                if (isPlaying) videoState("started")
                 scrobble(if (isPlaying) "start" else "pause")
             }
 
@@ -223,6 +242,12 @@ private fun PlayerContent(
 
             override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
                 if (reason == Player.MEDIA_ITEM_TRANSITION_REASON_AUTO) {
+                    // Trakt: the episode that ended is done, the next one starts
+                    traktState[1]?.let { id -> if (id != mediaItem?.mediaId) {
+                        val prev = (0 until player.mediaItemCount).map { player.getMediaItemAt(it) }.firstOrNull { it.mediaId == id }
+                        if (prev != null) scrobble("stop", finished = true, forItem = prev)
+                    } }
+                    scrobble("start")
                     // player.currentMediaItem is the next one now: the episode that ended counts as watched
                     lastSavedId?.let { id -> if (id != mediaItem?.mediaId) ResumeStore.save(context, Uri.parse(id), lastSavedDuration, lastSavedDuration) }
                     saveProgress()
@@ -235,12 +260,13 @@ private fun PlayerContent(
             scrobble("stop")
             player.removeListener(listener)
             player.release()
+            videoState("stopped")
         }
     }
     LifecycleEventEffect(Lifecycle.Event.ON_PAUSE) { saveProgress() }
     // there is no service behind the player: when the screen is left (and it is not the picture-in-picture
     // window), sound must not go on in the background
-    LifecycleEventEffect(Lifecycle.Event.ON_STOP) { player.pause() }
+    LifecycleEventEffect(Lifecycle.Event.ON_STOP) { player.pause(); videoState("stopped") }
 
     var playbackError by remember { mutableStateOf(false) }
     DisposableEffect(player) {

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au13_tvextra_playlists_title">Papildomi Graikijos kanalai</string>
+    <string name="au13_tvextra_playlists_summary">Prideda srautus ir kanalus iš viešų grojaraščių Free-TV ir greektvm3u, kurie į šį įrenginį įkeliami iš GitHub atidarius TV. Naudojama tik pasirinkus Graikiją. Jei jų nepavyksta įkelti, nieko nerodoma.</string>
+    <string name="au13_tvextra_epg_title">Programų gidas</string>
+    <string name="au13_tvextra_epg_summary">Rodo, kas Graikijos kanaluose rodoma dabar ir kas bus toliau (XMLTV gidas iš ext.greektv.app arba epgshare01.online, atnaujinamas ne dažniau kaip kas 6 valandas). Naudojama tik pasirinkus Graikiją.</string>
+    <string name="au13_tvextra_marker">Papildomas</string>
+    <string name="au13_tvextra_marker_description">Šis kanalas gaunamas iš pasirenkamo papildomo šaltinio ir gali būti mažiau patikimas</string>
+    <string name="au13_tvextraui_disclaimer_extra">Graikijos kanalams Telos TV gali naudoti ir pasirenkamus papildomus šaltinius: viešus grojaraščius (raw.githubusercontent.com) ir programų gidą (ext.greektv.app, epgshare01.online). Jie naudojami tik pasirinkus Graikiją, įjungus atitinkamą jungiklį ir tik kol TV atidarytas. Galite juos išjungti šalių sąraše.</string>
+    <string name="au13_tvextraui_now_line">Dabar: %1$s</string>
+    <string name="au13_tvextraui_player_now">Dabar: %1$s  %2$s–%3$s</string>
+    <string name="au13_tvextraui_player_next">Toliau: %1$s %2$s</string>
+    <string name="au13_tvextraui_epg_sheet_range">%1$s–%2$s</string>
+    <string name="au13_tvextraui_offline_title">Šis kanalas laikinai neprieinamas</string>
+    <string name="au13_tvextraui_offline_hint">Išbandėme visus galimus srautus ir patikrinome, ar yra naujesnis sąrašas. Bandykite vėliau.</string>
+    <string name="au13_tvextraui_offline_back">Atgal</string>
+    <string name="au13_tvextraui_static_description">TV triukšmas: nėra signalo</string>
+</resources>

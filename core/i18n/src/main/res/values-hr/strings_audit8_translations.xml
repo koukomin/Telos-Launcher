@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au8_traktweb_howto">Trakt zahtijeva vlastitu aplikaciju. Prijavite se na trakt.tv, otvorite trakt.tv/oauth/applications, odaberite New Application, unesite bilo koji naziv i kao adresu preusmjeravanja unesite točno adresu prikazanu u nastavku. Spremite je, zatim ovdje unesite njezin client id i client secret te dodirnite Prijava putem preglednika. Prijavljujete se i odobravate na samom trakt.tv; Telos nikada ne vidi vašu lozinku za Trakt.</string>
+    <string name="au8_traktweb_redirect_label">Adresa preusmjeravanja za vašu aplikaciju Trakt</string>
+    <string name="au8_traktweb_copy_redirect">Kopiraj adresu</string>
+    <string name="au8_traktweb_sign_in_browser">Prijava putem preglednika</string>
+    <string name="au8_traktweb_use_code">Umjesto toga koristi kôd</string>
+    <string name="au8_traktweb_waiting_browser">Čekanje vašeg odobrenja u pregledniku…</string>
+    <string name="au8_traktweb_denied">Trakt je odbio prijavu</string>
+    <string name="au8_traktweb_state_mismatch">Odgovor prijave nije odgovarao ovom zahtjevu i zanemaren je</string>
+    <string name="au8_traktweb_expired">Prijava je trajala dulje od 10 minuta. Pokušajte ponovno</string>
+    <string name="au8_traktweb_no_browser">Nije pronađen preglednik za otvaranje trakt.tv</string>
+</resources>

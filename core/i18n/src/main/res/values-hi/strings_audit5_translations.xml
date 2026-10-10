@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">रेडियो स्टेशन</string>
+    <string name="au5_radiosearch_pref_summary">अपने पसंदीदा Telos Radio स्टेशन खोज परिणामों में दिखाएँ और एक टैप में चलाएँ</string>
+    <string name="au5_radiosearch_play">%1$s चलाएँ</string>
+    <string name="au5_radiosearch_stop">%1$s रोकें</string>
+    <string name="au5_webapps3_cookie_accept">स्वीकार करें</string>
+    <string name="au5_webapps3_cookie_block">ब्लॉक करें</string>
+    <string name="au5_webapps3_cookies_isolated">इस वेब ऐप की कुकी और साइट डेटा अन्य सभी वेब ऐप से अलग संग्रहीत होते हैं। \"वैश्विक का उपयोग करें\" वेब ऐप स्क्रीन की कुकी सेटिंग का पालन करता है।</string>
+    <string name="au5_webapps3_cookies_unsupported">इंस्टॉल किया गया WebView प्रत्येक वेब ऐप के लिए अलग संग्रहण का समर्थन नहीं करता। कुकी और साइट डेटा सभी वेब ऐप के बीच साझा होते हैं और वैश्विक कुकी सेटिंग लागू होती हैं।</string>
+    <string name="au5_webapps3_clear_this">इस वेब ऐप की कुकी और साइट डेटा साफ़ करें</string>
+    <string name="au5_webapps3_clear_done">कुकी और साइट डेटा साफ़ किया गया</string>
+    <string name="au5_wgtorrent_title">Telos Network WireGuard के माध्यम से टोरेंट</string>
+    <string name="au5_wgtorrent_desc">टोरेंट (Telos Downloads और Telos Video) केवल Telos Network के चुने गए WireGuard प्रॉक्सी के माध्यम से कनेक्ट होते हैं। इसके लिए Telos एक स्थानीय HTTP प्रॉक्सी खोलता है, जो केवल तब मौजूद रहता है जब Telos Network चालू हो और प्रॉक्सी कनेक्ट हो। अन्यथा टोरेंट प्रतीक्षा करते हैं और कुछ भी सीधे कनेक्ट नहीं होता। यह टोरेंट के लिए ऊपर दिए गए प्रॉक्सी की जगह लेता है। HTTP प्रॉक्सी केवल TCP चलाता है, इसलिए DHT और uTP बंद कर दिए जाते हैं। चलने के दौरान, इस डिवाइस के अन्य ऐप भी स्थानीय प्रॉक्सी का उपयोग कर सकते हैं।</string>
+    <string name="au5_wgtorrent_none">उपयोग नहीं किया गया</string>
+    <string name="au5_wgtorrent_no_configs">Telos Network में अभी कोई WireGuard प्रॉक्सी नहीं है।</string>
+    <string name="au5_wgtorrent_summary">WireGuard के माध्यम से टोरेंट: %1$s</string>
+    <string name="au5_wgtorrent_removed">हटाया गया प्रॉक्सी</string>
+    <string name="au5_wgtorrent_status_ready">टोरेंट Telos Network के WireGuard प्रॉक्सी %1$s का उपयोग करते हैं।</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">टोरेंट प्रतीक्षा में: Telos Network नहीं चल रहा है।</string>
+    <string name="au5_wgtorrent_blocked_missing">टोरेंट प्रतीक्षा में: चुना गया WireGuard प्रॉक्सी अब मौजूद नहीं है।</string>
+    <string name="au5_wgtorrent_blocked_disabled">टोरेंट प्रतीक्षा में: चुना गया WireGuard प्रॉक्सी बंद है।</string>
+    <string name="au5_wgtorrent_blocked_down">टोरेंट प्रतीक्षा में: चुना गया WireGuard प्रॉक्सी कनेक्ट नहीं है।</string>
+    <string name="au5_wgtorrent_blocked_error">टोरेंट प्रतीक्षा में: Telos Network स्थानीय प्रॉक्सी नहीं खोल सका।</string>
+</resources>

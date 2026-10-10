@@ -49,6 +49,24 @@ interface WebAppShortcut : SavableSearchable {
      */
     val adBlockMode: AdBlockMode
 
+    /**
+     * Per web app cookie options (embedded WebView only). Both default to [CookieMode.Global]
+     * so existing and restored web apps keep following the global settings.
+     */
+    val cookieOptions: CookieOptions
+
+    enum class CookieMode {
+        /** Follow the global setting. */
+        Global,
+        Accept,
+        Block,
+    }
+
+    data class CookieOptions(
+        val cookies: CookieMode = CookieMode.Global,
+        val thirdPartyCookies: CookieMode = CookieMode.Global,
+    )
+
     enum class AdBlockMode {
         /** Follow the global setting. */
         Global,

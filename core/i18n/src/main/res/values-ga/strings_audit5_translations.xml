@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">Stáisiúin raidió</string>
+    <string name="au5_radiosearch_pref_summary">Taispeáin do stáisiúin ghlóir Telos Radio is fearr leat i dtorthaí cuardaigh agus seinn iad le tadhall amháin</string>
+    <string name="au5_radiosearch_play">Seinn %1$s</string>
+    <string name="au5_radiosearch_stop">Stop %1$s</string>
+    <string name="au5_webapps3_cookie_accept">Glac leis</string>
+    <string name="au5_webapps3_cookie_block">Bloc</string>
+    <string name="au5_webapps3_cookies_isolated">Stóráiltear fianáin agus sonraí suímh an aip ghréasáin seo scartha ó gach aip ghréasáin eile. Leanann “Úsáid an socrú domhanda” socruithe fianán scáileán na n-aipeanna gréasáin.</string>
+    <string name="au5_webapps3_cookies_unsupported">Ní thacaíonn an WebView suiteáilte le stóras ar leith in aghaidh an aip ghréasáin. Roinntear fianáin agus sonraí suímh idir gach aip ghréasáin agus baineann na socruithe fianán domhanda leo.</string>
+    <string name="au5_webapps3_clear_this">Glan fianáin agus sonraí suímh an aip ghréasáin seo</string>
+    <string name="au5_webapps3_clear_done">Glanadh na fianáin agus na sonraí suímh</string>
+    <string name="au5_wgtorrent_title">Torrents trí WireGuard de chuid Telos Network</string>
+    <string name="au5_wgtorrent_desc">Ní nascann torrents (Telos Downloads agus Telos Video) ach tríd an seachfhreastalaí WireGuard roghnaithe de chuid Telos Network. Osclaíonn Telos seachfhreastalaí HTTP áitiúil dó sin, nach bhfuil ann ach fad is atá Telos Network air agus an seachfhreastalaí nasctha. Seachas sin fanann torrents agus ní nascann aon rud go díreach. Cuireann sé seo an seachfhreastalaí thuas in ionad do torrents. Iompraíonn seachfhreastalaí HTTP TCP amháin, mar sin tá DHT agus uTP múchta. Fad is atá sé ag rith, d’fhéadfadh aipeanna eile ar an ngléas seo an seachfhreastalaí áitiúil a úsáid freisin.</string>
+    <string name="au5_wgtorrent_none">Gan úsáid</string>
+    <string name="au5_wgtorrent_no_configs">Níl aon seachfhreastalaí WireGuard i Telos Network go fóill.</string>
+    <string name="au5_wgtorrent_summary">Torrents trí WireGuard: %1$s</string>
+    <string name="au5_wgtorrent_removed">seachfhreastalaí bainte</string>
+    <string name="au5_wgtorrent_status_ready">Úsáideann torrents seachfhreastalaí WireGuard %1$s de chuid Telos Network.</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">Fanann torrents: níl Telos Network ag rith.</string>
+    <string name="au5_wgtorrent_blocked_missing">Fanann torrents: níl an seachfhreastalaí WireGuard roghnaithe ann a thuilleadh.</string>
+    <string name="au5_wgtorrent_blocked_disabled">Fanann torrents: tá an seachfhreastalaí WireGuard roghnaithe múchta.</string>
+    <string name="au5_wgtorrent_blocked_down">Fanann torrents: níl an seachfhreastalaí WireGuard roghnaithe nasctha.</string>
+    <string name="au5_wgtorrent_blocked_error">Fanann torrents: níorbh fhéidir le Telos Network an seachfhreastalaí áitiúil a oscailt.</string>
+</resources>

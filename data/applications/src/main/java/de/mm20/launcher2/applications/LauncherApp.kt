@@ -230,23 +230,36 @@ internal data class LauncherApp(
     override val canShareApk: Boolean = true
     override suspend fun shareApkFile(context: Context) {
         val launcherApps = context.getSystemService<LauncherApps>()!!
-        val fileCopy = java.io.File(
-            context.cacheDir,
-            "${componentName.packageName}-${versionName}.apk"
-        )
-        withContext(Dispatchers.IO) {
+        // an app made of several APK files (splits) is shared as one .apks archive with all parts, a plain app as its .apk
+        val result: Pair<java.io.File, String>? = withContext(Dispatchers.IO) {
             try {
                 val info = launcherApps.getApplicationInfo(componentName.packageName, 0, user)
-                val file = java.io.File(info.publicSourceDir)
-
-                try {
-                    file.copyTo(fileCopy, false)
-                } catch (e: FileAlreadyExistsException) {
-                    // Do nothing. If the file is already there we don't have to copy it again.
+                val parts = (listOf(info.publicSourceDir) + (info.splitPublicSourceDirs?.toList() ?: emptyList()))
+                    .filterNotNull().map { java.io.File(it) }.filter { it.isFile && it.canRead() }
+                if (parts.isEmpty()) return@withContext null
+                val dir = java.io.File(context.cacheDir, "share").apply { mkdirs() }
+                val base = "${componentName.packageName}-${versionName}".replace(Regex("[^A-Za-z0-9._-]"), "_")
+                if (parts.size == 1) {
+                    val copy = java.io.File(dir, "$base.apk")
+                    parts[0].copyTo(copy, true)
+                    copy to "application/vnd.android.package-archive"
+                } else {
+                    val copy = java.io.File(dir, "$base.apks")
+                    java.util.zip.ZipOutputStream(copy.outputStream().buffered()).use { zip ->
+                        parts.forEach { f ->
+                            zip.putNextEntry(java.util.zip.ZipEntry(f.name))
+                            f.inputStream().use { it.copyTo(zip) }
+                            zip.closeEntry()
+                        }
+                    }
+                    copy to "application/zip"
                 }
-            } catch (e: PackageManager.NameNotFoundException) {
+            } catch (e: Exception) {
+                null
             }
         }
+        if (result == null) return
+        val (fileCopy, mime) = result
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         val uri = FileProvider.getUriForFile(
@@ -255,7 +268,8 @@ internal data class LauncherApp(
             fileCopy
         )
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-        shareIntent.type = "application/vnd.android.package-archive"
+        shareIntent.clipData = android.content.ClipData.newRawUri(null, uri)
+        shareIntent.type = mime
         withContext(Dispatchers.Main) {
             context.startActivity(Intent.createChooser(shareIntent, null))
         }
