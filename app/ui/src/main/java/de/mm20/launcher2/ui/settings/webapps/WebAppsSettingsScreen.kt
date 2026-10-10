@@ -64,6 +64,12 @@ fun WebAppsSettingsScreen() {
     val swipeToSwitchEnabled by viewModel.swipeToSwitchEnabled.collectAsState()
     val groupsEnabled by viewModel.groupsEnabled.collectAsState()
     val groups by viewModel.groups.collectAsState()
+    val userAgentMode by viewModel.userAgentMode.collectAsState()
+    val customUserAgent by viewModel.customUserAgent.collectAsState()
+    val cookiesEnabled by viewModel.cookiesEnabled.collectAsState()
+    val thirdPartyCookiesEnabled by viewModel.thirdPartyCookiesEnabled.collectAsState()
+    var showCustomUserAgentDialog by remember { mutableStateOf(false) }
+    var showClearCookiesDialog by remember { mutableStateOf(false) }
 
     var showCreateGroupDialog by remember { mutableStateOf(false) }
     var groupToRename by remember { mutableStateOf<de.mm20.launcher2.preferences.WebAppGroup?>(null) }
@@ -214,6 +220,46 @@ fun WebAppsSettingsScreen() {
                     value = swipeToSwitchEnabled,
                     onValueChanged = { viewModel.setSwipeToSwitchEnabled(it) },
                 )
+                ListPreference(
+                    title = stringResource(R.string.au4_webapps2_user_agent),
+                    items = listOf(
+                        ListPreferenceItem(stringResource(R.string.au4_webapps2_user_agent_default), WebAppUserAgents.MODE_DEFAULT),
+                        ListPreferenceItem(stringResource(R.string.au4_webapps2_user_agent_desktop), WebAppUserAgents.MODE_DESKTOP),
+                        ListPreferenceItem(stringResource(R.string.au4_webapps2_user_agent_custom), WebAppUserAgents.MODE_CUSTOM),
+                    ),
+                    value = userAgentMode,
+                    onValueChanged = {
+                        if (it != null) {
+                            viewModel.setUserAgentMode(it)
+                            if (it == WebAppUserAgents.MODE_CUSTOM) showCustomUserAgentDialog = true
+                        }
+                    },
+                )
+                if (userAgentMode == WebAppUserAgents.MODE_CUSTOM) {
+                    Preference(
+                        title = stringResource(R.string.au4_webapps2_user_agent_custom_title),
+                        summary = customUserAgent.ifEmpty { stringResource(R.string.au4_webapps2_user_agent_default) },
+                        onClick = { showCustomUserAgentDialog = true },
+                    )
+                }
+                SwitchPreference(
+                    title = stringResource(R.string.au4_webapps2_cookies),
+                    summary = stringResource(R.string.au4_webapps2_cookies_summary),
+                    value = cookiesEnabled,
+                    onValueChanged = { viewModel.setCookiesEnabled(it) },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.au4_webapps2_third_party_cookies),
+                    summary = stringResource(R.string.au4_webapps2_third_party_cookies_summary),
+                    enabled = cookiesEnabled,
+                    value = thirdPartyCookiesEnabled && cookiesEnabled,
+                    onValueChanged = { viewModel.setThirdPartyCookiesEnabled(it) },
+                )
+                Preference(
+                    title = stringResource(R.string.au4_webapps2_clear_cookies),
+                    summary = stringResource(R.string.au4_webapps2_clear_cookies_summary),
+                    onClick = { showClearCookiesDialog = true },
+                )
             }
         }
         item {
@@ -329,6 +375,59 @@ fun WebAppsSettingsScreen() {
         onFindFavicon = { url -> viewModel.findFavicon(url) },
         onExportIconPackIcon = { customIcon, sizePx -> viewModel.exportIconPackIcon(customIcon, sizePx) },
     )
+
+    if (showCustomUserAgentDialog) {
+        var userAgentText by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(customUserAgent) }
+        AlertDialog(
+            onDismissRequest = { showCustomUserAgentDialog = false },
+            title = { Text(stringResource(R.string.au4_webapps2_user_agent_custom_title)) },
+            text = {
+                OutlinedTextField(
+                    value = userAgentText,
+                    onValueChange = { userAgentText = it },
+                    label = { Text(stringResource(R.string.au4_webapps2_user_agent_custom_hint)) },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.setCustomUserAgent(userAgentText)
+                    showCustomUserAgentDialog = false
+                }) { Text(stringResource(android.R.string.ok)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { showCustomUserAgentDialog = false }) {
+                    Text(stringResource(android.R.string.cancel))
+                }
+            }
+        )
+    }
+
+    if (showClearCookiesDialog) {
+        AlertDialog(
+            onDismissRequest = { showClearCookiesDialog = false },
+            title = { Text(stringResource(R.string.au4_webapps2_clear_cookies)) },
+            text = { Text(stringResource(R.string.au4_webapps2_clear_cookies_confirm)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    showClearCookiesDialog = false
+                    viewModel.clearCookiesAndSiteData {
+                        android.widget.Toast.makeText(
+                            context,
+                            context.getString(R.string.au4_webapps2_clear_cookies_done),
+                            android.widget.Toast.LENGTH_SHORT,
+                        ).show()
+                    }
+                }) { Text(stringResource(R.string.au4_webapps2_clear_cookies_action)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { showClearCookiesDialog = false }) {
+                    Text(stringResource(android.R.string.cancel))
+                }
+            }
+        )
+    }
 
     if (showCreateGroupDialog) {
         var groupName by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf("") }

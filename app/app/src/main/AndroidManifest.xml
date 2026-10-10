@@ -81,6 +81,16 @@
             </intent-filter>
         </activity>
 
+        <!-- Persists the language chosen in the in-app picker on Android versions before 13 -->
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
+
         <provider
             android:name=".content.GenericFileProvider"
             android:authorities="${applicationId}.fileprovider"

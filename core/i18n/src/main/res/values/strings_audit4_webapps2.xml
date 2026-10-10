@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au4_webapps2_user_agent">User agent</string>
+    <string name="au4_webapps2_user_agent_default">Default (mobile)</string>
+    <string name="au4_webapps2_user_agent_desktop">Desktop</string>
+    <string name="au4_webapps2_user_agent_custom">Custom</string>
+    <string name="au4_webapps2_user_agent_custom_title">Custom user agent</string>
+    <string name="au4_webapps2_user_agent_custom_hint">User agent string</string>
+    <string name="au4_webapps2_cookies">Accept cookies</string>
+    <string name="au4_webapps2_cookies_summary">Websites in web apps can store cookies. Turn off to block all cookies; you may not be able to stay signed in.</string>
+    <string name="au4_webapps2_third_party_cookies">Accept third-party cookies</string>
+    <string name="au4_webapps2_third_party_cookies_summary">Allow embedded content from other sites to set cookies. Disabled by default for privacy.</string>
+    <string name="au4_webapps2_clear_cookies">Clear cookies and site data</string>
+    <string name="au4_webapps2_clear_cookies_summary">Signs you out of all web apps and removes cached site data</string>
+    <string name="au4_webapps2_clear_cookies_confirm">Remove all cookies and site data of web apps?</string>
+    <string name="au4_webapps2_clear_cookies_done">Cookies and site data cleared</string>
+    <string name="au4_webapps2_clear_cookies_action">Clear</string>
+</resources>

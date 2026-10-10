@@ -29,6 +29,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.AlertDialog
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -172,13 +176,28 @@ fun PluginSettingsScreen(pluginId: String) {
                             contentDescription = stringResource(R.string.menu_app_info)
                         )
                     }
+                    var confirmUninstall by remember { mutableStateOf(false) }
+                    if (confirmUninstall) {
+                        AlertDialog(
+                            onDismissRequest = { confirmUninstall = false },
+                            title = { Text(stringResource(R.string.au4_confirms_plugin_title)) },
+                            text = { Text(stringResource(R.string.au4_confirms_plugin_message)) },
+                            confirmButton = {
+                                TextButton(onClick = {
+                                    confirmUninstall = false
+                                    viewModel.uninstall(context)
+                if (backStack.size <= 1) {
+                    activity?.onBackPressed()
+                } else {
+                    backStack.removeLastOrNull()
+                }
+                                }) { Text(stringResource(R.string.au4_confirms_confirm)) }
+                            },
+                            dismissButton = { TextButton(onClick = { confirmUninstall = false }) { Text(stringResource(R.string.au4_confirms_cancel)) } },
+                        )
+                    }
                     IconButton(onClick = {
-                        viewModel.uninstall(context)
-                        if (backStack.size <= 1) {
-                            activity?.onBackPressed()
-                        } else {
-                            backStack.removeLastOrNull()
-                        }
+                        confirmUninstall = true
                     }) {
                         Icon(
                             painterResource(R.drawable.delete_24px),

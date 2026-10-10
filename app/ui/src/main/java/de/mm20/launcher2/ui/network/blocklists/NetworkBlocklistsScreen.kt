@@ -11,6 +11,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -194,11 +195,26 @@ fun NetworkBlocklistsScreen() {
                 item { de.mm20.launcher2.ui.component.SearchEmptyState(bq.trim()) }
             }
             item {
+                var confirmResetCounts by remember { mutableStateOf(false) }
+                if (confirmResetCounts) {
+                    AlertDialog(
+                        onDismissRequest = { confirmResetCounts = false },
+                        title = { Text(stringResource(R.string.au4_confirms_counts_title)) },
+                        text = { Text(stringResource(R.string.au4_confirms_counts_message)) },
+                        confirmButton = {
+                            TextButton(onClick = {
+                                confirmResetCounts = false
+                                scope.launch { blocklists.resetCounts() }
+                            }) { Text(stringResource(R.string.au4_confirms_confirm)) }
+                        },
+                        dismissButton = { TextButton(onClick = { confirmResetCounts = false }) { Text(stringResource(R.string.au4_confirms_cancel)) } },
+                    )
+                }
                 PreferenceCategory {
                     Preference(
                         title = stringResource(R.string.netfw_b_reset_counts),
                         icon = IconsNetworkBlocklistsScreen.settings_backup_restore_24px,
-                        onClick = { scope.launch { blocklists.resetCounts() } },
+                        onClick = { confirmResetCounts = true },
                     )
                 }
             }

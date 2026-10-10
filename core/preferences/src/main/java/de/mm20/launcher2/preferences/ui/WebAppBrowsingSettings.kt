@@ -48,6 +48,35 @@ class WebAppBrowsingSettings internal constructor(
         dataStore.update { it.copy(webAppBrowsing = it.webAppBrowsing.copy(webAppSwipeToSwitchEnabled = enabled)) }
     }
 
+    /** "default", "desktop" or "custom". */
+    val userAgentMode
+        get() = dataStore.data.map { it.webAppBrowsing.webAppUserAgentMode }.distinctUntilChanged()
+
+    fun setUserAgentMode(mode: String) {
+        dataStore.update { it.copy(webAppBrowsing = it.webAppBrowsing.copy(webAppUserAgentMode = mode)) }
+    }
+
+    val customUserAgent
+        get() = dataStore.data.map { it.webAppBrowsing.webAppCustomUserAgent }.distinctUntilChanged()
+
+    fun setCustomUserAgent(userAgent: String) {
+        dataStore.update { it.copy(webAppBrowsing = it.webAppBrowsing.copy(webAppCustomUserAgent = userAgent)) }
+    }
+
+    val cookiesEnabled
+        get() = dataStore.data.map { it.webAppBrowsing.webAppCookiesEnabled }.distinctUntilChanged()
+
+    fun setCookiesEnabled(enabled: Boolean) {
+        dataStore.update { it.copy(webAppBrowsing = it.webAppBrowsing.copy(webAppCookiesEnabled = enabled)) }
+    }
+
+    val thirdPartyCookiesEnabled
+        get() = dataStore.data.map { it.webAppBrowsing.webAppThirdPartyCookiesEnabled }.distinctUntilChanged()
+
+    fun setThirdPartyCookiesEnabled(enabled: Boolean) {
+        dataStore.update { it.copy(webAppBrowsing = it.webAppBrowsing.copy(webAppThirdPartyCookiesEnabled = enabled)) }
+    }
+
     val groupsEnabled
         get() = dataStore.data.map { it.webAppBrowsing.webAppGroupsEnabled }.distinctUntilChanged()
 
