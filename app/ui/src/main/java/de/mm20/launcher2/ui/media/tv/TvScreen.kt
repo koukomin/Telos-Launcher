@@ -44,10 +44,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -67,7 +70,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.comms.tv.TvChannel
 import de.mm20.launcher2.comms.tv.TvIndex
@@ -77,6 +83,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.share.ShareActions
 import de.mm20.launcher2.ui.media.MediaFrame
 import de.mm20.launcher2.ui.media.MediaSearchBar
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import java.util.Locale
@@ -95,6 +102,7 @@ fun TvScreen() {
 
     val disclaimer by vm.disclaimerShown.collectAsStateWithLifecycle()
     val load by vm.load.collectAsStateWithLifecycle()
+    val disclaimerGreece by vm.disclaimerGreece.collectAsStateWithLifecycle()
     val playerOpen by vm.playerOpen.collectAsStateWithLifecycle()
     val current by vm.controller.currentChannel.collectAsStateWithLifecycle()
     val favoriteIds by vm.favoriteIds.collectAsStateWithLifecycle()
@@ -178,7 +186,7 @@ fun TvScreen() {
         },
     ) {
         when {
-            !disclaimer -> DisclaimerCard(onAccept = { vm.accept() })
+            !disclaimer -> DisclaimerCard(onAccept = { vm.accept() }, greece = disclaimerGreece)
             load == TvLoad.Ready -> TvHomeContent(
                 vm = vm,
                 reduceAnimations = reduceAnimations,
@@ -231,7 +239,7 @@ fun TvScreen() {
 }
 
 @Composable
-private fun DisclaimerCard(onAccept: () -> Unit) {
+private fun DisclaimerCard(onAccept: () -> Unit, greece: Boolean) {
     Column(
         Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp),
         verticalArrangement = Arrangement.Center,
@@ -244,6 +252,9 @@ private fun DisclaimerCard(onAccept: () -> Unit) {
                     fontWeight = FontWeight.Bold,
                 )
                 Text(stringResource(R.string.au12_tvui_disclaimer_text), style = MaterialTheme.typography.bodyMedium)
+                if (greece) {
+                    Text(stringResource(R.string.au13_tvextraui_disclaimer_extra), style = MaterialTheme.typography.bodyMedium)
+                }
                 Button(onClick = onAccept, modifier = Modifier.align(Alignment.End)) {
                     Text(stringResource(R.string.au12_tvui_accept))
                 }
@@ -252,8 +263,50 @@ private fun DisclaimerCard(onAccept: () -> Unit) {
     }
 }
 
+/**
+ * A key that changes when the programme guide changed, when it was switched, when Greece was (de)selected and
+ * every minute while the screen is at least started. [refresh] also asks for a (silent, rate limited) guide
+ * refresh each time the screen starts or resumes.
+ */
+@Composable
+fun rememberTvEpgKey(vm: TvViewModel, refresh: Boolean): Any {
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    val version by vm.epgVersion.collectAsStateWithLifecycle()
+    val enabled by vm.epgEnabled.collectAsStateWithLifecycle()
+    val greece by vm.greeceSelected.collectAsStateWithLifecycle()
+    var minute by remember { mutableIntStateOf(0) }
+    LaunchedEffect(refresh) {
+        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            if (refresh) vm.refreshEpg()
+            minute++
+            while (true) {
+                delay(60_000)
+                minute++
+            }
+        }
+    }
+    return remember(version, enabled, greece, minute) { Any() }
+}
+
 @Composable
 private fun TvHomeContent(
+    vm: TvViewModel,
+    reduceAnimations: Boolean,
+    onEdit: (TvChannel) -> Unit,
+    onDelete: (TvChannel) -> Unit,
+    onShowCountries: () -> Unit,
+) {
+    val key = rememberTvEpgKey(vm, refresh = true)
+    val playerOpen by vm.playerOpen.collectAsStateWithLifecycle()
+    val bad = remember(key, playerOpen) { vm.badStreamUrls() }
+    val info = remember(key, bad) { TvCardInfo(key, { vm.nowNext(it) }, bad) }
+    CompositionLocalProvider(LocalTvCardInfo provides info) {
+        TvHomeBody(vm, reduceAnimations, onEdit, onDelete, onShowCountries)
+    }
+}
+
+@Composable
+private fun TvHomeBody(
     vm: TvViewModel,
     reduceAnimations: Boolean,
     onEdit: (TvChannel) -> Unit,
@@ -494,6 +547,9 @@ private fun TvCountrySheet(vm: TvViewModel, onDismiss: () -> Unit) {
     val languages by vm.languages.collectAsStateWithLifecycle()
     val selected by vm.selectedCountries.collectAsStateWithLifecycle()
     val selectedLangs by vm.selectedLanguages.collectAsStateWithLifecycle()
+    val greece by vm.greeceSelected.collectAsStateWithLifecycle()
+    val extraPlaylists by vm.extraPlaylistsEnabled.collectAsStateWithLifecycle()
+    val epgOn by vm.epgEnabled.collectAsStateWithLifecycle()
     var search by rememberSaveable { mutableStateOf("") }
     val shown = remember(countries, search) {
         val q = search.trim()
@@ -554,6 +610,22 @@ private fun TvCountrySheet(vm: TvViewModel, onDismiss: () -> Unit) {
                 modifier = Modifier.fillMaxWidth().padding(16.dp),
             )
             LazyColumn(Modifier.weight(1f)) {
+                if (greece) {
+                    item(key = "extra:playlists") {
+                        ExtraSwitchRow(
+                            stringResource(R.string.au13_tvextra_playlists_title),
+                            stringResource(R.string.au13_tvextra_playlists_summary),
+                            extraPlaylists,
+                        ) { vm.setExtraPlaylists(it) }
+                    }
+                    item(key = "extra:epg") {
+                        ExtraSwitchRow(
+                            stringResource(R.string.au13_tvextra_epg_title),
+                            stringResource(R.string.au13_tvextra_epg_summary),
+                            epgOn,
+                        ) { vm.setEpg(it) }
+                    }
+                }
                 items(shown, key = { it.code }) { c ->
                     val isSel = c.code in selected
                     Row(
@@ -577,6 +649,23 @@ private fun TvCountrySheet(vm: TvViewModel, onDismiss: () -> Unit) {
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun ExtraSwitchRow(title: String, summary: String, checked: Boolean, onChange: (Boolean) -> Unit) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clickable { onChange(!checked) }
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Column(Modifier.weight(1f).padding(end = 12.dp)) {
+            Text(title, style = MaterialTheme.typography.bodyLarge)
+            Text(summary, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        Switch(checked = checked, onCheckedChange = null)
     }
 }
 

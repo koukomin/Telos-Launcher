@@ -11,6 +11,9 @@ import de.mm20.launcher2.comms.tv.TvChannel
 import de.mm20.launcher2.comms.tv.TvCategory
 import de.mm20.launcher2.comms.tv.TvCountry
 import de.mm20.launcher2.comms.tv.TvCustomChannel
+import de.mm20.launcher2.comms.tv.TvEpg
+import de.mm20.launcher2.comms.tv.TvExtraSources
+import de.mm20.launcher2.comms.tv.TvProgrammes
 import de.mm20.launcher2.comms.tv.TvImportResult
 import de.mm20.launcher2.comms.tv.TvIndex
 import de.mm20.launcher2.comms.tv.TvLanguage
@@ -61,7 +64,53 @@ class TvViewModel : ViewModel(), KoinComponent {
     private val backup: TvBackup by inject()
     private val commsSettings: CommsSettings by inject()
     private val appContext: Context by inject()
+    private val epg: TvEpg by inject()
+    private val extraSources: TvExtraSources by inject()
     val controller: TvPlayerController by inject()
+
+    // ---- optional extra Greek sources and programme guide ----
+
+    val extraPlaylistsEnabled: StateFlow<Boolean> get() = settings.extraPlaylistsEnabled
+    val epgEnabled: StateFlow<Boolean> get() = settings.epgEnabled
+    val epgVersion: StateFlow<Int> get() = epg.epgVersion
+    val greeceSelected: StateFlow<Boolean> = settings.selectedCountries.map { "GR" in it }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, settings.greeceSelected())
+
+    private val homeIsGreece = MutableStateFlow(false)
+
+    /** Greece is selected, or is the home country that will be selected after accepting (first run) */
+    val disclaimerGreece: StateFlow<Boolean> = combine(greeceSelected, homeIsGreece) { a, b -> a || b }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, false)
+
+    init {
+        viewModelScope.launch {
+            homeIsGreece.value = withContext(Dispatchers.Default) {
+                runCatching { HomeCountry.resolve(appContext, commsSettings.homeCountry.first()) }.getOrDefault("")
+            }.equals("GR", ignoreCase = true)
+        }
+    }
+
+    fun setExtraPlaylists(enabled: Boolean) {
+        settings.setExtraPlaylistsEnabled(enabled)
+        viewModelScope.launch { runCatching { extraSources.load() } }
+    }
+
+    fun setEpg(enabled: Boolean) {
+        settings.setEpgEnabled(enabled)
+        if (enabled) refreshEpg()
+    }
+
+    /** Silent; loads the cached guide and updates it when it is older than 6 hours */
+    fun refreshEpg() {
+        if (!settings.disclaimerShown.value) return
+        viewModelScope.launch { runCatching { epg.refreshEpgIfStale() } }
+    }
+
+    /** What is on now / next on [channelId]; null when there is no guide data */
+    fun nowNext(channelId: String): TvProgrammes? = epg.nowNext(channelId)
+
+    /** URLs of streams that failed recently */
+    fun badStreamUrls(): Set<String> = settings.badStreams().keys
 
     val disclaimerShown: StateFlow<Boolean> get() = settings.disclaimerShown
     val selectedCountries: StateFlow<List<String>> get() = settings.selectedCountries
@@ -130,7 +179,17 @@ class TvViewModel : ViewModel(), KoinComponent {
 
     fun setQuery(q: String) { _query.value = q.take(100) }
     fun setCategory(id: String?) { _category.value = id }
-    fun setCountries(codes: List<String>) = settings.setSelectedCountries(codes)
+    fun setCountries(codes: List<String>) {
+        settings.setSelectedCountries(codes)
+        if (settings.greeceSelected()) {
+            viewModelScope.launch {
+                runCatching { extraSources.load() }
+                runCatching { epg.refreshEpgIfStale() }
+            }
+        } else {
+            viewModelScope.launch { runCatching { extraSources.load() } }
+        }
+    }
     fun setLanguages(codes: List<String>) = settings.setSelectedLanguages(codes)
 
     val countries: StateFlow<List<TvCountry>> = index.map { it?.countries(Locale.getDefault()).orEmpty() }

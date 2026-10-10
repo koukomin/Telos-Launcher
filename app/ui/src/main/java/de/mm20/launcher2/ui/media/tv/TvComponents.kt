@@ -28,13 +28,18 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -47,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import de.mm20.launcher2.comms.tv.TvChannel
+import de.mm20.launcher2.comms.tv.TvProgrammes
 import de.mm20.launcher2.ui.R
 
 /** Actions of the long-press menu of a channel; null entries are not shown */
@@ -58,6 +64,18 @@ class TvCardActions(
     val onMoveBefore: (() -> Unit)? = null,
     val onMoveAfter: (() -> Unit)? = null,
 )
+
+/**
+ * What the channel cards need besides the channel: the programme guide lookup, a key that changes when the
+ * guide or the minute changed (so remembered values are recomputed), and the URLs of streams that fail.
+ */
+class TvCardInfo(
+    val key: Any = 0,
+    val nowNext: (String) -> TvProgrammes? = { null },
+    val badUrls: Set<String> = emptySet(),
+)
+
+val LocalTvCardInfo = compositionLocalOf { TvCardInfo() }
 
 /** Rounded tile with the channel logo; the first letter of the name when there is no logo or it fails to load */
 @Composable
@@ -138,6 +156,11 @@ fun TvChannelCard(
     modifier: Modifier = Modifier,
 ) {
     var menu by remember { mutableStateOf(false) }
+    val info = LocalTvCardInfo.current
+    val nowTitle = remember(info.key, channel.id) { info.nowNext(channel.id)?.current?.title }
+    val offline = remember(info.badUrls, channel.id) {
+        channel.streams.isNotEmpty() && channel.streams.all { it.url in info.badUrls }
+    }
     Box(modifier) {
         Column(
             Modifier
@@ -148,6 +171,25 @@ fun TvChannelCard(
         ) {
             Box(Modifier.fillMaxWidth().height(72.dp)) {
                 TvLogo(channel, Modifier.fillMaxSize())
+                if (offline) {
+                    TvStaticMini(Modifier.fillMaxSize().clip(RoundedCornerShape(16.dp)).alpha(0.6f))
+                }
+                if (channel.isExtra) {
+                    val desc = stringResource(R.string.au13_tvextra_marker_description)
+                    Text(
+                        stringResource(R.string.au13_tvextra_marker),
+                        fontSize = 9.sp,
+                        maxLines = 1,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer,
+                        modifier = Modifier
+                            .align(Alignment.TopStart)
+                            .padding(4.dp)
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.85f))
+                            .padding(horizontal = 4.dp, vertical = 1.dp)
+                            .semantics { contentDescription = desc },
+                    )
+                }
                 if (playing) {
                     TvEqualizer(reduceAnimations, Modifier.align(Alignment.BottomStart).padding(6.dp))
                 }
@@ -174,6 +216,17 @@ fun TvChannelCard(
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
             )
+            if (nowTitle != null) {
+                Text(
+                    stringResource(R.string.au13_tvextraui_now_line, nowTitle),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
         }
         DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
             DropdownMenuItem(

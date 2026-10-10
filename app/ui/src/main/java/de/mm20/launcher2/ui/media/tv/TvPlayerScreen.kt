@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.media.tv
 
+import android.text.format.DateFormat
 import android.view.View
 import android.view.WindowManager
 import androidx.compose.animation.AnimatedVisibility
@@ -8,6 +9,7 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -17,14 +19,21 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,6 +51,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -60,6 +70,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.media3.ui.PlayerView
 import de.mm20.launcher2.comms.tv.TvPlayerError
+import de.mm20.launcher2.comms.tv.TvProgramme
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.delay
 
@@ -68,6 +79,7 @@ import kotlinx.coroutines.delay
  * screen kept on. Tap shows or hides the controls, a vertical swipe zaps to the next / previous
  * channel of the list. Back minimizes: the channel keeps playing in the mini player.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TvPlayerDialog(
     viewModel: TvViewModel,
@@ -83,6 +95,9 @@ fun TvPlayerDialog(
     val recovering by controller.isRecovering.collectAsStateWithLifecycle()
     val error by controller.error.collectAsStateWithLifecycle()
     val streamIndex by controller.streamIndex.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val epgKey = rememberTvEpgKey(viewModel, refresh = false)
+    var epgSheet by remember { mutableStateOf(false) }
 
     Dialog(
         onDismissRequest = onMinimize,
@@ -110,8 +125,8 @@ fun TvPlayerDialog(
 
         var controls by remember { mutableStateOf(true) }
         // controls fade out after a while when the picture plays
-        LaunchedEffect(controls, playing, channel?.id) {
-            if (controls && playing) {
+        LaunchedEffect(controls, playing, channel?.id, epgSheet) {
+            if (controls && playing && !epgSheet) {
                 delay(4000)
                 controls = false
             }
@@ -134,6 +149,11 @@ fun TvPlayerDialog(
                 update = { view -> if (view.player !== player) view.player = player },
                 onRelease = { view -> view.player = null },
             )
+
+            // no picture and nothing left to try: analog TV noise
+            if (error != null) {
+                TvStatic(Modifier.fillMaxSize(), reduceAnimations = reduceAnimations)
+            }
 
             // gestures: tap toggles the controls, swipe up / down zaps
             Box(
@@ -165,16 +185,7 @@ fun TvPlayerDialog(
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
                         if (error != null) {
-                            Text(
-                                stringResource(
-                                    if (error == TvPlayerError.NO_STREAMS) R.string.au11_tvdata_error_no_streams
-                                    else R.string.au11_tvdata_error_all_failed
-                                ),
-                                color = Color.White,
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.bodyMedium,
-                            )
-                            Button(onClick = { controller.resume() }) { Text(stringResource(R.string.hc_retry)) }
+                            OfflinePanel(onRetry = { controller.resume() }, onBack = onMinimize)
                         } else {
                             CircularProgressIndicator(color = Color.White)
                             if (recovering) {
@@ -243,8 +254,63 @@ fun TvPlayerDialog(
                                 )
                             }
                         }
+                        val programmes = if (error == null) remember(epgKey, current.id) { viewModel.nowNext(current.id) } else null
+                        val nowProg = programmes?.current
+                        val nextProg = programmes?.next
+                        if (nowProg != null || nextProg != null) {
+                            val timeFormat = remember { DateFormat.getTimeFormat(context) }
+                            Column(
+                                Modifier
+                                    .align(Alignment.BottomCenter)
+                                    .fillMaxWidth()
+                                    .background(Brush.verticalGradient(listOf(Color.Transparent, Color(0xB3000000))))
+                                    .navigationBarsPadding()
+                                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                                verticalArrangement = Arrangement.spacedBy(4.dp),
+                            ) {
+                                if (nowProg != null) {
+                                    Text(
+                                        stringResource(
+                                            R.string.au13_tvextraui_player_now, nowProg.title,
+                                            timeFormat.format(java.util.Date(nowProg.start)),
+                                            timeFormat.format(java.util.Date(nowProg.stop)),
+                                        ),
+                                        color = Color.White,
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                        modifier = Modifier.fillMaxWidth().clickable { epgSheet = true },
+                                    )
+                                    val span = (nowProg.stop - nowProg.start).coerceAtLeast(1L)
+                                    val done = ((System.currentTimeMillis() - nowProg.start).toFloat() / span).coerceIn(0f, 1f)
+                                    LinearProgressIndicator(
+                                        progress = { done },
+                                        modifier = Modifier.fillMaxWidth().height(3.dp),
+                                        color = Color.White,
+                                        trackColor = Color(0x44FFFFFF),
+                                    )
+                                }
+                                if (nextProg != null) {
+                                    Text(
+                                        stringResource(
+                                            R.string.au13_tvextraui_player_next, nextProg.title,
+                                            timeFormat.format(java.util.Date(nextProg.start)),
+                                        ),
+                                        color = Color(0xCCFFFFFF),
+                                        style = MaterialTheme.typography.labelMedium,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                    )
+                                }
+                            }
+                            if (epgSheet && nowProg != null) {
+                                EpgSheet(nowProg, timeFormat, onDismiss = { epgSheet = false })
+                            }
+                        }
                         Row(
-                            Modifier.align(Alignment.Center),
+                            Modifier
+                                .align(if (error != null) Alignment.BottomCenter else Alignment.Center)
+                                .padding(bottom = if (error != null) 24.dp else 0.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.spacedBy(24.dp),
                         ) {
@@ -259,6 +325,72 @@ fun TvPlayerDialog(
                     }
                 }
             }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun EpgSheet(p: TvProgramme, timeFormat: java.text.DateFormat, onDismiss: () -> Unit) {
+    ModalBottomSheet(onDismissRequest = onDismiss) {
+        Column(
+            Modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = 24.dp, vertical = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Text(p.title, style = MaterialTheme.typography.titleLarge)
+            Text(
+                stringResource(
+                    R.string.au13_tvextraui_epg_sheet_range,
+                    timeFormat.format(java.util.Date(p.start)), timeFormat.format(java.util.Date(p.stop)),
+                ),
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary,
+            )
+            if (p.category.isNotBlank()) {
+                Text(p.category, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            if (p.description.isNotBlank()) {
+                Text(p.description, style = MaterialTheme.typography.bodyMedium)
+            }
+            Box(Modifier.height(16.dp))
+        }
+    }
+}
+
+/** Translucent panel over the static: the channel is offline after every stream was tried */
+@Composable
+private fun OfflinePanel(onRetry: () -> Unit, onBack: () -> Unit) {
+    Column(
+        Modifier
+            .padding(horizontal = 16.dp)
+            .clip(RoundedCornerShape(24.dp))
+            .background(Color(0xB3000000))
+            .padding(20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        Icon(
+            painterResource(R.drawable.wifi_off_24px),
+            contentDescription = stringResource(R.string.au13_tvextraui_static_description),
+            tint = Color.White,
+            modifier = Modifier.size(32.dp),
+        )
+        Text(
+            stringResource(R.string.au13_tvextraui_offline_title),
+            color = Color.White,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+        )
+        Text(
+            stringResource(R.string.au13_tvextraui_offline_hint),
+            color = Color(0xCCFFFFFF),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.bodyMedium,
+        )
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Button(onClick = onRetry) { Text(stringResource(R.string.hc_retry)) }
+            OutlinedButton(onClick = onBack) { Text(stringResource(R.string.au13_tvextraui_offline_back)) }
         }
     }
 }
