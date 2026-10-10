@@ -38,7 +38,9 @@ object TvExtraMerge {
         val folded = GreekText.fold(name.replace(BRACKETS, " "))
         val words = folded.split(SPLIT).filter { it.isNotEmpty() }.toMutableList()
         while (words.size > 1 && words.last() in SUFFIX_WORDS) words.removeAt(words.size - 1)
-        return GreekText.greekToLatin(words.joinToString(""))
+        val key = GreekText.greekToLatin(words.joinToString(""))
+        // "AlphaTV", "SkaiTV", "OpenTV" are the same channels as "Alpha", "Skai", "Open"
+        return if (key.length >= 6 && key.endsWith("tv")) key.dropLast(2) else key
     }
 
     /** Catalog category ids for a (Greek or English) playlist group; empty when not mappable */

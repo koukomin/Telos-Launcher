@@ -15,12 +15,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChip
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.runtime.getValue
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -85,6 +91,7 @@ internal fun MusicHome(
     unknownAlbum: String,
     unknownArtist: String,
     songsFormat: String,
+    reduceAnimations: Boolean = false,
 ) {
     val genres = remember(allTracks) { genresOf(allTracks) }
     val picks = remember(tracks, history) { quickPickAlbums(tracks, history, 9) }
@@ -104,37 +111,47 @@ internal fun MusicHome(
         tracks.filter { it.year > 1900 }.groupBy { it.year / 10 * 10 }.toSortedMap(compareByDescending<Int> { it })
             .map { (d, l) -> TrackGroup(decadeFormat.format(d), songsFormat.format(l.size), l.sortedBy { it.year }) }
     }
+    val haptic = LocalHapticFeedback.current
 
-    LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
-        if (genres.isNotEmpty()) item {
-            LazyRow(contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                item {
-                    FilterChip(selected = genre == null, onClick = { onGenre(null) }, label = { Text(stringResource(R.string.au10_music_genre_all)) })
+    LazyColumn(
+        contentPadding = PaddingValues(bottom = 112.dp),
+        verticalArrangement = Arrangement.spacedBy(24.dp),
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        if (genres.isNotEmpty()) item(key = "genres") {
+            LazyRow(contentPadding = PaddingValues(horizontal = 20.dp, vertical = 4.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                item(key = "all") {
+                    GenrePill(stringResource(R.string.au10_music_genre_all), genre == null, reduceAnimations) {
+                        haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove); onGenre(null)
+                    }
                 }
-                items(genres) { g ->
-                    FilterChip(selected = genre == g, onClick = { onGenre(if (genre == g) null else g) }, label = { Text(g) })
+                items(genres, key = { it }) { g ->
+                    GenrePill(g, genre == g, reduceAnimations) {
+                        haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove); onGenre(if (genre == g) null else g)
+                    }
                 }
             }
         }
-        if (picks.isNotEmpty()) {
-            item { ShelfTitle(stringResource(R.string.au10_music_quick_picks)) }
-            item {
-                Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        if (picks.isNotEmpty()) item(key = "picks") {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                ShelfTitle(stringResource(R.string.au10_music_quick_picks))
+                Column(Modifier.padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     picks.chunked(3).forEach { row ->
                         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             row.forEach { l ->
                                 val g = albumGroupOf(l, unknownAlbum)
                                 Box(
-                                    Modifier.weight(1f).aspectRatio(1f).clip(RoundedCornerShape(12.dp))
-                                        .combinedClickable(onLongClick = { onShareGroup(g) }, onClick = { onOpenGroup(g) }),
+                                    Modifier.weight(1f).aspectRatio(1f)
+                                        .pressScale(reduceAnimations, onClick = { onOpenGroup(g) }, onLongClick = { onShareGroup(g) })
+                                        .clip(RoundedCornerShape(20.dp)),
                                 ) {
                                     ArtOrNote(l.first().albumArtUri.toString(), Modifier.fillMaxSize())
                                     Box(
                                         Modifier.align(Alignment.BottomStart).fillMaxWidth()
-                                            .background(Brush.verticalGradient(listOf(Color.Transparent, Color.Black.copy(alpha = 0.75f))))
-                                            .padding(horizontal = 8.dp, vertical = 6.dp),
+                                            .background(Brush.verticalGradient(listOf(Color.Transparent, Color.Black.copy(alpha = 0.8f))))
+                                            .padding(start = 10.dp, end = 10.dp, top = 24.dp, bottom = 8.dp),
                                     ) {
-                                        Text(g.title, style = MaterialTheme.typography.labelMedium, color = Color.White, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                                        Text(g.title, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.SemiBold, color = Color.White, maxLines = 2, overflow = TextOverflow.Ellipsis)
                                     }
                                 }
                             }
@@ -144,64 +161,70 @@ internal fun MusicHome(
                 }
             }
         }
-        if (recent.isNotEmpty()) {
-            item { ShelfTitle(stringResource(R.string.au10_music_recent)) }
-            item {
-                LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    items(recent.size) { i ->
+        if (recent.isNotEmpty()) item(key = "recent") {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                ShelfTitle(stringResource(R.string.au10_music_recent))
+                LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    items(recent.size, key = { recent[it].id }) { i ->
                         val t = recent[i]
-                        Column(Modifier.width(128.dp).combinedClickable(onClick = { onPlay(recent, i) })) {
-                            ArtOrNote(t.albumArtUri.toString(), Modifier.size(128.dp).clip(RoundedCornerShape(12.dp)))
-                            Text(t.title, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 6.dp))
-                            Text(t.artist, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                        }
+                        ArtCard(t.albumArtUri.toString(), t.title, t.artist, reduceAnimations, onClick = { onPlay(recent, i) })
                     }
                 }
             }
         }
-        if (albums.isNotEmpty()) {
-            item { ShelfTitle(stringResource(R.string.hc_albums)) }
-            item {
-                LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    items(albums) { a ->
-                        Column(Modifier.width(128.dp).combinedClickable(onLongClick = { onShareGroup(a) }, onClick = { onOpenGroup(a) })) {
-                            ArtOrNote(a.tracks.first().albumArtUri.toString(), Modifier.size(128.dp).clip(RoundedCornerShape(12.dp)))
-                            Text(a.title, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 6.dp))
-                            Text(a.subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                        }
+        if (albums.isNotEmpty()) item(key = "albums") {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                ShelfTitle(stringResource(R.string.hc_albums))
+                LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    items(albums, key = { it.tracks.first().albumId }) { a ->
+                        ArtCard(a.tracks.first().albumArtUri.toString(), a.title, a.subtitle, reduceAnimations, onClick = { onOpenGroup(a) }, onLongClick = { onShareGroup(a) })
                     }
                 }
             }
         }
-        if (artists.isNotEmpty()) {
-            item { ShelfTitle(stringResource(R.string.au_music_tab_artists)) }
-            item {
-                LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    items(artists) { a ->
+        if (artists.isNotEmpty()) item(key = "artists") {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                ShelfTitle(stringResource(R.string.au_music_tab_artists))
+                LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                    items(artists, key = { it.title }) { a ->
                         Column(
-                            Modifier.width(104.dp).combinedClickable(onLongClick = { onShareGroup(a) }, onClick = { onOpenGroup(a) }),
+                            Modifier.width(112.dp).pressScale(reduceAnimations, onClick = { onOpenGroup(a) }, onLongClick = { onShareGroup(a) }),
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
-                            ArtOrNote(a.tracks.first().albumArtUri.toString(), Modifier.size(104.dp).clip(CircleShape))
-                            Text(a.title, style = MaterialTheme.typography.bodyMedium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 6.dp))
+                            ArtOrNote(a.tracks.first().albumArtUri.toString(), Modifier.size(112.dp).clip(CircleShape))
+                            Text(a.title, style = MaterialTheme.typography.labelLarge, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 8.dp))
                         }
                     }
                 }
             }
         }
-        if (decades.isNotEmpty()) {
-            item { ShelfTitle(stringResource(R.string.au10_music_decades)) }
-            item {
-                LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    items(decades) { d ->
+        if (decades.isNotEmpty()) item(key = "decades") {
+            val scheme = MaterialTheme.colorScheme
+            val pairs = remember(scheme) {
+                listOf(
+                    scheme.primaryContainer to scheme.tertiaryContainer,
+                    scheme.secondaryContainer to scheme.primaryContainer,
+                    scheme.tertiaryContainer to scheme.secondaryContainer,
+                )
+            }
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                ShelfTitle(stringResource(R.string.au10_music_decades))
+                LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    items(decades.size, key = { decades[it].title }) { i ->
+                        val d = decades[i]
+                        val (c1, c2) = pairs[i % pairs.size]
                         Box(
-                            Modifier.size(width = 128.dp, height = 72.dp).clip(RoundedCornerShape(12.dp))
-                                .background(Brush.linearGradient(listOf(MaterialTheme.colorScheme.primaryContainer, MaterialTheme.colorScheme.tertiaryContainer)))
-                                .combinedClickable(onLongClick = { onShareGroup(d) }, onClick = { onOpenGroup(d) })
-                                .padding(12.dp),
+                            Modifier.size(width = 156.dp, height = 96.dp)
+                                .pressScale(reduceAnimations, onClick = { onOpenGroup(d) }, onLongClick = { onShareGroup(d) })
+                                .clip(RoundedCornerShape(20.dp))
+                                .background(Brush.linearGradient(listOf(c1, c2)))
+                                .padding(14.dp),
                             contentAlignment = Alignment.BottomStart,
                         ) {
-                            Text(d.title, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onPrimaryContainer)
+                            Column {
+                                Text(d.title, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.ExtraBold, color = scheme.onPrimaryContainer)
+                                Text(d.subtitle, style = MaterialTheme.typography.labelMedium, color = scheme.onPrimaryContainer.copy(alpha = 0.75f))
+                            }
                         }
                     }
                 }
@@ -211,6 +234,29 @@ internal fun MusicHome(
 }
 
 @Composable
+private fun ArtCard(url: String?, title: String, subtitle: String, reduce: Boolean, onClick: () -> Unit, onLongClick: (() -> Unit)? = null) {
+    Column(Modifier.width(148.dp).pressScale(reduce, onClick, onLongClick)) {
+        ArtOrNote(url, Modifier.size(148.dp).clip(RoundedCornerShape(20.dp)))
+        Text(title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 8.dp))
+        Text(subtitle, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
+    }
+}
+
+@Composable
+private fun GenrePill(label: String, selected: Boolean, reduce: Boolean, onClick: () -> Unit) {
+    val scheme = MaterialTheme.colorScheme
+    val spec = if (reduce) snap<Color>() else tween(200)
+    val bg by animateColorAsState(if (selected) scheme.primary else scheme.surfaceContainerHigh, spec, label = "pillBg")
+    val fg by animateColorAsState(if (selected) scheme.onPrimary else scheme.onSurface, spec, label = "pillFg")
+    Box(
+        Modifier.height(40.dp).clip(CircleShape).background(bg).pressScale(reduce, onClick).padding(horizontal = 18.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(label, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.Medium, color = fg, maxLines = 1)
+    }
+}
+
+@Composable
 private fun ShelfTitle(text: String) {
-    Text(text, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp))
+    Text(text, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold, modifier = Modifier.padding(horizontal = 20.dp))
 }

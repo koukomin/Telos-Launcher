@@ -43,7 +43,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -133,7 +132,6 @@ fun TvSegmentedControl(
     onSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val density = LocalDensity.current
     val fraction by animateFloatAsState(
         targetValue = selected.toFloat(),
         animationSpec = if (reduceAnimations) tween(0) else spring(dampingRatio = 0.75f, stiffness = Spring.StiffnessMedium),
@@ -186,7 +184,6 @@ fun TvSegmentedControl(
             }
         }
     }
-    @Suppress("UNUSED_EXPRESSION") density
 }
 
 /** Large 16:9 "Continue watching" card */
