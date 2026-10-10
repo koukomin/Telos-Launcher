@@ -139,6 +139,8 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
     var userAgent by remember { mutableStateOf(with(de.mm20.launcher2.comms.media.video.VideoPrefs) { appContext.legacyUserAgent }) }
     var showNetwork by remember { mutableStateOf(false) }
     if (showNetwork) NetworkSourcesDialog { showNetwork = false }
+    var showTrakt by remember { mutableStateOf(false) }
+    if (showTrakt) TraktDialog { showTrakt = false }
 
     AlertDialog(
         onDismissRequest = onDismiss,
