@@ -210,6 +210,16 @@ Web apps turn a website into an app-like shortcut. Settings > Web app shortcuts.
    use the global setting, always on, or always off for this web app), a folder, and whether it shows in
    the grid and in the panel. Save.
 
+### Browsing settings
+
+These settings apply to the embedded browser only, not to Custom Tabs (Settings > Web app shortcuts).
+
+- **User agent:** Default (mobile), Desktop (a fixed desktop Chrome string, which can become outdated over time) or
+  Custom (printable ASCII only, up to 512 characters).
+- **Accept cookies** (on by default) and **Accept third-party cookies** (off by default; unavailable while cookies are off).
+- **Clear cookies and site data** signs you out of all web apps. Cookie policy and clearing are process-wide, so they
+  also affect other Telos pages that use a WebView.
+
 ### Block lists
 
 Besides the built-in host list, Settings > Web app shortcuts > **Block lists** can load more domain lists. Nothing is

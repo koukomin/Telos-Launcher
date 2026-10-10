@@ -140,7 +140,7 @@ package (below) and then offered where they are used.
 | --- | --- | --- | --- |
 | Plugin list: **Enabled** and **Installed** | Advanced > Plugins | none installed | Packages with an enabled plugin are listed under Enabled, others under Installed. Empty state: "No plugins installed" |
 | Enable plugin | Advanced > Plugins > the plugin | off | Enables every plugin type of that package. Triggers the permission request |
-| Plugin page toolbar: settings, info, delete | Advanced > Plugins > the plugin | n/a | Opens the plugin's own settings activity (if it has one), the Android app info, or uninstalls the package |
+| Plugin page toolbar: settings, info, delete | Advanced > Plugins > the plugin | n/a | Opens the plugin's own settings activity (if it has one), the Android app info, or uninstalls the package (after a confirmation) |
 | Verified author badge | Advanced > Plugins > the plugin | n/a | A check mark next to the author when the signing certificate matches a built-in list (currently only the author `MM2-0`) |
 | Plugin badges | Icons settings > Badges | on (`badgesPlugins`) | Shows which plugin produced a search result |
 | Setup banner | Plugin page | n/a | "You need to set up this plugin first" with a **Set up** action, when the plugin reports `SetupRequired` |
@@ -182,7 +182,7 @@ The accounts service handles two account types.
 
 | Account | Where in Settings | Sign-in | Effect |
 | --- | --- | --- | --- |
-| Nextcloud | Integrations > Nextcloud | Nextcloud's login flow, started from **Sign in** | Enables file search in your server. **Sign out** removes it |
+| Nextcloud | Integrations > Nextcloud | Nextcloud's login flow, started from **Sign in** | Enables file search in your server. **Sign out** (after a confirmation) removes it |
 | Owncloud | Integrations > Owncloud | Owncloud's login flow | Same, for ownCloud |
 
 After sign-in the screen shows the signed-in user. A **Files** switch (summary: search your cloud
@@ -476,7 +476,7 @@ The crash guard that switches off repeatedly crashing media apps is described on
 | --- | --- | --- |
 | Version | About | App version |
 | Build information | About > Build information | Build type, version details, signature hash, and the Features list (weather provider availability: Met No, OpenWeatherMap) |
-| License | About | The app license (GPL-3.0, except the plugin SDK and shared core, which are Apache-2.0). The open source licenses screen also lists the Telos third-party libraries (Media3, sshj, smbj, Commons Net and Compress, PdfBox-Android, ZXing, libtorrent4j, youtubedl-android, RethinkDNS, Transistor, Shizuku API and others) |
+| License | About | The app license (GPL-3.0, except the plugin SDK and shared core, which are Apache-2.0). The open source licenses screen also lists the Telos third-party libraries (Media3, sshj, smbj, Commons Net and Compress, PdfBox-Android, ZXing, libtorrent4j, youtubedl-android, RethinkDNS and its firestack library (MPL-2.0), TagLib (LGPL-2.1), SQLCipher, Dhizuku-API, Transistor, Shizuku API and others) |
 | GitHub link | About > Links | Project repository |
 | Open source libraries | About | List of third-party libraries with descriptions |
 

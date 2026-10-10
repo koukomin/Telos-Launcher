@@ -9,7 +9,7 @@ the apps to use its DNS.
 - Nothing is downloaded before you ask: use **Download blocklists**. Afterwards **Check for updates** and **Update now** keep them current. The screen shows the progress, the
   date of the last update, the storage used and errors. **Delete downloaded lists** removes them.
 - **Update automatically** (off until you switch it on, available after the first download) checks once a day on an unmetered network.
-- Each list counts how many queries it blocked. **Reset counters** starts again.
+- Each list counts how many queries it blocked. **Reset counters** starts again (after a confirmation).
 
 ## Exceptions (bypass)
 

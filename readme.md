@@ -314,7 +314,7 @@ Telos has built-in widgets, hosts any Android app widget and shows small widgets
 | Calendar | Events of the day, previous and next day buttons | Hide completed tasks, per-calendar choice |
 | Reminders | Tasks from the Tasks app | Hide completed tasks |
 | Media | Playing media with controls | Interactive progress bar |
-| Note | Free text, optionally linked to an external text file with conflict handling | Link to file |
+| Note | Free text, optionally linked to an existing or new external text file with conflict handling | Link to file |
 | Battery | Charge state | none |
 | Network | Connection type | none |
 | System | RAM and storage usage | none |
@@ -361,7 +361,7 @@ Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/doc
 - **Badges:** notification badges (dot or count, color), cloud, suspended or frozen apps, shortcut and plugin badges; work profile, hidden item and Store update badges are always on. Frozen apps can be grayscale or carry a snowflake.
 - **Motion:** charging animation, reduce animations, animation speed 0.5 to 2.0, bounce physics.
 - **Per-item customization:** long-press and tap Customize for a new label (the original name still matches), icon (including icon pack, themed or text icon), tags, **Show in**, a shutter app, or web app settings.
-- **Language and region:** 35 languages (see [Languages](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/languages)), per-app language on Android 13+, form of address (for every language with feminine and masculine variants: Arabic, Belarusian, Catalan, Czech, Greek, Spanish, French, Hebrew, Hindi, Italian, Polish, Portuguese, Romanian, Russian, Ukrainian), transliteration, time format, measurement system, calendar systems, currency order.
+- **Language and region:** 35 languages (see [Languages](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/languages)), per-app language on Android 13+ (in-app language picker on older versions), form of address (for every language with feminine and masculine variants: Arabic, Belarusian, Catalan, Czech, Greek, Spanish, French, Hebrew, Hindi, Italian, Polish, Portuguese, Romanian, Russian, Ukrainian), transliteration, time format, measurement system, calendar systems, currency order.
 - **Accessibility and comfort:** text size, high contrast and black and white schemes, reduce animations, label options, fixed rotation.
 - **Limitation:** fallback icon packs are supported by the icon service but have **no setting**, so only a single icon pack is usable. Several other values are stored without a screen (Wikipedia images, dock background blur, legacy surface settings).
 
@@ -449,7 +449,7 @@ Backup and restore ask first **what** to include: **Launcher** (settings and the
 - **Default launcher:** Telos is a home app (`HOME`) and also handles pinned shortcuts, theme files and `obtainium://` links.
 - **Assistant:** set Telos as the digital assistant and the assist gesture opens it in assistant mode.
 - **Global actions** without root: notifications and quick settings (status bar service, accessibility fallback), screen lock, power menu and recents (accessibility). Telos Screenshot takes screenshots through the accessibility service (Android 11+ for its own pictures, the system action on Android 9 and 10); there is no gesture for it.
-- Other: settings deep links, crash reporter and logs under Advanced > Debug (local only, nothing is sent), About with build information and open source libraries.
+- Other: settings deep links, crash reporter and logs under Advanced > Debug (local only, nothing is sent; can be switched off, and all reports can be deleted), About with build information and open source libraries.
 
 Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/features/system-catalogue).
 
@@ -474,7 +474,7 @@ Telos can draw things in other places than the home screen. Much of this is mark
 - **A profile can change:** gestures, the freeze profile, which home widget page opens, Do Not Disturb, brightness, and launch an app once. Profile icons: Home, Work, Car, Gaming, Battery saver, Sleep, Custom.
 - **Floating launcher settings:** side and position of the handle, handle size, width, color and transparency, hide the handle, two columns, show app names, panel transparency, icon size, rows before scrolling, File Dock, open apps in floating windows (needs freeform mode, see Desktop mode), haptic feedback, hide during a Gaming profile, Edit the sidebar. The handle opens with a tap or a drag, and the card opens next to it. If a bug ever locks the screen, it can be disabled without touch input with `adb shell am broadcast -a de.mm20.launcher2.action.DISABLE_FLOATING_LAUNCHER -p <application id>`.
 - **Dynamic Island:** also shows active calls (needs the phone state permission). The timer slot exists, but nothing in this build starts it.
-- **Web app browsing settings:** block ads and trackers (a built-in host blocklist plus optional downloadable block lists, domain rules only, not a full filter list engine), pinch to zoom, strip tracking parameters, top bar position, swipe to switch web apps. The ad blocker can also be set per web app (global, on or off, embedded browser only). **Block lists:** optional lists (StevenBlack, AdGuard DNS, Peter Lowe, OISD small, EasyList domain rules, URLhaus) that are downloaded only after you switch them on, directly from the list's own server, with your own lists by https address or file, and automatic updates (off, daily or weekly, Wi-Fi only by default). Suggested category folders (Social, Email, Messaging, Video & Music, Productivity & Work) can be added with one tap; they are normal web apps and folders that can be edited or deleted, and nothing is added automatically. Web apps can be locked with App Lock and customized per item.
+- **Web app browsing settings:** block ads and trackers (a built-in host blocklist plus optional downloadable block lists, domain rules only, not a full filter list engine), pinch to zoom, strip tracking parameters, top bar position, swipe to switch web apps, user agent (default, desktop or custom), cookie control (accept cookies, third-party cookies off by default, clear cookies and site data). The ad blocker can also be set per web app (global, on or off, embedded browser only). **Block lists:** optional lists (StevenBlack, AdGuard DNS, Peter Lowe, OISD small, EasyList domain rules, URLhaus) that are downloaded only after you switch them on, directly from the list's own server, with your own lists by https address or file, and automatic updates (off, daily or weekly, Wi-Fi only by default). Suggested category folders (Social, Email, Messaging, Video & Music, Productivity & Work) can be added with one tap; they are normal web apps and folders that can be edited or deleted, and nothing is added automatically. Web apps can be locked with App Lock and customized per item.
 - **Overlay services** (floating launcher, Dynamic Island, App Lock) are foreground services that only run while switched on and need the display-over-other-apps permission.
 - Desktop quarter snapping is in the code but not in the taskbar menu.
 
@@ -609,7 +609,7 @@ A complete phone app inside the launcher. Its layout follows [Right Dialer](http
 <summary><b>Smart gestures, auto redial, network mode, widgets, SIP and FRITZ!Box</b></summary>
 
 - **Smart gestures** (off by default, SIM calls only): raise to answer, flip to decline, rain mode shake gesture, pocket mode, proximity speaker, volume-button Do Not Disturb shortcut
-- **Auto redial** for busy, missed or rejected outgoing calls, fake incoming calls (scheduled)
+- **Auto redial** for busy, missed or rejected outgoing calls (configurable attempts and delay), fake incoming calls (scheduled)
 - **Cellular network mode switcher** (Shizuku or root) with a Quick Settings tile and screen-off / battery-saver automation
 - **Home screen widgets:** recent calls and direct call (dialpad)
 - **Settings page** in the Right Dialer style (accent section captions, rounded cards)
@@ -763,7 +763,7 @@ A download manager for links. [Docs](https://koukomin.github.io/Telos-Launcher/d
 - HTTP and HTTPS downloads with up to 16 connections per file (byte ranges); an idle connection takes over half of the biggest part that is left
 - Resume after a restart or a lost network, checked against size, ETag and Last-Modified; mirrors, redirects, file name from Content-Disposition
 - Queue with a limit of parallel downloads, priorities, retry with backoff, Wi-Fi only, pause on low battery, speed limit (global and per download)
-- Custom headers, user agent, referer, cookies, HTTP or SOCKS proxy, checksum check (MD5, SHA-1, SHA-256)
+- Custom headers, user agent, referer, cookies, HTTP or SOCKS proxy (also used by torrents), checksum check (MD5, SHA-1, SHA-256)
 - Saves to a folder you choose (system folder picker) or to `Downloads/Telos`; categories Video, Audio, Documents, Archives, Programs, Other
 - List with filters All, Active, Queued, Completed, Failed, search, swipe actions, details with one bar per connection, batch add, link from the clipboard, a share target for links
 - Foreground service with a progress notification, pause and cancel; open or share when finished
