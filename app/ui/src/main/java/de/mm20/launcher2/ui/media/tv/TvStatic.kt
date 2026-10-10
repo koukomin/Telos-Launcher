@@ -112,7 +112,9 @@ fun TvStatic(modifier: Modifier = Modifier, reduceAnimations: Boolean = false) {
 
     val scanStep = with(density) { 3.dp.toPx() }
     Canvas(modifier) {
-        val f = frame
+        // a zero sized canvas would make the radial gradient below throw (radius must be > 0)
+        if (size.width < 1f || size.height < 1f) return@Canvas
+        val f = frame.coerceAtLeast(0)
         val w = size.width.toInt().coerceAtLeast(1)
         val h = size.height.toInt().coerceAtLeast(1)
         val img = images[if (reduceAnimations) 0 else f and 1]

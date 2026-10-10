@@ -96,13 +96,21 @@ class TvPlaybackService : MediaSessionService(), KoinComponent {
             return
         }
         wrapped = p
-        val s = MediaSession.Builder(this, ControllerPlayer(p))
-            .setCallback(SessionCallback())
-            .setSessionActivity(openTvIntent())
-            .setCustomLayout(ImmutableList.of(stopButton()))
-            .build()
+        val s = runCatching {
+            MediaSession.Builder(this, ControllerPlayer(p))
+                .setId("telos_tv") // Media3 throws "Session ID must be unique" when music/radio use the default id
+                .setCallback(SessionCallback())
+                .setSessionActivity(openTvIntent())
+                .setCustomLayout(ImmutableList.of(stopButton()))
+                .build()
+        }.getOrNull()
+        if (s == null) {
+            wrapped = null
+            stopSelf()
+            return
+        }
         session = s
-        addSession(s)
+        runCatching { addSession(s) }
     }
 
     private fun releaseSession() {

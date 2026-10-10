@@ -232,7 +232,9 @@ class TvViewModel : ViewModel(), KoinComponent {
             f.countries.isNotEmpty() -> idx.byCountry(f.countries)
             else -> {
                 val appLang = Locale.getDefault().language
-                val home = TvSettings.defaultCountry(HomeCountry.resolve(appContext, ""), Locale.getDefault())
+                val home = TvSettings.defaultCountry(
+                    runCatching { HomeCountry.resolve(appContext, "") }.getOrDefault(""), Locale.getDefault()
+                )
                 idx.suggestedForLocale(home, appLang, 400).ifEmpty { idx.all }
             }
         }
@@ -241,18 +243,19 @@ class TvViewModel : ViewModel(), KoinComponent {
             else base.filter { c -> c.languages.isEmpty() || c.languages.any { it in langs3 } }
         }
         f.category?.let { k -> base = base.filter { k in it.categories } }
+        // lazy list keys are the channel ids: a duplicate id would crash with "Key was already used"
         TvHome(
-            channels = base,
-            results = if (f.query.isEmpty()) null else idx.search(f.query, 200),
+            channels = base.distinctBy { it.id },
+            results = if (f.query.isEmpty()) null else idx.search(f.query, 200).distinctBy { it.id },
             countrySelected = f.countries.isNotEmpty(),
         )
     }.flowOn(Dispatchers.Default).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), TvHome())
 
-    val favorites: StateFlow<List<TvChannel>> = library.observeFavorites()
+    val favorites: StateFlow<List<TvChannel>> = library.observeFavorites().map { l -> l.distinctBy { it.id } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     val favoriteIds: StateFlow<Set<String>> = favorites.map { l -> l.mapTo(HashSet()) { it.id } as Set<String> }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
-    val recents: StateFlow<List<TvChannel>> = library.observeRecents()
+    val recents: StateFlow<List<TvChannel>> = library.observeRecents().map { l -> l.distinctBy { it.id } }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
     val customChannels: StateFlow<List<TvChannel>> = library.observeCustomChannels()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())

@@ -27,7 +27,7 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
@@ -699,7 +699,8 @@ private fun TvCountrySheet(vm: TvViewModel, onDismiss: () -> Unit) {
     var search by rememberSaveable { mutableStateOf("") }
     val shown = remember(countries, search) {
         val q = search.trim()
-        if (q.isEmpty()) countries else countries.filter { it.name.contains(q, ignoreCase = true) || it.code.equals(q, ignoreCase = true) }
+        (if (q.isEmpty()) countries else countries.filter { it.name.contains(q, ignoreCase = true) || it.code.equals(q, ignoreCase = true) })
+            .distinctBy { it.code } // lazy keys must be unique
     }
     val langChips = remember(languages, selectedLangs) {
         (languages.sortedByDescending { it.channelCount }.take(40) + languages.filter { it.code in selectedLangs }).distinctBy { it.code }
