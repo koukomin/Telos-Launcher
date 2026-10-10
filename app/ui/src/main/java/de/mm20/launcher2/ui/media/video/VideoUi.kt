@@ -125,7 +125,7 @@ internal fun PillTabs(titles: List<String>, selected: Int, onSelect: (Int) -> Un
     val density = LocalDensity.current
     val xs = remember(titles.size) { mutableStateMapOf<Int, Int>() }
     val ws = remember(titles.size) { mutableStateMapOf<Int, Int>() }
-    val spec = if (reduce) snap<Int>() else spring(dampingRatio = 0.8f, stiffness = 400f)
+    val spec = if (reduce) snap<Int>() else spring<Int>(dampingRatio = 0.8f, stiffness = 400f)
     val x by animateIntAsState(xs[selected] ?: 0, spec, label = "pillX")
     val w by animateIntAsState(ws[selected] ?: 0, spec, label = "pillW")
     LaunchedEffect(selected, xs[selected], ws[selected]) {
