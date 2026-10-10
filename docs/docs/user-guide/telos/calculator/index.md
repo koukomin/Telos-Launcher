@@ -19,8 +19,8 @@ are translated to Greek, in other languages they are English.
 
 ## The calculator page
 
-The top bar has three buttons: the **keypad switch** (the icon with `√ π e =` switches to the scientific keypad,
-the one with `+ − × =` switches back), the **unit converter** (four squares) and the **menu** (three dots) with
+The top bar has four buttons: the **keypad switch** (the icon with `√ π e =` switches to the scientific keypad,
+the one with `+ − × =` switches back), the **VAT** (a receipt with a percent sign), the **unit converter** (four squares) and the **menu** (three dots) with
 **History** and **Copy result** (VAT has its own icon in the top row).
 
 | Part | Details |
