@@ -18,6 +18,7 @@ val downloadsModule = module {
     single { DownloadStore(androidContext()) }
     single { DownloadFiles(androidContext()) }
     single { DownloadNotifier(androidContext(), get()) }
+    single { TorrentProxyGate(androidContext(), get(), get()) }
     single { TorrentController(get()) }
     single { MediaRuntime(androidContext()) }
     factory<Backupable>(named<DownloadsBackup>()) { DownloadsBackup(get(), get(), get()) }
@@ -27,8 +28,9 @@ val downloadsModule = module {
             store = get(),
             settings = get(),
             files = get(),
-            engines = listOf(HttpDownloadEngine(), TorrentDownloadEngine(androidContext(), get()), MediaDownloadEngine(androidContext(), get())),
+            engines = listOf(HttpDownloadEngine(), TorrentDownloadEngine(androidContext(), get(), get()), MediaDownloadEngine(androidContext(), get())),
             notifier = get(),
+            torrentProxy = get(),
         )
     }
 }

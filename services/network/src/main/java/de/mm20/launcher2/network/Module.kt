@@ -7,6 +7,7 @@ import de.mm20.launcher2.network.api.FirewallController
 import de.mm20.launcher2.network.api.LogController
 import de.mm20.launcher2.network.api.NetworkSettings
 import de.mm20.launcher2.network.api.WireguardController
+import de.mm20.launcher2.network.api.WireguardLocalProxy
 import de.mm20.launcher2.network.impl.DefaultAppDirectory
 import de.mm20.launcher2.network.impl.DefaultBlocklistController
 import de.mm20.launcher2.network.impl.DefaultDnsController
@@ -14,6 +15,7 @@ import de.mm20.launcher2.network.impl.DefaultFirewallController
 import de.mm20.launcher2.network.impl.DefaultLogController
 import de.mm20.launcher2.network.impl.DefaultNetworkSettings
 import de.mm20.launcher2.network.impl.DefaultWireguardController
+import de.mm20.launcher2.network.impl.DefaultWireguardLocalProxy
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -29,11 +31,12 @@ val networkModule = module {
     single<FirewallController> { DefaultFirewallController(androidContext(), get(), get()) }
     single<DnsController> { DefaultDnsController(androidContext()) }
     single<WireguardController> { DefaultWireguardController(androidContext()) }
+    single<WireguardLocalProxy> { DefaultWireguardLocalProxy(get()) }
     single {
         NetworkEngine(
             context = androidContext(),
             settings = get(),
-            components = listOf(get<DnsController>(), get<WireguardController>(), get<BlocklistController>()),
+            components = listOf(get<DnsController>(), get<WireguardController>(), get<BlocklistController>(), get<WireguardLocalProxy>()),
         )
     }
 }
