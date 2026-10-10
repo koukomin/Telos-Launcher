@@ -188,6 +188,17 @@ private fun PlayerContent(
         }
     }
 
+    // web streams (not local files, not the torrent's local address) reconnect by themselves when the connection is lost
+    val reconnector = remember(player) {
+        if (!isTorrent && uris.any { it.scheme == "http" || it.scheme == "https" }) {
+            de.mm20.launcher2.comms.media.StreamReconnector(context.applicationContext, player).also { it.attach() }
+        } else null
+    }
+    val reconnecting by (reconnector?.reconnecting ?: remember { kotlinx.coroutines.flow.MutableStateFlow(false) })
+        .collectAsStateWithLifecycle()
+    val waitingForNetwork by (reconnector?.waiting ?: remember { kotlinx.coroutines.flow.MutableStateFlow(false) })
+        .collectAsStateWithLifecycle()
+
     // Trakt.tv: report what is played (only when the user signed in and switched it on)
     val traktScope = remember { kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.SupervisorJob() + kotlinx.coroutines.Dispatchers.IO) }
     // last Trakt action and the item it was about, so a stop is not sent twice
@@ -233,7 +244,8 @@ private fun PlayerContent(
             override fun onIsPlayingChanged(isPlaying: Boolean) {
                 onPlayingChanged(isPlaying)
                 if (isPlaying) videoState("started")
-                scrobble(if (isPlaying) "start" else "pause")
+                // the pause while the connection is restored is not a pause by the user
+                if (isPlaying || reconnector?.reconnecting?.value != true) scrobble(if (isPlaying) "start" else "pause")
             }
 
             override fun onPlaybackStateChanged(playbackState: Int) {
@@ -259,6 +271,7 @@ private fun PlayerContent(
             saveProgress()
             scrobble("stop")
             player.removeListener(listener)
+            reconnector?.release()
             player.release()
             videoState("stopped")
         }
@@ -516,7 +529,22 @@ private fun PlayerContent(
                 }
             },
         )
-        if (playbackError && !inPictureInPicture) {
+        if (reconnecting && !inPictureInPicture) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.align(Alignment.Center).padding(horizontal = 32.dp)
+                    .background(Color(0x99000000), androidx.compose.foundation.shape.RoundedCornerShape(12.dp))
+                    .padding(horizontal = 20.dp, vertical = 10.dp),
+            ) {
+                CircularProgressIndicator(color = Color.White, strokeWidth = 2.dp, modifier = Modifier.size(18.dp))
+                Text(
+                    text = stringResource(if (waitingForNetwork) R.string.au16_reconnect_waiting else R.string.au16_reconnect_label),
+                    color = Color.White,
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(start = 12.dp),
+                )
+            }
+        } else if (playbackError && !inPictureInPicture) {
             val remote = player.currentMediaItem?.localConfiguration?.uri?.let { RemoteVideo.isRemote(it) } == true
             Text(
                 text = stringResource(if (remote) R.string.vn_network_open_failed else R.string.au_video_playback_error),

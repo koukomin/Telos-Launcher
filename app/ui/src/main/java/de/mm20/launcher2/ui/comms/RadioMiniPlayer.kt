@@ -36,6 +36,8 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
     val stationName by viewModel.stationName.collectAsStateWithLifecycle()
     val nowPlaying by viewModel.nowPlayingMetadata.collectAsStateWithLifecycle()
     val error by viewModel.error.collectAsStateWithLifecycle()
+    val reconnecting by de.mm20.launcher2.comms.radio.RadioPlayerService.reconnecting.collectAsStateWithLifecycle()
+    val waitingForNetwork by de.mm20.launcher2.comms.radio.RadioPlayerService.waiting.collectAsStateWithLifecycle()
     val sleepEndsAt by viewModel.sleepEndsAt.collectAsStateWithLifecycle()
     val recording by viewModel.recordingState.collectAsStateWithLifecycle()
     val recState = recording as? RadioRecorder.State.Recording
@@ -115,9 +117,10 @@ fun RadioMiniPlayer(modifier: Modifier = Modifier) {
                     }
                     Text(
                         text = (recText?.let { "$it  ·  " }.orEmpty()) +
-                            (error?.let { stringResource(it) } ?: nowPlaying.ifEmpty { stringResource(R.string.au_radio_streaming_live) }) + sleepSuffix,
+                            ((if (reconnecting) stringResource(if (waitingForNetwork) R.string.au16_reconnect_waiting else R.string.au16_reconnect_label) else null)
+                            ?: error?.let { stringResource(it) } ?: nowPlaying.ifEmpty { stringResource(R.string.au_radio_streaming_live) }) + sleepSuffix,
                         style = MaterialTheme.typography.labelSmall,
-                        color = if (error != null || recText != null) MaterialTheme.colorScheme.error
+                        color = if ((error != null && !reconnecting) || recText != null) MaterialTheme.colorScheme.error
                         else MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis

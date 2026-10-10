@@ -173,7 +173,8 @@ class RadioViewModel : ViewModel(), KoinComponent {
 
     fun togglePlayPause() {
         val controller = mediaController ?: return
-        if (controller.isPlaying) {
+        // while the connection is being restored the user's tap means stop trying
+        if (controller.isPlaying || RadioPlayerService.reconnecting.value) {
             controller.pause()
         } else {
             controller.play()

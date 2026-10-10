@@ -214,6 +214,8 @@ fun RadioNowPlayingSheet(
     val playWhenReady by player.playWhenReady.collectAsStateWithLifecycle()
     val loading by player.isLoading.collectAsStateWithLifecycle()
     val error by player.error.collectAsStateWithLifecycle()
+    val reconnecting by de.mm20.launcher2.comms.radio.RadioPlayerService.reconnecting.collectAsStateWithLifecycle()
+    val waitingForNetwork by de.mm20.launcher2.comms.radio.RadioPlayerService.waiting.collectAsStateWithLifecycle()
     val sleepEndsAt by player.sleepEndsAt.collectAsStateWithLifecycle()
     val recording by player.recordingState.collectAsStateWithLifecycle()
     val visible by player.isVisible.collectAsStateWithLifecycle()
@@ -264,9 +266,10 @@ fun RadioNowPlayingSheet(
                     textAlign = TextAlign.Center, maxLines = 2, overflow = TextOverflow.Ellipsis,
                 )
                 Text(
-                    error?.let { stringResource(it) } ?: track.ifEmpty { stringResource(R.string.au_radio_streaming_live) },
+                    (if (reconnecting) stringResource(if (waitingForNetwork) R.string.au16_reconnect_waiting else R.string.au16_reconnect_label) else null)
+                        ?: error?.let { stringResource(it) } ?: track.ifEmpty { stringResource(R.string.au_radio_streaming_live) },
                     style = MaterialTheme.typography.titleMedium,
-                    color = if (error != null) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = if (error != null && !reconnecting) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center, maxLines = 2, overflow = TextOverflow.Ellipsis,
                 )
             }
