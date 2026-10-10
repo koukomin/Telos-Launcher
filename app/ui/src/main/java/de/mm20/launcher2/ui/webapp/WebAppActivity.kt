@@ -236,6 +236,12 @@ private fun WebAppScreen(
     val groupsEnabled by browsingSettings.groupsEnabled.collectAsStateWithLifecycle(false)
     val groups by browsingSettings.groups.collectAsStateWithLifecycle(emptyList())
 
+    val userAgentMode by browsingSettings.userAgentMode.collectAsStateWithLifecycle("default")
+    val customUserAgent by browsingSettings.customUserAgent.collectAsStateWithLifecycle("")
+    val cookiesEnabled by browsingSettings.cookiesEnabled.collectAsStateWithLifecycle(true)
+    val thirdPartyCookiesEnabled by browsingSettings.thirdPartyCookiesEnabled.collectAsStateWithLifecycle(false)
+    val defaultUserAgent = remember { android.webkit.WebSettings.getDefaultUserAgent(context) }
+
     val activity = LocalActivity.current as WebAppActivity
 
     // Each shortcut - including the one this screen was launched with - gets its own WebView, so
@@ -474,9 +480,18 @@ private fun WebAppScreen(
                 },
                 update = { container ->
                     // Zoom controls setting applies live to every already created WebView
+                    val resolvedUserAgent = de.mm20.launcher2.ui.settings.webapps.WebAppUserAgents
+                        .resolve(userAgentMode, customUserAgent) ?: defaultUserAgent
+                    // Cookie policy is process wide (CookieManager); applied before any load.
+                    val cookieManager = CookieManager.getInstance()
+                    cookieManager.setAcceptCookie(cookiesEnabled)
                     webViewEntries.values.forEach {
                         it.settings.setSupportZoom(zoomControlsEnabled)
                         it.settings.builtInZoomControls = zoomControlsEnabled
+                        if (it.settings.userAgentString != resolvedUserAgent) {
+                            it.settings.userAgentString = resolvedUserAgent
+                        }
+                        cookieManager.setAcceptThirdPartyCookies(it, cookiesEnabled && thirdPartyCookiesEnabled)
                     }
                     val key = activeKey
                     val isNewWebView = key !in webViewEntries
@@ -494,6 +509,8 @@ private fun WebAppScreen(
                             settings.displayZoomControls = false
                             settings.allowFileAccess = false
                             settings.allowContentAccess = false
+                            settings.userAgentString = resolvedUserAgent
+                            cookieManager.setAcceptThirdPartyCookies(this, cookiesEnabled && thirdPartyCookiesEnabled)
 
                             if (keyNotificationsEnabled) {
                                 val bridgeKey = if (key == initialKey) shortcutKey else key
