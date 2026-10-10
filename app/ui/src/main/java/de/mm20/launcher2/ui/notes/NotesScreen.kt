@@ -148,9 +148,19 @@ fun NotesScreen() {
                     contentPadding = PaddingValues(12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalItemSpacing = 8.dp,
                 ) {
                     items(notes, key = { it.id }) { n ->
+                      Box {
+                        var cardMenu by remember { mutableStateOf(false) }
                         NoteCard(n, onClick = { if (filter == NotesFilter.Trash) vm.restore(n) else editing = n },
                             onLong = {
-                                if (filter == NotesFilter.Trash) vm.delete(n) else {
+                                // in the trash a long press still deletes for good; otherwise a menu offers archive and share
+                                if (filter == NotesFilter.Trash) vm.delete(n) else cardMenu = true
+                            },
+                            trash = filter == NotesFilter.Trash)
+                        DropdownMenu(cardMenu, { cardMenu = false }) {
+                            DropdownMenuItem(
+                                text = { Text(stringResource(if (n.archived) R.string.au9_share_unarchive else R.string.notes_archive)) },
+                                onClick = {
+                                    cardMenu = false
                                     vm.save(n.copy(archived = !n.archived))
                                     scope.launch {
                                         snack.currentSnackbarData?.dismiss()
@@ -159,9 +169,19 @@ fun NotesScreen() {
                                             context.getString(R.string.au_planner_undo), duration = SnackbarDuration.Short)
                                         if (r == SnackbarResult.ActionPerformed) vm.save(n)
                                     }
-                                }
-                            },
-                            trash = filter == NotesFilter.Trash)
+                                })
+                            de.mm20.launcher2.ui.common.share.ShareMenuItem(onClick = {
+                                cardMenu = false
+                                de.mm20.launcher2.ui.common.share.ShareActions.shareNote(context, n.title, n.body, false)
+                            })
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.au9_share_note_md)) },
+                                onClick = {
+                                    cardMenu = false
+                                    de.mm20.launcher2.ui.common.share.ShareActions.shareNote(context, n.title, n.body, true)
+                                })
+                        }
+                      }
                     }
                 }
             }
@@ -209,11 +229,20 @@ private fun NoteEditor(note: Note, labels: List<String>, onChange: (Note) -> Uni
             IconButton(onClick = { colors = !colors }) { Icon(painterResource(R.drawable.palette_24px), stringResource(R.string.notes_color), tint = fg) }
             IconButton(onClick = { labelDialog = true }) { Icon(painterResource(R.drawable.label_24px), stringResource(R.string.notes_labels), tint = fg) }
             IconButton(onClick = onArchive) { Icon(painterResource(R.drawable.archive_24px), stringResource(R.string.notes_archive), tint = fg) }
-            IconButton(onClick = {
-                context.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).apply {
-                    type = "text/plain"; putExtra(Intent.EXTRA_SUBJECT, note.title); putExtra(Intent.EXTRA_TEXT, note.body)
-                }, null))
-            }) { Icon(painterResource(R.drawable.share_24px), stringResource(R.string.notes_share), tint = fg) }
+            Box {
+                var shareMenu by remember { mutableStateOf(false) }
+                IconButton(onClick = { shareMenu = true }) { Icon(painterResource(R.drawable.share_24px), stringResource(R.string.notes_share), tint = fg) }
+                DropdownMenu(shareMenu, { shareMenu = false }) {
+                    DropdownMenuItem(text = { Text(stringResource(R.string.au9_share_note_text)) }, onClick = {
+                        shareMenu = false
+                        de.mm20.launcher2.ui.common.share.ShareActions.shareNote(context, note.title, note.body, false)
+                    })
+                    DropdownMenuItem(text = { Text(stringResource(R.string.au9_share_note_md)) }, onClick = {
+                        shareMenu = false
+                        de.mm20.launcher2.ui.common.share.ShareActions.shareNote(context, note.title, note.body, true)
+                    })
+                }
+            }
             IconButton(onClick = onTrash) { Icon(painterResource(R.drawable.delete_24px), stringResource(R.string.notes_delete), tint = fg) }
         }
         if (colors) LazyRow(Modifier.padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {

@@ -332,6 +332,9 @@ class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.media.photos.PhotosRoute> {
                 de.mm20.launcher2.ui.media.photos.PhotosScreen()
             }
+            entry<de.mm20.launcher2.ui.media.hub.MediaHubRoute> {
+                de.mm20.launcher2.ui.media.hub.MediaHubScreen(it.space)
+            }
             entry<de.mm20.launcher2.ui.media.video.VideoRoute> {
                 de.mm20.launcher2.ui.media.video.VideoScreen()
             }
@@ -681,9 +684,12 @@ class SettingsActivity : BaseActivity() {
                     initialAttachments = intent.getStringArrayListExtra(SettingsDeepLinkContract.EXTRA_SMS_ATTACHMENTS).orEmpty(),
                 )
             }
-            ROUTE_RADIO -> de.mm20.launcher2.ui.comms.radio.RadioDashboardRoute
-            ROUTE_MUSIC -> de.mm20.launcher2.ui.media.music.MusicRoute
-            ROUTE_VIDEO -> de.mm20.launcher2.ui.media.video.VideoRoute
+            ROUTE_RADIO -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("radio")
+            ROUTE_MUSIC -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("music")
+            ROUTE_VIDEO -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("video")
+            ROUTE_MEDIA -> de.mm20.launcher2.ui.media.hub.MediaHubRoute(
+                intent.getStringExtra(SettingsDeepLinkContract.EXTRA_MEDIA_SPACE).orEmpty()
+            )
             ROUTE_PHOTOS -> de.mm20.launcher2.ui.media.photos.PhotosRoute
             ROUTE_FILES -> de.mm20.launcher2.ui.files.FilesRoute
             ROUTE_NETWORK -> de.mm20.launcher2.ui.network.NetworkRoute
@@ -724,6 +730,7 @@ class SettingsActivity : BaseActivity() {
         const val ROUTE_RADIO = SettingsDeepLinkContract.ROUTE_RADIO
         const val ROUTE_MUSIC = SettingsDeepLinkContract.ROUTE_MUSIC
         const val ROUTE_VIDEO = SettingsDeepLinkContract.ROUTE_VIDEO
+        const val ROUTE_MEDIA = SettingsDeepLinkContract.ROUTE_MEDIA
         const val ROUTE_PHOTOS = SettingsDeepLinkContract.ROUTE_PHOTOS
         const val ROUTE_FILES = SettingsDeepLinkContract.ROUTE_FILES
         const val ROUTE_CALCULATOR = SettingsDeepLinkContract.ROUTE_CALCULATOR

@@ -100,6 +100,9 @@ data object FilesRoute : NavKey
 
 private typealias Icons = de.mm20.launcher2.base.R.drawable
 
+/** From this many bytes to fetch from a network storage, sharing asks first */
+private const val SHARE_WARN_BYTES = 50L * 1024 * 1024
+
 private fun hasAllFilesAccess(context: android.content.Context): Boolean =
     if (Build.VERSION.SDK_INT >= 30) Environment.isExternalStorageManager()
     else ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
@@ -195,7 +198,11 @@ fun FilesScreen() {
                             onCopy = { vm.copyToClipboard(false) },
                             onCut = { vm.copyToClipboard(true) },
                             onDelete = { dialog = FilesDialog.Delete(vm.selectedEntries()) },
-                            onShare = { FileActions.share(context, vm.selectedEntries(), vm.rootMode) },
+                            onShare = {
+                                val picked = vm.selectedEntries()
+                                val bytes = vm.shareDownloadBytes(picked)
+                                if (bytes >= SHARE_WARN_BYTES) dialog = FilesDialog.ShareLarge(picked, bytes) else vm.shareEntries(picked)
+                            },
                             onRename = { vm.selectedEntries().singleOrNull()?.let { dialog = FilesDialog.Rename(it) } },
                             onCompress = { dialog = FilesDialog.Compress(vm.selectedEntries()) },
                             onProperties = { vm.selectedEntries().singleOrNull()?.let { dialog = FilesDialog.Properties(it) } },
@@ -321,6 +328,7 @@ private sealed interface FilesDialog {
     data class Properties(val entry: FsEntry) : FilesDialog
     data class Archive(val entry: FsEntry) : FilesDialog
     data class Unlock(val entry: FsEntry) : FilesDialog
+    data class ShareLarge(val entries: List<FsEntry>, val bytes: Long) : FilesDialog
 }
 
 @Composable
@@ -353,6 +361,13 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
                 dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
             )
         }
+        is FilesDialog.ShareLarge -> AlertDialog(
+            onDismissRequest = onDismiss,
+            title = { Text(stringResource(R.string.au9_share_large_title)) },
+            text = { Text(stringResource(R.string.au9_share_large_message, formatSize(dialog.bytes))) },
+            confirmButton = { TextButton(onClick = { vm.shareEntries(dialog.entries); onDismiss() }) { Text(stringResource(R.string.au9_share_large_confirm)) } },
+            dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
+        )
         FilesDialog.Sort -> SortDialog(vm, onDismiss)
         FilesDialog.EnableRoot -> RootWarningDialog(onDismiss) { vm.enableRoot { onDismiss() } }
         is FilesDialog.Archive -> AlertDialog(
@@ -497,7 +512,7 @@ private fun PropertiesDialog(vm: FilesViewModel, entry: FsEntry, onDismiss: () -
         dismissButton = {
             if (!entry.isDir) Row {
                 TextButton(onClick = { FileActions.openWith(context, entry, vm.rootMode) }) { Text(stringResource(R.string.hc_open_with_2)) }
-                TextButton(onClick = { FileActions.share(context, listOf(entry), vm.rootMode) }) { Text(stringResource(R.string.hc_share)) }
+                TextButton(onClick = { vm.shareEntries(listOf(entry)) }) { Text(stringResource(R.string.hc_share)) }
             }
         },
     )
@@ -524,6 +539,7 @@ private fun SelectionBar(
         title = { Text(stringResource(R.string.au_files_selected_count, count)) },
         navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(Icons.close_24px), contentDescription = stringResource(R.string.hc_close)) } },
         actions = {
+            IconButton(onClick = onShare) { Icon(painterResource(Icons.share_24px), contentDescription = stringResource(R.string.hc_share)) }
             IconButton(onClick = onCopy) { Icon(painterResource(Icons.content_copy_24px), contentDescription = stringResource(R.string.hc_copy)) }
             IconButton(onClick = onCut) { Icon(painterResource(Icons.content_cut_24px), contentDescription = stringResource(R.string.hc_cut)) }
             IconButton(onClick = onDelete) { Icon(painterResource(Icons.delete_24px), contentDescription = stringResource(R.string.hc_delete)) }

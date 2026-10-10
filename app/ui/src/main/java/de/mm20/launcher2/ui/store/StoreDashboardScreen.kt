@@ -8,6 +8,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -294,6 +295,7 @@ private fun EmptyMessage(title: String, text: String) {
 }
 
 @Composable
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 internal fun StoreItemRow(
     row: StoreRow,
     installState: StoreInstallUiState,
@@ -301,10 +303,15 @@ internal fun StoreItemRow(
     onActionClick: () -> Unit,
 ) {
     val item = row.item
+    val context = LocalContext.current
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+    var menu by remember { mutableStateOf(false) }
+    Box {
     Surface(
         shape = RoundedCornerShape(20.dp),
         color = MaterialTheme.colorScheme.surfaceContainerLow,
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp).clickable(onClick = onClick),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp)
+            .combinedClickable(onClick = onClick, onLongClick = { menu = true }),
     ) {
         Row(Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
             AppIcon(item.packageName, item.displayName, 44, item.installedVersionCode)
@@ -323,6 +330,27 @@ internal fun StoreItemRow(
             Spacer(Modifier.width(8.dp))
             StoreActionButton(row, installState, onActionClick)
         }
+    }
+    DropdownMenu(menu, { menu = false }) {
+        DropdownMenuItem(
+            text = { Text(stringResource(R.string.hc_share_link)) },
+            onClick = {
+                menu = false
+                de.mm20.launcher2.ui.common.share.ShareActions.shareText(context, de.mm20.launcher2.store.parser.StoreUrlParser.toUrl(item.source))
+            },
+        )
+        // the APK can only be shared for an app that is installed
+        if (item.installedVersionCode != null) DropdownMenuItem(
+            text = { Text(stringResource(R.string.menu_share_apk_file)) },
+            onClick = {
+                menu = false
+                scope.launch {
+                    val ok = withContext(Dispatchers.IO) { de.mm20.launcher2.ui.common.share.ShareActions.shareApk(context, item.packageName) }
+                    if (!ok) android.widget.Toast.makeText(context, context.getString(R.string.au9_share_apk_failed), android.widget.Toast.LENGTH_SHORT).show()
+                }
+            },
+        )
+    }
     }
 }
 

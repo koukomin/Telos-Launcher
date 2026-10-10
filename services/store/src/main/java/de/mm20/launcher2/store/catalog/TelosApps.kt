@@ -61,6 +61,14 @@ object TelosApps {
             commsTab = "messages",
         ),
         TelosApp(
+            key = "telos_media_app://media",
+            name = "Telos Media",
+            description = "Music, radio and video in one app: three spaces that you switch with a pill at the top, and one mini player for music and radio. Telos Music, Telos Radio and Telos Video also open here.",
+            features = listOf("Music, Radio and Video spaces", "Remembers the last space", "Shared mini player for music and radio", "Needs no extra permission of its own"),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_glyph_media,
+            route = SettingsDeepLinkContract.ROUTE_MEDIA,
+        ),
+        TelosApp(
             key = "telos_radio_app://radio",
             name = "Telos Radio",
             description = "Internet radio with a station search, your own collection and a sleep timer.",

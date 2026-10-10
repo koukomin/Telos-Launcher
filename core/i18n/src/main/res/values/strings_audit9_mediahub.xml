@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au9_mediahub_space_music">Music</string>
+    <string name="au9_mediahub_space_radio">Radio</string>
+    <string name="au9_mediahub_space_video">Video</string>
+    <string name="au9_mediahub_spaces">Media spaces</string>
+    <string name="au9_mediahub_open_player">Open player</string>
+    <string name="au9_mediahub_unknown_title">Unknown title</string>
+</resources>

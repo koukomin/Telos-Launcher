@@ -20,6 +20,10 @@ object SettingsDeepLinkContract {
     const val ROUTE_RADIO = "settings/radio"
     const val ROUTE_MUSIC = "settings/music"
     const val ROUTE_VIDEO = "settings/video"
+    /** Telos Media: music, radio and video spaces in one app */
+    const val ROUTE_MEDIA = "settings/media_hub"
+    /** Space to open in Telos Media: music, radio or video (default: the last used one) */
+    const val EXTRA_MEDIA_SPACE = "de.mm20.launcher2.settings.MEDIA_SPACE"
     /** An address or an obtainium:// link to add in the Store */
     const val EXTRA_STORE_URL = "de.mm20.launcher2.settings.STORE_URL"
     const val ROUTE_PHOTOS = "settings/photos"

@@ -54,7 +54,11 @@ data object MusicRoute : NavKey
 private data class TrackGroup(val title: String, val subtitle: String, val tracks: List<MusicTrack>)
 
 @Composable
-fun MusicScreen() {
+fun MusicScreen(
+    /** Telos Media: open the full player (asked by its mini player) */
+    openNowPlaying: Boolean = false,
+    onOpenNowPlayingConsumed: () -> Unit = {},
+) {
     val viewModel: MusicViewModel = viewModel()
     val context = LocalContext.current
 
@@ -89,6 +93,15 @@ fun MusicScreen() {
     var query by rememberSaveable { mutableStateOf("") }
     var group by remember { mutableStateOf<TrackGroup?>(null) }
     var showNowPlaying by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(openNowPlaying) {
+        if (openNowPlaying) {
+            showNowPlaying = true
+            onOpenNowPlayingConsumed()
+        }
+    }
+    // inside Telos Media its shared mini player is shown instead
+    val inHub = de.mm20.launcher2.ui.media.LocalInMediaHub.current
 
     BackHandler(enabled = showNowPlaying) { showNowPlaying = false }
     BackHandler(enabled = !showNowPlaying && group != null) { group = null }
@@ -191,7 +204,7 @@ fun MusicScreen() {
             }
         }
 
-        nowPlaying?.let { np ->
+        nowPlaying?.takeIf { !inHub }?.let { np ->
             val isPlaying by viewModel.isPlaying.collectAsStateWithLifecycle()
             Surface(
                 shape = RoundedCornerShape(16.dp),

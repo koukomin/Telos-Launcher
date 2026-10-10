@@ -300,7 +300,7 @@ fun RadioDashboardScreen() {
             }
         }
     }
-    de.mm20.launcher2.ui.comms.RadioMiniPlayer()
+    if (!de.mm20.launcher2.ui.media.LocalInMediaHub.current) de.mm20.launcher2.ui.comms.RadioMiniPlayer()
     }
     }
 
