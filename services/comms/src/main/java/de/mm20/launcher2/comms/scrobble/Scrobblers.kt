@@ -208,6 +208,62 @@ class LastFm(private val key: String, private val secret: String, private val se
     }
 
     companion object {
+        /** The callback address the user enters in their Last.fm API account. */
+        const val CALLBACK_URI = "telos-lastfm://callback"
+        private const val PENDING_MS = 10 * 60 * 1000L
+
+        sealed class WebResult {
+            object Connected : WebResult()
+            object NotPending : WebResult()
+            object Expired : WebResult()
+            object Failed : WebResult()
+        }
+
+        /**
+         * Marks a web login as pending (encrypted, valid for 10 minutes, single use) and returns the
+         * address to open in the browser. Last.fm has no state parameter, so this marker is the only
+         * protection: a callback is ignored unless the user started a sign in a moment ago. It cannot
+         * tell the right callback from a forged one inside that window.
+         */
+        fun beginWebLogin(context: Context, key: String): String {
+            val bytes = ByteArray(16).also { java.security.SecureRandom().nextBytes(it) }
+            val marker = bytes.joinToString("") { "%02x".format(it) }
+            context.getSharedPreferences("scrobble", Context.MODE_PRIVATE).edit()
+                .putString("lf_pending", SecretBox.encrypt(marker))
+                .putLong("lf_pending_until", System.currentTimeMillis() + PENDING_MS)
+                .apply()
+            return "https://www.last.fm/api/auth/?api_key=" + Scrobblers.enc(key.trim()) +
+                "&cb=" + Scrobblers.enc(CALLBACK_URI)
+        }
+
+        /** Handles the redirect from last.fm. Blocking: call it off the main thread. */
+        fun finishWebLogin(context: Context, token: String?): WebResult {
+            val p = context.getSharedPreferences("scrobble", Context.MODE_PRIVATE)
+            val pending = SecretBox.decrypt(p.getString("lf_pending", "").orEmpty())
+            val until = p.getLong("lf_pending_until", 0)
+            if (pending.isBlank()) return WebResult.NotPending
+            // single use, whatever the callback contains
+            p.edit().remove("lf_pending").remove("lf_pending_until").apply()
+            if (System.currentTimeMillis() > until) return WebResult.Expired
+            if (token.isNullOrBlank() || token.length > 128) return WebResult.Failed
+            val c = Scrobblers.load(context)
+            if (c.lastfmKey.isBlank() || c.lastfmSecret.isBlank()) return WebResult.Failed
+            return runCatching {
+                val all = mapOf("method" to "auth.getSession", "token" to token, "api_key" to c.lastfmKey)
+                val sig = Scrobblers.md5(all.toSortedMap().entries.joinToString("") { it.key + it.value } + c.lastfmSecret)
+                val body = (all + ("api_sig" to sig) + ("format" to "json"))
+                    .entries.joinToString("&") { it.key + "=" + Scrobblers.enc(it.value) }
+                val session = JSONObject(Scrobblers.post("https://ws.audioscrobbler.com/2.0/", body)).optJSONObject("session")
+                val sk = session?.optString("key").orEmpty()
+                if (sk.isBlank()) return@runCatching WebResult.Failed
+                Scrobblers.save(
+                    context,
+                    Scrobblers.load(context).copy(lastfmSession = sk, lastfmUser = session?.optString("name").orEmpty(), lastfmEnabled = true),
+                )
+                WebResult.Connected
+            }.getOrDefault(WebResult.Failed)
+        }
+
         /** Returns the session key for a user name and password */
         fun login(key: String, secret: String, user: String, password: String): String {
             val params = mapOf("method" to "auth.getMobileSession", "username" to user, "password" to password)

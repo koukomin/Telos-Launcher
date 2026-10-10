@@ -457,6 +457,21 @@
             </intent-filter>
         </activity>
 
+        <!-- Redirect of the Last.fm sign in in the browser; only accepted while a sign in was started in the app -->
+        <activity
+            android:name=".media.music.LastFmCallbackActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="telos-lastfm" android:host="callback" />
+            </intent-filter>
+        </activity>
+
         <!-- The same player in its own process, see IsolatedVideoPlayerActivity -->
         <activity
             android:name=".media.video.IsolatedVideoPlayerActivity"

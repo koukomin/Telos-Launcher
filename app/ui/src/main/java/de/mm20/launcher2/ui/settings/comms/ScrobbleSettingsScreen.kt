@@ -1,5 +1,9 @@
 package de.mm20.launcher2.ui.settings.comms
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,6 +24,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.comms.scrobble.LastFm
 import de.mm20.launcher2.comms.scrobble.LibreFm
@@ -63,15 +69,20 @@ fun ScrobbleSettingsScreen() {
     var lfSecret by remember { mutableStateOf(config.lastfmSecret) }
     var lfUser by rememberSaveable { mutableStateOf(config.lastfmUser) }
     var lfPass by remember { mutableStateOf("") }
+    var lfPasswordMode by rememberSaveable { mutableStateOf(false) }
     var libUser by rememberSaveable { mutableStateOf(config.librefmUser) }
     var libPass by remember { mutableStateOf("") }
     var lbToken by remember { mutableStateOf(config.listenbrainzToken) }
     var lbServer by rememberSaveable { mutableStateOf(config.listenbrainzServer) }
 
     fun update(change: (ScrobbleConfig) -> ScrobbleConfig) {
-        config = change(config)
+        // start from the saved state: the browser callback may have stored a session meanwhile
+        config = change(Scrobblers.load(context))
         Scrobblers.save(context, config)
     }
+
+    // pick up a sign in that finished in the callback activity
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { config = Scrobblers.load(context) }
 
     val lastFmReady = config.lastfmSession.isNotBlank()
     val libreFmReady = config.librefmPasswordHash.isNotBlank()
@@ -136,24 +147,49 @@ fun ScrobbleSettingsScreen() {
                     )
                     Field(lfKey, { lfKey = it }, stringResource(R.string.hc_api_key))
                     Field(lfSecret, { lfSecret = it }, stringResource(R.string.hc_shared_secret), secret = true)
-                    Field(lfUser, { lfUser = it }, stringResource(R.string.hc_user_name))
-                    Field(lfPass, { lfPass = it }, stringResource(R.string.hc_password_not_stored), secret = true)
-                    TextButton(
-                        enabled = !busy && lfKey.isNotBlank() && lfSecret.isNotBlank() && lfUser.isNotBlank() && lfPass.isNotBlank(),
-                        onClick = {
-                            busy = true
-                            scope.launch {
-                                runCatching { withContext(Dispatchers.IO) { LastFm.login(lfKey.trim(), lfSecret.trim(), lfUser.trim(), lfPass) } }
-                                    .onSuccess { session ->
-                                        update { it.copy(lastfmKey = lfKey.trim(), lastfmSecret = lfSecret.trim(), lastfmUser = lfUser.trim(), lastfmSession = session, lastfmEnabled = true) }
-                                        lfPass = ""
-                                        message = lastFmConnectedMsg
-                                    }
-                                    .onFailure { message = loginFailedFormat.format("Last.fm", it.message ?: loginFailedMsg) }
-                                busy = false
-                            }
-                        },
-                    ) { Text(stringResource(R.string.hc_connect_last_fm)) }
+                    if (!lfPasswordMode) {
+                        Text(stringResource(R.string.au12_lastfmweb_howto), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(stringResource(R.string.au12_lastfmweb_callback_label), style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(top = 8.dp))
+                        Text(LastFm.CALLBACK_URI, style = MaterialTheme.typography.bodyMedium)
+                        TextButton(onClick = {
+                            (context.getSystemService(android.content.Context.CLIPBOARD_SERVICE) as ClipboardManager)
+                                .setPrimaryClip(ClipData.newPlainText("Last.fm", LastFm.CALLBACK_URI))
+                        }) { Text(stringResource(R.string.au12_lastfmweb_copy_callback)) }
+                        Text(stringResource(R.string.au12_lastfmweb_limit_note), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        TextButton(
+                            enabled = !busy && lfKey.isNotBlank() && lfSecret.isNotBlank(),
+                            onClick = {
+                                // the callback reads key and secret from the saved config
+                                update { it.copy(lastfmKey = lfKey.trim(), lastfmSecret = lfSecret.trim()) }
+                                val url = LastFm.beginWebLogin(context, lfKey)
+                                val ok = runCatching {
+                                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                                }.isSuccess
+                                message = context.getString(if (ok) R.string.au12_lastfmweb_waiting else R.string.au12_lastfmweb_no_browser)
+                            },
+                        ) { Text(stringResource(R.string.au12_lastfmweb_sign_in_browser)) }
+                        TextButton(onClick = { lfPasswordMode = true }) { Text(stringResource(R.string.au12_lastfmweb_use_password)) }
+                    } else {
+                        Field(lfUser, { lfUser = it }, stringResource(R.string.hc_user_name))
+                        Field(lfPass, { lfPass = it }, stringResource(R.string.hc_password_not_stored), secret = true)
+                        TextButton(
+                            enabled = !busy && lfKey.isNotBlank() && lfSecret.isNotBlank() && lfUser.isNotBlank() && lfPass.isNotBlank(),
+                            onClick = {
+                                busy = true
+                                scope.launch {
+                                    runCatching { withContext(Dispatchers.IO) { LastFm.login(lfKey.trim(), lfSecret.trim(), lfUser.trim(), lfPass) } }
+                                        .onSuccess { session ->
+                                            update { it.copy(lastfmKey = lfKey.trim(), lastfmSecret = lfSecret.trim(), lastfmUser = lfUser.trim(), lastfmSession = session, lastfmEnabled = true) }
+                                            lfPass = ""
+                                            message = lastFmConnectedMsg
+                                        }
+                                        .onFailure { message = loginFailedFormat.format("Last.fm", it.message ?: loginFailedMsg) }
+                                    busy = false
+                                }
+                            },
+                        ) { Text(stringResource(R.string.hc_connect_last_fm)) }
+                        TextButton(onClick = { lfPasswordMode = false }) { Text(stringResource(R.string.au12_lastfmweb_use_browser)) }
+                    }
                 }
             }
         }
