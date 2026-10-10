@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">Stazzjonijiet tar-radju</string>
+    <string name="au5_radiosearch_pref_summary">Uri l-istazzjonijiet favoriti tiegħek ta’ Telos Radio fir-riżultati tat-tfittxija u ndaqqhom b’touch wieħed</string>
+    <string name="au5_radiosearch_play">Ħaddem %1$s</string>
+    <string name="au5_radiosearch_stop">Waqqaf %1$s</string>
+    <string name="au5_webapps3_cookie_accept">Aċċetta</string>
+    <string name="au5_webapps3_cookie_block">Imblokka</string>
+    <string name="au5_webapps3_cookies_isolated">Il-cookies u d-dejta tas-sit ta’ din l-app web huma maħżunin separatament minn kull app web oħra. “Uża l-globali” isegwi s-settings tal-cookies tal-iskrin tal-apps web.</string>
+    <string name="au5_webapps3_cookies_unsupported">Il-WebView installat ma jappoġġjax maħżen separat għal kull app web. Il-cookies u d-dejta tas-sit huma kondiviżi bejn l-apps web kollha u japplikaw is-settings globali tal-cookies.</string>
+    <string name="au5_webapps3_clear_this">Neħħi l-cookies u d-dejta tas-sit ta’ din l-app web</string>
+    <string name="au5_webapps3_clear_done">Il-cookies u d-dejta tas-sit tneħħew</string>
+    <string name="au5_wgtorrent_title">Torrents permezz tal-WireGuard ta’ Telos Network</string>
+    <string name="au5_wgtorrent_desc">It-torrents (Telos Downloads u Telos Video) jikkonnettjaw biss permezz tal-proxy WireGuard magħżul ta’ Telos Network. Telos jiftaħ proxy HTTP lokali għal dan, li jeżisti biss waqt li Telos Network ikun mixgħul u l-proxy jkun konness. Inkella t-torrents jistennew u xejn ma jikkonnettja direttament. Dan jieħu post il-proxy ta’ hawn fuq għat-torrents. Proxy HTTP iġorr TCP biss, għalhekk DHT u uTP huma mitfija. Waqt li jaħdem, apps oħra fuq dan l-apparat jistgħu jużaw ukoll il-proxy lokali.</string>
+    <string name="au5_wgtorrent_none">Mhux użat</string>
+    <string name="au5_wgtorrent_no_configs">Għad m’hemm ebda proxy WireGuard f’Telos Network.</string>
+    <string name="au5_wgtorrent_summary">Torrents permezz ta’ WireGuard: %1$s</string>
+    <string name="au5_wgtorrent_removed">proxy imneħħi</string>
+    <string name="au5_wgtorrent_status_ready">It-torrents jużaw il-proxy WireGuard %1$s ta’ Telos Network.</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">It-torrents jistennew: Telos Network mhux qed jaħdem.</string>
+    <string name="au5_wgtorrent_blocked_missing">It-torrents jistennew: il-proxy WireGuard magħżul ma għadux jeżisti.</string>
+    <string name="au5_wgtorrent_blocked_disabled">It-torrents jistennew: il-proxy WireGuard magħżul huwa mitfi.</string>
+    <string name="au5_wgtorrent_blocked_down">It-torrents jistennew: il-proxy WireGuard magħżul mhuwiex konness.</string>
+    <string name="au5_wgtorrent_blocked_error">It-torrents jistennew: Telos Network ma setax jiftaħ il-proxy lokali.</string>
+</resources>

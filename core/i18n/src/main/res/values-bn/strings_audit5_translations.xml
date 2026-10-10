@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">রেডিও স্টেশন</string>
+    <string name="au5_radiosearch_pref_summary">আপনার প্রিয় Telos Radio স্টেশনগুলো অনুসন্ধানের ফলাফলে দেখান এবং এক ট্যাপে চালান</string>
+    <string name="au5_radiosearch_play">%1$s চালান</string>
+    <string name="au5_radiosearch_stop">%1$s বন্ধ করুন</string>
+    <string name="au5_webapps3_cookie_accept">গ্রহণ করুন</string>
+    <string name="au5_webapps3_cookie_block">ব্লক করুন</string>
+    <string name="au5_webapps3_cookies_isolated">এই ওয়েব অ্যাপের কুকি ও সাইট ডেটা অন্য সব ওয়েব অ্যাপ থেকে আলাদাভাবে সংরক্ষিত হয়। \"গ্লোবাল ব্যবহার করুন\" ওয়েব অ্যাপ স্ক্রিনের কুকি সেটিংস অনুসরণ করে।</string>
+    <string name="au5_webapps3_cookies_unsupported">ইনস্টল করা WebView প্রতিটি ওয়েব অ্যাপের জন্য আলাদা স্টোরেজ সমর্থন করে না। কুকি ও সাইট ডেটা সব ওয়েব অ্যাপের মধ্যে ভাগ করা হয় এবং গ্লোবাল কুকি সেটিংস প্রযোজ্য হয়।</string>
+    <string name="au5_webapps3_clear_this">এই ওয়েব অ্যাপের কুকি ও সাইট ডেটা মুছুন</string>
+    <string name="au5_webapps3_clear_done">কুকি ও সাইট ডেটা মুছে ফেলা হয়েছে</string>
+    <string name="au5_wgtorrent_title">Telos Network WireGuard-এর মাধ্যমে টরেন্ট</string>
+    <string name="au5_wgtorrent_desc">টরেন্ট (Telos Downloads ও Telos Video) শুধুমাত্র Telos Network-এর নির্বাচিত WireGuard প্রক্সির মাধ্যমে সংযুক্ত হয়। এর জন্য Telos একটি লোকাল HTTP প্রক্সি খোলে, যা কেবল Telos Network চালু থাকলে এবং প্রক্সি সংযুক্ত থাকলে থাকে। অন্যথায় টরেন্ট অপেক্ষা করে এবং সরাসরি কিছুই সংযুক্ত হয় না। এটি টরেন্টের জন্য উপরের প্রক্সির পরিবর্তে কাজ করে। HTTP প্রক্সি শুধু TCP বহন করে, তাই DHT ও uTP বন্ধ থাকে। চলাকালীন এই ডিভাইসের অন্যান্য অ্যাপও লোকাল প্রক্সি ব্যবহার করতে পারে।</string>
+    <string name="au5_wgtorrent_none">ব্যবহার করা হচ্ছে না</string>
+    <string name="au5_wgtorrent_no_configs">Telos Network-এ এখনও কোনো WireGuard প্রক্সি নেই।</string>
+    <string name="au5_wgtorrent_summary">WireGuard-এর মাধ্যমে টরেন্ট: %1$s</string>
+    <string name="au5_wgtorrent_removed">সরানো প্রক্সি</string>
+    <string name="au5_wgtorrent_status_ready">টরেন্ট Telos Network-এর WireGuard প্রক্সি %1$s ব্যবহার করছে।</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">টরেন্ট অপেক্ষায়: Telos Network চলছে না।</string>
+    <string name="au5_wgtorrent_blocked_missing">টরেন্ট অপেক্ষায়: নির্বাচিত WireGuard প্রক্সি আর নেই।</string>
+    <string name="au5_wgtorrent_blocked_disabled">টরেন্ট অপেক্ষায়: নির্বাচিত WireGuard প্রক্সি বন্ধ আছে।</string>
+    <string name="au5_wgtorrent_blocked_down">টরেন্ট অপেক্ষায়: নির্বাচিত WireGuard প্রক্সি সংযুক্ত নয়।</string>
+    <string name="au5_wgtorrent_blocked_error">টরেন্ট অপেক্ষায়: Telos Network লোকাল প্রক্সি খুলতে পারেনি।</string>
+</resources>

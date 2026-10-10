@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">Radiostacijas</string>
+    <string name="au5_radiosearch_pref_summary">Rādiet savas iecienītākās Telos Radio stacijas meklēšanas rezultātos un atskaņojiet tās ar vienu pieskārienu</string>
+    <string name="au5_radiosearch_play">Atskaņot: %1$s</string>
+    <string name="au5_radiosearch_stop">Apturēt: %1$s</string>
+    <string name="au5_webapps3_cookie_accept">Pieņemt</string>
+    <string name="au5_webapps3_cookie_block">Bloķēt</string>
+    <string name="au5_webapps3_cookies_isolated">Šīs tīmekļa lietotnes sīkdatnes un vietņu dati tiek glabāti atsevišķi no visām pārējām tīmekļa lietotnēm. Opcija “Izmantot globālos” seko tīmekļa lietotņu ekrāna sīkdatņu iestatījumiem.</string>
+    <string name="au5_webapps3_cookies_unsupported">Instalētais WebView neatbalsta atsevišķu glabāšanu katrai tīmekļa lietotnei. Sīkdatnes un vietņu dati ir kopīgi visām tīmekļa lietotnēm, un tiek izmantoti globālie sīkdatņu iestatījumi.</string>
+    <string name="au5_webapps3_clear_this">Dzēst šīs tīmekļa lietotnes sīkdatnes un vietņu datus</string>
+    <string name="au5_webapps3_clear_done">Sīkdatnes un vietņu dati dzēsti</string>
+    <string name="au5_wgtorrent_title">Torrenti caur Telos Network WireGuard</string>
+    <string name="au5_wgtorrent_desc">Torrenti (Telos Downloads un Telos Video) savienojas tikai caur izvēlēto Telos Network WireGuard starpniekserveri. Telos šim nolūkam atver vietējo HTTP starpniekserveri, kas pastāv tikai tad, kad Telos Network ir ieslēgts un starpniekserveris ir savienots. Pretējā gadījumā torrenti gaida un nekas nesavienojas tieši. Tas torrentiem aizstāj iepriekš norādīto starpniekserveri. HTTP starpniekserveris pārraida tikai TCP, tāpēc DHT un uTP ir izslēgti. Kamēr tas darbojas, arī citas šīs ierīces lietotnes varētu izmantot vietējo starpniekserveri.</string>
+    <string name="au5_wgtorrent_none">Netiek izmantots</string>
+    <string name="au5_wgtorrent_no_configs">Telos Network vēl nav neviena WireGuard starpniekservera.</string>
+    <string name="au5_wgtorrent_summary">Torrenti caur WireGuard: %1$s</string>
+    <string name="au5_wgtorrent_removed">noņemts starpniekserveris</string>
+    <string name="au5_wgtorrent_status_ready">Torrenti izmanto Telos Network WireGuard starpniekserveri %1$s.</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">Torrenti gaida: Telos Network nedarbojas.</string>
+    <string name="au5_wgtorrent_blocked_missing">Torrenti gaida: izvēlētā WireGuard starpniekservera vairs nav.</string>
+    <string name="au5_wgtorrent_blocked_disabled">Torrenti gaida: izvēlētais WireGuard starpniekserveris ir izslēgts.</string>
+    <string name="au5_wgtorrent_blocked_down">Torrenti gaida: izvēlētais WireGuard starpniekserveris nav savienots.</string>
+    <string name="au5_wgtorrent_blocked_error">Torrenti gaida: Telos Network nevarēja atvērt vietējo starpniekserveri.</string>
+</resources>

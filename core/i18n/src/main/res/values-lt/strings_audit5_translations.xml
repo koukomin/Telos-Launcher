@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">Radijo stotys</string>
+    <string name="au5_radiosearch_pref_summary">Rodykite mėgstamiausias Telos Radio stotis paieškos rezultatuose ir paleiskite jas vienu palietimu</string>
+    <string name="au5_radiosearch_play">Leisti: %1$s</string>
+    <string name="au5_radiosearch_stop">Sustabdyti: %1$s</string>
+    <string name="au5_webapps3_cookie_accept">Priimti</string>
+    <string name="au5_webapps3_cookie_block">Blokuoti</string>
+    <string name="au5_webapps3_cookies_isolated">Šios žiniatinklio programos slapukai ir svetainių duomenys saugomi atskirai nuo visų kitų žiniatinklio programų. Parinktis „Naudoti bendrus“ vadovaujasi žiniatinklio programų ekrano slapukų nustatymais.</string>
+    <string name="au5_webapps3_cookies_unsupported">Įdiegta „WebView“ nepalaiko atskiros saugyklos kiekvienai žiniatinklio programai. Slapukai ir svetainių duomenys bendrinami tarp visų žiniatinklio programų, galioja bendri slapukų nustatymai.</string>
+    <string name="au5_webapps3_clear_this">Išvalyti šios žiniatinklio programos slapukus ir svetainių duomenis</string>
+    <string name="au5_webapps3_clear_done">Slapukai ir svetainių duomenys išvalyti</string>
+    <string name="au5_wgtorrent_title">Torrentai per Telos Network WireGuard</string>
+    <string name="au5_wgtorrent_desc">Torrentai („Telos Downloads“ ir „Telos Video“) jungiasi tik per pasirinktą Telos Network WireGuard tarpinį serverį. Telos tam atidaro vietinį HTTP tarpinį serverį, kuris egzistuoja tik tada, kai Telos Network įjungtas, o tarpinis serveris prijungtas. Kitaip torrentai laukia ir niekas nesijungia tiesiogiai. Tai torrentams pakeičia aukščiau nurodytą tarpinį serverį. HTTP tarpinis serveris perduoda tik TCP, todėl DHT ir uTP išjungti. Kol jis veikia, vietinį tarpinį serverį galėtų naudoti ir kitos šio įrenginio programos.</string>
+    <string name="au5_wgtorrent_none">Nenaudojama</string>
+    <string name="au5_wgtorrent_no_configs">Telos Network dar nėra WireGuard tarpinio serverio.</string>
+    <string name="au5_wgtorrent_summary">Torrentai per WireGuard: %1$s</string>
+    <string name="au5_wgtorrent_removed">pašalintas tarpinis serveris</string>
+    <string name="au5_wgtorrent_status_ready">Torrentai naudoja Telos Network WireGuard tarpinį serverį %1$s.</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">Torrentai laukia: Telos Network neveikia.</string>
+    <string name="au5_wgtorrent_blocked_missing">Torrentai laukia: pasirinkto WireGuard tarpinio serverio nebėra.</string>
+    <string name="au5_wgtorrent_blocked_disabled">Torrentai laukia: pasirinktas WireGuard tarpinis serveris išjungtas.</string>
+    <string name="au5_wgtorrent_blocked_down">Torrentai laukia: pasirinktas WireGuard tarpinis serveris neprijungtas.</string>
+    <string name="au5_wgtorrent_blocked_error">Torrentai laukia: Telos Network nepavyko atidaryti vietinio tarpinio serverio.</string>
+</resources>

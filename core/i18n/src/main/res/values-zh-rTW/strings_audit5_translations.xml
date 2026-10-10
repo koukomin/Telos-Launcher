@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">電台</string>
+    <string name="au5_radiosearch_pref_summary">在搜尋結果中顯示你喜愛的 Telos Radio 電台,並一鍵播放</string>
+    <string name="au5_radiosearch_play">播放 %1$s</string>
+    <string name="au5_radiosearch_stop">停止 %1$s</string>
+    <string name="au5_webapps3_cookie_accept">接受</string>
+    <string name="au5_webapps3_cookie_block">封鎖</string>
+    <string name="au5_webapps3_cookies_isolated">此網頁應用程式的 Cookie 和網站資料與其他網頁應用程式分開儲存。「使用全域設定」會遵循網頁應用程式頁面的 Cookie 設定。</string>
+    <string name="au5_webapps3_cookies_unsupported">已安裝的 WebView 不支援依網頁應用程式分別儲存。所有網頁應用程式共用 Cookie 和網站資料,並套用全域 Cookie 設定。</string>
+    <string name="au5_webapps3_clear_this">清除此網頁應用程式的 Cookie 和網站資料</string>
+    <string name="au5_webapps3_clear_done">Cookie 和網站資料已清除</string>
+    <string name="au5_wgtorrent_title">透過 Telos Network WireGuard 使用種子</string>
+    <string name="au5_wgtorrent_desc">種子(Telos Downloads 和 Telos Video)僅透過 Telos Network 中所選的 WireGuard 代理伺服器連線。Telos 會為此開啟本機 HTTP 代理伺服器,該代理伺服器僅在 Telos Network 開啟且代理已連線時存在。否則種子會等待,不會直接連線。這會取代上方用於種子的代理伺服器。HTTP 代理伺服器僅支援 TCP,因此 DHT 和 uTP 會被關閉。執行期間,此裝置上的其他應用程式也可能使用該本機代理伺服器。</string>
+    <string name="au5_wgtorrent_none">不使用</string>
+    <string name="au5_wgtorrent_no_configs">Telos Network 中尚無 WireGuard 代理伺服器。</string>
+    <string name="au5_wgtorrent_summary">透過 WireGuard 使用種子:%1$s</string>
+    <string name="au5_wgtorrent_removed">已移除的代理伺服器</string>
+    <string name="au5_wgtorrent_status_ready">種子使用 Telos Network 的 WireGuard 代理伺服器 %1$s。</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">種子等待中:Telos Network 未執行。</string>
+    <string name="au5_wgtorrent_blocked_missing">種子等待中:所選的 WireGuard 代理伺服器已不存在。</string>
+    <string name="au5_wgtorrent_blocked_disabled">種子等待中:所選的 WireGuard 代理伺服器已關閉。</string>
+    <string name="au5_wgtorrent_blocked_down">種子等待中:所選的 WireGuard 代理伺服器未連線。</string>
+    <string name="au5_wgtorrent_blocked_error">種子等待中:Telos Network 無法開啟本機代理伺服器。</string>
+</resources>

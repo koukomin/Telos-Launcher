@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">Rádióállomások</string>
+    <string name="au5_radiosearch_pref_summary">Jelenítse meg kedvenc Telos Radio állomásait a keresési találatok között, és játssza le őket egyetlen érintéssel</string>
+    <string name="au5_radiosearch_play">%1$s lejátszása</string>
+    <string name="au5_radiosearch_stop">%1$s leállítása</string>
+    <string name="au5_webapps3_cookie_accept">Elfogadás</string>
+    <string name="au5_webapps3_cookie_block">Letiltás</string>
+    <string name="au5_webapps3_cookies_isolated">Ennek a webalkalmazásnak a sütijeit és webhelyadatait a rendszer a többi webalkalmazástól elkülönítve tárolja. A „Globális használata” a webalkalmazások képernyőjének sütibeállításait követi.</string>
+    <string name="au5_webapps3_cookies_unsupported">A telepített WebView nem támogatja a webalkalmazásonkénti külön tárolást. A sütik és a webhelyadatok az összes webalkalmazás között megosztottak, és a globális sütibeállítások érvényesek.</string>
+    <string name="au5_webapps3_clear_this">Ennek a webalkalmazásnak a sütijeinek és webhelyadatainak törlése</string>
+    <string name="au5_webapps3_clear_done">Sütik és webhelyadatok törölve</string>
+    <string name="au5_wgtorrent_title">Torrentek a Telos Network WireGuardján keresztül</string>
+    <string name="au5_wgtorrent_desc">A torrentek (Telos Downloads és Telos Video) kizárólag a Telos Network kiválasztott WireGuard proxyján keresztül csatlakoznak. Telos ehhez helyi HTTP proxyt nyit, amely csak akkor létezik, amíg a Telos Network be van kapcsolva és a proxy csatlakozik. Ellenkező esetben a torrentek várakoznak, és semmi sem csatlakozik közvetlenül. Ez a torrentek esetében felváltja a fenti proxyt. A HTTP proxy csak TCP-t visz, ezért a DHT és az uTP ki van kapcsolva. Amíg fut, az eszköz más alkalmazásai is használhatják a helyi proxyt.</string>
+    <string name="au5_wgtorrent_none">Nincs használatban</string>
+    <string name="au5_wgtorrent_no_configs">A Telos Networkben még nincs WireGuard proxy.</string>
+    <string name="au5_wgtorrent_summary">Torrentek WireGuardon keresztül: %1$s</string>
+    <string name="au5_wgtorrent_removed">eltávolított proxy</string>
+    <string name="au5_wgtorrent_status_ready">A torrentek a Telos Network %1$s WireGuard proxyját használják.</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">A torrentek várakoznak: a Telos Network nem fut.</string>
+    <string name="au5_wgtorrent_blocked_missing">A torrentek várakoznak: a kiválasztott WireGuard proxy már nem létezik.</string>
+    <string name="au5_wgtorrent_blocked_disabled">A torrentek várakoznak: a kiválasztott WireGuard proxy ki van kapcsolva.</string>
+    <string name="au5_wgtorrent_blocked_down">A torrentek várakoznak: a kiválasztott WireGuard proxy nem csatlakozik.</string>
+    <string name="au5_wgtorrent_blocked_error">A torrentek várakoznak: a Telos Network nem tudta megnyitni a helyi proxyt.</string>
+</resources>

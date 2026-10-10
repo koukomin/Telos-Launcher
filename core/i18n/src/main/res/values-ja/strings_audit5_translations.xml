@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">ラジオ局</string>
+    <string name="au5_radiosearch_pref_summary">お気に入りの Telos Radio の局を検索結果に表示し、ワンタップで再生します</string>
+    <string name="au5_radiosearch_play">%1$s を再生</string>
+    <string name="au5_radiosearch_stop">%1$s を停止</string>
+    <string name="au5_webapps3_cookie_accept">許可</string>
+    <string name="au5_webapps3_cookie_block">ブロック</string>
+    <string name="au5_webapps3_cookies_isolated">このウェブアプリの Cookie とサイトデータは、他のすべてのウェブアプリとは別に保存されます。「グローバル設定を使用」は、ウェブアプリ画面の Cookie 設定に従います。</string>
+    <string name="au5_webapps3_cookies_unsupported">インストールされている WebView は、ウェブアプリごとの個別ストレージに対応していません。Cookie とサイトデータはすべてのウェブアプリで共有され、グローバルの Cookie 設定が適用されます。</string>
+    <string name="au5_webapps3_clear_this">このウェブアプリの Cookie とサイトデータを消去</string>
+    <string name="au5_webapps3_clear_done">Cookie とサイトデータを消去しました</string>
+    <string name="au5_wgtorrent_title">Telos Network WireGuard 経由のトレント</string>
+    <string name="au5_wgtorrent_desc">トレント(Telos Downloads と Telos Video)は、Telos Network で選択した WireGuard プロキシ経由でのみ接続します。Telos はそのためにローカル HTTP プロキシを開きます。このプロキシは、Telos Network がオンでプロキシが接続されている間のみ存在します。それ以外の場合、トレントは待機し、直接接続は行われません。これはトレント用の上記プロキシに代わるものです。HTTP プロキシは TCP のみを扱うため、DHT と uTP はオフになります。実行中は、このデバイス上の他のアプリもローカルプロキシを使用できる場合があります。</string>
+    <string name="au5_wgtorrent_none">使用しない</string>
+    <string name="au5_wgtorrent_no_configs">Telos Network にはまだ WireGuard プロキシがありません。</string>
+    <string name="au5_wgtorrent_summary">WireGuard 経由のトレント:%1$s</string>
+    <string name="au5_wgtorrent_removed">削除されたプロキシ</string>
+    <string name="au5_wgtorrent_status_ready">トレントは Telos Network の WireGuard プロキシ %1$s を使用しています。</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">トレントは待機中:Telos Network が実行されていません。</string>
+    <string name="au5_wgtorrent_blocked_missing">トレントは待機中:選択した WireGuard プロキシは存在しません。</string>
+    <string name="au5_wgtorrent_blocked_disabled">トレントは待機中:選択した WireGuard プロキシはオフです。</string>
+    <string name="au5_wgtorrent_blocked_down">トレントは待機中:選択した WireGuard プロキシは接続されていません。</string>
+    <string name="au5_wgtorrent_blocked_error">トレントは待機中:Telos Network がローカルプロキシを開けませんでした。</string>
+</resources>

@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">Radiostasjoner</string>
+    <string name="au5_radiosearch_pref_summary">Vis favorittene dine fra Telos Radio i søkeresultatene og spill dem av med ett trykk</string>
+    <string name="au5_radiosearch_play">Spill av %1$s</string>
+    <string name="au5_radiosearch_stop">Stopp %1$s</string>
+    <string name="au5_webapps3_cookie_accept">Godta</string>
+    <string name="au5_webapps3_cookie_block">Blokker</string>
+    <string name="au5_webapps3_cookies_isolated">Informasjonskapsler og nettstedsdata for denne nettappen lagres separat fra alle andre nettapper. «Bruk global» følger innstillingene for informasjonskapsler på nettapp-skjermen.</string>
+    <string name="au5_webapps3_cookies_unsupported">Den installerte WebView støtter ikke separat lagring per nettapp. Informasjonskapsler og nettstedsdata deles mellom alle nettapper, og de globale innstillingene for informasjonskapsler gjelder.</string>
+    <string name="au5_webapps3_clear_this">Tøm informasjonskapsler og nettstedsdata for denne nettappen</string>
+    <string name="au5_webapps3_clear_done">Informasjonskapsler og nettstedsdata er tømt</string>
+    <string name="au5_wgtorrent_title">Torrenter via WireGuard i Telos Network</string>
+    <string name="au5_wgtorrent_desc">Torrenter (Telos Downloads og Telos Video) kobler seg bare til via den valgte WireGuard-proxyen i Telos Network. Telos åpner en lokal HTTP-proxy til dette, som bare finnes mens Telos Network er på og proxyen er tilkoblet. Ellers venter torrenter og ingenting kobler til direkte. Dette erstatter proxyen ovenfor for torrenter. En HTTP-proxy frakter bare TCP, så DHT og uTP er slått av. Mens den kjører, kan også andre apper på denne enheten bruke den lokale proxyen.</string>
+    <string name="au5_wgtorrent_none">Ikke i bruk</string>
+    <string name="au5_wgtorrent_no_configs">Det finnes ingen WireGuard-proxy i Telos Network ennå.</string>
+    <string name="au5_wgtorrent_summary">Torrenter via WireGuard: %1$s</string>
+    <string name="au5_wgtorrent_removed">fjernet proxy</string>
+    <string name="au5_wgtorrent_status_ready">Torrenter bruker WireGuard-proxyen %1$s i Telos Network.</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">Torrenter venter: Telos Network kjører ikke.</string>
+    <string name="au5_wgtorrent_blocked_missing">Torrenter venter: den valgte WireGuard-proxyen finnes ikke lenger.</string>
+    <string name="au5_wgtorrent_blocked_disabled">Torrenter venter: den valgte WireGuard-proxyen er slått av.</string>
+    <string name="au5_wgtorrent_blocked_down">Torrenter venter: den valgte WireGuard-proxyen er ikke tilkoblet.</string>
+    <string name="au5_wgtorrent_blocked_error">Torrenter venter: Telos Network kunne ikke åpne den lokale proxyen.</string>
+</resources>

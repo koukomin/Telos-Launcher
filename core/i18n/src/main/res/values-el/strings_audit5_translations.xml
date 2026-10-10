@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">Ραδιοφωνικοί σταθμοί</string>
+    <string name="au5_radiosearch_pref_summary">Εμφανίστε τους αγαπημένους σας σταθμούς του Telos Radio στα αποτελέσματα αναζήτησης και αναπαράγετέ τους με ένα πάτημα</string>
+    <string name="au5_radiosearch_play">Αναπαραγωγή %1$s</string>
+    <string name="au5_radiosearch_stop">Διακοπή %1$s</string>
+    <string name="au5_webapps3_cookie_accept">Αποδοχή</string>
+    <string name="au5_webapps3_cookie_block">Αποκλεισμός</string>
+    <string name="au5_webapps3_cookies_isolated">Τα cookies και τα δεδομένα ιστότοπου αυτής της εφαρμογής ιστού αποθηκεύονται ξεχωριστά από όλες τις άλλες εφαρμογές ιστού. Η επιλογή «Χρήση καθολικών» ακολουθεί τις ρυθμίσεις cookies της οθόνης εφαρμογών ιστού.</string>
+    <string name="au5_webapps3_cookies_unsupported">Το εγκατεστημένο WebView δεν υποστηρίζει ξεχωριστό χώρο αποθήκευσης ανά εφαρμογή ιστού. Τα cookies και τα δεδομένα ιστότοπου κοινοποιούνται σε όλες τις εφαρμογές ιστού και ισχύουν οι καθολικές ρυθμίσεις cookies.</string>
+    <string name="au5_webapps3_clear_this">Εκκαθάριση cookies και δεδομένων ιστότοπου αυτής της εφαρμογής ιστού</string>
+    <string name="au5_webapps3_clear_done">Τα cookies και τα δεδομένα ιστότοπου εκκαθαρίστηκαν</string>
+    <string name="au5_wgtorrent_title">Torrents μέσω WireGuard του Telos Network</string>
+    <string name="au5_wgtorrent_desc">Τα torrents (Telos Downloads και Telos Video) συνδέονται μόνο μέσω του επιλεγμένου διακομιστή μεσολάβησης WireGuard του Telos Network. Το Telos ανοίγει για αυτό έναν τοπικό διακομιστή μεσολάβησης HTTP, ο οποίος υπάρχει μόνο όσο το Telos Network είναι ενεργό και ο διακομιστής μεσολάβησης είναι συνδεδεμένος. Διαφορετικά τα torrents περιμένουν και τίποτα δεν συνδέεται απευθείας. Αυτό αντικαθιστά τον παραπάνω διακομιστή μεσολάβησης για τα torrents. Ένας διακομιστής μεσολάβησης HTTP μεταφέρει μόνο TCP, γι\' αυτό τα DHT και uTP απενεργοποιούνται. Όσο λειτουργεί, και άλλες εφαρμογές σε αυτή τη συσκευή θα μπορούσαν να χρησιμοποιήσουν τον τοπικό διακομιστή μεσολάβησης.</string>
+    <string name="au5_wgtorrent_none">Δεν χρησιμοποιείται</string>
+    <string name="au5_wgtorrent_no_configs">Δεν υπάρχει ακόμη διακομιστής μεσολάβησης WireGuard στο Telos Network.</string>
+    <string name="au5_wgtorrent_summary">Torrents μέσω WireGuard: %1$s</string>
+    <string name="au5_wgtorrent_removed">αφαιρεμένος διακομιστής μεσολάβησης</string>
+    <string name="au5_wgtorrent_status_ready">Τα torrents χρησιμοποιούν τον διακομιστή μεσολάβησης WireGuard %1$s του Telos Network.</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">Τα torrents περιμένουν: το Telos Network δεν εκτελείται.</string>
+    <string name="au5_wgtorrent_blocked_missing">Τα torrents περιμένουν: ο επιλεγμένος διακομιστής μεσολάβησης WireGuard δεν υπάρχει πια.</string>
+    <string name="au5_wgtorrent_blocked_disabled">Τα torrents περιμένουν: ο επιλεγμένος διακομιστής μεσολάβησης WireGuard είναι απενεργοποιημένος.</string>
+    <string name="au5_wgtorrent_blocked_down">Τα torrents περιμένουν: ο επιλεγμένος διακομιστής μεσολάβησης WireGuard δεν είναι συνδεδεμένος.</string>
+    <string name="au5_wgtorrent_blocked_error">Τα torrents περιμένουν: το Telos Network δεν μπόρεσε να ανοίξει τον τοπικό διακομιστή μεσολάβησης.</string>
+</resources>

@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au5_radiosearch_pref_title">محطات الراديو</string>
+    <string name="au5_radiosearch_pref_summary">اعرض محطات Telos Radio المفضلة لديك في نتائج البحث وشغّلها بنقرة واحدة</string>
+    <string name="au5_radiosearch_play">تشغيل %1$s</string>
+    <string name="au5_radiosearch_stop">إيقاف %1$s</string>
+    <string name="au5_webapps3_cookie_accept">قبول</string>
+    <string name="au5_webapps3_cookie_block">حظر</string>
+    <string name="au5_webapps3_cookies_isolated">تُخزَّن ملفات تعريف الارتباط وبيانات الموقع لهذا التطبيق الويب بشكل منفصل عن بقية تطبيقات الويب. يتبع خيار \"استخدام الإعداد العام\" إعدادات ملفات تعريف الارتباط في شاشة تطبيقات الويب.</string>
+    <string name="au5_webapps3_cookies_unsupported">لا يدعم WebView المثبَّت تخزينًا منفصلًا لكل تطبيق ويب. تتم مشاركة ملفات تعريف الارتباط وبيانات الموقع بين جميع تطبيقات الويب وتُطبَّق الإعدادات العامة لملفات تعريف الارتباط.</string>
+    <string name="au5_webapps3_clear_this">مسح ملفات تعريف الارتباط وبيانات الموقع لهذا التطبيق الويب</string>
+    <string name="au5_webapps3_clear_done">تم مسح ملفات تعريف الارتباط وبيانات الموقع</string>
+    <string name="au5_wgtorrent_title">التورنت عبر Telos Network WireGuard</string>
+    <string name="au5_wgtorrent_desc">تتصل ملفات التورنت (Telos Downloads وTelos Video) فقط عبر وكيل WireGuard المحدد في Telos Network. يفتح Telos وكيل HTTP محليًا لهذا الغرض، ولا يوجد إلا أثناء تشغيل Telos Network واتصال الوكيل. وفي غير ذلك تنتظر ملفات التورنت ولا يتم أي اتصال مباشر. يحل هذا محل الوكيل أعلاه بالنسبة إلى التورنت. يدعم وكيل HTTP بروتوكول TCP فقط، لذا يتم إيقاف DHT وuTP. أثناء التشغيل، قد تستخدم تطبيقات أخرى على هذا الجهاز الوكيل المحلي أيضًا.</string>
+    <string name="au5_wgtorrent_none">غير مستخدم</string>
+    <string name="au5_wgtorrent_no_configs">لا يوجد وكيل WireGuard في Telos Network حتى الآن.</string>
+    <string name="au5_wgtorrent_summary">التورنت عبر WireGuard: %1$s</string>
+    <string name="au5_wgtorrent_removed">وكيل محذوف</string>
+    <string name="au5_wgtorrent_status_ready">تستخدم ملفات التورنت وكيل WireGuard ‏%1$s في Telos Network.</string>
+    <string name="au5_wgtorrent_blocked_vpn_off">التورنت في الانتظار: Telos Network غير قيد التشغيل.</string>
+    <string name="au5_wgtorrent_blocked_missing">التورنت في الانتظار: وكيل WireGuard المحدد لم يعد موجودًا.</string>
+    <string name="au5_wgtorrent_blocked_disabled">التورنت في الانتظار: وكيل WireGuard المحدد متوقف.</string>
+    <string name="au5_wgtorrent_blocked_down">التورنت في الانتظار: وكيل WireGuard المحدد غير متصل.</string>
+    <string name="au5_wgtorrent_blocked_error">التورنت في الانتظار: تعذّر على Telos Network فتح الوكيل المحلي.</string>
+</resources>
