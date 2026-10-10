@@ -35,6 +35,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
@@ -651,12 +653,12 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
                             label = "artScale",
                         )
                         Surface(
-                            shape = RoundedCornerShape(28.dp),
-                            shadowElevation = 24.dp,
+                            shape = RoundedCornerShape(10.dp),
+                            shadowElevation = 12.dp,
                             color = Color.Transparent,
                             modifier = Modifier.size(side).graphicsLayer { scaleX = artScale; scaleY = artScale },
                         ) {
-                            ArtOrNote(artUrl, Modifier.fillMaxSize().clip(RoundedCornerShape(28.dp)))
+                            ArtOrNote(artUrl, Modifier.fillMaxSize().clip(RoundedCornerShape(10.dp)))
                         }
                     }
                 }
@@ -698,7 +700,7 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
                             track = { state ->
                                 SliderDefaults.Track(
                                     sliderState = state,
-                                    modifier = Modifier.requiredHeight(8.dp),
+                                    modifier = Modifier.requiredHeight(4.dp),
                                     colors = SliderDefaults.colors(
                                         activeTrackColor = white,
                                         inactiveTrackColor = Color.White.copy(alpha = 0.30f),
@@ -721,15 +723,10 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
                             IconButton(onClick = { viewModel.previous() }) {
                                 Icon(painterResource(R.drawable.skip_previous_24px), contentDescription = stringResource(R.string.hc_previous))
                             }
-                            val corner by androidx.compose.animation.core.animateDpAsState(
-                                if (isPlaying) 40.dp else 28.dp,
-                                animationSpec = if (reduceAnimations) androidx.compose.animation.core.snap() else spring(dampingRatio = 0.8f, stiffness = 400f),
-                                label = "playCorner",
-                            )
                             FilledIconButton(
                                 onClick = { viewModel.togglePlayPause() },
-                                modifier = Modifier.size(80.dp),
-                                shape = RoundedCornerShape(corner),
+                                modifier = Modifier.size(72.dp),
+                                shape = CircleShape,
                                 colors = IconButtonDefaults.filledIconButtonColors(containerColor = white, contentColor = bottom),
                             ) {
                                 Icon(painterResource(if (isPlaying) R.drawable.pause_24px else R.drawable.play_arrow_24px), contentDescription = stringResource(if (isPlaying) R.string.au_music_pause else R.string.hc_play), modifier = Modifier.size(40.dp))
@@ -762,15 +759,24 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
                         if (uri != null) scope.launch { editing = viewModel.readTags(context, uri) ?: TagEditor.Tags(title = current.title, artist = current.artist) }
                     }, colors = ButtonDefaults.textButtonColors(contentColor = white)) { Text(stringResource(R.string.hc_edit)) }
                 }
-                // handle of the bottom sheet: tap or drag up for up next, lyrics and related
+                // YouTube Music style tabs at the bottom: tap or drag up for up next, lyrics and related
                 val openDescription = stringResource(R.string.au10_music_open_sheet)
-                Box(
-                    Modifier.fillMaxWidth().height(32.dp)
-                        .clickable(onClickLabel = openDescription) { sheet = true }
+                Row(
+                    Modifier.fillMaxWidth().height(48.dp)
+                        .semantics { contentDescription = openDescription }
                         .draggable(rememberDraggableState { }, Orientation.Vertical, onDragStopped = { v -> if (v < -300f) sheet = true }),
-                    contentAlignment = Alignment.Center,
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Box(Modifier.size(width = 40.dp, height = 4.dp).clip(CircleShape).background(soft))
+                    listOf(R.string.au10_music_up_next, R.string.au10_music_lyrics, R.string.au10_music_related).forEachIndexed { i, res ->
+                        Text(
+                            stringResource(res).uppercase(),
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.SemiBold,
+                            color = soft,
+                            modifier = Modifier.clip(CircleShape).clickable { sheetTab = i; sheet = true }.padding(horizontal = 12.dp, vertical = 10.dp),
+                        )
+                    }
                 }
             }
         }

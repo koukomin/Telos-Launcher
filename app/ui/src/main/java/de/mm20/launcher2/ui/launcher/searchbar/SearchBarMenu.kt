@@ -129,10 +129,9 @@ fun RowScope.SearchBarMenu(
                     shape = MenuDefaults.leadingItemShape,
                     onClick = {
                         context.startActivity(
-                            Intent.createChooser(
-                                Intent(Intent.ACTION_SET_WALLPAPER),
-                                null
-                            )
+                            Intent(context, SettingsActivity::class.java)
+                                .putExtra(SettingsActivity.EXTRA_ROUTE, SettingsActivity.ROUTE_WALLPAPER)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         )
                         showOverflowMenu = false
                     },

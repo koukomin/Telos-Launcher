@@ -444,7 +444,7 @@ private fun HubMiniPlayer(
         val artUrl = if (isMusic) musicNow?.artUri?.toString() else null
         val fallbackTint = if (isMusic) scheme.primary else if (isTv) scheme.secondary else scheme.tertiary
         val tint by rememberArtworkTint(artUrl, fallbackTint, reduceAnimations)
-        val cardShape = RoundedCornerShape(24.dp)
+        val cardShape = RoundedCornerShape(14.dp)
         val haptic = LocalHapticFeedback.current
         val duration = musicNow?.durationMs ?: 0L
 
@@ -469,7 +469,7 @@ private fun HubMiniPlayer(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Box(
-                    Modifier.size(56.dp).clip(RoundedCornerShape(12.dp)).background(scheme.secondaryContainer),
+                    Modifier.size(56.dp).clip(RoundedCornerShape(6.dp)).background(scheme.secondaryContainer),
                     contentAlignment = Alignment.Center,
                 ) {
                     Icon(
@@ -511,8 +511,8 @@ private fun HubMiniPlayer(
                         }
                     },
                     shape = CircleShape,
-                    color = scheme.primary,
-                    contentColor = scheme.onPrimary,
+                    color = scheme.onSurface,
+                    contentColor = scheme.surface,
                     modifier = Modifier.size(48.dp),
                 ) {
                     Box(contentAlignment = Alignment.Center) {

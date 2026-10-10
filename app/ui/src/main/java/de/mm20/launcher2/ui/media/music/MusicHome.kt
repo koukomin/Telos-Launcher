@@ -94,7 +94,11 @@ internal fun MusicHome(
     reduceAnimations: Boolean = false,
 ) {
     val genres = remember(allTracks) { genresOf(allTracks) }
-    val picks = remember(tracks, history) { quickPickAlbums(tracks, history, 9) }
+    val quickSongs = remember(tracks, history) {
+        // most recently played first, then the newest songs of the library
+        val played = tracks.filter { history.containsKey(it.id) }.sortedByDescending { history[it.id]?.lastPlayedMs ?: 0L }
+        (played + tracks.sortedByDescending { it.dateAddedSeconds }).distinctBy { it.id }.take(16)
+    }
     val recent = remember(tracks, history) {
         tracks.filter { history.containsKey(it.id) }.sortedByDescending { history[it.id]?.lastPlayedMs ?: 0L }.take(20)
     }
@@ -133,30 +137,26 @@ internal fun MusicHome(
                 }
             }
         }
-        if (picks.isNotEmpty()) item(key = "picks") {
+        if (quickSongs.isNotEmpty()) item(key = "picks") {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 ShelfTitle(stringResource(R.string.au10_music_quick_picks))
-                Column(Modifier.padding(horizontal = 20.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    picks.chunked(3).forEach { row ->
-                        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            row.forEach { l ->
-                                val g = albumGroupOf(l, unknownAlbum)
-                                Box(
-                                    Modifier.weight(1f).aspectRatio(1f)
-                                        .pressScale(reduceAnimations, onClick = { onOpenGroup(g) }, onLongClick = { onShareGroup(g) })
-                                        .clip(RoundedCornerShape(20.dp)),
+                // pages of four songs, swiped sideways (as in YouTube Music)
+                LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                    items(quickSongs.chunked(4).size, key = { "picks_$it" }) { page ->
+                        Column(Modifier.width(300.dp)) {
+                            quickSongs.chunked(4)[page].forEachIndexed { j, t ->
+                                val index = page * 4 + j
+                                Row(
+                                    Modifier.fillMaxWidth().pressScale(reduceAnimations, onClick = { onPlay(quickSongs, index) }).padding(vertical = 6.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
                                 ) {
-                                    ArtOrNote(l.first().albumArtUri.toString(), Modifier.fillMaxSize())
-                                    Box(
-                                        Modifier.align(Alignment.BottomStart).fillMaxWidth()
-                                            .background(Brush.verticalGradient(listOf(Color.Transparent, Color.Black.copy(alpha = 0.8f))))
-                                            .padding(start = 10.dp, end = 10.dp, top = 24.dp, bottom = 8.dp),
-                                    ) {
-                                        Text(g.title, style = MaterialTheme.typography.labelLarge, fontWeight = FontWeight.SemiBold, color = Color.White, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                                    ArtOrNote(t.albumArtUri.toString(), Modifier.size(52.dp).clip(RoundedCornerShape(6.dp)))
+                                    Column(Modifier.padding(start = 12.dp)) {
+                                        Text(t.title, style = MaterialTheme.typography.bodyLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                        Text(t.artist.ifBlank { unknownArtist }, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                                     }
                                 }
                             }
-                            repeat(3 - row.size) { Box(Modifier.weight(1f)) }
                         }
                     }
                 }
@@ -237,7 +237,7 @@ internal fun MusicHome(
 @Composable
 private fun ArtCard(url: String?, title: String, subtitle: String, reduce: Boolean, onClick: () -> Unit, onLongClick: (() -> Unit)? = null) {
     Column(Modifier.width(148.dp).pressScale(reduce, onClick, onLongClick)) {
-        ArtOrNote(url, Modifier.size(148.dp).clip(RoundedCornerShape(20.dp)))
+        ArtOrNote(url, Modifier.size(148.dp).clip(RoundedCornerShape(8.dp)))
         Text(title, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 8.dp))
         Text(subtitle, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
     }
@@ -247,8 +247,8 @@ private fun ArtCard(url: String?, title: String, subtitle: String, reduce: Boole
 private fun GenrePill(label: String, selected: Boolean, reduce: Boolean, onClick: () -> Unit) {
     val scheme = MaterialTheme.colorScheme
     val spec = if (reduce) snap<Color>() else tween<Color>(200)
-    val bg by animateColorAsState(if (selected) scheme.primary else scheme.surfaceContainerHigh, spec, label = "pillBg")
-    val fg by animateColorAsState(if (selected) scheme.onPrimary else scheme.onSurface, spec, label = "pillFg")
+    val bg by animateColorAsState(if (selected) scheme.onSurface else scheme.surfaceContainerHigh, spec, label = "pillBg")
+    val fg by animateColorAsState(if (selected) scheme.surface else scheme.onSurface, spec, label = "pillFg")
     Box(
         Modifier.height(40.dp).clip(CircleShape).background(bg).pressScale(reduce, onClick).padding(horizontal = 18.dp),
         contentAlignment = Alignment.Center,
