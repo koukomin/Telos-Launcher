@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au14_tvhome_view_favorites">Favorites</string>
+    <string name="au14_tvhome_view_browse">Browse</string>
+    <string name="au14_tvhome_hint_star">Tap the star on a channel to add it to your favorites</string>
+    <string name="au14_tvhome_continue_watching">Continue watching</string>
+    <string name="au14_tvhome_play">Play</string>
+    <string name="au14_tvhome_empty_favorites_title">No favorites yet</string>
+    <string name="au14_tvhome_empty_favorites_text">Open Browse and tap the star on a channel to keep it here.</string>
+    <string name="au14_tvhome_empty_browse_title">Nothing found</string>
+    <string name="au14_tvhome_views_description">Choose a view</string>
+    <string name="au14_tvhome_cat_animation">Animation</string>
+    <string name="au14_tvhome_cat_auto">Auto</string>
+    <string name="au14_tvhome_cat_business">Business</string>
+    <string name="au14_tvhome_cat_classic">Classic</string>
+    <string name="au14_tvhome_cat_comedy">Comedy</string>
+    <string name="au14_tvhome_cat_cooking">Cooking</string>
+    <string name="au14_tvhome_cat_culture">Culture</string>
+    <string name="au14_tvhome_cat_documentary">Documentary</string>
+    <string name="au14_tvhome_cat_education">Education</string>
+    <string name="au14_tvhome_cat_entertainment">Entertainment</string>
+    <string name="au14_tvhome_cat_family">Family</string>
+    <string name="au14_tvhome_cat_general">General</string>
+    <string name="au14_tvhome_cat_interactive">Interactive</string>
+    <string name="au14_tvhome_cat_kids">Kids</string>
+    <string name="au14_tvhome_cat_legislative">Legislative</string>
+    <string name="au14_tvhome_cat_lifestyle">Lifestyle</string>
+    <string name="au14_tvhome_cat_movies">Movies</string>
+    <string name="au14_tvhome_cat_music">Music</string>
+    <string name="au14_tvhome_cat_news">News</string>
+    <string name="au14_tvhome_cat_outdoor">Outdoor</string>
+    <string name="au14_tvhome_cat_public">Public</string>
+    <string name="au14_tvhome_cat_relax">Relax</string>
+    <string name="au14_tvhome_cat_religious">Religious</string>
+    <string name="au14_tvhome_cat_series">Series</string>
+    <string name="au14_tvhome_cat_science">Science</string>
+    <string name="au14_tvhome_cat_shop">Shopping</string>
+    <string name="au14_tvhome_cat_sports">Sports</string>
+    <string name="au14_tvhome_cat_travel">Travel</string>
+    <string name="au14_tvhome_cat_weather">Weather</string>
+</resources>
