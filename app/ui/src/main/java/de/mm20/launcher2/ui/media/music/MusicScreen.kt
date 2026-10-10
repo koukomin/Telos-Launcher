@@ -116,7 +116,8 @@ fun MusicScreen(
 
     val history by viewModel.history.collectAsStateWithLifecycle()
     val performanceSettings = koinInject<de.mm20.launcher2.preferences.ui.PerformanceSettings>()
-    val reduceAnimations by performanceSettings.reduceAnimations.collectAsState(false)
+    val reduceFlow = remember(performanceSettings) { performanceSettings.reduceAnimations }
+    val reduceAnimations by reduceFlow.collectAsState(false)
     val scope = rememberCoroutineScope()
     val shareFailed = stringResource(R.string.au9_share_failed)
     var genre by rememberSaveable { mutableStateOf<String?>(null) }

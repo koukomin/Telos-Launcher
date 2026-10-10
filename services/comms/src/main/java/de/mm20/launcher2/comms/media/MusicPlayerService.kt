@@ -81,7 +81,7 @@ class MusicPlayerService : MediaSessionService() {
             .setBitmapLoader(AlbumArtBitmapLoader(this))
             .build()
         MusicSleepTimer.onExpire = { player.pause() }
-        scrobbler = de.mm20.launcher2.comms.scrobble.ScrobbleTracker(this, player).also { it.attach() }
+        scrobbler = runCatching { de.mm20.launcher2.comms.scrobble.ScrobbleTracker(this, player).also { it.attach() } }.getOrNull()
     }
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? = mediaSession

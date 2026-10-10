@@ -125,7 +125,8 @@ internal fun MusicHome(
                         haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove); onGenre(null)
                     }
                 }
-                items(genres, key = { it }) { g ->
+                // prefixed: a genre tagged "all" must not collide with the key of the "All" chip
+                items(genres, key = { "genre_$it" }) { g ->
                     GenrePill(g, genre == g, reduceAnimations) {
                         haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove); onGenre(if (genre == g) null else g)
                     }

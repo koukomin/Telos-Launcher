@@ -130,10 +130,19 @@ class MusicViewModel : ViewModel() {
     fun connect(context: Context) {
         if (controller != null || connecting) return
         connecting = true
-        appContext = context.applicationContext
-        _history.value = MusicHistory.load(context)
-        val token = SessionToken(context, ComponentName(context, MusicPlayerService::class.java))
-        val future = MediaController.Builder(context, token).buildAsync()
+        // the application context: this view model outlives the screen, an activity must not be kept
+        val app = context.applicationContext
+        appContext = app
+        _history.value = MusicHistory.load(app)
+        // a failing connection (service missing, session refused) must not crash the screen
+        val future = runCatching {
+            val token = SessionToken(app, ComponentName(app, MusicPlayerService::class.java))
+            MediaController.Builder(app, token).buildAsync()
+        }.getOrNull()
+        if (future == null) {
+            connecting = false
+            return
+        }
         this.future = future
         future.addListener({
             connecting = false
@@ -178,6 +187,11 @@ class MusicViewModel : ViewModel() {
     }
 
     private fun refresh() {
+        // a player callback must never take the app down (e.g. the queue changing while it is read)
+        runCatching { refreshNow() }
+    }
+
+    private fun refreshNow() {
         val c = controller ?: return
         val item = c.currentMediaItem
         if (item == null) {
@@ -219,7 +233,13 @@ class MusicViewModel : ViewModel() {
         lyricsJob?.cancel()
         _lyrics.value = null
         lyricsJob = viewModelScope.launch {
-            _lyrics.value = LyricsClient.fetch(context, playing.artist, playing.title, album, playing.durationMs)
+            _lyrics.value = try {
+                LyricsClient.fetch(context, playing.artist, playing.title, album, playing.durationMs)
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                null // lyrics are optional: a failed lookup must not crash the player
+            }
         }
     }
 

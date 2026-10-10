@@ -161,7 +161,10 @@ fun MediaHubScreen(initialSpace: String = "") {
 
     var openMusicPlayer by remember { mutableStateOf(false) }
     val stateHolder = rememberSaveableStateHolder()
-    val reduceAnimations by koinInject<PerformanceSettings>().reduceAnimations.collectAsState(false)
+    val performanceSettings: PerformanceSettings = koinInject()
+    // the getter builds a new flow on every call: remember it, or the collection restarts on each recomposition
+    val reduceFlow = remember(performanceSettings) { performanceSettings.reduceAnimations }
+    val reduceAnimations by reduceFlow.collectAsState(false)
 
     val musicNow by musicVm.nowPlaying.collectAsStateWithLifecycle()
     val scheme = MaterialTheme.colorScheme

@@ -26,8 +26,11 @@ class ScrobbleTracker(private val context: Context, private val player: Player) 
 
     private val tick = object : Runnable {
         override fun run() {
-            accumulate()
-            check()
+            // scrobbling is a side task: nothing in it may take the player service down
+            runCatching {
+                accumulate()
+                check()
+            }
             if (player.isPlaying) handler.postDelayed(this, 5000)
         }
     }
@@ -67,7 +70,7 @@ class ScrobbleTracker(private val context: Context, private val player: Player) 
     private fun config(): ScrobbleConfig {
         val now = System.currentTimeMillis()
         cachedConfig?.let { if (now - cachedAt < 30_000L) return it }
-        return Scrobblers.load(context).also { cachedConfig = it; cachedAt = now }
+        return (runCatching { Scrobblers.load(context) }.getOrNull() ?: ScrobbleConfig()).also { cachedConfig = it; cachedAt = now }
     }
 
     private fun accumulate() {
@@ -103,7 +106,7 @@ class ScrobbleTracker(private val context: Context, private val player: Player) 
     override fun onIsPlayingChanged(isPlaying: Boolean) {
         accumulate()
         // the threshold may have been reached since the last tick
-        if (!isPlaying) check()
+        if (!isPlaying) runCatching { check() }
         handler.removeCallbacks(tick)
         if (isPlaying) {
             lastTick = System.currentTimeMillis()
@@ -113,7 +116,7 @@ class ScrobbleTracker(private val context: Context, private val player: Player) 
 
     override fun onMediaItemTransition(mediaItem: MediaItem?, reason: Int) {
         accumulate()
-        check()
+        runCatching { check() }
         loadTrack(mediaItem)
         if (player.isPlaying) {
             lastTick = System.currentTimeMillis()
