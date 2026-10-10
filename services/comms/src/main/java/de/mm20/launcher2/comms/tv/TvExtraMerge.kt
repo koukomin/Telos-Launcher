@@ -59,6 +59,15 @@ object TvExtraMerge {
         return out
     }
 
+    /** "MEGA COSMOS" becomes "Mega Cosmos"; short words (ERT, ANT1, TV) and names that are not all upper case stay */
+    fun prettyName(name: String): String {
+        val n = name.trim()
+        if (n.none { it.isLetter() } || n.any { it.isLowerCase() }) return n
+        return n.split(' ').joinToString(" ") { w ->
+            if (w.length > 3 && w.all { it.isLetter() }) w.lowercase().replaceFirstChar { it.uppercase() } else w
+        }
+    }
+
     /** Stable id of an extra channel from its name key */
     fun extraId(key: String): String {
         val d = MessageDigest.getInstance("SHA-1").digest(key.toByteArray(Charsets.UTF_8))
@@ -80,7 +89,8 @@ object TvExtraMerge {
             for (n in listOf(c.name) + c.altNames) nameKey(n).takeIf { it.length >= 2 }?.let { byKey.putIfAbsent(it, c) }
         }
         val known = HashSet<String>()
-        for (c in base.all) for (s in c.streams) known.add(s.url)
+        val knownGreek = HashSet<String>()
+        for (c in base.all) for (s in c.streams) { known.add(s.url); if (c.country == "GR") knownGreek.add(s.url) }
 
         val added = LinkedHashMap<String, MutableList<TvStream>>()
         val pendings = LinkedHashMap<String, Pending>()
@@ -111,11 +121,12 @@ object TvExtraMerge {
                     known.add(e.url)
                     added.getOrPut(match.id) { ArrayList() }.add(stream)
                 } else {
-                    if (key.length < 2 || e.url in known) continue
+                    // a stream that only exists in a channel of another country must not hide the Greek channel
+                    if (key.length < 2 || e.url in known && (e.url in knownGreek || pendings.values.any { p -> p.streams.any { it.url == e.url } })) continue
                     if (pendings.size >= MAX_EXTRA_CHANNELS && key !in pendings) continue
                     known.add(e.url)
                     val p = pendings.getOrPut(key) { Pending(key) }
-                    if (p.name.isEmpty()) p.name = e.name.take(TvLimits.MAX_NAME)
+                    if (p.name.isEmpty()) p.name = prettyName(e.name).take(TvLimits.MAX_NAME)
                     if (p.logo.isEmpty()) p.logo = e.logo
                     p.categories.addAll(categoriesFor(e.group))
                     p.streams.add(stream)

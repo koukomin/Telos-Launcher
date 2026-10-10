@@ -75,8 +75,17 @@ class TvSettings(context: Context) {
         save()
     }
 
-    /** True when the selected countries include Greece (the extra sources are Greek only) */
-    fun greeceSelected(): Boolean = "GR" in _countries.value
+    /**
+     * Home country resolved by the UI (may be blank). Only a hint for [greeceSelected] on a fresh install,
+     * where no country is selected yet.
+     */
+    @Volatile var homeCountryHint: String = ""
+
+    /**
+     * True when the Greek extra sources and guide apply: Greece is selected, or nothing is selected yet
+     * (first run) and the home country, the locale country or the language is Greek.
+     */
+    fun greeceSelected(): Boolean = greeceActive(_countries.value, homeCountryHint, java.util.Locale.getDefault())
 
     fun setDisclaimerShown(shown: Boolean) {
         _disclaimerShown.value = shown
@@ -147,8 +156,24 @@ class TvSettings(context: Context) {
     private fun JSONArray?.toStrings(): List<String> =
         if (this == null) emptyList() else (0 until length()).mapNotNull { optString(it).takeIf { s -> s.isNotBlank() } }
 
-    private companion object {
-        const val FILE = "tv_prefs.json"
-        const val MAX_BAD = 500
+    companion object {
+        /** Pure rule behind [greeceSelected] */
+        fun greeceActive(selected: List<String>, home: String, locale: java.util.Locale): Boolean {
+            if (selected.isNotEmpty()) return "GR" in selected
+            return home.trim().equals("GR", ignoreCase = true) ||
+                locale.country.equals("GR", ignoreCase = true) ||
+                locale.language.equals("el", ignoreCase = true)
+        }
+
+        /** The country to preselect on first run: the home country, else the locale country, else GR for Greek; blank if unknown */
+        fun defaultCountry(home: String, locale: java.util.Locale): String = when {
+            home.isNotBlank() -> TvIndex.normalizeCountry(home)
+            locale.country.length == 2 -> TvIndex.normalizeCountry(locale.country)
+            locale.language.equals("el", ignoreCase = true) -> "GR"
+            else -> ""
+        }
+
+        private const val FILE = "tv_prefs.json"
+        private const val MAX_BAD = 500
     }
 }
