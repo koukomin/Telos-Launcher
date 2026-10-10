@@ -8,6 +8,7 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.booleanOrNull
+import kotlinx.serialization.json.decodeToSequence
 import kotlinx.serialization.json.intOrNull
 import java.io.InputStream
 

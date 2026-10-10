@@ -277,7 +277,7 @@ class TvPlayerController(
     private fun ensurePlayer(): ExoPlayer {
         exo?.let { return it }
         val attributes = AudioAttributes.Builder()
-            .setUsage(C.USAGE_MOVIE)
+            .setUsage(C.USAGE_MEDIA)
             .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
             .build()
         val p = ExoPlayer.Builder(app)
