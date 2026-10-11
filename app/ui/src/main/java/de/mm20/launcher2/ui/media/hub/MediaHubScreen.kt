@@ -60,6 +60,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.runtime.key
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -118,8 +122,8 @@ private enum class MediaSpace(
 ) {
     Music("music", "telos_music_app://music", R.drawable.headphones_24px, R.string.au9_mediahub_space_music),
     Radio("radio", "telos_radio_app://radio", R.drawable.ic_glyph_radio, R.string.au9_mediahub_space_radio),
-    Tv("tv", "telos_tv_app://tv", R.drawable.tv_24px, R.string.au12_tvui_space_tv),
     Video("video", "telos_video_app://video", R.drawable.video_library_24px, R.string.au9_mediahub_space_video),
+    Tv("tv", "telos_tv_app://tv", R.drawable.tv_24px, R.string.au12_tvui_space_tv),
 }
 
 /**
@@ -137,7 +141,14 @@ fun MediaHubScreen(initialSpace: String = "") {
 
     // All four spaces are always offered: Telos Media is one app, and hiding the older Music or Radio entries
     // in the Store only removes their icons (they are hidden by default), never the space itself
-    val available = MediaSpace.entries.toList()
+    // order: the user's (long press and drag in the pill), spaces missing from it keep the default order
+    val orderFlow = remember(settings) { settings.mediaHubOrder }
+    val savedOrder by orderFlow.collectAsState(emptyList())
+    val available = remember(savedOrder) {
+        val byId = MediaSpace.entries.associateBy { it.id }
+        val chosen = savedOrder.mapNotNull { byId[it] }.distinct()
+        chosen + MediaSpace.entries.filter { it !in chosen }
+    }
 
     var space by rememberSaveable { mutableStateOf(initialSpace) }
     LaunchedEffect(Unit) {
@@ -200,27 +211,30 @@ fun MediaHubScreen(initialSpace: String = "") {
                     .padding(horizontal = 12.dp, vertical = 6.dp),
                 contentAlignment = Alignment.Center,
             ) {
-                Surface(
-                    onClick = { backStack.removeLastOrNull() },
-                    shape = CircleShape,
-                    color = scheme.surfaceContainerHigh.copy(alpha = 0.8f),
-                    modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .size(44.dp)
-                        .border(1.dp, scheme.outline.copy(alpha = 0.2f), CircleShape),
-                ) {
-                    Box(contentAlignment = Alignment.Center) {
-                        Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back))
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    Surface(
+                        onClick = { backStack.removeLastOrNull() },
+                        shape = CircleShape,
+                        color = scheme.surfaceContainerHigh.copy(alpha = 0.8f),
+                        modifier = Modifier
+                            .size(40.dp)
+                            .border(1.dp, scheme.outline.copy(alpha = 0.2f), CircleShape),
+                    ) {
+                        Box(contentAlignment = Alignment.Center) {
+                            Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back), modifier = Modifier.size(20.dp))
+                        }
                     }
-                }
-                if (current != null) {
-                    SpacePill(
-                        spaces = available,
-                        selected = current,
-                        onSelect = { space = it.id },
-                        reduceAnimations = reduceAnimations,
-                        modifier = Modifier.padding(start = 52.dp).wrapContentWidth(Alignment.CenterHorizontally),
-                    )
+                    Spacer(Modifier.width(8.dp))
+                    if (current != null) {
+                        SpacePill(
+                            spaces = available,
+                            selected = current,
+                            onSelect = { space = it.id },
+                            onReorder = { settings.setMediaHubOrder(it.map { s -> s.id }) },
+                            reduceAnimations = reduceAnimations,
+                            modifier = Modifier.weight(1f),
+                        )
+                    }
                 }
             }
 
@@ -285,11 +299,16 @@ private fun SpacePill(
     spaces: List<MediaSpace>,
     selected: MediaSpace,
     onSelect: (MediaSpace) -> Unit,
+    onReorder: (List<MediaSpace>) -> Unit,
     reduceAnimations: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    // four labels do not fit next to the back button on a 360dp phone
-    val compact = LocalConfiguration.current.screenWidthDp < 420
+    // only the selected segment shows its label, so that all four icons always fit
+    val compact = true
+    val currentSpaces by androidx.compose.runtime.rememberUpdatedState(spaces)
+    val currentOnReorder by androidx.compose.runtime.rememberUpdatedState(onReorder)
+    var dragItem by remember { mutableStateOf<MediaSpace?>(null) }
+    var dragDx by remember { mutableStateOf(0f) }
     val haptic = LocalHapticFeedback.current
     val scheme = MaterialTheme.colorScheme
     val shape = RoundedCornerShape(28.dp)
@@ -320,8 +339,8 @@ private fun SpacePill(
                         .background(scheme.primaryContainer)
                 )
             }
-            Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
-                for (item in spaces) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+                for (item in spaces) key(item) {
                     val isSelected = item == selected
                     val content by animateColorAsState(
                         if (isSelected) scheme.onPrimaryContainer else scheme.onSurfaceVariant,
@@ -329,21 +348,56 @@ private fun SpacePill(
                     )
                     val showLabel = isSelected || !compact
                     val label = stringResource(item.label)
+                    val segmentWeight by animateFloatAsState(
+                        if (isSelected) 1.7f else 1f, if (reduceAnimations) snap() else spring(0.8f, 400f), label = "mediaHubSegmentWeight",
+                    )
                     Row(
                         modifier = Modifier
+                            .weight(segmentWeight)
                             .height(36.dp)
                             .onGloballyPositioned {
                                 xs[item] = it.positionInParent().x
                                 ws[item] = it.size.width.toFloat()
                             }
+                            .graphicsLayer { translationX = if (dragItem == item) dragDx else 0f }
                             .clip(CircleShape)
                             .semantics { contentDescription = label; this.selected = isSelected }
                             .clickable(role = Role.Tab) {
                                 if (!isSelected) haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                                 onSelect(item)
                             }
-                            .padding(horizontal = 12.dp)
-                            .animateContentSize(),
+                            // long press and drag sideways to change the order
+                            .pointerInput(item) {
+                                detectDragGesturesAfterLongPress(
+                                    onDragStart = {
+                                        dragItem = item
+                                        dragDx = 0f
+                                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                                    },
+                                    onDrag = { change, amount ->
+                                        change.consume()
+                                        dragDx += amount.x
+                                        val list = currentSpaces
+                                        val i = list.indexOf(item)
+                                        val w = ws[item] ?: 0f
+                                        if (i >= 0 && w > 0f) {
+                                            if (dragDx > w / 2 && i < list.lastIndex) {
+                                                dragDx -= ws[list[i + 1]] ?: w
+                                                currentOnReorder(list.toMutableList().also { it.add(i + 1, it.removeAt(i)) })
+                                                haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                                            } else if (dragDx < -w / 2 && i > 0) {
+                                                dragDx += ws[list[i - 1]] ?: w
+                                                currentOnReorder(list.toMutableList().also { it.add(i - 1, it.removeAt(i)) })
+                                                haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                                            }
+                                        }
+                                    },
+                                    onDragEnd = { dragItem = null; dragDx = 0f },
+                                    onDragCancel = { dragItem = null; dragDx = 0f },
+                                )
+                            }
+                            .padding(horizontal = 8.dp),
+                        horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
@@ -360,6 +414,7 @@ private fun SpacePill(
                                 fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Medium,
                                 color = content,
                                 maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
                             )
                         }
                     }

@@ -217,6 +217,7 @@ class SettingsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.enableEdgeToEdge(window)
 
+        applyTaskLabel(intent)
         val newRoute = getStartRoute(intent)
         // Only apply the deep link on a fresh start; after rotation the restored back stack must be kept.
         initialRoute = if (savedInstanceState == null) newRoute else null
@@ -650,8 +651,42 @@ class SettingsActivity : BaseActivity() {
         }
     }
 
+    /**
+     * The Telos apps run inside this activity: the recents screen shows the name and icon of the app that
+     * was opened ("Telos Media") instead of "Settings".
+     */
+    private fun applyTaskLabel(intent: Intent) {
+        val route = intent.getStringExtra(EXTRA_ROUTE) ?: return
+        val (label, icon) = when (route) {
+            ROUTE_COMMS -> "Telos Phone" to "phone"
+            ROUTE_MEDIA, ROUTE_MUSIC, ROUTE_RADIO, ROUTE_VIDEO -> "Telos Media" to "music"
+            ROUTE_PHOTOS -> "Telos Photos" to "photos"
+            SettingsDeepLinkContract.ROUTE_VIEWER -> "Telos Viewer" to "viewer"
+            ROUTE_FILES -> "Telos Files" to "files"
+            ROUTE_NETWORK -> "Telos Network" to "network"
+            ROUTE_CALCULATOR -> "Telos Calculator" to "calculator"
+            ROUTE_VOICE_RECORDER -> "Telos Voice Recorder" to "voice_recorder"
+            ROUTE_SCREEN_RECORDER -> "Telos Screen Recorder" to "screen_recorder"
+            ROUTE_SCREENSHOT -> "Telos Screenshot" to "screenshot"
+            ROUTE_NOTES -> "Telos Notes" to "notes"
+            ROUTE_CALENDAR -> "Telos Calendar" to "calendar"
+            ROUTE_DOWNLOADS -> "Telos Downloads" to "downloads"
+            ROUTE_STORE -> "Telos Store" to "store"
+            else -> return
+        }
+        runCatching {
+            val res = resources.getIdentifier("ic_app_${icon}_full", "drawable", packageName)
+            @Suppress("DEPRECATION")
+            setTaskDescription(
+                if (res != 0) android.app.ActivityManager.TaskDescription(label, res)
+                else android.app.ActivityManager.TaskDescription(label)
+            )
+        }
+    }
+
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        applyTaskLabel(intent)
         val newRoute = getStartRoute(intent)
         initialRoute = newRoute
     }

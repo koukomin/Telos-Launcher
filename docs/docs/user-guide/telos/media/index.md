@@ -4,7 +4,7 @@ Telos Media puts [Telos Music](../music/index.md), [Telos Radio](../radio/index.
 
 ## Switching spaces
 
-A pill at the top has four segments: **Music**, **Radio**, **TV** and **Video** (on narrow phones only the selected one shows its label). Tap one to switch; the last space you used is remembered
+A pill at the top has four segments: **Music**, **Radio**, **Video** and **TV** (only the selected one shows its label, so all four icons always fit). Tap one to switch; long press a segment and drag it sideways to change the order (it is remembered); the last space you used is remembered
 (it is part of the launcher settings backup). The three older apps still exist and open Telos Media on their space, so existing
 shortcuts and search results keep working. A space whose app is hidden in the Store disappears from the pill.
 
