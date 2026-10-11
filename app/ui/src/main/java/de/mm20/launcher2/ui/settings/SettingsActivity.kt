@@ -621,7 +621,10 @@ class SettingsActivity : BaseActivity() {
                                 .fillMaxSize()
                                 .background(MaterialTheme.colorScheme.surfaceContainer)
                         ) {
-                            NavDisplay(
+                            // a Telos app opened directly is the only entry: going back from it closes the activity
+                            // (an empty back stack must never reach NavDisplay)
+                            LaunchedEffect(backStack.size) { if (backStack.isEmpty()) activity?.finish() }
+                            if (backStack.isNotEmpty()) NavDisplay(
                                 backStack = backStack,
                                 onBack = { backStack.removeLastOrNull() },
                                 entryProvider = entryProvider,
