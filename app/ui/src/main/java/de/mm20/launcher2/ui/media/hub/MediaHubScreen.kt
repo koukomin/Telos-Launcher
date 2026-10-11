@@ -446,6 +446,9 @@ private fun HubMiniPlayer(
     val stationName by radioVm.stationName.collectAsStateWithLifecycle()
     val radioMeta by radioVm.nowPlayingMetadata.collectAsStateWithLifecycle()
     val radioError by radioVm.error.collectAsStateWithLifecycle()
+    val recordingState by radioVm.recordingState.collectAsStateWithLifecycle()
+    val isRecording = recordingState is de.mm20.launcher2.comms.radio.RadioRecorder.State.Recording
+    val context = LocalContext.current
 
     val tvChannel by tvVm.controller.currentChannel.collectAsStateWithLifecycle()
     val tvPlaying by tvVm.controller.isPlaying.collectAsStateWithLifecycle()
@@ -582,6 +585,17 @@ private fun HubMiniPlayer(
                         Icon(painterResource(R.drawable.skip_next_24px), contentDescription = stringResource(R.string.hc_next))
                     }
                 } else {
+                    if (!isTv) {
+                        IconButton(onClick = {
+                            radioVm.toggleRecording(context)?.let { android.widget.Toast.makeText(context, context.getString(it), android.widget.Toast.LENGTH_SHORT).show() }
+                        }) {
+                            Icon(
+                                painterResource(if (isRecording) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px),
+                                contentDescription = stringResource(if (isRecording) R.string.au2_radio2_stop_recording else R.string.au2_radio2_record),
+                                tint = if (isRecording) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+                        }
+                    }
                     // a radio or TV stream has no next track: stop ends it and removes the bar
                     IconButton(onClick = { if (isTv) tvVm.stop() else radioVm.stop() }) {
                         Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.hc_stop))

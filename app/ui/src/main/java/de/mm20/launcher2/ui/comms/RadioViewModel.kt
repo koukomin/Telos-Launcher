@@ -197,6 +197,13 @@ class RadioViewModel : ViewModel(), KoinComponent {
         else playStation(station)
     }
 
+    /** Previous (-1) or next (1) station of [stations] (wraps around); nothing when there are fewer than two */
+    fun skipStation(step: Int, stations: List<RadioStation>) {
+        if (stations.size < 2) return
+        val i = stations.indexOfFirst { it.id == _stationId.value }
+        playStation(stations[Math.floorMod(i + step, stations.size)])
+    }
+
     fun stop() {
         mediaController?.stop()
         _isVisible.value = false

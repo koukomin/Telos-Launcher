@@ -23,6 +23,9 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items as gridItems
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -630,7 +633,7 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
     ) {
         CompositionLocalProvider(LocalContentColor provides white) {
             Column(
-                Modifier.fillMaxSize().padding(horizontal = 24.dp, vertical = 16.dp),
+                Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 24.dp, vertical = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -642,11 +645,11 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
                         Icon(painterResource(R.drawable.share_24px), contentDescription = stringResource(R.string.menu_share))
                     }
                 }
-                BoxWithConstraints(Modifier.weight(1f).fillMaxWidth(), contentAlignment = Alignment.Center) {
+                BoxWithConstraints(Modifier.fillMaxWidth().padding(top = 8.dp), contentAlignment = Alignment.Center) {
                     if (showLyrics) {
-                        LyricsView(lyrics, position, Modifier.fillMaxSize(), activeColor = white, inactiveColor = soft)
+                        LyricsView(lyrics, position, Modifier.fillMaxWidth().height(340.dp), activeColor = white, inactiveColor = soft)
                     } else {
-                        val side = minOf(maxWidth * 0.88f, maxHeight)
+                        val side = minOf(maxWidth * 0.92f, 360.dp)
                         val artScale by animateFloatAsState(
                             if (isPlaying || reduceAnimations) 1f else 0.9f,
                             animationSpec = spring(dampingRatio = 0.8f, stiffness = 400f),
@@ -697,6 +700,7 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
                                 activeTrackColor = white,
                                 inactiveTrackColor = Color.White.copy(alpha = 0.30f),
                             ),
+                            thumb = { Box(Modifier.size(14.dp).background(white, CircleShape)) },
                             track = { state ->
                                 SliderDefaults.Track(
                                     sliderState = state,
@@ -747,17 +751,28 @@ private fun NowPlayingScreen(viewModel: MusicViewModel, library: List<MusicTrack
                         }
                     }
                 }
-                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
-                    TextButton(onClick = { showLyrics = !showLyrics }, enabled = lyrics != null || showLyrics, colors = ButtonDefaults.textButtonColors(contentColor = white, disabledContentColor = soft)) {
-                        Text(stringResource(if (showLyrics) R.string.au_music_show_cover else R.string.au_music_show_lyrics))
+                // chips like YouTube Music: lyrics, sleep timer, edit tags
+                Row(
+                    Modifier.fillMaxWidth().padding(vertical = 8.dp).horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    @Composable
+                    fun chip(label: String, enabled: Boolean = true, onClick: () -> Unit) {
+                        Text(
+                            label,
+                            style = MaterialTheme.typography.labelLarge,
+                            fontWeight = FontWeight.Medium,
+                            color = if (enabled) white else soft,
+                            modifier = Modifier.clip(CircleShape).background(Color.White.copy(alpha = 0.12f))
+                                .clickable(enabled = enabled, onClick = onClick).padding(horizontal = 18.dp, vertical = 10.dp),
+                        )
                     }
-                    TextButton(onClick = { showSleep = true }, colors = ButtonDefaults.textButtonColors(contentColor = white)) {
-                        Text(stringResource(if (sleepEndsAt > 0) R.string.au_music_sleep_active else R.string.au_music_sleep))
-                    }
-                    TextButton(onClick = {
+                    chip(stringResource(if (showLyrics) R.string.au_music_show_cover else R.string.au_music_show_lyrics), enabled = lyrics != null || showLyrics) { showLyrics = !showLyrics }
+                    chip(stringResource(if (sleepEndsAt > 0) R.string.au_music_sleep_active else R.string.au_music_sleep)) { showSleep = true }
+                    chip(stringResource(R.string.hc_edit)) {
                         val uri = current.uri
                         if (uri != null) scope.launch { editing = viewModel.readTags(context, uri) ?: TagEditor.Tags(title = current.title, artist = current.artist) }
-                    }, colors = ButtonDefaults.textButtonColors(contentColor = white)) { Text(stringResource(R.string.hc_edit)) }
+                    }
                 }
                 // YouTube Music style tabs at the bottom: tap or drag up for up next, lyrics and related
                 val openDescription = stringResource(R.string.au10_music_open_sheet)

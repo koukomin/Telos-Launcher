@@ -70,6 +70,7 @@ fun RadioDashboardScreen() {
     var showAdd by remember { mutableStateOf(false) }
     var showSleep by remember { mutableStateOf(false) }
     var showNowPlaying by rememberSaveable { mutableStateOf(false) }
+    var showRecordings by remember { mutableStateOf(false) }
     var editTarget by remember { mutableStateOf<RadioStation?>(null) }
 
     LaunchedEffect(message) {
@@ -121,6 +122,13 @@ fun RadioDashboardScreen() {
                 Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
             }
             DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                DropdownMenuItem(
+                    text = { Text(stringResource(R.string.au2_radio2_recordings)) },
+                    onClick = {
+                        menuOpen = false
+                        showRecordings = true
+                    },
+                )
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.hc_scrobbling)) },
                     onClick = {
@@ -193,7 +201,6 @@ fun RadioDashboardScreen() {
                     modifier = Modifier.fillMaxSize(),
                     header = {
                         Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                            RadioRecordingsEntry()
                             if (shownFavorites.isEmpty() && favorites.isNotEmpty() && collectionQuery.isNotBlank()) {
                                 de.mm20.launcher2.ui.component.SearchEmptyState(collectionQuery)
                             }
@@ -297,6 +304,7 @@ fun RadioDashboardScreen() {
     }
 
     RadioRecordingResultEffect()
+    RadioRecordingsEntry(showCard = false, open = showRecordings, onDismiss = { showRecordings = false })
 
     if (showNowPlaying) {
         RadioNowPlayingSheet(

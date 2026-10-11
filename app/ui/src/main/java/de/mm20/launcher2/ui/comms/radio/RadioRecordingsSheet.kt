@@ -72,7 +72,7 @@ fun RadioRecordingResultEffect() {
 /** Row for the Collection tab that opens the list of recordings made by Telos Radio. */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RadioRecordingsEntry() {
+fun RadioRecordingsEntry(showCard: Boolean = true, open: Boolean = false, onDismiss: () -> Unit = {}) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val recState by RadioRecorder.state.collectAsStateWithLifecycle()
@@ -82,11 +82,11 @@ fun RadioRecordingsEntry() {
     var deleteTarget by remember { mutableStateOf<RadioRecording?>(null) }
 
     // reload when a recording has just finished (isRecording turns false) and when the sheet opens
-    LaunchedEffect(isRecording, showSheet) {
+    LaunchedEffect(isRecording, showSheet, open) {
         recordings = withContext(Dispatchers.IO) { RadioRecordings.list(context) }
     }
 
-    LauncherCard(modifier = Modifier.fillMaxWidth().clickable { showSheet = true }) {
+    if (showCard) LauncherCard(modifier = Modifier.fillMaxWidth().clickable { showSheet = true }) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -108,8 +108,8 @@ fun RadioRecordingsEntry() {
         }
     }
 
-    if (showSheet) {
-        ModalBottomSheet(onDismissRequest = { showSheet = false }) {
+    if (showSheet || open) {
+        ModalBottomSheet(onDismissRequest = { showSheet = false; onDismiss() }) {
             Column(Modifier.navigationBarsPadding().padding(horizontal = 16.dp)) {
                 Text(
                     stringResource(R.string.au2_radio2_recordings),

@@ -30,6 +30,13 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
@@ -230,110 +237,134 @@ fun RadioNowPlayingSheet(
         androidx.compose.runtime.LaunchedEffect(Unit) { onDismiss() }
     }
 
-    ModalBottomSheet(
+    val white = Color.White
+    val soft = Color.White.copy(alpha = 0.70f)
+    val top = logoColor.copy(alpha = 0.9f).compositeOver(Color.Black).let { Color(it.red * 0.45f, it.green * 0.45f, it.blue * 0.45f) }
+    // the stations that previous / next move between: the collection, or what was passed
+    val skipList = remember(stations, favoriteIds) {
+        stations.filter { it.id in favoriteIds }.ifEmpty { stations }
+    }
+
+    androidx.compose.ui.window.Dialog(
         onDismissRequest = onDismiss,
-        sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-        shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
-        containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+        properties = androidx.compose.ui.window.DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false),
     ) {
-        val low = MaterialTheme.colorScheme.surfaceContainerLow
-        Column(
-            Modifier
-                .fillMaxWidth()
-                .background(Brush.verticalGradient(listOf(logoColor.copy(alpha = 0.35f).compositeOver(low), low)))
-                .navigationBarsPadding()
-                .padding(horizontal = 24.dp, vertical = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            Text(
-                stringResource(R.string.au14_radioui_now_playing),
-                style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            if (station != null) {
-                RadioLogo(station, Modifier.widthIn(max = 280.dp).fillMaxWidth().aspectRatio(1f), corner = 28.dp, pad = 28.dp)
-            } else {
-                Box(
-                    Modifier.widthIn(max = 280.dp).fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(28.dp))
-                        .background(MaterialTheme.colorScheme.surfaceContainerHighest),
-                    contentAlignment = Alignment.Center,
-                ) { Icon(painterResource(R.drawable.radio_24px), null, Modifier.size(72.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant) }
-            }
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(top, Color(0xFF0B0B0D))))) {
+            Column(
+                Modifier
+                    .fillMaxSize()
+                    .statusBarsPadding()
+                    .navigationBarsPadding()
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 24.dp, vertical = 12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = onDismiss) {
+                        Icon(painterResource(R.drawable.keyboard_arrow_down_24px), stringResource(R.string.hc_close), tint = white)
+                    }
+                    Spacer(Modifier.weight(1f))
+                    Text(stringResource(R.string.au14_radioui_now_playing), style = MaterialTheme.typography.labelLarge, color = soft)
+                    Spacer(Modifier.weight(1f))
+                    Spacer(Modifier.size(48.dp))
+                }
+                Spacer(Modifier.height(16.dp))
+                if (station != null) {
+                    RadioLogo(station, Modifier.widthIn(max = 340.dp).fillMaxWidth(0.92f).aspectRatio(1f), corner = 10.dp, pad = 28.dp)
+                } else {
+                    Box(
+                        Modifier.widthIn(max = 340.dp).fillMaxWidth(0.92f).aspectRatio(1f).clip(RoundedCornerShape(10.dp))
+                            .background(Color.White.copy(alpha = 0.10f)),
+                        contentAlignment = Alignment.Center,
+                    ) { Icon(painterResource(R.drawable.radio_24px), null, Modifier.size(72.dp), tint = soft) }
+                }
+                Spacer(Modifier.height(24.dp))
                 Text(
                     name.ifEmpty { stringResource(R.string.au_radio_unknown_station) },
-                    style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Center, maxLines = 2, overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, color = white,
+                    maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.fillMaxWidth(),
                 )
                 Text(
                     (if (reconnecting) stringResource(if (waitingForNetwork) R.string.au16_reconnect_waiting else R.string.au16_reconnect_label) else null)
                         ?: error?.let { stringResource(it) } ?: track.ifEmpty { stringResource(R.string.au_radio_streaming_live) },
-                    style = MaterialTheme.typography.titleMedium,
-                    color = if (error != null && !reconnecting) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center, maxLines = 2, overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = if (error != null && !reconnecting) MaterialTheme.colorScheme.error else soft,
+                    maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.fillMaxWidth(),
                 )
-            }
-            // big play / pause with a loading ring
-            Box(
-                Modifier.size(80.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary)
-                    .clickable { player.togglePlayPause() },
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(
-                    painterResource(if (playWhenReady) R.drawable.pause_24px else R.drawable.play_arrow_24px),
-                    stringResource(if (playWhenReady) R.string.au_radio_pause else R.string.hc_play),
-                    Modifier.size(40.dp), tint = MaterialTheme.colorScheme.onPrimary,
-                )
-                if (loading && playWhenReady) {
-                    CircularProgressIndicator(Modifier.size(72.dp), strokeWidth = 3.dp, color = MaterialTheme.colorScheme.onPrimary)
-                }
-            }
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = {
-                    player.toggleRecording(context)?.let { Toast.makeText(context, context.getString(it), Toast.LENGTH_SHORT).show() }
-                }) {
-                    Icon(
-                        painterResource(if (isRecording) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px),
+                // chips like YouTube Music: favorite, record, sleep timer, share
+                Row(
+                    Modifier.fillMaxWidth().padding(vertical = 16.dp).horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    @Composable
+                    fun chip(icon: Int, label: String, tint: Color, onClick: () -> Unit) {
+                        Row(
+                            Modifier.clip(CircleShape).background(Color.White.copy(alpha = 0.12f)).clickable(onClick = onClick)
+                                .padding(horizontal = 16.dp, vertical = 10.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        ) {
+                            Icon(painterResource(icon), null, Modifier.size(20.dp), tint = tint)
+                            Text(label, style = MaterialTheme.typography.labelLarge, color = white, maxLines = 1)
+                        }
+                    }
+                    if (station != null && onToggleFavorite != null) {
+                        chip(if (isFavorite) R.drawable.star_24px_filled else R.drawable.star_24px, stringResource(R.string.hc_favorite), white) { onToggleFavorite(station) }
+                    }
+                    chip(
+                        if (isRecording) R.drawable.radio_button_checked_24px else R.drawable.radio_button_unchecked_24px,
                         stringResource(if (isRecording) R.string.au2_radio2_stop_recording else R.string.au2_radio2_record),
-                        tint = if (isRecording) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
+                        if (isRecording) MaterialTheme.colorScheme.error else white,
+                    ) { player.toggleRecording(context)?.let { Toast.makeText(context, context.getString(it), Toast.LENGTH_SHORT).show() } }
+                    Box {
+                        chip(R.drawable.timer_24px, stringResource(R.string.hc_sleep_timer), if (sleepEndsAt > 0) MaterialTheme.colorScheme.primary else white) { sleepMenu = true }
+                        DropdownMenu(expanded = sleepMenu, onDismissRequest = { sleepMenu = false }, shape = RoundedCornerShape(20.dp)) {
+                            listOf(15, 30, 45, 60, 90).forEach { minutes ->
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(R.string.hc_stop_playback_in_minutes, minutes)) },
+                                    onClick = { player.setSleepTimer(minutes); sleepMenu = false },
+                                )
+                            }
+                            if (sleepEndsAt > 0) {
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(R.string.hc_turn_timer_off)) },
+                                    onClick = { player.cancelSleepTimer(); sleepMenu = false },
+                                )
+                            }
+                        }
+                    }
+                    if (station != null) {
+                        chip(R.drawable.share_24px, stringResource(R.string.au10_radio_share), white) { RadioShare.share(context, station) }
+                    }
                 }
-                Box {
-                    IconButton(onClick = { sleepMenu = true }) {
+                // a live stream has no position: a full line with a dot at the end instead of a scrubber
+                Box(Modifier.fillMaxWidth().height(14.dp), contentAlignment = Alignment.CenterStart) {
+                    Box(Modifier.fillMaxWidth().height(4.dp).clip(CircleShape).background(Color.White.copy(alpha = 0.30f)))
+                    Box(Modifier.align(Alignment.CenterEnd).size(14.dp).background(white, CircleShape))
+                }
+                Spacer(Modifier.height(24.dp))
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = { player.skipStation(-1, skipList) }, enabled = skipList.size > 1, modifier = Modifier.size(56.dp)) {
+                        Icon(painterResource(R.drawable.skip_previous_24px), stringResource(R.string.hc_previous), Modifier.size(32.dp), tint = if (skipList.size > 1) white else soft)
+                    }
+                    Box(
+                        Modifier.size(72.dp).clip(CircleShape).background(white).clickable { player.togglePlayPause() },
+                        contentAlignment = Alignment.Center,
+                    ) {
                         Icon(
-                            painterResource(R.drawable.timer_24px), stringResource(R.string.hc_sleep_timer),
-                            tint = if (sleepEndsAt > 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                            painterResource(if (playWhenReady) R.drawable.pause_24px else R.drawable.play_arrow_24px),
+                            stringResource(if (playWhenReady) R.string.au_radio_pause else R.string.hc_play),
+                            Modifier.size(40.dp), tint = Color.Black,
                         )
+                        if (loading && playWhenReady) {
+                            CircularProgressIndicator(Modifier.size(64.dp), strokeWidth = 3.dp, color = Color.Black.copy(alpha = 0.5f))
+                        }
                     }
-                    DropdownMenu(expanded = sleepMenu, onDismissRequest = { sleepMenu = false }, shape = RoundedCornerShape(20.dp)) {
-                        listOf(15, 30, 45, 60, 90).forEach { minutes ->
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.hc_stop_playback_in_minutes, minutes)) },
-                                onClick = { player.setSleepTimer(minutes); sleepMenu = false },
-                            )
-                        }
-                        if (sleepEndsAt > 0) {
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.hc_turn_timer_off)) },
-                                onClick = { player.cancelSleepTimer(); sleepMenu = false },
-                            )
-                        }
+                    IconButton(onClick = { player.skipStation(1, skipList) }, enabled = skipList.size > 1, modifier = Modifier.size(56.dp)) {
+                        Icon(painterResource(R.drawable.skip_next_24px), stringResource(R.string.hc_next), Modifier.size(32.dp), tint = if (skipList.size > 1) white else soft)
                     }
                 }
-                if (station != null) {
-                    IconButton(onClick = { RadioShare.share(context, station) }) {
-                        Icon(painterResource(R.drawable.share_24px), stringResource(R.string.au10_radio_share), tint = MaterialTheme.colorScheme.onSurfaceVariant)
-                    }
-                    if (onToggleFavorite != null) {
-                        IconButton(onClick = { onToggleFavorite(station) }) {
-                            Icon(
-                                painterResource(if (isFavorite) R.drawable.star_24px_filled else R.drawable.star_24px),
-                                stringResource(R.string.hc_favorite),
-                                tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
-                        }
-                    }
-                }
+                Spacer(Modifier.height(24.dp))
             }
         }
     }
