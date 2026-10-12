@@ -64,6 +64,11 @@ android {
     buildTypes {
         release {
             applicationIdSuffix = ".release"
+            // Στο GitHub Actions (υπάρχει KEYSTORE_PASSWORD) υπογράφει με το Keystore, τοπικά με το debug κλειδί
+            signingConfig = if (System.getenv("KEYSTORE_PASSWORD") != null)
+                signingConfigs.getByName("gh-actions")
+            else
+                signingConfigs.getByName("debug")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
