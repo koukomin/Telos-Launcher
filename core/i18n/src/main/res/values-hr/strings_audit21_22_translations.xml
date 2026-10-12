@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Pogrešna lozinka</string>
+    <string name="au21_arch_password_needed">Ova arhiva zaštićena je lozinkom</string>
+    <string name="au21_arch_failed">Arhivu nije moguće otvoriti</string>
+    <string name="au21_arch_pw_title">Potrebna je lozinka</string>
+    <string name="au21_arch_pw_info">%1$s je zaštićen lozinkom. Unesite lozinku da ga otvorite ili raspakirate. Lozinka se čuva u memoriji samo dok ste u arhivi i nikada se ne sprema.</string>
+    <string name="au21_arch_ok">U redu</string>
+    <string name="au21_arch_checking">Provjera…</string>
+    <string name="au21_arch_show">Prikaži</string>
+    <string name="au21_arch_hide">Sakrij</string>
+    <string name="au21_arch_compress">Komprimiraj…</string>
+    <string name="au21_arch_format">Format</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Lozinka (AES-256, neobavezno)</string>
+    <string name="au21_arch_pw_repeat">Ponovite lozinku</string>
+    <string name="au21_arch_pw_mismatch">Lozinke se ne podudaraju</string>
+    <string name="au21_arch_zip_note">S lozinkom se datoteke šifriraju pomoću AES-256. Nazivi datoteka ostaju vidljivi. Telos nikada ne koristi slabo šifriranje ZipCrypto. Lozinku nije moguće oporaviti, stoga je dobro pohranite.</string>
+    <string name="au21_arch_no_pw_note">Arhive 7z i tar.gz stvaraju se bez lozinke.</string>
+    <string name="au22_files_open_as_archive">Otvori kao arhivu</string>
+    <string name="au22_files_view_mode">Način prikaza</string>
+    <string name="au22_files_view_list">Popis</string>
+    <string name="au22_files_view_grid_medium">Rešetka, srednji pregledi</string>
+    <string name="au22_files_view_grid_large">Rešetka, veliki pregledi</string>
+    <string name="au22_files_gshortcut_failed">Ovaj prečac za Google Drive nije moguće otvoriti</string>
+</resources>

@@ -367,6 +367,14 @@ class CommsSettings internal constructor(
     val mediaHubSpace
         get() = dataStore.data.map { it.comms.mediaHubSpace }
 
+    /** Telos Media: ids of the spaces in the order chosen by the user (may be incomplete or empty) */
+    val mediaHubOrder
+        get() = dataStore.data.map { data -> data.comms.mediaHubOrder.split(',').filter { it.isNotBlank() } }
+
+    fun setMediaHubOrder(ids: List<String>) {
+        dataStore.update { it.copy(comms = it.comms.copy(mediaHubOrder = ids.joinToString(","))) }
+    }
+
     fun setMediaHubSpace(space: String) {
         dataStore.update { it.copy(comms = it.comms.copy(mediaHubSpace = space)) }
     }

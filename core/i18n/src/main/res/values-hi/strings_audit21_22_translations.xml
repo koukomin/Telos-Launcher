@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">गलत पासवर्ड</string>
+    <string name="au21_arch_password_needed">यह आर्काइव पासवर्ड से सुरक्षित है</string>
+    <string name="au21_arch_failed">आर्काइव नहीं खोला जा सका</string>
+    <string name="au21_arch_pw_title">पासवर्ड आवश्यक है</string>
+    <string name="au21_arch_pw_info">%1$s पासवर्ड से सुरक्षित है। इसे खोलने या अनपैक करने के लिए इसका पासवर्ड दर्ज करें। पासवर्ड केवल तब तक मेमोरी में रहता है जब तक आप आर्काइव के अंदर हैं, और इसे कभी सहेजा नहीं जाता।</string>
+    <string name="au21_arch_ok">ठीक है</string>
+    <string name="au21_arch_checking">जाँच हो रही है…</string>
+    <string name="au21_arch_show">दिखाएँ</string>
+    <string name="au21_arch_hide">छिपाएँ</string>
+    <string name="au21_arch_compress">संपीड़ित करें…</string>
+    <string name="au21_arch_format">फ़ॉर्मैट</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">पासवर्ड (AES-256, वैकल्पिक)</string>
+    <string name="au21_arch_pw_repeat">पासवर्ड दोबारा दर्ज करें</string>
+    <string name="au21_arch_pw_mismatch">पासवर्ड मेल नहीं खाते</string>
+    <string name="au21_arch_zip_note">पासवर्ड के साथ फ़ाइलें AES-256 से एन्क्रिप्ट होती हैं। फ़ाइल नाम दिखते रहते हैं। Telos कभी कमज़ोर ZipCrypto एन्क्रिप्शन नहीं लिखता। पासवर्ड वापस नहीं पाया जा सकता, इसलिए इसे सुरक्षित रखें।</string>
+    <string name="au21_arch_no_pw_note">7z और tar.gz आर्काइव बिना पासवर्ड के बनाए जाते हैं।</string>
+    <string name="au22_files_open_as_archive">आर्काइव के रूप में खोलें</string>
+    <string name="au22_files_view_mode">व्यू मोड</string>
+    <string name="au22_files_view_list">सूची</string>
+    <string name="au22_files_view_grid_medium">ग्रिड, मध्यम पूर्वावलोकन</string>
+    <string name="au22_files_view_grid_large">ग्रिड, बड़े पूर्वावलोकन</string>
+    <string name="au22_files_gshortcut_failed">यह Google Drive शॉर्टकट नहीं खोला जा सकता</string>
+</resources>

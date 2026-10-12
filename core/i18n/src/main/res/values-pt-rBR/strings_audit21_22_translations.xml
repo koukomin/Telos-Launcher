@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Senha incorreta</string>
+    <string name="au21_arch_password_needed">Este arquivo está protegido por senha</string>
+    <string name="au21_arch_failed">Não foi possível abrir o arquivo</string>
+    <string name="au21_arch_pw_title">Senha necessária</string>
+    <string name="au21_arch_pw_info">%1$s está protegido por senha. Digite a senha para abri-lo ou extraí-lo. A senha é mantida na memória somente enquanto você está dentro do arquivo e nunca é salva.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Verificando…</string>
+    <string name="au21_arch_show">Mostrar</string>
+    <string name="au21_arch_hide">Ocultar</string>
+    <string name="au21_arch_compress">Compactar…</string>
+    <string name="au21_arch_format">Formato</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Senha (AES-256, opcional)</string>
+    <string name="au21_arch_pw_repeat">Repetir senha</string>
+    <string name="au21_arch_pw_mismatch">As senhas não coincidem</string>
+    <string name="au21_arch_zip_note">Com senha, os arquivos são criptografados com AES-256. Os nomes dos arquivos continuam visíveis. O Telos nunca usa a criptografia fraca ZipCrypto. A senha não pode ser recuperada, então guarde-a em um lugar seguro.</string>
+    <string name="au21_arch_no_pw_note">Arquivos 7z e tar.gz são criados sem senha.</string>
+    <string name="au22_files_open_as_archive">Abrir como arquivo compactado</string>
+    <string name="au22_files_view_mode">Modo de exibição</string>
+    <string name="au22_files_view_list">Lista</string>
+    <string name="au22_files_view_grid_medium">Grade, miniaturas médias</string>
+    <string name="au22_files_view_grid_large">Grade, miniaturas grandes</string>
+    <string name="au22_files_gshortcut_failed">Não é possível abrir este atalho do Google Drive</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Parolă greșită</string>
+    <string name="au21_arch_password_needed">Această arhivă este protejată prin parolă</string>
+    <string name="au21_arch_failed">Arhiva nu a putut fi deschisă</string>
+    <string name="au21_arch_pw_title">Parolă necesară</string>
+    <string name="au21_arch_pw_info">%1$s este protejat prin parolă. Introduceți parola pentru a-l deschide sau dezarhiva. Parola este păstrată în memorie doar cât timp vă aflați în arhivă și nu este salvată niciodată.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Se verifică…</string>
+    <string name="au21_arch_show">Afișează</string>
+    <string name="au21_arch_hide">Ascunde</string>
+    <string name="au21_arch_compress">Comprimă…</string>
+    <string name="au21_arch_format">Format</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Parolă (AES-256, opțională)</string>
+    <string name="au21_arch_pw_repeat">Repetați parola</string>
+    <string name="au21_arch_pw_mismatch">Parolele nu se potrivesc</string>
+    <string name="au21_arch_zip_note">Cu parolă, fișierele sunt criptate cu AES-256. Numele fișierelor rămân vizibile. Telos nu folosește niciodată criptarea slabă ZipCrypto. Parola nu poate fi recuperată, așa că păstrați-o în siguranță.</string>
+    <string name="au21_arch_no_pw_note">Arhivele 7z și tar.gz sunt create fără parolă.</string>
+    <string name="au22_files_open_as_archive">Deschide ca arhivă</string>
+    <string name="au22_files_view_mode">Mod de vizualizare</string>
+    <string name="au22_files_view_list">Listă</string>
+    <string name="au22_files_view_grid_medium">Grilă, previzualizări medii</string>
+    <string name="au22_files_view_grid_large">Grilă, previzualizări mari</string>
+    <string name="au22_files_gshortcut_failed">Această scurtătură Google Drive nu poate fi deschisă</string>
+</resources>

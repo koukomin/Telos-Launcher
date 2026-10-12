@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Tento archív RAR je zašifrovaný. Telos vie čítať archívy RAR, ale nedokáže ich dešifrovať. Otvorte ho radšej v aplikácii pre RAR.</string>
+    <string name="au23_rar_unavailable">Táto verzia Telosu nedokáže otvárať archívy RAR. Podpora RAR je súčasťou iba štandardnej verzie, nie verzie F-Droid.</string>
+    <string name="au23_rp_title">Náhľady súborov v cloudových a sieťových úložiskách</string>
+    <string name="au23_rp_note">Keď je zapnuté, zobrazenie obrázkov sťahuje obrázky a dokumenty z cloudového alebo sieťového úložiska do vyrovnávacej pamäte tohto telefónu (do zvolenej veľkosti), aby vykreslilo ich náhľad. Načítavajú sa iba viditeľné dlaždice. Šifrované trezory sa nikdy nezobrazujú v náhľade. Predvolene vypnuté kvôli šetreniu dát a súkromiu.</string>
+    <string name="au23_rp_max_size">Maximálna veľkosť súboru pre náhľady: %1$s</string>
+    <string name="au23_rp_max_size_hint">Odporúčané: 2 MB. Väčšie súbory si ponechajú farebnú dlaždicu typu.</string>
+    <string name="au23_rp_wifi_only">Iba cez Wi-Fi alebo neúčtované siete</string>
+    <string name="au23_rp_wifi_only_desc">Žiadne sťahovanie náhľadov cez mobilné dáta ani iné spoplatnené pripojenia.</string>
+    <string name="au23_rp_clear">Vymazať vyrovnávaciu pamäť náhľadov</string>
+    <string name="au23_rp_cache_size">Vyrovnávacia pamäť náhľadov: %1$s</string>
+</resources>

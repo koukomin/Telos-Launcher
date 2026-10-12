@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au15_tvbg_menu_playback">Playback</string>
+    <string name="au15_tvbg_title">Keep playing in the background</string>
+    <string name="au15_tvbg_summary">The channel keeps playing with the screen off or when you leave the app. A notification with controls is shown.</string>
+    <string name="au15_tvbg_live">Live TV</string>
+    <string name="au15_tvbg_channel_name">TV playback</string>
+    <string name="au15_tvbg_stop">Stop</string>
+</resources>

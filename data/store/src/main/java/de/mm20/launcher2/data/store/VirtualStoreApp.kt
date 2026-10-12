@@ -8,7 +8,7 @@ import android.os.Process
 import android.os.UserHandle
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
 import de.mm20.launcher2.search.Application
-import de.mm20.launcher2.search.NullSerializer
+import de.mm20.launcher2.search.VirtualAppSerializer
 import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.TelosAppKeywords
 import de.mm20.launcher2.search.SavableSearchable
@@ -76,7 +76,7 @@ internal class VirtualStoreApp(context: Context) : Application {
         )
     }
 
-    override fun getSerializer(): SearchableSerializer = NullSerializer()
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
 
     companion object {
         const val Domain = "telos_store_app"

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au20_viewer_title">Documents</string>
+    <string name="au20_viewer_count">%1$d files</string>
+    <string name="au20_viewer_search_hint">Search documents</string>
+    <string name="au20_viewer_cat_all">All</string>
+    <string name="au20_viewer_cat_documents">Documents</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Spreadsheets</string>
+    <string name="au20_viewer_cat_slides">Presentations</string>
+    <string name="au20_viewer_cat_ebooks">E-books</string>
+    <string name="au20_viewer_cat_other">Other</string>
+    <string name="au20_viewer_recent">Recent</string>
+    <string name="au20_viewer_clear_recent">Clear</string>
+    <string name="au20_viewer_remove_recent">Remove from recent</string>
+    <string name="au20_viewer_open_file">Open file…</string>
+    <string name="au20_viewer_sort">Sort</string>
+    <string name="au20_viewer_sort_date">Date</string>
+    <string name="au20_viewer_sort_name">Name</string>
+    <string name="au20_viewer_sort_size">Size</string>
+    <string name="au20_viewer_share">Share</string>
+    <string name="au20_viewer_open_with">Open with</string>
+    <string name="au20_viewer_info">Info</string>
+    <string name="au20_viewer_info_name">Name</string>
+    <string name="au20_viewer_info_folder">Folder</string>
+    <string name="au20_viewer_info_type">Type</string>
+    <string name="au20_viewer_info_size">Size</string>
+    <string name="au20_viewer_info_date">Date</string>
+    <string name="au20_viewer_empty_title">No documents found</string>
+    <string name="au20_viewer_empty_text">Documents on your phone appear here. Use Open file… for a file somewhere else.</string>
+    <string name="au20_viewer_access_title">Allow access to your files</string>
+    <string name="au20_viewer_access_text">To list the documents on your phone, Telos Viewer needs access to all files. You can also open a single file without it.</string>
+    <string name="au20_viewer_access_button">Allow access</string>
+    <string name="au20_viewer_share_failed">Sharing failed</string>
+    <string name="au20_viewer_open_failed">No app can open this file</string>
+</resources>

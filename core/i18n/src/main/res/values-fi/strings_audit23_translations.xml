@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Tämä RAR-arkisto on salattu. Telos osaa lukea RAR-arkistoja mutta ei purkaa niiden salausta. Avaa se RAR-sovelluksella.</string>
+    <string name="au23_rar_unavailable">Tämä Telos-versio ei voi avata RAR-arkistoja. RAR-tuki sisältyy vain vakioversioon, ei F-Droid-versioon.</string>
+    <string name="au23_rp_title">Pilvi- ja verkkotallennustilojen tiedostojen esikatselut</string>
+    <string name="au23_rp_note">Kun asetus on käytössä, kuvanäkymä lataa pilvi- tai verkkotallennustilan kuvat ja asiakirjat tämän puhelimen välimuistiin (valittuun kokoon asti) esikatselun piirtämistä varten. Vain näkyvät ruudut ladataan. Salattuja holveja ei koskaan esikatsella. Oletuksena pois päältä datan säästämiseksi ja yksityisyyden vuoksi.</string>
+    <string name="au23_rp_max_size">Esikatselun enimmäistiedostokoko: %1$s</string>
+    <string name="au23_rp_max_size_hint">Suositus: 2 MB. Suuremmat tiedostot näytetään värillisenä tyyppiruutuna.</string>
+    <string name="au23_rp_wifi_only">Vain Wi-Fi-verkossa tai rajoittamattomissa verkoissa</string>
+    <string name="au23_rp_wifi_only_desc">Esikatseluja ei ladata mobiilidatalla tai muilla rajoitetuilla yhteyksillä.</string>
+    <string name="au23_rp_clear">Tyhjennä esikatselun välimuisti</string>
+    <string name="au23_rp_cache_size">Esikatselun välimuisti: %1$s</string>
+</resources>

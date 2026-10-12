@@ -32,6 +32,8 @@
 -dontwarn javax.security.auth.**
 -dontwarn java.lang.management.**
 -dontwarn org.apache.commons.compress.**
+-dontwarn org.tukaani.xz.**
+-dontwarn net.lingala.zip4j.**
 
 # Telos PDF tools: PdfBox-Android loads fonts, CMaps and filters by name through reflection
 -keep class com.tom_roush.pdfbox.** { *; }

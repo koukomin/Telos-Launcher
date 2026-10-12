@@ -1,4 +1,6 @@
-# Telos Viewer
+# Telos Photos and Telos Viewer
+
+**Telos Photos** is the photo gallery (photos, albums, EXIF, editor) and opens on the photos. **Telos Viewer** is a separate app that opens on a documents library with category chips (All, Documents, PDF, Spreadsheets, Presentations, E-books, Other), search, sort by date, name or size, a **Recent** shelf (up to 50 files you opened from it), **Open file…** and a long-press menu (Share, Open with, Info). To list the documents on the phone it needs the same **All files access** as Telos Files; without it, Recent and **Open file…** still work, and "Open with" from other apps always works. The sections below describe both.
 
 A photo gallery, a metadata (EXIF) tool, a simple photo editor and a document viewer in one app.
 

@@ -36,7 +36,7 @@ stored per phone and are not part of the launcher backup.
 
 | Setting | Where | Default | Options |
 | --- | --- | --- | --- |
-| View | More > Grid view or List view | List | List with name, size and date, or an adaptive grid of cells 112 dp wide |
+| View | The view button in the top bar: **List**, **Grid, medium previews**, **Grid, large previews** | List | List with name, size and date, or a grid of rounded tiles with previews. The choice is remembered |
 | Sort by | More > Sort by... | Name | Name, Date, Size, Type |
 | Descending | Sort by | off | Reverses the order |
 | Folders first | Sort by | on | Keeps folders above files |
@@ -174,3 +174,9 @@ Files also get **Open with...** and **Share** buttons in the dialog.
 | A copy seems stuck | Tap **Cancel** in the task bar. The partly copied file may remain |
 | Folder shows empty | Hidden files may be hidden. Use **Show hidden files** |
 | "Cannot open this picture" or video | The file could not be handed over. Try **Open with...** |
+
+## Opening documents, Google shortcuts and previews
+
+- **Documents open at once:** a tap on `docx`, `xlsx`, `pptx`, `odt`, `ods`, `odp`, `epub`, `pdf`, text and every other type the Viewer supports opens it in [Telos Viewer](../photos/documents) immediately (files on remote storages and inside archives are downloaded or extracted into the cache first). The old question "Browse, Extract here or Open with" is still available for real archives; for documents that are also zip files use **Open as archive** in the overflow menu of the selection bar.
+- **Google Drive shortcuts:** `gdoc`, `gsheet`, `gslides`, `gdraw`, `gform` and `gsite` files only contain a pointer to a document online. Telos Viewer opens the address in the Google app or the browser. Telos fetches nothing itself.
+- **Previews in the grid views:** images, videos (a frame), the first page of a PDF, the thumbnail stored inside `odt`/`ods`/`odp` and `docx`/`xlsx`/`pptx` files, EPUB covers, APK icons, audio covers, and a collage of up to four images for folders. Everything else, and everything on a remote storage, in an archive or in a vault, shows a coloured tile with the file type (PDF red, Word blue, Excel green, PowerPoint orange, e-books purple, text grey, archives brown, audio pink, video teal). Previews are loaded lazily and are not made for files larger than 200 MB.

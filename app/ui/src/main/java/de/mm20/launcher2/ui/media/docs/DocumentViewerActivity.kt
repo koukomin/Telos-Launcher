@@ -114,7 +114,14 @@ class DocumentViewerActivity : BaseActivity() {
         @Suppress("DEPRECATION")
         val uri = intent.data ?: intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)
         if (uri == null) { finish(); return }
-        val name = displayName(uri)
+        var name = displayName(uri)
+        // Google Drive shortcuts open in the Google app or the browser, there is nothing to show here
+        if (!GoogleShortcuts.isShortcut(name)) GoogleShortcuts.extFor(intent.type)?.let { name = "$name.$it" }
+        if (GoogleShortcuts.isShortcut(name)) {
+            GoogleShortcuts.open(this, uri, DocumentTypes.ext(name))
+            finish()
+            return
+        }
         setContent {
             ProvideCompositionLocals {
                 LauncherTheme {

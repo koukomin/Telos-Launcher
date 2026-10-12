@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Väärä salasana</string>
+    <string name="au21_arch_password_needed">Arkisto on salasanasuojattu</string>
+    <string name="au21_arch_failed">Arkistoa ei voitu avata</string>
+    <string name="au21_arch_pw_title">Salasana vaaditaan</string>
+    <string name="au21_arch_pw_info">%1$s on salasanasuojattu. Anna salasana avataksesi tai purkaaksesi sen. Salasana pidetään vain muistissa, kun olet arkistossa, eikä sitä koskaan tallenneta.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Tarkistetaan…</string>
+    <string name="au21_arch_show">Näytä</string>
+    <string name="au21_arch_hide">Piilota</string>
+    <string name="au21_arch_compress">Pakkaa…</string>
+    <string name="au21_arch_format">Muoto</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Salasana (AES-256, valinnainen)</string>
+    <string name="au21_arch_pw_repeat">Toista salasana</string>
+    <string name="au21_arch_pw_mismatch">Salasanat eivät täsmää</string>
+    <string name="au21_arch_zip_note">Salasanalla tiedostot salataan AES-256:lla. Tiedostonimet pysyvät näkyvissä. Telos ei koskaan käytä heikkoa ZipCrypto-salausta. Salasanaa ei voi palauttaa, joten säilytä se huolellisesti.</string>
+    <string name="au21_arch_no_pw_note">7z- ja tar.gz-arkistot luodaan ilman salasanaa.</string>
+    <string name="au22_files_open_as_archive">Avaa arkistona</string>
+    <string name="au22_files_view_mode">Näkymä</string>
+    <string name="au22_files_view_list">Luettelo</string>
+    <string name="au22_files_view_grid_medium">Ruudukko, keskikokoiset esikatselut</string>
+    <string name="au22_files_view_grid_large">Ruudukko, suuret esikatselut</string>
+    <string name="au22_files_gshortcut_failed">Tätä Google Driven pikakuvaketta ei voi avata</string>
+</resources>

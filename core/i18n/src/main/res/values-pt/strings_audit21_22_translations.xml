@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Palavra-passe errada</string>
+    <string name="au21_arch_password_needed">Este arquivo está protegido por palavra-passe</string>
+    <string name="au21_arch_failed">Não foi possível abrir o arquivo</string>
+    <string name="au21_arch_pw_title">Palavra-passe necessária</string>
+    <string name="au21_arch_pw_info">%1$s está protegido por palavra-passe. Introduza a palavra-passe para o abrir ou extrair. A palavra-passe só é mantida em memória enquanto estiver dentro do arquivo e nunca é guardada.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">A verificar…</string>
+    <string name="au21_arch_show">Mostrar</string>
+    <string name="au21_arch_hide">Ocultar</string>
+    <string name="au21_arch_compress">Comprimir…</string>
+    <string name="au21_arch_format">Formato</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Palavra-passe (AES-256, opcional)</string>
+    <string name="au21_arch_pw_repeat">Repetir palavra-passe</string>
+    <string name="au21_arch_pw_mismatch">As palavras-passe não coincidem</string>
+    <string name="au21_arch_zip_note">Com palavra-passe, os ficheiros são cifrados com AES-256. Os nomes dos ficheiros continuam visíveis. O Telos nunca utiliza a cifragem fraca ZipCrypto. A palavra-passe não pode ser recuperada, por isso guarde-a em segurança.</string>
+    <string name="au21_arch_no_pw_note">Os arquivos 7z e tar.gz são criados sem palavra-passe.</string>
+    <string name="au22_files_open_as_archive">Abrir como arquivo</string>
+    <string name="au22_files_view_mode">Modo de visualização</string>
+    <string name="au22_files_view_list">Lista</string>
+    <string name="au22_files_view_grid_medium">Grelha, pré-visualizações médias</string>
+    <string name="au22_files_view_grid_large">Grelha, pré-visualizações grandes</string>
+    <string name="au22_files_gshortcut_failed">Não é possível abrir este atalho do Google Drive</string>
+</resources>

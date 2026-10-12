@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Šis RAR arhīvs ir šifrēts. Telos var lasīt RAR arhīvus, bet nevar tos atšifrēt. Tā vietā atveriet to ar RAR lietotni.</string>
+    <string name="au23_rar_unavailable">Šī Telos versija nevar atvērt RAR arhīvus. RAR atbalsts ir iekļauts tikai standarta versijā, nevis F-Droid versijā.</string>
+    <string name="au23_rp_title">Failu priekšskatījumi mākoņa un tīkla krātuvēs</string>
+    <string name="au23_rp_note">Kad ieslēgts, attēlu skats lejupielādē mākoņa vai tīkla krātuves attēlus un dokumentus šī tālruņa kešatmiņā (līdz izvēlētajam izmēram), lai attēlotu to priekšskatījumu. Tiek ielādētas tikai redzamās flīzes. Šifrētie seifi netiek priekšskatīti nekad. Pēc noklusējuma izslēgts, lai taupītu datus un aizsargātu privātumu.</string>
+    <string name="au23_rp_max_size">Maksimālais faila izmērs priekšskatījumiem: %1$s</string>
+    <string name="au23_rp_max_size_hint">Ieteicams: 2 MB. Lielākiem failiem paliek krāsainā faila veida flīze.</string>
+    <string name="au23_rp_wifi_only">Tikai Wi-Fi vai tīklos bez datu ierobežojuma</string>
+    <string name="au23_rp_wifi_only_desc">Priekšskatījumi netiek lejupielādēti mobilajos datos vai citos ierobežotos savienojumos.</string>
+    <string name="au23_rp_clear">Notīrīt priekšskatījumu kešatmiņu</string>
+    <string name="au23_rp_cache_size">Priekšskatījumu kešatmiņa: %1$s</string>
+</resources>

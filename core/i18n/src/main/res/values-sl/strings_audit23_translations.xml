@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Ta arhiv RAR je šifriran. Telos lahko bere arhive RAR, vendar jih ne more dešifrirati. Odprite ga z aplikacijo za RAR.</string>
+    <string name="au23_rar_unavailable">Ta različica Telosa ne more odpirati arhivov RAR. Podpora za RAR je vključena samo v standardno različico, ne v različico F-Droid.</string>
+    <string name="au23_rp_title">Predogledi datotek v oblačnih in omrežnih shrambah</string>
+    <string name="au23_rp_note">Ko je vklopljeno, pogled slik prenese slike in dokumente iz oblačne ali omrežne shrambe v predpomnilnik tega telefona (do izbrane velikosti), da izriše njihov predogled. Naložijo se samo vidne ploščice. Šifrirani trezorji se nikoli ne prikažejo v predogledu. Privzeto izklopljeno zaradi varčevanja s podatki in zasebnosti.</string>
+    <string name="au23_rp_max_size">Največja velikost datoteke za predoglede: %1$s</string>
+    <string name="au23_rp_max_size_hint">Predlagano: 2 MB. Večje datoteke obdržijo barvno ploščico vrste.</string>
+    <string name="au23_rp_wifi_only">Samo prek Wi-Fi ali omrežij brez merjenja prenosa</string>
+    <string name="au23_rp_wifi_only_desc">Brez prenosa predogledov prek mobilnih podatkov ali drugih merjenih povezav.</string>
+    <string name="au23_rp_clear">Počisti predpomnilnik predogledov</string>
+    <string name="au23_rp_cache_size">Predpomnilnik predogledov: %1$s</string>
+</resources>

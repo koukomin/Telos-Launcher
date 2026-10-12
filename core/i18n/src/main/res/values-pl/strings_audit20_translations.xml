@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Dokumenty</string>
+    <string name="au20_viewer_count">Pliki: %1$d</string>
+    <string name="au20_viewer_search_hint">Szukaj dokumentów</string>
+    <string name="au20_viewer_cat_all">Wszystkie</string>
+    <string name="au20_viewer_cat_documents">Dokumenty</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Arkusze kalkulacyjne</string>
+    <string name="au20_viewer_cat_slides">Prezentacje</string>
+    <string name="au20_viewer_cat_ebooks">E-booki</string>
+    <string name="au20_viewer_cat_other">Inne</string>
+    <string name="au20_viewer_recent">Ostatnie</string>
+    <string name="au20_viewer_clear_recent">Wyczyść</string>
+    <string name="au20_viewer_remove_recent">Usuń z ostatnich</string>
+    <string name="au20_viewer_open_file">Otwórz plik…</string>
+    <string name="au20_viewer_sort">Sortuj</string>
+    <string name="au20_viewer_sort_date">Data</string>
+    <string name="au20_viewer_sort_name">Nazwa</string>
+    <string name="au20_viewer_sort_size">Rozmiar</string>
+    <string name="au20_viewer_share">Udostępnij</string>
+    <string name="au20_viewer_open_with">Otwórz za pomocą</string>
+    <string name="au20_viewer_info">Informacje</string>
+    <string name="au20_viewer_info_name">Nazwa</string>
+    <string name="au20_viewer_info_folder">Folder</string>
+    <string name="au20_viewer_info_type">Typ</string>
+    <string name="au20_viewer_info_size">Rozmiar</string>
+    <string name="au20_viewer_info_date">Data</string>
+    <string name="au20_viewer_empty_title">Nie znaleziono dokumentów</string>
+    <string name="au20_viewer_empty_text">Dokumenty z telefonu pojawią się tutaj. Aby otworzyć plik z innego miejsca, użyj opcji Otwórz plik…</string>
+    <string name="au20_viewer_access_title">Zezwól na dostęp do plików</string>
+    <string name="au20_viewer_access_text">Aby wyświetlić dokumenty na telefonie, Telos Viewer potrzebuje dostępu do wszystkich plików. Pojedynczy plik można otworzyć także bez niego.</string>
+    <string name="au20_viewer_access_button">Zezwól na dostęp</string>
+    <string name="au20_viewer_share_failed">Udostępnianie nie powiodło się</string>
+    <string name="au20_viewer_open_failed">Żadna aplikacja nie może otworzyć tego pliku</string>
+</resources>

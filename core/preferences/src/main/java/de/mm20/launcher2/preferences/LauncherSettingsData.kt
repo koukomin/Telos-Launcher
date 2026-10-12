@@ -1281,6 +1281,8 @@ data class CommsGroup(
     val disabledVirtualApps: String = "",
     /** Telos Media: the space that was open last (music, radio or video) */
     val mediaHubSpace: String = "music",
+    /** Telos Media: order of the spaces in the pill, comma separated ids (empty = music, radio, video, tv) */
+    val mediaHubOrder: String = "",
     /** Telos Video: online services. Keys and passwords are encrypted with the Android Keystore. */
     val tmdbApiKeyEnc: String = "",
     val subtitleApiKeyEnc: String = "",

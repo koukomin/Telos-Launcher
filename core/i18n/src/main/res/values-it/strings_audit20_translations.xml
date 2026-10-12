@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Documenti</string>
+    <string name="au20_viewer_count">%1$d file</string>
+    <string name="au20_viewer_search_hint">Cerca documenti</string>
+    <string name="au20_viewer_cat_all">Tutti</string>
+    <string name="au20_viewer_cat_documents">Documenti</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Fogli di calcolo</string>
+    <string name="au20_viewer_cat_slides">Presentazioni</string>
+    <string name="au20_viewer_cat_ebooks">E-book</string>
+    <string name="au20_viewer_cat_other">Altro</string>
+    <string name="au20_viewer_recent">Recenti</string>
+    <string name="au20_viewer_clear_recent">Cancella</string>
+    <string name="au20_viewer_remove_recent">Rimuovi dai recenti</string>
+    <string name="au20_viewer_open_file">Apri file…</string>
+    <string name="au20_viewer_sort">Ordina</string>
+    <string name="au20_viewer_sort_date">Data</string>
+    <string name="au20_viewer_sort_name">Nome</string>
+    <string name="au20_viewer_sort_size">Dimensione</string>
+    <string name="au20_viewer_share">Condividi</string>
+    <string name="au20_viewer_open_with">Apri con</string>
+    <string name="au20_viewer_info">Info</string>
+    <string name="au20_viewer_info_name">Nome</string>
+    <string name="au20_viewer_info_folder">Cartella</string>
+    <string name="au20_viewer_info_type">Tipo</string>
+    <string name="au20_viewer_info_size">Dimensione</string>
+    <string name="au20_viewer_info_date">Data</string>
+    <string name="au20_viewer_empty_title">Nessun documento trovato</string>
+    <string name="au20_viewer_empty_text">I documenti del telefono appaiono qui. Usa Apri file… per un file in un’altra posizione.</string>
+    <string name="au20_viewer_access_title">Consenti l’accesso ai tuoi file</string>
+    <string name="au20_viewer_access_text">Per elencare i documenti sul telefono, Telos Viewer ha bisogno dell’accesso a tutti i file. Puoi anche aprire un singolo file senza.</string>
+    <string name="au20_viewer_access_button">Consenti accesso</string>
+    <string name="au20_viewer_share_failed">Condivisione non riuscita</string>
+    <string name="au20_viewer_open_failed">Nessuna app può aprire questo file</string>
+</resources>

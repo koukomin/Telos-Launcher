@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">المستندات</string>
+    <string name="au20_viewer_count">%1$d ملفات</string>
+    <string name="au20_viewer_search_hint">البحث في المستندات</string>
+    <string name="au20_viewer_cat_all">الكل</string>
+    <string name="au20_viewer_cat_documents">المستندات</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">جداول البيانات</string>
+    <string name="au20_viewer_cat_slides">العروض التقديمية</string>
+    <string name="au20_viewer_cat_ebooks">الكتب الإلكترونية</string>
+    <string name="au20_viewer_cat_other">أخرى</string>
+    <string name="au20_viewer_recent">الأخيرة</string>
+    <string name="au20_viewer_clear_recent">مسح</string>
+    <string name="au20_viewer_remove_recent">إزالة من الأخيرة</string>
+    <string name="au20_viewer_open_file">فتح ملف…</string>
+    <string name="au20_viewer_sort">ترتيب</string>
+    <string name="au20_viewer_sort_date">التاريخ</string>
+    <string name="au20_viewer_sort_name">الاسم</string>
+    <string name="au20_viewer_sort_size">الحجم</string>
+    <string name="au20_viewer_share">مشاركة</string>
+    <string name="au20_viewer_open_with">فتح باستخدام</string>
+    <string name="au20_viewer_info">معلومات</string>
+    <string name="au20_viewer_info_name">الاسم</string>
+    <string name="au20_viewer_info_folder">المجلد</string>
+    <string name="au20_viewer_info_type">النوع</string>
+    <string name="au20_viewer_info_size">الحجم</string>
+    <string name="au20_viewer_info_date">التاريخ</string>
+    <string name="au20_viewer_empty_title">لم يتم العثور على مستندات</string>
+    <string name="au20_viewer_empty_text">تظهر المستندات الموجودة على هاتفك هنا. استخدم فتح ملف… لملف في مكان آخر.</string>
+    <string name="au20_viewer_access_title">السماح بالوصول إلى ملفاتك</string>
+    <string name="au20_viewer_access_text">لعرض المستندات الموجودة على هاتفك، يحتاج Telos Viewer إلى الوصول إلى جميع الملفات. يمكنك أيضًا فتح ملف واحد بدونه.</string>
+    <string name="au20_viewer_access_button">السماح بالوصول</string>
+    <string name="au20_viewer_share_failed">فشلت المشاركة</string>
+    <string name="au20_viewer_open_failed">لا يوجد تطبيق يمكنه فتح هذا الملف</string>
+</resources>

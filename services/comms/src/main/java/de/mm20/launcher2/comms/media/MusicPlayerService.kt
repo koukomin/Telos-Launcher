@@ -77,10 +77,11 @@ class MusicPlayerService : MediaSessionService() {
         )
         handler.postDelayed(idleStop, IDLE_STOP_MS)
         mediaSession = MediaSession.Builder(this, player)
+            .setId("telos_music") // Media3 throws "Session ID must be unique" when radio (default id) is alive in the same process
             .setBitmapLoader(AlbumArtBitmapLoader(this))
             .build()
         MusicSleepTimer.onExpire = { player.pause() }
-        scrobbler = de.mm20.launcher2.comms.scrobble.ScrobbleTracker(this, player).also { it.attach() }
+        scrobbler = runCatching { de.mm20.launcher2.comms.scrobble.ScrobbleTracker(this, player).also { it.attach() } }.getOrNull()
     }
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? = mediaSession

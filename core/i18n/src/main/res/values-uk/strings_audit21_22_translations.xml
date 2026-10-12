@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Неправильний пароль</string>
+    <string name="au21_arch_password_needed">Цей архів захищено паролем</string>
+    <string name="au21_arch_failed">Не вдалося відкрити архів</string>
+    <string name="au21_arch_pw_title">Потрібен пароль</string>
+    <string name="au21_arch_pw_info">%1$s захищено паролем. Введіть пароль, щоб відкрити або розпакувати архів. Пароль зберігається лише в пам’яті, поки ви в архіві, і ніколи не записується.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Перевірка…</string>
+    <string name="au21_arch_show">Показати</string>
+    <string name="au21_arch_hide">Приховати</string>
+    <string name="au21_arch_compress">Стиснути…</string>
+    <string name="au21_arch_format">Формат</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Пароль (AES-256, необов’язково)</string>
+    <string name="au21_arch_pw_repeat">Повторіть пароль</string>
+    <string name="au21_arch_pw_mismatch">Паролі не збігаються</string>
+    <string name="au21_arch_zip_note">Якщо вказано пароль, файли шифруються за допомогою AES-256. Імена файлів залишаються видимими. Telos ніколи не використовує слабке шифрування ZipCrypto. Пароль неможливо відновити, тому зберігайте його надійно.</string>
+    <string name="au21_arch_no_pw_note">Архіви 7z і tar.gz створюються без пароля.</string>
+    <string name="au22_files_open_as_archive">Відкрити як архів</string>
+    <string name="au22_files_view_mode">Режим перегляду</string>
+    <string name="au22_files_view_list">Список</string>
+    <string name="au22_files_view_grid_medium">Сітка, середні попередні перегляди</string>
+    <string name="au22_files_view_grid_large">Сітка, великі попередні перегляди</string>
+    <string name="au22_files_gshortcut_failed">Цей ярлик Google Диска неможливо відкрити</string>
+</resources>

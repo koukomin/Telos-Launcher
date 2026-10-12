@@ -102,6 +102,7 @@ fun ConnectionsScreen() {
           de.mm20.launcher2.ui.component.TelosSearchBar(cq, { cq = it }, stringResource(R.string.hc_search))
           if (shownList.isEmpty()) de.mm20.launcher2.ui.component.SearchEmptyState(cq.trim())
           else LazyColumn(Modifier.fillMaxSize()) {
+            item(key = "remote_previews") { RemotePreviewSettings() }
             items(shownList, key = { it.id }) { c ->
                 ListItem(
                     headlineContent = { Text(c.name) },

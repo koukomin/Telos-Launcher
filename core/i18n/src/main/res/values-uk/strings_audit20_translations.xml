@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Документи</string>
+    <string name="au20_viewer_count">Файлів: %1$d</string>
+    <string name="au20_viewer_search_hint">Пошук документів</string>
+    <string name="au20_viewer_cat_all">Усі</string>
+    <string name="au20_viewer_cat_documents">Документи</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Таблиці</string>
+    <string name="au20_viewer_cat_slides">Презентації</string>
+    <string name="au20_viewer_cat_ebooks">Електронні книги</string>
+    <string name="au20_viewer_cat_other">Інше</string>
+    <string name="au20_viewer_recent">Нещодавні</string>
+    <string name="au20_viewer_clear_recent">Очистити</string>
+    <string name="au20_viewer_remove_recent">Видалити з нещодавніх</string>
+    <string name="au20_viewer_open_file">Відкрити файл…</string>
+    <string name="au20_viewer_sort">Сортування</string>
+    <string name="au20_viewer_sort_date">Дата</string>
+    <string name="au20_viewer_sort_name">Назва</string>
+    <string name="au20_viewer_sort_size">Розмір</string>
+    <string name="au20_viewer_share">Поділитися</string>
+    <string name="au20_viewer_open_with">Відкрити за допомогою</string>
+    <string name="au20_viewer_info">Інформація</string>
+    <string name="au20_viewer_info_name">Назва</string>
+    <string name="au20_viewer_info_folder">Тека</string>
+    <string name="au20_viewer_info_type">Тип</string>
+    <string name="au20_viewer_info_size">Розмір</string>
+    <string name="au20_viewer_info_date">Дата</string>
+    <string name="au20_viewer_empty_title">Документів не знайдено</string>
+    <string name="au20_viewer_empty_text">Документи на вашому телефоні відображаються тут. Скористайтеся пунктом Відкрити файл…, щоб відкрити файл з іншого місця.</string>
+    <string name="au20_viewer_access_title">Дозвольте доступ до файлів</string>
+    <string name="au20_viewer_access_text">Щоб показати документи на телефоні, Telos Viewer потрібен доступ до всіх файлів. Окремий файл можна відкрити й без нього.</string>
+    <string name="au20_viewer_access_button">Дозволити доступ</string>
+    <string name="au20_viewer_share_failed">Не вдалося поділитися</string>
+    <string name="au20_viewer_open_failed">Жодна програма не може відкрити цей файл</string>
+</resources>

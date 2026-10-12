@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Focal faire mícheart</string>
+    <string name="au21_arch_password_needed">Tá an cartlann seo cosanta ag focal faire</string>
+    <string name="au21_arch_failed">Níorbh fhéidir an chartlann a oscailt</string>
+    <string name="au21_arch_pw_title">Tá focal faire de dhíth</string>
+    <string name="au21_arch_pw_info">Tá %1$s cosanta ag focal faire. Cuir isteach a fhocal faire chun é a oscailt nó a dhíphacáil. Ní choinnítear an focal faire ach i gcuimhne agus tú sa chartlann, agus ní shábháiltear choíche é.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Ag seiceáil…</string>
+    <string name="au21_arch_show">Taispeáin</string>
+    <string name="au21_arch_hide">Folaigh</string>
+    <string name="au21_arch_compress">Comhbhrúigh…</string>
+    <string name="au21_arch_format">Formáid</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Focal faire (AES-256, roghnach)</string>
+    <string name="au21_arch_pw_repeat">Athscríobh an focal faire</string>
+    <string name="au21_arch_pw_mismatch">Ní hionann na focail faire</string>
+    <string name="au21_arch_zip_note">Le focal faire, criptítear na comhaid le AES-256. Fanann ainmneacha comhad infheicthe. Ní scríobhann Telos criptiú lag ZipCrypto choíche. Ní féidir an focal faire a aisghabháil, mar sin coinnigh slán é.</string>
+    <string name="au21_arch_no_pw_note">Cruthaítear cartlanna 7z agus tar.gz gan focal faire.</string>
+    <string name="au22_files_open_as_archive">Oscail mar chartlann</string>
+    <string name="au22_files_view_mode">Mód amhairc</string>
+    <string name="au22_files_view_list">Liosta</string>
+    <string name="au22_files_view_grid_medium">Eangach, réamhamhairc mheánmhéide</string>
+    <string name="au22_files_view_grid_large">Eangach, réamhamhairc mhóra</string>
+    <string name="au22_files_gshortcut_failed">Ní féidir an aicearra Google Drive seo a oscailt</string>
+</resources>

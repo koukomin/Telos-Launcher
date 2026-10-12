@@ -5,6 +5,8 @@ import de.mm20.launcher2.comms.repository.ContactDirectoryRepository
 import de.mm20.launcher2.comms.repository.MessageRepository
 import de.mm20.launcher2.comms.repository.RadioRepository
 import de.mm20.launcher2.search.VirtualAppProvider
+import de.mm20.launcher2.search.VirtualAppDeserializer
+import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.data.comms.radio.RadioBrowserClient
 import de.mm20.launcher2.data.comms.radio.RadioRepositoryImpl
 import io.ktor.client.HttpClient
@@ -38,4 +40,18 @@ val dataCommsModule = module {
     // === TELOS_PENDING_REVIEW_START: virtual_app_koin_fix ===
     factory<VirtualAppProvider>(org.koin.core.qualifier.named("commsVirtualAppProvider")) { CommsVirtualAppProvider(androidContext()) }
     // === TELOS_PENDING_REVIEW_END: virtual_app_koin_fix ===
+
+    // One deserializer per virtual app domain, so pinned / docked virtual apps survive a reload.
+    listOf(
+        VirtualPhoneApp.Domain, VirtualMessagesApp.Domain, VirtualRadioApp.Domain,
+        VirtualMusicApp.Domain, VirtualVideoApp.Domain, VirtualPhotosApp.Domain,
+        VirtualFilesApp.Domain, VirtualCalculatorApp.Domain, VirtualVoiceRecorderApp.Domain,
+        VirtualScreenRecorderApp.Domain, VirtualScreenshotApp.Domain, VirtualNotesApp.Domain,
+        VirtualCalendarApp.Domain, VirtualDownloadsApp.Domain, VirtualMediaApp.Domain,
+        VirtualNetworkApp.Domain, VirtualViewerApp.Domain,
+    ).forEach { domain ->
+        factory<SearchableDeserializer>(org.koin.core.qualifier.named(domain)) {
+            VirtualAppDeserializer(domain) { getAll<VirtualAppProvider>() }
+        }
+    }
 }

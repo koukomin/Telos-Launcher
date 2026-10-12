@@ -82,4 +82,16 @@ class CrashReportScreenVM : ViewModel() {
         )
     }
 
+    /** Copies the whole report as text, for when saving or sharing the file does not work */
+    fun copyCrashReport(context: Context, crashReport: CrashReport) {
+        val text = buildString {
+            appendLine(crashReport.summary)
+            crashReport.stacktrace?.let { appendLine(it) }
+            appendLine()
+            append(CrashReporter.getDeviceInformation(context))
+        }
+        val cm = context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+        cm.setPrimaryClip(android.content.ClipData.newPlainText("crash report", text))
+    }
+
 }

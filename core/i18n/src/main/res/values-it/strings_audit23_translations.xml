@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Questo archivio RAR è crittografato. Telos può leggere gli archivi RAR ma non può decrittarli. Aprilo con un\'app RAR.</string>
+    <string name="au23_rar_unavailable">Questa versione di Telos non può aprire archivi RAR. Il supporto RAR è incluso solo nella versione standard, non nella versione F-Droid.</string>
+    <string name="au23_rp_title">Anteprime dei file su archivi cloud e di rete</string>
+    <string name="au23_rp_note">Se attivo, la vista immagini scarica immagini e documenti di un archivio cloud o di rete nella cache di questo telefono (fino alla dimensione scelta) per disegnarne l\'anteprima. Vengono caricati solo i riquadri visibili. I vault crittografati non vengono mai mostrati in anteprima. Disattivato per impostazione predefinita per risparmiare dati e per la privacy.</string>
+    <string name="au23_rp_max_size">Dimensione massima dei file per le anteprime: %1$s</string>
+    <string name="au23_rp_max_size_hint">Consigliato: 2 MB. I file più grandi mantengono il riquadro colorato del tipo.</string>
+    <string name="au23_rp_wifi_only">Solo con Wi-Fi o reti non a consumo</string>
+    <string name="au23_rp_wifi_only_desc">Nessun download di anteprime con dati mobili o altre connessioni a consumo.</string>
+    <string name="au23_rp_clear">Svuota cache anteprime</string>
+    <string name="au23_rp_cache_size">Cache anteprime: %1$s</string>
+</resources>

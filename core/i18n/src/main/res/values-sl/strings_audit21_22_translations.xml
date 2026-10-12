@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Napačno geslo</string>
+    <string name="au21_arch_password_needed">Ta arhiv je zaščiten z geslom</string>
+    <string name="au21_arch_failed">Arhiva ni bilo mogoče odpreti</string>
+    <string name="au21_arch_pw_title">Potrebno je geslo</string>
+    <string name="au21_arch_pw_info">%1$s je zaščiten z geslom. Vnesite geslo, da ga odprete ali razpakirate. Geslo se hrani v pomnilniku le, medtem ko ste v arhivu, in se nikoli ne shrani.</string>
+    <string name="au21_arch_ok">V redu</string>
+    <string name="au21_arch_checking">Preverjanje …</string>
+    <string name="au21_arch_show">Pokaži</string>
+    <string name="au21_arch_hide">Skrij</string>
+    <string name="au21_arch_compress">Stisni …</string>
+    <string name="au21_arch_format">Oblika</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Geslo (AES-256, neobvezno)</string>
+    <string name="au21_arch_pw_repeat">Ponovite geslo</string>
+    <string name="au21_arch_pw_mismatch">Gesli se ne ujemata</string>
+    <string name="au21_arch_zip_note">Z geslom so datoteke šifrirane z AES-256. Imena datotek ostanejo vidna. Telos nikoli ne uporablja šibkega šifriranja ZipCrypto. Gesla ni mogoče obnoviti, zato ga shranite na varno.</string>
+    <string name="au21_arch_no_pw_note">Arhivi 7z in tar.gz se ustvarijo brez gesla.</string>
+    <string name="au22_files_open_as_archive">Odpri kot arhiv</string>
+    <string name="au22_files_view_mode">Način prikaza</string>
+    <string name="au22_files_view_list">Seznam</string>
+    <string name="au22_files_view_grid_medium">Mreža, srednji predogledi</string>
+    <string name="au22_files_view_grid_large">Mreža, veliki predogledi</string>
+    <string name="au22_files_gshortcut_failed">Te bližnjice Google Drive ni mogoče odpreti</string>
+</resources>

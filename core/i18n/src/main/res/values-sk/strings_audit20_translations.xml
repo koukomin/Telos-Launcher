@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Dokumenty</string>
+    <string name="au20_viewer_count">Súborov: %1$d</string>
+    <string name="au20_viewer_search_hint">Hľadať dokumenty</string>
+    <string name="au20_viewer_cat_all">Všetko</string>
+    <string name="au20_viewer_cat_documents">Dokumenty</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Tabuľky</string>
+    <string name="au20_viewer_cat_slides">Prezentácie</string>
+    <string name="au20_viewer_cat_ebooks">E-knihy</string>
+    <string name="au20_viewer_cat_other">Iné</string>
+    <string name="au20_viewer_recent">Nedávne</string>
+    <string name="au20_viewer_clear_recent">Vymazať</string>
+    <string name="au20_viewer_remove_recent">Odstrániť z nedávnych</string>
+    <string name="au20_viewer_open_file">Otvoriť súbor…</string>
+    <string name="au20_viewer_sort">Zoradiť</string>
+    <string name="au20_viewer_sort_date">Dátum</string>
+    <string name="au20_viewer_sort_name">Názov</string>
+    <string name="au20_viewer_sort_size">Veľkosť</string>
+    <string name="au20_viewer_share">Zdieľať</string>
+    <string name="au20_viewer_open_with">Otvoriť v aplikácii</string>
+    <string name="au20_viewer_info">Informácie</string>
+    <string name="au20_viewer_info_name">Názov</string>
+    <string name="au20_viewer_info_folder">Priečinok</string>
+    <string name="au20_viewer_info_type">Typ</string>
+    <string name="au20_viewer_info_size">Veľkosť</string>
+    <string name="au20_viewer_info_date">Dátum</string>
+    <string name="au20_viewer_empty_title">Nenašli sa žiadne dokumenty</string>
+    <string name="au20_viewer_empty_text">Dokumenty z telefónu sa zobrazia tu. Pre súbor inde použite Otvoriť súbor…</string>
+    <string name="au20_viewer_access_title">Povoliť prístup k súborom</string>
+    <string name="au20_viewer_access_text">Aby mohol Telos Viewer zobraziť dokumenty v telefóne, potrebuje prístup ku všetkým súborom. Jednotlivý súbor možno otvoriť aj bez neho.</string>
+    <string name="au20_viewer_access_button">Povoliť prístup</string>
+    <string name="au20_viewer_share_failed">Zdieľanie zlyhalo</string>
+    <string name="au20_viewer_open_failed">Tento súbor nemôže otvoriť žiadna aplikácia</string>
+</resources>

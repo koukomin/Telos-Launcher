@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au22_files_open_as_archive">Open as archive</string>
+    <string name="au22_files_view_mode">View mode</string>
+    <string name="au22_files_view_list">List</string>
+    <string name="au22_files_view_grid_medium">Grid, medium previews</string>
+    <string name="au22_files_view_grid_large">Grid, large previews</string>
+    <string name="au22_files_gshortcut_failed">This Google Drive shortcut cannot be opened</string>
+</resources>

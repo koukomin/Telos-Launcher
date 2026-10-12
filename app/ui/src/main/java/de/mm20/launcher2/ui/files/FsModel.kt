@@ -22,8 +22,8 @@ enum class FileKind(val labelRes: Int, val color: Color, val icon: Int) {
         private val images = setOf("jpg", "jpeg", "png", "gif", "webp", "bmp", "heic", "heif", "avif", "svg", "ico", "tif", "tiff", "dng", "raw", "arw", "cr2", "nef")
         private val videos = setOf("mp4", "mkv", "webm", "avi", "mov", "3gp", "m4v", "ts", "flv", "wmv", "mpg", "mpeg")
         private val audios = setOf("mp3", "m4a", "aac", "ogg", "oga", "opus", "flac", "wav", "wma", "amr", "mid", "midi")
-        private val documents = setOf("pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "odt", "ods", "odp", "rtf", "txt", "md", "csv", "epub", "log")
-        private val archives = setOf("zip", "rar", "7z", "tar", "gz", "tgz", "bz2", "xz", "jar", "cab", "iso")
+        private val documents = setOf("pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "odt", "ods", "odp", "rtf", "txt", "md", "csv", "epub", "log", "gdoc", "gsheet", "gslides", "gdraw", "gform", "gsite")
+        private val archives = setOf("zip", "rar", "7z", "tar", "gz", "tgz", "bz2", "xz", "jar", "cab", "iso", "lzma", "z", "taz", "tbz", "tbz2", "txz", "tlz", "cpio", "ar", "deb", "arj", "ace", "lzh", "lha", "rpm", "wim", "chm", "squashfs", "dmg", "vhd", "msi", "zst")
         private val code = setOf("kt", "java", "py", "js", "ts", "json", "xml", "html", "css", "sh", "c", "cpp", "h", "rs", "go", "yml", "yaml", "toml", "ini", "conf", "prop", "gradle", "sql")
 
         fun of(name: String, isDir: Boolean): FileKind {

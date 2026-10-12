@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au14_videoui_watched">Watched</string>
+    <string name="au14_videoui_more">More</string>
+    <string name="au14_videoui_less">Less</string>
+    <string name="au14_videoui_minutes">%1$d min</string>
+    <string name="au14_videoui_seasons">%1$d seasons</string>
+    <string name="au14_videoui_empty_title">No videos yet</string>
+    <string name="au14_videoui_empty_text">Videos on this device will show up here</string>
+</resources>

@@ -30,7 +30,8 @@ object DocumentTypes {
     fun isOfficeModel(name: String) = ext(name) in editableOffice || ext(name) in legacyOffice
     fun isLegacyOffice(name: String) = ext(name) in legacyOffice
     fun isText(name: String) = ext(name) in text
-    fun supports(name: String) = isPdf(name) || isOffice(name) || isText(name)
+    fun isGoogleShortcut(name: String) = GoogleShortcuts.isShortcut(name)
+    fun supports(name: String) = isPdf(name) || isOffice(name) || isText(name) || isGoogleShortcut(name)
 }
 
 /** Thrown for password protected documents. */

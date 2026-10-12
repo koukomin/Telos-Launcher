@@ -88,6 +88,14 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import coil.compose.AsyncImage
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.runtime.collectAsState
+import de.mm20.launcher2.preferences.ui.PerformanceSettings
+import org.koin.compose.koinInject
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
@@ -145,6 +153,18 @@ fun FilesScreen() {
     var menuOpen by remember { mutableStateOf(false) }
     var addMenu by remember { mutableStateOf(false) }
     var dialog by remember { mutableStateOf<FilesDialog?>(null) }
+    var viewMenu by remember { mutableStateOf(false) }
+    val performanceSettings: PerformanceSettings = koinInject()
+    val reduceFlow = remember(performanceSettings) { performanceSettings.reduceAnimations }
+    val reduceAnimations by reduceFlow.collectAsState(false)
+    val listState = rememberLazyListState()
+    val gridState = rememberLazyGridState()
+    val gridMode = vm.viewMode != 0
+    // the place in the folder stays when the view changes; a new folder starts at the top
+    LaunchedEffect(gridMode) {
+        if (gridMode) gridState.scrollToItem(listState.firstVisibleItemIndex) else listState.scrollToItem(gridState.firstVisibleItemIndex)
+    }
+    LaunchedEffect(vm.path) { listState.scrollToItem(0); gridState.scrollToItem(0) }
 
     BackHandler(drawer.isOpen) { scope.launch { drawer.close() } }
     BackHandler(!drawer.isOpen) {
@@ -162,7 +182,7 @@ fun FilesScreen() {
                 de.mm20.launcher2.ui.files.vault.VaultPath.isVaultFolder(java.io.File(entry.path)) ->
                 if (de.mm20.launcher2.ui.files.vault.VaultSessions.isUnlocked(entry.path)) vm.open(de.mm20.launcher2.ui.files.vault.VaultPath.build(entry.path, "/")) else dialog = FilesDialog.Unlock(entry)
             entry.isDir -> vm.open(entry.path)
-            ArchivePath.canOpen(entry.name) && !RemotePath.isRemote(entry.path) && !ArchivePath.isArchive(entry.path) -> dialog = FilesDialog.Archive(entry)
+            ArchivePath.canOpen(entry.name) && !de.mm20.launcher2.ui.media.docs.DocumentTypes.supports(entry.name) && !RemotePath.isRemote(entry.path) && !ArchivePath.isArchive(entry.path) -> dialog = FilesDialog.Archive(entry)
             RemotePath.isRemote(entry.path) && entry.kind == FileKind.Video -> FileActions.playRemoteVideo(context, entry, vm.entries)
             (RemotePath.isRemote(entry.path) || ArchivePath.isArchive(entry.path) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(entry.path)) -> vm.download(entry) { file ->
                 FileActions.open(context, FsEntry(file.path, file.name, false, file.length(), file.lastModified()), emptyList(), false)
@@ -207,6 +227,9 @@ fun FilesScreen() {
                             onCompress = { dialog = FilesDialog.Compress(vm.selectedEntries()) },
                             onProperties = { vm.selectedEntries().singleOrNull()?.let { dialog = FilesDialog.Properties(it) } },
                             onBookmark = { vm.selectedEntries().singleOrNull()?.let { vm.toggleBookmark(it.path); vm.clearSelection() } },
+                            onOpenAsArchive = vm.selectedEntries().singleOrNull()
+                                ?.takeIf { !it.isDir && de.mm20.launcher2.ui.media.docs.DocumentTypes.supports(it.name) && ArchivePath.canOpen(it.name) && !RemotePath.isRemote(it.path) && !ArchivePath.isArchive(it.path) }
+                                ?.let { archive -> { dialog = FilesDialog.Archive(archive); vm.clearSelection() } },
                         )
                         searching -> SearchBar(
                             query = vm.query,
@@ -224,12 +247,33 @@ fun FilesScreen() {
                                 if (vm.path != null) IconButton(onClick = { searching = true }) {
                                     Icon(painterResource(Icons.search_24px), contentDescription = stringResource(R.string.hc_search))
                                 }
+                                if (vm.path != null) Box {
+                                    IconButton(onClick = { viewMenu = true }) {
+                                        Icon(
+                                            painterResource(when (vm.viewMode) { 1 -> Icons.apps_24px; 2 -> Icons.dashboard_2_24px; else -> Icons.table_rows_24px }),
+                                            contentDescription = stringResource(R.string.au22_files_view_mode),
+                                        )
+                                    }
+                                    DropdownMenu(expanded = viewMenu, onDismissRequest = { viewMenu = false }) {
+                                        listOf(
+                                            Triple(0, R.string.au22_files_view_list, Icons.table_rows_24px),
+                                            Triple(1, R.string.au22_files_view_grid_medium, Icons.apps_24px),
+                                            Triple(2, R.string.au22_files_view_grid_large, Icons.dashboard_2_24px),
+                                        ).forEach { (mode, label, icon) ->
+                                            DropdownMenuItem(
+                                                text = { Text(stringResource(label)) },
+                                                leadingIcon = { Icon(painterResource(icon), contentDescription = null) },
+                                                trailingIcon = { if (vm.viewMode == mode) Icon(painterResource(Icons.check_24px), contentDescription = null) },
+                                                onClick = { viewMenu = false; vm.updateViewMode(mode) },
+                                            )
+                                        }
+                                    }
+                                }
                                 Box {
                                     IconButton(onClick = { menuOpen = true }) {
                                         Icon(painterResource(Icons.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
                                     }
                                     DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
-                                        DropdownMenuItem(text = { Text(if (vm.grid) stringResource(R.string.hf_files_list_view) else stringResource(R.string.hf_files_grid_view)) }, onClick = { menuOpen = false; vm.toggleGrid() })
                                         DropdownMenuItem(text = { Text(stringResource(R.string.hc_sort_by_2)) }, onClick = { menuOpen = false; dialog = FilesDialog.Sort })
                                         DropdownMenuItem(text = { Text(if (vm.showHidden) stringResource(R.string.hf_files_hide_hidden) else stringResource(R.string.hf_files_show_hidden)) }, onClick = { menuOpen = false; vm.toggleHidden() })
                                         vm.path?.takeIf { de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it) }?.let { vp ->
@@ -288,21 +332,32 @@ fun FilesScreen() {
                         if (shown.isEmpty() && !vm.loading) {
                             if (vm.query.isNotBlank()) de.mm20.launcher2.ui.component.SearchEmptyState(vm.query.trim(), Modifier.fillMaxSize())
                             else EmptyPage(stringResource(R.string.hf_files_folder_empty))
-                        } else if (vm.grid) {
-                            LazyVerticalGrid(
-                                columns = GridCells.Adaptive(112.dp),
-                                contentPadding = PaddingValues(12.dp, 4.dp, 12.dp, 96.dp),
-                                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                                verticalArrangement = Arrangement.spacedBy(10.dp),
-                            ) {
-                                gridItems(shown, key = { it.path }) { e ->
-                                    GridCell(e, e.path in vm.selection, { onOpenEntry(e) }, { vm.toggleSelected(e) })
-                                }
-                            }
                         } else {
-                            LazyColumn(contentPadding = PaddingValues(bottom = 96.dp)) {
-                                items(shown, key = { it.path }) { e ->
-                                    FileRow(e, e.path in vm.selection, vm.rootMode, { onOpenEntry(e) }, { vm.toggleSelected(e) })
+                            val unique = remember(shown) { shown.distinctBy { it.path } }
+                            Crossfade(targetState = gridMode, animationSpec = if (reduceAnimations) snap() else tween(200), label = "filesView") { isGrid ->
+                                if (isGrid) {
+                                    val large = vm.viewMode == 2
+                                    LazyVerticalGrid(
+                                        state = gridState,
+                                        columns = GridCells.Adaptive(if (large) 156.dp else 104.dp),
+                                        contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 96.dp),
+                                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                                        verticalArrangement = Arrangement.spacedBy(if (large) 16.dp else 12.dp),
+                                    ) {
+                                        gridItems(unique, key = { it.path }) { e ->
+                                            FileTile(
+                                                e, e.path in vm.selection, selecting, large, reduceAnimations,
+                                                onClick = { onOpenEntry(e) }, onLongClick = { vm.toggleSelected(e) },
+                                                modifier = if (reduceAnimations) Modifier else Modifier.animateItem(),
+                                            )
+                                        }
+                                    }
+                                } else {
+                                    LazyColumn(state = listState, contentPadding = PaddingValues(bottom = 96.dp)) {
+                                        items(unique, key = { it.path }) { e ->
+                                            FileRow(e, e.path in vm.selection, vm.rootMode, { onOpenEntry(e) }, { vm.toggleSelected(e) })
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -313,6 +368,7 @@ fun FilesScreen() {
     }
 
     FilesDialogs(vm, dialog) { dialog = null }
+    vm.archivePrompt?.let { ArchivePasswordDialog(vm, it) }
 }
 
 // ---------------------------------------------------------------- dialogs
@@ -339,9 +395,7 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
         FilesDialog.NewFolder -> NameDialog(stringResource(R.string.hc_new_folder), "", stringResource(R.string.hf_files_create), onDismiss) { vm.newFolder(it); onDismiss() }
         FilesDialog.NewFile -> NameDialog(stringResource(R.string.hc_new_file), "", stringResource(R.string.hf_files_create), onDismiss) { vm.newFile(it); onDismiss() }
         is FilesDialog.Rename -> NameDialog(stringResource(R.string.hc_rename), dialog.entry.name, stringResource(R.string.hc_rename), onDismiss) { vm.rename(dialog.entry, it); onDismiss() }
-        is FilesDialog.Compress -> NameDialog(stringResource(R.string.hc_compress_to_zip), dialog.entries.first().name.substringBeforeLast('.'), stringResource(R.string.hf_files_compress_action), onDismiss) {
-            vm.compress(dialog.entries, it); vm.clearSelection(); onDismiss()
-        }
+        is FilesDialog.Compress -> CompressDialog(vm, dialog.entries, onDismiss)
         is FilesDialog.Delete -> {
             val system = dialog.entries.any { FileActions.isSystemPath(it.path, vm.rootMode) }
             AlertDialog(
@@ -385,6 +439,100 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
         is FilesDialog.Unlock -> UnlockVaultDialog(vm, dialog.entry, onDismiss)
         is FilesDialog.Properties -> PropertiesDialog(vm, dialog.entry, onDismiss)
     }
+}
+
+/** Asks for the password of an encrypted archive. A wrong password keeps the dialog open. */
+@Composable
+private fun ArchivePasswordDialog(vm: FilesViewModel, prompt: ArchivePrompt) {
+    var password by remember(prompt) { mutableStateOf("") }
+    var visible by remember(prompt) { mutableStateOf(false) }
+    var error by remember(prompt) { mutableStateOf<String?>(null) }
+    var busy by remember(prompt) { mutableStateOf(false) }
+    AlertDialog(
+        onDismissRequest = { if (!busy) vm.cancelArchivePrompt() },
+        title = { Text(stringResource(R.string.au21_arch_pw_title)) },
+        text = {
+            Column {
+                Text(stringResource(R.string.au21_arch_pw_info, nameOf(prompt.archive)))
+                OutlinedTextField(
+                    password, { password = it; error = null }, label = { Text(stringResource(R.string.hc_password)) }, singleLine = true,
+                    visualTransformation = if (visible) androidx.compose.ui.text.input.VisualTransformation.None else androidx.compose.ui.text.input.PasswordVisualTransformation(),
+                    trailingIcon = { TextButton(onClick = { visible = !visible }) { Text(stringResource(if (visible) R.string.au21_arch_hide else R.string.au21_arch_show)) } },
+                    isError = error != null, supportingText = error?.let { { Text(it) } },
+                    modifier = Modifier.fillMaxWidth().padding(top = 12.dp),
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(enabled = password.isNotEmpty() && !busy, onClick = {
+                busy = true
+                vm.unlockArchive(password.toCharArray(), onError = { error = it; busy = false }, onDone = { busy = false })
+            }) { Text(if (busy) stringResource(R.string.au21_arch_checking) else stringResource(R.string.au21_arch_ok)) }
+        },
+        dismissButton = { TextButton(enabled = !busy, onClick = { vm.cancelArchivePrompt() }) { Text(stringResource(R.string.hc_cancel)) } },
+    )
+}
+
+/** Name, format (zip, 7z, tar.gz) and, for zip, an optional AES-256 password */
+@Composable
+private fun CompressDialog(vm: FilesViewModel, entries: List<FsEntry>, onDismiss: () -> Unit) {
+    var name by remember { mutableStateOf(entries.first().name.substringBeforeLast('.')) }
+    var format by remember { mutableStateOf(CompressFormat.Zip) }
+    var password by remember { mutableStateOf("") }
+    var repeat by remember { mutableStateOf("") }
+    var visible by remember { mutableStateOf(false) }
+    val mismatch = format.supportsPassword && password.isNotEmpty() && password != repeat
+    val hide = if (visible) androidx.compose.ui.text.input.VisualTransformation.None else androidx.compose.ui.text.input.PasswordVisualTransformation()
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.au21_arch_compress)) },
+        text = {
+            Column(Modifier.verticalScroll(rememberScrollState())) {
+                OutlinedTextField(name, { name = it }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                Text(stringResource(R.string.au21_arch_format), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 12.dp))
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                    CompressFormat.values().forEach { f ->
+                        Row(Modifier.clickable { format = f }, verticalAlignment = Alignment.CenterVertically) {
+                            androidx.compose.material3.RadioButton(selected = format == f, onClick = { format = f })
+                            Text(stringResource(when (f) {
+                                CompressFormat.Zip -> R.string.au21_arch_fmt_zip
+                                CompressFormat.SevenZ -> R.string.au21_arch_fmt_7z
+                                CompressFormat.TarGz -> R.string.au21_arch_fmt_targz
+                            }))
+                        }
+                    }
+                }
+                if (format.supportsPassword) {
+                    OutlinedTextField(
+                        password, { password = it }, label = { Text(stringResource(R.string.au21_arch_pw_optional)) }, singleLine = true,
+                        visualTransformation = hide,
+                        trailingIcon = { TextButton(onClick = { visible = !visible }) { Text(stringResource(if (visible) R.string.au21_arch_hide else R.string.au21_arch_show)) } },
+                        modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                    )
+                    if (password.isNotEmpty()) {
+                        OutlinedTextField(
+                            repeat, { repeat = it }, label = { Text(stringResource(R.string.au21_arch_pw_repeat)) }, singleLine = true,
+                            visualTransformation = hide,
+                            isError = mismatch, supportingText = if (mismatch) { { Text(stringResource(R.string.au21_arch_pw_mismatch)) } } else null,
+                            modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                        )
+                    }
+                    Text(stringResource(R.string.au21_arch_zip_note), style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 8.dp))
+                } else {
+                    Text(stringResource(R.string.au21_arch_no_pw_note), style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 12.dp))
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(enabled = name.isNotBlank() && '/' !in name && !mismatch, onClick = {
+                val secret = if (format.supportsPassword && password.isNotEmpty()) password.toCharArray() else null
+                vm.compress(entries, name.trim(), format, secret)
+                vm.clearSelection()
+                onDismiss()
+            }) { Text(stringResource(R.string.hf_files_compress_action)) }
+        },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
+    )
 }
 
 @Composable
@@ -533,6 +681,7 @@ private fun Detail(label: String, value: String) {
 private fun SelectionBar(
     count: Int, single: FsEntry?, onClose: () -> Unit, onSelectAll: () -> Unit, onCopy: () -> Unit, onCut: () -> Unit,
     onDelete: () -> Unit, onShare: () -> Unit, onRename: () -> Unit, onCompress: () -> Unit, onProperties: () -> Unit, onBookmark: () -> Unit,
+    onOpenAsArchive: (() -> Unit)? = null,
 ) {
     var more by remember { mutableStateOf(false) }
     TopAppBar(
@@ -548,7 +697,8 @@ private fun SelectionBar(
                 DropdownMenu(expanded = more, onDismissRequest = { more = false }) {
                     DropdownMenuItem(text = { Text(stringResource(R.string.hc_select_all)) }, onClick = { more = false; onSelectAll() })
                     DropdownMenuItem(text = { Text(stringResource(R.string.hc_share)) }, onClick = { more = false; onShare() })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.hc_compress_to_zip)) }, onClick = { more = false; onCompress() })
+                    DropdownMenuItem(text = { Text(stringResource(R.string.au21_arch_compress)) }, onClick = { more = false; onCompress() })
+                    if (onOpenAsArchive != null) DropdownMenuItem(text = { Text(stringResource(R.string.au22_files_open_as_archive)) }, onClick = { more = false; onOpenAsArchive() })
                     if (single != null) {
                         DropdownMenuItem(text = { Text(stringResource(R.string.hc_rename)) }, onClick = { more = false; onRename() })
                         DropdownMenuItem(text = { Text(stringResource(R.string.hc_properties)) }, onClick = { more = false; onProperties() })

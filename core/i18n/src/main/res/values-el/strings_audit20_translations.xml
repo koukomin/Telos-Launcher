@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Έγγραφα</string>
+    <string name="au20_viewer_count">%1$d αρχεία</string>
+    <string name="au20_viewer_search_hint">Αναζήτηση εγγράφων</string>
+    <string name="au20_viewer_cat_all">Όλα</string>
+    <string name="au20_viewer_cat_documents">Έγγραφα</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Υπολογιστικά φύλλα</string>
+    <string name="au20_viewer_cat_slides">Παρουσιάσεις</string>
+    <string name="au20_viewer_cat_ebooks">Ηλεκτρονικά βιβλία</string>
+    <string name="au20_viewer_cat_other">Άλλα</string>
+    <string name="au20_viewer_recent">Πρόσφατα</string>
+    <string name="au20_viewer_clear_recent">Απαλοιφή</string>
+    <string name="au20_viewer_remove_recent">Κατάργηση από τα πρόσφατα</string>
+    <string name="au20_viewer_open_file">Άνοιγμα αρχείου…</string>
+    <string name="au20_viewer_sort">Ταξινόμηση</string>
+    <string name="au20_viewer_sort_date">Ημερομηνία</string>
+    <string name="au20_viewer_sort_name">Όνομα</string>
+    <string name="au20_viewer_sort_size">Μέγεθος</string>
+    <string name="au20_viewer_share">Κοινοποίηση</string>
+    <string name="au20_viewer_open_with">Άνοιγμα με</string>
+    <string name="au20_viewer_info">Πληροφορίες</string>
+    <string name="au20_viewer_info_name">Όνομα</string>
+    <string name="au20_viewer_info_folder">Φάκελος</string>
+    <string name="au20_viewer_info_type">Τύπος</string>
+    <string name="au20_viewer_info_size">Μέγεθος</string>
+    <string name="au20_viewer_info_date">Ημερομηνία</string>
+    <string name="au20_viewer_empty_title">Δεν βρέθηκαν έγγραφα</string>
+    <string name="au20_viewer_empty_text">Τα έγγραφα του τηλεφώνου σας εμφανίζονται εδώ. Χρησιμοποιήστε το Άνοιγμα αρχείου… για ένα αρχείο αλλού.</string>
+    <string name="au20_viewer_access_title">Επιτρέψτε πρόσβαση στα αρχεία σας</string>
+    <string name="au20_viewer_access_text">Για να εμφανίσει τα έγγραφα του τηλεφώνου σας, το Telos Viewer χρειάζεται πρόσβαση σε όλα τα αρχεία. Μπορείτε επίσης να ανοίξετε ένα μεμονωμένο αρχείο χωρίς αυτήν.</string>
+    <string name="au20_viewer_access_button">Επιτρέπεται η πρόσβαση</string>
+    <string name="au20_viewer_share_failed">Η κοινοποίηση απέτυχε</string>
+    <string name="au20_viewer_open_failed">Καμία εφαρμογή δεν μπορεί να ανοίξει αυτό το αρχείο</string>
+</resources>

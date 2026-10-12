@@ -29,6 +29,8 @@ object SettingsDeepLinkContract {
     /** An address or an obtainium:// link to add in the Store */
     const val EXTRA_STORE_URL = "de.mm20.launcher2.settings.STORE_URL"
     const val ROUTE_PHOTOS = "settings/photos"
+    /** Telos Viewer: library of documents (PDF, Office, text, e-books) */
+    const val ROUTE_VIEWER = "settings/viewer"
     const val ROUTE_FILES = "settings/files"
     const val ROUTE_CALCULATOR = "settings/calculator"
     const val ROUTE_VOICE_RECORDER = "settings/voice_recorder"

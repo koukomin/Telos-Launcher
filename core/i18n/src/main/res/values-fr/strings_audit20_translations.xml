@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Documents</string>
+    <string name="au20_viewer_count">%1$d fichiers</string>
+    <string name="au20_viewer_search_hint">Rechercher des documents</string>
+    <string name="au20_viewer_cat_all">Tous</string>
+    <string name="au20_viewer_cat_documents">Documents</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Feuilles de calcul</string>
+    <string name="au20_viewer_cat_slides">Présentations</string>
+    <string name="au20_viewer_cat_ebooks">Livres numériques</string>
+    <string name="au20_viewer_cat_other">Autres</string>
+    <string name="au20_viewer_recent">Récents</string>
+    <string name="au20_viewer_clear_recent">Effacer</string>
+    <string name="au20_viewer_remove_recent">Retirer des récents</string>
+    <string name="au20_viewer_open_file">Ouvrir un fichier…</string>
+    <string name="au20_viewer_sort">Trier</string>
+    <string name="au20_viewer_sort_date">Date</string>
+    <string name="au20_viewer_sort_name">Nom</string>
+    <string name="au20_viewer_sort_size">Taille</string>
+    <string name="au20_viewer_share">Partager</string>
+    <string name="au20_viewer_open_with">Ouvrir avec</string>
+    <string name="au20_viewer_info">Infos</string>
+    <string name="au20_viewer_info_name">Nom</string>
+    <string name="au20_viewer_info_folder">Dossier</string>
+    <string name="au20_viewer_info_type">Type</string>
+    <string name="au20_viewer_info_size">Taille</string>
+    <string name="au20_viewer_info_date">Date</string>
+    <string name="au20_viewer_empty_title">Aucun document trouvé</string>
+    <string name="au20_viewer_empty_text">Les documents de votre téléphone apparaissent ici. Utilisez Ouvrir un fichier… pour un fichier situé ailleurs.</string>
+    <string name="au20_viewer_access_title">Autoriser l’accès à vos fichiers</string>
+    <string name="au20_viewer_access_text">Pour lister les documents de votre téléphone, Telos Viewer a besoin d’accéder à tous les fichiers. Vous pouvez aussi ouvrir un seul fichier sans cet accès.</string>
+    <string name="au20_viewer_access_button">Autoriser l’accès</string>
+    <string name="au20_viewer_share_failed">Échec du partage</string>
+    <string name="au20_viewer_open_failed">Aucune application ne peut ouvrir ce fichier</string>
+</resources>

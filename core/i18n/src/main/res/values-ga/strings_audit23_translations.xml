@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Tá an cartlann RAR seo criptithe. Is féidir le Telos cartlanna RAR a léamh ach ní féidir leis iad a dhíchriptiú. Oscail le haip RAR í ina ionad sin.</string>
+    <string name="au23_rar_unavailable">Ní féidir leis an mbuild seo de Telos cartlanna RAR a oscailt. Níl tacaíocht RAR san áireamh ach sa leagan caighdeánach, ní sa leagan F-Droid.</string>
+    <string name="au23_rp_title">Réamhamhairc do chomhaid ar stóráil scamall agus líonra</string>
+    <string name="au23_rp_note">Nuair a bhíonn sé ar siúl, íoslódálann amharc na bpictiúr pictiúir agus doiciméid ó stóras scamall nó líonra isteach i dtaisce an fhóin seo (suas go dtí an méid a roghnaíonn tú) chun a réamhamharc a tharraingt. Ní lódáiltear ach tíleanna infheicthe. Ní dhéantar réamhamharc ar thithe sábhála criptithe choíche. As de réir réamhshocraithe chun sonraí a shábháil agus ar mhaithe le príobháideacht.</string>
+    <string name="au23_rp_max_size">Uasmhéid comhaid do réamhamhairc: %1$s</string>
+    <string name="au23_rp_max_size_hint">Molta: 2 MB. Coinníonn comhaid níos mó an tíl daite cineáil.</string>
+    <string name="au23_rp_wifi_only">Ar Wi-Fi nó ar líonraí gan teorainn amháin</string>
+    <string name="au23_rp_wifi_only_desc">Gan réamhamhairc a íoslódáil ar shonraí soghluaiste ná ar naisc theoranta eile.</string>
+    <string name="au23_rp_clear">Glan taisce na réamhamharc</string>
+    <string name="au23_rp_cache_size">Taisce réamhamharc: %1$s</string>
+</resources>

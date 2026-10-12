@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Cáipéisí</string>
+    <string name="au20_viewer_count">%1$d comhad</string>
+    <string name="au20_viewer_search_hint">Cuardaigh cáipéisí</string>
+    <string name="au20_viewer_cat_all">Gach ceann</string>
+    <string name="au20_viewer_cat_documents">Cáipéisí</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Scarbhileoga</string>
+    <string name="au20_viewer_cat_slides">Cur i láthair</string>
+    <string name="au20_viewer_cat_ebooks">Leabhair-e</string>
+    <string name="au20_viewer_cat_other">Eile</string>
+    <string name="au20_viewer_recent">Le déanaí</string>
+    <string name="au20_viewer_clear_recent">Glan</string>
+    <string name="au20_viewer_remove_recent">Bain de na cinn le déanaí</string>
+    <string name="au20_viewer_open_file">Oscail comhad…</string>
+    <string name="au20_viewer_sort">Sórtáil</string>
+    <string name="au20_viewer_sort_date">Dáta</string>
+    <string name="au20_viewer_sort_name">Ainm</string>
+    <string name="au20_viewer_sort_size">Méid</string>
+    <string name="au20_viewer_share">Comhroinn</string>
+    <string name="au20_viewer_open_with">Oscail le</string>
+    <string name="au20_viewer_info">Eolas</string>
+    <string name="au20_viewer_info_name">Ainm</string>
+    <string name="au20_viewer_info_folder">Fillteán</string>
+    <string name="au20_viewer_info_type">Cineál</string>
+    <string name="au20_viewer_info_size">Méid</string>
+    <string name="au20_viewer_info_date">Dáta</string>
+    <string name="au20_viewer_empty_title">Níor aimsíodh aon cháipéis</string>
+    <string name="au20_viewer_empty_text">Taispeántar cáipéisí do ghutháin anseo. Úsáid Oscail comhad… le haghaidh comhaid in áit eile.</string>
+    <string name="au20_viewer_access_title">Lig rochtain ar do chomhaid</string>
+    <string name="au20_viewer_access_text">Chun cáipéisí do ghutháin a liostú, teastaíonn rochtain ar gach comhad ó Telos Viewer. Is féidir comhad amháin a oscailt gan é freisin.</string>
+    <string name="au20_viewer_access_button">Lig rochtain</string>
+    <string name="au20_viewer_share_failed">Theip ar an gcomhroinnt</string>
+    <string name="au20_viewer_open_failed">Ní féidir le haon aip an comhad seo a oscailt</string>
+</resources>

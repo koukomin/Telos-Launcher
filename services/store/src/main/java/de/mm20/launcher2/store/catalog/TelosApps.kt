@@ -97,11 +97,19 @@ object TelosApps {
         ),
         TelosApp(
             key = "telos_photos_app://photos",
-            name = "Telos Viewer",
-            description = "A gallery, photo editor and viewer for documents: PDF, Office and OpenDocument files, with a privacy focus.",
-            features = listOf("Albums and a date timeline", "EXIF viewer, editor and remover", "Crop, rotate, filters", "PDF, Word, Excel and PowerPoint viewing and editing", "20 PDF tools"),
+            name = "Telos Photos",
+            description = "A gallery and photo editor for the pictures on your phone, with a privacy focus.",
+            features = listOf("Albums and a date timeline", "EXIF viewer, editor and remover", "Crop, rotate, filters"),
             iconRes = de.mm20.launcher2.base.R.drawable.ic_glyph_photos,
             route = SettingsDeepLinkContract.ROUTE_PHOTOS,
+        ),
+        TelosApp(
+            key = "telos_viewer_app://viewer",
+            name = "Telos Viewer",
+            description = "A library and viewer for documents: PDF, Word, Excel, PowerPoint, OpenDocument, text and e-books, sorted by category.",
+            features = listOf("Categories: documents, PDF, spreadsheets, presentations, e-books", "Recent files and search", "PDF, Word, Excel and PowerPoint viewing and editing", "20 PDF tools"),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_glyph_viewer,
+            route = SettingsDeepLinkContract.ROUTE_VIEWER,
         ),
         TelosApp(
             key = "telos_files_app://files",

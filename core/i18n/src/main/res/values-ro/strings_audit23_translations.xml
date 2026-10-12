@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Această arhivă RAR este criptată. Telos poate citi arhive RAR, dar nu le poate decripta. Deschide-o cu o aplicație RAR.</string>
+    <string name="au23_rar_unavailable">Această versiune de Telos nu poate deschide arhive RAR. Suportul RAR este inclus doar în versiunea standard, nu și în versiunea F-Droid.</string>
+    <string name="au23_rp_title">Previzualizări pentru fișiere din stocări cloud și de rețea</string>
+    <string name="au23_rp_note">Când este activat, vizualizarea imaginilor descarcă imagini și documente dintr-o stocare cloud sau de rețea în memoria cache a acestui telefon (până la dimensiunea aleasă) pentru a desena previzualizarea. Se încarcă doar plăcile vizibile. Seifurile criptate nu sunt previzualizate niciodată. Dezactivat implicit pentru a economisi date și pentru confidențialitate.</string>
+    <string name="au23_rp_max_size">Dimensiunea maximă a fișierelor pentru previzualizări: %1$s</string>
+    <string name="au23_rp_max_size_hint">Sugerat: 2 MB. Fișierele mai mari păstrează placa colorată a tipului.</string>
+    <string name="au23_rp_wifi_only">Doar pe Wi-Fi sau rețele fără limită de date</string>
+    <string name="au23_rp_wifi_only_desc">Fără descărcarea previzualizărilor pe date mobile sau alte conexiuni cu trafic limitat.</string>
+    <string name="au23_rp_clear">Șterge memoria cache a previzualizărilor</string>
+    <string name="au23_rp_cache_size">Cache previzualizări: %1$s</string>
+</resources>

@@ -39,7 +39,7 @@ address yourself.
 | --- | --- |
 | Title "Radio" and back arrow | The screen name and a way back |
 | **+** (Add station) | Adds a station by address |
-| Record button | Starts or stops [recording](#recording-a-station) the playing station |
+| Record button | Starts or stops [recording](#recording-a-station) the playing station (also in the mini player and in the full-screen player) |
 | Sleep timer icon | Opens the sleep timer |
 | Three-dot menu | Import playlist (M3U / PLS), Export playlist (M3U), Back up collection, Restore backup |
 | Tabs **Collection**, **Search**, **History** | The three views |
@@ -49,7 +49,7 @@ address yourself.
 
 | Tab | Contents |
 | --- | --- |
-| **Collection** | A **Recordings** row (see below) and your stations. Tap to play, long-press to rename or remove, the heart removes a station from the collection. An empty collection says "No stations yet. Search for a station, add one with its address, or import a playlist." |
+| **Collection** | Your stations (the list of recordings is in the ⋮ menu, see below). Tap to play, long-press to rename or remove, the heart removes a station from the collection. An empty collection says "No stations yet. Search for a station, add one with its address, or import a playlist." |
 | **Search** | A search field "Search by station name" with a progress bar. Results show a heart that saves a station to your collection |
 | **History** | The tracks announced by the stations you listen to, newest first, with **Clear history** |
 
@@ -118,7 +118,7 @@ station. Tap it again to stop.
 | While recording | A foreground notification with a timer and a **Stop** action. The elapsed time and the size so far are shown in the app |
 | Ending | If the stream drops, the storage is nearly full, or you tap **Stop**, what was captured so far is saved |
 | Too short | A recording under 1 KB saves nothing |
-| Recordings list | The **Recordings** row at the top of the Collection tab opens a sheet with the saved files: open, share and delete (delete asks for confirmation) |
+| Recordings list | **Recordings** in the ⋮ menu of the Radio space opens a sheet with the saved files: open, share and delete (delete asks for confirmation) |
 
 ::: warning Closing the mini player does not stop a recording
 Stopping playback with the **X** of the mini player does not stop an active recording. Stop the recording with the
@@ -213,3 +213,7 @@ internet radio.
 ## Station grid, sharing and import
 
 The collection is a grid of station cards with filter chips (All, Recently played, Added by me, From Radio Browser) and a Recently played shelf. The playing station shows an equalizer and a card tinted from its logo (static with reduced animations). Long-press a card for **Share**, Rename or Remove. A shared station contains a `telos-radio://add` link: opening it in Telos shows "Add station X to Telos Radio?" with the name and address editable, and nothing is played or fetched before you confirm. Telos Radio also accepts shared stream and playlist links (`.m3u`, `.pls`, `.mp3`, `.aac`, `icy://`), http and https only. Backups include the optional last played time.
+
+## Full-screen player
+
+Tapping the mini player opens a full-screen player in the style of YouTube Music: a large logo, the station and the current track, chips for favorite, record, sleep timer and share, and previous / play-pause / next (previous and next move between your favorite stations).

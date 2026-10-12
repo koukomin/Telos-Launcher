@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Dette RAR-arkivet er kryptert. Telos kan lese RAR-arkiver, men ikke dekryptere dem. Åpne det med en RAR-app i stedet.</string>
+    <string name="au23_rar_unavailable">Denne versjonen av Telos kan ikke åpne RAR-arkiver. RAR-støtte er bare med i standardversjonen, ikke i F-Droid-versjonen.</string>
+    <string name="au23_rp_title">Forhåndsvisning av filer i sky- og nettverkslagring</string>
+    <string name="au23_rp_note">Når dette er på, laster bildevisningen ned bilder og dokumenter fra en sky- eller nettverkslagring til hurtigbufferen på denne telefonen (opptil valgt størrelse) for å tegne forhåndsvisningen. Bare synlige fliser lastes. Krypterte hvelv forhåndsvises aldri. Av som standard for å spare data og av hensyn til personvernet.</string>
+    <string name="au23_rp_max_size">Maksimal filstørrelse for forhåndsvisning: %1$s</string>
+    <string name="au23_rp_max_size_hint">Anbefalt: 2 MB. Større filer beholder den fargede filtypeflisen.</string>
+    <string name="au23_rp_wifi_only">Bare på Wi-Fi eller nett uten datagrense</string>
+    <string name="au23_rp_wifi_only_desc">Ingen nedlasting av forhåndsvisninger på mobildata eller andre tilkoblinger med datagrense.</string>
+    <string name="au23_rp_clear">Tøm hurtigbufferen for forhåndsvisning</string>
+    <string name="au23_rp_cache_size">Hurtigbuffer for forhåndsvisning: %1$s</string>
+</resources>

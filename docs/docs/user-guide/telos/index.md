@@ -54,7 +54,8 @@ gallery, music, video and radio players, an app store and an app freezer.
 | Telos Calendar | Calendar with local and synced calendars | [Calendar](./calendar/) |
 | Telos Downloads | Download manager for links with resume and a queue | [Downloads](./downloads/) |
 | Telos Calculator | Standard and scientific calculator, VAT, converters | [Calculator](./calculator/) |
-| Telos Viewer | Gallery, photo editor, document viewer | [Viewer](./photos/) |
+| Telos Photos | Gallery, EXIF tools, photo editor | [Photos](./photos/) |
+| Telos Viewer | Documents library, PDF, Office and text viewer | [Viewer](./photos/documents) |
 | Telos Media | Music, radio and video in one app | [Media](./media/) |
 | Telos Music | Player for the music on the phone | [Music](./music/) |
 | Telos Video | Video library and player, streams and torrents | [Video](./video/) |

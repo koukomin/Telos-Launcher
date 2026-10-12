@@ -47,6 +47,12 @@ fun CrashReportScreen(fileName: String) {
         },
         topBarActions = {
             if (crashReport != null) {
+                IconButton(onClick = { crashReport?.let { viewModel.copyCrashReport(context, it) } }) {
+                    Icon(
+                        painterResource(R.drawable.content_copy_24px),
+                        contentDescription = stringResource(android.R.string.copy)
+                    )
+                }
                 IconButton(onClick = { crashReport?.let { viewModel.shareCrashReport(context, it) } }) {
                     Icon(
                         painterResource(R.drawable.share_24px),

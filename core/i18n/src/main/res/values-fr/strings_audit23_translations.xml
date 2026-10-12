@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Cette archive RAR est chiffrée. Telos peut lire les archives RAR mais ne peut pas les déchiffrer. Ouvrez-la plutôt avec une application RAR.</string>
+    <string name="au23_rar_unavailable">Cette version de Telos ne peut pas ouvrir les archives RAR. La prise en charge de RAR n\'est incluse que dans la version standard, pas dans la version F-Droid.</string>
+    <string name="au23_rp_title">Aperçus des fichiers sur les stockages cloud et réseau</string>
+    <string name="au23_rp_note">Si cette option est activée, la vue en images télécharge les images et documents d\'un stockage cloud ou réseau dans le cache de ce téléphone (jusqu\'à la taille choisie) pour afficher leur aperçu. Seules les vignettes visibles sont chargées. Les coffres chiffrés ne sont jamais prévisualisés. Désactivé par défaut pour économiser des données et par souci de confidentialité.</string>
+    <string name="au23_rp_max_size">Taille maximale des fichiers pour les aperçus : %1$s</string>
+    <string name="au23_rp_max_size_hint">Suggestion : 2 MB. Les fichiers plus volumineux conservent la vignette colorée du type.</string>
+    <string name="au23_rp_wifi_only">Uniquement en Wi-Fi ou sur les réseaux non facturés au volume</string>
+    <string name="au23_rp_wifi_only_desc">Aucun téléchargement d\'aperçu avec les données mobiles ou d\'autres connexions limitées.</string>
+    <string name="au23_rp_clear">Vider le cache des aperçus</string>
+    <string name="au23_rp_cache_size">Cache des aperçus : %1$s</string>
+</resources>

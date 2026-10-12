@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Dokumenti</string>
+    <string name="au20_viewer_count">%1$d fajls</string>
+    <string name="au20_viewer_search_hint">Fittex id-dokumenti</string>
+    <string name="au20_viewer_cat_all">Kollha</string>
+    <string name="au20_viewer_cat_documents">Dokumenti</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Spreadsheets</string>
+    <string name="au20_viewer_cat_slides">Preżentazzjonijiet</string>
+    <string name="au20_viewer_cat_ebooks">E-books</string>
+    <string name="au20_viewer_cat_other">Oħrajn</string>
+    <string name="au20_viewer_recent">Reċenti</string>
+    <string name="au20_viewer_clear_recent">Neħħi</string>
+    <string name="au20_viewer_remove_recent">Neħħi mir-reċenti</string>
+    <string name="au20_viewer_open_file">Iftaħ fajl…</string>
+    <string name="au20_viewer_sort">Ordna</string>
+    <string name="au20_viewer_sort_date">Data</string>
+    <string name="au20_viewer_sort_name">Isem</string>
+    <string name="au20_viewer_sort_size">Daqs</string>
+    <string name="au20_viewer_share">Aqsam</string>
+    <string name="au20_viewer_open_with">Iftaħ b\'</string>
+    <string name="au20_viewer_info">Informazzjoni</string>
+    <string name="au20_viewer_info_name">Isem</string>
+    <string name="au20_viewer_info_folder">Folder</string>
+    <string name="au20_viewer_info_type">Tip</string>
+    <string name="au20_viewer_info_size">Daqs</string>
+    <string name="au20_viewer_info_date">Data</string>
+    <string name="au20_viewer_empty_title">Ma nstab ebda dokument</string>
+    <string name="au20_viewer_empty_text">Id-dokumenti fuq it-telefon tiegħek jidhru hawn. Uża Iftaħ fajl… għal fajl x\'imkien ieħor.</string>
+    <string name="au20_viewer_access_title">Ippermetti aċċess għall-fajls tiegħek</string>
+    <string name="au20_viewer_access_text">Biex jelenka d-dokumenti fuq it-telefon tiegħek, Telos Viewer jeħtieġ aċċess għall-fajls kollha. Tista\' wkoll tiftaħ fajl wieħed mingħajru.</string>
+    <string name="au20_viewer_access_button">Ippermetti aċċess</string>
+    <string name="au20_viewer_share_failed">L-qsim falla</string>
+    <string name="au20_viewer_open_failed">Ebda app ma tista\' tiftaħ dan il-fajl</string>
+</resources>

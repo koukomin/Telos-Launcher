@@ -239,7 +239,24 @@ credentials. Telos is not endorsed or certified by Trakt.
 sshj and smbj (Apache-2.0, Copyright Jeroen van Erp and contributors), Apache Commons Net and Apache
 Commons Compress (Apache-2.0, Copyright The Apache Software Foundation), OkHttp (Apache-2.0,
 Copyright Square, Inc.), Bouncy Castle (MIT-style license, Copyright The Legion of the Bouncy Castle
-Inc.). All are used unchanged as Maven dependencies.
+Inc.), Zip4j (Apache-2.0, Copyright 2010 Srikanth Reddy Lingala; password-protected zip files),
+XZ for Java (0BSD, Copyright The XZ for Java authors and contributors, Lasse Collin, Igor Pavlov and
+Brett Okken; the LZMA, LZMA2 and XZ decoders that Commons Compress uses for 7z, xz and tar.xz). All are
+used unchanged as Maven dependencies. The Apache-2.0 and 0BSD licences are compatible with GPL-3.0-or-later.
+
+libarchive-android 1.1.7 (me.zhanghai.android.libarchive, Apache-2.0, Copyright Hai Zhang, https://github.com/zhanghai/libarchive-android)
+with the libarchive it bundles (BSD-2-Clause, Copyright Tim Kientzle and the libarchive contributors,
+https://libarchive.org) reads RAR 3, 4 and RAR5 archives in Telos Files. The prebuilt native library is used
+unchanged and also contains zlib, bzip2, liblzma (0BSD/public domain), lz4 (BSD-2-Clause), zstd (BSD-3-Clause
+or GPL-2.0, used under BSD-3-Clause) and Mbed TLS (Apache-2.0 or GPL-2.0-or-later). Only the RAR and RAR5 readers
+are switched on in Telos. It is part of the `default` flavor only; the `fdroid` flavor does not contain it. RAR
+encryption is not supported. All these licences are compatible with GPL-3.0-or-later.
+
+The UnRAR source code (RARLAB) and junrar (UnRar licence) are not used: that licence forbids using the code to
+recreate the RAR compression algorithm and is not compatible with the GPL.
+
+7-Zip and 7-Zip-JBinding (LGPL-2.1 with the unRAR restriction) are not part of Telos. They were evaluated for
+RAR and more formats and are not shipped.
 
 ## Cryptomator vault format
 

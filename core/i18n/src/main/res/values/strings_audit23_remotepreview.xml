@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au23_rp_title">Previews for files on cloud and network storages</string>
+    <string name="au23_rp_note">When on, the picture view downloads pictures and documents of a cloud or network storage into the cache of this phone (up to the size you choose) to draw their preview. Only visible tiles are loaded. Encrypted vaults are never previewed. Off by default to save data and for privacy.</string>
+    <string name="au23_rp_max_size">Maximum file size for previews: %1$s</string>
+    <string name="au23_rp_max_size_hint">Suggested: 2 MB. Larger files keep the coloured type tile.</string>
+    <string name="au23_rp_wifi_only">Only on Wi-Fi or unmetered networks</string>
+    <string name="au23_rp_wifi_only_desc">No preview downloads on mobile data or other metered connections.</string>
+    <string name="au23_rp_clear">Clear preview cache</string>
+    <string name="au23_rp_cache_size">Preview cache: %1$s</string>
+</resources>

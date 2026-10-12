@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">密码错误</string>
+    <string name="au21_arch_password_needed">此压缩包受密码保护</string>
+    <string name="au21_arch_failed">无法打开压缩包</string>
+    <string name="au21_arch_pw_title">需要密码</string>
+    <string name="au21_arch_pw_info">%1$s 受密码保护。请输入密码以打开或解压。密码仅在您位于压缩包内时保留在内存中，绝不会被保存。</string>
+    <string name="au21_arch_ok">确定</string>
+    <string name="au21_arch_checking">正在检查…</string>
+    <string name="au21_arch_show">显示</string>
+    <string name="au21_arch_hide">隐藏</string>
+    <string name="au21_arch_compress">压缩…</string>
+    <string name="au21_arch_format">格式</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">密码（AES-256，可选）</string>
+    <string name="au21_arch_pw_repeat">重复输入密码</string>
+    <string name="au21_arch_pw_mismatch">两次输入的密码不一致</string>
+    <string name="au21_arch_zip_note">设置密码后，文件将使用 AES-256 加密。文件名仍然可见。Telos 绝不使用不安全的 ZipCrypto 加密。密码无法找回，请妥善保管。</string>
+    <string name="au21_arch_no_pw_note">7z 和 tar.gz 压缩包不设密码。</string>
+    <string name="au22_files_open_as_archive">作为压缩包打开</string>
+    <string name="au22_files_view_mode">视图模式</string>
+    <string name="au22_files_view_list">列表</string>
+    <string name="au22_files_view_grid_medium">网格，中等预览</string>
+    <string name="au22_files_view_grid_large">网格，大预览</string>
+    <string name="au22_files_gshortcut_failed">无法打开此 Google 云端硬盘快捷方式</string>
+</resources>

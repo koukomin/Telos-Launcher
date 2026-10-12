@@ -385,6 +385,25 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                     onValueChanged = { searchable ->
                         if (searchable != null) {
                             val (pageIdx, itemIdx) = showSearchablePickerForSlot!!
+                            // Transactional: the new item must be persistable BEFORE the slot is
+                            // changed, otherwise the old item would vanish and the slot would point
+                            // at a key that can never be resolved again.
+                            val persistable = searchable.key.isNotEmpty() && try {
+                                searchable.getSerializer().serialize(searchable) != null
+                            } catch (e: Exception) {
+                                false
+                            }
+                            if (!persistable) {
+                                android.widget.Toast.makeText(
+                                    context,
+                                    context.getString(R.string.au17_dock_save_failed),
+                                    android.widget.Toast.LENGTH_LONG
+                                ).show()
+                                showSearchablePickerForSlot = null
+                                return@SearchablePicker
+                            }
+                            // Save the searchable itself first; the dock only stores its key.
+                            searchableRepository.upsert(searchable)
                             val updated = dockPages.toMutableList()
                             val page = updated[pageIdx].toMutableList()
                             

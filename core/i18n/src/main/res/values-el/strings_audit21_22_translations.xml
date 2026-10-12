@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Λάθος κωδικός</string>
+    <string name="au21_arch_password_needed">Το αρχείο είναι προστατευμένο με κωδικό</string>
+    <string name="au21_arch_failed">Δεν ήταν δυνατό το άνοιγμα του αρχείου</string>
+    <string name="au21_arch_pw_title">Απαιτείται κωδικός</string>
+    <string name="au21_arch_pw_info">Το %1$s προστατεύεται με κωδικό. Εισαγάγετε τον κωδικό για να το ανοίξετε ή να το αποσυμπιέσετε. Ο κωδικός διατηρείται στη μνήμη μόνο όσο βρίσκεστε μέσα στο αρχείο και δεν αποθηκεύεται ποτέ.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Έλεγχος…</string>
+    <string name="au21_arch_show">Εμφάνιση</string>
+    <string name="au21_arch_hide">Απόκρυψη</string>
+    <string name="au21_arch_compress">Συμπίεση…</string>
+    <string name="au21_arch_format">Μορφή</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Κωδικός (AES-256, προαιρετικός)</string>
+    <string name="au21_arch_pw_repeat">Επανάληψη κωδικού</string>
+    <string name="au21_arch_pw_mismatch">Οι κωδικοί δεν ταιριάζουν</string>
+    <string name="au21_arch_zip_note">Με κωδικό, τα αρχεία κρυπτογραφούνται με AES-256. Τα ονόματα αρχείων παραμένουν ορατά. Το Telos δεν χρησιμοποιεί ποτέ την αδύναμη κρυπτογράφηση ZipCrypto. Ο κωδικός δεν μπορεί να ανακτηθεί, γι\' αυτό φυλάξτε τον καλά.</string>
+    <string name="au21_arch_no_pw_note">Τα αρχεία 7z και tar.gz δημιουργούνται χωρίς κωδικό.</string>
+    <string name="au22_files_open_as_archive">Άνοιγμα ως αρχείο</string>
+    <string name="au22_files_view_mode">Προβολή</string>
+    <string name="au22_files_view_list">Λίστα</string>
+    <string name="au22_files_view_grid_medium">Πλέγμα, μεσαίες προεπισκοπήσεις</string>
+    <string name="au22_files_view_grid_large">Πλέγμα, μεγάλες προεπισκοπήσεις</string>
+    <string name="au22_files_gshortcut_failed">Αυτή η συντόμευση του Google Drive δεν μπορεί να ανοιχτεί</string>
+</resources>

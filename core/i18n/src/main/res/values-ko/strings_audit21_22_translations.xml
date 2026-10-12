@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">비밀번호가 올바르지 않습니다</string>
+    <string name="au21_arch_password_needed">이 압축 파일은 비밀번호로 보호되어 있습니다</string>
+    <string name="au21_arch_failed">압축 파일을 열 수 없습니다</string>
+    <string name="au21_arch_pw_title">비밀번호 필요</string>
+    <string name="au21_arch_pw_info">%1$s은(는) 비밀번호로 보호되어 있습니다. 열거나 압축을 풀려면 비밀번호를 입력하세요. 비밀번호는 압축 파일 안에 있는 동안에만 메모리에 보관되며 저장되지 않습니다.</string>
+    <string name="au21_arch_ok">확인</string>
+    <string name="au21_arch_checking">확인 중…</string>
+    <string name="au21_arch_show">표시</string>
+    <string name="au21_arch_hide">숨기기</string>
+    <string name="au21_arch_compress">압축…</string>
+    <string name="au21_arch_format">형식</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">비밀번호(AES-256, 선택 사항)</string>
+    <string name="au21_arch_pw_repeat">비밀번호 확인</string>
+    <string name="au21_arch_pw_mismatch">비밀번호가 일치하지 않습니다</string>
+    <string name="au21_arch_zip_note">비밀번호를 설정하면 파일이 AES-256으로 암호화됩니다. 파일 이름은 그대로 표시됩니다. Telos는 취약한 ZipCrypto 암호화를 절대 사용하지 않습니다. 비밀번호는 복구할 수 없으니 안전하게 보관하세요.</string>
+    <string name="au21_arch_no_pw_note">7z 및 tar.gz 압축 파일은 비밀번호 없이 만들어집니다.</string>
+    <string name="au22_files_open_as_archive">압축 파일로 열기</string>
+    <string name="au22_files_view_mode">보기 모드</string>
+    <string name="au22_files_view_list">목록</string>
+    <string name="au22_files_view_grid_medium">그리드, 중간 미리보기</string>
+    <string name="au22_files_view_grid_large">그리드, 큰 미리보기</string>
+    <string name="au22_files_gshortcut_failed">이 Google 드라이브 바로가기를 열 수 없습니다</string>
+</resources>

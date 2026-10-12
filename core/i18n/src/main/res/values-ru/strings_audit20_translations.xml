@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Документы</string>
+    <string name="au20_viewer_count">Файлов: %1$d</string>
+    <string name="au20_viewer_search_hint">Поиск документов</string>
+    <string name="au20_viewer_cat_all">Все</string>
+    <string name="au20_viewer_cat_documents">Документы</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Таблицы</string>
+    <string name="au20_viewer_cat_slides">Презентации</string>
+    <string name="au20_viewer_cat_ebooks">Электронные книги</string>
+    <string name="au20_viewer_cat_other">Другое</string>
+    <string name="au20_viewer_recent">Недавние</string>
+    <string name="au20_viewer_clear_recent">Очистить</string>
+    <string name="au20_viewer_remove_recent">Удалить из недавних</string>
+    <string name="au20_viewer_open_file">Открыть файл…</string>
+    <string name="au20_viewer_sort">Сортировка</string>
+    <string name="au20_viewer_sort_date">Дата</string>
+    <string name="au20_viewer_sort_name">Имя</string>
+    <string name="au20_viewer_sort_size">Размер</string>
+    <string name="au20_viewer_share">Поделиться</string>
+    <string name="au20_viewer_open_with">Открыть в приложении</string>
+    <string name="au20_viewer_info">Сведения</string>
+    <string name="au20_viewer_info_name">Имя</string>
+    <string name="au20_viewer_info_folder">Папка</string>
+    <string name="au20_viewer_info_type">Тип</string>
+    <string name="au20_viewer_info_size">Размер</string>
+    <string name="au20_viewer_info_date">Дата</string>
+    <string name="au20_viewer_empty_title">Документы не найдены</string>
+    <string name="au20_viewer_empty_text">Документы на телефоне появятся здесь. Для файла из другого места используйте «Открыть файл…».</string>
+    <string name="au20_viewer_access_title">Разрешите доступ к файлам</string>
+    <string name="au20_viewer_access_text">Чтобы показать документы на телефоне, Telos Viewer нужен доступ ко всем файлам. Отдельный файл можно открыть и без него.</string>
+    <string name="au20_viewer_access_button">Разрешить доступ</string>
+    <string name="au20_viewer_share_failed">Не удалось поделиться</string>
+    <string name="au20_viewer_open_failed">Нет приложения для открытия этого файла</string>
+</resources>

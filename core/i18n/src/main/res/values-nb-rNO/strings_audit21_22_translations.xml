@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Feil passord</string>
+    <string name="au21_arch_password_needed">Arkivet er passordbeskyttet</string>
+    <string name="au21_arch_failed">Kunne ikke åpne arkivet</string>
+    <string name="au21_arch_pw_title">Passord kreves</string>
+    <string name="au21_arch_pw_info">%1$s er passordbeskyttet. Skriv inn passordet for å åpne eller pakke det ut. Passordet beholdes bare i minnet mens du er i arkivet, og lagres aldri.</string>
+    <string name="au21_arch_ok">OK</string>
+    <string name="au21_arch_checking">Kontrollerer…</string>
+    <string name="au21_arch_show">Vis</string>
+    <string name="au21_arch_hide">Skjul</string>
+    <string name="au21_arch_compress">Komprimer…</string>
+    <string name="au21_arch_format">Format</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Passord (AES-256, valgfritt)</string>
+    <string name="au21_arch_pw_repeat">Gjenta passord</string>
+    <string name="au21_arch_pw_mismatch">Passordene stemmer ikke overens</string>
+    <string name="au21_arch_zip_note">Med passord krypteres filene med AES-256. Filnavn forblir synlige. Telos skriver aldri den svake ZipCrypto-krypteringen. Passordet kan ikke gjenopprettes, så oppbevar det trygt.</string>
+    <string name="au21_arch_no_pw_note">7z- og tar.gz-arkiver opprettes uten passord.</string>
+    <string name="au22_files_open_as_archive">Åpne som arkiv</string>
+    <string name="au22_files_view_mode">Visningsmodus</string>
+    <string name="au22_files_view_list">Liste</string>
+    <string name="au22_files_view_grid_medium">Rutenett, middels forhåndsvisninger</string>
+    <string name="au22_files_view_grid_large">Rutenett, store forhåndsvisninger</string>
+    <string name="au22_files_gshortcut_failed">Denne Google Drive-snarveien kan ikke åpnes</string>
+</resources>

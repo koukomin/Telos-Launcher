@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Documentos</string>
+    <string name="au20_viewer_count">%1$d arquivos</string>
+    <string name="au20_viewer_search_hint">Pesquisar documentos</string>
+    <string name="au20_viewer_cat_all">Todos</string>
+    <string name="au20_viewer_cat_documents">Documentos</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Planilhas</string>
+    <string name="au20_viewer_cat_slides">Apresentações</string>
+    <string name="au20_viewer_cat_ebooks">E-books</string>
+    <string name="au20_viewer_cat_other">Outros</string>
+    <string name="au20_viewer_recent">Recentes</string>
+    <string name="au20_viewer_clear_recent">Limpar</string>
+    <string name="au20_viewer_remove_recent">Remover dos recentes</string>
+    <string name="au20_viewer_open_file">Abrir arquivo…</string>
+    <string name="au20_viewer_sort">Ordenar</string>
+    <string name="au20_viewer_sort_date">Data</string>
+    <string name="au20_viewer_sort_name">Nome</string>
+    <string name="au20_viewer_sort_size">Tamanho</string>
+    <string name="au20_viewer_share">Compartilhar</string>
+    <string name="au20_viewer_open_with">Abrir com</string>
+    <string name="au20_viewer_info">Informações</string>
+    <string name="au20_viewer_info_name">Nome</string>
+    <string name="au20_viewer_info_folder">Pasta</string>
+    <string name="au20_viewer_info_type">Tipo</string>
+    <string name="au20_viewer_info_size">Tamanho</string>
+    <string name="au20_viewer_info_date">Data</string>
+    <string name="au20_viewer_empty_title">Nenhum documento encontrado</string>
+    <string name="au20_viewer_empty_text">Os documentos do seu celular aparecem aqui. Use Abrir arquivo… para um arquivo em outro local.</string>
+    <string name="au20_viewer_access_title">Permitir acesso aos seus arquivos</string>
+    <string name="au20_viewer_access_text">Para listar os documentos do seu celular, o Telos Viewer precisa de acesso a todos os arquivos. Você também pode abrir um único arquivo sem esse acesso.</string>
+    <string name="au20_viewer_access_button">Permitir acesso</string>
+    <string name="au20_viewer_share_failed">Falha ao compartilhar</string>
+    <string name="au20_viewer_open_failed">Nenhum app consegue abrir este arquivo</string>
+</resources>

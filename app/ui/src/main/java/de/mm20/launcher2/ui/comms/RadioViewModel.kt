@@ -96,8 +96,15 @@ class RadioViewModel : ViewModel(), KoinComponent {
     fun initialize(context: Context) {
         if (mediaController != null || connecting) return
         connecting = true
-        val sessionToken = SessionToken(context, ComponentName(context, RadioPlayerService::class.java))
-        val controllerFuture = MediaController.Builder(context, sessionToken).buildAsync()
+        // a failing connection (service missing, background start refused) must not crash the screen: the player just stays unavailable
+        val controllerFuture = runCatching {
+            val sessionToken = SessionToken(context, ComponentName(context, RadioPlayerService::class.java))
+            MediaController.Builder(context, sessionToken).buildAsync()
+        }.getOrNull()
+        if (controllerFuture == null) {
+            connecting = false
+            return
+        }
         this.controllerFuture = controllerFuture
 
         controllerFuture.addListener({
@@ -173,7 +180,8 @@ class RadioViewModel : ViewModel(), KoinComponent {
 
     fun togglePlayPause() {
         val controller = mediaController ?: return
-        if (controller.isPlaying) {
+        // while the connection is being restored the user's tap means stop trying
+        if (controller.isPlaying || RadioPlayerService.reconnecting.value) {
             controller.pause()
         } else {
             controller.play()
@@ -187,6 +195,13 @@ class RadioViewModel : ViewModel(), KoinComponent {
     fun toggleStation(station: RadioStation) {
         if (_stationId.value == station.id && _isVisible.value && mediaController != null) togglePlayPause()
         else playStation(station)
+    }
+
+    /** Previous (-1) or next (1) station of [stations] (wraps around); nothing when there are fewer than two */
+    fun skipStation(step: Int, stations: List<RadioStation>) {
+        if (stations.size < 2) return
+        val i = stations.indexOfFirst { it.id == _stationId.value }
+        playStation(stations[Math.floorMod(i + step, stations.size)])
     }
 
     fun stop() {

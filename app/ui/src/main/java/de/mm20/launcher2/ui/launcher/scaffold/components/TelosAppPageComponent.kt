@@ -58,6 +58,7 @@ internal object TelosPages {
         "telos_music_app://music" -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("music")
         "telos_video_app://video" -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("video")
         "telos_photos_app://photos" -> de.mm20.launcher2.ui.media.photos.PhotosRoute
+        "telos_viewer_app://viewer" -> de.mm20.launcher2.ui.media.docs.ViewerRoute
         "telos_files_app://files" -> de.mm20.launcher2.ui.files.FilesRoute
         "telos_calculator_app://calculator" -> de.mm20.launcher2.ui.calculator.CalculatorRoute
         "telos_notes_app://notes" -> de.mm20.launcher2.ui.notes.NotesRoute
@@ -129,6 +130,9 @@ internal object TelosPages {
         }
         entry<de.mm20.launcher2.ui.media.photos.PhotosRoute> {
             de.mm20.launcher2.ui.media.photos.PhotosScreen()
+        }
+        entry<de.mm20.launcher2.ui.media.docs.ViewerRoute> {
+            de.mm20.launcher2.ui.media.docs.ViewerScreen()
         }
         entry<de.mm20.launcher2.ui.media.hub.MediaHubRoute> {
             de.mm20.launcher2.ui.media.hub.MediaHubScreen(it.space)

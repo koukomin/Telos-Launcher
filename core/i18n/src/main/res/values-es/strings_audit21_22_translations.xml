@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au21_arch_wrong_password">Contraseña incorrecta</string>
+    <string name="au21_arch_password_needed">Este archivo está protegido con contraseña</string>
+    <string name="au21_arch_failed">No se pudo abrir el archivo comprimido</string>
+    <string name="au21_arch_pw_title">Se requiere contraseña</string>
+    <string name="au21_arch_pw_info">%1$s está protegido con contraseña. Introduce la contraseña para abrirlo o descomprimirlo. La contraseña solo se mantiene en memoria mientras estás dentro del archivo y nunca se guarda.</string>
+    <string name="au21_arch_ok">Aceptar</string>
+    <string name="au21_arch_checking">Comprobando…</string>
+    <string name="au21_arch_show">Mostrar</string>
+    <string name="au21_arch_hide">Ocultar</string>
+    <string name="au21_arch_compress">Comprimir…</string>
+    <string name="au21_arch_format">Formato</string>
+    <string name="au21_arch_fmt_zip">ZIP</string>
+    <string name="au21_arch_fmt_7z">7z</string>
+    <string name="au21_arch_fmt_targz">tar.gz</string>
+    <string name="au21_arch_pw_optional">Contraseña (AES-256, opcional)</string>
+    <string name="au21_arch_pw_repeat">Repetir contraseña</string>
+    <string name="au21_arch_pw_mismatch">Las contraseñas no coinciden</string>
+    <string name="au21_arch_zip_note">Con contraseña, los archivos se cifran con AES-256. Los nombres de archivo siguen siendo visibles. Telos nunca usa el cifrado débil ZipCrypto. La contraseña no se puede recuperar, así que guárdala en un lugar seguro.</string>
+    <string name="au21_arch_no_pw_note">Los archivos 7z y tar.gz se crean sin contraseña.</string>
+    <string name="au22_files_open_as_archive">Abrir como archivo comprimido</string>
+    <string name="au22_files_view_mode">Modo de vista</string>
+    <string name="au22_files_view_list">Lista</string>
+    <string name="au22_files_view_grid_medium">Cuadrícula, vistas previas medianas</string>
+    <string name="au22_files_view_grid_large">Cuadrícula, vistas previas grandes</string>
+    <string name="au22_files_gshortcut_failed">No se puede abrir este acceso directo de Google Drive</string>
+</resources>

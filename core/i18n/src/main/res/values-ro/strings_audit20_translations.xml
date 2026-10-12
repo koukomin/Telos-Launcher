@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">Documente</string>
+    <string name="au20_viewer_count">%1$d fișiere</string>
+    <string name="au20_viewer_search_hint">Caută documente</string>
+    <string name="au20_viewer_cat_all">Toate</string>
+    <string name="au20_viewer_cat_documents">Documente</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">Foi de calcul</string>
+    <string name="au20_viewer_cat_slides">Prezentări</string>
+    <string name="au20_viewer_cat_ebooks">Cărți electronice</string>
+    <string name="au20_viewer_cat_other">Altele</string>
+    <string name="au20_viewer_recent">Recente</string>
+    <string name="au20_viewer_clear_recent">Șterge</string>
+    <string name="au20_viewer_remove_recent">Elimină din recente</string>
+    <string name="au20_viewer_open_file">Deschide fișier…</string>
+    <string name="au20_viewer_sort">Sortare</string>
+    <string name="au20_viewer_sort_date">Data</string>
+    <string name="au20_viewer_sort_name">Nume</string>
+    <string name="au20_viewer_sort_size">Dimensiune</string>
+    <string name="au20_viewer_share">Distribuie</string>
+    <string name="au20_viewer_open_with">Deschide cu</string>
+    <string name="au20_viewer_info">Informații</string>
+    <string name="au20_viewer_info_name">Nume</string>
+    <string name="au20_viewer_info_folder">Dosar</string>
+    <string name="au20_viewer_info_type">Tip</string>
+    <string name="au20_viewer_info_size">Dimensiune</string>
+    <string name="au20_viewer_info_date">Data</string>
+    <string name="au20_viewer_empty_title">Nu s-au găsit documente</string>
+    <string name="au20_viewer_empty_text">Documentele de pe telefon apar aici. Folosiți Deschide fișier… pentru un fișier din altă parte.</string>
+    <string name="au20_viewer_access_title">Permiteți accesul la fișierele dvs.</string>
+    <string name="au20_viewer_access_text">Pentru a lista documentele de pe telefon, Telos Viewer are nevoie de acces la toate fișierele. Puteți deschide și un singur fișier fără acesta.</string>
+    <string name="au20_viewer_access_button">Permite accesul</string>
+    <string name="au20_viewer_share_failed">Distribuirea a eșuat</string>
+    <string name="au20_viewer_open_failed">Nicio aplicație nu poate deschide acest fișier</string>
+</resources>

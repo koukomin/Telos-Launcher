@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Este arquivo RAR está encriptado. O Telos consegue ler arquivos RAR, mas não os consegue desencriptar. Abra-o com uma aplicação RAR.</string>
+    <string name="au23_rar_unavailable">Esta versão do Telos não consegue abrir arquivos RAR. O suporte para RAR só está incluído na versão padrão, não na versão F-Droid.</string>
+    <string name="au23_rp_title">Pré-visualizações de ficheiros em armazenamentos na cloud e de rede</string>
+    <string name="au23_rp_note">Quando ativado, a vista de imagens transfere imagens e documentos de um armazenamento na cloud ou de rede para a cache deste telemóvel (até ao tamanho escolhido) para desenhar a pré-visualização. Apenas os mosaicos visíveis são carregados. Os cofres encriptados nunca são pré-visualizados. Desativado por predefinição para poupar dados e por privacidade.</string>
+    <string name="au23_rp_max_size">Tamanho máximo de ficheiro para pré-visualizações: %1$s</string>
+    <string name="au23_rp_max_size_hint">Sugerido: 2 MB. Os ficheiros maiores mantêm o mosaico colorido do tipo.</string>
+    <string name="au23_rp_wifi_only">Apenas em Wi-Fi ou redes sem limite de dados</string>
+    <string name="au23_rp_wifi_only_desc">Sem transferências de pré-visualizações com dados móveis ou outras ligações com limite de dados.</string>
+    <string name="au23_rp_clear">Limpar cache de pré-visualizações</string>
+    <string name="au23_rp_cache_size">Cache de pré-visualizações: %1$s</string>
+</resources>

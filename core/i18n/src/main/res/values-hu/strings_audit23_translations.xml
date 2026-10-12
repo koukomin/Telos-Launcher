@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Ez a RAR-archívum titkosított. A Telos képes olvasni a RAR-archívumokat, de nem tudja visszafejteni őket. Nyisd meg egy RAR-alkalmazással.</string>
+    <string name="au23_rar_unavailable">A Telos ezen összeállítása nem tud RAR-archívumokat megnyitni. A RAR-támogatás csak a szabványos verzióban van benne, az F-Droid verzióban nincs.</string>
+    <string name="au23_rp_title">Fájlok előnézete felhő- és hálózati tárhelyeken</string>
+    <string name="au23_rp_note">Bekapcsolva a képnézet letölti a felhő- vagy hálózati tárhely képeit és dokumentumait a telefon gyorsítótárába (a választott méretig), hogy megrajzolja az előnézetüket. Csak a látható csempék töltődnek be. A titkosított széfek előnézete soha nem jelenik meg. Alapértelmezetten ki van kapcsolva az adatforgalom megtakarítása és az adatvédelem miatt.</string>
+    <string name="au23_rp_max_size">Előnézetek legnagyobb fájlmérete: %1$s</string>
+    <string name="au23_rp_max_size_hint">Javasolt: 2 MB. A nagyobb fájlok megtartják a színes típuscsempét.</string>
+    <string name="au23_rp_wifi_only">Csak Wi-Fi vagy nem mért hálózaton</string>
+    <string name="au23_rp_wifi_only_desc">Nincs előnézet-letöltés mobiladaton vagy más mért kapcsolaton.</string>
+    <string name="au23_rp_clear">Előnézeti gyorsítótár törlése</string>
+    <string name="au23_rp_cache_size">Előnézeti gyorsítótár: %1$s</string>
+</resources>

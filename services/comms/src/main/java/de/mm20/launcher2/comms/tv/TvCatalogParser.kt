@@ -55,7 +55,32 @@ object TvCatalogParser {
         }
     }
 
-    fun parse(src: Sources): TvIndex {
+    /** Why channels were dropped; for logging and tests */
+    class Stats {
+        var channelsInFile = 0
+        var noStream = 0
+        var blocked = 0
+        var nsfw = 0
+        var closed = 0
+        var replaced = 0
+        var noName = 0
+        var kept = 0
+        override fun toString() =
+            "channels=$channelsInFile kept=$kept noStream=$noStream blocked=$blocked nsfw=$nsfw closed=$closed replaced=$replaced noName=$noName"
+    }
+
+    /** True when the "closed" value (a date such as 2019-03-01, or a flag) means the channel is closed on [today] */
+    internal fun isClosed(closed: String?, today: java.time.LocalDate): Boolean {
+        val c = closed?.trim().orEmpty()
+        if (c.isEmpty()) return false
+        val date = runCatching { java.time.LocalDate.parse(c.take(10)) }.getOrNull() ?: return true
+        return !date.isAfter(today)
+    }
+
+    fun parse(src: Sources): TvIndex = parseWithStats(src).first
+
+    fun parseWithStats(src: Sources, today: java.time.LocalDate = java.time.LocalDate.now()): Pair<TvIndex, Stats> {
+        val stats = Stats()
         // streams first: only channels that can be played are kept
         val streamsByChannel = HashMap<String, MutableList<TvStream>>()
         forEachObject(src.streams) { o ->
@@ -114,13 +139,19 @@ object TvCatalogParser {
         val channels = ArrayList<TvChannel>()
         forEachObject(src.channels) { o ->
             val id = o.str("id") ?: return@forEachObject
-            val streams = streamsByChannel[id] ?: return@forEachObject
-            if (id in blocked) return@forEachObject
-            if (o.bool("is_nsfw") == true) return@forEachObject
-            if (!o.str("closed").isNullOrBlank() || !o.str("replaced_by").isNullOrBlank()) return@forEachObject
+            stats.channelsInFile++
+            val streams = streamsByChannel[id] ?: run { stats.noStream++; return@forEachObject }
+            if (id in blocked) { stats.blocked++; return@forEachObject }
+            if (o.bool("is_nsfw") == true) { stats.nsfw++; return@forEachObject }
+            // a channel that has a playable stream stays unless it is really closed (a future closing date does not count)
+            if (isClosed(o.str("closed"), today)) { stats.closed++; return@forEachObject }
+            // replaced channels go only when the replacement can be played, otherwise the channel would vanish
+            val replacement = o.str("replaced_by")?.substringBefore('@')
+            if (replacement != null && replacement in streamsByChannel && replacement != id) { stats.replaced++; return@forEachObject }
             val categories = o.strList("categories").map { it.lowercase() }.distinct()
-            if ("xxx" in categories) return@forEachObject
-            val name = o.str("name")?.trim()?.takeIf { it.isNotEmpty() } ?: return@forEachObject
+            if ("xxx" in categories) { stats.nsfw++; return@forEachObject }
+            val name = o.str("name")?.trim()?.takeIf { it.isNotEmpty() } ?: run { stats.noName++; return@forEachObject }
+            stats.kept++
             // older schemas had languages and logo in the channel itself
             val languages = (languagesByChannel[id].orEmpty() + o.strList("languages").map { it.lowercase() })
                 .filter { it.length in 2..3 }.distinct()
@@ -138,7 +169,7 @@ object TvCatalogParser {
                 )
             )
         }
-        return TvIndex(channels, categoryNames)
+        return TvIndex(channels, categoryNames) to stats
     }
 
     /** 1080p > 720p > 576p > 480p..., interlaced counts the same; unknown quality ranks in the middle */

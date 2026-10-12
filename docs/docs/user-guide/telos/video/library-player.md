@@ -182,3 +182,7 @@ deleted or changed, watch progress is kept, and subtitle files next to the video
 ## Home, shelves and sharing
 
 The **Library** tab is a home: category chips (Movies, Series, Other, Recent, Unwatched, Folders, shown only when they have items), **Continue watching** (2 to 95 percent, with the time left), **Recently added**, Movies and Series posters. The detail header is tinted with the poster colour (needs the TMDB posters option). Long-press a video for mark watched, **Share** and delete: local files are copied for sharing (confirmation above 50 MB), web and magnet items share their link, items on network storages cannot be shared. Telos Video also opens web video links, magnet links and `.torrent` links or files shared to it.
+
+## What is recognised as a movie or a series
+
+A film needs a real title followed by a standalone year, such as `Title (2010).mkv` or `Title.2010.1080p.mkv`. Dates and camera or messenger names (`VID-20240305-WA0001`, `video_2024-03-05_12-30-11`, `20240305_123011`, `Screen_Recording_...`) never count. Series need `S01E02` or `1x02`. Videos in messenger, camera, screenshot or screen-recording folders (Viber, WhatsApp, Telegram, Messenger, Facebook, Instagram, Snapchat, Signal, TikTok, DCIM/Camera, Screenshots, Screen recordings, Telos recordings) are never movies or series and are listed under **Other**.

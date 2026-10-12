@@ -18,8 +18,12 @@ object TelosAppKeywords {
         "telos_music_app" to listOf("songs", "player", "audio", "tracks", "μουσική", "τραγούδια"),
         "telos_video_app" to listOf("movies", "player", "films", "βίντεο", "ταινίες"),
         "telos_photos_app" to listOf(
-            "photos", "gallery", "pictures", "images", "pdf", "documents", "office", "word", "excel",
-            "φωτογραφίες", "γκαλερί", "έγγραφα", "εικόνες",
+            "photos", "gallery", "pictures", "images", "camera roll", "albums",
+            "φωτογραφίες", "γκαλερί", "εικόνες", "άλμπουμ",
+        ),
+        "telos_viewer_app" to listOf(
+            "viewer", "documents", "docs", "pdf", "office", "word", "excel", "powerpoint", "presentations", "spreadsheets", "ebook", "epub", "reader", "files",
+            "προβολή", "έγγραφα", "αρχεία", "παρουσιάσεις", "λογιστικά φύλλα", "αναγνώστης",
         ),
         "telos_files_app" to listOf("file manager", "folders", "storage", "αρχεία", "φάκελοι"),
         "telos_calculator_app" to listOf("calc", "math", "αριθμομηχανή", "υπολογιστής"),

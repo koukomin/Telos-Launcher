@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">أرشيف RAR هذا مشفّر. يستطيع Telos قراءة أرشيفات RAR لكنه لا يستطيع فك تشفيرها. افتحه بتطبيق RAR بدلًا من ذلك.</string>
+    <string name="au23_rar_unavailable">لا يستطيع هذا الإصدار من Telos فتح أرشيفات RAR. دعم RAR مضمّن في الإصدار القياسي فقط، وليس في إصدار F-Droid.</string>
+    <string name="au23_rp_title">معاينات الملفات على وحدات التخزين السحابية والشبكية</string>
+    <string name="au23_rp_note">عند التفعيل، يقوم عرض الصور بتنزيل صور ومستندات وحدة تخزين سحابية أو شبكية إلى ذاكرة التخزين المؤقت لهذا الهاتف (حتى الحجم الذي تختاره) لرسم معاينتها. يتم تحميل البلاطات المرئية فقط. لا تتم معاينة الخزائن المشفّرة أبدًا. معطّل افتراضيًا لتوفير البيانات وحفاظًا على الخصوصية.</string>
+    <string name="au23_rp_max_size">الحد الأقصى لحجم الملف للمعاينة: %1$s</string>
+    <string name="au23_rp_max_size_hint">المقترح: 2 MB. تبقى الملفات الأكبر ببلاطة نوع ملونة.</string>
+    <string name="au23_rp_wifi_only">عبر Wi-Fi أو الشبكات غير المحدودة فقط</string>
+    <string name="au23_rp_wifi_only_desc">لا يتم تنزيل المعاينات عبر بيانات الجوال أو الاتصالات الأخرى المحدودة.</string>
+    <string name="au23_rp_clear">مسح ذاكرة المعاينة المؤقتة</string>
+    <string name="au23_rp_cache_size">ذاكرة المعاينة المؤقتة: %1$s</string>
+</resources>

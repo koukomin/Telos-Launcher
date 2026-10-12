@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au20_viewer_title">दस्तावेज़</string>
+    <string name="au20_viewer_count">%1$d फ़ाइलें</string>
+    <string name="au20_viewer_search_hint">दस्तावेज़ खोजें</string>
+    <string name="au20_viewer_cat_all">सभी</string>
+    <string name="au20_viewer_cat_documents">दस्तावेज़</string>
+    <string name="au20_viewer_cat_pdf">PDF</string>
+    <string name="au20_viewer_cat_sheets">स्प्रेडशीट</string>
+    <string name="au20_viewer_cat_slides">प्रेजेंटेशन</string>
+    <string name="au20_viewer_cat_ebooks">ई-बुक</string>
+    <string name="au20_viewer_cat_other">अन्य</string>
+    <string name="au20_viewer_recent">हाल के</string>
+    <string name="au20_viewer_clear_recent">साफ़ करें</string>
+    <string name="au20_viewer_remove_recent">हाल के से हटाएँ</string>
+    <string name="au20_viewer_open_file">फ़ाइल खोलें…</string>
+    <string name="au20_viewer_sort">क्रमबद्ध करें</string>
+    <string name="au20_viewer_sort_date">तारीख़</string>
+    <string name="au20_viewer_sort_name">नाम</string>
+    <string name="au20_viewer_sort_size">आकार</string>
+    <string name="au20_viewer_share">साझा करें</string>
+    <string name="au20_viewer_open_with">इसके साथ खोलें</string>
+    <string name="au20_viewer_info">जानकारी</string>
+    <string name="au20_viewer_info_name">नाम</string>
+    <string name="au20_viewer_info_folder">फ़ोल्डर</string>
+    <string name="au20_viewer_info_type">प्रकार</string>
+    <string name="au20_viewer_info_size">आकार</string>
+    <string name="au20_viewer_info_date">तारीख़</string>
+    <string name="au20_viewer_empty_title">कोई दस्तावेज़ नहीं मिला</string>
+    <string name="au20_viewer_empty_text">आपके फ़ोन के दस्तावेज़ यहाँ दिखते हैं। कहीं और की फ़ाइल के लिए फ़ाइल खोलें… का उपयोग करें।</string>
+    <string name="au20_viewer_access_title">अपनी फ़ाइलों तक पहुँच की अनुमति दें</string>
+    <string name="au20_viewer_access_text">आपके फ़ोन के दस्तावेज़ सूचीबद्ध करने के लिए Telos Viewer को सभी फ़ाइलों तक पहुँच चाहिए। आप इसके बिना भी एक फ़ाइल खोल सकते हैं।</string>
+    <string name="au20_viewer_access_button">पहुँच की अनुमति दें</string>
+    <string name="au20_viewer_share_failed">साझा करना विफल रहा</string>
+    <string name="au20_viewer_open_failed">कोई ऐप इस फ़ाइल को नहीं खोल सकता</string>
+</resources>

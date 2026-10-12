@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au23_rar_encrypted">Dit RAR-archief is versleuteld. Telos kan RAR-archieven lezen maar niet ontsleutelen. Open het in plaats daarvan met een RAR-app.</string>
+    <string name="au23_rar_unavailable">Deze versie van Telos kan geen RAR-archieven openen. RAR-ondersteuning zit alleen in de standaardversie, niet in de F-Droid-versie.</string>
+    <string name="au23_rp_title">Voorbeelden voor bestanden op cloud- en netwerkopslag</string>
+    <string name="au23_rp_note">Indien ingeschakeld downloadt de afbeeldingsweergave afbeeldingen en documenten van een cloud- of netwerkopslag naar de cache van deze telefoon (tot de gekozen grootte) om hun voorbeeld te tekenen. Alleen zichtbare tegels worden geladen. Versleutelde kluizen worden nooit weergegeven als voorbeeld. Standaard uit om data te besparen en voor privacy.</string>
+    <string name="au23_rp_max_size">Maximale bestandsgrootte voor voorbeelden: %1$s</string>
+    <string name="au23_rp_max_size_hint">Voorgesteld: 2 MB. Grotere bestanden houden de gekleurde typetegel.</string>
+    <string name="au23_rp_wifi_only">Alleen via Wi-Fi of niet-getarifeerde netwerken</string>
+    <string name="au23_rp_wifi_only_desc">Geen voorbeelden downloaden via mobiele data of andere getarifeerde verbindingen.</string>
+    <string name="au23_rp_clear">Voorbeeldcache wissen</string>
+    <string name="au23_rp_cache_size">Voorbeeldcache: %1$s</string>
+</resources>

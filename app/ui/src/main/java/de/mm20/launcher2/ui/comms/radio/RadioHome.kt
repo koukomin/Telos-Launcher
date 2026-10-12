@@ -8,9 +8,17 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.snap
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.unit.Dp
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,7 +37,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -69,7 +76,7 @@ enum class RadioChip { All, Recent, Mine, Browser }
 
 /** Average colour of a station logo, used to tint the card of the playing station. Null when unavailable. */
 @Composable
-private fun rememberLogoColor(url: String, enabled: Boolean): Color? {
+internal fun rememberLogoColor(url: String, enabled: Boolean): Color? {
     val context = LocalContext.current
     var color by remember(url) { mutableStateOf<Color?>(null) }
     LaunchedEffect(url, enabled) {
@@ -126,9 +133,9 @@ fun RadioEqualizer(animate: Boolean, color: Color, modifier: Modifier = Modifier
 }
 
 @Composable
-private fun Logo(station: RadioStation, modifier: Modifier) {
+internal fun RadioLogo(station: RadioStation, modifier: Modifier, corner: Dp = 20.dp, pad: Dp = 12.dp) {
     Box(
-        modifier.clip(RoundedCornerShape(16.dp)).background(MaterialTheme.colorScheme.surfaceVariant),
+        modifier.clip(RoundedCornerShape(corner)).background(MaterialTheme.colorScheme.surfaceContainerHighest),
         contentAlignment = Alignment.Center,
     ) {
         if (station.faviconUrl.isNotBlank()) {
@@ -136,7 +143,7 @@ private fun Logo(station: RadioStation, modifier: Modifier) {
                 model = station.faviconUrl,
                 contentDescription = null,
                 contentScale = ContentScale.Fit,
-                modifier = Modifier.fillMaxWidth().aspectRatio(1f).padding(12.dp),
+                modifier = Modifier.fillMaxSize().padding(pad),
             )
         } else {
             Icon(painterResource(R.drawable.music_note_24px), null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(40.dp))
@@ -144,7 +151,7 @@ private fun Logo(station: RadioStation, modifier: Modifier) {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
+/** Station card: soft logo-tinted gradient, large logo, play button, equalizer while playing */
 @Composable
 fun RadioStationCard(
     station: RadioStation,
@@ -156,27 +163,31 @@ fun RadioStationCard(
     val playingId by player.stationId.collectAsStateWithLifecycle()
     val playWhenReady by player.playWhenReady.collectAsStateWithLifecycle()
     val playing = playingId == station.id && playWhenReady
-    val logoColor = rememberLogoColor(station.faviconUrl, playing)
-    val base = MaterialTheme.colorScheme.surfaceVariant
-    val bg = if (playing && logoColor != null) logoColor.copy(alpha = 0.28f).compositeOver(base) else base.copy(alpha = 0.5f)
+    val logoColor = rememberLogoColor(station.faviconUrl, true)
+    val tint by animateColorAsState(
+        (logoColor ?: MaterialTheme.colorScheme.primary).copy(alpha = if (playing) 0.42f else 0.24f),
+        animationSpec = if (reduce) snap() else tween(300),
+        label = "cardTint",
+    )
+    val low = MaterialTheme.colorScheme.surfaceContainerLow
     Column(
         modifier
-            .clip(RoundedCornerShape(20.dp))
-            .background(bg)
-            .combinedClickable(onClick = { player.toggleStation(station) }, onLongClick = onLongClick)
-            .padding(10.dp),
+            .pressScale(reduce, onClick = { player.toggleStation(station) }, onLongClick = onLongClick)
+            .clip(RoundedCornerShape(24.dp))
+            .background(Brush.verticalGradient(listOf(tint.compositeOver(low), low)))
+            .padding(12.dp),
     ) {
         Box {
-            Logo(station, Modifier.fillMaxWidth().aspectRatio(1f))
+            RadioLogo(station, Modifier.fillMaxWidth().aspectRatio(1f), corner = 18.dp)
             RadioPlayButton(station, player, Modifier.align(Alignment.BottomEnd).padding(6.dp))
         }
-        Row(Modifier.padding(top = 8.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+        Row(Modifier.padding(top = 10.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             if (playing) RadioEqualizer(!reduce, MaterialTheme.colorScheme.primary)
-            Text(station.name, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(station.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
         }
         Text(
             radioStationSubtitle(station),
-            style = MaterialTheme.typography.bodySmall,
+            style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -184,7 +195,35 @@ fun RadioStationCard(
     }
 }
 
-/** Home of the collection: filter chips, a shelf of recently played stations and a two column grid */
+/** Pill filter chip with an animated selection colour */
+@Composable
+private fun RadioPill(selected: Boolean, label: String, reduce: Boolean, onClick: () -> Unit) {
+    val haptics = LocalHapticFeedback.current
+    val bg by animateColorAsState(
+        if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceContainerHigh,
+        animationSpec = if (reduce) snap() else tween(200), label = "pillBg",
+    )
+    val fg by animateColorAsState(
+        if (selected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
+        animationSpec = if (reduce) snap() else tween(200), label = "pillFg",
+    )
+    Box(
+        Modifier
+            .heightIn(min = 40.dp)
+            .clip(CircleShape)
+            .background(bg)
+            .clickable {
+                haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                onClick()
+            }
+            .padding(horizontal = 18.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(label, style = MaterialTheme.typography.labelLarge, color = fg, maxLines = 1)
+    }
+}
+
+/** Home of the collection: pill chips, a shelf of recently played stations and a two column grid */
 @Composable
 fun RadioHome(
     favorites: List<RadioStation>,
@@ -195,6 +234,7 @@ fun RadioHome(
     header: @Composable () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val reduce by koinInject<PerformanceSettings>().reduceAnimations.collectAsState(false)
     val recent = remember(favorites) {
         favorites.filter { it.lastPlayedAt > 0 }.sortedByDescending { it.lastPlayedAt }.take(10)
     }
@@ -208,7 +248,7 @@ fun RadioHome(
     }
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        contentPadding = PaddingValues(16.dp),
+        contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 8.dp, bottom = 24.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         modifier = modifier,
@@ -217,39 +257,41 @@ fun RadioHome(
         item(span = { GridItemSpan(maxLineSpan) }) {
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 items(RadioChip.values().toList()) { c ->
-                    FilterChip(
+                    RadioPill(
                         selected = chip == c,
+                        reduce = reduce,
                         onClick = { onChip(c) },
-                        label = {
-                            Text(
-                                stringResource(
-                                    when (c) {
-                                        RadioChip.All -> R.string.au10_radio_chip_all
-                                        RadioChip.Recent -> R.string.au10_radio_chip_recent
-                                        RadioChip.Mine -> R.string.au10_radio_chip_mine
-                                        RadioChip.Browser -> R.string.au10_radio_chip_browser
-                                    }
-                                )
-                            )
-                        },
+                        label = stringResource(
+                            when (c) {
+                                RadioChip.All -> R.string.au10_radio_chip_all
+                                RadioChip.Recent -> R.string.au10_radio_chip_recent
+                                RadioChip.Mine -> R.string.au10_radio_chip_mine
+                                RadioChip.Browser -> R.string.au10_radio_chip_browser
+                            }
+                        ),
                     )
                 }
             }
         }
         if (chip == RadioChip.All && recent.isNotEmpty()) {
             item(span = { GridItemSpan(maxLineSpan) }) {
-                Column {
-                    Text(stringResource(R.string.au10_radio_recent_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
+                Column(Modifier.padding(top = 12.dp)) {
+                    Text(
+                        stringResource(R.string.au10_radio_recent_title),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier.padding(bottom = 12.dp),
+                    )
                     LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                         items(recent, key = { it.id }) { s ->
-                            RadioStationCard(s, player, { onLongClick(s) }, Modifier.width(140.dp))
+                            RadioStationCard(s, player, { onLongClick(s) }, Modifier.width(156.dp))
                         }
                     }
                 }
             }
         }
         items(shown, key = { it.id }) { s ->
-            RadioStationCard(s, player, { onLongClick(s) })
+            RadioStationCard(s, player, { onLongClick(s) }, if (reduce) Modifier else Modifier.animateItem())
         }
     }
 }
