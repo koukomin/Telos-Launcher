@@ -117,3 +117,9 @@ What is not there: Stremio's own streaming server (torrents use the torrent engi
 settings pages (add-ons that need configuration first must be configured in a browser, then added here with their address), the
 watch position of an item (Stremio shows a title in continue watching when its offset is above zero; Telos writes the smallest
 value and does not know the real position of a stream), and Android TV controls. The local add-on list, library and history are not part of the Telos backup.
+
+### Greek supplemental channels / Πρόσθετα ελληνικά κανάλια
+
+The supplemental greektvm3u source uses its current `main` branch. TV Refresh checks Free-TV and greektvm3u alongside the main catalog; temporarily offline extra channels remain listed for later retry. Sources are fetched on the device and their live availability or geographic restrictions still apply.
+
+Η «Ανανέωση» ελέγχει και τις πρόσθετες λίστες Free-TV και greektvm3u. Τα πρόσθετα κανάλια που είναι προσωρινά εκτός σύνδεσης παραμένουν στη λίστα για νέα δοκιμή. Η διαθεσιμότητα και τυχόν γεωγραφικοί περιορισμοί εξαρτώνται από την πηγή.

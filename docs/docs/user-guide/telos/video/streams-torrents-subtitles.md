@@ -224,3 +224,9 @@ refreshed automatically and stored encrypted.
 | "Search failed" | Check the key and your network. The OpenSubtitles daily limit may also be reached |
 | Trakt says "Sign in failed" | Check the client id and secret, and that the redirect address is set |
 | Posters missing | Wait, or add a TMDB key. Check that the file name has the title |
+
+## Torrent connection details / Πληροφορίες σύνδεσης torrent
+
+While finding metadata/peers and while buffering, a compact connection card shows current peers, seeds, download speed, responding/error trackers, DHT nodes and elapsed time. These are live torrent counters, not a measurement of the internet connection’s maximum speed. The same player is used by Stremio Fork.
+
+Κατά την αναζήτηση peers και την προσωρινή αποθήκευση εμφανίζεται κάρτα με peers, seeds, ταχύτητα λήψης, trackers που απαντούν ή παρουσιάζουν σφάλματα, κόμβους DHT και χρόνο αναμονής. Οι τιμές αφορούν το συγκεκριμένο torrent και δεν είναι μέτρηση της μέγιστης ταχύτητας της σύνδεσης. Ισχύει και για το Stremio Fork.

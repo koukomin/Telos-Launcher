@@ -82,6 +82,14 @@ from Telos Store.
 | **Telos Store** | Install and update apps from GitHub, F-Droid and more, manages the Telos apps | [Store](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/store/) |
 | **Smart Freeze** | Freeze or hide apps through Shizuku, root, device owner or Island (a launcher feature in Settings, not a Telos app) | [Smart Freeze](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/freeze/) |
 
+### Recent Media and Store improvements
+
+- Greek TV supplements use the current greektvm3u `main` playlist alongside Free-TV. Refresh checks both supplemental lists; temporarily offline extra channels remain visible.
+- Torrent startup and buffering show live peers, seeds, download speed, responding/error trackers, DHT nodes and elapsed time, for both Video and Stremio Fork.
+- Store downloads stream APKs to disk with progress/speed, pause/resume and automatic retry after a network interruption. Validated HTTP Range resumes partial files; servers without safe range support restart the transfer. Partial files survive cancellation and can be resumed by requesting the download again.
+- Store filters are in a compact button/dialog. Update checks discover supported non-Play installs using known recommended sources, F-Droid and IzzyOnDroid. Discovered apps start with automatic updates off; individual/bulk Update offers opt-in for the selected apps. Silent automatic installation still requires Shizuku or root.
+- Large HTTP responses are no longer buffered in memory during APK downloads. Source text has a size limit; custom F-Droid indexes are parsed as a stream.
+
 ### How the built-in apps work
 
 - **They look like normal apps.** Each has an icon in the app grid and shows up in search. Apps opened separately also have their own name and icon in Android Recents, so Files and Media can be switched independently; reopening an app reuses its card. Apps embedded as launcher pages stay in the launcher.

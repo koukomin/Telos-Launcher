@@ -46,7 +46,7 @@ Open an app in the Store to change how it is tracked.
 | Exclude from background updates | off | The app is only checked and updated when you ask |
 | File name filter | empty | A regular expression that picks the right APK from the release, for example `arm64` or `universal`. Empty means the best match for this phone |
 | Include pre-releases | off | Pre-releases are considered (GitHub, GitLab and Gitea sources) |
-| Category | empty | A label for grouping. Every category becomes a filter chip |
+| Category | empty | A label for grouping. Categories are available inside the Filters dialog |
 | Note | empty | A free text note |
 | Rename | | Changes the name in the list |
 
@@ -94,7 +94,7 @@ hours. Tapping it opens the Store. Notifications are not counted as announced wh
 
 ## Install and uninstall
 
-The APK is downloaded to the app's cache and then installed.
+The APK is streamed directly to private app storage and then installed. The list and app page show progress and speed, with Pause/Resume. A network interruption is retried automatically. Partial files remain after a cancelled task or process restart: request the same release again to resume it. HTTP Range and a server validator protect resumption; if the server cannot safely resume, the download restarts. APKs are not loaded as a single byte array in memory.
 
 | Backend | Behavior |
 | --- | --- |
@@ -115,7 +115,21 @@ fall through to the prompt, so you are not surprised by a second install dialog.
 ### Silent updates
 
 Silent installs happen in two cases: you install from the Store while Shizuku or root is allowed, or the background
-check runs with **Install updates automatically** on. Updates of apps set to Track only are never installed.
+check runs with automatic updates enabled globally or for that app. An explicit per-app choice overrides the global option. Updates of apps set to Track only are never installed.
+
+## Discovery and update consent
+
+Opening the Store starts an update check. Update checks also discover non-system apps installed outside Google Play (including installs with no known installer), using a known recommended source, F-Droid, then IzzyOnDroid. Unsupported apps are left alone. Discovery of a package is retried at most once per day. These apps appear in the normal list and Updates filter when a newer version exists; automatic updates start **off**, even if the global option is on.
+
+Choosing **Update** or **Update all** offers **Enable and update** or **Update this time only** when any selected app has automatic updates off. Enable applies only to the selected apps. You can switch it off again in each app’s settings. Android still requires a compatible package and signing key. Without Shizuku/root silent-install permission, automatic updates remain notifications rather than silently installing.
+
+The **Filters** button contains app status and category choices in a scrollable dialog, so they fit on narrow screens.
+
+### Ελληνικά
+
+Το Store εντοπίζει υποστηριζόμενες εφαρμογές από άλλα stores, εκτός του Google Play, και εμφανίζει διαθέσιμες αναβαθμίσεις. Η αυτόματη αναβάθμιση παραμένει αρχικά κλειστή για τις εφαρμογές που εντοπίστηκαν. Στην «Ενημέρωση» ή «Ενημέρωση όλων» μπορείς να επιλέξεις «Ενεργοποίηση και ενημέρωση» για τις επιλεγμένες εφαρμογές ή «Ενημέρωση μόνο τώρα». Η αυτόματη εγκατάσταση χωρίς επιβεβαίωση απαιτεί κατάλληλη άδεια Shizuku ή root.
+
+Οι λήψεις δείχνουν ταχύτητα και πρόοδο, με «Παύση» και «Συνέχιση». Μετά από διακοπή δικτύου επαναλαμβάνονται αυτόματα. Η συνέχιση από το ίδιο σημείο εξαρτάται από την υποστήριξη του server· διαφορετικά η λήψη ξεκινά ξανά με ασφάλεια. Τα «Φίλτρα» ανοίγουν σε παράθυρο που χωρά και σε μικρές οθόνες.
 
 ## Add installed apps
 

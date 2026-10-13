@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.shizuku.provider)
     implementation(libs.hiddenapibypass)
 
+    implementation(project(":core:i18n"))
     implementation(project(":core:ktx"))
     implementation(project(":core:base"))
     implementation(project(":core:crashreporter"))

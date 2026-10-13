@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_torrent_connecting">Connecting to the torrent</string>
+    <string name="telos_torrent_peers">Peers: %1$d · Seeds: %2$d</string>
+    <string name="telos_torrent_speed">Download: %1$d KiB/s</string>
+    <string name="telos_torrent_trackers">Trackers responding: %1$d / %2$d · Errors: %3$d</string>
+    <string name="telos_torrent_dht">DHT nodes: %1$d · Elapsed: %2$d s</string>
+    <string name="telos_store_filters">Filters</string>
+    <string name="telos_store_paused">Download paused</string>
+    <string name="telos_store_waiting_network">Waiting for connection · Will resume automatically</string>
+    <string name="telos_store_transfer">%1$d KiB/s · %2$d MiB downloaded</string>
+    <string name="telos_store_resume">Resume</string>
+    <string name="telos_store_pause">Pause</string>
+    <string name="telos_store_auto_title">Automatic updates</string>
+    <string name="telos_store_auto_explanation">Enable automatic updates for the selected apps? Future updates install automatically when Shizuku or root permits silent installation. Otherwise you will receive an update notification. You can change this for each app in its settings.</string>
+    <string name="telos_store_auto_enable">Enable and update</string>
+    <string name="telos_store_update_once">Update this time only</string>
+    <string name="telos_store_download_failed">The APK could not be downloaded. Try again to resume the download.</string>
+</resources>

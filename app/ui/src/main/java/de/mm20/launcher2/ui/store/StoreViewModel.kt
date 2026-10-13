@@ -84,6 +84,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
     private fun str(id: Int, vararg args: Any): String = context.getString(id, *args)
     private val repository: StoreRepository by inject()
     private val actionHandler: StoreActionHandler by inject()
+    private val downloader: de.mm20.launcher2.store.installer.Downloader by inject()
     private val tools: StoreTools by inject()
     private val updater: StoreUpdater by inject()
     val options: StoreOptions by inject()
@@ -232,19 +233,46 @@ class StoreViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    val pendingUpdates = MutableStateFlow<List<StoreItem>>(emptyList())
+    private val activeInstalls = mutableSetOf<String>()
+
     fun updateAll() {
-        viewModelScope.launch {
-            rows.value.filter { it.updateAvailable && !it.options.trackOnly }.forEach { row ->
-                installNow(row.item)
-            }
-        }
+        requestUpdates(rows.value.filter { it.updateAvailable && !it.options.trackOnly }.map { it.item })
+    }
+
+    private fun requestUpdates(targets: List<StoreItem>) {
+        if (targets.isEmpty()) return
+        if (targets.any { !(options.item(it.id).autoUpdate ?: global.value.autoInstall) }) {
+            pendingUpdates.value = targets
+        } else performUpdates(targets)
+    }
+
+    fun confirmUpdates(automatic: Boolean) {
+        val targets = pendingUpdates.value
+        pendingUpdates.value = emptyList()
+        if (automatic) targets.forEach { item -> options.update(item.id) { it.copy(autoUpdate = true) } }
+        performUpdates(targets)
+    }
+
+    fun dismissUpdates() { pendingUpdates.value = emptyList() }
+    private fun performUpdates(targets: List<StoreItem>) {
+        viewModelScope.launch { targets.forEach { installNow(it) } }
     }
 
     /**
      * Installs/updates [item], or - if it's already installed and up to date - launches it. For apps
      * that are only tracked, the source page opens instead (they are never installed from here).
      */
+    fun resumeDownload(item: StoreItem) {
+        downloader.resume(item.id)
+        viewModelScope.launch { installNow(item) }
+    }
+
     fun onAppActionClicked(item: StoreItem) {
+        if (downloader.progress.value[item.id]?.status == de.mm20.launcher2.store.installer.StoreDownloadStatus.Paused) {
+            resumeDownload(item)
+            return
+        }
         val o = options.item(item.id)
         if (item.installedVersionCode != null && !item.hasUpdate) {
             openApp(item.packageName)
@@ -254,13 +282,16 @@ class StoreViewModel : ViewModel(), KoinComponent {
             openUrl(StoreUrlParser.toUrl(item.source))
             return
         }
-        viewModelScope.launch { installNow(item) }
+        if (item.installedVersionCode != null && item.hasUpdate) requestUpdates(listOf(item))
+        else viewModelScope.launch { installNow(item) }
     }
 
     private suspend fun installNow(item: StoreItem) {
+        if (!activeInstalls.add(item.id)) return
+        try {
         setState(item.id, StoreInstallUiState.Downloading)
         val result = try {
-            actionHandler.install(item)
+            actionHandler.install(item) { setState(item.id, StoreInstallUiState.Installing) }
         } catch (e: kotlinx.coroutines.CancellationException) {
             setState(item.id, StoreInstallUiState.Idle)
             throw e
@@ -276,6 +307,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
                 _message.value = "${item.displayName}: ${action.reason}"
             }
         }
+        } finally { activeInstalls.remove(item.id) }
     }
 
     fun uninstall(item: StoreItem) = actionHandler.uninstall(item.packageName)
@@ -374,6 +406,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
                     displayName = app.label,
                     source = source,
                 )
+                options.update(item.id) { it.copy(autoUpdate = false) }
                 repository.insertItem(item)
                 found++
             }

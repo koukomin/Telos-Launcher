@@ -38,7 +38,7 @@ class StoreActionHandler(
     private val fetcherRegistry: StoreFetcherRegistry,
     private val repository: de.mm20.launcher2.store.repository.StoreRepository,
 ) {
-    suspend fun install(item: StoreItem): StoreAction {
+    suspend fun install(item: StoreItem, onInstalling: () -> Unit = {}): StoreAction {
         val source = item.source
         if (source is AppSource.AffiliatePlayStore) {
             return launchPlayStore(source)
@@ -48,7 +48,7 @@ class StoreActionHandler(
             ?: return StoreAction.Failed("Could not resolve a release for ${item.packageName}")
 
         val fileName = "${item.packageName}-${release.version}.apk"
-        val download = downloader.download(release.downloadUrl, fileName)
+        val download = downloader.download(release.downloadUrl, fileName, item.id)
         val apkFile = when (download) {
             is DownloadResult.Success -> download.file
             is DownloadResult.Failed -> {
@@ -69,6 +69,7 @@ class StoreActionHandler(
         if (detected != null && !known) repository.updatePackageName(item.id, detected)
         val packageName = detected ?: item.packageName
 
+        onInstalling()
         return when (val result = installer.install(apkFile, packageName)) {
             is InstallResult.Success -> StoreAction.Installed
             is InstallResult.Pending -> StoreAction.Installing

@@ -21,6 +21,8 @@ data class ItemOptions(
     /** A label to group apps */
     val category: String = "",
     val note: String = "",
+    /** null follows the existing global setting; discovered apps explicitly start with false. */
+    val autoUpdate: Boolean? = null,
 )
 
 /** Settings of the Store as a whole. */

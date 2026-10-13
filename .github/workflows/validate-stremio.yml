@@ -4,6 +4,9 @@ on:
     paths:
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/media/**'
       - 'services/comms/src/**'
+      - 'services/store/src/**'
+      - 'data/store/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/store/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/settings/**'
       - 'app/ui/src/main/AndroidManifest.xml'
       - 'core/base/src/**'
@@ -24,9 +27,11 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: chmod +x gradlew
       - name: Test Stremio protocol and watched state
-        run: ./gradlew :services:comms:testDebugUnitTest --tests 'de.mm20.launcher2.comms.stremio.*' --stacktrace
+        run: ./gradlew :services:comms:testDebugUnitTest --tests 'de.mm20.launcher2.comms.stremio.*' --tests 'de.mm20.launcher2.comms.tv.*' --stacktrace
       - name: Test virtual app task identities
         run: ./gradlew :core:base:testDebugUnitTest --tests 'de.mm20.launcher2.applock.VirtualAppTaskTest' --stacktrace
+      - name: Test Store download and update policies
+        run: ./gradlew :services:store:testDebugUnitTest --stacktrace
       - name: Build debug APK
         run: ./gradlew :app:app:assembleDefaultDebug --stacktrace
       - uses: actions/upload-artifact@v4

@@ -113,6 +113,7 @@ fun VideoPlayerScreen(
                     modifier = Modifier.padding(top = 16.dp),
                 )
                 if (error == null && torrent.stage == TorrentState.Stage.FindingPeers) {
+                    TorrentConnectionCard(torrent)
                     Text(stringResource(R.string.hc_this_can_take_a_minute), color = Color(0xB3FFFFFF), style = MaterialTheme.typography.bodySmall)
                 }
                 TextButton(onClick = onClose, modifier = Modifier.padding(top = 16.dp)) {
@@ -123,6 +124,20 @@ fun VideoPlayerScreen(
         return
     }
     PlayerContent(r, torrentSource != null, torrent, onClose, onPlayingChanged, inPictureInPicture, externalSubtitles)
+}
+
+@Composable
+private fun TorrentConnectionCard(torrent: TorrentState, modifier: Modifier = Modifier) {
+    Column(
+        modifier.background(Color(0xCC17202B), androidx.compose.foundation.shape.RoundedCornerShape(20.dp)).padding(20.dp),
+        verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(8.dp),
+    ) {
+        Text(stringResource(R.string.telos_torrent_connecting), color = Color.White, style = MaterialTheme.typography.titleMedium)
+        Text(stringResource(R.string.telos_torrent_peers, torrent.peers, torrent.seeds), color = Color.White)
+        Text(stringResource(R.string.telos_torrent_speed, torrent.downloadBytesPerSecond / 1024), color = Color.White)
+        Text(stringResource(R.string.telos_torrent_trackers, torrent.workingTrackers, torrent.trackers, torrent.failedTrackers), color = Color(0xCCFFFFFF), style = MaterialTheme.typography.bodySmall)
+        Text(stringResource(R.string.telos_torrent_dht, torrent.dhtNodes, torrent.elapsedSeconds), color = Color(0xCCFFFFFF), style = MaterialTheme.typography.bodySmall)
+    }
 }
 
 private data class ResolvedMedia(
@@ -313,6 +328,7 @@ private fun PlayerContent(
     LifecycleEventEffect(Lifecycle.Event.ON_STOP) { player.pause(); videoState("stopped") }
 
     var playbackError by remember { mutableStateOf(false) }
+    var playbackStage by remember(player) { mutableStateOf(player.playbackState) }
     DisposableEffect(player) {
         val errorListener = object : Player.Listener {
             override fun onPlayerError(error: androidx.media3.common.PlaybackException) {
@@ -320,6 +336,7 @@ private fun PlayerContent(
             }
 
             override fun onPlaybackStateChanged(playbackState: Int) {
+                playbackStage = playbackState
                 if (playbackState == Player.STATE_READY) playbackError = false
             }
 
@@ -593,6 +610,9 @@ private fun PlayerContent(
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.align(Alignment.Center).background(Color(0x99000000), androidx.compose.foundation.shape.RoundedCornerShape(12.dp)).padding(horizontal = 20.dp, vertical = 10.dp),
             )
+        }
+        if (isTorrent && !inPictureInPicture && !playbackError && playbackStage == Player.STATE_BUFFERING) {
+            TorrentConnectionCard(torrent, Modifier.align(Alignment.Center).padding(horizontal = 24.dp))
         }
         if (isTorrent && !inPictureInPicture && (controlsVisible || torrent.downloadBytesPerSecond < 50_000)) {
             Text(

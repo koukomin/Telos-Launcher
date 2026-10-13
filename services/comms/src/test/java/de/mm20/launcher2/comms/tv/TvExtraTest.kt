@@ -77,12 +77,13 @@ class TvExtraTest {
         assertEquals(base.size + 1, m.size)
     }
 
-    @Test fun extraChannelHiddenWhenAllStreamsBad() {
+    @Test fun offlineExtraChannelRemainsAvailableForRetry() {
         val base = TvIndex(listOf(ch("A.gr", "Alpha", "https://i.example/a.m3u8")))
         val src = TvExtraMerge.Source("greektvm3u", listOf(TvM3uEntry("Zeta Local", "https://g.example/z.m3u8", "", "")))
         val bad = mapOf("https://g.example/z.m3u8" to 1000L)
         val m = TvExtraMerge.merge(base, TvExtraMerge.Extras(listOf(src)), bad, 2000L)
-        assertEquals(1, m.size)
+        assertEquals(2, m.size)
+        assertEquals(1, m.all.first { it.name == "Zeta Local" }.streams.size)
         assertEquals(2, TvExtraMerge.merge(base, TvExtraMerge.Extras(listOf(src)), emptyMap(), 2000L).size)
     }
 
