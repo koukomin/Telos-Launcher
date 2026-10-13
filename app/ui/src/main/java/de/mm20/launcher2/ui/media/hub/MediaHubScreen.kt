@@ -239,6 +239,16 @@ fun MediaHubScreen(initialSpace: String = "") {
                 }
             }
 
+            current?.let { selectedSpace ->
+                Text(
+                    stringResource(selectedSpace.label),
+                    style = MaterialTheme.typography.headlineLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = accent,
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp),
+                )
+            }
+
             Box(Modifier.weight(1f).fillMaxWidth()) {
                 AnimatedContent(
                     targetState = current,
@@ -305,8 +315,7 @@ private fun SpacePill(
     reduceAnimations: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    // only the selected segment shows its label, so that all four icons always fit
-    val compact = true
+    // The selected space has a full-size title below the icon pill.
     val currentSpaces by androidx.compose.runtime.rememberUpdatedState(spaces)
     val currentOnReorder by androidx.compose.runtime.rememberUpdatedState(onReorder)
     var dragItem by remember { mutableStateOf<MediaSpace?>(null) }
@@ -348,10 +357,9 @@ private fun SpacePill(
                         if (isSelected) scheme.onPrimaryContainer else scheme.onSurfaceVariant,
                         label = "mediaHubSegmentContent",
                     )
-                    val showLabel = isSelected || !compact
                     val label = stringResource(item.label)
                     val segmentWeight by animateFloatAsState(
-                        if (isSelected) 1.7f else 1f, if (reduceAnimations) snap() else spring(0.8f, 400f), label = "mediaHubSegmentWeight",
+                        1f, if (reduceAnimations) snap() else spring(0.8f, 400f), label = "mediaHubSegmentWeight",
                     )
                     Row(
                         modifier = Modifier
@@ -408,17 +416,7 @@ private fun SpacePill(
                             tint = content,
                             modifier = Modifier.size(18.dp),
                         )
-                        if (showLabel) {
-                            Spacer(Modifier.width(6.dp))
-                            Text(
-                                label,
-                                style = MaterialTheme.typography.labelLarge,
-                                fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Medium,
-                                color = content,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                            )
-                        }
+
                     }
                 }
             }

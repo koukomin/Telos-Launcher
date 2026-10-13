@@ -68,7 +68,7 @@ object Trakt {
     }
 
     fun signOut(context: Context) {
-        prefs(context).edit().remove("access").remove("refresh").remove("expires").remove("watched").remove("queue").apply()
+        prefs(context).edit().remove("access").remove("refresh").remove("expires").remove("watched").remove("watched_at").remove("queue").apply()
         watchedCache = null
     }
 
@@ -391,10 +391,17 @@ object Trakt {
         else watchedKeyMovie(parsed.title, parsed.year) in set || watchedKeyMovie(parsed.title, null) in set
     }
 
+    /** Exact provider IDs avoid confusing different titles with the same name. */
+    fun isWatchedId(context: Context, imdb: String, season: Int? = null, episode: Int? = null): Boolean {
+        if (prefs(context).getString("access", "").isNullOrBlank()) return false
+        val key = if (season != null && episode != null) "imdb:$imdb:$season:$episode" else "imdb:$imdb"
+        return key in cachedWatched(context)
+    }
+
     /** Downloads what the user already watched, so it can be marked in the library. At most once an hour. */
     suspend fun refreshWatched(context: Context, force: Boolean = false) = withContext(Dispatchers.IO) {
         val l = login(context)
-        if (!l.enabled || !l.connected) return@withContext
+        if (!l.connected) return@withContext
         val last = prefs(context).getLong("watched_at", 0)
         if (!force && System.currentTimeMillis() - last < 3_600_000) return@withContext
         val token = token(context) ?: return@withContext
@@ -405,6 +412,7 @@ object Trakt {
                 val a = JSONArray(movies.body)
                 for (i in 0 until a.length()) {
                     val m = a.getJSONObject(i).optJSONObject("movie") ?: continue
+                    m.optJSONObject("ids")?.optString("imdb")?.takeIf { it.isNotBlank() }?.let { set += "imdb:$it" }
                     val title = m.optString("title")
                     set += watchedKeyMovie(title, m.optInt("year").takeIf { it > 0 })
                     set += watchedKeyMovie(title, null)
@@ -416,16 +424,21 @@ object Trakt {
                 for (i in 0 until a.length()) {
                     val o = a.getJSONObject(i)
                     val show = o.optJSONObject("show")?.optString("title") ?: continue
+                    val imdb = o.optJSONObject("show")?.optJSONObject("ids")?.optString("imdb")?.takeIf { it.isNotBlank() }
                     val seasons = o.optJSONArray("seasons") ?: continue
                     for (s in 0 until seasons.length()) {
                         val season = seasons.getJSONObject(s)
                         val sn = season.optInt("number")
                         val eps = season.optJSONArray("episodes") ?: continue
-                        for (e in 0 until eps.length()) set += watchedKeyEpisode(show, sn, eps.getJSONObject(e).optInt("number"))
+                        for (e in 0 until eps.length()) {
+                            val number = eps.getJSONObject(e).optInt("number")
+                            set += watchedKeyEpisode(show, sn, number)
+                            if (imdb != null) set += "imdb:$imdb:$sn:$number"
+                        }
                     }
                 }
             }
-            if (movies.code == 200 || full.code == 200) {
+            if (movies.code == 200 && full.code == 200) {
                 prefs(context).edit().putStringSet("watched", set).putLong("watched_at", System.currentTimeMillis()).apply()
                 watchedCache = set
             }

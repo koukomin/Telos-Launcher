@@ -39,4 +39,6 @@
     <string name="au22_stremio_directory">Browse add-ons</string>
     <string name="au22_stremio_directory_hint">Add-ons listed by your installed add-ons and by Stremio\'s public list. They are made by others and are not checked by Telos or Stremio.</string>
     <string name="au22_stremio_directory_empty">No add-ons found</string>
+    <string name="au22_stremio_fork_intro">Stremio Fork brings your Stremio account into Telos Media: browse catalogs, movies and series, use your add-ons and library, and see watched marks from Stremio and your connected Trakt account. This is an independent, unofficial client and is not affiliated with Stremio. Sign in below to get started.</string>
+    <string name="au22_stremio_watched_sources">✓ Watched · %s</string>
 </resources>
