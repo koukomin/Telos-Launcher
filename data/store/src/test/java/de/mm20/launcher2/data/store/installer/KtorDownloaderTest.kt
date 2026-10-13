@@ -20,6 +20,7 @@ class KtorDownloaderTest {
     private class Fixture(val size: Long, val failFirst: Boolean = false, val ignoreRange: Boolean = false, val slow: Boolean = false) : AutoCloseable {
         val dir = Files.createTempDirectory("telos-apk-test").toFile()
         val requests = CopyOnWriteArrayList<Long>()
+        val breakConnection = CompletableDeferred<Unit>()
         val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
         val client = HttpClient(MockEngine { request ->
             val requested = request.headers["Range"]?.removePrefix("bytes=")?.removeSuffix("-")?.toLong() ?: 0
@@ -33,7 +34,10 @@ class KtorDownloaderTest {
                     var position = start
                     while (position < size) {
                         if (slow || failFirst && first) delay(120)
-                        if (failFirst && first && position >= 384 * 1024) throw IOException("Connection lost")
+                        if (failFirst && first && position >= 384 * 1024) {
+                            breakConnection.await()
+                            throw IOException("Connection lost")
+                        }
                         val count = minOf(buffer.size.toLong(), size - position).toInt()
                         body.writeFully(buffer, 0, count)
                         position += count
@@ -72,26 +76,32 @@ class KtorDownloaderTest {
             f.downloader.resume("pause")
             val result = withTimeout(10_000) { job.await() } as DownloadResult.Success
             assertEquals(f.size, result.file.length())
-            assertTrue(f.requests.any { it > 0 })
-            assertTrue(result.file.readBytes().all { it == 42.toByte() })
+            assertTrue("Expected a Range request; requests=${f.requests}", f.requests.any { it > 0 })
+            assertTrue("Unexpected bytes in resumed APK", result.file.readBytes().all { it == 42.toByte() })
         }
     }
 
     @Test fun interruptedNetworkAutomaticallyResumesWithoutDuplicatingBytes() = runBlocking {
         Fixture(1024L * 1024, failFirst = true).use { f ->
-            val result = withTimeout(15_000) { f.downloader.download("https://example.test/app.apk", "retry.apk", "retry") } as DownloadResult.Success
+            val job = async { f.downloader.download("https://example.test/app.apk", "retry.apk", "retry") }
+            withTimeout(10_000) { f.downloader.progress.first { (it["retry"]?.bytes ?: 0) > 0 } }
+            f.breakConnection.complete(Unit)
+            val result = withTimeout(15_000) { job.await() } as DownloadResult.Success
             assertEquals(f.size, result.file.length())
-            assertTrue(f.requests.any { it > 0 })
-            assertTrue(result.file.readBytes().all { it == 42.toByte() })
+            assertTrue("Expected a Range request; requests=${f.requests}", f.requests.any { it > 0 })
+            assertTrue("Unexpected bytes in resumed APK", result.file.readBytes().all { it == 42.toByte() })
         }
     }
 
     @Test fun aServerWithoutRangeSupportRestartsSafely() = runBlocking {
         Fixture(1024L * 1024, failFirst = true, ignoreRange = true).use { f ->
-            val result = withTimeout(15_000) { f.downloader.download("https://example.test/app.apk", "restart.apk", "restart") } as DownloadResult.Success
+            val job = async { f.downloader.download("https://example.test/app.apk", "restart.apk", "restart") }
+            withTimeout(10_000) { f.downloader.progress.first { (it["restart"]?.bytes ?: 0) > 0 } }
+            f.breakConnection.complete(Unit)
+            val result = withTimeout(15_000) { job.await() } as DownloadResult.Success
             assertEquals(f.size, result.file.length())
-            assertTrue(f.requests.any { it > 0 })
-            assertTrue(result.file.readBytes().all { it == 42.toByte() })
+            assertTrue("Expected a Range request; requests=${f.requests}", f.requests.any { it > 0 })
+            assertTrue("Unexpected bytes in resumed APK", result.file.readBytes().all { it == 42.toByte() })
         }
     }
 }

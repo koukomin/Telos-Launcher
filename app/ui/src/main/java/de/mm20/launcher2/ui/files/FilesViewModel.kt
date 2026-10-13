@@ -29,6 +29,8 @@ data class StorageVolume(val name: String, val path: String, val total: Long, va
 
 data class ClipboardState(val paths: List<String>, val cut: Boolean, val rootMode: Boolean)
 
+class FilesClipboard { var value by mutableStateOf<ClipboardState?>(null) }
+
 data class TaskState(val title: String, val progress: Float?, val cancel: CancelFlag)
 
 /** An archive that needs a password; [retry] runs again once the password was accepted. [browsing] is true when the user is looking inside it. */
@@ -70,8 +72,11 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
 
     var selection by mutableStateOf<Set<String>>(emptySet())
         private set
-    var clipboard by mutableStateOf<ClipboardState?>(null)
-        private set
+    internal var onFilesChanged: () -> Unit = {}
+    var sharedClipboard = FilesClipboard()
+    var clipboard: ClipboardState?
+        get() = sharedClipboard.value
+        private set(value) { sharedClipboard.value = value }
     var task by mutableStateOf<TaskState?>(null)
         private set
 
@@ -123,10 +128,8 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     override fun onCleared() {
-        // files fetched from a server, an archive or a vault (decrypted!) must not stay in the cache
-        runCatching { File(context.cacheDir, "remote_open").deleteRecursively() }
-        runCatching { File(context.cacheDir, "share_dl").deleteRecursively() }
-        ArchiveSessions.clearAll() // archive passwords only live in memory, as long as the file manager is open
+        task?.cancel?.cancelled = true
+        searchJob?.cancel()
         super.onCleared()
     }
 
@@ -158,10 +161,13 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     // ---- browsing ----
 
     /** Forgets the password of an archive the user is leaving */
+    internal var archiveInUseElsewhere: (String) -> Boolean = { false }
+
     private fun leaveArchive(oldPath: String?, newPath: String?) {
         if (oldPath == null || !ArchivePath.isArchive(oldPath)) return
         val archive = ArchivePath.archiveOf(oldPath)
         if (newPath != null && ArchivePath.isArchive(newPath) && ArchivePath.archiveOf(newPath) == archive) return
+        if (archiveInUseElsewhere(archive)) return
         ArchiveSessions.clear(archive)
         promptDeclined.remove(archive)
         if (archivePrompt?.archive == archive && archivePrompt?.browsing == true) archivePrompt = null
@@ -169,10 +175,12 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
 
     fun open(newPath: String?) {
         leaveArchive(path, newPath)
+        searchJob?.cancel()
         selection = emptySet()
         searchResults = null
         query = ""
         path = newPath
+        restoreFolderOptions(newPath)
         error = null
         if (newPath == null) { entries = emptyList(); return }
         load(newPath)
@@ -183,7 +191,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     private fun load(dir: String) {
         loading = true
         viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) { runCatching { fs.list(dir) } }
+            val result = withContext(Dispatchers.IO) { runCatching { fsFor(dir).list(dir) } }
             if (path != dir) return@launch
             loading = false
             result.onSuccess {
@@ -262,17 +270,44 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
 
     // ---- view options ----
 
+    private fun folderKey(folder: String?) = folder?.let { "folder:" + java.security.MessageDigest.getInstance("SHA-256").digest(it.toByteArray()).joinToString("") { b -> "%02x".format(b) } }
+
+    private fun restoreFolderOptions(folder: String?) {
+        val key = folderKey(folder)
+        val stored = key?.let { prefs.getString(it, null) }
+        if (stored == null) {
+            sort = loadSort()
+            viewMode = prefs.getInt("viewMode", if (prefs.getBoolean("grid", false)) 1 else 0).coerceIn(0, 2)
+            showHidden = prefs.getBoolean("hidden", false)
+            return
+        }
+        runCatching {
+            val json = org.json.JSONObject(stored)
+            sort = SortSpec(SortKey.valueOf(json.getString("sort")), json.getBoolean("ascending"), json.getBoolean("foldersFirst"))
+            viewMode = json.getInt("view").coerceIn(0, 2)
+            showHidden = json.getBoolean("hidden")
+        }
+    }
+
+    private fun saveFolderOptions() {
+        val key = folderKey(path) ?: return
+        prefs.edit().putString(key, org.json.JSONObject().put("sort", sort.key.name).put("ascending", sort.ascending)
+            .put("foldersFirst", sort.foldersFirst).put("view", viewMode).put("hidden", showHidden).toString()).apply()
+    }
+
     fun updateSort(spec: SortSpec) {
         sort = spec
-        prefs.edit().putString("sortKey", spec.key.name).putBoolean("sortAsc", spec.ascending).putBoolean("foldersFirst", spec.foldersFirst).apply()
+        if (path == null) prefs.edit().putString("sortKey", spec.key.name).putBoolean("sortAsc", spec.ascending).putBoolean("foldersFirst", spec.foldersFirst).apply()
+        saveFolderOptions()
     }
 
     fun toggleGrid() = updateViewMode(if (viewMode == 0) 1 else 0)
     fun updateViewMode(mode: Int) {
         viewMode = mode.coerceIn(0, 2)
-        prefs.edit().putInt("viewMode", viewMode).putBoolean("grid", viewMode != 0).apply()
+        if (path == null) prefs.edit().putInt("viewMode", viewMode).putBoolean("grid", viewMode != 0).apply()
+        saveFolderOptions()
     }
-    fun toggleHidden() { showHidden = !showHidden; prefs.edit().putBoolean("hidden", showHidden).apply() }
+    fun toggleHidden() { showHidden = !showHidden; if (path == null) prefs.edit().putBoolean("hidden", showHidden).apply(); saveFolderOptions() }
 
     // ---- selection ----
 
@@ -352,12 +387,14 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             val ok = withContext(Dispatchers.IO) { root.chmod(entry.path, mode) }
             message = if (ok) s(R.string.au_files_chmod_ok) else s(R.string.au_files_chmod_failed)
             reload()
+            onFilesChanged()
         }
     }
 
     // ---- operations ----
 
     private fun runTask(title: String, total: Long?, block: (CancelFlag, (Long) -> Unit) -> String) {
+        if (task != null) { message = s(R.string.telos_files_task_busy); return }
         val cancel = CancelFlag()
         task = TaskState(title, if (total != null) 0f else null, cancel)
         viewModelScope.launch {
@@ -382,6 +419,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             }
             selection = emptySet()
             reload()
+            onFilesChanged()
         }
     }
 
@@ -391,6 +429,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             val ok = withContext(Dispatchers.IO) { fs.mkdir(dir, fs.freeName(dir, name)) }
             message = if (ok) null else s(R.string.au_files_mkdir_failed)
             reload()
+            onFilesChanged()
         }
     }
 
@@ -400,6 +439,44 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             val ok = withContext(Dispatchers.IO) { fs.createFile(dir, fs.freeName(dir, name)) }
             message = if (ok) null else s(R.string.au_files_create_failed)
             reload()
+            onFilesChanged()
+        }
+    }
+
+    fun batchRename(items: List<FsEntry>, names: List<String>) {
+        if (items.size != names.size || items.isEmpty()) return
+        val operationFs = fs
+        val destinations = items.zip(names).map { (entry, name) -> joinPath(parentOf(entry.path) ?: "/", name) }
+        if (destinations.map { it.lowercase() }.toSet().size != destinations.size || names.any { !isPlainName(it) } ||
+            items.any { parent -> parent.isDir && items.any { child -> child.path.startsWith(parent.path.trimEnd('/') + "/") } }) {
+            message = s(R.string.telos_files_rename_collision); return
+        }
+        runTask(s(R.string.telos_files_batch_rename), null) { cancel, _ ->
+            val sourcePaths = items.map { it.path }.toSet()
+            if (destinations.any { it !in sourcePaths && operationFs.exists(it) }) return@runTask s(R.string.telos_files_rename_collision)
+            // Two phases allow swaps without overwriting an existing file.
+            val current = items.map { it.path }.toMutableList()
+            try {
+                items.indices.forEach { i ->
+                    if (cancel.cancelled) throw java.io.IOException("Cancelled")
+                    val temp = ".telos-rename-${java.util.UUID.randomUUID()}"
+                    if (!operationFs.rename(current[i], temp)) throw java.io.IOException("Rename failed")
+                    current[i] = joinPath(parentOf(items[i].path) ?: "/", temp)
+                }
+                items.indices.forEach { i ->
+                    if (cancel.cancelled || !operationFs.rename(current[i], names[i])) throw java.io.IOException("Rename failed")
+                    current[i] = destinations[i]
+                }
+                s(R.string.telos_files_renamed, items.size)
+            } catch (e: Exception) {
+                // Best-effort rollback, using fresh names first so swaps cannot collide.
+                val rollback = current.map { old ->
+                    val name = ".telos-rollback-${java.util.UUID.randomUUID()}"
+                    if (runCatching { operationFs.rename(old, name) }.getOrDefault(false)) joinPath(parentOf(old) ?: "/", name) else old
+                }
+                val restored = rollback.indices.map { i -> runCatching { operationFs.rename(rollback[i], items[i].name) }.getOrDefault(false) }.all { it }
+                s(if (restored) R.string.telos_files_rename_rolled_back else R.string.telos_files_rename_partial)
+            }
         }
     }
 
@@ -414,6 +491,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             message = if (ok) null else s(R.string.au_files_rename_failed)
             selection = emptySet()
             reload()
+            onFilesChanged()
         }
     }
 

@@ -41,7 +41,10 @@ android {
     namespace = "de.mm20.launcher2.data.store"
 }
 
-tasks.withType<Test>().configureEach { maxHeapSize = "128m" }
+tasks.withType<Test>().configureEach {
+    maxHeapSize = "128m"
+    testLogging.exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+}
 
 dependencies {
     testImplementation(libs.bundles.tests)

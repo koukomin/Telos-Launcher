@@ -13,6 +13,7 @@ Solid Explorer and MiXplorer (no code was copied).
 
 | Page | Contents |
 | --- | --- |
+| [Σύγκριση MiXplorer και Solid Explorer](./feature-comparison) | Αναλυτικός πίνακας δυνατοτήτων, ελλείψεων και σταδίων υλοποίησης |
 | [Browsing and file operations](./browsing) | Home page, drawer, breadcrumbs, views, sorting, search, selection, copy and paste, properties, opening files |
 | [Root explorer](./root) <Badge type="warning" text="root" /> | Superuser mode, warnings, permissions, remounting `/system` |
 | [Network and cloud storages](./network-cloud) | WebDAV, Nextcloud, ownCloud, SFTP, SMB, FTP, Dropbox, Google Drive, OneDrive, with per-provider client ID setup |
@@ -93,12 +94,12 @@ and a paste bar "N items to copy" with **Paste here** or **Move here** and **Can
 
 ## Settings and stored state
 
-Telos Files has no settings screen. These choices are remembered in its private preferences:
+Telos Files has no separate settings screen. View, sorting and hidden-file choices are remembered per folder; defaults from earlier versions are preserved.
 
 | Setting | Where | Default | Effect |
 | --- | --- | --- | --- |
-| View | More > List view or Grid view | List | List or grid |
-| Sort | More > Sort by... | Name, ascending, folders first | Name, date, size or type |
+| View | View button | List | List or two grid sizes, remembered per folder |
+| Sort | More > Sort by... | Name, ascending, folders first | Name, date, size or type, remembered per folder |
 | Hidden files | More > Show hidden files | hidden | Shows entries starting with a dot |
 | Favorites | More > Add to favorites | none | Folders on the home page and in the drawer |
 | Connections | Settings > Integrations > Cloud and network storage, or drawer > Add or manage | none | See [Network and cloud](./network-cloud) |
@@ -135,3 +136,9 @@ Keystore, which does not leave the device. Cryptomator passwords are never store
 | The SD card is missing | Tap **Refresh** in the More menu to re-read the volumes |
 | A file opens in the wrong app | Telos opens pictures in Photos, videos in Video and documents in Telos Viewer. Others use Android's chooser |
 | Related apps | [Photos](../photos/), [Video](../video/) |
+
+## Καρτέλες και δύο πάνελ
+
+Η επάνω γραμμή ανοίγει νέες καρτέλες και ενεργοποιεί τα «Δύο πάνελ». Κάθε καρτέλα διατηρεί τον δικό της φάκελο και τις επιλογές της. Τα πάνελ εμφανίζονται δίπλα-δίπλα σε αρκετά μεγάλη οθόνη και το ένα πάνω από το άλλο σε μικρότερη. Το ενεργό πάνελ επισημαίνεται με το χρώμα του Telos. Copy/Cut/Paste μοιράζονται μεταξύ καρτελών· drag-and-drop δεν έχει προστεθεί ακόμη.
+
+Με επιλογή πολλών αρχείων, το μενού προσφέρει «Μαζική μετονομασία»: όνομα/επέκταση, αρίθμηση με padding, εύρεση και αντικατάσταση με προαιρετική κανονική έκφραση. Εμφανίζεται preview και ελέγχονται οι συγκρούσεις πριν ξεκινήσει η αλλαγή. Σε αποτυχία επιχειρείται επαναφορά των αρχικών ονομάτων· αν η πηγή δεν επιτρέψει την επαναφορά, εμφανίζεται σχετικό μήνυμα.

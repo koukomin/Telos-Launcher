@@ -6,6 +6,9 @@ on:
       - 'services/comms/src/**'
       - 'services/store/src/**'
       - 'data/store/**'
+      - 'data/comms/src/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/files/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/comms/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/store/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/settings/**'
       - 'app/ui/src/main/AndroidManifest.xml'
@@ -29,7 +32,7 @@ jobs:
       - name: Test Stremio protocol and watched state
         run: ./gradlew :services:comms:testDebugUnitTest --tests 'de.mm20.launcher2.comms.stremio.*' --tests 'de.mm20.launcher2.comms.tv.*' --stacktrace
       - name: Test virtual app task identities
-        run: ./gradlew :core:base:testDebugUnitTest --tests 'de.mm20.launcher2.applock.VirtualAppTaskTest' --stacktrace
+        run: ./gradlew :core:base:testDebugUnitTest --tests 'de.mm20.launcher2.applock.VirtualAppTaskTest' --tests 'de.mm20.launcher2.helper.BatchNamesTest' --stacktrace
       - name: Test Store download and update policies
         run: ./gradlew :services:store:testDebugUnitTest --stacktrace
       - name: Test streaming APK downloads with a constrained heap

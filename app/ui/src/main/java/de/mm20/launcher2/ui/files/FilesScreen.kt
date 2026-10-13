@@ -122,14 +122,13 @@ private fun hasAllFilesAccess(context: android.content.Context): Boolean =
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilesScreen() {
-    val vm: FilesViewModel = viewModel()
+internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
     val context = LocalContext.current
     val backStack = LocalBackStack.current
     val scope = rememberCoroutineScope()
 
     var hasAccess by remember { mutableStateOf(hasAllFilesAccess(context)) }
-    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { hasAccess = hasAllFilesAccess(context); vm.refreshVolumes(); vm.reloadConnections() }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { hasAccess = hasAllFilesAccess(context); vm.refreshVolumes(); vm.reloadConnections(); vm.reload() }
     val legacyPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { hasAccess = hasAllFilesAccess(context) }
 
     if (!hasAccess) {
@@ -166,8 +165,8 @@ fun FilesScreen() {
     }
     LaunchedEffect(vm.path) { listState.scrollToItem(0); gridState.scrollToItem(0) }
 
-    BackHandler(drawer.isOpen) { scope.launch { drawer.close() } }
-    BackHandler(!drawer.isOpen) {
+    BackHandler(handlesBack && drawer.isOpen) { scope.launch { drawer.close() } }
+    BackHandler(handlesBack && !drawer.isOpen) {
         if (searching && vm.query.isEmpty() && vm.searchResults == null) searching = false
         else if (!vm.up()) backStack.removeLastOrNull()
         if (vm.query.isEmpty()) searching = false
@@ -223,7 +222,7 @@ fun FilesScreen() {
                                 val bytes = vm.shareDownloadBytes(picked)
                                 if (bytes >= SHARE_WARN_BYTES) dialog = FilesDialog.ShareLarge(picked, bytes) else vm.shareEntries(picked)
                             },
-                            onRename = { vm.selectedEntries().singleOrNull()?.let { dialog = FilesDialog.Rename(it) } },
+                            onRename = { val picked = vm.selectedEntries(); dialog = picked.singleOrNull()?.let { FilesDialog.Rename(it) } ?: FilesDialog.BatchRename(picked) },
                             onCompress = { dialog = FilesDialog.Compress(vm.selectedEntries()) },
                             onProperties = { vm.selectedEntries().singleOrNull()?.let { dialog = FilesDialog.Properties(it) } },
                             onBookmark = { vm.selectedEntries().singleOrNull()?.let { vm.toggleBookmark(it.path); vm.clearSelection() } },
@@ -379,6 +378,7 @@ private sealed interface FilesDialog {
     data object Sort : FilesDialog
     data object EnableRoot : FilesDialog
     data class Rename(val entry: FsEntry) : FilesDialog
+    data class BatchRename(val entries: List<FsEntry>) : FilesDialog
     data class Delete(val entries: List<FsEntry>) : FilesDialog
     data class Compress(val entries: List<FsEntry>) : FilesDialog
     data class Properties(val entry: FsEntry) : FilesDialog
@@ -395,6 +395,7 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
         FilesDialog.NewFolder -> NameDialog(stringResource(R.string.hc_new_folder), "", stringResource(R.string.hf_files_create), onDismiss) { vm.newFolder(it); onDismiss() }
         FilesDialog.NewFile -> NameDialog(stringResource(R.string.hc_new_file), "", stringResource(R.string.hf_files_create), onDismiss) { vm.newFile(it); onDismiss() }
         is FilesDialog.Rename -> NameDialog(stringResource(R.string.hc_rename), dialog.entry.name, stringResource(R.string.hc_rename), onDismiss) { vm.rename(dialog.entry, it); onDismiss() }
+        is FilesDialog.BatchRename -> BatchRenameDialog(vm, dialog.entries, onDismiss)
         is FilesDialog.Compress -> CompressDialog(vm, dialog.entries, onDismiss)
         is FilesDialog.Delete -> {
             val system = dialog.entries.any { FileActions.isSystemPath(it.path, vm.rootMode) }
@@ -699,8 +700,8 @@ private fun SelectionBar(
                     DropdownMenuItem(text = { Text(stringResource(R.string.hc_share)) }, onClick = { more = false; onShare() })
                     DropdownMenuItem(text = { Text(stringResource(R.string.au21_arch_compress)) }, onClick = { more = false; onCompress() })
                     if (onOpenAsArchive != null) DropdownMenuItem(text = { Text(stringResource(R.string.au22_files_open_as_archive)) }, onClick = { more = false; onOpenAsArchive() })
+                    DropdownMenuItem(text = { Text(stringResource(if (single != null) R.string.hc_rename else R.string.telos_files_batch_rename)) }, onClick = { more = false; onRename() })
                     if (single != null) {
-                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_rename)) }, onClick = { more = false; onRename() })
                         DropdownMenuItem(text = { Text(stringResource(R.string.hc_properties)) }, onClick = { more = false; onProperties() })
                         if (single.isDir) DropdownMenuItem(text = { Text(stringResource(R.string.hc_add_to_favorites)) }, onClick = { more = false; onBookmark() })
                     }

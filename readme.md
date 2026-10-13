@@ -82,6 +82,8 @@ from Telos Store.
 | **Telos Store** | Install and update apps from GitHub, F-Droid and more, manages the Telos apps | [Store](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/store/) |
 | **Smart Freeze** | Freeze or hide apps through Shizuku, root, device owner or Island (a launcher feature in Settings, not a Telos app) | [Smart Freeze](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/freeze/) |
 
+Telos Phone now reads the full Android contact list across synced accounts, including email-only contacts, rather than seeding its directory only from phone-number rows.
+
 ### Recent Media and Store improvements
 
 - Greek TV supplements use the current greektvm3u `main` playlist alongside Free-TV. Refresh checks both supplemental lists; temporarily offline extra channels remain visible.
@@ -681,6 +683,11 @@ Text (SMS) and picture (MMS) messages as conversations with a reply field. It is
 **Status and limitations:** MMS (pictures, videos, group messages) is experimental and untested across devices and carriers. A video of more than about 2.4 MB is silently left out of a message. There is no search, delete, archive, delivery report or draft saving, no RCS and no end-to-end encryption.
 
 ### Telos Files
+
+- Independent folder tabs and an adaptive two-panel workspace, with shared copy/cut/paste and Telos styling. Drag-and-drop is still pending.
+- View, sorting and hidden-file preferences are remembered per folder.
+- Batch rename with name/extension tokens, padded numbering, literal/regex replacement and previews. Targets are checked before renaming; failures attempt to restore original names.
+- [Detailed MiXplorer/Solid Explorer comparison and remaining work](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/feature-comparison/).
 
 A file manager for your phone, network storages and cloud storages. The layout follows [Solid Explorer](https://play.google.com/store/apps/details?id=pl.solidexplorer2) and [MiXplorer](https://forum.xda-developers.com/t/app-2-2-mixplorer-v6-x-released-fully-featured-file-manager.1523691/), taken as inspiration only, no code was copied. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/). Needs All files access on Android 11 and later.
 
