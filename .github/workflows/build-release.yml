@@ -6,8 +6,13 @@
 #   telos-armeabi-v7a.apk (32-bit, μόνο για παλιά κινητά)
 #
 # Πότε τρέχει:
-#   1. Όταν κάνεις push ένα tag που ξεκινά με "v" (π.χ. v1.40.2)
-#   2. Χειροκίνητα: Actions → Build Release APK → Run workflow
+#   1. Σε κάθε merge/push στο main (εκτός από αλλαγές μόνο σε docs/markdown): φτιάχνει αυτόματα
+#      νέο tag (το επόμενο patch, π.χ. v1.40.2 -> v1.40.3) και νέο GitHub Release με τα δύο APK.
+#      Για major/minor αλλαγή αρκεί να σπρώξεις ένα tag με το νέο νούμερο (π.χ. v1.41.0): τα επόμενα
+#      αυτόματα releases συνεχίζουν από εκεί.
+#   2. Όταν κάνεις push ένα tag που ξεκινά με "v" (π.χ. v1.41.0)
+#   3. Χειροκίνητα: Actions → Build Release APK → Run workflow (χτίζει, ανεβάζει τα APK ως artifacts,
+#      δεν δημιουργεί release)
 #
 # Secrets που χρειάζονται (Settings → Secrets and variables → Actions):
 #   KEYSTORE              = το .jks αρχείο σε base64
@@ -23,16 +28,56 @@ name: Build Release APK
 
 on:
   push:
+    branches: [main]
+    # αλλαγές μόνο σε κείμενα δεν βγάζουν νέα έκδοση
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
+      - '.github/release-notes-header.md'
     tags:
       - 'v*'
   workflow_dispatch:
+
+# Ένα release κάθε φορά: δύο γρήγορα merge δεν πρέπει να πάρουν το ίδιο νούμερο έκδοσης
+concurrency:
+  group: build-release
+  cancel-in-progress: false
 
 # Δικαίωμα για δημιουργία GitHub Release
 permissions:
   contents: write
 
 jobs:
+  # Αποφασίζει το tag της έκδοσης: το tag που σπρώχτηκε, ή (σε push στο main) το επόμενο patch
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.v.outputs.tag }}
+      publish: ${{ steps.v.outputs.publish }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: v
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            echo "tag=$GITHUB_REF_NAME" >> "$GITHUB_OUTPUT"
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          elif [[ "$GITHUB_REF" == refs/heads/main ]]; then
+            LAST=$(git tag -l 'v*' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1)
+            # χωρίς κανένα tag ακόμα: συνεχίζει από το versionName της εφαρμογής
+            LAST=${LAST:-v1.40.2}
+            IFS=. read -r MA MI PA <<< "${LAST#v}"
+            echo "tag=v$MA.$MI.$((PA + 1))" >> "$GITHUB_OUTPUT"
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=" >> "$GITHUB_OUTPUT"
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          fi
+          cat "$GITHUB_OUTPUT"
+
   build:
+    needs: version
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -93,7 +138,8 @@ jobs:
         run: |
           echo "VERSION_CODE_OVERRIDE=$(date +%Y%m%d)$(printf '%02d' $((GITHUB_RUN_NUMBER % 100)))" >> "$GITHUB_ENV"
           # το όνομα έκδοσης είναι αυτό του tag (v1.41.0 -> 1.41.0): το Store συγκρίνει με αυτό για τις ενημερώσεις
-          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then echo "VERSION_NAME_OVERRIDE=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"; fi
+          TAG="${{ needs.version.outputs.tag }}"
+          if [ -n "$TAG" ]; then echo "VERSION_NAME_OVERRIDE=${TAG#v}" >> "$GITHUB_ENV"; fi
 
       # -Ptelos.abi βάζει στο APK μόνο τις native βιβλιοθήκες αυτής της αρχιτεκτονικής
       - name: Build and sign Release APK (${{ matrix.abi }})
@@ -127,11 +173,13 @@ jobs:
           name: telos-${{ matrix.abi }}
           path: ${{ runner.temp }}/out/telos-${{ matrix.abi }}.apk
 
-  # Δημιουργεί ένα GitHub Release (μόνο όταν το τρέξιμο ξεκίνησε από tag) με τα δύο APK.
+  # Δημιουργεί ένα GitHub Release (σε push στο main ή σε tag) με τα δύο APK.
   # Ξεχωριστό job ώστε τα δύο builds να μην προσπαθούν να φτιάξουν το ίδιο release.
   release:
-    needs: build
-    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [version, build]
+    if: needs.version.outputs.publish == 'true'
+    env:
+      TAG: ${{ needs.version.outputs.tag }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -149,8 +197,10 @@ jobs:
         run: |
           ls -l apks
           # Create the release with both APKs, or (if the tag UI already made the release) just upload them to it
-          gh release create "$GITHUB_REF_NAME" apks/*.apk \
-            --title "Telos $GITHUB_REF_NAME" \
+          # --target: σε push στο main το tag φτιάχνεται πάνω στο commit που χτίστηκε
+          gh release create "$TAG" apks/*.apk \
+            --target "$GITHUB_SHA" \
+            --title "Telos $TAG" \
             --notes-file .github/release-notes-header.md \
             --generate-notes \
-          || gh release upload "$GITHUB_REF_NAME" apks/*.apk --clobber
+          || gh release upload "$TAG" apks/*.apk --clobber

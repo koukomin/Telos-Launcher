@@ -70,11 +70,11 @@ Suggested apps in four groups. **Add** puts one into your tracked apps, where it
 | Group | Apps |
 | --- | --- |
 | Stores | Aurora Store, Obtainium, Accrescent, F-Droid, Droid-ify |
-| Tools | Shizuku, a Shizuku fork (thedjchi), Morphe Manager, Morphe microG, SD Maid SE |
-| Browser | IronFox, Cromite, Titanium Browser, Iceraven |
+| Tools | Shizuku, Shizuku Next, Morphe Manager, Morphe microG, SD Maid SE |
+| Browser | IronFox, Cromite, Titanium Browser, Iceraven, Tor Browser, Waterfox |
 | Media | Nova Video Player, Transistor, VLC, BoomingMusic |
 
-Icons: installed apps are shown with their icon as the launcher draws it (your icon pack and icon shape); apps that are not installed yet show a letter. Not every source was checked on a device, so an app can fail to add when its release page changes; the error is shown. There is no "IzzyOnDroid" entry because it is a repository and not an app: add any of its apps through its F-Droid page address instead.
+Icons: installed apps are shown with their icon as the launcher draws it (your icon pack and icon shape); apps that are not installed yet show a letter. Not every source was checked on a device, so an app can fail to add when its release page changes or has no APK (this may happen with Waterfox, whose project page is for the desktop browser); the error is shown. Tor Browser is read from the Tor Project's download folder, newest version first. There is no "IzzyOnDroid" entry because it is a repository and not an app: add any of its apps through its F-Droid page address instead.
 
 ### App page
 

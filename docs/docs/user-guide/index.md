@@ -29,7 +29,7 @@ download to a working setup. The rest of the guide describes every feature in de
 Telos is not on the Play Store. Two kinds of build are published on the
 [releases page](https://github.com/koukomin/Telos-Launcher/releases):
 
-- **Stable releases** are signed with the Telos release key. This is the recommended download for everyday use.
+- **Stable releases** are signed with the Telos release key. This is the recommended download for everyday use. A new stable release is published automatically for every change that is merged into the main branch (changes to the documentation alone do not count), with the next patch number (for example `v1.40.3`). Telos Store notices it and offers the update.
 - **Development builds** are debug-signed pre-releases, published from every successful build of the development
   branch for people who want to try the newest changes. The three newest are kept.
 

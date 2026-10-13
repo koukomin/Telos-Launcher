@@ -36,7 +36,7 @@ object RecommendedApps {
 
         // ---- Tools ----
         RecommendedApp("Shizuku", RecommendedCategory.Tools, AppSource.GitHub("RikkaApps", "Shizuku"), "moe.shizuku.privileged.api"),
-        RecommendedApp("Shizuku (thedjchi fork)", RecommendedCategory.Tools, AppSource.GitHub("thedjchi", "Shizuku")),
+        RecommendedApp("Shizuku Next", RecommendedCategory.Tools, AppSource.GitHub("rushiranpise", "Shizuku-Next")),
         RecommendedApp("Morphe Manager", RecommendedCategory.Tools, AppSource.GitHub("MorpheApp", "morphe-manager")),
         RecommendedApp("Morphe microG", RecommendedCategory.Tools, AppSource.GitHub("MorpheApp", "MicroG-RE", assetNameRegex = "^microg-[0-9.]+\\.apk$")),
         RecommendedApp("SD Maid SE", RecommendedCategory.Tools, AppSource.GitHub("d4rken-org", "sdmaid-se"), "eu.darken.sdmse"),
@@ -50,6 +50,9 @@ object RecommendedApps {
         ),
         RecommendedApp("Titanium Browser", RecommendedCategory.Browsers, AppSource.GitHub("jqssun", "android-titanium-browser")),
         RecommendedApp("Iceraven", RecommendedCategory.Browsers, AppSource.GitHub("fork-maintainers", "iceraven-browser"), "io.github.forkmaintainers.iceraven"),
+        // the Tor Project publishes the APKs in one folder per version (the Store looks into the newest folder)
+        RecommendedApp("Tor Browser", RecommendedCategory.Browsers, AppSource.Html("https://download.torproject.org/tor-browser-for-android/"), "org.torproject.torbrowser"),
+        RecommendedApp("Waterfox", RecommendedCategory.Browsers, AppSource.GitHub("BrowserWorks", "waterfox")),
 
         // ---- Media ----
         RecommendedApp("Nova Video Player", RecommendedCategory.Media, AppSource.GitHub("nova-video-player", "aos-AVP"), "org.courville.nova"),
