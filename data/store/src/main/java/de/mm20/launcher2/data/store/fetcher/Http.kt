@@ -5,6 +5,7 @@ import io.ktor.client.request.prepareGet
 import io.ktor.client.request.header
 import io.ktor.client.request.url
 import io.ktor.client.statement.bodyAsChannel
+import io.ktor.utils.io.readAvailable
 
 /** A source could not give a release; [message] says why in words for the user. */
 class StoreFetchException(message: String, cause: Throwable? = null) : Exception(message, cause)
@@ -44,7 +45,7 @@ internal suspend fun HttpClient.getText(
                     output.write(buffer, 0, read)
                 }
                 HttpText(response.status.value, output.toString(Charsets.UTF_8.name()))
-            } finally { channel.cancel() }
+            } finally { channel.cancel(null) }
         }
     } catch (e: kotlinx.coroutines.CancellationException) {
         throw e

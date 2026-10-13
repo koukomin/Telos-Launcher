@@ -122,7 +122,7 @@ class FDroidFetcher(
                         reader.endObject()
                         (versions ?: throw StoreFetchException("$packageName is not in this repository")) to suggested
                     }
-                } finally { channel.cancel() }
+                } finally { channel.cancel(null) }
             }
         }
         val abis = Build.SUPPORTED_ABIS.toSet()

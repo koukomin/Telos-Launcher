@@ -32,6 +32,8 @@ jobs:
         run: ./gradlew :core:base:testDebugUnitTest --tests 'de.mm20.launcher2.applock.VirtualAppTaskTest' --stacktrace
       - name: Test Store download and update policies
         run: ./gradlew :services:store:testDebugUnitTest --stacktrace
+      - name: Test streaming APK downloads with a constrained heap
+        run: ./gradlew :data:store:testDebugUnitTest --stacktrace
       - name: Build debug APK
         run: ./gradlew :app:app:assembleDefaultDebug --stacktrace
       - uses: actions/upload-artifact@v4

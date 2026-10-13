@@ -41,7 +41,12 @@ android {
     namespace = "de.mm20.launcher2.data.store"
 }
 
+tasks.withType<Test>().configureEach { maxHeapSize = "128m" }
+
 dependencies {
+    testImplementation(libs.bundles.tests)
+    testImplementation("org.json:json:20240303")
+    testImplementation("io.ktor:ktor-client-mock:${libs.versions.ktor.get()}")
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)

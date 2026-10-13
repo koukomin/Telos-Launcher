@@ -1,12 +1,12 @@
 package de.mm20.launcher2.data.store.installer
 
 import android.content.Context
-import android.os.SystemClock
 import de.mm20.launcher2.store.installer.*
 import io.ktor.client.HttpClient
 import io.ktor.client.request.prepareGet
 import io.ktor.client.request.header
 import io.ktor.client.statement.bodyAsChannel
+import io.ktor.utils.io.readAvailable
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,10 +21,15 @@ import java.security.MessageDigest
 import java.util.concurrent.ConcurrentHashMap
 
 /** Stream APKs with validated HTTP Range resumption; partial files survive cancellation/restart. */
-class KtorDownloader(
-    private val context: Context,
-    private val httpClient: HttpClient = HttpClient(),
+class KtorDownloader internal constructor(
+    private val directory: File,
+    private val httpClient: HttpClient,
+    private val failureMessage: () -> String = { "The APK could not be downloaded" },
 ) : Downloader {
+    constructor(context: Context, httpClient: HttpClient = HttpClient()) : this(
+        File(context.filesDir, "store_downloads"), httpClient,
+        { context.getString(de.mm20.launcher2.i18n.R.string.telos_store_download_failed) },
+    )
     private val states = MutableStateFlow<Map<String, StoreDownloadProgress>>(emptyMap())
     override val progress: StateFlow<Map<String, StoreDownloadProgress>> = states
     private val paused = ConcurrentHashMap.newKeySet<String>()
@@ -39,7 +44,7 @@ class KtorDownloader(
     override suspend fun download(url: String, suggestedFileName: String, key: String): DownloadResult =
         locks.getOrPut(key) { Mutex() }.withLock {
             withContext(Dispatchers.IO) {
-                val dir = File(context.filesDir, "store_downloads").apply { mkdirs() }
+                val dir = directory.apply { mkdirs() }
                 val hash = MessageDigest.getInstance("SHA-256").digest(url.toByteArray()).joinToString("") { "%02x".format(it) }
                 val partial = File(dir, "$hash.part")
                 val metadata = File(dir, "$hash.json")
@@ -74,7 +79,7 @@ class KtorDownloader(
                             }
                             if (code == 408 || code == 429 || code >= 500) throw IOException("Server temporarily unavailable")
                             val append = StoreDownloadRange.appendOffset(code, response.headers["Content-Range"], offset)
-                                ?: return@execute DownloadResult.Failed(context.getString(de.mm20.launcher2.i18n.R.string.telos_store_download_failed))
+                                ?: return@execute DownloadResult.Failed(failureMessage())
                             offset = append
                             total = response.headers["Content-Range"]?.substringAfterLast('/')?.toLongOrNull()
                                 ?: response.headers["Content-Length"]?.toLongOrNull()?.let { offset + it }
@@ -82,7 +87,7 @@ class KtorDownloader(
                             metadata.writeText(JSONObject().put("validator", etag ?: response.headers["Last-Modified"].orEmpty()).toString())
                             var bytes = offset
                             var sampledBytes = bytes
-                            var sampledAt = SystemClock.elapsedRealtime()
+                            var sampledAt = (System.nanoTime() / 1_000_000)
                             val channel = response.bodyAsChannel()
                             try {
                                 FileOutputStream(partial, offset > 0).use { out ->
@@ -95,16 +100,16 @@ class KtorDownloader(
                                         if (read == 0) continue
                                         out.write(buffer, 0, read)
                                         bytes += read
-                                        val now = SystemClock.elapsedRealtime()
+                                        val now = (System.nanoTime() / 1_000_000)
                                         if (now - sampledAt >= 500) {
                                             publish(key, StoreDownloadProgress(bytes, total, (bytes - sampledBytes) * 1000 / (now - sampledAt)))
                                             sampledBytes = bytes; sampledAt = now; retry = 0
                                         }
                                     }
                                 }
-                            } finally { channel.cancel() }
+                            } finally { channel.cancel(null) }
                             if (total != null && bytes != total) throw IOException("Download interrupted")
-                            if (bytes == 0L) return@execute DownloadResult.Failed(context.getString(de.mm20.launcher2.i18n.R.string.telos_store_download_failed))
+                            if (bytes == 0L) return@execute DownloadResult.Failed(failureMessage())
                             if (!partial.renameTo(destination)) throw IOException("Could not save the APK")
                             metadata.delete()
                             DownloadResult.Success(destination)
@@ -127,7 +132,7 @@ class KtorDownloader(
                         retry++
                     } catch (e: Exception) {
                         publish(key, StoreDownloadProgress(partial.length(), total, status = StoreDownloadStatus.Failed))
-                        return@withContext DownloadResult.Failed(context.getString(de.mm20.launcher2.i18n.R.string.telos_store_download_failed), e)
+                        return@withContext DownloadResult.Failed(failureMessage(), e)
                     }
                 }
                 @Suppress("UNREACHABLE_CODE")
