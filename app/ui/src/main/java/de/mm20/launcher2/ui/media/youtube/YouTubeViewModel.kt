@@ -24,7 +24,7 @@ import kotlin.coroutines.resumeWithException
 
 class YouTubeViewModel : ViewModel(), KoinComponent {
     private val repository: YouTubeRepository by inject()
-    val results = MutableStateFlow<List<YouTubeEntry>>(emptyList())
+    val results = MutableStateFlow<Map<Boolean, List<YouTubeEntry>>>(emptyMap())
     val searching = MutableStateFlow(false)
     val resolving = MutableStateFlow(false)
     val message = MutableStateFlow<String?>(null)
@@ -49,7 +49,7 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             searching.value = true; message.value = null
-            try { results.value = repository.search(query.trim(), music) }
+            try { results.value = results.value + (music to repository.search(query.trim(), music)) }
             catch (e: CancellationException) { throw e }
             catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_search_failed) }
             finally { searching.value = false }

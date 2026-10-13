@@ -596,9 +596,14 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
                             modifier = Modifier.padding(top = 10.dp),
                         )
                     }
-                    Text(app.description, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 10.dp))
+                    Text(when (app.key) {
+                        "telos_youtube_app://youtube", "telos_youtube_music_app://youtube_music" -> stringResource(R.string.telos_youtube_store_description)
+                        "telos_media_app://media" -> stringResource(R.string.telos_media_store_description)
+                        else -> app.description
+                    }, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 10.dp))
                     Text(
-                        app.features.joinToString(" · "),
+                        if (app.key.startsWith("telos_youtube")) stringResource(R.string.telos_youtube_store_features)
+                        else app.features.joinToString(" · "),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(top = 6.dp),

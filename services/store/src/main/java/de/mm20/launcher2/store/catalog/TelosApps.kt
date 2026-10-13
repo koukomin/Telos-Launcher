@@ -69,6 +69,22 @@ object TelosApps {
             route = SettingsDeepLinkContract.ROUTE_MEDIA,
         ),
         TelosApp(
+            key = "telos_youtube_app://youtube",
+            name = "Telos YouTube",
+            description = "YouTube search and native playback inside Telos Media.",
+            features = listOf("Background playback", "Shared audio and video player", "Video links"),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_youtube_full,
+            route = SettingsDeepLinkContract.ROUTE_YOUTUBE,
+        ),
+        TelosApp(
+            key = "telos_youtube_music_app://youtube_music",
+            name = "Telos YouTube Music",
+            description = "YouTube search and native playback inside Telos Media.",
+            features = listOf("Background playback", "Shared audio and video player", "Video links"),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_youtube_music_full,
+            route = SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC,
+        ),
+        TelosApp(
             key = "telos_radio_app://radio",
             name = "Telos Radio",
             description = "Internet radio with a station search, your own collection and a sleep timer.",

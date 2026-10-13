@@ -271,7 +271,7 @@ The layout and feature set of Telos Files are inspired by these file managers. N
 
 ## Flow — selected YouTube components
 
-Copyright © 2025–2026 A-EDev. GPL-3.0. Upstream: https://github.com/Flow-Tube/Flow at commit `4c93b64790c3d89eed57ba96abc997bb955c05f2`. License retained at `third-party/flow/LICENSE`. Adapted files: `utils/YouTubeLink.kt`, `player/stream/AudioStreamSelector.kt`, and `data/repository/NewPipeDownloader.kt`, located under `services/comms/.../youtube/flow/`. Telos supplies its own repository, Compose screens and Media3 session. The downloader uses bounded response reads; Flow proxy-specific dependencies are not copied. Media layouts take inspiration from Flow while using the Telos theme.
+Copyright © 2025–2026 A-EDev. GPL-3.0. Upstream: https://github.com/Flow-Tube/Flow at commit `4c93b64790c3d89eed57ba96abc997bb955c05f2`. License retained at `third-party/flow/LICENSE`. Adapted files: `utils/YouTubeLink.kt`, `player/stream/AudioStreamSelector.kt`, and `data/repository/NewPipeDownloader.kt`, located under `services/comms/.../youtube/flow/`. NewPipe/Rhino rules in `services/comms/consumer-rules.pro` are adapted from Flow `app/proguard-rules.pro` (GPL-3.0-or-later). Telos supplies its own repository, Compose screens and Media3 session. The downloader uses bounded response reads; Flow proxy-specific dependencies are not copied. Media layouts take inspiration from Flow while using the Telos theme.
 
 ## NewPipeExtractor
 

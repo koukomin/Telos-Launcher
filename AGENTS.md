@@ -67,6 +67,6 @@ you port, adapt or take design from another project, update `readme.md` **in the
 
 ## User workflow preferences
 
-- Add necessary UI translations for every change, with Greek as the priority alongside English.
+- Add necessary UI translations for every change, for all supported languages, with Greek as the priority alongside English.
 - Update README, docs and Pages source content when the behavior changes.
 - Push development changes to the working PR branch. Do not merge or create a release without the user explicitly asking.

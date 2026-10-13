@@ -26,7 +26,8 @@ import de.mm20.launcher2.ui.R
 fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
     val context = LocalContext.current
     var query by rememberSaveable(music) { mutableStateOf("") }
-    val entries by vm.results.collectAsStateWithLifecycle()
+    val allEntries by vm.results.collectAsStateWithLifecycle()
+    val entries = allEntries[music].orEmpty()
     val searching by vm.searching.collectAsStateWithLifecycle()
     val resolving by vm.resolving.collectAsStateWithLifecycle()
     val buffering by vm.buffering.collectAsStateWithLifecycle()

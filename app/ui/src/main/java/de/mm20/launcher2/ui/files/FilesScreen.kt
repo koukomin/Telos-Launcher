@@ -152,6 +152,8 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
     var menuOpen by remember { mutableStateOf(false) }
     var addMenu by remember { mutableStateOf(false) }
     var dialog by remember { mutableStateOf<FilesDialog?>(null) }
+    var analysisPath by remember { mutableStateOf<String?>(null) }
+    analysisPath?.let { StorageAnalysisDialog(it, vm::open, { analysisPath = null }) }
     var viewMenu by remember { mutableStateOf(false) }
     val performanceSettings: PerformanceSettings = koinInject()
     val reduceFlow = remember(performanceSettings) { performanceSettings.reduceAnimations }
@@ -273,6 +275,8 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                         Icon(painterResource(Icons.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
                                     }
                                     DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                                        if (vm.path != null && !vm.rootMode && !RemotePath.isRemote(vm.path!!) && !ArchivePath.isArchive(vm.path!!) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(vm.path!!))
+                                            DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_analyze)) }, onClick = { menuOpen = false; analysisPath = vm.path })
                                         DropdownMenuItem(text = { Text(stringResource(R.string.hc_sort_by_2)) }, onClick = { menuOpen = false; dialog = FilesDialog.Sort })
                                         DropdownMenuItem(text = { Text(if (vm.showHidden) stringResource(R.string.hf_files_hide_hidden) else stringResource(R.string.hf_files_show_hidden)) }, onClick = { menuOpen = false; vm.toggleHidden() })
                                         vm.path?.takeIf { de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it) }?.let { vp ->
