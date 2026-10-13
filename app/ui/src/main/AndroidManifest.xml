@@ -206,6 +206,17 @@
             </intent-filter>
         </activity>
 
+        <!-- One document task per virtual app; Settings keeps its own normal task. -->
+        <activity
+            android:name=".settings.TelosAppActivity"
+            android:exported="false"
+            android:documentLaunchMode="intoExisting"
+            android:launchMode="standard"
+            android:taskAffinity=""
+            android:label="@string/settings"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:enableOnBackInvokedCallback="true" />
+
         <activity
             android:name=".settings.SettingsActivity"
             android:exported="true"

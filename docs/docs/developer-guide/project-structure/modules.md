@@ -72,3 +72,13 @@ started this project so future refactorings are to be expected. This is the curr
 
 Most of the modules have a `Module.kt` file in their root which contains Koin definitions to make
 the APIs accessible to other modules.
+
+## Built-in app tasks
+
+`SettingsActivity` routes built-in app deep links to the non-exported `TelosAppActivity`,
+which reuses the same screen host with `documentLaunchMode="intoExisting"` and standard launch mode.
+A stable `telos-task://app/<id>` data URI identifies each app task; payload extras are preserved.
+`SettingsDeepLinkContract.virtualAppTaskId` groups the Media spaces and Viewer aliases,
+and distinguishes Phone from Messages. Ordinary settings and embedded launcher pages keep
+their existing navigation. Test Files → Home → Media → Recents, reopening each app,
+Phone versus Messages, notifications, shared links, rotation, Back and task removal on a device.

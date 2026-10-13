@@ -84,7 +84,7 @@ from Telos Store.
 
 ### How the built-in apps work
 
-- **They look like normal apps.** Each has an icon in the app grid and shows up in search.
+- **They look like normal apps.** Each has an icon in the app grid and shows up in search. Apps opened separately also have their own name and icon in Android Recents, so Files and Media can be switched independently; reopening an app reuses its card. Apps embedded as launcher pages stay in the launcher.
 - **They can be switched on and off.** In Telos Store "install" shows an app's icon and "remove" hides it. Telos Store itself cannot be removed.
 - **Switched-off apps cost nothing.** For Radio, Music, Video and Viewer the services and screens are disabled, so they use no memory or CPU and are not offered in "Open with". Phone and Messages are never touched.
 - **They are guarded against crashes.** Radio, Music, Video and Viewer are switched off automatically when they crash or hang twice within a day, with a notification that points to the Store. Installing the app again resets the counter. Phone and Messages are never switched off, because Android needs them.
