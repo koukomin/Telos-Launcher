@@ -985,7 +985,7 @@ An app installer and updater that works like [Obtainium](https://github.com/Imra
 
 - Search, filters (updates, installed, not installed, track only) and categories
 - Add the apps that are already installed (found through F-Droid and IzzyOnDroid)
-- Import and export in the Obtainium export format, and `obtainium://` links open in the Store
+- Import and export in the Obtainium export format; import individual configurations or arrays, and open `obtainium://app/`, `apps/`, `add/` and `add?url=` links. Imported apps have automatic updates disabled until explicitly enabled.
 
 **Managing the Telos apps**
 

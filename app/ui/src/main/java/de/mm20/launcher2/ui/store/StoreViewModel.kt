@@ -183,9 +183,10 @@ class StoreViewModel : ViewModel(), KoinComponent {
         if (link.isBlank()) return
         viewModelScope.launch {
             when {
-                link.startsWith("obtainium://app/", true) -> {
-                    val json = Uri.decode(link.substringAfter("obtainium://app/"))
-                    val wrapped = runCatching { JSONObject().put("apps", org.json.JSONArray().put(JSONObject(json))).toString() }.getOrNull()
+                link.startsWith("obtainium://app/", true) || link.startsWith("obtainium://apps/", true) -> {
+                    val uri = Uri.parse(link)
+                    val json = Uri.decode(uri.encodedPath.orEmpty().removePrefix("/"))
+                    val wrapped = runCatching { JSONObject().put("apps", if (uri.host.equals("apps", true)) org.json.JSONArray(json) else org.json.JSONArray().put(JSONObject(json))).toString() }.getOrNull()
                     val summary = wrapped?.let { runCatching { tools.importObtainium(it) }.getOrNull() }
                     _message.value = when {
                         summary == null -> str(R.string.au_store_msg_link_unreadable)
@@ -194,7 +195,10 @@ class StoreViewModel : ViewModel(), KoinComponent {
                         else -> str(R.string.au_store_msg_unsupported)
                     }
                 }
-                link.startsWith("obtainium://add/", true) -> onPrefill(link.substringAfter("obtainium://add/"))
+                Uri.parse(link).let { it.scheme.equals("obtainium", true) && it.host.equals("add", true) } -> {
+                    val uri = Uri.parse(link)
+                    onPrefill(uri.getQueryParameter("url") ?: Uri.decode(uri.encodedPath.orEmpty().removePrefix("/")))
+                }
                 else -> onPrefill(link)
             }
         }

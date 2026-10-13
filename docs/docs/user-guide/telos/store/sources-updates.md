@@ -176,3 +176,14 @@ Only the first category of an app is kept on import. Installed state is taken fr
 | Update is not installed in the background | Turn on **Install updates automatically** and make Shizuku or root available, otherwise only a notification is shown |
 | The installer does not open | Allow "Install unknown apps" for Telos in Android settings |
 | Imported apps show as not installed | Their package ids differ from the installed ones. Edit the package name or add the app again |
+
+
+## Εισαγωγή από Obtainium
+
+Από το μενού του Store επιλέξτε εισαγωγή αρχείου Obtainium και ανοίξτε το JSON που εξάγατε. Εισάγονται οι εφαρμογές από το πεδίο `apps`, μεμονωμένες διαμορφώσεις ή λίστες JSON, μαζί με τις υποστηριζόμενες επιλογές πηγής (φίλτρο APK, prereleases), κατηγορία, καρφίτσωμα και παρακολούθηση χωρίς εγκατάσταση. Οι γενικές ρυθμίσεις εμφάνισης και τα credentials του Obtainium δεν μεταφέρονται. Πηγές που δεν υποστηρίζει το Telos αναφέρονται στην περίληψη εισαγωγής.
+
+Υποστηρίζονται τα links `obtainium://app/<encoded JSON>`, `obtainium://apps/<encoded array>`, `obtainium://add/<url>` και `obtainium://add?url=<encoded url>`. Η προσθήκη δεν εγκαθιστά αυτόματα εφαρμογές. Η αυτόματη αναβάθμιση παραμένει απενεργοποιημένη για εισαγόμενες εφαρμογές.
+
+### Obtainium import
+
+Use the Store menu to import an Obtainium JSON export, a single app configuration or an array of configurations. Supported source options, category, pinning and track-only settings are retained. Global Obtainium preferences and credentials are not imported. Unsupported sources are reported in the import summary. App and bulk-app links import configurations; add links prefill the source form. Import does not install apps or enable automatic updates.
