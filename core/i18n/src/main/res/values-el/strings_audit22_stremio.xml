@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">Σχετικά με τα πρόσθετα</string>
+    <string name="au22_stremio_notice_text">Αυτός ο χώρος είναι ένας ανεπίσημος πελάτης για πρόσθετα του Stremio. Τα πρόσθετα είναι μικρές διαδικτυακές υπηρεσίες από ανεξάρτητους προγραμματιστές. Το Telos απλώς εμφανίζει και αναπαράγει όσα προσφέρει ένα πρόσθετο: δεν περιλαμβάνει πρόσθετα, δεν φιλοξενεί βίντεο και δεν ελέγχει το περιεχόμενο που παρέχει ένα πρόσθετο. Ευθύνεστε εσείς για ό,τι προσθέτετε και παρακολουθείτε, καθώς και για το δικαίωμα παρακολούθησής του στη χώρα σας. Ορισμένα πρόσθετα χρησιμοποιούν BitTorrent, το οποίο εμφανίζει τη διεύθυνση IP σας σε άλλους χρήστες. Το Telos δεν συνδέεται με το Stremio.</string>
+    <string name="au22_stremio_notice_accept">Κατάλαβα</string>
+    <string name="au22_stremio_addons">Πρόσθετα</string>
+    <string name="au22_stremio_add_addon">Προσθήκη πρόσθετου</string>
+    <string name="au22_stremio_addon_address">Διεύθυνση πρόσθετου</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json ή stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Προσθήκη Cinemeta (το πρόσθετο μεταδεδομένων του Stremio)</string>
+    <string name="au22_stremio_empty">Δεν υπάρχουν ακόμη πρόσθετα. Προσθέστε ένα για να δείτε τους καταλόγους και τις ροές του. Το Telos δεν περιλαμβάνει κανένα.</string>
+    <string name="au22_stremio_home">Αρχική</string>
+    <string name="au22_stremio_library">Βιβλιοθήκη</string>
+    <string name="au22_stremio_search_hint">Αναζήτηση τίτλων</string>
+    <string name="au22_stremio_continue">Συνέχεια παρακολούθησης</string>
+    <string name="au22_stremio_no_results">Δεν βρέθηκε τίποτα</string>
+    <string name="au22_stremio_library_empty">Η βιβλιοθήκη σας είναι κενή. Ανοίξτε έναν τίτλο και αποθηκεύστε τον εδώ.</string>
+    <string name="au22_stremio_save">Αποθήκευση</string>
+    <string name="au22_stremio_saved">Αποθηκεύτηκε</string>
+    <string name="au22_stremio_season">Κύκλος %d</string>
+    <string name="au22_stremio_streams">Επιλέξτε ροή</string>
+    <string name="au22_stremio_no_streams">Δεν βρέθηκαν ροές για αυτόν τον τίτλο.</string>
+    <string name="au22_stremio_last_used">Τελευταία χρήση</string>
+    <string name="au22_stremio_p2p_warning">Χρησιμοποιεί BitTorrent: άλλοι χρήστες μπορούν να δουν τη διεύθυνση IP σας</string>
+    <string name="au22_stremio_opens_browser">Ανοίγει στο πρόγραμμα περιήγησης</string>
+    <string name="au22_stremio_unsupported">Αυτό το είδος ροής δεν υποστηρίζεται</string>
+    <string name="au22_stremio_refresh">Ανανέωση</string>
+</resources>

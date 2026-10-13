@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">Over add-ons</string>
+    <string name="au22_stremio_notice_text">Deze ruimte is een onofficiële client voor Stremio-add-ons. Add-ons zijn kleine webservices van onafhankelijke ontwikkelaars. Telos toont alleen wat een add-on aanbiedt en speelt het af: het bevat geen add-ons, host geen video\'s en controleert niet wat een add-on levert. Jij bent verantwoordelijk voor wat je toevoegt en bekijkt, en voor het recht om het te bekijken waar je woont. Sommige add-ons gebruiken BitTorrent, waardoor je IP-adres zichtbaar is voor andere gebruikers. Telos is niet verbonden aan Stremio.</string>
+    <string name="au22_stremio_notice_accept">Begrepen</string>
+    <string name="au22_stremio_addons">Add-ons</string>
+    <string name="au22_stremio_add_addon">Add-on toevoegen</string>
+    <string name="au22_stremio_addon_address">Add-on-adres</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json of stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Cinemeta toevoegen (de metadata-add-on van Stremio)</string>
+    <string name="au22_stremio_empty">Er zijn nog geen add-ons. Voeg er een toe om de catalogi en streams te zien. Telos bevat er geen.</string>
+    <string name="au22_stremio_home">Start</string>
+    <string name="au22_stremio_library">Bibliotheek</string>
+    <string name="au22_stremio_search_hint">Titels zoeken</string>
+    <string name="au22_stremio_continue">Verder kijken</string>
+    <string name="au22_stremio_no_results">Niets gevonden</string>
+    <string name="au22_stremio_library_empty">Je bibliotheek is leeg. Open een titel en sla die hier op.</string>
+    <string name="au22_stremio_save">Opslaan</string>
+    <string name="au22_stremio_saved">Opgeslagen</string>
+    <string name="au22_stremio_season">Seizoen %d</string>
+    <string name="au22_stremio_streams">Kies een stream</string>
+    <string name="au22_stremio_no_streams">Er zijn geen streams gevonden voor deze titel.</string>
+    <string name="au22_stremio_last_used">Laatst gebruikt</string>
+    <string name="au22_stremio_p2p_warning">Gebruikt BitTorrent: andere gebruikers kunnen je IP-adres zien</string>
+    <string name="au22_stremio_opens_browser">Opent in de browser</string>
+    <string name="au22_stremio_unsupported">Dit soort stream wordt niet ondersteund</string>
+    <string name="au22_stremio_refresh">Vernieuwen</string>
+</resources>

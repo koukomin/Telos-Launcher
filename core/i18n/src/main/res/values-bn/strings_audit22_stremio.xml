@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">অ্যাড-অন সম্পর্কে</string>
+    <string name="au22_stremio_notice_text">এই স্থানটি Stremio অ্যাড-অনের একটি অনানুষ্ঠানিক ক্লায়েন্ট। অ্যাড-অন হলো স্বাধীন ডেভেলপারদের তৈরি ছোট ওয়েব পরিষেবা। Telos শুধু অ্যাড-অন যা দেয় তা দেখায় ও চালায়: এতে কোনো অ্যাড-অন নেই, কোনো ভিডিও হোস্ট করা হয় না এবং অ্যাড-অন কী সরবরাহ করে তা যাচাই করা হয় না। আপনি যা যোগ করেন ও দেখেন, এবং আপনি যেখানে থাকেন সেখানে তা দেখার অধিকার আপনার আছে কি না, তার দায় আপনার। কিছু অ্যাড-অন BitTorrent ব্যবহার করে, যার ফলে অন্য ব্যবহারকারীরা আপনার IP ঠিকানা দেখতে পায়। Telos-এর সাথে Stremio-র কোনো সম্পর্ক নেই।</string>
+    <string name="au22_stremio_notice_accept">বুঝেছি</string>
+    <string name="au22_stremio_addons">অ্যাড-অন</string>
+    <string name="au22_stremio_add_addon">অ্যাড-অন যোগ করুন</string>
+    <string name="au22_stremio_addon_address">অ্যাড-অনের ঠিকানা</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json বা stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Cinemeta যোগ করুন (Stremio-র মেটাডেটা অ্যাড-অন)</string>
+    <string name="au22_stremio_empty">এখনও কোনো অ্যাড-অন নেই। এর ক্যাটালগ ও স্ট্রিম দেখতে একটি যোগ করুন। Telos-এ কোনো অ্যাড-অন নেই।</string>
+    <string name="au22_stremio_home">হোম</string>
+    <string name="au22_stremio_library">লাইব্রেরি</string>
+    <string name="au22_stremio_search_hint">শিরোনাম খুঁজুন</string>
+    <string name="au22_stremio_continue">দেখা চালিয়ে যান</string>
+    <string name="au22_stremio_no_results">কিছু পাওয়া যায়নি</string>
+    <string name="au22_stremio_library_empty">আপনার লাইব্রেরি খালি। একটি শিরোনাম খুলে এখানে সংরক্ষণ করুন।</string>
+    <string name="au22_stremio_save">সংরক্ষণ</string>
+    <string name="au22_stremio_saved">সংরক্ষিত</string>
+    <string name="au22_stremio_season">সিজন %d</string>
+    <string name="au22_stremio_streams">একটি স্ট্রিম বেছে নিন</string>
+    <string name="au22_stremio_no_streams">এই শিরোনামের জন্য কোনো স্ট্রিম পাওয়া যায়নি।</string>
+    <string name="au22_stremio_last_used">সর্বশেষ ব্যবহৃত</string>
+    <string name="au22_stremio_p2p_warning">BitTorrent ব্যবহার করে: অন্য ব্যবহারকারীরা আপনার IP ঠিকানা দেখতে পারে</string>
+    <string name="au22_stremio_opens_browser">ব্রাউজারে খোলে</string>
+    <string name="au22_stremio_unsupported">এই ধরনের স্ট্রিম সমর্থিত নয়</string>
+    <string name="au22_stremio_refresh">রিফ্রেশ</string>
+</resources>

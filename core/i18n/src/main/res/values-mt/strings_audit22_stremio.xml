@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">Dwar l-add-ons</string>
+    <string name="au22_stremio_notice_text">Dan l-ispazju huwa klijent mhux uffiċjali għall-add-ons ta\' Stremio. L-add-ons huma servizzi żgħar tal-web magħmula minn żviluppaturi indipendenti. Telos juri biss dak li joffri add-on u jilgħabu: ma jinkludi ebda add-on, ma jospita ebda vidjow u ma jiċċekkjax dak li jipprovdi add-on. Int responsabbli minn dak li żżid u tara, u milli jkollok id-dritt li tarah fejn tgħix. Xi add-ons jużaw BitTorrent, li juri l-indirizz IP tiegħek lil utenti oħra. Telos m\'huwiex affiljat ma\' Stremio.</string>
+    <string name="au22_stremio_notice_accept">Nifhem</string>
+    <string name="au22_stremio_addons">Add-ons</string>
+    <string name="au22_stremio_add_addon">Żid add-on</string>
+    <string name="au22_stremio_addon_address">Indirizz tal-add-on</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json jew stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Żid Cinemeta (add-on tal-metadata ta\' Stremio)</string>
+    <string name="au22_stremio_empty">Għad m\'hemm ebda add-on. Żid wieħed biex tara l-katalogi u l-istreams tiegħu. Telos ma jinkludi ebda wieħed.</string>
+    <string name="au22_stremio_home">Home</string>
+    <string name="au22_stremio_library">Librerija</string>
+    <string name="au22_stremio_search_hint">Fittex titli</string>
+    <string name="au22_stremio_continue">Kompli ara</string>
+    <string name="au22_stremio_no_results">Ma nstab xejn</string>
+    <string name="au22_stremio_library_empty">Il-librerija tiegħek hija vojta. Iftaħ titlu u ssejvjah hawn.</string>
+    <string name="au22_stremio_save">Issejvja</string>
+    <string name="au22_stremio_saved">Issejvjat</string>
+    <string name="au22_stremio_season">Staġun %d</string>
+    <string name="au22_stremio_streams">Agħżel stream</string>
+    <string name="au22_stremio_no_streams">Ma nstab ebda stream għal dan it-titlu.</string>
+    <string name="au22_stremio_last_used">Użat l-aħħar</string>
+    <string name="au22_stremio_p2p_warning">Juża BitTorrent: utenti oħra jistgħu jaraw l-indirizz IP tiegħek</string>
+    <string name="au22_stremio_opens_browser">Jinfetaħ fil-browser</string>
+    <string name="au22_stremio_unsupported">Dan it-tip ta\' stream mhuwiex appoġġjat</string>
+    <string name="au22_stremio_refresh">Aġġorna</string>
+</resources>

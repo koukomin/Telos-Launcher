@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">Eklentiler hakkında</string>
+    <string name="au22_stremio_notice_text">Bu alan, Stremio eklentileri için resmî olmayan bir istemcidir. Eklentiler, bağımsız geliştiricilerin hazırladığı küçük web hizmetleridir. Telos yalnızca bir eklentinin sunduklarını gösterir ve oynatır: eklenti içermez, video barındırmaz ve eklentilerin sağladığı içeriği denetlemez. Eklediklerinizden, izlediklerinizden ve yaşadığınız yerde izleme hakkına sahip olmanızdan siz sorumlusunuz. Bazı eklentiler BitTorrent kullanır; bu da IP adresinizi diğer kullanıcılara gösterir. Telos, Stremio ile bağlantılı değildir.</string>
+    <string name="au22_stremio_notice_accept">Anladım</string>
+    <string name="au22_stremio_addons">Eklentiler</string>
+    <string name="au22_stremio_add_addon">Eklenti ekle</string>
+    <string name="au22_stremio_addon_address">Eklenti adresi</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json veya stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Cinemeta ekle (Stremio\'nun meta veri eklentisi)</string>
+    <string name="au22_stremio_empty">Henüz eklenti yok. Kataloglarını ve yayınlarını görmek için bir eklenti ekleyin. Telos hiçbirini içermez.</string>
+    <string name="au22_stremio_home">Ana sayfa</string>
+    <string name="au22_stremio_library">Kitaplık</string>
+    <string name="au22_stremio_search_hint">Başlık ara</string>
+    <string name="au22_stremio_continue">İzlemeye devam et</string>
+    <string name="au22_stremio_no_results">Hiçbir şey bulunamadı</string>
+    <string name="au22_stremio_library_empty">Kitaplığınız boş. Bir başlık açıp buraya kaydedin.</string>
+    <string name="au22_stremio_save">Kaydet</string>
+    <string name="au22_stremio_saved">Kaydedildi</string>
+    <string name="au22_stremio_season">%d. sezon</string>
+    <string name="au22_stremio_streams">Bir yayın seçin</string>
+    <string name="au22_stremio_no_streams">Bu başlık için yayın bulunamadı.</string>
+    <string name="au22_stremio_last_used">Son kullanılan</string>
+    <string name="au22_stremio_p2p_warning">BitTorrent kullanır: diğer kullanıcılar IP adresinizi görebilir</string>
+    <string name="au22_stremio_opens_browser">Tarayıcıda açılır</string>
+    <string name="au22_stremio_unsupported">Bu tür yayın desteklenmiyor</string>
+    <string name="au22_stremio_refresh">Yenile</string>
+</resources>

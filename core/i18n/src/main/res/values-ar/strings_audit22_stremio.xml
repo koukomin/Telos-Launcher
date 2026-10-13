@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">حول الإضافات</string>
+    <string name="au22_stremio_notice_text">هذه المساحة عميل غير رسمي لإضافات Stremio. الإضافات خدمات ويب صغيرة يصنعها مطورون مستقلون. يعرض Telos ما تقدمه الإضافة ويشغّله فقط: فهو لا يتضمن أي إضافات، ولا يستضيف أي فيديو، ولا يتحقق مما توفره الإضافة. أنت مسؤول عما تضيفه وتشاهده، وعن امتلاك الحق في مشاهدته في مكان إقامتك. تستخدم بعض الإضافات BitTorrent، مما يُظهر عنوان IP الخاص بك للمستخدمين الآخرين. Telos غير تابع لـ Stremio.</string>
+    <string name="au22_stremio_notice_accept">فهمت</string>
+    <string name="au22_stremio_addons">الإضافات</string>
+    <string name="au22_stremio_add_addon">إضافة إضافة</string>
+    <string name="au22_stremio_addon_address">عنوان الإضافة</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json أو stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">إضافة Cinemeta (إضافة البيانات الوصفية في Stremio)</string>
+    <string name="au22_stremio_empty">لا توجد إضافات بعد. أضف إضافة لعرض فهارسها وبثوثها. لا يتضمن Telos أي إضافات.</string>
+    <string name="au22_stremio_home">الرئيسية</string>
+    <string name="au22_stremio_library">المكتبة</string>
+    <string name="au22_stremio_search_hint">البحث عن عناوين</string>
+    <string name="au22_stremio_continue">متابعة المشاهدة</string>
+    <string name="au22_stremio_no_results">لم يتم العثور على شيء</string>
+    <string name="au22_stremio_library_empty">مكتبتك فارغة. افتح عنوانًا واحفظه هنا.</string>
+    <string name="au22_stremio_save">حفظ</string>
+    <string name="au22_stremio_saved">تم الحفظ</string>
+    <string name="au22_stremio_season">الموسم %d</string>
+    <string name="au22_stremio_streams">اختر بثًا</string>
+    <string name="au22_stremio_no_streams">لم يتم العثور على أي بث لهذا العنوان.</string>
+    <string name="au22_stremio_last_used">آخر استخدام</string>
+    <string name="au22_stremio_p2p_warning">يستخدم BitTorrent: يمكن للمستخدمين الآخرين رؤية عنوان IP الخاص بك</string>
+    <string name="au22_stremio_opens_browser">يُفتح في المتصفح</string>
+    <string name="au22_stremio_unsupported">هذا النوع من البث غير مدعوم</string>
+    <string name="au22_stremio_refresh">تحديث</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">O dodatkach</string>
+    <string name="au22_stremio_notice_text">Ta przestrzeń to nieoficjalny klient dodatków Stremio. Dodatki to małe usługi internetowe tworzone przez niezależnych programistów. Telos jedynie pokazuje to, co oferuje dodatek, i to odtwarza: nie zawiera dodatków, nie hostuje filmów i nie sprawdza, co dostarcza dodatek. Odpowiadasz za to, co dodajesz i oglądasz, oraz za prawo do oglądania tego w miejscu, w którym mieszkasz. Niektóre dodatki korzystają z BitTorrent, który pokazuje Twój adres IP innym użytkownikom. Telos nie jest powiązany ze Stremio.</string>
+    <string name="au22_stremio_notice_accept">Rozumiem</string>
+    <string name="au22_stremio_addons">Dodatki</string>
+    <string name="au22_stremio_add_addon">Dodaj dodatek</string>
+    <string name="au22_stremio_addon_address">Adres dodatku</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json lub stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Dodaj Cinemeta (dodatek z metadanymi Stremio)</string>
+    <string name="au22_stremio_empty">Nie ma jeszcze dodatków. Dodaj jeden, aby zobaczyć jego katalogi i strumienie. Telos nie zawiera żadnych.</string>
+    <string name="au22_stremio_home">Start</string>
+    <string name="au22_stremio_library">Biblioteka</string>
+    <string name="au22_stremio_search_hint">Szukaj tytułów</string>
+    <string name="au22_stremio_continue">Kontynuuj oglądanie</string>
+    <string name="au22_stremio_no_results">Nic nie znaleziono</string>
+    <string name="au22_stremio_library_empty">Twoja biblioteka jest pusta. Otwórz tytuł i zapisz go tutaj.</string>
+    <string name="au22_stremio_save">Zapisz</string>
+    <string name="au22_stremio_saved">Zapisano</string>
+    <string name="au22_stremio_season">Sezon %d</string>
+    <string name="au22_stremio_streams">Wybierz strumień</string>
+    <string name="au22_stremio_no_streams">Nie znaleziono strumieni dla tego tytułu.</string>
+    <string name="au22_stremio_last_used">Ostatnio używany</string>
+    <string name="au22_stremio_p2p_warning">Używa BitTorrent: inni użytkownicy mogą zobaczyć Twój adres IP</string>
+    <string name="au22_stremio_opens_browser">Otwiera się w przeglądarce</string>
+    <string name="au22_stremio_unsupported">Ten rodzaj strumienia nie jest obsługiwany</string>
+    <string name="au22_stremio_refresh">Odśwież</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">关于附加组件</string>
+    <string name="au22_stremio_notice_text">此空间是 Stremio 附加组件的非官方客户端。附加组件是由独立开发者制作的小型网络服务。Telos 只会显示并播放附加组件提供的内容：它不包含任何附加组件，不托管任何视频，也不会检查附加组件提供的内容。您需要对自己添加和观看的内容负责，并确保在您所在地区有权观看。部分附加组件使用 BitTorrent，这会向其他用户显示您的 IP 地址。Telos 与 Stremio 没有任何关联。</string>
+    <string name="au22_stremio_notice_accept">我明白了</string>
+    <string name="au22_stremio_addons">附加组件</string>
+    <string name="au22_stremio_add_addon">添加附加组件</string>
+    <string name="au22_stremio_addon_address">附加组件地址</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json 或 stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">添加 Cinemeta（Stremio 的元数据附加组件）</string>
+    <string name="au22_stremio_empty">尚无附加组件。添加一个即可查看其目录和流。Telos 不内置任何附加组件。</string>
+    <string name="au22_stremio_home">主页</string>
+    <string name="au22_stremio_library">媒体库</string>
+    <string name="au22_stremio_search_hint">搜索影片</string>
+    <string name="au22_stremio_continue">继续观看</string>
+    <string name="au22_stremio_no_results">未找到任何内容</string>
+    <string name="au22_stremio_library_empty">您的媒体库为空。打开某个影片并将其保存到这里。</string>
+    <string name="au22_stremio_save">保存</string>
+    <string name="au22_stremio_saved">已保存</string>
+    <string name="au22_stremio_season">第 %d 季</string>
+    <string name="au22_stremio_streams">选择一个流</string>
+    <string name="au22_stremio_no_streams">未找到此影片的流。</string>
+    <string name="au22_stremio_last_used">上次使用</string>
+    <string name="au22_stremio_p2p_warning">使用 BitTorrent：其他用户可以看到您的 IP 地址</string>
+    <string name="au22_stremio_opens_browser">在浏览器中打开</string>
+    <string name="au22_stremio_unsupported">不支持此类流</string>
+    <string name="au22_stremio_refresh">刷新</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">A bővítményekről</string>
+    <string name="au22_stremio_notice_text">Ez a felület a Stremio-bővítmények nem hivatalos kliense. A bővítmények független fejlesztők által készített kis webszolgáltatások. A Telos csak megjeleníti, amit egy bővítmény kínál, és lejátssza azt: nem tartalmaz bővítményeket, nem tárol videókat, és nem ellenőrzi, mit nyújt egy bővítmény. Ön felel azért, amit hozzáad és megnéz, valamint azért, hogy ott, ahol él, jogosult legyen megnézni. Egyes bővítmények BitTorrentet használnak, amely megmutatja az IP-címét más felhasználóknak. A Telos nem áll kapcsolatban a Stremióval.</string>
+    <string name="au22_stremio_notice_accept">Értem</string>
+    <string name="au22_stremio_addons">Bővítmények</string>
+    <string name="au22_stremio_add_addon">Bővítmény hozzáadása</string>
+    <string name="au22_stremio_addon_address">Bővítmény címe</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json vagy stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Cinemeta hozzáadása (a Stremio metaadat-bővítménye)</string>
+    <string name="au22_stremio_empty">Még nincsenek bővítmények. Adjon hozzá egyet a katalógusainak és streamjeinek megtekintéséhez. A Telos nem tartalmaz ilyet.</string>
+    <string name="au22_stremio_home">Kezdőlap</string>
+    <string name="au22_stremio_library">Könyvtár</string>
+    <string name="au22_stremio_search_hint">Címek keresése</string>
+    <string name="au22_stremio_continue">Folytatás</string>
+    <string name="au22_stremio_no_results">Nincs találat</string>
+    <string name="au22_stremio_library_empty">A könyvtár üres. Nyisson meg egy címet, és mentse ide.</string>
+    <string name="au22_stremio_save">Mentés</string>
+    <string name="au22_stremio_saved">Mentve</string>
+    <string name="au22_stremio_season">%d. évad</string>
+    <string name="au22_stremio_streams">Válasszon streamet</string>
+    <string name="au22_stremio_no_streams">Ehhez a címhez nem található stream.</string>
+    <string name="au22_stremio_last_used">Utoljára használt</string>
+    <string name="au22_stremio_p2p_warning">BitTorrentet használ: más felhasználók láthatják az IP-címét</string>
+    <string name="au22_stremio_opens_browser">Megnyílik a böngészőben</string>
+    <string name="au22_stremio_unsupported">Ez a streamtípus nem támogatott</string>
+    <string name="au22_stremio_refresh">Frissítés</string>
+</resources>

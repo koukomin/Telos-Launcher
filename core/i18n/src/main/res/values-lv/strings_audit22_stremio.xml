@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">Par papildinājumiem</string>
+    <string name="au22_stremio_notice_text">Šī sadaļa ir neoficiāls Stremio papildinājumu klients. Papildinājumi ir nelieli tīmekļa pakalpojumi, ko veido neatkarīgi izstrādātāji. Telos tikai parāda, ko papildinājums piedāvā, un atskaņo to: tajā nav iekļauts neviens papildinājums, tas neglabā videoklipus un nepārbauda, ko papildinājums nodrošina. Tu esi atbildīgs par to, ko pievieno un skaties, kā arī par to, vai tev ir tiesības to skatīties savā dzīvesvietā. Daži papildinājumi izmanto BitTorrent, kas citiem lietotājiem parāda tavu IP adresi. Telos nav saistīts ar Stremio.</string>
+    <string name="au22_stremio_notice_accept">Saprotu</string>
+    <string name="au22_stremio_addons">Papildinājumi</string>
+    <string name="au22_stremio_add_addon">Pievienot papildinājumu</string>
+    <string name="au22_stremio_addon_address">Papildinājuma adrese</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json vai stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Pievienot Cinemeta (Stremio metadatu papildinājumu)</string>
+    <string name="au22_stremio_empty">Papildinājumu vēl nav. Pievieno vienu, lai redzētu tā katalogus un straumes. Telos neietver nevienu.</string>
+    <string name="au22_stremio_home">Sākums</string>
+    <string name="au22_stremio_library">Bibliotēka</string>
+    <string name="au22_stremio_search_hint">Meklēt nosaukumus</string>
+    <string name="au22_stremio_continue">Turpināt skatīties</string>
+    <string name="au22_stremio_no_results">Nekas nav atrasts</string>
+    <string name="au22_stremio_library_empty">Tava bibliotēka ir tukša. Atver nosaukumu un saglabā to šeit.</string>
+    <string name="au22_stremio_save">Saglabāt</string>
+    <string name="au22_stremio_saved">Saglabāts</string>
+    <string name="au22_stremio_season">%d. sezona</string>
+    <string name="au22_stremio_streams">Izvēlies straumi</string>
+    <string name="au22_stremio_no_streams">Šim nosaukumam straumes netika atrastas.</string>
+    <string name="au22_stremio_last_used">Pēdējoreiz izmantots</string>
+    <string name="au22_stremio_p2p_warning">Izmanto BitTorrent: citi lietotāji var redzēt tavu IP adresi</string>
+    <string name="au22_stremio_opens_browser">Atveras pārlūkā</string>
+    <string name="au22_stremio_unsupported">Šāda veida straume netiek atbalstīta</string>
+    <string name="au22_stremio_refresh">Atsvaidzināt</string>
+</resources>

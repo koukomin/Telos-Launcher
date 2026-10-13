@@ -14,6 +14,7 @@ based on" table in `readme.md`.
 | [Thor](https://github.com/trinadhthatakula/Thor) | GPL-3.0-or-later | Copyright (c) 2025-2026 Trinadh Thatakula |
 | [Undead Wallpaper](https://github.com/maocide/UndeadWallpaper) | GPL-3.0 | The Undead Wallpaper authors |
 | [Obtainium](https://github.com/ImranR98/Obtainium) | GPL-3.0 | The Obtainium authors |
+| [Stremio add-on SDK (protocol documentation)](https://github.com/Stremio/stremio-addon-sdk) | MIT | Copyright © 2019 SmartCode OOD. Only the protocol description was used as a specification; Telos' Stremio client is its own code. Not affiliated with Stremio |
 | [iptv-org (API and database)](https://github.com/iptv-org/api) | Unlicense (public domain) | Data only, downloaded at run time (channel list, logos, stream addresses); nothing is bundled. The streams belong to third parties |
 | [Free-TV/IPTV](https://github.com/Free-TV/IPTV), [greektvm3u](https://github.com/filipposfilippides/greektvm3u), XMLTV guides | no license stated | Data only, fetched at run time (playlists and programme guide); nothing is bundled or redistributed |
 | [Gopeed](https://github.com/GopeedLab/gopeed) | GPL-3.0 | Design ideas only for Telos Downloads, no code copied (copyright: the Gopeed authors) |
