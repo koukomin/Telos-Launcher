@@ -358,12 +358,9 @@ private fun SpacePill(
                         label = "mediaHubSegmentContent",
                     )
                     val label = stringResource(item.label)
-                    val segmentWeight by animateFloatAsState(
-                        1f, if (reduceAnimations) snap() else spring(0.8f, 400f), label = "mediaHubSegmentWeight",
-                    )
                     Row(
                         modifier = Modifier
-                            .weight(segmentWeight)
+                            .weight(1f)
                             .height(36.dp)
                             .onGloballyPositioned {
                                 xs[item] = it.positionInParent().x

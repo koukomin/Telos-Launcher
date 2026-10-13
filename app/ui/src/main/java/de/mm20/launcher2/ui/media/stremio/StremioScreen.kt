@@ -93,6 +93,12 @@ fun StremioScreen() {
     var showTrakt by remember { mutableStateOf(false) }
     val email by vm.accountEmail.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    androidx.compose.runtime.LaunchedEffect(email) {
+        if (email == null) {
+            showAccount = false
+            showAddons = false
+        }
+    }
     val lifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle
     androidx.compose.runtime.DisposableEffect(lifecycle, vm) {
         val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
@@ -103,7 +109,7 @@ fun StremioScreen() {
     }
 
     MediaFrame(stringResource(R.string.au22_stremio_label), actions = {
-        TextButton(onClick = { showAccount = true }) { Text(stringResource(R.string.au22_stremio_account)) }
+        if (email != null) TextButton(onClick = { showAccount = true }) { Text(stringResource(R.string.au22_stremio_account)) }
         TextButton(onClick = { showTrakt = true }) { Text(stringResource(R.string.au7_trakt_title)) }
         if (accepted && email != null) {
             IconButton(onClick = { showAddons = true }) {
