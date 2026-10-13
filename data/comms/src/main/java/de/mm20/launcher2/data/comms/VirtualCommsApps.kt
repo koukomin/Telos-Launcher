@@ -948,7 +948,6 @@ internal class CommsVirtualAppProvider(private val context: Context) : VirtualAp
         VirtualRadioApp(context),
         VirtualMusicApp(context),
         VirtualVideoApp(context),
-        VirtualPhotosApp(context),
         VirtualViewerApp(context),
         VirtualFilesApp(context),
         VirtualCalculatorApp(context),

@@ -71,7 +71,7 @@ the Work Mode switch and the private space lock.
 2. **Open the settings.** Tap the **more** button in the search bar (three dots): the menu has **Wallpaper**,
    **Settings**, **Add widget** and **Help**. A long press on the home screen opens a smaller menu with
    **Change wallpaper** and **Add widget**.
-3. **Look at the app grid.** Besides your installed apps you find the Telos apps (Phone, Messages, Files, Photos,
+3. **Look at the app grid.** Besides your installed apps you find the Telos apps (Phone, Messages, Files, Viewer,
    Music, Video, Radio, Calculator, Screenshot, Screen Recorder, Voice Recorder, Notes, Calendar and Store). They run inside the launcher.
 4. **Open Telos Store** to switch the Telos apps on or off, and to install and update other apps from GitHub,
    F-Droid and similar sources. See [Store](./telos/store/).

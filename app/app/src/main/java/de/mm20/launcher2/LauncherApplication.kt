@@ -341,7 +341,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                 "de.mm20.launcher2.ui.media.video.VideoPlayerActivity",
                 "de.mm20.launcher2.ui.media.video.IsolatedVideoPlayerActivity",
             ),
-            "telos_photos_app://photos" to listOf(
+            "telos_viewer_app://viewer" to listOf(
                 "de.mm20.launcher2.ui.media.photos.PhotoViewerActivity",
                 "de.mm20.launcher2.ui.media.photos.PhotoEditorActivity",
             ),
@@ -349,7 +349,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
         )
         val GUARDED_NAMES = mapOf(
             "telos_radio_app://radio" to "Telos Radio", "telos_music_app://music" to "Telos Music",
-            "telos_video_app://video" to "Telos Video", "telos_photos_app://photos" to "Telos Photos",
+            "telos_video_app://video" to "Telos Video", "telos_viewer_app://viewer" to "Telos Viewer",
             "telos_downloads_app://downloads" to "Telos Downloads",
         )
     }

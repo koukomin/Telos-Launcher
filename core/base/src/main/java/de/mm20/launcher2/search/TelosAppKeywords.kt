@@ -17,11 +17,9 @@ object TelosAppKeywords {
         "telos_radio_app" to listOf("fm", "stations", "ραδιόφωνο", "ραδιοφωνικοί σταθμοί"),
         "telos_music_app" to listOf("songs", "player", "audio", "tracks", "μουσική", "τραγούδια"),
         "telos_video_app" to listOf("movies", "player", "films", "βίντεο", "ταινίες"),
-        "telos_photos_app" to listOf(
+        "telos_viewer_app" to listOf(
             "photos", "gallery", "pictures", "images", "camera roll", "albums",
             "φωτογραφίες", "γκαλερί", "εικόνες", "άλμπουμ",
-        ),
-        "telos_viewer_app" to listOf(
             "viewer", "documents", "docs", "pdf", "office", "word", "excel", "powerpoint", "presentations", "spreadsheets", "ebook", "epub", "reader", "files",
             "προβολή", "έγγραφα", "αρχεία", "παρουσιάσεις", "λογιστικά φύλλα", "αναγνώστης",
         ),

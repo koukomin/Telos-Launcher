@@ -319,9 +319,37 @@ private fun dateText(context: Context, millis: Long): String =
         context, millis, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_ABBREV_MONTH or DateUtils.FORMAT_SHOW_YEAR
     )
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+/**
+ * Telos Viewer: the pictures on the phone (gallery) and the documents (library), as two tabs.
+ * The last tab used is remembered.
+ */
 @Composable
 fun ViewerScreen() {
+    de.mm20.launcher2.ui.media.VirtualAppGuardEffect("telos_viewer_app://viewer")
+    val context = LocalContext.current
+    var tab by rememberSaveable {
+        mutableIntStateOf(
+            runCatching { context.getSharedPreferences("telos_viewer", Context.MODE_PRIVATE).getInt("tab", 0) }.getOrDefault(0)
+        )
+    }
+    fun select(t: Int) {
+        tab = t
+        runCatching { context.getSharedPreferences("telos_viewer", Context.MODE_PRIVATE).edit().putInt("tab", t).apply() }
+    }
+    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface).statusBarsPadding()) {
+        androidx.compose.material3.TabRow(selectedTabIndex = tab, containerColor = Color.Transparent) {
+            androidx.compose.material3.Tab(selected = tab == 0, onClick = { select(0) }, text = { Text(stringResource(R.string.hc_photos)) })
+            androidx.compose.material3.Tab(selected = tab == 1, onClick = { select(1) }, text = { Text(stringResource(R.string.au20_viewer_cat_documents)) })
+        }
+        Box(Modifier.weight(1f).fillMaxWidth()) {
+            if (tab == 0) de.mm20.launcher2.ui.media.photos.PhotosScreen(embedded = true) else DocumentsScreen(embedded = true)
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@Composable
+internal fun DocumentsScreen(embedded: Boolean = false) {
     val vm: ViewerViewModel = viewModel()
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -388,13 +416,13 @@ fun ViewerScreen() {
         Modifier.fillMaxSize().background(surface)
             .background(Brush.verticalGradient(listOf(primary.copy(alpha = 0.14f), surface)))
     ) {
-        Column(Modifier.fillMaxSize().statusBarsPadding()) {
+        Column(Modifier.fillMaxSize().then(if (embedded) Modifier else Modifier.statusBarsPadding())) {
             Row(
-                Modifier.fillMaxWidth().padding(start = 20.dp, end = 16.dp, top = 12.dp, bottom = 4.dp),
+                Modifier.fillMaxWidth().padding(start = 20.dp, end = 16.dp, top = if (embedded) 4.dp else 12.dp, bottom = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(Modifier.weight(1f)) {
-                    Text(
+                    if (!embedded) Text(
                         stringResource(R.string.au20_viewer_title),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.SemiBold,

@@ -127,9 +127,10 @@ private fun Thumb(item: PhotoItem, modifier: Modifier) {
 }
 
 @Composable
-fun PhotosScreen() {
+/** The photo library. With [embedded] it sits inside Telos Viewer, which draws the status bar space and the tabs. */
+fun PhotosScreen(embedded: Boolean = false) {
     val viewModel: PhotosViewModel = viewModel()
-    de.mm20.launcher2.ui.media.VirtualAppGuardEffect("telos_photos_app://photos")
+    // the guard of the whole app is set by Telos Viewer
     val context = LocalContext.current
     val items by viewModel.items.collectAsStateWithLifecycle()
 
@@ -189,7 +190,7 @@ fun PhotosScreen() {
     ) { padding ->
         Column(Modifier.fillMaxSize().padding(padding)) {
             Row(
-                Modifier.fillMaxWidth().statusBarsPadding().padding(start = 20.dp, end = 12.dp, top = 12.dp, bottom = 8.dp),
+                Modifier.fillMaxWidth().then(if (embedded) Modifier else Modifier.statusBarsPadding()).padding(start = 20.dp, end = 12.dp, top = if (embedded) 4.dp else 12.dp, bottom = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 if (album != null) {
@@ -198,7 +199,7 @@ fun PhotosScreen() {
                     }
                 }
                 Column {
-                    Text(
+                    if (!embedded || album != null) Text(
                         album?.name ?: stringResource(R.string.hc_photos),
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.SemiBold,

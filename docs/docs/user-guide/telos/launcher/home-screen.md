@@ -15,7 +15,7 @@ virtual apps that cannot be saved as a normal shortcut. Switching an app off in 
 For every app except the Store you get a second choice: **"&lt;App&gt; as a page in the launcher"**. Then the app is not started in a
 separate screen but shown as a page of the home screen, which slides in with the gesture (push for swipes, zoom for double tap and
 long press) and goes away with the back gesture or by swiping back. Phone, Messages, Notes, Calendar, Calculator, Voice Recorder,
-Screen Recorder, Screenshot, Radio, Music, Video, Photos, Files, Downloads and Network can be used this way, including their own sub screens
+Screen Recorder, Screenshot, Radio, Music, Video, Viewer, Files, Downloads and Network can be used this way, including their own sub screens
 (for example contact details or the app's settings). The page always starts on the app's first screen and is closed again when you
 leave the launcher. The keyboard moves the page up while you type. Lists inside the page scroll first; the page only closes when you
 drag further than the list can scroll. Like "open", the page does nothing if the app is switched off in Telos Store. This is not

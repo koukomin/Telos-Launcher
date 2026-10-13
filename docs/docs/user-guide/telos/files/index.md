@@ -133,5 +133,5 @@ Keystore, which does not leave the device. Cryptomator passwords are never store
 | Only the gate screen shows | Tap **Allow access** and enable All files access for Telos |
 | A folder says "Cannot open this folder" | The app cannot read it (for example `Android/data` on newer Android). Use the root explorer if you have root |
 | The SD card is missing | Tap **Refresh** in the More menu to re-read the volumes |
-| A file opens in the wrong app | Telos opens pictures in Photos, videos in Video and documents in Photos' document viewer. Others use Android's chooser |
+| A file opens in the wrong app | Telos opens pictures in Photos, videos in Video and documents in Telos Viewer. Others use Android's chooser |
 | Related apps | [Photos](../photos/), [Video](../video/) |
