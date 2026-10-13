@@ -104,5 +104,23 @@ features:
 
   <div class="credits">Wallpaper by Allec Gomes on <a href="https://unsplash.com/de/fotos/ein-grunes-blatt-das-auf-einem-gewasser-schwimmt-UcWUMqIsld8" target="_blank">Unsplash.com</a></div>
 </div>
+<div class="telos-story">
+
+## The story behind Telos
+
+Telos started as a personal project, and I want to be upfront about how it was made: **I built it with zero coding knowledge.** All of the development was done with AI assistants — mainly [Claude](https://claude.ai), along with Grok and Gemini. I couldn't have written this software by hand. What I could do was describe what I wanted, test each build on my own phone, and keep iterating with the AI until it worked. In that sense Telos is as much an experiment in AI-assisted development as it is a launcher.
+
+It all comes down to one missing feature. I was already a happy user of [Kvaesitso](https://github.com/MM2-0/Kvaesitso), which I think is an excellent launcher. But a few things I really wanted weren't there — above all **freezing apps and launching frozen apps straight from the launcher.** For me that is the single most important feature, for two reasons:
+
+- **Battery.** A frozen app can't wake up, run in the background, sync or drain power. Freeze the apps you only open once in a while and the battery lasts noticeably longer.
+- **Privacy.** A frozen app can't phone home, track you, or quietly listen in the background. (You know the feeling — you talk about something near your phone and suddenly see an ad for it? A frozen app simply isn't running. *Are you listening, Facebook?*) Being able to freeze an app and still open it on demand, right from the home screen, gives you the convenience without leaving it running all day.
+
+Once that worked, I kept going. I started adding the things I use every day — a dialer, messaging, a file manager, a gallery, music, video, radio, downloads, a firewall and more — not as separate apps you install, but as **virtual apps built into the launcher itself.** Little by little the project grew, and at some point it stopped feeling like "a launcher with a few extras" and started feeling like something closer to a small **operating system on top of Android**: one place that does most of what I need a phone to do, built around my own priorities of speed, battery and privacy.
+
+Telos is still a personal fork and a work in progress, shaped by what one person actually wanted from their phone. If any of that resonates with you, you're welcome to use it.
+
+
+</div>
+
 <p class="telos-note">Telos is a fork of <a href="https://github.com/MM2-0/Kvaesitso">Kvaesitso</a> by MM2-0 and its contributors, released under the GPL-3.0.</p>
 <Footer></Footer>
