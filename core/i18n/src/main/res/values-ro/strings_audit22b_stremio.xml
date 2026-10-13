@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Cont Stremio</string>
+    <string name="au22_stremio_account_intro">Conectați-vă cu contul Stremio pentru a păstra sincronizate suplimentele, biblioteca și continuarea vizionării. Parola este trimisă doar către Stremio (api.strem.io) și nu este stocată. Aceasta folosește serviciul de conturi Stremio, pe care Stremio îl poate modifica sau bloca oricând. Telos nu este afiliat cu Stremio.</string>
+    <string name="au22_stremio_email">E-mail</string>
+    <string name="au22_stremio_password">Parolă</string>
+    <string name="au22_stremio_sign_in">Conectare</string>
+    <string name="au22_stremio_signed_in">Conectat ca %s</string>
+    <string name="au22_stremio_sync_now">Sincronizează acum</string>
+    <string name="au22_stremio_sign_out">Deconectare</string>
+    <string name="au22_stremio_synced">Sincronizat</string>
+    <string name="au22_stremio_directory">Răsfoiește suplimentele</string>
+    <string name="au22_stremio_directory_hint">Suplimente listate de suplimentele instalate și de lista publică Stremio. Sunt create de terți și nu sunt verificate de Telos sau Stremio.</string>
+    <string name="au22_stremio_directory_empty">Nu s-au găsit suplimente</string>
+</resources>

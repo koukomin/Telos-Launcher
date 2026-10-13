@@ -16,8 +16,9 @@ class StremioClient {
     /** Reads the manifest at the address the user gave; fails with a readable message if it is not an add-on */
     suspend fun fetchAddon(input: String): Result<Addon> = runCatching {
         val base = StremioProtocol.baseUrl(input) ?: error("This is not a web address")
-        val manifest = StremioProtocol.parseManifest(get(StremioProtocol.manifestUrl(base))) ?: error("This is not a Stremio add-on")
-        Addon(base, manifest)
+        val raw = get(StremioProtocol.manifestUrl(base))
+        val manifest = StremioProtocol.parseManifest(raw) ?: error("This is not a Stremio add-on")
+        Addon(base, manifest, raw)
     }
 
     suspend fun catalog(addon: Addon, catalog: AddonCatalog, extra: Map<String, String> = emptyMap()): List<MetaPreview> =
@@ -32,9 +33,19 @@ class StremioClient {
         runCatching { StremioProtocol.parseStreams(get(StremioProtocol.resourceUrl(addon.baseUrl, "stream", type, id)), addon.name) }
             .getOrDefault(emptyList())
 
-    suspend fun subtitles(addon: Addon, type: String, id: String): List<SubtitleItem> =
-        runCatching { StremioProtocol.parseSubtitles(get(StremioProtocol.resourceUrl(addon.baseUrl, "subtitles", type, id))) }
+    suspend fun subtitles(addon: Addon, type: String, id: String, extra: Map<String, String> = emptyMap()): List<SubtitleItem> =
+        runCatching { StremioProtocol.parseSubtitles(get(StremioProtocol.resourceUrl(addon.baseUrl, "subtitles", type, id, extra))) }
             .getOrDefault(emptyList())
+
+    /** The add-ons listed by an add-on catalog (`addon_catalog` resource) of [addon]: a directory of other add-ons */
+    suspend fun addonCatalog(addon: Addon, catalog: AddonCatalog): List<DirectoryAddon> =
+        runCatching {
+            StremioProtocol.parseAddonCatalog(get(StremioProtocol.resourceUrl(addon.baseUrl, "addon_catalog", catalog.type, catalog.id)))
+        }.getOrDefault(emptyList())
+
+    /** A list of add-ons at an address (Stremio's public add-on list); empty when it cannot be read */
+    suspend fun addonList(url: String): List<DirectoryAddon> =
+        runCatching { StremioProtocol.parseAddonList(get(url)) }.getOrDefault(emptyList())
 
     /** The streams of all add-ons that answer for this content, asked in parallel */
     suspend fun allStreams(addons: List<Addon>, type: String, id: String): List<StreamItem> = coroutineScope {
@@ -43,9 +54,9 @@ class StremioClient {
             .flatMap { it.await() }
     }
 
-    suspend fun allSubtitles(addons: List<Addon>, type: String, id: String): List<SubtitleItem> = coroutineScope {
+    suspend fun allSubtitles(addons: List<Addon>, type: String, id: String, extra: Map<String, String> = emptyMap()): List<SubtitleItem> = coroutineScope {
         addons.filter { it.manifest.supports("subtitles", type, id) }
-            .map { a -> async { subtitles(a, type, id) } }
+            .map { a -> async { subtitles(a, type, id, extra) } }
             .flatMap { it.await() }
     }
 

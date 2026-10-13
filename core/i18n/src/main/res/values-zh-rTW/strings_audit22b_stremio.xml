@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Stremio 帳號</string>
+    <string name="au22_stremio_account_intro">使用 Stremio 帳號登入,讓你的附加元件、媒體庫和繼續觀看與其保持同步。你的密碼只會傳送給 Stremio (api.strem.io),不會被儲存。此功能使用 Stremio 的帳號服務,Stremio 可能隨時變更或封鎖。Telos 與 Stremio 沒有任何關聯。</string>
+    <string name="au22_stremio_email">電子郵件</string>
+    <string name="au22_stremio_password">密碼</string>
+    <string name="au22_stremio_sign_in">登入</string>
+    <string name="au22_stremio_signed_in">已登入為 %s</string>
+    <string name="au22_stremio_sync_now">立即同步</string>
+    <string name="au22_stremio_sign_out">登出</string>
+    <string name="au22_stremio_synced">已同步</string>
+    <string name="au22_stremio_directory">瀏覽附加元件</string>
+    <string name="au22_stremio_directory_hint">由你已安裝的附加元件和 Stremio 公開清單提供的附加元件。它們由第三方製作,Telos 和 Stremio 均未審核。</string>
+    <string name="au22_stremio_directory_empty">找不到附加元件</string>
+</resources>

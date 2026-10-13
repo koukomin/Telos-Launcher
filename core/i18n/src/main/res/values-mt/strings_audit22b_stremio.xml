@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Kont Stremio</string>
+    <string name="au22_stremio_account_intro">Idħol bil-kont Stremio tiegħek biex iżżomm l-add-ons, il-librerija u l-kontinwazzjoni tat-telefrajzjoni sinkronizzati. Il-password tiegħek tintbagħat biss lil Stremio (api.strem.io) u ma tinħażinx. Dan juża s-servizz tal-kont ta\' Stremio, li Stremio jista\' jibdel jew jibblokka fi kwalunkwe ħin. Telos mhuwiex affiljat ma\' Stremio.</string>
+    <string name="au22_stremio_email">Email</string>
+    <string name="au22_stremio_password">Password</string>
+    <string name="au22_stremio_sign_in">Idħol</string>
+    <string name="au22_stremio_signed_in">Dħalt bħala %s</string>
+    <string name="au22_stremio_sync_now">Issinkronizza issa</string>
+    <string name="au22_stremio_sign_out">Oħroġ</string>
+    <string name="au22_stremio_synced">Sinkronizzat</string>
+    <string name="au22_stremio_directory">Fittex l-add-ons</string>
+    <string name="au22_stremio_directory_hint">Add-ons elenkati mill-add-ons installati tiegħek u mil-lista pubblika ta\' Stremio. Dawn saru minn oħrajn u Telos jew Stremio ma jiċċekkjawhomx.</string>
+    <string name="au22_stremio_directory_empty">Ma nstabu l-ebda add-ons</string>
+</resources>

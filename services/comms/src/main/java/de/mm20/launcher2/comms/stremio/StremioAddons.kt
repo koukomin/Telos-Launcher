@@ -35,8 +35,9 @@ class StremioAddons(context: Context, private val client: StremioClient) {
             val arr = JSONArray(file.readText())
             (0 until arr.length()).mapNotNull { i ->
                 val o = arr.optJSONObject(i) ?: return@mapNotNull null
-                val manifest = StremioProtocol.parseManifest(o.optString("manifest")) ?: return@mapNotNull null
-                Addon(o.optString("url"), manifest).takeIf { it.baseUrl.isNotBlank() }
+                val raw = o.optString("manifest")
+                val manifest = StremioProtocol.parseManifest(raw) ?: return@mapNotNull null
+                Addon(o.optString("url"), manifest, raw, o.optBoolean("official"), o.optBoolean("protected")).takeIf { it.baseUrl.isNotBlank() }
             }
         }.getOrDefault(emptyList())
     }
@@ -45,7 +46,12 @@ class StremioAddons(context: Context, private val client: StremioClient) {
         runCatching {
             val arr = JSONArray()
             // the manifest is stored as the add-on sent it, in a compact form of what was parsed
-            list.forEach { arr.put(JSONObject().put("url", it.baseUrl).put("manifest", manifestJson(it.manifest))) }
+            list.forEach {
+                arr.put(
+                    JSONObject().put("url", it.baseUrl).put("manifest", it.rawManifest.ifBlank { manifestJson(it.manifest) })
+                        .put("official", it.official).put("protected", it.protected)
+                )
+            }
             val tmp = File(file.parentFile, file.name + ".tmp")
             tmp.writeText(arr.toString())
             tmp.renameTo(file)
@@ -64,6 +70,18 @@ class StremioAddons(context: Context, private val client: StremioClient) {
         return result
     }
 
+    /** Installs add-ons that came from somewhere else (a directory, the add-ons of a Stremio account); existing ones are kept */
+    fun upsert(list: List<Addon>) {
+        val current = _addons.value
+        val next = current + list.filter { n -> current.none { it.baseUrl == n.baseUrl || it.manifest.id == n.manifest.id } }
+        if (next.size != current.size) {
+            _addons.value = next
+            save(next)
+        }
+    }
+
+    fun install(d: DirectoryAddon) = upsert(listOf(Addon(d.baseUrl, d.manifest, d.rawManifest)))
+
     fun remove(baseUrl: String) {
         val next = _addons.value.filter { it.baseUrl != baseUrl }
         _addons.value = next
@@ -80,6 +98,9 @@ class StremioAddons(context: Context, private val client: StremioClient) {
     companion object {
         /** Stremio's own metadata add-on, offered as a one-tap suggestion (never installed without the user's tap) */
         const val CINEMETA = "https://v3-cinemeta.strem.io"
+
+        /** The public list of community add-ons that Stremio's apps show; may change or be gone, then the directory shows less */
+        const val PUBLIC_LIST = "https://api.strem.io/addonscollection.json"
 
         private fun manifestJson(m: AddonManifest): String {
             val o = JSONObject()

@@ -362,8 +362,10 @@ private fun StreamsSheet(vm: StremioViewModel, state: StreamsState) {
                 LazyColumn(modifier = Modifier.fillMaxWidth().height(420.dp)) {
                     items(state.items, key = { it.streamKey() + "#" + state.items.indexOf(it) }) { s ->
                         StreamRow(s, last = s.streamKey() == state.lastUsed) {
-                            if (vm.play(context, s, state)) vm.closeStreams()
-                            else Toast.makeText(context, R.string.au22_stremio_unsupported, Toast.LENGTH_SHORT).show()
+                            vm.play(context, s, state) { opened ->
+                                if (opened) vm.closeStreams()
+                                else Toast.makeText(context, R.string.au22_stremio_unsupported, Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 }
@@ -403,14 +405,128 @@ private fun StreamRow(s: StreamItem, last: Boolean, onClick: () -> Unit) {
 @Composable
 private fun AddonsSheet(vm: StremioViewModel, onDismiss: () -> Unit) {
     val addons by vm.addons.collectAsStateWithLifecycle()
+    var showDirectory by remember { mutableStateOf(false) }
     ModalBottomSheet(onDismissRequest = onDismiss) {
-        Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp).padding(bottom = 24.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Column(
+            Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp).padding(bottom = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            AccountSection(vm)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(stringResource(R.string.au22_stremio_addons), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
                 TextButton(onClick = { vm.refreshAddons() }) { Text(stringResource(R.string.au22_stremio_refresh)) }
             }
             addons.forEach { a -> AddonRow(a, onRemove = { vm.removeAddon(a.baseUrl) }) }
             AddAddonForm(vm, showSuggestion = addons.none { it.baseUrl == StremioAddons.CINEMETA })
+            OutlinedButton(onClick = { showDirectory = true; vm.loadDirectory() }) { Text(stringResource(R.string.au22_stremio_directory)) }
+        }
+    }
+    if (showDirectory) DirectorySheet(vm, onDismiss = { showDirectory = false })
+}
+
+/** Sign in to a Stremio account to keep add-ons, library and continue watching in step with it */
+@Composable
+private fun AccountSection(vm: StremioViewModel) {
+    val context = LocalContext.current
+    val email by vm.accountEmail.collectAsStateWithLifecycle()
+    val busy by vm.accountBusy.collectAsStateWithLifecycle()
+    var mail by rememberSaveable { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var working by remember { mutableStateOf(false) }
+    var error by remember { mutableStateOf<String?>(null) }
+    val syncedText = stringResource(R.string.au22_stremio_synced)
+    val shownError = error
+    Card(Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(stringResource(R.string.au22_stremio_account), style = MaterialTheme.typography.titleMedium)
+            if (email != null) {
+                Text(stringResource(R.string.au22_stremio_signed_in, email!!), style = MaterialTheme.typography.bodyMedium)
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Button(
+                        enabled = !busy && !working,
+                        onClick = {
+                            working = true
+                            vm.syncNow { result ->
+                                working = false
+                                Toast.makeText(context, result ?: syncedText, Toast.LENGTH_SHORT).show()
+                            }
+                        },
+                    ) { Text(stringResource(R.string.au22_stremio_sync_now)) }
+                    TextButton(onClick = { vm.signOut() }) { Text(stringResource(R.string.au22_stremio_sign_out)) }
+                    if (busy || working) CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
+                }
+            } else {
+                Text(stringResource(R.string.au22_stremio_account_intro), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                OutlinedTextField(
+                    value = mail, onValueChange = { mail = it }, singleLine = true, modifier = Modifier.fillMaxWidth(),
+                    label = { Text(stringResource(R.string.au22_stremio_email)) },
+                    keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Email),
+                )
+                OutlinedTextField(
+                    value = password, onValueChange = { password = it }, singleLine = true, modifier = Modifier.fillMaxWidth(),
+                    label = { Text(stringResource(R.string.au22_stremio_password)) },
+                    visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
+                    keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Password),
+                    isError = shownError != null,
+                    supportingText = if (shownError != null) { { Text(shownError) } } else null,
+                )
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Button(
+                        enabled = mail.isNotBlank() && password.isNotEmpty() && !working,
+                        onClick = {
+                            working = true
+                            error = null
+                            vm.signIn(mail, password) { result ->
+                                working = false
+                                if (result == null) password = "" else error = result
+                            }
+                        },
+                    ) { Text(stringResource(R.string.au22_stremio_sign_in)) }
+                    if (working) CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
+                }
+            }
+        }
+    }
+}
+
+/** Add-ons found in the directories of installed add-ons and in Stremio's public list; they are made by others and not checked by Telos */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun DirectorySheet(vm: StremioViewModel, onDismiss: () -> Unit) {
+    val directory by vm.directory.collectAsStateWithLifecycle()
+    val installed by vm.addons.collectAsStateWithLifecycle()
+    ModalBottomSheet(onDismissRequest = onDismiss) {
+        Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp).padding(bottom = 24.dp)) {
+            Text(stringResource(R.string.au22_stremio_directory), style = MaterialTheme.typography.titleLarge)
+            Text(
+                stringResource(R.string.au22_stremio_directory_hint),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(vertical = 8.dp),
+            )
+            val list = directory
+            if (list == null) {
+                Box(Modifier.fillMaxWidth().height(96.dp), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
+            } else if (list.isEmpty()) {
+                Text(stringResource(R.string.au22_stremio_directory_empty), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(vertical = 16.dp))
+            } else {
+                LazyColumn(Modifier.fillMaxWidth().height(460.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    items(list, key = { it.baseUrl }) { d ->
+                        val isInstalled = installed.any { it.baseUrl == d.baseUrl || it.manifest.id == d.manifest.id }
+                        Card(Modifier.fillMaxWidth()) {
+                            Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Column(Modifier.weight(1f)) {
+                                    Text("${d.manifest.name} ${d.manifest.version}".trim(), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
+                                    if (d.manifest.description.isNotBlank()) Text(d.manifest.description, style = MaterialTheme.typography.bodySmall, maxLines = 3, overflow = TextOverflow.Ellipsis)
+                                    if (d.manifest.p2p) Text(stringResource(R.string.au22_stremio_p2p_warning), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
+                                }
+                                if (isInstalled) OutlinedButton(onClick = {}, enabled = false) { Text(stringResource(R.string.hf_store_installed)) }
+                                else Button(onClick = { vm.installDirectory(d) }) { Text(stringResource(R.string.hc_install)) }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -32,6 +32,8 @@ data class AddonManifest(
     val types: List<String> = emptyList(),
     val idPrefixes: List<String> = emptyList(),
     val catalogs: List<AddonCatalog> = emptyList(),
+    /** Catalogs of other add-ons (a directory), see the `addon_catalog` resource */
+    val addonCatalogs: List<AddonCatalog> = emptyList(),
     val resources: List<AddonResource> = emptyList(),
     /** The add-on says it streams with BitTorrent (this reveals the IP address to other peers) */
     val p2p: Boolean = false,
@@ -50,8 +52,18 @@ data class AddonManifest(
     fun provides(resource: String): Boolean = resources.any { it.name == resource }
 }
 
-/** An installed add-on: where it lives (the address without `/manifest.json`) and what its manifest said */
-data class Addon(val baseUrl: String, val manifest: AddonManifest) {
+/**
+ * An installed add-on: where it lives (the address without `/manifest.json`) and what its manifest said.
+ * [rawManifest] is the manifest exactly as the add-on sent it (needed to put the add-on into a Stremio account);
+ * [official] and [protected] are the flags Stremio gives its own add-ons.
+ */
+data class Addon(
+    val baseUrl: String,
+    val manifest: AddonManifest,
+    val rawManifest: String = "",
+    val official: Boolean = false,
+    val protected: Boolean = false,
+) {
     val name: String get() = manifest.name
 }
 
@@ -128,3 +140,6 @@ data class StreamItem(
 
     enum class Kind { Web, Torrent, YouTube, External, Unsupported }
 }
+
+/** An add-on that a directory lists: its address (of the manifest) and its manifest */
+data class DirectoryAddon(val baseUrl: String, val manifest: AddonManifest, val rawManifest: String)

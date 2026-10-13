@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Stremio konts</string>
+    <string name="au22_stremio_account_intro">Pieraksties ar savu Stremio kontu, lai papildinājumi, bibliotēka un skatīšanās turpināšana būtu sinhronizēti. Tava parole tiek nosūtīta tikai Stremio (api.strem.io) un netiek saglabāta. Tiek izmantots Stremio kontu pakalpojums, ko Stremio jebkurā laikā var mainīt vai bloķēt. Telos nav saistīts ar Stremio.</string>
+    <string name="au22_stremio_email">E-pasts</string>
+    <string name="au22_stremio_password">Parole</string>
+    <string name="au22_stremio_sign_in">Pieteikties</string>
+    <string name="au22_stremio_signed_in">Pierakstīts kā %s</string>
+    <string name="au22_stremio_sync_now">Sinhronizēt tagad</string>
+    <string name="au22_stremio_sign_out">Izrakstīties</string>
+    <string name="au22_stremio_synced">Sinhronizēts</string>
+    <string name="au22_stremio_directory">Pārlūkot papildinājumus</string>
+    <string name="au22_stremio_directory_hint">Papildinājumi no tavā ierīcē instalētajiem papildinājumiem un Stremio publiskā saraksta. Tos veidojuši citi, un Telos vai Stremio tos nepārbauda.</string>
+    <string name="au22_stremio_directory_empty">Papildinājumi nav atrasti</string>
+</resources>

@@ -63,6 +63,11 @@ object StremioProtocol {
             }
             AddonCatalog(type, cid, c.str("name") ?: cid, extras)
         }
+        val addonCatalogs = o.optJSONArray("addonCatalogs").objects { c ->
+            val type = c.str("type") ?: return@objects null
+            val cid = c.str("id") ?: return@objects null
+            AddonCatalog(type, cid, c.str("name") ?: cid)
+        }
         val hints = o.optJSONObject("behaviorHints")
         return AddonManifest(
             id = id,
@@ -73,11 +78,34 @@ object StremioProtocol {
             types = o.optJSONArray("types").strings(),
             idPrefixes = o.optJSONArray("idPrefixes").strings(),
             catalogs = catalogs,
+            addonCatalogs = addonCatalogs,
             resources = resources,
             p2p = hints?.optBoolean("p2p", false) ?: false,
             adult = hints?.optBoolean("adult", false) ?: false,
             configurationRequired = hints?.optBoolean("configurationRequired", false) ?: false,
         )
+    }
+
+    private fun directoryAddon(o: JSONObject): DirectoryAddon? {
+        val manifestObject = o.optJSONObject("manifest") ?: return null
+        val raw = manifestObject.toString()
+        val manifest = parseManifest(raw) ?: return null
+        val base = baseUrl(o.str("transportUrl") ?: return null) ?: return null
+        return DirectoryAddon(base, manifest, raw)
+    }
+
+    /** The answer of an `addon_catalog` request: `{ "addons": [ { transportUrl, manifest } ] }` */
+    fun parseAddonCatalog(json: String): List<DirectoryAddon> {
+        val o = runCatching { JSONObject(json) }.getOrNull() ?: return emptyList()
+        return o.optJSONArray("addons").objects(::directoryAddon).distinctBy { it.baseUrl }
+    }
+
+    /** A plain list of add-ons: either `[ {...} ]` or `{ "addons": [ {...} ] }` */
+    fun parseAddonList(json: String): List<DirectoryAddon> {
+        val arr = runCatching { JSONArray(json) }.getOrNull()
+            ?: runCatching { JSONObject(json).optJSONArray("addons") }.getOrNull()
+            ?: return emptyList()
+        return arr.objects(::directoryAddon).distinctBy { it.baseUrl }
     }
 
     private fun previewOf(m: JSONObject): MetaPreview? {

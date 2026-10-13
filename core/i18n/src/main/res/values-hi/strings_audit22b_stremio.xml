@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Stremio खाता</string>
+    <string name="au22_stremio_account_intro">अपने ऐड-ऑन, लाइब्रेरी और जारी रखें सूची को सिंक में रखने के लिए अपने Stremio खाते से साइन इन करें। आपका पासवर्ड केवल Stremio (api.strem.io) को भेजा जाता है और सहेजा नहीं जाता। यह Stremio की खाता सेवा का उपयोग करता है, जिसे Stremio कभी भी बदल या ब्लॉक कर सकता है। Telos का Stremio से कोई संबंध नहीं है।</string>
+    <string name="au22_stremio_email">ईमेल</string>
+    <string name="au22_stremio_password">पासवर्ड</string>
+    <string name="au22_stremio_sign_in">साइन इन करें</string>
+    <string name="au22_stremio_signed_in">%s के रूप में साइन इन हैं</string>
+    <string name="au22_stremio_sync_now">अभी सिंक करें</string>
+    <string name="au22_stremio_sign_out">साइन आउट करें</string>
+    <string name="au22_stremio_synced">सिंक हो गया</string>
+    <string name="au22_stremio_directory">ऐड-ऑन ब्राउज़ करें</string>
+    <string name="au22_stremio_directory_hint">आपके इंस्टॉल किए गए ऐड-ऑन और Stremio की सार्वजनिक सूची से मिले ऐड-ऑन। इन्हें दूसरों ने बनाया है और Telos या Stremio ने इनकी जाँच नहीं की है।</string>
+    <string name="au22_stremio_directory_empty">कोई ऐड-ऑन नहीं मिला</string>
+</resources>

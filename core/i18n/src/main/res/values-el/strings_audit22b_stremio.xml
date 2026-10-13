@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Λογαριασμός Stremio</string>
+    <string name="au22_stremio_account_intro">Συνδεθείτε με τον λογαριασμό σας στο Stremio για να διατηρείτε συγχρονισμένα τα πρόσθετα, τη βιβλιοθήκη και τη συνέχεια παρακολούθησης. Ο κωδικός σας αποστέλλεται μόνο στο Stremio (api.strem.io) και δεν αποθηκεύεται. Χρησιμοποιείται η υπηρεσία λογαριασμών του Stremio, την οποία το Stremio μπορεί να αλλάξει ή να αποκλείσει ανά πάσα στιγμή. Το Telos δεν συνδέεται με το Stremio.</string>
+    <string name="au22_stremio_email">Email</string>
+    <string name="au22_stremio_password">Κωδικός πρόσβασης</string>
+    <string name="au22_stremio_sign_in">Σύνδεση</string>
+    <string name="au22_stremio_signed_in">Συνδεδεμένος ως %s</string>
+    <string name="au22_stremio_sync_now">Συγχρονισμός τώρα</string>
+    <string name="au22_stremio_sign_out">Αποσύνδεση</string>
+    <string name="au22_stremio_synced">Συγχρονίστηκε</string>
+    <string name="au22_stremio_directory">Περιήγηση στα πρόσθετα</string>
+    <string name="au22_stremio_directory_hint">Πρόσθετα από τα εγκατεστημένα πρόσθετά σας και τη δημόσια λίστα του Stremio. Δημιουργούνται από τρίτους και δεν ελέγχονται από το Telos ή το Stremio.</string>
+    <string name="au22_stremio_directory_empty">Δεν βρέθηκαν πρόσθετα</string>
+</resources>

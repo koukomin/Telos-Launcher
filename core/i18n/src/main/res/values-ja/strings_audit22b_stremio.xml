@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Stremio アカウント</string>
+    <string name="au22_stremio_account_intro">Stremio アカウントでログインすると、アドオン、ライブラリ、続きから見るを同期できます。パスワードは Stremio (api.strem.io) にのみ送信され、保存されません。これは Stremio のアカウントサービスを利用しており、Stremio がいつでも変更またはブロックする可能性があります。Telos は Stremio と提携していません。</string>
+    <string name="au22_stremio_email">メールアドレス</string>
+    <string name="au22_stremio_password">パスワード</string>
+    <string name="au22_stremio_sign_in">ログイン</string>
+    <string name="au22_stremio_signed_in">%s としてログイン中</string>
+    <string name="au22_stremio_sync_now">今すぐ同期</string>
+    <string name="au22_stremio_sign_out">ログアウト</string>
+    <string name="au22_stremio_synced">同期済み</string>
+    <string name="au22_stremio_directory">アドオンを探す</string>
+    <string name="au22_stremio_directory_hint">インストール済みのアドオンと Stremio の公開リストにあるアドオンです。第三者によって作られたもので、Telos や Stremio による確認は行われていません。</string>
+    <string name="au22_stremio_directory_empty">アドオンが見つかりません</string>
+</resources>

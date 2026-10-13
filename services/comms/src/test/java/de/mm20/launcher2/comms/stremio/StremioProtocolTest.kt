@@ -69,4 +69,17 @@ class StremioProtocolTest {
         assertTrue(meta.isSeries)
         assertEquals(1, meta.videos.single().season)
     }
+
+    @Test
+    fun addonDirectories() {
+        val list = StremioProtocol.parseAddonCatalog(
+            """{"addons":[{"transportUrl":"https://x.example/manifest.json","transportName":"http",
+               "manifest":{"id":"a.b","name":"A","version":"1.0","resources":["stream"],"types":["movie"],"catalogs":[]}}]}"""
+        )
+        assertEquals("https://x.example", list.single().baseUrl)
+        assertEquals("A", list.single().manifest.name)
+        // a plain list works as well
+        assertEquals(1, StremioProtocol.parseAddonList("""[{"transportUrl":"stremio://y.example/manifest.json","manifest":{"id":"c","name":"C","version":"1","resources":["catalog"],"types":["movie"],"catalogs":[]}}]""").size)
+        assertTrue(StremioProtocol.parseAddonList("not json").isEmpty())
+    }
 }

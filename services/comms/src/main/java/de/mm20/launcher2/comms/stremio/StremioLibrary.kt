@@ -93,6 +93,26 @@ class StremioLibrary(context: Context) {
         save()
     }
 
+    /**
+     * Brings in what a Stremio account has: titles saved there are added, titles removed there (after they were saved here)
+     * are removed, and the continue watching shelf takes the newer entry of each title. [removedIds] maps the id of a title
+     * removed in the account to the time of its removal.
+     */
+    fun mergeRemote(saved: List<LibraryEntry>, watching: List<WatchProgress>, removedIds: Map<String, Long>) {
+        val current = _library.value
+        val kept = current.filterNot { e -> removedIds[e.id]?.let { it > e.addedAt } == true }
+        _library.value = kept + saved.filter { s -> kept.none { it.id == s.id } && removedIds[s.id] == null }
+        val local = _watching.value
+        val merged = ArrayList(local)
+        for (w in watching) {
+            val i = merged.indexOfFirst { it.id == w.id }
+            if (i < 0) merged += w
+            else if (w.watchedAt > merged[i].watchedAt) merged[i] = w.copy(stream = merged[i].stream.takeIf { merged[i].videoId == w.videoId })
+        }
+        _watching.value = merged.sortedByDescending { it.watchedAt }.take(MAX_HISTORY)
+        save()
+    }
+
     fun lastStream(id: String): String? = _watching.value.firstOrNull { it.id == id }?.stream
 
     fun removeProgress(id: String) {

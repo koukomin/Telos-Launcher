@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.comms.stremio.Addon
 import de.mm20.launcher2.comms.stremio.AddonCatalog
+import de.mm20.launcher2.comms.stremio.DirectoryAddon
+import de.mm20.launcher2.comms.stremio.StremioAccount
 import de.mm20.launcher2.comms.stremio.LibraryEntry
 import de.mm20.launcher2.comms.stremio.Meta
 import de.mm20.launcher2.comms.stremio.MetaPreview
@@ -28,6 +30,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
+import kotlinx.coroutines.withTimeoutOrNull
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -58,6 +61,7 @@ class StremioViewModel : ViewModel(), KoinComponent {
     private val store: StremioAddons by inject()
     private val client: StremioClient by inject()
     private val library: StremioLibrary by inject()
+    private val account: StremioAccount by inject()
 
     val addons: StateFlow<List<Addon>> get() = store.addons
     val noticeAccepted: StateFlow<Boolean> get() = store.noticeAccepted
@@ -70,11 +74,66 @@ class StremioViewModel : ViewModel(), KoinComponent {
 
     fun addAddon(input: String, onResult: (String?) -> Unit) {
         viewModelScope.launch {
-            store.add(input).onSuccess { onResult(null) }.onFailure { onResult(it.message ?: "Failed") }
+            store.add(input)
+                .onSuccess {
+                    onResult(null)
+                    account.addonAdded()
+                }
+                .onFailure { onResult(it.message ?: "Failed") }
         }
     }
 
-    fun removeAddon(baseUrl: String) = store.remove(baseUrl)
+    fun removeAddon(baseUrl: String) {
+        store.remove(baseUrl)
+        viewModelScope.launch { account.addonRemoved(baseUrl) }
+    }
+
+    // ---- account ----
+
+    val accountEmail: StateFlow<String?> get() = account.email
+    val accountBusy: StateFlow<Boolean> get() = account.busy
+
+    fun signIn(email: String, password: String, onResult: (String?) -> Unit) {
+        viewModelScope.launch {
+            account.signIn(email, password)
+                .onSuccess { account.syncAll().onSuccess { onResult(null) }.onFailure { onResult(it.message) } }
+                .onFailure { onResult(it.message ?: "Failed") }
+        }
+    }
+
+    fun signOut() {
+        viewModelScope.launch { account.signOut() }
+    }
+
+    /** Syncs add-ons, library and continue watching with the account; [onResult] gets null on success, otherwise the reason */
+    fun syncNow(onResult: (String?) -> Unit) {
+        viewModelScope.launch {
+            account.syncAll().onSuccess { onResult(null) }.onFailure { onResult(it.message ?: "Failed") }
+        }
+    }
+
+    // ---- the directory of add-ons ----
+
+    private val _directory = MutableStateFlow<List<DirectoryAddon>?>(null)
+    /** Add-ons found in the directories of the installed add-ons and in Stremio's public list; null while loading */
+    val directory: StateFlow<List<DirectoryAddon>?> get() = _directory
+
+    fun loadDirectory() {
+        _directory.value = null
+        viewModelScope.launch {
+            val found = ArrayList<DirectoryAddon>()
+            for (a in addons.value) {
+                for (c in a.manifest.addonCatalogs.take(4)) found += client.addonCatalog(a, c)
+            }
+            found += client.addonList(StremioAddons.PUBLIC_LIST)
+            _directory.value = found.distinctBy { it.baseUrl }.sortedBy { it.manifest.name.lowercase() }
+        }
+    }
+
+    fun installDirectory(d: DirectoryAddon) {
+        store.install(d)
+        viewModelScope.launch { account.addonAdded() }
+    }
 
     fun refreshAddons() {
         viewModelScope.launch { store.refresh() }
@@ -168,7 +227,11 @@ class StremioViewModel : ViewModel(), KoinComponent {
 
     fun isSaved(id: String): Boolean = library.isSaved(id)
 
-    fun toggleSaved(meta: Meta) = library.toggle(meta.type, meta.id, meta.name, meta.poster)
+    fun toggleSaved(meta: Meta) {
+        library.toggle(meta.type, meta.id, meta.name, meta.poster)
+        val removed = !library.isSaved(meta.id)
+        viewModelScope.launch { account.saveChanged(meta.type, meta.id, meta.name, meta.poster, removed) }
+    }
 
     fun removeProgress(id: String) = library.removeProgress(id)
 
@@ -203,45 +266,75 @@ class StremioViewModel : ViewModel(), KoinComponent {
         _streams.value = null
     }
 
-    /** Starts the player (or the browser) for [stream]; false if Telos cannot play this kind of stream */
-    fun play(context: Context, stream: StreamItem, state: StreamsState): Boolean {
-        val opened = when (stream.kind) {
-            StreamItem.Kind.Web -> {
-                context.startActivity(
-                    Intent(context, PlayerChoice.playerClass(context))
-                        .putStringArrayListExtra(VideoPlayerActivity.EXTRA_URIS, arrayListOf(stream.url!!))
-                        .putStringArrayListExtra(VideoPlayerActivity.EXTRA_TITLES, arrayListOf(state.title))
-                )
-                true
-            }
-            StreamItem.Kind.Torrent -> {
-                val magnet = StremioProtocol.magnet(stream, state.title) ?: return false
-                // the player opens the torrent (finding peers, then playing its biggest video); the torrent route
-                // and Wi-Fi rules of Telos Video apply
-                context.startActivity(
-                    Intent(context, PlayerChoice.playerClass(context)).putExtra(VideoPlayerActivity.EXTRA_SOURCE, magnet)
-                )
-                true
-            }
-            StreamItem.Kind.YouTube -> {
-                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=${Uri.encode(stream.ytId)}")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-                true
-            }
-            StreamItem.Kind.External -> {
-                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(stream.externalUrl)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-                true
-            }
-            StreamItem.Kind.Unsupported -> false
+    /**
+     * Starts the player (or the browser) for [stream]. Subtitles that come with the stream, and those of subtitle
+     * add-ons (asked for a few seconds at most), go along. [onDone] says whether Telos could open this kind of stream.
+     */
+    fun play(context: Context, stream: StreamItem, state: StreamsState, onDone: (Boolean) -> Unit) {
+        if (stream.kind == StreamItem.Kind.Unsupported) {
+            onDone(false)
+            return
         }
-        if (opened) {
-            library.markWatched(
-                WatchProgress(state.type, state.metaId, state.name, state.poster, state.videoId, state.title, System.currentTimeMillis(), stream.streamKey())
-            )
+        _streams.update { it?.copy(loading = true) }
+        viewModelScope.launch {
+            val needsPlayer = stream.kind == StreamItem.Kind.Web || stream.kind == StreamItem.Kind.Torrent
+            val subtitles = if (!needsPlayer) emptyList() else {
+                val extra = stream.filename?.let { mapOf("filename" to it) }.orEmpty()
+                val fromAddons = withTimeoutOrNull(6_000) { client.allSubtitles(addons.value, state.type, state.videoId, extra) }.orEmpty()
+                (stream.subtitles + fromAddons).distinctBy { it.url }.take(MAX_SUBTITLES)
+            }
+            fun withSubtitles(intent: Intent): Intent = intent
+                .putStringArrayListExtra(VideoPlayerActivity.EXTRA_SUB_URLS, ArrayList(subtitles.map { it.url }))
+                .putStringArrayListExtra(VideoPlayerActivity.EXTRA_SUB_LANGS, ArrayList(subtitles.map { it.lang }))
+                .putStringArrayListExtra(VideoPlayerActivity.EXTRA_SUB_LABELS, ArrayList(subtitles.map { it.label.orEmpty() }))
+            val opened = when (stream.kind) {
+                StreamItem.Kind.Web -> {
+                    context.startActivity(
+                        withSubtitles(
+                            Intent(context, PlayerChoice.playerClass(context))
+                                .putStringArrayListExtra(VideoPlayerActivity.EXTRA_URIS, arrayListOf(stream.url!!))
+                                .putStringArrayListExtra(VideoPlayerActivity.EXTRA_TITLES, arrayListOf(state.title))
+                        )
+                    )
+                    true
+                }
+                StreamItem.Kind.Torrent -> {
+                    val magnet = StremioProtocol.magnet(stream, state.title)
+                    if (magnet == null) false else {
+                        // the torrent player opens the torrent (finding peers), then plays the file the add-on named, or the biggest
+                        // video; the torrent route and Wi-Fi rules of Telos Video apply
+                        context.startActivity(
+                            withSubtitles(
+                                Intent(context, PlayerChoice.playerClass(context))
+                                    .putExtra(VideoPlayerActivity.EXTRA_SOURCE, magnet)
+                                    .apply { stream.fileIdx?.let { putExtra(VideoPlayerActivity.EXTRA_FILE_IDX, it) } }
+                            )
+                        )
+                        true
+                    }
+                }
+                StreamItem.Kind.YouTube -> {
+                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=${Uri.encode(stream.ytId)}")).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                    true
+                }
+                StreamItem.Kind.External -> {
+                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(stream.externalUrl)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                    true
+                }
+                StreamItem.Kind.Unsupported -> false
+            }
+            if (opened) {
+                val progress = WatchProgress(state.type, state.metaId, state.name, state.poster, state.videoId, state.title, System.currentTimeMillis(), stream.streamKey())
+                library.markWatched(progress)
+                launch { account.played(progress) }
+            }
+            _streams.update { it?.copy(loading = false) }
+            onDone(opened)
         }
-        return opened
     }
 
     companion object {
         private const val MAX_ROWS = 30
+        private const val MAX_SUBTITLES = 15
     }
 }

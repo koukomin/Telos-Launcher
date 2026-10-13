@@ -48,8 +48,13 @@ import kotlinx.coroutines.launch
  * Plays local videos, web streams, and torrents. A torrent is opened first (finding peers, reading
  * the file list), then its video files play through the local stream address.
  */
+/** A subtitle file that comes with the video (from a Stremio add-on, for example) */
+data class ExternalSubtitle(val url: String, val language: String, val label: String)
+
 @Composable
 fun VideoPlayerScreen(
+    externalSubtitles: List<ExternalSubtitle> = emptyList(),
+    torrentFileIdx: Int? = null,
     uris: List<Uri>,
     titles: List<String>,
     startIndex: Int,
@@ -70,7 +75,7 @@ fun VideoPlayerScreen(
     if (torrentSource != null) {
         LaunchedEffect(torrentSource) {
             val config = VideoServices.config()
-            runCatching { TorrentStreamer.open(context, torrentSource, config.torrentWifiOnly, context.findActivity()) }
+            runCatching { TorrentStreamer.open(context, torrentSource, config.torrentWifiOnly, context.findActivity(), torrentFileIdx) }
                 .onSuccess { opened ->
                     val name = TorrentStreamer.torrentName()
                     resolved = ResolvedMedia(
@@ -117,7 +122,7 @@ fun VideoPlayerScreen(
         }
         return
     }
-    PlayerContent(r, torrentSource != null, torrent, onClose, onPlayingChanged, inPictureInPicture)
+    PlayerContent(r, torrentSource != null, torrent, onClose, onPlayingChanged, inPictureInPicture, externalSubtitles)
 }
 
 private data class ResolvedMedia(
@@ -136,6 +141,7 @@ private fun PlayerContent(
     onClose: () -> Unit,
     onPlayingChanged: (Boolean) -> Unit,
     inPictureInPicture: Boolean,
+    externalSubtitles: List<ExternalSubtitle> = emptyList(),
 ) {
     val context = LocalContext.current
     val uris = media.uris
@@ -177,6 +183,25 @@ private fun PlayerContent(
                     .setUri(uri)
                     .setMediaId(media.mediaIds[index])
                     .setMediaMetadata(MediaMetadata.Builder().setTitle(titles.getOrNull(index)).build())
+                    .apply {
+                        // subtitle files that came with the video belong to the one that starts
+                        if (index == startIndex && externalSubtitles.isNotEmpty()) {
+                            setSubtitleConfigurations(externalSubtitles.map { s ->
+                                val lower = s.url.substringBefore('?').lowercase()
+                                MediaItem.SubtitleConfiguration.Builder(Uri.parse(s.url))
+                                    .setMimeType(
+                                        when {
+                                            lower.endsWith(".vtt") -> androidx.media3.common.MimeTypes.TEXT_VTT
+                                            lower.endsWith(".ass") || lower.endsWith(".ssa") -> androidx.media3.common.MimeTypes.TEXT_SSA
+                                            else -> androidx.media3.common.MimeTypes.APPLICATION_SUBRIP
+                                        }
+                                    )
+                                    .setLanguage(s.language.ifBlank { null })
+                                    .setLabel(s.label.ifBlank { s.language.ifBlank { null } })
+                                    .build()
+                            })
+                        }
+                    }
                     .build()
             }
             val resumeKey = Uri.parse(media.mediaIds[startIndex])

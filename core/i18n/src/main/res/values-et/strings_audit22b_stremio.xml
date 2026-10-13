@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Stremio konto</string>
+    <string name="au22_stremio_account_intro">Logi sisse oma Stremio kontoga, et hoida oma lisandmoodulid, kogu ja jätkamisloend sünkroonis. Sinu parool saadetakse ainult Stremiole (api.strem.io) ja seda ei salvestata. See kasutab Stremio kontoteenust, mida Stremio võib igal ajal muuta või blokeerida. Telos ei ole Stremioga seotud.</string>
+    <string name="au22_stremio_email">E-post</string>
+    <string name="au22_stremio_password">Parool</string>
+    <string name="au22_stremio_sign_in">Logi sisse</string>
+    <string name="au22_stremio_signed_in">Sisse logitud kasutajana %s</string>
+    <string name="au22_stremio_sync_now">Sünkrooni kohe</string>
+    <string name="au22_stremio_sign_out">Logi välja</string>
+    <string name="au22_stremio_synced">Sünkroonitud</string>
+    <string name="au22_stremio_directory">Sirvi lisandmooduleid</string>
+    <string name="au22_stremio_directory_hint">Lisandmoodulid, mida pakuvad sinu installitud lisandmoodulid ja Stremio avalik loend. Need on teiste loodud ning Telos ega Stremio neid ei kontrolli.</string>
+    <string name="au22_stremio_directory_empty">Lisandmooduleid ei leitud</string>
+</resources>

@@ -4,7 +4,7 @@ Telos Media puts [Telos Music](../music/index.md), [Telos Radio](../radio/index.
 
 ## Switching spaces
 
-A pill at the top has five segments: **Music**, **Radio**, **Video**, **TV** and **Stremio** (only the selected one shows its label, so all five icons always fit). Tap one to switch; long press a segment and drag it sideways to change the order (it is remembered); the last space you used is remembered
+A pill at the top has five segments: **Music**, **Radio**, **Video**, **TV** and **Stremio Fork** (only the selected one shows its label, so all five icons always fit). Tap one to switch; long press a segment and drag it sideways to change the order (it is remembered); the last space you used is remembered
 (it is part of the launcher settings backup). The three older apps still exist and open Telos Media on their space, so existing
 shortcuts and search results keep working. A space whose app is hidden in the Store disappears from the pill.
 
@@ -67,9 +67,9 @@ All four spaces are always offered in the pill; hiding the older Telos Music or 
 
 Music, radio, TV and video each show a media notification while they play (also on the lock screen and in the system media controls, e.g. the media output on newer Android versions) with play/pause and previous/next (songs, stations, channels, episodes). Leaving the video screen pauses the video; its notification then lets you continue with sound only. Android 13 and newer asks for the notification permission.
 
-## Stremio
+## Stremio Fork
 
-The **Stremio** space is Telos' own client for [Stremio add-ons](https://github.com/Stremio/stremio-addon-sdk). It was written
+The **Stremio Fork** space is Telos' own client for [Stremio add-ons](https://github.com/Stremio/stremio-addon-sdk). It was written
 from the public description of the add-on protocol (MIT licensed); no code of the Stremio apps or of other Stremio clients
 is used. **Telos is not affiliated with Stremio and this is not the Stremio app.**
 
@@ -94,9 +94,23 @@ Streams of the torrent kind go through the same torrent player as Telos Video, s
   torrents open as magnet links in the same player, YouTube and web page links open in the matching app. Other kinds (Usenet,
   archives) are shown as not supported.
 
-What is not there: the Stremio account and its sync (library, add-ons and settings of your account are not read or written),
-the add-on directory of Stremio, the MPV player and Stremio's own streaming server (torrents use the torrent engine of Telos
-Video, which plays the biggest video of a torrent and ignores a file index given by an add-on), subtitles offered by add-ons
-(Telos Video's own subtitle search is used), and Android TV controls. The add-on list, library and history are not part of a
-backup yet.
+- **Subtitles:** subtitles that a stream carries, and those of subtitle add-ons (asked for a few seconds, with the file name of the
+  stream), are handed to the player; pick them in the player's subtitle menu next to the ones of Telos Video's own subtitle search.
+- **File inside a torrent (`fileIdx`):** a torrent can hold many files, for example a whole season. When an add-on names the
+  file of the episode (its index in the torrent), that file plays; without it, the biggest video of the torrent plays.
+- **Directory of add-ons:** **Browse add-ons** (in the add-ons sheet) lists add-ons offered by the directories of your installed
+  add-ons (the `addon_catalog` part of the protocol) and by Stremio's public list of community add-ons (an address that
+  Stremio can change or remove; then the list is shorter). They are made by others and are not checked by Telos or Stremio.
+- **Stremio account (optional):** sign in with your Stremio account to keep your **add-ons, library and continue watching** in
+  step with it, the way the Stremio apps back them up. Telos uses the same account service as the Stremio apps
+  (`api.strem.io`), documented in Stremio's open-source core (MIT). Your password is sent once to Stremio and never stored; only
+  the session key is kept, encrypted with the Android Keystore. Add-ons and library items are merged (nothing of the account is
+  deleted by signing in), and changes made here are sent to the account; **Sync now** repeats the merge. This is **unofficial**:
+  Stremio can change or block the service, and we have not been able to check its terms of use. If you want to stay clear of that,
+  do not sign in: everything works without an account.
 
+What is not there: Stremio's own streaming server (torrents use the torrent engine of Telos Video), the MPV player, add-on
+settings pages (add-ons that need configuration first must be configured in a browser, then added here with their address), the
+watch position of an item (Stremio shows a title in continue watching when its offset is above zero; Telos writes the smallest
+value and does not know the real position of a stream), and Android TV controls. Without an account the add-on list, library and
+history stay on this phone and are not part of the Telos backup.

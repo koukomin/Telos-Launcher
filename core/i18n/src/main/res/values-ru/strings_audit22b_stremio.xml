@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Аккаунт Stremio</string>
+    <string name="au22_stremio_account_intro">Войдите в аккаунт Stremio, чтобы синхронизировать дополнения, библиотеку и список «Продолжить просмотр». Пароль отправляется только в Stremio (api.strem.io) и не сохраняется. Используется служба аккаунтов Stremio, которую Stremio может изменить или заблокировать в любой момент. Telos не связан со Stremio.</string>
+    <string name="au22_stremio_email">Эл. почта</string>
+    <string name="au22_stremio_password">Пароль</string>
+    <string name="au22_stremio_sign_in">Войти</string>
+    <string name="au22_stremio_signed_in">Вы вошли как %s</string>
+    <string name="au22_stremio_sync_now">Синхронизировать сейчас</string>
+    <string name="au22_stremio_sign_out">Выйти</string>
+    <string name="au22_stremio_synced">Синхронизировано</string>
+    <string name="au22_stremio_directory">Обзор дополнений</string>
+    <string name="au22_stremio_directory_hint">Дополнения из ваших установленных дополнений и из публичного списка Stremio. Они созданы сторонними разработчиками и не проверяются Telos или Stremio.</string>
+    <string name="au22_stremio_directory_empty">Дополнения не найдены</string>
+</resources>

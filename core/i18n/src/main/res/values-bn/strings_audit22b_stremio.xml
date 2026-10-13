@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Stremio অ্যাকাউন্ট</string>
+    <string name="au22_stremio_account_intro">আপনার অ্যাড-অন, লাইব্রেরি এবং দেখা চালিয়ে যান তালিকা সিঙ্কে রাখতে Stremio অ্যাকাউন্ট দিয়ে সাইন ইন করুন। আপনার পাসওয়ার্ড শুধু Stremio (api.strem.io)-এ পাঠানো হয় এবং সংরক্ষণ করা হয় না। এটি Stremio-র অ্যাকাউন্ট পরিষেবা ব্যবহার করে, যা Stremio যেকোনো সময় বদলাতে বা ব্লক করতে পারে। Telos-এর সাথে Stremio-র কোনো সম্পর্ক নেই।</string>
+    <string name="au22_stremio_email">ইমেইল</string>
+    <string name="au22_stremio_password">পাসওয়ার্ড</string>
+    <string name="au22_stremio_sign_in">সাইন ইন</string>
+    <string name="au22_stremio_signed_in">%s হিসেবে সাইন ইন করা আছে</string>
+    <string name="au22_stremio_sync_now">এখনই সিঙ্ক করুন</string>
+    <string name="au22_stremio_sign_out">সাইন আউট</string>
+    <string name="au22_stremio_synced">সিঙ্ক হয়েছে</string>
+    <string name="au22_stremio_directory">অ্যাড-অন ব্রাউজ করুন</string>
+    <string name="au22_stremio_directory_hint">আপনার ইনস্টল করা অ্যাড-অন এবং Stremio-র পাবলিক তালিকা থেকে পাওয়া অ্যাড-অন। এগুলো অন্যদের তৈরি এবং Telos বা Stremio যাচাই করেনি।</string>
+    <string name="au22_stremio_directory_empty">কোনো অ্যাড-অন পাওয়া যায়নি</string>
+</resources>
