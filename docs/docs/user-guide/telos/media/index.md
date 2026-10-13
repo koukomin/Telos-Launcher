@@ -123,3 +123,16 @@ value and does not know the real position of a stream), and Android TV controls.
 The supplemental greektvm3u source uses its current `main` branch. TV Refresh checks Free-TV and greektvm3u alongside the main catalog; temporarily offline extra channels remain listed for later retry. Sources are fetched on the device and their live availability or geographic restrictions still apply.
 
 Η «Ανανέωση» ελέγχει και τις πρόσθετες λίστες Free-TV και greektvm3u. Τα πρόσθετα κανάλια που είναι προσωρινά εκτός σύνδεσης παραμένουν στη λίστα για νέα δοκιμή. Η διαθεσιμότητα και τυχόν γεωγραφικοί περιορισμοί εξαρτώνται από την πηγή.
+
+
+## YouTube και YouTube Music
+
+Η Ακρόαση περιλαμβάνει μουσική συσκευής, ραδιόφωνο και YouTube Music. Τα Βίντεο περιλαμβάνουν την τοπική βιβλιοθήκη και το YouTube. Τηλεόραση και Stremio Fork παραμένουν ξεχωριστές επιλογές. Κάτω από το κεντρικό pill επιλέγετε πηγή και βλέπετε καθαρά την ενεργή ενότητα.
+
+Στο YouTube μπορείτε να αναζητήσετε ή να επικολλήσετε σύνδεσμο βίντεο. Οι δύο ενότητες μοιράζονται player και χειριστήρια ειδοποίησης/οθόνης κλειδώματος. Η αναπαραγωγή συνεχίζεται στο παρασκήνιο. Η σύνδεση λογαριασμού βρίσκεται ακόμη υπό ανάπτυξη· προς το παρόν η native αναζήτηση δεν απαιτεί λογαριασμό.
+
+Υλοποίηση βασισμένη σε επιλεγμένα GPL components του [Flow](https://github.com/Flow-Tube/Flow) και στο [NewPipeExtractor](https://github.com/TeamNewPipe/NewPipeExtractor). Η δυνατότητα εξαγωγής ροών εξαρτάται από τις αλλαγές του YouTube και δεν αντικαθιστά ολόκληρη την εφαρμογή Flow.
+
+### YouTube playback
+
+Choose YouTube Music under Listen or YouTube under Video. Search or paste a video link; both sources use one native Media3 session with background playback and notification controls. Account integration is still in development. The implementation adapts selected Flow components and uses NewPipeExtractor; it does not embed the whole Flow app.

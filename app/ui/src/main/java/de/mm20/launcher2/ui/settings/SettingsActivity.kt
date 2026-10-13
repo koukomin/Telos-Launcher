@@ -668,7 +668,7 @@ open class SettingsActivity : BaseActivity() {
         val (label, icon) = when (route) {
             ROUTE_COMMS -> if (intent.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB) == "messages")
                 "Telos Messages" to "messages" else "Telos Phone" to "phone"
-            ROUTE_MEDIA, ROUTE_MUSIC, ROUTE_RADIO, ROUTE_VIDEO -> "Telos Media" to "music"
+            ROUTE_MEDIA, ROUTE_MUSIC, ROUTE_RADIO, ROUTE_VIDEO, SettingsDeepLinkContract.ROUTE_YOUTUBE, SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC -> "Telos Media" to "music"
             ROUTE_PHOTOS -> "Telos Viewer" to "viewer"
             SettingsDeepLinkContract.ROUTE_VIEWER -> "Telos Viewer" to "viewer"
             ROUTE_FILES -> "Telos Files" to "files"
@@ -756,6 +756,8 @@ open class SettingsActivity : BaseActivity() {
             }
             ROUTE_RADIO -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("radio")
             ROUTE_MUSIC -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("music")
+            SettingsDeepLinkContract.ROUTE_YOUTUBE -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("youtube")
+            SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("youtube_music")
             ROUTE_VIDEO -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("video")
             ROUTE_MEDIA -> de.mm20.launcher2.ui.media.hub.MediaHubRoute(
                 intent.getStringExtra(SettingsDeepLinkContract.EXTRA_MEDIA_SPACE).orEmpty()

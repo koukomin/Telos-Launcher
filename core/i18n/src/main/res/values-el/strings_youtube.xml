@@ -1,0 +1,11 @@
+<resources>
+    <string name="telos_youtube_label">YouTube</string>
+    <string name="telos_youtube_music_label">YouTube Music</string>
+    <string name="telos_media_listen">Ακρόαση</string>
+    <string name="telos_youtube_search">Αναζήτηση YouTube ή σύνδεσμος βίντεο</string>
+    <string name="telos_youtube_search_failed">Η αναζήτηση στο YouTube απέτυχε. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</string>
+    <string name="telos_youtube_play_failed">Δεν ήταν δυνατή η αναπαραγωγή. Δοκιμάστε ξανά ή επιλέξτε άλλο βίντεο.</string>
+    <string name="telos_youtube_preparing">Προετοιμασία αναπαραγωγής…</string>
+    <string name="telos_youtube_searching">Αναζήτηση…</string>
+    <string name="telos_youtube_intro">Ανακαλύψτε βίντεο και μουσική ή επικολλήστε σύνδεσμο YouTube. Η αναπαραγωγή συνεχίζεται στο παρασκήνιο.</string>
+</resources>

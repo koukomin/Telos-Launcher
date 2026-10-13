@@ -16,6 +16,9 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.FilterChip
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -124,7 +127,28 @@ private enum class MediaSpace(
     Radio("radio", "telos_radio_app://radio", R.drawable.ic_glyph_radio, R.string.au9_mediahub_space_radio),
     Video("video", "telos_video_app://video", R.drawable.video_library_24px, R.string.au9_mediahub_space_video),
     Tv("tv", "telos_tv_app://tv", R.drawable.tv_24px, R.string.au12_tvui_space_tv),
-    Stremio("stremio", "telos_media_app://stremio", R.drawable.extension_24px, R.string.au22_stremio_label),
+    YouTube("youtube", "telos_youtube_app://youtube", de.mm20.launcher2.base.R.drawable.ic_app_youtube_fg, R.string.telos_youtube_label),
+    YouTubeMusic("youtube_music", "telos_youtube_music_app://youtube_music", de.mm20.launcher2.base.R.drawable.ic_app_youtube_music_fg, R.string.telos_youtube_music_label),
+    Stremio("stremio", "telos_media_app://stremio", R.drawable.video_library_24px, R.string.au22_stremio_label),
+}
+
+private val MediaSpace.group: String get() = when (this) {
+    MediaSpace.Music, MediaSpace.Radio, MediaSpace.YouTubeMusic -> "audio"
+    MediaSpace.Video, MediaSpace.YouTube -> "video"
+    MediaSpace.Tv -> "tv"
+    MediaSpace.Stremio -> "stremio"
+}
+private val MediaSpace.groupLabel: Int get() = when (group) {
+    "audio" -> R.string.telos_media_listen
+    "video" -> R.string.au9_mediahub_space_video
+    "tv" -> R.string.au12_tvui_space_tv
+    else -> R.string.au22_stremio_label
+}
+private val MediaSpace.groupIcon: Int get() = when (group) {
+    "audio" -> R.drawable.headphones_24px
+    "video" -> R.drawable.video_library_24px
+    "tv" -> R.drawable.tv_24px
+    else -> R.drawable.video_library_24px
 }
 
 /**
@@ -162,6 +186,11 @@ fun MediaHubScreen(initialSpace: String = "") {
         ?: if (MediaSpace.entries.none { it.id == space }) null else available.first()
     LaunchedEffect(current) { current?.let { settings.setMediaHubSpace(it.id) } }
 
+    val groupSelections = remember { mutableStateMapOf<String, MediaSpace>() }
+    LaunchedEffect(current) { current?.let { groupSelections[it.group] = it } }
+    val groupSpaces = available.distinctBy { it.group }.map { groupSelections[it.group] ?: it }
+    val youtubeVm: de.mm20.launcher2.ui.media.youtube.YouTubeViewModel = viewModel()
+    LaunchedEffect(current) { if (current == MediaSpace.YouTube || current == MediaSpace.YouTubeMusic) youtubeVm.reconnect(context) }
     val musicVm: MusicViewModel = viewModel()
     val radioVm: RadioViewModel = viewModel()
     val tvVm: TvViewModel = viewModel()
@@ -228,10 +257,12 @@ fun MediaHubScreen(initialSpace: String = "") {
                     Spacer(Modifier.width(8.dp))
                     if (current != null) {
                         SpacePill(
-                            spaces = available,
-                            selected = current,
+                            spaces = groupSpaces,
+                            selected = groupSpaces.first { it.group == current.group },
                             onSelect = { space = it.id },
-                            onReorder = { settings.setMediaHubOrder(it.map { s -> s.id }) },
+                            onReorder = { reordered ->
+                                settings.setMediaHubOrder(reordered.flatMap { group -> available.filter { it.group == group.group }.map { it.id } })
+                            },
                             reduceAnimations = reduceAnimations,
                             modifier = Modifier.weight(1f),
                         )
@@ -240,6 +271,12 @@ fun MediaHubScreen(initialSpace: String = "") {
             }
 
             current?.let { selectedSpace ->
+                val sources = available.filter { it.group == selectedSpace.group }
+                if (sources.size > 1) Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    for (source in sources) FilterChip(selected = source == selectedSpace, onClick = { space = source.id },
+                        label = { Text(stringResource(source.label)) })
+                }
+
                 Text(
                     stringResource(selectedSpace.label),
                     style = MaterialTheme.typography.headlineLarge,
@@ -276,6 +313,8 @@ fun MediaHubScreen(initialSpace: String = "") {
                                     MediaSpace.Radio -> RadioDashboardScreen()
                                     MediaSpace.Tv -> TvScreen()
                                     MediaSpace.Video -> VideoScreen()
+                                    MediaSpace.YouTube -> de.mm20.launcher2.ui.media.youtube.YouTubeScreen(false, youtubeVm)
+                                    MediaSpace.YouTubeMusic -> de.mm20.launcher2.ui.media.youtube.YouTubeScreen(true, youtubeVm)
                                     MediaSpace.Stremio -> de.mm20.launcher2.ui.media.stremio.StremioScreen()
                                 }
                             }
@@ -284,6 +323,9 @@ fun MediaHubScreen(initialSpace: String = "") {
                 }
             }
 
+            de.mm20.launcher2.ui.media.youtube.YouTubeMiniPlayer(youtubeVm) { music ->
+                space = if (music) MediaSpace.YouTubeMusic.id else MediaSpace.YouTube.id
+            }
             if (current != null) {
                 HubMiniPlayer(
                     space = current,
@@ -357,7 +399,7 @@ private fun SpacePill(
                         if (isSelected) scheme.onPrimaryContainer else scheme.onSurfaceVariant,
                         label = "mediaHubSegmentContent",
                     )
-                    val label = stringResource(item.label)
+                    val label = stringResource(item.groupLabel)
                     Row(
                         modifier = Modifier
                             .weight(1f)
@@ -408,7 +450,7 @@ private fun SpacePill(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
-                            painterResource(item.icon),
+                            painterResource(item.groupIcon),
                             contentDescription = null,
                             tint = content,
                             modifier = Modifier.size(18.dp),

@@ -267,3 +267,12 @@ architecture and vault format description. No Cryptomator code was copied.
 ## Solid Explorer and MiXplorer
 
 The layout and feature set of Telos Files are inspired by these file managers. No code was copied.
+
+
+## Flow — selected YouTube components
+
+Copyright © 2025–2026 A-EDev. GPL-3.0. Upstream: https://github.com/Flow-Tube/Flow at commit `4c93b64790c3d89eed57ba96abc997bb955c05f2`. License retained at `third-party/flow/LICENSE`. Adapted files: `utils/YouTubeLink.kt`, `player/stream/AudioStreamSelector.kt`, and `data/repository/NewPipeDownloader.kt`, located under `services/comms/.../youtube/flow/`. Telos supplies its own repository, Compose screens and Media3 session. The downloader uses bounded response reads; Flow proxy-specific dependencies are not copied. Media layouts take inspiration from Flow while using the Telos theme.
+
+## NewPipeExtractor
+
+Copyright NewPipe contributors. GPL-3.0-or-later. https://github.com/TeamNewPipe/NewPipeExtractor, version v0.26.5. Used as a dependency for YouTube search, metadata and stream extraction.

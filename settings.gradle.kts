@@ -8,6 +8,7 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
+        maven("https://jitpack.io") { content { includeGroup("com.github.TeamNewPipe") } }
         google()
         mavenCentral()
     }
