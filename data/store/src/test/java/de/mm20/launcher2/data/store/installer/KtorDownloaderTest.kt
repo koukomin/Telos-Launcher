@@ -40,6 +40,7 @@ class KtorDownloaderTest {
                         }
                         val count = minOf(buffer.size.toLong(), size - position).toInt()
                         body.writeFully(buffer, 0, count)
+                        body.flush()
                         position += count
                     }
                     body.close()
