@@ -26,18 +26,23 @@ download to a working setup. The rest of the guide describes every feature in de
 
 ## Install Telos
 
-Telos is not on the Play Store. Every successful build of the development branch is published on GitHub as a
-pre-release, and the three newest builds are kept.
+Telos is not on the Play Store. Two kinds of build are published on the
+[releases page](https://github.com/koukomin/Telos-Launcher/releases):
 
-1. Open the [releases page](https://github.com/koukomin/Telos-Launcher/releases) on your phone and download the
-   newest `telos-debug.apk`.
+- **Stable releases** are signed with the Telos release key. This is the recommended download for everyday use.
+- **Development builds** are debug-signed pre-releases, published from every successful build of the development
+  branch for people who want to try the newest changes. The three newest are kept.
+
+1. Open the [releases page](https://github.com/koukomin/Telos-Launcher/releases) on your phone. For everyday use,
+   download the newest `telos-release.apk` from the latest release; to try the newest changes, download
+   `telos-debug.apk` from a pre-release.
 2. Open the file. Android asks you to allow installing apps from this source (your browser or file manager). Allow
    it once, then confirm the installation.
 3. Open Telos and set it as your home app, see below.
 
-::: warning These are test builds
-The builds on the releases page are **debug-signed and meant for testing**. Expect rough edges, and several
-features are marked experimental in this guide. Back up before you update, see
+::: warning Early software
+Telos is a personal fork and a work in progress. Development builds in particular are debug-signed test builds with
+rough edges, and several features are marked experimental in this guide. Back up before you update, see
 [Update problems](./troubleshooting/update-not-installed).
 :::
 
