@@ -114,6 +114,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # Create the release with the APK, or (if the tag UI already made the release) just upload the APK to it
           gh release create "$GITHUB_REF_NAME" "$RUNNER_TEMP/telos-release.apk" \
             --title "Telos $GITHUB_REF_NAME" \
-            --generate-notes
+            --generate-notes \
+          || gh release upload "$GITHUB_REF_NAME" "$RUNNER_TEMP/telos-release.apk" --clobber
