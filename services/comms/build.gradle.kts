@@ -5,6 +5,10 @@ plugins {
     alias(libs.plugins.kotlin.plugin.serialization)
 }
 
+// the CPU types of this build, see -Ptelos.abi in app/app/build.gradle.kts
+val telosAbis = ((findProperty("telos.abi") as String?)?.takeIf { it.isNotBlank() }?.let { listOf(it) }
+    ?: listOf("arm64-v8a", "armeabi-v7a"))
+
 android {
     compileSdk {
         version = release(libs.versions.compileSdk.get().toInt()) {
@@ -21,7 +25,7 @@ android {
         // The native SIP engine is only built when the baresip static libraries are present
         // (downloaded by CI from the "sip-libs" release, or built locally with sip-native/Makefile).
         if (rootProject.file("sip-native/distribution/baresip").exists()) {
-            ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
+            ndk { abiFilters += telosAbis }
             // The static libraries and the AAudio calls need API 28; older devices fall back to no SIP
             externalNativeBuild { cmake { arguments += "-DANDROID_PLATFORM=android-28" } }
         }
@@ -58,8 +62,9 @@ android {
 dependencies {
     // Torrent streaming (MIT): Java API and the native libraries for 64 and 32 bit ARM
     implementation(libs.libtorrent4j)
-    implementation(libs.libtorrent4j.arm64)
-    implementation(libs.libtorrent4j.arm)
+    // only the native library of the CPU type that is built (see -Ptelos.abi in app/app/build.gradle.kts)
+    if ("arm64-v8a" in telosAbis) implementation(libs.libtorrent4j.arm64)
+    if ("armeabi-v7a" in telosAbis) implementation(libs.libtorrent4j.arm)
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)

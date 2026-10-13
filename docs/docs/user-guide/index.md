@@ -34,11 +34,22 @@ Telos is not on the Play Store. Two kinds of build are published on the
   branch for people who want to try the newest changes. The three newest are kept.
 
 1. Open the [releases page](https://github.com/koukomin/Telos-Launcher/releases) on your phone. For everyday use,
-   download the newest `telos-release.apk` from the latest release; to try the newest changes, download
-   `telos-debug.apk` from a pre-release.
+   download the APK for your phone from the latest release, see **Which APK?** below; to try the newest changes,
+   download `telos-debug.apk` from a pre-release.
 2. Open the file. Android asks you to allow installing apps from this source (your browser or file manager). Allow
    it once, then confirm the installation.
 3. Open Telos and set it as your home app, see below.
+
+### Which APK?
+
+A stable release has two files, one per CPU type. Each contains only the libraries of its own CPU, so neither is bigger than needed:
+
+| File | Phones |
+| --- | --- |
+| `telos-arm64-v8a.apk` | **Almost every phone of the last ~8 years (64-bit ARM). Take this one if unsure.** |
+| `telos-armeabi-v7a.apk` | Old 32-bit ARM phones, and some cheap phones that run a 32-bit Android on a 64-bit chip. Use it only if the 64-bit file cannot be installed |
+
+Install only one. Both are signed with the same key, so you can switch later without uninstalling. Telos Store updates Telos itself and picks the right file for your phone. You can see the CPU type of your phone in **Settings > About phone**, or with an app such as CPU-Z.
 
 ::: warning Early software
 Telos is a personal fork and a work in progress. Development builds in particular are debug-signed test builds with

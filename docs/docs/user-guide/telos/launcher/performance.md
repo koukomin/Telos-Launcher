@@ -91,7 +91,7 @@ These are visible in the build files. The final size depends on the build, and n
 
 | Choice | Effect |
 | --- | --- |
-| Only **arm64-v8a** and **armeabi-v7a** native libraries | No x86 or x86_64 copies of the FFmpeg decoders and other libraries. The comment says nothing runs them |
+| One APK per CPU type: **arm64-v8a** and **armeabi-v7a** (`-Ptelos.abi`) | Each release APK has only the native libraries (and the torrent engine) of its own CPU, about half the native size of one APK with both. No x86 copies either |
 | R8 minification and resource shrinking in release and nightly builds | Removes unused code and resources. Debug builds skip it |
 | R8 full mode, with optimization enabled | Inlining, dead code removal and constant propagation (an old setting that disabled optimization was removed) |
 | `Log.v` and `Log.d` calls stripped in release builds | Less code and no logging cost |

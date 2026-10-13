@@ -9,6 +9,11 @@ plugins {
 // see services/downloads/build.gradle.kts: the yt-dlp runtime is only built in with -Ptelos.media=true
 val mediaRuntime = (findProperty("telos.media") as String?)?.toBoolean() == true
 
+// One APK per CPU type: -Ptelos.abi=arm64-v8a or -Ptelos.abi=armeabi-v7a puts only the native libraries of that
+// CPU into the APK. Without it both are included (local and debug builds). Keep in sync with services/comms.
+val telosAbis = ((findProperty("telos.abi") as String?)?.takeIf { it.isNotBlank() }?.let { listOf(it) }
+    ?: listOf("arm64-v8a", "armeabi-v7a"))
+
 android {
     androidResources {
         generateLocaleConfig = true
@@ -44,12 +49,13 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2026053100
-        versionName = "1.40.2"
+        // release builds get the version of their tag (v1.41.0 -> 1.41.0), otherwise the update check would always find the tag newer
+        versionName = System.getenv("VERSION_NAME_OVERRIDE")?.takeIf { it.isNotBlank() } ?: "1.40.2"
         signingConfig = signingConfigs.getByName("debug")
 
-        // One APK for the phones people actually use. Without this the x86 and x86_64 builds of
-        // the FFmpeg decoders (and other libraries) end up in the APK although nothing runs them.
-        ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
+        // Only the CPU types we ship: without this the x86 and x86_64 builds of the FFmpeg decoders
+        // (and other libraries) end up in the APK although nothing runs them.
+        ndk { abiFilters += telosAbis }
     }
 
     signingConfigs {

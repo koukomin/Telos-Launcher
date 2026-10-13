@@ -73,15 +73,20 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
+import de.mm20.launcher2.store.catalog.RecommendedApp
+import de.mm20.launcher2.store.catalog.RecommendedApps
+import de.mm20.launcher2.store.catalog.RecommendedCategory
 import de.mm20.launcher2.store.catalog.TelosApp
 import de.mm20.launcher2.store.catalog.TelosApps
 import de.mm20.launcher2.store.model.AppSource
 import de.mm20.launcher2.store.model.StoreItem
+import de.mm20.launcher2.store.parser.StoreUrlParser
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.media.MediaFrame
 import de.mm20.launcher2.ui.media.MediaSearchBar
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
@@ -107,6 +112,7 @@ fun StoreDashboardScreen(initialLink: String = "") {
     val categories by viewModel.categories.collectAsStateWithLifecycle()
     val message by viewModel.message.collectAsStateWithLifecycle()
     val disabledTelos by viewModel.disabledTelosApps.collectAsStateWithLifecycle()
+    val trackedUrls by viewModel.trackedUrls.collectAsStateWithLifecycle()
 
     var tab by rememberSaveable { mutableIntStateOf(0) }
     var showAdd by remember { mutableStateOf(false) }
@@ -163,6 +169,7 @@ fun StoreDashboardScreen(initialLink: String = "") {
                 TabRow(selectedTabIndex = tab) {
                     Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(R.string.hc_apps)) })
                     Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(R.string.hc_telos_apps)) })
+                    Tab(selected = tab == 2, onClick = { tab = 2 }, text = { Text(stringResource(R.string.recommendation_tab_label)) })
                 }
                 if (tab == 0) {
                     AppsTab(
@@ -180,6 +187,16 @@ fun StoreDashboardScreen(initialLink: String = "") {
                         onOpen = { backStack.add(AppDetailsRoute(itemId = it.item.id)) },
                         onAction = { viewModel.onAppActionClicked(it.item) },
                         onUpdateAll = { viewModel.updateAll() },
+                    )
+                } else if (tab == 2) {
+                    RecommendedTab(
+                        tracked = trackedUrls,
+                        onAdd = { app, done ->
+                            viewModel.addRecommended(app) { error ->
+                                done()
+                                if (error != null) Toast.makeText(context, error, Toast.LENGTH_LONG).show()
+                            }
+                        },
                     )
                 } else {
                     TelosAppsTab(
@@ -282,6 +299,60 @@ private fun AppsTab(
     }
 }
 
+/** Suggested free apps in four groups; "Add" puts one into the tracked apps (it is then installed and updated like any other) */
+@Composable
+private fun RecommendedTab(tracked: Set<String>, onAdd: (RecommendedApp, () -> Unit) -> Unit) {
+    var adding by remember { mutableStateOf(setOf<String>()) }
+    LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
+        for (category in RecommendedCategory.values()) {
+            item(key = "header_${category.name}") {
+                Text(
+                    stringResource(
+                        when (category) {
+                            RecommendedCategory.Stores -> R.string.au21_store_cat_stores
+                            RecommendedCategory.Tools -> R.string.hc_tools
+                            RecommendedCategory.Browsers -> R.string.recommendation_category_browsers
+                            RecommendedCategory.Media -> R.string.dl_m_tab
+                        }
+                    ),
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 4.dp),
+                )
+            }
+            items(RecommendedApps.forCategory(category), key = { "${category.name}_${it.name}" }) { app ->
+                val isTracked = StoreUrlParser.toUrl(app.source).lowercase() in tracked
+                Surface(
+                    shape = RoundedCornerShape(20.dp),
+                    color = MaterialTheme.colorScheme.surfaceContainerLow,
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
+                ) {
+                    Row(Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                        AppIcon(app.packageName, app.name, 44)
+                        Spacer(Modifier.width(12.dp))
+                        Column(Modifier.weight(1f)) {
+                            Text(app.name, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(app.source.summary(), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        }
+                        Spacer(Modifier.width(8.dp))
+                        if (isTracked) {
+                            OutlinedButton(onClick = {}, enabled = false) { Text(stringResource(R.string.dl_detail_created)) }
+                        } else if (app.name in adding) {
+                            OutlinedButton(onClick = {}, enabled = false) { CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp) }
+                        } else {
+                            Button(onClick = {
+                                adding = adding + app.name
+                                // the button comes back when adding is done (it then shows "Added", or "Add" again after an error)
+                                onAdd(app) { adding = adding - app.name }
+                            }) { Text(stringResource(R.string.hc_add)) }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 @Composable
 private fun EmptyMessage(title: String, text: String) {
     Column(
@@ -366,20 +437,41 @@ private fun StoreItem.versionLine(update: Boolean): String {
     }
 }
 
-/** The icon of the installed app, or a letter before it is installed */
+/**
+ * The icon of the installed app, drawn the way the launcher draws it (the icon pack and icon shape the
+ * user chose), or a letter before it is installed
+ */
+@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 @Composable
 internal fun AppIcon(packageName: String, name: String, size: Int, installedVersion: Long? = null) {
     val context = LocalContext.current
+    val appRepository: de.mm20.launcher2.applications.AppRepository = org.koin.compose.koinInject()
+    val iconService: de.mm20.launcher2.icons.IconService = org.koin.compose.koinInject()
+    val sizePx = with(androidx.compose.ui.platform.LocalDensity.current) { size.dp.roundToPx() }
+    val launcherIcon by remember(packageName, installedVersion, sizePx) {
+        if (packageName.isBlank()) {
+            kotlinx.coroutines.flow.flowOf<de.mm20.launcher2.icons.LauncherIcon?>(null)
+        } else {
+            appRepository.findOne(packageName, android.os.Process.myUserHandle())
+                .flatMapLatest { app ->
+                    if (app == null) kotlinx.coroutines.flow.flowOf<de.mm20.launcher2.icons.LauncherIcon?>(null)
+                    else iconService.getIcon(app, sizePx)
+                }
+        }
+    }.collectAsStateWithLifecycle(null)
     val bitmap by androidx.compose.runtime.produceState<androidx.compose.ui.graphics.ImageBitmap?>(null, packageName, installedVersion) {
-        value = withContext(Dispatchers.IO) {
+        value = if (packageName.isBlank()) null else withContext(Dispatchers.IO) {
             runCatching {
                 val d: Drawable = context.packageManager.getApplicationIcon(packageName)
                 d.toBitmap(size * 3, size * 3).asImageBitmap()
             }.getOrNull()
         }
     }
+    val li = launcherIcon
     val b = bitmap
-    if (b != null) {
+    if (li != null) {
+        de.mm20.launcher2.ui.component.ShapedLauncherIcon(size = size.dp, icon = { li })
+    } else if (b != null) {
         Image(b, contentDescription = null, modifier = Modifier.size(size.dp))
     } else {
         Surface(Modifier.size(size.dp), shape = CircleShape, color = MaterialTheme.colorScheme.primaryContainer) {

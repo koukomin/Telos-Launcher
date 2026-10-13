@@ -94,6 +94,11 @@ class StoreViewModel : ViewModel(), KoinComponent {
 
     val global: StateFlow<GlobalOptions> = options.global
 
+    /** Addresses of the tracked apps, to show which recommended apps are already in the list */
+    val trackedUrls: StateFlow<Set<String>> = items
+        .map { list -> list.map { StoreUrlParser.toUrl(it.source).lowercase() }.toSet() }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptySet())
+
     // ---- list state ----
 
     val query = MutableStateFlow("")
@@ -160,6 +165,14 @@ class StoreViewModel : ViewModel(), KoinComponent {
     fun addFromUrl(url: String, packageName: String = "", onResult: (String?) -> Unit) {
         viewModelScope.launch {
             val result = runCatching { tools.addFromUrl(url.trim(), packageName) }.getOrElse { Result.failure(it) }
+            result.onSuccess { onResult(null) }.onFailure { onResult(it.message ?: str(R.string.au_store_msg_add_failed)) }
+        }
+    }
+
+    /** Adds an app of the recommended list; [onResult] gets null on success, otherwise the reason */
+    fun addRecommended(app: de.mm20.launcher2.store.catalog.RecommendedApp, onResult: (String?) -> Unit) {
+        viewModelScope.launch {
+            val result = runCatching { tools.addSource(app.source, app.name, app.packageName) }.getOrElse { Result.failure(it) }
             result.onSuccess { onResult(null) }.onFailure { onResult(it.message ?: str(R.string.au_store_msg_add_failed)) }
         }
     }
