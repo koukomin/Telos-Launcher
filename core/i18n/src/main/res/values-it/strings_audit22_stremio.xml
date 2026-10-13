@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">Informazioni sui componenti aggiuntivi</string>
+    <string name="au22_stremio_notice_text">Questo spazio è un client non ufficiale per i componenti aggiuntivi di Stremio. I componenti aggiuntivi sono piccoli servizi web creati da sviluppatori indipendenti. Telos mostra e riproduce soltanto ciò che un componente offre: non include componenti aggiuntivi, non ospita video e non verifica ciò che un componente fornisce. Sei responsabile di ciò che aggiungi e guardi, e di avere il diritto di guardarlo dove vivi. Alcuni componenti usano BitTorrent, che mostra il tuo indirizzo IP agli altri utenti. Telos non è affiliato a Stremio.</string>
+    <string name="au22_stremio_notice_accept">Ho capito</string>
+    <string name="au22_stremio_addons">Componenti aggiuntivi</string>
+    <string name="au22_stremio_add_addon">Aggiungi componente</string>
+    <string name="au22_stremio_addon_address">Indirizzo del componente</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json o stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Aggiungi Cinemeta (il componente di metadati di Stremio)</string>
+    <string name="au22_stremio_empty">Non ci sono ancora componenti aggiuntivi. Aggiungine uno per vederne cataloghi e stream. Telos non ne include nessuno.</string>
+    <string name="au22_stremio_home">Home</string>
+    <string name="au22_stremio_library">Libreria</string>
+    <string name="au22_stremio_search_hint">Cerca titoli</string>
+    <string name="au22_stremio_continue">Continua a guardare</string>
+    <string name="au22_stremio_no_results">Nessun risultato</string>
+    <string name="au22_stremio_library_empty">La tua libreria è vuota. Apri un titolo e salvalo qui.</string>
+    <string name="au22_stremio_save">Salva</string>
+    <string name="au22_stremio_saved">Salvato</string>
+    <string name="au22_stremio_season">Stagione %d</string>
+    <string name="au22_stremio_streams">Scegli uno stream</string>
+    <string name="au22_stremio_no_streams">Nessuno stream trovato per questo titolo.</string>
+    <string name="au22_stremio_last_used">Ultimo utilizzo</string>
+    <string name="au22_stremio_p2p_warning">Usa BitTorrent: gli altri utenti possono vedere il tuo indirizzo IP</string>
+    <string name="au22_stremio_opens_browser">Si apre nel browser</string>
+    <string name="au22_stremio_unsupported">Questo tipo di stream non è supportato</string>
+    <string name="au22_stremio_refresh">Aggiorna</string>
+</resources>

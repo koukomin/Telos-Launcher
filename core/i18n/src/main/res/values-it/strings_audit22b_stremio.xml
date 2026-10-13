@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Account Stremio</string>
+    <string name="au22_stremio_account_intro">Accedi con il tuo account Stremio per mantenere sincronizzati i tuoi componenti aggiuntivi, la libreria e i contenuti in corso. La password viene inviata solo a Stremio (api.strem.io) e non viene memorizzata. Viene usato il servizio account di Stremio, che Stremio può modificare o bloccare in qualsiasi momento. Telos non è affiliato a Stremio.</string>
+    <string name="au22_stremio_email">Email</string>
+    <string name="au22_stremio_password">Password</string>
+    <string name="au22_stremio_sign_in">Accedi</string>
+    <string name="au22_stremio_signed_in">Accesso eseguito come %s</string>
+    <string name="au22_stremio_sync_now">Sincronizza ora</string>
+    <string name="au22_stremio_sign_out">Esci</string>
+    <string name="au22_stremio_synced">Sincronizzato</string>
+    <string name="au22_stremio_directory">Sfoglia componenti aggiuntivi</string>
+    <string name="au22_stremio_directory_hint">Componenti aggiuntivi elencati da quelli installati e dall\'elenco pubblico di Stremio. Sono creati da terzi e non vengono verificati da Telos né da Stremio.</string>
+    <string name="au22_stremio_directory_empty">Nessun componente aggiuntivo trovato</string>
+</resources>

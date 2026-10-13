@@ -54,6 +54,24 @@ class StoreToolsImpl(
         return null
     }
 
+    override suspend fun addSource(source: AppSource, name: String, packageName: String): Result<StoreItem> {
+        val wanted = StoreUrlParser.toUrl(source).lowercase()
+        if (repository.getAll().any { StoreUrlParser.toUrl(it.source).lowercase() == wanted }) {
+            return Result.failure(IllegalStateException("This app is already in your list"))
+        }
+        val release = registry.resolveLatestRelease(source).getOrElse { return Result.failure(it) }
+        val item = StoreItem(
+            id = UUID.randomUUID().toString(),
+            packageName = packageName.trim().ifBlank { StoreActionHandler.UNKNOWN_PACKAGE },
+            displayName = name,
+            source = source,
+            latestRelease = release,
+            lastCheckedAt = System.currentTimeMillis(),
+        )
+        repository.insertItem(item)
+        return Result.success(item)
+    }
+
     override suspend fun addFromUrl(url: String, packageName: String): Result<StoreItem> {
         val parsed = StoreUrlParser.parse(url) ?: return Result.failure(IllegalArgumentException("This is not a web address"))
         val existing = repository.getAll()

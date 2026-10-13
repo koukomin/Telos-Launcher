@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Stremio-Konto</string>
+    <string name="au22_stremio_account_intro">Melde dich mit deinem Stremio-Konto an, um deine Add-ons, Bibliothek und Weiterschauen-Liste abzugleichen. Dein Passwort wird nur an Stremio (api.strem.io) gesendet und nicht gespeichert. Dabei wird der Kontodienst von Stremio genutzt, den Stremio jederzeit ändern oder sperren kann. Telos ist nicht mit Stremio verbunden.</string>
+    <string name="au22_stremio_email">E-Mail</string>
+    <string name="au22_stremio_password">Passwort</string>
+    <string name="au22_stremio_sign_in">Anmelden</string>
+    <string name="au22_stremio_signed_in">Angemeldet als %s</string>
+    <string name="au22_stremio_sync_now">Jetzt synchronisieren</string>
+    <string name="au22_stremio_sign_out">Abmelden</string>
+    <string name="au22_stremio_synced">Synchronisiert</string>
+    <string name="au22_stremio_directory">Add-ons durchsuchen</string>
+    <string name="au22_stremio_directory_hint">Add-ons, die von deinen installierten Add-ons und von der öffentlichen Liste von Stremio aufgeführt werden. Sie stammen von Dritten und werden weder von Telos noch von Stremio geprüft.</string>
+    <string name="au22_stremio_directory_empty">Keine Add-ons gefunden</string>
+</resources>

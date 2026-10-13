@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">O dodatkih</string>
+    <string name="au22_stremio_notice_text">Ta prostor je neuradni odjemalec za dodatke Stremio. Dodatki so majhne spletne storitve neodvisnih razvijalcev. Telos le prikaže, kar dodatek ponuja, in to predvaja: ne vsebuje dodatkov, ne gosti videoposnetkov in ne preverja, kaj dodatek nudi. Sami ste odgovorni za to, kar dodate in gledate, ter za pravico do ogleda tam, kjer živite. Nekateri dodatki uporabljajo BitTorrent, kar drugim uporabnikom razkrije vaš naslov IP. Telos ni povezan s Stremio.</string>
+    <string name="au22_stremio_notice_accept">Razumem</string>
+    <string name="au22_stremio_addons">Dodatki</string>
+    <string name="au22_stremio_add_addon">Dodaj dodatek</string>
+    <string name="au22_stremio_addon_address">Naslov dodatka</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json ali stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Dodaj Cinemeta (dodatek Stremio za metapodatke)</string>
+    <string name="au22_stremio_empty">Dodatkov še ni. Dodajte enega, da vidite njegove kataloge in tokove. Telos jih ne vsebuje.</string>
+    <string name="au22_stremio_home">Domov</string>
+    <string name="au22_stremio_library">Knjižnica</string>
+    <string name="au22_stremio_search_hint">Išči naslove</string>
+    <string name="au22_stremio_continue">Nadaljuj z gledanjem</string>
+    <string name="au22_stremio_no_results">Nič ni najdeno</string>
+    <string name="au22_stremio_library_empty">Vaša knjižnica je prazna. Odprite naslov in ga shranite sem.</string>
+    <string name="au22_stremio_save">Shrani</string>
+    <string name="au22_stremio_saved">Shranjeno</string>
+    <string name="au22_stremio_season">Sezona %d</string>
+    <string name="au22_stremio_streams">Izberite tok</string>
+    <string name="au22_stremio_no_streams">Za ta naslov ni najdenih tokov.</string>
+    <string name="au22_stremio_last_used">Nazadnje uporabljeno</string>
+    <string name="au22_stremio_p2p_warning">Uporablja BitTorrent: drugi uporabniki lahko vidijo vaš naslov IP</string>
+    <string name="au22_stremio_opens_browser">Odpre se v brskalniku</string>
+    <string name="au22_stremio_unsupported">Ta vrsta toka ni podprta</string>
+    <string name="au22_stremio_refresh">Osveži</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">Lisamoodulitest</string>
+    <string name="au22_stremio_notice_text">See ala on mitteametlik Stremio lisamoodulite klient. Lisamoodulid on väikesed veebiteenused, mille on loonud sõltumatud arendajad. Telos näitab ainult seda, mida lisamoodul pakub, ja esitab selle: see ei sisalda lisamooduleid, ei hosti videoid ega kontrolli, mida lisamoodul pakub. Vastutad ise selle eest, mida lisad ja vaatad, ning selle eest, et sul on õigus seda oma elukohas vaadata. Mõned lisamoodulid kasutavad BitTorrentit, mis näitab sinu IP-aadressi teistele kasutajatele. Telos ei ole Stremioga seotud.</string>
+    <string name="au22_stremio_notice_accept">Saan aru</string>
+    <string name="au22_stremio_addons">Lisamoodulid</string>
+    <string name="au22_stremio_add_addon">Lisa lisamoodul</string>
+    <string name="au22_stremio_addon_address">Lisamooduli aadress</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json või stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Lisa Cinemeta (Stremio metaandmete lisamoodul)</string>
+    <string name="au22_stremio_empty">Lisamooduleid pole veel. Lisa üks, et näha selle katalooge ja voogusid. Telos ei sisalda ühtegi.</string>
+    <string name="au22_stremio_home">Avaleht</string>
+    <string name="au22_stremio_library">Kogu</string>
+    <string name="au22_stremio_search_hint">Otsi pealkirju</string>
+    <string name="au22_stremio_continue">Jätka vaatamist</string>
+    <string name="au22_stremio_no_results">Midagi ei leitud</string>
+    <string name="au22_stremio_library_empty">Sinu kogu on tühi. Ava pealkiri ja salvesta see siia.</string>
+    <string name="au22_stremio_save">Salvesta</string>
+    <string name="au22_stremio_saved">Salvestatud</string>
+    <string name="au22_stremio_season">%d. hooaeg</string>
+    <string name="au22_stremio_streams">Vali voog</string>
+    <string name="au22_stremio_no_streams">Selle pealkirja jaoks ei leitud ühtegi voogu.</string>
+    <string name="au22_stremio_last_used">Viimati kasutatud</string>
+    <string name="au22_stremio_p2p_warning">Kasutab BitTorrentit: teised kasutajad näevad sinu IP-aadressi</string>
+    <string name="au22_stremio_opens_browser">Avaneb brauseris</string>
+    <string name="au22_stremio_unsupported">Seda tüüpi voogu ei toetata</string>
+    <string name="au22_stremio_refresh">Värskenda</string>
+</resources>

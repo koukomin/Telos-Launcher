@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Обліковий запис Stremio</string>
+    <string name="au22_stremio_account_intro">Увійдіть у свій обліковий запис Stremio, щоб синхронізувати додатки, бібліотеку та продовження перегляду. Ваш пароль надсилається лише до Stremio (api.strem.io) і не зберігається. Використовується сервіс облікових записів Stremio, який Stremio може змінити або заблокувати будь-коли. Telos не пов’язаний зі Stremio.</string>
+    <string name="au22_stremio_email">Електронна пошта</string>
+    <string name="au22_stremio_password">Пароль</string>
+    <string name="au22_stremio_sign_in">Увійти</string>
+    <string name="au22_stremio_signed_in">Ви увійшли як %s</string>
+    <string name="au22_stremio_sync_now">Синхронізувати зараз</string>
+    <string name="au22_stremio_sign_out">Вийти</string>
+    <string name="au22_stremio_synced">Синхронізовано</string>
+    <string name="au22_stremio_directory">Огляд додатків</string>
+    <string name="au22_stremio_directory_hint">Додатки з ваших встановлених додатків і публічного списку Stremio. Їх створили інші, і Telos чи Stremio їх не перевіряють.</string>
+    <string name="au22_stremio_directory_empty">Додатків не знайдено</string>
+</resources>

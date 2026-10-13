@@ -29,4 +29,9 @@ val commsModule = module {
     single { de.mm20.launcher2.comms.tv.TvLibrary(get(), get()) }
     single { de.mm20.launcher2.comms.tv.TvBackup(get(), get()) }
     single { de.mm20.launcher2.comms.tv.TvPlayerController(androidContext(), get(), get(), get()) }
+    // Stremio add-on client of Telos Media
+    single { de.mm20.launcher2.comms.stremio.StremioClient() }
+    single { de.mm20.launcher2.comms.stremio.StremioAddons(androidContext(), get()) }
+    single { de.mm20.launcher2.comms.stremio.StremioLibrary(androidContext()) }
+    single { de.mm20.launcher2.comms.stremio.StremioAccount(androidContext(), get(), get()) }
 }

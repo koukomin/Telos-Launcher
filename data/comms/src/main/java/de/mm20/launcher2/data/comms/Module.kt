@@ -44,7 +44,7 @@ val dataCommsModule = module {
     // One deserializer per virtual app domain, so pinned / docked virtual apps survive a reload.
     listOf(
         VirtualPhoneApp.Domain, VirtualMessagesApp.Domain, VirtualRadioApp.Domain,
-        VirtualMusicApp.Domain, VirtualVideoApp.Domain, VirtualPhotosApp.Domain,
+        VirtualMusicApp.Domain, VirtualVideoApp.Domain,
         VirtualFilesApp.Domain, VirtualCalculatorApp.Domain, VirtualVoiceRecorderApp.Domain,
         VirtualScreenRecorderApp.Domain, VirtualScreenshotApp.Domain, VirtualNotesApp.Domain,
         VirtualCalendarApp.Domain, VirtualDownloadsApp.Domain, VirtualMediaApp.Domain,
@@ -52,6 +52,13 @@ val dataCommsModule = module {
     ).forEach { domain ->
         factory<SearchableDeserializer>(org.koin.core.qualifier.named(domain)) {
             VirtualAppDeserializer(domain) { getAll<VirtualAppProvider>() }
+        }
+    }
+    // Telos Photos is a tab of Telos Viewer now: a Photos icon that was pinned or docked earlier becomes the Viewer
+    factory<SearchableDeserializer>(org.koin.core.qualifier.named(VirtualPhotosApp.Domain)) {
+        val viewer = VirtualAppDeserializer(VirtualViewerApp.Domain) { getAll<VirtualAppProvider>() }
+        object : SearchableDeserializer {
+            override suspend fun deserialize(serialized: String) = viewer.deserialize("${VirtualViewerApp.Domain}://viewer")
         }
     }
 }

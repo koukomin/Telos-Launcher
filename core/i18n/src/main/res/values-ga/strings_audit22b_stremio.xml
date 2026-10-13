@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Cuntas Stremio</string>
+    <string name="au22_stremio_account_intro">Sínigh isteach le do chuntas Stremio chun do chuid breiseán, leabharlann agus leanúint ort ag féachaint a choinneáil sioncronaithe. Seoltar do phasfhocal chuig Stremio amháin (api.strem.io) agus ní stóráiltear é. Úsáideann sé seo seirbhís cuntais Stremio, ar féidir le Stremio é a athrú nó a bhlocáil am ar bith. Níl Telos ceangailte le Stremio.</string>
+    <string name="au22_stremio_email">Ríomhphost</string>
+    <string name="au22_stremio_password">Pasfhocal</string>
+    <string name="au22_stremio_sign_in">Sínigh isteach</string>
+    <string name="au22_stremio_signed_in">Sínithe isteach mar %s</string>
+    <string name="au22_stremio_sync_now">Sioncronaigh anois</string>
+    <string name="au22_stremio_sign_out">Sínigh amach</string>
+    <string name="au22_stremio_synced">Sioncronaithe</string>
+    <string name="au22_stremio_directory">Brabhsáil breiseáin</string>
+    <string name="au22_stremio_directory_hint">Breiseáin a liostaítear ag do bhreiseáin suiteáilte agus ag liosta poiblí Stremio. Rinne daoine eile iad agus ní sheiceálann Telos ná Stremio iad.</string>
+    <string name="au22_stremio_directory_empty">Níor aimsíodh aon bhreiseáin</string>
+</resources>

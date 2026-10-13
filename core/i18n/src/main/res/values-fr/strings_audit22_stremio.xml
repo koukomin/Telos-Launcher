@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">À propos des modules complémentaires</string>
+    <string name="au22_stremio_notice_text">Cet espace est un client non officiel pour les modules complémentaires Stremio. Les modules complémentaires sont de petits services web créés par des développeurs indépendants. Telos se contente d\'afficher et de lire ce qu\'un module propose : il n\'inclut aucun module, n\'héberge aucune vidéo et ne vérifie pas ce qu\'un module fournit. Vous êtes responsable de ce que vous ajoutez et regardez, et du droit de le regarder là où vous vivez. Certains modules utilisent BitTorrent, qui montre votre adresse IP aux autres utilisateurs. Telos n\'est pas affilié à Stremio.</string>
+    <string name="au22_stremio_notice_accept">Compris</string>
+    <string name="au22_stremio_addons">Modules complémentaires</string>
+    <string name="au22_stremio_add_addon">Ajouter un module</string>
+    <string name="au22_stremio_addon_address">Adresse du module</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json ou stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Ajouter Cinemeta (le module de métadonnées de Stremio)</string>
+    <string name="au22_stremio_empty">Aucun module complémentaire pour le moment. Ajoutez-en un pour voir ses catalogues et ses flux. Telos n\'en inclut aucun.</string>
+    <string name="au22_stremio_home">Accueil</string>
+    <string name="au22_stremio_library">Bibliothèque</string>
+    <string name="au22_stremio_search_hint">Rechercher des titres</string>
+    <string name="au22_stremio_continue">Reprendre la lecture</string>
+    <string name="au22_stremio_no_results">Aucun résultat</string>
+    <string name="au22_stremio_library_empty">Votre bibliothèque est vide. Ouvrez un titre et enregistrez-le ici.</string>
+    <string name="au22_stremio_save">Enregistrer</string>
+    <string name="au22_stremio_saved">Enregistré</string>
+    <string name="au22_stremio_season">Saison %d</string>
+    <string name="au22_stremio_streams">Choisir un flux</string>
+    <string name="au22_stremio_no_streams">Aucun flux n\'a été trouvé pour ce titre.</string>
+    <string name="au22_stremio_last_used">Dernier utilisé</string>
+    <string name="au22_stremio_p2p_warning">Utilise BitTorrent : les autres utilisateurs peuvent voir votre adresse IP</string>
+    <string name="au22_stremio_opens_browser">S\'ouvre dans le navigateur</string>
+    <string name="au22_stremio_unsupported">Ce type de flux n\'est pas pris en charge</string>
+    <string name="au22_stremio_refresh">Actualiser</string>
+</resources>

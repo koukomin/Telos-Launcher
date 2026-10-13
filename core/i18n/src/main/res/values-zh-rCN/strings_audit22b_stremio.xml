@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Stremio 账户</string>
+    <string name="au22_stremio_account_intro">使用 Stremio 账户登录,让你的附加组件、媒体库和继续观看与其保持同步。你的密码只会发送给 Stremio (api.strem.io),不会被保存。此功能使用 Stremio 的账户服务,Stremio 可能随时更改或屏蔽。Telos 与 Stremio 没有任何关联。</string>
+    <string name="au22_stremio_email">电子邮件</string>
+    <string name="au22_stremio_password">密码</string>
+    <string name="au22_stremio_sign_in">登录</string>
+    <string name="au22_stremio_signed_in">已登录为 %s</string>
+    <string name="au22_stremio_sync_now">立即同步</string>
+    <string name="au22_stremio_sign_out">退出登录</string>
+    <string name="au22_stremio_synced">已同步</string>
+    <string name="au22_stremio_directory">浏览附加组件</string>
+    <string name="au22_stremio_directory_hint">由你已安装的附加组件和 Stremio 公开列表提供的附加组件。它们由第三方制作,Telos 和 Stremio 均未进行审核。</string>
+    <string name="au22_stremio_directory_empty">未找到附加组件</string>
+</resources>

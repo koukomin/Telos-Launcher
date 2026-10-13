@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">Apie papildinius</string>
+    <string name="au22_stremio_notice_text">Ši erdvė yra neoficiali Stremio papildinių programa. Papildiniai yra nedidelės žiniatinklio paslaugos, kurias kuria nepriklausomi kūrėjai. Telos tik parodo, ką siūlo papildinys, ir tai paleidžia: joje nėra jokių papildinių, ji nelaiko vaizdo įrašų ir netikrina, ką teikia papildinys. Tu pats atsakai už tai, ką pridedi ir žiūri, bei už tai, ar turi teisę tai žiūrėti savo gyvenamojoje vietoje. Kai kurie papildiniai naudoja BitTorrent, kuris kitiems naudotojams parodo tavo IP adresą. Telos nėra susijusi su Stremio.</string>
+    <string name="au22_stremio_notice_accept">Supratau</string>
+    <string name="au22_stremio_addons">Papildiniai</string>
+    <string name="au22_stremio_add_addon">Pridėti papildinį</string>
+    <string name="au22_stremio_addon_address">Papildinio adresas</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json arba stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Pridėti Cinemeta (Stremio metaduomenų papildinį)</string>
+    <string name="au22_stremio_empty">Papildinių dar nėra. Pridėk vieną, kad pamatytum jo katalogus ir srautus. Telos jų neįtraukia.</string>
+    <string name="au22_stremio_home">Pradžia</string>
+    <string name="au22_stremio_library">Biblioteka</string>
+    <string name="au22_stremio_search_hint">Ieškoti pavadinimų</string>
+    <string name="au22_stremio_continue">Tęsti žiūrėjimą</string>
+    <string name="au22_stremio_no_results">Nieko nerasta</string>
+    <string name="au22_stremio_library_empty">Tavo biblioteka tuščia. Atidaryk pavadinimą ir išsaugok jį čia.</string>
+    <string name="au22_stremio_save">Išsaugoti</string>
+    <string name="au22_stremio_saved">Išsaugota</string>
+    <string name="au22_stremio_season">%d sezonas</string>
+    <string name="au22_stremio_streams">Pasirink srautą</string>
+    <string name="au22_stremio_no_streams">Šiam pavadinimui srautų nerasta.</string>
+    <string name="au22_stremio_last_used">Paskutinį kartą naudota</string>
+    <string name="au22_stremio_p2p_warning">Naudoja BitTorrent: kiti naudotojai gali matyti tavo IP adresą</string>
+    <string name="au22_stremio_opens_browser">Atidaroma naršyklėje</string>
+    <string name="au22_stremio_unsupported">Šio tipo srautas nepalaikomas</string>
+    <string name="au22_stremio_refresh">Atnaujinti</string>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">Tietoja lisäosista</string>
+    <string name="au22_stremio_notice_text">Tämä tila on epävirallinen asiakas Stremio-lisäosille. Lisäosat ovat riippumattomien kehittäjien tekemiä pieniä verkkopalveluja. Telos vain näyttää, mitä lisäosa tarjoaa, ja toistaa sen: se ei sisällä lisäosia, ei isännöi videoita eikä tarkista, mitä lisäosa tarjoaa. Olet itse vastuussa siitä, mitä lisäät ja katsot, sekä siitä, että sinulla on oikeus katsoa se asuinpaikassasi. Jotkin lisäosat käyttävät BitTorrentia, joka näyttää IP-osoitteesi muille käyttäjille. Telos ei ole sidoksissa Stremioon.</string>
+    <string name="au22_stremio_notice_accept">Ymmärrän</string>
+    <string name="au22_stremio_addons">Lisäosat</string>
+    <string name="au22_stremio_add_addon">Lisää lisäosa</string>
+    <string name="au22_stremio_addon_address">Lisäosan osoite</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json tai stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Lisää Cinemeta (Stremion metatietolisäosa)</string>
+    <string name="au22_stremio_empty">Lisäosia ei ole vielä. Lisää yksi nähdäksesi sen luettelot ja striimit. Telos ei sisällä yhtään.</string>
+    <string name="au22_stremio_home">Koti</string>
+    <string name="au22_stremio_library">Kirjasto</string>
+    <string name="au22_stremio_search_hint">Hae nimikkeitä</string>
+    <string name="au22_stremio_continue">Jatka katsomista</string>
+    <string name="au22_stremio_no_results">Mitään ei löytynyt</string>
+    <string name="au22_stremio_library_empty">Kirjastosi on tyhjä. Avaa nimike ja tallenna se tänne.</string>
+    <string name="au22_stremio_save">Tallenna</string>
+    <string name="au22_stremio_saved">Tallennettu</string>
+    <string name="au22_stremio_season">Kausi %d</string>
+    <string name="au22_stremio_streams">Valitse striimi</string>
+    <string name="au22_stremio_no_streams">Tälle nimikkeelle ei löytynyt striimejä.</string>
+    <string name="au22_stremio_last_used">Viimeksi käytetty</string>
+    <string name="au22_stremio_p2p_warning">Käyttää BitTorrentia: muut käyttäjät voivat nähdä IP-osoitteesi</string>
+    <string name="au22_stremio_opens_browser">Avautuu selaimessa</string>
+    <string name="au22_stremio_unsupported">Tämän tyyppistä striimiä ei tuettu</string>
+    <string name="au22_stremio_refresh">Päivitä</string>
+</resources>

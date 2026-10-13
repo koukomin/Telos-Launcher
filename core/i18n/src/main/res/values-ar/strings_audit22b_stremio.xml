@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">حساب Stremio</string>
+    <string name="au22_stremio_account_intro">سجّل الدخول بحساب Stremio لإبقاء الإضافات والمكتبة وقائمة متابعة المشاهدة متزامنة. تُرسل كلمة المرور إلى Stremio (api.strem.io) فقط ولا يتم تخزينها. يستخدم هذا خدمة حسابات Stremio، والتي قد تغيّرها Stremio أو تحظرها في أي وقت. Telos غير تابع لـ Stremio.</string>
+    <string name="au22_stremio_email">البريد الإلكتروني</string>
+    <string name="au22_stremio_password">كلمة المرور</string>
+    <string name="au22_stremio_sign_in">تسجيل الدخول</string>
+    <string name="au22_stremio_signed_in">تم تسجيل الدخول باسم %s</string>
+    <string name="au22_stremio_sync_now">زامن الآن</string>
+    <string name="au22_stremio_sign_out">تسجيل الخروج</string>
+    <string name="au22_stremio_synced">تمت المزامنة</string>
+    <string name="au22_stremio_directory">تصفّح الإضافات</string>
+    <string name="au22_stremio_directory_hint">الإضافات التي تقدمها إضافاتك المثبتة والقائمة العامة من Stremio. صنعها آخرون ولم يتحقق منها Telos أو Stremio.</string>
+    <string name="au22_stremio_directory_empty">لم يتم العثور على إضافات</string>
+</resources>

@@ -52,7 +52,7 @@ itself a Telos app, but it **cannot be removed**, otherwise there would be no wa
 | Title "Store" | The screen name |
 | **Check for updates** (refresh icon) | Asks every source now |
 | **More** menu | **Add installed apps**, **Import (Obtainium file)**, **Export (Obtainium file)**, **Store settings** |
-| Tabs **Apps** and **Telos apps** | Your tracked apps, and the built-in Telos apps |
+| Tabs **Apps**, **Telos apps** and **Recommended** | Your tracked apps, the built-in Telos apps, and a list of suggested free apps |
 | Search field "Search apps" | Matches the name, the package name and the category |
 | Filter chips | **All**, **Updates (N)**, **Installed**, **Not installed**, **Track only**, and one chip per category |
 | **Update all (N)** | Installs every available update, except for apps set to Track only |
@@ -62,6 +62,19 @@ itself a Telos app, but it **cannot be removed**, otherwise there would be no wa
 The list shows apps with updates first, then the others by name. A row says `v1.2 -> v1.3` for an update, `v1.2` for
 the installed version, "Not installed", "v1.3 available" for track only apps, and marks "track only" and "pinned" apps.
 An empty list says "No apps yet" and a filter without results says "No apps match".
+
+### Recommended
+
+Suggested apps in four groups. **Add** puts one into your tracked apps, where it is installed and updated like any other (an app that is already tracked shows "Added"). The Store only adds the place where the app's releases are published; it does not host anything.
+
+| Group | Apps |
+| --- | --- |
+| Stores | Aurora Store, Obtainium, Accrescent, F-Droid, Droid-ify |
+| Tools | Shizuku, Shizuku Next, Morphe Manager, Morphe microG, SD Maid SE |
+| Browser | IronFox, Cromite, Titanium Browser, Iceraven, Tor Browser, Waterfox |
+| Media | Nova Video Player, Transistor, VLC, BoomingMusic |
+
+Icons: installed apps are shown with their icon as the launcher draws it (your icon pack and icon shape); apps that are not installed yet show a letter. Not every source was checked on a device, so an app can fail to add when its release page changes or has no APK (this may happen with Waterfox, whose project page is for the desktop browser); the error is shown. Tor Browser is read from the Tor Project's download folder, newest version first. There is no "IzzyOnDroid" entry because it is a repository and not an app: add any of its apps through its F-Droid page address instead.
 
 ### App page
 

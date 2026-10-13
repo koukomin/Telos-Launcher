@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Konto Stremio</string>
+    <string name="au22_stremio_account_intro">Zaloguj się na konto Stremio, aby synchronizować dodatki, bibliotekę i listę „Kontynuuj oglądanie”. Hasło jest wysyłane tylko do Stremio (api.strem.io) i nie jest zapisywane. Wykorzystuje to usługę kont Stremio, którą Stremio może w każdej chwili zmienić lub zablokować. Telos nie jest powiązany ze Stremio.</string>
+    <string name="au22_stremio_email">E-mail</string>
+    <string name="au22_stremio_password">Hasło</string>
+    <string name="au22_stremio_sign_in">Zaloguj się</string>
+    <string name="au22_stremio_signed_in">Zalogowano jako %s</string>
+    <string name="au22_stremio_sync_now">Synchronizuj teraz</string>
+    <string name="au22_stremio_sign_out">Wyloguj się</string>
+    <string name="au22_stremio_synced">Zsynchronizowano</string>
+    <string name="au22_stremio_directory">Przeglądaj dodatki</string>
+    <string name="au22_stremio_directory_hint">Dodatki z Twoich zainstalowanych dodatków i publicznej listy Stremio. Są tworzone przez innych i nie są sprawdzane przez Telos ani Stremio.</string>
+    <string name="au22_stremio_directory_empty">Nie znaleziono dodatków</string>
+</resources>

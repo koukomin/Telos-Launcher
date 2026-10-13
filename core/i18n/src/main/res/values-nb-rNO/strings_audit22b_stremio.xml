@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Stremio-konto</string>
+    <string name="au22_stremio_account_intro">Logg inn med Stremio-kontoen din for å holde tilleggene, biblioteket og fortsett å se synkronisert. Passordet ditt sendes bare til Stremio (api.strem.io) og lagres ikke. Dette bruker Stremios kontotjeneste, som Stremio når som helst kan endre eller blokkere. Telos er ikke tilknyttet Stremio.</string>
+    <string name="au22_stremio_email">E-post</string>
+    <string name="au22_stremio_password">Passord</string>
+    <string name="au22_stremio_sign_in">Logg inn</string>
+    <string name="au22_stremio_signed_in">Logget inn som %s</string>
+    <string name="au22_stremio_sync_now">Synkroniser nå</string>
+    <string name="au22_stremio_sign_out">Logg ut</string>
+    <string name="au22_stremio_synced">Synkronisert</string>
+    <string name="au22_stremio_directory">Bla gjennom tillegg</string>
+    <string name="au22_stremio_directory_hint">Tillegg oppført av de installerte tilleggene dine og Stremios offentlige liste. De er laget av andre og kontrolleres ikke av Telos eller Stremio.</string>
+    <string name="au22_stremio_directory_empty">Fant ingen tillegg</string>
+</resources>

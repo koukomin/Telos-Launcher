@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">アドオンについて</string>
+    <string name="au22_stremio_notice_text">このスペースは Stremio アドオンの非公式クライアントです。アドオンは独立した開発者が作る小さな Web サービスです。Telos はアドオンが提供する内容を表示して再生するだけで、アドオンは同梱されず、動画もホストせず、アドオンの提供内容も確認しません。追加するものや視聴するもの、およびお住まいの地域で視聴する権利があるかどうかは、ご自身の責任となります。一部のアドオンは BitTorrent を使用しており、他のユーザーに IP アドレスが表示されます。Telos は Stremio とは無関係です。</string>
+    <string name="au22_stremio_notice_accept">了解しました</string>
+    <string name="au22_stremio_addons">アドオン</string>
+    <string name="au22_stremio_add_addon">アドオンを追加</string>
+    <string name="au22_stremio_addon_address">アドオンのアドレス</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json または stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Cinemeta を追加（Stremio のメタデータアドオン）</string>
+    <string name="au22_stremio_empty">アドオンがまだありません。追加すると、そのカタログやストリームが表示されます。Telos にはアドオンは含まれていません。</string>
+    <string name="au22_stremio_home">ホーム</string>
+    <string name="au22_stremio_library">ライブラリ</string>
+    <string name="au22_stremio_search_hint">タイトルを検索</string>
+    <string name="au22_stremio_continue">続きを見る</string>
+    <string name="au22_stremio_no_results">見つかりませんでした</string>
+    <string name="au22_stremio_library_empty">ライブラリは空です。タイトルを開いて、ここに保存してください。</string>
+    <string name="au22_stremio_save">保存</string>
+    <string name="au22_stremio_saved">保存済み</string>
+    <string name="au22_stremio_season">シーズン %d</string>
+    <string name="au22_stremio_streams">ストリームを選択</string>
+    <string name="au22_stremio_no_streams">このタイトルのストリームは見つかりませんでした。</string>
+    <string name="au22_stremio_last_used">前回使用</string>
+    <string name="au22_stremio_p2p_warning">BitTorrent を使用：他のユーザーに IP アドレスが表示されます</string>
+    <string name="au22_stremio_opens_browser">ブラウザで開きます</string>
+    <string name="au22_stremio_unsupported">この種類のストリームには対応していません</string>
+    <string name="au22_stremio_refresh">更新</string>
+</resources>

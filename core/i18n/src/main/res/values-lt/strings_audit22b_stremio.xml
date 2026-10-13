@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Stremio paskyra</string>
+    <string name="au22_stremio_account_intro">Prisijunkite su Stremio paskyra, kad jūsų papildiniai, biblioteka ir žiūrėjimo tęsinys būtų sinchronizuoti. Slaptažodis siunčiamas tik Stremio (api.strem.io) ir nesaugomas. Naudojama Stremio paskyrų paslauga, kurią Stremio gali bet kada pakeisti arba užblokuoti. Telos nėra susijusi su Stremio.</string>
+    <string name="au22_stremio_email">El. paštas</string>
+    <string name="au22_stremio_password">Slaptažodis</string>
+    <string name="au22_stremio_sign_in">Prisijungti</string>
+    <string name="au22_stremio_signed_in">Prisijungta kaip %s</string>
+    <string name="au22_stremio_sync_now">Sinchronizuoti dabar</string>
+    <string name="au22_stremio_sign_out">Atsijungti</string>
+    <string name="au22_stremio_synced">Sinchronizuota</string>
+    <string name="au22_stremio_directory">Naršyti papildinius</string>
+    <string name="au22_stremio_directory_hint">Papildiniai iš jūsų įdiegtų papildinių ir viešo Stremio sąrašo. Juos sukūrė kiti, Telos ar Stremio jų netikrina.</string>
+    <string name="au22_stremio_directory_empty">Papildinių nerasta</string>
+</resources>

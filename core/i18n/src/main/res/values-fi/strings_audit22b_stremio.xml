@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Stremio-tili</string>
+    <string name="au22_stremio_account_intro">Kirjaudu Stremio-tilillesi, jotta lisäosasi, kirjastosi ja katsomisen jatkaminen pysyvät synkronoituina. Salasanasi lähetetään vain Stremiolle (api.strem.io), eikä sitä tallenneta. Tämä käyttää Stremion tilipalvelua, jota Stremio voi muuttaa tai estää milloin tahansa. Telos ei ole sidoksissa Stremioon.</string>
+    <string name="au22_stremio_email">Sähköposti</string>
+    <string name="au22_stremio_password">Salasana</string>
+    <string name="au22_stremio_sign_in">Kirjaudu sisään</string>
+    <string name="au22_stremio_signed_in">Kirjautuneena: %s</string>
+    <string name="au22_stremio_sync_now">Synkronoi nyt</string>
+    <string name="au22_stremio_sign_out">Kirjaudu ulos</string>
+    <string name="au22_stremio_synced">Synkronoitu</string>
+    <string name="au22_stremio_directory">Selaa lisäosia</string>
+    <string name="au22_stremio_directory_hint">Asennettujen lisäosien ja Stremion julkisen luettelon listaamat lisäosat. Ne ovat muiden tekemiä, eikä Telos tai Stremio tarkista niitä.</string>
+    <string name="au22_stremio_directory_empty">Lisäosia ei löytynyt</string>
+</resources>

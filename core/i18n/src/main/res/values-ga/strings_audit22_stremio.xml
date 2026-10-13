@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">Faoi bhreiseáin</string>
+    <string name="au22_stremio_notice_text">Is cliant neamhoifigiúil é an spás seo do bhreiseáin Stremio. Seirbhísí beaga gréasáin iad na breiseáin a rinne forbróirí neamhspleácha. Ní thaispeánann Telos ach an méid a thairgeann breiseán agus seinneann sé é: níl aon bhreiseán ann, ní óstálann sé aon fhíseáin agus ní dhéanann sé seiceáil ar an méid a sholáthraíonn breiseán. Tá tú freagrach as an méid a chuireann tú leis agus a fhaireann tú, agus as an gceart a bheith agat é a fhéachaint san áit a bhfuil tú i do chónaí. Úsáideann roinnt breiseán BitTorrent, rud a thaispeánann do sheoladh IP d\'úsáideoirí eile. Níl Telos ceangailte le Stremio.</string>
+    <string name="au22_stremio_notice_accept">Tuigim</string>
+    <string name="au22_stremio_addons">Breiseáin</string>
+    <string name="au22_stremio_add_addon">Cuir breiseán leis</string>
+    <string name="au22_stremio_addon_address">Seoladh an bhreiseáin</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json nó stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Cuir Cinemeta leis (breiseán meiteashonraí Stremio)</string>
+    <string name="au22_stremio_empty">Níl aon bhreiseán ann go fóill. Cuir ceann leis chun a chatalóga agus a shruthanna a fheiceáil. Níl aon cheann ag Telos.</string>
+    <string name="au22_stremio_home">Baile</string>
+    <string name="au22_stremio_library">Leabharlann</string>
+    <string name="au22_stremio_search_hint">Cuardaigh teidil</string>
+    <string name="au22_stremio_continue">Lean ar aghaidh ag féachaint</string>
+    <string name="au22_stremio_no_results">Níor aimsíodh tada</string>
+    <string name="au22_stremio_library_empty">Tá do leabharlann folamh. Oscail teideal agus sábháil anseo é.</string>
+    <string name="au22_stremio_save">Sábháil</string>
+    <string name="au22_stremio_saved">Sábháilte</string>
+    <string name="au22_stremio_season">Séasúr %d</string>
+    <string name="au22_stremio_streams">Roghnaigh sruth</string>
+    <string name="au22_stremio_no_streams">Níor aimsíodh aon sruth don teideal seo.</string>
+    <string name="au22_stremio_last_used">Úsáidte go deireanach</string>
+    <string name="au22_stremio_p2p_warning">Úsáideann sé BitTorrent: is féidir le húsáideoirí eile do sheoladh IP a fheiceáil</string>
+    <string name="au22_stremio_opens_browser">Osclaíonn sé sa bhrabhsálaí</string>
+    <string name="au22_stremio_unsupported">Ní thacaítear leis an gcineál sruth seo</string>
+    <string name="au22_stremio_refresh">Athnuaigh</string>
+</resources>

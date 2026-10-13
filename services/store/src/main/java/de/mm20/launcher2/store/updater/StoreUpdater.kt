@@ -38,6 +38,9 @@ interface StoreTools {
     /** Looks for the source of an app that is already installed: F-Droid first, then IzzyOnDroid */
     suspend fun findSourceForInstalled(packageName: String): AppSource?
 
+    /** Adds an app with a known [source] (the recommended apps) and returns the new item */
+    suspend fun addSource(source: AppSource, name: String, packageName: String = ""): Result<StoreItem>
+
     /** Adds the app at [url] and returns the new item, or an error text */
     suspend fun addFromUrl(url: String, packageName: String = ""): Result<StoreItem>
 }

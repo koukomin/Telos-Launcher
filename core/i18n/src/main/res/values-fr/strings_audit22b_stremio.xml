@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Compte Stremio</string>
+    <string name="au22_stremio_account_intro">Connectez-vous avec votre compte Stremio pour garder vos modules complémentaires, votre bibliothèque et vos lectures en cours synchronisés. Votre mot de passe est envoyé uniquement à Stremio (api.strem.io) et n\'est pas enregistré. Cela utilise le service de comptes de Stremio, que Stremio peut modifier ou bloquer à tout moment. Telos n\'est pas affilié à Stremio.</string>
+    <string name="au22_stremio_email">E-mail</string>
+    <string name="au22_stremio_password">Mot de passe</string>
+    <string name="au22_stremio_sign_in">Se connecter</string>
+    <string name="au22_stremio_signed_in">Connecté en tant que %s</string>
+    <string name="au22_stremio_sync_now">Synchroniser maintenant</string>
+    <string name="au22_stremio_sign_out">Se déconnecter</string>
+    <string name="au22_stremio_synced">Synchronisé</string>
+    <string name="au22_stremio_directory">Parcourir les modules complémentaires</string>
+    <string name="au22_stremio_directory_hint">Modules complémentaires proposés par vos modules installés et par la liste publique de Stremio. Ils sont créés par des tiers et ne sont vérifiés ni par Telos ni par Stremio.</string>
+    <string name="au22_stremio_directory_empty">Aucun module complémentaire trouvé</string>
+</resources>

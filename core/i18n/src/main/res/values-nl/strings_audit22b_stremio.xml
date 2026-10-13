@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Stremio-account</string>
+    <string name="au22_stremio_account_intro">Meld je aan met je Stremio-account om je add-ons, bibliotheek en verder kijken synchroon te houden. Je wachtwoord wordt alleen naar Stremio (api.strem.io) gestuurd en niet opgeslagen. Dit gebruikt de accountservice van Stremio, die Stremio op elk moment kan wijzigen of blokkeren. Telos is niet verbonden met Stremio.</string>
+    <string name="au22_stremio_email">E-mail</string>
+    <string name="au22_stremio_password">Wachtwoord</string>
+    <string name="au22_stremio_sign_in">Aanmelden</string>
+    <string name="au22_stremio_signed_in">Aangemeld als %s</string>
+    <string name="au22_stremio_sync_now">Nu synchroniseren</string>
+    <string name="au22_stremio_sign_out">Afmelden</string>
+    <string name="au22_stremio_synced">Gesynchroniseerd</string>
+    <string name="au22_stremio_directory">Add-ons bekijken</string>
+    <string name="au22_stremio_directory_hint">Add-ons uit je geïnstalleerde add-ons en de openbare lijst van Stremio. Ze zijn door anderen gemaakt en worden niet gecontroleerd door Telos of Stremio.</string>
+    <string name="au22_stremio_directory_empty">Geen add-ons gevonden</string>
+</resources>

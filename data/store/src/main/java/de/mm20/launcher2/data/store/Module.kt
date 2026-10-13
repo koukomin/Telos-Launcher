@@ -61,5 +61,5 @@ val dataStoreModule = module {
         de.mm20.launcher2.data.store.updater.StoreToolsImpl(registry = get(), repository = get(), options = get())
     }
 
-    single { StoreUpdateScheduler(context = androidContext(), options = get()) }
+    single { StoreUpdateScheduler(context = androidContext(), options = get(), repository = get()) }
 }

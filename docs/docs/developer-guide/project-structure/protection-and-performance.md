@@ -1,6 +1,6 @@
 # Protection and optimization
 
-The Telos apps (Phone, Messages, Radio, Music, Video, Photos, Store) are *virtual apps*: they live
+The Telos apps (Phone, Messages, Radio, Music, Video, Viewer, Store) are *virtual apps*: they live
 inside the launcher process. That is cheap, but it also means a bug in one of them can take the
 whole launcher down. This page describes what Telos does about that, and how it keeps these apps
 from using memory and CPU while they are not in use.

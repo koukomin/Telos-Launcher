@@ -80,9 +80,10 @@ object TorrentStreamer {
 
     /**
      * Opens a magnet link, a .torrent address or a .torrent file and returns its video files.
-     * [wifiOnly] refuses to start on mobile data.
+     * [wifiOnly] refuses to start on mobile data. [preferredFile] is the index of the file inside the torrent that
+     * should play first (an add-on names it for a season pack); without it, or when it is not a video, the biggest video plays.
      */
-    suspend fun open(context: Context, source: String, wifiOnly: Boolean, owner: Any? = null): TorrentOpened =
+    suspend fun open(context: Context, source: String, wifiOnly: Boolean, owner: Any? = null, preferredFile: Int? = null): TorrentOpened =
         withContext(Dispatchers.IO) {
             val myGeneration: Int
             synchronized(lock) {
@@ -144,8 +145,8 @@ object TorrentStreamer {
 
                 token = UUID.randomUUID().toString().replace("-", "")
                 val port = startServer()
-                // prefer the biggest file for the first piece priorities
-                val biggest = videos.maxByOrNull { fs.fileSize(it) }!!
+                // the file an add-on asked for, else the biggest one, gets the first piece priorities
+                val biggest = preferredFile?.takeIf { it in videos } ?: videos.maxByOrNull { fs.fileSize(it) }!!
                 prioritiseEnds(biggest)
 
                 _state.value = TorrentState(TorrentState.Stage.Ready, name = ti.name(), message = "Buffering…")

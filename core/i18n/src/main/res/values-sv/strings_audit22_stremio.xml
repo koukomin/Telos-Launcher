@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">Om tillägg</string>
+    <string name="au22_stremio_notice_text">Det här utrymmet är en inofficiell klient för Stremio-tillägg. Tillägg är små webbtjänster som skapats av oberoende utvecklare. Telos visar bara vad ett tillägg erbjuder och spelar upp det: det innehåller inga tillägg, lagrar inga videor och kontrollerar inte vad ett tillägg tillhandahåller. Du ansvarar för vad du lägger till och tittar på, och för att du har rätt att titta på det där du bor. Vissa tillägg använder BitTorrent, vilket visar din IP-adress för andra användare. Telos är inte knutet till Stremio.</string>
+    <string name="au22_stremio_notice_accept">Jag förstår</string>
+    <string name="au22_stremio_addons">Tillägg</string>
+    <string name="au22_stremio_add_addon">Lägg till tillägg</string>
+    <string name="au22_stremio_addon_address">Tilläggets adress</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json eller stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Lägg till Cinemeta (Stremios tillägg för metadata)</string>
+    <string name="au22_stremio_empty">Det finns inga tillägg ännu. Lägg till ett för att se dess kataloger och strömmar. Telos innehåller inga.</string>
+    <string name="au22_stremio_home">Hem</string>
+    <string name="au22_stremio_library">Bibliotek</string>
+    <string name="au22_stremio_search_hint">Sök titlar</string>
+    <string name="au22_stremio_continue">Fortsätt titta</string>
+    <string name="au22_stremio_no_results">Inget hittades</string>
+    <string name="au22_stremio_library_empty">Ditt bibliotek är tomt. Öppna en titel och spara den här.</string>
+    <string name="au22_stremio_save">Spara</string>
+    <string name="au22_stremio_saved">Sparad</string>
+    <string name="au22_stremio_season">Säsong %d</string>
+    <string name="au22_stremio_streams">Välj en ström</string>
+    <string name="au22_stremio_no_streams">Inga strömmar hittades för den här titeln.</string>
+    <string name="au22_stremio_last_used">Senast använd</string>
+    <string name="au22_stremio_p2p_warning">Använder BitTorrent: andra användare kan se din IP-adress</string>
+    <string name="au22_stremio_opens_browser">Öppnas i webbläsaren</string>
+    <string name="au22_stremio_unsupported">Den här typen av ström stöds inte</string>
+    <string name="au22_stremio_refresh">Uppdatera</string>
+</resources>

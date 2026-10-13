@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Stremio račun</string>
+    <string name="au22_stremio_account_intro">Prijavite se svojim Stremio računom kako bi vaši dodaci, biblioteka i nastavak gledanja ostali usklađeni. Lozinka se šalje samo Stremiju (api.strem.io) i ne pohranjuje se. Ovo koristi Stremiovu uslugu računa, koju Stremio može promijeniti ili blokirati u bilo kojem trenutku. Telos nije povezan sa Stremiom.</string>
+    <string name="au22_stremio_email">E-pošta</string>
+    <string name="au22_stremio_password">Lozinka</string>
+    <string name="au22_stremio_sign_in">Prijava</string>
+    <string name="au22_stremio_signed_in">Prijavljeni kao %s</string>
+    <string name="au22_stremio_sync_now">Sinkroniziraj sada</string>
+    <string name="au22_stremio_sign_out">Odjava</string>
+    <string name="au22_stremio_synced">Sinkronizirano</string>
+    <string name="au22_stremio_directory">Pregledaj dodatke</string>
+    <string name="au22_stremio_directory_hint">Dodaci koje navode vaši instalirani dodaci i Stremiov javni popis. Izradili su ih drugi, a Telos ni Stremio ih ne provjeravaju.</string>
+    <string name="au22_stremio_directory_empty">Nema pronađenih dodataka</string>
+</resources>

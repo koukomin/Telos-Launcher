@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Stremio-fiók</string>
+    <string name="au22_stremio_account_intro">Jelentkezzen be Stremio-fiókjával, hogy a kiegészítők, a könyvtár és a folytatás szinkronban maradjanak. A jelszót csak a Stremio (api.strem.io) kapja meg, és nem tároljuk. Ez a Stremio fiókszolgáltatását használja, amelyet a Stremio bármikor módosíthat vagy blokkolhat. A Telos nem áll kapcsolatban a Stremióval.</string>
+    <string name="au22_stremio_email">E-mail</string>
+    <string name="au22_stremio_password">Jelszó</string>
+    <string name="au22_stremio_sign_in">Bejelentkezés</string>
+    <string name="au22_stremio_signed_in">Bejelentkezve mint %s</string>
+    <string name="au22_stremio_sync_now">Szinkronizálás most</string>
+    <string name="au22_stremio_sign_out">Kijelentkezés</string>
+    <string name="au22_stremio_synced">Szinkronizálva</string>
+    <string name="au22_stremio_directory">Kiegészítők böngészése</string>
+    <string name="au22_stremio_directory_hint">A telepített kiegészítők és a Stremio nyilvános listája által felsorolt kiegészítők. Másokat készítették őket, a Telos és a Stremio nem ellenőrzi őket.</string>
+    <string name="au22_stremio_directory_empty">Nem található kiegészítő</string>
+</resources>

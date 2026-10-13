@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.graphics.drawable.toBitmap
 import de.mm20.launcher2.applock.SettingsDeepLinkContract
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.store.action.StoreAction
@@ -122,8 +123,11 @@ class StoreUpdaterImpl(
             else -> if (installed.size == 1) "${installed[0].displayName} was updated" else "${installed.size} apps were updated"
         }
         val text = (if (fresh.isNotEmpty()) fresh.joinToString { it.displayName } else installed.joinToString { it.displayName })
+        // the icon of the (first) app next to the text
+        val largeIcon = (if (fresh.isNotEmpty()) fresh else installed).firstOrNull()?.let { appIcon(it.packageName) }
         val notification = NotificationCompat.Builder(context, CHANNEL)
             .setSmallIcon(android.R.drawable.stat_sys_download_done)
+            .setLargeIcon(largeIcon)
             .setContentTitle(title)
             .setContentText(text)
             .setStyle(NotificationCompat.BigTextStyle().bigText(text))
@@ -132,6 +136,10 @@ class StoreUpdaterImpl(
             .build()
         runCatching { nm.notify(NOTIFICATION_ID, notification) }
     }
+
+    private fun appIcon(packageName: String): android.graphics.Bitmap? = runCatching {
+        context.packageManager.getApplicationIcon(packageName).toBitmap(128, 128)
+    }.getOrNull()
 
     companion object {
         private const val CHANNEL = "store_updates"

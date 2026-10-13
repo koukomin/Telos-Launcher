@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">O doplnkoch</string>
+    <string name="au22_stremio_notice_text">Tento priestor je neoficiálny klient pre doplnky Stremio. Doplnky sú malé webové služby od nezávislých vývojárov. Telos iba zobrazuje, čo doplnok ponúka, a prehráva to: neobsahuje žiadne doplnky, nehostuje videá a nekontroluje, čo doplnok poskytuje. Za to, čo pridáte a sledujete, aj za oprávnenie to sledovať tam, kde žijete, zodpovedáte vy. Niektoré doplnky používajú BitTorrent, ktorý ostatným používateľom ukazuje vašu IP adresu. Telos nie je so Stremio nijako spojený.</string>
+    <string name="au22_stremio_notice_accept">Rozumiem</string>
+    <string name="au22_stremio_addons">Doplnky</string>
+    <string name="au22_stremio_add_addon">Pridať doplnok</string>
+    <string name="au22_stremio_addon_address">Adresa doplnku</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json alebo stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Pridať Cinemeta (doplnok Stremio s metadátami)</string>
+    <string name="au22_stremio_empty">Zatiaľ nemáte žiadne doplnky. Pridajte jeden, aby ste videli jeho katalógy a streamy. Telos žiadne neobsahuje.</string>
+    <string name="au22_stremio_home">Domov</string>
+    <string name="au22_stremio_library">Knižnica</string>
+    <string name="au22_stremio_search_hint">Hľadať tituly</string>
+    <string name="au22_stremio_continue">Pokračovať v sledovaní</string>
+    <string name="au22_stremio_no_results">Nič sa nenašlo</string>
+    <string name="au22_stremio_library_empty">Vaša knižnica je prázdna. Otvorte titul a uložte ho sem.</string>
+    <string name="au22_stremio_save">Uložiť</string>
+    <string name="au22_stremio_saved">Uložené</string>
+    <string name="au22_stremio_season">Séria %d</string>
+    <string name="au22_stremio_streams">Vyberte stream</string>
+    <string name="au22_stremio_no_streams">Pre tento titul sa nenašli žiadne streamy.</string>
+    <string name="au22_stremio_last_used">Naposledy použité</string>
+    <string name="au22_stremio_p2p_warning">Používa BitTorrent: ostatní používatelia môžu vidieť vašu IP adresu</string>
+    <string name="au22_stremio_opens_browser">Otvorí sa v prehliadači</string>
+    <string name="au22_stremio_unsupported">Tento druh streamu nie je podporovaný</string>
+    <string name="au22_stremio_refresh">Obnoviť</string>
+</resources>

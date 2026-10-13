@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">ऐड-ऑन के बारे में</string>
+    <string name="au22_stremio_notice_text">यह स्थान Stremio ऐड-ऑन के लिए एक अनौपचारिक क्लाइंट है। ऐड-ऑन स्वतंत्र डेवलपर्स द्वारा बनाई गई छोटी वेब सेवाएँ हैं। Telos केवल वही दिखाता और चलाता है जो कोई ऐड-ऑन उपलब्ध कराता है: इसमें कोई ऐड-ऑन शामिल नहीं है, यह कोई वीडियो होस्ट नहीं करता और ऐड-ऑन की सामग्री की जाँच नहीं करता। आप जो जोड़ते और देखते हैं, तथा जहाँ आप रहते हैं वहाँ उसे देखने का अधिकार आपके पास है या नहीं, इसकी ज़िम्मेदारी आपकी है। कुछ ऐड-ऑन BitTorrent का उपयोग करते हैं, जिससे आपका IP पता अन्य उपयोगकर्ताओं को दिखाई देता है। Telos का Stremio से कोई संबंध नहीं है।</string>
+    <string name="au22_stremio_notice_accept">मैं समझता/समझती हूँ</string>
+    <string name="au22_stremio_addons">ऐड-ऑन</string>
+    <string name="au22_stremio_add_addon">ऐड-ऑन जोड़ें</string>
+    <string name="au22_stremio_addon_address">ऐड-ऑन का पता</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json या stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Cinemeta जोड़ें (Stremio का मेटाडेटा ऐड-ऑन)</string>
+    <string name="au22_stremio_empty">अभी कोई ऐड-ऑन नहीं है। उसके कैटलॉग और स्ट्रीम देखने के लिए एक जोड़ें। Telos में कोई ऐड-ऑन शामिल नहीं है।</string>
+    <string name="au22_stremio_home">होम</string>
+    <string name="au22_stremio_library">लाइब्रेरी</string>
+    <string name="au22_stremio_search_hint">शीर्षक खोजें</string>
+    <string name="au22_stremio_continue">देखना जारी रखें</string>
+    <string name="au22_stremio_no_results">कुछ नहीं मिला</string>
+    <string name="au22_stremio_library_empty">आपकी लाइब्रेरी खाली है। कोई शीर्षक खोलें और उसे यहाँ सहेजें।</string>
+    <string name="au22_stremio_save">सहेजें</string>
+    <string name="au22_stremio_saved">सहेजा गया</string>
+    <string name="au22_stremio_season">सीज़न %d</string>
+    <string name="au22_stremio_streams">स्ट्रीम चुनें</string>
+    <string name="au22_stremio_no_streams">इस शीर्षक के लिए कोई स्ट्रीम नहीं मिली।</string>
+    <string name="au22_stremio_last_used">पिछली बार उपयोग किया गया</string>
+    <string name="au22_stremio_p2p_warning">BitTorrent का उपयोग करता है: अन्य उपयोगकर्ता आपका IP पता देख सकते हैं</string>
+    <string name="au22_stremio_opens_browser">ब्राउज़र में खुलता है</string>
+    <string name="au22_stremio_unsupported">इस प्रकार की स्ट्रीम समर्थित नहीं है</string>
+    <string name="au22_stremio_refresh">रीफ़्रेश करें</string>
+</resources>

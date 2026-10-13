@@ -124,6 +124,7 @@ private enum class MediaSpace(
     Radio("radio", "telos_radio_app://radio", R.drawable.ic_glyph_radio, R.string.au9_mediahub_space_radio),
     Video("video", "telos_video_app://video", R.drawable.video_library_24px, R.string.au9_mediahub_space_video),
     Tv("tv", "telos_tv_app://tv", R.drawable.tv_24px, R.string.au12_tvui_space_tv),
+    Stremio("stremio", "telos_media_app://stremio", R.drawable.extension_24px, R.string.au22_stremio_label),
 }
 
 /**
@@ -265,6 +266,7 @@ fun MediaHubScreen(initialSpace: String = "") {
                                     MediaSpace.Radio -> RadioDashboardScreen()
                                     MediaSpace.Tv -> TvScreen()
                                     MediaSpace.Video -> VideoScreen()
+                                    MediaSpace.Stremio -> de.mm20.launcher2.ui.media.stremio.StremioScreen()
                                 }
                             }
                         }
@@ -457,7 +459,7 @@ private fun HubMiniPlayer(
     val hasMusic = musicNow != null
     val hasTv = tvChannel != null
     val shown: MediaSpace? = when {
-        space == MediaSpace.Video -> null
+        space == MediaSpace.Video || space == MediaSpace.Stremio -> null
         space == MediaSpace.Tv && tvPlayerOpen -> null
         space == MediaSpace.Music && hasMusic -> MediaSpace.Music
         space == MediaSpace.Radio && radioVisible -> MediaSpace.Radio

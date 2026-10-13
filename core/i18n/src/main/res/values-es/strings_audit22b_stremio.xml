@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Cuenta de Stremio</string>
+    <string name="au22_stremio_account_intro">Inicia sesión con tu cuenta de Stremio para mantener sincronizados tus complementos, tu biblioteca y tu contenido en curso. Tu contraseña se envía solo a Stremio (api.strem.io) y no se guarda. Se usa el servicio de cuentas de Stremio, que Stremio puede cambiar o bloquear en cualquier momento. Telos no está afiliado a Stremio.</string>
+    <string name="au22_stremio_email">Correo electrónico</string>
+    <string name="au22_stremio_password">Contraseña</string>
+    <string name="au22_stremio_sign_in">Iniciar sesión</string>
+    <string name="au22_stremio_signed_in">Sesión iniciada como %s</string>
+    <string name="au22_stremio_sync_now">Sincronizar ahora</string>
+    <string name="au22_stremio_sign_out">Cerrar sesión</string>
+    <string name="au22_stremio_synced">Sincronizado</string>
+    <string name="au22_stremio_directory">Explorar complementos</string>
+    <string name="au22_stremio_directory_hint">Complementos indicados por tus complementos instalados y por la lista pública de Stremio. Son creados por terceros y ni Telos ni Stremio los verifican.</string>
+    <string name="au22_stremio_directory_empty">No se encontraron complementos</string>
+</resources>

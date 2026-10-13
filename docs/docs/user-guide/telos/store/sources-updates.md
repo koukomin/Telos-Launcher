@@ -75,9 +75,13 @@ does not parse as a regular expression is ignored.
 - If five or more sources fail and nothing else happened, the job is retried later. A few unreachable sources next to
   working ones do not cause a retry.
 
+### Telos updates itself
+
+The signed release build of Telos is in the Store list from the first start, with the project's GitHub releases as its source. It is checked together with the other apps (every 6 hours by default, see the table above) and you get a notification when a new version is out. The file for your phone's CPU is chosen by its name (`telos-arm64-v8a.apk` or `telos-armeabi-v7a.apk`). Debug and nightly builds and the F-Droid build do not do this: they have another update channel. You can stop it with **Exclude from background** on the Telos entry.
+
 ### Notifications
 
-A notification on the channel "App updates" says "Update for (app)" or "N app updates", or, after silent installs, "(app)
+A notification on the channel "App updates" (with the icon of the app) says "Update for (app)" or "N app updates", or, after silent installs, "(app)
 was updated". It only announces versions you have not been told about yet, so you do not get the same message every six
 hours. Tapping it opens the Store. Notifications are not counted as announced when they are switched off.
 

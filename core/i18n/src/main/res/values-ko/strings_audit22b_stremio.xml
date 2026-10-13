@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Stremio 계정</string>
+    <string name="au22_stremio_account_intro">Stremio 계정으로 로그인하여 애드온, 라이브러리, 이어보기를 동기화하세요. 비밀번호는 Stremio(api.strem.io)로만 전송되며 저장되지 않습니다. 이 기능은 Stremio의 계정 서비스를 사용하며, Stremio가 언제든지 변경하거나 차단할 수 있습니다. Telos는 Stremio와 제휴 관계가 아닙니다.</string>
+    <string name="au22_stremio_email">이메일</string>
+    <string name="au22_stremio_password">비밀번호</string>
+    <string name="au22_stremio_sign_in">로그인</string>
+    <string name="au22_stremio_signed_in">%s(으)로 로그인됨</string>
+    <string name="au22_stremio_sync_now">지금 동기화</string>
+    <string name="au22_stremio_sign_out">로그아웃</string>
+    <string name="au22_stremio_synced">동기화됨</string>
+    <string name="au22_stremio_directory">애드온 둘러보기</string>
+    <string name="au22_stremio_directory_hint">설치된 애드온과 Stremio 공개 목록에 있는 애드온입니다. 다른 사람이 만든 것이며 Telos나 Stremio에서 검증하지 않습니다.</string>
+    <string name="au22_stremio_directory_empty">애드온을 찾을 수 없음</string>
+</resources>

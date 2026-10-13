@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">Относно добавките</string>
+    <string name="au22_stremio_notice_text">Това пространство е неофициален клиент за добавки на Stremio. Добавките са малки уеб услуги, създадени от независими разработчици. Telos само показва какво предлага една добавка и го възпроизвежда: не включва добавки, не хоства видеа и не проверява какво предоставя добавката. Вие отговаряте за това, което добавяте и гледате, и за правото да го гледате там, където живеете. Някои добавки използват BitTorrent, който показва вашия IP адрес на други потребители. Telos не е свързан със Stremio.</string>
+    <string name="au22_stremio_notice_accept">Разбирам</string>
+    <string name="au22_stremio_addons">Добавки</string>
+    <string name="au22_stremio_add_addon">Добави добавка</string>
+    <string name="au22_stremio_addon_address">Адрес на добавката</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json или stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Добави Cinemeta (добавката на Stremio за метаданни)</string>
+    <string name="au22_stremio_empty">Все още няма добавки. Добавете една, за да видите нейните каталози и потоци. Telos не включва такива.</string>
+    <string name="au22_stremio_home">Начало</string>
+    <string name="au22_stremio_library">Библиотека</string>
+    <string name="au22_stremio_search_hint">Търсене на заглавия</string>
+    <string name="au22_stremio_continue">Продължи гледането</string>
+    <string name="au22_stremio_no_results">Нищо не е намерено</string>
+    <string name="au22_stremio_library_empty">Библиотеката ви е празна. Отворете заглавие и го запазете тук.</string>
+    <string name="au22_stremio_save">Запази</string>
+    <string name="au22_stremio_saved">Запазено</string>
+    <string name="au22_stremio_season">Сезон %d</string>
+    <string name="au22_stremio_streams">Изберете поток</string>
+    <string name="au22_stremio_no_streams">Не са намерени потоци за това заглавие.</string>
+    <string name="au22_stremio_last_used">Последно използвано</string>
+    <string name="au22_stremio_p2p_warning">Използва BitTorrent: други потребители могат да видят вашия IP адрес</string>
+    <string name="au22_stremio_opens_browser">Отваря се в браузъра</string>
+    <string name="au22_stremio_unsupported">Този вид поток не се поддържа</string>
+    <string name="au22_stremio_refresh">Обнови</string>
+</resources>

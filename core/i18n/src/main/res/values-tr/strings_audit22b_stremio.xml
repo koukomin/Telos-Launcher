@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Stremio hesabı</string>
+    <string name="au22_stremio_account_intro">Eklentilerinizi, kitaplığınızı ve izlemeye devam et listenizi eşitlemek için Stremio hesabınızla giriş yapın. Parolanız yalnızca Stremio\'ya (api.strem.io) gönderilir ve saklanmaz. Bu, Stremio\'nun hesap hizmetini kullanır; Stremio bunu istediği zaman değiştirebilir veya engelleyebilir. Telos, Stremio ile bağlantılı değildir.</string>
+    <string name="au22_stremio_email">E-posta</string>
+    <string name="au22_stremio_password">Parola</string>
+    <string name="au22_stremio_sign_in">Giriş yap</string>
+    <string name="au22_stremio_signed_in">%s olarak giriş yapıldı</string>
+    <string name="au22_stremio_sync_now">Şimdi eşitle</string>
+    <string name="au22_stremio_sign_out">Çıkış yap</string>
+    <string name="au22_stremio_synced">Eşitlendi</string>
+    <string name="au22_stremio_directory">Eklentilere göz at</string>
+    <string name="au22_stremio_directory_hint">Yüklü eklentileriniz ve Stremio\'nun herkese açık listesi tarafından listelenen eklentiler. Başkaları tarafından geliştirilmiştir ve Telos ya da Stremio tarafından denetlenmez.</string>
+    <string name="au22_stremio_directory_empty">Eklenti bulunamadı</string>
+</resources>

@@ -86,9 +86,19 @@ open class VideoPlayerActivity : AppCompatActivity() {
             startIndex = 0
         }
 
+        val subUrls = intent.getStringArrayListExtra(EXTRA_SUB_URLS).orEmpty()
+        val subLangs = intent.getStringArrayListExtra(EXTRA_SUB_LANGS).orEmpty()
+        val subLabels = intent.getStringArrayListExtra(EXTRA_SUB_LABELS).orEmpty()
+        val externalSubtitles = subUrls.mapIndexed { i, url ->
+            ExternalSubtitle(url, subLangs.getOrNull(i).orEmpty(), subLabels.getOrNull(i).orEmpty())
+        }
+        val fileIdx = intent.getIntExtra(EXTRA_FILE_IDX, -1).takeIf { it >= 0 }
+
         setContent {
             Themed {
                     VideoPlayerScreen(
+                        externalSubtitles = externalSubtitles,
+                        torrentFileIdx = fileIdx,
                         uris = uris,
                         titles = titles,
                         startIndex = startIndex,
@@ -169,5 +179,11 @@ open class VideoPlayerActivity : AppCompatActivity() {
         /** A web address, magnet link or .torrent address typed by the user */
         const val EXTRA_SOURCE = "de.mm20.launcher2.video.SOURCE"
         const val EXTRA_IS_TORRENT = "de.mm20.launcher2.video.IS_TORRENT"
+        /** The file inside a torrent that plays first (an index into the torrent's files) */
+        const val EXTRA_FILE_IDX = "de.mm20.launcher2.video.FILE_IDX"
+        /** Subtitle files for the first video, as three lists of the same length: addresses, language codes, labels */
+        const val EXTRA_SUB_URLS = "de.mm20.launcher2.video.SUB_URLS"
+        const val EXTRA_SUB_LANGS = "de.mm20.launcher2.video.SUB_LANGS"
+        const val EXTRA_SUB_LABELS = "de.mm20.launcher2.video.SUB_LABELS"
     }
 }

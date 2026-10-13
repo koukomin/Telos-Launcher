@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Conta do Stremio</string>
+    <string name="au22_stremio_account_intro">Entre com sua conta do Stremio para manter seus add-ons, biblioteca e itens em andamento sincronizados. Sua senha é enviada apenas ao Stremio (api.strem.io) e não é armazenada. Isso usa o serviço de contas do Stremio, que o Stremio pode alterar ou bloquear a qualquer momento. O Telos não é afiliado ao Stremio.</string>
+    <string name="au22_stremio_email">E-mail</string>
+    <string name="au22_stremio_password">Senha</string>
+    <string name="au22_stremio_sign_in">Entrar</string>
+    <string name="au22_stremio_signed_in">Conectado como %s</string>
+    <string name="au22_stremio_sync_now">Sincronizar agora</string>
+    <string name="au22_stremio_sign_out">Sair</string>
+    <string name="au22_stremio_synced">Sincronizado</string>
+    <string name="au22_stremio_directory">Explorar add-ons</string>
+    <string name="au22_stremio_directory_hint">Add-ons indicados pelos seus add-ons instalados e pela lista pública do Stremio. Eles são criados por terceiros e não são verificados pelo Telos nem pelo Stremio.</string>
+    <string name="au22_stremio_directory_empty">Nenhum add-on encontrado</string>
+</resources>

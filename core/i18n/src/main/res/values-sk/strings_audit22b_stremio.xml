@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_account">Účet Stremio</string>
+    <string name="au22_stremio_account_intro">Prihláste sa účtom Stremio a udržiavajte doplnky, knižnicu aj rozpozerané videá synchronizované. Heslo sa odosiela iba službe Stremio (api.strem.io) a neukladá sa. Využíva sa služba účtov Stremio, ktorú môže Stremio kedykoľvek zmeniť alebo zablokovať. Telos nie je so Stremio nijako spojený.</string>
+    <string name="au22_stremio_email">E-mail</string>
+    <string name="au22_stremio_password">Heslo</string>
+    <string name="au22_stremio_sign_in">Prihlásiť sa</string>
+    <string name="au22_stremio_signed_in">Prihlásený ako %s</string>
+    <string name="au22_stremio_sync_now">Synchronizovať teraz</string>
+    <string name="au22_stremio_sign_out">Odhlásiť sa</string>
+    <string name="au22_stremio_synced">Synchronizované</string>
+    <string name="au22_stremio_directory">Prehliadať doplnky</string>
+    <string name="au22_stremio_directory_hint">Doplnky uvedené vašimi nainštalovanými doplnkami a verejným zoznamom Stremio. Vytvorili ich iní a Telos ani Stremio ich nekontrolujú.</string>
+    <string name="au22_stremio_directory_empty">Nenašli sa žiadne doplnky</string>
+</resources>

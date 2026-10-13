@@ -331,7 +331,8 @@ class SettingsActivity : BaseActivity() {
                 de.mm20.launcher2.ui.calculator.CalculatorScreen()
             }
             entry<de.mm20.launcher2.ui.media.photos.PhotosRoute> {
-                de.mm20.launcher2.ui.media.photos.PhotosScreen()
+                // Photos is a tab of Telos Viewer
+                de.mm20.launcher2.ui.media.docs.ViewerScreen()
             }
             entry<de.mm20.launcher2.ui.media.docs.ViewerRoute> {
                 de.mm20.launcher2.ui.media.docs.ViewerScreen()
@@ -663,7 +664,7 @@ class SettingsActivity : BaseActivity() {
         val (label, icon) = when (route) {
             ROUTE_COMMS -> "Telos Phone" to "phone"
             ROUTE_MEDIA, ROUTE_MUSIC, ROUTE_RADIO, ROUTE_VIDEO -> "Telos Media" to "music"
-            ROUTE_PHOTOS -> "Telos Photos" to "photos"
+            ROUTE_PHOTOS -> "Telos Viewer" to "viewer"
             SettingsDeepLinkContract.ROUTE_VIEWER -> "Telos Viewer" to "viewer"
             ROUTE_FILES -> "Telos Files" to "files"
             ROUTE_NETWORK -> "Telos Network" to "network"
@@ -731,7 +732,7 @@ class SettingsActivity : BaseActivity() {
             ROUTE_MEDIA -> de.mm20.launcher2.ui.media.hub.MediaHubRoute(
                 intent.getStringExtra(SettingsDeepLinkContract.EXTRA_MEDIA_SPACE).orEmpty()
             )
-            ROUTE_PHOTOS -> de.mm20.launcher2.ui.media.photos.PhotosRoute
+            ROUTE_PHOTOS -> de.mm20.launcher2.ui.media.docs.ViewerRoute
             SettingsDeepLinkContract.ROUTE_VIEWER -> de.mm20.launcher2.ui.media.docs.ViewerRoute
             ROUTE_FILES -> de.mm20.launcher2.ui.files.FilesRoute
             ROUTE_NETWORK -> de.mm20.launcher2.ui.network.NetworkRoute

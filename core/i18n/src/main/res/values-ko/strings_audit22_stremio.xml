@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="au22_stremio_notice_title">애드온 안내</string>
+    <string name="au22_stremio_notice_text">이 공간은 Stremio 애드온을 위한 비공식 클라이언트입니다. 애드온은 독립 개발자가 만든 작은 웹 서비스입니다. Telos는 애드온이 제공하는 항목을 표시하고 재생할 뿐이며, 애드온을 포함하지 않고 동영상을 호스팅하지 않으며 애드온이 제공하는 내용을 확인하지 않습니다. 추가하고 시청하는 콘텐츠와 거주 지역에서 시청할 권리가 있는지에 대한 책임은 사용자에게 있습니다. 일부 애드온은 BitTorrent를 사용하며, 이 경우 다른 사용자에게 IP 주소가 표시됩니다. Telos는 Stremio와 관련이 없습니다.</string>
+    <string name="au22_stremio_notice_accept">이해했습니다</string>
+    <string name="au22_stremio_addons">애드온</string>
+    <string name="au22_stremio_add_addon">애드온 추가</string>
+    <string name="au22_stremio_addon_address">애드온 주소</string>
+    <string name="au22_stremio_addon_address_hint">https://…/manifest.json 또는 stremio://…</string>
+    <string name="au22_stremio_add_cinemeta">Cinemeta 추가 (Stremio의 메타데이터 애드온)</string>
+    <string name="au22_stremio_empty">아직 애드온이 없습니다. 하나를 추가하면 해당 카탈로그와 스트림을 볼 수 있습니다. Telos에는 애드온이 포함되어 있지 않습니다.</string>
+    <string name="au22_stremio_home">홈</string>
+    <string name="au22_stremio_library">라이브러리</string>
+    <string name="au22_stremio_search_hint">타이틀 검색</string>
+    <string name="au22_stremio_continue">이어 보기</string>
+    <string name="au22_stremio_no_results">결과 없음</string>
+    <string name="au22_stremio_library_empty">라이브러리가 비어 있습니다. 타이틀을 열어 여기에 저장하세요.</string>
+    <string name="au22_stremio_save">저장</string>
+    <string name="au22_stremio_saved">저장됨</string>
+    <string name="au22_stremio_season">시즌 %d</string>
+    <string name="au22_stremio_streams">스트림 선택</string>
+    <string name="au22_stremio_no_streams">이 타이틀의 스트림을 찾을 수 없습니다.</string>
+    <string name="au22_stremio_last_used">마지막 사용</string>
+    <string name="au22_stremio_p2p_warning">BitTorrent 사용: 다른 사용자가 내 IP 주소를 볼 수 있습니다</string>
+    <string name="au22_stremio_opens_browser">브라우저에서 열림</string>
+    <string name="au22_stremio_unsupported">지원되지 않는 스트림 유형입니다</string>
+    <string name="au22_stremio_refresh">새로고침</string>
+</resources>
