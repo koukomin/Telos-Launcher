@@ -60,7 +60,7 @@ class TelosSearchTest {
     @Test fun apostropheInName() { yes("obrien", "O'Brien"); yes("o'brien", "O'Brien") }
     @Test fun johnSkippingH() { yes("jon", "John") }
 
-    @Test fun scoreZeroOnMismatch() { assertEquals(0, TelosSearch.score("qqq", "abc")) }
+    @Test fun scoreZeroOnMismatch() { assertEquals(0, TelosSearch.score("zzz", "abc")) }
     @Test fun scoreOrder() {
         val exact = TelosSearch.score("kostas", "Kostas")
         val prefix = TelosSearch.score("kost", "Kostas")
@@ -90,5 +90,32 @@ class TelosSearchTest {
     @Test fun filterDropsNonMatches() {
         val items = listOf("Γιάννης", "Κώστας", "Giannis")
         assertEquals(listOf("Γιάννης", "Giannis"), TelosSearch.filter(items, "giannis") { listOf(it) })
+    }
+    @Test fun compiledQueryCanBeReusedWithoutRetainingPreviousFields() {
+        val matcher = TelosSearch.compile("giannis 697")
+        assertTrue(matcher.matches("Γιάννης", "+30 697 123 4567"))
+        assertFalse(matcher.matches("Κώστας", "+30 697 123 4567"))
+        assertFalse(matcher.matches("Γιάννης", "+30 698 123 4567"))
+        assertFalse(matcher.matches(null, null))
+        // Another compiled query and previous failures cannot modify the first query.
+        assertTrue(TelosSearch.compile("kostas").matches("Κώστας"))
+        assertTrue(matcher.matches("Giannis", "00306971234567"))
+    }
+
+    @Test fun compiledQueriesPreserveGreeklishTonosSigmaPhoneAndScores() {
+        val fields = listOf(arrayOf<String?>("Γιάννης Παπαδόπουλος", "+30 697 123 4567"),
+            arrayOf<String?>("Giannis Papadopoulos", null), arrayOf<String?>("John Smith", "1234"),
+            arrayOf<String?>("Κώστας", null), arrayOf<String?>(null, null))
+        val queries = listOf("", "   ", "!!!", "giannis", "γιά΄ννης", "ΓΙΑΝΝΗΣ", "yiannis papa",
+            "γιαννησ", "00306971234567", "697-123", "giannis 697", "johnsm", "zzz")
+        for (query in queries) {
+            val matcher = TelosSearch.compile(query)
+            for (item in fields) {
+                assertEquals("Score for '$query'", TelosSearch.score(query, *item), matcher.score(*item))
+                assertEquals("Match for '$query'", TelosSearch.matches(query, *item), matcher.matches(*item))
+            }
+        }
+        assertEquals(43, TelosSearch.compile("kostas").score("Κώστας"))
+        assertEquals(1, TelosSearch.compile("!!!").score(null))
     }
 }

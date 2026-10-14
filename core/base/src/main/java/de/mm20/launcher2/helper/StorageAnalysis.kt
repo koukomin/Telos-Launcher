@@ -40,19 +40,23 @@ object StorageAnalysis {
     /** Hash narrows candidates; a full byte comparison confirms each group, even on a hash collision. */
     fun duplicates(records: List<Record>, checkpoint: () -> Unit = {}): List<List<Record>> {
         val result = ArrayList<List<Record>>()
+        // Reused only within this invocation: concurrent scans never share mutable buffers.
+        val workspace = DuplicateWorkspace()
         for (sameSize in records.groupBy { it.size }.values.filter { it.size > 1 }) {
             val hashed = LinkedHashMap<String, MutableList<Record>>()
             for (record in sameSize) {
                 checkpoint()
                 if (!unchanged(record)) continue
-                val hash = runCatching { digest(record.file, checkpoint) }.getOrNull() ?: continue
+                val hash = try { digest(record.file, workspace, checkpoint) }
+                    catch (_: java.io.IOException) { continue }
+                    catch (_: SecurityException) { continue }
                 if (unchanged(record)) hashed.getOrPut(hash) { ArrayList() }.add(record)
             }
             for (candidates in hashed.values.filter { it.size > 1 }) {
                 val groups = ArrayList<MutableList<Record>>()
                 for (record in candidates) {
                     checkpoint()
-                    val group = groups.firstOrNull { unchanged(it.first()) && unchanged(record) && equalBytes(it.first().file, record.file, checkpoint) }
+                    val group = groups.firstOrNull { unchanged(it.first()) && unchanged(record) && equalBytes(it.first().file, record.file, workspace, checkpoint) }
                     if (group == null) groups.add(arrayListOf(record)) else group.add(record)
                 }
                 result.addAll(groups.filter { it.size > 1 && it.all(::unchanged) })
@@ -61,17 +65,32 @@ object StorageAnalysis {
         return result.sortedByDescending { group -> group.first().size * (group.size - 1) }
     }
     private fun unchanged(record: Record) = record.file.isFile && record.file.length() == record.size && record.file.lastModified() == record.modified
-    private fun digest(file: File, checkpoint: () -> Unit): String {
-        val hash = MessageDigest.getInstance("SHA-256")
+    private class DuplicateWorkspace {
+        val hash: MessageDigest by lazy { MessageDigest.getInstance("SHA-256") }
+        val hashBuffer: ByteArray by lazy { ByteArray(64 * 1024) }
+        val compareLeft: ByteArray by lazy { ByteArray(64 * 1024) }
+        val compareRight: ByteArray by lazy { ByteArray(64 * 1024) }
+    }
+    private fun digest(file: File, workspace: DuplicateWorkspace, checkpoint: () -> Unit): String {
+        val hash = workspace.hash
+        hash.reset()
         file.inputStream().use { input ->
-            val buffer = ByteArray(64 * 1024)
+            val buffer = workspace.hashBuffer
             while (true) { checkpoint(); val count = input.read(buffer); if (count < 0) break; hash.update(buffer, 0, count) }
         }
-        return hash.digest().joinToString("") { "%02x".format(it) }
+        val digest = hash.digest()
+        val hex = CharArray(digest.size * 2)
+        val digits = "0123456789abcdef"
+        for (i in digest.indices) {
+            val value = digest[i].toInt() and 0xff
+            hex[i * 2] = digits[value ushr 4]
+            hex[i * 2 + 1] = digits[value and 0xf]
+        }
+        return String(hex)
     }
-    private fun equalBytes(first: File, second: File, checkpoint: () -> Unit): Boolean { return try {
-        first.inputStream().buffered(64 * 1024).use { a -> second.inputStream().buffered(64 * 1024).use { b ->
-            val left = ByteArray(64 * 1024); val right = ByteArray(64 * 1024)
+    private fun equalBytes(first: File, second: File, workspace: DuplicateWorkspace, checkpoint: () -> Unit): Boolean { return try {
+        first.inputStream().use { a -> second.inputStream().use { b ->
+            val left = workspace.compareLeft; val right = workspace.compareRight
             while (true) {
                 checkpoint()
                 val count = a.read(left)

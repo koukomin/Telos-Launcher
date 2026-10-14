@@ -9,18 +9,30 @@ package de.mm20.launcher2.comms.search
  * numbers regardless of spaces, dashes and a leading + or 00.
  *
  * Both sides are folded to a loose phonetic skeleton (see [skeleton]) in addition to the plain
- * accent-folded text, so no state has to be precomputed. Pure Kotlin, O(items * fields * tokens).
+ * accent-folded text. [compile] prepares the query once for a batch; no item cache is retained.
+ * Pure Kotlin, O(items * fields * tokens).
  */
 object TelosSearch {
 
     /** True if every token of [query] matches one of [fields]. A blank query matches everything. */
-    fun matches(query: String, vararg fields: String?): Boolean = scoreList(query, fields.asList()) > 0
+    fun matches(query: String, vararg fields: String?): Boolean = compile(query).scoreFields(fields.asList()) > 0
 
     /**
      * 0 = no match, higher is better: exact word > prefix of a word > word contains > substring.
      * A blank query scores 1 for everything.
      */
-    fun score(query: String, vararg fields: String?): Int = scoreList(query, fields.asList())
+    fun score(query: String, vararg fields: String?): Int = compile(query).scoreFields(fields.asList())
+
+    /** Immutable, reusable query for scanning a batch without normalizing it for every item. */
+    fun compile(query: String): Query = Query(query)
+
+    class Query internal constructor(query: String) {
+        private val tokens = query.split(WHITESPACE).mapNotNull { buildToken(it) }
+
+        fun matches(vararg fields: String?): Boolean = scoreFields(fields.asList()) > 0
+        fun score(vararg fields: String?): Int = scoreFields(fields.asList())
+        internal fun scoreFields(fields: List<String?>): Int = scoreTokens(tokens, fields)
+    }
 
     /**
      * Keeps only the items that match. The order is kept for a blank query, otherwise the best
@@ -28,9 +40,10 @@ object TelosSearch {
      */
     fun <T> filter(items: List<T>, query: String, fields: (T) -> List<String?>): List<T> {
         if (query.isBlank()) return items
+        val matcher = compile(query)
         val scored = ArrayList<Pair<T, Int>>()
         for (item in items) {
-            val s = scoreList(query, fields(item))
+            val s = matcher.scoreFields(fields(item))
             if (s > 0) scored.add(item to s)
         }
         return scored.sortedByDescending { it.second }.map { it.first }
@@ -48,8 +61,7 @@ object TelosSearch {
 
     private class Field(val words: List<String>, val sk1: List<String>, val sk2: List<String>, val digits: String)
 
-    private fun scoreList(query: String, fields: List<String?>): Int {
-        val tokens = query.split(WHITESPACE).mapNotNull { buildToken(it) }
+    private fun scoreTokens(tokens: List<Token>, fields: List<String?>): Int {
         if (tokens.isEmpty()) return 1
         val prepared = fields.map { f -> if (f.isNullOrEmpty()) null else buildField(f) }
         var total = 0

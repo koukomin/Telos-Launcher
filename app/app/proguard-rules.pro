@@ -1,5 +1,4 @@
 -keepattributes SourceFile,LineNumberTable
--dontobfuscate
 # === TELOS_PENDING_REVIEW_START: perf_optimizations ===
 # Telos note: Optimizations were disabled here (-dontoptimize). Removing the flag allows R8 to execute inlining, dead code removal, and constant propagation.
 # -dontoptimize
@@ -45,3 +44,6 @@
 -dontwarn org.bouncycastle.**
 -dontwarn javax.imageio.**
 -dontwarn java.awt.**
+
+# TvPlayerController compares this activity class name with SettingsDeepLinkContract.
+-keepnames class de.mm20.launcher2.ui.settings.SettingsActivity

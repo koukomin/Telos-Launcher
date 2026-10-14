@@ -45,4 +45,17 @@ class FileSearchIndexTest {
             assertTrue(result.limited); assertTrue(result.estimatedBytes <= 512); assertTrue(result.files.size < 6)
         } finally { root.deleteRecursively() }
     }
+    @Test fun hiddenAncestryEndsAtTheDirectoryBoundaryAndExcludesTheScanRoot() {
+        val parent = Files.createTempDirectory("search-hidden-root").toFile()
+        val root = parent.resolve(".root").also { it.mkdir() }
+        try {
+            root.resolve(".hidden/deep").mkdirs()
+            root.resolve(".hidden/deep/file.txt").writeText("hidden")
+            root.resolve("visible/deep").mkdirs()
+            root.resolve("visible/deep/file.txt").writeText("shown")
+            val entries = FileSearchIndex.scan(root).files
+            assertTrue(entries.filter { it.path.contains("/.hidden/") }.all { it.hidden })
+            assertTrue(entries.filter { it.path.contains("/visible") }.all { !it.hidden })
+        } finally { parent.deleteRecursively() }
+    }
 }
