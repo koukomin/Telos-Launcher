@@ -38,6 +38,14 @@ The documentation site is published via GitHub Pages at <https://koukomin.github
 - [Credits](#credits) and [Projects Telos is based on](#projects-telos-is-based-on)
 - [License](#license)
 
+## Development screenshots
+
+Real, unedited captures from a clean Pixel 7 emulator (Android API 35, x86_64 debug), without personal accounts. These show the development UI; they do not validate live playback or account sync.
+
+[View the gallery](docs/docs/user-guide/telos/screenshots.md). Each original PNG includes its capture resolution; the gallery identifies its source commit.
+
+Πραγματικές λήψεις από καθαρό emulator με development build, χωρίς προσωπικούς λογαριασμούς. [Συλλογή screenshots](docs/docs/user-guide/telos/screenshots.md).
+
 ## The story behind Telos
 
 Telos started as a personal project, and I want to be upfront about how it was made: **I built it with zero coding knowledge.** The development has been done with AI assistants — [ChatGPT](https://chatgpt.com), [Claude](https://claude.ai), Grok and Gemini. I couldn't have written this software by hand. What I could do was describe what I wanted, test each build on my own phone, and keep iterating with the AI until it worked. In that sense Telos is as much an experiment in AI-assisted development as it is a launcher.
@@ -991,7 +999,7 @@ An app installer and updater that works like [Obtainium](https://github.com/Imra
 
 - Search, filters (updates, installed, not installed, track only) and categories
 - Add the apps that are already installed (found through F-Droid and IzzyOnDroid)
-- Import and export in the Obtainium export format; import individual configurations or arrays, and open `obtainium://app/`, `apps/`, `add/` and `add?url=` links. Imported apps have automatic updates disabled until explicitly enabled.
+- Import and export in the Obtainium export format; import individual configurations or arrays, and open `obtainium://app/`, `apps/`, `add/` and `add?url=` links. Imported apps have automatic updates disabled until explicitly enabled. File imports enforce the existing 4,194,304-character limit while reading, before buffering an oversized provider file.
 
 **Managing the Telos apps**
 

@@ -97,18 +97,50 @@ features:
 <script setup>
   import { withBase } from 'vitepress'
   import Footer from '.vitepress/theme/Footer.vue'
-  const shots = [1, 2, 3, 4, 5, 6].map((n) => withBase(`/img/screenshot-${n}.png`))
+  const shots = [
+  {
+    "src": "/img/telos-development-01-launcher.png",
+    "caption": "Telos Launcher — home clock and search bar"
+  },
+  {
+    "src": "/img/telos-development-03-youtube-music.png",
+    "caption": "Telos Media — YouTube Music search"
+  },
+  {
+    "src": "/img/telos-development-05-stremio-fork.png",
+    "caption": "Stremio Fork — introduction and account sign-in"
+  },
+  {
+    "src": "/img/telos-development-06-files.png",
+    "caption": "Telos Files — storage, tabs and two-panel controls"
+  },
+  {
+    "src": "/img/telos-development-07-store.png",
+    "caption": "Telos Store — sources and compact filter button"
+  },
+  {
+    "src": "/img/telos-development-11-calculator.png",
+    "caption": "Telos Calculator — calculator and conversion tools"
+  }
+]
 </script>
+<div class="telos-note">
+  <strong>Development preview · Pixel 7 emulator · Android API 35</strong><br />
+  Real captures from a clean debug build, without personal accounts.
+  Πραγματικές λήψεις από καθαρό development build σε emulator, χωρίς προσωπικούς λογαριασμούς.
+  <a :href="withBase('/docs/user-guide/telos/screenshots')">All screenshots / Όλα τα screenshots</a>
+</div>
 <div class="home-screenshots">
-  <img v-for="src in shots" :key="src" :src="src" alt="Telos screenshot" />
-
-  <div class="credits">Wallpaper by Allec Gomes on <a href="https://unsplash.com/de/fotos/ein-grunes-blatt-das-auf-einem-gewasser-schwimmt-UcWUMqIsld8" target="_blank">Unsplash.com</a></div>
+  <figure v-for="shot in shots" :key="shot.src">
+    <a :href="withBase(shot.src)"><img :src="withBase(shot.src)" :alt="shot.caption" loading="lazy" width="1080" height="2400" /></a>
+    <figcaption>{{ shot.caption }}</figcaption>
+  </figure>
 </div>
 <div class="telos-story">
 
 ## The story behind Telos
 
-Telos started as a personal project, and I want to be upfront about how it was made: **I built it with zero coding knowledge.** All of the development was done with AI assistants — mainly [Claude](https://claude.ai), along with Grok and Gemini. I couldn't have written this software by hand. What I could do was describe what I wanted, test each build on my own phone, and keep iterating with the AI until it worked. In that sense Telos is as much an experiment in AI-assisted development as it is a launcher.
+Telos started as a personal project, and I want to be upfront about how it was made: **I built it with zero coding knowledge.** All of the development was done with AI assistants — [ChatGPT](https://chatgpt.com), [Claude](https://claude.ai), Grok and Gemini. I couldn't have written this software by hand. What I could do was describe what I wanted, test each build on my own phone, and keep iterating with the AI until it worked. In that sense Telos is as much an experiment in AI-assisted development as it is a launcher.
 
 It all comes down to one missing feature. I was already a happy user of [Kvaesitso](https://github.com/MM2-0/Kvaesitso), which I think is an excellent launcher. But a few things I really wanted weren't there — above all **freezing apps and launching frozen apps straight from the launcher.** For me that is the single most important feature, for two reasons:
 

@@ -74,8 +74,8 @@ for name, route, space in screens:
     else:
         adb("shell", "am", "start", "-n", APP + "/de.mm20.launcher2.ui.launcher.LauncherActivity")
         time.sleep(2)
-        # The clean default home intentionally has no widgets or dock. Open its
-        # real search/app drawer with the configured default downward gesture.
+        # Dismiss the initial widget guide with the default downward gesture,
+        # revealing the real home clock and search bar.
         adb("shell", "input", "swipe", "540", "550", "540", "1700", "500")
         time.sleep(2)
     try:
@@ -91,7 +91,7 @@ for name, route, space in screens:
     print("Captured", name)
 (OUT / "capture-info.json").write_text(json.dumps({"commit": os.environ.get("GITHUB_SHA"), "device": "Pixel 7 emulator", "sdk": 35,
     "build": "x86_64 debug", "data": "Clean emulator, no personal accounts or data. Native ARM-only torrent/SIP components are not tested.",
-    "launcher": "Default home with its search/app drawer opened using the default downward gesture.",
+    "launcher": "Home clock and search bar after the initial widget guide is dismissed.",
     "screens": [name for name, _, _ in screens]}, indent=2))
 (OUT / "logcat.txt").write_bytes(adb("logcat", "-d", "-s", "AndroidRuntime", "ActivityTaskManager", "Launcher", check=False).stdout)
 if failures:

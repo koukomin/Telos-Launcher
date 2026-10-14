@@ -368,7 +368,11 @@ class StoreViewModel : ViewModel(), KoinComponent {
     fun import(uri: Uri) {
         viewModelScope.launch {
             val text = withContext(Dispatchers.IO) {
-                runCatching { context.contentResolver.openInputStream(uri)!!.bufferedReader().use { it.readText() } }.getOrNull()
+                runCatching {
+                    context.contentResolver.openInputStream(uri)!!.bufferedReader().use {
+                        de.mm20.launcher2.store.transfer.ObtainiumTransfer.readExport(it)
+                    }
+                }.getOrNull()
             }
             if (text == null) {
                 _message.value = str(R.string.au_store_msg_read_failed)
