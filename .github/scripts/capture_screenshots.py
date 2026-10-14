@@ -27,34 +27,43 @@ adb("shell", "cmd", "statusbar", "collapse", check=False)
 adb("shell", "am", "start", "-n", APP + "/de.mm20.launcher2.ui.launcher.LauncherActivity")
 time.sleep(2)
 
-screens = [("01-launcher", None, None), ("02-media-listen", "settings/media_hub", "music"),
+screens = [("02-media-listen", "settings/media_hub", "music"),
            ("03-youtube-music", "settings/media_hub", "youtube_music"), ("04-youtube-video", "settings/media_hub", "youtube"),
            ("05-stremio-fork", "settings/media_hub", "stremio"), ("06-files", "settings/files", None),
            ("07-store", "settings/store", None), ("08-viewer", "settings/viewer", None),
            ("09-notes", "settings/notes", None), ("10-calendar", "settings/calendar", None),
-           ("11-calculator", "settings/calculator", None), ("12-downloads", "settings/downloads", None)]
+           ("11-calculator", "settings/calculator", None), ("12-downloads", "settings/downloads", None),
+           ("01-launcher", None, None)]
 def wait_for_rendered_ui(name, timeout=60):
     deadline = time.monotonic() + timeout
     expected = {
-        "01-launcher": ["Search", "Settings"], "02-media-listen": ["Music"],
+        "01-launcher": [], "02-media-listen": ["Music"],
         "03-youtube-music": ["YouTube Music"], "04-youtube-video": ["YouTube"],
         "05-stremio-fork": ["Stremio Fork"], "06-files": ["Storage"],
         "07-store": ["Telos apps"], "08-viewer": ["Photos"], "09-notes": ["Notes"],
         "10-calendar": ["Today"], "11-calculator": ["VAT"], "12-downloads": ["Downloads"],
     }[name]
+    dump = b""
     while time.monotonic() < deadline:
+        adb("shell", "rm", "-f", "/sdcard/telos-ui.xml", check=False)
         adb("shell", "uiautomator", "dump", "/sdcard/telos-ui.xml", check=False)
         dump = adb("shell", "cat", "/sdcard/telos-ui.xml", check=False).stdout
         try:
             tree = ET.fromstring(dump)
             labels = [n.attrib.get("text", "") + " " + n.attrib.get("content-desc", "") for n in tree.iter("node")]
-            if any(word in text for word in expected for text in labels):
+            app_nodes = [n for n in tree.iter("node") if n.attrib.get("package") == APP]
+            launcher_ready = name == "01-launcher" and len(app_nodes) >= 5 and any(text.strip() for text in labels)
+            if launcher_ready or any(word in text for word in expected for text in labels):
                 return dump
         except ET.ParseError:
             pass
         time.sleep(1)
+    (OUT / (name + "-failed.xml")).write_bytes(dump)
+    (OUT / (name + "-failed.png")).write_bytes(adb("exec-out", "screencap", "-p").stdout)
+    (OUT / (name + "-logcat.txt")).write_bytes(adb("logcat", "-d", "-s", "AndroidRuntime", "ActivityTaskManager", "Launcher", check=False).stdout)
     raise RuntimeError("UI did not render: " + name)
 
+failures = []
 for name, route, space in screens:
     if route:
         args = ["shell", "am", "start", "-n", APP + "/de.mm20.launcher2.ui.settings.SettingsActivity", "--es", "de.mm20.launcher2.settings.ROUTE", route]
@@ -62,7 +71,14 @@ for name, route, space in screens:
             args += ["--es", "de.mm20.launcher2.settings.MEDIA_SPACE", space]
         adb(*args, check=False)
         time.sleep(1)
-    dump = wait_for_rendered_ui(name)
+    else:
+        adb("shell", "am", "start", "-n", APP + "/de.mm20.launcher2.ui.launcher.LauncherActivity")
+    try:
+        dump = wait_for_rendered_ui(name)
+    except RuntimeError as error:
+        failures.append(name)
+        print(error, flush=True)
+        continue
     time.sleep(2)
     result = adb("exec-out", "screencap", "-p")
     (OUT / (name + ".png")).write_bytes(result.stdout)
@@ -72,3 +88,5 @@ for name, route, space in screens:
     "build": "x86_64 debug", "data": "Clean emulator, no personal accounts or data. Native ARM-only torrent/SIP components are not tested.",
     "screens": [name for name, _, _ in screens]}, indent=2))
 (OUT / "logcat.txt").write_bytes(adb("logcat", "-d", "-s", "AndroidRuntime", "ActivityTaskManager", "Launcher", check=False).stdout)
+if failures:
+    raise RuntimeError("Screens requiring inspection: " + ", ".join(failures))
