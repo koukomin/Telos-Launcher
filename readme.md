@@ -100,6 +100,8 @@ Telos Phone now reads the full Android contact list across synced accounts, incl
 - Store filters are in a compact button/dialog. Update checks discover supported non-Play installs using known recommended sources, F-Droid and IzzyOnDroid. Discovered apps start with automatic updates off; individual/bulk Update offers opt-in for the selected apps. Silent automatic installation still requires Shizuku or root.
 - Large HTTP responses are no longer buffered in memory during APK downloads. Source text has a size limit; custom F-Droid indexes are parsed as a stream.
 
+The new Media, Store and Files UI strings include Greek and English plus all supported base locales. Android XML, placeholders and changed-string coverage are checked in CI.
+
 ### YouTube in Telos Media
 
 Telos YouTube and Telos YouTube Music provide video/music search, direct video links and a shared native Media3 background player. The Media hub groups local music, radio and YouTube Music under Listen; local video and YouTube under Video, alongside TV and Stremio Fork. Launcher search suggests both YouTube features with distinct Telos icons. Selected link parsing, audio selection and the downloader adapter are adapted from [Flow](https://github.com/Flow-Tube/Flow), with [NewPipeExtractor](https://github.com/TeamNewPipe/NewPipeExtractor). This is a focused integration, not the entire Flow application. An optional [browser account panel](docs/docs/user-guide/telos/media/youtube-account.md) opens YouTube and YouTube Music in the same browser profile. The native player does not import browser accounts; native account integration remains unfinished.

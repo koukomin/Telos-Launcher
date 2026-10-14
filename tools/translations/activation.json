@@ -1,6 +1,0 @@
-{
-  "generate": true,
-  "functional_changes_complete": true,
-  "reason": "User requested translations in parallel after merging PR #28; current release continues independently.",
-  "source_commit": "82710244073f5696c04218a2b957669171e7b29e"
-}
