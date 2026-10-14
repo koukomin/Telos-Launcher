@@ -16,3 +16,5 @@ Standalone fixtures live in `tools/performance/jvm/`. Compile each fixture separ
 Regression coverage includes mixed empty/short/multi-buffer files, pause/resume, changed sources, destination collisions, large duplicate groups, hidden-directory ancestry and cancellation.
 
 Search compiles each query once and reuses its immutable matcher across items, without a global cache. An independent comparison of 800 individual scores across 20 queries and 40 field pairs produced identical results before and after; 45 search tests pass.
+
+For search, compile `SearchBenchmarkBefore.kt` with the base sources and `SearchBenchmarkAfter.kt` with the candidate sources; include both `GreekText.kt` and `TelosSearch.kt`. The fixtures differ only in the batch matcher invocation and assert a stable score checksum.
