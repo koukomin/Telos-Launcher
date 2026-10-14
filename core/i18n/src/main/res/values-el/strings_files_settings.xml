@@ -1,0 +1,10 @@
+<resources>
+    <string name="telos_files_settings_transfer">Ρυθμίσεις</string>
+    <string name="telos_files_settings_export">Εξαγωγή ρυθμίσεων Files</string>
+    <string name="telos_files_settings_import">Εισαγωγή ρυθμίσεων Files</string>
+    <string name="telos_files_settings_confirm">Να αντικατασταθούν οι ρυθμίσεις εμφάνισης, οι σελιδοδείκτες και οι ανοιχτές καρτέλες; Δεν εισάγονται συνδέσεις, κωδικοί ή στοιχεία σύνδεσης λογαριασμών. Οι απομακρυσμένοι σελιδοδείκτες χρειάζονται την αντίστοιχη σύνδεση σε αυτή τη συσκευή.</string>
+    <string name="telos_files_settings_exported">Οι ρυθμίσεις Files εξήχθησαν.</string>
+    <string name="telos_files_settings_imported">Οι ρυθμίσεις Files εισήχθησαν.</string>
+    <string name="telos_files_settings_failed">Δεν είναι δυνατή η ανάγνωση ή αποθήκευση των ρυθμίσεων Files. Ελέγξτε ότι το αρχείο είναι έγκυρη εξαγωγή Telos Files.</string>
+    <string name="telos_files_settings_busy">Ολοκληρώστε ή ακυρώστε τις εκκρεμείς μεταφορές αρχείων πριν εισαγάγετε ρυθμίσεις.</string>
+</resources>

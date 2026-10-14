@@ -157,6 +157,20 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
     var addMenu by remember { mutableStateOf(false) }
     var dialog by remember { mutableStateOf<FilesDialog?>(null) }
     var showTrash by remember { mutableStateOf(false) }
+    var showTransfers by remember { mutableStateOf(false) }
+    var showCollections by remember { mutableStateOf(false) }
+    var sharingPath by remember { mutableStateOf<String?>(null) }
+    sharingPath?.let { FilesSharingDialog(it) { sharingPath = null } }
+    var showToolbarSettings by remember { mutableStateOf(false) }
+    var toolbarConfig by remember { mutableStateOf(FilesToolbarPreferences.read(context)) }
+    val localTransfers by vm.transferQueue.items.collectAsState()
+    LaunchedEffect(localTransfers.count { it.status in setOf(FilesTransferQueue.Status.COMPLETE, FilesTransferQueue.Status.ORIGINAL_RETAINED, FilesTransferQueue.Status.FAILED, FilesTransferQueue.Status.CANCELLED) }) {
+        vm.reload(); vm.onFilesChanged()
+    }
+    if (showTransfers) FilesTransfersDialog(vm.transferQueue) { showTransfers = false }
+    if (showToolbarSettings) FilesToolbarSettingsDialog(toolbarConfig, { showToolbarSettings = false }) { config ->
+        FilesToolbarPreferences.write(context, config); toolbarConfig = config; showToolbarSettings = false
+    }
     var showSearchFilters by remember { mutableStateOf(false) }
     if (showSearchFilters) FilesSearchDialog(vm) { showSearchFilters = false }
     if (showTrash) de.mm20.launcher2.ui.trash.TrashDialog({ showTrash = false }, { vm.reload(); vm.onFilesChanged() })
@@ -200,6 +214,10 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
             }
             else -> FileActions.open(context, entry, vm.entries, vm.rootMode)
         }
+    }
+
+    if (showCollections) FilesCollectionsDialog(vm, { showCollections = false }) { entry ->
+        showCollections = false; vm.clearSelection(); onOpenEntry(entry)
     }
 
     ModalNavigationDrawer(
@@ -281,7 +299,8 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                 if (vm.path != null) IconButton(onClick = { searching = true }) {
                                     Icon(painterResource(Icons.search_24px), contentDescription = stringResource(R.string.hc_search))
                                 }
-                                if (vm.path != null) Box {
+                                toolbarConfig.actions.forEach { action ->
+                                if (vm.path != null && action == FilesToolbarAction.View) Box {
                                     IconButton(onClick = { viewMenu = true }) {
                                         Icon(
                                             painterResource(when (vm.viewMode) { 1 -> Icons.apps_24px; 2 -> Icons.dashboard_2_24px; else -> Icons.table_rows_24px }),
@@ -303,11 +322,41 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                         }
                                     }
                                 }
+                                if (action != FilesToolbarAction.View) {
+                                    val label = when (action) {
+                                        FilesToolbarAction.Sort -> R.string.hc_sort_by_2
+                                        FilesToolbarAction.Hidden -> if (vm.showHidden) R.string.hf_files_hide_hidden else R.string.hf_files_show_hidden
+                                        else -> R.string.hc_refresh
+                                    }
+                                    IconButton(onClick = { when (action) {
+                                        FilesToolbarAction.Sort -> dialog = FilesDialog.Sort
+                                        FilesToolbarAction.Hidden -> vm.toggleHidden()
+                                        else -> { vm.reload(); vm.refreshVolumes() }
+                                    } }) {
+                                        Icon(painterResource(when (action) {
+                                            FilesToolbarAction.Sort -> Icons.tune_24px
+                                            FilesToolbarAction.Hidden -> Icons.visibility_24px
+                                            else -> Icons.restart_alt_24px
+                                        }), contentDescription = stringResource(label))
+                                    }
+                                }
+                                }
                                 Box {
                                     IconButton(onClick = { menuOpen = true }) {
                                         Icon(painterResource(Icons.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
                                     }
                                     DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                                        DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_collections)) }, onClick = { menuOpen = false; showCollections = true })
+                                        vm.path?.takeIf { !vm.rootMode && !RemotePath.isRemote(it) && !ArchivePath.isArchive(it) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it) }?.let { folder ->
+                                            DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_sharing_title)) }, onClick = { menuOpen = false; sharingPath = folder })
+                                        }
+                                        DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_transfers_title)) }, onClick = { menuOpen = false; showTransfers = true })
+                                        DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_toolbar_title)) }, onClick = { menuOpen = false; showToolbarSettings = true })
+                                        if (vm.path != null && FilesToolbarAction.View !in toolbarConfig.actions) {
+                                            listOf(0 to R.string.au22_files_view_list, 1 to R.string.au22_files_view_grid_medium, 2 to R.string.au22_files_view_grid_large).forEach { (mode, label) ->
+                                                DropdownMenuItem(text = { Text(stringResource(label)) }, onClick = { menuOpen = false; vm.updateViewMode(mode) })
+                                            }
+                                        }
                                         DropdownMenuItem(text = { Text(stringResource(R.string.telos_trash_title)) }, onClick = { menuOpen = false; showTrash = true })
                                         if (vm.path != null) DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_search_filters)) }, onClick = { menuOpen = false; searching = true; showSearchFilters = true })
                                         if (vm.path != null && !vm.rootMode && !RemotePath.isRemote(vm.path!!) && !ArchivePath.isArchive(vm.path!!) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(vm.path!!))
@@ -353,6 +402,8 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
             bottomBar = {
                 Column {
                     vm.task?.let { TaskBar(it) }
+                    if (localTransfers.any { it.status in setOf(FilesTransferQueue.Status.RUNNING, FilesTransferQueue.Status.QUEUED, FilesTransferQueue.Status.PAUSED) })
+                        TextButton(onClick = { showTransfers = true }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.telos_files_transfers_title)) }
                     val clip = vm.clipboard
                     if (clip != null && vm.path != null && vm.task == null) PasteBar(
                         count = clip.paths.size, cut = clip.cut,

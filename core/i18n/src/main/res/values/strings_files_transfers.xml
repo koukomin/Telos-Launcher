@@ -1,0 +1,16 @@
+<resources>
+    <string name="telos_files_transfers_title">File transfers</string>
+    <string name="telos_files_transfers_note">Local transfers are queued one at a time and continue when you close a tab. After restarting Telos, resume them here. Remote, root and archive operations use the existing transfer controls.</string>
+    <string name="telos_files_transfers_empty">No file transfers yet</string>
+    <string name="telos_files_transfers_clear">Clear history</string>
+    <string name="telos_files_transfer_queued">Waiting in queue</string>
+    <string name="telos_files_transfer_running">Transferring</string>
+    <string name="telos_files_transfer_paused">Paused — partial files are kept for resume</string>
+    <string name="telos_files_transfer_complete">Completed</string>
+    <string name="telos_files_transfer_failed">Transfer stopped. Check storage access and available space. Changed sources or destinations are preserved.</string>
+    <string name="telos_files_transfer_retained">Copied, but some originals were retained because they changed or could not be removed.</string>
+    <string name="telos_files_transfer_pause">Pause</string>
+    <string name="telos_files_transfer_resume">Resume</string>
+    <string name="telos_files_transfer_added">Added to the file transfer queue</string>
+    <string name="telos_files_transfer_queue_full">Could not add transfer. Finish or cancel pending transfers and check available storage.</string>
+</resources>

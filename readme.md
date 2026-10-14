@@ -696,10 +696,13 @@ Text (SMS) and picture (MMS) messages as conversations with a reply field. It is
 
 ### Telos Files
 
+- Persistent local transfer queue with progress, pause/resume and history. Interrupted transfers require explicit resume after restarting the app; completed files are verified before move removes their originals. Network/archive/vault transfers remain separate and do not have persistent resume.
 - Independent folder tabs and an adaptive two-panel workspace, with shared copy/cut/paste, internal drag-and-drop with a copy/move choice, and Telos styling. Hardware shortcuts cover tabs, search, selection, copy/cut/paste, refresh, hidden files, rename and confirmed deletion.
 - Advanced local search: extension/type, size and modified-date filters, optional subfolders, a one-minute metadata cache capped at 50,000 entries and 16 MiB, and clear partial-results reporting. Network, archive and vault filters apply to the current folder.
 - Shared trash across Files, Viewer, Media, radio/voice/call/screen recordings, completed Downloads and screenshot notification actions: choose trash or permanent deletion, restore without overwriting, default 30-day retention configurable from 1–365 days for local files. Android-managed media trash keeps its system 30-day policy.
 - View, sorting and hidden-file preferences are remembered per folder.
+- Export/import Files display settings, per-folder options, toolbar shortcuts, bookmarks and up to 16 workspace tabs as validated JSON (512 KiB maximum). Connection credentials and transfer journals are excluded.
+- Customize up to two optional toolbar shortcuts. Read-only collections show recent files, bookmarks and local file types with bounded scans and partial-results reporting.
 - Batch rename with name/extension tokens, padded numbering, literal/regex replacement and previews. Targets are checked before renaming; failures attempt to restore original names.
 - Local storage analyzer with largest-file lists and byte-verified duplicate groups. Scans are cancellable, bounded and skip symlinks; no files are deleted automatically.
 - [Detailed MiXplorer/Solid Explorer comparison and remaining work](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/feature-comparison/).

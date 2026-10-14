@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_toolbar_title">Customize toolbar</string>
+    <string name="telos_files_toolbar_info">Choose up to %1$d shortcuts and change their order. Navigation, search and the menu stay available. All actions remain in the menu.</string>
+    <string name="telos_files_toolbar_up">Move %1$s up</string>
+    <string name="telos_files_toolbar_down">Move %1$s down</string>
+    <string name="telos_files_toolbar_reset">Restore defaults</string>
+    <string name="telos_files_toolbar_save">Save</string>
+</resources>

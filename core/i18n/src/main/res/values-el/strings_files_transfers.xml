@@ -1,0 +1,16 @@
+<resources>
+    <string name="telos_files_transfers_title">Μεταφορές αρχείων</string>
+    <string name="telos_files_transfers_note">Οι τοπικές μεταφορές εκτελούνται μία κάθε φορά και συνεχίζονται όταν κλείνετε μια καρτέλα. Μετά την επανεκκίνηση του Telos, συνεχίστε τις από εδώ. Οι απομακρυσμένες μεταφορές, το root και τα αρχεία συμπίεσης χρησιμοποιούν τους υπάρχοντες ελέγχους.</string>
+    <string name="telos_files_transfers_empty">Δεν υπάρχουν ακόμη μεταφορές αρχείων</string>
+    <string name="telos_files_transfers_clear">Εκκαθάριση ιστορικού</string>
+    <string name="telos_files_transfer_queued">Αναμονή στην ουρά</string>
+    <string name="telos_files_transfer_running">Μεταφορά σε εξέλιξη</string>
+    <string name="telos_files_transfer_paused">Σε παύση — τα μερικά αρχεία διατηρούνται για συνέχιση</string>
+    <string name="telos_files_transfer_complete">Ολοκληρώθηκε</string>
+    <string name="telos_files_transfer_failed">Η μεταφορά σταμάτησε. Ελέγξτε την πρόσβαση και τον ελεύθερο χώρο. Τα αρχεία προέλευσης ή προορισμού που άλλαξαν διατηρούνται.</string>
+    <string name="telos_files_transfer_retained">Έγινε αντιγραφή, αλλά ορισμένα πρωτότυπα διατηρήθηκαν επειδή άλλαξαν ή δεν μπορούσαν να αφαιρεθούν.</string>
+    <string name="telos_files_transfer_pause">Παύση</string>
+    <string name="telos_files_transfer_resume">Συνέχιση</string>
+    <string name="telos_files_transfer_added">Προστέθηκε στην ουρά μεταφοράς αρχείων</string>
+    <string name="telos_files_transfer_queue_full">Δεν ήταν δυνατή η προσθήκη. Ολοκληρώστε ή ακυρώστε τις εκκρεμείς μεταφορές και ελέγξτε τον ελεύθερο χώρο.</string>
+</resources>

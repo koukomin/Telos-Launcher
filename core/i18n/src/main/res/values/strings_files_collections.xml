@@ -1,0 +1,9 @@
+<resources>
+    <string name="telos_files_collections">Collections</string>
+    <string name="telos_files_collection_recent">Recently modified</string>
+    <string name="telos_files_collection_bookmarks">Bookmarks</string>
+    <string name="telos_files_collections_scope">Local files in %1$s. Bookmarks may point to other locations.</string>
+    <string name="telos_files_collections_partial">Partial view: up to 300 files are shown. Some folders may be inaccessible or exceed the index limits.</string>
+    <string name="telos_files_collections_failed">Cannot read this collection. Check storage access.</string>
+    <string name="telos_files_collections_empty">No files in this collection.</string>
+</resources>

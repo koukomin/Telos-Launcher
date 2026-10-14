@@ -74,6 +74,8 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     var selection by mutableStateOf<Set<String>>(emptySet())
         private set
     internal var onFilesChanged: () -> Unit = {}
+    internal var onLocationChanged: () -> Unit = {}
+    val transferQueue = FilesTransferQueue.get(application)
     var sharedClipboard = FilesClipboard()
     var clipboard: ClipboardState?
         get() = sharedClipboard.value
@@ -190,10 +192,17 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         searchResults = null
         query = ""
         path = newPath
+        onLocationChanged()
         restoreFolderOptions(newPath)
         error = null
         if (newPath == null) { entries = emptyList(); return }
         load(newPath)
+    }
+
+    fun reloadPreferences() {
+        bookmarks = prefs.getStringSet("bookmarks", emptySet()).orEmpty().sorted()
+        restoreFolderOptions(path)
+        reload()
     }
 
     fun reload() { path?.let { folder ->
@@ -541,7 +550,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             var moved = 0
             try {
                 for (item in items) {
-                    if (cancel.cancelled) break
+                    if (cancel.cancelled) throw java.io.IOException("Cancelled")
                     trash.move(item.path)
                     moved++
                     task = task?.copy(progress = moved.toFloat() / items.size)
@@ -557,7 +566,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         runTask(s(R.string.au_files_deleting), null) { cancel, _ ->
             var failed = 0
             for (item in items) {
-                if (cancel.cancelled) break
+                if (cancel.cancelled) throw java.io.IOException("Cancelled")
                 if (!fs.delete(item.path)) failed++
             }
             if (failed == 0) s(R.string.au_files_deleted) else s(R.string.au_files_delete_failed, failed)
@@ -576,34 +585,36 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val clip = clipboard?.takeIf { it.paths.isNotEmpty() } ?: return
         paste(clip)
     }
-    internal fun transferDragged(paths: List<String>, sourceRoot: Boolean, move: Boolean) {
+    internal fun transferDragged(paths: List<String>, sourceRoot: Boolean, move: Boolean, destination: String? = path) {
         if (task != null || paths.isEmpty() || path == null || ArchivePath.isArchive(path!!) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(path!!)) return
-        paste(ClipboardState(paths, move, sourceRoot), clearCopiedClipboard = false)
+        paste(ClipboardState(paths, move, sourceRoot), clearCopiedClipboard = false, destination = destination)
     }
-    private fun paste(clip: ClipboardState, clearCopiedClipboard: Boolean = true) {
-        val dir = path ?: return
+    private fun paste(clip: ClipboardState, clearCopiedClipboard: Boolean = true, destination: String? = path) {
+        val dir = destination ?: return
         val dstFs = fsFor(dir)
         val first = clip.paths.first()
         val srcFs = if (clip.rootMode && !RemotePath.isRemote(first) && !ArchivePath.isArchive(first) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(first)) root else fsFor(first)
         val bothLocal = dstFs is LocalFs && srcFs is LocalFs
-        val estimate: ((CancelFlag) -> Long?)? = if (bothLocal) { cancel ->
-            clip.paths.fold(0L) { sum, item -> Math.addExact(sum, FsOps.sizeOf(File(item), cancel)) }
-        } else null
+        if (bothLocal) {
+            runCatching { transferQueue.enqueue(clip.paths, dir, clip.cut) }
+                .onSuccess {
+                    selection = emptySet()
+                    if (clip.cut && clearCopiedClipboard) clipboard = null
+                    message = s(R.string.telos_files_transfer_added)
+                }
+                .onFailure { message = s(R.string.telos_files_transfer_queue_full) }
+            return
+        }
         val infoByPath = (searchResults ?: entries).associateBy { it.path }
-        runTask(if (clip.cut) s(R.string.au_files_moving) else s(R.string.au_files_copying), null, estimate) { cancel, progress ->
+        runTask(if (clip.cut) s(R.string.au_files_moving) else s(R.string.au_files_copying), null) { cancel, progress ->
             var failed = 0
             for (src in clip.paths) {
-                if (cancel.cancelled) break
+                if (cancel.cancelled) throw java.io.IOException("Cancelled")
                 if (dir == src || dir.startsWith(src.trimEnd('/') + "/")) { failed++; continue } // not into itself
                 if (bothLocal && File(dir).canonicalFile.toPath().startsWith(File(src).canonicalFile.toPath())) { failed++; continue }
                 if (clip.cut && parentOf(src)?.trimEnd('/') == dir.trimEnd('/')) continue // moved into its own folder: nothing to do
                 val name = dstFs.freeName(dir, nameOf(src))
                 val ok = when {
-                    bothLocal -> if (clip.cut && File(src).renameTo(File(dir, name))) true else runCatching {
-                        FsOps.copyTree(File(src), File(dir, name), cancel, progress)
-                        if (clip.cut) de.mm20.launcher2.helper.FileTreeOps.delete(File(src))
-                        true
-                    }.getOrDefault(false)
                     // the same machine can copy or move by itself
                     srcFs === dstFs || (srcFs.isRoot && dstFs.isRoot) || (srcFs.isRemote && dstFs.isRemote && RemotePath.idOf(src) == RemotePath.idOf(dir)) -> {
                         val native = if (clip.cut) dstFs.move(src, dir, name) else dstFs.copy(src, dir, name)
@@ -623,7 +634,9 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val dir = isDir ?: runCatching { src.list(srcPath); true }.getOrDefault(false)
         FsOps.copyAcross(src, srcPath, dir, dst, dstPath, cancel, progress)
         // the copy is there; a move that could not remove the original is reported, not shown as done
-        return !move || src.delete(srcPath)
+        // Remote backends cannot prove a whole live directory is still the copied snapshot.
+        // Preserve originals instead of recursively deleting files added during the copy.
+        return !move // Unverified remote originals are retained; native server moves are attempted above.
     }
 
     /** Unlocks a Cryptomator vault (the key derivation is slow on purpose, so it runs off the main thread) and opens it. */
