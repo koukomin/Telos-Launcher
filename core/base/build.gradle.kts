@@ -61,6 +61,7 @@ dependencies {
     runtimeOnly(libs.androidx.compose.runtime)
 
     implementation(libs.stringsimilarity)
+    implementation(libs.zip4j)
 
     implementation(project(":core:ktx"))
     implementation(project(":core:i18n"))

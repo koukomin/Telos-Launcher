@@ -33,6 +33,7 @@ fun FilesTransfersDialog(queue: FilesTransferQueue, onDismiss: () -> Unit) {
                                 FilesTransferQueue.Status.FAILED -> R.string.telos_files_transfer_failed
                                 FilesTransferQueue.Status.CANCELLED -> R.string.au_files_cancelled
                                 FilesTransferQueue.Status.ORIGINAL_RETAINED -> R.string.telos_files_transfer_retained
+                                FilesTransferQueue.Status.LIMIT_EXCEEDED -> R.string.telos_files_transfer_limit
                             }), style = MaterialTheme.typography.bodySmall)
                             if (item.status == FilesTransferQueue.Status.RUNNING) {
                                 if (item.total > 0) LinearProgressIndicator(progress = { (item.completed.toFloat() / item.total).coerceIn(0f, 1f) }, modifier = Modifier.fillMaxWidth())

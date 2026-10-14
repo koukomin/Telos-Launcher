@@ -20,6 +20,7 @@ data class TransferPlan(val id: String, val destinationRoot: String, val move: B
 /** Resumable, bounded local transfers. A move removes only byte-verified files from its original manifest. */
 object ResumableFileTransfer {
     class Paused : IOException("Transfer paused")
+    class LimitExceeded : IOException("Transfer exceeds safe planning limits")
     class SourceChanged : IOException("Source changed; original retained")
     class OriginalRetained : IOException("Some originals were retained")
     private val noFollow = arrayOf(NOFOLLOW_LINKS)
@@ -41,11 +42,11 @@ object ResumableFileTransfer {
         var metadata = 0L
         fun add(source: File, target: File, depth: Int) {
             checkpoint(); checkPlain(source)
-            if (depth > 64 || rows.size >= 50_000) throw IOException("Transfer is too large")
+            if (depth > 64 || rows.size >= 10_000) throw LimitExceeded()
             val attrs = attributes(source)
             if (!attrs.isDirectory && !attrs.isRegularFile) throw IOException("Unsupported source file")
             metadata += 192L + (source.path.length + target.path.length) * 2L
-            if (metadata > 12L * 1024 * 1024) throw IOException("Transfer metadata is too large")
+            if (metadata > 4L * 1024 * 1024) throw LimitExceeded()
             rows += TransferEntry(source.absolutePath, target.absolutePath, attrs.isDirectory, attrs.size(), attrs.lastModifiedTime().toMillis(), attrs.fileKey()?.toString())
             if (attrs.isDirectory) Files.newDirectoryStream(source.toPath()).use { children ->
                 for (child in children) add(child.toFile(), File(target, child.fileName.toString()), depth + 1)
@@ -89,7 +90,7 @@ object ResumableFileTransfer {
         var completed = 0L
         val total = plan.entries.filterNot { it.directory }.fold(0L) { sum, item -> Math.addExact(sum, item.size) }
         // Check a loaded journal before it can write any path.
-        require(plan.entries.size <= 50_000)
+        require(plan.entries.size <= 10_000)
         for (entry in plan.entries) {
             val target = File(entry.destination).absoluteFile
             require(target.toPath().normalize().startsWith(root.toPath()) && target != root && entry.size >= 0)

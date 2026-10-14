@@ -9,6 +9,14 @@ Solid Explorer and MiXplorer (no code was copied).
 <Badge type="warning" text="Cryptomator (read only, experimental)" /> <Badge type="warning" text="root explorer (optional, untested)" />
 :::
 
+## Workspace and transfers
+
+Files remembers up to 16 folder tabs and its two-pane workspace. The settings menu exports/imports display options, bookmarks, toolbar shortcuts and workspace as validated JSON, without account credentials. Import is disabled while the local transfer queue has unfinished work.
+
+Local copy/move has a persistent queue, progress, pause/resume and up to 50 history entries. After an app restart, interrupted work is paused until you explicitly resume it. Cancelling retains completed copies and originals. Move removes only verified original files; newly added source files are retained. Network/archive/vault transfers do not yet have persistent resume; cross-provider moves conservatively retain their originals.
+
+Collections provide read-only recent files, bookmarks and file-type categories. Toolbar settings choose and order up to two optional shortcuts. Local folders can be shared read-only over HTTP during a visible foreground dialog, on a private LAN address with a random access link. Sharing stops when you close the dialog or background the app; it is not encrypted and requires filesystem support for secure directory-relative access.
+
 ## Pages in this section
 
 | Page | Contents |
@@ -17,6 +25,7 @@ Solid Explorer and MiXplorer (no code was copied).
 | [Browsing and file operations](./browsing) | Home page, drawer, breadcrumbs, views, sorting, search, selection, copy and paste, properties, opening files |
 | [Root explorer](./root) <Badge type="warning" text="root" /> | Superuser mode, warnings, permissions, remounting `/system` |
 | [Network and cloud storages](./network-cloud) | WebDAV, Nextcloud, ownCloud, SFTP, SMB, FTP, Dropbox, Google Drive, OneDrive, with per-provider client ID setup |
+| [Password file encryption](./password-encryption) | Chunked authenticated AES-GCM, private staging and explicit output limitations |
 | [Archives and Cryptomator vaults](./archives-vaults) | Browsing and unpacking archives, zip, read-only vaults |
 
 For how the code is organised see the developer page [Telos Files internals](../../../developer-guide/project-structure/telos-files).

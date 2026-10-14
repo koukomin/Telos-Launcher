@@ -357,14 +357,17 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         fun matches(entry: FsEntry, hidden: Boolean = entry.hidden): Boolean =
             (text.isBlank() || TelosSearch.matches(text, entry.name)) && (kind == null || entry.kind == kind) &&
                 (showHidden || !hidden) && filter.matches(de.mm20.launcher2.helper.IndexedFile(entry.path, entry.name, entry.isDir, entry.size, entry.modified, hidden, entry.isLink))
-        if (RemotePath.isRemote(dir) || ArchivePath.isArchive(dir) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(dir)) {
+        if ((RemotePath.isRemote(dir) && !recursiveSearch) || ArchivePath.isArchive(dir) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(dir)) {
             searchResults = entries.filter { matches(it) }; return
         }
         searchJob = viewModelScope.launch {
             try {
                 val result = withContext(Dispatchers.IO) {
                     val job = coroutineContext
-                    if (rootMode) {
+                    if (RemotePath.isRemote(dir)) {
+                        val scan = FilesRemoteSearch.scan(fsFor(dir), dir, showHidden, { matches(it) })
+                        scan.entries to scan.partial
+                    } else if (rootMode) {
                         val files = RootShell.run("find ${RootShell.q(dir)} -mindepth 1 2>/dev/null | head -20000").out.lines()
                             .filter { it.isNotBlank() && (text.isBlank() || TelosSearch.matches(text, nameOf(it))) }.take(300)
                             .map { FsEntry(it, nameOf(it), File(it).isDirectory, -1, 0) }.filter { matches(it) }
@@ -593,7 +596,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val dir = destination ?: return
         val dstFs = fsFor(dir)
         val first = clip.paths.first()
-        val srcFs = if (clip.rootMode && !RemotePath.isRemote(first) && !ArchivePath.isArchive(first) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(first)) root else fsFor(first)
+        val srcFs = if (RemotePath.isRemote(first) || ArchivePath.isArchive(first) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(first)) fsFor(first) else if (clip.rootMode) root else local
         val bothLocal = dstFs is LocalFs && srcFs is LocalFs
         if (bothLocal) {
             runCatching { transferQueue.enqueue(clip.paths, dir, clip.cut) }
@@ -624,7 +627,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                 }
                 if (!ok) failed++
             }
-            if (clip.cut && clearCopiedClipboard) clipboard = null
+            if (clip.cut && clearCopiedClipboard && failed == 0) clipboard = null
             if (failed == 0) s(R.string.au_files_done) else if (clip.cut) s(R.string.au_files_move_failed, failed) else s(R.string.au_files_copy_failed, failed)
         }
     }
@@ -738,25 +741,30 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
      * Packs [items] into a new archive next to them. [password] (zip only) encrypts the files with AES-256;
      * it is used for this one task and not kept.
      */
-    fun compress(items: List<FsEntry>, zipName: String, format: CompressFormat = CompressFormat.Zip, password: CharArray? = null) {
+    fun compress(items: List<FsEntry>, zipName: String, format: CompressFormat = CompressFormat.Zip, password: CharArray? = null, splitBytes: Long? = null) {
         val dir = path ?: return
         val files = items.map { File(it.path) }
-        val total = files.sumOf { FsOps.sizeOf(it) }
         val secret = password?.takeIf { format.supportsPassword && it.isNotEmpty() }
-        runTask(s(R.string.au_files_compressing), total) { cancel, progress ->
+        runTask(s(R.string.au_files_compressing), null, { cancel -> files.fold(0L) { total, file -> Math.addExact(total, FsOps.sizeOf(file, cancel)) } }) { cancel, progress ->
             val name = ArchiveFormats.freeName(ArchiveFormats.withExtension(zipName, format.extension)) { File(dir, it).exists() }
             val target = File(dir, name)
             try {
-                when {
-                    format == CompressFormat.Zip && secret != null -> ArchiveWriter.zipEncrypted(files, target, secret, cancel, progress)
-                    format == CompressFormat.Zip -> FsOps.zip(files, target, cancel, progress)
-                    format == CompressFormat.SevenZ -> ArchiveWriter.sevenZ(files, target, cancel, progress)
-                    else -> ArchiveWriter.tarGz(files, target, cancel, progress)
+                if (format == CompressFormat.Zip && splitBytes != null) {
+                    // The split writer owns all its staging files and collision cleanup.
+                    de.mm20.launcher2.helper.SplitZipArchive.create(files, target, splitBytes, secret,
+                        { if (cancel.cancelled) throw java.io.IOException("Cancelled") }, progress)
+                } else {
+                    try {
+                        when {
+                            format == CompressFormat.Zip && secret != null -> ArchiveWriter.zipEncrypted(files, target, secret, cancel, progress)
+                            format == CompressFormat.Zip -> FsOps.zip(files, target, cancel, progress)
+                            format == CompressFormat.SevenZ -> ArchiveWriter.sevenZ(files, target, cancel, progress)
+                            else -> ArchiveWriter.tarGz(files, target, cancel, progress)
+                        }
+                    } catch (e: Exception) { target.delete(); throw e }
                 }
-            } catch (e: Exception) {
-                target.delete(); throw e
-            }
-            s(R.string.au_files_created, target.name)
+                s(R.string.au_files_created, target.name)
+            } finally { secret?.fill('\u0000') }
         }
     }
 

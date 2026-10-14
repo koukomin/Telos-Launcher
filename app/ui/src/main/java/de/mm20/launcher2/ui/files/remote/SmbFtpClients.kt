@@ -158,7 +158,7 @@ class FtpRemoteClient(private val connection: RemoteConnection, private val host
     override fun list(path: String): List<RemoteEntry> = withClient { c ->
         val dir = abs(path)
         (c.listFiles(dir) ?: emptyArray()).filter { it.name != "." && it.name != ".." }.map {
-            RemoteEntry(it.name, ("/" + path.trim('/') + "/" + it.name).replace("//", "/"), it.isDirectory, it.size, it.timestamp?.timeInMillis ?: 0)
+            RemoteEntry(it.name, ("/" + path.trim('/') + "/" + it.name).replace("//", "/"), it.isDirectory, it.size, it.timestamp?.timeInMillis ?: 0, isLink = it.isSymbolicLink)
         }
     }
 

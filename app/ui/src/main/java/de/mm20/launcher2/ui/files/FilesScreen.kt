@@ -158,6 +158,9 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
     var dialog by remember { mutableStateOf<FilesDialog?>(null) }
     var showTrash by remember { mutableStateOf(false) }
     var showTransfers by remember { mutableStateOf(false) }
+    var encryptionEntry by remember { mutableStateOf<Pair<FsEntry, Boolean>?>(null) }
+    encryptionEntry?.let { (entry, decrypt) -> FilesEncryptionDialog(java.io.File(entry.path), decrypt,
+        { encryptionEntry = null }, { encryptionEntry = null; vm.clearSelection(); vm.reload(); vm.onFilesChanged() }) }
     var showCollections by remember { mutableStateOf(false) }
     var sharingPath by remember { mutableStateOf<String?>(null) }
     sharingPath?.let { FilesSharingDialog(it) { sharingPath = null } }
@@ -278,6 +281,8 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                             onCompress = { dialog = FilesDialog.Compress(vm.selectedEntries()) },
                             onProperties = { vm.selectedEntries().singleOrNull()?.let { dialog = FilesDialog.Properties(it) } },
                             onBookmark = { vm.selectedEntries().singleOrNull()?.let { vm.toggleBookmark(it.path); vm.clearSelection() } },
+                            onEncrypt = vm.selectedEntries().singleOrNull()?.takeIf { !vm.rootMode && !it.isDir && !it.isLink && !RemotePath.isRemote(it.path) && !ArchivePath.isArchive(it.path) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it.path) }?.let { entry -> { encryptionEntry = entry to false } },
+                            onDecrypt = vm.selectedEntries().singleOrNull()?.takeIf { !vm.rootMode && !it.isDir && !it.isLink && it.name.endsWith(".telos-aes", true) && !RemotePath.isRemote(it.path) && !ArchivePath.isArchive(it.path) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it.path) }?.let { entry -> { encryptionEntry = entry to true } },
                             onOpenAsArchive = vm.selectedEntries().singleOrNull()
                                 ?.takeIf { !it.isDir && de.mm20.launcher2.ui.media.docs.DocumentTypes.supports(it.name) && ArchivePath.canOpen(it.name) && !RemotePath.isRemote(it.path) && !ArchivePath.isArchive(it.path) }
                                 ?.let { archive -> { dialog = FilesDialog.Archive(archive); vm.clearSelection() } },
@@ -385,7 +390,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                     }
                     if (vm.path != null && !selecting) Breadcrumbs(vm) { vm.open(it) }
                     if (vm.loading) LinearProgressIndicator(Modifier.fillMaxWidth())
-                    if (vm.searchLimited) Text(stringResource(R.string.telos_files_search_limited), Modifier.padding(horizontal = 16.dp), style = MaterialTheme.typography.labelSmall)
+                    if (vm.searchLimited) Text(stringResource(if (vm.path?.let { RemotePath.isRemote(it) } == true) R.string.telos_files_remote_search_partial else R.string.telos_files_search_limited), Modifier.padding(horizontal = 16.dp), style = MaterialTheme.typography.labelSmall)
                 }
             },
             floatingActionButton = {
@@ -562,6 +567,10 @@ private fun CompressDialog(vm: FilesViewModel, entries: List<FsEntry>, onDismiss
     var password by remember { mutableStateOf("") }
     var repeat by remember { mutableStateOf("") }
     var visible by remember { mutableStateOf(false) }
+    var split by remember { mutableStateOf(false) }
+    var partMiB by remember { mutableStateOf("100") }
+    val splitBytes = if (format == CompressFormat.Zip) splitZipBytes(split, partMiB) else null
+    val splitValid = format != CompressFormat.Zip || !split || splitBytes != null
     val mismatch = format.supportsPassword && password.isNotEmpty() && password != repeat
     val hide = if (visible) androidx.compose.ui.text.input.VisualTransformation.None else androidx.compose.ui.text.input.PasswordVisualTransformation()
     AlertDialog(
@@ -583,6 +592,7 @@ private fun CompressDialog(vm: FilesViewModel, entries: List<FsEntry>, onDismiss
                         }
                     }
                 }
+                if (format == CompressFormat.Zip) SplitZipOptions(split, { split = it }, partMiB, { partMiB = it })
                 if (format.supportsPassword) {
                     OutlinedTextField(
                         password, { password = it }, label = { Text(stringResource(R.string.au21_arch_pw_optional)) }, singleLine = true,
@@ -605,9 +615,9 @@ private fun CompressDialog(vm: FilesViewModel, entries: List<FsEntry>, onDismiss
             }
         },
         confirmButton = {
-            TextButton(enabled = name.isNotBlank() && '/' !in name && !mismatch, onClick = {
+            TextButton(enabled = name.isNotBlank() && '/' !in name && !mismatch && splitValid, onClick = {
                 val secret = if (format.supportsPassword && password.isNotEmpty()) password.toCharArray() else null
-                vm.compress(entries, name.trim(), format, secret)
+                vm.compress(entries, name.trim(), format, secret, splitBytes)
                 vm.clearSelection()
                 onDismiss()
             }) { Text(stringResource(R.string.hf_files_compress_action)) }
@@ -763,6 +773,7 @@ private fun SelectionBar(
     count: Int, single: FsEntry?, onClose: () -> Unit, onSelectAll: () -> Unit, onCopy: () -> Unit, onCut: () -> Unit,
     onDelete: () -> Unit, onShare: () -> Unit, onRename: () -> Unit, onCompress: () -> Unit, onProperties: () -> Unit, onBookmark: () -> Unit,
     onOpenAsArchive: (() -> Unit)? = null,
+    onEncrypt: (() -> Unit)? = null, onDecrypt: (() -> Unit)? = null,
 ) {
     var more by remember { mutableStateOf(false) }
     TopAppBar(
@@ -779,6 +790,8 @@ private fun SelectionBar(
                     DropdownMenuItem(text = { Text(stringResource(R.string.hc_select_all)) }, onClick = { more = false; onSelectAll() })
                     DropdownMenuItem(text = { Text(stringResource(R.string.hc_share)) }, onClick = { more = false; onShare() })
                     DropdownMenuItem(text = { Text(stringResource(R.string.au21_arch_compress)) }, onClick = { more = false; onCompress() })
+                    if (onEncrypt != null) DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_encrypt)) }, onClick = { more = false; onEncrypt() })
+                    if (onDecrypt != null) DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_decrypt)) }, onClick = { more = false; onDecrypt() })
                     if (onOpenAsArchive != null) DropdownMenuItem(text = { Text(stringResource(R.string.au22_files_open_as_archive)) }, onClick = { more = false; onOpenAsArchive() })
                     DropdownMenuItem(text = { Text(stringResource(if (single != null) R.string.hc_rename else R.string.telos_files_batch_rename)) }, onClick = { more = false; onRename() })
                     if (single != null) {

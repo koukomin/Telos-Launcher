@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.files
 
+import de.mm20.launcher2.helper.ExclusiveFilePublication
 import net.lingala.zip4j.io.outputstream.ZipOutputStream
 import net.lingala.zip4j.model.ZipParameters
 import net.lingala.zip4j.model.enums.AesKeyStrength
@@ -11,6 +12,8 @@ import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream
 import java.io.File
 import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.LinkOption.NOFOLLOW_LINKS
 
 /** The archives Telos can create. RAR can only be read: its format may not be written by free software. */
 enum class CompressFormat(val extension: String, val supportsPassword: Boolean) {
@@ -22,8 +25,45 @@ enum class CompressFormat(val extension: String, val supportsPassword: Boolean) 
 /** Creates zip (optionally AES-256 encrypted), 7z and tar.gz archives from local files, with progress and cancel. */
 object ArchiveWriter {
 
+    fun tarGz(sources: List<File>, target: File, cancel: CancelFlag, progress: (Long) -> Unit) =
+        staged(sources, target, cancel) { output -> tarGzContent(sources, output, cancel, progress) }
+
+
+    fun sevenZ(sources: List<File>, target: File, cancel: CancelFlag, progress: (Long) -> Unit) =
+        staged(sources, target, cancel) { output -> sevenZContent(sources, output, cancel, progress) }
+
+
+    fun zipEncrypted(sources: List<File>, target: File, password: CharArray, cancel: CancelFlag, progress: (Long) -> Unit) =
+        staged(sources, target, cancel) { output -> zipEncryptedContent(sources, output, password, cancel, progress) }
+
+
+    /** All writers own their staging files; failures never delete a pre-existing destination. */
+    private fun staged(sources: List<File>, target: File, cancel: CancelFlag, write: (File) -> Unit) {
+        require(sources.isNotEmpty())
+        require(sources.map { it.name }.distinct().size == sources.size) { "Duplicate archive names" }
+        val parent = target.parentFile?.canonicalFile ?: throw IOException("Missing output directory")
+        sources.forEach { source ->
+            require(source.name.isNotEmpty() && !Files.isSymbolicLink(source.toPath())) { "Invalid archive source" }
+            require(!parent.toPath().startsWith(source.toPath().toRealPath())) { "Output is inside a source directory" }
+        }
+        val destination = parent.toPath().resolve(target.name)
+        if (Files.exists(destination, NOFOLLOW_LINKS)) throw IOException("Archive already exists")
+        val staging = Files.createTempDirectory(parent.toPath(), ".telos-archive-")
+        val output = staging.resolve(target.name)
+        try {
+            write(output.toFile())
+            if (cancel.cancelled) throw IOException("Cancelled")
+            ExclusiveFilePublication.copy(output.toFile(), destination.toFile()) {
+                if (cancel.cancelled) throw IOException("Cancelled")
+            }
+        } finally {
+            runCatching { Files.deleteIfExists(output) }
+            runCatching { Files.deleteIfExists(staging) }
+        }
+    }
+
     private fun copy(file: File, cancel: CancelFlag, progress: (Long) -> Unit, write: (ByteArray, Int) -> Unit) {
-        file.inputStream().use { input ->
+        Files.newInputStream(file.toPath(), NOFOLLOW_LINKS).use { input ->
             val buffer = ByteArray(64 * 1024)
             while (true) {
                 if (cancel.cancelled) throw IOException("Cancelled")
@@ -36,10 +76,17 @@ object ArchiveWriter {
     }
 
     /** A zip file whose files are encrypted with AES-256 (never the weak ZipCrypto) */
-    fun zipEncrypted(sources: List<File>, target: File, password: CharArray, cancel: CancelFlag, progress: (Long) -> Unit) {
+    private fun zipEncryptedContent(sources: List<File>, target: File, password: CharArray, cancel: CancelFlag, progress: (Long) -> Unit) {
         require(password.isNotEmpty())
-        ZipOutputStream(target.outputStream().buffered(), password.copyOf()).use { zip ->
-            fun add(file: File, entryName: String) {
+        val secret = password.copyOf()
+        try {
+        ZipOutputStream(target.outputStream().buffered(), secret).use { zip ->
+            var entries = 0
+            fun add(file: File, entryName: String, depth: Int = 0) {
+                if ('\\' in file.name || file.name == "." || file.name == "..") throw IOException("Invalid archive entry name")
+                if (++entries > 50_000 || depth > 64) throw IOException("Archive contains too many entries")
+                if (Files.isSymbolicLink(file.toPath())) throw IOException("Symbolic links cannot be archived")
+                if (!Files.isDirectory(file.toPath(), NOFOLLOW_LINKS) && !Files.isRegularFile(file.toPath(), NOFOLLOW_LINKS)) throw IOException("Not a regular file")
                 if (cancel.cancelled) throw IOException("Cancelled")
                 if (file.isDirectory) {
                     // a folder has no content to encrypt
@@ -49,7 +96,9 @@ object ArchiveWriter {
                     dir.setCompressionMethod(CompressionMethod.STORE)
                     zip.putNextEntry(dir)
                     zip.closeEntry()
-                    file.listFiles()?.forEach { add(it, "$entryName/${it.name}") }
+                    Files.newDirectoryStream(file.toPath()).use { children ->
+                        for (child in children) add(child.toFile(), "$entryName/${child.fileName}", depth + 1)
+                    }
                 } else {
                     val params = ZipParameters()
                     params.setFileNameInZip(entryName)
@@ -65,17 +114,25 @@ object ArchiveWriter {
             }
             sources.forEach { add(it, it.name) }
         }
+        } finally { secret.fill('\u0000') }
     }
 
     /** A 7z archive (LZMA2). Not encrypted. */
-    fun sevenZ(sources: List<File>, target: File, cancel: CancelFlag, progress: (Long) -> Unit) {
+    private fun sevenZContent(sources: List<File>, target: File, cancel: CancelFlag, progress: (Long) -> Unit) {
         SevenZOutputFile(target).use { out ->
-            fun add(file: File, entryName: String) {
+            var entries = 0
+            fun add(file: File, entryName: String, depth: Int = 0) {
+                if ('\\' in file.name || file.name == "." || file.name == "..") throw IOException("Invalid archive entry name")
+                if (++entries > 50_000 || depth > 64) throw IOException("Archive contains too many entries")
+                if (Files.isSymbolicLink(file.toPath())) throw IOException("Symbolic links cannot be archived")
+                if (!Files.isDirectory(file.toPath(), NOFOLLOW_LINKS) && !Files.isRegularFile(file.toPath(), NOFOLLOW_LINKS)) throw IOException("Not a regular file")
                 if (cancel.cancelled) throw IOException("Cancelled")
                 out.putArchiveEntry(out.createArchiveEntry(file, entryName))
                 if (file.isDirectory) {
                     out.closeArchiveEntry()
-                    file.listFiles()?.forEach { add(it, "$entryName/${it.name}") }
+                    Files.newDirectoryStream(file.toPath()).use { children ->
+                        for (child in children) add(child.toFile(), "$entryName/${child.fileName}", depth + 1)
+                    }
                 } else {
                     copy(file, cancel, progress) { buffer, n -> out.write(buffer, 0, n) }
                     out.closeArchiveEntry()
@@ -87,16 +144,23 @@ object ArchiveWriter {
     }
 
     /** A tar archive compressed with gzip. Not encrypted. */
-    fun tarGz(sources: List<File>, target: File, cancel: CancelFlag, progress: (Long) -> Unit) {
+    private fun tarGzContent(sources: List<File>, target: File, cancel: CancelFlag, progress: (Long) -> Unit) {
         TarArchiveOutputStream(GzipCompressorOutputStream(target.outputStream().buffered())).use { tar ->
             tar.setLongFileMode(TarArchiveOutputStream.LONGFILE_POSIX)
             tar.setBigNumberMode(TarArchiveOutputStream.BIGNUMBER_POSIX)
-            fun add(file: File, entryName: String) {
+            var entries = 0
+            fun add(file: File, entryName: String, depth: Int = 0) {
+                if ('\\' in file.name || file.name == "." || file.name == "..") throw IOException("Invalid archive entry name")
+                if (++entries > 50_000 || depth > 64) throw IOException("Archive contains too many entries")
+                if (Files.isSymbolicLink(file.toPath())) throw IOException("Symbolic links cannot be archived")
+                if (!Files.isDirectory(file.toPath(), NOFOLLOW_LINKS) && !Files.isRegularFile(file.toPath(), NOFOLLOW_LINKS)) throw IOException("Not a regular file")
                 if (cancel.cancelled) throw IOException("Cancelled")
                 tar.putArchiveEntry(TarArchiveEntry(file, entryName))
                 if (file.isDirectory) {
                     tar.closeArchiveEntry()
-                    file.listFiles()?.forEach { add(it, "$entryName/${it.name}") }
+                    Files.newDirectoryStream(file.toPath()).use { children ->
+                        for (child in children) add(child.toFile(), "$entryName/${child.fileName}", depth + 1)
+                    }
                 } else {
                     copy(file, cancel, progress) { buffer, n -> tar.write(buffer, 0, n) }
                     tar.closeArchiveEntry()

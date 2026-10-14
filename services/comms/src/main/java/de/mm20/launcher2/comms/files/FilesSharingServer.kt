@@ -52,7 +52,7 @@ class FilesSharingServer(folder: File, address: InetAddress) : Closeable {
             if (request.endsWith("\r\n\r\n")) break
         }
         if (!request.endsWith("\r\n\r\n")) return
-        val fields = request.substringBefore("\r\n").split(' ')
+        val fields = request.toString().substringBefore("\r\n").split(' ')
         if (fields.size != 3 || fields[0] !in listOf("GET", "HEAD")) { respond(socket, 405, "Method not allowed".toByteArray()); return }
         val prefix = "/$token/"
         val path = fields[1].substringBefore('?')

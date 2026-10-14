@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap
 
 /** Application-owned queue: closing a Files tab does not cancel a local transfer. */
 class FilesTransferQueue private constructor(context: Context) {
-    enum class Status { QUEUED, RUNNING, PAUSED, COMPLETE, FAILED, CANCELLED, ORIGINAL_RETAINED }
+    enum class Status { QUEUED, RUNNING, PAUSED, COMPLETE, FAILED, CANCELLED, ORIGINAL_RETAINED, LIMIT_EXCEEDED }
     data class Item(val id: String, val sources: List<String>, val destination: String, val move: Boolean,
         val status: Status, val completed: Long = 0, val total: Long = 0, val created: Long = System.currentTimeMillis())
     private val folder = File(context.noBackupFilesDir, "files-transfer-queue").apply { mkdirs() }
@@ -34,9 +34,9 @@ class FilesTransferQueue private constructor(context: Context) {
     private var worker = false
     private var activeId: String? = null
     init {
-        val existingFiles = java.nio.file.Files.newDirectoryStream(folder.toPath(), "*.json").use { paths ->
-            paths.take(100).map { it.toFile() }.toList()
-        }
+        val existingFiles = runCatching {
+            java.nio.file.Files.newDirectoryStream(folder.toPath(), "*.json").use { paths -> paths.take(100).map { it.toFile() }.toList() }
+        }.getOrDefault(emptyList())
         scope.launch {
             synchronized(guard) {
                 val recoveredItems = existingFiles.mapNotNull { file ->
@@ -80,13 +80,13 @@ class FilesTransferQueue private constructor(context: Context) {
         start()
     }
     fun clearHistory() = synchronized(guard) {
-        val terminal = setOf(Status.COMPLETE, Status.CANCELLED, Status.ORIGINAL_RETAINED)
+        val terminal = setOf(Status.COMPLETE, Status.CANCELLED, Status.ORIGINAL_RETAINED, Status.LIMIT_EXCEEDED)
         val removed = _items.value.filter { it.status in terminal && it.id != activeId }
         removed.forEach { file(it.id).delete(); logFile(it.id).delete() }
         _items.value = _items.value.filterNot { entry -> removed.any { it.id == entry.id } }
     }
     private fun trimHistory() {
-        val terminal = setOf(Status.COMPLETE, Status.CANCELLED, Status.ORIGINAL_RETAINED)
+        val terminal = setOf(Status.COMPLETE, Status.CANCELLED, Status.ORIGINAL_RETAINED, Status.LIMIT_EXCEEDED)
         val removed = _items.value.filter { it.status in terminal && it.id != activeId }.drop(50)
         removed.forEach { file(it.id).delete(); logFile(it.id).delete() }
         _items.value = _items.value.filterNot { item -> removed.any { it.id == item.id } }
@@ -95,7 +95,7 @@ class FilesTransferQueue private constructor(context: Context) {
     private fun file(id: String): File { require(id.matches(Regex("[0-9a-f-]{36}"))); return File(folder, "$id.json") }
     private fun change(id: String, status: Status) = synchronized(guard) {
         val item = _items.value.firstOrNull { it.id == id } ?: return@synchronized
-        if (item.status in setOf(Status.COMPLETE, Status.CANCELLED, Status.ORIGINAL_RETAINED)) return@synchronized
+        if (item.status in setOf(Status.COMPLETE, Status.CANCELLED, Status.ORIGINAL_RETAINED, Status.LIMIT_EXCEEDED)) return@synchronized
         val next = item.copy(status = status)
         val json = read(file(id)); json.put("status", status.name); write(file(id), json)
         _items.value = _items.value.map { if (it.id == id) next else it }
@@ -163,6 +163,8 @@ class FilesTransferQueue private constructor(context: Context) {
             if (item.id in requestedCancel) {
                 plan?.let { ResumableFileTransfer.discardPartials(it) }
             } else change(item.id, Status.PAUSED)
+        } catch (_: ResumableFileTransfer.LimitExceeded) {
+            change(item.id, Status.LIMIT_EXCEEDED)
         } catch (_: ResumableFileTransfer.OriginalRetained) {
             change(item.id, Status.ORIGINAL_RETAINED)
         } catch (_: Exception) {
@@ -172,7 +174,7 @@ class FilesTransferQueue private constructor(context: Context) {
     private fun restoreCompleted(id: String, plan: TransferPlan) {
         val journal = logFile(id)
         if (!journal.exists()) return
-        require(journal.length() <= 12L * 1024 * 1024)
+        require(journal.length() <= 8L * 1024 * 1024)
         journal.bufferedReader(Charsets.US_ASCII).useLines { lines ->
             var count = 0
             lines.forEach { line ->
@@ -211,19 +213,19 @@ class FilesTransferQueue private constructor(context: Context) {
     }
     private fun decodePlan(json: JSONObject): TransferPlan? {
         if (!json.has("entries")) return null
-        val entries = json.getJSONArray("entries"); require(entries.length() <= 50_000)
+        val entries = json.getJSONArray("entries"); require(entries.length() <= 10_000)
         return TransferPlan(json.getString("planId"), json.getString("destination"), json.getBoolean("move"),
             (0 until entries.length()).map { index -> val e = entries.getJSONObject(index)
                 TransferEntry(e.getString("source"), e.getString("destination"), e.getBoolean("directory"), e.getLong("size"), e.getLong("modified"),
                     if (e.isNull("identity")) null else e.getString("identity"), e.getBoolean("committed"), if (e.isNull("digest")) null else e.getString("digest")) })
     }
     private fun read(file: File): JSONObject {
-        require(file.length() <= 16L * 1024 * 1024)
+        require(file.length() <= 8L * 1024 * 1024)
         return JSONObject(file.readText())
     }
     private fun write(file: File, json: JSONObject) {
         val bytes = json.toString().toByteArray(Charsets.UTF_8)
-        require(bytes.size <= 16 * 1024 * 1024)
+        require(bytes.size <= 8 * 1024 * 1024)
         val temp = File(file.parentFile, file.name + ".tmp")
         java.io.FileOutputStream(temp).use { it.write(bytes); it.fd.sync() }
         java.nio.file.Files.move(temp.toPath(), file.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING, java.nio.file.StandardCopyOption.ATOMIC_MOVE)

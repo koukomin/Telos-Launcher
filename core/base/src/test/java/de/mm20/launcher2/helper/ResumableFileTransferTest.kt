@@ -100,4 +100,14 @@ class ResumableFileTransferTest {
         assertFalse(dst.resolve("source").listFiles().orEmpty().any { it.name.endsWith(".owner") })
     }
 
+    @Test fun selectedTopLevelSymbolicLinkIsRejectedBeforeCanonicalization() = fixture { src, dst ->
+        val outside = src.parentFile.resolve("outside").apply { writeText("keep") }
+        val link = src.resolve("link")
+        Files.createSymbolicLink(link.toPath(), outside.toPath())
+        try { ResumableFileTransfer.plan(listOf(link), dst, true); fail() }
+        catch (_: java.io.IOException) { }
+        assertEquals("keep", outside.readText()); assertTrue(Files.isSymbolicLink(link.toPath()))
+        assertTrue(dst.listFiles().orEmpty().isEmpty())
+    }
+
 }

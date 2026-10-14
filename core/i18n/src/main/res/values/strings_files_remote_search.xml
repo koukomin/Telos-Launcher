@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_remote_search_recursive">Search remote subfolders</string>
+    <string name="telos_files_remote_search_scope">Remote search includes subfolders, up to 5,000 entries, 16 levels and one minute. Hidden folders are skipped unless enabled; known symbolic links are skipped. Some servers do not identify symbolic links. Cancel by closing search or changing the query.</string>
+    <string name="telos_files_remote_search_partial">Partial remote results: a time, depth or result limit was reached, or a folder could not be read.</string>
+</resources>

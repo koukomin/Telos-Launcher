@@ -705,6 +705,10 @@ Text (SMS) and picture (MMS) messages as conversations with a reply field. It is
 - Customize up to two optional toolbar shortcuts. Read-only collections show recent files, bookmarks and local file types with bounded scans and partial-results reporting.
 - Batch rename with name/extension tokens, padded numbering, literal/regex replacement and previews. Targets are checked before renaming; failures attempt to restore original names.
 - Local storage analyzer with largest-file lists and byte-verified duplicate groups. Scans are cancellable, bounded and skip symlinks; no files are deleted automatically.
+- Read-only local HTTP sharing on a private LAN, with a random access link; stops when the dialog closes or the app leaves the foreground. Secure filesystem support is required.
+- Password file encryption with chunked AES-256-GCM and authenticated private staging; originals are retained and existing output files are preserved.
+- Split ZIP creation and reading, including optional AES-encrypted ZIPs.
+- Remote subfolder search has visit/depth/time/result limits and cancellation; individual folder-list allocation still depends on the provider.
 - [Detailed MiXplorer/Solid Explorer comparison and remaining work](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/feature-comparison/).
 
 A file manager for your phone, network storages and cloud storages. The layout follows [Solid Explorer](https://play.google.com/store/apps/details?id=pl.solidexplorer2) and [MiXplorer](https://forum.xda-developers.com/t/app-2-2-mixplorer-v6-x-released-fully-featured-file-manager.1523691/), taken as inspiration only, no code was copied. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/). Needs All files access on Android 11 and later.

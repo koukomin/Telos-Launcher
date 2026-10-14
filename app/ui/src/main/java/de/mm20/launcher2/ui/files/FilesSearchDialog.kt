@@ -47,8 +47,8 @@ internal fun FilesSearchDialog(vm: FilesViewModel, onDismiss: () -> Unit) {
             OutlinedTextField(maximum, { maximum = it.take(20) }, label = { Text(stringResource(R.string.telos_files_search_maximum)) }, singleLine = true)
             OutlinedTextField(after, { after = it.take(10) }, label = { Text(stringResource(R.string.telos_files_search_after)) }, singleLine = true)
             OutlinedTextField(before, { before = it.take(10) }, label = { Text(stringResource(R.string.telos_files_search_before)) }, singleLine = true)
-            Row(verticalAlignment = Alignment.CenterVertically) { Checkbox(recursive, { recursive = it }); Text(stringResource(R.string.telos_files_search_recursive)) }
-            Text(stringResource(R.string.telos_files_search_scope), style = MaterialTheme.typography.bodySmall)
+            Row(verticalAlignment = Alignment.CenterVertically) { Checkbox(recursive, { recursive = it }); Text(stringResource(if (vm.path?.let { de.mm20.launcher2.ui.files.remote.RemotePath.isRemote(it) } == true) R.string.telos_files_remote_search_recursive else R.string.telos_files_search_recursive)) }
+            Text(stringResource(if (vm.path?.let { de.mm20.launcher2.ui.files.remote.RemotePath.isRemote(it) } == true) R.string.telos_files_remote_search_scope else R.string.telos_files_search_scope), style = MaterialTheme.typography.bodySmall)
             if (!valid) Text(stringResource(R.string.telos_files_search_invalid), color = MaterialTheme.colorScheme.error)
             TextButton(onClick = { extensions = ""; minimum = ""; maximum = ""; after = ""; before = ""; kind = null; recursive = true }) { Text(stringResource(R.string.telos_files_search_reset)) }
         }

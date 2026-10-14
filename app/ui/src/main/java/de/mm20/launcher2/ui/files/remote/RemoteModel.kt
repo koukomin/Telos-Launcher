@@ -96,7 +96,7 @@ class ConnectionStore(context: Context) {
     )
 }
 
-class RemoteEntry(val name: String, val path: String, val isDir: Boolean, val size: Long, val modified: Long, val permissions: String = "")
+class RemoteEntry(val name: String, val path: String, val isDir: Boolean, val size: Long, val modified: Long, val permissions: String = "", val isLink: Boolean = false)
 
 /** What a protocol (SFTP, SMB, a cloud API, ...) has to offer. Paths look like "/folder/file.txt". */
 interface RemoteClient : Closeable {
@@ -144,6 +144,7 @@ class RemoteFs(private val id: String, private val context: Context) : Fs {
             FsEntry(
                 path = RemotePath.build(id, it.path), name = it.name, isDir = it.isDir,
                 size = if (it.isDir) -1 else it.size, modified = it.modified, permissions = it.permissions,
+                isLink = it.isLink,
             )
         }
     }

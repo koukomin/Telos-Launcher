@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="files_archive_split">Split ZIP into parts</string>
+    <string name="files_archive_split_size">Part size (MiB)</string>
+    <string name="files_archive_split_note">Keep every .z01, .z02… part beside the final .zip file. Open the .zip file to browse or extract the archive.</string>
+    <string name="files_archive_split_invalid">Enter a whole number from 1 to 4194304 MiB.</string>
+</resources>

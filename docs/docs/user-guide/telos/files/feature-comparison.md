@@ -29,7 +29,7 @@
 | Παράλληλες εργασίες | Ναι | — | Ανεξάρτητες εργασίες ανά καρτέλα· μία ενεργή ανά καρτέλα |
 | Ουρά εργασιών, pause/resume, ιστορικό | Ναι για tasks | — | Προστέθηκε μόνιμη ουρά τοπικών μεταφορών με pause/resume, ιστορικό και ρητή συνέχεια μετά από restart· όχι ακόμη remote/archive/vault resume |
 | Μαζική μετονομασία | Ναι | Ναι | Προστέθηκε: tokens, αρίθμηση, literal/regex αντικατάσταση, preview, έλεγχος συγκρούσεων |
-| Recursive search | Προχωρημένη | Indexed | Υπάρχει τοπική/root· remote/archive/vault μόνο τρέχουσα λίστα |
+| Recursive search | Προχωρημένη | Indexed | Υπάρχει τοπική/root και προστέθηκε remote subfolder search με όρια 5.000 entries/16 επιπέδων/60 δευτερολέπτων/300 αποτελεσμάτων· archive/vault τρέχουσα λίστα |
 | Indexed search και φίλτρα μεγέθους/ημερομηνίας | Προχωρημένη | Ναι | Προστέθηκαν τύπος/επέκταση, μέγεθος και ημερομηνίες, με προσωρινό τοπικό index 1 λεπτού· όχι μόνιμος database index |
 | Αυτόματες συλλογές αρχείων | Ναι | Ναι | Προστέθηκαν read-only συλλογές πρόσφατων/σελιδοδεικτών/τύπων, με περιορισμένο τοπικό index και ένδειξη μερικών αποτελεσμάτων |
 | Storage analyzer | — | Ναι | Προστέθηκε για τοπικούς φακέλους: κατανομή ανά τύπο, μεγαλύτερα αρχεία, ακύρωση και όριο 50.000 entries |
@@ -51,9 +51,9 @@
 | MediaFire/SugarSync | Ναι | Ναι | Δεν υπάρχουν direct clients |
 | pCloud/HiDrive/Mail.ru/4Sync/4Shared/Meo | Ναι | — | Δεν υπάρχουν dedicated clients |
 | Cloud app ήδη συνδεδεμένο στο κινητό | — | — | Υπάρχει επιλογή system document provider, εφόσον το app εκθέτει φακέλους |
-| FTP/HTTP/WebDAV/DLNA server | Ναι | FTP και web sharing | Δεν υπάρχει server στο Files |
+| FTP/HTTP/WebDAV/DLNA server | Ναι | FTP και web sharing | Προστέθηκε read-only HTTP share σε ιδιωτικό LAN όσο είναι ορατό το dialog· όχι FTP/WebDAV/DLNA server |
 | MiX Send-to/TCP/Bluetooth transfer | Ναι | — | Android Share υπάρχει· όχι MiX-compatible peer/server protocol |
-| Ανάδρομη αναζήτηση/ανάλυση remote storage | Προχωρημένη | Μερικά εργαλεία cloud | Δεν υπάρχει |
+| Ανάδρομη αναζήτηση/ανάλυση remote storage | Προχωρημένη | Μερικά εργαλεία cloud | Προστέθηκε περιορισμένη recursive remote αναζήτηση· όχι πλήρης remote ανάλυση |
 
 ## Archives, ασφάλεια και viewers
 
@@ -63,9 +63,9 @@
 | AES-256 ZIP | Ναι | Encryption αναφέρεται ξεχωριστά | Υπάρχει |
 | Encrypted ZIP/7z ανάγνωση | Ναι | — | Υπάρχει· password μόνο στη μνήμη |
 | RAR/RAR5 | Ανάγνωση | Ναι | Ανάγνωση στο default flavor· όχι encrypted ή split RAR |
-| Split ZIP/7z και τροποποίηση archive | Ναι | — | Δεν υποστηρίζονται· ArchiveFs read-only |
+| Split ZIP/7z και τροποποίηση archive | Ναι | — | Προστέθηκαν split ZIP δημιουργία/ανάγνωση· όχι split 7z ή τροποποίηση archive |
 | CAB/ISO/WIM/DMG/virtual disks και λοιπά 7-Zip formats | Πολλά formats | — | Αναγνωρίζονται ορισμένες επεκτάσεις, αλλά δεν σημαίνει ότι διαβάζονται |
-| Standalone encryption/password/fingerprint | Aescrypt/containers | AES-256/fingerprint | Μόνο encrypted ZIP και read-only Cryptomator· όχι αντίστοιχο encrypted-file workflow |
+| Standalone encryption/password/fingerprint | Aescrypt/containers | AES-256/fingerprint | Προστέθηκε chunked AES-256-GCM encrypted-file workflow με κωδικό· όχι fingerprint/container υποστήριξη |
 | gocryptfs/EncFS containers | Ναι | — | Δεν υπάρχουν |
 | Cryptomator | — | — | Υπάρχει read-only, experimental, τοπικό vault |
 | Root file operations | Ναι | Ναι | Υπάρχουν, απαιτούν root· δεν έχουν device validation εδώ |

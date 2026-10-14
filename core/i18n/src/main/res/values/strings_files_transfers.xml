@@ -13,4 +13,5 @@
     <string name="telos_files_transfer_resume">Resume</string>
     <string name="telos_files_transfer_added">Added to the file transfer queue</string>
     <string name="telos_files_transfer_queue_full">Could not add transfer. Finish or cancel pending transfers and check available storage.</string>
+    <string name="telos_files_transfer_limit">This selection is too large to plan safely (10,000 entries, 64 folder levels or 4 MiB of metadata). Transfer smaller groups of files.</string>
 </resources>
