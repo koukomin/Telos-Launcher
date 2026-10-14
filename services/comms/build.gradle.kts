@@ -60,6 +60,8 @@ android {
 }
 
 dependencies {
+    implementation("com.github.TeamNewPipe:NewPipeExtractor:v0.26.5")
+    implementation(libs.okhttp)
     // Torrent streaming (MIT): Java API and the native libraries for 64 and 32 bit ARM
     implementation(libs.libtorrent4j)
     // only the native library of the CPU type that is built (see -Ptelos.abi in app/app/build.gradle.kts)

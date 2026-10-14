@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.ensureActive
@@ -28,6 +29,8 @@ import java.io.File
 data class StorageVolume(val name: String, val path: String, val total: Long, val free: Long, val removable: Boolean)
 
 data class ClipboardState(val paths: List<String>, val cut: Boolean, val rootMode: Boolean)
+
+class FilesClipboard { var value by mutableStateOf<ClipboardState?>(null) }
 
 data class TaskState(val title: String, val progress: Float?, val cancel: CancelFlag)
 
@@ -70,8 +73,13 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
 
     var selection by mutableStateOf<Set<String>>(emptySet())
         private set
-    var clipboard by mutableStateOf<ClipboardState?>(null)
-        private set
+    internal var onFilesChanged: () -> Unit = {}
+    internal var onLocationChanged: () -> Unit = {}
+    val transferQueue = FilesTransferQueue.get(application)
+    var sharedClipboard = FilesClipboard()
+    var clipboard: ClipboardState?
+        get() = sharedClipboard.value
+        private set(value) { sharedClipboard.value = value }
     var task by mutableStateOf<TaskState?>(null)
         private set
 
@@ -80,6 +88,15 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     var searchResults by mutableStateOf<List<FsEntry>?>(null)
         private set
     private var searchJob: Job? = null
+    var searchFilter by mutableStateOf(de.mm20.launcher2.helper.FileSearchFilter())
+        private set
+    var searchKind by mutableStateOf<FileKind?>(null)
+        private set
+    var recursiveSearch by mutableStateOf(true)
+        private set
+    var searchLimited by mutableStateOf(false)
+        private set
+    private var searchRevision = 0L
 
     /** The superuser is used for file operations and for folders the app cannot read */
     var rootMode by mutableStateOf(false)
@@ -123,10 +140,8 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     override fun onCleared() {
-        // files fetched from a server, an archive or a vault (decrypted!) must not stay in the cache
-        runCatching { File(context.cacheDir, "remote_open").deleteRecursively() }
-        runCatching { File(context.cacheDir, "share_dl").deleteRecursively() }
-        ArchiveSessions.clearAll() // archive passwords only live in memory, as long as the file manager is open
+        task?.cancel?.cancelled = true
+        searchJob?.cancel()
         super.onCleared()
     }
 
@@ -158,10 +173,13 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     // ---- browsing ----
 
     /** Forgets the password of an archive the user is leaving */
+    internal var archiveInUseElsewhere: (String) -> Boolean = { false }
+
     private fun leaveArchive(oldPath: String?, newPath: String?) {
         if (oldPath == null || !ArchivePath.isArchive(oldPath)) return
         val archive = ArchivePath.archiveOf(oldPath)
         if (newPath != null && ArchivePath.isArchive(newPath) && ArchivePath.archiveOf(newPath) == archive) return
+        if (archiveInUseElsewhere(archive)) return
         ArchiveSessions.clear(archive)
         promptDeclined.remove(archive)
         if (archivePrompt?.archive == archive && archivePrompt?.browsing == true) archivePrompt = null
@@ -169,25 +187,39 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
 
     fun open(newPath: String?) {
         leaveArchive(path, newPath)
+        searchJob?.cancel()
         selection = emptySet()
         searchResults = null
         query = ""
         path = newPath
+        onLocationChanged()
+        restoreFolderOptions(newPath)
         error = null
         if (newPath == null) { entries = emptyList(); return }
         load(newPath)
     }
 
-    fun reload() { path?.let { load(it) } }
+    fun reloadPreferences() {
+        bookmarks = prefs.getStringSet("bookmarks", emptySet()).orEmpty().sorted()
+        restoreFolderOptions(path)
+        reload()
+    }
+
+    fun reload() { path?.let { folder ->
+        if (!RemotePath.isRemote(folder) && !ArchivePath.isArchive(folder) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(folder))
+            runCatching { de.mm20.launcher2.helper.FileSearchIndex.invalidate(folder) }
+        load(folder)
+    } }
 
     private fun load(dir: String) {
         loading = true
         viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) { runCatching { fs.list(dir) } }
+            val result = withContext(Dispatchers.IO) { runCatching { fsFor(dir).list(dir) } }
             if (path != dir) return@launch
             loading = false
             result.onSuccess {
                 entries = it; error = null
+                if (searchResults != null || query.isNotBlank()) search(query)
                 if (ArchivePath.isArchive(dir)) askIfEncrypted(ArchivePath.archiveOf(dir))
             }.onFailure {
                 entries = emptyList()
@@ -262,17 +294,47 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
 
     // ---- view options ----
 
+    private fun folderKey(folder: String?) = folder?.let { "folder:" + java.security.MessageDigest.getInstance("SHA-256").digest(it.toByteArray()).joinToString("") { b -> "%02x".format(b) } }
+
+    private fun restoreFolderOptions(folder: String?) {
+        val key = folderKey(folder)
+        val stored = key?.let { prefs.getString(it, null) }
+        if (stored == null) {
+            sort = loadSort()
+            viewMode = prefs.getInt("viewMode", if (prefs.getBoolean("grid", false)) 1 else 0).coerceIn(0, 2)
+            showHidden = prefs.getBoolean("hidden", false)
+            return
+        }
+        runCatching {
+            val json = org.json.JSONObject(stored)
+            sort = SortSpec(SortKey.valueOf(json.getString("sort")), json.getBoolean("ascending"), json.getBoolean("foldersFirst"))
+            viewMode = json.getInt("view").coerceIn(0, 2)
+            showHidden = json.getBoolean("hidden")
+        }
+    }
+
+    private fun saveFolderOptions() {
+        val key = folderKey(path) ?: return
+        prefs.edit().putString(key, org.json.JSONObject().put("sort", sort.key.name).put("ascending", sort.ascending)
+            .put("foldersFirst", sort.foldersFirst).put("view", viewMode).put("hidden", showHidden).toString()).apply()
+    }
+
     fun updateSort(spec: SortSpec) {
         sort = spec
-        prefs.edit().putString("sortKey", spec.key.name).putBoolean("sortAsc", spec.ascending).putBoolean("foldersFirst", spec.foldersFirst).apply()
+        if (path == null) prefs.edit().putString("sortKey", spec.key.name).putBoolean("sortAsc", spec.ascending).putBoolean("foldersFirst", spec.foldersFirst).apply()
+        saveFolderOptions()
     }
 
     fun toggleGrid() = updateViewMode(if (viewMode == 0) 1 else 0)
     fun updateViewMode(mode: Int) {
         viewMode = mode.coerceIn(0, 2)
-        prefs.edit().putInt("viewMode", viewMode).putBoolean("grid", viewMode != 0).apply()
+        if (path == null) prefs.edit().putInt("viewMode", viewMode).putBoolean("grid", viewMode != 0).apply()
+        saveFolderOptions()
     }
-    fun toggleHidden() { showHidden = !showHidden; prefs.edit().putBoolean("hidden", showHidden).apply() }
+    fun toggleHidden() {
+        showHidden = !showHidden; if (path == null) prefs.edit().putBoolean("hidden", showHidden).apply(); saveFolderOptions()
+        if (searchResults != null || query.isNotBlank()) search(query)
+    }
 
     // ---- selection ----
 
@@ -287,33 +349,51 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
     // ---- search ----
 
     fun search(text: String) {
-        query = text
-        searchJob?.cancel()
-        val dir = path
-        if (text.isBlank() || dir == null) { searchResults = null; return }
-        if (RemotePath.isRemote(dir) || ArchivePath.isArchive(dir) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(dir)) {
-            // a server cannot be searched quickly: filter what is shown
-            searchResults = entries.filter { TelosSearch.matches(text, it.name) }
-            return
+        query = text; searchJob?.cancel()
+        val revision = ++searchRevision
+        val dir = path; searchLimited = false
+        if (dir == null || text.isBlank() && searchFilter == de.mm20.launcher2.helper.FileSearchFilter() && searchKind == null) { searchResults = null; return }
+        val filter = searchFilter; val kind = searchKind
+        fun matches(entry: FsEntry, hidden: Boolean = entry.hidden): Boolean =
+            (text.isBlank() || TelosSearch.matches(text, entry.name)) && (kind == null || entry.kind == kind) &&
+                (showHidden || !hidden) && filter.matches(de.mm20.launcher2.helper.IndexedFile(entry.path, entry.name, entry.isDir, entry.size, entry.modified, hidden, entry.isLink))
+        if ((RemotePath.isRemote(dir) && !recursiveSearch) || ArchivePath.isArchive(dir) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(dir)) {
+            searchResults = entries.filter { matches(it) }; return
         }
         searchJob = viewModelScope.launch {
-            val found = withContext(Dispatchers.IO) {
-                // the walk is a plain sequence: it has to look at the job itself, or a cancelled search keeps walking the whole storage
-                val job = coroutineContext
-                if (rootMode) {
-                    RootShell.run("find ${RootShell.q(dir)} -mindepth 1 2>/dev/null | head -20000").out.lines()
-                        .filter { it.isNotBlank() && TelosSearch.matches(text, nameOf(it)) }.take(300)
-                        .map { FsEntry(it, nameOf(it), File(it).isDirectory, -1, 0) }
-                } else {
-                    File(dir).walkTopDown().onEnter { job.ensureActive(); true }.filter { it.path != dir && TelosSearch.matches(text, it.name) }.take(300)
-                        .map { FsEntry(it.path, it.name, it.isDirectory, if (it.isDirectory) -1 else it.length(), it.lastModified()) }.toList()
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    val job = coroutineContext
+                    if (RemotePath.isRemote(dir)) {
+                        val scan = FilesRemoteSearch.scan(fsFor(dir), dir, showHidden, { matches(it) })
+                        scan.entries to scan.partial
+                    } else if (rootMode) {
+                        val files = RootShell.run("find ${RootShell.q(dir)} -mindepth 1 2>/dev/null | head -20000").out.lines()
+                            .filter { it.isNotBlank() && (text.isBlank() || TelosSearch.matches(text, nameOf(it))) }.take(300)
+                            .map { FsEntry(it, nameOf(it), File(it).isDirectory, -1, 0) }.filter { matches(it) }
+                        files to (files.size >= 300)
+                    } else if (!recursiveSearch) {
+                        val files = entries.filter { matches(it) }; files.take(300) to (files.size > 300)
+                    } else {
+                        val snapshot = de.mm20.launcher2.helper.FileSearchIndex.read(File(dir)) { job.ensureActive() }
+                        val files = snapshot.files.asSequence().map { file ->
+                            job.ensureActive()
+                            FsEntry(file.path, file.name, file.directory, file.size, file.modified, isLink = file.symbolicLink) to file.hidden
+                        }.filter { (entry, hidden) -> matches(entry, hidden) }.take(301).map { it.first }.toList()
+                        files.take(300) to (snapshot.limited || snapshot.unreadable > 0 || files.size > 300)
+                    }
                 }
+                if (searchRevision == revision) { searchResults = result.first; searchLimited = result.second }
+            } catch (e: CancellationException) { throw e }
+            catch (_: Exception) {
+                if (searchRevision == revision) { searchResults = emptyList(); searchLimited = false; message = s(R.string.au_files_cannot_open_folder) }
             }
-            if (query == text) searchResults = found
         }
     }
-
-    fun clearSearch() { query = ""; searchResults = null; searchJob?.cancel() }
+    fun setSearchOptions(filter: de.mm20.launcher2.helper.FileSearchFilter, kind: FileKind?, recursive: Boolean) {
+        searchFilter = filter; searchKind = kind; recursiveSearch = recursive; search(query)
+    }
+    fun clearSearch() { query = ""; searchResults = null; searchJob?.cancel(); searchRevision++; searchLimited = false }
 
     // ---- bookmarks ----
 
@@ -352,21 +432,24 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             val ok = withContext(Dispatchers.IO) { root.chmod(entry.path, mode) }
             message = if (ok) s(R.string.au_files_chmod_ok) else s(R.string.au_files_chmod_failed)
             reload()
+            onFilesChanged()
         }
     }
 
     // ---- operations ----
 
-    private fun runTask(title: String, total: Long?, block: (CancelFlag, (Long) -> Unit) -> String) {
+    private fun runTask(title: String, total: Long?, estimate: ((CancelFlag) -> Long?)? = null, block: (CancelFlag, (Long) -> Unit) -> String) {
+        if (task != null) { message = s(R.string.telos_files_task_busy); return }
         val cancel = CancelFlag()
         task = TaskState(title, if (total != null) 0f else null, cancel)
         viewModelScope.launch {
             val done = java.util.concurrent.atomic.AtomicLong()
             val result = withContext(Dispatchers.IO) {
                 runCatching {
+                    val expected = total ?: estimate?.invoke(cancel)
                     block(cancel) { bytes ->
                         val sum = done.addAndGet(bytes)
-                        if (total != null && total > 0) task = task?.copy(progress = (sum.toFloat() / total).coerceIn(0f, 1f))
+                        if (expected != null && expected > 0) task = task?.copy(progress = (sum.toFloat() / expected).coerceIn(0f, 1f))
                     }
                 }
             }
@@ -382,6 +465,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             }
             selection = emptySet()
             reload()
+            onFilesChanged()
         }
     }
 
@@ -391,6 +475,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             val ok = withContext(Dispatchers.IO) { fs.mkdir(dir, fs.freeName(dir, name)) }
             message = if (ok) null else s(R.string.au_files_mkdir_failed)
             reload()
+            onFilesChanged()
         }
     }
 
@@ -400,6 +485,44 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             val ok = withContext(Dispatchers.IO) { fs.createFile(dir, fs.freeName(dir, name)) }
             message = if (ok) null else s(R.string.au_files_create_failed)
             reload()
+            onFilesChanged()
+        }
+    }
+
+    fun batchRename(items: List<FsEntry>, names: List<String>) {
+        if (items.size != names.size || items.isEmpty()) return
+        val operationFs = fs
+        val destinations = items.zip(names).map { (entry, name) -> joinPath(parentOf(entry.path) ?: "/", name) }
+        if (destinations.map { it.lowercase() }.toSet().size != destinations.size || names.any { !isPlainName(it) } ||
+            items.any { parent -> parent.isDir && items.any { child -> child.path.startsWith(parent.path.trimEnd('/') + "/") } }) {
+            message = s(R.string.telos_files_rename_collision); return
+        }
+        runTask(s(R.string.telos_files_batch_rename), null) { cancel, _ ->
+            val sourcePaths = items.map { it.path }.toSet()
+            if (destinations.any { it !in sourcePaths && operationFs.exists(it) }) return@runTask s(R.string.telos_files_rename_collision)
+            // Two phases allow swaps without overwriting an existing file.
+            val current = items.map { it.path }.toMutableList()
+            try {
+                items.indices.forEach { i ->
+                    if (cancel.cancelled) throw java.io.IOException("Cancelled")
+                    val temp = ".telos-rename-${java.util.UUID.randomUUID()}"
+                    if (!operationFs.rename(current[i], temp)) throw java.io.IOException("Rename failed")
+                    current[i] = joinPath(parentOf(items[i].path) ?: "/", temp)
+                }
+                items.indices.forEach { i ->
+                    if (cancel.cancelled || !operationFs.rename(current[i], names[i])) throw java.io.IOException("Rename failed")
+                    current[i] = destinations[i]
+                }
+                s(R.string.telos_files_renamed, items.size)
+            } catch (e: Exception) {
+                // Best-effort rollback, using fresh names first so swaps cannot collide.
+                val rollback = current.map { old ->
+                    val name = ".telos-rollback-${java.util.UUID.randomUUID()}"
+                    if (runCatching { operationFs.rename(old, name) }.getOrDefault(false)) joinPath(parentOf(old) ?: "/", name) else old
+                }
+                val restored = rollback.indices.map { i -> runCatching { operationFs.rename(rollback[i], items[i].name) }.getOrDefault(false) }.all { it }
+                s(if (restored) R.string.telos_files_rename_rolled_back else R.string.telos_files_rename_partial)
+            }
         }
     }
 
@@ -414,6 +537,31 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
             message = if (ok) null else s(R.string.au_files_rename_failed)
             selection = emptySet()
             reload()
+            onFilesChanged()
+        }
+    }
+
+    private val trash: de.mm20.launcher2.comms.files.TelosTrash by lazy {
+        org.koin.core.context.GlobalContext.get().get<de.mm20.launcher2.comms.files.TelosTrash>()
+    }
+    fun canTrash(items: List<FsEntry>): Boolean = !rootMode && items.isNotEmpty() && items.all { trash.supports(it.path) }
+    fun moveToTrash(items: List<FsEntry>) {
+        if (task != null) { message = s(R.string.telos_files_task_busy); return }
+        val cancel = CancelFlag()
+        task = TaskState(s(R.string.telos_trash_move), 0f, cancel)
+        viewModelScope.launch {
+            var moved = 0
+            try {
+                for (item in items) {
+                    if (cancel.cancelled) throw java.io.IOException("Cancelled")
+                    trash.move(item.path)
+                    moved++
+                    task = task?.copy(progress = moved.toFloat() / items.size)
+                }
+                message = s(R.string.telos_trash_moved, moved)
+            } catch (e: kotlinx.coroutines.CancellationException) { throw e }
+              catch (_: Exception) { message = s(R.string.telos_trash_move_failed) }
+            finally { task = null; selection = emptySet(); reload(); onFilesChanged() }
         }
     }
 
@@ -421,7 +569,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         runTask(s(R.string.au_files_deleting), null) { cancel, _ ->
             var failed = 0
             for (item in items) {
-                if (cancel.cancelled) break
+                if (cancel.cancelled) throw java.io.IOException("Cancelled")
                 if (!fs.delete(item.path)) failed++
             }
             if (failed == 0) s(R.string.au_files_deleted) else s(R.string.au_files_delete_failed, failed)
@@ -438,25 +586,38 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
 
     fun paste() {
         val clip = clipboard?.takeIf { it.paths.isNotEmpty() } ?: return
-        val dir = path ?: return
+        paste(clip)
+    }
+    internal fun transferDragged(paths: List<String>, sourceRoot: Boolean, move: Boolean, destination: String? = path) {
+        if (task != null || paths.isEmpty() || path == null || ArchivePath.isArchive(path!!) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(path!!)) return
+        paste(ClipboardState(paths, move, sourceRoot), clearCopiedClipboard = false, destination = destination)
+    }
+    private fun paste(clip: ClipboardState, clearCopiedClipboard: Boolean = true, destination: String? = path) {
+        val dir = destination ?: return
         val dstFs = fsFor(dir)
-        val srcFs = fsFor(clip.paths.first())
-        val bothLocal = !dstFs.isRemote && !srcFs.isRemote && !(rootMode || clip.rootMode)
-        val total = if (bothLocal) clip.paths.sumOf { FsOps.sizeOf(File(it)) } else null
+        val first = clip.paths.first()
+        val srcFs = if (RemotePath.isRemote(first) || ArchivePath.isArchive(first) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(first)) fsFor(first) else if (clip.rootMode) root else local
+        val bothLocal = dstFs is LocalFs && srcFs is LocalFs
+        if (bothLocal) {
+            runCatching { transferQueue.enqueue(clip.paths, dir, clip.cut) }
+                .onSuccess {
+                    selection = emptySet()
+                    if (clip.cut && clearCopiedClipboard) clipboard = null
+                    message = s(R.string.telos_files_transfer_added)
+                }
+                .onFailure { message = s(R.string.telos_files_transfer_queue_full) }
+            return
+        }
         val infoByPath = (searchResults ?: entries).associateBy { it.path }
-        runTask(if (clip.cut) s(R.string.au_files_moving) else s(R.string.au_files_copying), total) { cancel, progress ->
+        runTask(if (clip.cut) s(R.string.au_files_moving) else s(R.string.au_files_copying), null) { cancel, progress ->
             var failed = 0
             for (src in clip.paths) {
-                if (cancel.cancelled) break
+                if (cancel.cancelled) throw java.io.IOException("Cancelled")
                 if (dir == src || dir.startsWith(src.trimEnd('/') + "/")) { failed++; continue } // not into itself
+                if (bothLocal && File(dir).canonicalFile.toPath().startsWith(File(src).canonicalFile.toPath())) { failed++; continue }
                 if (clip.cut && parentOf(src)?.trimEnd('/') == dir.trimEnd('/')) continue // moved into its own folder: nothing to do
                 val name = dstFs.freeName(dir, nameOf(src))
                 val ok = when {
-                    bothLocal -> if (clip.cut && File(src).renameTo(File(dir, name))) true else runCatching {
-                        FsOps.copyTree(File(src), File(dir, name), cancel, progress)
-                        if (clip.cut) File(src).deleteRecursively()
-                        true
-                    }.getOrDefault(false)
                     // the same machine can copy or move by itself
                     srcFs === dstFs || (srcFs.isRoot && dstFs.isRoot) || (srcFs.isRemote && dstFs.isRemote && RemotePath.idOf(src) == RemotePath.idOf(dir)) -> {
                         val native = if (clip.cut) dstFs.move(src, dir, name) else dstFs.copy(src, dir, name)
@@ -466,7 +627,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                 }
                 if (!ok) failed++
             }
-            if (clip.cut) clipboard = null
+            if (clip.cut && clearCopiedClipboard && failed == 0) clipboard = null
             if (failed == 0) s(R.string.au_files_done) else if (clip.cut) s(R.string.au_files_move_failed, failed) else s(R.string.au_files_copy_failed, failed)
         }
     }
@@ -476,7 +637,9 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val dir = isDir ?: runCatching { src.list(srcPath); true }.getOrDefault(false)
         FsOps.copyAcross(src, srcPath, dir, dst, dstPath, cancel, progress)
         // the copy is there; a move that could not remove the original is reported, not shown as done
-        return !move || src.delete(srcPath)
+        // Remote backends cannot prove a whole live directory is still the copied snapshot.
+        // Preserve originals instead of recursively deleting files added during the copy.
+        return !move // Unverified remote originals are retained; native server moves are attempted above.
     }
 
     /** Unlocks a Cryptomator vault (the key derivation is slow on purpose, so it runs off the main thread) and opens it. */
@@ -578,25 +741,30 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
      * Packs [items] into a new archive next to them. [password] (zip only) encrypts the files with AES-256;
      * it is used for this one task and not kept.
      */
-    fun compress(items: List<FsEntry>, zipName: String, format: CompressFormat = CompressFormat.Zip, password: CharArray? = null) {
+    fun compress(items: List<FsEntry>, zipName: String, format: CompressFormat = CompressFormat.Zip, password: CharArray? = null, splitBytes: Long? = null) {
         val dir = path ?: return
         val files = items.map { File(it.path) }
-        val total = files.sumOf { FsOps.sizeOf(it) }
         val secret = password?.takeIf { format.supportsPassword && it.isNotEmpty() }
-        runTask(s(R.string.au_files_compressing), total) { cancel, progress ->
+        runTask(s(R.string.au_files_compressing), null, { cancel -> files.fold(0L) { total, file -> Math.addExact(total, FsOps.sizeOf(file, cancel)) } }) { cancel, progress ->
             val name = ArchiveFormats.freeName(ArchiveFormats.withExtension(zipName, format.extension)) { File(dir, it).exists() }
             val target = File(dir, name)
             try {
-                when {
-                    format == CompressFormat.Zip && secret != null -> ArchiveWriter.zipEncrypted(files, target, secret, cancel, progress)
-                    format == CompressFormat.Zip -> FsOps.zip(files, target, cancel, progress)
-                    format == CompressFormat.SevenZ -> ArchiveWriter.sevenZ(files, target, cancel, progress)
-                    else -> ArchiveWriter.tarGz(files, target, cancel, progress)
+                if (format == CompressFormat.Zip && splitBytes != null) {
+                    // The split writer owns all its staging files and collision cleanup.
+                    de.mm20.launcher2.helper.SplitZipArchive.create(files, target, splitBytes, secret,
+                        { if (cancel.cancelled) throw java.io.IOException("Cancelled") }, progress)
+                } else {
+                    try {
+                        when {
+                            format == CompressFormat.Zip && secret != null -> ArchiveWriter.zipEncrypted(files, target, secret, cancel, progress)
+                            format == CompressFormat.Zip -> FsOps.zip(files, target, cancel, progress)
+                            format == CompressFormat.SevenZ -> ArchiveWriter.sevenZ(files, target, cancel, progress)
+                            else -> ArchiveWriter.tarGz(files, target, cancel, progress)
+                        }
+                    } catch (e: Exception) { target.delete(); throw e }
                 }
-            } catch (e: Exception) {
-                target.delete(); throw e
-            }
-            s(R.string.au_files_created, target.name)
+                s(R.string.au_files_created, target.name)
+            } finally { secret?.fill('\u0000') }
         }
     }
 

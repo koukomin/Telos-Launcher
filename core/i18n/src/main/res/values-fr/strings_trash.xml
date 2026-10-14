@@ -1,0 +1,18 @@
+<resources>
+    <string name="telos_trash_delete_title">Supprimer %1$d éléments ?</string>
+    <string name="telos_trash_title">Corbeille</string>
+    <string name="telos_trash_move">Déplacer vers la corbeille</string>
+    <string name="telos_trash_permanent">Supprimer définitivement</string>
+    <string name="telos_trash_permanent_warning">La suppression définitive est irréversible.</string>
+    <string name="telos_trash_retention">Conserver dans la corbeille (jours)</string>
+    <string name="telos_trash_retention_hint">Choisissez de 1 à 365 jours. Ce sera la valeur par défaut pour les prochaines suppressions. Les dates d\'expiration existantes restent inchangées. Les éléments expirés sont supprimés lors du nettoyage quotidien.</string>
+    <string name="telos_trash_android_retention">Android gère cette corbeille multimédia et conserve les éléments pendant 30 jours.</string>
+    <string name="telos_trash_unavailable">La corbeille n\'est pas disponible pour cette source. Seule la suppression définitive est possible.</string>
+    <string name="telos_trash_moved">%1$d éléments déplacés vers la corbeille</string>
+    <string name="telos_trash_move_failed">L\'opération n\'a pas pu être terminée. Les éléments qui n\'ont pas pu être déplacés restent à leur emplacement d\'origine.</string>
+    <string name="telos_trash_restore">Restaurer</string>
+    <string name="telos_trash_restore_failed">L\'opération n\'a pas pu être terminée. La restauration n\'écrasera pas un fichier existant.</string>
+    <string name="telos_trash_empty">La corbeille est vide.</string>
+    <string name="telos_trash_expires">Expire le : %1$s</string>
+    <string name="telos_trash_working">Traitement du fichier…</string>
+</resources>

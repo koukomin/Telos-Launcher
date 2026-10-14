@@ -1,0 +1,14 @@
+<resources>
+    <string name="telos_youtube_label">YouTube</string>
+    <string name="telos_youtube_music_label">YouTube Music</string>
+    <string name="telos_media_listen">Listen</string>
+    <string name="telos_youtube_search">Search YouTube or paste a video link</string>
+    <string name="telos_youtube_search_failed">Could not search YouTube. Check your connection and try again.</string>
+    <string name="telos_youtube_play_failed">This stream could not be played. Try again or choose another video.</string>
+    <string name="telos_youtube_preparing">Preparing playback…</string>
+    <string name="telos_youtube_searching">Searching…</string>
+    <string name="telos_youtube_intro">Discover videos and music, or paste a YouTube link. Playback continues in the background.</string>
+    <string name="telos_youtube_store_description">Search YouTube and play videos or music directly in Telos Media. No account is required.</string>
+    <string name="telos_youtube_store_features">Background playback · Shared audio/video player · Video links</string>
+    <string name="telos_media_store_description">Listen to local music, radio and YouTube Music, watch local videos or YouTube, and explore TV and Stremio Fork.</string>
+</resources>

@@ -1,0 +1,109 @@
+package de.mm20.launcher2.ui.media.youtube
+
+import android.content.ComponentName
+import android.content.Context
+import android.net.Uri
+import android.os.Bundle
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
+import androidx.media3.common.PlaybackException
+import androidx.media3.common.Player
+import androidx.media3.session.MediaController
+import androidx.media3.session.SessionToken
+import de.mm20.launcher2.comms.youtube.*
+import de.mm20.launcher2.ui.R
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+
+class YouTubeViewModel : ViewModel(), KoinComponent {
+    private val repository: YouTubeRepository by inject()
+    val results = MutableStateFlow<Map<Boolean, List<YouTubeEntry>>>(emptyMap())
+    val searching = MutableStateFlow(false)
+    val resolving = MutableStateFlow(false)
+    val message = MutableStateFlow<String?>(null)
+    val controller = MutableStateFlow<MediaController?>(null)
+    val nowPlaying = MutableStateFlow<MediaItem?>(null)
+    val playing = MutableStateFlow(false)
+    val buffering = MutableStateFlow(false)
+    private var searchJob: Job? = null
+    private var playJob: Job? = null
+    private var connectJob: Deferred<MediaController>? = null
+    private var future: com.google.common.util.concurrent.ListenableFuture<MediaController>? = null
+    private var playbackErrorMessage: String? = null
+    private val listener = object : Player.Listener {
+        override fun onEvents(player: Player, events: Player.Events) {
+            nowPlaying.value = player.currentMediaItem
+            playing.value = player.isPlaying
+            buffering.value = player.playbackState == Player.STATE_BUFFERING
+        }
+        override fun onPlayerError(error: PlaybackException) { message.value = playbackErrorMessage }
+    }
+    fun search(context: Context, query: String, music: Boolean) {
+        if (query.isBlank()) return
+        searchJob?.cancel()
+        searchJob = viewModelScope.launch {
+            searching.value = true; message.value = null
+            try { results.value = results.value + (music to repository.search(query.trim(), music)) }
+            catch (e: CancellationException) { throw e }
+            catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_search_failed) }
+            finally { searching.value = false }
+        }
+    }
+    private suspend fun connect(context: Context): MediaController {
+        controller.value?.let { return it }
+        connectJob?.let { return it.await() }
+        val app = context.applicationContext
+        playbackErrorMessage = app.getString(R.string.telos_youtube_player_error)
+        val deferred = viewModelScope.async {
+            val pending = MediaController.Builder(app, SessionToken(app, ComponentName(app, YouTubePlayerService::class.java))).buildAsync()
+            future = pending
+            val c = suspendCancellableCoroutine<MediaController> { continuation ->
+                pending.addListener({
+                    try { if (continuation.isActive) continuation.resume(pending.get()) }
+                    catch (e: Exception) { if (continuation.isActive) continuation.resumeWithException(e) }
+                }, ContextCompat.getMainExecutor(app))
+                continuation.invokeOnCancellation { MediaController.releaseFuture(pending) }
+            }
+            controller.value = c; c.addListener(listener)
+            nowPlaying.value = c.currentMediaItem; playing.value = c.isPlaying
+            c
+        }
+        connectJob = deferred
+        try { return deferred.await() } finally { connectJob = null }
+    }
+    fun reconnect(context: Context) { viewModelScope.launch { runCatching { connect(context) } } }
+    fun play(context: Context, entry: YouTubeEntry, music: Boolean) {
+        playJob?.cancel()
+        playJob = viewModelScope.launch {
+            resolving.value = true; message.value = null
+            try {
+                val playback = repository.resolve(entry, music)
+                val c = connect(context)
+                val extras = Bundle().apply {
+                    putBoolean("audioOnly", playback.audioOnly)
+                    playback.audioUrl?.let { putString(YouTubePlayerService.EXTRA_AUDIO_URL, it) }
+                }
+                val metadata = MediaMetadata.Builder().setTitle(playback.entry.title).setArtist(playback.entry.artist)
+                    .setArtworkUri(playback.entry.thumbnail?.let(Uri::parse)).setExtras(extras).build()
+                c.setMediaItem(MediaItem.Builder().setMediaId(entry.url).setUri(playback.streamUrl).setMediaMetadata(metadata).build())
+                c.prepare(); c.play()
+            } catch (e: CancellationException) { throw e }
+            catch (_: Exception) { message.value = context.getString(R.string.telos_youtube_play_failed) }
+            finally { resolving.value = false }
+        }
+    }
+    fun toggle() { controller.value?.let { if (it.playWhenReady) it.pause() else it.play() } }
+    fun stop() { controller.value?.run { stop(); clearMediaItems() }; nowPlaying.value = null }
+    override fun onCleared() {
+        controller.value?.removeListener(listener)
+        future?.let(MediaController::releaseFuture)
+        controller.value = null
+    }
+}

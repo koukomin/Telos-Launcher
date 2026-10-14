@@ -20,7 +20,9 @@ contact database of its own, apart from the notes, hidden numbers and defaults i
 | Swipe left | Calls the contact. Honors **Confirm before calling** |
 | Long-press a row | Sheet with Call, Message, Contact Details, Share and Block number |
 
-Only contacts that have at least one phone number are listed. Contacts are sorted by name.
+The full Android Contacts table is listed, without an account or visible-group filter. Phone and email Data rows are attached across all synced accounts in this device profile, including local/SIM contacts exposed by the provider. Email-only contacts remain visible; their Call button is disabled. Contacts are sorted by name. Telos cannot display contacts that have not synced to Android, or bypass work-profile access restrictions.
+
+Η λίστα διαβάζει όλες τις επαφές που έχει συγχρονίσει το Android στο τρέχον προφίλ, από όλους τους λογαριασμούς. Επαφές χωρίς τηλέφωνο παραμένουν στη λίστα με το email τους και χωρίς ενεργό κουμπί κλήσης. Δεν εφαρμόζεται φίλτρο Google λογαριασμού.
 
 ::: info The list screen also has a starred filter
 The list screen can show a star filter and a strip of favorites at the top. In Phone these are hidden because

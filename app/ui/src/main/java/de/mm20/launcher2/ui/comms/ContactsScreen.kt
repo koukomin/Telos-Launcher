@@ -283,7 +283,7 @@ fun ContactsScreen(
                                             backStack.add(ContactDetailsRoute(contactId = item.contact.id))
                                         },
                                         onCall = {
-                                            if (!tapToCall) {
+                                            if (!tapToCall || number.isEmpty()) {
                                                 backStack.add(ContactDetailsRoute(contactId = item.contact.id))
                                             } else if (confirmBeforeCall) {
                                                 pendingCall = number
@@ -500,14 +500,14 @@ private fun ContactRow(
                     }
                 }
                 Text(
-                    text = contact.phoneNumbers.firstOrNull().orEmpty(),
+                    text = contact.phoneNumbers.firstOrNull() ?: contact.emails.firstOrNull().orEmpty(),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
             }
-            IconButton(onClick = onCall) {
+            IconButton(onClick = onCall, enabled = contact.phoneNumbers.isNotEmpty()) {
                 Icon(
                     painterResource(R.drawable.rd_ic_phone_green_vector),
                     contentDescription = stringResource(R.string.search_action_call),

@@ -150,6 +150,8 @@ but Telos cannot judge whether the source itself is trustworthy.
 
 - Only the listed sources. Obtainium sources such as APKMirror, Uptodown, Aptoide, APKPure, the Play Store, Huawei,
   Tencent, RuStore and Telegram are skipped when importing.
+- Obtainium file imports are limited to 4,194,304 characters. The limit is enforced while reading, so an oversized file is rejected before it is loaded into memory.
+- Η εισαγωγή αρχείων Obtainium έχει όριο 4.194.304 χαρακτήρων, το οποίο ελέγχεται κατά την ανάγνωση ώστε ένα υπερβολικά μεγάλο αρχείο να μη φορτωθεί ολόκληρο στη μνήμη.
 - Apps in several parts (split APKs, bundles) and apps that need a login to download are not supported.
 - Silent installs need Shizuku or root. Otherwise Android shows its installer each time.
 - Checks run as a periodic job, so Android decides the exact moment.

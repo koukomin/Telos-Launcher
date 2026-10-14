@@ -38,17 +38,17 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 21
       - name: Use Gradle
         uses: gradle/actions/setup-gradle@v4
-      - run: gradle dokkaGenerateHtml
+      - run: chmod +x gradlew && ./gradlew dokkaGenerateHtml
         working-directory: .
       - run: mv build/dokka/html docs/public/reference
         working-directory: .
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22
       - run: npm ci
         working-directory: docs
       - run: npm run docs:build

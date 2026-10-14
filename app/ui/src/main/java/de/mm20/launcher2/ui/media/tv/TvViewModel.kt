@@ -167,6 +167,7 @@ class TvViewModel : ViewModel(), KoinComponent {
         if (!settings.disclaimerShown.value) return
         viewModelScope.launch {
             runCatching { catalog.refresh() }
+            runCatching { extraSources.load(force = true) }
             if (_load.value != TvLoad.Ready && catalog.index.value != null) _load.value = TvLoad.Ready
         }
     }

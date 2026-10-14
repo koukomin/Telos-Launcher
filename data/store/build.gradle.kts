@@ -41,7 +41,15 @@ android {
     namespace = "de.mm20.launcher2.data.store"
 }
 
+tasks.withType<Test>().configureEach {
+    maxHeapSize = "128m"
+    testLogging.exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+}
+
 dependencies {
+    testImplementation(libs.bundles.tests)
+    testImplementation("org.json:json:20240303")
+    testImplementation("io.ktor:ktor-client-mock:${libs.versions.ktor.get()}")
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
@@ -56,6 +64,7 @@ dependencies {
     implementation(libs.shizuku.provider)
     implementation(libs.hiddenapibypass)
 
+    implementation(project(":core:i18n"))
     implementation(project(":core:ktx"))
     implementation(project(":core:base"))
     implementation(project(":core:crashreporter"))

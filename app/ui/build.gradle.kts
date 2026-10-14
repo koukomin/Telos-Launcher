@@ -218,6 +218,7 @@ dependencies {
     // === TELOS_PENDING_REVIEW_END: radio_mini_player ===
 
     testImplementation(libs.bundles.tests)
+    testImplementation("org.json:json:20240303")
 }
 // Bouncy Castle comes in with several versions (sshj, other libraries); the parts must match or the classes are duplicated
 configurations.all {

@@ -209,12 +209,16 @@ import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsScreen
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
 
-class SettingsActivity : BaseActivity() {
+open class SettingsActivity : BaseActivity() {
 
     private var initialRoute by mutableStateOf<NavKey?>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (redirectVirtualApp(intent)) {
+            finish()
+            return
+        }
         WindowCompat.enableEdgeToEdge(window)
 
         applyTaskLabel(intent)
@@ -662,8 +666,9 @@ class SettingsActivity : BaseActivity() {
     private fun applyTaskLabel(intent: Intent) {
         val route = intent.getStringExtra(EXTRA_ROUTE) ?: return
         val (label, icon) = when (route) {
-            ROUTE_COMMS -> "Telos Phone" to "phone"
-            ROUTE_MEDIA, ROUTE_MUSIC, ROUTE_RADIO, ROUTE_VIDEO -> "Telos Media" to "music"
+            ROUTE_COMMS -> if (intent.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB) == "messages")
+                "Telos Messages" to "messages" else "Telos Phone" to "phone"
+            ROUTE_MEDIA, ROUTE_MUSIC, ROUTE_RADIO, ROUTE_VIDEO, SettingsDeepLinkContract.ROUTE_YOUTUBE, SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC -> "Telos Media" to "music"
             ROUTE_PHOTOS -> "Telos Viewer" to "viewer"
             SettingsDeepLinkContract.ROUTE_VIEWER -> "Telos Viewer" to "viewer"
             ROUTE_FILES -> "Telos Files" to "files"
@@ -690,9 +695,32 @@ class SettingsActivity : BaseActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        if (redirectVirtualApp(intent)) return
+        setIntent(intent)
         applyTaskLabel(intent)
         val newRoute = getStartRoute(intent)
         initialRoute = newRoute
+    }
+
+    /** Keep every existing entry point (drawer, notifications, shares) on the same app task. */
+    private fun redirectVirtualApp(source: Intent): Boolean {
+        if (this is TelosAppActivity) return false
+        val route = if (source.data?.host == "kvaesitso.mm20.de")
+            source.data?.getQueryParameter("route") else source.getStringExtra(EXTRA_ROUTE)
+        val id = SettingsDeepLinkContract.virtualAppTaskId(
+            route, source.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB),
+        ) ?: return false
+        startActivity(Intent(source).apply {
+            setClass(this@SettingsActivity, TelosAppActivity::class.java)
+            putExtra(EXTRA_ROUTE, route)
+            data = android.net.Uri.parse("telos-task://app/$id")
+            // Task matching uses component + data, not extras. Never force a duplicate task.
+            flags = (flags and (Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or
+                Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS).inv()) or
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT or Intent.FLAG_ACTIVITY_RETAIN_IN_RECENTS
+        })
+        return true
     }
 
     private fun getStartRoute(intent: Intent): NavKey? {
@@ -728,6 +756,8 @@ class SettingsActivity : BaseActivity() {
             }
             ROUTE_RADIO -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("radio")
             ROUTE_MUSIC -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("music")
+            SettingsDeepLinkContract.ROUTE_YOUTUBE -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("youtube")
+            SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("youtube_music")
             ROUTE_VIDEO -> de.mm20.launcher2.ui.media.hub.MediaHubRoute("video")
             ROUTE_MEDIA -> de.mm20.launcher2.ui.media.hub.MediaHubRoute(
                 intent.getStringExtra(SettingsDeepLinkContract.EXTRA_MEDIA_SPACE).orEmpty()

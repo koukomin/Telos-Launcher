@@ -75,6 +75,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.foundation.focusable
+import androidx.compose.ui.input.key.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -122,14 +126,13 @@ private fun hasAllFilesAccess(context: android.content.Context): Boolean =
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilesScreen() {
-    val vm: FilesViewModel = viewModel()
+internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
     val context = LocalContext.current
     val backStack = LocalBackStack.current
     val scope = rememberCoroutineScope()
 
     var hasAccess by remember { mutableStateOf(hasAllFilesAccess(context)) }
-    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { hasAccess = hasAllFilesAccess(context); vm.refreshVolumes(); vm.reloadConnections() }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { hasAccess = hasAllFilesAccess(context); vm.refreshVolumes(); vm.reloadConnections(); vm.reload() }
     val legacyPermission = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { hasAccess = hasAllFilesAccess(context) }
 
     if (!hasAccess) {
@@ -153,7 +156,32 @@ fun FilesScreen() {
     var menuOpen by remember { mutableStateOf(false) }
     var addMenu by remember { mutableStateOf(false) }
     var dialog by remember { mutableStateOf<FilesDialog?>(null) }
+    var showTrash by remember { mutableStateOf(false) }
+    var showTransfers by remember { mutableStateOf(false) }
+    var encryptionEntry by remember { mutableStateOf<Pair<FsEntry, Boolean>?>(null) }
+    encryptionEntry?.let { (entry, decrypt) -> FilesEncryptionDialog(java.io.File(entry.path), decrypt,
+        { encryptionEntry = null }, { encryptionEntry = null; vm.clearSelection(); vm.reload(); vm.onFilesChanged() }) }
+    var showCollections by remember { mutableStateOf(false) }
+    var sharingPath by remember { mutableStateOf<String?>(null) }
+    sharingPath?.let { FilesSharingDialog(it) { sharingPath = null } }
+    var showToolbarSettings by remember { mutableStateOf(false) }
+    var toolbarConfig by remember { mutableStateOf(FilesToolbarPreferences.read(context)) }
+    val localTransfers by vm.transferQueue.items.collectAsState()
+    LaunchedEffect(localTransfers.count { it.status in setOf(FilesTransferQueue.Status.COMPLETE, FilesTransferQueue.Status.ORIGINAL_RETAINED, FilesTransferQueue.Status.FAILED, FilesTransferQueue.Status.CANCELLED) }) {
+        vm.reload(); vm.onFilesChanged()
+    }
+    if (showTransfers) FilesTransfersDialog(vm.transferQueue) { showTransfers = false }
+    if (showToolbarSettings) FilesToolbarSettingsDialog(toolbarConfig, { showToolbarSettings = false }) { config ->
+        FilesToolbarPreferences.write(context, config); toolbarConfig = config; showToolbarSettings = false
+    }
+    var showSearchFilters by remember { mutableStateOf(false) }
+    if (showSearchFilters) FilesSearchDialog(vm) { showSearchFilters = false }
+    if (showTrash) de.mm20.launcher2.ui.trash.TrashDialog({ showTrash = false }, { vm.reload(); vm.onFilesChanged() })
+    var analysisPath by remember { mutableStateOf<String?>(null) }
+    analysisPath?.let { StorageAnalysisDialog(it, vm::open, { analysisPath = null }) }
     var viewMenu by remember { mutableStateOf(false) }
+    val keyboardFocus = remember { FocusRequester() }
+    LaunchedEffect(handlesBack) { if (handlesBack) keyboardFocus.requestFocus() }
     val performanceSettings: PerformanceSettings = koinInject()
     val reduceFlow = remember(performanceSettings) { performanceSettings.reduceAnimations }
     val reduceAnimations by reduceFlow.collectAsState(false)
@@ -166,8 +194,8 @@ fun FilesScreen() {
     }
     LaunchedEffect(vm.path) { listState.scrollToItem(0); gridState.scrollToItem(0) }
 
-    BackHandler(drawer.isOpen) { scope.launch { drawer.close() } }
-    BackHandler(!drawer.isOpen) {
+    BackHandler(handlesBack && drawer.isOpen) { scope.launch { drawer.close() } }
+    BackHandler(handlesBack && !drawer.isOpen) {
         if (searching && vm.query.isEmpty() && vm.searchResults == null) searching = false
         else if (!vm.up()) backStack.removeLastOrNull()
         if (vm.query.isEmpty()) searching = false
@@ -191,7 +219,33 @@ fun FilesScreen() {
         }
     }
 
+    if (showCollections) FilesCollectionsDialog(vm, { showCollections = false }) { entry ->
+        showCollections = false; vm.clearSelection(); onOpenEntry(entry)
+    }
+
     ModalNavigationDrawer(
+        modifier = Modifier.focusRequester(keyboardFocus).onPreviewKeyEvent { event ->
+            if (!handlesBack || event.type != KeyEventType.KeyDown) false else when {
+                event.isCtrlPressed && event.key == Key.F && vm.path != null -> { searching = true; true }
+                event.key == Key.Escape && searching -> { searching = false; vm.clearSearch(); true }
+                event.isCtrlPressed && event.key == Key.R -> { vm.reload(); true }
+                searching -> false
+                event.isCtrlPressed && event.key == Key.A -> { vm.selectAll(); true }
+                event.isCtrlPressed && event.key == Key.C && selecting -> { vm.copyToClipboard(false); true }
+                event.isCtrlPressed && event.key == Key.X && selecting -> { vm.copyToClipboard(true); true }
+                event.isCtrlPressed && event.key == Key.V && vm.clipboard != null && vm.task == null -> { vm.paste(); true }
+                event.isCtrlPressed && event.key == Key.H -> { vm.toggleHidden(); true }
+                event.isCtrlPressed && event.key == Key.N && vm.path != null -> { dialog = FilesDialog.NewFolder; true }
+                event.isAltPressed && event.key == Key.DirectionUp -> vm.up()
+                event.key == Key.Escape && selecting -> { vm.clearSelection(); true }
+                event.key == Key.Delete && selecting -> { dialog = FilesDialog.Delete(vm.selectedEntries()); true }
+                event.key == Key.F2 && selecting -> {
+                    val picked = vm.selectedEntries()
+                    dialog = picked.singleOrNull()?.let { FilesDialog.Rename(it) } ?: FilesDialog.BatchRename(picked); true
+                }
+                else -> false
+            }
+        }.focusable(),
         drawerState = drawer,
         drawerContent = {
             ModalDrawerSheet {
@@ -223,10 +277,12 @@ fun FilesScreen() {
                                 val bytes = vm.shareDownloadBytes(picked)
                                 if (bytes >= SHARE_WARN_BYTES) dialog = FilesDialog.ShareLarge(picked, bytes) else vm.shareEntries(picked)
                             },
-                            onRename = { vm.selectedEntries().singleOrNull()?.let { dialog = FilesDialog.Rename(it) } },
+                            onRename = { val picked = vm.selectedEntries(); dialog = picked.singleOrNull()?.let { FilesDialog.Rename(it) } ?: FilesDialog.BatchRename(picked) },
                             onCompress = { dialog = FilesDialog.Compress(vm.selectedEntries()) },
                             onProperties = { vm.selectedEntries().singleOrNull()?.let { dialog = FilesDialog.Properties(it) } },
                             onBookmark = { vm.selectedEntries().singleOrNull()?.let { vm.toggleBookmark(it.path); vm.clearSelection() } },
+                            onEncrypt = vm.selectedEntries().singleOrNull()?.takeIf { !vm.rootMode && !it.isDir && !it.isLink && !RemotePath.isRemote(it.path) && !ArchivePath.isArchive(it.path) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it.path) }?.let { entry -> { encryptionEntry = entry to false } },
+                            onDecrypt = vm.selectedEntries().singleOrNull()?.takeIf { !vm.rootMode && !it.isDir && !it.isLink && it.name.endsWith(".telos-aes", true) && !RemotePath.isRemote(it.path) && !ArchivePath.isArchive(it.path) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it.path) }?.let { entry -> { encryptionEntry = entry to true } },
                             onOpenAsArchive = vm.selectedEntries().singleOrNull()
                                 ?.takeIf { !it.isDir && de.mm20.launcher2.ui.media.docs.DocumentTypes.supports(it.name) && ArchivePath.canOpen(it.name) && !RemotePath.isRemote(it.path) && !ArchivePath.isArchive(it.path) }
                                 ?.let { archive -> { dialog = FilesDialog.Archive(archive); vm.clearSelection() } },
@@ -235,6 +291,7 @@ fun FilesScreen() {
                             query = vm.query,
                             onQuery = vm::search,
                             onClose = { searching = false; vm.clearSearch() },
+                            onFilters = { showSearchFilters = true },
                         )
                         else -> TopAppBar(
                             title = { Text(vm.path?.let { vm.connectionName(it)?.takeIf { _ -> RemotePath.isRoot(it) } ?: if (ArchivePath.isRoot(it)) nameOf(ArchivePath.archiveOf(it)) else if (de.mm20.launcher2.ui.files.vault.VaultPath.isRoot(it)) nameOf(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(it)) else nameOf(it) } ?: stringResource(R.string.hc_telos_files), maxLines = 1, overflow = TextOverflow.Ellipsis) },
@@ -247,7 +304,8 @@ fun FilesScreen() {
                                 if (vm.path != null) IconButton(onClick = { searching = true }) {
                                     Icon(painterResource(Icons.search_24px), contentDescription = stringResource(R.string.hc_search))
                                 }
-                                if (vm.path != null) Box {
+                                toolbarConfig.actions.forEach { action ->
+                                if (vm.path != null && action == FilesToolbarAction.View) Box {
                                     IconButton(onClick = { viewMenu = true }) {
                                         Icon(
                                             painterResource(when (vm.viewMode) { 1 -> Icons.apps_24px; 2 -> Icons.dashboard_2_24px; else -> Icons.table_rows_24px }),
@@ -269,11 +327,45 @@ fun FilesScreen() {
                                         }
                                     }
                                 }
+                                if (action != FilesToolbarAction.View) {
+                                    val label = when (action) {
+                                        FilesToolbarAction.Sort -> R.string.hc_sort_by_2
+                                        FilesToolbarAction.Hidden -> if (vm.showHidden) R.string.hf_files_hide_hidden else R.string.hf_files_show_hidden
+                                        else -> R.string.hc_refresh
+                                    }
+                                    IconButton(onClick = { when (action) {
+                                        FilesToolbarAction.Sort -> dialog = FilesDialog.Sort
+                                        FilesToolbarAction.Hidden -> vm.toggleHidden()
+                                        else -> { vm.reload(); vm.refreshVolumes() }
+                                    } }) {
+                                        Icon(painterResource(when (action) {
+                                            FilesToolbarAction.Sort -> Icons.tune_24px
+                                            FilesToolbarAction.Hidden -> Icons.visibility_24px
+                                            else -> Icons.restart_alt_24px
+                                        }), contentDescription = stringResource(label))
+                                    }
+                                }
+                                }
                                 Box {
                                     IconButton(onClick = { menuOpen = true }) {
                                         Icon(painterResource(Icons.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
                                     }
                                     DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                                        DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_collections)) }, onClick = { menuOpen = false; showCollections = true })
+                                        vm.path?.takeIf { !vm.rootMode && !RemotePath.isRemote(it) && !ArchivePath.isArchive(it) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it) }?.let { folder ->
+                                            DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_sharing_title)) }, onClick = { menuOpen = false; sharingPath = folder })
+                                        }
+                                        DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_transfers_title)) }, onClick = { menuOpen = false; showTransfers = true })
+                                        DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_toolbar_title)) }, onClick = { menuOpen = false; showToolbarSettings = true })
+                                        if (vm.path != null && FilesToolbarAction.View !in toolbarConfig.actions) {
+                                            listOf(0 to R.string.au22_files_view_list, 1 to R.string.au22_files_view_grid_medium, 2 to R.string.au22_files_view_grid_large).forEach { (mode, label) ->
+                                                DropdownMenuItem(text = { Text(stringResource(label)) }, onClick = { menuOpen = false; vm.updateViewMode(mode) })
+                                            }
+                                        }
+                                        DropdownMenuItem(text = { Text(stringResource(R.string.telos_trash_title)) }, onClick = { menuOpen = false; showTrash = true })
+                                        if (vm.path != null) DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_search_filters)) }, onClick = { menuOpen = false; searching = true; showSearchFilters = true })
+                                        if (vm.path != null && !vm.rootMode && !RemotePath.isRemote(vm.path!!) && !ArchivePath.isArchive(vm.path!!) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(vm.path!!))
+                                            DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_analyze)) }, onClick = { menuOpen = false; analysisPath = vm.path })
                                         DropdownMenuItem(text = { Text(stringResource(R.string.hc_sort_by_2)) }, onClick = { menuOpen = false; dialog = FilesDialog.Sort })
                                         DropdownMenuItem(text = { Text(if (vm.showHidden) stringResource(R.string.hf_files_hide_hidden) else stringResource(R.string.hf_files_show_hidden)) }, onClick = { menuOpen = false; vm.toggleHidden() })
                                         vm.path?.takeIf { de.mm20.launcher2.ui.files.vault.VaultPath.isVault(it) }?.let { vp ->
@@ -298,6 +390,7 @@ fun FilesScreen() {
                     }
                     if (vm.path != null && !selecting) Breadcrumbs(vm) { vm.open(it) }
                     if (vm.loading) LinearProgressIndicator(Modifier.fillMaxWidth())
+                    if (vm.searchLimited) Text(stringResource(if (vm.path?.let { RemotePath.isRemote(it) } == true) R.string.telos_files_remote_search_partial else R.string.telos_files_search_limited), Modifier.padding(horizontal = 16.dp), style = MaterialTheme.typography.labelSmall)
                 }
             },
             floatingActionButton = {
@@ -314,6 +407,8 @@ fun FilesScreen() {
             bottomBar = {
                 Column {
                     vm.task?.let { TaskBar(it) }
+                    if (localTransfers.any { it.status in setOf(FilesTransferQueue.Status.RUNNING, FilesTransferQueue.Status.QUEUED, FilesTransferQueue.Status.PAUSED) })
+                        TextButton(onClick = { showTransfers = true }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.telos_files_transfers_title)) }
                     val clip = vm.clipboard
                     if (clip != null && vm.path != null && vm.task == null) PasteBar(
                         count = clip.paths.size, cut = clip.cut,
@@ -348,14 +443,14 @@ fun FilesScreen() {
                                             FileTile(
                                                 e, e.path in vm.selection, selecting, large, reduceAnimations,
                                                 onClick = { onOpenEntry(e) }, onLongClick = { vm.toggleSelected(e) },
-                                                modifier = if (reduceAnimations) Modifier else Modifier.animateItem(),
+                                                modifier = (if (reduceAnimations) Modifier else Modifier.animateItem()).then(fileDragSource(e, vm)),
                                             )
                                         }
                                     }
                                 } else {
                                     LazyColumn(state = listState, contentPadding = PaddingValues(bottom = 96.dp)) {
                                         items(unique, key = { it.path }) { e ->
-                                            FileRow(e, e.path in vm.selection, vm.rootMode, { onOpenEntry(e) }, { vm.toggleSelected(e) })
+                                            FileRow(e, e.path in vm.selection, vm.rootMode, { onOpenEntry(e) }, { vm.toggleSelected(e) }, fileDragSource(e, vm))
                                         }
                                     }
                                 }
@@ -379,6 +474,7 @@ private sealed interface FilesDialog {
     data object Sort : FilesDialog
     data object EnableRoot : FilesDialog
     data class Rename(val entry: FsEntry) : FilesDialog
+    data class BatchRename(val entries: List<FsEntry>) : FilesDialog
     data class Delete(val entries: List<FsEntry>) : FilesDialog
     data class Compress(val entries: List<FsEntry>) : FilesDialog
     data class Properties(val entry: FsEntry) : FilesDialog
@@ -395,26 +491,16 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
         FilesDialog.NewFolder -> NameDialog(stringResource(R.string.hc_new_folder), "", stringResource(R.string.hf_files_create), onDismiss) { vm.newFolder(it); onDismiss() }
         FilesDialog.NewFile -> NameDialog(stringResource(R.string.hc_new_file), "", stringResource(R.string.hf_files_create), onDismiss) { vm.newFile(it); onDismiss() }
         is FilesDialog.Rename -> NameDialog(stringResource(R.string.hc_rename), dialog.entry.name, stringResource(R.string.hc_rename), onDismiss) { vm.rename(dialog.entry, it); onDismiss() }
+        is FilesDialog.BatchRename -> BatchRenameDialog(vm, dialog.entries, onDismiss)
         is FilesDialog.Compress -> CompressDialog(vm, dialog.entries, onDismiss)
-        is FilesDialog.Delete -> {
-            val system = dialog.entries.any { FileActions.isSystemPath(it.path, vm.rootMode) }
-            AlertDialog(
-                onDismissRequest = onDismiss,
-                title = { Text(if (dialog.entries.size == 1) stringResource(R.string.hf_files_delete_named, dialog.entries.first().name) else stringResource(R.string.hf_files_delete_selected, dialog.entries.size)) },
-                text = {
-                    Text(
-                        if (system) stringResource(R.string.hf_files_delete_system_warning)
-                        else stringResource(R.string.hf_files_cannot_undo)
-                    )
-                },
-                confirmButton = {
-                    TextButton(onClick = { vm.delete(dialog.entries); onDismiss() }) {
-                        Text(stringResource(R.string.hc_delete), color = MaterialTheme.colorScheme.error)
-                    }
-                },
-                dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
-            )
-        }
+        is FilesDialog.Delete -> de.mm20.launcher2.ui.trash.TrashDeleteDialog(
+            count = dialog.entries.size,
+            canTrash = vm.canTrash(dialog.entries),
+            onTrash = { vm.moveToTrash(dialog.entries) },
+            onPermanent = { vm.delete(dialog.entries) },
+            onDismiss = onDismiss,
+            warning = if (dialog.entries.any { FileActions.isSystemPath(it.path, vm.rootMode) }) stringResource(R.string.hf_files_delete_system_warning) else null,
+        )
         is FilesDialog.ShareLarge -> AlertDialog(
             onDismissRequest = onDismiss,
             title = { Text(stringResource(R.string.au9_share_large_title)) },
@@ -481,6 +567,10 @@ private fun CompressDialog(vm: FilesViewModel, entries: List<FsEntry>, onDismiss
     var password by remember { mutableStateOf("") }
     var repeat by remember { mutableStateOf("") }
     var visible by remember { mutableStateOf(false) }
+    var split by remember { mutableStateOf(false) }
+    var partMiB by remember { mutableStateOf("100") }
+    val splitBytes = if (format == CompressFormat.Zip) splitZipBytes(split, partMiB) else null
+    val splitValid = format != CompressFormat.Zip || !split || splitBytes != null
     val mismatch = format.supportsPassword && password.isNotEmpty() && password != repeat
     val hide = if (visible) androidx.compose.ui.text.input.VisualTransformation.None else androidx.compose.ui.text.input.PasswordVisualTransformation()
     AlertDialog(
@@ -502,6 +592,7 @@ private fun CompressDialog(vm: FilesViewModel, entries: List<FsEntry>, onDismiss
                         }
                     }
                 }
+                if (format == CompressFormat.Zip) SplitZipOptions(split, { split = it }, partMiB, { partMiB = it })
                 if (format.supportsPassword) {
                     OutlinedTextField(
                         password, { password = it }, label = { Text(stringResource(R.string.au21_arch_pw_optional)) }, singleLine = true,
@@ -524,9 +615,9 @@ private fun CompressDialog(vm: FilesViewModel, entries: List<FsEntry>, onDismiss
             }
         },
         confirmButton = {
-            TextButton(enabled = name.isNotBlank() && '/' !in name && !mismatch, onClick = {
+            TextButton(enabled = name.isNotBlank() && '/' !in name && !mismatch && splitValid, onClick = {
                 val secret = if (format.supportsPassword && password.isNotEmpty()) password.toCharArray() else null
-                vm.compress(entries, name.trim(), format, secret)
+                vm.compress(entries, name.trim(), format, secret, splitBytes)
                 vm.clearSelection()
                 onDismiss()
             }) { Text(stringResource(R.string.hf_files_compress_action)) }
@@ -682,6 +773,7 @@ private fun SelectionBar(
     count: Int, single: FsEntry?, onClose: () -> Unit, onSelectAll: () -> Unit, onCopy: () -> Unit, onCut: () -> Unit,
     onDelete: () -> Unit, onShare: () -> Unit, onRename: () -> Unit, onCompress: () -> Unit, onProperties: () -> Unit, onBookmark: () -> Unit,
     onOpenAsArchive: (() -> Unit)? = null,
+    onEncrypt: (() -> Unit)? = null, onDecrypt: (() -> Unit)? = null,
 ) {
     var more by remember { mutableStateOf(false) }
     TopAppBar(
@@ -698,9 +790,11 @@ private fun SelectionBar(
                     DropdownMenuItem(text = { Text(stringResource(R.string.hc_select_all)) }, onClick = { more = false; onSelectAll() })
                     DropdownMenuItem(text = { Text(stringResource(R.string.hc_share)) }, onClick = { more = false; onShare() })
                     DropdownMenuItem(text = { Text(stringResource(R.string.au21_arch_compress)) }, onClick = { more = false; onCompress() })
+                    if (onEncrypt != null) DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_encrypt)) }, onClick = { more = false; onEncrypt() })
+                    if (onDecrypt != null) DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_decrypt)) }, onClick = { more = false; onDecrypt() })
                     if (onOpenAsArchive != null) DropdownMenuItem(text = { Text(stringResource(R.string.au22_files_open_as_archive)) }, onClick = { more = false; onOpenAsArchive() })
+                    DropdownMenuItem(text = { Text(stringResource(if (single != null) R.string.hc_rename else R.string.telos_files_batch_rename)) }, onClick = { more = false; onRename() })
                     if (single != null) {
-                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_rename)) }, onClick = { more = false; onRename() })
                         DropdownMenuItem(text = { Text(stringResource(R.string.hc_properties)) }, onClick = { more = false; onProperties() })
                         if (single.isDir) DropdownMenuItem(text = { Text(stringResource(R.string.hc_add_to_favorites)) }, onClick = { more = false; onBookmark() })
                     }
@@ -713,7 +807,7 @@ private fun SelectionBar(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SearchBar(query: String, onQuery: (String) -> Unit, onClose: () -> Unit) {
+private fun SearchBar(query: String, onQuery: (String) -> Unit, onClose: () -> Unit, onFilters: () -> Unit) {
     TopAppBar(
         title = {
             de.mm20.launcher2.ui.component.TelosSearchTopBar(
@@ -723,6 +817,7 @@ private fun SearchBar(query: String, onQuery: (String) -> Unit, onClose: () -> U
             )
         },
         navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(Icons.arrow_back_24px), contentDescription = stringResource(R.string.hc_back)) } },
+        actions = { IconButton(onClick = onFilters) { Icon(painterResource(Icons.tune_24px), contentDescription = stringResource(R.string.telos_files_search_filters)) } },
         colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
     )
 }
@@ -1030,9 +1125,9 @@ private fun TypeTile(kind: FileKind, thumbnail: String?, selected: Boolean, size
 
 @OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
-private fun FileRow(e: FsEntry, selected: Boolean, rootMode: Boolean, onClick: () -> Unit, onLongClick: () -> Unit) {
+private fun FileRow(e: FsEntry, selected: Boolean, rootMode: Boolean, onClick: () -> Unit, onLongClick: () -> Unit, modifier: Modifier = Modifier) {
     Row(
-        Modifier.fillMaxWidth()
+        modifier.fillMaxWidth()
             .background(if (selected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f) else Color.Transparent)
             .combinedClickable(onClick = onClick, onLongClick = onLongClick)
             .padding(horizontal = 16.dp, vertical = 8.dp),

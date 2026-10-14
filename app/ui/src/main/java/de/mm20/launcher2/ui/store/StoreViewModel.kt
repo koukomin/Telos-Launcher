@@ -84,6 +84,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
     private fun str(id: Int, vararg args: Any): String = context.getString(id, *args)
     private val repository: StoreRepository by inject()
     private val actionHandler: StoreActionHandler by inject()
+    private val downloader: de.mm20.launcher2.store.installer.Downloader by inject()
     private val tools: StoreTools by inject()
     private val updater: StoreUpdater by inject()
     val options: StoreOptions by inject()
@@ -182,9 +183,10 @@ class StoreViewModel : ViewModel(), KoinComponent {
         if (link.isBlank()) return
         viewModelScope.launch {
             when {
-                link.startsWith("obtainium://app/", true) -> {
-                    val json = Uri.decode(link.substringAfter("obtainium://app/"))
-                    val wrapped = runCatching { JSONObject().put("apps", org.json.JSONArray().put(JSONObject(json))).toString() }.getOrNull()
+                link.startsWith("obtainium://app/", true) || link.startsWith("obtainium://apps/", true) -> {
+                    val uri = Uri.parse(link)
+                    val json = Uri.decode(uri.encodedPath.orEmpty().removePrefix("/"))
+                    val wrapped = runCatching { JSONObject().put("apps", if (uri.host.equals("apps", true)) org.json.JSONArray(json) else org.json.JSONArray().put(JSONObject(json))).toString() }.getOrNull()
                     val summary = wrapped?.let { runCatching { tools.importObtainium(it) }.getOrNull() }
                     _message.value = when {
                         summary == null -> str(R.string.au_store_msg_link_unreadable)
@@ -193,7 +195,10 @@ class StoreViewModel : ViewModel(), KoinComponent {
                         else -> str(R.string.au_store_msg_unsupported)
                     }
                 }
-                link.startsWith("obtainium://add/", true) -> onPrefill(link.substringAfter("obtainium://add/"))
+                Uri.parse(link).let { it.scheme.equals("obtainium", true) && it.host.equals("add", true) } -> {
+                    val uri = Uri.parse(link)
+                    onPrefill(uri.getQueryParameter("url") ?: Uri.decode(uri.encodedPath.orEmpty().removePrefix("/")))
+                }
                 else -> onPrefill(link)
             }
         }
@@ -232,19 +237,46 @@ class StoreViewModel : ViewModel(), KoinComponent {
         }
     }
 
+    val pendingUpdates = MutableStateFlow<List<StoreItem>>(emptyList())
+    private val activeInstalls = mutableSetOf<String>()
+
     fun updateAll() {
-        viewModelScope.launch {
-            rows.value.filter { it.updateAvailable && !it.options.trackOnly }.forEach { row ->
-                installNow(row.item)
-            }
-        }
+        requestUpdates(rows.value.filter { it.updateAvailable && !it.options.trackOnly }.map { it.item })
+    }
+
+    private fun requestUpdates(targets: List<StoreItem>) {
+        if (targets.isEmpty()) return
+        if (targets.any { !(options.item(it.id).autoUpdate ?: global.value.autoInstall) }) {
+            pendingUpdates.value = targets
+        } else performUpdates(targets)
+    }
+
+    fun confirmUpdates(automatic: Boolean) {
+        val targets = pendingUpdates.value
+        pendingUpdates.value = emptyList()
+        if (automatic) targets.forEach { item -> options.update(item.id) { it.copy(autoUpdate = true) } }
+        performUpdates(targets)
+    }
+
+    fun dismissUpdates() { pendingUpdates.value = emptyList() }
+    private fun performUpdates(targets: List<StoreItem>) {
+        viewModelScope.launch { targets.forEach { installNow(it) } }
     }
 
     /**
      * Installs/updates [item], or - if it's already installed and up to date - launches it. For apps
      * that are only tracked, the source page opens instead (they are never installed from here).
      */
+    fun resumeDownload(item: StoreItem) {
+        downloader.resume(item.id)
+        viewModelScope.launch { installNow(item) }
+    }
+
     fun onAppActionClicked(item: StoreItem) {
+        if (downloader.progress.value[item.id]?.status == de.mm20.launcher2.store.installer.StoreDownloadStatus.Paused) {
+            resumeDownload(item)
+            return
+        }
         val o = options.item(item.id)
         if (item.installedVersionCode != null && !item.hasUpdate) {
             openApp(item.packageName)
@@ -254,13 +286,16 @@ class StoreViewModel : ViewModel(), KoinComponent {
             openUrl(StoreUrlParser.toUrl(item.source))
             return
         }
-        viewModelScope.launch { installNow(item) }
+        if (item.installedVersionCode != null && item.hasUpdate) requestUpdates(listOf(item))
+        else viewModelScope.launch { installNow(item) }
     }
 
     private suspend fun installNow(item: StoreItem) {
+        if (!activeInstalls.add(item.id)) return
+        try {
         setState(item.id, StoreInstallUiState.Downloading)
         val result = try {
-            actionHandler.install(item)
+            actionHandler.install(item) { setState(item.id, StoreInstallUiState.Installing) }
         } catch (e: kotlinx.coroutines.CancellationException) {
             setState(item.id, StoreInstallUiState.Idle)
             throw e
@@ -276,6 +311,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
                 _message.value = "${item.displayName}: ${action.reason}"
             }
         }
+        } finally { activeInstalls.remove(item.id) }
     }
 
     fun uninstall(item: StoreItem) = actionHandler.uninstall(item.packageName)
@@ -332,7 +368,11 @@ class StoreViewModel : ViewModel(), KoinComponent {
     fun import(uri: Uri) {
         viewModelScope.launch {
             val text = withContext(Dispatchers.IO) {
-                runCatching { context.contentResolver.openInputStream(uri)!!.bufferedReader().use { it.readText() } }.getOrNull()
+                runCatching {
+                    context.contentResolver.openInputStream(uri)!!.bufferedReader().use {
+                        de.mm20.launcher2.store.transfer.ObtainiumTransfer.readExport(it)
+                    }
+                }.getOrNull()
             }
             if (text == null) {
                 _message.value = str(R.string.au_store_msg_read_failed)
@@ -374,6 +414,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
                     displayName = app.label,
                     source = source,
                 )
+                options.update(item.id) { it.copy(autoUpdate = false) }
                 repository.insertItem(item)
                 found++
             }

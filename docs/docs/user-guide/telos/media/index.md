@@ -1,14 +1,16 @@
 # Telos Media
 
-Telos Media puts [Telos Music](../music/index.md), [Telos Radio](../radio/index.md), TV and [Telos Video](../video/index.md) in one app, as four spaces, plus a fifth one for Stremio add-ons.
+Telos Media combines local music, radio, YouTube Music, local video, YouTube, TV and Stremio Fork in one app.
 
 ## Switching spaces
 
-A pill at the top has five segments: **Music**, **Radio**, **Video**, **TV** and **Stremio Fork** (only the selected one shows its label, so all five icons always fit). Tap one to switch; long press a segment and drag it sideways to change the order (it is remembered); the last space you used is remembered
+A pill at the top has four groups: **Listen** (Music, Radio and YouTube Music), **Video** (local Video and YouTube), **TV** and **Stremio Fork**. Icons stay in the pill; the selected space has a large title directly underneath. Tap a group and select its source; long press a segment and drag it sideways to change the order (it is remembered); the last space you used is remembered
 (it is part of the launcher settings backup). The three older apps still exist and open Telos Media on their space, so existing
 shortcuts and search results keep working. A space whose app is hidden in the Store disappears from the pill.
 
 ## Shared mini player
+
+YouTube and YouTube Music use a shared native background player. Their optional [browser account panel](youtube-account.md) opens both websites in the same browser; it does not import that account into the native player.
 
 Music and Radio share one mini player at the bottom. It shows the title and artist (music) or the station (radio) with the artwork,
 play/pause, and next (music) or stop (radio). Tapping it opens the Music Now Playing screen, or the Radio space. It is hidden on the
@@ -61,7 +63,7 @@ The TV space plays live channels from the open [iptv-org](https://github.com/ipt
 
 ## Telos Media pill
 
-All four spaces are always offered in the pill; hiding the older Telos Music or Radio icons in the Store only removes those icons.
+All five spaces are offered as icons in the pill, with the selected space named in a large heading directly below it; hiding the older Telos Music or Radio icons in the Store only removes those icons.
 
 ## Notification controls
 
@@ -77,7 +79,7 @@ is used. **Telos is not affiliated with Stremio and this is not the Stremio app.
 Telos ships **no add-on** and hosts **no content**. An add-on is a small web service run by someone else; it decides which
 catalogs and streams you see, and Telos does not check them. You are responsible for what you add and watch, and for having the
 right to watch it where you live. Some add-ons use BitTorrent, which shows your IP address to the other users of the torrent
-(the add-on list and the stream list say so). The first time you open the space it shows a notice that you must accept.
+(the add-on list and the stream list say so). The first time you sign in, it shows a notice that you must accept.
 Streams of the torrent kind go through the same torrent player as Telos Video, so its Wi-Fi only setting and its VPN route apply.
 :::
 
@@ -101,16 +103,49 @@ Streams of the torrent kind go through the same torrent player as Telos Video, s
 - **Directory of add-ons:** **Browse add-ons** (in the add-ons sheet) lists add-ons offered by the directories of your installed
   add-ons (the `addon_catalog` part of the protocol) and by Stremio's public list of community add-ons (an address that
   Stremio can change or remove; then the list is shorter). They are made by others and are not checked by Telos or Stremio.
-- **Stremio account (optional):** sign in with your Stremio account to keep your **add-ons, library and continue watching** in
+- **Stremio account:** opening this space while signed out shows an explanation of Stremio Fork and the sign-in form immediately. Sign in with your Stremio account to keep your **add-ons, library and continue watching** in
   step with it, the way the Stremio apps back them up. Telos uses the same account service as the Stremio apps
   (`api.strem.io`), documented in Stremio's open-source core (MIT). Your password is sent once to Stremio and never stored; only
   the session key is kept, encrypted with the Android Keystore. Add-ons and library items are merged (nothing of the account is
   deleted by signing in), and changes made here are sent to the account; **Sync now** repeats the merge. This is **unofficial**:
   Stremio can change or block the service, and we have not been able to check its terms of use. If you want to stay clear of that,
-  do not sign in: everything works without an account.
+  you can use the other Telos Media spaces without signing in.
+
+Use **Stremio account** in the toolbar to sync or **Sign out**. Signing out returns to the sign-in form and clears Stremio watched indicators. **Trakt** in the toolbar opens the same account settings used by Telos Video.
+
+Movies display **Watched · Stremio**, **Watched · Trakt**, or both sources on posters and detail pages. Episode rows show the corresponding marks. Stremio episode marks follow its [watched-bitfield format](https://github.com/Stremio/stremio-watched-bitfield); merely starting playback is not counted as watched. Trakt marks match IMDb IDs and episode season/number, and work even when scrobbling is disabled. History refreshes on returning to this space and through **Sync now**. Trakt marks require a connected account and a catalog that supplies IMDb IDs.
 
 What is not there: Stremio's own streaming server (torrents use the torrent engine of Telos Video), the MPV player, add-on
 settings pages (add-ons that need configuration first must be configured in a browser, then added here with their address), the
 watch position of an item (Stremio shows a title in continue watching when its offset is above zero; Telos writes the smallest
-value and does not know the real position of a stream), and Android TV controls. Without an account the add-on list, library and
-history stay on this phone and are not part of the Telos backup.
+value and does not know the real position of a stream), and Android TV controls. The local add-on list, library and history are not part of the Telos backup.
+
+### Greek supplemental channels / Πρόσθετα ελληνικά κανάλια
+
+The supplemental greektvm3u source uses its current `main` branch. TV Refresh checks Free-TV and greektvm3u alongside the main catalog; temporarily offline extra channels remain listed for later retry. Sources are fetched on the device and their live availability or geographic restrictions still apply.
+
+Η «Ανανέωση» ελέγχει και τις πρόσθετες λίστες Free-TV και greektvm3u. Τα πρόσθετα κανάλια που είναι προσωρινά εκτός σύνδεσης παραμένουν στη λίστα για νέα δοκιμή. Η διαθεσιμότητα και τυχόν γεωγραφικοί περιορισμοί εξαρτώνται από την πηγή.
+
+
+## YouTube και YouTube Music
+
+Η Ακρόαση περιλαμβάνει μουσική συσκευής, ραδιόφωνο και YouTube Music. Τα Βίντεο περιλαμβάνουν την τοπική βιβλιοθήκη και το YouTube. Τηλεόραση και Stremio Fork παραμένουν ξεχωριστές επιλογές. Κάτω από το κεντρικό pill επιλέγετε πηγή και βλέπετε καθαρά την ενεργή ενότητα.
+
+Στο YouTube μπορείτε να αναζητήσετε ή να επικολλήσετε σύνδεσμο βίντεο. Οι δύο ενότητες μοιράζονται player και χειριστήρια ειδοποίησης/οθόνης κλειδώματος. Η αναπαραγωγή συνεχίζεται στο παρασκήνιο. Η σύνδεση λογαριασμού βρίσκεται ακόμη υπό ανάπτυξη· προς το παρόν η native αναζήτηση δεν απαιτεί λογαριασμό.
+
+Υλοποίηση βασισμένη σε επιλεγμένα GPL components του [Flow](https://github.com/Flow-Tube/Flow) και στο [NewPipeExtractor](https://github.com/TeamNewPipe/NewPipeExtractor). Η δυνατότητα εξαγωγής ροών εξαρτάται από τις αλλαγές του YouTube και δεν αντικαθιστά ολόκληρη την εφαρμογή Flow.
+
+### YouTube playback
+
+Choose YouTube Music under Listen or YouTube under Video. Search or paste a video link; both sources use one native Media3 session with background playback and notification controls. Account integration is still in development. The implementation adapts selected Flow components and uses NewPipeExtractor; it does not embed the whole Flow app.
+
+
+## Κοινός κάδος Telos
+
+Πριν από διαγραφή επιλέγετε μεταφορά στον κάδο ή οριστική διαγραφή. Τα τοπικά αρχεία μεταφέρονται ατομικά σε ιδιωτικό φάκελο του app στον ίδιο χώρο αποθήκευσης· αποτυχία μεταφοράς δεν διαγράφει το πρωτότυπο. Προεπιλεγμένη διατήρηση: 30 ημέρες, ρυθμιζόμενη σε 1–365 ημέρες για επόμενες διαγραφές. Οι ήδη αποθηκευμένες ημερομηνίες λήξης δεν αλλάζουν. Ο καθημερινός καθαρισμός αφαιρεί ληγμένα στοιχεία όταν το Android εκτελέσει την εργασία. Ο κάδος είναι διαθέσιμος από Files, Viewer και Media, με επαναφορά στην αρχική θέση χωρίς αντικατάσταση υπάρχοντος αρχείου.
+
+Χωρίς δικαίωμα πρόσβασης στο τοπικό αρχείο, φωτογραφίες/βίντεο/ήχος μπορούν να χρησιμοποιήσουν τον κάδο του Android (Android 11+), με συναίνεση του συστήματος και σταθερή διατήρηση 30 ημερών. Εμφανίζονται έως 1.000 στοιχεία του συστήματος που επιτρέπουν τα τρέχοντα δικαιώματα πολυμέσων. Remote/root/archive/vault πηγές και providers που δεν επιτρέπουν ασφαλή μεταφορά δεν έχουν γενικό κάδο· η οριστική διαγραφή ζητά επιβεβαίωση. Ο ιδιωτικός κάδος αφαιρείται όταν απεγκατασταθεί το Telos ή διαγραφούν τα δεδομένα του app.
+
+### Shared trash
+
+Files, Viewer and Media share a delete/trash choice and restore UI. Local files use an atomic same-volume move with durable metadata, a default 30-day retention configurable to 1–365 days for future deletions, and daily expiry cleanup. Restore never overwrites an existing file. Android-managed media trash uses the system’s fixed 30-day retention and permission dialog. Unsupported storages offer explicitly confirmed permanent deletion. The private trash is removed on app uninstall or app-data deletion.

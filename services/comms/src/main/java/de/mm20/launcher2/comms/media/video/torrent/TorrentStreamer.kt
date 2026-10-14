@@ -33,6 +33,12 @@ data class TorrentState(
     val peers: Int = 0,
     val downloadBytesPerSecond: Long = 0,
     val progress: Float = 0f,
+    val seeds: Int = 0,
+    val trackers: Int = 0,
+    val workingTrackers: Int = 0,
+    val failedTrackers: Int = 0,
+    val dhtNodes: Long = 0,
+    val elapsedSeconds: Long = 0,
     val message: String = "",
 ) {
     enum class Stage { Idle, FindingPeers, Ready, Failed }
@@ -54,6 +60,8 @@ object TorrentStreamer {
 
     @Volatile private var handle: TorrentHandle? = null
     @Volatile private var info: TorrentInfo? = null
+    @Volatile private var metadataHash: org.libtorrent4j.Sha1Hash? = null
+    @Volatile private var startedAt: Long = 0
     @Volatile private var saveDir: File? = null
     private var server: ServerSocket? = null
     private val sockets = java.util.Collections.synchronizedSet(HashSet<Socket>())
@@ -106,6 +114,12 @@ object TorrentStreamer {
                 if (!alive()) throw kotlinx.coroutines.CancellationException("The torrent was closed")
                 val sm = TorrentSession.acquire(context, this@TorrentStreamer)
 
+                startedAt = android.os.SystemClock.elapsedRealtime()
+                if (source.startsWith("magnet:", ignoreCase = true)) {
+                    val ec = org.libtorrent4j.swig.error_code()
+                    val params = org.libtorrent4j.swig.libtorrent.parse_magnet_uri(source, ec)
+                    if (ec.value() == 0) metadataHash = org.libtorrent4j.Sha1Hash(params.getInfo_hashes().get_best())
+                }
                 val data: ByteArray = when {
                     source.startsWith("magnet:", ignoreCase = true) ->
                         sm.fetchMagnet(source, 90, File(dir, "meta").apply { mkdirs() })
@@ -215,13 +229,26 @@ object TorrentStreamer {
     /** Updates the numbers shown in the player (peers, speed, progress). */
     fun refreshStatus() {
         if (closed) return
-        val h = handle ?: return
+        val currentGeneration = generation.get()
         runCatching {
-            val s = h.status()
+            val sm = TorrentSession.current() ?: return
+            // fetchMagnet owns a temporary handle while metadata is being discovered.
+            val h = handle ?: metadataHash?.let { sm.find(it) }
+            val status = h?.status()
+            val trackers = h?.trackers().orEmpty()
+            val working = trackers.count { t -> t.endpoints().any { it.infohashV1().isWorking() } }
+            val failed = trackers.count { t -> t.endpoints().any { it.infohashV1().fails() > 0 } }
+            if (closed || generation.get() != currentGeneration) return
             _state.value = _state.value.copy(
-                peers = s.numPeers(),
-                downloadBytesPerSecond = s.downloadPayloadRate().toLong(),
-                progress = s.progress(),
+                peers = status?.numPeers() ?: 0,
+                seeds = status?.numSeeds() ?: 0,
+                downloadBytesPerSecond = status?.downloadPayloadRate()?.toLong() ?: 0,
+                progress = status?.progress() ?: 0f,
+                trackers = trackers.size,
+                workingTrackers = working,
+                failedTrackers = failed,
+                dhtNodes = sm.dhtNodes(),
+                elapsedSeconds = if (startedAt == 0L) 0 else (android.os.SystemClock.elapsedRealtime() - startedAt) / 1000,
             )
         }
     }
@@ -400,6 +427,8 @@ object TorrentStreamer {
         TorrentSession.release(this)
         handle = null
         info = null
+        metadataHash = null
+        startedAt = 0
         saveDir?.let { dir -> Thread { runCatching { dir.deleteRecursively() } }.start() }
         saveDir = null
         _state.value = TorrentState()

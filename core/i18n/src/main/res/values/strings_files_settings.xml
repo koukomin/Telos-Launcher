@@ -1,0 +1,10 @@
+<resources>
+    <string name="telos_files_settings_transfer">Settings</string>
+    <string name="telos_files_settings_export">Export Files settings</string>
+    <string name="telos_files_settings_import">Import Files settings</string>
+    <string name="telos_files_settings_confirm">Replace display settings, bookmarks and open tabs? Connections, passwords and account tokens are not imported. Remote bookmarks require the matching connection on this device.</string>
+    <string name="telos_files_settings_exported">Files settings exported.</string>
+    <string name="telos_files_settings_imported">Files settings imported.</string>
+    <string name="telos_files_settings_failed">Cannot read or save Files settings. Check that the file is a valid Telos Files export.</string>
+    <string name="telos_files_settings_busy">Finish or cancel pending file transfers before importing settings.</string>
+</resources>

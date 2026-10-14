@@ -62,6 +62,7 @@ class StremioViewModel : ViewModel(), KoinComponent {
     private val client: StremioClient by inject()
     private val library: StremioLibrary by inject()
     private val account: StremioAccount by inject()
+    private val appContext: Context by inject()
 
     val addons: StateFlow<List<Addon>> get() = store.addons
     val noticeAccepted: StateFlow<Boolean> get() = store.noticeAccepted
@@ -92,6 +93,19 @@ class StremioViewModel : ViewModel(), KoinComponent {
 
     val accountEmail: StateFlow<String?> get() = account.email
     val accountBusy: StateFlow<Boolean> get() = account.busy
+    val accountWatched get() = account.watched
+    private val _traktVersion = MutableStateFlow(0)
+    val traktVersion: StateFlow<Int> get() = _traktVersion
+
+    fun refreshAccounts(context: Context, force: Boolean = false) {
+        viewModelScope.launch {
+            launch { if (account.signedIn) account.syncAll() }
+            launch {
+                de.mm20.launcher2.comms.media.video.trakt.Trakt.refreshWatched(context, force)
+                _traktVersion.value++
+            }
+        }
+    }
 
     fun signIn(email: String, password: String, onResult: (String?) -> Unit) {
         viewModelScope.launch {
@@ -102,6 +116,8 @@ class StremioViewModel : ViewModel(), KoinComponent {
     }
 
     fun signOut() {
+        closeDetail()
+        closeStreams()
         viewModelScope.launch { account.signOut() }
     }
 
@@ -109,6 +125,8 @@ class StremioViewModel : ViewModel(), KoinComponent {
     fun syncNow(onResult: (String?) -> Unit) {
         viewModelScope.launch {
             account.syncAll().onSuccess { onResult(null) }.onFailure { onResult(it.message ?: "Failed") }
+            de.mm20.launcher2.comms.media.video.trakt.Trakt.refreshWatched(appContext, force = true)
+            _traktVersion.value++
         }
     }
 

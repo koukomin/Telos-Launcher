@@ -243,13 +243,10 @@ fun VideoScreen() {
         )
     }
     confirmDelete?.let { video ->
-        AlertDialog(
-            onDismissRequest = { confirmDelete = null },
-            title = { Text(stringResource(R.string.vn_delete_video)) },
-            text = { Text(stringResource(R.string.vn_delete_confirm, video.fileName)) },
-            confirmButton = { TextButton(onClick = { confirmDelete = null; performDelete(video) }) { Text(stringResource(R.string.vn_delete_video)) } },
-            dismissButton = { TextButton(onClick = { confirmDelete = null }) { Text(stringResource(R.string.hc_cancel)) } },
-        )
+        de.mm20.launcher2.ui.trash.UriDeleteDialog(video.uri,
+            onDeleted = { ResumeStore.markUnwatched(context, video.uri); viewModel.load(context) },
+            onDismiss = { confirmDelete = null },
+            onPermanent = { performDelete(video) })
     }
     var showOpen by remember { mutableStateOf(false) }
     var showServices by remember { mutableStateOf(false) }

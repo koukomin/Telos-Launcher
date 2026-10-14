@@ -23,10 +23,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 /**
- * Queries `ContactsContract.CommonDataKinds.Phone` directly for a flat (id, name, number) list -
+ * Reads the full aggregated Contacts table, then attaches Data rows from every local account -
  * deliberately not routed through `:data:contacts`' `ContactRepository`, whose `search()` only
  * returns non-empty results for a 2+ character query and is built around `SavableSearchable`
- * rendering, not a dialer's "every contact with a phone number" list.
+ * rendering. Email-only contacts are retained and no account or visibility filter is applied.
  */
 internal class ContactDirectoryRepositoryImpl(
     private val context: Context,
@@ -45,7 +45,7 @@ internal class ContactDirectoryRepositoryImpl(
                         }
                     }
                     context.contentResolver.registerContentObserver(
-                        ContactsContract.Contacts.CONTENT_URI,
+                        android.net.Uri.parse("content://${ContactsContract.AUTHORITY}"),
                         true,
                         observer,
                     )
@@ -180,6 +180,19 @@ internal class ContactDirectoryRepositoryImpl(
         )
         val byId = LinkedHashMap<Long, Acc>()
 
+        // Seed from Contacts, not Phone: contacts from another account may have no phone row.
+        context.contentResolver.query(
+            ContactsContract.Contacts.CONTENT_URI,
+            arrayOf(ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME_PRIMARY,
+                ContactsContract.Contacts.PHOTO_URI, ContactsContract.Contacts.STARRED),
+            null, null, "${ContactsContract.Contacts.DISPLAY_NAME_PRIMARY} ASC",
+        )?.use { cursor ->
+            while (cursor.moveToNext()) {
+                val id = cursor.getLong(0)
+                byId[id] = Acc(cursor.getString(1).orEmpty(), cursor.getString(2), starred = cursor.getInt(3) != 0)
+            }
+        }
+
         val phoneProjection = arrayOf(
             ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
             ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY,
@@ -188,10 +201,10 @@ internal class ContactDirectoryRepositoryImpl(
             ContactsContract.CommonDataKinds.Phone.STARRED,
         )
         context.contentResolver.query(
-            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+            ContactsContract.Data.CONTENT_URI,
             phoneProjection,
-            null,
-            null,
+            "${ContactsContract.Data.MIMETYPE}=?",
+            arrayOf(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE),
             "${ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY} ASC",
         )?.use { cursor ->
             val idCol = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)
@@ -199,11 +212,11 @@ internal class ContactDirectoryRepositoryImpl(
             val numberCol = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
             val photoCol = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI)
             val starredCol = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.STARRED)
-            if (idCol < 0) return@withContext emptyList()
+            if (idCol < 0 || numberCol < 0) return@use
 
             while (cursor.moveToNext()) {
                 val id = cursor.getLong(idCol)
-                val name = cursor.getString(nameCol) ?: continue
+                val name = if (nameCol >= 0) cursor.getString(nameCol).orEmpty() else ""
                 val number = cursor.getString(numberCol) ?: continue
                 val photoUri = if (photoCol >= 0) cursor.getString(photoCol) else null
                 val starred = starredCol >= 0 && cursor.getInt(starredCol) != 0
@@ -218,10 +231,10 @@ internal class ContactDirectoryRepositoryImpl(
             ContactsContract.CommonDataKinds.Email.ADDRESS,
         )
         context.contentResolver.query(
-            ContactsContract.CommonDataKinds.Email.CONTENT_URI,
+            ContactsContract.Data.CONTENT_URI,
             emailProjection,
-            null,
-            null,
+            "${ContactsContract.Data.MIMETYPE}=?",
+            arrayOf(ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE),
             null,
         )?.use { cursor ->
             val idCol = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.CONTACT_ID)

@@ -123,6 +123,7 @@ fun StoreDashboardScreen(initialLink: String = "") {
 
     // an address that opened the Store is handled once, not again after a rotation
     var linkHandled by rememberSaveable(initialLink) { mutableStateOf(false) }
+    LaunchedEffect(Unit) { viewModel.checkAll() }
     LaunchedEffect(initialLink) {
         if (linkHandled) return@LaunchedEffect
         linkHandled = true
@@ -224,6 +225,7 @@ fun StoreDashboardScreen(initialLink: String = "") {
         }
     }
 
+    StoreUpdateConsent(viewModel)
     if (showAdd) AddAppDialog(viewModel, addPrefill) { showAdd = false }
     if (showSettings) StoreSettingsDialog(viewModel) { showSettings = false }
     if (showInstalled) InstalledAppsDialog(viewModel) { showInstalled = false }
@@ -250,28 +252,44 @@ private fun AppsTab(
 ) {
     Column(Modifier.fillMaxSize()) {
         de.mm20.launcher2.ui.component.TelosSearchBar(query, onQuery, stringResource(R.string.hf_store_search))
-        LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            items(StoreFilter.values().toList()) { f ->
-                FilterChip(
-                    selected = filter == f,
-                    onClick = { onFilter(f) },
-                    label = {
-                        Text(
-                            when (f) {
+        var showFilters by rememberSaveable { mutableStateOf(false) }
+        OutlinedButton(onClick = { showFilters = true }, modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+            Text(stringResource(R.string.telos_store_filters))
+        }
+        if (showFilters) AlertDialog(
+            onDismissRequest = { showFilters = false },
+            title = { Text(stringResource(R.string.telos_store_filters)) },
+            text = {
+                Column(Modifier.verticalScroll(rememberScrollState())) {
+                    StoreFilter.entries.forEach { f ->
+                        Row(Modifier.fillMaxWidth().clickable { onFilter(f) }, verticalAlignment = Alignment.CenterVertically) {
+                            androidx.compose.material3.RadioButton(selected = filter == f, onClick = { onFilter(f) })
+                            Text(when (f) {
                                 StoreFilter.All -> stringResource(R.string.hf_store_filter_all)
                                 StoreFilter.Updates -> stringResource(R.string.hf_store_filter_updates, updateCount)
                                 StoreFilter.Installed -> stringResource(R.string.hf_store_installed)
                                 StoreFilter.NotInstalled -> stringResource(R.string.hf_store_not_installed)
                                 StoreFilter.TrackOnly -> stringResource(R.string.hf_store_track_only)
+                            }, modifier = Modifier.weight(1f))
+                        }
+                    }
+                    if (categories.isNotEmpty()) {
+                        Text(stringResource(R.string.hc_category), style = MaterialTheme.typography.titleSmall)
+                        Row(Modifier.fillMaxWidth().clickable { onCategory(null) }, verticalAlignment = Alignment.CenterVertically) {
+                            androidx.compose.material3.RadioButton(selected = category == null, onClick = { onCategory(null) })
+                            Text(stringResource(R.string.hf_store_filter_all))
+                        }
+                        categories.forEach { c ->
+                            Row(Modifier.fillMaxWidth().clickable { onCategory(c) }, verticalAlignment = Alignment.CenterVertically) {
+                                androidx.compose.material3.RadioButton(selected = category == c, onClick = { onCategory(c) })
+                                Text(c, modifier = Modifier.weight(1f))
                             }
-                        )
-                    },
-                )
-            }
-            items(categories) { c ->
-                FilterChip(selected = category == c, onClick = { onCategory(if (category == c) null else c) }, label = { Text(c) })
-            }
-        }
+                        }
+                    }
+                }
+            },
+            confirmButton = { TextButton(onClick = { showFilters = false }) { Text(stringResource(R.string.hc_close)) } },
+        )
         if (updateCount > 0) {
             FilledTonalButton(onClick = onUpdateAll, modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
                 Text(stringResource(R.string.hc_update_all_count, updateCount))
@@ -397,6 +415,7 @@ internal fun StoreItemRow(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                 )
+                StoreTransferProgress(item.id)
             }
             Spacer(Modifier.width(8.dp))
             StoreActionButton(row, installState, onActionClick)
@@ -484,16 +503,25 @@ internal fun AppIcon(packageName: String, name: String, size: Int, installedVers
 
 @Composable
 internal fun StoreActionButton(row: StoreRow, state: StoreInstallUiState, onClick: () -> Unit) {
+    val downloader: de.mm20.launcher2.store.installer.Downloader = org.koin.compose.koinInject()
+    val transfers by downloader.progress.collectAsStateWithLifecycle()
+    val transfer = transfers[row.item.id]
+    val paused = transfer?.status == de.mm20.launcher2.store.installer.StoreDownloadStatus.Paused
+    if (state == StoreInstallUiState.Downloading || paused) {
+        OutlinedButton(onClick = {
+            if (paused) { downloader.resume(row.item.id); onClick() }
+            else downloader.pause(row.item.id)
+        }) { Text(stringResource(if (paused) R.string.telos_store_resume else R.string.telos_store_pause)) }
+        return
+    }
     when (state) {
-        StoreInstallUiState.Downloading, StoreInstallUiState.Installing -> {
-            OutlinedButton(onClick = {}, enabled = false) {
-                CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp)
-                Spacer(Modifier.width(8.dp))
-                Text(if (state == StoreInstallUiState.Downloading) stringResource(R.string.hf_store_downloading) else stringResource(R.string.hf_store_installing))
-            }
+        StoreInstallUiState.Installing -> OutlinedButton(onClick = {}, enabled = false) {
+            CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp)
+            Spacer(Modifier.width(8.dp))
+            Text(stringResource(R.string.hf_store_installing))
         }
         StoreInstallUiState.Failed -> OutlinedButton(onClick = onClick) { Text(stringResource(R.string.hc_retry)) }
-        StoreInstallUiState.Idle, StoreInstallUiState.Installed -> {
+        else -> {
             val label = row.actionLabel()
             if (row.isOpenAction()) OutlinedButton(onClick = onClick) { Text(label) } else Button(onClick = onClick) { Text(label) }
         }
@@ -568,9 +596,14 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
                             modifier = Modifier.padding(top = 10.dp),
                         )
                     }
-                    Text(app.description, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 10.dp))
+                    Text(when (app.key) {
+                        "telos_youtube_app://youtube", "telos_youtube_music_app://youtube_music" -> stringResource(R.string.telos_youtube_store_description)
+                        "telos_media_app://media" -> stringResource(R.string.telos_media_store_description)
+                        else -> app.description
+                    }, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 10.dp))
                     Text(
-                        app.features.joinToString(" · "),
+                        if (app.key.startsWith("telos_youtube")) stringResource(R.string.telos_youtube_store_features)
+                        else app.features.joinToString(" · "),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(top = 6.dp),

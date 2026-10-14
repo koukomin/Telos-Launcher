@@ -32,6 +32,9 @@
     <!-- === TELOS_PENDING_REVIEW_END: sms_and_radio_engine === -->
 
     <application>
+        <service android:name=".youtube.YouTubePlayerService" android:exported="true" android:foregroundServiceType="mediaPlayback">
+            <intent-filter><action android:name="androidx.media3.session.MediaSessionService" /></intent-filter>
+        </service>
         <service
             android:name=".sip.SipService"
             android:exported="false"

@@ -55,6 +55,7 @@ val dataStoreModule = module {
             options = get(),
             handler = get(),
             installer = get(),
+            tools = get(),
         )
     }
     single<de.mm20.launcher2.store.updater.StoreTools> {

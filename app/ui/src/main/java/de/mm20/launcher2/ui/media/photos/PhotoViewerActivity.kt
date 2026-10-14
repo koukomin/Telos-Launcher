@@ -148,7 +148,10 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
     val pager = rememberPagerState(initialPage = start) { uris.size }
     var chrome by remember { mutableStateOf(true) }
     var showInfo by remember { mutableStateOf(false) }
+    var confirmDelete by remember { mutableStateOf(false) }
     val current = uris[pager.currentPage]
+
+    if (confirmDelete) de.mm20.launcher2.ui.trash.UriDeleteDialog(current, onClose, { confirmDelete = false })
 
     // Action that needs write access; runs after the user granted it (API 30+) or immediately.
     var pendingWrite by remember { mutableStateOf<(() -> Unit)?>(null) }
@@ -211,8 +214,7 @@ private fun PhotoViewer(uris: List<Uri>, start: Int, onClose: () -> Unit) {
                 ViewerAction(R.drawable.info_24px, stringResource(R.string.hc_details)) { showInfo = true }
                 if (Build.VERSION.SDK_INT >= 30 && current.authority == MediaStore.AUTHORITY) {
                     ViewerAction(R.drawable.delete_24px, stringResource(R.string.hc_delete)) {
-                        val sender = MediaStore.createDeleteRequest(context.contentResolver, listOf(current)).intentSender
-                        deleteLauncher.launch(IntentSenderRequest.Builder(sender).build())
+                        confirmDelete = true
                     }
                 }
             }

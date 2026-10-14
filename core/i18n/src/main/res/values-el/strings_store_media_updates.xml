@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_torrent_connecting">Σύνδεση με το torrent</string>
+    <string name="telos_torrent_peers">Peers: %1$d · Seeds: %2$d</string>
+    <string name="telos_torrent_speed">Ταχύτητα λήψης: %1$d KiB/s</string>
+    <string name="telos_torrent_trackers">Trackers που απαντούν: %1$d / %2$d · Σφάλματα: %3$d</string>
+    <string name="telos_torrent_dht">Κόμβοι DHT: %1$d · Αναμονή: %2$d δευτ.</string>
+    <string name="telos_store_filters">Φίλτρα</string>
+    <string name="telos_store_paused">Η λήψη είναι σε παύση</string>
+    <string name="telos_store_waiting_network">Αναμονή σύνδεσης · Αυτόματη συνέχιση</string>
+    <string name="telos_store_transfer">%1$d KiB/s · Έχουν ληφθεί %2$d MiB</string>
+    <string name="telos_store_resume">Συνέχιση</string>
+    <string name="telos_store_pause">Παύση</string>
+    <string name="telos_store_auto_title">Αυτόματες ενημερώσεις</string>
+    <string name="telos_store_auto_explanation">Να ενεργοποιηθούν οι αυτόματες ενημερώσεις για τις επιλεγμένες εφαρμογές; Οι μελλοντικές ενημερώσεις εγκαθίστανται αυτόματα όταν το Shizuku ή το root επιτρέπει εγκατάσταση χωρίς επιβεβαίωση. Διαφορετικά θα λαμβάνεις ειδοποίηση ενημέρωσης. Μπορείς να αλλάξεις την επιλογή στις ρυθμίσεις κάθε εφαρμογής.</string>
+    <string name="telos_store_auto_enable">Ενεργοποίηση και ενημέρωση</string>
+    <string name="telos_store_update_once">Ενημέρωση μόνο τώρα</string>
+    <string name="telos_store_download_failed">Δεν ήταν δυνατή η λήψη του APK. Δοκίμασε ξανά για να συνεχιστεί η λήψη.</string>
+</resources>

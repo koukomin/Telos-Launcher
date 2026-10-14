@@ -35,6 +35,9 @@ class StremioAccount(
     private val _busy = MutableStateFlow(false)
     val busy: StateFlow<Boolean> get() = _busy
 
+    private val _watched = MutableStateFlow<Map<String, StremioWatched>>(emptyMap())
+    val watched: StateFlow<Map<String, StremioWatched>> get() = _watched
+
     private fun authKey(): String? =
         prefs.getString("key", null)?.let { runCatching { SecretBox.decrypt(it) }.getOrNull() }?.takeIf { it.isNotBlank() }
 
@@ -62,9 +65,13 @@ class StremioAccount(
     }
 
     suspend fun signOut() {
-        val key = authKey()
-        prefs.edit().clear().apply()
-        _email.value = null
+        val key = mutex.withLock {
+            val currentKey = authKey()
+            prefs.edit().clear().apply()
+            _email.value = null
+            _watched.value = emptyMap()
+            currentKey
+        }
         // ends the session on the server too; failing to do so changes nothing here
         if (key != null) runCatching { post("logout", JSONObject().put("type", "Logout").put("authKey", key)) }
     }
@@ -148,12 +155,17 @@ class StremioAccount(
         val saved = ArrayList<LibraryEntry>()
         val watching = ArrayList<WatchProgress>()
         val removed = HashMap<String, Long>()
+        val watched = HashMap<String, StremioWatched>()
         for (o in items) {
             val id = o.optString("_id")
             val type = o.optString("type")
             if (id.isBlank() || type == "other") continue
             val poster = nullIfBlank(o.optString("poster"))
             val state = o.optJSONObject("state")
+            if (state != null) watched[id] = StremioWatched(
+                movie = type == "movie" && (state.optInt("timesWatched") > 0 || state.optInt("flaggedWatched") > 0),
+                videos = nullIfBlank(state.optString("watched")),
+            )
             val isRemoved = o.optBoolean("removed")
             val temp = o.optBoolean("temp")
             val mtime = millis(o.optString("_mtime"))
@@ -168,6 +180,7 @@ class StremioAccount(
             }
         }
         library.mergeRemote(saved, watching, removed)
+        _watched.value = watched
         // titles saved only here go to the account
         val remoteIds = items.map { it.optString("_id") }.toSet()
         library.library.value.filter { it.id !in remoteIds }.forEach { e ->

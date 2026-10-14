@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_encrypt">Encrypt file</string>
+    <string name="telos_files_decrypt">Decrypt file</string>
+    <string name="telos_files_encryption_info">Create a separate password-protected file using authenticated AES-256-GCM. The original is kept. Use at least 8 characters when encrypting. Your password is not saved; losing it means losing access.</string>
+    <string name="telos_files_encryption_publish_note">Telos uses its own encrypted file format, not an encrypted ZIP. Existing files are never overwritten. A power loss while saving the result can leave an incomplete output file; keep the original until you verify the result.</string>
+    <string name="telos_files_encryption_output">Output filename</string>
+    <string name="telos_files_encryption_password">Password</string>
+    <string name="telos_files_encryption_confirm">Confirm password</string>
+    <string name="telos_files_encryption_failed">Could not complete the operation. Check the password, file integrity, available storage and write permission. The original has been kept.</string>
+</resources>

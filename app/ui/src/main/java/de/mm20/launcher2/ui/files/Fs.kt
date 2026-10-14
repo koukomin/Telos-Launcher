@@ -82,9 +82,10 @@ class LocalFs : Fs {
         if (to.exists() && !f.name.equals(newName, ignoreCase = true)) return false
         return f.renameTo(to)
     }
-    override fun delete(path: String) = File(path).deleteRecursively()
+    override fun delete(path: String) = runCatching { de.mm20.launcher2.helper.FileTreeOps.delete(File(path)) }.isSuccess
     override fun copy(src: String, dstDir: String, newName: String): Boolean = runCatching {
-        File(src).copyRecursively(File(dstDir, newName), overwrite = false)
+        FsOps.copyTree(File(src), File(dstDir, newName), CancelFlag()) {}
+        true
     }.getOrDefault(false)
     override fun move(src: String, dstDir: String, newName: String): Boolean {
         val from = File(src)
@@ -92,11 +93,16 @@ class LocalFs : Fs {
         if (to.exists()) return false // never replace what is there
         if (from.renameTo(to)) return true
         // another volume: copy, then remove the original
-        return runCatching { from.copyRecursively(to, overwrite = false) && from.deleteRecursively() }.getOrDefault(false)
+        return runCatching {
+            val plan = de.mm20.launcher2.helper.ResumableFileTransfer.plan(listOf(from), File(dstDir), true)
+            if (plan.entries.firstOrNull()?.destination != to.absolutePath) return@runCatching false
+            de.mm20.launcher2.helper.ResumableFileTransfer.execute(plan, {}, {}, { _, _ -> })
+            true
+        }.getOrDefault(false)
     }
     override fun chmod(path: String, mode: String) = false
     override fun exists(path: String) = File(path).exists()
-    override fun totalSize(path: String): Long = File(path).walkTopDown().filter { it.isFile }.sumOf { it.length() }
+    override fun totalSize(path: String): Long = FsOps.sizeOf(File(path))
     override fun openRead(path: String): java.io.InputStream = File(path).inputStream()
     override fun openWrite(path: String): java.io.OutputStream = File(path).outputStream()
 }
@@ -197,13 +203,16 @@ object FsOps {
 
     fun copyTree(src: File, dst: File, cancel: CancelFlag, progress: (Long) -> Unit) {
         if (cancel.cancelled) throw IOException("Cancelled")
+        if (Files.isSymbolicLink(src.toPath())) throw IOException("Cannot copy symbolic links")
         if (src.isDirectory) {
-            dst.mkdirs()
-            src.listFiles()?.forEach { copyTree(it, File(dst, it.name), cancel, progress) }
+            Files.createDirectory(dst.toPath())
+            Files.newDirectoryStream(src.toPath()).use { children -> children.forEach { copyTree(it.toFile(), File(dst, it.fileName.toString()), cancel, progress) } }
         } else {
+            var created = false
             try {
                 src.inputStream().use { input ->
-                    dst.outputStream().use { output ->
+                    Files.newOutputStream(dst.toPath(), java.nio.file.StandardOpenOption.WRITE, java.nio.file.StandardOpenOption.CREATE_NEW).use { output ->
+                        created = true
                         val buffer = ByteArray(256 * 1024)
                         while (true) {
                             if (cancel.cancelled) throw IOException("Cancelled")
@@ -215,7 +224,7 @@ object FsOps {
                     }
                 }
             } catch (e: Exception) {
-                dst.delete()
+                if (created) dst.delete()
                 throw e
             }
             dst.setLastModified(src.lastModified())
@@ -225,8 +234,9 @@ object FsOps {
     /** Copies a file or folder from one file system to another, through the phone. */
     fun copyAcross(src: Fs, srcPath: String, srcIsDir: Boolean, dst: Fs, dstPath: String, cancel: CancelFlag, progress: (Long) -> Unit) {
         if (cancel.cancelled) throw IOException("Cancelled")
+        if (dst.exists(dstPath)) throw IOException("Destination already exists")
         if (srcIsDir) {
-            dst.mkdir(parentOf(dstPath) ?: "/", nameOf(dstPath))
+            if (!dst.mkdir(parentOf(dstPath) ?: "/", nameOf(dstPath))) throw IOException("Cannot create destination folder")
             for (child in src.list(srcPath)) {
                 if (!isPlainName(child.name)) continue // a server could list "../../x" to write outside the target
                 copyAcross(src, child.path, child.isDir, dst, joinPath(dstPath, child.name), cancel, progress)
@@ -247,13 +257,15 @@ object FsOps {
                 }
             } catch (e: Exception) {
                 // a cancelled or failed copy must not leave a cut-off file behind (a server may even have stored it when the stream closed)
-                runCatching { dst.delete(dstPath) }
+                // Keep the partial rather than risk deleting a concurrently created destination.
                 throw e
             }
         }
     }
 
-    fun sizeOf(file: File): Long = if (file.isDirectory) file.walkTopDown().filter { it.isFile }.sumOf { it.length() } else file.length()
+    fun sizeOf(file: File, cancel: CancelFlag = CancelFlag()): Long = de.mm20.launcher2.helper.FileTreeOps.size(file) {
+        if (cancel.cancelled) throw IOException("Cancelled")
+    }
 
     /** Packs [sources] into a zip file at [target] */
     fun zip(sources: List<File>, target: File, cancel: CancelFlag, progress: (Long) -> Unit) {

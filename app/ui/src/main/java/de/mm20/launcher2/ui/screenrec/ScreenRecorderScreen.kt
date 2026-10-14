@@ -234,22 +234,10 @@ fun ScreenRecorderScreen() {
     }
 
     deleting?.let { rec ->
-        AlertDialog(
-            onDismissRequest = { deleting = null },
-            title = { Text(stringResource(R.string.voice_delete_title)) },
-            text = { Text(rec.name) },
-            confirmButton = {
-                TextButton(onClick = {
-                    runCatching {
-                        if (rec.uri.scheme == "file") File(rec.uri.path!!).delete() else context.contentResolver.delete(rec.uri, null, null)
-                    }
-                    deleting = null
-                    reload++
-                }) { Text(stringResource(R.string.voice_delete)) }
-            },
-            dismissButton = { TextButton(onClick = { deleting = null }) { Text(stringResource(R.string.voice_cancel)) } },
-        )
+        de.mm20.launcher2.ui.trash.UriDeleteDialog(rec.uri,
+            onDeleted = { reload++ }, onDismiss = { deleting = null })
     }
+
 }
 
 @Composable

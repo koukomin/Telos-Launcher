@@ -1,0 +1,8 @@
+<resources>
+    <string name="telos_files_sharing_title">Κοινή χρήση φακέλου στο τοπικό δίκτυο</string>
+    <string name="telos_files_sharing_description">Πρόσβαση μόνο για ανάγνωση μέσω ιδιωτικού συνδέσμου όσο αυτό το παράθυρο παραμένει ανοιχτό. Όποιος έχει τον σύνδεσμο στο τοπικό δίκτυό σου μπορεί να κατεβάσει αυτά τα αρχεία. Το HTTP δεν είναι κρυπτογραφημένο· χρησιμοποίησε έμπιστο δίκτυο. Η κοινή χρήση σταματά όταν το Telos περάσει στο παρασκήνιο. Ορισμένα συστήματα αρχείων δεν υποστηρίζουν ασφαλή κοινή χρήση.</string>
+    <string name="telos_files_sharing_start">Έναρξη κοινής χρήσης</string>
+    <string name="telos_files_sharing_stop">Διακοπή κοινής χρήσης</string>
+    <string name="telos_files_sharing_close">Κλείσιμο</string>
+    <string name="telos_files_sharing_failed">Δεν ήταν δυνατή η έναρξη. Συνδέσου σε τοπικό δίκτυο και επίλεξε υποστηριζόμενο τοπικό φάκελο.</string>
+</resources>

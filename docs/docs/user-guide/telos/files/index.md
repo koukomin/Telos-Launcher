@@ -9,13 +9,23 @@ Solid Explorer and MiXplorer (no code was copied).
 <Badge type="warning" text="Cryptomator (read only, experimental)" /> <Badge type="warning" text="root explorer (optional, untested)" />
 :::
 
+## Workspace and transfers
+
+Files remembers up to 16 folder tabs and its two-pane workspace. The settings menu exports/imports display options, bookmarks, toolbar shortcuts and workspace as validated JSON, without account credentials. Import is disabled while the local transfer queue has unfinished work.
+
+Local copy/move has a persistent queue, progress, pause/resume and up to 50 history entries. After an app restart, interrupted work is paused until you explicitly resume it. Cancelling retains completed copies and originals. Move removes only verified original files; newly added source files are retained. Network/archive/vault transfers do not yet have persistent resume; cross-provider moves conservatively retain their originals.
+
+Collections provide read-only recent files, bookmarks and file-type categories. Toolbar settings choose and order up to two optional shortcuts. Local folders can be shared read-only over HTTP during a visible foreground dialog, on a private LAN address with a random access link. Sharing stops when you close the dialog or background the app; it is not encrypted and requires filesystem support for secure directory-relative access.
+
 ## Pages in this section
 
 | Page | Contents |
 | --- | --- |
+| [Σύγκριση MiXplorer και Solid Explorer](./feature-comparison) | Αναλυτικός πίνακας δυνατοτήτων, ελλείψεων και σταδίων υλοποίησης |
 | [Browsing and file operations](./browsing) | Home page, drawer, breadcrumbs, views, sorting, search, selection, copy and paste, properties, opening files |
 | [Root explorer](./root) <Badge type="warning" text="root" /> | Superuser mode, warnings, permissions, remounting `/system` |
 | [Network and cloud storages](./network-cloud) | WebDAV, Nextcloud, ownCloud, SFTP, SMB, FTP, Dropbox, Google Drive, OneDrive, with per-provider client ID setup |
+| [Password file encryption](./password-encryption) | Chunked authenticated AES-GCM, private staging and explicit output limitations |
 | [Archives and Cryptomator vaults](./archives-vaults) | Browsing and unpacking archives, zip, read-only vaults |
 
 For how the code is organised see the developer page [Telos Files internals](../../../developer-guide/project-structure/telos-files).
@@ -93,12 +103,12 @@ and a paste bar "N items to copy" with **Paste here** or **Move here** and **Can
 
 ## Settings and stored state
 
-Telos Files has no settings screen. These choices are remembered in its private preferences:
+Telos Files has no separate settings screen. View, sorting and hidden-file choices are remembered per folder; defaults from earlier versions are preserved.
 
 | Setting | Where | Default | Effect |
 | --- | --- | --- | --- |
-| View | More > List view or Grid view | List | List or grid |
-| Sort | More > Sort by... | Name, ascending, folders first | Name, date, size or type |
+| View | View button | List | List or two grid sizes, remembered per folder |
+| Sort | More > Sort by... | Name, ascending, folders first | Name, date, size or type, remembered per folder |
 | Hidden files | More > Show hidden files | hidden | Shows entries starting with a dot |
 | Favorites | More > Add to favorites | none | Folders on the home page and in the drawer |
 | Connections | Settings > Integrations > Cloud and network storage, or drawer > Add or manage | none | See [Network and cloud](./network-cloud) |
@@ -135,3 +145,54 @@ Keystore, which does not leave the device. Cryptomator passwords are never store
 | The SD card is missing | Tap **Refresh** in the More menu to re-read the volumes |
 | A file opens in the wrong app | Telos opens pictures in Photos, videos in Video and documents in Telos Viewer. Others use Android's chooser |
 | Related apps | [Photos](../photos/), [Video](../video/) |
+
+## Καρτέλες και δύο πάνελ
+
+Η επάνω γραμμή ανοίγει νέες καρτέλες και ενεργοποιεί τα «Δύο πάνελ». Κάθε καρτέλα διατηρεί τον δικό της φάκελο και τις επιλογές της. Τα πάνελ εμφανίζονται δίπλα-δίπλα σε αρκετά μεγάλη οθόνη και το ένα πάνω από το άλλο σε μικρότερη. Το ενεργό πάνελ επισημαίνεται με το χρώμα του Telos. Copy/Cut/Paste μοιράζονται μεταξύ καρτελών. Με παρατεταμένο πάτημα και σύρσιμο μεταφέρετε επιλογή στο άλλο πάνελ και ο διάλογος ζητά αντιγραφή ή μετακίνηση πριν εκτελέσει την εργασία.
+
+Με επιλογή πολλών αρχείων, το μενού προσφέρει «Μαζική μετονομασία»: όνομα/επέκταση, αρίθμηση με padding, εύρεση και αντικατάσταση με προαιρετική κανονική έκφραση. Εμφανίζεται preview και ελέγχονται οι συγκρούσεις πριν ξεκινήσει η αλλαγή. Σε αποτυχία επιχειρείται επαναφορά των αρχικών ονομάτων· αν η πηγή δεν επιτρέψει την επαναφορά, εμφανίζεται σχετικό μήνυμα.
+
+
+## Ανάλυση χώρου και διπλότυπα
+
+Ανοίξτε τοπικό φάκελο και επιλέξτε «Ανάλυση χώρου» από το μενού. Θα δείτε χώρο ανά τύπο και τα δέκα μεγαλύτερα αρχεία. Η εύρεση πανομοιότυπων αρχείων συγκρίνει μέγεθος, SHA-256 και τελικά τα ίδια τα bytes. Πατήστε διαδρομή για να ανοίξετε τον φάκελο· δεν γίνεται αυτόματη διαγραφή. Η σάρωση δεν ακολουθεί symlinks, σταματά στις 50.000 εγγραφές και αναφέρει μερικά αποτελέσματα όταν υπάρχουν μη προσβάσιμοι φάκελοι. Κλείσιμο του διαλόγου ακυρώνει την εργασία. Δεν καλύπτει root, remote, archive ή vault φακέλους.
+
+### Storage analysis
+
+The local-folder menu offers storage analysis, the ten largest files and byte-verified duplicate groups. No files are automatically deleted. Scans are cancellable, skip symlinks and stop at 50,000 entries; inaccessible folders and limits produce an explicit partial-results note. Root, remote, archive and vault paths are excluded.
+
+
+## Κοινός κάδος Telos
+
+Πριν από διαγραφή επιλέγετε μεταφορά στον κάδο ή οριστική διαγραφή. Τα τοπικά αρχεία μεταφέρονται ατομικά σε ιδιωτικό φάκελο του app στον ίδιο χώρο αποθήκευσης· αποτυχία μεταφοράς δεν διαγράφει το πρωτότυπο. Προεπιλεγμένη διατήρηση: 30 ημέρες, ρυθμιζόμενη σε 1–365 ημέρες για επόμενες διαγραφές. Οι ήδη αποθηκευμένες ημερομηνίες λήξης δεν αλλάζουν. Ο καθημερινός καθαρισμός αφαιρεί ληγμένα στοιχεία όταν το Android εκτελέσει την εργασία. Ο κάδος είναι διαθέσιμος από Files, Viewer και Media, με επαναφορά στην αρχική θέση χωρίς αντικατάσταση υπάρχοντος αρχείου.
+
+Χωρίς δικαίωμα πρόσβασης στο τοπικό αρχείο, φωτογραφίες/βίντεο/ήχος μπορούν να χρησιμοποιήσουν τον κάδο του Android (Android 11+), με συναίνεση του συστήματος και σταθερή διατήρηση 30 ημερών. Εμφανίζονται έως 1.000 στοιχεία του συστήματος που επιτρέπουν τα τρέχοντα δικαιώματα πολυμέσων. Remote/root/archive/vault πηγές και providers που δεν επιτρέπουν ασφαλή μεταφορά δεν έχουν γενικό κάδο· η οριστική διαγραφή ζητά επιβεβαίωση. Ο ιδιωτικός κάδος αφαιρείται όταν απεγκατασταθεί το Telos ή διαγραφούν τα δεδομένα του app.
+
+### Shared trash
+
+Files, Viewer and Media share a delete/trash choice and restore UI. Local files use an atomic same-volume move with durable metadata, a default 30-day retention configurable to 1–365 days for future deletions, and daily expiry cleanup. Restore never overwrites an existing file. Android-managed media trash uses the system’s fixed 30-day retention and permission dialog. Unsupported storages offer explicitly confirmed permanent deletion. The private trash is removed on app uninstall or app-data deletion.
+
+
+Ο ίδιος διάλογος χρησιμοποιείται επίσης για εγγραφές ραδιοφώνου/φωνής/κλήσεων/οθόνης, ολοκληρωμένα αρχεία Downloads και το Delete στην ειδοποίηση screenshot. Οι εγγραφές κλήσεων παραμένουν κρυπτογραφημένες μέσα στον ιδιωτικό κάδο. Προσωρινά ή ημιτελή αρχεία εργασιών δεν αντιμετωπίζονται ως ολοκληρωμένα αρχεία χρήστη.
+
+The same deletion choice also covers radio/voice/call/screen recordings, completed download outputs and screenshot notification actions. Call recordings remain encrypted in the private trash. Temporary or unfinished transfer files are not treated as completed user files.
+
+
+## Προχωρημένη αναζήτηση και πληκτρολόγιο
+
+Το κουμπί φίλτρων προσφέρει τύπο, επεκτάσεις, μέγεθος σε KiB και συμπεριληπτικά όρια ημερομηνίας τροποποίησης (έτος-μήνας-ημέρα). Η τοπική αναζήτηση μπορεί να περιλαμβάνει υποφακέλους. Το προσωρινό index κρατά έως 50.000 εγγραφές και περίπου 16 MiB μεταδεδομένων συνολικά, για ένα λεπτό, χωρίς να ακολουθεί symlinks. Εμφανίζονται έως 300 αποτελέσματα· όρια, βάθος και μη αναγνώσιμοι φάκελοι σημαίνονται ως μερικά αποτελέσματα. Πατήστε Ανανέωση για επαναδημιουργία. Στο δίκτυο, στα archives και στα vaults τα φίλτρα καλύπτουν την τρέχουσα λίστα.
+
+| Συντόμευση | Ενέργεια |
+| --- | --- |
+| Ctrl+T / Ctrl+W | Νέα / κλείσιμο καρτέλας (η τελευταία παραμένει) |
+| Ctrl+Tab / Ctrl+Shift+Tab | Επόμενη / προηγούμενη καρτέλα |
+| Ctrl+F / Ctrl+R / Ctrl+H | Αναζήτηση / ανανέωση / κρυφά αρχεία |
+| Ctrl+A / Ctrl+C / Ctrl+X / Ctrl+V | Επιλογή όλων / αντιγραφή / αποκοπή / επικόλληση |
+| Ctrl+N / Alt+Up | Νέος φάκελος / πάνω φάκελος |
+| F2 / Delete / Escape | Μετονομασία / διάλογος διαγραφής / κλείσιμο αναζήτησης ή ακύρωση επιλογής |
+
+Οι συντομεύσεις επεξεργασίας στο πεδίο αναζήτησης παραμένουν διαθέσιμες για το κείμενο. Η οριστική τοπική διαγραφή συνδέσμου αφαιρεί μόνο τον σύνδεσμο. Η αντιγραφή μέσω τοπικού streaming δεν ακολουθεί symlinks και αρνείται υπάρχοντα αρχεία προορισμού.
+
+### Advanced search and input
+
+Local search supports type/extension, size and inclusive modified-date filters, optional subfolders, and a one-minute metadata cache bounded to 50,000 records and approximately 16 MiB. Results are capped at 300 and partial scans are labeled. Symlinks are not followed. Refresh invalidates the cache. Network, archive and vault filtering remains current-folder-only. Hardware shortcuts cover tabs, search, selection, copy/cut/paste, refresh, hidden files, folder creation, rename and confirmed deletion; search text-editing shortcuts are preserved. Internal panel drag-and-drop asks for copy or move. Permanent deletion unlinks symlinks without visiting targets, while streaming copy refuses symbolic links and existing destination files.

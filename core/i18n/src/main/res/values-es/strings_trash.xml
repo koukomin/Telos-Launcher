@@ -1,0 +1,18 @@
+<resources>
+    <string name="telos_trash_delete_title">¿Eliminar %1$d elementos?</string>
+    <string name="telos_trash_title">Papelera</string>
+    <string name="telos_trash_move">Mover a la papelera</string>
+    <string name="telos_trash_permanent">Eliminar permanentemente</string>
+    <string name="telos_trash_permanent_warning">La eliminación permanente no se puede deshacer.</string>
+    <string name="telos_trash_retention">Conservar en la papelera (días)</string>
+    <string name="telos_trash_retention_hint">Elige entre 1 y 365 días. Será el valor predeterminado para futuras eliminaciones. Las fechas de caducidad existentes no cambian. Los elementos caducados se eliminan durante la limpieza diaria.</string>
+    <string name="telos_trash_android_retention">Android gestiona esta papelera multimedia y conserva los elementos durante 30 días.</string>
+    <string name="telos_trash_unavailable">La papelera no está disponible para esta fuente. Solo se pueden eliminar los elementos permanentemente.</string>
+    <string name="telos_trash_moved">%1$d elementos movidos a la papelera</string>
+    <string name="telos_trash_move_failed">No se pudo completar la operación. Los elementos que no se pudieron mover permanecen en su ubicación original.</string>
+    <string name="telos_trash_restore">Restaurar</string>
+    <string name="telos_trash_restore_failed">No se pudo completar la operación. La restauración no sobrescribirá un archivo existente.</string>
+    <string name="telos_trash_empty">La papelera está vacía.</string>
+    <string name="telos_trash_expires">Caduca: %1$s</string>
+    <string name="telos_trash_working">Procesando archivo…</string>
+</resources>

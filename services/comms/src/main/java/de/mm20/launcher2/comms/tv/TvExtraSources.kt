@@ -45,7 +45,7 @@ class TvExtraSources(
     }
 
     /** Reads the cached playlists, updates those that are older than 12 hours, and merges them into the catalog. Silent. */
-    suspend fun load() {
+    suspend fun load(force: Boolean = false) {
         mutex.withLock {
             if (!isActive()) {
                 if (parsed.isNotEmpty()) parsed.clear()
@@ -58,7 +58,7 @@ class TvExtraSources(
                     runCatching {
                         var file = cache.usable(p.key, now)
                         var changed = parsed[p.key] == null
-                        if (file == null || now - cache.okAt(p.key) >= REFRESH_MS) {
+                        if (force || file == null || now - cache.okAt(p.key) >= REFRESH_MS) {
                             val outcome = cache.fetch(p.key, p.url, MAX_PLAYLIST_BYTES, "text/plain, */*")
                             if (outcome == TvExtraCache.Outcome.UPDATED) changed = true
                             file = cache.usable(p.key, now)
@@ -84,7 +84,7 @@ class TvExtraSources(
     companion object {
         private val PLAYLISTS = listOf(
             Playlist("freetv.m3u8", "https://raw.githubusercontent.com/Free-TV/IPTV/master/playlists/playlist_greece.m3u8", TvExtraMerge.LABEL_FREE_TV),
-            Playlist("greektvm3u.m3u", "https://raw.githubusercontent.com/filipposfilippides/greektvm3u/master/tv.m3u", TvExtraMerge.LABEL_GREEKTV),
+            Playlist("greektvm3u-main.m3u", "https://raw.githubusercontent.com/filipposfilippides/greektvm3u/main/tv.m3u", TvExtraMerge.LABEL_GREEKTV),
         )
         const val MAX_PLAYLIST_BYTES = 2L * 1024 * 1024
         const val MAX_ENTRIES = 1000

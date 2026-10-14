@@ -1,0 +1,11 @@
+<resources>
+    <string name="telos_files_analyze">Analyze storage</string>
+    <string name="telos_files_analyzing">Scanning files…</string>
+    <string name="telos_files_analysis_failed">The folder could not be analyzed.</string>
+    <string name="telos_files_analysis_total">%1$d files · %2$s</string>
+    <string name="telos_files_analysis_partial">Partial results: some folders were unreadable or the scan limit was reached.</string>
+    <string name="telos_files_largest">Largest files</string>
+    <string name="telos_files_find_duplicates">Find identical files</string>
+    <string name="telos_files_duplicates_count">%1$d groups of identical files</string>
+    <string name="telos_files_duplicates_hint">Files are compared byte for byte. Tap a path to open its folder. Nothing is deleted automatically. Up to 50 groups are shown.</string>
+</resources>

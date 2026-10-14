@@ -1,0 +1,14 @@
+<resources>
+    <string name="telos_files_search_filters">Filtros de búsqueda</string>
+    <string name="telos_files_search_extensions">Extensiones (por ejemplo: jpg, pdf)</string>
+    <string name="telos_files_search_minimum">Tamaño mínimo (KiB)</string>
+    <string name="telos_files_search_maximum">Tamaño máximo (KiB)</string>
+    <string name="telos_files_search_after">Modificado desde (AAAA-MM-DD)</string>
+    <string name="telos_files_search_before">Modificado hasta (AAAA-MM-DD)</string>
+    <string name="telos_files_search_recursive">Incluir subcarpetas</string>
+    <string name="telos_files_search_scope">La búsqueda local almacena los metadatos durante un minuto y no sigue enlaces simbólicos. Los filtros de red, archivos comprimidos y bóvedas se aplican a la carpeta actual. Actualiza para reconstruir el índice local.</string>
+    <string name="telos_files_search_invalid">Introduce tamaños y fechas válidos, con el valor mínimo anterior al máximo.</string>
+    <string name="telos_files_search_reset">Restablecer filtros</string>
+    <string name="telos_files_search_limited">Resultados parciales: hasta 300 coincidencias y 50.000 entradas indexadas. Algunas carpetas pueden ser ilegibles.</string>
+    <string name="telos_files_drop_title">¿Copiar o mover %1$d elementos aquí?</string>
+</resources>

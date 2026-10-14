@@ -47,6 +47,10 @@ class StoreToolsImpl(
     }
 
     override suspend fun findSourceForInstalled(packageName: String): AppSource? {
+        val recommended = de.mm20.launcher2.store.catalog.RecommendedApps.all.firstOrNull {
+            it.packageName == packageName && it.source !is AppSource.AffiliatePlayStore
+        }
+        if (recommended != null && registry.resolveLatestRelease(recommended.source).isSuccess) return recommended.source
         val fdroid = AppSource.FDroid(packageName)
         if (registry.resolveLatestRelease(fdroid).isSuccess) return fdroid
         val izzy = AppSource.FDroid(packageName, StoreUrlParser.IZZY_REPO)

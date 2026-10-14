@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="files_archive_split">Χωρισμός ZIP σε τμήματα</string>
+    <string name="files_archive_split_size">Μέγεθος τμήματος (MiB)</string>
+    <string name="files_archive_split_note">Κράτησε όλα τα τμήματα .z01, .z02… στον ίδιο φάκελο με το τελικό αρχείο .zip. Άνοιξε το .zip για περιήγηση ή αποσυμπίεση.</string>
+    <string name="files_archive_split_invalid">Πληκτρολόγησε ακέραιο αριθμό από 1 έως 4194304 MiB.</string>
+</resources>

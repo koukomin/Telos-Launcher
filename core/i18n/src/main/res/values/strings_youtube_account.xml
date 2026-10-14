@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_youtube_browser_account">Account in browser</string>
+    <string name="telos_youtube_browser_account_info">Open YouTube or YouTube Music and sign in on the official website. Both open in the same browser, so you can use the same Google account. Switch accounts or sign out from the website.</string>
+    <string name="telos_youtube_browser_native_limit">This sign-in applies to the browser websites. Telos playback continues without an account; your subscriptions, playlists and recommendations are not synced into Telos.</string>
+    <string name="telos_youtube_browser_unavailable">No compatible browser is available. Install or enable a browser that supports Custom Tabs.</string>
+    <string name="telos_youtube_browser_music">Open YouTube Music</string>
+    <string name="telos_youtube_browser_video">Open YouTube</string>
+    <string name="telos_youtube_browser_close">Close</string>
+    <string name="telos_youtube_player_error">Playback stopped. Try opening the item again or choose another video.</string>
+</resources>

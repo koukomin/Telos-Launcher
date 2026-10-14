@@ -137,14 +137,13 @@ object TvExtraMerge {
         }
         if (added.isEmpty() && pendings.isEmpty()) return base
 
-        val live = TvFailover.prune(bad, now)
         val channels = ArrayList<TvChannel>(base.size + pendings.size)
         for (c in base.all) {
             val more = added[c.id]
             channels.add(if (more == null) c else c.copy(streams = c.streams + more))
         }
         for (p in pendings.values) {
-            if (p.streams.all { it.url in live }) continue
+            // Keep an offline channel visible; playback failover tracks failed streams separately.
             channels.add(
                 TvChannel(
                     id = extraId(p.key),

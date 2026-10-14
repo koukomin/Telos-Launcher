@@ -5,6 +5,13 @@ import de.mm20.launcher2.store.fetcher.SourceFetcher
 import de.mm20.launcher2.store.model.AppSource
 import de.mm20.launcher2.store.model.ReleaseArtifact
 import io.ktor.client.HttpClient
+import io.ktor.client.request.prepareGet
+import io.ktor.client.request.header
+import io.ktor.client.statement.bodyAsChannel
+import io.ktor.utils.io.jvm.javaio.toInputStream
+import android.util.JsonReader
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
 /**
@@ -52,24 +59,78 @@ class FDroidFetcher(
     }
 
     private suspend fun fromIndex(repo: String, packageName: String): ReleaseArtifact {
-        val answer = httpClient.getText("$repo/index-v1.json", accept = "application/json")
-        if (!answer.ok) throw StoreFetchException("The repository answered ${answer.code}")
-        val root = JSONObject(answer.body)
-        val list = root.optJSONObject("packages")?.optJSONArray(packageName)
-            ?: throw StoreFetchException("$packageName is not in this repository")
+        val (list, suggested) = withContext(Dispatchers.IO) {
+            httpClient.prepareGet("$repo/index-v1.json") { header("Accept", "application/json") }.execute { response ->
+                if (response.status.value !in 200..299) throw StoreFetchException("The repository answered ${response.status}")
+                val channel = response.bodyAsChannel()
+                try {
+                    JsonReader(channel.toInputStream().reader(Charsets.UTF_8)).use { reader ->
+                        var versions: org.json.JSONArray? = null
+                        var suggested = 0L
+                        reader.beginObject()
+                        while (reader.hasNext()) when (reader.nextName()) {
+                            "apps" -> {
+                                reader.beginArray()
+                                while (reader.hasNext()) {
+                                    var pkg = ""; var code = 0L
+                                    reader.beginObject()
+                                    while (reader.hasNext()) when (reader.nextName()) {
+                                        "packageName" -> pkg = reader.nextString()
+                                        "suggestedVersionCode" -> code = reader.nextLong()
+                                        else -> reader.skipValue()
+                                    }
+                                    reader.endObject()
+                                    if (pkg == packageName) suggested = code
+                                }
+                                reader.endArray()
+                            }
+                            "packages" -> {
+                                reader.beginObject()
+                                while (reader.hasNext()) {
+                                    if (reader.nextName() != packageName) { reader.skipValue(); continue }
+                                    val selected = org.json.JSONArray()
+                                    reader.beginArray()
+                                    while (reader.hasNext()) {
+                                        if (selected.length() >= 1000) throw StoreFetchException("Too many versions of $packageName")
+                                        val build = JSONObject()
+                                        reader.beginObject()
+                                        while (reader.hasNext()) {
+                                            val field = reader.nextName()
+                                            when (field) {
+                                                "versionCode", "size", "added" -> build.put(field, reader.nextLong())
+                                                "versionName", "apkName" -> build.put(field, reader.nextString())
+                                                "nativecode" -> {
+                                                    val abis = org.json.JSONArray()
+                                                    reader.beginArray()
+                                                    while (reader.hasNext()) abis.put(reader.nextString())
+                                                    reader.endArray()
+                                                    build.put(field, abis)
+                                                }
+                                                else -> reader.skipValue()
+                                            }
+                                        }
+                                        reader.endObject()
+                                        selected.put(build)
+                                    }
+                                    reader.endArray()
+                                    versions = selected
+                                }
+                                reader.endObject()
+                            }
+                            else -> reader.skipValue()
+                        }
+                        reader.endObject()
+                        (versions ?: throw StoreFetchException("$packageName is not in this repository")) to suggested
+                    }
+                } finally { channel.cancel(null) }
+            }
+        }
         val abis = Build.SUPPORTED_ABIS.toSet()
         val builds = (0 until list.length()).map { list.getJSONObject(it) }.filter { b ->
             val native = b.optJSONArray("nativecode")
             native == null || native.length() == 0 || (0 until native.length()).any { native.getString(it) in abis }
         }
         if (builds.isEmpty()) throw StoreFetchException("No build of $packageName for this phone")
-        var suggested = 0L
-        root.optJSONArray("apps")?.let { apps ->
-            for (i in 0 until apps.length()) {
-                val a = apps.getJSONObject(i)
-                if (a.optString("packageName") == packageName) suggested = a.optLong("suggestedVersionCode", 0)
-            }
-        }
         val chosen = builds.firstOrNull { it.optLong("versionCode") == suggested } ?: builds.maxByOrNull { it.optLong("versionCode") }!!
         return ReleaseArtifact(
             version = chosen.optString("versionName"),

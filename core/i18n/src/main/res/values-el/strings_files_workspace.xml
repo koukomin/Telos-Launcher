@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_tab">Καρτέλα %1$d</string>
+    <string name="telos_files_new_tab">Νέα καρτέλα</string>
+    <string name="telos_files_two_panels">Δύο πάνελ</string>
+    <string name="telos_files_close_tab">Κλείσιμο καρτέλας %1$d</string>
+    <string name="telos_files_batch_rename">Μαζική μετονομασία</string>
+    <string name="telos_files_rename_tokens">Χρησιμοποίησε {name} για το αρχικό όνομα, {ext} για την επέκταση και {n:3} για αρίθμηση με τρία ψηφία. Έλεγξε την προεπισκόπηση πριν την εφαρμογή.</string>
+    <string name="telos_files_rename_pattern">Μοτίβο ονόματος</string>
+    <string name="telos_files_rename_start">Έναρξη αρίθμησης από</string>
+    <string name="telos_files_rename_find">Εύρεση στο αρχικό όνομα</string>
+    <string name="telos_files_rename_replace">Αντικατάσταση με</string>
+    <string name="telos_files_rename_regex">Κανονική έκφραση</string>
+    <string name="telos_files_rename_invalid">Μη έγκυρο μοτίβο ή αριθμός έναρξης</string>
+    <string name="telos_files_rename_collision">Τα ονόματα συγκρούονται μεταξύ τους ή με υπάρχοντα αρχεία. Δεν μετονομάστηκε κανένα αρχείο.</string>
+    <string name="telos_files_renamed">Μετονομάστηκαν %1$d αρχεία</string>
+    <string name="telos_files_rename_rolled_back">Η μετονομασία διακόπηκε. Επαναφέρθηκαν τα αρχικά ονόματα.</string>
+    <string name="telos_files_rename_partial">Δεν ήταν δυνατή η επαναφορά όλων των αρχείων. Έλεγξε τον φάκελο για αρχεία με πρόθεμα .telos-rename ή .telos-rollback.</string>
+    <string name="telos_files_task_busy">Περίμενε να ολοκληρωθεί η τρέχουσα εργασία ή χρησιμοποίησε άλλη καρτέλα.</string>
+</resources>

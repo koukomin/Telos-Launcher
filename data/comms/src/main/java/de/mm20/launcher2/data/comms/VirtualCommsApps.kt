@@ -238,6 +238,114 @@ internal class VirtualMusicApp(context: Context) : Application {
     }
 }
 
+internal class VirtualYouTubeApp(context: Context) : Application {
+
+    override val key: String = "$Domain://youtube"
+    override val label: String = "Telos YouTube"
+    override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
+    override val domain: String = Domain
+    override val score: ResultScore = ResultScore.Unspecified
+
+    override val componentName: ComponentName = ComponentName(
+        context.packageName,
+        "de.mm20.launcher2.comms.VirtualYouTubeApp",
+    )
+    override val isSuspended: Boolean = false
+    override val user: UserHandle = Process.myUserHandle()
+    override val versionName: String? = null
+
+    override val canUninstall: Boolean = false
+    override fun uninstall(context: Context) {}
+    override fun openAppDetails(context: Context) {}
+
+    override val canShareApk: Boolean = false
+
+    override fun overrideLabel(label: String): SavableSearchable = this
+
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return try {
+            val intent = Intent().apply {
+                setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_YOUTUBE)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent, options)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_youtube_fg) ?: return null
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(drawable, 1f),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF00796B.toInt()), 1f),
+        )
+    }
+
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
+
+    companion object {
+        const val Domain = "telos_youtube_app"
+    }
+}
+
+internal class VirtualYouTubeMusicApp(context: Context) : Application {
+
+    override val key: String = "$Domain://youtube_music"
+    override val label: String = "Telos YouTube Music"
+    override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
+    override val domain: String = Domain
+    override val score: ResultScore = ResultScore.Unspecified
+
+    override val componentName: ComponentName = ComponentName(
+        context.packageName,
+        "de.mm20.launcher2.comms.VirtualYouTubeMusicApp",
+    )
+    override val isSuspended: Boolean = false
+    override val user: UserHandle = Process.myUserHandle()
+    override val versionName: String? = null
+
+    override val canUninstall: Boolean = false
+    override fun uninstall(context: Context) {}
+    override fun openAppDetails(context: Context) {}
+
+    override val canShareApk: Boolean = false
+
+    override fun overrideLabel(label: String): SavableSearchable = this
+
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return try {
+            val intent = Intent().apply {
+                setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent, options)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_youtube_music_fg) ?: return null
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(drawable, 1f),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFF7B2FC9.toInt()), 1f),
+        )
+    }
+
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
+
+    companion object {
+        const val Domain = "telos_youtube_music_app"
+    }
+}
+
 internal class VirtualVideoApp(context: Context) : Application {
 
     override val key: String = "$Domain://video"
@@ -945,6 +1053,8 @@ internal class CommsVirtualAppProvider(private val context: Context) : VirtualAp
         VirtualPhoneApp(context),
         VirtualMessagesApp(context),
         VirtualMediaApp(context),
+        VirtualYouTubeApp(context),
+        VirtualYouTubeMusicApp(context),
         VirtualRadioApp(context),
         VirtualMusicApp(context),
         VirtualVideoApp(context),

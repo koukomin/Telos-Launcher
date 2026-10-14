@@ -1,0 +1,14 @@
+<resources>
+    <string name="telos_files_search_filters">Filtres de recherche</string>
+    <string name="telos_files_search_extensions">Extensions (par exemple : jpg, pdf)</string>
+    <string name="telos_files_search_minimum">Taille minimale (KiB)</string>
+    <string name="telos_files_search_maximum">Taille maximale (KiB)</string>
+    <string name="telos_files_search_after">Modifié depuis (AAAA-MM-JJ)</string>
+    <string name="telos_files_search_before">Modifié jusqu\'au (AAAA-MM-JJ)</string>
+    <string name="telos_files_search_recursive">Inclure les sous-dossiers</string>
+    <string name="telos_files_search_scope">La recherche locale conserve les métadonnées pendant une minute et ne suit pas les liens symboliques. Les filtres réseau, archives et coffres s\'appliquent au dossier actuel. Actualisez pour reconstruire l\'index local.</string>
+    <string name="telos_files_search_invalid">Saisissez des tailles et des dates valides, avec la valeur minimale avant la maximale.</string>
+    <string name="telos_files_search_reset">Réinitialiser les filtres</string>
+    <string name="telos_files_search_limited">Résultats partiels : au plus 300 correspondances et 50 000 entrées indexées. Certains dossiers peuvent être illisibles.</string>
+    <string name="telos_files_drop_title">Copier ou déplacer %1$d éléments ici ?</string>
+</resources>

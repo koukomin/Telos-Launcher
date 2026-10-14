@@ -1,0 +1,18 @@
+<resources>
+    <string name="telos_trash_delete_title">%1$d Elemente löschen?</string>
+    <string name="telos_trash_title">Papierkorb</string>
+    <string name="telos_trash_move">In den Papierkorb verschieben</string>
+    <string name="telos_trash_permanent">Endgültig löschen</string>
+    <string name="telos_trash_permanent_warning">Endgültiges Löschen kann nicht rückgängig gemacht werden.</string>
+    <string name="telos_trash_retention">Im Papierkorb aufbewahren (Tage)</string>
+    <string name="telos_trash_retention_hint">Wähle 1–365 Tage. Dies wird die Standardeinstellung für künftige Löschvorgänge. Bestehende Ablaufdaten bleiben unverändert. Abgelaufene Elemente werden bei der täglichen Bereinigung entfernt.</string>
+    <string name="telos_trash_android_retention">Android verwaltet diesen Medienpapierkorb und bewahrt Elemente 30 Tage lang auf.</string>
+    <string name="telos_trash_unavailable">Für diese Quelle ist kein Papierkorb verfügbar. Nur endgültiges Löschen ist möglich.</string>
+    <string name="telos_trash_moved">%1$d Elemente in den Papierkorb verschoben</string>
+    <string name="telos_trash_move_failed">Der Vorgang konnte nicht abgeschlossen werden. Elemente, die nicht verschoben werden konnten, bleiben an ihrem ursprünglichen Speicherort.</string>
+    <string name="telos_trash_restore">Wiederherstellen</string>
+    <string name="telos_trash_restore_failed">Der Vorgang konnte nicht abgeschlossen werden. Beim Wiederherstellen werden vorhandene Dateien nicht überschrieben.</string>
+    <string name="telos_trash_empty">Der Papierkorb ist leer.</string>
+    <string name="telos_trash_expires">Läuft ab: %1$s</string>
+    <string name="telos_trash_working">Datei wird verarbeitet…</string>
+</resources>

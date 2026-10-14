@@ -1,0 +1,18 @@
+<resources>
+    <string name="telos_trash_delete_title">Delete %1$d items?</string>
+    <string name="telos_trash_title">Trash</string>
+    <string name="telos_trash_move">Move to trash</string>
+    <string name="telos_trash_permanent">Delete permanently</string>
+    <string name="telos_trash_permanent_warning">Permanent deletion cannot be undone.</string>
+    <string name="telos_trash_retention">Keep in trash (days)</string>
+    <string name="telos_trash_retention_hint">Choose 1–365 days. This becomes the default for future deletions. Existing expiry dates stay unchanged. Expired items are removed during daily cleanup.</string>
+    <string name="telos_trash_android_retention">Android manages this media trash and keeps items for 30 days.</string>
+    <string name="telos_trash_unavailable">Trash is unavailable for this source. Only permanent deletion is possible.</string>
+    <string name="telos_trash_moved">%1$d items moved to trash</string>
+    <string name="telos_trash_move_failed">The operation could not be completed. Items that could not be moved remain in their original location.</string>
+    <string name="telos_trash_restore">Restore</string>
+    <string name="telos_trash_restore_failed">Could not complete the operation. Restore will not overwrite an existing file.</string>
+    <string name="telos_trash_empty">Trash is empty.</string>
+    <string name="telos_trash_expires">Expires: %1$s</string>
+    <string name="telos_trash_working">Processing file…</string>
+</resources>

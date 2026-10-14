@@ -27,6 +27,11 @@
 name: Build Release APK
 
 on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/build-release.yml'
+      - 'tools/release-validation-request.json'
   push:
     branches: [main]
     # αλλαγές μόνο σε κείμενα δεν βγάζουν νέα έκδοση
@@ -60,10 +65,10 @@ jobs:
           fetch-depth: 0
       - id: v
         run: |
-          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+          if [[ "$GITHUB_EVENT_NAME" == push && "$GITHUB_REF" == refs/tags/v* ]]; then
             echo "tag=$GITHUB_REF_NAME" >> "$GITHUB_OUTPUT"
             echo "publish=true" >> "$GITHUB_OUTPUT"
-          elif [[ "$GITHUB_REF" == refs/heads/main ]]; then
+          elif [[ "$GITHUB_EVENT_NAME" == push && "$GITHUB_REF" == refs/heads/main ]]; then
             LAST=$(git tag -l 'v*' | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1)
             # χωρίς κανένα tag ακόμα: συνεχίζει από το versionName της εφαρμογής
             LAST=${LAST:-v1.40.2}

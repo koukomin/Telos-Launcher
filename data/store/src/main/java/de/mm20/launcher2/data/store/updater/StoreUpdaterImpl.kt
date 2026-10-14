@@ -1,5 +1,7 @@
 package de.mm20.launcher2.data.store.updater
 
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.ensureActive
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -33,12 +35,16 @@ class StoreUpdaterImpl(
     private val options: StoreOptions,
     private val handler: StoreActionHandler,
     private val installer: AppInstaller,
+    private val tools: de.mm20.launcher2.store.updater.StoreTools,
 ) : StoreUpdater {
 
     private val dao = AppDatabase.getInstance(context).storeItemDao()
     private val prefs = context.getSharedPreferences("store_notified", Context.MODE_PRIVATE)
 
-    override suspend fun checkAll(background: Boolean): CheckSummary {
+    private val checkMutex = kotlinx.coroutines.sync.Mutex()
+
+    override suspend fun checkAll(background: Boolean): CheckSummary = checkMutex.withLock {
+        discoverInstalled()
         val items = repository.getAll()
         var failed = 0
         val updates = ArrayList<StoreItem>()
@@ -57,9 +63,10 @@ class StoreUpdaterImpl(
 
         val installed = ArrayList<StoreItem>()
         val global = options.global.value
-        if (background && global.autoInstall && updates.isNotEmpty() && installer.canInstallSilently()) {
+        if (background && updates.isNotEmpty() && installer.canInstallSilently()) {
             for (item in updates.toList()) {
-                if (options.item(item.id).trackOnly) continue
+                val itemOptions = options.item(item.id)
+                if (!de.mm20.launcher2.store.updater.StoreUpdatePolicy.automatic(itemOptions, global.autoInstall)) continue
                 if (handler.install(item) is StoreAction.Installed) {
                     installed += item
                     updates.remove(item)
@@ -67,7 +74,35 @@ class StoreUpdaterImpl(
             }
         }
         if (background && global.notifyUpdates) notify(updates, installed)
-        return CheckSummary(updates, installed, failed)
+        CheckSummary(updates, installed, failed)
+    }
+
+    /** Discover supported non-Play installs without opting them into automatic installation. */
+    private suspend fun discoverInstalled() = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+        val pm = context.packageManager
+        val tracked = repository.getAll().map { it.packageName }.toSet()
+        val now = System.currentTimeMillis()
+        val candidates = pm.getInstalledApplications(0).filter { app ->
+            app.flags and android.content.pm.ApplicationInfo.FLAG_SYSTEM == 0 &&
+                app.packageName != context.packageName && app.packageName !in tracked &&
+                now - prefs.getLong("discovery:${app.packageName}", 0) >= 24 * 60 * 60 * 1000L &&
+                runCatching {
+                    val installer = if (Build.VERSION.SDK_INT >= 30) pm.getInstallSourceInfo(app.packageName).installingPackageName
+                        else @Suppress("DEPRECATION") pm.getInstallerPackageName(app.packageName)
+                    de.mm20.launcher2.store.updater.StoreUpdatePolicy.discoverInstaller(installer)
+                }.getOrDefault(false)
+        }
+        for (app in candidates) {
+            kotlinx.coroutines.currentCoroutineContext().ensureActive()
+            val source = tools.findSourceForInstalled(app.packageName)
+            // Check each package at most daily; new packages are still discovered immediately.
+            prefs.edit().putLong("discovery:${app.packageName}", now).apply()
+            if (source == null || source is AppSource.AffiliatePlayStore) continue
+            val item = StoreItem(java.util.UUID.randomUUID().toString(), app.packageName,
+                pm.getApplicationLabel(app).toString(), source)
+            options.update(item.id) { it.copy(autoUpdate = false) }
+            repository.insertItem(item)
+        }
     }
 
     override suspend fun checkOne(item: StoreItem): Boolean = refresh(item) != null

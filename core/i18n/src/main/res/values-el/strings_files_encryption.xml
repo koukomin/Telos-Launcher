@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_encrypt">Κρυπτογράφηση αρχείου</string>
+    <string name="telos_files_decrypt">Αποκρυπτογράφηση αρχείου</string>
+    <string name="telos_files_encryption_info">Δημιούργησε ξεχωριστό αρχείο με κωδικό και κρυπτογράφηση AES-256-GCM με έλεγχο αυθεντικότητας. Το αρχικό διατηρείται. Χρησιμοποίησε τουλάχιστον 8 χαρακτήρες στην κρυπτογράφηση. Ο κωδικός δεν αποθηκεύεται· αν χαθεί, δεν θα έχεις πρόσβαση.</string>
+    <string name="telos_files_encryption_publish_note">Το Telos χρησιμοποιεί δική του μορφή κρυπτογραφημένου αρχείου, όχι κρυπτογραφημένο ZIP. Δεν αντικαθιστά υπάρχοντα αρχεία. Αν διακοπεί το ρεύμα κατά την αποθήκευση, το αποτέλεσμα μπορεί να είναι ελλιπές· κράτησε το αρχικό μέχρι να ελέγξεις το αποτέλεσμα.</string>
+    <string name="telos_files_encryption_output">Όνομα αρχείου εξόδου</string>
+    <string name="telos_files_encryption_password">Κωδικός</string>
+    <string name="telos_files_encryption_confirm">Επιβεβαίωση κωδικού</string>
+    <string name="telos_files_encryption_failed">Η ενέργεια δεν ολοκληρώθηκε. Έλεγξε τον κωδικό, την ακεραιότητα του αρχείου, τον διαθέσιμο χώρο και την άδεια εγγραφής. Το αρχικό αρχείο διατηρήθηκε.</string>
+</resources>

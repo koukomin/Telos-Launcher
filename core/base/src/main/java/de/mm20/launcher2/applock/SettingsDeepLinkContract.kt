@@ -19,6 +19,8 @@ object SettingsDeepLinkContract {
     const val EXTRA_SMS_ATTACHMENTS = "de.mm20.launcher2.settings.SMS_ATTACHMENTS"
     const val ROUTE_RADIO = "settings/radio"
     const val ROUTE_MUSIC = "settings/music"
+    const val ROUTE_YOUTUBE = "settings/youtube"
+    const val ROUTE_YOUTUBE_MUSIC = "settings/youtube_music"
     const val ROUTE_VIDEO = "settings/video"
     /** Telos Media: music, radio and video spaces in one app */
     const val ROUTE_MEDIA = "settings/media_hub"
@@ -42,5 +44,22 @@ object SettingsDeepLinkContract {
     const val ROUTE_NETWORK = "settings/network"
     /** Links (string array) to offer in the add sheet of Telos Downloads, from a share or an Open with */
     const val EXTRA_DOWNLOAD_URLS = "de.mm20.launcher2.settings.DOWNLOAD_URLS"
+    /** Stable identity for one Recents task per built-in app, independent of launch payload. */
+    fun virtualAppTaskId(route: String?, commsTab: String? = null): String? = when (route) {
+        ROUTE_COMMS -> if (commsTab == "messages") "messages" else "phone"
+        ROUTE_MEDIA, ROUTE_MUSIC, ROUTE_RADIO, ROUTE_VIDEO, ROUTE_YOUTUBE, ROUTE_YOUTUBE_MUSIC -> "media"
+        ROUTE_PHOTOS, ROUTE_VIEWER -> "viewer"
+        ROUTE_FILES -> "files"
+        ROUTE_STORE -> "store"
+        ROUTE_NETWORK -> "network"
+        ROUTE_CALCULATOR -> "calculator"
+        ROUTE_VOICE_RECORDER -> "voice_recorder"
+        ROUTE_SCREEN_RECORDER -> "screen_recorder"
+        ROUTE_SCREENSHOT -> "screenshot"
+        ROUTE_NOTES -> "notes"
+        ROUTE_CALENDAR -> "calendar"
+        ROUTE_DOWNLOADS -> "downloads"
+        else -> null
+    }
     // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===
 }

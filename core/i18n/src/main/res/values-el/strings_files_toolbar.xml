@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_toolbar_title">Προσαρμογή γραμμής εργαλείων</string>
+    <string name="telos_files_toolbar_info">Διάλεξε έως %1$d συντομεύσεις και άλλαξε τη σειρά τους. Η πλοήγηση, η αναζήτηση και το μενού παραμένουν διαθέσιμα. Όλες οι ενέργειες παραμένουν στο μενού.</string>
+    <string name="telos_files_toolbar_up">Μετακίνηση του %1$s προς τα πάνω</string>
+    <string name="telos_files_toolbar_down">Μετακίνηση του %1$s προς τα κάτω</string>
+    <string name="telos_files_toolbar_reset">Επαναφορά προεπιλογών</string>
+    <string name="telos_files_toolbar_save">Αποθήκευση</string>
+</resources>

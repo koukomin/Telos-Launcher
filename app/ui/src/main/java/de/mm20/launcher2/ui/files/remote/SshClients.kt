@@ -81,6 +81,7 @@ class SftpRemoteClient(private val connection: RemoteConnection, private val onF
             RemoteEntry(
                 name = it.name, path = it.path, isDir = it.isDirectory, size = it.attributes.size,
                 modified = it.attributes.mtime * 1000, permissions = mask(it.attributes.mode.permissionsMask),
+                isLink = it.attributes.type == net.schmizz.sshj.sftp.FileMode.Type.SYMLINK,
             )
         }
 

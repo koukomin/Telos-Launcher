@@ -167,10 +167,11 @@ object ScreenshotController {
             ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
-        val delete = PendingIntent.getBroadcast(
+        val delete = PendingIntent.getActivity(
             context, id + 200000,
-            Intent(context, ScreenshotActionReceiver::class.java).setAction(ScreenshotActionReceiver.ACTION_DELETE)
-                .putExtra(ScreenshotActionReceiver.EXTRA_URI, uri.toString()).putExtra(ScreenshotActionReceiver.EXTRA_ID, id),
+            Intent(context, de.mm20.launcher2.ui.trash.FileDeleteActivity::class.java)
+                .putExtra(de.mm20.launcher2.ui.trash.FileDeleteActivity.EXTRA_URI, uri.toString())
+                .putExtra(de.mm20.launcher2.ui.trash.FileDeleteActivity.EXTRA_NOTIFICATION_ID, id),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
         val thumb = Bitmap.createScaledBitmap(bitmap, 640, (640f * bitmap.height / bitmap.width).toInt().coerceAtLeast(1), true)
@@ -290,8 +291,12 @@ object ScreenshotController {
 class ScreenshotActionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != ACTION_DELETE) return
-        intent.getStringExtra(EXTRA_URI)?.let { ScreenshotStore.delete(context, Uri.parse(it)) }
-        context.getSystemService(NotificationManager::class.java).cancel(intent.getIntExtra(EXTRA_ID, 0))
+        intent.getStringExtra(EXTRA_URI)?.let { uri ->
+            context.startActivity(Intent(context, de.mm20.launcher2.ui.trash.FileDeleteActivity::class.java)
+                .putExtra(de.mm20.launcher2.ui.trash.FileDeleteActivity.EXTRA_URI, uri)
+                .putExtra(de.mm20.launcher2.ui.trash.FileDeleteActivity.EXTRA_NOTIFICATION_ID, intent.getIntExtra(EXTRA_ID, 0))
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }
     }
 
     companion object {

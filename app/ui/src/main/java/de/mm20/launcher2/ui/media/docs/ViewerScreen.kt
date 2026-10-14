@@ -390,6 +390,12 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
     var sort by rememberSaveable { mutableStateOf(DocSort.Date) }
     var query by rememberSaveable { mutableStateOf("") }
     var info by remember { mutableStateOf<DocTarget?>(null) }
+    var pendingDelete by remember { mutableStateOf<DocTarget?>(null) }
+    var showTrash by remember { mutableStateOf(false) }
+    if (showTrash) de.mm20.launcher2.ui.trash.TrashDialog({ showTrash = false }, { vm.scan(context) })
+    pendingDelete?.let { target -> de.mm20.launcher2.ui.trash.UriDeleteDialog(target.uri,
+        { vm.removeRecent(context, target.uri.toString()); vm.scan(context) }, { pendingDelete = null }) }
+
 
     val shown = remember(files, category, sort, query) {
         val base = files.orEmpty().filter { category == DocCategory.All || DocCategory.of(it.ext) == category }
@@ -447,6 +453,7 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
                 onValueChange = { query = it },
                 placeholder = stringResource(R.string.au20_viewer_search_hint),
                 trailing = {
+                    TextButton(onClick = { showTrash = true }) { Text(stringResource(R.string.telos_trash_title)) }
                     var sortMenu by remember { mutableStateOf(false) }
                     Box {
                         IconButton(onClick = { sortMenu = true }) {
@@ -583,6 +590,7 @@ internal fun DocumentsScreen(embedded: Boolean = false) {
                         onShare = { share(target) },
                         onOpenWith = { openWith(context, f.uri, f.name) },
                         onInfo = { info = target },
+                        onDelete = { pendingDelete = target },
                     )
                 }
                 item(key = "bottom") { Spacer(Modifier.navigationBarsPadding()) }
@@ -650,6 +658,7 @@ private fun DocRow(
     onShare: () -> Unit,
     onOpenWith: () -> Unit,
     onInfo: () -> Unit,
+    onDelete: () -> Unit,
 ) {
     val context = LocalContext.current
     val haptic = LocalHapticFeedback.current
@@ -686,7 +695,7 @@ private fun DocRow(
                 }
             }
         }
-        DocMenu(menu, { menu = false }, onShare, onOpenWith, onInfo, null)
+        DocMenu(menu, { menu = false }, onShare, onOpenWith, onInfo, null, onDelete)
     }
 }
 
@@ -742,6 +751,7 @@ private fun DocMenu(
     onOpenWith: () -> Unit,
     onInfo: () -> Unit,
     onRemove: (() -> Unit)?,
+    onDelete: (() -> Unit)? = null,
 ) {
     DropdownMenu(expanded = expanded, onDismissRequest = onDismiss) {
         DropdownMenuItem(
@@ -759,6 +769,8 @@ private fun DocMenu(
             leadingIcon = { Icon(painterResource(R.drawable.info_24px), contentDescription = null, modifier = Modifier.size(24.dp)) },
             onClick = { onDismiss(); onInfo() },
         )
+        if (onDelete != null) DropdownMenuItem(text = { Text(stringResource(R.string.hc_delete)) },
+            leadingIcon = { Icon(painterResource(R.drawable.delete_24px), null) }, onClick = { onDismiss(); onDelete() })
         if (onRemove != null) {
             DropdownMenuItem(
                 text = { Text(stringResource(R.string.au20_viewer_remove_recent)) },

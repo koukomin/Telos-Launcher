@@ -171,6 +171,9 @@ object CallAudioRecorder {
             .orEmpty()
     }
 
+    @Synchronized
+    fun isActiveFile(file: File): Boolean = _isRecording.value && outputFile?.absolutePath == file.absolutePath
+
     fun delete(file: File): Boolean = try {
         file.delete()
     } catch (_: Exception) {

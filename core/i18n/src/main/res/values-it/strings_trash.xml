@@ -1,0 +1,18 @@
+<resources>
+    <string name="telos_trash_delete_title">Eliminare %1$d elementi?</string>
+    <string name="telos_trash_title">Cestino</string>
+    <string name="telos_trash_move">Sposta nel cestino</string>
+    <string name="telos_trash_permanent">Elimina definitivamente</string>
+    <string name="telos_trash_permanent_warning">L\'eliminazione definitiva non può essere annullata.</string>
+    <string name="telos_trash_retention">Conserva nel cestino (giorni)</string>
+    <string name="telos_trash_retention_hint">Scegli da 1 a 365 giorni. Sarà il valore predefinito per le eliminazioni future. Le date di scadenza esistenti non cambiano. Gli elementi scaduti vengono rimossi durante la pulizia giornaliera.</string>
+    <string name="telos_trash_android_retention">Android gestisce questo cestino multimediale e conserva gli elementi per 30 giorni.</string>
+    <string name="telos_trash_unavailable">Il cestino non è disponibile per questa fonte. È possibile solo l\'eliminazione definitiva.</string>
+    <string name="telos_trash_moved">%1$d elementi spostati nel cestino</string>
+    <string name="telos_trash_move_failed">Impossibile completare l\'operazione. Gli elementi che non è stato possibile spostare rimangono nella posizione originale.</string>
+    <string name="telos_trash_restore">Ripristina</string>
+    <string name="telos_trash_restore_failed">Impossibile completare l\'operazione. Il ripristino non sovrascriverà un file esistente.</string>
+    <string name="telos_trash_empty">Il cestino è vuoto.</string>
+    <string name="telos_trash_expires">Scade: %1$s</string>
+    <string name="telos_trash_working">Elaborazione del file…</string>
+</resources>

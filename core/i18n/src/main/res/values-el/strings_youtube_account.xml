@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_youtube_browser_account">Λογαριασμός στον browser</string>
+    <string name="telos_youtube_browser_account_info">Άνοιξε το YouTube ή το YouTube Music και συνδέσου στην επίσημη ιστοσελίδα. Ανοίγουν στον ίδιο browser, ώστε να χρησιμοποιείς τον ίδιο λογαριασμό Google. Άλλαξε λογαριασμό ή αποσυνδέσου από την ιστοσελίδα.</string>
+    <string name="telos_youtube_browser_native_limit">Η σύνδεση ισχύει για τις ιστοσελίδες στον browser. Η αναπαραγωγή του Telos συνεχίζει χωρίς λογαριασμό· οι συνδρομές, οι λίστες αναπαραγωγής και οι προτάσεις σου δεν συγχρονίζονται στο Telos.</string>
+    <string name="telos_youtube_browser_unavailable">Δεν υπάρχει συμβατός browser. Εγκατάστησε ή ενεργοποίησε έναν browser που υποστηρίζει Custom Tabs.</string>
+    <string name="telos_youtube_browser_music">Άνοιγμα YouTube Music</string>
+    <string name="telos_youtube_browser_video">Άνοιγμα YouTube</string>
+    <string name="telos_youtube_browser_close">Κλείσιμο</string>
+    <string name="telos_youtube_player_error">Η αναπαραγωγή σταμάτησε. Δοκίμασε να ανοίξεις ξανά το στοιχείο ή διάλεξε άλλο βίντεο.</string>
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telos_files_tab">Tab %1$d</string>
+    <string name="telos_files_new_tab">New tab</string>
+    <string name="telos_files_two_panels">Two panels</string>
+    <string name="telos_files_close_tab">Close tab %1$d</string>
+    <string name="telos_files_batch_rename">Batch rename</string>
+    <string name="telos_files_rename_tokens">Use {name} for the original name, {ext} for its extension and {n:3} for a three-digit sequence. Preview the changes before applying.</string>
+    <string name="telos_files_rename_pattern">Name pattern</string>
+    <string name="telos_files_rename_start">Start numbering from</string>
+    <string name="telos_files_rename_find">Find in original name</string>
+    <string name="telos_files_rename_replace">Replace with</string>
+    <string name="telos_files_rename_regex">Regular expression</string>
+    <string name="telos_files_rename_invalid">Invalid name pattern or sequence number</string>
+    <string name="telos_files_rename_collision">Names conflict with each other or with existing files. No files were renamed.</string>
+    <string name="telos_files_renamed">%1$d files renamed</string>
+    <string name="telos_files_rename_rolled_back">The rename was interrupted. Original names were restored.</string>
+    <string name="telos_files_rename_partial">Some files could not be restored. Check the folder for files with a .telos-rename or .telos-rollback prefix.</string>
+    <string name="telos_files_task_busy">Wait for the current file operation to finish, or use another tab.</string>
+</resources>

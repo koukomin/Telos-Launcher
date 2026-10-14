@@ -93,6 +93,9 @@ class ArchiveFs(private val archive: File) : Fs {
     override val isRemote = true // copied by streaming, never as plain files
 
     private val items: List<ArchiveItem> by lazy { index() }
+    private val splitZip: Boolean by lazy {
+        kind == ArchiveKind.Zip && net.lingala.zip4j.ZipFile(archive).use { it.isSplitArchive }
+    }
     private val stamp: Long = archive.lastModified() + archive.length()
 
     /** A password that is being tried, before it is kept for the session */
@@ -191,6 +194,9 @@ class ArchiveFs(private val archive: File) : Fs {
                     add(name, e.isDirectory, e.size, if (e.hasLastModifiedDate) e.lastModifiedDate.time else 0L, e.isEncrypted7z())
                 }
             }
+            k == ArchiveKind.Zip && splitZip -> net.lingala.zip4j.ZipFile(archive).use { z ->
+                for (e in z.fileHeaders) add(e.fileName, e.isDirectory, e.uncompressedSize, e.lastModifiedTimeEpoch, e.isEncrypted)
+            }
             k == ArchiveKind.Zip -> ZipFile.builder().setFile(archive).get().use { z ->
                 for (e in z.entries) add(e.name, e.isDirectory, e.size, e.time, e.generalPurposeBit.usesEncryption())
             }
@@ -256,6 +262,21 @@ class ArchiveFs(private val archive: File) : Fs {
         }
         val k = kind
         when {
+            k == ArchiveKind.Zip && splitZip -> {
+                CryptZip(archive, pw ?: charArrayOf(), this::clean).use { reader ->
+                    net.lingala.zip4j.ZipFile(archive).use { zip ->
+                        for (entry in zip.fileHeaders) {
+                            if (cancel.cancelled) throw IOException("Cancelled")
+                            val dest = destination(entry.fileName) ?: continue
+                            if (entry.isDirectory) dest.mkdirs()
+                            else {
+                                if (entry.isEncrypted && pw == null) throw ArchivePasswordRequiredException()
+                                reader.open(clean(entry.fileName) ?: continue).use { input -> write(dest) { input.read(it) } }
+                            }
+                        }
+                    }
+                }
+            }
             k == ArchiveKind.Zip -> {
                 var crypt: CryptZip? = null
                 try {
@@ -330,9 +351,10 @@ class ArchiveFs(private val archive: File) : Fs {
         val pw = password
         when {
             k == ArchiveKind.Zip -> {
-                if (items.firstOrNull { it.path == wanted }?.encrypted == true) {
-                    if (pw == null) throw ArchivePasswordRequiredException()
-                    val crypt = CryptZip(archive, pw, this::clean)
+                val encrypted = items.firstOrNull { it.path == wanted }?.encrypted == true
+                if (splitZip || encrypted) {
+                    if (encrypted && pw == null) throw ArchivePasswordRequiredException()
+                    val crypt = CryptZip(archive, pw ?: charArrayOf(), this::clean)
                     return try {
                         val stream = crypt.open(wanted)
                         GuardedStream(stream, { it }, { crypt.close() })

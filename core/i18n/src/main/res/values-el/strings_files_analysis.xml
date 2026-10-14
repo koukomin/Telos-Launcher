@@ -1,0 +1,11 @@
+<resources>
+    <string name="telos_files_analyze">Ανάλυση χώρου</string>
+    <string name="telos_files_analyzing">Σάρωση αρχείων…</string>
+    <string name="telos_files_analysis_failed">Δεν ήταν δυνατή η ανάλυση του φακέλου.</string>
+    <string name="telos_files_analysis_total">%1$d αρχεία · %2$s</string>
+    <string name="telos_files_analysis_partial">Μερικά αποτελέσματα: ορισμένοι φάκελοι δεν διαβάστηκαν ή συμπληρώθηκε το όριο σάρωσης.</string>
+    <string name="telos_files_largest">Μεγαλύτερα αρχεία</string>
+    <string name="telos_files_find_duplicates">Εύρεση πανομοιότυπων αρχείων</string>
+    <string name="telos_files_duplicates_count">%1$d ομάδες πανομοιότυπων αρχείων</string>
+    <string name="telos_files_duplicates_hint">Τα αρχεία συγκρίνονται byte προς byte. Πατήστε μια διαδρομή για να ανοίξετε τον φάκελό της. Δεν διαγράφεται τίποτα αυτόματα. Εμφανίζονται έως 50 ομάδες.</string>
+</resources>

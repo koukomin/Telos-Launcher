@@ -1,0 +1,14 @@
+<resources>
+    <string name="telos_files_search_filters">Search filters</string>
+    <string name="telos_files_search_extensions">Extensions (for example: jpg, pdf)</string>
+    <string name="telos_files_search_minimum">Minimum size (KiB)</string>
+    <string name="telos_files_search_maximum">Maximum size (KiB)</string>
+    <string name="telos_files_search_after">Modified from (YYYY-MM-DD)</string>
+    <string name="telos_files_search_before">Modified until (YYYY-MM-DD)</string>
+    <string name="telos_files_search_recursive">Include subfolders</string>
+    <string name="telos_files_search_scope">Local search caches metadata for one minute and never follows symbolic links. Network, archive and vault filters apply to the current folder. Refresh to rebuild the local index.</string>
+    <string name="telos_files_search_invalid">Enter valid sizes and dates, with the minimum before the maximum.</string>
+    <string name="telos_files_search_reset">Reset filters</string>
+    <string name="telos_files_search_limited">Partial results: at most 300 matches and 50,000 indexed entries. Some folders may be unreadable.</string>
+    <string name="telos_files_drop_title">Copy or move %1$d items here?</string>
+</resources>

@@ -1,10 +1,11 @@
 package de.mm20.launcher2.data.store.fetcher
 
 import io.ktor.client.HttpClient
-import io.ktor.client.request.get
+import io.ktor.client.request.prepareGet
 import io.ktor.client.request.header
 import io.ktor.client.request.url
-import io.ktor.client.statement.bodyAsText
+import io.ktor.client.statement.bodyAsChannel
+import io.ktor.utils.io.readAvailable
 
 /** A source could not give a release; [message] says why in words for the user. */
 class StoreFetchException(message: String, cause: Throwable? = null) : Exception(message, cause)
@@ -24,13 +25,28 @@ internal suspend fun HttpClient.getText(
     bearer: String? = null,
 ): HttpText {
     try {
-        val response = get {
+        return prepareGet {
             url(url)
             header("User-Agent", "Telos Store")
             accept?.let { header("Accept", it) }
             bearer?.takeIf { it.isNotBlank() }?.let { header("Authorization", "Bearer $it") }
+        }.execute { response ->
+            val limit = 4 * 1024 * 1024
+            if ((response.headers["Content-Length"]?.toLongOrNull() ?: 0) > limit)
+                throw StoreFetchException("The source response is too large")
+            val channel = response.bodyAsChannel()
+            val output = java.io.ByteArrayOutputStream()
+            try {
+                val buffer = ByteArray(16 * 1024)
+                while (true) {
+                    val read = channel.readAvailable(buffer, 0, buffer.size)
+                    if (read < 0) break
+                    if (output.size() + read > limit) throw StoreFetchException("The source response is too large")
+                    output.write(buffer, 0, read)
+                }
+                HttpText(response.status.value, output.toString(Charsets.UTF_8.name()))
+            } finally { channel.cancel(null) }
         }
-        return HttpText(response.status.value, response.bodyAsText())
     } catch (e: kotlinx.coroutines.CancellationException) {
         throw e
     } catch (e: Exception) {

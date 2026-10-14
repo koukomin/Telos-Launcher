@@ -1,0 +1,8 @@
+<resources>
+    <string name="telos_files_sharing_title">Share folder on local network</string>
+    <string name="telos_files_sharing_description">Read-only access through a private link while this window remains open. Anyone with the link on your local network can download these files. HTTP is unencrypted; use a trusted network. Sharing stops when Telos goes into the background. Some filesystems do not support secure sharing.</string>
+    <string name="telos_files_sharing_start">Start sharing</string>
+    <string name="telos_files_sharing_stop">Stop sharing</string>
+    <string name="telos_files_sharing_close">Close</string>
+    <string name="telos_files_sharing_failed">Sharing could not start. Connect to a local network and select a supported local folder.</string>
+</resources>

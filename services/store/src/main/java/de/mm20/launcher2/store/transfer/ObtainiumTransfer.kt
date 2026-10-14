@@ -6,6 +6,7 @@ import de.mm20.launcher2.store.options.ItemOptions
 import de.mm20.launcher2.store.parser.StoreUrlParser
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.Reader
 
 /** One app read from an Obtainium export. */
 data class ImportedApp(
@@ -22,6 +23,19 @@ data class ImportedApp(
  * can be moved from Obtainium to Telos and back.
  */
 object ObtainiumTransfer {
+    private const val MaxExportCharacters = 4 * 1024 * 1024
+
+    /** Enforce the parser limit while reading, before a large provider file fills the heap. */
+    fun readExport(reader: Reader): String {
+        val text = StringBuilder()
+        val buffer = CharArray(8192)
+        while (true) {
+            val count = reader.read(buffer, 0, minOf(buffer.size, MaxExportCharacters - text.length + 1))
+            if (count < 0) return text.toString()
+            require(count <= MaxExportCharacters - text.length) { "Obtainium export is too large" }
+            text.append(buffer, 0, count)
+        }
+    }
 
     fun export(items: List<StoreItem>, options: (String) -> ItemOptions): String {
         val apps = JSONArray()
@@ -65,8 +79,13 @@ object ObtainiumTransfer {
 
     /** Apps of the file whose address Telos understands, and how many it could not use. */
     fun parse(text: String): Pair<List<ImportedApp>, Int> {
-        val root = JSONObject(text)
-        val array = root.optJSONArray("apps") ?: return emptyList<ImportedApp>() to 0
+        require(text.length <= MaxExportCharacters) { "Obtainium export is too large" }
+        val trimmed = text.trim()
+        val array = if (trimmed.startsWith("[")) JSONArray(trimmed) else {
+            val root = JSONObject(trimmed)
+            root.optJSONArray("apps") ?: if (root.has("url")) JSONArray().put(root)
+            else throw IllegalArgumentException("No app configurations in this export")
+        }
         val result = ArrayList<ImportedApp>()
         var unsupported = 0
         for (i in 0 until array.length()) {
@@ -97,6 +116,7 @@ object ObtainiumTransfer {
                 name = settings.optString("appName").ifBlank { o.optString("name").ifBlank { parsed.suggestedName } },
                 source = source,
                 options = ItemOptions(
+                    autoUpdate = false,
                     trackOnly = settings.optBoolean("trackOnly", false),
                     pinned = o.optBoolean("pinned", false),
                     excludeFromBackground = settings.optBoolean("exemptFromBackgroundUpdates", false),

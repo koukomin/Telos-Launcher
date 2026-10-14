@@ -89,9 +89,29 @@ fun StremioScreen() {
     val detail by vm.detail.collectAsStateWithLifecycle()
     val streams by vm.streams.collectAsStateWithLifecycle()
     var showAddons by remember { mutableStateOf(false) }
+    var showAccount by remember { mutableStateOf(false) }
+    var showTrakt by remember { mutableStateOf(false) }
+    val email by vm.accountEmail.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    androidx.compose.runtime.LaunchedEffect(email) {
+        if (email == null) {
+            showAccount = false
+            showAddons = false
+        }
+    }
+    val lifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle
+    androidx.compose.runtime.DisposableEffect(lifecycle, vm) {
+        val observer = androidx.lifecycle.LifecycleEventObserver { _, event ->
+            if (event == androidx.lifecycle.Lifecycle.Event.ON_RESUME) vm.refreshAccounts(context, force = true)
+        }
+        lifecycle.addObserver(observer)
+        onDispose { lifecycle.removeObserver(observer) }
+    }
 
     MediaFrame(stringResource(R.string.au22_stremio_label), actions = {
-        if (accepted) {
+        if (email != null) TextButton(onClick = { showAccount = true }) { Text(stringResource(R.string.au22_stremio_account)) }
+        TextButton(onClick = { showTrakt = true }) { Text(stringResource(R.string.au7_trakt_title)) }
+        if (accepted && email != null) {
             IconButton(onClick = { showAddons = true }) {
                 Icon(painterResource(R.drawable.extension_24px), contentDescription = stringResource(R.string.au22_stremio_addons))
             }
@@ -99,6 +119,10 @@ fun StremioScreen() {
     }) {
         Box(Modifier.fillMaxSize()) {
             when {
+                email == null -> Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    Text(stringResource(R.string.au22_stremio_fork_intro), style = MaterialTheme.typography.bodyLarge)
+                    AccountSection(vm)
+                }
                 !accepted -> NoticeCard(onAccept = { vm.acceptNotice() })
                 addons.isEmpty() -> EmptyAddons(vm)
                 else -> StremioHome(vm)
@@ -109,7 +133,12 @@ fun StremioScreen() {
         }
     }
 
-    if (showAddons) AddonsSheet(vm, onDismiss = { showAddons = false })
+    if (showAccount && email != null) AccountSheet(vm) { showAccount = false }
+    if (showTrakt) de.mm20.launcher2.ui.media.video.TraktDialog {
+        showTrakt = false
+        vm.refreshAccounts(context, force = true)
+    }
+    if (showAddons && email != null) AddonsSheet(vm, onDismiss = { showAddons = false })
     streams?.let { s -> StreamsSheet(vm, s) }
 }
 
@@ -197,7 +226,7 @@ private fun StremioHome(vm: StremioViewModel) {
                         RowTitle(stringResource(R.string.au22_stremio_continue))
                         LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                             items(watching, key = { it.id }) { p ->
-                                Poster(MetaPreview(p.id, p.type, p.name, p.poster), caption = p.videoTitle, onClick = { vm.openProgress(p) })
+                                Poster(vm, MetaPreview(p.id, p.type, p.name, p.poster), caption = p.videoTitle, onClick = { vm.openProgress(p) })
                             }
                         }
                     }
@@ -212,7 +241,7 @@ private fun StremioHome(vm: StremioViewModel) {
                             Text(stringResource(R.string.au22_stremio_no_results), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(horizontal = 16.dp))
                         } else {
                             LazyRow(contentPadding = PaddingValues(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                                items(list, key = { it.id }) { m -> Poster(m, onClick = { vm.open(m) }) }
+                                items(list, key = { it.id }) { m -> Poster(vm, m, onClick = { vm.open(m) }) }
                             }
                         }
                     }
@@ -228,7 +257,7 @@ private fun StremioHome(vm: StremioViewModel) {
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalArrangement = Arrangement.spacedBy(14.dp),
                 ) {
-                    gridItems(saved, key = { it.id }) { e -> Poster(MetaPreview(e.id, e.type, e.name, e.poster), onClick = { vm.openSaved(e) }, fillWidth = true) }
+                    gridItems(saved, key = { it.id }) { e -> Poster(vm, MetaPreview(e.id, e.type, e.name, e.poster), onClick = { vm.openSaved(e) }, fillWidth = true) }
                 }
             }
         }
@@ -241,7 +270,7 @@ private fun RowTitle(text: String) {
 }
 
 @Composable
-private fun Poster(item: MetaPreview, onClick: () -> Unit, caption: String? = null, fillWidth: Boolean = false) {
+private fun Poster(vm: StremioViewModel, item: MetaPreview, onClick: () -> Unit, caption: String? = null, fillWidth: Boolean = false) {
     val ratio = when (item.posterShape) {
         "landscape" -> 1.77f
         "square" -> 1f
@@ -253,6 +282,7 @@ private fun Poster(item: MetaPreview, onClick: () -> Unit, caption: String? = nu
         Box(Modifier.fillMaxWidth().aspectRatio(ratio).clip(RoundedCornerShape(8.dp)).background(MaterialTheme.colorScheme.surfaceContainerHigh)) {
             AsyncImage(model = item.poster, contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
         }
+        if (item.type == "movie") WatchMark(vm, item.id)
         Text(item.name, style = MaterialTheme.typography.labelLarge, maxLines = 2, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 6.dp))
         if (caption != null) Text(caption, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
         else if (item.releaseInfo != null) Text(item.releaseInfo!!, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
@@ -283,6 +313,7 @@ private fun DetailPage(vm: StremioViewModel, d: DetailState) {
             }
             Column(Modifier.padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(meta?.name ?: preview.name, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+                if (preview.type == "movie") WatchMark(vm, preview.id)
                 if (meta == null) {
                     CircularProgressIndicator(Modifier.size(24.dp), strokeWidth = 2.dp)
                 } else {
@@ -337,6 +368,7 @@ private fun Episodes(vm: StremioViewModel, meta: Meta) {
                 }
                 Column(Modifier.weight(1f)) {
                     Text(listOfNotNull(v.episode?.toString(), v.title).joinToString(". "), style = MaterialTheme.typography.bodyLarge, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                    WatchMark(vm, meta.id, v.id, meta.videos.map { it.id }, v.season, v.episode)
                     v.overview?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis) }
                 }
             }
@@ -411,7 +443,6 @@ private fun AddonsSheet(vm: StremioViewModel, onDismiss: () -> Unit) {
             Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp).padding(bottom = 24.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            AccountSection(vm)
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(stringResource(R.string.au22_stremio_addons), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
                 TextButton(onClick = { vm.refreshAddons() }) { Text(stringResource(R.string.au22_stremio_refresh)) }
@@ -422,6 +453,16 @@ private fun AddonsSheet(vm: StremioViewModel, onDismiss: () -> Unit) {
         }
     }
     if (showDirectory) DirectorySheet(vm, onDismiss = { showDirectory = false })
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AccountSheet(vm: StremioViewModel, onDismiss: () -> Unit) {
+    ModalBottomSheet(onDismissRequest = onDismiss) {
+        Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(16.dp).padding(bottom = 24.dp)) {
+            AccountSection(vm)
+        }
+    }
 }
 
 /** Sign in to a Stremio account to keep add-ons, library and continue watching in step with it */
@@ -452,7 +493,7 @@ private fun AccountSection(vm: StremioViewModel) {
                             }
                         },
                     ) { Text(stringResource(R.string.au22_stremio_sync_now)) }
-                    TextButton(onClick = { vm.signOut() }) { Text(stringResource(R.string.au22_stremio_sign_out)) }
+                    TextButton(enabled = !busy && !working, onClick = { vm.signOut() }) { Text(stringResource(R.string.au22_stremio_sign_out)) }
                     if (busy || working) CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
                 }
             } else {
@@ -543,5 +584,24 @@ private fun AddonRow(a: Addon, onRemove: () -> Unit) {
             }
             TextButton(onClick = onRemove) { Text(stringResource(R.string.hc_remove)) }
         }
+    }
+}
+
+@Composable
+private fun WatchMark(vm: StremioViewModel, id: String, videoId: String? = null, videoIds: List<String> = emptyList(), season: Int? = null, episode: Int? = null) {
+    val states by vm.accountWatched.collectAsStateWithLifecycle()
+    val version by vm.traktVersion.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val state = states[id]
+    val stremio = remember(state, videoId, videoIds) {
+        if (videoId == null) state?.movie == true else videoId in state?.episodes(videoIds).orEmpty()
+    }
+    val trakt = remember(id, season, episode, version) {
+        de.mm20.launcher2.comms.media.video.trakt.Trakt.isWatchedId(context, id, season, episode)
+    }
+    if (stremio || trakt) {
+        val sources = listOfNotNull(if (stremio) "Stremio" else null, if (trakt) "Trakt" else null).joinToString(" · ")
+        Text(stringResource(R.string.au22_stremio_watched_sources, sources), style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.primary, modifier = Modifier.padding(vertical = 4.dp))
     }
 }

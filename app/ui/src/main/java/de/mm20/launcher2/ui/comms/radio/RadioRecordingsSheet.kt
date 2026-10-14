@@ -140,26 +140,10 @@ fun RadioRecordingsEntry(showCard: Boolean = true, open: Boolean = false, onDism
     }
 
     deleteTarget?.let { rec ->
-        AlertDialog(
-            onDismissRequest = { deleteTarget = null },
-            title = { Text(stringResource(R.string.au2_radio2_delete_title)) },
-            text = { Text(stringResource(R.string.au2_radio2_delete_message, rec.name)) },
-            confirmButton = {
-                TextButton(onClick = {
-                    deleteTarget = null
-                    scope.launch {
-                        val ok = withContext(Dispatchers.IO) { RadioRecordings.delete(context, rec) }
-                        if (ok) {
-                            recordings = recordings.filterNot { it.id == rec.id }
-                        } else {
-                            Toast.makeText(context, context.getString(R.string.au2_radio2_delete_failed), Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }) { Text(stringResource(R.string.hc_delete)) }
-            },
-            dismissButton = { TextButton(onClick = { deleteTarget = null }) { Text(stringResource(R.string.hc_cancel)) } },
-        )
+        de.mm20.launcher2.ui.trash.UriDeleteDialog(rec.uri,
+            onDeleted = { recordings = recordings.filterNot { it.id == rec.id } }, onDismiss = { deleteTarget = null })
     }
+
 }
 
 @Composable

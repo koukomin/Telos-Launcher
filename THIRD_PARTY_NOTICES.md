@@ -14,7 +14,7 @@ based on" table in `readme.md`.
 | [Thor](https://github.com/trinadhthatakula/Thor) | GPL-3.0-or-later | Copyright (c) 2025-2026 Trinadh Thatakula |
 | [Undead Wallpaper](https://github.com/maocide/UndeadWallpaper) | GPL-3.0 | The Undead Wallpaper authors |
 | [Obtainium](https://github.com/ImranR98/Obtainium) | GPL-3.0 | The Obtainium authors |
-| [Stremio add-on SDK (protocol documentation)](https://github.com/Stremio/stremio-addon-sdk) and [stremio-core](https://github.com/Stremio/stremio-core) (request formats of the account service) | MIT | Copyright © 2019 SmartCode OOD. Only the protocol description and the documented request formats were used as a specification; Telos' Stremio client is its own code. Not affiliated with Stremio |
+| [Stremio add-on SDK (protocol documentation)](https://github.com/Stremio/stremio-addon-sdk) and [stremio-core](https://github.com/Stremio/stremio-core) (request formats of the account service) and [stremio-watched-bitfield](https://github.com/Stremio/stremio-watched-bitfield) (watched-state format) | MIT | Copyright © 2019 SmartCode OOD. Only the protocol description and the documented request formats were used as a specification; Telos' Stremio client is its own code. Not affiliated with Stremio |
 | [iptv-org (API and database)](https://github.com/iptv-org/api) | Unlicense (public domain) | Data only, downloaded at run time (channel list, logos, stream addresses); nothing is bundled. The streams belong to third parties |
 | [Free-TV/IPTV](https://github.com/Free-TV/IPTV), [greektvm3u](https://github.com/filipposfilippides/greektvm3u), XMLTV guides | no license stated | Data only, fetched at run time (playlists and programme guide); nothing is bundled or redistributed |
 | [Gopeed](https://github.com/GopeedLab/gopeed) | GPL-3.0 | Design ideas only for Telos Downloads, no code copied (copyright: the Gopeed authors) |
@@ -267,3 +267,12 @@ architecture and vault format description. No Cryptomator code was copied.
 ## Solid Explorer and MiXplorer
 
 The layout and feature set of Telos Files are inspired by these file managers. No code was copied.
+
+
+## Flow — selected YouTube components
+
+Copyright © 2025–2026 A-EDev. GPL-3.0. Upstream: https://github.com/Flow-Tube/Flow at commit `4c93b64790c3d89eed57ba96abc997bb955c05f2`. License retained at `third-party/flow/LICENSE`. Adapted files: `utils/YouTubeLink.kt`, `player/stream/AudioStreamSelector.kt`, and `data/repository/NewPipeDownloader.kt`, located under `services/comms/.../youtube/flow/`. NewPipe/Rhino rules in `services/comms/consumer-rules.pro` are adapted from Flow `app/proguard-rules.pro` (GPL-3.0-or-later). Telos supplies its own repository, Compose screens and Media3 session. The downloader uses bounded response reads; Flow proxy-specific dependencies are not copied. Media layouts take inspiration from Flow while using the Telos theme.
+
+## NewPipeExtractor
+
+Copyright NewPipe contributors. GPL-3.0-or-later. https://github.com/TeamNewPipe/NewPipeExtractor, version v0.26.5. Used as a dependency for YouTube search, metadata and stream extraction.

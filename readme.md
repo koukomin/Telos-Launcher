@@ -38,9 +38,17 @@ The documentation site is published via GitHub Pages at <https://koukomin.github
 - [Credits](#credits) and [Projects Telos is based on](#projects-telos-is-based-on)
 - [License](#license)
 
+## Development screenshots
+
+Real, unedited captures from a clean Pixel 7 emulator (Android API 35, x86_64 debug), without personal accounts. These show the development UI; they do not validate live playback or account sync.
+
+[View the gallery](docs/docs/user-guide/telos/screenshots.md). Each original PNG includes its capture resolution; the gallery identifies its source commit.
+
+Πραγματικές λήψεις από καθαρό emulator με development build, χωρίς προσωπικούς λογαριασμούς. [Συλλογή screenshots](docs/docs/user-guide/telos/screenshots.md).
+
 ## The story behind Telos
 
-Telos started as a personal project, and I want to be upfront about how it was made: **I built it with zero coding knowledge.** All of the development was done with AI assistants — mainly [Claude](https://claude.ai), along with Grok and Gemini. I couldn't have written this software by hand. What I could do was describe what I wanted, test each build on my own phone, and keep iterating with the AI until it worked. In that sense Telos is as much an experiment in AI-assisted development as it is a launcher.
+Telos started as a personal project, and I want to be upfront about how it was made: **I built it with zero coding knowledge.** The development has been done with AI assistants — [ChatGPT](https://chatgpt.com), [Claude](https://claude.ai), Grok and Gemini. I couldn't have written this software by hand. What I could do was describe what I wanted, test each build on my own phone, and keep iterating with the AI until it worked. In that sense Telos is as much an experiment in AI-assisted development as it is a launcher.
 
 It all comes down to one missing feature. I was already a happy user of [Kvaesitso](https://github.com/MM2-0/Kvaesitso), which I think is an excellent launcher. But a few things I really wanted weren't there — above all **freezing apps and launching frozen apps straight from the launcher.** For me that is the single most important feature, for two reasons:
 
@@ -75,16 +83,30 @@ from Telos Store.
 | **Telos Voice Recorder** | Voice recordings with search, pause and call recordings | [Voice Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/voice-recorder/) |
 | **Telos Calculator** | Standard and scientific calculator, VAT, unit and currency converter, history | [Calculator](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calculator/) |
 | **Telos Viewer** | Two tabs: **Photos** (gallery, EXIF tools, photo editor) and **Documents** (library with categories, search and recents, viewer and editor for PDF, Office, OpenDocument, text and EPUB, PDF tools) | [Viewer](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) | [Viewer](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
-| **Telos Media** | Music, Radio, TV, Video and **Stremio Fork** in one app: five spaces switched by a pill (the last one is remembered), a shared mini player for music and radio, the older apps open inside it, **TV** with live channels from iptv-org (country, language and category filters, favorites, recents, your own channels and M3U import, automatic failover to another or updated stream, optional extra Greek playlists and a Greek programme guide with now/next, favorites-first home with Browse and localized categories, optional background playback with a notification, automatic reconnecting when the connection is lost, and animated TV static for channels that are offline; **Stremio Fork**: Telos' own client for Stremio add-ons, written from the public add-on protocol, with add-on management and a directory of add-ons, catalogs, search, detail pages with episodes, a stream list (web, torrent with the file an add-on names, YouTube), subtitles from add-ons, a library and continue watching, an optional Stremio account sync (unofficial) for add-ons, library and continue watching, no add-ons or content included and not affiliated with Stremio), music and radio pause while a video plays, Share from long-press menus (songs, albums, videos, radio stations with a Telos import link, contacts, notes, files, documents, installed APKs) | [Media](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/media/) |
+| **Telos Media** | Music, Radio, YouTube Music, local Video, YouTube, TV and **Stremio Fork** in one app: four groups with source selection, switched by an icon pill with a large title below it (the last one is remembered), a shared mini player for music and radio, the older apps open inside it, **TV** with live channels from iptv-org (country, language and category filters, favorites, recents, your own channels and M3U import, automatic failover to another or updated stream, optional extra Greek playlists and a Greek programme guide with now/next, favorites-first home with Browse and localized categories, optional background playback with a notification, automatic reconnecting when the connection is lost, and animated TV static for channels that are offline; **Stremio Fork**: Telos' own client for Stremio add-ons, written from the public add-on protocol, with add-on management and a directory of add-ons, catalogs, search, detail pages with episodes, a stream list (web, torrent with the file an add-on names, YouTube), subtitles from add-ons, a library and continue watching, Stremio account sign-in shown on entry, a separate account panel with sign-out, account sync (unofficial) for add-ons, library and continue watching, watched marks on movies and episodes from Stremio and the connected Trakt account, no add-ons or content included and not affiliated with Stremio), music and radio pause while a video plays, Share from long-press menus (songs, albums, videos, radio stations with a Telos import link, contacts, notes, files, documents, installed APKs) | [Media](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/media/) |
 | **Telos Music** | Local library with a Home tab (genre chips, quick picks, shelves), artwork-tinted Now Playing, sharing, lyrics, scrobbling, tag editor | [Music](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/music/) |
 | **Telos Video** | Library, player, web streams, torrents, subtitles, Trakt | [Video](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/video/) |
 | **Telos Radio** | Internet radio with station search, sleep timer and stream recording | [Radio](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/radio/) |
 | **Telos Store** | Install and update apps from GitHub, F-Droid and more, manages the Telos apps | [Store](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/store/) |
 | **Smart Freeze** | Freeze or hide apps through Shizuku, root, device owner or Island (a launcher feature in Settings, not a Telos app) | [Smart Freeze](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/freeze/) |
 
+Telos Phone now reads the full Android contact list across synced accounts, including email-only contacts, rather than seeding its directory only from phone-number rows.
+
+### Recent Media and Store improvements
+
+- Greek TV supplements use the current greektvm3u `main` playlist alongside Free-TV. Refresh checks both supplemental lists; temporarily offline extra channels remain visible.
+- Torrent startup and buffering show live peers, seeds, download speed, responding/error trackers, DHT nodes and elapsed time, for both Video and Stremio Fork.
+- Store downloads stream APKs to disk with progress/speed, pause/resume and automatic retry after a network interruption. Validated HTTP Range resumes partial files; servers without safe range support restart the transfer. Partial files survive cancellation and can be resumed by requesting the download again.
+- Store filters are in a compact button/dialog. Update checks discover supported non-Play installs using known recommended sources, F-Droid and IzzyOnDroid. Discovered apps start with automatic updates off; individual/bulk Update offers opt-in for the selected apps. Silent automatic installation still requires Shizuku or root.
+- Large HTTP responses are no longer buffered in memory during APK downloads. Source text has a size limit; custom F-Droid indexes are parsed as a stream.
+
+### YouTube in Telos Media
+
+Telos YouTube and Telos YouTube Music provide video/music search, direct video links and a shared native Media3 background player. The Media hub groups local music, radio and YouTube Music under Listen; local video and YouTube under Video, alongside TV and Stremio Fork. Launcher search suggests both YouTube features with distinct Telos icons. Selected link parsing, audio selection and the downloader adapter are adapted from [Flow](https://github.com/Flow-Tube/Flow), with [NewPipeExtractor](https://github.com/TeamNewPipe/NewPipeExtractor). This is a focused integration, not the entire Flow application. An optional [browser account panel](docs/docs/user-guide/telos/media/youtube-account.md) opens YouTube and YouTube Music in the same browser profile. The native player does not import browser accounts; native account integration remains unfinished.
+
 ### How the built-in apps work
 
-- **They look like normal apps.** Each has an icon in the app grid and shows up in search.
+- **They look like normal apps.** Each has an icon in the app grid and shows up in search. Apps opened separately also have their own name and icon in Android Recents, so Files and Media can be switched independently; reopening an app reuses its card. Apps embedded as launcher pages stay in the launcher.
 - **They can be switched on and off.** In Telos Store "install" shows an app's icon and "remove" hides it. Telos Store itself cannot be removed.
 - **Switched-off apps cost nothing.** For Radio, Music, Video and Viewer the services and screens are disabled, so they use no memory or CPU and are not offered in "Open with". Phone and Messages are never touched.
 - **They are guarded against crashes.** Radio, Music, Video and Viewer are switched off automatically when they crash or hang twice within a day, with a notification that points to the Store. Installing the app again resets the counter. Phone and Messages are never switched off, because Android needs them.
@@ -674,6 +696,21 @@ Text (SMS) and picture (MMS) messages as conversations with a reply field. It is
 
 ### Telos Files
 
+- Persistent local transfer queue with progress, pause/resume and history. Interrupted transfers require explicit resume after restarting the app; completed files are verified before move removes their originals. Network/archive/vault transfers remain separate and do not have persistent resume.
+- Independent folder tabs and an adaptive two-panel workspace, with shared copy/cut/paste, internal drag-and-drop with a copy/move choice, and Telos styling. Hardware shortcuts cover tabs, search, selection, copy/cut/paste, refresh, hidden files, rename and confirmed deletion.
+- Advanced local search: extension/type, size and modified-date filters, optional subfolders, a one-minute metadata cache capped at 50,000 entries and 16 MiB, and clear partial-results reporting. Network, archive and vault filters apply to the current folder.
+- Shared trash across Files, Viewer, Media, radio/voice/call/screen recordings, completed Downloads and screenshot notification actions: choose trash or permanent deletion, restore without overwriting, default 30-day retention configurable from 1–365 days for local files. Android-managed media trash keeps its system 30-day policy.
+- View, sorting and hidden-file preferences are remembered per folder.
+- Export/import Files display settings, per-folder options, toolbar shortcuts, bookmarks and up to 16 workspace tabs as validated JSON (512 KiB maximum). Connection credentials and transfer journals are excluded.
+- Customize up to two optional toolbar shortcuts. Read-only collections show recent files, bookmarks and local file types with bounded scans and partial-results reporting.
+- Batch rename with name/extension tokens, padded numbering, literal/regex replacement and previews. Targets are checked before renaming; failures attempt to restore original names.
+- Local storage analyzer with largest-file lists and byte-verified duplicate groups. Scans are cancellable, bounded and skip symlinks; no files are deleted automatically.
+- Read-only local HTTP sharing on a private LAN, with a random access link; stops when the dialog closes or the app leaves the foreground. Secure filesystem support is required.
+- Password file encryption with chunked AES-256-GCM and authenticated private staging; originals are retained and existing output files are preserved.
+- Split ZIP creation and reading, including optional AES-encrypted ZIPs.
+- Remote subfolder search has visit/depth/time/result limits and cancellation; individual folder-list allocation still depends on the provider.
+- [Detailed MiXplorer/Solid Explorer comparison and remaining work](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/feature-comparison/).
+
 A file manager for your phone, network storages and cloud storages. The layout follows [Solid Explorer](https://play.google.com/store/apps/details?id=pl.solidexplorer2) and [MiXplorer](https://forum.xda-developers.com/t/app-2-2-mixplorer-v6-x-released-fully-featured-file-manager.1523691/), taken as inspiration only, no code was copied. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/files/). Needs All files access on Android 11 and later.
 
 **Browsing and viewing**
@@ -686,7 +723,7 @@ A file manager for your phone, network storages and cloud storages. The layout f
 
 **File operations**
 
-- Multi-select, copy, cut and paste with progress and cancel, rename, delete (permanent, no trash), new folder and file, share, compress to zip, 7z or tar.gz (zip with an optional AES-256 password)
+- Multi-select, copy, cut and paste with progress and cancel, rename, shared Trash or permanent deletion, new folder and file, share, compress to zip, 7z or tar.gz (zip with an optional AES-256 password)
 - Properties with permissions and on-demand MD5, SHA-1 and SHA-256 checksums
 - Copy between any two storages (local, network, cloud); nothing is ever overwritten, a free name is used
 
@@ -970,7 +1007,7 @@ An app installer and updater that works like [Obtainium](https://github.com/Imra
 
 - Search, filters (updates, installed, not installed, track only) and categories
 - Add the apps that are already installed (found through F-Droid and IzzyOnDroid)
-- Import and export in the Obtainium export format, and `obtainium://` links open in the Store
+- Import and export in the Obtainium export format; import individual configurations or arrays, and open `obtainium://app/`, `apps/`, `add/` and `add?url=` links. Imported apps have automatic updates disabled until explicitly enabled. File imports enforce the existing 4,194,304-character limit while reading, before buffering an oversized provider file.
 
 **Managing the Telos apps**
 
@@ -1088,7 +1125,7 @@ adapted, the original license is respected.
 | [Ever Dialer](https://github.com/hari161008/Ever-Dialer) | GPL-3.0 | Power-user features: recording backends and retention, gestures, auto redial, fake calls, network switcher, notes |
 | [Thor](https://github.com/trinadhthatakula/Thor) | GPL-3.0 | Freeze backends (Shizuku, Dhizuku) and OEM suspend fallbacks |
 | [Undead Wallpaper](https://github.com/maocide/UndeadWallpaper) | GPL-3.0 | Video live wallpaper engine |
-| [Stremio add-on protocol](https://github.com/Stremio/stremio-addon-sdk) (docs) and [stremio-core](https://github.com/Stremio/stremio-core) (API types) | MIT | The public description of the add-on protocol (manifest, catalog, meta, stream, subtitles and add-on catalog requests) and the request formats of the account service documented in stremio-core were used to write Telos' own client in Telos Media. No code of Stremio or of other Stremio clients is used |
+| [Stremio add-on protocol](https://github.com/Stremio/stremio-addon-sdk) (docs) and [stremio-core](https://github.com/Stremio/stremio-core) (API types) and [stremio-watched-bitfield](https://github.com/Stremio/stremio-watched-bitfield) (watched-state format) | MIT | The public description of the add-on protocol (manifest, catalog, meta, stream, subtitles and add-on catalog requests) and the request formats of the account service documented in stremio-core were used to write Telos' own client in Telos Media. No code of Stremio or of other Stremio clients is used |
 | [iptv-org](https://github.com/iptv-org/iptv) (API and database) | Unlicense (public domain) | Channel list, logos and stream addresses of Telos TV, downloaded from `iptv-org.github.io/api` only after you accept the disclaimer and open TV. The streams belong to third parties |
 | [Free-TV/IPTV](https://github.com/Free-TV/IPTV), [greektvm3u](https://github.com/filipposfilippides/greektvm3u) and the XMLTV guides (`ext.greektv.app`, `epgshare01.online`) | no license stated | Optional extra Greek channels and programme guide for Telos TV. Fetched at run time on your device only when Greece is selected and TV is open; nothing is bundled or redistributed, and nothing is shown if they do not work |
 | [Gopeed](https://github.com/GopeedLab/gopeed) | GPL-3.0 | Ideas for Telos Downloads: segmented downloads that resume, task filters, categories, headers and proxy (written from scratch, no code was copied) |
@@ -1098,6 +1135,8 @@ adapted, the original license is respected.
 | [yt-dlp](https://github.com/yt-dlp/yt-dlp) | Unlicense | The extractor and downloader behind video and audio sites, used unchanged inside the optional media build |
 | [youtubedl-android](https://github.com/yausername/youtubedl-android) (junkfood02 fork) | GPL-3.0 | Library that runs yt-dlp, Python and FFmpeg on Android, used unchanged as a Maven dependency in the optional media build; FFmpeg and Python have their own licences (see `THIRD_PARTY_NOTICES.md`) |
 | [LibreTorrent](https://github.com/proninyaroslav/libretorrent) | GPL-3.0-or-later | Ideas for the torrent part of Telos Downloads: file selection with priorities, sequential download, seeding limits, DHT/PEX/LSD/uTP/encryption/port settings, peers and trackers views, resume data, IP filter (written from scratch on libtorrent4j, no code was copied) |
+| [Flow](https://github.com/Flow-Tube/Flow) | GPL-3.0 | YouTube link parser, audio stream selection and adapted NewPipe downloader; Media UI inspiration |
+| [NewPipeExtractor](https://github.com/TeamNewPipe/NewPipeExtractor) | GPL-3.0-or-later | YouTube metadata, search and stream extraction |
 | [Obtainium](https://github.com/ImranR98/Obtainium) | GPL-3.0 | Store behaviour and features: sources, per-app settings, update flow, export format, links, update broadcasts (the behaviour is re-implemented, no code was copied) |
 | [RethinkDNS](https://github.com/celzero/rethink-app) | Apache-2.0 | Telos Network: concept, feature set and the way the VPN service, DNS, firewall rules and logs are organised (adapted where noted, copyright notice kept in `THIRD_PARTY_NOTICES.md`) |
 | [firestack](https://github.com/celzero/firestack) | MPL-2.0 | The Go network engine behind Telos Network, used unchanged as a Maven dependency (`com.celzero:firestack`) |
@@ -1111,7 +1150,7 @@ adapted, the original license is respected.
 | [mpv-android](https://github.com/mpv-android/mpv-android) and [mpvKt](https://github.com/abdallahmehiz/mpvKt) | MIT / Apache-2.0 | Ideas for gestures, speed presets and sleep timer (no code) |
 | [Nova Video Player](https://github.com/nova-video-player/aos-AVP) | Apache-2.0 | Feature inspiration for Telos Video: playing and scanning videos from network shares, library marks, subtitle search. Re-implemented with Media3, no code and none of its prebuilt binaries were copied |
 | [OpenSubtitles](https://www.opensubtitles.com) and [Podnapisi](https://www.podnapisi.net) | service terms | Subtitle search and download in Telos Video (old OpenSubtitles REST API without an account, the file hash algorithm is the published one) |
-| [Trakt.tv](https://trakt.tv) | API terms | Scrobbling and watched marks in Telos Video |
+| [Trakt.tv](https://trakt.tv) | API terms | Scrobbling and watched marks in Telos Video, with watched marks also shown in Stremio Fork |
 | [Last.fm](https://www.last.fm/api), [Libre.fm](https://libre.fm) and [ListenBrainz](https://listenbrainz.org) | open APIs | Scrobbling in Telos Music and Telos Radio |
 | [libtorrent4j](https://github.com/aldenml/libtorrent4j) and [libtorrent](https://www.libtorrent.org) | MIT / BSD-3-Clause | The torrent session of Telos: streaming in Telos Video and torrent downloads in Telos Downloads |
 | [StevenBlack/hosts](https://github.com/StevenBlack/hosts), [AdGuard DNS filter](https://github.com/AdguardTeam/AdGuardSDNSFilter), [Peter Lowe's list](https://pgl.yoyo.org/adservers/), [OISD](https://oisd.nl), [EasyList](https://easylist.to), [URLhaus](https://urlhaus.abuse.ch), [Naunter/BT_BlockLists](https://github.com/Naunter/BT_BlockLists), [Spamhaus DROP](https://www.spamhaus.org/drop/), [FireHOL level 1](https://iplists.firehol.org/?ipset=firehol_level1) | MIT, GPL-3.0, see notice, GPL-3.0, GPL-3.0 / CC BY-SA 3.0, abuse.ch terms, Unlicense, free with credit to The Spamhaus Project, mixed (see notice) | Optional block lists for web apps and torrents. Not bundled: downloaded from their own servers only when you switch them on |
