@@ -696,7 +696,8 @@ Text (SMS) and picture (MMS) messages as conversations with a reply field. It is
 
 ### Telos Files
 
-- Independent folder tabs and an adaptive two-panel workspace, with shared copy/cut/paste and Telos styling. Drag-and-drop is still pending.
+- Independent folder tabs and an adaptive two-panel workspace, with shared copy/cut/paste, internal drag-and-drop with a copy/move choice, and Telos styling. Hardware shortcuts cover tabs, search, selection, copy/cut/paste, refresh, hidden files, rename and confirmed deletion.
+- Advanced local search: extension/type, size and modified-date filters, optional subfolders, a one-minute metadata cache capped at 50,000 entries and 16 MiB, and clear partial-results reporting. Network, archive and vault filters apply to the current folder.
 - Shared trash across Files, Viewer, Media, radio/voice/call/screen recordings, completed Downloads and screenshot notification actions: choose trash or permanent deletion, restore without overwriting, default 30-day retention configurable from 1–365 days for local files. Android-managed media trash keeps its system 30-day policy.
 - View, sorting and hidden-file preferences are remembered per folder.
 - Batch rename with name/extension tokens, padded numbering, literal/regex replacement and previews. Targets are checked before renaming; failures attempt to restore original names.

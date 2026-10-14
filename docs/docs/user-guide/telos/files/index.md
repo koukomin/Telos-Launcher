@@ -139,7 +139,7 @@ Keystore, which does not leave the device. Cryptomator passwords are never store
 
 ## Καρτέλες και δύο πάνελ
 
-Η επάνω γραμμή ανοίγει νέες καρτέλες και ενεργοποιεί τα «Δύο πάνελ». Κάθε καρτέλα διατηρεί τον δικό της φάκελο και τις επιλογές της. Τα πάνελ εμφανίζονται δίπλα-δίπλα σε αρκετά μεγάλη οθόνη και το ένα πάνω από το άλλο σε μικρότερη. Το ενεργό πάνελ επισημαίνεται με το χρώμα του Telos. Copy/Cut/Paste μοιράζονται μεταξύ καρτελών· drag-and-drop δεν έχει προστεθεί ακόμη.
+Η επάνω γραμμή ανοίγει νέες καρτέλες και ενεργοποιεί τα «Δύο πάνελ». Κάθε καρτέλα διατηρεί τον δικό της φάκελο και τις επιλογές της. Τα πάνελ εμφανίζονται δίπλα-δίπλα σε αρκετά μεγάλη οθόνη και το ένα πάνω από το άλλο σε μικρότερη. Το ενεργό πάνελ επισημαίνεται με το χρώμα του Telos. Copy/Cut/Paste μοιράζονται μεταξύ καρτελών. Με παρατεταμένο πάτημα και σύρσιμο μεταφέρετε επιλογή στο άλλο πάνελ και ο διάλογος ζητά αντιγραφή ή μετακίνηση πριν εκτελέσει την εργασία.
 
 Με επιλογή πολλών αρχείων, το μενού προσφέρει «Μαζική μετονομασία»: όνομα/επέκταση, αρίθμηση με padding, εύρεση και αντικατάσταση με προαιρετική κανονική έκφραση. Εμφανίζεται preview και ελέγχονται οι συγκρούσεις πριν ξεκινήσει η αλλαγή. Σε αποτυχία επιχειρείται επαναφορά των αρχικών ονομάτων· αν η πηγή δεν επιτρέψει την επαναφορά, εμφανίζεται σχετικό μήνυμα.
 
@@ -167,3 +167,23 @@ Files, Viewer and Media share a delete/trash choice and restore UI. Local files 
 Ο ίδιος διάλογος χρησιμοποιείται επίσης για εγγραφές ραδιοφώνου/φωνής/κλήσεων/οθόνης, ολοκληρωμένα αρχεία Downloads και το Delete στην ειδοποίηση screenshot. Οι εγγραφές κλήσεων παραμένουν κρυπτογραφημένες μέσα στον ιδιωτικό κάδο. Προσωρινά ή ημιτελή αρχεία εργασιών δεν αντιμετωπίζονται ως ολοκληρωμένα αρχεία χρήστη.
 
 The same deletion choice also covers radio/voice/call/screen recordings, completed download outputs and screenshot notification actions. Call recordings remain encrypted in the private trash. Temporary or unfinished transfer files are not treated as completed user files.
+
+
+## Προχωρημένη αναζήτηση και πληκτρολόγιο
+
+Το κουμπί φίλτρων προσφέρει τύπο, επεκτάσεις, μέγεθος σε KiB και συμπεριληπτικά όρια ημερομηνίας τροποποίησης (έτος-μήνας-ημέρα). Η τοπική αναζήτηση μπορεί να περιλαμβάνει υποφακέλους. Το προσωρινό index κρατά έως 50.000 εγγραφές και περίπου 16 MiB μεταδεδομένων συνολικά, για ένα λεπτό, χωρίς να ακολουθεί symlinks. Εμφανίζονται έως 300 αποτελέσματα· όρια, βάθος και μη αναγνώσιμοι φάκελοι σημαίνονται ως μερικά αποτελέσματα. Πατήστε Ανανέωση για επαναδημιουργία. Στο δίκτυο, στα archives και στα vaults τα φίλτρα καλύπτουν την τρέχουσα λίστα.
+
+| Συντόμευση | Ενέργεια |
+| --- | --- |
+| Ctrl+T / Ctrl+W | Νέα / κλείσιμο καρτέλας (η τελευταία παραμένει) |
+| Ctrl+Tab / Ctrl+Shift+Tab | Επόμενη / προηγούμενη καρτέλα |
+| Ctrl+F / Ctrl+R / Ctrl+H | Αναζήτηση / ανανέωση / κρυφά αρχεία |
+| Ctrl+A / Ctrl+C / Ctrl+X / Ctrl+V | Επιλογή όλων / αντιγραφή / αποκοπή / επικόλληση |
+| Ctrl+N / Alt+Up | Νέος φάκελος / πάνω φάκελος |
+| F2 / Delete / Escape | Μετονομασία / διάλογος διαγραφής / κλείσιμο αναζήτησης ή ακύρωση επιλογής |
+
+Οι συντομεύσεις επεξεργασίας στο πεδίο αναζήτησης παραμένουν διαθέσιμες για το κείμενο. Η οριστική τοπική διαγραφή συνδέσμου αφαιρεί μόνο τον σύνδεσμο. Η αντιγραφή μέσω τοπικού streaming δεν ακολουθεί symlinks και αρνείται υπάρχοντα αρχεία προορισμού.
+
+### Advanced search and input
+
+Local search supports type/extension, size and inclusive modified-date filters, optional subfolders, and a one-minute metadata cache bounded to 50,000 records and approximately 16 MiB. Results are capped at 300 and partial scans are labeled. Symlinks are not followed. Refresh invalidates the cache. Network, archive and vault filtering remains current-folder-only. Hardware shortcuts cover tabs, search, selection, copy/cut/paste, refresh, hidden files, folder creation, rename and confirmed deletion; search text-editing shortcuts are preserved. Internal panel drag-and-drop asks for copy or move. Permanent deletion unlinks symlinks without visiting targets, while streaming copy refuses symbolic links and existing destination files.

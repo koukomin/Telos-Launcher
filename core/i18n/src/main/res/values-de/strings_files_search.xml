@@ -1,0 +1,14 @@
+<resources>
+    <string name="telos_files_search_filters">Suchfilter</string>
+    <string name="telos_files_search_extensions">Erweiterungen (zum Beispiel: jpg, pdf)</string>
+    <string name="telos_files_search_minimum">Mindestgröße (KiB)</string>
+    <string name="telos_files_search_maximum">Maximalgröße (KiB)</string>
+    <string name="telos_files_search_after">Geändert ab (JJJJ-MM-TT)</string>
+    <string name="telos_files_search_before">Geändert bis (JJJJ-MM-TT)</string>
+    <string name="telos_files_search_recursive">Unterordner einbeziehen</string>
+    <string name="telos_files_search_scope">Die lokale Suche speichert Metadaten für eine Minute und folgt keinen symbolischen Links. Filter für Netzwerk, Archive und Tresore gelten für den aktuellen Ordner. Aktualisiere die Ansicht, um den lokalen Index neu aufzubauen.</string>
+    <string name="telos_files_search_invalid">Gib gültige Größen und Daten ein. Der Mindestwert muss vor dem Höchstwert liegen.</string>
+    <string name="telos_files_search_reset">Filter zurücksetzen</string>
+    <string name="telos_files_search_limited">Teilweise Ergebnisse: höchstens 300 Treffer und 50.000 indexierte Einträge. Manche Ordner sind möglicherweise nicht lesbar.</string>
+    <string name="telos_files_drop_title">%1$d Elemente hierher kopieren oder verschieben?</string>
+</resources>

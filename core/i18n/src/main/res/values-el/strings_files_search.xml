@@ -1,0 +1,14 @@
+<resources>
+    <string name="telos_files_search_filters">Φίλτρα αναζήτησης</string>
+    <string name="telos_files_search_extensions">Επεκτάσεις (π.χ. jpg, pdf)</string>
+    <string name="telos_files_search_minimum">Ελάχιστο μέγεθος (KiB)</string>
+    <string name="telos_files_search_maximum">Μέγιστο μέγεθος (KiB)</string>
+    <string name="telos_files_search_after">Τροποποίηση από (ΕΕΕΕ-ΜΜ-ΗΗ)</string>
+    <string name="telos_files_search_before">Τροποποίηση έως (ΕΕΕΕ-ΜΜ-ΗΗ)</string>
+    <string name="telos_files_search_recursive">Συμπερίληψη υποφακέλων</string>
+    <string name="telos_files_search_scope">Η τοπική αναζήτηση κρατά τα μεταδεδομένα για ένα λεπτό και δεν ακολουθεί συμβολικούς συνδέσμους. Τα φίλτρα δικτύου, συμπιεσμένων αρχείων και θησαυροφυλακίων εφαρμόζονται στον τρέχοντα φάκελο. Πατήστε Ανανέωση για επαναδημιουργία του τοπικού index.</string>
+    <string name="telos_files_search_invalid">Δώστε έγκυρα μεγέθη και ημερομηνίες, με την ελάχιστη τιμή πριν από τη μέγιστη.</string>
+    <string name="telos_files_search_reset">Επαναφορά φίλτρων</string>
+    <string name="telos_files_search_limited">Μερικά αποτελέσματα: έως 300 αντιστοιχίες και 50.000 καταχωρίσεις. Ορισμένοι φάκελοι μπορεί να μην είναι αναγνώσιμοι.</string>
+    <string name="telos_files_drop_title">Αντιγραφή ή μετακίνηση %1$d στοιχείων εδώ;</string>
+</resources>

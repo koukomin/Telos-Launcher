@@ -8,7 +8,7 @@ Telos — a search-focused, free and open source Android launcher (package `de.m
 
 ## Build & common commands
 
-- Build environment: JDK 21 toolchain (see `gradle/gradle-daemon-jvm.properties`), Gradle 9.4.1 via wrapper.
+- Build environment: JDK 21 toolchain (see `gradle/gradle-daemon-jvm.properties`), Gradle 9.6.0 via wrapper.
 - Build variants are a combination of a build type (`debug`, `release`, `nightly`) and a product flavor (`default`, `fdroid`), e.g. `assembleDefaultDebug`, `assembleFdroidRelease`.
 - Build a debug APK: `./gradlew assembleDefaultDebug`
 - Install to a connected device/emulator: `./gradlew installDefaultDebug`
@@ -16,7 +16,7 @@ Telos — a search-focused, free and open source Android launcher (package `de.m
 - Run tests for a single module: `./gradlew :core:base:test` (module paths mirror the directory structure, e.g. `:data:locations:test`)
 - Run a single test class: `./gradlew :core:base:test --tests "de.mm20.launcher2.OpeningScheduleTest"`
 - Lint is non-fatal (`lint.abortOnError = false` in `app/app/build.gradle.kts`).
-- Unit tests currently only exist in `core/ktx`, `core/base`, and `data/locations` — most modules have no test suite.
+- Unit tests exist in `core/ktx`, `core/base`, `data/locations`, `services/comms`, `services/store` and `data/store`; most other modules have no test suite.
 - CI (`.github/workflows/build-nightly.yml`) builds `assembleDefaultNightly` nightly.
 
 ## Architecture

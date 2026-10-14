@@ -75,6 +75,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.foundation.focusable
+import androidx.compose.ui.input.key.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -153,10 +157,14 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
     var addMenu by remember { mutableStateOf(false) }
     var dialog by remember { mutableStateOf<FilesDialog?>(null) }
     var showTrash by remember { mutableStateOf(false) }
+    var showSearchFilters by remember { mutableStateOf(false) }
+    if (showSearchFilters) FilesSearchDialog(vm) { showSearchFilters = false }
     if (showTrash) de.mm20.launcher2.ui.trash.TrashDialog({ showTrash = false }, { vm.reload(); vm.onFilesChanged() })
     var analysisPath by remember { mutableStateOf<String?>(null) }
     analysisPath?.let { StorageAnalysisDialog(it, vm::open, { analysisPath = null }) }
     var viewMenu by remember { mutableStateOf(false) }
+    val keyboardFocus = remember { FocusRequester() }
+    LaunchedEffect(handlesBack) { if (handlesBack) keyboardFocus.requestFocus() }
     val performanceSettings: PerformanceSettings = koinInject()
     val reduceFlow = remember(performanceSettings) { performanceSettings.reduceAnimations }
     val reduceAnimations by reduceFlow.collectAsState(false)
@@ -195,6 +203,28 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
     }
 
     ModalNavigationDrawer(
+        modifier = Modifier.focusRequester(keyboardFocus).onPreviewKeyEvent { event ->
+            if (!handlesBack || event.type != KeyEventType.KeyDown) false else when {
+                event.isCtrlPressed && event.key == Key.F && vm.path != null -> { searching = true; true }
+                event.key == Key.Escape && searching -> { searching = false; vm.clearSearch(); true }
+                event.isCtrlPressed && event.key == Key.R -> { vm.reload(); true }
+                searching -> false
+                event.isCtrlPressed && event.key == Key.A -> { vm.selectAll(); true }
+                event.isCtrlPressed && event.key == Key.C && selecting -> { vm.copyToClipboard(false); true }
+                event.isCtrlPressed && event.key == Key.X && selecting -> { vm.copyToClipboard(true); true }
+                event.isCtrlPressed && event.key == Key.V && vm.clipboard != null && vm.task == null -> { vm.paste(); true }
+                event.isCtrlPressed && event.key == Key.H -> { vm.toggleHidden(); true }
+                event.isCtrlPressed && event.key == Key.N && vm.path != null -> { dialog = FilesDialog.NewFolder; true }
+                event.isAltPressed && event.key == Key.DirectionUp -> vm.up()
+                event.key == Key.Escape && selecting -> { vm.clearSelection(); true }
+                event.key == Key.Delete && selecting -> { dialog = FilesDialog.Delete(vm.selectedEntries()); true }
+                event.key == Key.F2 && selecting -> {
+                    val picked = vm.selectedEntries()
+                    dialog = picked.singleOrNull()?.let { FilesDialog.Rename(it) } ?: FilesDialog.BatchRename(picked); true
+                }
+                else -> false
+            }
+        }.focusable(),
         drawerState = drawer,
         drawerContent = {
             ModalDrawerSheet {
@@ -238,6 +268,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                             query = vm.query,
                             onQuery = vm::search,
                             onClose = { searching = false; vm.clearSearch() },
+                            onFilters = { showSearchFilters = true },
                         )
                         else -> TopAppBar(
                             title = { Text(vm.path?.let { vm.connectionName(it)?.takeIf { _ -> RemotePath.isRoot(it) } ?: if (ArchivePath.isRoot(it)) nameOf(ArchivePath.archiveOf(it)) else if (de.mm20.launcher2.ui.files.vault.VaultPath.isRoot(it)) nameOf(de.mm20.launcher2.ui.files.vault.VaultPath.vaultOf(it)) else nameOf(it) } ?: stringResource(R.string.hc_telos_files), maxLines = 1, overflow = TextOverflow.Ellipsis) },
@@ -278,6 +309,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                     }
                                     DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
                                         DropdownMenuItem(text = { Text(stringResource(R.string.telos_trash_title)) }, onClick = { menuOpen = false; showTrash = true })
+                                        if (vm.path != null) DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_search_filters)) }, onClick = { menuOpen = false; searching = true; showSearchFilters = true })
                                         if (vm.path != null && !vm.rootMode && !RemotePath.isRemote(vm.path!!) && !ArchivePath.isArchive(vm.path!!) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(vm.path!!))
                                             DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_analyze)) }, onClick = { menuOpen = false; analysisPath = vm.path })
                                         DropdownMenuItem(text = { Text(stringResource(R.string.hc_sort_by_2)) }, onClick = { menuOpen = false; dialog = FilesDialog.Sort })
@@ -304,6 +336,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                     }
                     if (vm.path != null && !selecting) Breadcrumbs(vm) { vm.open(it) }
                     if (vm.loading) LinearProgressIndicator(Modifier.fillMaxWidth())
+                    if (vm.searchLimited) Text(stringResource(R.string.telos_files_search_limited), Modifier.padding(horizontal = 16.dp), style = MaterialTheme.typography.labelSmall)
                 }
             },
             floatingActionButton = {
@@ -354,14 +387,14 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                             FileTile(
                                                 e, e.path in vm.selection, selecting, large, reduceAnimations,
                                                 onClick = { onOpenEntry(e) }, onLongClick = { vm.toggleSelected(e) },
-                                                modifier = if (reduceAnimations) Modifier else Modifier.animateItem(),
+                                                modifier = (if (reduceAnimations) Modifier else Modifier.animateItem()).then(fileDragSource(e, vm)),
                                             )
                                         }
                                     }
                                 } else {
                                     LazyColumn(state = listState, contentPadding = PaddingValues(bottom = 96.dp)) {
                                         items(unique, key = { it.path }) { e ->
-                                            FileRow(e, e.path in vm.selection, vm.rootMode, { onOpenEntry(e) }, { vm.toggleSelected(e) })
+                                            FileRow(e, e.path in vm.selection, vm.rootMode, { onOpenEntry(e) }, { vm.toggleSelected(e) }, fileDragSource(e, vm))
                                         }
                                     }
                                 }
@@ -710,7 +743,7 @@ private fun SelectionBar(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SearchBar(query: String, onQuery: (String) -> Unit, onClose: () -> Unit) {
+private fun SearchBar(query: String, onQuery: (String) -> Unit, onClose: () -> Unit, onFilters: () -> Unit) {
     TopAppBar(
         title = {
             de.mm20.launcher2.ui.component.TelosSearchTopBar(
@@ -720,6 +753,7 @@ private fun SearchBar(query: String, onQuery: (String) -> Unit, onClose: () -> U
             )
         },
         navigationIcon = { IconButton(onClick = onClose) { Icon(painterResource(Icons.arrow_back_24px), contentDescription = stringResource(R.string.hc_back)) } },
+        actions = { IconButton(onClick = onFilters) { Icon(painterResource(Icons.tune_24px), contentDescription = stringResource(R.string.telos_files_search_filters)) } },
         colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
     )
 }
@@ -1027,9 +1061,9 @@ private fun TypeTile(kind: FileKind, thumbnail: String?, selected: Boolean, size
 
 @OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
-private fun FileRow(e: FsEntry, selected: Boolean, rootMode: Boolean, onClick: () -> Unit, onLongClick: () -> Unit) {
+private fun FileRow(e: FsEntry, selected: Boolean, rootMode: Boolean, onClick: () -> Unit, onLongClick: () -> Unit, modifier: Modifier = Modifier) {
     Row(
-        Modifier.fillMaxWidth()
+        modifier.fillMaxWidth()
             .background(if (selected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f) else Color.Transparent)
             .combinedClickable(onClick = onClick, onLongClick = onLongClick)
             .padding(horizontal = 16.dp, vertical = 8.dp),

@@ -82,7 +82,7 @@ class LocalFs : Fs {
         if (to.exists() && !f.name.equals(newName, ignoreCase = true)) return false
         return f.renameTo(to)
     }
-    override fun delete(path: String) = File(path).deleteRecursively()
+    override fun delete(path: String) = runCatching { de.mm20.launcher2.helper.FileTreeOps.delete(File(path)) }.isSuccess
     override fun copy(src: String, dstDir: String, newName: String): Boolean = runCatching {
         File(src).copyRecursively(File(dstDir, newName), overwrite = false)
     }.getOrDefault(false)
@@ -197,13 +197,16 @@ object FsOps {
 
     fun copyTree(src: File, dst: File, cancel: CancelFlag, progress: (Long) -> Unit) {
         if (cancel.cancelled) throw IOException("Cancelled")
+        if (Files.isSymbolicLink(src.toPath())) throw IOException("Cannot copy symbolic links")
         if (src.isDirectory) {
-            dst.mkdirs()
-            src.listFiles()?.forEach { copyTree(it, File(dst, it.name), cancel, progress) }
+            Files.createDirectory(dst.toPath())
+            Files.newDirectoryStream(src.toPath()).use { children -> children.forEach { copyTree(it.toFile(), File(dst, it.fileName.toString()), cancel, progress) } }
         } else {
+            var created = false
             try {
                 src.inputStream().use { input ->
-                    dst.outputStream().use { output ->
+                    Files.newOutputStream(dst.toPath(), java.nio.file.StandardOpenOption.WRITE, java.nio.file.StandardOpenOption.CREATE_NEW).use { output ->
+                        created = true
                         val buffer = ByteArray(256 * 1024)
                         while (true) {
                             if (cancel.cancelled) throw IOException("Cancelled")
@@ -215,7 +218,7 @@ object FsOps {
                     }
                 }
             } catch (e: Exception) {
-                dst.delete()
+                if (created) dst.delete()
                 throw e
             }
             dst.setLastModified(src.lastModified())
@@ -253,7 +256,9 @@ object FsOps {
         }
     }
 
-    fun sizeOf(file: File): Long = if (file.isDirectory) file.walkTopDown().filter { it.isFile }.sumOf { it.length() } else file.length()
+    fun sizeOf(file: File, cancel: CancelFlag = CancelFlag()): Long = de.mm20.launcher2.helper.FileTreeOps.size(file) {
+        if (cancel.cancelled) throw IOException("Cancelled")
+    }
 
     /** Packs [sources] into a zip file at [target] */
     fun zip(sources: List<File>, target: File, cancel: CancelFlag, progress: (Long) -> Unit) {
