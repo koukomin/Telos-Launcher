@@ -698,6 +698,11 @@ Text (SMS) and picture (MMS) messages as conversations with a reply field. It is
 
 ### Telos Files
 
+File searches reuse a compiled query across results to reduce repeated text normalization and temporary allocations.
+
+File scans, duplicate checks and resumable transfers reuse bounded scratch buffers to reduce allocation churn. [Runtime measurements](docs/dev-notes/runtime-performance.md) distinguish local JVM results from device measurements.
+
+
 - Persistent local transfer queue with progress, pause/resume and history. Interrupted transfers require explicit resume after restarting the app; completed files are verified before move removes their originals. Network/archive/vault transfers remain separate and do not have persistent resume.
 - Independent folder tabs and an adaptive two-panel workspace, with shared copy/cut/paste, internal drag-and-drop with a copy/move choice, and Telos styling. Hardware shortcuts cover tabs, search, selection, copy/cut/paste, refresh, hidden files, rename and confirmed deletion.
 - Advanced local search: extension/type, size and modified-date filters, optional subfolders, a one-minute metadata cache capped at 50,000 entries and 16 MiB, and clear partial-results reporting. Network, archive and vault filters apply to the current folder.

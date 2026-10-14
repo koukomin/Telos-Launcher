@@ -24,11 +24,13 @@ object ExclusiveFilePublication {
                 identity = Files.readAttributes(destination.toPath(), BasicFileAttributes::class.java, NOFOLLOW_LINKS).fileKey()
                 FileInputStream(temporary).use { source ->
                     val buffer = ByteArray(64 * 1024)
+                    val bytes = ByteBuffer.wrap(buffer)
                     try {
                         while (true) {
                             checkpoint(); val count = source.read(buffer)
                             if (count < 0) break
-                            val bytes = ByteBuffer.wrap(buffer, 0, count)
+                            bytes.clear()
+                            bytes.limit(count)
                             while (bytes.hasRemaining()) { checkpoint(); channel.write(bytes) }
                         }
                     } finally { buffer.fill(0) }

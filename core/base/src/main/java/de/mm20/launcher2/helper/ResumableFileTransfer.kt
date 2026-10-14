@@ -76,19 +76,33 @@ object ResumableFileTransfer {
         a.isRegularFile && a.size() == entry.size && a.lastModifiedTime().toMillis() == entry.modified &&
             (entry.identity == null || a.fileKey()?.toString() == entry.identity)
     }.getOrDefault(false)
-    private fun digest(file: File, checkpoint: () -> Unit): String {
-        val hash = MessageDigest.getInstance("SHA-256")
+    private fun digest(file: File, checkpoint: () -> Unit, buffer: ByteArray, hash: MessageDigest): String {
+        hash.reset()
         file.inputStream().use { input ->
-            val buffer = ByteArray(128 * 1024)
             while (true) { checkpoint(); val n = input.read(buffer); if (n < 0) break; hash.update(buffer, 0, n) }
         }
-        return hash.digest().joinToString("") { "%02x".format(it) }
+        val bytes = hash.digest()
+        val digits = "0123456789abcdef"
+        return CharArray(bytes.size * 2).also { output ->
+            bytes.forEachIndexed { index, byte ->
+                val value = byte.toInt() and 255
+                output[index * 2] = digits[value ushr 4]
+                output[index * 2 + 1] = digits[value and 15]
+            }
+        }.concatToString()
     }
     fun execute(plan: TransferPlan, checkpoint: () -> Unit, saved: () -> Unit, progress: (Long, Long) -> Unit) {
         require(plan.id.matches(Regex("[0-9a-f-]{36}")))
         val root = File(plan.destinationRoot).canonicalFile
+        // Execution is sequential: share scratch space across files and verification passes.
+        val ioBuffer = ByteArray(128 * 1024)
+        val hash = MessageDigest.getInstance("SHA-256")
+        var prefixBuffer: ByteArray? = null
+        fun fileDigest(file: File) = digest(file, checkpoint, ioBuffer, hash)
         var completed = 0L
-        val total = plan.entries.filterNot { it.directory }.fold(0L) { sum, item -> Math.addExact(sum, item.size) }
+        val total = plan.entries.fold(0L) { sum, item ->
+            if (item.directory) sum else Math.addExact(sum, item.size)
+        }
         // Check a loaded journal before it can write any path.
         require(plan.entries.size <= 10_000)
         for (entry in plan.entries) {
@@ -121,7 +135,7 @@ object ResumableFileTransfer {
             val temporary = File(target.parentFile, ".telos-transfer-${plan.id}-$index.part")
             if (entry.committed) {
                 checkPlain(target)
-                if (!target.isFile || digest(target, checkpoint) != entry.digest) throw IOException("Destination changed")
+                if (!target.isFile || fileDigest(target) != entry.digest) throw IOException("Destination changed")
                 checkPlain(temporary)
                 Files.deleteIfExists(temporary.toPath())
                 completed += entry.size; progress(completed, total)
@@ -129,7 +143,7 @@ object ResumableFileTransfer {
             }
             if (entry.digest != null && target.exists()) {
                 checkPlain(target)
-                if (!target.isFile || target.length() != entry.size || digest(target, checkpoint) != entry.digest) throw IOException("Destination changed")
+                if (!target.isFile || target.length() != entry.size || fileDigest(target) != entry.digest) throw IOException("Destination changed")
                 entry.committed = true; saved()
                 checkPlain(temporary)
                 Files.deleteIfExists(temporary.toPath())
@@ -144,7 +158,8 @@ object ResumableFileTransfer {
             // A resumed prefix must still be identical to the source, even on coarse-time filesystems.
             source.inputStream().use { input ->
                 if (offset > 0) temporary.inputStream().use { partial ->
-                    val a = ByteArray(128 * 1024); val b = ByteArray(a.size)
+                    val a = ioBuffer
+                    val b = prefixBuffer ?: ByteArray(a.size).also { prefixBuffer = it }
                     var remaining = offset
                     while (remaining > 0) {
                         checkpoint()
@@ -160,7 +175,7 @@ object ResumableFileTransfer {
                 }
                 RandomAccessFile(temporary, "rw").use { output ->
                     output.seek(offset)
-                    val bytes = ByteArray(128 * 1024)
+                    val bytes = ioBuffer
                     while (true) {
                         checkpoint()
                         val count = input.read(bytes)
@@ -172,7 +187,7 @@ object ResumableFileTransfer {
                 }
             }
             if (offset != entry.size || !unchanged(entry)) throw SourceChanged()
-            entry.digest = digest(temporary, checkpoint)
+            entry.digest = fileDigest(temporary)
             // Persist the digest before publication, so a process interruption immediately after
             // publication can recover only an exact matching destination.
             saved()
@@ -199,8 +214,8 @@ object ResumableFileTransfer {
                         // Nonempty directories are retained: never delete children added after planning.
                         Files.delete(source.toPath())
                     } else {
-                        if (!unchanged(entry) || digest(source, checkpoint) != entry.digest ||
-                            digest(File(entry.destination), checkpoint) != entry.digest) throw SourceChanged()
+                        if (!unchanged(entry) || fileDigest(source) != entry.digest ||
+                            fileDigest(File(entry.destination)) != entry.digest) throw SourceChanged()
                         Files.delete(source.toPath())
                     }
                 } catch (e: Paused) { throw e } catch (_: IOException) { retained = true }

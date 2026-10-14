@@ -9,6 +9,10 @@ plugins {
 // see services/downloads/build.gradle.kts: the yt-dlp runtime is only built in with -Ptelos.media=true
 val mediaRuntime = (findProperty("telos.media") as String?)?.toBoolean() == true
 
+// Measurement only: production builds retain stable class/member names by default.
+val obfuscationExperiment = providers.gradleProperty("telos.obfuscationExperiment")
+    .map { it.toBooleanStrict() }.getOrElse(false)
+
 // One APK per CPU type: -Ptelos.abi=arm64-v8a or -Ptelos.abi=armeabi-v7a puts only the native libraries of that
 // CPU into the APK. Without it both are included (local and debug builds). Keep in sync with services/comms.
 val telosAbis = ((findProperty("telos.abi") as String?)?.takeIf { it.isNotBlank() }?.let { listOf(it) }
@@ -81,6 +85,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            if (!obfuscationExperiment) proguardFile("stable-names.pro")
         }
         debug {
             applicationIdSuffix = ".debug"
@@ -99,6 +104,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            if (!obfuscationExperiment) proguardFile("stable-names.pro")
         }
 
         flavorDimensions += "variant"

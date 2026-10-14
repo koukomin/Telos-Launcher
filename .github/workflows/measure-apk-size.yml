@@ -1,0 +1,76 @@
+name: Measure APK size experiment
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/measure-apk-size.yml'
+      - 'tools/performance/**'
+      - 'app/app/build.gradle.kts'
+      - 'app/app/proguard-rules.pro'
+      - 'app/app/stable-names.pro'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: apk-size-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - variant: baseline
+            obfuscate: 'false'
+          - variant: candidate
+            obfuscate: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Download optional SIP native libraries
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release download sip-libs --pattern sip-libs.tar.gz --dir "$RUNNER_TEMP"; then
+            tar -xzf "$RUNNER_TEMP/sip-libs.tar.gz" -C sip-native
+          else
+            echo "No SIP libraries available; both measurements use the same fallback configuration."
+          fi
+      - name: Build isolated release experiment
+        # No signing credentials are passed: these APKs use debug signing and are not releases.
+        env:
+          VERSION_CODE_OVERRIDE: '2026101400'
+          VERSION_NAME_OVERRIDE: 'size-experiment'
+        run: |
+          chmod +x gradlew
+          ./gradlew :app:app:assembleDefaultRelease -Ptelos.abi=arm64-v8a -Ptelos.obfuscationExperiment=${{ matrix.obfuscate }} --stacktrace
+      - name: Measure APK entries
+        env:
+          VARIANT: ${{ matrix.variant }}
+        run: |
+          mkdir -p size-report
+          APK=$(find app/app/build/outputs/apk/default/release -name '*.apk' -print -quit)
+          test -n "$APK"
+          cp "$APK" "size-report/telos-size-$VARIANT-arm64.apk"
+          python3 tools/performance/apk_size.py "$APK" --output "size-report/$VARIANT.json"
+          git rev-parse HEAD > size-report/source-commit.txt
+          printf '%s\n' 'Experimental APK: debug signed, not for publishing or updating an installed release.' > size-report/README.txt
+      - name: Upload experiment APK, report and mapping
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: apk-size-${{ matrix.variant }}
+          retention-days: 7
+          path: |
+            size-report/
+            app/app/build/outputs/mapping/defaultRelease/

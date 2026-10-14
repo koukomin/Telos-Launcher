@@ -5,6 +5,16 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class ResumableFileTransferTest {
+    @Test fun mixedSizeFilesRemainDistinctAcrossOneMove() = fixture { src, dst ->
+        val contents = listOf(ByteArray(0), ByteArray(7) { 29 }, ByteArray(300_007) { (it % 251).toByte() })
+        val sources = contents.mapIndexed { index, bytes -> src.resolve("$index.bin").apply { writeBytes(bytes) } }
+        val plan = ResumableFileTransfer.plan(sources, dst, true)
+        ResumableFileTransfer.execute(plan, {}, {}, { _, _ -> })
+        contents.forEachIndexed { index, expected ->
+            assertArrayEquals(expected, dst.resolve("$index.bin").readBytes())
+            assertFalse(sources[index].exists())
+        }
+    }
     private fun fixture(block: (java.io.File, java.io.File) -> Unit) {
         val root = Files.createTempDirectory("transfer-test").toFile()
         try { val src = root.resolve("source").apply { mkdir() }; val dst = root.resolve("destination").apply { mkdir() }; block(src, dst) }

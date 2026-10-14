@@ -58,30 +58,40 @@ object FileSearchIndex {
         val root = folder.canonicalFile.toPath(); require(Files.isDirectory(root))
         val entries = ArrayList<IndexedFile>()
         var limited = false; var unreadable = 0; var estimatedBytes = 0L
-        fun add(path: Path, attributes: BasicFileAttributes): FileVisitResult {
+        fun add(path: Path, attributes: BasicFileAttributes, hidden: Boolean): FileVisitResult {
             checkpoint()
             if (path != root) {
-                val bytes = 128L + 2L * (path.toString().length + path.fileName.toString().length)
+                val pathString = path.toString()
+                val name = path.fileName.toString()
+                val bytes = 128L + 2L * (pathString.length + name.length)
                 if (bytes > memoryLimitBytes - estimatedBytes) { limited = true; return FileVisitResult.TERMINATE }
                 estimatedBytes += bytes
-                entries += IndexedFile(path.toString(), path.fileName.toString(), attributes.isDirectory,
+                entries += IndexedFile(pathString, name, attributes.isDirectory,
                     if (attributes.isDirectory) -1 else attributes.size(), attributes.lastModifiedTime().toMillis(),
-                    root.relativize(path).any { it.toString().startsWith('.') }, attributes.isSymbolicLink)
+                    hidden, attributes.isSymbolicLink)
             }
             if (entries.size >= limit) { limited = true; return FileVisitResult.TERMINATE }
             return FileVisitResult.CONTINUE
         }
+        // The visitor already tracks ancestry. Carry one flag per level instead of allocating
+        // a relative Path and component Paths for every indexed entry.
+        val hiddenDirectories = ArrayDeque<Boolean>()
         Files.walkFileTree(root, emptySet(), 64, object : SimpleFileVisitor<Path>() {
-            override fun preVisitDirectory(dir: Path, attrs: BasicFileAttributes) = add(dir, attrs)
+            override fun preVisitDirectory(dir: Path, attrs: BasicFileAttributes): FileVisitResult {
+                val hidden = dir != root &&
+                    (hiddenDirectories.lastOrNull() == true || dir.fileName.toString().startsWith('.'))
+                hiddenDirectories.addLast(hidden)
+                return add(dir, attrs, hidden)
+            }
             override fun visitFile(file: Path, attrs: BasicFileAttributes): FileVisitResult {
                 if (attrs.isDirectory) limited = true
-                return add(file, attrs)
+                return add(file, attrs, hiddenDirectories.lastOrNull() == true || file.fileName.toString().startsWith('.'))
             }
             override fun visitFileFailed(file: Path, exc: IOException): FileVisitResult {
                 checkpoint(); unreadable++; return FileVisitResult.CONTINUE
             }
             override fun postVisitDirectory(dir: Path, exc: IOException?): FileVisitResult {
-                checkpoint(); if (exc != null) unreadable++; return FileVisitResult.CONTINUE
+                checkpoint(); hiddenDirectories.removeLast(); if (exc != null) unreadable++; return FileVisitResult.CONTINUE
             }
         })
         return FileSearchSnapshot(entries, limited, unreadable, estimatedBytes)

@@ -354,8 +354,9 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         val dir = path; searchLimited = false
         if (dir == null || text.isBlank() && searchFilter == de.mm20.launcher2.helper.FileSearchFilter() && searchKind == null) { searchResults = null; return }
         val filter = searchFilter; val kind = searchKind
+        val matcher = TelosSearch.compile(text)
         fun matches(entry: FsEntry, hidden: Boolean = entry.hidden): Boolean =
-            (text.isBlank() || TelosSearch.matches(text, entry.name)) && (kind == null || entry.kind == kind) &&
+            (text.isBlank() || matcher.matches(entry.name)) && (kind == null || entry.kind == kind) &&
                 (showHidden || !hidden) && filter.matches(de.mm20.launcher2.helper.IndexedFile(entry.path, entry.name, entry.isDir, entry.size, entry.modified, hidden, entry.isLink))
         if ((RemotePath.isRemote(dir) && !recursiveSearch) || ArchivePath.isArchive(dir) || de.mm20.launcher2.ui.files.vault.VaultPath.isVault(dir)) {
             searchResults = entries.filter { matches(it) }; return
@@ -369,7 +370,7 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
                         scan.entries to scan.partial
                     } else if (rootMode) {
                         val files = RootShell.run("find ${RootShell.q(dir)} -mindepth 1 2>/dev/null | head -20000").out.lines()
-                            .filter { it.isNotBlank() && (text.isBlank() || TelosSearch.matches(text, nameOf(it))) }.take(300)
+                            .filter { it.isNotBlank() && (text.isBlank() || matcher.matches(nameOf(it))) }.take(300)
                             .map { FsEntry(it, nameOf(it), File(it).isDirectory, -1, 0) }.filter { matches(it) }
                         files to (files.size >= 300)
                     } else if (!recursiveSearch) {
