@@ -24,6 +24,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Validate complete translations and Android placeholders
+        run: python tools/translations/validate.py
       - uses: actions/setup-java@v4
         with:
           java-version: '21'

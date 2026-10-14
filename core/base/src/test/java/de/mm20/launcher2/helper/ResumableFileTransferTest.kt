@@ -110,4 +110,57 @@ class ResumableFileTransferTest {
         assertTrue(dst.listFiles().orEmpty().isEmpty())
     }
 
+    @Test fun destinationCreatedAfterPreparedJournalIsNeverOverwritten() = fixture { src, dst ->
+        val source = src.resolve("sample").apply { writeText("original") }
+        val plan = ResumableFileTransfer.plan(listOf(source), dst, true)
+        try {
+            ResumableFileTransfer.execute(plan, {}, {
+                if (!plan.entries.single().committed) dst.resolve("sample").writeText("concurrent writer")
+            }, { _, _ -> })
+            fail("publication replaced another writer")
+        } catch (_: java.io.IOException) { }
+        assertEquals("concurrent writer", dst.resolve("sample").readText())
+        assertEquals("original", source.readText())
+        assertFalse(plan.entries.single().committed)
+        assertEquals("original", dst.listFiles()!!.single { it.name.endsWith(".part") }.readText())
+    }
+
+    @Test fun pauseDuringPublicationRetainsVerifiedStagingAndResumes() = fixture { src, dst ->
+        val bytes = ByteArray(300_000) { (it % 251).toByte() }
+        val source = src.resolve("sample").apply { writeBytes(bytes) }
+        val plan = ResumableFileTransfer.plan(listOf(source), dst, true)
+        var publishing = false
+        var checks = 0
+        try {
+            ResumableFileTransfer.execute(plan, {
+                if (publishing && ++checks == 3) throw ResumableFileTransfer.Paused()
+            }, { if (!plan.entries.single().committed) publishing = true }, { _, _ -> })
+            fail("pause ignored")
+        } catch (_: ResumableFileTransfer.Paused) { }
+        assertFalse(dst.resolve("sample").exists())
+        assertArrayEquals(bytes, source.readBytes())
+        assertArrayEquals(bytes, dst.listFiles()!!.single { it.name.endsWith(".part") }.readBytes())
+        ResumableFileTransfer.execute(plan, {}, {}, { _, _ -> })
+        assertFalse(source.exists())
+        assertArrayEquals(bytes, dst.resolve("sample").readBytes())
+        assertFalse(dst.listFiles()!!.any { it.name.endsWith(".part") })
+    }
+
+    @Test fun incompletePublicationAfterPowerLossRetainsOriginalAndStaging() = fixture { src, dst ->
+        val source = src.resolve("sample").apply { writeText("original") }
+        val plan = ResumableFileTransfer.plan(listOf(source), dst, true)
+        try {
+            ResumableFileTransfer.execute(plan, {}, {
+                dst.resolve("sample").writeText("partial")
+                throw java.io.IOException("Simulated interruption after prepared journal")
+            }, { _, _ -> })
+            fail()
+        } catch (_: java.io.IOException) { }
+        try { ResumableFileTransfer.execute(plan, {}, {}, { _, _ -> }); fail("partial accepted") }
+        catch (_: java.io.IOException) { }
+        assertEquals("partial", dst.resolve("sample").readText())
+        assertEquals("original", source.readText())
+        assertEquals("original", dst.listFiles()!!.single { it.name.endsWith(".part") }.readText())
+    }
+
 }

@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+"""Check changed UI-string coverage and Android resource syntax."""
+import re
+import xml.etree.ElementTree as ET
+from prepare import RES, inventory
+
+TOKEN = re.compile(r'%(?:\d+\$)?[-#+ 0,(]*\d*(?:\.\d+)?[a-zA-Z%]|\{(?:name|ext|n(?::\d+)?)\}')
+
+def main():
+    data = inventory('71262e1e52c1bbb34da722d0ff5e213da665916f')
+    missing = {locale: list(rows) for locale, rows in data['locales'].items() if rows}
+    if missing:
+        raise SystemExit('Missing or stale translations: ' + repr(missing))
+    checked = 0
+    for directory in RES.glob('values-*'):
+        names = set()
+        for path in directory.glob('*.xml'):
+            for node in ET.parse(path).getroot():
+                if node.tag != 'string':
+                    continue
+                name = node.get('name')
+                if name in names:
+                    raise SystemExit(f'Duplicate string: {directory.name}/{name}')
+                names.add(name)
+                if path.name != 'strings_telos_remaining.xml':
+                    continue
+                text = ''.join(node.itertext())
+                source = data['strings'][name]['text']
+                if sorted(TOKEN.findall(text)) != sorted(TOKEN.findall(source)):
+                    raise SystemExit(f'Changed placeholders: {directory.name}/{name}')
+                for match in re.finditer("['\"]", text):
+                    prefix = text[:match.start()]
+                    slashes = len(prefix) - len(prefix.rstrip('\\'))
+                    if slashes % 2 != 1:
+                        raise SystemExit(f'Unescaped Android quote: {directory.name}/{name}')
+                checked += 1
+    print(f'{checked} translations validated; complete changed-string coverage in {len(data["locales"])} base locales.')
+
+if __name__ == '__main__':
+    main()
