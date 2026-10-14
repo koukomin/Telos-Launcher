@@ -129,7 +129,7 @@ private enum class MediaSpace(
     Tv("tv", "telos_tv_app://tv", R.drawable.tv_24px, R.string.au12_tvui_space_tv),
     YouTube("youtube", "telos_youtube_app://youtube", de.mm20.launcher2.base.R.drawable.ic_app_youtube_fg, R.string.telos_youtube_label),
     YouTubeMusic("youtube_music", "telos_youtube_music_app://youtube_music", de.mm20.launcher2.base.R.drawable.ic_app_youtube_music_fg, R.string.telos_youtube_music_label),
-    Stremio("stremio", "telos_media_app://stremio", R.drawable.video_library_24px, R.string.au22_stremio_label),
+    Stremio("stremio", "telos_media_app://stremio", R.drawable.theaters_24px, R.string.au22_stremio_label),
 }
 
 private val MediaSpace.group: String get() = when (this) {
@@ -148,7 +148,7 @@ private val MediaSpace.groupIcon: Int get() = when (group) {
     "audio" -> R.drawable.headphones_24px
     "video" -> R.drawable.video_library_24px
     "tv" -> R.drawable.tv_24px
-    else -> R.drawable.video_library_24px
+    else -> R.drawable.theaters_24px
 }
 
 /**

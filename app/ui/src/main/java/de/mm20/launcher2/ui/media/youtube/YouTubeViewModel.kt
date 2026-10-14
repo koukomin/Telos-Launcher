@@ -36,13 +36,14 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
     private var playJob: Job? = null
     private var connectJob: Deferred<MediaController>? = null
     private var future: com.google.common.util.concurrent.ListenableFuture<MediaController>? = null
+    private var playbackErrorMessage: String? = null
     private val listener = object : Player.Listener {
         override fun onEvents(player: Player, events: Player.Events) {
             nowPlaying.value = player.currentMediaItem
             playing.value = player.isPlaying
             buffering.value = player.playbackState == Player.STATE_BUFFERING
         }
-        override fun onPlayerError(error: PlaybackException) { message.value = error.errorCodeName }
+        override fun onPlayerError(error: PlaybackException) { message.value = playbackErrorMessage }
     }
     fun search(context: Context, query: String, music: Boolean) {
         if (query.isBlank()) return
@@ -59,6 +60,7 @@ class YouTubeViewModel : ViewModel(), KoinComponent {
         controller.value?.let { return it }
         connectJob?.let { return it.await() }
         val app = context.applicationContext
+        playbackErrorMessage = app.getString(R.string.telos_youtube_player_error)
         val deferred = viewModelScope.async {
             val pending = MediaController.Builder(app, SessionToken(app, ComponentName(app, YouTubePlayerService::class.java))).buildAsync()
             future = pending

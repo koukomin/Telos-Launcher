@@ -1,14 +1,16 @@
 # Telos Media
 
-Telos Media puts [Telos Music](../music/index.md), [Telos Radio](../radio/index.md), TV and [Telos Video](../video/index.md) in one app, as four spaces, plus a fifth one for Stremio add-ons.
+Telos Media combines local music, radio, YouTube Music, local video, YouTube, TV and Stremio Fork in one app.
 
 ## Switching spaces
 
-A pill at the top has five segments: **Music**, **Radio**, **Video**, **TV** and **Stremio Fork** (icons stay in the pill; the selected space has a large title directly underneath). Tap one to switch; long press a segment and drag it sideways to change the order (it is remembered); the last space you used is remembered
+A pill at the top has four groups: **Listen** (Music, Radio and YouTube Music), **Video** (local Video and YouTube), **TV** and **Stremio Fork**. Icons stay in the pill; the selected space has a large title directly underneath. Tap a group and select its source; long press a segment and drag it sideways to change the order (it is remembered); the last space you used is remembered
 (it is part of the launcher settings backup). The three older apps still exist and open Telos Media on their space, so existing
 shortcuts and search results keep working. A space whose app is hidden in the Store disappears from the pill.
 
 ## Shared mini player
+
+YouTube and YouTube Music use a shared native background player. Their optional [browser account panel](youtube-account.md) opens both websites in the same browser; it does not import that account into the native player.
 
 Music and Radio share one mini player at the bottom. It shows the title and artist (music) or the station (radio) with the artwork,
 play/pause, and next (music) or stop (radio). Tapping it opens the Music Now Playing screen, or the Radio space. It is hidden on the

@@ -26,6 +26,8 @@ import de.mm20.launcher2.ui.R
 fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
     val context = LocalContext.current
     var query by rememberSaveable(music) { mutableStateOf("") }
+    var accountPanel by rememberSaveable { mutableStateOf(false) }
+    var browserUnavailable by rememberSaveable { mutableStateOf(false) }
     val allEntries by vm.results.collectAsStateWithLifecycle()
     val entries = allEntries[music].orEmpty()
     val searching by vm.searching.collectAsStateWithLifecycle()
@@ -35,6 +37,11 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
     val controller by vm.controller.collectAsStateWithLifecycle()
     val now by vm.nowPlaying.collectAsStateWithLifecycle()
     Column(Modifier.fillMaxSize().padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        TextButton(onClick = { accountPanel = true }, modifier = Modifier.align(Alignment.End)) {
+            Icon(painterResource(R.drawable.open_in_new_24px), null)
+            Spacer(Modifier.width(8.dp))
+            Text(stringResource(R.string.telos_youtube_browser_account))
+        }
         Row(verticalAlignment = Alignment.CenterVertically) {
             OutlinedTextField(query, { query = it }, modifier = Modifier.weight(1f), singleLine = true,
                 label = { Text(stringResource(R.string.telos_youtube_search)) }, shape = RoundedCornerShape(24.dp))
@@ -70,6 +77,25 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                 }
             }
         }
+    }
+    if (accountPanel) {
+        AlertDialog(onDismissRequest = { accountPanel = false },
+            title = { Text(stringResource(R.string.telos_youtube_browser_account)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text(stringResource(R.string.telos_youtube_browser_account_info))
+                    Text(stringResource(R.string.telos_youtube_browser_native_limit), style = MaterialTheme.typography.bodySmall)
+                    if (browserUnavailable) Text(stringResource(R.string.telos_youtube_browser_unavailable), color = MaterialTheme.colorScheme.error)
+                    listOf(false, true).forEach { browserMusic ->
+                        OutlinedButton(onClick = {
+                            browserUnavailable = !YouTubeBrowserAccount.open(context, browserMusic)
+                        }, modifier = Modifier.fillMaxWidth()) {
+                            Text(stringResource(if (browserMusic) R.string.telos_youtube_browser_music else R.string.telos_youtube_browser_video))
+                        }
+                    }
+                }
+            },
+            confirmButton = { TextButton(onClick = { accountPanel = false }) { Text(stringResource(R.string.telos_youtube_browser_close)) } })
     }
 }
 

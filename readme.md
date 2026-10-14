@@ -102,7 +102,7 @@ Telos Phone now reads the full Android contact list across synced accounts, incl
 
 ### YouTube in Telos Media
 
-Telos YouTube and Telos YouTube Music provide video/music search, direct video links and a shared native Media3 background player. The Media hub groups local music, radio and YouTube Music under Listen; local video and YouTube under Video, alongside TV and Stremio Fork. Launcher search suggests both YouTube features with distinct Telos icons. Selected link parsing, audio selection and the downloader adapter are adapted from [Flow](https://github.com/Flow-Tube/Flow), with [NewPipeExtractor](https://github.com/TeamNewPipe/NewPipeExtractor). This is a focused integration, not the entire Flow application. Account integration is still under development.
+Telos YouTube and Telos YouTube Music provide video/music search, direct video links and a shared native Media3 background player. The Media hub groups local music, radio and YouTube Music under Listen; local video and YouTube under Video, alongside TV and Stremio Fork. Launcher search suggests both YouTube features with distinct Telos icons. Selected link parsing, audio selection and the downloader adapter are adapted from [Flow](https://github.com/Flow-Tube/Flow), with [NewPipeExtractor](https://github.com/TeamNewPipe/NewPipeExtractor). This is a focused integration, not the entire Flow application. An optional [browser account panel](docs/docs/user-guide/telos/media/youtube-account.md) opens YouTube and YouTube Music in the same browser profile. The native player does not import browser accounts; native account integration remains unfinished.
 
 ### How the built-in apps work
 

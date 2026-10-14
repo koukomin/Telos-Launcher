@@ -60,9 +60,10 @@ fun UriDeleteDialog(uris: List<Uri>, onDeleted: () -> Unit, onDismiss: () -> Uni
             busy = true
             if (localTrash) scope.launch {
                 busy = true
-                try { for (path in paths) trash.move(path!!); onDeleted(); onDismiss() }
+                var changed = false
+                try { for (path in paths) { trash.move(path!!); changed = true }; onDeleted(); onDismiss() }
                 catch (e: CancellationException) { throw e }
-                catch (_: Exception) { failed() }
+                catch (_: Exception) { if (changed) onDeleted(); failed() }
                 finally { busy = false }
             } else if (Build.VERSION.SDK_INT >= 30) {
                 runCatching {
