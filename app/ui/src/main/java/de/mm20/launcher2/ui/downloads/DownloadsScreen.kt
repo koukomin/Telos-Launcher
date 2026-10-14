@@ -557,13 +557,19 @@ private fun TaskCard(task: DownloadTask, manager: DownloadManager, onOpenDetails
 @Composable
 private fun DeleteDialog(task: DownloadTask, onDismiss: () -> Unit, onConfirm: (deleteFile: Boolean) -> Unit) {
     val done = task.state == DownloadState.Completed || (task.torrent != null && task.completedAt > 0)
+    val uris = remember(task) { (task.media?.outputUris.orEmpty() + task.torrent?.files.orEmpty().mapNotNull { it.uri } + listOfNotNull(task.fileUri)).distinct().map(android.net.Uri::parse) }
+    var deleteFiles by remember(task.id) { mutableStateOf(false) }
+    if (deleteFiles && uris.isNotEmpty()) {
+        de.mm20.launcher2.ui.trash.UriDeleteDialog(uris, { onConfirm(false) }, { deleteFiles = false }, { onConfirm(true) })
+        return
+    }
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.dl_delete_title)) },
         text = { Text(stringResource(if (done) R.string.dl_delete_text_done else R.string.dl_delete_text_partial, task.displayName)) },
         confirmButton = {
             Row {
-                if (done) TextButton(onClick = { onConfirm(true) }) { Text(stringResource(R.string.dl_delete_with_file)) }
+                if (done) TextButton(onClick = { if (uris.isNotEmpty()) deleteFiles = true else onConfirm(true) }) { Text(stringResource(R.string.dl_delete_with_file)) }
                 TextButton(onClick = { onConfirm(false) }) { Text(stringResource(if (done) R.string.dl_delete_keep_file else R.string.dl_delete)) }
             }
         },

@@ -119,21 +119,7 @@ private fun RecordingRow(rec: CallRecordingFile, onChanged: () -> Unit) {
             }
         },
     )
-    if (confirmDelete) {
-        AlertDialog(
-            onDismissRequest = { confirmDelete = false },
-            title = { Text(stringResource(R.string.au_phoneb_delete_recording)) },
-            text = { Text(title) },
-            confirmButton = {
-                TextButton(onClick = {
-                    confirmDelete = false
-                    CallAudioRecorder.delete(rec.file)
-                    onChanged()
-                }) { Text(stringResource(R.string.hc_delete)) }
-            },
-            dismissButton = {
-                TextButton(onClick = { confirmDelete = false }) { Text(stringResource(R.string.hc_cancel)) }
-            },
-        )
-    }
+    if (confirmDelete) de.mm20.launcher2.ui.trash.UriDeleteDialog(android.net.Uri.fromFile(rec.file),
+        onDeleted = onChanged, onDismiss = { confirmDelete = false })
+
 }

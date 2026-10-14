@@ -5,6 +5,7 @@ import os
 import pathlib
 import subprocess
 import time
+import xml.etree.ElementTree as ET
 
 APP = "com.dimitris.telos.debug"
 OUT = pathlib.Path("screenshots")
@@ -24,7 +25,7 @@ adb("shell", "input", "keyevent", "KEYCODE_WAKEUP")
 adb("shell", "wm", "dismiss-keyguard", check=False)
 adb("shell", "cmd", "statusbar", "collapse", check=False)
 adb("shell", "am", "start", "-n", APP + "/de.mm20.launcher2.ui.launcher.LauncherActivity")
-time.sleep(5)
+time.sleep(2)
 
 screens = [("01-launcher", None, None), ("02-media-listen", "settings/media_hub", "music"),
            ("03-youtube-music", "settings/media_hub", "youtube_music"), ("04-youtube-video", "settings/media_hub", "youtube"),
@@ -32,20 +33,42 @@ screens = [("01-launcher", None, None), ("02-media-listen", "settings/media_hub"
            ("07-store", "settings/store", None), ("08-viewer", "settings/viewer", None),
            ("09-notes", "settings/notes", None), ("10-calendar", "settings/calendar", None),
            ("11-calculator", "settings/calculator", None), ("12-downloads", "settings/downloads", None)]
+def wait_for_rendered_ui(name, timeout=60):
+    deadline = time.monotonic() + timeout
+    expected = {
+        "01-launcher": ["Search", "Settings"], "02-media-listen": ["Music"],
+        "03-youtube-music": ["YouTube Music"], "04-youtube-video": ["YouTube"],
+        "05-stremio-fork": ["Stremio Fork"], "06-files": ["Storage"],
+        "07-store": ["Telos apps"], "08-viewer": ["Photos"], "09-notes": ["Notes"],
+        "10-calendar": ["Today"], "11-calculator": ["VAT"], "12-downloads": ["Downloads"],
+    }[name]
+    while time.monotonic() < deadline:
+        adb("shell", "uiautomator", "dump", "/sdcard/telos-ui.xml", check=False)
+        dump = adb("shell", "cat", "/sdcard/telos-ui.xml", check=False).stdout
+        try:
+            tree = ET.fromstring(dump)
+            labels = [n.attrib.get("text", "") + " " + n.attrib.get("content-desc", "") for n in tree.iter("node")]
+            if any(word in text for word in expected for text in labels):
+                return dump
+        except ET.ParseError:
+            pass
+        time.sleep(1)
+    raise RuntimeError("UI did not render: " + name)
+
 for name, route, space in screens:
     if route:
         args = ["shell", "am", "start", "-n", APP + "/de.mm20.launcher2.ui.settings.SettingsActivity", "--es", "de.mm20.launcher2.settings.ROUTE", route]
         if space:
             args += ["--es", "de.mm20.launcher2.settings.MEDIA_SPACE", space]
         adb(*args, check=False)
-        time.sleep(3)
+        time.sleep(1)
+    dump = wait_for_rendered_ui(name)
+    time.sleep(2)
     result = adb("exec-out", "screencap", "-p")
     (OUT / (name + ".png")).write_bytes(result.stdout)
-    adb("shell", "uiautomator", "dump", "/sdcard/telos-ui.xml", check=False)
-    dump = adb("shell", "cat", "/sdcard/telos-ui.xml", check=False)
-    (OUT / (name + ".xml")).write_bytes(dump.stdout)
+    (OUT / (name + ".xml")).write_bytes(dump)
     print("Captured", name)
 (OUT / "capture-info.json").write_text(json.dumps({"commit": os.environ.get("GITHUB_SHA"), "device": "Pixel 7 emulator", "sdk": 35,
     "build": "x86_64 debug", "data": "Clean emulator, no personal accounts or data. Native ARM-only torrent/SIP components are not tested.",
     "screens": [name for name, _, _ in screens]}, indent=2))
-(OUT / "logcat.txt").write_bytes(adb("logcat", "-d", "-t", "1500", check=False).stdout)
+(OUT / "logcat.txt").write_bytes(adb("logcat", "-d", "-s", "AndroidRuntime", "ActivityTaskManager", "Launcher", check=False).stdout)

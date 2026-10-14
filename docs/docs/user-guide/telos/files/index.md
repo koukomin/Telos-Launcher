@@ -162,3 +162,8 @@ The local-folder menu offers storage analysis, the ten largest files and byte-ve
 ### Shared trash
 
 Files, Viewer and Media share a delete/trash choice and restore UI. Local files use an atomic same-volume move with durable metadata, a default 30-day retention configurable to 1–365 days for future deletions, and daily expiry cleanup. Restore never overwrites an existing file. Android-managed media trash uses the system’s fixed 30-day retention and permission dialog. Unsupported storages offer explicitly confirmed permanent deletion. The private trash is removed on app uninstall or app-data deletion.
+
+
+Ο ίδιος διάλογος χρησιμοποιείται επίσης για εγγραφές ραδιοφώνου/φωνής/κλήσεων/οθόνης, ολοκληρωμένα αρχεία Downloads και το Delete στην ειδοποίηση screenshot. Οι εγγραφές κλήσεων παραμένουν κρυπτογραφημένες μέσα στον ιδιωτικό κάδο. Προσωρινά ή ημιτελή αρχεία εργασιών δεν αντιμετωπίζονται ως ολοκληρωμένα αρχεία χρήστη.
+
+The same deletion choice also covers radio/voice/call/screen recordings, completed download outputs and screenshot notification actions. Call recordings remain encrypted in the private trash. Temporary or unfinished transfer files are not treated as completed user files.

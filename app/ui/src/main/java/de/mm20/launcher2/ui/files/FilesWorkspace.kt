@@ -87,7 +87,7 @@ internal class FilesWorkspaceViewModel(application: Application) : AndroidViewMo
 @Composable
 fun FilesScreen() {
     val workspace: FilesWorkspaceViewModel = viewModel()
-    Column(Modifier.fillMaxSize()) {
+    Column(Modifier.fillMaxSize().statusBarsPadding()) {
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 8.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             workspace.tabs.forEachIndexed { index, tab ->
                 val selected = tab.id == if (workspace.activeRight && workspace.dual) workspace.right else workspace.left

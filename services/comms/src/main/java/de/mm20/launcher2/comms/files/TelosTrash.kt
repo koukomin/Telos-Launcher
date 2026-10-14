@@ -21,7 +21,7 @@ class TelosTrash(context: Context) {
         get() = prefs.getInt("retentionDays", 30).coerceIn(1, 365)
         set(value) { require(value in 1..365); prefs.edit().putInt("retentionDays", value).apply() }
     data class Item(val store: FileTrash, val entry: FileTrash.Entry)
-    private fun stores(): List<Pair<File, FileTrash>> = app.getExternalFilesDirs(null).filterNotNull().map { folder ->
+    private fun stores(): List<Pair<File, FileTrash>> = listOf(app.filesDir to FileTrash(File(app.filesDir, "telos_trash"), app.filesDir)) + app.getExternalFilesDirs(null).filterNotNull().map { folder ->
         val volume = File(folder.path.substringBefore("/Android/"))
         volume to FileTrash(File(folder, "telos_trash"), volume)
     }
@@ -31,7 +31,15 @@ class TelosTrash(context: Context) {
         val source = File(path)
         val pair = stores().firstOrNull { (volume, _) -> source.absolutePath.startsWith(volume.absolutePath.trimEnd('/') + "/") }
             ?: throw java.io.IOException("Trash unavailable for this storage")
-        val entry = pair.second.moveToTrash(source, retentionDays)
+        val entry = if (source.parentFile?.canonicalFile == File(app.filesDir, "CallRecordings").canonicalFile) {
+            // Do not race the recorder or move a pending plaintext call recording into the trash.
+            if (de.mm20.launcher2.comms.recording.CallAudioRecorder.isActiveFile(source)) throw java.io.IOException("Recording is still active")
+            synchronized(de.mm20.launcher2.comms.recording.RecordingCrypto) {
+                if (!de.mm20.launcher2.comms.recording.RecordingCrypto.encryptInPlace(source) ||
+                    !de.mm20.launcher2.comms.recording.RecordingCrypto.isEncrypted(source)) throw java.io.IOException("Recording encryption unavailable")
+                pair.second.moveToTrash(source, retentionDays)
+            }
+        } else pair.second.moveToTrash(source, retentionDays)
         scan(path)
         scheduleCleanup()
         Item(pair.second, entry)

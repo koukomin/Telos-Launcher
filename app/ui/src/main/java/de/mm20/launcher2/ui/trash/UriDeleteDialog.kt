@@ -19,28 +19,35 @@ import java.io.File
 
 /** The same deletion choice regardless of which Telos library opened the file. */
 @Composable
-fun UriDeleteDialog(uri: Uri, onDeleted: () -> Unit, onDismiss: () -> Unit, onPermanent: (() -> Unit)? = null) {
+fun UriDeleteDialog(uri: Uri, onDeleted: () -> Unit, onDismiss: () -> Unit, onPermanent: (() -> Unit)? = null) =
+    UriDeleteDialog(listOf(uri), onDeleted, onDismiss, onPermanent)
+
+@Composable
+fun UriDeleteDialog(uris: List<Uri>, onDeleted: () -> Unit, onDismiss: () -> Unit, onPermanent: (() -> Unit)? = null) {
+    require(uris.isNotEmpty())
     val context = LocalContext.current
     val trash: TelosTrash = koinInject()
     val scope = rememberCoroutineScope()
-    var path by remember(uri) { mutableStateOf<String?>(null) }
-    var resolved by remember(uri) { mutableStateOf(false) }
-    var localTrash by remember(uri) { mutableStateOf(false) }
-    var systemTrash by remember(uri) { mutableStateOf(false) }
-    var confirming by remember(uri) { mutableStateOf(true) }
-    var busy by remember(uri) { mutableStateOf(false) }
-    var nativePending by remember(uri) { mutableStateOf(false) }
+    var paths by remember(uris) { mutableStateOf<List<String?>>(emptyList()) }
+    var resolved by remember(uris) { mutableStateOf(false) }
+    var localTrash by remember(uris) { mutableStateOf(false) }
+    var systemTrash by remember(uris) { mutableStateOf(false) }
+    var confirming by remember(uris) { mutableStateOf(true) }
+    var busy by remember(uris) { mutableStateOf(false) }
+    var nativePending by remember(uris) { mutableStateOf(false) }
     val native = rememberLauncherForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {
         nativePending = false
         if (it.resultCode == Activity.RESULT_OK) onDeleted()
         onDismiss()
     }
-    LaunchedEffect(uri) {
-        path = trash.filePath(uri)
-        localTrash = withContext(Dispatchers.IO) { path?.let { trash.supports(it) && File(it).exists() && File(it).parentFile?.canWrite() == true } == true }
-        systemTrash = Build.VERSION.SDK_INT >= 30 && uri.authority == MediaStore.AUTHORITY && withContext(Dispatchers.IO) {
-            val type = runCatching { context.contentResolver.getType(uri) }.getOrNull().orEmpty()
-            type.startsWith("image/") || type.startsWith("video/") || type.startsWith("audio/")
+    LaunchedEffect(uris) {
+        paths = uris.map { trash.filePath(it) }
+        localTrash = withContext(Dispatchers.IO) { paths.all { path -> path?.let { trash.supports(it) && File(it).exists() && File(it).parentFile?.canWrite() == true } == true } }
+        systemTrash = Build.VERSION.SDK_INT >= 30 && uris.size <= 2000 && uris.all { it.authority == MediaStore.AUTHORITY } && withContext(Dispatchers.IO) {
+            uris.all { uri ->
+                val type = runCatching { context.contentResolver.getType(uri) }.getOrNull().orEmpty()
+                type.startsWith("image/") || type.startsWith("video/") || type.startsWith("audio/")
+            }
         }
         resolved = true
     }
@@ -48,18 +55,18 @@ fun UriDeleteDialog(uri: Uri, onDeleted: () -> Unit, onDismiss: () -> Unit, onPe
         onDismissRequest = {}, title = { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(R.string.telos_trash_working)) },
         text = { androidx.compose.material3.LinearProgressIndicator() }, confirmButton = {})
     fun failed() { Toast.makeText(context, R.string.telos_trash_move_failed, Toast.LENGTH_LONG).show(); onDismiss() }
-    if (resolved && confirming) TrashDeleteDialog(1, localTrash || systemTrash,
+    if (resolved && confirming) TrashDeleteDialog(uris.size, localTrash || systemTrash,
         onTrash = {
             busy = true
             if (localTrash) scope.launch {
                 busy = true
-                try { trash.move(path!!); onDeleted(); onDismiss() }
+                try { for (path in paths) trash.move(path!!); onDeleted(); onDismiss() }
                 catch (e: CancellationException) { throw e }
                 catch (_: Exception) { failed() }
                 finally { busy = false }
             } else if (Build.VERSION.SDK_INT >= 30) {
                 runCatching {
-                    val request = MediaStore.createTrashRequest(context.contentResolver, listOf(uri), true)
+                    val request = MediaStore.createTrashRequest(context.contentResolver, uris, true)
                     nativePending = true
                     native.launch(IntentSenderRequest.Builder(request.intentSender).build())
                 }.onFailure { nativePending = false; failed() }
@@ -71,17 +78,17 @@ fun UriDeleteDialog(uri: Uri, onDeleted: () -> Unit, onDismiss: () -> Unit, onPe
             else if (Build.VERSION.SDK_INT >= 30 && systemTrash) {
                 runCatching {
                     nativePending = true
-                    native.launch(IntentSenderRequest.Builder(MediaStore.createDeleteRequest(context.contentResolver, listOf(uri)).intentSender).build())
+                    native.launch(IntentSenderRequest.Builder(MediaStore.createDeleteRequest(context.contentResolver, uris).intentSender).build())
                 }.onFailure { nativePending = false; failed() }
             } else scope.launch {
                 busy = true
                 try {
                     val deleted = withContext(Dispatchers.IO) {
-                        when {
+                        uris.map { uri -> when {
                             uri.scheme == "file" -> File(uri.path!!).delete()
                             DocumentsContract.isDocumentUri(context, uri) -> DocumentsContract.deleteDocument(context.contentResolver, uri)
                             else -> context.contentResolver.delete(uri, null, null) > 0
-                        }
+                        } }.all { it }
                     }
                     if (deleted) onDeleted() else failed()
                     onDismiss()

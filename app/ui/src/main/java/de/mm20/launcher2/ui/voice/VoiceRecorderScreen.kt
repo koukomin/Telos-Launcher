@@ -376,21 +376,10 @@ fun VoiceRecorderScreen() {
         )
     }
     deleting?.let { item ->
-        AlertDialog(
-            onDismissRequest = { deleting = null },
-            title = { Text(stringResource(R.string.voice_delete_title)) },
-            text = { Text(item.title) },
-            confirmButton = {
-                TextButton(onClick = {
-                    player.stop()
-                    if (item.isCall) CallAudioRecorder.delete(item.file) else item.file.delete()
-                    deleting = null
-                    reload++
-                }) { Text(stringResource(R.string.voice_delete)) }
-            },
-            dismissButton = { TextButton(onClick = { deleting = null }) { Text(stringResource(R.string.voice_cancel)) } },
-        )
+        de.mm20.launcher2.ui.trash.UriDeleteDialog(android.net.Uri.fromFile(item.file),
+            onDeleted = { player.stop(); reload++ }, onDismiss = { deleting = null })
     }
+
 }
 
 @Composable
