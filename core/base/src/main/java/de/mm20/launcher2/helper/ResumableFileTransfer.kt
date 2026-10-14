@@ -118,9 +118,12 @@ object ResumableFileTransfer {
                 } else if (!target.isDirectory || Files.isSymbolicLink(target.toPath())) throw IOException("Destination changed")
                 continue
             }
+            val temporary = File(target.parentFile, ".telos-transfer-${plan.id}-$index.part")
             if (entry.committed) {
                 checkPlain(target)
                 if (!target.isFile || digest(target, checkpoint) != entry.digest) throw IOException("Destination changed")
+                checkPlain(temporary)
+                Files.deleteIfExists(temporary.toPath())
                 completed += entry.size; progress(completed, total)
                 continue
             }
@@ -128,11 +131,12 @@ object ResumableFileTransfer {
                 checkPlain(target)
                 if (!target.isFile || target.length() != entry.size || digest(target, checkpoint) != entry.digest) throw IOException("Destination changed")
                 entry.committed = true; saved()
+                checkPlain(temporary)
+                Files.deleteIfExists(temporary.toPath())
                 completed += entry.size; progress(completed, total)
                 continue
             }
             if (!unchanged(entry)) throw SourceChanged()
-            val temporary = File(target.parentFile, ".telos-transfer-${plan.id}-$index.part")
             checkPlain(temporary)
             if (target.exists()) throw IOException("Destination already exists")
             var offset = if (temporary.exists()) temporary.length() else 0L
@@ -170,12 +174,15 @@ object ResumableFileTransfer {
             if (offset != entry.size || !unchanged(entry)) throw SourceChanged()
             entry.digest = digest(temporary, checkpoint)
             // Persist the digest before publication, so a process interruption immediately after
-            // the rename can recover only an exact matching destination.
+            // publication can recover only an exact matching destination.
             saved()
-            // No REPLACE_EXISTING. A user-created destination is always preserved.
-            Files.move(temporary.toPath(), target.toPath())
+            // CREATE_NEW closes the check/rename race on Unix and shared storage. A process
+            // interruption during publication can leave a partial destination; never overwrite
+            // that unknown output on resume. The verified staging and original stay available.
+            ExclusiveFilePublication.copy(temporary, target, checkpoint)
             target.setLastModified(entry.modified)
             entry.committed = true; saved()
+            Files.deleteIfExists(temporary.toPath())
             completed += entry.size; progress(completed, total)
         }
         if (plan.move) {
