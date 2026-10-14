@@ -689,6 +689,7 @@ Text (SMS) and picture (MMS) messages as conversations with a reply field. It is
 ### Telos Files
 
 - Independent folder tabs and an adaptive two-panel workspace, with shared copy/cut/paste and Telos styling. Drag-and-drop is still pending.
+- Shared trash across Files, Viewer and Media: choose trash or permanent deletion, restore without overwriting, default 30-day retention configurable from 1–365 days for local files. Android-managed media trash keeps its system 30-day policy.
 - View, sorting and hidden-file preferences are remembered per folder.
 - Batch rename with name/extension tokens, padded numbering, literal/regex replacement and previews. Targets are checked before renaming; failures attempt to restore original names.
 - Local storage analyzer with largest-file lists and byte-verified duplicate groups. Scans are cancellable, bounded and skip symlinks; no files are deleted automatically.
@@ -706,7 +707,7 @@ A file manager for your phone, network storages and cloud storages. The layout f
 
 **File operations**
 
-- Multi-select, copy, cut and paste with progress and cancel, rename, delete (permanent, no trash), new folder and file, share, compress to zip, 7z or tar.gz (zip with an optional AES-256 password)
+- Multi-select, copy, cut and paste with progress and cancel, rename, shared Trash or permanent deletion, new folder and file, share, compress to zip, 7z or tar.gz (zip with an optional AES-256 password)
 - Properties with permissions and on-demand MD5, SHA-1 and SHA-256 checksums
 - Copy between any two storages (local, network, cloud); nothing is ever overwritten, a free name is used
 

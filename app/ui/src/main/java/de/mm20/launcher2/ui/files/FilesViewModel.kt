@@ -495,6 +495,30 @@ class FilesViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    private val trash: de.mm20.launcher2.comms.files.TelosTrash by lazy {
+        org.koin.core.context.GlobalContext.get().get<de.mm20.launcher2.comms.files.TelosTrash>()
+    }
+    fun canTrash(items: List<FsEntry>): Boolean = !rootMode && items.isNotEmpty() && items.all { trash.supports(it.path) }
+    fun moveToTrash(items: List<FsEntry>) {
+        if (task != null) { message = s(R.string.telos_files_task_busy); return }
+        val cancel = CancelFlag()
+        task = TaskState(s(R.string.telos_trash_move), 0f, cancel)
+        viewModelScope.launch {
+            var moved = 0
+            try {
+                for (item in items) {
+                    if (cancel.cancelled) break
+                    trash.move(item.path)
+                    moved++
+                    task = task?.copy(progress = moved.toFloat() / items.size)
+                }
+                message = s(R.string.telos_trash_moved, moved)
+            } catch (e: kotlinx.coroutines.CancellationException) { throw e }
+              catch (_: Exception) { message = s(R.string.telos_trash_move_failed) }
+            finally { task = null; selection = emptySet(); reload(); onFilesChanged() }
+        }
+    }
+
     fun delete(items: List<FsEntry>) {
         runTask(s(R.string.au_files_deleting), null) { cancel, _ ->
             var failed = 0

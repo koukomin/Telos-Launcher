@@ -152,6 +152,8 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
     var menuOpen by remember { mutableStateOf(false) }
     var addMenu by remember { mutableStateOf(false) }
     var dialog by remember { mutableStateOf<FilesDialog?>(null) }
+    var showTrash by remember { mutableStateOf(false) }
+    if (showTrash) de.mm20.launcher2.ui.trash.TrashDialog({ showTrash = false }, { vm.reload(); vm.onFilesChanged() })
     var analysisPath by remember { mutableStateOf<String?>(null) }
     analysisPath?.let { StorageAnalysisDialog(it, vm::open, { analysisPath = null }) }
     var viewMenu by remember { mutableStateOf(false) }
@@ -275,6 +277,7 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                         Icon(painterResource(Icons.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
                                     }
                                     DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                                        DropdownMenuItem(text = { Text(stringResource(R.string.telos_trash_title)) }, onClick = { menuOpen = false; showTrash = true })
                                         if (vm.path != null && !vm.rootMode && !RemotePath.isRemote(vm.path!!) && !ArchivePath.isArchive(vm.path!!) && !de.mm20.launcher2.ui.files.vault.VaultPath.isVault(vm.path!!))
                                             DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_analyze)) }, onClick = { menuOpen = false; analysisPath = vm.path })
                                         DropdownMenuItem(text = { Text(stringResource(R.string.hc_sort_by_2)) }, onClick = { menuOpen = false; dialog = FilesDialog.Sort })
@@ -401,25 +404,14 @@ private fun FilesDialogs(vm: FilesViewModel, dialog: FilesDialog?, onDismiss: ()
         is FilesDialog.Rename -> NameDialog(stringResource(R.string.hc_rename), dialog.entry.name, stringResource(R.string.hc_rename), onDismiss) { vm.rename(dialog.entry, it); onDismiss() }
         is FilesDialog.BatchRename -> BatchRenameDialog(vm, dialog.entries, onDismiss)
         is FilesDialog.Compress -> CompressDialog(vm, dialog.entries, onDismiss)
-        is FilesDialog.Delete -> {
-            val system = dialog.entries.any { FileActions.isSystemPath(it.path, vm.rootMode) }
-            AlertDialog(
-                onDismissRequest = onDismiss,
-                title = { Text(if (dialog.entries.size == 1) stringResource(R.string.hf_files_delete_named, dialog.entries.first().name) else stringResource(R.string.hf_files_delete_selected, dialog.entries.size)) },
-                text = {
-                    Text(
-                        if (system) stringResource(R.string.hf_files_delete_system_warning)
-                        else stringResource(R.string.hf_files_cannot_undo)
-                    )
-                },
-                confirmButton = {
-                    TextButton(onClick = { vm.delete(dialog.entries); onDismiss() }) {
-                        Text(stringResource(R.string.hc_delete), color = MaterialTheme.colorScheme.error)
-                    }
-                },
-                dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_cancel)) } },
-            )
-        }
+        is FilesDialog.Delete -> de.mm20.launcher2.ui.trash.TrashDeleteDialog(
+            count = dialog.entries.size,
+            canTrash = vm.canTrash(dialog.entries),
+            onTrash = { vm.moveToTrash(dialog.entries) },
+            onPermanent = { vm.delete(dialog.entries) },
+            onDismiss = onDismiss,
+            warning = if (dialog.entries.any { FileActions.isSystemPath(it.path, vm.rootMode) }) stringResource(R.string.hf_files_delete_system_warning) else null,
+        )
         is FilesDialog.ShareLarge -> AlertDialog(
             onDismissRequest = onDismiss,
             title = { Text(stringResource(R.string.au9_share_large_title)) },

@@ -200,6 +200,8 @@ fun MediaHubScreen(initialSpace: String = "") {
         runCatching { radioVm.initialize(context) }
     }
 
+    var showTrash by remember { mutableStateOf(false) }
+    if (showTrash) de.mm20.launcher2.ui.trash.TrashDialog({ showTrash = false })
     var openMusicPlayer by remember { mutableStateOf(false) }
     val stateHolder = rememberSaveableStateHolder()
     val performanceSettings: PerformanceSettings = koinInject()
@@ -266,6 +268,9 @@ fun MediaHubScreen(initialSpace: String = "") {
                             reduceAnimations = reduceAnimations,
                             modifier = Modifier.weight(1f),
                         )
+                    }
+                    IconButton(onClick = { showTrash = true }) {
+                        Icon(painterResource(R.drawable.delete_24px), stringResource(R.string.telos_trash_title))
                     }
                 }
             }

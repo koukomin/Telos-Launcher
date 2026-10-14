@@ -151,3 +151,14 @@ Keystore, which does not leave the device. Cryptomator passwords are never store
 ### Storage analysis
 
 The local-folder menu offers storage analysis, the ten largest files and byte-verified duplicate groups. No files are automatically deleted. Scans are cancellable, skip symlinks and stop at 50,000 entries; inaccessible folders and limits produce an explicit partial-results note. Root, remote, archive and vault paths are excluded.
+
+
+## Κοινός κάδος Telos
+
+Πριν από διαγραφή επιλέγετε μεταφορά στον κάδο ή οριστική διαγραφή. Τα τοπικά αρχεία μεταφέρονται ατομικά σε ιδιωτικό φάκελο του app στον ίδιο χώρο αποθήκευσης· αποτυχία μεταφοράς δεν διαγράφει το πρωτότυπο. Προεπιλεγμένη διατήρηση: 30 ημέρες, ρυθμιζόμενη σε 1–365 ημέρες για επόμενες διαγραφές. Οι ήδη αποθηκευμένες ημερομηνίες λήξης δεν αλλάζουν. Ο καθημερινός καθαρισμός αφαιρεί ληγμένα στοιχεία όταν το Android εκτελέσει την εργασία. Ο κάδος είναι διαθέσιμος από Files, Viewer και Media, με επαναφορά στην αρχική θέση χωρίς αντικατάσταση υπάρχοντος αρχείου.
+
+Χωρίς δικαίωμα πρόσβασης στο τοπικό αρχείο, φωτογραφίες/βίντεο/ήχος μπορούν να χρησιμοποιήσουν τον κάδο του Android (Android 11+), με συναίνεση του συστήματος και σταθερή διατήρηση 30 ημερών. Εμφανίζονται έως 1.000 στοιχεία του συστήματος που επιτρέπουν τα τρέχοντα δικαιώματα πολυμέσων. Remote/root/archive/vault πηγές και providers που δεν επιτρέπουν ασφαλή μεταφορά δεν έχουν γενικό κάδο· η οριστική διαγραφή ζητά επιβεβαίωση. Ο ιδιωτικός κάδος αφαιρείται όταν απεγκατασταθεί το Telos ή διαγραφούν τα δεδομένα του app.
+
+### Shared trash
+
+Files, Viewer and Media share a delete/trash choice and restore UI. Local files use an atomic same-volume move with durable metadata, a default 30-day retention configurable to 1–365 days for future deletions, and daily expiry cleanup. Restore never overwrites an existing file. Android-managed media trash uses the system’s fixed 30-day retention and permission dialog. Unsupported storages offer explicitly confirmed permanent deletion. The private trash is removed on app uninstall or app-data deletion.

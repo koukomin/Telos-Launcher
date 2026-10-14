@@ -1,0 +1,18 @@
+<resources>
+    <string name="telos_trash_delete_title">Διαγραφή %1$d στοιχείων;</string>
+    <string name="telos_trash_title">Κάδος</string>
+    <string name="telos_trash_move">Μεταφορά στον κάδο</string>
+    <string name="telos_trash_permanent">Οριστική διαγραφή</string>
+    <string name="telos_trash_permanent_warning">Η οριστική διαγραφή δεν αναιρείται.</string>
+    <string name="telos_trash_retention">Διατήρηση στον κάδο (ημέρες)</string>
+    <string name="telos_trash_retention_hint">Επιλέξτε 1–365 ημέρες. Η επιλογή ισχύει για τις επόμενες διαγραφές. Οι υπάρχουσες ημερομηνίες λήξης δεν αλλάζουν. Τα ληγμένα στοιχεία αφαιρούνται με τον καθημερινό καθαρισμό.</string>
+    <string name="telos_trash_android_retention">Αυτόν τον κάδο πολυμέσων διαχειρίζεται το Android, με διατήρηση 30 ημερών.</string>
+    <string name="telos_trash_unavailable">Ο κάδος δεν υποστηρίζεται για αυτή την πηγή. Είναι δυνατή μόνο η οριστική διαγραφή.</string>
+    <string name="telos_trash_moved">%1$d στοιχεία μεταφέρθηκαν στον κάδο</string>
+    <string name="telos_trash_move_failed">Η ενέργεια δεν ολοκληρώθηκε. Όσα στοιχεία δεν μεταφέρθηκαν παραμένουν στην αρχική τους θέση.</string>
+    <string name="telos_trash_restore">Επαναφορά</string>
+    <string name="telos_trash_restore_failed">Η ενέργεια απέτυχε. Η επαναφορά δεν αντικαθιστά υπάρχον αρχείο.</string>
+    <string name="telos_trash_empty">Ο κάδος είναι άδειος.</string>
+    <string name="telos_trash_expires">Λήξη: %1$s</string>
+    <string name="telos_trash_working">Επεξεργασία αρχείου…</string>
+</resources>
