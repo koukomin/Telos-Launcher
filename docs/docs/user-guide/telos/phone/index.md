@@ -148,3 +148,17 @@ crash guard because Android needs a working phone app.
 ## Where to go next
 
 Use the pages listed at the top. If something does not work, each page ends with a troubleshooting table.
+
+## Contact details and block-list availability
+
+Opening a contact does not depend on a successful encrypted block-list read. The block control
+shows loading, a verified blocked/unblocked state, or **Unavailable** with **Retry**. A database,
+Keystore or native-library error is logged and leaves the contact details usable; unavailable is
+never represented as unblocked. Coroutine cancellation remains cancellation. Failed block changes
+do not show success or discard stored data.
+
+The block database uses the current SQLCipher for Android integration with 16 KiB-aligned native
+libraries. The existing database name, schema and wrapped passphrase are retained. There is no
+plaintext fallback or automatic reset on a read failure. Automated coverage includes injected
+read failures and a native encrypted-database open/reopen smoke test on an Android emulator; a
+specific device crash still needs its own crash trace to establish its exact cause.

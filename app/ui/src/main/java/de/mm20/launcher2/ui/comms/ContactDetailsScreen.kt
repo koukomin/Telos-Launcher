@@ -84,10 +84,10 @@ data class ContactDetailsRoute(
     val phoneNumber: String = "",
 ) : NavKey
 
-data class ContactDetailsUi(
+internal data class ContactDetailsUi(
     val contact: DialerContact?,
     val recents: List<CallLogEntry>,
-    val blocked: Boolean,
+    val blockStatus: ContactBlockStatus,
 )
 
 class ContactDetailsViewModel : ViewModel(), KoinComponent {
@@ -146,7 +146,7 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
     private var cachedUi: StateFlow<ContactDetailsUi>? = null
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun observeDetails(contactId: Long, phoneNumber: String): StateFlow<ContactDetailsUi> {
+    internal fun observeDetails(contactId: Long, phoneNumber: String): StateFlow<ContactDetailsUi> {
         val key = contactId to phoneNumber
         cachedUi?.let { if (cachedKey == key) return it }
         cachedKey = key
@@ -166,7 +166,12 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
         }
         val blockedFlow = combine(contactFlow, blockedTick) { contact, _ -> contact }.flatMapLatest { contact ->
             val number = contact?.phoneNumbers?.firstOrNull().orEmpty()
-            if (number.isEmpty()) flowOf(false) else flow { emit(spam.isNumberBlocked(number)) }
+            if (number.isEmpty()) flowOf(ContactBlockStatus.Unavailable) else flow {
+                emit(ContactBlockStatus.Loading)
+                emit(readContactBlockStatus({ spam.isNumberBlocked(number) }) {
+                    android.util.Log.e("ContactDetails", "Could not read encrypted block status", it)
+                })
+            }
         }
 
         val ui = combine(contactFlow, recentsFlow, blockedFlow) { contact, recents, blocked ->
@@ -174,11 +179,13 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
         }.stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5_000),
-            ContactDetailsUi(null, emptyList(), false),
+            ContactDetailsUi(null, emptyList(), ContactBlockStatus.Loading),
         )
         cachedUi = ui
         return ui
     }
+
+    fun retryBlockStatus() { blockedTick.value += 1 }
 
     fun dial(context: Context, number: String) {
         if (number.isEmpty()) return
@@ -260,11 +267,12 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
         viewModelScope.launch { callLog.deleteForNumbers(numbers) }
     }
 
-    fun setBlocked(number: String, blocked: Boolean, onDone: () -> Unit) {
+    fun setBlocked(number: String, blocked: Boolean) {
         viewModelScope.launch {
-            spam.setBlocked(number, blocked)
+            readContactBlockStatus({ spam.setBlocked(number, blocked); blocked }) {
+                android.util.Log.e("ContactDetails", "Could not update encrypted block status", it)
+            }
             blockedTick.value += 1
-            onDone()
         }
     }
 }
@@ -281,7 +289,6 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
     val hiddenNumbers by viewModel.hiddenNumbers.collectAsStateWithLifecycle()
     val protectedNumbers by viewModel.protectedCallNumbers.collectAsStateWithLifecycle()
     var confirmDelete by remember { mutableStateOf(false) }
-    var blockedOverride by remember { mutableStateOf<Boolean?>(null) }
     var editingNote by remember { mutableStateOf(false) }
     var starOverride by remember { mutableStateOf<Boolean?>(null) }
     var showReminder by remember { mutableStateOf(false) }
@@ -289,7 +296,7 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
     var showSpeedDial by remember { mutableStateOf(false) }
 
     val contact = ui.contact
-    val blocked = blockedOverride ?: ui.blocked
+    val blocked = ui.blockStatus == ContactBlockStatus.Blocked
     val primary = contact?.phoneNumbers?.firstOrNull().orEmpty()
     val scope = androidx.compose.runtime.rememberCoroutineScope()
     val ringtoneLauncher = androidx.activity.compose.rememberLauncherForActivityResult(
@@ -747,10 +754,20 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                     }
                 }
                 item {
-                    CommsDetailCard(
+                    if (ui.blockStatus == ContactBlockStatus.Loading) {
+                        CommsDetailCard {
+                            androidx.compose.material3.CircularProgressIndicator(Modifier.size(24.dp))
+                        }
+                    } else if (ui.blockStatus == ContactBlockStatus.Unavailable) {
+                        CommsDetailCard {
+                            Text(stringResource(R.string.comms_block_number))
+                            Text(stringResource(R.string.shortcut_label_unavailable), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            TextButton(onClick = viewModel::retryBlockStatus) { Text(stringResource(R.string.hc_retry)) }
+                        }
+                    } else CommsDetailCard(
                         onClick = {
                             val next = !blocked
-                            viewModel.setBlocked(primary, next) { blockedOverride = next }
+                            viewModel.setBlocked(primary, next)
                         },
                     ) {
                         Text(

@@ -171,10 +171,11 @@ but Telos cannot judge whether the source itself is trustworthy.
 ## Updating frozen applications
 
 Enable **Update frozen apps** in Store settings (off by default). Authorized Root/Shizuku installs
-stream the private APK to the privileged process without proactively thawing the target. Android
-14+ uses the installer’s persistent enabled-setting option where available; older/OEM installers
-may enable the target during commit. Telos verifies and restores the saved restrictions after
-success or failure. Telos configured as **Device Owner** uses Android
+save the original freeze state, temporarily thaw through the same authorized backend, stream the
+private APK to the privileged process, and verify/restore the saved restrictions after success or
+failure. The compatibility thaw is deliberate: some installers reject disabled, hidden or suspended
+targets even when a persistent-enabled-setting flag is available. Automatic freeze holds the target
+throughout this update window. A failed thaw prevents installation; failed restoration stays pending. Telos configured as **Device Owner** uses Android
 PackageInstaller sessions and restores state from the final callback, including cancellation.
 Device Owner updates reject package/component disable overrides that this backend cannot restore.
 Android may still require user action under its update policies. Plain Device Admin access does
@@ -186,3 +187,18 @@ Unfinished restoration is retained in Freeze Manager; after an interrupted updat
 **Freeze again** action once installation has finished. For Play Store updates, use Freeze Manager's
 temporary **Unfreeze all / Freeze again** session instead. Current-profile and backend limitations
 are documented in [Smart Freeze](../freeze/backends-profiles.md#temporary-update-session).
+
+## Published icons for apps not yet installed
+
+Tracked rows, recommendations and app details prefer the installed application’s icon/icon pack.
+For uninstalled apps, Telos looks for published icons in GitHub/GitLab/Gitea README artwork and
+Fastlane paths, F-Droid/IzzyOnDroid package metadata, SourceForge project pages and linked HTML
+pages. It does not download an APK just to obtain an icon or substitute a GitHub owner avatar.
+Lookup responses are limited to 256 KiB, at most four lookups run concurrently, and a bounded
+in-memory cache plus the image cache avoids repeated successful downloads. If no usable artwork
+is published, the letter placeholder remains. Image-server failures never block installing an app.
+
+Manual installation failures open a scrollable, selectable diagnostic dialog instead of truncating
+the installer response in a toast. Shizuku/root process streams are fully read before cleanup so
+`Success` and actual failure messages are not lost. Frozen/hidden installed apps are also included
+in source discovery; discovery alone never opts them into automatic installation.

@@ -20,17 +20,22 @@ internal suspend fun streamApkInstall(apk: File, process: Process): Pair<Boolean
     }
     val output = async(Dispatchers.IO) { readBounded(process.inputStream) }
     val errors = async(Dispatchers.IO) { readBounded(process.errorStream) }
-    var writeFailed = false
-    val exit = try {
+    try {
+        var writeFailed = false
         try {
             process.outputStream.use { target -> apk.inputStream().use { it.copyTo(target, 64 * 1024) } }
         } catch (_: java.io.IOException) {
-            // An unsupported option may make pm close stdin before consuming the APK.
+            // pm can reject an option before consuming stdin; still collect its diagnosis.
             writeFailed = true
         }
-        process.waitFor()
-    } finally { process.destroy() }
-    val stdout = output.await()
-    val stderr = errors.await()
-    (!writeFailed && exit == 0 && stdout.lineSequence().any { it.trim() == "Success" }) to (stdout + stderr).take(8192)
+        val exit = process.waitFor()
+        val stdout = output.await()
+        val stderr = errors.await()
+        (!writeFailed && exit == 0 && stdout.lineSequence().any { it.trim() == "Success" }) to
+            (stdout + stderr).take(8192)
+    } finally {
+        // Remote Shizuku streams may still contain the result after waitFor returns.
+        // Closing the process before readers finish can discard Success or throw Stream closed.
+        process.destroy()
+    }
 }

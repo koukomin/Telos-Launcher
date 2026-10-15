@@ -6,7 +6,8 @@ on:
       - 'services/comms/src/**'
       - 'services/store/src/**'
       - 'data/store/**'
-      - 'data/comms/src/**'
+      - 'data/comms/**'
+      - 'gradle/libs.versions.toml'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/files/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/trash/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/comms/**'
@@ -57,8 +58,8 @@ jobs:
         run: ./gradlew :core:base:testDebugUnitTest --tests 'de.mm20.launcher2.applock.VirtualAppTaskTest' --tests 'de.mm20.launcher2.helper.BatchNamesTest' --tests 'de.mm20.launcher2.helper.StorageAnalysisTest' --tests 'de.mm20.launcher2.helper.FileTrashTest' --tests 'de.mm20.launcher2.helper.FileSearchIndexTest' --tests 'de.mm20.launcher2.helper.FileTreeOpsTest' --tests 'de.mm20.launcher2.helper.ResumableFileTransferTest' --tests 'de.mm20.launcher2.helper.PasswordFileEncryptionTest' --tests 'de.mm20.launcher2.helper.SplitZipArchiveTest' --tests 'de.mm20.launcher2.helper.ExclusiveFilePublicationTest' --stacktrace
       - name: Test Store download and update policies
         run: ./gradlew :services:store:testDebugUnitTest --stacktrace
-      - name: Test Files settings import validation
-        run: ./gradlew :app:ui:testDefaultDebugUnitTest --tests 'de.mm20.launcher2.ui.files.FilesSettingsTransferTest' --tests 'de.mm20.launcher2.ui.files.ArchiveWriterTest' --stacktrace
+      - name: Test UI settings, archives and contact recovery
+        run: ./gradlew :app:ui:testDefaultDebugUnitTest --tests 'de.mm20.launcher2.ui.files.FilesSettingsTransferTest' --tests 'de.mm20.launcher2.ui.files.ArchiveWriterTest' --tests 'de.mm20.launcher2.ui.comms.ContactBlockStatusTest' --stacktrace
       - name: Test streaming APK downloads with a constrained heap
         run: ./gradlew :data:store:testDebugUnitTest --stacktrace
       - name: Build debug APK

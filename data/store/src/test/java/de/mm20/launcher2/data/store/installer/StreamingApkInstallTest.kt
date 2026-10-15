@@ -66,4 +66,27 @@ class StreamingApkInstallTest {
             assertEquals(process.errorBytes, process.drained)
         } finally { apk.delete() }
     }
+    @Test fun remotePipesAreDrainedBeforeProcessCleanup() = runBlocking {
+        val apk = Files.createTempFile("telos-apk", ".apk").toFile()
+        val finished = java.util.concurrent.CountDownLatch(1)
+        var destroyed = false
+        val process = object : Process() {
+            private val bytes = ByteArrayInputStream("Success\n".toByteArray())
+            override fun getOutputStream() = java.io.ByteArrayOutputStream()
+            override fun getInputStream(): InputStream = object : InputStream() {
+                override fun read(): Int {
+                    check(finished.await(2, java.util.concurrent.TimeUnit.SECONDS))
+                    Thread.sleep(20)
+                    check(!destroyed) { "Remote pipe closed before final status was read" }
+                    return bytes.read()
+                }
+            }
+            override fun getErrorStream() = ByteArrayInputStream(ByteArray(0))
+            override fun waitFor(): Int { finished.countDown(); return 0 }
+            override fun exitValue() = 0
+            override fun destroy() { destroyed = true }
+        }
+        try { assertTrue(streamApkInstall(apk, process).first); assertTrue(destroyed) }
+        finally { apk.delete() }
+    }
 }

@@ -158,6 +158,9 @@ class StoreViewModel : ViewModel(), KoinComponent {
     private val _message = MutableStateFlow<String?>(null)
     val message: StateFlow<String?> = _message
     fun consumeMessage() { _message.value = null }
+    private val _installationError = MutableStateFlow<String?>(null)
+    val installationError: StateFlow<String?> = _installationError
+    fun consumeInstallationError() { _installationError.value = null }
 
     fun item(id: String): Flow<StoreItem?> = repository.observeItem(id)
 
@@ -308,7 +311,7 @@ class StoreViewModel : ViewModel(), KoinComponent {
             is StoreAction.LaunchedPlayStore -> setState(item.id, StoreInstallUiState.Idle)
             is StoreAction.Failed -> {
                 setState(item.id, StoreInstallUiState.Failed)
-                _message.value = "${item.displayName}: ${action.reason}"
+                _installationError.value = "${item.displayName}: ${action.reason}"
             }
         }
         } finally { activeInstalls.remove(item.id) }

@@ -184,8 +184,18 @@ internal class FreezeMaintenance(
                     "This frozen state requires Root or Shizuku"
                 }
             }
-            // Journal only: let the installer preserve disabled state, without a pre-install thaw.
+            // Write ahead before compatibility thawing; automatic freeze respects this hold.
             settings.saveMaintenance(key(packageName), entry)
+            if (existing == null && (backendName == "Shizuku" || backendName == "Root")) {
+                val backend = provider(backendName)?.second ?: error("Freeze backend unavailable")
+                try {
+                    check(thaw(entry, backend)) { "Could not temporarily unfreeze app for installation" }
+                } catch (error: Exception) {
+                    if (runCatching { restore(entry, backend) }.getOrDefault(false))
+                        settings.saveMaintenance(key(packageName), null)
+                    throw error
+                }
+            }
             activeInstalls += key(packageName)
             entry.operationId
         }

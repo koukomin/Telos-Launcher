@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_block_number">Blokir nomor</string>
+    <string name="hc_retry">Coba lagi</string>
+    <string name="shortcut_label_unavailable">Tidak tersedia</string>
+</resources>
