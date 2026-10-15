@@ -58,7 +58,10 @@ class TelosPackageInstaller(
         context.getString(de.mm20.launcher2.data.store.R.string.au_store_msg_install_failed) +
             details?.takeIf { it.isNotBlank() }?.take(8192)?.let { "\n$it" }.orEmpty(), cause)
 
-    override suspend fun install(apk: File, packageName: String): InstallResult {
+    override suspend fun install(apk: File, packageName: String): InstallResult =
+        kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { installOnIo(apk, packageName) }
+
+    private suspend fun installOnIo(apk: File, packageName: String): InstallResult {
         if (freezeManager.hasPendingFrozenUpdate(packageName)) return InstallResult.Failed(context.getString(de.mm20.launcher2.data.store.R.string.hf_store_installing))
         val archive = context.packageManager.getPackageArchiveInfo(apk.path, 0)
             ?: return failed(IllegalArgumentException("Invalid APK"))

@@ -4,9 +4,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.ImageDecoder
 import android.graphics.Movie
-import android.graphics.Paint
-import android.graphics.Rect
-import android.graphics.RectF
 import android.graphics.drawable.AnimatedImageDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
@@ -106,11 +103,8 @@ internal class GifWallpaperRenderer(
         /** Header and file-size limits apply before invoking a native decoder. */
         fun create(file: File, holder: SurfaceHolder, settings: () -> VideoWallpaperTransforms,
             offset: () -> Float, speed: () -> Float): GifWallpaperRenderer {
-            require(file.length() in 10..32L * 1024 * 1024) { "GIF exceeds the wallpaper size limit" }
-            val header = file.inputStream().use { input -> ByteArray(10).also { require(input.read(it) == 10) } }
-            val width = (header[6].toInt() and 255) or ((header[7].toInt() and 255) shl 8)
-            val height = (header[8].toInt() and 255) or ((header[9].toInt() and 255) shl 8)
-            require(width in 1..4096 && height in 1..4096 && width.toLong() * height <= 4_194_304)
+            val header = file.inputStream().use { input -> ByteArray(10).also { java.io.DataInputStream(input).readFully(it) } }
+            gifWallpaperDimensions(header, file.length())
             val drawable = if (Build.VERSION.SDK_INT >= 28) ImageDecoder.decodeDrawable(ImageDecoder.createSource(file)) { decoder, info, _ ->
                 val ratio = min(1f, 2048f / maxOf(info.size.width, info.size.height))
                 decoder.setTargetSize(maxOf(1, (info.size.width * ratio).toInt()), maxOf(1, (info.size.height * ratio).toInt()))

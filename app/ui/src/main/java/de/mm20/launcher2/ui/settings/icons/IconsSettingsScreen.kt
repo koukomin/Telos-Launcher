@@ -85,7 +85,7 @@ fun IconsSettingsScreen() {
     val homeGrid by viewModel.homeGrid.collectAsStateWithLifecycle(GridSettings())
     val drawerGrid by viewModel.drawerGrid.collectAsStateWithLifecycle(GridSettings())
 
-    val drawerBackgroundEnabled by viewModel.drawerBackgroundEnabled.collectAsStateWithLifecycle(false)
+    val drawerBackgroundEnabled by viewModel.drawerBackgroundEnabled.collectAsStateWithLifecycle(true)
     val drawerBackgroundColor by viewModel.drawerBackgroundColor.collectAsStateWithLifecycle(null)
     val drawerBackgroundBlur by viewModel.drawerBackgroundBlur.collectAsStateWithLifecycle(32)
     val drawerBackgroundOpacity by viewModel.drawerBackgroundOpacity.collectAsStateWithLifecycle(0.35f)

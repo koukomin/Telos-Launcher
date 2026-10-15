@@ -11,8 +11,9 @@ internal suspend fun installPrivilegedSession(
     preserveEnabled: Boolean = false,
     run: suspend (List<String>, File?) -> InstallCommandResult,
 ): BackendInstallResult {
+    require(userId >= 0 && apk.length() > 0)
     val args = listOf("pm", "install-create", "-r", "--user", userId.toString(), "-S", apk.length().toString())
-    var created = run(args + if (preserveEnabled) listOf("--application-enabled-setting-persistent") else emptyList(), null)
+    var created = run(args + if (preserveEnabled) listOf("--skip-enable") else emptyList(), null)
     if (created.exitCode != 0 && preserveEnabled && unsupportedPreserveFlag(created.output)) created = run(args, null)
     val session = if (created.exitCode == 0) Regex("""\[(\d+)]""").find(created.output)?.groupValues?.get(1) else null
     if (session == null) return BackendInstallResult.Failed("install-create: ${created.output}")

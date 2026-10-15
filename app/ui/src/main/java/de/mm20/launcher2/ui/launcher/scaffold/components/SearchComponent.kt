@@ -65,7 +65,7 @@ internal class SearchComponent(
         state: LauncherScaffoldState
     ) {
         val gridSettings by uiSettings.drawerGridSettings.collectAsState(GridSettings())
-        val drawerBackgroundEnabled by uiSettings.drawerBackgroundEnabled.collectAsState(false)
+        val drawerBackgroundEnabled by uiSettings.drawerBackgroundEnabled.collectAsState(true)
         val drawerBackgroundColor by uiSettings.drawerBackgroundColor.collectAsState(null)
         val drawerBackgroundOpacity by uiSettings.drawerBackgroundOpacity.collectAsState(0.35f)
         val rememberScrollPosition by uiSettings.rememberScrollPosition.collectAsState(false)

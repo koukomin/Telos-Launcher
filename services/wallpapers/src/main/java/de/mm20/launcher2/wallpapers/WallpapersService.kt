@@ -63,11 +63,8 @@ class WallpapersService(private val context: Context) {
                     }
                 } ?: return@withContext false
                 if (GifWallpaperRenderer.isGif(tmp)) {
-                    require(tmp.length() <= 32L * 1024 * 1024) { "GIF exceeds the wallpaper size limit" }
-                    val header = tmp.inputStream().use { stream -> ByteArray(10).also { require(stream.read(it) == 10) } }
-                    val w = (header[6].toInt() and 255) or ((header[7].toInt() and 255) shl 8)
-                    val h = (header[8].toInt() and 255) or ((header[9].toInt() and 255) shl 8)
-                    require(w in 1..4096 && h in 1..4096 && w.toLong() * h <= 4_194_304) { "GIF dimensions exceed the wallpaper limit" }
+                    val header = tmp.inputStream().use { stream -> ByteArray(10).also { java.io.DataInputStream(stream).readFully(it) } }
+                    gifWallpaperDimensions(header, tmp.length())
                 }
                 if (!tmp.renameTo(target)) return@withContext false
                 if (!appendToPlaylist) dir.listFiles()?.filter { it != target }?.forEach { it.delete() }
