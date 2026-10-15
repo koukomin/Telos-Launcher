@@ -665,26 +665,31 @@ open class SettingsActivity : BaseActivity() {
      */
     private fun applyTaskLabel(intent: Intent) {
         val route = intent.getStringExtra(EXTRA_ROUTE) ?: return
-        val (label, icon) = when (route) {
+        val domain = when (route) {
             ROUTE_COMMS -> if (intent.getStringExtra(SettingsDeepLinkContract.EXTRA_COMMS_TAB) == "messages")
-                "Telos Messages" to "messages" else "Telos Phone" to "phone"
-            ROUTE_MEDIA, ROUTE_MUSIC, ROUTE_RADIO, ROUTE_VIDEO, SettingsDeepLinkContract.ROUTE_YOUTUBE, SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC -> "Telos Media" to "music"
-            ROUTE_PHOTOS -> "Telos Viewer" to "viewer"
-            SettingsDeepLinkContract.ROUTE_VIEWER -> "Telos Viewer" to "viewer"
-            ROUTE_FILES -> "Telos Files" to "files"
-            ROUTE_NETWORK -> "Telos Network" to "network"
-            ROUTE_CALCULATOR -> "Telos Calculator" to "calculator"
-            ROUTE_VOICE_RECORDER -> "Telos Voice Recorder" to "voice_recorder"
-            ROUTE_SCREEN_RECORDER -> "Telos Screen Recorder" to "screen_recorder"
-            ROUTE_SCREENSHOT -> "Telos Screenshot" to "screenshot"
-            ROUTE_NOTES -> "Telos Notes" to "notes"
-            ROUTE_CALENDAR -> "Telos Calendar" to "calendar"
-            ROUTE_DOWNLOADS -> "Telos Downloads" to "downloads"
-            ROUTE_STORE -> "Telos Store" to "store"
+                "telos_messages_app" else "telos_phone_app"
+            ROUTE_MEDIA -> "telos_media_app"
+            ROUTE_MUSIC -> "telos_music_app"
+            ROUTE_RADIO -> "telos_radio_app"
+            ROUTE_VIDEO -> "telos_video_app"
+            SettingsDeepLinkContract.ROUTE_YOUTUBE -> "telos_youtube_app"
+            SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC -> "telos_youtube_music_app"
+            ROUTE_PHOTOS, SettingsDeepLinkContract.ROUTE_VIEWER -> "telos_viewer_app"
+            ROUTE_FILES -> "telos_files_app"
+            ROUTE_NETWORK -> "telos_network_app"
+            ROUTE_CALCULATOR -> "telos_calculator_app"
+            ROUTE_VOICE_RECORDER -> "telos_voice_recorder_app"
+            ROUTE_SCREEN_RECORDER -> "telos_screen_recorder_app"
+            ROUTE_SCREENSHOT -> "telos_screenshot_app"
+            ROUTE_NOTES -> "telos_notes_app"
+            ROUTE_CALENDAR -> "telos_calendar_app"
+            ROUTE_DOWNLOADS -> "telos_downloads_app"
+            ROUTE_STORE -> "telos_store_app"
             else -> return
         }
+        val label = de.mm20.launcher2.search.TelosAppLabels.forDomain(this, domain)
         runCatching {
-            val res = resources.getIdentifier("ic_app_${icon}_full", "drawable", packageName)
+            val res = de.mm20.launcher2.search.TelosAppIcons.forDomain(domain) ?: 0
             @Suppress("DEPRECATION")
             setTaskDescription(
                 if (res != 0) android.app.ActivityManager.TaskDescription(label, res)

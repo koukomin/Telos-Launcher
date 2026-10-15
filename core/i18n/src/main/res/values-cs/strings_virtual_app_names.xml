@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">Telefon</string>
+    <string name="virtual_app_viewer">Prohlížeč</string>
+    <string name="preference_drawer_full_width">Plná šířka na tabletech</string>
+</resources>

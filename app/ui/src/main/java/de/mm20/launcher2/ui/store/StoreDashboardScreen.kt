@@ -582,7 +582,9 @@ internal fun AppSource.summary(): String = when (this) {
 @Composable
 private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) -> Unit, onOpen: (TelosApp) -> Unit) {
     var tq by remember { mutableStateOf("") }
-    val shownApps = remember(tq) { TelosApps.all.filter { de.mm20.launcher2.comms.search.TelosSearch.matches(tq, it.name, it.description, it.features.joinToString(" "), it.keywords.joinToString(" ")) } }
+    val appContext = LocalContext.current
+    val appConfiguration = androidx.compose.ui.platform.LocalConfiguration.current
+    val shownApps = remember(tq, appConfiguration) { TelosApps.all.filter { de.mm20.launcher2.comms.search.TelosSearch.matches(tq, it.localizedName(appContext.resources), it.name, it.description, it.features.joinToString(" "), it.keywords.joinToString(" ")) } }
     Column(Modifier.fillMaxSize()) {
     de.mm20.launcher2.ui.component.TelosSearchBar(tq, { tq = it }, stringResource(R.string.hf_store_search))
     if (shownApps.isEmpty()) de.mm20.launcher2.ui.component.SearchEmptyState(tq.trim())
@@ -601,12 +603,12 @@ private fun TelosAppsTab(disabled: Set<String>, onToggle: (TelosApp, Boolean) ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Surface(Modifier.size(48.dp), shape = RoundedCornerShape(14.dp), color = MaterialTheme.colorScheme.primaryContainer) {
                             Box(contentAlignment = Alignment.Center) {
-                                Icon(painterResource(app.iconRes), contentDescription = null, tint = MaterialTheme.colorScheme.onPrimaryContainer, modifier = Modifier.size(26.dp))
+                                androidx.compose.foundation.Image(painterResource(app.iconRes), contentDescription = null, modifier = Modifier.size(40.dp))
                             }
                         }
                         Spacer(Modifier.width(12.dp))
                         Column(Modifier.weight(1f)) {
-                            Text(app.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+                            Text(app.localizedName(appContext.resources), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
                             Text(if (installed) stringResource(R.string.hf_store_installed) else stringResource(R.string.hf_store_not_installed), style = MaterialTheme.typography.labelMedium, color = if (installed) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">Telèfon</string>
+    <string name="virtual_app_viewer">Visualitzador</string>
+    <string name="au_music_title">Música</string>
+    <string name="backup_group_calendar">Calendari</string>
+    <string name="calculator_title">Calculadora</string>
+    <string name="dl_m_tab">Multimèdia</string>
+    <string name="dl_title">Baixades</string>
+    <string name="hc_messages">Missatges</string>
+    <string name="hc_network">Xarxa</string>
+    <string name="hc_photos">Fotos</string>
+    <string name="hc_radio">Ràdio</string>
+    <string name="hf_store_title">Botiga</string>
+    <string name="notes_title">Notes</string>
+    <string name="screenrec_title">Enregistrador de pantalla</string>
+    <string name="screenshot_title">Captura de pantalla</string>
+    <string name="voice_title">Enregistrador de veu</string>
+    <string name="gesture_action_telos_app_open">Obre %1$s</string>
+    <string name="gesture_action_telos_app_page">Mostra la pàgina de %1$s</string>
+    <string name="preference_drawer_full_width">Amplada completa en tauletes</string>
+</resources>

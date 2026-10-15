@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">โทรศัพท์</string>
+    <string name="virtual_app_viewer">ตัวแสดง</string>
+    <string name="au_music_title">เพลง</string>
+    <string name="backup_group_calendar">ปฏิทิน</string>
+    <string name="calculator_title">เครื่องคิดเลข</string>
+    <string name="dl_m_tab">สื่อ</string>
+    <string name="dl_title">ดาวน์โหลด</string>
+    <string name="hc_messages">ข้อความ</string>
+    <string name="hc_network">เครือข่าย</string>
+    <string name="hc_photos">รูปภาพ</string>
+    <string name="hc_radio">วิทยุ</string>
+    <string name="hf_store_title">ร้านค้า</string>
+    <string name="notes_title">โน้ต</string>
+    <string name="screenrec_title">บันทึกหน้าจอ</string>
+    <string name="screenshot_title">ภาพหน้าจอ</string>
+    <string name="voice_title">บันทึกเสียง</string>
+    <string name="gesture_action_telos_app_open">เปิด %1$s</string>
+    <string name="gesture_action_telos_app_page">แสดงหน้า %1$s</string>
+    <string name="preference_drawer_full_width">ความกว้างเต็มบนแท็บเล็ต</string>
+</resources>

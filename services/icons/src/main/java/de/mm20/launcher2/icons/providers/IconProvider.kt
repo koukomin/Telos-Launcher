@@ -12,7 +12,12 @@ internal suspend fun Iterable<IconProvider>.getFirstIcon(
     size: Int
 ): LauncherIcon? {
     for (provider in this) {
-        val icon = provider.getIcon(searchable, size)
+        val icon = try { provider.getIcon(searchable, size) }
+            catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (error: Exception) {
+                android.util.Log.w("IconProvider", "Icon lookup failed; trying next provider", error)
+                null
+            }
         if (icon != null) {
             return icon
         }

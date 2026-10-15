@@ -302,7 +302,7 @@ internal fun GesturePreference(
                         ) {
                             for (app in de.mm20.launcher2.store.catalog.TelosApps.all) {
                                 GestureItem(
-                                    title = stringResource(R.string.gesture_action_telos_app_open, app.name),
+                                    title = stringResource(R.string.gesture_action_telos_app_open, app.localizedName(androidx.compose.ui.platform.LocalContext.current.resources)),
                                     icon = app.iconRes,
                                     selected = value is GestureAction.TelosApp && value.key == app.key,
                                     onClick = {
@@ -313,7 +313,7 @@ internal fun GesturePreference(
                                 // Apps that cannot be shown inside the launcher only have "open"
                                 if (de.mm20.launcher2.ui.launcher.scaffold.components.TelosPages.canEmbed(app.key)) {
                                     GestureItem(
-                                        title = stringResource(R.string.gesture_action_telos_app_page, app.name),
+                                        title = stringResource(R.string.gesture_action_telos_app_page, app.localizedName(androidx.compose.ui.platform.LocalContext.current.resources)),
                                         icon = app.iconRes,
                                         selected = value is GestureAction.TelosPage && value.key == app.key,
                                         onClick = {
@@ -491,10 +491,10 @@ private fun getActionLabel(
 ): String {
     return when (action) {
         GestureAction.Feed -> resources.getString(R.string.gesture_action_feed)
-        is GestureAction.TelosApp -> de.mm20.launcher2.store.catalog.TelosApps.all.firstOrNull { it.key == action.key }?.name
+        is GestureAction.TelosApp -> de.mm20.launcher2.store.catalog.TelosApps.all.firstOrNull { it.key == action.key }?.localizedName(resources)
             ?.let { resources.getString(R.string.gesture_action_telos_app_open, it) }
             ?: resources.getString(R.string.gesture_action_launch_app)
-        is GestureAction.TelosPage -> de.mm20.launcher2.store.catalog.TelosApps.all.firstOrNull { it.key == action.key }?.name
+        is GestureAction.TelosPage -> de.mm20.launcher2.store.catalog.TelosApps.all.firstOrNull { it.key == action.key }?.localizedName(resources)
             ?.let { resources.getString(R.string.gesture_action_telos_app_page, it) }
             ?: resources.getString(R.string.gesture_action_launch_app)
         is GestureAction.Launch -> {

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">Telefon</string>
+    <string name="virtual_app_viewer">Pemapar</string>
+    <string name="au_music_title">Muzik</string>
+    <string name="backup_group_calendar">Kalendar</string>
+    <string name="calculator_title">Kalkulator</string>
+    <string name="dl_m_tab">Media</string>
+    <string name="dl_title">Muat turun</string>
+    <string name="hc_messages">Mesej</string>
+    <string name="hc_network">Rangkaian</string>
+    <string name="hc_photos">Foto</string>
+    <string name="hc_radio">Radio</string>
+    <string name="hf_store_title">Kedai</string>
+    <string name="notes_title">Nota</string>
+    <string name="screenrec_title">Perakam skrin</string>
+    <string name="screenshot_title">Tangkapan skrin</string>
+    <string name="voice_title">Perakam suara</string>
+    <string name="gesture_action_telos_app_open">Buka %1$s</string>
+    <string name="gesture_action_telos_app_page">Papar halaman %1$s</string>
+    <string name="preference_drawer_full_width">Lebar penuh pada tablet</string>
+</resources>

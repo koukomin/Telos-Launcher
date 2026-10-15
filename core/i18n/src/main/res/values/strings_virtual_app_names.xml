@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">Phone</string>
+    <string name="virtual_app_viewer">Viewer</string>
+    <string name="preference_drawer_full_width">Full width on tablets</string>
+</resources>

@@ -8,6 +8,7 @@
 - **Freeze:** προαιρετική προστασία της εφαρμογής προσκηνίου, ανενεργή από προεπιλογή. Απαιτεί πρόσβαση χρήσης.
 - **Συρτάρι:** ανεξάρτητη αδιαφάνεια/blur, απαλό ημιδιαφανές preset για νέες εγκαταστάσεις και πλήρες διαθέσιμο πλάτος στα tablets.
 - **Ταπετσαρία GIF:** επιλογή κινούμενου GIF με προεπισκόπηση live wallpaper και παύση όταν δεν είναι ορατό ή ενεργοποιούνται οι σχετικές ρυθμίσεις εξοικονόμησης. Όριο εισόδου 32 MiB και 4 megapixels.
+- **Ενσωματωμένες εφαρμογές:** σύντομα ονόματα στη γλώσσα του χρήστη χωρίς το «Telos». Η αναζήτηση διατηρεί `telos` και αγγλικά/ελληνικά ονόματα. Προτεραιότητα στα δικά τους εικονίδια και σταθερά εικονίδια στο Store/Recents.
 - Μεταφράσεις σε όλες τις υποστηριζόμενες βασικές γλώσσες και ενημέρωση README, docs, Pages πηγών και credits του Aurora Store.
 
 ### English
@@ -18,6 +19,7 @@
 - **Freeze:** optional foreground-app protection, off by default, requiring Usage access.
 - **Drawer:** independent opacity/blur, soft-glass defaults for fresh installs and full available width on tablets.
 - **GIF wallpaper:** animated GIF live-wallpaper picker with visibility and configured power/thermal controls. Input limit: 32 MiB / 4 megapixels. Video playlist and speed controls remain video features.
+- **Built-in apps:** localized short names without the Telos prefix, retaining `telos` and English/Greek search aliases; first-party icons and explicit Store/Recents artwork.
 - Changed-string translations, README, docs, Pages sources and Aurora Store attribution updated.
 
 **Εγκατάσταση / Installation:** αν το προηγούμενο Store αποτυγχάνει, εγκαταστήστε το κατάλληλο APK πάνω από την υπάρχουσα εφαρμογή χωρίς απεγκατάσταση. If the older Store fails, install the matching APK over the existing app without uninstalling.
@@ -43,3 +45,6 @@ Install only one of them. They are signed with the same key, so you can later sw
 
 ---
 
+
+- Tablet drawer: visible full-width setting and adaptive columns, preserving custom column counts.
+- Συρτάρι tablet: ρύθμιση πλήρους πλάτους και αυτόματη προσαρμογή στηλών, με διατήρηση της χειροκίνητης επιλογής.

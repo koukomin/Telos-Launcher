@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">تلفن</string>
+    <string name="virtual_app_viewer">نمایشگر</string>
+    <string name="au_music_title">موسیقی</string>
+    <string name="backup_group_calendar">تقویم</string>
+    <string name="calculator_title">ماشین‌حساب</string>
+    <string name="dl_m_tab">رسانه</string>
+    <string name="dl_title">بارگیری‌ها</string>
+    <string name="hc_messages">پیام‌ها</string>
+    <string name="hc_network">شبکه</string>
+    <string name="hc_photos">عکس‌ها</string>
+    <string name="hc_radio">رادیو</string>
+    <string name="hf_store_title">فروشگاه</string>
+    <string name="notes_title">یادداشت‌ها</string>
+    <string name="screenrec_title">ضبط صفحه</string>
+    <string name="screenshot_title">نماگرفت</string>
+    <string name="voice_title">ضبط صدا</string>
+    <string name="gesture_action_telos_app_open">باز کردن %1$s</string>
+    <string name="gesture_action_telos_app_page">نمایش صفحهٔ %1$s</string>
+    <string name="preference_drawer_full_width">تمام‌عرض در تبلت‌ها</string>
+</resources>

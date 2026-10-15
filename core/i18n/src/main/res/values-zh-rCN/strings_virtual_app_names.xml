@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">电话</string>
+    <string name="virtual_app_viewer">查看器</string>
+    <string name="preference_drawer_full_width">在平板电脑上使用全宽</string>
+</resources>

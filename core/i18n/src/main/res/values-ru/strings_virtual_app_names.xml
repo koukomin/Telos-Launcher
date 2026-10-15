@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">Телефон</string>
+    <string name="virtual_app_viewer">Просмотр</string>
+    <string name="preference_drawer_full_width">Полная ширина на планшетах</string>
+</resources>

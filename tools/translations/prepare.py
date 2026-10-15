@@ -16,7 +16,7 @@ def inventory(base):
     current = records(RES.glob('values/*.xml'), lambda p: p.read_text())
     paths = subprocess.check_output(['git','ls-tree','-r','--name-only',base,str(RES/'values')], text=True).splitlines()
     previous = records([p for p in paths if p.endswith('.xml')], lambda p: subprocess.check_output(['git','show',base+':'+str(p)],text=True))
-    delta = subprocess.check_output(['git','diff',base,'--','app/ui/src/main/java'],text=True)
+    delta = subprocess.check_output(['git','diff',base,'--','app/ui/src/main/java','core/base/src/main/java/de/mm20/launcher2/search/TelosAppLabels.kt'],text=True)
     surfaced = set(re.findall(r'R\.string\.(\w+)', '\n'.join(line for line in delta.splitlines() if line.startswith('+') and not line.startswith('+++'))))
     keys = {k for k,v in current.items() if k not in previous or v['text'] != previous[k]['text']} | surfaced
     keys &= current.keys()

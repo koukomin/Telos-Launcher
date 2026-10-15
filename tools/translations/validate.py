@@ -2,7 +2,7 @@
 """Check changed UI-string coverage and Android resource syntax."""
 import re
 import xml.etree.ElementTree as ET
-from prepare import RES, inventory
+from prepare import RES, inventory, records
 
 TOKEN = re.compile(r'%(?:\d+\$)?[-#+ 0,(]*\d*(?:\.\d+)?[a-zA-Z%]|\{(?:name|ext|n(?::\d+)?)\}')
 
@@ -11,6 +11,7 @@ def main():
     missing = {locale: list(rows) for locale, rows in data['locales'].items() if rows}
     if missing:
         raise SystemExit('Missing or stale translations: ' + repr(missing))
+    sources = records(RES.glob('values/*.xml'), lambda p: p.read_text())
     checked = 0
     for directory in RES.glob('values-*'):
         names = set()
@@ -22,10 +23,10 @@ def main():
                 if name in names:
                     raise SystemExit(f'Duplicate string: {directory.name}/{name}')
                 names.add(name)
-                if path.name not in {'strings_telos_remaining.xml', 'strings_installer_dock_wallpaper.xml'}:
+                if path.name not in {'strings_telos_remaining.xml', 'strings_installer_dock_wallpaper.xml', 'strings_virtual_app_names.xml'}:
                     continue
                 text = ''.join(node.itertext())
-                source = data['strings'][name]['text']
+                source = sources[name]['text']
                 if sorted(TOKEN.findall(text)) != sorted(TOKEN.findall(source)):
                     raise SystemExit(f'Changed placeholders: {directory.name}/{name}')
                 for match in re.finditer("['\"]", text):

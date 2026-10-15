@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">Telefonoa</string>
+    <string name="virtual_app_viewer">Ikustailea</string>
+    <string name="au_music_title">Musika</string>
+    <string name="backup_group_calendar">Egutegia</string>
+    <string name="calculator_title">Kalkulagailua</string>
+    <string name="dl_m_tab">Multimedia</string>
+    <string name="dl_title">Deskargak</string>
+    <string name="hc_messages">Mezuak</string>
+    <string name="hc_network">Sarea</string>
+    <string name="hc_photos">Argazkiak</string>
+    <string name="hc_radio">Irratia</string>
+    <string name="hf_store_title">Denda</string>
+    <string name="notes_title">Oharrak</string>
+    <string name="screenrec_title">Pantaila-grabagailua</string>
+    <string name="screenshot_title">Pantaila-argazkia</string>
+    <string name="voice_title">Ahots-grabagailua</string>
+    <string name="gesture_action_telos_app_open">Ireki %1$s</string>
+    <string name="gesture_action_telos_app_page">Erakutsi %1$s orria</string>
+    <string name="preference_drawer_full_width">Zabalera osoa tabletetan</string>
+</resources>

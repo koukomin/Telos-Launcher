@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">電話</string>
+    <string name="virtual_app_viewer">ビューア</string>
+    <string name="preference_drawer_full_width">タブレットで全幅表示</string>
+</resources>

@@ -36,7 +36,34 @@ object TelosAppKeywords {
         "telos_screenshot_app" to listOf("screen capture", "screengrab", "στιγμιότυπο", "αποτύπωση οθόνης"),
     )
 
-    fun forDomain(domain: String): List<String> = byDomain[domain].orEmpty()
+    private val englishNames = mapOf(
+        "telos_phone_app" to "phone",
+        "telos_messages_app" to "messages",
+        "telos_radio_app" to "radio",
+        "telos_music_app" to "music",
+        "telos_youtube_app" to "YouTube",
+        "telos_youtube_music_app" to "YouTube Music",
+        "telos_video_app" to "video",
+        "telos_photos_app" to "photos",
+        "telos_viewer_app" to "viewer",
+        "telos_files_app" to "files",
+        "telos_calculator_app" to "calculator",
+        "telos_voice_recorder_app" to "Voice recorder",
+        "telos_screen_recorder_app" to "Screen recorder",
+        "telos_screenshot_app" to "screenshot",
+        "telos_notes_app" to "notes",
+        "telos_calendar_app" to "calendar",
+        "telos_downloads_app" to "downloads",
+        "telos_media_app" to "media",
+        "telos_network_app" to "network",
+        "telos_store_app" to "store",
+    )
+
+    fun forDomain(domain: String): List<String> {
+        val name = englishNames[domain] ?: return byDomain[domain].orEmpty()
+        return (listOf("telos", "τέλος", "τελος", name, "telos $name") + byDomain[domain].orEmpty()).distinct()
+    }
+
 
     /** [key] is a virtual app key such as `telos_photos_app://photos`. */
     fun forKey(key: String): List<String> = forDomain(key.substringBefore("://"))

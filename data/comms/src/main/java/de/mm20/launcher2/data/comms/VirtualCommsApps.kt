@@ -20,10 +20,10 @@ import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.StaticIconLayer
 import de.mm20.launcher2.icons.TransparentLayer
 
-internal class VirtualPhoneApp(context: Context) : Application {
+internal class VirtualPhoneApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://phone"
-    override val label: String = "Telos Phone"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -75,10 +75,10 @@ internal class VirtualPhoneApp(context: Context) : Application {
     }
 }
 
-internal class VirtualMessagesApp(context: Context) : Application {
+internal class VirtualMessagesApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://messages"
-    override val label: String = "Telos Messages"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -130,10 +130,10 @@ internal class VirtualMessagesApp(context: Context) : Application {
     }
 }
 
-internal class VirtualRadioApp(context: Context) : Application {
+internal class VirtualRadioApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://radio"
-    override val label: String = "Telos Radio"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -184,10 +184,10 @@ internal class VirtualRadioApp(context: Context) : Application {
     }
 }
 
-internal class VirtualMusicApp(context: Context) : Application {
+internal class VirtualMusicApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://music"
-    override val label: String = "Telos Music"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -238,10 +238,10 @@ internal class VirtualMusicApp(context: Context) : Application {
     }
 }
 
-internal class VirtualYouTubeApp(context: Context) : Application {
+internal class VirtualYouTubeApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://youtube"
-    override val label: String = "Telos YouTube"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -292,10 +292,10 @@ internal class VirtualYouTubeApp(context: Context) : Application {
     }
 }
 
-internal class VirtualYouTubeMusicApp(context: Context) : Application {
+internal class VirtualYouTubeMusicApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://youtube_music"
-    override val label: String = "Telos YouTube Music"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -346,10 +346,10 @@ internal class VirtualYouTubeMusicApp(context: Context) : Application {
     }
 }
 
-internal class VirtualVideoApp(context: Context) : Application {
+internal class VirtualVideoApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://video"
-    override val label: String = "Telos Video"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -400,10 +400,10 @@ internal class VirtualVideoApp(context: Context) : Application {
     }
 }
 
-internal class VirtualPhotosApp(context: Context) : Application {
+internal class VirtualPhotosApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://photos"
-    override val label: String = "Telos Photos"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -454,10 +454,10 @@ internal class VirtualPhotosApp(context: Context) : Application {
     }
 }
 
-internal class VirtualViewerApp(context: Context) : Application {
+internal class VirtualViewerApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://viewer"
-    override val label: String = "Telos Viewer"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -508,10 +508,10 @@ internal class VirtualViewerApp(context: Context) : Application {
     }
 }
 
-internal class VirtualFilesApp(context: Context) : Application {
+internal class VirtualFilesApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://files"
-    override val label: String = "Telos Files"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -562,10 +562,10 @@ internal class VirtualFilesApp(context: Context) : Application {
     }
 }
 
-internal class VirtualCalculatorApp(context: Context) : Application {
+internal class VirtualCalculatorApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://calculator"
-    override val label: String = "Telos Calculator"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -616,10 +616,10 @@ internal class VirtualCalculatorApp(context: Context) : Application {
     }
 }
 
-internal class VirtualVoiceRecorderApp(context: Context) : Application {
+internal class VirtualVoiceRecorderApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://voice_recorder"
-    override val label: String = "Telos Voice Recorder"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -670,10 +670,10 @@ internal class VirtualVoiceRecorderApp(context: Context) : Application {
     }
 }
 
-internal class VirtualScreenRecorderApp(context: Context) : Application {
+internal class VirtualScreenRecorderApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://screen_recorder"
-    override val label: String = "Telos Screen Recorder"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -724,10 +724,10 @@ internal class VirtualScreenRecorderApp(context: Context) : Application {
     }
 }
 
-internal class VirtualScreenshotApp(context: Context) : Application {
+internal class VirtualScreenshotApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://screenshot"
-    override val label: String = "Telos Screenshot"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -778,10 +778,10 @@ internal class VirtualScreenshotApp(context: Context) : Application {
     }
 }
 
-internal class VirtualNotesApp(context: Context) : Application {
+internal class VirtualNotesApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://notes"
-    override val label: String = "Telos Notes"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -832,10 +832,10 @@ internal class VirtualNotesApp(context: Context) : Application {
     }
 }
 
-internal class VirtualCalendarApp(context: Context) : Application {
+internal class VirtualCalendarApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://calendar"
-    override val label: String = "Telos Calendar"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -886,10 +886,10 @@ internal class VirtualCalendarApp(context: Context) : Application {
     }
 }
 
-internal class VirtualDownloadsApp(context: Context) : Application {
+internal class VirtualDownloadsApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://downloads"
-    override val label: String = "Telos Downloads"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -940,10 +940,10 @@ internal class VirtualDownloadsApp(context: Context) : Application {
     }
 }
 
-internal class VirtualMediaApp(context: Context) : Application {
+internal class VirtualMediaApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://media"
-    override val label: String = "Telos Media"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -994,10 +994,10 @@ internal class VirtualMediaApp(context: Context) : Application {
     }
 }
 
-internal class VirtualNetworkApp(context: Context) : Application {
+internal class VirtualNetworkApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://network"
-    override val label: String = "Telos Network"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain

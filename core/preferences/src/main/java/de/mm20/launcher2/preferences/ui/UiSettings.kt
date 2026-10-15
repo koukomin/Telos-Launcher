@@ -26,6 +26,7 @@ data class GridSettings(
     val labelMaxLines: Int = 1,
     val labelShadow: Boolean = false,
     val labelColor: Int? = null,
+    val adaptiveColumns: Boolean = false,
     val showList: Boolean = false,
     val showListIcons: Boolean = true,
 )
@@ -115,6 +116,7 @@ class UiSettings internal constructor(
                 showListIcons = it.grid.gridListIcons,
                 iconSize = it.grid.drawerGridIconSize ?: it.grid.gridIconSize,
                 columnCount = it.grid.drawerGridColumnCount ?: it.grid.gridColumnCount,
+                adaptiveColumns = it.grid.drawerGridColumnCount == null,
             )
         }
 
@@ -205,6 +207,12 @@ class UiSettings internal constructor(
 
     fun setDockBackgroundShadow(elevation: Int) {
         launcherDataStore.update { it.copy(grid = it.grid.copy(dockBackgroundShadow = elevation)) }
+    }
+
+    val drawerFullWidth get() = launcherDataStore.data.map { it.grid.drawerFullWidth }.distinctUntilChanged()
+
+    fun setDrawerFullWidth(enabled: Boolean) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(drawerFullWidth = enabled)) }
     }
 
     val drawerBackgroundEnabled

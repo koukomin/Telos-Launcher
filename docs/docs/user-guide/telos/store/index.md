@@ -224,3 +224,14 @@ success or erase the recovery snapshot. External installation is never a silent 
 
 Session failure callbacks now clear the pending row and display their diagnostic text. Exact
 OEM installation failures still need the complete error shown by the selected backend.
+
+## Built-in application names and icons
+
+Built-in entries now use localized names without the Telos prefix in the launcher, Store,
+gesture picker and Recents. Search aliases retain `telos`, English names, Greek names and prior
+feature synonyms regardless of display language. Keys, stored dock items and disabled-app choices
+are unchanged. First-party feature artwork is preferred over generated icons for synthetic
+components; explicit custom icons still take precedence. Recents and Store use full-color artwork
+referenced directly so release resource shrinking cannot remove it.
+
+The launcher drawer width is controlled separately under Settings → Icons → App drawer → Full width on tablets. Tablets use adaptive columns unless a custom drawer column count is selected.
