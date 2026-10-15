@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">Teléfono</string>
+    <string name="virtual_app_viewer">Visor</string>
+    <string name="preference_drawer_full_width">Ancho completo en tabletas</string>
+</resources>

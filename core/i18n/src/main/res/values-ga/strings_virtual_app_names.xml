@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">Fón</string>
+    <string name="virtual_app_viewer">Amharcóir</string>
+    <string name="preference_drawer_full_width">Leithead iomlán ar tháibléid</string>
+</resources>

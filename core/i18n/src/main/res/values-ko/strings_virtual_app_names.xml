@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">전화</string>
+    <string name="virtual_app_viewer">뷰어</string>
+    <string name="preference_drawer_full_width">태블릿에서 전체 너비 사용</string>
+</resources>

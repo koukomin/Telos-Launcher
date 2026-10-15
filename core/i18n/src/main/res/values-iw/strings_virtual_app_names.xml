@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">טלפון</string>
+    <string name="virtual_app_viewer">מציג</string>
+    <string name="au_music_title">מוזיקה</string>
+    <string name="backup_group_calendar">לוח שנה</string>
+    <string name="calculator_title">מחשבון</string>
+    <string name="dl_m_tab">מדיה</string>
+    <string name="dl_title">הורדות</string>
+    <string name="hc_messages">הודעות</string>
+    <string name="hc_network">רשת</string>
+    <string name="hc_photos">תמונות</string>
+    <string name="hc_radio">רדיו</string>
+    <string name="hf_store_title">חנות</string>
+    <string name="notes_title">פתקים</string>
+    <string name="screenrec_title">מקליט מסך</string>
+    <string name="screenshot_title">צילום מסך</string>
+    <string name="voice_title">מקליט קול</string>
+    <string name="gesture_action_telos_app_open">פתיחת %1$s</string>
+    <string name="gesture_action_telos_app_page">הצגת דף %1$s</string>
+    <string name="preference_drawer_full_width">רוחב מלא בטאבלטים</string>
+</resources>

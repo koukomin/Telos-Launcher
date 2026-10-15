@@ -179,3 +179,8 @@ Store offers a selectable Android-session, Shizuku, root or installed external A
 The dock keeps frozen apps' normal icons. Drawer opacity and blur are adjustable with a soft-glass
 preset for fresh installs and full-width tablet layout. Wallpaper settings also accept animated
 GIFs through the live-wallpaper preview, subject to the documented size limits.
+
+Built-in apps use localized names without a Telos prefix, while `telos` and English/Greek feature
+names remain search aliases. Their own artwork is retained in the launcher, Store and Recents.
+
+The tablet drawer offers a full-width switch in Settings → Icons → App drawer; columns adapt to available width unless overridden.

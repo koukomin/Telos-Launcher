@@ -26,10 +26,10 @@ import de.mm20.launcher2.icons.TransparentLayer
  * [SettingsDeepLinkContract], since `:data:store` can't depend on `:app:ui`) pointed straight at
  * the Store dashboard, rather than resolving a real [componentName] through the package manager.
  */
-internal class VirtualStoreApp(context: Context) : Application {
+internal class VirtualStoreApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://store"
-    override val label: String = "Telos Store"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
     override val labelOverride: String? = null
     override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
     override val domain: String = Domain
@@ -67,12 +67,12 @@ internal class VirtualStoreApp(context: Context) : Application {
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): de.mm20.launcher2.icons.LauncherIcon? {
         // the same icon as the launcher itself
-        val launcher = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.mipmap.ic_launcher)
-            as? android.graphics.drawable.AdaptiveIconDrawable ?: return null
-        val foreground = launcher.foreground ?: return null
+        val launcher = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.mipmap.ic_launcher) ?: return null
+        val adaptive = launcher as? android.graphics.drawable.AdaptiveIconDrawable
+        val foreground = adaptive?.foreground ?: launcher
         return StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(foreground, 1f),
-            backgroundLayer = launcher.background?.let { StaticIconLayer(it, 1f) } ?: TransparentLayer,
+            backgroundLayer = adaptive?.background?.let { StaticIconLayer(it, 1f) } ?: TransparentLayer,
         )
     }
 

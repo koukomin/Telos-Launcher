@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">Telefon</string>
+    <string name="virtual_app_viewer">Baxış</string>
+    <string name="au_music_title">Musiqi</string>
+    <string name="backup_group_calendar">Təqvim</string>
+    <string name="calculator_title">Kalkulyator</string>
+    <string name="dl_m_tab">Media</string>
+    <string name="dl_title">Yükləmələr</string>
+    <string name="hc_messages">Mesajlar</string>
+    <string name="hc_network">Şəbəkə</string>
+    <string name="hc_photos">Şəkillər</string>
+    <string name="hc_radio">Radio</string>
+    <string name="hf_store_title">Mağaza</string>
+    <string name="notes_title">Qeydlər</string>
+    <string name="screenrec_title">Ekran yazıcısı</string>
+    <string name="screenshot_title">Ekran görüntüsü</string>
+    <string name="voice_title">Səs yazıcısı</string>
+    <string name="gesture_action_telos_app_open">%1$s tətbiqini aç</string>
+    <string name="gesture_action_telos_app_page">%1$s səhifəsini göstər</string>
+    <string name="preference_drawer_full_width">Planşetlərdə tam en</string>
+</resources>

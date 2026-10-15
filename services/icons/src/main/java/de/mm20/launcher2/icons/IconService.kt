@@ -208,7 +208,9 @@ class IconService(
                 return@combine icon
             }
 
-            val provs = if (customIcon != null) getProviders(customIcon) + providers else providers
+            val defaults = if (searchable.getSerializer() is de.mm20.launcher2.search.VirtualAppSerializer)
+                listOf(SystemIconProvider(context, false)) + providers else providers
+            val provs = if (customIcon != null) getProviders(customIcon) + defaults else defaults
             val transforms = getTransformations(customIcon) ?: transformations
 
             icon = provs.getFirstIcon(searchable, size)

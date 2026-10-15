@@ -1,0 +1,26 @@
+package de.mm20.launcher2.search
+
+import org.junit.Assert.*
+import org.junit.Test
+
+class TelosAppKeywordsTest {
+    @Test fun everyCatalogFeatureRetainsTelosAndItsEnglishNameAsAliases() {
+        val domains = listOf("phone", "messages", "media", "radio", "music", "video", "youtube", "youtube_music", "viewer", "files", "calculator", "notes", "calendar", "downloads", "network", "voice_recorder", "screen_recorder", "screenshot", "store")
+        for (domain in domains) {
+            val aliases = TelosAppKeywords.forDomain("telos_${domain}_app").map { it.lowercase() }
+            assertTrue(domain, "telos" in aliases)
+            assertTrue(domain, domain.replace('_', ' ') in aliases)
+            assertTrue(domain, "telos " + domain.replace('_', ' ') in aliases)
+        }
+    }
+    @Test fun greekNamesRemainSearchableWhenDisplayLanguageIsDifferent() {
+        assertTrue("τηλέφωνο" in TelosAppKeywords.forDomain("telos_phone_app"))
+        assertTrue("μηνύματα" in TelosAppKeywords.forDomain("telos_messages_app"))
+        assertTrue("αρχεία" in TelosAppKeywords.forDomain("telos_files_app"))
+        assertTrue("μουσική" in TelosAppKeywords.forDomain("telos_music_app"))
+    }
+    @Test fun aliasesResolveFromStableSavedKeys() {
+        assertEquals(TelosAppKeywords.forDomain("telos_files_app"), TelosAppKeywords.forKey("telos_files_app://files"))
+        assertTrue(TelosAppKeywords.forDomain("some_other_app").isEmpty())
+    }
+}

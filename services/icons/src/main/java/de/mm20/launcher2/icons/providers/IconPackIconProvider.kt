@@ -17,7 +17,7 @@ class IconPackIconProvider(
     private val allowThemed: Boolean,
 ): IconProvider {
     override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? {
-        if (searchable !is Application) return null
+        if (searchable !is Application || searchable.getSerializer() is de.mm20.launcher2.search.VirtualAppSerializer) return null
 
 
         return iconPackManager.getIcon(iconPack.packageName, searchable.componentName.packageName, searchable.componentName.className, allowThemed)

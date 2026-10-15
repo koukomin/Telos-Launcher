@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">Điện thoại</string>
+    <string name="virtual_app_viewer">Trình xem</string>
+    <string name="au_music_title">Âm nhạc</string>
+    <string name="backup_group_calendar">Lịch</string>
+    <string name="calculator_title">Máy tính</string>
+    <string name="dl_m_tab">Đa phương tiện</string>
+    <string name="dl_title">Tải xuống</string>
+    <string name="hc_messages">Tin nhắn</string>
+    <string name="hc_network">Mạng</string>
+    <string name="hc_photos">Ảnh</string>
+    <string name="hc_radio">Radio</string>
+    <string name="hf_store_title">Cửa hàng</string>
+    <string name="notes_title">Ghi chú</string>
+    <string name="screenrec_title">Trình ghi màn hình</string>
+    <string name="screenshot_title">Ảnh chụp màn hình</string>
+    <string name="voice_title">Trình ghi âm</string>
+    <string name="gesture_action_telos_app_open">Mở %1$s</string>
+    <string name="gesture_action_telos_app_page">Hiện trang %1$s</string>
+    <string name="preference_drawer_full_width">Toàn bộ chiều rộng trên máy tính bảng</string>
+</resources>

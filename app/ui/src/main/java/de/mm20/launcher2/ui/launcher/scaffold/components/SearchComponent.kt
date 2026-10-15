@@ -1,7 +1,7 @@
 package de.mm20.launcher2.ui.launcher.scaffold.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -65,6 +65,7 @@ internal class SearchComponent(
         state: LauncherScaffoldState
     ) {
         val gridSettings by uiSettings.drawerGridSettings.collectAsState(GridSettings())
+        val drawerFullWidth by uiSettings.drawerFullWidth.collectAsState(true)
         val drawerBackgroundEnabled by uiSettings.drawerBackgroundEnabled.collectAsState(true)
         val drawerBackgroundColor by uiSettings.drawerBackgroundColor.collectAsState(null)
         val drawerBackgroundOpacity by uiSettings.drawerBackgroundOpacity.collectAsState(0.35f)
@@ -105,8 +106,7 @@ internal class SearchComponent(
             }
         }
 
-        CompositionLocalProvider(LocalGridSettings provides gridSettings) {
-            Box(
+        BoxWithConstraints(
                 modifier = if (drawerBackgroundEnabled) {
                     val color = drawerBackgroundColor?.let { androidx.compose.ui.graphics.Color(it) }
                         ?: if (de.mm20.launcher2.ui.locals.LocalDarkTheme.current) androidx.compose.ui.graphics.Color.Black else androidx.compose.ui.graphics.Color.White
@@ -116,9 +116,15 @@ internal class SearchComponent(
                 },
                 contentAlignment = Alignment.Center
             ) {
-
+                val availableWidth = if (drawerFullWidth) maxWidth else minOf(maxWidth, 916.dp)
+                val effectiveGrid = if (drawerFullWidth && availableWidth >= 600.dp && gridSettings.adaptiveColumns) {
+                    gridSettings.copy(columnCount = maxOf(gridSettings.columnCount, (availableWidth.value / maxOf(96f, gridSettings.iconSize + 40f)).toInt()))
+                } else gridSettings
+                CompositionLocalProvider(LocalGridSettings provides effectiveGrid) {
                 SearchColumn(
-                    modifier = Modifier.nestedScroll(scrollConnection).fillMaxWidth().fillMaxHeight(),
+                    modifier = Modifier.nestedScroll(scrollConnection)
+                        .widthIn(max = if (drawerFullWidth) androidx.compose.ui.unit.Dp.Infinity else 916.dp)
+                        .fillMaxWidth().fillMaxHeight(),
                     paddingValues = insets,
                     state = lazyListState,
                     reverse = reverse,

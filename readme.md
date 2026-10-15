@@ -92,7 +92,7 @@ from Telos Store.
 
 Telos Phone now reads the full Android contact list across synced accounts, including email-only contacts, rather than seeding its directory only from phone-number rows.
 
-Virtual Telos entries keep their own internal launch routes; frozen-package recovery only applies to real Android applications.
+Built-in apps display short localized names such as **Phone / Τηλέφωνο** and **Files / Αρχεία**, without the Telos prefix. Searching `telos` still finds them, and English/Greek aliases work independently of the display language. Stable virtual keys preserve dock/favorites/gesture entries. Built-in artwork takes priority over generated icon-pack fallbacks; explicit user-selected icons remain supported. Recents use explicit icon resources that survive release shrinking. Virtual entries keep their own internal launch routes; frozen-package recovery only applies to real Android applications.
 
 ### Installer, dock, drawer and GIF wallpaper updates
 
@@ -1210,3 +1210,5 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ```
 
 The plugin SDK modules (`plugins/sdk` and `core/shared`) are licensed under the Apache License 2.0.
+
+Tablet drawer: a dedicated full-width switch under Settings → Icons → App drawer, with adaptive columns unless a custom drawer column count is selected.

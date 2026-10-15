@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">Telefono</string>
+    <string name="virtual_app_viewer">Vidilo</string>
+    <string name="au_music_title">Muziko</string>
+    <string name="backup_group_calendar">Kalendaro</string>
+    <string name="calculator_title">Kalkulilo</string>
+    <string name="dl_m_tab">Amaskomunikiloj</string>
+    <string name="dl_title">Elŝutoj</string>
+    <string name="hc_messages">Mesaĝoj</string>
+    <string name="hc_network">Reto</string>
+    <string name="hc_photos">Fotoj</string>
+    <string name="hc_radio">Radio</string>
+    <string name="hf_store_title">Vendejo</string>
+    <string name="notes_title">Notoj</string>
+    <string name="screenrec_title">Ekranregistrilo</string>
+    <string name="screenshot_title">Ekrankopio</string>
+    <string name="voice_title">Voĉregistrilo</string>
+    <string name="gesture_action_telos_app_open">Malfermi %1$s</string>
+    <string name="gesture_action_telos_app_page">Montri la paĝon de %1$s</string>
+    <string name="preference_drawer_full_width">Plena larĝo sur tabulkomputiloj</string>
+</resources>

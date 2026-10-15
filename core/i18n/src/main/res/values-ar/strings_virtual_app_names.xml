@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">الهاتف</string>
+    <string name="virtual_app_viewer">العارض</string>
+    <string name="preference_drawer_full_width">العرض الكامل على الأجهزة اللوحية</string>
+</resources>

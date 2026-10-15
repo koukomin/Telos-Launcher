@@ -85,6 +85,7 @@ fun IconsSettingsScreen() {
     val homeGrid by viewModel.homeGrid.collectAsStateWithLifecycle(GridSettings())
     val drawerGrid by viewModel.drawerGrid.collectAsStateWithLifecycle(GridSettings())
 
+    val drawerFullWidth by viewModel.drawerFullWidth.collectAsStateWithLifecycle(true)
     val drawerBackgroundEnabled by viewModel.drawerBackgroundEnabled.collectAsStateWithLifecycle(true)
     val drawerBackgroundColor by viewModel.drawerBackgroundColor.collectAsStateWithLifecycle(null)
     val drawerBackgroundBlur by viewModel.drawerBackgroundBlur.collectAsStateWithLifecycle(32)
@@ -243,6 +244,11 @@ fun IconsSettingsScreen() {
         }
         item {
             PreferenceCategory(title = stringResource(R.string.preference_category_grid_drawer)) {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_drawer_full_width),
+                    value = drawerFullWidth,
+                    onValueChanged = viewModel::setDrawerFullWidth,
+                )
                 var override by remember { mutableStateOf(false) }
                 LaunchedEffect(drawerGrid) {
                     override = drawerGrid.columnCount != grid.columnCount || drawerGrid.iconSize != grid.iconSize

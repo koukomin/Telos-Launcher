@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="virtual_app_phone">Тэлефон</string>
+    <string name="virtual_app_viewer">Праглядальнік</string>
+    <string name="au_music_title">Музыка</string>
+    <string name="backup_group_calendar">Каляндар</string>
+    <string name="calculator_title">Калькулятар</string>
+    <string name="dl_m_tab">Медыя</string>
+    <string name="dl_title">Спампоўкі</string>
+    <string name="hc_messages">Паведамленні</string>
+    <string name="hc_network">Сетка</string>
+    <string name="hc_photos">Фота</string>
+    <string name="hc_radio">Радыё</string>
+    <string name="hf_store_title">Крама</string>
+    <string name="notes_title">Нататкі</string>
+    <string name="screenrec_title">Запіс экрана</string>
+    <string name="screenshot_title">Здымак экрана</string>
+    <string name="voice_title">Дыктафон</string>
+    <string name="gesture_action_telos_app_open">Адкрыць %1$s</string>
+    <string name="gesture_action_telos_app_page">Паказаць старонку %1$s</string>
+    <string name="preference_drawer_full_width">Поўная шырыня на планшэтах</string>
+</resources>

@@ -63,6 +63,9 @@ class IconsSettingsScreenVM(
 
     fun setGridLabelColor(color: Int?) = uiSettings.setGridLabelColor(color)
 
+    val drawerFullWidth = uiSettings.drawerFullWidth
+    fun setDrawerFullWidth(enabled: Boolean) = uiSettings.setDrawerFullWidth(enabled)
+
     val drawerBackgroundEnabled = uiSettings.drawerBackgroundEnabled
     val drawerBackgroundColor = uiSettings.drawerBackgroundColor
     val drawerBackgroundBlur = uiSettings.drawerBackgroundBlur
