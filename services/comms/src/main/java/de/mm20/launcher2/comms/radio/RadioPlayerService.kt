@@ -57,6 +57,8 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
 
     override fun onCreate() {
         super.onCreate()
+        setMediaNotificationProvider(androidx.media3.session.DefaultMediaNotificationProvider.Builder(this)
+            .setNotificationId(de.mm20.launcher2.comms.media.MediaPlaybackNotifications.RADIO).build())
 
         // Configure audio attributes for media playback
         val audioAttributes = AudioAttributes.Builder()
@@ -126,7 +128,10 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
         RadioSleepTimer.onExpire = { player?.pause() }
         handler.postDelayed(idleStop, IDLE_STOP_MS)
 
-        mediaSession = MediaSession.Builder(this, stationSwitchingPlayer(exo)).build()
+        mediaSession = MediaSession.Builder(this, stationSwitchingPlayer(exo))
+            .setSessionActivity(de.mm20.launcher2.comms.media.MediaPlaybackNotifications.open(
+                this, "radio", de.mm20.launcher2.comms.media.MediaPlaybackNotifications.RADIO))
+            .build()
     }
 
     /**

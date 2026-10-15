@@ -42,6 +42,7 @@ android {
 
 dependencies {
     implementation(libs.bundles.kotlin)
+    testImplementation(libs.bundles.tests)
     implementation(libs.androidx.core)
 
     implementation(libs.koin.android)

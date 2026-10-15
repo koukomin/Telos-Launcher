@@ -26,6 +26,8 @@ class YouTubePlayerService : MediaSessionService() {
     private val idleStop = Runnable { if (session?.player?.playWhenReady != true) pauseAllPlayersAndStopSelf() }
     override fun onCreate() {
         super.onCreate()
+        setMediaNotificationProvider(androidx.media3.session.DefaultMediaNotificationProvider.Builder(this)
+            .setNotificationId(de.mm20.launcher2.comms.media.MediaPlaybackNotifications.YOUTUBE).build())
         val default = DefaultMediaSourceFactory(DefaultDataSource.Factory(this,
             DefaultHttpDataSource.Factory().setUserAgent("Mozilla/5.0").setAllowCrossProtocolRedirects(true)))
         val sources = object : MediaSource.Factory by default {

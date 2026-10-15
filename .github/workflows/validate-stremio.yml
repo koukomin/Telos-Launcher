@@ -16,6 +16,7 @@ on:
       - 'core/base/src/**'
       - 'core/preferences/src/**'
       - 'services/freeze/**'
+      - 'services/music/**'
       - 'services/icons/**'
       - 'data/applications/**'
       - 'services/badges/**'
@@ -44,6 +45,8 @@ jobs:
       - run: chmod +x gradlew
       - name: Test Stremio protocol and watched state
         run: ./gradlew :services:comms:testDebugUnitTest --tests 'de.mm20.launcher2.comms.search.*' --tests 'de.mm20.launcher2.comms.stremio.*' --tests 'de.mm20.launcher2.comms.tv.*' --tests 'de.mm20.launcher2.comms.youtube.*' --tests 'de.mm20.launcher2.comms.files.FilesSharingServerTest' --stacktrace
+      - name: Test home media session discovery and priority
+        run: ./gradlew :services:music:testDebugUnitTest --stacktrace
       - name: Test frozen launcher component ordering
         run: ./gradlew :data:applications:testDebugUnitTest --stacktrace
       - name: Test persisted frozen-app snapshots

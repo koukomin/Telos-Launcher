@@ -67,6 +67,7 @@ class TvPlaybackService : MediaSessionService(), KoinComponent {
         super.onCreate()
         setMediaNotificationProvider(
             DefaultMediaNotificationProvider.Builder(this)
+                .setNotificationId(de.mm20.launcher2.comms.media.MediaPlaybackNotifications.TV)
                 .setChannelId(CHANNEL_ID)
                 .setChannelName(I18nR.string.au15_tvbg_channel_name)
                 .build()

@@ -521,7 +521,8 @@ private fun HubMiniPlayer(
     val display = shown ?: last
 
     AnimatedVisibility(
-        visible = shown != null,
+        // Music and Radio own their richer bar on their own page; keep the hub bar elsewhere.
+        visible = shown != null && !(shown == space && (space == MediaSpace.Music || space == MediaSpace.Radio)),
         enter = if (reduceAnimations) EnterTransition.None else slideInVertically(spring(0.8f, 400f)) { it } + fadeIn(),
         exit = if (reduceAnimations) ExitTransition.None else slideOutVertically(spring(0.8f, 400f)) { it } + fadeOut(),
         modifier = modifier,

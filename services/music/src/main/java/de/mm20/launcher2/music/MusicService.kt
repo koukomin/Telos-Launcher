@@ -21,7 +21,6 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import coil.size.Scale
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.notifications.Notification
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.preferences.media.MediaSettings
 import kotlinx.coroutines.CoroutineScope
@@ -110,10 +109,16 @@ internal class MusicServiceImpl(
                     settings.allowList,
                     settings.denyList,
                 )
-                val sbn: Notification? = notifications.filter {
+                val candidates = notifications.filter {
                     it.mediaSessionToken != null && musicApps.contains(it.packageName)
-                }.maxByOrNull { it.postTime }
-
+                }
+                val sbn = selectPlaybackCandidate(candidates,
+                    isPlaying = { notification ->
+                        runCatching {
+                            notification.mediaSessionToken?.let { MediaController(context, it).playbackState?.state } ==
+                                android.media.session.PlaybackState.STATE_PLAYING
+                        }.getOrDefault(false)
+                    }, postTime = { it.postTime })
                 return@withContext sbn?.mediaSessionToken
             }
         }
@@ -580,7 +585,9 @@ internal class MusicServiceImpl(
             apps.addAll(context.packageManager.queryIntentActivities(intent, 0)
                 .map { it.activityInfo.applicationInfo.packageName })
         }
-        return apps
+        // Built-in Music/Radio/YouTube sessions belong to the launcher package, which need not
+        // advertise an external music-player activity. Include it in discovery and the chooser.
+        return apps + context.packageName
     }
 
     private suspend fun getEnabledPlayerPackages(
@@ -588,7 +595,7 @@ internal class MusicServiceImpl(
         denyList: Set<String>
     ): Set<String> {
         val installed = getInstalledPlayerPackages()
-        return installed.union(allowList).subtract(denyList).toSet()
+        return eligibleMusicPackages(installed, context.packageName, allowList, denyList)
     }
 
     override fun resetPlayer() {

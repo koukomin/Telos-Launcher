@@ -143,8 +143,6 @@ fun MusicScreen(
             onOpenNowPlayingConsumed()
         }
     }
-    // inside Telos Media its shared mini player is shown instead
-    val inHub = de.mm20.launcher2.ui.media.LocalInMediaHub.current
 
     BackHandler(enabled = showNowPlaying) { showNowPlaying = false }
     BackHandler(enabled = !showNowPlaying && group != null) { group = null }
@@ -261,7 +259,7 @@ fun MusicScreen(
             }
         }
 
-        nowPlaying?.takeIf { !inHub }?.let { np ->
+        nowPlaying?.let { np ->
             val isPlaying by viewModel.isPlaying.collectAsStateWithLifecycle()
             ArtTintedMiniPlayer(
                 title = np.title,
