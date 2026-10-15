@@ -50,6 +50,7 @@ internal class SessionApiInstallBackend(private val context: Context) : InstallB
         val sessionId = try {
             val params = PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL).apply {
                 setAppPackageName(packageName)
+                if (Build.VERSION.SDK_INT >= 34) setApplicationEnabledSettingPersistent()
                 val owner = context.getSystemService(android.app.admin.DevicePolicyManager::class.java)
                     ?.isDeviceOwnerApp(context.packageName) == true
                 if (owner && isAtLeastApiLevel(Build.VERSION_CODES.S))

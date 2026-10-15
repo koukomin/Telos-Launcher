@@ -53,7 +53,7 @@ class TelosPackageInstaller(
             var restored = true
             var lease: String? = null
             try {
-                if (options.global.value.updateFrozenApps) lease = freezeManager.beginFrozenUpdate(packageName,
+                lease = freezeManager.beginFrozenUpdate(packageName,
                     if (backend === shizuku) "Shizuku" else "Root")
                 result = backend.install(apk, packageName)
             } catch (cancelled: kotlinx.coroutines.CancellationException) {
@@ -92,10 +92,10 @@ class TelosPackageInstaller(
         var pending = false
         var lease: String? = null
         try {
-            if (options.global.value.updateFrozenApps && freezeManager.isFrozen(packageName)) {
+            if (freezeManager.isFrozen(packageName)) {
                 if (!isDeviceOwner()) return InstallResult.Failed(context.getString(de.mm20.launcher2.data.store.R.string.freeze_no_backend_available))
-                lease = freezeManager.beginFrozenUpdate(packageName, "DeviceOwner")
             }
+            lease = freezeManager.beginFrozenUpdate(packageName, "DeviceOwner")
             return when (val result = sessionApi.install(apk, packageName, lease)) {
                 is BackendInstallResult.Success -> { pending = true; InstallResult.Pending }
                 is BackendInstallResult.Failed -> failed(result.cause)

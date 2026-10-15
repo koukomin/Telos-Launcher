@@ -171,9 +171,12 @@ but Telos cannot judge whether the source itself is trustworthy.
 ## Updating frozen applications
 
 Enable **Update frozen apps** in Store settings (off by default). Authorized Root/Shizuku installs
-stream the private APK to the privileged process, temporarily thaw the target and restore its
-previous restrictions after success or failure. Telos configured as **Device Owner** uses Android
+stream the private APK to the privileged process without proactively thawing the target. Android
+14+ uses the installer’s persistent enabled-setting option where available; older/OEM installers
+may enable the target during commit. Telos verifies and restores the saved restrictions after
+success or failure. Telos configured as **Device Owner** uses Android
 PackageInstaller sessions and restores state from the final callback, including cancellation.
+Device Owner updates reject package/component disable overrides that this backend cannot restore.
 Android may still require user action under its update policies. Plain Device Admin access does
 not grant these privileges; it is not advertised as a silent installer.
 

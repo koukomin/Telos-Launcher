@@ -33,8 +33,14 @@ internal class RootInstallBackend : InstallBackend {
         }
         return withContext(Dispatchers.IO) {
             try {
-                val process = ProcessBuilder("su", "-c", "pm install -r -S ${apk.length()}").start()
-                val (success, output) = streamApkInstall(apk, process)
+                suspend fun attempt(preserve: Boolean): Pair<Boolean, String> {
+                    val command = apkInstallArguments(apk.length(), android.os.Process.myUid() / 100000, preserve)
+                    return streamApkInstall(apk, ProcessBuilder("su", "-c", command.joinToString(" ")).start())
+                }
+                val preserve = android.os.Build.VERSION.SDK_INT >= 34
+                var outcome = attempt(preserve)
+                if (!outcome.first && preserve && unsupportedPreserveFlag(outcome.second)) outcome = attempt(false)
+                val (success, output) = outcome
                 if (success) BackendInstallResult.Success
                 else BackendInstallResult.Failed("Root install failed: $output")
             } catch (error: Exception) {

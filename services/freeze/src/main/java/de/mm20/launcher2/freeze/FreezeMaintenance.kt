@@ -51,7 +51,10 @@ internal class FreezeMaintenance(
             catch (_: PackageManager.NameNotFoundException) { true }
         val enabled = pm.getApplicationEnabledSetting(packageName)
         val suspended = info.flags and ApplicationInfo.FLAG_SUSPENDED != 0
-        if (!hidden && !suspended && enabled < 2 && components.isEmpty()) return null
+        val hasEnabledLauncher = pm.queryIntentActivities(
+            Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER).setPackage(packageName), 0
+        ).any { it.activityInfo?.enabled == true }
+        if (!hidden && !suspended && enabled < 2 && !isComponentFreeze(hasEnabledLauncher, components.isNotEmpty())) return null
         return FrozenAppRestore(packageName, userId, suspended, enabled, hidden, components, installer, backend)
     }
 
@@ -70,6 +73,7 @@ internal class FreezeMaintenance(
         require(entry.userId == userId && (allowProtected || !isProtected(entry.packageName)))
         require(entry.packageName.matches(Regex("[A-Za-z0-9_]+(\\.[A-Za-z0-9_]+)*")))
         require(entry.enabledState in 0..4 && entry.components.size <= 1000)
+        require(entry.hidden || entry.suspended || entry.enabledState >= 2 || entry.components.isNotEmpty())
         entry.components.forEach { (component, state) ->
             val cn = requireNotNull(ComponentName.unflattenFromString(component))
             require(cn.packageName == entry.packageName && cn.className.matches(Regex("[A-Za-z0-9_.$]+")) && state in 2..4)
@@ -84,7 +88,10 @@ internal class FreezeMaintenance(
             suspendPackages = { names, value -> backend.setPackagesSuspended(names, value, userId) },
             enablePackages = { names, value -> backend.setPackagesEnabled(names, value, userId) })
         if (pkg !in changed) return false
-        for (component in entry.components.keys) {
+        val hasLauncher = pm.queryIntentActivities(
+            Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER).setPackage(pkg), 0
+        ).any { it.activityInfo?.enabled == true }
+        for (component in if (hasLauncher) emptyList() else entry.components.keys.take(1)) {
             if (!backend.setComponentSetting(component, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, userId)) return false
         }
         return capture(pkg) == null
@@ -95,6 +102,8 @@ internal class FreezeMaintenance(
         val pkg = entry.packageName
         val current = try { pm.getApplicationInfo(pkg, flags) } catch (_: PackageManager.NameNotFoundException) { return false }
         if (current.flags and ApplicationInfo.FLAG_INSTALLED == 0) return false
+        val before = capture(pkg)
+        if (before != null && matches(entry, before)) return true
         // Re-establish protection first; even a retired launcher alias must not leave an app thawed.
         if (entry.enabledState >= 2 && pm.getApplicationEnabledSetting(pkg) != entry.enabledState &&
             !backend.setEnabledSetting(pkg, entry.enabledState, userId)) return false
@@ -110,9 +119,13 @@ internal class FreezeMaintenance(
             !backend.setEnabledSetting(pkg, entry.enabledState, userId)) return false
         if (!entry.suspended && pkg !in backend.setPackagesSuspended(listOf(pkg), false, userId)) return false
         val actual = capture(pkg) ?: return false
-        return actual.suspended == entry.suspended && actual.hidden == entry.hidden &&
-            actual.enabledState == entry.enabledState && entry.components.all { (c, state) -> actual.components[c] == state }
+        return matches(entry, actual)
     }
+
+    private fun matches(entry: FrozenAppRestore, actual: FrozenAppRestore) =
+        actual.suspended == entry.suspended && actual.hidden == entry.hidden &&
+            actual.enabledState == entry.enabledState && entry.components.all { (c, state) -> actual.components[c] == state }
+
 
     suspend fun unfreezeAll(groups: Set<FrozenAppGroup>): Int = withContext(NonCancellable + Dispatchers.IO) {
         mutex.withLock {
@@ -122,7 +135,7 @@ internal class FreezeMaintenance(
                 try {
                     val pkg = row.state.packageName
                     val existing = settings.maintenance.first()[key(pkg)]
-                    if (existing?.installer == true) { failed++; continue }
+                    if (existing?.installer == true || existing?.operationId?.isNotEmpty() == true) { failed++; continue }
                     val entry = existing ?: row.state.copy(backend = name)
                     if (!saveThenThaw(entry, { settings.saveMaintenance(key(pkg), it) }, { thaw(it, backend) })) failed++
                 } catch (error: Exception) {
@@ -141,6 +154,8 @@ internal class FreezeMaintenance(
                 try {
                     // Active installer sessions are completed by their callback, never by bulk actions.
                     if (entry.installer) continue
+                    if (entry.operationId.isNotEmpty() && (id in activeInstalls ||
+                        pm.packageInstaller.mySessions.any { it.appPackageName == entry.packageName })) { failed++; continue }
                     val backend = provider(entry.backend)?.second
                     if (backend == null || !restoreThenForget(entry, { restore(it, backend) },
                         { settings.saveMaintenance(id, null) })) failed++
@@ -156,19 +171,21 @@ internal class FreezeMaintenance(
     suspend fun beginInstall(packageName: String, backendName: String): String? = withContext(NonCancellable + Dispatchers.IO) {
         mutex.withLock {
             val existing = settings.maintenance.first()[key(packageName)]
-            check(existing?.installer != true) { "An update is already pending" }
-            if (existing != null) return@withLock null
-            val entry = capture(packageName, backendName, installer = true)?.copy(operationId = java.util.UUID.randomUUID().toString())
+            check(existing?.operationId.isNullOrEmpty()) { "An update is already pending" }
+            val token = java.util.UUID.randomUUID().toString()
+            val entry = existing?.copy(operationId = token)
+                ?: capture(packageName, backendName, installer = true)?.copy(operationId = token)
                 ?: return@withLock null
             valid(entry)
-            val backend = provider(backendName)?.second ?: error("Freeze backend unavailable")
-            settings.saveMaintenance(key(packageName), entry)
-            try {
-                check(thaw(entry, backend)) { "Could not unfreeze app" }
-            } catch (error: Exception) {
-                if (runCatching { restore(entry, backend) }.getOrDefault(false)) settings.saveMaintenance(key(packageName), null)
-                throw error
+            if (existing == null) {
+                check(provider(backendName) != null) { "Freeze backend unavailable" }
+                // Device Owner cannot restore arbitrary package/component disable overrides.
+                check(backendName != "DeviceOwner" || (entry.enabledState < 2 && entry.components.isEmpty())) {
+                    "This frozen state requires Root or Shizuku"
+                }
             }
+            // Journal only: let the installer preserve disabled state, without a pre-install thaw.
+            settings.saveMaintenance(key(packageName), entry)
             activeInstalls += key(packageName)
             entry.operationId
         }
@@ -178,8 +195,12 @@ internal class FreezeMaintenance(
         mutex.withLock {
             try {
                 val entry = settings.maintenance.first()[key(packageName)] ?: return@withLock true
-                if (!entry.installer || !ownsFrozenUpdate(entry.operationId, token)) return@withLock false
+                if (!ownsFrozenUpdate(entry.operationId, token)) return@withLock false
                 activeInstalls -= key(packageName)
+                if (!entry.installer) {
+                    settings.saveMaintenance(key(packageName), entry.copy(operationId = ""))
+                    return@withLock true
+                }
                 val backend = provider(entry.backend)?.second ?: return@withLock false
                 restoreThenForget(entry, { restore(it, backend) }, { settings.saveMaintenance(key(packageName), null) })
             } catch (error: Exception) {

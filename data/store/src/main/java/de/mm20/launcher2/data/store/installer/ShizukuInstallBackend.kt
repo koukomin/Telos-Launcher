@@ -82,9 +82,14 @@ internal class ShizukuInstallBackend : InstallBackend {
                     String::class.java,
                 )
                 method.isAccessible = true
-                val command = arrayOf("pm", "install", "-r", "-S", apk.length().toString())
-                val process = method.invoke(null, command, null, null) as Process
-                val (success, output) = streamApkInstall(apk, process)
+                suspend fun attempt(preserve: Boolean): Pair<Boolean, String> {
+                    val command = apkInstallArguments(apk.length(), android.os.Process.myUid() / 100000, preserve)
+                    return streamApkInstall(apk, method.invoke(null, command.toTypedArray(), null, null) as Process)
+                }
+                val preserve = android.os.Build.VERSION.SDK_INT >= 34
+                var outcome = attempt(preserve)
+                if (!outcome.first && preserve && unsupportedPreserveFlag(outcome.second)) outcome = attempt(false)
+                val (success, output) = outcome
                 if (success) BackendInstallResult.Success
                 else BackendInstallResult.Failed("Shizuku install failed: $output")
             } catch (e: Exception) {

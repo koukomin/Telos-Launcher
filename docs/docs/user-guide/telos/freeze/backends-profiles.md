@@ -233,7 +233,7 @@ The restoration journal is written before changing Android state, remains on thi
 process restarts, and is excluded from exported/restored launcher backups. Auto-freeze skips
 journaled apps throughout the update window. History is removed only after restoration is verified.
 Failures remain pending; **Freeze again** retries them. Pending installer callbacks carry an operation
-ID, so an old callback cannot restore a newer installation. Active installer sessions are skipped
+ID, so an old callback cannot restore a newer installation. Active installer sessions, including updates inside a bulk thaw window, are skipped
 by manual recovery. If a process dies during an install, reopen Freeze Manager after installation
 has finished and use **Freeze again** to recover any remaining entry.
 
@@ -246,5 +246,6 @@ pending; Telos first re-establishes package protection rather than silently leav
 Frozen-app launches survive refresh/removal of the old launcher row. Telos waits up to about five
 seconds for an actual launcher activity and retries transient launch failures without another tap.
 Icon-pack generation uses disabled-aware resource lookup, and frozen scans prefer the original
-launcher component over an arbitrary seasonal/icon alias. No device-level visual or Root/Shizuku
+launcher component over an arbitrary seasonal/icon alias. An inactive alternate alias does not
+classify an otherwise launchable application as frozen. No device-level visual or Root/Shizuku
 integration test has been performed in the cloud environment.

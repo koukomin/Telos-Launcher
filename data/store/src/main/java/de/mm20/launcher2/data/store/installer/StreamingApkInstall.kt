@@ -20,11 +20,17 @@ internal suspend fun streamApkInstall(apk: File, process: Process): Pair<Boolean
     }
     val output = async(Dispatchers.IO) { readBounded(process.inputStream) }
     val errors = async(Dispatchers.IO) { readBounded(process.errorStream) }
+    var writeFailed = false
     val exit = try {
-        process.outputStream.use { target -> apk.inputStream().use { it.copyTo(target, 64 * 1024) } }
+        try {
+            process.outputStream.use { target -> apk.inputStream().use { it.copyTo(target, 64 * 1024) } }
+        } catch (_: java.io.IOException) {
+            // An unsupported option may make pm close stdin before consuming the APK.
+            writeFailed = true
+        }
         process.waitFor()
     } finally { process.destroy() }
     val stdout = output.await()
     val stderr = errors.await()
-    (exit == 0 && stdout.lineSequence().any { it.trim() == "Success" }) to (stdout + stderr).take(8192)
+    (!writeFailed && exit == 0 && stdout.lineSequence().any { it.trim() == "Success" }) to (stdout + stderr).take(8192)
 }

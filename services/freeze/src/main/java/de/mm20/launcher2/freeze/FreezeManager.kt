@@ -68,7 +68,7 @@ class FreezeManager internal constructor(
     suspend fun beginFrozenUpdate(packageName: String, backend: String) = maintenance.beginInstall(packageName, backend)
     suspend fun finishFrozenUpdate(packageName: String, token: String) = maintenance.finishInstall(packageName, token)
     suspend fun hasPendingFrozenUpdate(packageName: String) = settings.maintenance.first().values.any {
-        it.packageName == packageName && it.userId == Process.myUid() / 100000 && it.installer
+        it.packageName == packageName && it.userId == Process.myUid() / 100000 && it.operationId.isNotEmpty()
     }
     suspend fun launchThawed(packageName: String, user: UserHandle, preferred: ComponentName,
         launch: (ComponentName) -> Boolean) = maintenance.launchThawed(packageName, user, preferred, launch)
@@ -345,12 +345,13 @@ class FreezeManager internal constructor(
                 launcherIntent,
                 PackageManager.MATCH_DISABLED_COMPONENTS,
             )?.activityInfo
-            val isComponentDisabled = launcherActivity != null && (
+            val hasEnabledLauncher = pm.queryIntentActivities(launcherIntent, 0).any { it.activityInfo?.enabled == true }
+            val isComponentDisabled = isComponentFreeze(hasEnabledLauncher, launcherActivity != null && (
                 !launcherActivity.enabled ||
                     pm.getComponentEnabledSetting(
                         ComponentName(launcherActivity.packageName, launcherActivity.name)
                     ) == PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-                )
+                ))
             when {
                 !info.enabled || isComponentDisabled -> AppFreezeState.Disabled
                 (info.flags and ApplicationInfo.FLAG_SUSPENDED) != 0 -> AppFreezeState.Suspended

@@ -1007,7 +1007,7 @@ An app installer and updater that works like [Obtainium](https://github.com/Imra
 **Updates and installing**
 
 - Update checks in the background (interval and Wi-Fi only settings, a notification), "update all", "check now"
-- Install and uninstall with Shizuku or root backends (silent) or the system installer; device-owner installs use Android sessions. An APK for another package is refused. **Update frozen apps** is opt-in: save the original state before temporary thawing, then restore it after installation or failure. Interrupted restorations remain in Freeze Manager. Private APKs are streamed to Root/Shizuku installers without public copies or APK-sized RAM buffers.
+- Install and uninstall with Shizuku or root backends (silent) or the system installer; device-owner installs use Android sessions. An APK for another package is refused. **Update frozen apps** is opt-in: journal the original state before installation and verify/restore it after success or failure. Android 14+ installers preserve the disabled setting when supported; older/OEM installers may enable it during commit before restoration. Interrupted restorations remain in Freeze Manager. Private APKs are streamed to Root/Shizuku installers without public copies or APK-sized RAM buffers.
 - Optional GitHub token to raise the request limit
 
 **Organizing**
