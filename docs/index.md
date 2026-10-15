@@ -147,6 +147,7 @@ features:
 - **Freeze Manager:** consistent snowflake/grayscale and icon packs, verified Disable/Suspend
   transitions, and actual-state scans with Unfreeze all / Freeze again for saved user/system groups.
 - **Store:** opt-in frozen-app updates with durable restoration and streaming Shizuku/root installs.
+  Published source artwork is shown for uninstalled apps, and full installer failures are readable.
   Plain Device Admin is insufficient; Device Owner supports only states it can restore.
 
 Details: [Media](/docs/user-guide/telos/media/), [Store](/docs/user-guide/telos/store/),

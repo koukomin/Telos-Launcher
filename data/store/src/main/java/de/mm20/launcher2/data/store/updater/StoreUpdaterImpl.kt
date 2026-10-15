@@ -82,7 +82,9 @@ class StoreUpdaterImpl(
         val pm = context.packageManager
         val tracked = repository.getAll().map { it.packageName }.toSet()
         val now = System.currentTimeMillis()
-        val candidates = pm.getInstalledApplications(0).filter { app ->
+        val candidates = pm.getInstalledApplications(android.content.pm.PackageManager.MATCH_DISABLED_COMPONENTS or
+            android.content.pm.PackageManager.MATCH_UNINSTALLED_PACKAGES).filter { app ->
+            app.flags and android.content.pm.ApplicationInfo.FLAG_INSTALLED != 0 &&
             app.flags and android.content.pm.ApplicationInfo.FLAG_SYSTEM == 0 &&
                 app.packageName != context.packageName && app.packageName !in tracked &&
                 now - prefs.getLong("discovery:${app.packageName}", 0) >= 24 * 60 * 60 * 1000L &&

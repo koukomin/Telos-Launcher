@@ -38,8 +38,9 @@ class TelosPackageInstaller(
     private fun isDeviceOwner() = context.getSystemService(android.app.admin.DevicePolicyManager::class.java)
         ?.isDeviceOwnerApp(context.packageName) == true
 
-    private fun failed(cause: Throwable? = null) = InstallResult.Failed(
-        context.getString(de.mm20.launcher2.data.store.R.string.au_store_msg_install_failed), cause)
+    private fun failed(cause: Throwable? = null, details: String? = cause?.message) = InstallResult.Failed(
+        context.getString(de.mm20.launcher2.data.store.R.string.au_store_msg_install_failed) +
+            details?.takeIf { it.isNotBlank() }?.take(8192)?.let { "\n$it" }.orEmpty(), cause)
 
     override suspend fun install(apk: File, packageName: String): InstallResult {
         if (freezeManager.hasPendingFrozenUpdate(packageName)) return InstallResult.Failed(context.getString(de.mm20.launcher2.data.store.R.string.hf_store_installing))
@@ -82,7 +83,7 @@ class TelosPackageInstaller(
                     // the user, so silently handing off to a second, *prompting* install would
                     // be a confusing surprise. Report the failure instead.
                     CrashReporter.logException(Exception("${backend::class.simpleName}: ${installed.reason}", installed.cause))
-                    failed(installed.cause)
+                    failed(installed.cause, installed.reason)
                 }
             }
         }

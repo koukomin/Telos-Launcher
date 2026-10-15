@@ -49,7 +49,7 @@ class FreezeManager internal constructor(
 
     private val operationMutex = Mutex()
 
-    private val shizukuProvider = ShizukuProvider()
+    private val shizukuProvider = ShizukuProvider(context.packageName)
     private val rootProvider = RootProvider()
     private val islandProvider = IslandProvider(context)
     private val deviceOwnerProvider = DeviceOwnerProvider(context)

@@ -79,7 +79,7 @@ fun AppDetailsScreen(itemId: String) {
         LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             item {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    AppIcon(item.packageName, item.displayName, 64, item.installedVersionCode)
+                    AppIcon(item.packageName, item.displayName, 64, item.installedVersionCode, item.source)
                     Spacer(Modifier.width(16.dp))
                     Column(Modifier.weight(1f)) {
                         Text(item.displayName, style = MaterialTheme.typography.titleLarge)

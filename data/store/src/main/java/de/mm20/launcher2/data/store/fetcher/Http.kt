@@ -23,6 +23,7 @@ internal suspend fun HttpClient.getText(
     url: String,
     accept: String? = null,
     bearer: String? = null,
+    maxBytes: Int = 4 * 1024 * 1024,
 ): HttpText {
     try {
         return prepareGet {
@@ -31,7 +32,7 @@ internal suspend fun HttpClient.getText(
             accept?.let { header("Accept", it) }
             bearer?.takeIf { it.isNotBlank() }?.let { header("Authorization", "Bearer $it") }
         }.execute { response ->
-            val limit = 4 * 1024 * 1024
+            val limit = maxBytes
             if ((response.headers["Content-Length"]?.toLongOrNull() ?: 0) > limit)
                 throw StoreFetchException("The source response is too large")
             val channel = response.bodyAsChannel()

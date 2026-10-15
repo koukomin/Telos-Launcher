@@ -27,12 +27,11 @@ import kotlin.coroutines.resume
  * entry (declared in this module's manifest). Hidden-API reflection goes through
  * [HiddenApiBypass] because these framework methods are on the greylist since API 28.
  */
-internal class ShizukuProvider : PrivilegedAccessProvider {
+internal class ShizukuProvider(private val ownPackage: String) : PrivilegedAccessProvider {
 
     companion object {
         private const val REQUEST_CODE = 9316
         private const val TAG = "ShizukuProvider"
-        private const val OWN_PACKAGE = "de.mm20.launcher2"
     }
 
     private val isRoot: Boolean
@@ -43,7 +42,7 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
      * calls run as the shell uid, so it must be com.android.shell; for root it can be us.
      */
     private val callerPackage: String
-        get() = if (isRoot) OWN_PACKAGE else "com.android.shell"
+        get() = de.mm20.launcher2.freeze.shizukuCallingPackage(isRoot, ownPackage)
 
     private val userId: Int
         get() = Process.myUid() / 100000
@@ -109,7 +108,11 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
                 .getOrDefault(false)
 
             // A binder compatibility failure may use the equivalent shell command, never uninstall.
-            if (!success) success = runPackageCommand(if (suspended) "suspend" else "unsuspend", pkg, userId)
+            if (!suspended) {
+                // Clear the shell-owned restriction left by ADB mode or a previous pm fallback,
+                // even if the root binder call successfully cleared our own suspension entry.
+                success = runPackageCommand("unsuspend", pkg, userId) || success
+            } else if (!success) success = runPackageCommand("suspend", pkg, userId)
             success
         }
     }
@@ -142,9 +145,9 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
     private fun runPackageCommand(action: String, packageName: String, userId: Int): Boolean = runCatching {
         val method = Shizuku::class.java.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)
         method.isAccessible = true
-        val process = method.invoke(null, arrayOf("pm", action, "--user", userId.toString(), packageName), null, null)
-        try { process::class.java.getMethod("waitFor").invoke(process) == 0 }
-        finally { process::class.java.getMethod("destroy").invoke(process) }
+        val process = method.invoke(null, arrayOf("pm", action, "--user", userId.toString(), packageName), null, null) as java.lang.Process
+        try { process.waitFor() == 0 }
+        finally { process.destroy() }
     }.getOrDefault(false)
 
     // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
