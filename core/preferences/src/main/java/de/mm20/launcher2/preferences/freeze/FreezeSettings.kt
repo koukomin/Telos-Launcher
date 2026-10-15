@@ -137,6 +137,22 @@ class FreezeSettings internal constructor(
         }
     }
 
+    val maintenance get() = dataStore.data.map { it.freeze.freezeMaintenance }
+
+    suspend fun saveMaintenance(key: String, entry: de.mm20.launcher2.preferences.FrozenAppRestore?) {
+        dataStore.updateAndWait { current ->
+            val entries = current.freeze.freezeMaintenance
+            require(entry == null || entries.size < 10_000 || key in entries)
+            val updated = if (entry == null) entries - key else entries + (key to entry)
+            val bytes = updated.values.sumOf { row ->
+                192L + 2L * (row.packageName.length + row.backend.length + row.operationId.length) +
+                    row.components.keys.sumOf { 32L + it.length * 2L }
+            }
+            require(entry == null || bytes <= 4L * 1024 * 1024)
+            current.copy(freeze = current.freeze.copy(freezeMaintenance = updated))
+        }
+    }
+
     val freezeMethods
         get() = dataStore.data.map { it.freeze.freezeMethods }
 

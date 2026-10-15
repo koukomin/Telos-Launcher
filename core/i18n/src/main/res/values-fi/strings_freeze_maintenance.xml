@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">Jäädytettyjen sovellusten päivitykset</string>
+    <string name="freeze_unfreeze_all">Sulata kaikki</string>
+    <string name="freeze_restore_all">Jäädytä uudelleen</string>
+    <string name="freeze_system_iconless">Järjestelmäsovellukset ilman käynnistyskuvaketta</string>
+    <string name="store_update_frozen">Päivitä jäädytetyt sovellukset</string>
+</resources>

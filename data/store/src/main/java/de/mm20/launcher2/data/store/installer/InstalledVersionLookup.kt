@@ -10,7 +10,9 @@ internal data class InstalledInfo(val versionCode: Long, val versionName: String
 /** The installed version of [packageName], or null if it's not (or no longer) installed. */
 internal fun resolveInstalledInfo(context: Context, packageName: String): InstalledInfo? {
     return try {
-        val info = context.packageManager.getPackageInfo(packageName, 0)
+        val info = context.packageManager.getPackageInfo(packageName,
+            PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_UNINSTALLED_PACKAGES)
+        if ((info.applicationInfo?.flags ?: 0) and android.content.pm.ApplicationInfo.FLAG_INSTALLED == 0) return null
         val code = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             info.longVersionCode
         } else {

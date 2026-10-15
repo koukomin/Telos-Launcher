@@ -1,0 +1,12 @@
+<resources>
+    <string name="freeze_maintenance_title">Actualisationes de apps congelate</string>
+    <string name="freeze_unfreeze_all">Discongelar totes</string>
+    <string name="freeze_restore_all">Congelar de novo</string>
+    <string name="freeze_system_iconless">Apps de systema sin icones de lanceamento</string>
+    <string name="store_update_frozen">Actualisar apps congelate</string>
+    <string name="hc_restore">Restaurar</string>
+    <string name="hf_freeze_frozen_apps">Apps congelate</string>
+    <string name="freeze_backend_device_owner">Proprietario del dispositivo</string>
+    <string name="freeze_backend_root">Root</string>
+    <string name="freeze_backend_shizuku">Shizuku</string>
+</resources>

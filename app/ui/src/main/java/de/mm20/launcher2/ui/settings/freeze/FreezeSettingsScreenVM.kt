@@ -43,6 +43,39 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     private val iconService: IconService by inject()
     private val permissionsManager: PermissionsManager by inject()
 
+    private val maintenanceLock = kotlinx.coroutines.sync.Mutex()
+    private val _maintenanceBusy = MutableStateFlow(false)
+    val maintenanceBusy = _maintenanceBusy.asStateFlow()
+    private val _frozenInventory = MutableStateFlow<List<de.mm20.launcher2.freeze.FrozenAppInventory>>(emptyList())
+    val frozenInventory = _frozenInventory.asStateFlow()
+    val maintenanceEntries = freezeManager.maintenanceEntries
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
+
+    fun refreshFrozenInventory() = maintenanceAction { 0 }
+    fun unfreezeAll(groups: Set<de.mm20.launcher2.freeze.FrozenAppGroup>) =
+        maintenanceAction { freezeManager.unfreezeAll(groups) }
+    fun restoreFrozenApps() = maintenanceAction {
+        freezeManager.restoreFrozenApps() + freezeManager.recoverFrozenUpdates()
+    }
+    private fun maintenanceAction(action: suspend () -> Int) {
+        viewModelScope.launch(kotlinx.coroutines.NonCancellable) {
+            maintenanceLock.lock()
+            try {
+                _maintenanceBusy.value = true
+                if (action() != 0) showPolicyError()
+                _frozenInventory.value = freezeManager.scanFrozenApps()
+                // Refresh iconless entries each time Settings is opened, including other freezers.
+                _iconlessApps.value = appRepository.findIconlessApps().sorted()
+            } catch (error: Exception) {
+                android.util.Log.e("FreezeSettings", "Maintenance operation failed", error)
+                showPolicyError()
+            } finally {
+                _maintenanceBusy.value = false
+                maintenanceLock.unlock()
+            }
+        }
+    }
+
     val usageAccessGranted = permissionsManager.hasPermission(PermissionGroup.UsageAccess)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 

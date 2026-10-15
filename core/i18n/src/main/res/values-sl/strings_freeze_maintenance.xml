@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">Posodobitve zamrznjenih aplikacij</string>
+    <string name="freeze_unfreeze_all">Odmrzni vse</string>
+    <string name="freeze_restore_all">Znova zamrzni</string>
+    <string name="freeze_system_iconless">Sistemske aplikacije brez zagonske ikone</string>
+    <string name="store_update_frozen">Posodobi zamrznjene aplikacije</string>
+</resources>

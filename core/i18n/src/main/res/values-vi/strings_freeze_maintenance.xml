@@ -1,0 +1,12 @@
+<resources>
+    <string name="freeze_maintenance_title">Cập nhật ứng dụng bị đóng băng</string>
+    <string name="freeze_unfreeze_all">Rã đông tất cả</string>
+    <string name="freeze_restore_all">Đóng băng lại</string>
+    <string name="freeze_system_iconless">Ứng dụng hệ thống không có biểu tượng khởi chạy</string>
+    <string name="store_update_frozen">Cập nhật ứng dụng bị đóng băng</string>
+    <string name="hc_restore">Khôi phục</string>
+    <string name="hf_freeze_frozen_apps">Ứng dụng bị đóng băng</string>
+    <string name="freeze_backend_device_owner">Chủ sở hữu thiết bị</string>
+    <string name="freeze_backend_root">Root</string>
+    <string name="freeze_backend_shizuku">Shizuku</string>
+</resources>

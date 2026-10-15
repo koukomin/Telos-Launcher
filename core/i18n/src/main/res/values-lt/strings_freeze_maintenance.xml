@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">Užšaldytų programų naujinimai</string>
+    <string name="freeze_unfreeze_all">Atšildyti visas</string>
+    <string name="freeze_restore_all">Užšaldyti iš naujo</string>
+    <string name="freeze_system_iconless">Sistemos programos be paleidimo piktogramos</string>
+    <string name="store_update_frozen">Naujinti užšaldytas programas</string>
+</resources>

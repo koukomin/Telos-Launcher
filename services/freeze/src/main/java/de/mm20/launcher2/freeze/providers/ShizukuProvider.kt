@@ -6,6 +6,7 @@ import android.os.IBinder
 import android.os.Process
 import android.util.Log
 import de.mm20.launcher2.freeze.PrivilegedAccessProvider
+import de.mm20.launcher2.freeze.enabledAction
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -129,6 +130,15 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
             success
         }
     }
+    override suspend fun setEnabledSetting(packageName: String, state: Int, userId: Int): Boolean =
+        withContext(Dispatchers.IO) { enabledAction(state)?.let { runPackageCommand(it, packageName, userId) } ?: false }
+
+    override suspend fun setComponentSetting(component: String, state: Int, userId: Int): Boolean =
+        setEnabledSetting(component, state, userId)
+
+    override suspend fun setHidden(packageName: String, hidden: Boolean, userId: Int): Boolean =
+        withContext(Dispatchers.IO) { runPackageCommand(if (hidden) "hide" else "unhide", packageName, userId) }
+
     private fun runPackageCommand(action: String, packageName: String, userId: Int): Boolean = runCatching {
         val method = Shizuku::class.java.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)
         method.isAccessible = true

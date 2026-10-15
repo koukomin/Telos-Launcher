@@ -1,0 +1,12 @@
+<resources>
+    <string name="freeze_maintenance_title">به‌روزرسانی برنامه‌های منجمد</string>
+    <string name="freeze_unfreeze_all">خروج همه از انجماد</string>
+    <string name="freeze_restore_all">انجماد دوباره</string>
+    <string name="freeze_system_iconless">برنامه‌های سیستمی بدون نماد اجرا</string>
+    <string name="store_update_frozen">به‌روزرسانی برنامه‌های منجمد</string>
+    <string name="hc_restore">بازیابی</string>
+    <string name="hf_freeze_frozen_apps">برنامه‌های منجمد</string>
+    <string name="freeze_backend_device_owner">مالک دستگاه</string>
+    <string name="freeze_backend_root">Root</string>
+    <string name="freeze_backend_shizuku">Shizuku</string>
+</resources>

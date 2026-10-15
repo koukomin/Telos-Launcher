@@ -24,9 +24,11 @@ internal class SessionApiInstallBackend(private val context: Context) : InstallB
     override suspend fun hasPermission(): Boolean = true
     override suspend fun requestPermission(): Boolean = true
 
-    override suspend fun install(apk: File, packageName: String): BackendInstallResult {
+    override suspend fun install(apk: File, packageName: String): BackendInstallResult = install(apk, packageName, null)
+
+    suspend fun install(apk: File, packageName: String, freezeToken: String?): BackendInstallResult {
         return try {
-            FileInputStream(apk).use { install(it, packageName, apk.length()) }
+            FileInputStream(apk).use { install(it, packageName, apk.length(), freezeToken) }
         } catch (e: Exception) {
             Log.w(TAG, "Session install failed for $packageName", e)
             BackendInstallResult.Failed("Could not read APK file: ${e.message}", e)
@@ -42,11 +44,16 @@ internal class SessionApiInstallBackend(private val context: Context) : InstallB
         apkStream: InputStream,
         packageName: String,
         sizeBytes: Long = -1,
+        freezeToken: String? = null,
     ): BackendInstallResult {
         val packageInstaller = context.packageManager.packageInstaller
         val sessionId = try {
             val params = PackageInstaller.SessionParams(PackageInstaller.SessionParams.MODE_FULL_INSTALL).apply {
                 setAppPackageName(packageName)
+                val owner = context.getSystemService(android.app.admin.DevicePolicyManager::class.java)
+                    ?.isDeviceOwnerApp(context.packageName) == true
+                if (owner && isAtLeastApiLevel(Build.VERSION_CODES.S))
+                    setRequireUserAction(PackageInstaller.SessionParams.USER_ACTION_NOT_REQUIRED)
                 if (isAtLeastApiLevel(Build.VERSION_CODES.O)) {
                     setInstallReason(android.content.pm.PackageManager.INSTALL_REASON_USER)
                 }
@@ -60,7 +67,7 @@ internal class SessionApiInstallBackend(private val context: Context) : InstallB
             val session = packageInstaller.openSession(sessionId)
             session.use { s ->
                 writeApkIntoSession(s, apkStream, sizeBytes)
-                commitSession(s, sessionId, packageName).also {
+                commitSession(s, sessionId, packageName, freezeToken).also {
                     // a failed commit leaves the session (and its copy of the APK) behind otherwise
                     if (it is BackendInstallResult.Failed) {
                         runCatching { packageInstaller.abandonSession(sessionId) }
@@ -99,6 +106,7 @@ internal class SessionApiInstallBackend(private val context: Context) : InstallB
         session: PackageInstaller.Session,
         sessionId: Int,
         packageName: String,
+        freezeToken: String?,
     ): BackendInstallResult {
         val flags = if (isAtLeastApiLevel(Build.VERSION_CODES.S)) {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
@@ -108,6 +116,7 @@ internal class SessionApiInstallBackend(private val context: Context) : InstallB
         val intent = Intent(context, InstallResultReceiver::class.java).apply {
             action = InstallResultReceiver.ACTION_INSTALL_STATUS
             putExtra(InstallResultReceiver.EXTRA_PACKAGE_NAME, packageName)
+            if (freezeToken != null) putExtra(InstallResultReceiver.EXTRA_FREEZE_TOKEN, freezeToken)
         }
         val pendingIntent = PendingIntent.getBroadcast(context, sessionId, intent, flags)
         return try {

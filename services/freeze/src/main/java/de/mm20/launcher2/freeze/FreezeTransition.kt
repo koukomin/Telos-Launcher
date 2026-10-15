@@ -26,3 +26,12 @@ internal suspend fun transitionFreezeState(
         else enablePackages(suspended.toList(), true).intersect(suspended)
     }
 }
+
+internal fun enabledAction(state: Int): String? = when (state) {
+    0 -> "default-state"
+    1 -> "enable"
+    2 -> "disable"
+    3 -> "disable-user"
+    4 -> "disable-until-used"
+    else -> null
+}

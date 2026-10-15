@@ -1,0 +1,12 @@
+<resources>
+    <string name="freeze_maintenance_title">Ĝisdatigoj de frostigitaj aplikaĵoj</string>
+    <string name="freeze_unfreeze_all">Malfrostigi ĉiujn</string>
+    <string name="freeze_restore_all">Frostigi denove</string>
+    <string name="freeze_system_iconless">Sistemaj aplikaĵoj sen lanĉaj piktogramoj</string>
+    <string name="store_update_frozen">Ĝisdatigi frostigitajn aplikaĵojn</string>
+    <string name="hc_restore">Restaŭri</string>
+    <string name="hf_freeze_frozen_apps">Frostigitaj aplikaĵoj</string>
+    <string name="freeze_backend_device_owner">Posedanto de la aparato</string>
+    <string name="freeze_backend_root">Root</string>
+    <string name="freeze_backend_shizuku">Shizuku</string>
+</resources>

@@ -1,0 +1,12 @@
+<resources>
+    <string name="freeze_maintenance_title">Pembaruan aplikasi beku</string>
+    <string name="freeze_unfreeze_all">Cairkan semua</string>
+    <string name="freeze_restore_all">Bekukan lagi</string>
+    <string name="freeze_system_iconless">Aplikasi sistem tanpa ikon peluncur</string>
+    <string name="store_update_frozen">Perbarui aplikasi beku</string>
+    <string name="hc_restore">Pulihkan</string>
+    <string name="hf_freeze_frozen_apps">Aplikasi beku</string>
+    <string name="freeze_backend_device_owner">Pemilik perangkat</string>
+    <string name="freeze_backend_root">Root</string>
+    <string name="freeze_backend_shizuku">Shizuku</string>
+</resources>

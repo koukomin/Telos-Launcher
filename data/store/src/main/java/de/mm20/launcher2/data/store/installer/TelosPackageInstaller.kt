@@ -14,7 +14,11 @@ import java.io.InputStream
  * API ([SessionApiInstallBackend]) when neither privileged backend is authorized. This mirrors
  * `FreezeManager`'s Shizuku-then-root backend selection in `:services:freeze`.
  */
-class TelosPackageInstaller(private val context: Context) : AppInstaller {
+class TelosPackageInstaller(
+    private val context: Context,
+    private val freezeManager: de.mm20.launcher2.freeze.FreezeManager,
+    private val options: de.mm20.launcher2.store.options.StoreOptions,
+) : AppInstaller {
 
     private val shizuku = ShizukuInstallBackend()
     private val root = RootInstallBackend()
@@ -29,12 +33,40 @@ class TelosPackageInstaller(private val context: Context) : AppInstaller {
     }
 
     override suspend fun canInstallSilently(): Boolean =
-        privilegedBackends.any { it.isAvailable() && it.hasPermission() }
+        privilegedBackends.any { it.isAvailable() && it.hasPermission() } || isDeviceOwner()
+
+    private fun isDeviceOwner() = context.getSystemService(android.app.admin.DevicePolicyManager::class.java)
+        ?.isDeviceOwnerApp(context.packageName) == true
+
+    private fun failed(cause: Throwable? = null) = InstallResult.Failed(
+        context.getString(de.mm20.launcher2.data.store.R.string.au_store_msg_install_failed), cause)
 
     override suspend fun install(apk: File, packageName: String): InstallResult {
+        if (freezeManager.hasPendingFrozenUpdate(packageName)) return InstallResult.Failed(context.getString(de.mm20.launcher2.data.store.R.string.hf_store_installing))
+        val archive = context.packageManager.getPackageArchiveInfo(apk.path, 0)
+        if (archive?.packageName != packageName) return failed(IllegalArgumentException("APK package does not match the selected app"))
+        if (freezeManager.isFrozen(packageName) && !options.global.value.updateFrozenApps)
+            return InstallResult.Failed(context.getString(de.mm20.launcher2.data.store.R.string.store_update_frozen))
         for (backend in privilegedBackends) {
             if (!backend.isAvailable() || !backend.hasPermission()) continue
-            return when (val result = backend.install(apk, packageName)) {
+            var result: BackendInstallResult = BackendInstallResult.Failed("Install did not start")
+            var restored = true
+            var lease: String? = null
+            try {
+                if (options.global.value.updateFrozenApps) lease = freezeManager.beginFrozenUpdate(packageName,
+                    if (backend === shizuku) "Shizuku" else "Root")
+                result = backend.install(apk, packageName)
+            } catch (cancelled: kotlinx.coroutines.CancellationException) {
+                throw cancelled
+            } catch (error: Exception) {
+                result = BackendInstallResult.Failed(error.message ?: "Frozen update failed", error)
+            } finally {
+                restored = lease?.let { freezeManager.finishFrozenUpdate(packageName, it) } ?: true
+            }
+            if (!restored) return InstallResult.Failed(
+                context.getString(de.mm20.launcher2.data.store.R.string.freeze_restore_all) + ": " +
+                    context.getString(de.mm20.launcher2.data.store.R.string.pdft_error_title))
+            return when (val installed = result) {
                 is BackendInstallResult.Success -> {
                     // Shizuku/root installs finish synchronously (unlike the session API path,
                     // whose result arrives later via InstallResultReceiver) - persist the new
@@ -49,36 +81,41 @@ class TelosPackageInstaller(private val context: Context) : AppInstaller {
                     // `pm install` quirk) isn't worth falling through for - it already bypassed
                     // the user, so silently handing off to a second, *prompting* install would
                     // be a confusing surprise. Report the failure instead.
-                    CrashReporter.logException(Exception("${backend::class.simpleName}: ${result.reason}", result.cause))
-                    InstallResult.Failed(result.reason, result.cause)
+                    CrashReporter.logException(Exception("${backend::class.simpleName}: ${installed.reason}", installed.cause))
+                    failed(installed.cause)
                 }
             }
         }
 
         // No privileged backend authorized - fall back to the standard session API, which always
         // succeeds at *starting* the install (the actual accept/reject happens in system UI).
-        return when (val result = sessionApi.install(apk, packageName)) {
-            is BackendInstallResult.Success -> InstallResult.Pending
-            is BackendInstallResult.Failed -> {
-                CrashReporter.logException(Exception(result.reason, result.cause))
-                InstallResult.Failed(result.reason, result.cause)
+        var pending = false
+        var lease: String? = null
+        try {
+            if (options.global.value.updateFrozenApps && freezeManager.isFrozen(packageName)) {
+                if (!isDeviceOwner()) return InstallResult.Failed(context.getString(de.mm20.launcher2.data.store.R.string.freeze_no_backend_available))
+                lease = freezeManager.beginFrozenUpdate(packageName, "DeviceOwner")
             }
+            return when (val result = sessionApi.install(apk, packageName, lease)) {
+                is BackendInstallResult.Success -> { pending = true; InstallResult.Pending }
+                is BackendInstallResult.Failed -> failed(result.cause)
+            }
+        } catch (cancelled: kotlinx.coroutines.CancellationException) {
+            throw cancelled
+        } catch (error: Exception) {
+            CrashReporter.logException(error)
+            return failed(error)
+        } finally {
+            if (!pending) lease?.let { freezeManager.finishFrozenUpdate(packageName, it) }
         }
     }
 
-    /**
-     * Installs directly from [apkStream] via the standard session API, without first spooling to
-     * a local file - useful when a caller already has a download stream in hand. This always goes
-     * through [sessionApi] (never a privileged backend), since the shell-based Shizuku/root paths
-     * need a file path on disk to pass to `pm install`.
-     */
+    /** Spool in bounded chunks so streams use the same package validation and freeze policy. */
     suspend fun installFromStream(apkStream: InputStream, packageName: String, sizeBytes: Long = -1): InstallResult {
-        return when (val result = sessionApi.install(apkStream, packageName, sizeBytes)) {
-            is BackendInstallResult.Success -> InstallResult.Pending
-            is BackendInstallResult.Failed -> {
-                CrashReporter.logException(Exception(result.reason, result.cause))
-                InstallResult.Failed(result.reason, result.cause)
-            }
-        }
+        val temporary = File.createTempFile("store-install-", ".apk", context.cacheDir)
+        return try {
+            temporary.outputStream().use { apkStream.copyTo(it, 64 * 1024) }
+            install(temporary, packageName)
+        } finally { temporary.delete() }
     }
 }

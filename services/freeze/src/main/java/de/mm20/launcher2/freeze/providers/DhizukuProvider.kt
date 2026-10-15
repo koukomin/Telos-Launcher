@@ -131,6 +131,9 @@ internal class DhizukuProvider(private val context: Context) : PrivilegedAccessP
         const val TAG = "DhizukuProvider"
     }
 
+    override suspend fun setHidden(packageName: String, hidden: Boolean, userId: Int): Boolean =
+        packageName in setPackagesEnabled(listOf(packageName), !hidden, userId)
+
     override suspend fun forceStopPackage(packageName: String, userId: Int): Boolean = false
 
     override suspend fun clearCache(packageName: String, userId: Int): Boolean = false

@@ -57,6 +57,36 @@ class FreezeManager internal constructor(
     private val _activeBackend = MutableStateFlow<FreezeBackendType?>(null)
     val activeBackend: StateFlow<FreezeBackendType?> = _activeBackend.asStateFlow()
 
+    private val maintenance by lazy {
+        FreezeMaintenance(context, settings, operationMutex, { it in PROTECTED_PACKAGES }, ::maintenanceProvider)
+    }
+    val maintenanceEntries get() = settings.maintenance
+    suspend fun scanFrozenApps() = maintenance.scan()
+    suspend fun unfreezeAll(groups: Set<FrozenAppGroup>) = maintenance.unfreezeAll(groups)
+    suspend fun restoreFrozenApps() = maintenance.restoreAll()
+    suspend fun recoverFrozenUpdates() = maintenance.recoverInstalls()
+    suspend fun beginFrozenUpdate(packageName: String, backend: String) = maintenance.beginInstall(packageName, backend)
+    suspend fun finishFrozenUpdate(packageName: String, token: String) = maintenance.finishInstall(packageName, token)
+    suspend fun hasPendingFrozenUpdate(packageName: String) = settings.maintenance.first().values.any {
+        it.packageName == packageName && it.userId == Process.myUid() / 100000 && it.installer
+    }
+    suspend fun launchThawed(packageName: String, user: UserHandle, preferred: ComponentName,
+        launch: (ComponentName) -> Boolean) = maintenance.launchThawed(packageName, user, preferred, launch)
+
+    private suspend fun maintenanceProvider(name: String?): Pair<String, PrivilegedAccessProvider>? {
+        if (name == null) refreshBackendState()
+        val type = if (name.isNullOrEmpty()) _activeBackend.value else
+            FreezeBackendType.entries.firstOrNull { it.name == name }
+        val provider = when (type) {
+            FreezeBackendType.Root -> rootProvider
+            FreezeBackendType.Shizuku -> shizukuProvider
+            FreezeBackendType.DeviceOwner -> deviceOwnerProvider
+            FreezeBackendType.Dhizuku -> dhizukuProvider
+            else -> return null
+        }
+        return if (provider.isAvailable() && provider.hasPermission()) type!!.name to provider else null
+    }
+
     /** Re-evaluates which backend (if any) is currently usable, based on the user's preference. */
     suspend fun refreshBackendState() {
         _activeBackend.value = when (settings.backend.first()) {
@@ -134,10 +164,11 @@ class FreezeManager internal constructor(
      */
     suspend fun freezeInBackground(packageNames: List<String>, userId: Int = Process.myUid() / 100000) {
         if (packageNames.isEmpty()) return
+        if (_activeBackend.value == null) refreshBackendState()
         if (_activeBackend.value == FreezeBackendType.Island) {
             islandProvider.postFreezeNotification(packageNames)
         } else {
-            freeze(packageNames, userId)
+            operationMutex.withLock { applySuspended(packageNames, true, userId, respectMaintenance = true) }
         }
     }
 
@@ -195,14 +226,16 @@ class FreezeManager internal constructor(
     private suspend fun applySuspended(
         packageNames: List<String>, suspended: Boolean, userId: Int,
         methodOverride: Map<String, FreezeMethod>? = null,
+        respectMaintenance: Boolean = false,
     ): Set<String> {
         if (packageNames.isEmpty()) return emptySet()
 
         // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
         // Package names end up in shell commands (root / Shizuku fallbacks), so anything that is not a
         // well-formed package name is dropped here rather than trusted.
+        val held = if (respectMaintenance) settings.maintenance.first().values.map { it.packageName }.toSet() else emptySet()
         val safePackages = packageNames.filter { VALID_PACKAGE_NAME.matches(it) }
-            .filterNot { PROTECTED_PACKAGES.contains(it) }
+            .filterNot { (suspended && PROTECTED_PACKAGES.contains(it)) || it in held }
         if (safePackages.isEmpty()) {
             Log.w(TAG, "All targeted packages are protected system packages. Aborting freeze.")
             return emptySet()

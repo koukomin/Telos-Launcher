@@ -276,7 +276,12 @@ internal class AppRepositoryImpl(
                 emptyList()
             }
 
-            for (resolveInfo in allActivities) {
+            val previousComponents = installedApps.value.filter { it.user == userHandle }
+                .map { it.componentName.flattenToString() }.toSet()
+            val orderedActivities = orderFrozenLaunchers(allActivities, previousComponents,
+                key = { row -> row.activityInfo?.let { ComponentName(it.packageName, it.name).flattenToString() }.orEmpty() },
+                enabled = { it.activityInfo?.enabled == true })
+            for (resolveInfo in orderedActivities) {
                 val activityInfo = resolveInfo.activityInfo ?: continue
                 val pkg = activityInfo.packageName
                 

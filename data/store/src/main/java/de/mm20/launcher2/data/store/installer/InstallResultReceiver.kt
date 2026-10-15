@@ -39,20 +39,20 @@ class InstallResultReceiver : BroadcastReceiver() {
             return
         }
 
-        if (status != PackageInstaller.STATUS_SUCCESS) {
-            Log.w(
-                TAG,
-                "Install failed for $packageName: status=$status message=${intent.getStringExtra(PackageInstaller.EXTRA_STATUS_MESSAGE)}",
-            )
-            return
-        }
-
         // onReceive must return quickly and the DB write is suspending - goAsync() keeps the
         // receiver (and the process) alive long enough for it to finish.
         val pendingResult = goAsync()
         val appContext = context.applicationContext
         containedScope(Dispatchers.IO).launch {
             try {
+                val freeze = org.koin.core.context.GlobalContext.get().get<de.mm20.launcher2.freeze.FreezeManager>()
+                val token = intent.getStringExtra(EXTRA_FREEZE_TOKEN)
+                if (token != null && !freeze.finishFrozenUpdate(packageName, token))
+                    Log.w(TAG, "Freeze restoration pending for $packageName")
+                if (status != PackageInstaller.STATUS_SUCCESS) {
+                    Log.w(TAG, "Install failed for $packageName, status=$status")
+                    return@launch
+                }
                 val versionCode = resolveInstalledVersionCode(appContext, packageName)
                 AppDatabase.getInstance(appContext).storeItemDao()
                     .updateInstalledVersion(packageName, versionCode)
@@ -67,6 +67,7 @@ class InstallResultReceiver : BroadcastReceiver() {
     companion object {
         private const val TAG = "InstallResultReceiver"
         const val ACTION_INSTALL_STATUS = "de.mm20.launcher2.store.INSTALL_SESSION_STATUS"
+        const val EXTRA_FREEZE_TOKEN = "de.mm20.launcher2.store.EXTRA_FREEZE_TOKEN"
         const val EXTRA_PACKAGE_NAME = "de.mm20.launcher2.store.EXTRA_PACKAGE_NAME"
     }
 }

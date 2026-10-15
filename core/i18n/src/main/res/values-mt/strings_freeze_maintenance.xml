@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">Aġġornamenti tal-apps iffriżati</string>
+    <string name="freeze_unfreeze_all">Neħħi l-iffriżar minn kulħadd</string>
+    <string name="freeze_restore_all">Iffriża mill-ġdid</string>
+    <string name="freeze_system_iconless">Apps tas-sistema mingħajr ikona tat-tnedija</string>
+    <string name="store_update_frozen">Aġġorna l-apps iffriżati</string>
+</resources>

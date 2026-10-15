@@ -1,0 +1,12 @@
+<resources>
+    <string name="freeze_maintenance_title">Абнаўленні замарожаных праграм</string>
+    <string name="freeze_unfreeze_all">Размарозіць усе</string>
+    <string name="freeze_restore_all">Замарозіць зноў</string>
+    <string name="freeze_system_iconless">Сістэмныя праграмы без значкоў запуску</string>
+    <string name="store_update_frozen">Абнаўляць замарожаныя праграмы</string>
+    <string name="hc_restore">Аднавіць</string>
+    <string name="hf_freeze_frozen_apps">Замарожаныя праграмы</string>
+    <string name="freeze_backend_device_owner">Уладальнік прылады</string>
+    <string name="freeze_backend_root">Root</string>
+    <string name="freeze_backend_shizuku">Shizuku</string>
+</resources>

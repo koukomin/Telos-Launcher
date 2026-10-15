@@ -688,9 +688,11 @@ private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
                 }
                 ToggleRow(stringResource(R.string.hc_only_on_wi_fi), g.wifiOnly) { v -> viewModel.setGlobal { it.copy(wifiOnly = v) } }
                 ToggleRow(stringResource(R.string.hf_store_notify), g.notifyUpdates) { v -> viewModel.setGlobal { it.copy(notifyUpdates = v) } }
+                ToggleRow(stringResource(R.string.store_update_frozen), g.updateFrozenApps) { v -> viewModel.setGlobal { it.copy(updateFrozenApps = v) } }
                 ToggleRow(stringResource(R.string.hf_store_auto_install), g.autoInstall) { v -> viewModel.setGlobal { it.copy(autoInstall = v) } }
                 Text(
-                    stringResource(R.string.hc_automatic_installs_only_happen_when_shiz),
+                    stringResource(R.string.freeze_backend_shizuku) + " / " + stringResource(R.string.freeze_backend_root) +
+                        " / " + stringResource(R.string.freeze_backend_device_owner),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

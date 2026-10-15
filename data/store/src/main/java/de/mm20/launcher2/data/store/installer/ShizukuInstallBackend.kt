@@ -82,14 +82,11 @@ internal class ShizukuInstallBackend : InstallBackend {
                     String::class.java,
                 )
                 method.isAccessible = true
-                val command = arrayOf("sh", "-c", "pm install -r \"${apk.absolutePath}\"")
-                val process = method.invoke(null, command, null, null)
-                val exitCode = process!!::class.java.getMethod("waitFor").invoke(process) as Int
-                if (exitCode == 0) {
-                    BackendInstallResult.Success
-                } else {
-                    BackendInstallResult.Failed("`pm install` exited with code $exitCode for $packageName")
-                }
+                val command = arrayOf("pm", "install", "-r", "-S", apk.length().toString())
+                val process = method.invoke(null, command, null, null) as Process
+                val (success, output) = streamApkInstall(apk, process)
+                if (success) BackendInstallResult.Success
+                else BackendInstallResult.Failed("Shizuku install failed: $output")
             } catch (e: Exception) {
                 Log.w(TAG, "Shizuku install failed for $packageName", e)
                 BackendInstallResult.Failed("Shizuku install failed: ${e.message}", e)

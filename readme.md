@@ -97,7 +97,7 @@ Telos Phone now reads the full Android contact list across synced accounts, incl
 - Greek TV supplements use the current greektvm3u `main` playlist alongside Free-TV. Refresh checks both supplemental lists; temporarily offline extra channels remain visible.
 - Torrent startup and buffering show live peers, seeds, download speed, responding/error trackers, DHT nodes and elapsed time, for both Video and Stremio Fork.
 - Store downloads stream APKs to disk with progress/speed, pause/resume and automatic retry after a network interruption. Validated HTTP Range resumes partial files; servers without safe range support restart the transfer. Partial files survive cancellation and can be resumed by requesting the download again.
-- Store filters are in a compact button/dialog. Update checks discover supported non-Play installs using known recommended sources, F-Droid and IzzyOnDroid. Discovered apps start with automatic updates off; individual/bulk Update offers opt-in for the selected apps. Silent automatic installation still requires Shizuku or root.
+- Store filters are in a compact button/dialog. Update checks discover supported non-Play installs using known recommended sources, F-Droid and IzzyOnDroid. Discovered apps start with automatic updates off; individual/bulk Update offers opt-in for the selected apps. Silent automatic installation requires authorized Shizuku, root or Telos configured as device owner; plain device-admin access is insufficient.
 - Large HTTP responses are no longer buffered in memory during APK downloads. Source text has a size limit; custom F-Droid indexes are parsed as a stream.
 
 The new Media, Store and Files UI strings include Greek and English plus all supported base locales. Android XML, placeholders and changed-string coverage are checked in CI.
@@ -1007,7 +1007,7 @@ An app installer and updater that works like [Obtainium](https://github.com/Imra
 **Updates and installing**
 
 - Update checks in the background (interval and Wi-Fi only settings, a notification), "update all", "check now"
-- Install and uninstall with Shizuku or root backends (silent) or the system installer; an APK for another package is refused
+- Install and uninstall with Shizuku or root backends (silent) or the system installer; device-owner installs use Android sessions. An APK for another package is refused. **Update frozen apps** is opt-in: save the original state before temporary thawing, then restore it after installation or failure. Interrupted restorations remain in Freeze Manager. Private APKs are streamed to Root/Shizuku installers without public copies or APK-sized RAM buffers.
 - Optional GitHub token to raise the request limit
 
 **Organizing**
@@ -1040,6 +1040,8 @@ Freeze or hide apps you do not need right now. It is a launcher feature in Setti
 **Freezing**
 
 - **Suspend** (default) or **Disable** per app; changing the method of an already frozen app applies and verifies the new Android state before saving the policy. Failed conversions keep the previous policy and show an error. Shizuku fallbacks use suspend/enable commands, never uninstall/install-existing. Per-app states: Not managed, Auto-freeze (Suspend), Auto-freeze (Disable), Never freeze
+- **Temporary update session:** scan the current Android profile whenever Freeze Manager opens; select user apps, system apps and/or system apps without launcher icons, then **Unfreeze all**. The scan includes apps frozen by other tools. **Freeze again** restores the saved original restrictions, including component settings where supported; active apps outside that snapshot are not frozen. Auto-freeze holds these apps until restoration. The device-local journal survives restarts, stays out of portable backups and retains failures for retry. Protected core packages and restrictions imposed by another policy owner remain excluded or report failure.
+- Frozen apps wait for a fresh launcher activity and open from one tap after successful thawing; the launch survives replacement of the old list row. Frozen icons keep icon-pack mappings and generated masks/backgrounds, including disabled activities.
 - Frozen apps are unfrozen automatically when launched from the launcher; hide frozen apps, or show them grayscale or with a snowflake badge
 - Protected packages (the Android system, System UI, Settings, keyguard, telecom server, Google Play services, Play Store and Telos) are never frozen
 - Advanced features: Force stop and Clear cache (Shizuku or root)

@@ -562,6 +562,8 @@ data class FreezeGroup(
     val freezeExcludeNetwork: Boolean = true,
     val freezeNetworkThresholdKb: Int = 100,
     val freezeMethods: Map<String, FreezeMethod> = emptyMap(),
+    /** Device-local restoration journal, excluded from portable backups. */
+    val freezeMaintenance: Map<String, FrozenAppRestore> = emptyMap(),
     val freezeAdvancedFeaturesEnabled: Boolean = false,
     /** Hides currently-frozen apps from the home screen, app drawer and search entirely - they
      * remain fully manageable (freeze/unfreeze) from the Freeze Manager itself. Default off:
@@ -1339,3 +1341,16 @@ data class CommsGroup(
     val batterySaverLte: Boolean = false,
 )
 // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===
+
+@Serializable
+data class FrozenAppRestore(
+    val packageName: String,
+    val userId: Int,
+    val suspended: Boolean,
+    val enabledState: Int,
+    val hidden: Boolean,
+    val components: Map<String, Int> = emptyMap(),
+    val installer: Boolean = false,
+    val backend: String = "",
+    val operationId: String = "",
+)

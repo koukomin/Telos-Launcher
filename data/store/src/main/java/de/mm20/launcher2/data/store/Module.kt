@@ -36,7 +36,7 @@ val dataStoreModule = module {
         StoreFetcherRegistryImpl.create(get()) { options.global.value.githubToken }
     }
 
-    single<AppInstaller> { TelosPackageInstaller(context = androidContext()) }
+    single<AppInstaller> { TelosPackageInstaller(context = androidContext(), freezeManager = get(), options = get()) }
     single<Downloader> { KtorDownloader(context = androidContext(), httpClient = get()) }
     single<StoreRepository> { StoreRepositoryImpl(context = androidContext()) }
 

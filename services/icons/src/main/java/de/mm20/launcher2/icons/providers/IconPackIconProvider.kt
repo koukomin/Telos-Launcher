@@ -29,7 +29,24 @@ class IconPackIconProvider(
                         Intent().setComponent(searchable.componentName),
                         searchable.user
                     )
-                    ai?.getIcon(context.resources.displayMetrics.densityDpi)
+                    ai?.getIcon(context.resources.displayMetrics.densityDpi) ?: runCatching {
+                        // Disabled activities cannot be resolved by LauncherApps, but retain their
+                        // original resources. Use those resources for the icon pack's mask/back.
+                        if (searchable.user == android.os.Process.myUserHandle())
+                            runCatching { context.packageManager.getActivityInfo(searchable.componentName,
+                                android.content.pm.PackageManager.MATCH_DISABLED_COMPONENTS or
+                                    android.content.pm.PackageManager.MATCH_UNINSTALLED_PACKAGES)
+                                .loadIcon(context.packageManager) }.getOrElse {
+                                context.packageManager.getApplicationInfo(searchable.componentName.packageName,
+                                    android.content.pm.PackageManager.MATCH_DISABLED_COMPONENTS or
+                                        android.content.pm.PackageManager.MATCH_UNINSTALLED_PACKAGES)
+                                    .loadIcon(context.packageManager)
+                            }
+                        else context.getSystemService<LauncherApps>()?.getApplicationInfo(
+                            searchable.componentName.packageName,
+                            android.content.pm.PackageManager.MATCH_DISABLED_COMPONENTS, searchable.user)
+                            ?.loadIcon(context.packageManager)
+                    }.getOrNull()
                 } ?: return null,
                 size = size,
             )

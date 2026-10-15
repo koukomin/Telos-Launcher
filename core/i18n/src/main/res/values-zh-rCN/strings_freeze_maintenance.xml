@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">冻结应用更新</string>
+    <string name="freeze_unfreeze_all">全部解冻</string>
+    <string name="freeze_restore_all">重新冻结</string>
+    <string name="freeze_system_iconless">没有启动图标的系统应用</string>
+    <string name="store_update_frozen">更新冻结的应用</string>
+</resources>

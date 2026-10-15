@@ -167,3 +167,19 @@ but Telos cannot judge whether the source itself is trustworthy.
 | Installing opens the system installer | Shizuku or root is not available or not allowed |
 | An update is not offered | The app is pinned, the version is skipped, or it is set to Track only |
 | A Telos app has no icon | Open the Telos apps tab and tap Install |
+
+## Updating frozen applications
+
+Enable **Update frozen apps** in Store settings (off by default). Authorized Root/Shizuku installs
+stream the private APK to the privileged process, temporarily thaw the target and restore its
+previous restrictions after success or failure. Telos configured as **Device Owner** uses Android
+PackageInstaller sessions and restores state from the final callback, including cancellation.
+Android may still require user action under its update policies. Plain Device Admin access does
+not grant these privileges; it is not advertised as a silent installer.
+
+This switch does not enable automatic updates for any app. Existing per-app/global opt-in rules,
+APK package/signature checks and Android update ownership restrictions continue to apply.
+Unfinished restoration is retained in Freeze Manager; after an interrupted update, use its
+**Freeze again** action once installation has finished. For Play Store updates, use Freeze Manager's
+temporary **Unfreeze all / Freeze again** session instead. Current-profile and backend limitations
+are documented in [Smart Freeze](../freeze/backends-profiles.md#temporary-update-session).

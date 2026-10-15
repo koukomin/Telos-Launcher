@@ -19,7 +19,7 @@ internal class RootInstallBackend : InstallBackend {
     override suspend fun isAvailable(): Boolean {
         hasRoot?.let { return it }
         val granted = runAsRoot("id")
-        hasRoot = granted
+        if (granted) hasRoot = true
         return granted
     }
 
@@ -31,13 +31,15 @@ internal class RootInstallBackend : InstallBackend {
         if (!hasPermission()) {
             return BackendInstallResult.Failed("Root is not available")
         }
-        // `-r` (replace existing) and `-d` (allow version downgrade for testing/rollback builds)
-        // match what Obtainium and similar sideload tools use for root installs.
-        val success = runAsRoot("pm install -r -d \"${apk.absolutePath}\"")
-        return if (success) {
-            BackendInstallResult.Success
-        } else {
-            BackendInstallResult.Failed("`pm install` failed via root for $packageName")
+        return withContext(Dispatchers.IO) {
+            try {
+                val process = ProcessBuilder("su", "-c", "pm install -r -S ${apk.length()}").start()
+                val (success, output) = streamApkInstall(apk, process)
+                if (success) BackendInstallResult.Success
+                else BackendInstallResult.Failed("Root install failed: $output")
+            } catch (error: Exception) {
+                BackendInstallResult.Failed("Root install failed", error)
+            }
         }
     }
 

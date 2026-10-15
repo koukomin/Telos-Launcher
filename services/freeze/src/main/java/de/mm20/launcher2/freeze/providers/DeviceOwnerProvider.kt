@@ -76,6 +76,9 @@ internal class DeviceOwnerProvider(private val context: Context) : PrivilegedAcc
         }
     }
 
+    override suspend fun setHidden(packageName: String, hidden: Boolean, userId: Int): Boolean =
+        packageName in setPackagesEnabled(listOf(packageName), !hidden, userId)
+
     override suspend fun forceStopPackage(packageName: String, userId: Int): Boolean = false
 
     override suspend fun clearCache(packageName: String, userId: Int): Boolean = false

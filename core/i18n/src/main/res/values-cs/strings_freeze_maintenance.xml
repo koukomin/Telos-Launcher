@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">Aktualizace zmrazených aplikací</string>
+    <string name="freeze_unfreeze_all">Rozmrazit vše</string>
+    <string name="freeze_restore_all">Znovu zmrazit</string>
+    <string name="freeze_system_iconless">Systémové aplikace bez spouštěcí ikony</string>
+    <string name="store_update_frozen">Aktualizovat zmrazené aplikace</string>
+</resources>

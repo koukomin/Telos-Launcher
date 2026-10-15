@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">ফ্রিজ করা অ্যাপের আপডেট</string>
+    <string name="freeze_unfreeze_all">সব আনফ্রিজ করুন</string>
+    <string name="freeze_restore_all">আবার ফ্রিজ করুন</string>
+    <string name="freeze_system_iconless">লঞ্চার আইকন ছাড়া সিস্টেম অ্যাপ</string>
+    <string name="store_update_frozen">ফ্রিজ করা অ্যাপ আপডেট করুন</string>
+</resources>

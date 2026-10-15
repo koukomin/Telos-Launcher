@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">Iesaldētu lietotņu atjauninājumi</string>
+    <string name="freeze_unfreeze_all">Atsaldēt visas</string>
+    <string name="freeze_restore_all">Iesaldēt vēlreiz</string>
+    <string name="freeze_system_iconless">Sistēmas lietotnes bez palaišanas ikonas</string>
+    <string name="store_update_frozen">Atjaunināt iesaldētās lietotnes</string>
+</resources>

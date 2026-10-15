@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">تحديثات التطبيقات المجمدة</string>
+    <string name="freeze_unfreeze_all">إلغاء تجميد الكل</string>
+    <string name="freeze_restore_all">تجميد مجددًا</string>
+    <string name="freeze_system_iconless">تطبيقات النظام دون أيقونات تشغيل</string>
+    <string name="store_update_frozen">تحديث التطبيقات المجمدة</string>
+</resources>
