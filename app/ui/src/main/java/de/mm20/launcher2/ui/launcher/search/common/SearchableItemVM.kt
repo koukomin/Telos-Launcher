@@ -226,7 +226,9 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         }
         val bundle = options.toBundle()
 
-        if (searchable is Application) {
+        if (searchable is Application && searchable.getSerializer() !is de.mm20.launcher2.search.VirtualAppSerializer &&
+            (searchable.isSuspended || (searchable.user == android.os.Process.myUserHandle() &&
+                freezeManager.isFrozen(searchable.componentName.packageName)))) {
             viewModelScope.launch(kotlinx.coroutines.NonCancellable) {
                 try {
                     val started = freezeManager.launchThawed(searchable.componentName.packageName, searchable.user,

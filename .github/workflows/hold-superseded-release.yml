@@ -1,0 +1,21 @@
+name: Hold superseded release build
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/hold-superseded-release.yml'
+permissions:
+  actions: write
+  contents: read
+jobs:
+  hold:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Stop the known superseded build before publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          STATUS=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/38782758604" --jq '.status')
+          if [ "$STATUS" != completed ]; then
+            gh api --method POST "repos/$GITHUB_REPOSITORY/actions/runs/38782758604/cancel"
+          fi

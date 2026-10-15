@@ -92,6 +92,8 @@ from Telos Store.
 
 Telos Phone now reads the full Android contact list across synced accounts, including email-only contacts, rather than seeding its directory only from phone-number rows.
 
+Virtual Telos entries keep their own internal launch routes; frozen-package recovery only applies to real Android applications.
+
 ### Installer, dock, drawer and GIF wallpaper updates
 
 - Store settings offer Android session installation (default), Shizuku, root and installed external APK handlers such as Thor. Privileged installs use explicit create/write/commit sessions with bounded stdin streaming and abandon failed sessions. External handoff requires confirmation; only the installed version determines success.
