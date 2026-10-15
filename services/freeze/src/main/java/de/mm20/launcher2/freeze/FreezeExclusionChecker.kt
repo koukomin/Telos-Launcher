@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.first
  * A per-app "never freeze" override ([FreezeSettings.neverFreezeApps]) always wins, regardless
  * of profile. Of the five rules below, only rule 3 (active media session) is ever affected by
  * [FreezeExclusionStrictness] - [FreezeProfile.UltraAggressive][de.mm20.launcher2.preferences.FreezeProfile]
- * is the only profile that relaxes it. Rules 1, 2, 4, and 5 are always enforced, for every
+ * is the only profile that relaxes it. Rules 2, 4, and 5 are always enforced, for every
  * profile. Foreground exclusion is separately configurable and off by default.
  */
 internal class FreezeExclusionChecker(

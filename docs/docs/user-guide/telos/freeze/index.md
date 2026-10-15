@@ -154,7 +154,7 @@ A home screen widget with a **Freeze now** button. It shows how many apps are se
 | --- | --- |
 | "No freeze backend available. Install and set up Shizuku, or use a rooted device." | Start Shizuku and grant it, or set up another backend |
 | "Tap to grant permission" | Tap it and allow the backend (Shizuku or root) |
-| An app froze while I was using it | Grant Usage access |
+| An app froze while I was using it | Enable foreground-app protection and grant Usage access |
 | Auto-freeze does nothing | The app is not a candidate, an exclusion rule applies, or auto-freeze is off |
 | Force stop is missing | Turn on **Advanced Features** and use Shizuku or root |
 

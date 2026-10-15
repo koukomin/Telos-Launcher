@@ -2,25 +2,27 @@
 
 ### Ελληνικά
 
-- **Store — παγωμένες εφαρμογές:** προσωρινό ξεπάγωμα πριν από εγκατάσταση μέσω Shizuku/root και επαναφορά της καταγεγραμμένης κατάστασης μετά. Διορθώθηκε η ταυτότητα κλήσης root και η ανάγνωση αποτελέσματος του installer.
-- **Store — εικονίδια:** εμφάνιση δημοσιευμένων εικονιδίων και για μη εγκατεστημένες εφαρμογές από τις υποστηριζόμενες πηγές. Τα εγκατεστημένα εικονίδια και icon packs διατηρούν προτεραιότητα.
-- **Store — σφάλματα:** πλήρες, επιλέξιμο μήνυμα αποτυχίας εγκατάστασης, αντί για κομμένο toast.
-- **Dialer:** αποτυχία ανάγνωσης της βάσης αποκλεισμένων αριθμών δεν κλείνει την οθόνη επαφής. Εμφανίζεται μη διαθέσιμη κατάσταση με επανάληψη. Ενημέρωση SQLCipher χωρίς διαγραφή βάσης ή αλλαγή του αποθηκευμένου κλειδιού.
-- Ενημερωμένα README, docs, Pages και μεταφράσεις των αλλαγών.
-
-**Αναβάθμιση:** αν το παλιό Store αποτυγχάνει, εγκαταστήστε χειροκίνητα το κατάλληλο APK παρακάτω πάνω από την υπάρχουσα εφαρμογή, χωρίς απεγκατάσταση.
+- **Store:** επιλογή τρόπου εγκατάστασης στις ρυθμίσεις: συνεδρία Android (προεπιλογή), Shizuku, root και διαθέσιμοι εξωτερικοί installers APK, όπως Thor/Island όταν εκθέτουν συμβατό χειριστή στο τρέχον προφίλ.
+- **Αναβαθμίσεις:** Shizuku/root χρησιμοποιούν ξεχωριστά βήματα δημιουργίας, εγγραφής και ολοκλήρωσης session, με streaming του APK. Οι παγωμένες εφαρμογές ενημερώνονται με αποθήκευση και επαναφορά της αρχικής κατάστασης. Τα σφάλματα του Android session εμφανίζονται στο Store.
+- **Dock:** κανονικά έγχρωμα εικονίδια χωρίς νιφάδα για frozen/suspended εφαρμογές και νέα αναζήτηση launcher activity μετά το ξεπάγωμα.
+- **Freeze:** προαιρετική προστασία της εφαρμογής προσκηνίου, ανενεργή από προεπιλογή. Απαιτεί πρόσβαση χρήσης.
+- **Συρτάρι:** ανεξάρτητη αδιαφάνεια/blur, απαλό ημιδιαφανές preset για νέες εγκαταστάσεις και πλήρες διαθέσιμο πλάτος στα tablets.
+- **Ταπετσαρία GIF:** επιλογή κινούμενου GIF με προεπισκόπηση live wallpaper και παύση όταν δεν είναι ορατό ή ενεργοποιούνται οι σχετικές ρυθμίσεις εξοικονόμησης. Όριο εισόδου 32 MiB και 4 megapixels.
+- Μεταφράσεις σε όλες τις υποστηριζόμενες βασικές γλώσσες και ενημέρωση README, docs, Pages πηγών και credits του Aurora Store.
 
 ### English
 
-- **Store — frozen apps:** temporarily thaw before Shizuku/root installation and restore the recorded state afterwards. Correct root caller identity and drain installer output before closing the remote process.
-- **Store — icons:** show published icons for uninstalled apps from supported sources, retaining installed icons and icon packs first.
-- **Store — diagnostics:** full, selectable installation errors instead of truncated toasts.
-- **Dialer:** failed encrypted block-list reads no longer close contact details; an unavailable/retry state is shown. Update SQLCipher while retaining the database and stored key.
-- README, documentation, Pages sources and changed-string translations updated.
+- **Store:** selectable Android session installer (default), Shizuku, root and installed external APK handlers such as Thor/Island where supported in the current profile.
+- **Updates:** explicit privileged create/write/commit sessions, bounded APK streaming and journaled frozen-state restoration. Android session failures now resolve the Store row and show diagnostics.
+- **Dock:** normal-color frozen/suspended icons without snowflakes; resolve fresh launcher activities after thawing.
+- **Freeze:** optional foreground-app protection, off by default, requiring Usage access.
+- **Drawer:** independent opacity/blur, soft-glass defaults for fresh installs and full available width on tablets.
+- **GIF wallpaper:** animated GIF live-wallpaper picker with visibility and configured power/thermal controls. Input limit: 32 MiB / 4 megapixels. Video playlist and speed controls remain video features.
+- Changed-string translations, README, docs, Pages sources and Aurora Store attribution updated.
 
-**Update:** if the older Store fails, manually install the matching APK over the existing app, without uninstalling.
+**Εγκατάσταση / Installation:** αν το προηγούμενο Store αποτυγχάνει, εγκαταστήστε το κατάλληλο APK πάνω από την υπάρχουσα εφαρμογή χωρίς απεγκατάσταση. If the older Store fails, install the matching APK over the existing app without uninstalling.
 
-Physical-device Shizuku installation and the reported contact crash still need confirmation on the affected device. The contact report did not include a stack trace, so its exact cause is unconfirmed. No database reset is performed.
+Physical-device Shizuku/root updates, external installer callbacks and GIF/OEM visuals still need confirmation on the affected device. The drawer preset is inspired by modern launchers and does not claim exact proprietary OnePlus measurements. Third-party policy and Android profile restrictions still apply.
 
 ---
 
