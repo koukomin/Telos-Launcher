@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_block_number">Chặn số</string>
+    <string name="hc_retry">Thử lại</string>
+</resources>

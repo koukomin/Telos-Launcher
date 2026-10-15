@@ -35,7 +35,10 @@ abstract class SpamDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): SpamDatabase {
             return INSTANCE ?: synchronized(this) {
-                val factory = net.sqlcipher.database.SupportFactory(SpamDbKey.get(context))
+                // sqlcipher-android supports newer Android native page sizes. Keep the existing
+                // database name and wrapped passphrase; never wipe or fall back to plaintext.
+                System.loadLibrary("sqlcipher")
+                val factory = net.zetetic.database.sqlcipher.SupportOpenHelperFactory(SpamDbKey.get(context))
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     SpamDatabase::class.java,

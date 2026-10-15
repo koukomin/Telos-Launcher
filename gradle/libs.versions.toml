@@ -65,7 +65,7 @@ osmOpeningHours = "0.4.0"
 shizuku = "13.1.5"
 dhizuku = "2.5.3"
 
-sqlcipher = "4.5.4"
+sqlcipher = "4.19.1"
 taglib = "1.0.6"
 libtorrent4j = "2.1.0-39"
 youtubedl = "0.18.1"
@@ -75,7 +75,7 @@ firestack = "c4a33649be"
 
 [libraries]
 taglib = { group = "io.github.kyant0", name = "taglib", version.ref = "taglib" }
-sqlcipher-android = { group = "net.zetetic", name = "android-database-sqlcipher", version.ref = "sqlcipher" }
+sqlcipher-android = { group = "net.zetetic", name = "sqlcipher-android", version.ref = "sqlcipher" }
 mustache-compiler = { module = "com.github.spullara.mustache.java:compiler", version.ref = "mustache" }
 
 jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jacksonCore" }

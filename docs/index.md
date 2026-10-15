@@ -26,7 +26,7 @@ features:
     link: /docs/user-guide/telos/launcher/
   - icon: 📞
     title: Telos Phone
-    details: A clean dialer and call experience that fits the launcher.
+    details: Contacts, calls and an encrypted block list, with recoverable contact-detail loading.
     link: /docs/user-guide/telos/phone/
   - icon: 💬
     title: Messages
