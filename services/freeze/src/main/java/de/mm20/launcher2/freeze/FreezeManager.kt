@@ -215,6 +215,11 @@ class FreezeManager internal constructor(
             Log.w(TAG, "setSuspended($targetPackages, $suspended, user $userId): no active backend")
             return emptySet()
         }
+        if (userId != Process.myUid() / 100000 &&
+            (backend == FreezeBackendType.DeviceOwner || backend == FreezeBackendType.Dhizuku)) {
+            Log.w(TAG, "$backend cannot change packages for another user")
+            return emptySet()
+        }
         if (!hasPermission()) {
             Log.w(TAG, "setSuspended($targetPackages, $suspended, user $userId): $backend has no permission")
             return emptySet()

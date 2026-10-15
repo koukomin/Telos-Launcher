@@ -112,7 +112,8 @@ fun ShapedLauncherIcon(
     // One policy for grids, lists, folders and overlays. Normal icons need no settings collector.
     val frozenStyle = if (frozen) {
         val settings: FreezeSettings = koinInject()
-        val style by settings.frozenAppStyle.collectAsStateWithLifecycle(FrozenAppStyle.SnowflakeBadge)
+        val styleFlow = remember(settings) { settings.frozenAppStyle }
+        val style by styleFlow.collectAsStateWithLifecycle(FrozenAppStyle.SnowflakeBadge)
         style
     } else null
     val _icon = icon()
