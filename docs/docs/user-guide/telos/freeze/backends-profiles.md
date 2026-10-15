@@ -218,4 +218,4 @@ method of an already frozen Island app reports failure. Shizuku’s compatibilit
 uses the equivalent suspend/enable commands; it does not uninstall or reinstall apps.
 
 The **grayscale / snowflake** setting applies consistently to frozen icons in grids, lists, folders,
-the dashboard and the sidebar. Snowflake mode preserves the icon’s colours and adds the badge.
+the dashboard and the sidebar. Snowflake mode preserves the icon’s colours and adds the badge. The separate suspended-app badge visibility switch is respected, and other badges remain visible.

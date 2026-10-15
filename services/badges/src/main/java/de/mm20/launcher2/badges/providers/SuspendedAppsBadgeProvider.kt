@@ -8,7 +8,7 @@ import de.mm20.launcher2.badges.BadgeIcon
 import de.mm20.launcher2.badges.BadgeProvider
 import de.mm20.launcher2.badges.MutableBadge
 import de.mm20.launcher2.badges.R
-import de.mm20.launcher2.preferences.FreezeMethod
+import de.mm20.launcher2.applications.AppRepository
 import de.mm20.launcher2.preferences.FrozenAppStyle
 import de.mm20.launcher2.preferences.freeze.FreezeSettings
 import de.mm20.launcher2.search.Application
@@ -21,6 +21,7 @@ import org.koin.core.component.inject
 
 class SuspendedAppsBadgeProvider(private val context: Context) : BadgeProvider, KoinComponent {
     private val freezeSettings: FreezeSettings by inject()
+    private val appRepository: AppRepository by inject()
 
     override fun getBadge(searchable: Searchable): Flow<Badge?> {
         if (searchable !is Application) return flowOf(null)
@@ -29,14 +30,15 @@ class SuspendedAppsBadgeProvider(private val context: Context) : BadgeProvider, 
 
         return combine(
             freezeSettings.frozenAppStyle,
-            freezeSettings.candidates
-        ) { style, candidates ->
+            freezeSettings.candidates,
+            appRepository.findOne(packageName, searchable.user)
+        ) { style, candidates, currentApp ->
             if (style == FrozenAppStyle.Grayscale) {
                 // Handled natively by ShapedLauncherIcon color matrix
                 return@combine null
             }
 
-            if (searchable.isSuspended) {
+            if (currentApp?.isSuspended ?: searchable.isSuspended) {
                 // Retain the resource identity so the renderer avoids duplicate markers.
                 MutableBadge(icon = BadgeIcon(R.drawable.ac_unit_24px))
             } else if (candidates.contains(packageName)) {

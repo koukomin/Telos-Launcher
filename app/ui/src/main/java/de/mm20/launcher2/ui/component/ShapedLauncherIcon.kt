@@ -116,6 +116,12 @@ fun ShapedLauncherIcon(
         val style by styleFlow.collectAsStateWithLifecycle(FrozenAppStyle.SnowflakeBadge)
         style
     } else null
+    val showSnowflake = if (frozenStyle == FrozenAppStyle.SnowflakeBadge) {
+        val badgeSettings: de.mm20.launcher2.preferences.ui.BadgeSettings = koinInject()
+        val enabledFlow = remember(badgeSettings) { badgeSettings.suspendedApps }
+        val enabled by enabledFlow.collectAsStateWithLifecycle(true)
+        enabled
+    } else false
     val _icon = icon()
 
     var currentIcon by remember(_icon) {
@@ -328,7 +334,7 @@ fun ShapedLauncherIcon(
             }
         }
         // Preserve other badges and avoid drawing a second copy of the frozen marker.
-        if (frozenStyle == FrozenAppStyle.SnowflakeBadge &&
+        if (showSnowflake &&
             (_badge?.icon as? BadgeIcon.Vector)?.iconRes != de.mm20.launcher2.ui.R.drawable.ac_unit_24px) {
             Surface(
                 modifier = Modifier.size(size * 0.33f)

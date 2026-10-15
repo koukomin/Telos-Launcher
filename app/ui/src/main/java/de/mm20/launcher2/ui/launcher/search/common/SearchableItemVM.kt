@@ -124,7 +124,8 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         else appRepository.findOne(searchable.componentName.packageName, searchable.user)
             // Also covers apps frozen by disabling them (not just FLAG_SUSPENDED), so the toolbar
             // offers "Unfreeze" for those as well.
-            .map { it?.isSuspended == true || freezeManager.isFrozen(searchable.componentName.packageName) }
+            .map { it?.isSuspended == true || (searchable.user == android.os.Process.myUserHandle() &&
+                freezeManager.isFrozen(searchable.componentName.packageName)) }
             .distinctUntilChanged()
     }.stateIn(viewModelScope, SharingStarted.Lazily, false)
 
