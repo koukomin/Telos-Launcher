@@ -937,7 +937,7 @@ A video library and player. It plays the videos on your phone, web streams, and 
 
 **Player**
 
-- Full screen player: swipe to seek, brightness (left) and volume (right), double tap to jump 10 seconds, press and hold for double speed
+- Full screen player: swipe to seek, brightness (left) and volume (right), double tap to jump 10 seconds, press and hold for double speed. Video, Stremio Fork and TV show vertical brightness/volume sliders with icons alongside playback controls; the top-left back button stops playback and returns. TV keeps a separate minimize action for continued playback. Brightness changes are local to the player window and restored on exit.
 - Speed presets (0.5x to 2x), picture size (fit, fill, zoom), audio and subtitle track choice, repeat, sleep timer, picture in picture
 - FFmpeg software decoders for AC3, E-AC3, DTS, TrueHD and more
 - Also used when another app opens a video; playlists for series and folders

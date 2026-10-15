@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_back">ย้อนกลับ</string>
+    <string name="au_video_brightness">ความสว่าง %1$d%%</string>
+    <string name="au_video_volume">ระดับเสียง %1$d%%</string>
+</resources>

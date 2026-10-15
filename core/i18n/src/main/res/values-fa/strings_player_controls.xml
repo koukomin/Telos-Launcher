@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hc_back">بازگشت</string>
+    <string name="au_video_brightness">روشنایی %1$d%%</string>
+    <string name="au_video_volume">بلندی صدا %1$d%%</string>
+</resources>
