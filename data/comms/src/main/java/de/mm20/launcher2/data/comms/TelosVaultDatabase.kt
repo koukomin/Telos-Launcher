@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import net.sqlcipher.database.SupportFactory
+import net.zetetic.database.sqlcipher.SupportOpenHelperFactory
 
 @Database(
     entities = [SecretContact::class, SecretCallLog::class, SecretSms::class],
@@ -19,7 +19,8 @@ abstract class TelosVaultDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context, passphrase: ByteArray): TelosVaultDatabase {
             return INSTANCE ?: synchronized(this) {
-                val factory = SupportFactory(passphrase)
+                System.loadLibrary("sqlcipher")
+                val factory = SupportOpenHelperFactory(passphrase)
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     TelosVaultDatabase::class.java,
