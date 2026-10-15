@@ -177,7 +177,7 @@ fun AppItem(
                             badge = { badge },
                             icon = { icon },
                             // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
-                            grayscale = isSuspended && (de.mm20.launcher2.preferences.FrozenAppStyle.Grayscale == viewModel.frozenAppStyle.collectAsStateWithLifecycle(de.mm20.launcher2.preferences.FrozenAppStyle.SnowflakeBadge).value),
+                            frozen = isSuspended,
                             // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
                         )
                     }
@@ -636,7 +636,7 @@ fun AppItem(
                             badge = { badge },
                             icon = { icon },
                             // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
-                            grayscale = isSuspended && (de.mm20.launcher2.preferences.FrozenAppStyle.Grayscale == viewModel.frozenAppStyle.collectAsStateWithLifecycle(de.mm20.launcher2.preferences.FrozenAppStyle.SnowflakeBadge).value),
+                            frozen = isSuspended,
                             // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
                         )
                     }

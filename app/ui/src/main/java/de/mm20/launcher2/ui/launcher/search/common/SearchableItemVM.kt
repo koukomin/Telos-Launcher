@@ -124,7 +124,8 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         else appRepository.findOne(searchable.componentName.packageName, searchable.user)
             // Also covers apps frozen by disabling them (not just FLAG_SUSPENDED), so the toolbar
             // offers "Unfreeze" for those as well.
-            .map { it?.isSuspended == true || freezeManager.isFrozen(searchable.componentName.packageName) }
+            .map { it?.isSuspended == true || (searchable.user == android.os.Process.myUserHandle() &&
+                freezeManager.isFrozen(searchable.componentName.packageName)) }
             .distinctUntilChanged()
     }.stateIn(viewModelScope, SharingStarted.Lazily, false)
 
@@ -221,24 +222,24 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         }
         val bundle = options.toBundle()
 
-        if (searchable is Application && freezeManager.isFrozen(searchable.componentName.packageName)) {
-            viewModelScope.launch {
-                freezeManager.unfreeze(searchable.componentName.packageName)
-                // Small delay to allow the system to recognize the app is enabled
-                // before startMainActivity is called.
-                kotlinx.coroutines.delay(200)
-                if (searchable.launch(context, bundle)) {
-                    reportUsage(searchable)
-                } else {
-                    // Try one more time with a slightly longer delay if it failed
-                    kotlinx.coroutines.delay(300)
-                    if (searchable.launch(context, bundle)) {
-                        reportUsage(searchable)
-                    } else if (!freezeManager.isFrozen(searchable.componentName.packageName)) {
-                        // Only reset if the app really is unavailable; if unfreezing failed (backend
-                        // gone, permission revoked) the favorite must be kept.
-                        favoritesService.reset(searchable)
+        if (searchable is Application && (searchable.isSuspended ||
+            (searchable.user == android.os.Process.myUserHandle() && freezeManager.isFrozen(searchable.componentName.packageName)))) {
+            viewModelScope.launch(kotlinx.coroutines.NonCancellable) {
+                try {
+                    val started = freezeManager.launchThawed(searchable.componentName.packageName, searchable.user,
+                        searchable.componentName) { component ->
+                        try {
+                            requireNotNull(context.getSystemService(android.content.pm.LauncherApps::class.java))
+                                .startMainActivity(component, searchable.user, null, bundle)
+                            true
+                        } catch (_: Exception) { false }
                     }
+                    if (started) reportUsage(searchable) else android.widget.Toast.makeText(context,
+                        de.mm20.launcher2.ui.R.string.pdft_error_title, android.widget.Toast.LENGTH_LONG).show()
+                } catch (error: Exception) {
+                    android.util.Log.e("AppLaunch", "Could not launch frozen app", error)
+                    android.widget.Toast.makeText(context, de.mm20.launcher2.ui.R.string.pdft_error_title,
+                        android.widget.Toast.LENGTH_LONG).show()
                 }
             }
             return true

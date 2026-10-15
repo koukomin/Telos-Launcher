@@ -30,6 +30,11 @@ internal interface PrivilegedAccessProvider {
      */
     suspend fun setPackagesEnabled(packageNames: List<String>, enabled: Boolean, userId: Int = Process.myUid() / 100000): Set<String>
 
+    /** Exact settings are needed when restoring apps frozen by another tool. */
+    suspend fun setEnabledSetting(packageName: String, state: Int, userId: Int): Boolean = false
+    suspend fun setComponentSetting(component: String, state: Int, userId: Int): Boolean = false
+    suspend fun setHidden(packageName: String, hidden: Boolean, userId: Int): Boolean = false
+
     /** Force stops the given package for the given user. */
     suspend fun forceStopPackage(packageName: String, userId: Int = Process.myUid() / 100000): Boolean
 

@@ -68,13 +68,16 @@ internal class DeviceOwnerProvider(private val context: Context) : PrivilegedAcc
         return packageNames.filterTo(mutableSetOf()) { pkg ->
             try {
                 manager.setApplicationHidden(admin, pkg, !enabled)
-                true
+                manager.isApplicationHidden(admin, pkg) == !enabled
             } catch (e: Throwable) {
                 Log.e(TAG, "setApplicationHidden($pkg) failed", e)
                 false
             }
         }
     }
+
+    override suspend fun setHidden(packageName: String, hidden: Boolean, userId: Int): Boolean =
+        packageName in setPackagesEnabled(listOf(packageName), !hidden, userId)
 
     override suspend fun forceStopPackage(packageName: String, userId: Int): Boolean = false
 

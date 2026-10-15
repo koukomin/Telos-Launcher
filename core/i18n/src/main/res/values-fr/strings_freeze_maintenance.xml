@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">Mises à jour des applications gelées</string>
+    <string name="freeze_unfreeze_all">Tout dégeler</string>
+    <string name="freeze_restore_all">Geler à nouveau</string>
+    <string name="freeze_system_iconless">Applications système sans icône de lancement</string>
+    <string name="store_update_frozen">Mettre à jour les applications gelées</string>
+</resources>

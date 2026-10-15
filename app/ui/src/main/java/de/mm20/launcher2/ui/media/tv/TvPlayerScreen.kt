@@ -126,9 +126,10 @@ fun TvPlayerDialog(
         }
 
         var controls by remember { mutableStateOf(true) }
+        var adjustingLevels by remember { mutableStateOf(false) }
         // controls fade out after a while when the picture plays
-        LaunchedEffect(controls, playing, channel?.id, epgSheet) {
-            if (controls && playing && !epgSheet) {
+        LaunchedEffect(controls, playing, channel?.id, epgSheet, adjustingLevels) {
+            if (controls && playing && !epgSheet && !adjustingLevels) {
                 delay(4000)
                 controls = false
             }
@@ -178,6 +179,11 @@ fun TvPlayerDialog(
                     },
             )
 
+            de.mm20.launcher2.ui.media.video.PlayerLevelControls(
+                visible = controls || error != null,
+                window = window,
+                onAdjusting = { adjustingLevels = it },
+            )
             if (current != null) {
                 val showStatus = error != null || reconnecting || recovering || (buffering && !playing)
                 if (showStatus) {
@@ -221,6 +227,11 @@ fun TvPlayerDialog(
                                 .padding(horizontal = 8.dp, vertical = 8.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
+                            IconButton(onClick = { viewModel.stop() },
+                                modifier = Modifier.background(Color(0xB31A1A1A), androidx.compose.foundation.shape.CircleShape)) {
+                                Icon(painterResource(R.drawable.arrow_back_24px),
+                                    contentDescription = stringResource(R.string.hc_back), tint = Color.White)
+                            }
                             IconButton(onClick = onMinimize) {
                                 Icon(
                                     painterResource(R.drawable.keyboard_arrow_down_24px),

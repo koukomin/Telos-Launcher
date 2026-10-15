@@ -6,6 +6,12 @@ import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Process
+import android.os.UserHandle
+import android.content.pm.LauncherApps
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import android.util.Log
 import de.mm20.launcher2.freeze.providers.RootProvider
 import de.mm20.launcher2.freeze.providers.ShizukuProvider
@@ -41,6 +47,8 @@ class FreezeManager internal constructor(
     )
     // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
 
+    private val operationMutex = Mutex()
+
     private val shizukuProvider = ShizukuProvider()
     private val rootProvider = RootProvider()
     private val islandProvider = IslandProvider(context)
@@ -48,6 +56,36 @@ class FreezeManager internal constructor(
 
     private val _activeBackend = MutableStateFlow<FreezeBackendType?>(null)
     val activeBackend: StateFlow<FreezeBackendType?> = _activeBackend.asStateFlow()
+
+    private val maintenance by lazy {
+        FreezeMaintenance(context, settings, operationMutex, { it in PROTECTED_PACKAGES }, ::maintenanceProvider)
+    }
+    val maintenanceEntries get() = settings.maintenance
+    suspend fun scanFrozenApps() = maintenance.scan()
+    suspend fun unfreezeAll(groups: Set<FrozenAppGroup>) = maintenance.unfreezeAll(groups)
+    suspend fun restoreFrozenApps() = maintenance.restoreAll()
+    suspend fun recoverFrozenUpdates() = maintenance.recoverInstalls()
+    suspend fun beginFrozenUpdate(packageName: String, backend: String) = maintenance.beginInstall(packageName, backend)
+    suspend fun finishFrozenUpdate(packageName: String, token: String) = maintenance.finishInstall(packageName, token)
+    suspend fun hasPendingFrozenUpdate(packageName: String) = settings.maintenance.first().values.any {
+        it.packageName == packageName && it.userId == Process.myUid() / 100000 && it.operationId.isNotEmpty()
+    }
+    suspend fun launchThawed(packageName: String, user: UserHandle, preferred: ComponentName,
+        launch: (ComponentName) -> Boolean) = maintenance.launchThawed(packageName, user, preferred, launch)
+
+    private suspend fun maintenanceProvider(name: String?): Pair<String, PrivilegedAccessProvider>? {
+        if (name == null) refreshBackendState()
+        val type = if (name.isNullOrEmpty()) _activeBackend.value else
+            FreezeBackendType.entries.firstOrNull { it.name == name }
+        val provider = when (type) {
+            FreezeBackendType.Root -> rootProvider
+            FreezeBackendType.Shizuku -> shizukuProvider
+            FreezeBackendType.DeviceOwner -> deviceOwnerProvider
+            FreezeBackendType.Dhizuku -> dhizukuProvider
+            else -> return null
+        }
+        return if (provider.isAvailable() && provider.hasPermission()) type!!.name to provider else null
+    }
 
     /** Re-evaluates which backend (if any) is currently usable, based on the user's preference. */
     suspend fun refreshBackendState() {
@@ -126,22 +164,78 @@ class FreezeManager internal constructor(
      */
     suspend fun freezeInBackground(packageNames: List<String>, userId: Int = Process.myUid() / 100000) {
         if (packageNames.isEmpty()) return
+        if (_activeBackend.value == null) refreshBackendState()
         if (_activeBackend.value == FreezeBackendType.Island) {
             islandProvider.postFreezeNotification(packageNames)
         } else {
-            freeze(packageNames, userId)
+            operationMutex.withLock { applySuspended(packageNames, true, userId, respectMaintenance = true) }
         }
     }
 
+    /** Apply a method change to an already frozen app before committing its new policy. */
+    suspend fun updateAppPolicy(
+        packageName: String, user: UserHandle, candidate: Boolean, neverFreeze: Boolean,
+        method: FreezeMethod? = null,
+    ): Boolean = withContext(NonCancellable) {
+        // Once started, finish the policy transaction even if its settings screen closes.
+        operationMutex.withLock {
+            if (!VALID_PACKAGE_NAME.matches(packageName)) return@withLock false
+            val userId = user.hashCode()
+            val frozen = if (!candidate) false else if (userId == Process.myUid() / 100000) isFrozen(packageName) else {
+                // PackageManager on the launcher context describes only the current user.
+                val launcherApps = requireNotNull(context.getSystemService(LauncherApps::class.java))
+                val info = launcherApps.getApplicationInfo(packageName, PackageManager.MATCH_DISABLED_COMPONENTS, user)
+                !launcherApps.isPackageEnabled(packageName, user) || !info.enabled ||
+                    (info.flags and ApplicationInfo.FLAG_SUSPENDED) != 0
+            }
+            if (candidate && frozen) {
+                if (_activeBackend.value == null) refreshBackendState()
+                // Island exposes a hide intent, not a synchronous suspend/disable conversion.
+                if (_activeBackend.value == FreezeBackendType.Island) return@withLock false
+                val changed = applySuspended(listOf(packageName), true, userId,
+                    mapOf(packageName to (method ?: FreezeMethod.Suspend)))
+                if (packageName !in changed || !methodApplied(packageName, user, method ?: FreezeMethod.Suspend))
+                    return@withLock false
+            }
+            settings.setAppPolicy(packageName, candidate, neverFreeze, method)
+            true
+        }
+    }
+
+    /** Do not treat a successful shell exit as proof that Android accepted a mode change. */
+    private fun methodApplied(packageName: String, user: UserHandle, method: FreezeMethod): Boolean {
+        if (user == Process.myUserHandle()) {
+            val info = context.packageManager.getApplicationInfo(packageName,
+                PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_UNINSTALLED_PACKAGES)
+            val suspended = (info.flags and ApplicationInfo.FLAG_SUSPENDED) != 0
+            val state = freezeState(packageName)
+            return if (method == FreezeMethod.Suspend) state == AppFreezeState.Suspended
+                else !suspended && (state == AppFreezeState.Disabled || state == AppFreezeState.Hidden)
+        }
+        val apps = requireNotNull(context.getSystemService(LauncherApps::class.java))
+        val info = apps.getApplicationInfo(packageName, PackageManager.MATCH_DISABLED_COMPONENTS, user)
+        val suspended = (info.flags and ApplicationInfo.FLAG_SUSPENDED) != 0
+        val enabled = info.enabled && apps.isPackageEnabled(packageName, user)
+        return if (method == FreezeMethod.Suspend) suspended && enabled else !suspended && !enabled
+    }
+
     /** @return the subset of [packageNames] that were actually toggled successfully. */
-    private suspend fun setSuspended(packageNames: List<String>, suspended: Boolean, userId: Int = Process.myUid() / 100000): Set<String> {
+    private suspend fun setSuspended(packageNames: List<String>, suspended: Boolean, userId: Int = Process.myUid() / 100000): Set<String> =
+        operationMutex.withLock { applySuspended(packageNames, suspended, userId) }
+
+    private suspend fun applySuspended(
+        packageNames: List<String>, suspended: Boolean, userId: Int,
+        methodOverride: Map<String, FreezeMethod>? = null,
+        respectMaintenance: Boolean = false,
+    ): Set<String> {
         if (packageNames.isEmpty()) return emptySet()
 
         // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
         // Package names end up in shell commands (root / Shizuku fallbacks), so anything that is not a
         // well-formed package name is dropped here rather than trusted.
+        val held = if (respectMaintenance) settings.maintenance.first().values.map { it.packageName }.toSet() else emptySet()
         val safePackages = packageNames.filter { VALID_PACKAGE_NAME.matches(it) }
-            .filterNot { PROTECTED_PACKAGES.contains(it) }
+            .filterNot { (suspended && PROTECTED_PACKAGES.contains(it)) || it in held }
         if (safePackages.isEmpty()) {
             Log.w(TAG, "All targeted packages are protected system packages. Aborting freeze.")
             return emptySet()
@@ -154,74 +248,36 @@ class FreezeManager internal constructor(
             Log.w(TAG, "setSuspended($targetPackages, $suspended, user $userId): no active backend")
             return emptySet()
         }
+        if (userId != Process.myUid() / 100000 &&
+            (backend == FreezeBackendType.DeviceOwner || backend == FreezeBackendType.Dhizuku)) {
+            Log.w(TAG, "$backend cannot change packages for another user")
+            return emptySet()
+        }
         if (!hasPermission()) {
             Log.w(TAG, "setSuspended($targetPackages, $suspended, user $userId): $backend has no permission")
             return emptySet()
         }
-        val methods = settings.freezeMethods.first()
-
-        val succeeded = when (backend) {
-            FreezeBackendType.Shizuku -> {
-                if (suspended) {
-                    val toDisable = targetPackages.filter { methods[it] == FreezeMethod.Disable }
-                    val toSuspend = targetPackages.filter { methods[it] != FreezeMethod.Disable }
-                    shizukuProvider.setPackagesSuspended(toSuspend, true, userId) +
-                            shizukuProvider.setPackagesEnabled(toDisable, false, userId)
-                } else {
-                    val unsuspended = shizukuProvider.setPackagesSuspended(targetPackages, false, userId)
-                    val enabled = shizukuProvider.setPackagesEnabled(targetPackages, true, userId)
-                    unsuspended + enabled
-                }
+        val methods = methodOverride ?: settings.freezeMethods.first()
+        val succeeded = if (backend == FreezeBackendType.Island) {
+            if (islandProvider.setPackagesSuspended(targetPackages, suspended, userId)) targetPackages.toSet()
+            else emptySet()
+        } else {
+            val provider: PrivilegedAccessProvider = when (backend) {
+                FreezeBackendType.Shizuku -> shizukuProvider
+                FreezeBackendType.Dhizuku -> dhizukuProvider
+                FreezeBackendType.Root -> rootProvider
+                FreezeBackendType.DeviceOwner -> deviceOwnerProvider
+                FreezeBackendType.Island -> error("Island uses its intent provider")
             }
-            
-            // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
-            FreezeBackendType.Dhizuku -> {
-                if (suspended) {
-                    val toDisable = targetPackages.filter { methods[it] == FreezeMethod.Disable }
-                    val toSuspend = targetPackages.filter { methods[it] != FreezeMethod.Disable }
-                    dhizukuProvider.setPackagesSuspended(toSuspend, true, userId) +
-                            dhizukuProvider.setPackagesEnabled(toDisable, false, userId)
-                } else {
-                    val unsuspended = dhizukuProvider.setPackagesSuspended(targetPackages, false, userId)
-                    val enabled = dhizukuProvider.setPackagesEnabled(targetPackages, true, userId)
-                    unsuspended + enabled
-                }
-            }
-            // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
-
-            FreezeBackendType.Root -> {
-                if (suspended) {
-                    val toDisable = targetPackages.filter { methods[it] == FreezeMethod.Disable }
-                    val toSuspend = targetPackages.filter { methods[it] != FreezeMethod.Disable }
-                    rootProvider.setPackagesSuspended(toSuspend, true, userId) +
-                            rootProvider.setPackagesEnabled(toDisable, false, userId)
-                } else {
-                    val unsuspended = rootProvider.setPackagesSuspended(targetPackages, false, userId)
-                    val enabled = rootProvider.setPackagesEnabled(targetPackages, true, userId)
-                    unsuspended + enabled
-                }
-            }
-
-            FreezeBackendType.Island -> {
-                if (islandProvider.setPackagesSuspended(targetPackages, suspended, userId)) {
-                    targetPackages.toSet()
-                } else {
-                    emptySet()
-                }
-            }
-
-            FreezeBackendType.DeviceOwner -> {
-                if (suspended) {
-                    val toDisable = targetPackages.filter { methods[it] == FreezeMethod.Disable }
-                    val toSuspend = targetPackages.filter { methods[it] != FreezeMethod.Disable }
-                    deviceOwnerProvider.setPackagesSuspended(toSuspend, true, userId) +
-                            deviceOwnerProvider.setPackagesEnabled(toDisable, false, userId)
-                } else {
-                    val unsuspended = deviceOwnerProvider.setPackagesSuspended(targetPackages, false, userId)
-                    val enabled = deviceOwnerProvider.setPackagesEnabled(targetPackages, true, userId)
-                    unsuspended + enabled
-                }
-            }
+            suspend fun transition(packages: List<String>, disable: Boolean = false) = transitionFreezeState(
+                packages, suspended, disable,
+                suspendPackages = { names, value -> provider.setPackagesSuspended(names, value, userId) },
+                enablePackages = { names, value -> provider.setPackagesEnabled(names, value, userId) },
+            )
+            if (suspended) {
+                transition(targetPackages.filter { methods[it] != FreezeMethod.Disable }) +
+                    transition(targetPackages.filter { methods[it] == FreezeMethod.Disable }, disable = true)
+            } else transition(targetPackages)
         }
 
         val now = System.currentTimeMillis()
@@ -289,12 +345,13 @@ class FreezeManager internal constructor(
                 launcherIntent,
                 PackageManager.MATCH_DISABLED_COMPONENTS,
             )?.activityInfo
-            val isComponentDisabled = launcherActivity != null && (
+            val hasEnabledLauncher = pm.queryIntentActivities(launcherIntent, 0).any { it.activityInfo?.enabled == true }
+            val isComponentDisabled = isComponentFreeze(hasEnabledLauncher, launcherActivity != null && (
                 !launcherActivity.enabled ||
                     pm.getComponentEnabledSetting(
                         ComponentName(launcherActivity.packageName, launcherActivity.name)
                     ) == PackageManager.COMPONENT_ENABLED_STATE_DISABLED
-                )
+                ))
             when {
                 !info.enabled || isComponentDisabled -> AppFreezeState.Disabled
                 (info.flags and ApplicationInfo.FLAG_SUSPENDED) != 0 -> AppFreezeState.Suspended

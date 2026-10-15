@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">Updates voor bevroren apps</string>
+    <string name="freeze_unfreeze_all">Alles ontdooien</string>
+    <string name="freeze_restore_all">Opnieuw bevriezen</string>
+    <string name="freeze_system_iconless">Systeemapps zonder startpictogram</string>
+    <string name="store_update_frozen">Bevroren apps bijwerken</string>
+</resources>

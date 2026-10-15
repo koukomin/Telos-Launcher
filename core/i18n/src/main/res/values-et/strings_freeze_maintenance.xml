@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">Külmutatud rakenduste uuendused</string>
+    <string name="freeze_unfreeze_all">Vabasta kõik</string>
+    <string name="freeze_restore_all">Külmuta uuesti</string>
+    <string name="freeze_system_iconless">Süsteemirakendused ilma käivitusikoonita</string>
+    <string name="store_update_frozen">Uuenda külmutatud rakendusi</string>
+</resources>

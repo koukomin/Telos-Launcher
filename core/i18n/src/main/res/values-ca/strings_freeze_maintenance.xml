@@ -1,0 +1,12 @@
+<resources>
+    <string name="freeze_maintenance_title">Actualitzacions d’aplicacions congelades</string>
+    <string name="freeze_unfreeze_all">Descongela-les totes</string>
+    <string name="freeze_restore_all">Torna a congelar</string>
+    <string name="freeze_system_iconless">Aplicacions del sistema sense icona d’inici</string>
+    <string name="store_update_frozen">Actualitza les aplicacions congelades</string>
+    <string name="hc_restore">Restaura</string>
+    <string name="hf_freeze_frozen_apps">Aplicacions congelades</string>
+    <string name="freeze_backend_device_owner">Propietari del dispositiu</string>
+    <string name="freeze_backend_root">Root</string>
+    <string name="freeze_backend_shizuku">Shizuku</string>
+</resources>

@@ -335,7 +335,7 @@ fun GridItem(
                 size = iconSizeDp,
                 badge = { badge },
                 icon = { icon },
-                grayscale = isSuspended,
+                frozen = isSuspended,
         // === TELOS_PENDING_REVIEW_END: perf_optimizations ===
             )
         }

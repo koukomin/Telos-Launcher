@@ -217,3 +217,11 @@ The collection is a grid of station cards with filter chips (All, Recently playe
 ## Full-screen player
 
 Tapping the mini player opens a full-screen player in the style of YouTube Music: a large logo, the station and the current track, chips for favorite, record, sleep timer and share, and previous / play-pause / next (previous and next move between your favorite stations).
+
+### One mini player and home controls
+
+The Radio page keeps its own now-playing bar and full-player shortcut. The Media Hub does not
+add a second bar for the same radio session; its shared bar remains available in other sections.
+The launcher’s home music area can show Telos Radio’s station/track metadata and transport controls
+using the same notification access as external players. Tapping the session opens Radio. Explicit
+player exclusions and the home-screen music-display settings continue to apply.

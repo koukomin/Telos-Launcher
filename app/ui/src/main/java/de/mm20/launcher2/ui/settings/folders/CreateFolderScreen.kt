@@ -134,7 +134,7 @@ private fun AppCheckRow(
         ShapedLauncherIcon(
             size = 40.dp, 
             icon = { icon }, 
-            grayscale = app.isSuspended
+            frozen = app.isSuspended
         )
         // === TELOS_PENDING_REVIEW_END: ui_i18n_and_features_batch ===
         Text(

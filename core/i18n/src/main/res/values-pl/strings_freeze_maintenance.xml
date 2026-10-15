@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">Aktualizacje zamrożonych aplikacji</string>
+    <string name="freeze_unfreeze_all">Odmroź wszystkie</string>
+    <string name="freeze_restore_all">Zamroź ponownie</string>
+    <string name="freeze_system_iconless">Aplikacje systemowe bez ikony uruchamiania</string>
+    <string name="store_update_frozen">Aktualizuj zamrożone aplikacje</string>
+</resources>

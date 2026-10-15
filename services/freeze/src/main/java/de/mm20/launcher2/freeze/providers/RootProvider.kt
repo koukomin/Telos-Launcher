@@ -1,6 +1,7 @@
 package de.mm20.launcher2.freeze.providers
 
 import de.mm20.launcher2.freeze.PrivilegedAccessProvider
+import de.mm20.launcher2.freeze.enabledAction
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.DataOutputStream
@@ -40,6 +41,16 @@ internal class RootProvider : PrivilegedAccessProvider {
         val action = if (enabled) "enable" else "disable-user"
         return packageNames.filterTo(mutableSetOf()) { pkg -> runAsRoot("pm $action --user $userId $pkg") }
     }
+
+    override suspend fun setEnabledSetting(packageName: String, state: Int, userId: Int): Boolean =
+        if (!packageName.matches(Regex("[A-Za-z0-9_.$/]+"))) false else
+            enabledAction(state)?.let { runAsRoot("pm $it --user $userId '$packageName'") } ?: false
+
+    override suspend fun setComponentSetting(component: String, state: Int, userId: Int): Boolean =
+        setEnabledSetting(component, state, userId)
+
+    override suspend fun setHidden(packageName: String, hidden: Boolean, userId: Int): Boolean =
+        runAsRoot("pm ${if (hidden) "hide" else "unhide"} --user $userId $packageName")
 
     override suspend fun forceStopPackage(packageName: String, userId: Int): Boolean {
         return runAsRoot("am force-stop --user $userId $packageName")

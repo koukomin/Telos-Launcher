@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">Actualizări pentru aplicații înghețate</string>
+    <string name="freeze_unfreeze_all">Dezgheață toate</string>
+    <string name="freeze_restore_all">Îngheață din nou</string>
+    <string name="freeze_system_iconless">Aplicații de sistem fără pictogramă de lansare</string>
+    <string name="store_update_frozen">Actualizează aplicațiile înghețate</string>
+</resources>

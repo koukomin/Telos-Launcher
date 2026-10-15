@@ -1,0 +1,12 @@
+<resources>
+    <string name="freeze_maintenance_title">עדכוני אפליקציות מוקפאות</string>
+    <string name="freeze_unfreeze_all">הפשר הכול</string>
+    <string name="freeze_restore_all">הקפא שוב</string>
+    <string name="freeze_system_iconless">אפליקציות מערכת ללא סמל הפעלה</string>
+    <string name="store_update_frozen">עדכון אפליקציות מוקפאות</string>
+    <string name="hc_restore">שחזור</string>
+    <string name="hf_freeze_frozen_apps">אפליקציות מוקפאות</string>
+    <string name="freeze_backend_device_owner">בעל המכשיר</string>
+    <string name="freeze_backend_root">Root</string>
+    <string name="freeze_backend_shizuku">Shizuku</string>
+</resources>

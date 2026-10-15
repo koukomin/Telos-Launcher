@@ -12,9 +12,15 @@ shortcuts and search results keep working. A space whose app is hidden in the St
 
 YouTube and YouTube Music use a shared native background player. Their optional [browser account panel](youtube-account.md) opens both websites in the same browser; it does not import that account into the native player.
 
-Music and Radio share one mini player at the bottom. It shows the title and artist (music) or the station (radio) with the artwork,
-play/pause, and next (music) or stop (radio). Tapping it opens the Music Now Playing screen, or the Radio space. It is hidden on the
-Video space, because video plays in its own player.
+Music and Radio each keep their own mini player on their page, without a second Hub bar below it.
+When browsing other sections, the shared mini player keeps playback reachable. It shows the title
+and artist (music) or station (radio), artwork and playback controls. Tapping it opens the matching
+section/player. It is hidden in Video and Stremio Fork, which use their own video player.
+
+The home-screen music area also recognizes built-in Telos playback, using the same notification
+access and display settings as external players. Explicit player exclusions still apply. Playing
+sessions take priority over newer paused notifications, and Music/Radio session taps open the
+correct section. Each built-in media service has its own notification ID.
 
 ## What is kept when you switch
 
@@ -47,7 +53,7 @@ The TV space plays live channels from the open [iptv-org](https://github.com/ipt
 - **Catalog:** channel list, logos and stream addresses are downloaded from `iptv-org.github.io` when you open TV (cached on the device, checked for changes, refreshed in the background when older than 24 hours; **Refresh** forces it). Adult channels, closed channels and blocklisted ones are left out.
 - **Country and language:** your home country and the app language are preselected; **Countries** lets you pick several (flags, channel counts, search) and filter by language. Category chips filter the list; search is Greek and Greeklish aware.
 - **Favorites, recents, your channels:** the star on a card adds a favorite (shelf at the top, **Move up/down** in the long-press menu), recents are kept, and **Add channel** creates your own (name, http or https stream address, optional logo and group). **Import M3U playlist** (up to 2 MB and 5000 entries) adds many at once. **Export / Import TV channels** saves a JSON backup file.
-- **Player:** tap a card for the full player; tap the picture for the controls, swipe up or down to change channel, back or minimize keeps it playing in the mini player.
+- **Player:** tap a card for the full player; tap the picture for the controls, swipe up or down to change channel, the top-left back button stops playback, while minimize (or Android system Back) keeps it playing in the mini player.
 - **Self-healing streams:** if a stream fails or is not ready within 8 seconds, Telos tries the next stream of the same channel; if all fail it checks online whether the stream list was updated and retries with the new addresses before showing an error ("Looking for another stream…" is shown meanwhile).
 - **Search:** Settings > Search > **TV channels** (off by default) shows favorite, custom and recent channels; TV and Radio results carry a type chip.
 - **Extra Greek sources (optional):** when Greece is among the selected countries, two public playlists ([Free-TV/IPTV](https://github.com/Free-TV/IPTV) Greece and [greektvm3u](https://github.com/filipposfilippides/greektvm3u)) add more streams to the same channels (tried after the iptv-org streams when one fails) and a few extra channels, marked **Extra**. They and the **Programme guide** have switches in the Countries sheet (on by default, only shown with Greece selected). Everything is loaded on your device only while TV is open, from `raw.githubusercontent.com`, `ext.greektv.app` and `epgshare01.online`; nothing is bundled (the playlists have no license file), and if a source does not work nothing is shown for it.

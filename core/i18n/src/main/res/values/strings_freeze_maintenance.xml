@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">Frozen app updates</string>
+    <string name="freeze_unfreeze_all">Unfreeze all</string>
+    <string name="freeze_restore_all">Freeze again</string>
+    <string name="freeze_system_iconless">System apps without launcher icons</string>
+    <string name="store_update_frozen">Update frozen apps</string>
+</resources>

@@ -52,6 +52,7 @@ fun FreezeSettingsScreen() {
     // usage access in another app or system screen and come back.
     LifecycleResumeEffect(Unit) {
         viewModel.refreshBackendState()
+        viewModel.refreshFrozenInventory()
         onPauseOrDispose { }
     }
 
@@ -86,12 +87,44 @@ fun FreezeSettingsScreen() {
     val showSystemApps by viewModel.showSystemApps.collectAsStateWithLifecycle()
     val showIconlessApps by viewModel.showIconlessApps.collectAsStateWithLifecycle()
 
+    val frozenInventory by viewModel.frozenInventory.collectAsStateWithLifecycle()
+    val maintenanceEntries by viewModel.maintenanceEntries.collectAsStateWithLifecycle()
+    val maintenanceBusy by viewModel.maintenanceBusy.collectAsStateWithLifecycle()
+    var includeUsers by remember { mutableStateOf(true) }
+    var includeSystem by remember { mutableStateOf(false) }
+    var includeIconless by remember { mutableStateOf(false) }
     val backStack = LocalBackStack.current
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_freeze),
         verticalArrangement = Arrangement.spacedBy(2.dp),
     ) {
+        item {
+            PreferenceCategory(title = stringResource(R.string.freeze_maintenance_title)) {
+                SwitchPreference(title = stringResource(R.string.netfw_filter_user), value = includeUsers,
+                    onValueChanged = { includeUsers = it }, enabled = !maintenanceBusy)
+                SwitchPreference(title = stringResource(R.string.netfw_filter_system), value = includeSystem,
+                    onValueChanged = { includeSystem = it }, enabled = !maintenanceBusy)
+                SwitchPreference(title = stringResource(R.string.freeze_system_iconless), value = includeIconless,
+                    onValueChanged = { includeIconless = it }, enabled = !maintenanceBusy)
+                val groups = buildSet {
+                    if (includeUsers) add(de.mm20.launcher2.freeze.FrozenAppGroup.User)
+                    if (includeSystem) add(de.mm20.launcher2.freeze.FrozenAppGroup.System)
+                    if (includeIconless) add(de.mm20.launcher2.freeze.FrozenAppGroup.SystemWithoutLauncher)
+                }
+                val selectedCount = frozenInventory.count { it.group in groups }
+                Preference(title = stringResource(R.string.freeze_unfreeze_all),
+                    summary = stringResource(R.string.hf_freeze_frozen_apps) + ": " + selectedCount,
+                    enabled = !maintenanceBusy && selectedCount > 0 && hasPermission == true && activeBackend != FreezeBackendType.Island,
+                    onClick = { viewModel.unfreezeAll(groups) },
+                    controls = { if (maintenanceBusy) androidx.compose.material3.CircularProgressIndicator(
+                        modifier = androidx.compose.ui.Modifier) })
+                Preference(title = stringResource(R.string.freeze_restore_all),
+                    summary = stringResource(R.string.hc_restore) + ": " + maintenanceEntries.size,
+                    enabled = !maintenanceBusy && maintenanceEntries.isNotEmpty(),
+                    onClick = { viewModel.restoreFrozenApps() })
+            }
+        }
         item {
             Preference(
                 icon = R.drawable.bar_chart_24px,
@@ -331,7 +364,7 @@ fun FreezeSettingsScreen() {
             Preference(
                 title = app.label,
                 icon = {
-                    ShapedLauncherIcon(size = 32.dp, icon = { icon })
+                    ShapedLauncherIcon(size = 32.dp, icon = { icon }, frozen = isFrozenNow)
                 },
                 summary = if (isFrozenNow) {
                     stringResource(R.string.freeze_dashboard_currently_frozen) + " · " + candidateSummary

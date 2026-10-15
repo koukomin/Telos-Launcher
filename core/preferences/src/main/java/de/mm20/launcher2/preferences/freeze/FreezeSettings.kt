@@ -124,6 +124,35 @@ class FreezeSettings internal constructor(
         dataStore.update { it.copy(freeze = it.freeze.copy(freezeNetworkThresholdKb = threshold)) }
     }
 
+    /** Save one app policy atomically, with no independently launched writes racing each other. */
+    suspend fun setAppPolicy(packageName: String, candidate: Boolean, neverFreeze: Boolean, method: FreezeMethod?) {
+        dataStore.updateAndWait { current ->
+            val freeze = current.freeze
+            current.copy(freeze = freeze.copy(
+                freezeCandidates = if (candidate) freeze.freezeCandidates + packageName else freeze.freezeCandidates - packageName,
+                freezeNeverFreezeApps = if (neverFreeze) freeze.freezeNeverFreezeApps + packageName else freeze.freezeNeverFreezeApps - packageName,
+                freezeMethods = if (!candidate) freeze.freezeMethods else
+                    freeze.freezeMethods + (packageName to (method ?: FreezeMethod.Suspend)),
+            ))
+        }
+    }
+
+    val maintenance get() = dataStore.data.map { it.freeze.freezeMaintenance }
+
+    suspend fun saveMaintenance(key: String, entry: de.mm20.launcher2.preferences.FrozenAppRestore?) {
+        dataStore.updateAndWait { current ->
+            val entries = current.freeze.freezeMaintenance
+            require(entry == null || entries.size < 10_000 || key in entries)
+            val updated = if (entry == null) entries - key else entries + (key to entry)
+            val bytes = updated.values.sumOf { row ->
+                192L + 2L * (row.packageName.length + row.backend.length + row.operationId.length) +
+                    row.components.keys.sumOf { 32L + it.length * 2L }
+            }
+            require(entry == null || bytes <= 4L * 1024 * 1024)
+            current.copy(freeze = current.freeze.copy(freezeMaintenance = updated))
+        }
+    }
+
     val freezeMethods
         get() = dataStore.data.map { it.freeze.freezeMethods }
 

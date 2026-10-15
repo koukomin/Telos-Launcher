@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">Ενημερώσεις παγωμένων εφαρμογών</string>
+    <string name="freeze_unfreeze_all">Ξεπάγωμα όλων</string>
+    <string name="freeze_restore_all">Πάγωμα ξανά</string>
+    <string name="freeze_system_iconless">Εφαρμογές συστήματος χωρίς εικονίδιο εκκίνησης</string>
+    <string name="store_update_frozen">Ενημέρωση παγωμένων εφαρμογών</string>
+</resources>

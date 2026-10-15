@@ -70,4 +70,5 @@ dependencies {
     implementation(project(":core:crashreporter"))
     implementation(project(":data:database"))
     implementation(project(":services:store"))
+    implementation(project(":services:freeze"))
 }

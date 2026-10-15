@@ -161,7 +161,8 @@ class AutoFreezeController internal constructor(
     private suspend fun freezableCandidates(): List<String> {
         val candidates = settings.candidates.first()
         if (candidates.isEmpty()) return emptyList()
-        return candidates
+        val held = settings.maintenance.first().values.map { it.packageName }.toSet()
+        return candidates.filterNot { it in held }
             .filterNot { freezeManager.isFrozen(it) }
             .filterNot { exclusionChecker.isExcluded(it) }
     }

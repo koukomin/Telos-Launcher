@@ -202,3 +202,50 @@ Every freeze and unfreeze is counted per app, with the last time of each. They s
 | An app is never frozen automatically | An exclusion rule applies (notification, music, network, foreground) or it is set to Never freeze |
 | Frozen app still appears | **Hide frozen apps** is off. Switch it on, or pick the Grayscale style |
 | Force stop and clear cache are missing | Switch on **Advanced Features** and use Shizuku or root |
+
+## Changing a frozen app’s method
+
+Changing an already frozen app from **Disable** to **Suspend** first suspends it, then enables it.
+The reverse change first disables it, then removes suspension. Telos verifies the resulting Android
+state and saves the app policy as one settings update after a successful conversion. Auto-freeze
+operations and policy changes are serialized so a concurrent trigger cannot reapply the old method
+between conversion and saving. Changing the policy of an active app does not immediately freeze it.
+
+If a conversion fails, the previous policy remains selected and an error is shown. A partial
+failure can leave both restrictions active; Telos retains the frozen protection and permits a retry.
+Island’s intent-based backend cannot confirm a synchronous method conversion, so changing the
+method of an already frozen Island app reports failure. Shizuku’s compatibility fallback only
+uses the equivalent suspend/enable commands; it does not uninstall or reinstall apps.
+
+The **grayscale / snowflake** setting applies consistently to frozen icons in grids, lists, folders,
+the dashboard and the sidebar. Snowflake mode preserves the icon’s colours and adds the badge. The separate suspended-app badge visibility switch is respected, and other badges remain visible.
+
+## Temporary update session
+
+Every time Freeze Manager opens, Telos queries the actual installed/frozen state in the current
+Android profile, including system packages with no launcher icon and apps frozen outside Telos.
+Choose **User apps**, **System apps** and/or **System apps without launcher icons**, then **Unfreeze all**.
+The protected core-package list remains excluded. **Freeze again** acts only on saved original
+frozen apps, never every currently active app. It restores suspension, package enabled settings,
+hidden state and disabled launcher-component settings when the authorized backend permits it.
+
+The restoration journal is written before changing Android state, remains on this device across
+process restarts, and is excluded from exported/restored launcher backups. Auto-freeze skips
+journaled apps throughout the update window. History is removed only after restoration is verified.
+Failures remain pending; **Freeze again** retries them. Pending installer callbacks carry an operation
+ID, so an old callback cannot restore a newer installation. Active installer sessions, including updates inside a bulk thaw window, are skipped
+by manual recovery. If a process dies during an install, reopen Freeze Manager after installation
+has finished and use **Freeze again** to recover any remaining entry.
+
+Root and Shizuku support enabled/component settings. Device Owner/Dhizuku can manage their own
+hide/suspend restrictions but cannot override another owner's policies or arbitrary disabled
+components. Island cannot provide a synchronous, verifiable update session. Failures are reported
+and snapshots retained. If an update removes a saved launcher component, restoration may remain
+pending; Telos first re-establishes package protection rather than silently leaving the app active.
+
+Frozen-app launches survive refresh/removal of the old launcher row. Telos waits up to about five
+seconds for an actual launcher activity and retries transient launch failures without another tap.
+Icon-pack generation uses disabled-aware resource lookup, and frozen scans prefer the original
+launcher component over an arbitrary seasonal/icon alias. An inactive alternate alias does not
+classify an otherwise launchable application as frozen. No device-level visual or Root/Shizuku
+integration test has been performed in the cloud environment.

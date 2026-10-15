@@ -31,6 +31,8 @@ class MusicPlayerService : MediaSessionService() {
 
     override fun onCreate() {
         super.onCreate()
+        setMediaNotificationProvider(androidx.media3.session.DefaultMediaNotificationProvider.Builder(this)
+            .setNotificationId(de.mm20.launcher2.comms.media.MediaPlaybackNotifications.MUSIC).build())
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(C.USAGE_MEDIA)
             .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
@@ -79,6 +81,7 @@ class MusicPlayerService : MediaSessionService() {
         mediaSession = MediaSession.Builder(this, player)
             .setId("telos_music") // Media3 throws "Session ID must be unique" when radio (default id) is alive in the same process
             .setBitmapLoader(AlbumArtBitmapLoader(this))
+            .setSessionActivity(MediaPlaybackNotifications.open(this, "music", MediaPlaybackNotifications.MUSIC))
             .build()
         MusicSleepTimer.onExpire = { player.pause() }
         scrobbler = runCatching { de.mm20.launcher2.comms.scrobble.ScrobbleTracker(this, player).also { it.attach() } }.getOrNull()

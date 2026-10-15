@@ -14,6 +14,15 @@ on:
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/settings/**'
       - 'app/ui/src/main/AndroidManifest.xml'
       - 'core/base/src/**'
+      - 'core/preferences/src/**'
+      - 'services/freeze/**'
+      - 'services/music/**'
+      - 'services/icons/**'
+      - 'data/applications/**'
+      - 'services/badges/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/component/ShapedLauncherIcon.kt'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/floating/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/launcher/search/**'
       - 'core/i18n/src/main/res/**'
       - '.github/workflows/validate-stremio.yml'
   workflow_dispatch:
@@ -36,6 +45,14 @@ jobs:
       - run: chmod +x gradlew
       - name: Test Stremio protocol and watched state
         run: ./gradlew :services:comms:testDebugUnitTest --tests 'de.mm20.launcher2.comms.search.*' --tests 'de.mm20.launcher2.comms.stremio.*' --tests 'de.mm20.launcher2.comms.tv.*' --tests 'de.mm20.launcher2.comms.youtube.*' --tests 'de.mm20.launcher2.comms.files.FilesSharingServerTest' --stacktrace
+      - name: Test home media session discovery and priority
+        run: ./gradlew :services:music:testDebugUnitTest --stacktrace
+      - name: Test frozen launcher component ordering
+        run: ./gradlew :data:applications:testDebugUnitTest --stacktrace
+      - name: Test persisted frozen-app snapshots
+        run: ./gradlew :core:preferences:testDebugUnitTest --stacktrace
+      - name: Test freeze transitions and partial failures
+        run: ./gradlew :services:freeze:testDebugUnitTest --stacktrace
       - name: Test virtual app task identities
         run: ./gradlew :core:base:testDebugUnitTest --tests 'de.mm20.launcher2.applock.VirtualAppTaskTest' --tests 'de.mm20.launcher2.helper.BatchNamesTest' --tests 'de.mm20.launcher2.helper.StorageAnalysisTest' --tests 'de.mm20.launcher2.helper.FileTrashTest' --tests 'de.mm20.launcher2.helper.FileSearchIndexTest' --tests 'de.mm20.launcher2.helper.FileTreeOpsTest' --tests 'de.mm20.launcher2.helper.ResumableFileTransferTest' --tests 'de.mm20.launcher2.helper.PasswordFileEncryptionTest' --tests 'de.mm20.launcher2.helper.SplitZipArchiveTest' --tests 'de.mm20.launcher2.helper.ExclusiveFilePublicationTest' --stacktrace
       - name: Test Store download and update policies

@@ -169,6 +169,7 @@ fun SearchablePicker(
                         modifier = Modifier.padding(horizontal = 10.dp),
                         icon = { icon },
                         badge = { badge },
+                        frozen = (it as? de.mm20.launcher2.search.Application)?.isSuspended == true,
                         size = 36.dp,
                     )
                     Text(

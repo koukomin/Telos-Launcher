@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">Обновления замороженных приложений</string>
+    <string name="freeze_unfreeze_all">Разморозить все</string>
+    <string name="freeze_restore_all">Заморозить снова</string>
+    <string name="freeze_system_iconless">Системные приложения без значка запуска</string>
+    <string name="store_update_frozen">Обновлять замороженные приложения</string>
+</resources>

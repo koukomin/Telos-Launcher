@@ -1,0 +1,12 @@
+<resources>
+    <string name="freeze_maintenance_title">Izoztutako aplikazioen eguneraketak</string>
+    <string name="freeze_unfreeze_all">Desizoztu guztiak</string>
+    <string name="freeze_restore_all">Izoztu berriro</string>
+    <string name="freeze_system_iconless">Abiarazteko ikonorik gabeko sistema-aplikazioak</string>
+    <string name="store_update_frozen">Eguneratu izoztutako aplikazioak</string>
+    <string name="hc_restore">Leheneratu</string>
+    <string name="hf_freeze_frozen_apps">Izoztutako aplikazioak</string>
+    <string name="freeze_backend_device_owner">Gailuaren jabea</string>
+    <string name="freeze_backend_root">Root</string>
+    <string name="freeze_backend_shizuku">Shizuku</string>
+</resources>

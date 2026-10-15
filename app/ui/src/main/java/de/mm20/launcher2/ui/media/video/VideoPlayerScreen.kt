@@ -577,6 +577,16 @@ private fun PlayerContent(
                 }
             },
         )
+        PlayerLevelControls(
+            visible = controlsVisible && !inPictureInPicture,
+            window = context.findActivity()?.window,
+            onAdjusting = { adjusting ->
+                playerView?.let { view ->
+                    view.controllerShowTimeoutMs = if (adjusting) 0 else 3000
+                    view.showController()
+                }
+            },
+        )
         if (reconnecting && !inPictureInPicture) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -632,7 +642,8 @@ private fun PlayerContent(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                IconButton(onClick = onClose) {
+                IconButton(onClick = { player.pause(); onClose() },
+                    modifier = Modifier.background(Color(0xB31A1A1A), androidx.compose.foundation.shape.CircleShape)) {
                     Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back), tint = Color.White)
                 }
                 Text(

@@ -186,3 +186,17 @@ The **Library** tab is a home: category chips (Movies, Series, Other, Recent, Un
 ## What is recognised as a movie or a series
 
 A film needs a real title followed by a standalone year, such as `Title (2010).mkv` or `Title.2010.1080p.mkv`. Dates and camera or messenger names (`VID-20240305-WA0001`, `video_2024-03-05_12-30-11`, `20240305_123011`, `Screen_Recording_...`) never count. Series need `S01E02` or `1x02`. Videos in messenger, camera, screenshot or screen-recording folders (Viber, WhatsApp, Telegram, Messenger, Facebook, Instagram, Snapchat, Signal, TikTok, DCIM/Camera, Screenshots, Screen recordings, Telos recordings) are never movies or series and are listed under **Other**.
+
+## On-screen brightness, volume and back
+
+Tap the video to reveal the playback controls. A rounded back button at the top left pauses
+and closes the player, releasing playback and returning to the previous screen. The left vertical
+slider changes this player window’s brightness; the right slider changes media volume. Both have
+icons and percentage values, follow the controls’ visibility and stay visible while dragging.
+Physical volume keys and video gestures update the displayed levels. Closing the player restores
+the previous window brightness without changing the system brightness setting.
+
+The same controls are used for local/remote videos and Stremio Fork streams opened with the
+built-in player. TV has matching sliders and a stop-and-back button, plus a separate minimize
+action that deliberately keeps the channel playing. External players retain their own controls.
+Controls are hidden in picture-in-picture.

@@ -1,0 +1,12 @@
+<resources>
+    <string name="freeze_maintenance_title">Dondurulmuş tətbiqlərin yenilənməsi</string>
+    <string name="freeze_unfreeze_all">Hamısının donunu aç</string>
+    <string name="freeze_restore_all">Yenidən dondur</string>
+    <string name="freeze_system_iconless">Başlatma nişanı olmayan sistem tətbiqləri</string>
+    <string name="store_update_frozen">Dondurulmuş tətbiqləri yenilə</string>
+    <string name="hc_restore">Bərpa et</string>
+    <string name="hf_freeze_frozen_apps">Dondurulmuş tətbiqlər</string>
+    <string name="freeze_backend_device_owner">Cihaz sahibi</string>
+    <string name="freeze_backend_root">Root</string>
+    <string name="freeze_backend_shizuku">Shizuku</string>
+</resources>

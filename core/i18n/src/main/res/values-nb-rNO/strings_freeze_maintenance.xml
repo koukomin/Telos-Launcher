@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">Oppdateringer av fryste apper</string>
+    <string name="freeze_unfreeze_all">Tin opp alle</string>
+    <string name="freeze_restore_all">Frys igjen</string>
+    <string name="freeze_system_iconless">Systemapper uten startikoner</string>
+    <string name="store_update_frozen">Oppdater fryste apper</string>
+</resources>

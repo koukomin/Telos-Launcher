@@ -51,7 +51,16 @@ different list.
 ## The mini player
 
 Shown at the bottom while something is loaded. It has the title, the artist, the cover, play or pause and next.
-Tap the bar to open the full player.
+Tap the bar to open the full player. Music and Radio each show one mini player on their own page;
+the Media Hub’s shared bar is used when you browse other sections, without duplicating the local bar.
+
+The home-screen music area also recognizes Telos’ built-in media sessions, alongside external
+players such as Poweramp. It shows the current title and artist/station with the session’s available
+transport controls. Notification access and the existing home music-display settings still apply;
+an explicit player exclusion is respected. An actively playing session takes priority over newer
+notifications from paused players. Tapping a Music/Radio session opens the matching Media section.
+Built-in Music, Radio, TV and YouTube use separate notification IDs so one service cannot replace
+or cancel another service’s media notification.
 
 ## The full player
 

@@ -1,0 +1,7 @@
+<resources>
+    <string name="freeze_maintenance_title">Atualizações de apps congelados</string>
+    <string name="freeze_unfreeze_all">Descongelar todos</string>
+    <string name="freeze_restore_all">Congelar novamente</string>
+    <string name="freeze_system_iconless">Apps do sistema sem ícone de inicialização</string>
+    <string name="store_update_frozen">Atualizar apps congelados</string>
+</resources>
