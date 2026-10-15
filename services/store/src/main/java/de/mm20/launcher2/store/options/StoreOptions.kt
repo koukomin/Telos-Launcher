@@ -35,6 +35,8 @@ data class GlobalOptions(
     /** Install updates without asking when Shizuku or root allows it (never otherwise) */
     val autoInstall: Boolean = false,
     val updateFrozenApps: Boolean = false,
+    /** session, shizuku, root, or external:<package>. */
+    val installer: String = "session",
     /** Raises the GitHub limit from 60 to 5000 requests per hour; optional */
     val githubToken: String = "",
     val lastCheckMillis: Long = 0,

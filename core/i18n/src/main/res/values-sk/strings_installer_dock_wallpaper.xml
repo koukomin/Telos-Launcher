@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Spôsob inštalácie</string>
+    <string name="store_installer_session">Inštalátor relácií Androidu</string>
+    <string name="store_installer_external_summary">Externé inštalátory vyžadujú potvrdenie.</string>
+    <string name="freeze_exclude_foreground">Nezmrazovať aplikáciu v popredí</string>
+    <string name="freeze_exclude_foreground_summary">Vyžaduje prístup k údajom o používaní. Predvolene vypnuté.</string>
+    <string name="wallpaper_animated_gif">Animovaná tapeta GIF</string>
+</resources>

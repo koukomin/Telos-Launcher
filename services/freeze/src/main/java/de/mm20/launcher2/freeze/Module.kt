@@ -4,7 +4,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val freezeModule = module {
-    single { FreezeManager(androidContext(), get()) }
+    single { FreezeManager(androidContext(), get(), get()) }
     single { FreezeProfileManager(get(), get()) }
     single { AppUsageStatsProvider(androidContext(), get()) }
     single { FreezeExclusionChecker(androidContext(), get(), get(), get(), get()) }

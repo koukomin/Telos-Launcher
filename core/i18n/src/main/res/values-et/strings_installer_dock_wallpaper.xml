@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Paigaldusviis</string>
+    <string name="store_installer_session">Androidi seansipaigaldaja</string>
+    <string name="store_installer_external_summary">Välised paigaldajad nõuavad kinnitust.</string>
+    <string name="freeze_exclude_foreground">Ära külmuta esiplaani rakendust</string>
+    <string name="freeze_exclude_foreground_summary">Vajab kasutusandmete juurdepääsu. Vaikimisi väljas.</string>
+    <string name="wallpaper_animated_gif">Animeeritud GIF-taustapilt</string>
+</resources>

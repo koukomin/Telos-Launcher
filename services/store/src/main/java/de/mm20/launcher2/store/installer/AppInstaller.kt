@@ -16,7 +16,11 @@ sealed interface InstallResult {
  * the user. The concrete orchestration (`TelosPackageInstaller`) lives in `:data:store`, since it
  * depends on Android's `PackageInstaller`/`PackageManager` APIs.
  */
+data class InstallerChoice(val id: String, val label: String)
+
 interface AppInstaller {
+    fun externalInstallers(): List<InstallerChoice> = emptyList()
+
     /**
      * True if at least one backend (Shizuku, root, or the standard session API, which is always
      * available) can install right now. In practice this is almost always true; it exists mainly

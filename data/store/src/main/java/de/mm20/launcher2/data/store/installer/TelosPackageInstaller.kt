@@ -8,12 +8,7 @@ import de.mm20.launcher2.store.installer.InstallResult
 import java.io.File
 import java.io.InputStream
 
-/**
- * [AppInstaller] implementation: tries silent install backends in order (Shizuku, then root),
- * and only falls back to the user-prompted standard [android.content.pm.PackageInstaller] session
- * API ([SessionApiInstallBackend]) when neither privileged backend is authorized. This mirrors
- * `FreezeManager`'s Shizuku-then-root backend selection in `:services:freeze`.
- */
+/** User-selected installation path, with journaled freeze restoration. */
 class TelosPackageInstaller(
     private val context: Context,
     private val freezeManager: de.mm20.launcher2.freeze.FreezeManager,
@@ -32,8 +27,29 @@ class TelosPackageInstaller(
         return true
     }
 
-    override suspend fun canInstallSilently(): Boolean =
-        privilegedBackends.any { it.isAvailable() && it.hasPermission() } || isDeviceOwner()
+    override suspend fun canInstallSilently(): Boolean = when (options.global.value.installer) {
+        "shizuku" -> shizuku.isAvailable() && shizuku.hasPermission()
+        "root" -> root.isAvailable() && root.hasPermission()
+        "session" -> isDeviceOwner()
+        else -> false
+    }
+
+    override fun externalInstallers(): List<de.mm20.launcher2.store.installer.InstallerChoice> =
+        externalInstallerActivities(context).map { info ->
+            de.mm20.launcher2.store.installer.InstallerChoice(
+                "external:" + android.content.ComponentName(info.activityInfo.packageName, info.activityInfo.name).flattenToString(),
+                info.loadLabel(context.packageManager).toString())
+        }
+
+    private suspend fun freezeBackend(): String? {
+        freezeManager.refreshBackendState()
+        return when {
+            shizuku.isAvailable() && shizuku.hasPermission() -> "Shizuku"
+            root.isAvailable() && root.hasPermission() -> "Root"
+            isDeviceOwner() -> "DeviceOwner"
+            else -> null
+        }
+    }
 
     private fun isDeviceOwner() = context.getSystemService(android.app.admin.DevicePolicyManager::class.java)
         ?.isDeviceOwnerApp(context.packageName) == true
@@ -45,17 +61,21 @@ class TelosPackageInstaller(
     override suspend fun install(apk: File, packageName: String): InstallResult {
         if (freezeManager.hasPendingFrozenUpdate(packageName)) return InstallResult.Failed(context.getString(de.mm20.launcher2.data.store.R.string.hf_store_installing))
         val archive = context.packageManager.getPackageArchiveInfo(apk.path, 0)
+            ?: return failed(IllegalArgumentException("Invalid APK"))
         if (archive?.packageName != packageName) return failed(IllegalArgumentException("APK package does not match the selected app"))
         if (freezeManager.isFrozen(packageName) && !options.global.value.updateFrozenApps)
             return InstallResult.Failed(context.getString(de.mm20.launcher2.data.store.R.string.store_update_frozen))
-        for (backend in privilegedBackends) {
-            if (!backend.isAvailable() || !backend.hasPermission()) continue
+        val selected = options.global.value.installer
+        val selectedBackend = when (selected) { "shizuku" -> shizuku; "root" -> root; else -> null }
+        for (backend in listOfNotNull(selectedBackend)) {
+            if (!backend.isAvailable() || !backend.requestPermission())
+                return failed(IllegalStateException("$selected is not available or authorized"))
             var result: BackendInstallResult = BackendInstallResult.Failed("Install did not start")
             var restored = true
             var lease: String? = null
             try {
                 lease = freezeManager.beginFrozenUpdate(packageName,
-                    if (backend === shizuku) "Shizuku" else "Root")
+                    if (backend === shizuku) "Shizuku" else "Root", thawFirst = false)
                 result = backend.install(apk, packageName)
             } catch (cancelled: kotlinx.coroutines.CancellationException) {
                 throw cancelled
@@ -88,18 +108,41 @@ class TelosPackageInstaller(
             }
         }
 
-        // No privileged backend authorized - fall back to the standard session API, which always
-        // succeeds at *starting* the install (the actual accept/reject happens in system UI).
         var pending = false
         var lease: String? = null
         try {
-            if (freezeManager.isFrozen(packageName)) {
-                if (!isDeviceOwner()) return InstallResult.Failed(context.getString(de.mm20.launcher2.data.store.R.string.freeze_no_backend_available))
+            val frozen = freezeManager.isFrozen(packageName)
+            val restorationBackend = if (frozen) freezeBackend()
+                ?: return InstallResult.Failed(context.getString(de.mm20.launcher2.data.store.R.string.freeze_no_backend_available))
+                else "DeviceOwner"
+            lease = freezeManager.beginFrozenUpdate(packageName, restorationBackend)
+            if (selected.startsWith("external:")) {
+                val component = android.content.ComponentName.unflattenFromString(selected.removePrefix("external:"))
+                    ?: return failed(IllegalStateException("Installer is no longer available"))
+                val available = externalInstallerActivities(context).any {
+                    it.activityInfo.packageName == component.packageName && it.activityInfo.name == component.className
+                }
+                if (!available) return failed(IllegalStateException("Installer is no longer available"))
+                // Copy into our provider's cache; external apps cannot read a private download path.
+                val shared = File(context.cacheDir, "store-handoff").apply { mkdirs() }
+                shared.listFiles()?.filter { System.currentTimeMillis() - it.lastModified() > 24 * 60 * 60 * 1000L }?.forEach { it.delete() }
+                val copy = File(shared, java.util.UUID.randomUUID().toString() + ".apk")
+                apk.inputStream().use { input -> copy.outputStream().use { input.copyTo(it, 64 * 1024) } }
+                context.startActivity(android.content.Intent(context, ExternalInstallActivity::class.java).apply {
+                    addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+                    putExtra("component", component.flattenToString())
+                    putExtra("file", copy.path)
+                    putExtra(InstallResultReceiver.EXTRA_PACKAGE_NAME, packageName)
+                    putExtra(InstallResultReceiver.EXTRA_FREEZE_TOKEN, lease)
+                    putExtra("version", if (android.os.Build.VERSION.SDK_INT >= 28) archive.longVersionCode else archive.versionCode.toLong())
+                })
+                pending = true
+                return InstallResult.Pending
             }
-            lease = freezeManager.beginFrozenUpdate(packageName, "DeviceOwner")
+            if (selected != "session") return failed(IllegalStateException("Unknown installer: $selected"))
             return when (val result = sessionApi.install(apk, packageName, lease)) {
                 is BackendInstallResult.Success -> { pending = true; InstallResult.Pending }
-                is BackendInstallResult.Failed -> failed(result.cause)
+                is BackendInstallResult.Failed -> failed(result.cause, result.reason)
             }
         } catch (cancelled: kotlinx.coroutines.CancellationException) {
             throw cancelled

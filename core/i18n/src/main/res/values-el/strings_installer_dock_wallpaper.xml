@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Τρόπος εγκατάστασης</string>
+    <string name="store_installer_session">Εγκατάσταση με συνεδρία Android</string>
+    <string name="store_installer_external_summary">Οι εξωτερικοί installers απαιτούν επιβεβαίωση.</string>
+    <string name="freeze_exclude_foreground">Να μην παγώνει η εφαρμογή προσκηνίου</string>
+    <string name="freeze_exclude_foreground_summary">Απαιτεί πρόσβαση χρήσης. Ανενεργό από προεπιλογή.</string>
+    <string name="wallpaper_animated_gif">Κινούμενο GIF ως ταπετσαρία</string>
+</resources>

@@ -221,6 +221,11 @@ class UiSettings internal constructor(
         launcherDataStore.update { it.copy(grid = it.grid.copy(drawerBackgroundColor = color)) }
     }
 
+    val drawerBackgroundBlur get() = launcherDataStore.data.map { it.grid.drawerBackgroundBlur }.distinctUntilChanged()
+    fun setDrawerBackgroundBlur(radius: Int) {
+        launcherDataStore.update { it.copy(grid = it.grid.copy(drawerBackgroundBlur = radius.coerceIn(0, 100))) }
+    }
+
     val drawerBackgroundOpacity
         get() = launcherDataStore.data.map { it.grid.drawerBackgroundOpacity }.distinctUntilChanged()
 

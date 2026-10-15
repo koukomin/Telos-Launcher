@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Način instalacije</string>
+    <string name="store_installer_session">Instalacija putem Android sesije</string>
+    <string name="store_installer_external_summary">Vanjski instalacijski programi zahtijevaju potvrdu.</string>
+    <string name="freeze_exclude_foreground">Ne zamrzavaj aplikaciju u prvom planu</string>
+    <string name="freeze_exclude_foreground_summary">Potreban je pristup podacima o upotrebi. Zadano je isključeno.</string>
+    <string name="wallpaper_animated_gif">Animirana GIF pozadina</string>
+</resources>

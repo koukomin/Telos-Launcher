@@ -1,6 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <queries>
+        <intent><action android:name="android.intent.action.VIEW" /><data android:mimeType="application/vnd.android.package-archive" /></intent>
+    </queries>
     <application>
+        <activity android:name=".installer.ExternalInstallActivity" android:exported="false" />
         <receiver
             android:name=".installer.InstallResultReceiver"
             android:exported="false" />

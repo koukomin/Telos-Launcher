@@ -65,6 +65,8 @@ class IconsSettingsScreenVM(
 
     val drawerBackgroundEnabled = uiSettings.drawerBackgroundEnabled
     val drawerBackgroundColor = uiSettings.drawerBackgroundColor
+    val drawerBackgroundBlur = uiSettings.drawerBackgroundBlur
+    fun setDrawerBackgroundBlur(radius: Int) = uiSettings.setDrawerBackgroundBlur(radius)
     val drawerBackgroundOpacity = uiSettings.drawerBackgroundOpacity
     fun setDrawerBackgroundEnabled(enabled: Boolean) = uiSettings.setDrawerBackgroundEnabled(enabled)
     fun setDrawerBackgroundColor(color: Int?) = uiSettings.setDrawerBackgroundColor(color)

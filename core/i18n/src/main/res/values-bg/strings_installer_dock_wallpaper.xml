@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Начин на инсталиране</string>
+    <string name="store_installer_session">Инсталиране чрез сесия на Android</string>
+    <string name="store_installer_external_summary">Външните инсталатори изискват потвърждение.</string>
+    <string name="freeze_exclude_foreground">Без замразяване на приложението на преден план</string>
+    <string name="freeze_exclude_foreground_summary">Изисква достъп до данните за употреба. Изключено по подразбиране.</string>
+    <string name="wallpaper_animated_gif">Анимиран GIF тапет</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Metodă de instalare</string>
+    <string name="store_installer_session">Instalare prin sesiune Android</string>
+    <string name="store_installer_external_summary">Instalatoarele externe necesită confirmare.</string>
+    <string name="freeze_exclude_foreground">Nu îngheța aplicația din prim-plan</string>
+    <string name="freeze_exclude_foreground_summary">Necesită acces la datele de utilizare. Dezactivat implicit.</string>
+    <string name="wallpaper_animated_gif">Fundal GIF animat</string>
+</resources>

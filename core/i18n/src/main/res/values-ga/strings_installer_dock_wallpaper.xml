@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Modh suiteála</string>
+    <string name="store_installer_session">Suiteálaí seisiúin Android</string>
+    <string name="store_installer_external_summary">Teastaíonn deimhniú ó shuiteálaithe seachtracha.</string>
+    <string name="freeze_exclude_foreground">Ná reoigh an aip sa tulra</string>
+    <string name="freeze_exclude_foreground_summary">Rochtain ar shonraí úsáide de dhíth. Múchta de réir réamhshocraithe.</string>
+    <string name="wallpaper_animated_gif">Cúlbhrat GIF beoite</string>
+</resources>

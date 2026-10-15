@@ -94,7 +94,11 @@ internal class FreezeMaintenance(
         for (component in if (hasLauncher) emptyList() else entry.components.keys.take(1)) {
             if (!backend.setComponentSetting(component, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, userId)) return false
         }
-        return capture(pkg) == null
+        repeat(30) {
+            if (capture(pkg) == null) return true
+            kotlinx.coroutines.delay(100)
+        }
+        return false
     }
 
     private suspend fun restore(entry: FrozenAppRestore, backend: PrivilegedAccessProvider): Boolean {
@@ -168,7 +172,7 @@ internal class FreezeMaintenance(
         }
     }
 
-    suspend fun beginInstall(packageName: String, backendName: String): String? = withContext(NonCancellable + Dispatchers.IO) {
+    suspend fun beginInstall(packageName: String, backendName: String, thawFirst: Boolean): String? = withContext(NonCancellable + Dispatchers.IO) {
         mutex.withLock {
             val existing = settings.maintenance.first()[key(packageName)]
             check(existing?.operationId.isNullOrEmpty()) { "An update is already pending" }
@@ -186,7 +190,7 @@ internal class FreezeMaintenance(
             }
             // Write ahead before compatibility thawing; automatic freeze respects this hold.
             settings.saveMaintenance(key(packageName), entry)
-            if (existing == null && (backendName == "Shizuku" || backendName == "Root")) {
+            if (thawFirst && existing == null && (backendName == "Shizuku" || backendName == "Root")) {
                 val backend = provider(backendName)?.second ?: error("Freeze backend unavailable")
                 try {
                     check(thaw(entry, backend)) { "Could not temporarily unfreeze app for installation" }
@@ -265,7 +269,7 @@ internal class FreezeMaintenance(
             }
             launchWhenReady(
                 find = {
-                    val activities = apps.getActivityList(packageName, user)
+                    val activities = runCatching { apps.getActivityList(packageName, user) }.getOrDefault(emptyList())
                     activities.firstOrNull { it.componentName == preferred }?.componentName
                         ?: activities.firstOrNull()?.componentName
                 }, launch = launch,

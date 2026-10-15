@@ -279,10 +279,11 @@ data class GridGroup(
     val dockBackgroundOpacity: Float = 0.3f,
     val dockBackgroundBlur: Int = 0,
     val dockBackgroundShadow: Int = 0,
-    val drawerBackgroundEnabled: Boolean = false,
+    val drawerBackgroundEnabled: Boolean = true,
     @Serializable(with = ColorIntAsHexSerializer::class)
     val drawerBackgroundColor: Int? = null,
-    val drawerBackgroundOpacity: Float = 0.9f,
+    val drawerBackgroundOpacity: Float = 0.35f,
+    val drawerBackgroundBlur: Int = 32,
     @Serializable(with = ColorIntAsHexSerializer::class)
     val folderBackgroundColor: Int? = null,
     val dockPageIndicatorEnabled: Boolean = true,
@@ -558,6 +559,7 @@ data class FreezeGroup(
     val freezeExclusionStrictness: FreezeExclusionStrictness = FreezeExclusionStrictness.Strict,
     val freezeNeverFreezeApps: Set<String> = emptySet(),
     val freezeStats: Map<String, FreezeAppStats> = emptyMap(),
+    val freezeExcludeForeground: Boolean = false,
     val freezeExcludeMusic: Boolean = true,
     val freezeExcludeNetwork: Boolean = true,
     val freezeNetworkThresholdKb: Int = 100,

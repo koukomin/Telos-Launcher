@@ -49,7 +49,7 @@ internal class FreezeExclusionChecker(
             notifications.any { it.mediaSessionToken != null }
         ) return true
 
-        if (isForeground(packageName)) return true // rule 1
+        if (settings.excludeForeground.first() && isForeground(packageName)) return true // optional rule 1
 
         if (settings.excludeMusic.first() && isMusicActive()) return true
         if (settings.excludeNetwork.first() && isNetworkActive(packageName)) return true

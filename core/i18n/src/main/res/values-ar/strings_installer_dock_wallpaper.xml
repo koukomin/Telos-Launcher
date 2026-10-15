@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">طريقة التثبيت</string>
+    <string name="store_installer_session">مثبّت جلسات Android</string>
+    <string name="store_installer_external_summary">تتطلب أدوات التثبيت الخارجية التأكيد.</string>
+    <string name="freeze_exclude_foreground">عدم تجميد التطبيق في المقدمة</string>
+    <string name="freeze_exclude_foreground_summary">يتطلب الوصول إلى بيانات الاستخدام. معطّل افتراضيًا.</string>
+    <string name="wallpaper_animated_gif">خلفية GIF متحركة</string>
+</resources>

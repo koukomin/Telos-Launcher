@@ -68,6 +68,7 @@ fun FreezeSettingsScreen() {
     val idleTimeoutMinutes by viewModel.idleTimeoutMinutes.collectAsStateWithLifecycle()
     val freezeOnBatterySaver by viewModel.freezeOnBatterySaver.collectAsStateWithLifecycle()
 
+    val excludeForeground by viewModel.excludeForeground.collectAsStateWithLifecycle()
     val excludeMusic by viewModel.excludeMusic.collectAsStateWithLifecycle()
     val excludeNetwork by viewModel.excludeNetwork.collectAsStateWithLifecycle()
     val networkThresholdKb by viewModel.networkThresholdKb.collectAsStateWithLifecycle()
@@ -253,7 +254,6 @@ fun FreezeSettingsScreen() {
                                 )
                                 ListPreference(
                                     title = stringResource(R.string.preference_freeze_exclusion_strictness),
-                                    summary = stringResource(R.string.preference_freeze_exclusion_strictness_summary),
                                     items = listOf(
                                         stringResource(R.string.freeze_exclusion_strictness_strict) to FreezeExclusionStrictness.Strict,
                                         stringResource(R.string.freeze_exclusion_strictness_relaxed) to FreezeExclusionStrictness.Relaxed,
@@ -263,6 +263,12 @@ fun FreezeSettingsScreen() {
                                 )
                             }
                         }
+                        SwitchPreference(
+                            title = stringResource(R.string.freeze_exclude_foreground),
+                            summary = stringResource(R.string.freeze_exclude_foreground_summary),
+                            value = excludeForeground,
+                            onValueChanged = viewModel::setExcludeForeground,
+                        )
                         SwitchPreference(
                             title = stringResource(R.string.preference_freeze_exclude_music),
                             summary = stringResource(R.string.preference_freeze_exclude_music_summary),

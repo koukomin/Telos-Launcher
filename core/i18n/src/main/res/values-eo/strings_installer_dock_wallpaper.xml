@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Instalmetodo</string>
+    <string name="store_installer_session">Seanca instalilo de Android</string>
+    <string name="store_installer_external_summary">Eksteraj instaliloj bezonas konfirmon.</string>
+    <string name="freeze_exclude_foreground">Ne frostigu la malfonan aplikaĵon</string>
+    <string name="freeze_exclude_foreground_summary">Bezonas aliron al uzdatumoj. Defaŭlte malŝaltita.</string>
+    <string name="wallpaper_animated_gif">Movbilda GIF-ekranfono</string>
+    <string name="preference_dock_background_blur">Fona malklarigo</string>
+</resources>

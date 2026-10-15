@@ -33,16 +33,10 @@ internal class RootInstallBackend : InstallBackend {
         }
         return withContext(Dispatchers.IO) {
             try {
-                suspend fun attempt(preserve: Boolean): Pair<Boolean, String> {
-                    val command = apkInstallArguments(apk.length(), android.os.Process.myUid() / 100000, preserve)
-                    return streamApkInstall(apk, ProcessBuilder("su", "-c", command.joinToString(" ")).start())
+                installPrivilegedSession(apk, android.os.Process.myUid() / 100000, android.os.Build.VERSION.SDK_INT >= 34) { command, input ->
+                    // All arguments are generated internally (no paths or package names).
+                    runInstallCommand(input, ProcessBuilder("su", "-c", command.joinToString(" ")).start())
                 }
-                val preserve = android.os.Build.VERSION.SDK_INT >= 34
-                var outcome = attempt(preserve)
-                if (!outcome.first && preserve && unsupportedPreserveFlag(outcome.second)) outcome = attempt(false)
-                val (success, output) = outcome
-                if (success) BackendInstallResult.Success
-                else BackendInstallResult.Failed("Root install failed: $output")
             } catch (error: Exception) {
                 BackendInstallResult.Failed("Root install failed", error)
             }

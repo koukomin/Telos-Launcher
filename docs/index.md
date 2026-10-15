@@ -171,3 +171,11 @@ Telos is still a personal fork and a work in progress, shaped by what one person
 
 <p class="telos-note">Telos is a fork of <a href="https://github.com/MM2-0/Kvaesitso">Kvaesitso</a> by MM2-0 and its contributors, released under the GPL-3.0.</p>
 <Footer></Footer>
+
+
+### Launcher appearance and installation controls
+
+Store offers a selectable Android-session, Shizuku, root or installed external APK installer.
+The dock keeps frozen apps' normal icons. Drawer opacity and blur are adjustable with a soft-glass
+preset for fresh installs and full-width tablet layout. Wallpaper settings also accept animated
+GIFs through the live-wallpaper preview, subject to the documented size limits.

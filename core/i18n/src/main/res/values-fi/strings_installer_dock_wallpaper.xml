@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Asennustapa</string>
+    <string name="store_installer_session">Androidin istuntoasennus</string>
+    <string name="store_installer_external_summary">Ulkoiset asentimet vaativat vahvistuksen.</string>
+    <string name="freeze_exclude_foreground">Älä jäädytä etualan sovellusta</string>
+    <string name="freeze_exclude_foreground_summary">Vaatii käyttötilastojen käyttöoikeuden. Oletuksena pois käytöstä.</string>
+    <string name="wallpaper_animated_gif">Animoitu GIF-taustakuva</string>
+</resources>

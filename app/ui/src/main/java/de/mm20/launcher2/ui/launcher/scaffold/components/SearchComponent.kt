@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher.scaffold.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyListState
@@ -66,7 +67,7 @@ internal class SearchComponent(
         val gridSettings by uiSettings.drawerGridSettings.collectAsState(GridSettings())
         val drawerBackgroundEnabled by uiSettings.drawerBackgroundEnabled.collectAsState(false)
         val drawerBackgroundColor by uiSettings.drawerBackgroundColor.collectAsState(null)
-        val drawerBackgroundOpacity by uiSettings.drawerBackgroundOpacity.collectAsState(0.9f)
+        val drawerBackgroundOpacity by uiSettings.drawerBackgroundOpacity.collectAsState(0.35f)
         val rememberScrollPosition by uiSettings.rememberScrollPosition.collectAsState(false)
 
         val searchVM = viewModel<SearchVM>()
@@ -117,7 +118,7 @@ internal class SearchComponent(
             ) {
 
                 SearchColumn(
-                    modifier = Modifier.nestedScroll(scrollConnection).widthIn(max = 916.dp).fillMaxHeight(),
+                    modifier = Modifier.nestedScroll(scrollConnection).fillMaxWidth().fillMaxHeight(),
                     paddingValues = insets,
                     state = lazyListState,
                     reverse = reverse,

@@ -92,6 +92,14 @@ from Telos Store.
 
 Telos Phone now reads the full Android contact list across synced accounts, including email-only contacts, rather than seeding its directory only from phone-number rows.
 
+### Installer, dock, drawer and GIF wallpaper updates
+
+- Store settings offer Android session installation (default), Shizuku, root and installed external APK handlers such as Thor. Privileged installs use explicit create/write/commit sessions with bounded stdin streaming and abandon failed sessions. External handoff requires confirmation; only the installed version determines success.
+- Privileged frozen-app updates retain a recovery snapshot and install directly without requiring a successful thaw first. The Android-session/external path temporarily thaws with an authorized freeze backend and restores after its result. Cross-profile and third-party policy restrictions still apply.
+- Dock apps use fresh launcher activities after thawing; frozen styling and snowflake badges are omitted in the dock while other badges remain available. Optional foreground-app freeze protection is **off by default** and requires Usage access when enabled.
+- Drawer background tint/opacity and blur are independently adjustable. Fresh installs start with a soft-glass preset (35% tint, 32 dp blur), inspired by modern OEM launchers, not a measured copy of OnePlus. Tablet drawers use the available full width.
+- Animated GIF wallpapers use the existing live-wallpaper activation and battery/thermal/visibility controls. Choose **Animated GIF wallpaper** in wallpaper settings. One GIF is animated at a time, with a 32 MiB input and 4-megapixel source limit; video playlist and playback-speed controls remain video features.
+
 ### Recent Media and Store improvements
 
 - Greek TV supplements use the current greektvm3u `main` playlist alongside Free-TV. Refresh checks both supplemental lists; temporarily offline extra channels remain visible.
@@ -1146,6 +1154,7 @@ adapted, the original license is respected.
 | [LibreTorrent](https://github.com/proninyaroslav/libretorrent) | GPL-3.0-or-later | Ideas for the torrent part of Telos Downloads: file selection with priorities, sequential download, seeding limits, DHT/PEX/LSD/uTP/encryption/port settings, peers and trackers views, resume data, IP filter (written from scratch on libtorrent4j, no code was copied) |
 | [Flow](https://github.com/Flow-Tube/Flow) | GPL-3.0 | YouTube link parser, audio stream selection and adapted NewPipe downloader; Media UI inspiration |
 | [NewPipeExtractor](https://github.com/TeamNewPipe/NewPipeExtractor) | GPL-3.0-or-later | YouTube metadata, search and stream extraction |
+| [Aurora Store](https://gitlab.com/AuroraOSS/AuroraStore) | GPL-3.0-or-later | Reference for the explicit privileged install-session sequence; independently implemented in Telos |
 | [Obtainium](https://github.com/ImranR98/Obtainium) | GPL-3.0 | Store behaviour and features: sources, per-app settings, update flow, export format, links, update broadcasts (the behaviour is re-implemented, no code was copied) |
 | [RethinkDNS](https://github.com/celzero/rethink-app) | Apache-2.0 | Telos Network: concept, feature set and the way the VPN service, DNS, firewall rules and logs are organised (adapted where noted, copyright notice kept in `THIRD_PARTY_NOTICES.md`) |
 | [firestack](https://github.com/celzero/firestack) | MPL-2.0 | The Go network engine behind Telos Network, used unchanged as a Maven dependency (`com.celzero:firestack`) |

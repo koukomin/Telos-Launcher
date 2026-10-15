@@ -54,10 +54,6 @@ class WallpapersService(private val context: Context) {
             val filename = if (appendToPlaylist) "video_${System.currentTimeMillis()}" else "video"
             val target = File(dir, filename)
             
-            if (!appendToPlaylist) {
-                // Clear existing videos if not appending
-                dir.listFiles()?.forEach { it.delete() }
-            }
             
             val tmp = File(dir, "$filename.tmp")
             try {
@@ -66,7 +62,15 @@ class WallpapersService(private val context: Context) {
                         input.copyTo(output)
                     }
                 } ?: return@withContext false
+                if (GifWallpaperRenderer.isGif(tmp)) {
+                    require(tmp.length() <= 32L * 1024 * 1024) { "GIF exceeds the wallpaper size limit" }
+                    val header = tmp.inputStream().use { stream -> ByteArray(10).also { require(stream.read(it) == 10) } }
+                    val w = (header[6].toInt() and 255) or ((header[7].toInt() and 255) shl 8)
+                    val h = (header[8].toInt() and 255) or ((header[9].toInt() and 255) shl 8)
+                    require(w in 1..4096 && h in 1..4096 && w.toLong() * h <= 4_194_304) { "GIF dimensions exceed the wallpaper limit" }
+                }
                 if (!tmp.renameTo(target)) return@withContext false
+                if (!appendToPlaylist) dir.listFiles()?.filter { it != target }?.forEach { it.delete() }
                 VideoWallpaperService.videoChanged.tryEmit(Unit)
                 true
             } catch (e: Exception) {

@@ -28,7 +28,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
 interface BadgeService {
-    fun getBadge(searchable: Searchable): Flow<Badge?>
+    fun getBadge(searchable: Searchable, includeFrozen: Boolean = true): Flow<Badge?>
 }
 
 internal class BadgeServiceImpl(
@@ -70,8 +70,9 @@ internal class BadgeServiceImpl(
         }
     }
 
-    override fun getBadge(searchable: Searchable): Flow<Badge?> {
-        return badgeProviders.flatMapLatest { providers ->
+    override fun getBadge(searchable: Searchable, includeFrozen: Boolean): Flow<Badge?> {
+        return badgeProviders.flatMapLatest { allProviders ->
+            val providers = allProviders.filter { includeFrozen || it !is SuspendedAppsBadgeProvider }
             if (providers.isEmpty()) return@flatMapLatest flowOf(null)
             combine(providers.map { it.getBadge(searchable) }) { it.filterNotNull() }
                 .map { it.combine() }

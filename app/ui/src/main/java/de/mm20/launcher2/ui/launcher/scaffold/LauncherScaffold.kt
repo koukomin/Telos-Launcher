@@ -1227,16 +1227,13 @@ internal fun LauncherScaffold(
             }
         }
 
-        if (config.wallpaperBlurRadius > 0.dp) {
+        val drawerUi: de.mm20.launcher2.preferences.ui.UiSettings = org.koin.compose.koinInject()
+        val drawerBlur by drawerUi.drawerBackgroundBlur.collectAsState(32)
+        val activeComponent = if (state.currentProgress >= 0.5f) state.currentComponent else config.homeComponent
+        val targetBlur = if (activeComponent is SearchComponent) drawerBlur.dp else config.wallpaperBlurRadius
+        if (targetBlur > 0.dp) {
             val wallpaperBlur by animateIntAsState(
-                if (state.currentProgress >= 0.5f && (state.currentComponent?.drawBackground
-                        ?: config.homeComponent.drawBackground)
-                    || state.currentProgress < 0.5f && config.homeComponent.drawBackground
-                ) {
-                    config.wallpaperBlurRadius.toPixels().toInt()
-                } else {
-                    0
-                }
+                if (activeComponent?.drawBackground == true) targetBlur.toPixels().toInt() else 0
             )
             WallpaperBlur { wallpaperBlur }
         }
@@ -1611,7 +1608,7 @@ private fun SecondaryPage(
             .fillMaxSize()
             .secondaryPageAnimation(
                 state,
-                config.backgroundColor.copy(alpha = MaterialTheme.transparency.background),
+                if (component is SearchComponent) Color.Transparent else config.backgroundColor.copy(alpha = MaterialTheme.transparency.background),
             )
         val composable = composables[component]
 

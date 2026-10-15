@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Método de instalação</string>
+    <string name="store_installer_session">Instalador de sessões Android</string>
+    <string name="store_installer_external_summary">Os instaladores externos exigem confirmação.</string>
+    <string name="freeze_exclude_foreground">Não congelar a app em primeiro plano</string>
+    <string name="freeze_exclude_foreground_summary">Requer acesso à utilização. Desativado por predefinição.</string>
+    <string name="wallpaper_animated_gif">Papel de parede GIF animado</string>
+</resources>

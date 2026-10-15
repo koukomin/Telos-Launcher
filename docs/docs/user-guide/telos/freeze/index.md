@@ -157,3 +157,14 @@ A home screen widget with a **Freeze now** button. It shows how many apps are se
 | An app froze while I was using it | Grant Usage access |
 | Auto-freeze does nothing | The app is not a candidate, an exclusion rule applies, or auto-freeze is off |
 | Force stop is missing | Turn on **Advanced Features** and use Shizuku or root |
+
+## Dock and foreground protection
+
+Dock entries deliberately show their normal icon and other badges without grayscale or a
+snowflake, independently of the drawer's frozen-app style. Launching resolves the current launcher
+activity after thawing, including retries while Android refreshes enabled-state information.
+
+**Do not freeze the foreground app** is off by default. Enable it in Freeze settings to protect
+the current foreground app from automatic and manual freeze operations. It requires Usage access;
+without it Telos cannot reliably identify that app. Other existing notification, media and core
+system-package protections remain separate. The check applies to the current Android profile.

@@ -89,12 +89,16 @@ fun WallpaperSettingsScreen() {
     ) { uri ->
         if (uri != null) {
             val mimeType = context.contentResolver.getType(uri)
-            if (mimeType?.startsWith("video/") == true) {
+            if (mimeType?.startsWith("video/") == true || mimeType == "image/gif") {
                 viewModel.setVideoWallpaper(uri, false, ::activateVideoIfNeeded)
             } else {
                 pendingImageUri = uri
             }
         }
+    }
+
+    val gifPicker = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if (uri != null) viewModel.setVideoWallpaper(uri, false, ::activateVideoIfNeeded)
     }
 
     var appendToPlaylist by rememberSaveable { mutableStateOf(false) }
@@ -152,6 +156,10 @@ fun WallpaperSettingsScreen() {
     PreferenceScreen(title = stringResource(R.string.preference_screen_wallpaper)) {
         item {
             PreferenceCategory(title = stringResource(R.string.preference_category_wallpaper)) {
+                Preference(
+                    title = stringResource(R.string.wallpaper_animated_gif),
+                    onClick = { gifPicker.launch(arrayOf("image/gif")) },
+                )
                 Preference(
                     icon = R.drawable.wallpaper_24px,
                     title = stringResource(R.string.preference_wallpaper_change),

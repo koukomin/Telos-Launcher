@@ -62,7 +62,7 @@ class AppUsageStatsProvider internal constructor(
     }
 
     companion object {
-        private const val FOREGROUND_LOOKBACK_MS = 60_000L
+        private const val FOREGROUND_LOOKBACK_MS = ONE_DAY_MS
         private const val ONE_DAY_MS = 24 * 60 * 60 * 1000L
     }
 }
