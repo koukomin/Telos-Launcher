@@ -160,5 +160,7 @@ do not show success or discard stored data.
 The block database uses the current SQLCipher for Android integration with 16 KiB-aligned native
 libraries. The existing database name, schema and wrapped passphrase are retained. There is no
 plaintext fallback or automatic reset on a read failure. Automated coverage includes injected
-read failures and a native encrypted-database open/reopen smoke test on an Android emulator; a
-specific device crash still needs its own crash trace to establish its exact cause.
+read failures and a native encrypted-database write/read/reopen test, which passed on an Android
+15 (API 35, x86_64) emulator. This does not verify an existing device database migration or runtime
+behavior on a 16 KiB-page device. A specific device crash still needs its own crash trace to
+establish its exact cause.
