@@ -70,23 +70,23 @@ features:
     link: /docs/user-guide/telos/photos/
   - icon: 🎵
     title: Music
-    details: Play your own library with a lightweight music player.
+    details: Local music with one mini player, lyrics and home-screen playback controls.
     link: /docs/user-guide/telos/music/
   - icon: 🎬
     title: Video
-    details: A straightforward video player for your local media.
+    details: Local and remote video with brightness, volume and stop-and-back controls.
     link: /docs/user-guide/telos/video/
   - icon: 📻
     title: Radio
-    details: Tune in to internet radio stations.
+    details: Internet radio with one now-playing bar and home-screen station/track controls.
     link: /docs/user-guide/telos/radio/
   - icon: 🛍️
     title: Store
-    details: Discover and manage apps from the Telos Store.
+    details: Discover and update apps, including opt-in frozen-app updates through authorized backends.
     link: /docs/user-guide/telos/store/
   - icon: ❄️
     title: Smart Freeze
-    details: Freeze rarely used apps to save battery and keep them out of the way.
+    details: Freeze apps, launch them on demand, and temporarily unfreeze/restore saved groups for updates.
     link: /docs/user-guide/telos/freeze/
   - icon: 🛡️
     title: Privacy and crash guard
@@ -137,6 +137,20 @@ features:
   </figure>
 </div>
 <div class="telos-story">
+
+## Latest improvements
+
+- **Media:** one mini player per Music/Radio page, home-screen metadata and controls for built-in
+  playback, and separate Music, Radio, TV and YouTube notifications.
+- **Video, TV and Stremio Fork:** brightness-left and volume-right sliders with icons; a top-left
+  stop-and-back button. TV keeps a separate minimize action.
+- **Freeze Manager:** consistent snowflake/grayscale and icon packs, verified Disable/Suspend
+  transitions, and actual-state scans with Unfreeze all / Freeze again for saved user/system groups.
+- **Store:** opt-in frozen-app updates with durable restoration and streaming Shizuku/root installs.
+  Plain Device Admin is insufficient; Device Owner supports only states it can restore.
+
+Details: [Media](/docs/user-guide/telos/media/), [Store](/docs/user-guide/telos/store/),
+[Freeze](/docs/user-guide/telos/freeze/backends-profiles).
 
 ## The story behind Telos
 
