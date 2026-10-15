@@ -398,7 +398,7 @@ Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/doc
 - **Presets** (applied at once, no confirmation, no undo): AMOLED Black and Cyberpunk (colors), Colorful Grid (colors and layout), Classic Grid, Clean Grid, Pixel-style (layout). A layout preset overwrites grid, icon shape, dock and search bar settings.
 - **Grid:** 3 to 12 columns (5 default), icon size 32 to 64 dp, labels (size 8 to 24, one or two lines, shadow, color), apps as a list, separate overrides for home and search grids, folders and folder covers.
 - **Icons:** shapes (Platform default, Circle, Square, Rounded square, Squircle, Reuleaux triangle, Hexagon, Pentagon, Teardrop, Pebble), enforce shape, themed icons, enforce themed icons, one **icon pack** (appfilter and grayscale-map formats, live calendar and clock icons), icon cache size 50 to 500.
-- **Badges:** notification badges (dot or count, color), cloud, suspended or frozen apps, shortcut and plugin badges; work profile, hidden item and Store update badges are always on. Frozen apps can be grayscale or carry a snowflake.
+- **Badges:** notification badges (dot or count, color), cloud, suspended or frozen apps, shortcut and plugin badges; work profile, hidden item and Store update badges are always on. Frozen apps follow the selected grayscale or snowflake style consistently in grids, lists, folders and the sidebar.
 - **Motion:** charging animation, reduce animations, animation speed 0.5 to 2.0, bounce physics.
 - **Per-item customization:** long-press and tap Customize for a new label (the original name still matches), icon (including icon pack, themed or text icon), tags, **Show in**, a shutter app, or web app settings.
 - **Language and region:** 35 languages (see [Languages](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/launcher/languages)), per-app language on Android 13+ (in-app language picker on older versions), form of address (for every language with feminine and masculine variants: Arabic, Belarusian, Catalan, Czech, Greek, Spanish, French, Hebrew, Hindi, Italian, Polish, Portuguese, Romanian, Russian, Ukrainian), transliteration, time format, measurement system, calendar systems, currency order.
@@ -1039,7 +1039,7 @@ Freeze or hide apps you do not need right now. It is a launcher feature in Setti
 
 **Freezing**
 
-- **Suspend** (default) or **Disable** per app; per-app states: Not managed, Auto-freeze (Suspend), Auto-freeze (Disable), Never freeze
+- **Suspend** (default) or **Disable** per app; changing the method of an already frozen app applies and verifies the new Android state before saving the policy. Failed conversions keep the previous policy and show an error. Shizuku fallbacks use suspend/enable commands, never uninstall/install-existing. Per-app states: Not managed, Auto-freeze (Suspend), Auto-freeze (Disable), Never freeze
 - Frozen apps are unfrozen automatically when launched from the launcher; hide frozen apps, or show them grayscale or with a snowflake badge
 - Protected packages (the Android system, System UI, Settings, keyguard, telecom server, Google Play services, Play Store and Telos) are never frozen
 - Advanced features: Force stop and Clear cache (Shizuku or root)

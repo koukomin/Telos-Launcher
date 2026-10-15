@@ -67,6 +67,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.mm20.launcher2.badges.Badge
+import de.mm20.launcher2.preferences.FrozenAppStyle
+import de.mm20.launcher2.preferences.freeze.FreezeSettings
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.koin.compose.koinInject
 import de.mm20.launcher2.badges.BadgeIcon
 import de.mm20.launcher2.icons.ClockLayer
 import de.mm20.launcher2.icons.ClockSublayer
@@ -102,8 +106,15 @@ fun ShapedLauncherIcon(
     badge: () -> Badge? = { null },
     shape: Shape = LocalIconShape.current,
     grayscale: Boolean = false,
+    frozen: Boolean = false,
 ) {
 
+    // One policy for grids, lists, folders and overlays. Normal icons need no settings collector.
+    val frozenStyle = if (frozen) {
+        val settings: FreezeSettings = koinInject()
+        val style by settings.frozenAppStyle.collectAsStateWithLifecycle(FrozenAppStyle.SnowflakeBadge)
+        style
+    } else null
     val _icon = icon()
 
     var currentIcon by remember(_icon) {
@@ -148,7 +159,7 @@ fun ShapedLauncherIcon(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .then(if (grayscale) Modifier.grayscale() else Modifier),
+                .then(if (grayscale || frozenStyle == FrozenAppStyle.Grayscale) Modifier.grayscale() else Modifier),
             contentAlignment = Alignment.Center
         ) {
             val bmp = currentBitmap
@@ -313,6 +324,20 @@ fun ShapedLauncherIcon(
                         )
                     }
                 }
+            }
+        }
+        // Preserve other badges and avoid drawing a second copy of the frozen marker.
+        if (frozenStyle == FrozenAppStyle.SnowflakeBadge &&
+            (_badge?.icon as? BadgeIcon.Vector)?.iconRes != de.mm20.launcher2.ui.R.drawable.ac_unit_24px) {
+            Surface(
+                modifier = Modifier.size(size * 0.33f)
+                    .align(if (_badge == null) Alignment.BottomEnd else Alignment.TopEnd),
+                color = MaterialTheme.colorScheme.tertiary,
+                contentColor = MaterialTheme.colorScheme.onTertiary,
+                shape = CircleShape,
+            ) {
+                Icon(painterResource(de.mm20.launcher2.ui.R.drawable.ac_unit_24px),
+                    contentDescription = null, modifier = Modifier.padding(size / 24))
             }
         }
     }

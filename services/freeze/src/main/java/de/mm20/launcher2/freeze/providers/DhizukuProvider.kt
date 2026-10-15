@@ -88,8 +88,9 @@ internal class DhizukuProvider(private val context: Context) : PrivilegedAccessP
             val admin = Dhizuku.getOwnerComponent()
             for (pkg in packageNames) {
                 try {
-                    // "Disabled" means hidden for a device owner. true is returned only if the state changed.
-                    if (dpm.setApplicationHidden(admin, pkg, !enabled)) successSet.add(pkg)
+                    // An already-correct state is successful too; verify the resulting state.
+                    dpm.setApplicationHidden(admin, pkg, !enabled)
+                    if (dpm.isApplicationHidden(admin, pkg) == !enabled) successSet.add(pkg)
                 } catch (e: SecurityException) {
                     Log.e(TAG, "setApplicationHidden denied for $pkg", e)
                 } catch (e: Exception) {

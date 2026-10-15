@@ -68,7 +68,7 @@ internal class DeviceOwnerProvider(private val context: Context) : PrivilegedAcc
         return packageNames.filterTo(mutableSetOf()) { pkg ->
             try {
                 manager.setApplicationHidden(admin, pkg, !enabled)
-                true
+                manager.isApplicationHidden(admin, pkg) == !enabled
             } catch (e: Throwable) {
                 Log.e(TAG, "setApplicationHidden($pkg) failed", e)
                 false

@@ -222,7 +222,7 @@ fun SmartFreezeDashboardScreen() {
                             ShapedLauncherIcon(
                                 size = 48.dp,
                                 icon = { icon },
-                                grayscale = isFrozen
+                                frozen = isFrozen
                             )
                             
                             Column(modifier = Modifier.weight(1f)) {

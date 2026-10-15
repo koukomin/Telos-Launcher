@@ -124,6 +124,19 @@ class FreezeSettings internal constructor(
         dataStore.update { it.copy(freeze = it.freeze.copy(freezeNetworkThresholdKb = threshold)) }
     }
 
+    /** Save one app policy atomically, with no independently launched writes racing each other. */
+    suspend fun setAppPolicy(packageName: String, candidate: Boolean, neverFreeze: Boolean, method: FreezeMethod?) {
+        dataStore.updateAndWait { current ->
+            val freeze = current.freeze
+            current.copy(freeze = freeze.copy(
+                freezeCandidates = if (candidate) freeze.freezeCandidates + packageName else freeze.freezeCandidates - packageName,
+                freezeNeverFreezeApps = if (neverFreeze) freeze.freezeNeverFreezeApps + packageName else freeze.freezeNeverFreezeApps - packageName,
+                freezeMethods = if (!candidate) freeze.freezeMethods else
+                    freeze.freezeMethods + (packageName to (method ?: FreezeMethod.Suspend)),
+            ))
+        }
+    }
+
     val freezeMethods
         get() = dataStore.data.map { it.freeze.freezeMethods }
 

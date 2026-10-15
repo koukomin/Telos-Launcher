@@ -202,3 +202,20 @@ Every freeze and unfreeze is counted per app, with the last time of each. They s
 | An app is never frozen automatically | An exclusion rule applies (notification, music, network, foreground) or it is set to Never freeze |
 | Frozen app still appears | **Hide frozen apps** is off. Switch it on, or pick the Grayscale style |
 | Force stop and clear cache are missing | Switch on **Advanced Features** and use Shizuku or root |
+
+## Changing a frozen app’s method
+
+Changing an already frozen app from **Disable** to **Suspend** first suspends it, then enables it.
+The reverse change first disables it, then removes suspension. Telos verifies the resulting Android
+state and saves the app policy as one settings update after a successful conversion. Auto-freeze
+operations and policy changes are serialized so a concurrent trigger cannot reapply the old method
+between conversion and saving. Changing the policy of an active app does not immediately freeze it.
+
+If a conversion fails, the previous policy remains selected and an error is shown. A partial
+failure can leave both restrictions active; Telos retains the frozen protection and permits a retry.
+Island’s intent-based backend cannot confirm a synchronous method conversion, so changing the
+method of an already frozen Island app reports failure. Shizuku’s compatibility fallback only
+uses the equivalent suspend/enable commands; it does not uninstall or reinstall apps.
+
+The **grayscale / snowflake** setting applies consistently to frozen icons in grids, lists, folders,
+the dashboard and the sidebar. Snowflake mode preserves the icon’s colours and adds the badge.

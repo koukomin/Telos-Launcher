@@ -104,6 +104,10 @@ internal class LauncherDataStore(
     val data
         get() = context.dataStore.data
 
+    suspend fun updateAndWait(block: (LauncherSettingsData) -> LauncherSettingsData) {
+        updateDataAndWait(block)
+    }
+
     fun update(block: (LauncherSettingsData) -> LauncherSettingsData) {
         updateData(block)
     }

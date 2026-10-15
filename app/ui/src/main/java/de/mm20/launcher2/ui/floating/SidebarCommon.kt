@@ -447,7 +447,7 @@ internal fun FavoriteIcon(
             ShapedLauncherIcon(
                 size = if (editMode) style.iconSize * 0.75f else style.iconSize,
                 icon = { icon },
-                grayscale = isFrozen,
+                frozen = isFrozen,
             )
             if (editMode || style.showLabels) {
                 Text(

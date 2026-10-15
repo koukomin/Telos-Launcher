@@ -198,11 +198,23 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setAppFreezeState(app: Application, state: AppFreezeState, method: FreezeMethod? = null) {
         val packageName = app.componentName.packageName
-        freezeManager.setAutoFreezeCandidate(packageName, state == AppFreezeState.Candidate)
-        freezeSettings.setNeverFreeze(packageName, state == AppFreezeState.NeverFreeze)
-        if (state == AppFreezeState.Candidate) {
-            freezeSettings.setFreezeMethod(packageName, method)
+        viewModelScope.launch {
+            try {
+                val changed = freezeManager.updateAppPolicy(packageName, app.user,
+                    state == AppFreezeState.Candidate, state == AppFreezeState.NeverFreeze, method)
+                if (!changed) showPolicyError()
+            } catch (cancelled: kotlinx.coroutines.CancellationException) {
+                throw cancelled
+            } catch (error: Exception) {
+                android.util.Log.e("FreezeSettings", "Could not apply app freeze policy", error)
+                showPolicyError()
+            }
         }
+    }
+
+    private fun showPolicyError() {
+        android.widget.Toast.makeText(context, de.mm20.launcher2.ui.R.string.pdft_error_title,
+            android.widget.Toast.LENGTH_LONG).show()
     }
 
     fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon?> {

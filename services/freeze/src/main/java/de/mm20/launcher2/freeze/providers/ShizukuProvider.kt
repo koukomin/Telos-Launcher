@@ -107,22 +107,8 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
                 .onFailure { Log.e(TAG, "setPackagesSuspended($pkg) failed", it) }
                 .getOrDefault(false)
 
-            // OEM Fallback: If suspend fails, try uninstall/install-existing
-            if (!success) {
-                success = runCatching {
-                    val method = Shizuku::class.java.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)
-                    method.isAccessible = true
-                    if (suspended) {
-                        Log.i(TAG, "Suspend failed for $pkg. Falling back to uninstall -k")
-                        val process = method.invoke(null, arrayOf("sh", "-c", "pm uninstall -k --user $userId $pkg"), null, null)
-                        process::class.java.getMethod("waitFor").invoke(process) == 0
-                    } else {
-                        Log.i(TAG, "Unsuspend failed for $pkg. Falling back to install-existing")
-                        val process = method.invoke(null, arrayOf("sh", "-c", "cmd package install-existing --user $userId $pkg"), null, null)
-                        process::class.java.getMethod("waitFor").invoke(process) == 0
-                    }
-                }.getOrDefault(false)
-            }
+            // A binder compatibility failure may use the equivalent shell command, never uninstall.
+            if (!success) success = runPackageCommand(if (suspended) "suspend" else "unsuspend", pkg, userId)
             success
         }
     }
@@ -139,25 +125,18 @@ internal class ShizukuProvider : PrivilegedAccessProvider {
                 .onFailure { Log.e(TAG, "setPackagesEnabled($pkg) failed", it) }
                 .getOrDefault(false)
                 
-            // OEM Fallback: If disable fails, try uninstall/install-existing
-            if (!success) {
-                success = runCatching {
-                    val method = Shizuku::class.java.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)
-                    method.isAccessible = true
-                    if (!enabled) {
-                        Log.i(TAG, "Disable failed for $pkg. Falling back to uninstall -k")
-                        val process = method.invoke(null, arrayOf("sh", "-c", "pm uninstall -k --user $userId $pkg"), null, null)
-                        process::class.java.getMethod("waitFor").invoke(process) == 0
-                    } else {
-                        Log.i(TAG, "Enable failed for $pkg. Falling back to install-existing")
-                        val process = method.invoke(null, arrayOf("sh", "-c", "cmd package install-existing --user $userId $pkg"), null, null)
-                        process::class.java.getMethod("waitFor").invoke(process) == 0
-                    }
-                }.getOrDefault(false)
-            }
+            if (!success) success = runPackageCommand(if (enabled) "enable" else "disable-user", pkg, userId)
             success
         }
     }
+    private fun runPackageCommand(action: String, packageName: String, userId: Int): Boolean = runCatching {
+        val method = Shizuku::class.java.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)
+        method.isAccessible = true
+        val process = method.invoke(null, arrayOf("pm", action, "--user", userId.toString(), packageName), null, null)
+        try { process::class.java.getMethod("waitFor").invoke(process) == 0 }
+        finally { process::class.java.getMethod("destroy").invoke(process) }
+    }.getOrDefault(false)
+
     // === TELOS_PENDING_REVIEW_END: thor_freezer_features ===
 
     /**

@@ -40,6 +40,11 @@ abstract class BaseSettings<T>(
         }
     }
 
+    /** Completes only after the update has been persisted; for ordered privileged operations. */
+    protected suspend fun updateDataAndWait(block: suspend (T) -> T) {
+        context.dataStore.updateData(block)
+    }
+
     /** What goes into a backup. Override to leave out what must not leave the device. */
     protected open fun forBackup(data: T): T = data
 

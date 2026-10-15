@@ -331,7 +331,7 @@ fun FreezeSettingsScreen() {
             Preference(
                 title = app.label,
                 icon = {
-                    ShapedLauncherIcon(size = 32.dp, icon = { icon })
+                    ShapedLauncherIcon(size = 32.dp, icon = { icon }, frozen = isFrozenNow)
                 },
                 summary = if (isFrozenNow) {
                     stringResource(R.string.freeze_dashboard_currently_frozen) + " · " + candidateSummary

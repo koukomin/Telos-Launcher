@@ -37,13 +37,8 @@ class SuspendedAppsBadgeProvider(private val context: Context) : BadgeProvider, 
             }
 
             if (searchable.isSuspended) {
-                // Solid Snowflake
-                val drawable = ContextCompat.getDrawable(context, R.drawable.ac_unit_24px)
-                if (drawable != null) {
-                    MutableBadge(icon = BadgeIcon(drawable))
-                } else {
-                    MutableBadge(icon = BadgeIcon(R.drawable.ac_unit_24px))
-                }
+                // Retain the resource identity so the renderer avoids duplicate markers.
+                MutableBadge(icon = BadgeIcon(R.drawable.ac_unit_24px))
             } else if (candidates.contains(packageName)) {
                 // Faint Snowflake
                 val drawable = ContextCompat.getDrawable(context, R.drawable.ac_unit_24px)?.mutate()?.apply {
