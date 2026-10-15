@@ -9,14 +9,12 @@ sealed interface InstallResult {
     data class Failed(val reason: String, val cause: Throwable? = null) : InstallResult
 }
 
-/**
- * Installs an already-downloaded APK file, picking the least intrusive backend that's actually
- * usable on this device: a Shizuku-authorized silent install, then a rooted silent install, then
- * falling back to the standard [android.content.pm.PackageInstaller] session API, which prompts
- * the user. The concrete orchestration (`TelosPackageInstaller`) lives in `:data:store`, since it
- * depends on Android's `PackageInstaller`/`PackageManager` APIs.
- */
+/** An explicitly selectable installation path. External handlers always require user interaction. */
+data class InstallerChoice(val id: String, val label: String)
+
 interface AppInstaller {
+    fun externalInstallers(): List<InstallerChoice> = emptyList()
+
     /**
      * True if at least one backend (Shizuku, root, or the standard session API, which is always
      * available) can install right now. In practice this is almost always true; it exists mainly
@@ -25,8 +23,8 @@ interface AppInstaller {
     suspend fun isAvailable(): Boolean
 
     /**
-     * True when updates can be installed without anyone tapping through the system installer:
-     * Shizuku or root is available and allowed. Background installs only happen then.
+     * True only when the selected installer is currently authorized for silent installation.
+     * External handlers never qualify; Android sessions require device-owner privileges.
      */
     suspend fun canInstallSilently(): Boolean
 

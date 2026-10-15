@@ -102,6 +102,10 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         if (it == null) emptyFlow() else badgeService.getBadge(it)
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
+    val dockBadge = searchable.flatMapLatest {
+        if (it == null) emptyFlow() else badgeService.getBadge(it, includeFrozen = false)
+    }.stateIn(viewModelScope, SharingStarted.Lazily, null)
+
     val icon = searchable.combine(iconSize) { sh, sz -> sh to sz }.flatMapLatest { (s, size) ->
         if (s == null || size == 0) emptyFlow() else iconService.getIcon(s, size)
     }.stateIn(viewModelScope, SharingStarted.Lazily, null)
@@ -222,8 +226,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         }
         val bundle = options.toBundle()
 
-        if (searchable is Application && (searchable.isSuspended ||
-            (searchable.user == android.os.Process.myUserHandle() && freezeManager.isFrozen(searchable.componentName.packageName)))) {
+        if (searchable is Application) {
             viewModelScope.launch(kotlinx.coroutines.NonCancellable) {
                 try {
                     val started = freezeManager.launchThawed(searchable.componentName.packageName, searchable.user,

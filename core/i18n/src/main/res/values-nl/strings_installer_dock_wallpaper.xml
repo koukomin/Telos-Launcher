@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Installatiemethode</string>
+    <string name="store_installer_session">Android-sessie-installatie</string>
+    <string name="store_installer_external_summary">Externe installatieprogramma’s vereisen bevestiging.</string>
+    <string name="freeze_exclude_foreground">App op de voorgrond niet bevriezen</string>
+    <string name="freeze_exclude_foreground_summary">Vereist toegang tot gebruiksgegevens. Standaard uitgeschakeld.</string>
+    <string name="wallpaper_animated_gif">Geanimeerde GIF-achtergrond</string>
+</resources>

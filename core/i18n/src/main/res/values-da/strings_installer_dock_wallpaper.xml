@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Installationsmetode</string>
+    <string name="store_installer_session">Android-sessionsinstallation</string>
+    <string name="store_installer_external_summary">Eksterne installationsprogrammer kræver bekræftelse.</string>
+    <string name="freeze_exclude_foreground">Frys ikke appen i forgrunden</string>
+    <string name="freeze_exclude_foreground_summary">Kræver adgang til brugsdata. Slået fra som standard.</string>
+    <string name="wallpaper_animated_gif">Animeret GIF-baggrund</string>
+</resources>

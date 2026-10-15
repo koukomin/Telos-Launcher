@@ -93,6 +93,9 @@ class StoreViewModel : ViewModel(), KoinComponent {
     val items: StateFlow<List<StoreItem>> = repository.observeItems()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    private val appInstaller: de.mm20.launcher2.store.installer.AppInstaller by inject()
+    fun externalInstallers() = appInstaller.externalInstallers()
+
     val global: StateFlow<GlobalOptions> = options.global
 
     /** Addresses of the tracked apps, to show which recommended apps are already in the list */
@@ -161,6 +164,18 @@ class StoreViewModel : ViewModel(), KoinComponent {
     private val _installationError = MutableStateFlow<String?>(null)
     val installationError: StateFlow<String?> = _installationError
     fun consumeInstallationError() { _installationError.value = null }
+
+    init {
+        viewModelScope.launch {
+            de.mm20.launcher2.store.installer.InstallEvents.events.collect { event ->
+                items.value.filter { it.packageName == event.packageName }.forEach {
+                    setState(it.id, if (event.success) StoreInstallUiState.Installed else StoreInstallUiState.Failed)
+                }
+                if (!event.success) _installationError.value = event.packageName + ": " +
+                    str(R.string.au_store_msg_install_failed) + "\n" + event.details
+            }
+        }
+    }
 
     fun item(id: String): Flow<StoreItem?> = repository.observeItem(id)
 

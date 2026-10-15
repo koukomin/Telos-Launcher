@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Metode pemasangan</string>
+    <string name="store_installer_session">Pemasang sesi Android</string>
+    <string name="store_installer_external_summary">Pemasang eksternal memerlukan konfirmasi.</string>
+    <string name="freeze_exclude_foreground">Jangan bekukan aplikasi di latar depan</string>
+    <string name="freeze_exclude_foreground_summary">Memerlukan akses penggunaan. Nonaktif secara bawaan.</string>
+    <string name="wallpaper_animated_gif">Wallpaper GIF animasi</string>
+    <string name="preference_dock_background_blur">Keburaman latar belakang</string>
+</resources>

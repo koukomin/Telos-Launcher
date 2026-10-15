@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Instalazio-metodoa</string>
+    <string name="store_installer_session">Android saio-instalatzailea</string>
+    <string name="store_installer_external_summary">Kanpoko instalatzaileek berrespena behar dute.</string>
+    <string name="freeze_exclude_foreground">Ez izoztu aurreko planoko aplikazioa</string>
+    <string name="freeze_exclude_foreground_summary">Erabilera-datuetarako sarbidea behar du. Lehenespenez desgaituta.</string>
+    <string name="wallpaper_animated_gif">GIF horma-paper animatua</string>
+    <string name="preference_dock_background_blur">Atzeko planoaren lausotzea</string>
+</resources>

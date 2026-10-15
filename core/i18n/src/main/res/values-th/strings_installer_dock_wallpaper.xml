@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">วิธีติดตั้ง</string>
+    <string name="store_installer_session">ตัวติดตั้งเซสชัน Android</string>
+    <string name="store_installer_external_summary">ตัวติดตั้งภายนอกต้องมีการยืนยัน</string>
+    <string name="freeze_exclude_foreground">ไม่แช่แข็งแอปที่อยู่เบื้องหน้า</string>
+    <string name="freeze_exclude_foreground_summary">ต้องมีสิทธิ์เข้าถึงข้อมูลการใช้งาน ปิดไว้โดยค่าเริ่มต้น</string>
+    <string name="wallpaper_animated_gif">วอลเปเปอร์ GIF เคลื่อนไหว</string>
+    <string name="preference_dock_background_blur">ความเบลอของพื้นหลัง</string>
+</resources>

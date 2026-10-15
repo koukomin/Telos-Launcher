@@ -237,8 +237,9 @@ ID, so an old callback cannot restore a newer installation. Active installer ses
 by manual recovery. If a process dies during an install, reopen Freeze Manager after installation
 has finished and use **Freeze again** to recover any remaining entry.
 
-Store Root/Shizuku updates journal the original state before temporarily thawing for installation
-compatibility, then verify and restore it even if installation fails. Auto-freeze holds these targets.
+Store Root/Shizuku updates journal the original state and use explicit native install sessions
+without requiring thaw first, then verify and restore it even if installation fails. Standard or
+external installer handoff can temporarily thaw through an authorized backend. Auto-freeze holds these targets.
 The same path is used by manual and opted-in background updates. Root-backed Shizuku uses the
 installed Telos package ID; unsuspending also clears the known shell-owned restriction from ADB
 mode or a prior shell fallback. Other policy owners’ restrictions remain subject to Android limits.

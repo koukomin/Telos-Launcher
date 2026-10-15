@@ -189,6 +189,10 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
     val freezeOnBatterySaver = freezeSettings.freezeOnBatterySaver
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+    val excludeForeground = freezeSettings.excludeForeground
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    fun setExcludeForeground(value: Boolean) = freezeSettings.setExcludeForeground(value)
+
     val excludeMusic = freezeSettings.excludeMusic
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val excludeNetwork = freezeSettings.excludeNetwork

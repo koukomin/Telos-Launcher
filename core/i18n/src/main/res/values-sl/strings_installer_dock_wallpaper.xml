@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Način namestitve</string>
+    <string name="store_installer_session">Namestitveni program sej Android</string>
+    <string name="store_installer_external_summary">Zunanji namestitveni programi zahtevajo potrditev.</string>
+    <string name="freeze_exclude_foreground">Ne zamrzni aplikacije v ospredju</string>
+    <string name="freeze_exclude_foreground_summary">Zahteva dostop do podatkov o uporabi. Privzeto izklopljeno.</string>
+    <string name="wallpaper_animated_gif">Animirano ozadje GIF</string>
+</resources>

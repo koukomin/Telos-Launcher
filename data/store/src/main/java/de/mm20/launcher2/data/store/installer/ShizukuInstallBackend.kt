@@ -9,18 +9,7 @@ import rikka.shizuku.Shizuku
 import java.io.File
 import kotlin.coroutines.resume
 
-/**
- * Silently installs an APK by shelling `pm install` out through Shizuku's elevated process
- * ([Shizuku.newProcess], the same reflection entry point `ShizukuProvider` in `:services:freeze`
- * already uses, since it isn't part of Shizuku's stable public API).
- *
- * This is the MVP: a shell-level install, not a true `IPackageInstaller` session carried over
- * Shizuku's binder (`ShizukuBinderWrapper` + `IPackageInstaller.Stub.asInterface`, the way
- * `ShizukuProvider.packageManager()` talks to `IPackageManager` directly). That binder-level
- * session is the next step - it avoids spawning a shell process per install and gives proper
- * progress/error callbacks instead of a bare exit code - but isn't implemented yet. [install]
- * documents this as a TODO rather than silently behaving differently from its interface contract.
- */
+/** Uses Android install sessions through the authorized Shizuku process. */
 internal class ShizukuInstallBackend : InstallBackend {
 
     companion object {
@@ -67,8 +56,6 @@ internal class ShizukuInstallBackend : InstallBackend {
         }
     }
 
-    // TODO(store): switch to a binder-level IPackageInstaller session (see class doc) instead of
-    //  shelling out to `pm install`, to get real progress/error reporting.
     override suspend fun install(apk: File, packageName: String): BackendInstallResult =
         withContext(Dispatchers.IO) {
             if (!hasPermission()) {
@@ -82,16 +69,9 @@ internal class ShizukuInstallBackend : InstallBackend {
                     String::class.java,
                 )
                 method.isAccessible = true
-                suspend fun attempt(preserve: Boolean): Pair<Boolean, String> {
-                    val command = apkInstallArguments(apk.length(), android.os.Process.myUid() / 100000, preserve)
-                    return streamApkInstall(apk, method.invoke(null, command.toTypedArray(), null, null) as Process)
+                installPrivilegedSession(apk, android.os.Process.myUid() / 100000, android.os.Build.VERSION.SDK_INT >= 34) { command, input ->
+                    runInstallCommand(input, method.invoke(null, command.toTypedArray(), null, null) as Process)
                 }
-                val preserve = android.os.Build.VERSION.SDK_INT >= 34
-                var outcome = attempt(preserve)
-                if (!outcome.first && preserve && unsupportedPreserveFlag(outcome.second)) outcome = attempt(false)
-                val (success, output) = outcome
-                if (success) BackendInstallResult.Success
-                else BackendInstallResult.Failed("Shizuku install failed: $output")
             } catch (e: Exception) {
                 Log.w(TAG, "Shizuku install failed for $packageName", e)
                 BackendInstallResult.Failed("Shizuku install failed: ${e.message}", e)

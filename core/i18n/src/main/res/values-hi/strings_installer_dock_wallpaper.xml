@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">इंस्टॉल करने का तरीका</string>
+    <string name="store_installer_session">Android सत्र इंस्टॉलर</string>
+    <string name="store_installer_external_summary">बाहरी इंस्टॉलर के लिए पुष्टि आवश्यक है।</string>
+    <string name="freeze_exclude_foreground">सामने चल रहे ऐप को फ़्रीज़ न करें</string>
+    <string name="freeze_exclude_foreground_summary">उपयोग डेटा की अनुमति आवश्यक है। डिफ़ॉल्ट रूप से बंद है।</string>
+    <string name="wallpaper_animated_gif">एनिमेटेड GIF वॉलपेपर</string>
+</resources>

@@ -171,11 +171,12 @@ but Telos cannot judge whether the source itself is trustworthy.
 ## Updating frozen applications
 
 Enable **Update frozen apps** in Store settings (off by default). Authorized Root/Shizuku installs
-save the original freeze state, temporarily thaw through the same authorized backend, stream the
-private APK to the privileged process, and verify/restore the saved restrictions after success or
-failure. The compatibility thaw is deliberate: some installers reject disabled, hidden or suspended
-targets even when a persistent-enabled-setting flag is available. Automatic freeze holds the target
-throughout this update window. A failed thaw prevents installation; failed restoration stays pending. Telos configured as **Device Owner** uses Android
+save the original freeze state, stream the private APK through explicit privileged sessions, and
+verify/restore the saved restrictions after success or failure. A native update does not depend on
+thawing first. Where supported, the enabled-setting preservation flag avoids enabling the target;
+restoration is still verified afterwards. Standard Android session and external installers can
+thaw through an authorized backend before handoff. Auto-freeze holds journaled targets throughout
+the update window. Failed restoration stays pending. Telos configured as **Device Owner** uses Android
 PackageInstaller sessions and restores state from the final callback, including cancellation.
 Device Owner updates reject package/component disable overrides that this backend cannot restore.
 Android may still require user action under its update policies. Plain Device Admin access does
@@ -202,3 +203,24 @@ Manual installation failures open a scrollable, selectable diagnostic dialog ins
 the installer response in a toast. Shizuku/root process streams are fully read before cleanup so
 `Success` and actual failure messages are not lost. Frozen/hidden installed apps are also included
 in source discovery; discovery alone never opts them into automatic installation.
+
+## Choosing an installation method
+
+Store settings now let you explicitly select **Android session installer**, **Shizuku**, **Root**,
+or an installed, exported APK handler (for example Thor). The Android session installer is the
+default. A selected privileged backend must be running and authorized; an unavailable backend
+reports a failure rather than silently switching methods. Choose another method and retry the
+already downloaded APK. External handlers are discovered from their Android intent filters in
+the current profile, not from a hard-coded list of names. Island only appears if that installed
+version exposes a compatible APK handler; its work-profile policy is not a universal installer.
+
+Shizuku/root use `install-create`, streamed `install-write`, then `install-commit`, with session
+abandonment after failure. No private APK path is handed to the shell. Frozen-app updates on
+these paths record the original state and install directly, then verify restoration. Android
+session/external installation may temporarily thaw with an authorized freeze backend; its
+callback restores the journaled state. If an external installer does not return a result or the
+process is interrupted, use pending-update recovery in Freeze settings; Telos does not assume
+success or erase the recovery snapshot. External installation is never a silent auto-update path.
+
+Session failure callbacks now clear the pending row and display their diagnostic text. Exact
+OEM installation failures still need the complete error shown by the selected backend.

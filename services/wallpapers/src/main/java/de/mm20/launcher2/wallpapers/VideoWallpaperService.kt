@@ -64,6 +64,7 @@ class VideoWallpaperService : WallpaperService() {
         private var scope: CoroutineScope? = null
 
         private var player: ExoPlayer? = null
+        private var gifRenderer: GifWallpaperRenderer? = null
         private var lastPositionMs = 0L
 
         private var isSurfaceReady = false
@@ -253,9 +254,10 @@ class VideoWallpaperService : WallpaperService() {
                 thermalListener?.let { powerManager?.removeThermalStatusListener(it) }
                 thermalListener = null
             }
-            releasePlayer()
             scope?.cancel()
             scope = null
+            // onDestroy runs on the main thread: do not enqueue cleanup into the cancelled scope.
+            releasePlayerLocked()
         }
 
         private fun shouldPlay(): Boolean {
@@ -281,7 +283,7 @@ class VideoWallpaperService : WallpaperService() {
             scope?.launch {
                 playerMutex.withLock {
                     if (shouldPlay()) {
-                        if (player == null) createPlayerLocked()
+                        if (player == null && gifRenderer == null) createPlayerLocked()
                         else player?.play()
                     } else {
                         releasePlayerLocked()
@@ -315,7 +317,7 @@ class VideoWallpaperService : WallpaperService() {
         }
 
         @OptIn(UnstableApi::class)
-        private fun createPlayerLocked() {
+        private suspend fun createPlayerLocked() {
             val dir = WallpapersService.getVideoDir(this@VideoWallpaperService)
             val files = dir.listFiles()?.filter { !it.name.endsWith(".tmp") }?.sortedBy { it.name }
 
@@ -323,6 +325,16 @@ class VideoWallpaperService : WallpaperService() {
             val allFiles = if (files.isNullOrEmpty() && legacyFile.exists()) listOf(legacyFile) else files ?: emptyList()
 
             if (allFiles.isEmpty()) return
+            val first = allFiles.first()
+            if (withContext(Dispatchers.IO) { GifWallpaperRenderer.isGif(first) }) {
+                try {
+                    gifRenderer = withContext(Dispatchers.IO) {
+                        GifWallpaperRenderer.create(first, surfaceHolder, { transforms }, { xOffset }, { speed })
+                    }.also { it.start() }
+                } catch (error: Exception) { CrashReporter.logException(error) }
+                return
+            }
+
 
             val p = ExoPlayer.Builder(this@VideoWallpaperService).build()
             try {
@@ -411,6 +423,8 @@ class VideoWallpaperService : WallpaperService() {
         }
 
         private fun releasePlayerLocked() {
+            gifRenderer?.close()
+            gifRenderer = null
             val p = player ?: return
             player = null
             try {

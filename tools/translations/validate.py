@@ -22,7 +22,7 @@ def main():
                 if name in names:
                     raise SystemExit(f'Duplicate string: {directory.name}/{name}')
                 names.add(name)
-                if path.name != 'strings_telos_remaining.xml':
+                if path.name not in {'strings_telos_remaining.xml', 'strings_installer_dock_wallpaper.xml'}:
                     continue
                 text = ''.join(node.itertext())
                 source = data['strings'][name]['text']

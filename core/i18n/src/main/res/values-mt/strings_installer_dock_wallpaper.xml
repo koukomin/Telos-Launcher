@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Metodu ta’ installazzjoni</string>
+    <string name="store_installer_session">Installatur tas-sessjonijiet Android</string>
+    <string name="store_installer_external_summary">L-installaturi esterni jeħtieġu konferma.</string>
+    <string name="freeze_exclude_foreground">Tiffriżax l-app li qed tintuża bħalissa</string>
+    <string name="freeze_exclude_foreground_summary">Jeħtieġ aċċess għad-dejta tal-użu. Mitfi b’mod predefinit.</string>
+    <string name="wallpaper_animated_gif">Sfond GIF animat</string>
+</resources>

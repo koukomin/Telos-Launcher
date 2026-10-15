@@ -49,6 +49,9 @@ class InstallResultReceiver : BroadcastReceiver() {
                 val token = intent.getStringExtra(EXTRA_FREEZE_TOKEN)
                 if (token != null && !freeze.finishFrozenUpdate(packageName, token))
                     Log.w(TAG, "Freeze restoration pending for $packageName")
+                de.mm20.launcher2.store.installer.InstallEvents.report(
+                    de.mm20.launcher2.store.installer.InstallEvent(packageName, status == PackageInstaller.STATUS_SUCCESS,
+                        intent.getStringExtra(PackageInstaller.EXTRA_STATUS_MESSAGE).orEmpty().take(8192)))
                 if (status != PackageInstaller.STATUS_SUCCESS) {
                     Log.w(TAG, "Install failed for $packageName, status=$status")
                     return@launch

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Instalēšanas metode</string>
+    <string name="store_installer_session">Android sesijas instalētājs</string>
+    <string name="store_installer_external_summary">Ārējiem instalētājiem nepieciešams apstiprinājums.</string>
+    <string name="freeze_exclude_foreground">Nesasaldēt priekšplāna lietotni</string>
+    <string name="freeze_exclude_foreground_summary">Nepieciešama piekļuve lietojuma datiem. Pēc noklusējuma izslēgts.</string>
+    <string name="wallpaper_animated_gif">Animēts GIF fona attēls</string>
+</resources>

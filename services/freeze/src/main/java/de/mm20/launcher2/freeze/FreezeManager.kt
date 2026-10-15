@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.first
 class FreezeManager internal constructor(
     private val context: Context,
     private val settings: FreezeSettings,
+    private val usageStats: AppUsageStatsProvider,
 ) {
     // === TELOS_PENDING_REVIEW_START: thor_freezer_features ===
     private val dhizukuProvider = DhizukuProvider(context)
@@ -58,14 +59,14 @@ class FreezeManager internal constructor(
     val activeBackend: StateFlow<FreezeBackendType?> = _activeBackend.asStateFlow()
 
     private val maintenance by lazy {
-        FreezeMaintenance(context, settings, operationMutex, { it in PROTECTED_PACKAGES }, ::maintenanceProvider)
+        FreezeMaintenance(context, settings, operationMutex, { it in PROTECTED_PACKAGES }, ::maintenanceProvider, usageStats::currentForegroundPackage)
     }
     val maintenanceEntries get() = settings.maintenance
     suspend fun scanFrozenApps() = maintenance.scan()
     suspend fun unfreezeAll(groups: Set<FrozenAppGroup>) = maintenance.unfreezeAll(groups)
     suspend fun restoreFrozenApps() = maintenance.restoreAll()
     suspend fun recoverFrozenUpdates() = maintenance.recoverInstalls()
-    suspend fun beginFrozenUpdate(packageName: String, backend: String) = maintenance.beginInstall(packageName, backend)
+    suspend fun beginFrozenUpdate(packageName: String, backend: String, thawFirst: Boolean = true) = maintenance.beginInstall(packageName, backend, thawFirst)
     suspend fun finishFrozenUpdate(packageName: String, token: String) = maintenance.finishInstall(packageName, token)
     suspend fun hasPendingFrozenUpdate(packageName: String) = settings.maintenance.first().values.any {
         it.packageName == packageName && it.userId == Process.myUid() / 100000 && it.operationId.isNotEmpty()
@@ -234,8 +235,9 @@ class FreezeManager internal constructor(
         // Package names end up in shell commands (root / Shizuku fallbacks), so anything that is not a
         // well-formed package name is dropped here rather than trusted.
         val held = if (respectMaintenance) settings.maintenance.first().values.map { it.packageName }.toSet() else emptySet()
+        val foreground = if (suspended && userId == Process.myUid() / 100000 && settings.excludeForeground.first()) usageStats.currentForegroundPackage() else null
         val safePackages = packageNames.filter { VALID_PACKAGE_NAME.matches(it) }
-            .filterNot { (suspended && PROTECTED_PACKAGES.contains(it)) || it in held }
+            .filterNot { (suspended && PROTECTED_PACKAGES.contains(it)) || it in held || it == foreground }
         if (safePackages.isEmpty()) {
             Log.w(TAG, "All targeted packages are protected system packages. Aborting freeze.")
             return emptySet()

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Installationsmethode</string>
+    <string name="store_installer_session">Android-Sitzungsinstaller</string>
+    <string name="store_installer_external_summary">Externe Installer erfordern eine Bestätigung.</string>
+    <string name="freeze_exclude_foreground">App im Vordergrund nicht einfrieren</string>
+    <string name="freeze_exclude_foreground_summary">Benötigt Nutzungszugriff. Standardmäßig deaktiviert.</string>
+    <string name="wallpaper_animated_gif">Animiertes GIF als Hintergrund</string>
+</resources>

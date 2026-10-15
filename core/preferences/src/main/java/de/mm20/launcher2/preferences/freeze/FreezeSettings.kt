@@ -103,6 +103,12 @@ class FreezeSettings internal constructor(
         }
     }
 
+    val excludeForeground get() = dataStore.data.map { it.freeze.freezeExcludeForeground }
+
+    fun setExcludeForeground(value: Boolean) {
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeExcludeForeground = value)) }
+    }
+
     val excludeMusic
         get() = dataStore.data.map { it.freeze.freezeExcludeMusic }
 

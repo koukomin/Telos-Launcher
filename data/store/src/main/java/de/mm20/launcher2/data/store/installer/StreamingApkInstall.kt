@@ -7,7 +7,12 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 /** Stream private APK bytes to the privileged process; no public copy or APK-sized allocation. */
-internal suspend fun streamApkInstall(apk: File, process: Process): Pair<Boolean, String> = coroutineScope {
+internal suspend fun streamApkInstall(apk: File, process: Process): Pair<Boolean, String> {
+    val result = runInstallCommand(apk, process)
+    return (result.exitCode == 0 && result.output.lineSequence().any { it.trim() == "Success" }) to result.output
+}
+
+internal suspend fun runInstallCommand(apk: File?, process: Process): InstallCommandResult = coroutineScope {
     fun readBounded(input: InputStream): String = input.bufferedReader().use { reader ->
         val text = StringBuilder()
         val buffer = CharArray(2048)
@@ -23,7 +28,7 @@ internal suspend fun streamApkInstall(apk: File, process: Process): Pair<Boolean
     try {
         var writeFailed = false
         try {
-            process.outputStream.use { target -> apk.inputStream().use { it.copyTo(target, 64 * 1024) } }
+            process.outputStream.use { target -> apk?.inputStream()?.use { it.copyTo(target, 64 * 1024) } }
         } catch (_: java.io.IOException) {
             // pm can reject an option before consuming stdin; still collect its diagnosis.
             writeFailed = true
@@ -31,8 +36,7 @@ internal suspend fun streamApkInstall(apk: File, process: Process): Pair<Boolean
         val exit = process.waitFor()
         val stdout = output.await()
         val stderr = errors.await()
-        (!writeFailed && exit == 0 && stdout.lineSequence().any { it.trim() == "Success" }) to
-            (stdout + stderr).take(8192)
+        InstallCommandResult(if (writeFailed && exit == 0) -1 else exit, (stdout + stderr).take(8192))
     } finally {
         // Remote Shizuku streams may still contain the result after waitFor returns.
         // Closing the process before readers finish can discard Success or throw Stream closed.

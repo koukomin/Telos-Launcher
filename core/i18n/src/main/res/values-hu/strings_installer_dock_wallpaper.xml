@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Telepítési mód</string>
+    <string name="store_installer_session">Android-munkamenetes telepítő</string>
+    <string name="store_installer_external_summary">A külső telepítők megerősítést igényelnek.</string>
+    <string name="freeze_exclude_foreground">Ne fagyassza be az előtérben lévő alkalmazást</string>
+    <string name="freeze_exclude_foreground_summary">Használati hozzáférést igényel. Alapértelmezetten kikapcsolva.</string>
+    <string name="wallpaper_animated_gif">Animált GIF-háttérkép</string>
+</resources>

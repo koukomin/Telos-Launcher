@@ -709,6 +709,19 @@ private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
                         FilterChip(selected = g.checkIntervalHours == hours, onClick = { viewModel.setGlobal { it.copy(checkIntervalHours = hours) } }, label = { Text(label) })
                     }
                 }
+                Text(stringResource(R.string.store_installer_method), style = MaterialTheme.typography.titleSmall)
+                val choices = listOf(
+                    de.mm20.launcher2.store.installer.InstallerChoice("session", stringResource(R.string.store_installer_session)),
+                    de.mm20.launcher2.store.installer.InstallerChoice("shizuku", "Shizuku"),
+                    de.mm20.launcher2.store.installer.InstallerChoice("root", "Root"),
+                ) + viewModel.externalInstallers()
+                choices.forEach { choice ->
+                    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                        androidx.compose.material3.RadioButton(selected = g.installer == choice.id, onClick = { viewModel.setGlobal { it.copy(installer = choice.id) } })
+                        Text(choice.label)
+                    }
+                }
+                Text(stringResource(R.string.store_installer_external_summary), style = MaterialTheme.typography.bodySmall)
                 ToggleRow(stringResource(R.string.hc_only_on_wi_fi), g.wifiOnly) { v -> viewModel.setGlobal { it.copy(wifiOnly = v) } }
                 ToggleRow(stringResource(R.string.hf_store_notify), g.notifyUpdates) { v -> viewModel.setGlobal { it.copy(notifyUpdates = v) } }
                 ToggleRow(stringResource(R.string.store_update_frozen), g.updateFrozenApps) { v -> viewModel.setGlobal { it.copy(updateFrozenApps = v) } }

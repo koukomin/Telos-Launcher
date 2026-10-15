@@ -57,6 +57,22 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'docs/.vitepress/dist'
+          name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+      # The previous release left this Pages deployment active after its workflow timed out.
+      # Cancel only that known abandoned deployment; never touch the live site's successful build.
+      - name: Recover abandoned Pages deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          STALE_PAGES_SHA=f1319d02aae3570d293ae3e320392bab2ef71a7d
+          STATUS=$(gh api "repos/$GITHUB_REPOSITORY/pages/deployments/$STALE_PAGES_SHA" --jq '.status' 2>/dev/null || true)
+          case "$STATUS" in
+            deployment_in_progress|queued|pending|building|in_progress)
+              gh api --method POST "repos/$GITHUB_REPOSITORY/pages/deployments/$STALE_PAGES_SHA/cancel"
+              ;;
+          esac
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}

@@ -277,7 +277,7 @@ fun GridItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        val badge by viewModel.badge.collectAsStateWithLifecycle()
+        val badge by (if (inDock) viewModel.dockBadge else viewModel.badge).collectAsStateWithLifecycle()
         val icon by viewModel.icon.collectAsStateWithLifecycle()
         val isSuspended by viewModel.isSuspended.collectAsStateWithLifecycle()
 
@@ -335,7 +335,7 @@ fun GridItem(
                 size = iconSizeDp,
                 badge = { badge },
                 icon = { icon },
-                frozen = isSuspended,
+                frozen = isSuspended && !inDock,
         // === TELOS_PENDING_REVIEW_END: perf_optimizations ===
             )
         }

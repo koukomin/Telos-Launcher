@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_installer_method">Methodo de installation</string>
+    <string name="store_installer_session">Installator de sessiones Android</string>
+    <string name="store_installer_external_summary">Le installatores externe require confirmation.</string>
+    <string name="freeze_exclude_foreground">Non congelar le application in primo plano</string>
+    <string name="freeze_exclude_foreground_summary">Require accesso al datos de uso. Disactivate per predefinition.</string>
+    <string name="wallpaper_animated_gif">Fundo de schermo GIF animate</string>
+    <string name="preference_dock_background_blur">Offuscamento del fundo</string>
+</resources>

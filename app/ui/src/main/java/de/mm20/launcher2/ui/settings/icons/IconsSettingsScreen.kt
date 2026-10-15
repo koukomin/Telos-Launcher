@@ -85,9 +85,10 @@ fun IconsSettingsScreen() {
     val homeGrid by viewModel.homeGrid.collectAsStateWithLifecycle(GridSettings())
     val drawerGrid by viewModel.drawerGrid.collectAsStateWithLifecycle(GridSettings())
 
-    val drawerBackgroundEnabled by viewModel.drawerBackgroundEnabled.collectAsStateWithLifecycle(false)
+    val drawerBackgroundEnabled by viewModel.drawerBackgroundEnabled.collectAsStateWithLifecycle(true)
     val drawerBackgroundColor by viewModel.drawerBackgroundColor.collectAsStateWithLifecycle(null)
-    val drawerBackgroundOpacity by viewModel.drawerBackgroundOpacity.collectAsStateWithLifecycle(0.9f)
+    val drawerBackgroundBlur by viewModel.drawerBackgroundBlur.collectAsStateWithLifecycle(32)
+    val drawerBackgroundOpacity by viewModel.drawerBackgroundOpacity.collectAsStateWithLifecycle(0.35f)
     val folderBackgroundColor by viewModel.folderBackgroundColor.collectAsStateWithLifecycle(null)
     val folderCoverEnabled by viewModel.folderCoverEnabled.collectAsStateWithLifecycle(true)
 
@@ -286,6 +287,12 @@ fun IconsSettingsScreen() {
                 )
                 AnimatedVisibility(drawerBackgroundEnabled) {
                     Column {
+                        SliderPreference(
+                            title = stringResource(R.string.preference_dock_background_blur),
+                            value = drawerBackgroundBlur,
+                            min = 0, max = 100,
+                            onValueChanged = viewModel::setDrawerBackgroundBlur,
+                        )
                         ColorPreference(
                             title = stringResource(R.string.preference_dock_background_color),
                             value = drawerBackgroundColor?.let { Color(it) },
