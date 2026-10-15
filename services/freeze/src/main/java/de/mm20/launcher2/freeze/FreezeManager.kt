@@ -59,7 +59,7 @@ class FreezeManager internal constructor(
     val activeBackend: StateFlow<FreezeBackendType?> = _activeBackend.asStateFlow()
 
     private val maintenance by lazy {
-        FreezeMaintenance(context, settings, operationMutex, { it in PROTECTED_PACKAGES }, ::maintenanceProvider)
+        FreezeMaintenance(context, settings, operationMutex, { it in PROTECTED_PACKAGES }, ::maintenanceProvider, usageStats::currentForegroundPackage)
     }
     val maintenanceEntries get() = settings.maintenance
     suspend fun scanFrozenApps() = maintenance.scan()

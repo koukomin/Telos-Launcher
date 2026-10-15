@@ -254,9 +254,10 @@ class VideoWallpaperService : WallpaperService() {
                 thermalListener?.let { powerManager?.removeThermalStatusListener(it) }
                 thermalListener = null
             }
-            releasePlayer()
             scope?.cancel()
             scope = null
+            // onDestroy runs on the main thread: do not enqueue cleanup into the cancelled scope.
+            releasePlayerLocked()
         }
 
         private fun shouldPlay(): Boolean {

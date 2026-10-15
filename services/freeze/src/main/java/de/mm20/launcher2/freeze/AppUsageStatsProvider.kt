@@ -19,7 +19,7 @@ class AppUsageStatsProvider internal constructor(
 ) {
     fun hasPermission(): Boolean = permissionsManager.checkPermissionOnce(PermissionGroup.UsageAccess)
 
-    /** The package currently in the foreground, reconstructed from the last minute of usage
+    /** The package currently in the foreground, reconstructed from the last day of usage
      * events, or null if unknown (no permission, or nothing moved to foreground recently). */
     fun currentForegroundPackage(): String? {
         if (!hasPermission()) return null
@@ -62,7 +62,7 @@ class AppUsageStatsProvider internal constructor(
     }
 
     companion object {
-        private const val FOREGROUND_LOOKBACK_MS = ONE_DAY_MS
+        private const val FOREGROUND_LOOKBACK_MS = 24 * 60 * 60 * 1000L
         private const val ONE_DAY_MS = 24 * 60 * 60 * 1000L
     }
 }

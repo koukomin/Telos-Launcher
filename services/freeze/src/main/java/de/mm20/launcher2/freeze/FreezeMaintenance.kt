@@ -25,6 +25,7 @@ internal class FreezeMaintenance(
     private val mutex: Mutex,
     private val isProtected: (String) -> Boolean,
     private val provider: suspend (String?) -> Pair<String, PrivilegedAccessProvider>?,
+    private val foregroundPackage: () -> String?,
 ) {
     private val activeInstalls = mutableSetOf<String>()
     private val pm get() = context.packageManager
@@ -104,6 +105,7 @@ internal class FreezeMaintenance(
     private suspend fun restore(entry: FrozenAppRestore, backend: PrivilegedAccessProvider): Boolean {
         valid(entry)
         val pkg = entry.packageName
+        if (settings.excludeForeground.first() && foregroundPackage() == pkg) return false
         val current = try { pm.getApplicationInfo(pkg, flags) } catch (_: PackageManager.NameNotFoundException) { return false }
         if (current.flags and ApplicationInfo.FLAG_INSTALLED == 0) return false
         val before = capture(pkg)
