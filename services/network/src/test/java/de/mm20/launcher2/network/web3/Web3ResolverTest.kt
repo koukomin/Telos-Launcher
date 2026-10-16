@@ -7,6 +7,12 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class Web3ResolverTest {
+    @Test fun providerJsonErrorsAreNotReportedAsMissingRecords() = runBlocking {
+        val resolver = Web3Resolver { url ->
+            Json.parseToJsonElement(if (url.contains("ensideas")) """{"error":"RPC unavailable","address":null}""" else """{"Status":"2"}""").jsonObject
+        }
+        assertTrue(resolver.resolve("alice.eth", "").partialFailure)
+    }
     @Test fun walletOutageDoesNotHideWebsite() = runBlocking {
         val resolver = Web3Resolver { url ->
             if (url.contains("ensideas")) error("offline")

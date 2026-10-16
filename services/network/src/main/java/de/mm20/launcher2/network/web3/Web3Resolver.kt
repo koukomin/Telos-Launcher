@@ -33,7 +33,9 @@ class Web3Resolver(private val fetch: ((String) -> JsonObject)? = null) {
             }
             Web3Resolution(name, address?.let { mapOf("ETH" to it) }.orEmpty(),
                 if (hasContent) "https://$name.limo/" else null,
-                listOf("https://api.ensideas.com", "https://dns.eth.limo"), result.isFailure || dns.isFailure)
+                listOf("https://api.ensideas.com", "https://dns.eth.limo"),
+                result.isFailure || dns.isFailure || result.getOrNull()?.get("error")?.let { it !is JsonNull } == true ||
+                    dns.getOrNull()?.get("Status")?.jsonPrimitive?.contentOrNull?.toIntOrNull()?.let { it != 0 } == true)
         } else {
             // The official UD API requires a backend-held API key. Never ship a shared key in APKs.
             val base = Web3Names.httpsUrl(unstoppableProxy.trim().trimEnd('/'))
@@ -41,7 +43,7 @@ class Web3Resolver(private val fetch: ((String) -> JsonObject)? = null) {
                 ?: throw IllegalArgumentException("Configure an HTTPS Unstoppable Domains API proxy")
             val result = request("$base/$name")
             ensureActive()
-            val records = result["records"]?.jsonObject ?: JsonObject(emptyMap())
+            val records = checkNotNull(result["records"]?.jsonObject) { "Invalid resolution response" }
             val wallets = records.entries.mapNotNull { (key, value) ->
                 val address = value.jsonPrimitive.contentOrNull.orEmpty()
                 if (key.startsWith("crypto.") && key.endsWith(".address") && address.isNotBlank() && address.length <= 256)

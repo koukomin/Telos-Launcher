@@ -117,27 +117,30 @@ private fun Web3Lookup() {
     var failed by remember { mutableStateOf(false) }
     var loading by remember { mutableStateOf(false) }
     var job by remember { mutableStateOf<Job?>(null) }
+    var generation by remember { mutableIntStateOf(0) }
     Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Text("Web3", style = MaterialTheme.typography.titleLarge)
         Text(stringResource(R.string.nweb_intro))
         SelectionContainer { Text(".eth · " + Web3Names.unstoppableSuffixes.sorted().joinToString(" · ") { ".$it" }) }
         OutlinedTextField(value = proxy, onValueChange = {
             proxy = it
+            generation++
             settings.update { s -> s.copy(web3UnstoppableProxy = it) }
             job?.cancel(); loading = false; result = null; failed = false
         }, label = { Text(stringResource(R.string.nweb_proxy)) }, modifier = Modifier.fillMaxWidth(), singleLine = false)
         OutlinedTextField(value = name, onValueChange = {
-            name = it; job?.cancel(); loading = false; result = null; failed = false
+            name = it; generation++; job?.cancel(); loading = false; result = null; failed = false
         }, label = { Text(stringResource(R.string.net_dns_detail_address)) },
             placeholder = { Text("alice.eth") }, modifier = Modifier.fillMaxWidth(), singleLine = true)
         Button(enabled = !loading && Web3Names.normalize(name) != null && (name.trim().trimEnd('.').endsWith(".eth", true) || Web3Names.httpsUrl(proxy) != null),
             onClick = {
                 job?.cancel(); result = null; failed = false; loading = true
+                val request = ++generation
                 job = scope.launch {
                     try { result = Web3Resolver().resolve(name, proxy) }
                     catch (cancelled: CancellationException) { throw cancelled }
                     catch (_: Exception) { failed = true }
-                    finally { loading = false }
+                    finally { if (generation == request) loading = false }
                 }
             }) { Text(stringResource(R.string.ts_search)) }
         if (loading) CircularProgressIndicator()
