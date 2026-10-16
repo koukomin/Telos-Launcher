@@ -1212,3 +1212,5 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 The plugin SDK modules (`plugins/sdk` and `core/shared`) are licensed under the Apache License 2.0.
 
 Tablet drawer: a dedicated full-width switch under Settings → Icons → App drawer, with adaptive columns unless a custom drawer column count is selected.
+
+Frozen application targets assigned to icon shutters and folder children use the same app-lock and verified thaw-before-launch path as drawer and dock icons. An authorized freeze backend is required to thaw an app.
