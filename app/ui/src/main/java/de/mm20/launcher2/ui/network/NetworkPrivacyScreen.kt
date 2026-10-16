@@ -53,7 +53,6 @@ fun NetworkPrivacyScreen() {
             PreferenceCategory(title = "Tor") {
                 SwitchPreference(
                     title = stringResource(R.string.nt_onion),
-                    summary = stringResource(R.string.net_settings_apply_sum),
                     value = config.torEnabled, enabled = state !is NetState.Starting,
                     onValueChanged = {
                         settings.update { s -> s.copy(torEnabled = it, torWasActive = if (it) s.torWasActive else false) }; settings.flush()

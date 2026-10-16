@@ -19,11 +19,10 @@
 
     <application>
         <!--
-            The VPN. Never started by itself: only by NetworkEngine.start() (a user action), by the
-            boot receiver below when the user switched on "start on boot", or by the system when the
-            user selected Telos Network as always-on VPN in the Android settings.
+            The VPN restores persisted active intent after service/process restarts and app updates.
+            Reboot restoration is gated by "start on boot". Android may also start an always-on VPN.
             systemExempted: the foreground service type Android allows for VPN apps (API 34+);
-            specialUse is the fallback when a device refuses it.
+            specialUse is tried first to support OEMs that reject systemExempted.
         -->
         <service
             android:name="de.mm20.launcher2.network.vpn.TelosVpnService"

@@ -78,6 +78,7 @@ class NetworkEngine internal constructor(
      * intent from there and call [start] again after the user agreed. Does nothing while
      * [NetState.Starting] or [NetState.On].
      */
+    @Synchronized
     fun start() {
         val current = _state.value
         if (current is NetState.Starting || current is NetState.On) return
@@ -98,8 +99,9 @@ class NetworkEngine internal constructor(
         watchdog = scope.launch {
             delay(START_TIMEOUT_MS)
             if (_state.value is NetState.Starting) {
-                TelosVpnService.current?.requestStop(StopReason.Failure, "timeout")
-                if (_state.value is NetState.Starting) fail(StopReason.Failure, "timeout")
+                val service = TelosVpnService.current
+                if (service != null) service.requestStop(StopReason.Failure, "timeout")
+                else fail(StopReason.Failure, "timeout")
             }
         }
         try {
