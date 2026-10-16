@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor لنطاقات .onion</string>
+    <string name="nt_mode_hint">أوقف VPN قبل تغيير وضع Tor.</string>
+    <string name="nt_waiting">بانتظار طلب .onion</string>
+    <string name="nt_auto">تشغيل Tor تلقائيًا</string>
+    <string name="nt_auto_hint">طلبات DNS الظاهرة فقط؛ أعد المحاولة بعد الاتصال. لا يمكن لـ DNS المشفر تشغيل Tor.</string>
+    <string name="nt_apps">تطبيقات عبر Tor فقط</string>
+    <string name="nt_scope">فقط أثناء تشغيل VPN وعبر TCP. يُستثنى Telos؛ يُعطّل تجاوز VPN واستثناءات التطبيقات الأخرى.</string>
+    <string name="nt_safety">للحماية بعد توقف VPN، فعّل VPN الدائم وحظر الاتصالات بدون VPN في إعدادات Android.</string>
+    <string name="nweb_intro">أسماء ASCII. ‏.eth: ‏ENS Ideas / eth.limo؛ غيرها: وكيل UD الخاص بك. يرى المزودون الأسماء/IP. تستخدم المواقع بوابات HTTPS.</string>
+    <string name="nweb_proxy">وكيل Unstoppable Domains ‏(HTTPS)</string>
+    <string name="nweb_wallets">عناوين المحافظ</string>
+</resources>

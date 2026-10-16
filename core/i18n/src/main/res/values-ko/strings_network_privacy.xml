@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">.onion용 Tor</string>
+    <string name="nt_mode_hint">Tor 모드를 바꾸기 전에 VPN을 중지하세요.</string>
+    <string name="nt_waiting">.onion 요청 대기 중</string>
+    <string name="nt_auto">Tor 자동 시작</string>
+    <string name="nt_auto_hint">감지 가능한 DNS만 해당합니다. 연결 후 다시 시도하세요. 암호화된 DNS는 Tor를 시작할 수 없습니다.</string>
+    <string name="nt_apps">Tor만 사용하는 앱</string>
+    <string name="nt_scope">VPN 실행 중 TCP만 지원합니다. Telos는 제외되며 VPN 우회 및 다른 앱 제외 설정은 비활성화됩니다.</string>
+    <string name="nt_safety">VPN 중지 후에도 보호하려면 Android에서 상시 연결 VPN과 VPN 없이 연결 차단을 켜세요.</string>
+    <string name="nweb_intro">ASCII 이름만 지원합니다. .eth: ENS Ideas / eth.limo, 나머지: 사용자 UD 프록시. 제공업체에 이름/IP가 전달됩니다. 웹사이트는 HTTPS 게이트웨이를 사용합니다.</string>
+    <string name="nweb_proxy">Unstoppable Domains 프록시 (HTTPS)</string>
+    <string name="nweb_wallets">지갑 주소</string>
+</resources>

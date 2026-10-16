@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuGroup
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.DropdownMenuPopup
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MenuDefaults
@@ -64,7 +63,7 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
                     modifier = Modifier
                         .size(48.dp)
                 ) {
-                    DropdownMenuPopup(
+                    DropdownMenu(
                         expanded = showMenu,
                         onDismissRequest = { showMenu = false },
                         modifier = Modifier.animateContentSize()
@@ -109,7 +108,7 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
                                     .size(48.dp)
                                     .offset(0.dp, LocalWindowPosition.current.toDp())
                             ) {
-                                DropdownMenuPopup(
+                                DropdownMenu(
                                     expanded = showMenu,
                                     onDismissRequest = { showMenu = false },
                                     modifier = Modifier.animateContentSize()

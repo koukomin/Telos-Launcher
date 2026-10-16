@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor per .onion</string>
+    <string name="nt_mode_hint">Arresta la VPN prima di cambiare modalità Tor.</string>
+    <string name="nt_waiting">In attesa di richiesta .onion</string>
+    <string name="nt_auto">Avvia Tor automaticamente</string>
+    <string name="nt_auto_hint">Solo DNS visibile; riprova dopo la connessione. Il DNS cifrato non può avviare Tor.</string>
+    <string name="nt_apps">App solo tramite Tor</string>
+    <string name="nt_scope">Solo con VPN attiva e TCP. Telos è escluso; bypass VPN e altre esclusioni delle app sono disabilitati.</string>
+    <string name="nt_safety">Per proteggerti quando la VPN si arresta: attiva VPN sempre attiva e Blocca connessioni senza VPN in Android.</string>
+    <string name="nweb_intro">Nomi ASCII. .eth: ENS Ideas / eth.limo; altri: il tuo proxy UD. I fornitori vedono nomi/IP. I siti usano gateway HTTPS.</string>
+    <string name="nweb_proxy">Proxy Unstoppable Domains (HTTPS)</string>
+    <string name="nweb_wallets">Indirizzi wallet</string>
+</resources>

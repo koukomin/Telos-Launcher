@@ -61,7 +61,7 @@ data class QueueSettings(
     val schedule: ScheduleWindow = ScheduleWindow(),
 )
 
-enum class BlockReason { Offline, WifiOnly, LowBattery, Schedule }
+enum class BlockReason { Offline, WifiOnly, LowBattery, Schedule, NetworkPolicy }
 
 /** Which queued tasks may start now. Pure, see QueueRulesTest. */
 object QueueRules {

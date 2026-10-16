@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor สำหรับ .onion</string>
+    <string name="nt_mode_hint">หยุด VPN ก่อนเปลี่ยนโหมด Tor</string>
+    <string name="nt_waiting">กำลังรอคำขอ .onion</string>
+    <string name="nt_auto">เริ่ม Tor อัตโนมัติ</string>
+    <string name="nt_auto_hint">เฉพาะ DNS ที่ตรวจพบได้ โปรดลองอีกครั้งหลังเชื่อมต่อ DNS ที่เข้ารหัสไม่สามารถเริ่ม Tor ได้</string>
+    <string name="nt_apps">แอปที่ใช้ Tor เท่านั้น</string>
+    <string name="nt_scope">เฉพาะขณะ VPN ทำงานและรองรับ TCP เท่านั้น ยกเว้น Telos การข้าม VPN และข้อยกเว้นแอปอื่นจะถูกปิด</string>
+    <string name="nt_safety">เพื่อป้องกันหลัง VPN หยุด ให้เปิด VPN แบบเปิดตลอดเวลาและบล็อกการเชื่อมต่อโดยไม่ใช้ VPN ใน Android</string>
+    <string name="nweb_intro">ชื่อ ASCII เท่านั้น .eth: ENS Ideas / eth.limo อื่น ๆ: พร็อกซี UD ของคุณ ผู้ให้บริการเห็นชื่อ/IP เว็บไซต์ใช้เกตเวย์ HTTPS</string>
+    <string name="nweb_proxy">พร็อกซี Unstoppable Domains (HTTPS)</string>
+    <string name="nweb_wallets">ที่อยู่กระเป๋าเงิน</string>
+    <string name="au22_stremio_opens_browser">เปิดในเบราว์เซอร์</string>
+    <string name="au8_traktweb_copy_redirect">คัดลอกที่อยู่</string>
+</resources>

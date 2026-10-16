@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">.onion üçün Tor</string>
+    <string name="nt_mode_hint">Tor rejimini dəyişməzdən əvvəl VPN-i dayandırın.</string>
+    <string name="nt_waiting">.onion sorğusu gözlənilir</string>
+    <string name="nt_auto">Tor-u avtomatik başladın</string>
+    <string name="nt_auto_hint">Yalnız görünən DNS; qoşulduqdan sonra yenidən cəhd edin. Şifrəli DNS Tor-u başlada bilməz.</string>
+    <string name="nt_apps">Yalnız Tor istifadə edən tətbiqlər</string>
+    <string name="nt_scope">Yalnız aktiv VPN və TCP ilə. Telos istisnadır; VPN-dən yan keçmə və digər tətbiq istisnaları söndürülür.</string>
+    <string name="nt_safety">VPN dayandıqdan sonra qorunmaq üçün Android-də Daim aktiv VPN və VPN-siz bağlantıları bloklama seçimlərini aktivləşdirin.</string>
+    <string name="nweb_intro">ASCII adları. .eth: ENS Ideas / eth.limo; digərləri: öz UD proksiniz. Təchizatçılar adları/IP-ni görür. Saytlar HTTPS şlüzlərindən istifadə edir.</string>
+    <string name="nweb_proxy">Unstoppable Domains proksisi (HTTPS)</string>
+    <string name="nweb_wallets">Pul kisəsi ünvanları</string>
+    <string name="au22_stremio_opens_browser">Brauzerdə açılır</string>
+    <string name="au8_traktweb_copy_redirect">Ünvanı köçür</string>
+</resources>

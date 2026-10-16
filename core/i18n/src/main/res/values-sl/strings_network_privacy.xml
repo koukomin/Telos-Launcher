@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor za .onion</string>
+    <string name="nt_mode_hint">Pred spremembo načina Tor ustavite VPN.</string>
+    <string name="nt_waiting">Čakanje na poizvedbo .onion</string>
+    <string name="nt_auto">Samodejno zaženi Tor</string>
+    <string name="nt_auto_hint">Samo vidni DNS; poskusite po povezavi. Šifrirani DNS ne more zagnati Tora.</string>
+    <string name="nt_apps">Aplikacije samo prek Tora</string>
+    <string name="nt_scope">Samo z aktivnim VPN in TCP. Telos je izvzet; obhod VPN in druge izjeme aplikacij so onemogočeni.</string>
+    <string name="nt_safety">Za zaščito po ustavitvi VPN v Androidu omogočite vedno vklopljen VPN in blokiranje povezav brez VPN.</string>
+    <string name="nweb_intro">Imena ASCII. .eth: ENS Ideas / eth.limo; druga: vaš posrednik UD. Ponudniki vidijo imena/IP. Spletišča uporabljajo prehode HTTPS.</string>
+    <string name="nweb_proxy">Posrednik Unstoppable Domains (HTTPS)</string>
+    <string name="nweb_wallets">Naslovi denarnic</string>
+</resources>

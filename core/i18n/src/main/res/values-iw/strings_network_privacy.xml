@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor עבור .onion</string>
+    <string name="nt_mode_hint">יש לעצור את ה־VPN לפני שינוי מצב Tor.</string>
+    <string name="nt_waiting">בהמתנה לבקשת .onion</string>
+    <string name="nt_auto">הפעלת Tor אוטומטית</string>
+    <string name="nt_auto_hint">רק DNS גלוי; יש לנסות שוב לאחר החיבור. DNS מוצפן אינו יכול להפעיל Tor.</string>
+    <string name="nt_apps">יישומים דרך Tor בלבד</string>
+    <string name="nt_scope">רק עם VPN פעיל ו־TCP. ‏Telos מוחרג; עקיפת VPN והחרגות יישומים אחרות מושבתות.</string>
+    <string name="nt_safety">להגנה לאחר עצירת ה־VPN, יש להפעיל ב־Android ‏VPN תמיד פעיל וחסימת חיבורים ללא VPN.</string>
+    <string name="nweb_intro">שמות ASCII. ‏.eth: ‏ENS Ideas / eth.limo; אחרים: שרת UD מתווך שלך. הספקים רואים שמות/IP. אתרים משתמשים בשערי HTTPS.</string>
+    <string name="nweb_proxy">שרת מתווך Unstoppable Domains ‏(HTTPS)</string>
+    <string name="nweb_wallets">כתובות ארנק</string>
+    <string name="au22_stremio_opens_browser">נפתח בדפדפן</string>
+    <string name="au8_traktweb_copy_redirect">העתקת כתובת</string>
+</resources>

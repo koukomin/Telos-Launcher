@@ -100,7 +100,10 @@ object TorrentStreamer {
                 myGeneration = generation.get()
             }
             fun alive() = generation.get() == myGeneration
-            if (wifiOnly && onMeteredNetwork(context)) {
+            val network = de.mm20.launcher2.comms.network.TransferNetworkGate.get(context, "torrent")
+            network.refresh()
+            if (!network.allowed.value) fail(context.getString(de.mm20.launcher2.i18n.R.string.netfw_blocked))
+            if (!network.configured.value && wifiOnly && onMeteredNetwork(context)) {
                 fail("Torrent streaming is set to Wi-Fi only")
             }
             closed = false
@@ -131,7 +134,7 @@ object TorrentStreamer {
                         readTimeout = 30_000
                         try {
                             if (contentLengthLong > MAX_TORRENT_FILE) fail("The torrent file is too large")
-                            inputStream.use { readLimited(it) }
+                            inputStream.use { readLimited(it, context.getString(de.mm20.launcher2.i18n.R.string.netfw_blocked)) { network.allowed.value } }
                         } finally { disconnect() }
                     }
                 }
@@ -189,10 +192,11 @@ object TorrentStreamer {
     private const val MAX_TORRENT_FILE = 8_000_000
 
     /** A .torrent file is small; a stream of unknown length must not fill the memory */
-    private fun readLimited(input: java.io.InputStream): ByteArray {
+    private fun readLimited(input: java.io.InputStream, blockedMessage: String = "", allowed: () -> Boolean = { true }): ByteArray {
         val out = java.io.ByteArrayOutputStream()
         val buf = ByteArray(16 * 1024)
         while (true) {
+            if (!allowed()) throw java.io.IOException(blockedMessage)
             val n = input.read(buf)
             if (n < 0) break
             out.write(buf, 0, n)

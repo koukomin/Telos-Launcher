@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor pentru .onion</string>
+    <string name="nt_mode_hint">Opriți VPN înainte de schimbarea modului Tor.</string>
+    <string name="nt_waiting">Se așteaptă o cerere .onion</string>
+    <string name="nt_auto">Pornește Tor automat</string>
+    <string name="nt_auto_hint">Doar DNS vizibil; reîncercați după conectare. DNS criptat nu poate porni Tor.</string>
+    <string name="nt_apps">Aplicații doar prin Tor</string>
+    <string name="nt_scope">Doar cu VPN activ și TCP. Telos este exclus; ocolirea VPN și celelalte excluderi sunt dezactivate.</string>
+    <string name="nt_safety">Pentru protecție după oprirea VPN: activați VPN permanent și Blocare conexiuni fără VPN în Android.</string>
+    <string name="nweb_intro">Nume ASCII. .eth: ENS Ideas / eth.limo; altele: proxy-ul UD propriu. Furnizorii văd nume/IP. Site-urile folosesc gateway-uri HTTPS.</string>
+    <string name="nweb_proxy">Proxy Unstoppable Domains (HTTPS)</string>
+    <string name="nweb_wallets">Adrese de portofel</string>
+</resources>

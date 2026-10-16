@@ -48,12 +48,13 @@ The first time you turn it on, Android asks for your consent to set up a VPN. Wi
 - No subscription and no RPN (no paid proxy service), no account, no server of ours.
 - None of the experimental features of RethinkDNS.
 - It cannot look inside encrypted connections. It filters by app, address and domain.
-- It does not make you anonymous. Websites still see your IP address, unless you use a WireGuard tunnel you trust.
+- It does not make you anonymous. Websites still see your IP address, unless you use a WireGuard tunnel you trust or explicitly route the connection through Tor.
 - Android allows one VPN at a time. Telos Network replaces another VPN while it runs; use [WireGuard](wireguard.md) inside Telos Network instead.
 - The engine does not know which app is in the foreground. Rules for *background* work only if you grant *usage access* (the firewall screen offers a button for it); without it they never block.
 
 ## Pages
 
+- [Tor and Web3 names](tor-web3.md)
 - [DNS](dns.md)
 - [WireGuard](wireguard.md)
 - [Firewall](firewall.md)

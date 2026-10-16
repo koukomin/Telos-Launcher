@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor per a .onion</string>
+    <string name="nt_mode_hint">Atura la VPN abans de canviar el mode Tor.</string>
+    <string name="nt_waiting">Esperant una consulta .onion</string>
+    <string name="nt_auto">Inicia Tor automàticament</string>
+    <string name="nt_auto_hint">Només DNS visible; torna-ho a provar en connectar. El DNS xifrat no pot iniciar Tor.</string>
+    <string name="nt_apps">Aplicacions només per Tor</string>
+    <string name="nt_scope">Només amb VPN activa i TCP. Telos queda exclòs; es desactiven la derivació de VPN i les altres exclusions.</string>
+    <string name="nt_safety">Per protegir-te quan la VPN es para, activa VPN sempre activa i Bloqueja connexions sense VPN a Android.</string>
+    <string name="nweb_intro">Noms ASCII. .eth: ENS Ideas / eth.limo; altres: el teu servidor intermediari UD. Els proveïdors veuen noms/IP. Els llocs usen passarel·les HTTPS.</string>
+    <string name="nweb_proxy">Servidor intermediari Unstoppable Domains (HTTPS)</string>
+    <string name="nweb_wallets">Adreces de cartera</string>
+    <string name="au22_stremio_opens_browser">S’obre al navegador</string>
+    <string name="au8_traktweb_copy_redirect">Copia l’adreça</string>
+</resources>

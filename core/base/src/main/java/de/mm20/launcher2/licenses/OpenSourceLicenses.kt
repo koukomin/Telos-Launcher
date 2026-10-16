@@ -4,6 +4,13 @@ import de.mm20.launcher2.base.R
 
 val OpenSourceLicenses = arrayOf(
     OpenSourceLibrary(
+        name = "Tor Android / Tor",
+        licenseName = R.string.bsd_3clause_name,
+        licenseText = R.raw.license_tor_android,
+        copyrightNote = "Copyright (c) 2009-2010 Nathan Freitas, The Guardian Project; The Tor Project and contributors",
+        url = "https://github.com/guardianproject/tor-android",
+    ),
+    OpenSourceLibrary(
         name = "Kotlin Standard Library",
         description = " A modern programming language that makes developers happier.",
         licenseName = R.string.apache_license_name,

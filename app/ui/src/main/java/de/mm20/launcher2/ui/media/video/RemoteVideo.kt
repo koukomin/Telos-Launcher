@@ -122,6 +122,14 @@ object RemoteVideo {
 internal class RemoteRoutingDataSource(private val context: Context, private val fallback: DataSource) : DataSource {
     private val remote = RemoteVideoDataSource(context)
     private var active: DataSource? = null
+    private val networkGate = de.mm20.launcher2.comms.network.TransferNetworkGate.get(context, "torrent")
+    private var managedNetwork = false
+    private fun checkNetwork() {
+        if (managedNetwork && !networkGate.allowed.value) {
+            runCatching { active?.close() }
+            throw java.io.IOException(context.getString(de.mm20.launcher2.ui.R.string.netfw_blocked))
+        }
+    }
 
     override fun addTransferListener(listener: TransferListener) {
         fallback.addTransferListener(listener)
@@ -129,12 +137,19 @@ internal class RemoteRoutingDataSource(private val context: Context, private val
     }
 
     override fun open(dataSpec: DataSpec): Long {
+        managedNetwork = dataSpec.uri.scheme in setOf("http", "https") &&
+            dataSpec.uri.host !in setOf("127.0.0.1", "localhost", "::1", "[::1]")
+        networkGate.refresh()
+        checkNetwork()
         val d = if (RemoteVideo.isRemote(dataSpec.uri)) remote else fallback
         active = d
         return d.open(dataSpec)
     }
 
-    override fun read(buffer: ByteArray, offset: Int, length: Int): Int = active!!.read(buffer, offset, length)
+    override fun read(buffer: ByteArray, offset: Int, length: Int): Int {
+        checkNetwork()
+        return active!!.read(buffer, offset, length)
+    }
     override fun getUri(): Uri? = active?.uri
     override fun getResponseHeaders(): Map<String, List<String>> = active?.responseHeaders ?: emptyMap()
     override fun close() {

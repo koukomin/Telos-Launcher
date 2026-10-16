@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor .onion-címekhez</string>
+    <string name="nt_mode_hint">A Tor-mód módosítása előtt állítsa le a VPN-t.</string>
+    <string name="nt_waiting">Várakozás .onion-lekérdezésre</string>
+    <string name="nt_auto">Tor automatikus indítása</string>
+    <string name="nt_auto_hint">Csak látható DNS; kapcsolódás után próbálja újra. Titkosított DNS nem indíthatja el a Tort.</string>
+    <string name="nt_apps">Alkalmazások kizárólag Toron át</string>
+    <string name="nt_scope">Csak aktív VPN és TCP esetén. A Telos kivétel; a VPN-megkerülés és más alkalmazáskivételek tiltva vannak.</string>
+    <string name="nt_safety">A VPN leállása utáni védelemhez engedélyezze Androidon a Mindig aktív VPN és VPN nélküli kapcsolatok tiltása beállításokat.</string>
+    <string name="nweb_intro">ASCII-nevek. .eth: ENS Ideas / eth.limo; mások: saját UD-proxy. A szolgáltatók látják a neveket/IP-t. A webhelyek HTTPS-átjárót használnak.</string>
+    <string name="nweb_proxy">Unstoppable Domains proxy (HTTPS)</string>
+    <string name="nweb_wallets">Tárcacímek</string>
+</resources>

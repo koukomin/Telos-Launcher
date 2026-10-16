@@ -32,7 +32,11 @@ class SearchablePickerVM : ViewModel(), KoinComponent {
 
     var items by mutableStateOf(emptyList<SavableSearchable>())
 
-    init {
+    private var applicationsOnly = false
+
+    fun startSession(applicationsOnly: Boolean) {
+        this.applicationsOnly = applicationsOnly
+        items = emptyList()
         onSearchQueryChanged("", true)
     }
 
@@ -45,11 +49,18 @@ class SearchablePickerVM : ViewModel(), KoinComponent {
             searchService.search(
                 query = query,
                 // Never hit the network just because the user is typing into a picker (online results are opt-in)
-                filters = SearchFilters(allowNetwork = false)
+                filters = if (applicationsOnly) SearchFilters(
+                    allowNetwork = false, websites = false, articles = false, places = false,
+                    files = false, shortcuts = false, contacts = false, events = false,
+                    reminders = false, tools = false, documents = false, images = false,
+                    video = false, music = false,
+                ) else SearchFilters(allowNetwork = false)
             ).collectLatest {
                 if (searchQuery != query) return@collectLatest
                 items = withContext(Dispatchers.Default) {
-                    it.toList().filterIsInstance<SavableSearchable>().sorted()
+                    it.toList().filterIsInstance<SavableSearchable>()
+                        .filter { item -> !applicationsOnly || item is de.mm20.launcher2.search.Application }
+                        .sorted()
                 }
             }
         }

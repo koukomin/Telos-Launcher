@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_store_pinned">Sabitlənmiş</string>
+    <string name="hc_apps">Tətbiqlər</string>
+    <string name="hc_details">Təfərrüatlar</string>
+    <string name="hc_telos_apps">Telos tətbiqləri</string>
+    <string name="hf_store_track_only">Yalnız izlə</string>
+    <string name="recommendation_tab_label">Tövsiyə olunanlar</string>
+    <string name="dl_settings_rules">Qaydalar</string>
+    <string name="dl_t_set_shared_note">Bu parametrlər Telos Video torrent yayımlayarkən də istifadə olunur.</string>
+    <string name="au22_stremio_addons">Əlavələr</string>
+    <string name="hc_more">Daha çox</string>
+</resources>

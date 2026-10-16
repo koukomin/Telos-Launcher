@@ -234,6 +234,7 @@ fun MediaHubScreen(initialSpace: String = "") {
                 .fillMaxSize()
                 .background(Brush.verticalGradient(listOf(accent.copy(alpha = 0.14f), scheme.surface)))
                 .statusBarsPadding()
+                .navigationBarsPadding()
         ) {
             // soft scrim behind the floating controls
             Box(
@@ -343,10 +344,7 @@ fun MediaHubScreen(initialSpace: String = "") {
                         if (target == MediaSpace.Tv) tvVm.openPlayer()
                         space = target.id
                     },
-                    modifier = Modifier.navigationBarsPadding(),
                 )
-            } else {
-                Spacer(Modifier.navigationBarsPadding())
             }
         }
     }

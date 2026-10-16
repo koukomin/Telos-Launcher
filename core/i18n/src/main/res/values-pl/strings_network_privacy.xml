@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor dla .onion</string>
+    <string name="nt_mode_hint">Zatrzymaj VPN przed zmianą trybu Tor.</string>
+    <string name="nt_waiting">Oczekiwanie na zapytanie .onion</string>
+    <string name="nt_auto">Uruchamiaj Tor automatycznie</string>
+    <string name="nt_auto_hint">Tylko widoczny DNS; ponów po połączeniu. Szyfrowany DNS nie może uruchomić Tora.</string>
+    <string name="nt_apps">Aplikacje tylko przez Tor</string>
+    <string name="nt_scope">Tylko przy aktywnym VPN i przez TCP. Telos jest wyłączony; omijanie VPN i pozostałe wyjątki aplikacji są zablokowane.</string>
+    <string name="nt_safety">Dla ochrony po zatrzymaniu VPN włącz w Androidzie Zawsze aktywny VPN i Blokuj połączenia bez VPN.</string>
+    <string name="nweb_intro">Nazwy ASCII. .eth: ENS Ideas / eth.limo; pozostałe: własne proxy UD. Dostawcy widzą nazwy/IP. Strony używają bram HTTPS.</string>
+    <string name="nweb_proxy">Proxy Unstoppable Domains (HTTPS)</string>
+    <string name="nweb_wallets">Adresy portfeli</string>
+</resources>

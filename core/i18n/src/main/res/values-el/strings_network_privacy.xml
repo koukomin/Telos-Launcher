@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor για .onion</string>
+    <string name="nt_mode_hint">Σταμάτησε το VPN πριν αλλάξεις τη λειτουργία Tor.</string>
+    <string name="nt_waiting">Αναμονή αιτήματος .onion</string>
+    <string name="nt_auto">Αυτόματη εκκίνηση Tor</string>
+    <string name="nt_auto_hint">Μόνο ορατά αιτήματα DNS· δοκίμασε ξανά μετά τη σύνδεση. Το κρυπτογραφημένο DNS δεν εκκινεί το Tor.</string>
+    <string name="nt_apps">Εφαρμογές αποκλειστικά μέσω Tor</string>
+    <string name="nt_scope">Μόνο με ενεργό VPN και μόνο TCP. Το Telos εξαιρείται· απενεργοποιούνται η παράκαμψη VPN και οι εξαιρέσεις άλλων εφαρμογών.</string>
+    <string name="nt_safety">Για προστασία όταν σταματά το VPN: ενεργοποίησε στις ρυθμίσεις Android το VPN πάντα ενεργό και τον αποκλεισμό συνδέσεων χωρίς VPN.</string>
+    <string name="nweb_intro">Ονόματα ASCII. .eth: ENS Ideas / eth.limo· υπόλοιπα: ο δικός σου UD proxy. Οι πάροχοι βλέπουν ονόματα/IP. Οι ιστοσελίδες ανοίγουν μέσω HTTPS gateways.</string>
+    <string name="nweb_proxy">Proxy Unstoppable Domains (HTTPS)</string>
+    <string name="nweb_wallets">Διευθύνσεις wallet</string>
+</resources>

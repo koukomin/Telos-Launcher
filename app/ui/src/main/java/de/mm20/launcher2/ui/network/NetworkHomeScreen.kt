@@ -160,6 +160,9 @@ fun NetworkHomeScreen() {
         }
         item {
             PreferenceCategory(title = stringResource(R.string.net_hub_cat_dns)) {
+                Preference(title = stringResource(R.string.nt_title),
+                    icon = IconsNetworkHomeScreen.language_24px,
+                    onClick = { backStack.add(NetworkPrivacyRoute) })
                 Preference(
                     title = stringResource(R.string.net_hub_dns),
                     summary = stringResource(R.string.net_hub_dns_sum),

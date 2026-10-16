@@ -88,6 +88,8 @@ fun StremioScreen() {
     val addons by vm.addons.collectAsStateWithLifecycle()
     val detail by vm.detail.collectAsStateWithLifecycle()
     val streams by vm.streams.collectAsStateWithLifecycle()
+    var showActions by remember { mutableStateOf(false) }
+    var showNetworkRules by remember { mutableStateOf(false) }
     var showAddons by remember { mutableStateOf(false) }
     var showAccount by remember { mutableStateOf(false) }
     var showTrakt by remember { mutableStateOf(false) }
@@ -108,12 +110,36 @@ fun StremioScreen() {
         onDispose { lifecycle.removeObserver(observer) }
     }
 
+    if (showNetworkRules) androidx.compose.material3.AlertDialog(
+        onDismissRequest = { showNetworkRules = false },
+        title = { Text(stringResource(R.string.dl_settings_rules)) },
+        text = { Column(Modifier.verticalScroll(rememberScrollState())) {
+            de.mm20.launcher2.ui.downloads.TransferNetworkPreferences("torrent")
+        } },
+        confirmButton = { TextButton(onClick = { showNetworkRules = false }) { Text(stringResource(R.string.hc_close)) } },
+    )
     MediaFrame(stringResource(R.string.au22_stremio_label), actions = {
-        if (email != null) TextButton(onClick = { showAccount = true }) { Text(stringResource(R.string.au22_stremio_account)) }
-        TextButton(onClick = { showTrakt = true }) { Text(stringResource(R.string.au7_trakt_title)) }
-        if (accepted && email != null) {
-            IconButton(onClick = { showAddons = true }) {
-                Icon(painterResource(R.drawable.extension_24px), contentDescription = stringResource(R.string.au22_stremio_addons))
+        Box {
+            IconButton(onClick = { showActions = true }) {
+                Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
+            }
+            androidx.compose.material3.DropdownMenu(expanded = showActions, onDismissRequest = { showActions = false }) {
+                androidx.compose.material3.DropdownMenuItem(
+                    text = { Text(stringResource(R.string.dl_settings_rules)) },
+                    onClick = { showActions = false; showNetworkRules = true },
+                )
+                if (email != null) androidx.compose.material3.DropdownMenuItem(
+                    text = { Text(stringResource(R.string.au22_stremio_account)) },
+                    onClick = { showActions = false; showAccount = true },
+                )
+                androidx.compose.material3.DropdownMenuItem(
+                    text = { Text(stringResource(R.string.au7_trakt_title)) },
+                    onClick = { showActions = false; showTrakt = true },
+                )
+                if (accepted && email != null) androidx.compose.material3.DropdownMenuItem(
+                    text = { Text(stringResource(R.string.au22_stremio_addons)) },
+                    onClick = { showActions = false; showAddons = true },
+                )
             }
         }
     }) {

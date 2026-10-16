@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor .onion-osoitteille</string>
+    <string name="nt_mode_hint">Pysäytä VPN ennen Tor-tilan muuttamista.</string>
+    <string name="nt_waiting">Odotetaan .onion-kyselyä</string>
+    <string name="nt_auto">Käynnistä Tor automaattisesti</string>
+    <string name="nt_auto_hint">Vain näkyvä DNS; yritä uudelleen yhteyden muodostuttua. Salattu DNS ei voi käynnistää Toria.</string>
+    <string name="nt_apps">Sovellukset vain Torin kautta</string>
+    <string name="nt_scope">Vain aktiivisella VPN:llä ja TCP:llä. Telos ohitetaan; VPN:n ohitus ja muut sovelluspoikkeukset poistetaan käytöstä.</string>
+    <string name="nt_safety">Suojaa yhteydet VPN:n pysähdyttyä: ota Androidissa käyttöön Aina käytössä oleva VPN ja Estä yhteydet ilman VPN:ää.</string>
+    <string name="nweb_intro">ASCII-nimet. .eth: ENS Ideas / eth.limo; muut: oma UD-välityspalvelin. Palveluntarjoajat näkevät nimet/IP:t. Sivustot käyttävät HTTPS-yhdyskäytäviä.</string>
+    <string name="nweb_proxy">Unstoppable Domains -välityspalvelin (HTTPS)</string>
+    <string name="nweb_wallets">Lompakko-osoitteet</string>
+</resources>

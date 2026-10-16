@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor .onion-aadressidele</string>
+    <string name="nt_mode_hint">Peata VPN enne Tori režiimi muutmist.</string>
+    <string name="nt_waiting">Ootan .onion-päringut</string>
+    <string name="nt_auto">Käivita Tor automaatselt</string>
+    <string name="nt_auto_hint">Ainult nähtav DNS; proovi pärast ühendamist uuesti. Krüptitud DNS ei saa Tori käivitada.</string>
+    <string name="nt_apps">Rakendused ainult Tori kaudu</string>
+    <string name="nt_scope">Ainult aktiivse VPN-i ja TCP-ga. Telos on välistatud; VPN-ist möödumine ja muud rakenduste erandid keelatakse.</string>
+    <string name="nt_safety">Kaitseks pärast VPN-i peatumist lülita Androidis sisse alati aktiivne VPN ja VPN-ita ühenduste blokeerimine.</string>
+    <string name="nweb_intro">ASCII-nimed. .eth: ENS Ideas / eth.limo; muud: sinu UD puhverserver. Pakkujad näevad nimesid/IP-d. Veebilehed kasutavad HTTPS-lüüse.</string>
+    <string name="nweb_proxy">Unstoppable Domainsi puhverserver (HTTPS)</string>
+    <string name="nweb_wallets">Rahakotiaadressid</string>
+</resources>

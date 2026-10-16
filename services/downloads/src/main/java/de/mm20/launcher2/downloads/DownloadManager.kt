@@ -58,6 +58,8 @@ class DownloadManager(
     private val stopTargets = ConcurrentHashMap<String, DownloadState>()
     private val globalLimiter = RateLimiter()
     private val monitor = ConditionsMonitor(context)
+    private val downloadNetwork = de.mm20.launcher2.comms.network.TransferNetworkGate.get(context, "downloads")
+    private val torrentNetwork = de.mm20.launcher2.comms.network.TransferNetworkGate.get(context, "torrent")
     private val kicks = MutableSharedFlow<Unit>(extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
     private var started = false
     private var wakeAt = 0L
@@ -97,7 +99,7 @@ class DownloadManager(
         if (store.tasks.value.any { !it.state.isFinished }) monitor.start()
         scope.launch {
             merge(
-                store.tasks.map { }, settings.values.map { }, monitor.conditions.map { }, torrentProxy.route.map { }, kicks,
+                store.tasks.map { }, settings.values.map { }, monitor.conditions.map { }, torrentProxy.route.map { }, downloadNetwork.allowed.map { }, torrentNetwork.allowed.map { }, kicks,
             ).collect { schedule() }
         }
     }
@@ -272,10 +274,16 @@ class DownloadManager(
         val now = System.currentTimeMillis()
         globalLimiter.bytesPerSecond = s.speedLimitKBps * 1024L
         // torrents never start or keep running without the proxy that was chosen for them
-        val torrentsBlocked = torrentProxy.applyNow() is TorrentRoute.WireguardBlocked
+        val torrentsBlocked = torrentProxy.applyNow() is TorrentRoute.WireguardBlocked || !torrentNetwork.allowed.value
 
         val clock = currentClock()
-        val reason = QueueRules.blockReason(c, s.queue, clock)
+        val pendingTasks = all.filter { !it.state.isFinished }
+        val reason = when {
+            !c.online -> BlockReason.Offline
+            !downloadNetwork.allowed.value -> BlockReason.NetworkPolicy
+            !torrentNetwork.allowed.value && pendingTasks.isNotEmpty() && pendingTasks.all { it.type == DownloadType.Torrent } -> BlockReason.NetworkPolicy
+            else -> QueueRules.blockReason(c, s.queue.copy(wifiOnly = false), clock)
+        }
         _blockReason.value = reason
         if (reason != null) {
             // everything that runs waits until the conditions are good again; this is not a failure
@@ -290,7 +298,7 @@ class DownloadManager(
                     jobs[t.id]?.cancel()
                 }
             }
-            for (t in QueueRules.pickNext(all, now, c, s.queue, clock) { task ->
+            for (t in QueueRules.pickNext(all, now, c, s.queue.copy(wifiOnly = false), clock) { task ->
                 engines.any { it.supports(task) } && !(torrentsBlocked && task.type == DownloadType.Torrent)
             }) startTask(t)
         }

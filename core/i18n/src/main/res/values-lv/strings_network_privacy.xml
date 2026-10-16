@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor .onion adresēm</string>
+    <string name="nt_mode_hint">Pirms Tor režīma maiņas apturiet VPN.</string>
+    <string name="nt_waiting">Gaida .onion pieprasījumu</string>
+    <string name="nt_auto">Palaist Tor automātiski</string>
+    <string name="nt_auto_hint">Tikai redzams DNS; mēģiniet pēc savienojuma. Šifrēts DNS nevar palaist Tor.</string>
+    <string name="nt_apps">Lietotnes tikai caur Tor</string>
+    <string name="nt_scope">Tikai ar aktīvu VPN un TCP. Telos ir izņēmums; VPN apiešana un citi lietotņu izņēmumi ir atspējoti.</string>
+    <string name="nt_safety">Aizsardzībai pēc VPN apstāšanās Android iestatījumos ieslēdziet pastāvīgu VPN un savienojumu bez VPN bloķēšanu.</string>
+    <string name="nweb_intro">ASCII nosaukumi. .eth: ENS Ideas / eth.limo; citi: jūsu UD starpniekserveris. Pakalpojumu sniedzēji redz nosaukumus/IP. Vietnes izmanto HTTPS vārtejas.</string>
+    <string name="nweb_proxy">Unstoppable Domains starpniekserveris (HTTPS)</string>
+    <string name="nweb_wallets">Maku adreses</string>
+</resources>

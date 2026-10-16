@@ -24,6 +24,7 @@ import org.koin.dsl.module
  * implementation only has to replace the matching line here.
  */
 val networkModule = module {
+    single { de.mm20.launcher2.network.tor.TorController(androidContext(), get()) }
     single<NetworkSettings> { DefaultNetworkSettings(androidContext()) }
     single<AppDirectory> { DefaultAppDirectory(androidContext()) }
     single<LogController> { DefaultLogController(androidContext(), get(), get()) }
@@ -36,7 +37,7 @@ val networkModule = module {
         NetworkEngine(
             context = androidContext(),
             settings = get(),
-            components = listOf(get<DnsController>(), get<WireguardController>(), get<BlocklistController>(), get<WireguardLocalProxy>()),
+            components = listOf(get<DnsController>(), get<WireguardController>(), get<BlocklistController>(), get<WireguardLocalProxy>(), get<de.mm20.launcher2.network.tor.TorController>()),
         )
     }
 }

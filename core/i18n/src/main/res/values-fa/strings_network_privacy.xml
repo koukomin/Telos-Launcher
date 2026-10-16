@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor برای .onion</string>
+    <string name="nt_mode_hint">پیش از تغییر حالت Tor، VPN را متوقف کنید.</string>
+    <string name="nt_waiting">در انتظار درخواست .onion</string>
+    <string name="nt_auto">راه‌اندازی خودکار Tor</string>
+    <string name="nt_auto_hint">فقط DNS قابل مشاهده؛ پس از اتصال دوباره تلاش کنید. DNS رمزگذاری‌شده نمی‌تواند Tor را راه‌اندازی کند.</string>
+    <string name="nt_apps">برنامه‌ها فقط از طریق Tor</string>
+    <string name="nt_scope">فقط با VPN فعال و TCP. ‏Telos مستثنا است؛ دورزدن VPN و دیگر استثناهای برنامه‌ها غیرفعال می‌شوند.</string>
+    <string name="nt_safety">برای محافظت پس از توقف VPN، در Android گزینه‌های VPN همیشه روشن و مسدودسازی اتصال بدون VPN را فعال کنید.</string>
+    <string name="nweb_intro">نام‌های ASCII. ‏.eth: ‏ENS Ideas / eth.limo؛ سایرین: پراکسی UD شما. ارائه‌دهندگان نام/IP را می‌بینند. سایت‌ها از درگاه HTTPS استفاده می‌کنند.</string>
+    <string name="nweb_proxy">پراکسی Unstoppable Domains ‏(HTTPS)</string>
+    <string name="nweb_wallets">نشانی‌های کیف پول</string>
+    <string name="au22_stremio_opens_browser">در مرورگر باز می‌شود</string>
+    <string name="au8_traktweb_copy_redirect">کپی نشانی</string>
+</resources>

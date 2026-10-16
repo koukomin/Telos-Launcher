@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_title" translatable="false">Tor / Web3</string>
+    <string name="nt_onion">Tor for .onion</string>
+    <string name="nt_mode_hint">Stop the VPN before changing Tor mode.</string>
+    <string name="nt_waiting">Waiting for a .onion request</string>
+    <string name="nt_auto">Start Tor automatically</string>
+    <string name="nt_auto_hint">Visible DNS only; retry after connection. Encrypted DNS cannot start Tor.</string>
+    <string name="nt_apps">Apps using only Tor</string>
+    <string name="nt_scope">VPN and TCP only. Telos is excluded; VPN bypass and other app exclusions are disabled.</string>
+    <string name="nt_safety">For protection after the VPN stops: enable Android Always-on VPN and Block connections without VPN.</string>
+    <string name="nweb_intro">ASCII names. .eth: ENS Ideas / eth.limo; others: your UD proxy. Providers see names/IP. Websites use HTTPS gateways.</string>
+    <string name="nweb_proxy">Unstoppable Domains proxy (HTTPS)</string>
+    <string name="nweb_wallets">Wallet addresses</string>
+</resources>

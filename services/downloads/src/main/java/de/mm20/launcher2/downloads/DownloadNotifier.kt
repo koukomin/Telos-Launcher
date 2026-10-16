@@ -71,6 +71,7 @@ class DownloadNotifier(private val context: Context, private val settings: Downl
             else -> context.resources.getQuantityString(I18nR.plurals.dl_notification_downloading, active.size, active.size)
         }
         val text = when (blocked) {
+            BlockReason.NetworkPolicy -> context.getString(I18nR.string.netfw_blocked)
             BlockReason.Offline -> context.getString(I18nR.string.dl_block_offline)
             BlockReason.WifiOnly -> context.getString(I18nR.string.dl_block_wifi)
             BlockReason.LowBattery -> context.getString(I18nR.string.dl_block_battery)

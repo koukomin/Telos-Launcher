@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_store_pinned">Ainguratuta</string>
+    <string name="hc_apps">Aplikazioak</string>
+    <string name="hc_details">Xehetasunak</string>
+    <string name="hc_telos_apps">Telos aplikazioak</string>
+    <string name="hf_store_track_only">Jarraipena soilik</string>
+    <string name="recommendation_tab_label">Gomendatuak</string>
+    <string name="dl_settings_rules">Arauak</string>
+    <string name="dl_t_set_shared_note">Ezarpen hauek Telos Video aplikazioan ere erabiltzen dira torrent bat erreproduzitzean.</string>
+    <string name="au22_stremio_addons">Gehigarriak</string>
+    <string name="hc_more">Gehiago</string>
+</resources>

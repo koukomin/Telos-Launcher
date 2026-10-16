@@ -3,6 +3,8 @@ package de.mm20.launcher2.comms.media.video.torrent
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.libtorrent4j.SessionManager
@@ -41,6 +43,12 @@ object TorrentSession {
             appContext = context.applicationContext
             prefs = appContext!!.getSharedPreferences("telos_torrent_session", Context.MODE_PRIVATE)
             _config.value = read(prefs!!)
+            val network = de.mm20.launcher2.comms.network.TransferNetworkGate.get(context, "torrent")
+            kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.SupervisorJob() + kotlinx.coroutines.Dispatchers.IO).launch {
+                network.allowed.collect { allowed ->
+                    synchronized(lock) { manager?.let { if (allowed) it.resume() else it.pause() } }
+                }
+            }
             wgRoute = prefs!!.getBoolean("wgRoute", false)
             // a stored loopback proxy of an earlier session is never used: with a WireGuard route the proxy
             // stays a dead end until the route is synced again (see setRoute)
@@ -110,6 +118,9 @@ object TorrentSession {
     fun acquire(context: Context, owner: Any): SessionManager {
         init(context)
         awaitRoute()
+        val network = de.mm20.launcher2.comms.network.TransferNetworkGate.get(context, "torrent")
+        network.refresh()
+        check(network.allowed.value) { context.getString(de.mm20.launcher2.i18n.R.string.netfw_blocked) }
         synchronized(lock) {
             if (wgRoute && !(wgSynced && proxy.valid)) throw TorrentRouteNotReadyException()
             if (!proxy.valid) throw IllegalStateException("The proxy settings are incomplete")

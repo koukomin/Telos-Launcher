@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor pour .onion</string>
+    <string name="nt_mode_hint">Arrêtez le VPN avant de changer le mode Tor.</string>
+    <string name="nt_waiting">En attente de requête .onion</string>
+    <string name="nt_auto">Démarrer Tor automatiquement</string>
+    <string name="nt_auto_hint">DNS visible uniquement ; réessayez après connexion. Le DNS chiffré ne peut pas démarrer Tor.</string>
+    <string name="nt_apps">Applications uniquement via Tor</string>
+    <string name="nt_scope">VPN actif et TCP uniquement. Telos est exclu ; le contournement du VPN et les autres exclusions sont désactivés.</string>
+    <string name="nt_safety">Pour rester protégé après arrêt du VPN : activez VPN permanent et Bloquer les connexions sans VPN dans Android.</string>
+    <string name="nweb_intro">Noms ASCII. .eth : ENS Ideas / eth.limo ; autres : votre proxy UD. Les fournisseurs voient noms/IP. Les sites utilisent des passerelles HTTPS.</string>
+    <string name="nweb_proxy">Proxy Unstoppable Domains (HTTPS)</string>
+    <string name="nweb_wallets">Adresses de portefeuille</string>
+</resources>

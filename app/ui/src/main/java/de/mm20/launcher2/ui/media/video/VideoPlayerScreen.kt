@@ -171,6 +171,8 @@ private fun PlayerContent(
         ) { putString("state", state) }
     }
 
+    val networkGate = remember { de.mm20.launcher2.comms.network.TransferNetworkGate.get(context, "torrent") }
+    val managedNetwork = isTorrent || uris.any { it.scheme in setOf("http", "https") && it.host !in setOf("127.0.0.1", "localhost", "::1", "[::1]") }
     val player = remember {
         videoState("started")
         // FFmpeg software decoders (AC3, E-AC3, DTS, TrueHD, ...) take over where the phone has no decoder
@@ -223,8 +225,29 @@ private fun PlayerContent(
             val progress = ResumeStore.progress(context, resumeKey)
             val resumeAt = if (progress in 0.02f..0.95f) ResumeStore.position(context, resumeKey) else 0L
             setMediaItems(items, startIndex, resumeAt)
-            prepare()
+            if (!managedNetwork || networkGate.allowed.value) prepare()
             playWhenReady = true
+        }
+    }
+
+    LaunchedEffect(player, managedNetwork) {
+        if (!managedNetwork) return@LaunchedEffect
+        var blocked = false
+        var resumePlayback = false
+        while (true) {
+            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { networkGate.refresh() }
+            if (!networkGate.allowed.value && !blocked) {
+                resumePlayback = player.playWhenReady
+                player.stop()
+                blocked = true
+                android.widget.Toast.makeText(context, R.string.netfw_blocked, android.widget.Toast.LENGTH_LONG).show()
+            } else if (networkGate.allowed.value && blocked) {
+                resumePlayback = player.playWhenReady
+                player.prepare()
+                player.playWhenReady = resumePlayback
+                blocked = false
+            }
+            delay(500)
         }
     }
 

@@ -73,6 +73,7 @@ private fun TorrentNetworkCategory() {
     val c by TorrentSession.config.collectAsState()
     var editPort by remember { mutableStateOf(false) }
     PreferenceCategory(title = stringResource(R.string.dl_t_settings_title)) {
+        TransferNetworkPreferences("torrent")
         SwitchPreference(
             title = stringResource(R.string.dl_t_set_dht), summary = stringResource(R.string.dl_t_set_dht_s),
             value = c.dht, onValueChanged = { v -> TorrentSession.updateConfig(context) { it.copy(dht = v) } },

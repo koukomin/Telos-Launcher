@@ -48,6 +48,7 @@ fun ShutterGate(
             onDismissRequest = onDismiss,
         ) {
             SearchablePicker(
+                applicationsOnly = true,
                 modifier = Modifier.padding(bottom = 16.dp),
                 value = null,
                 onValueChanged = { picked ->

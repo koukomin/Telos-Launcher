@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor untuk .onion</string>
+    <string name="nt_mode_hint">Hentikan VPN sebelum mengubah mode Tor.</string>
+    <string name="nt_waiting">Menunggu permintaan .onion</string>
+    <string name="nt_auto">Mulai Tor otomatis</string>
+    <string name="nt_auto_hint">Hanya DNS terlihat; coba lagi setelah tersambung. DNS terenkripsi tidak dapat memulai Tor.</string>
+    <string name="nt_apps">Aplikasi hanya melalui Tor</string>
+    <string name="nt_scope">Hanya saat VPN aktif dan TCP. Telos dikecualikan; bypass VPN dan pengecualian aplikasi lain dinonaktifkan.</string>
+    <string name="nt_safety">Untuk perlindungan setelah VPN berhenti, aktifkan VPN selalu aktif dan Blokir koneksi tanpa VPN di Android.</string>
+    <string name="nweb_intro">Nama ASCII. .eth: ENS Ideas / eth.limo; lainnya: proxy UD Anda. Penyedia melihat nama/IP. Situs memakai gateway HTTPS.</string>
+    <string name="nweb_proxy">Proxy Unstoppable Domains (HTTPS)</string>
+    <string name="nweb_wallets">Alamat dompet</string>
+    <string name="au22_stremio_opens_browser">Buka di browser</string>
+    <string name="au8_traktweb_copy_redirect">Salin alamat</string>
+</resources>

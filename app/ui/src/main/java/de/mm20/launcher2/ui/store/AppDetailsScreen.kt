@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -93,7 +94,7 @@ fun AppDetailsScreen(itemId: String) {
                 }
             }
             item {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     StoreActionButton(row, installStates[item.id] ?: StoreInstallUiState.Idle) { viewModel.onAppActionClicked(item) }
                     OutlinedButton(onClick = { viewModel.checkOne(item) }, enabled = !checking) {
                         if (checking) CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp) else Text(stringResource(R.string.hc_check_now))

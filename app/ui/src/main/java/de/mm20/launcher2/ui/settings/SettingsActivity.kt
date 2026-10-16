@@ -298,6 +298,12 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.network.NetworkRoute> {
                 de.mm20.launcher2.ui.network.NetworkHomeScreen()
             }
+            entry<de.mm20.launcher2.ui.network.NetworkPrivacyRoute> {
+                de.mm20.launcher2.ui.network.NetworkPrivacyScreen()
+            }
+            entry<de.mm20.launcher2.ui.network.NetworkTorAppsRoute> {
+                de.mm20.launcher2.ui.network.NetworkTorAppsScreen()
+            }
             entry<de.mm20.launcher2.ui.network.NetworkSettingsRoute> {
                 de.mm20.launcher2.ui.network.NetworkSettingsScreen()
             }
