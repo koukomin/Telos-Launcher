@@ -11,6 +11,14 @@ import kotlinx.coroutines.flow.map
 class WebAppBrowsingSettings internal constructor(
     private val dataStore: LauncherDataStore,
 ) {
+    val engine
+        get() = dataStore.data.map { it.webAppBrowsing.webAppEngine }.distinctUntilChanged()
+
+    fun setEngine(engine: String) {
+        if (engine !in setOf("ironewolf", "webview")) return
+        dataStore.update { it.copy(webAppBrowsing = it.webAppBrowsing.copy(webAppEngine = engine)) }
+    }
+
     val adBlockEnabled
         get() = dataStore.data.map { it.webAppBrowsing.webAppAdBlockEnabled }.distinctUntilChanged()
 

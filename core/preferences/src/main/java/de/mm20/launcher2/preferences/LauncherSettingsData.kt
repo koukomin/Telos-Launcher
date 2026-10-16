@@ -695,6 +695,8 @@ data class WebAppsPanelGroup(
 
 @Serializable
 data class WebAppBrowsingGroup(
+    /** Preferred embedded engine; builds without the Fenix host retain WebView. */
+    val webAppEngine: String = "ironewolf",
     /** Applies to the embedded WebView renderer used by web app shortcuts (not Custom Tabs). */
     val webAppAdBlockEnabled: Boolean = true,
     val webAppTrackingParamStrippingEnabled: Boolean = true,

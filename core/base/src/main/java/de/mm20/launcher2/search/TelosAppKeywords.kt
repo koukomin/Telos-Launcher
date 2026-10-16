@@ -37,6 +37,7 @@ object TelosAppKeywords {
     )
 
     private val englishNames = mapOf(
+        "telos_ironewolf_app" to "Ironewolf",
         "telos_phone_app" to "phone",
         "telos_messages_app" to "messages",
         "telos_radio_app" to "radio",
@@ -61,7 +62,9 @@ object TelosAppKeywords {
 
     fun forDomain(domain: String): List<String> {
         val name = englishNames[domain] ?: return byDomain[domain].orEmpty()
-        return (listOf("telos", "τέλος", "τελος", name, "telos $name") + byDomain[domain].orEmpty()).distinct()
+        val browserAliases = if (domain == "telos_ironewolf_app")
+            listOf("ironfox", "firefox", "browser", "περιηγητής", "φυλλομετρητής") else emptyList()
+        return (browserAliases + listOf("telos", "τέλος", "τελος", name, "telos $name") + byDomain[domain].orEmpty()).distinct()
     }
 
 

@@ -1068,6 +1068,8 @@ internal class CommsVirtualAppProvider(private val context: Context) : VirtualAp
         VirtualCalendarApp(context),
         VirtualDownloadsApp(context),
         VirtualNetworkApp(context),
-    )
+    ) + listOfNotNull(VirtualIronewolfApp(context).takeIf {
+        de.mm20.launcher2.webapp.IronewolfRuntime.isBundled(context)
+    })
 }
 // === TELOS_PENDING_REVIEW_END: comms_virtual_apps ===

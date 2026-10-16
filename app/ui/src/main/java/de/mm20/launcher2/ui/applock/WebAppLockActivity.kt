@@ -94,6 +94,7 @@ class WebAppLockActivity : BaseActivity() {
         }
         val intent = Intent(Intent.ACTION_VIEW).apply {
             setClassName(packageName, WebAppLaunchContract.ACTIVITY_CLASS_NAME)
+            putExtra(WebAppLaunchContract.EXTRA_KEY, this@WebAppLockActivity.intent.getStringExtra(WebAppLockLaunchContract.EXTRA_KEY))
             putExtra(WebAppLaunchContract.EXTRA_URL, url)
             putExtra(WebAppLaunchContract.EXTRA_LABEL, label)
             putExtra(WebAppLaunchContract.EXTRA_CUSTOM_CSS, customCss)

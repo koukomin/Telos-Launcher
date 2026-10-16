@@ -41,6 +41,11 @@ class WebAppsSettingsScreenVM : ViewModel(), KoinComponent {
     private val browsingSettings: WebAppBrowsingSettings by inject()
     private val panelManager: WebAppsPanelManager by inject()
 
+    val embeddedEngine = browsingSettings.engine
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "ironewolf")
+
+    fun setEmbeddedEngine(engine: String) = browsingSettings.setEngine(engine)
+
     val adBlockEnabled = browsingSettings.adBlockEnabled
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
 

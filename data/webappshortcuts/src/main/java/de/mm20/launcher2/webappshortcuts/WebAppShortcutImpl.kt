@@ -140,6 +140,7 @@ internal data class WebAppShortcutImpl(
     private fun openLockGate(context: Context, options: Bundle?): Boolean {
         val intent = Intent(Intent.ACTION_VIEW).apply {
             setClassName(context.packageName, WebAppLockLaunchContract.ACTIVITY_CLASS_NAME)
+            putExtra(WebAppLockLaunchContract.EXTRA_KEY, key)
             putExtra(WebAppLockLaunchContract.EXTRA_URL, url)
             putExtra(WebAppLockLaunchContract.EXTRA_LABEL, labelOverride ?: label)
             putExtra(WebAppLockLaunchContract.EXTRA_RENDERER_PACKAGE, rendererPackage)
