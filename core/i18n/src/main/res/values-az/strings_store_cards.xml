@@ -8,4 +8,6 @@
     <string name="recommendation_tab_label">Tövsiyə olunanlar</string>
     <string name="dl_settings_rules">Qaydalar</string>
     <string name="dl_t_set_shared_note">Bu parametrlər Telos Video torrent yayımlayarkən də istifadə olunur.</string>
+    <string name="au22_stremio_addons">Əlavələr</string>
+    <string name="hc_more">Daha çox</string>
 </resources>

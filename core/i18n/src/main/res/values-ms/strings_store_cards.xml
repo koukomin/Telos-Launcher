@@ -8,4 +8,6 @@
     <string name="recommendation_tab_label">Disyorkan</string>
     <string name="dl_settings_rules">Peraturan</string>
     <string name="dl_t_set_shared_note">Tetapan ini juga digunakan oleh Telos Video semasa menstrim torrent.</string>
+    <string name="au22_stremio_addons">Alat tambah</string>
+    <string name="hc_more">Lagi</string>
 </resources>

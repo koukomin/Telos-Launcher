@@ -8,4 +8,6 @@
     <string name="recommendation_tab_label">Recomanades</string>
     <string name="dl_settings_rules">Regles</string>
     <string name="dl_t_set_shared_note">Aquests paràmetres també es fan servir a Telos Video quan reprodueix un torrent.</string>
+    <string name="au22_stremio_addons">Complements</string>
+    <string name="hc_more">Més</string>
 </resources>

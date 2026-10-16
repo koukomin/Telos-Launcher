@@ -8,4 +8,6 @@
     <string name="recommendation_tab_label">מומלצות</string>
     <string name="dl_settings_rules">כללים</string>
     <string name="dl_t_set_shared_note">ההגדרות האלה משמשות גם את Telos Video בהזרמת טורנט.</string>
+    <string name="au22_stremio_addons">תוספים</string>
+    <string name="hc_more">עוד</string>
 </resources>

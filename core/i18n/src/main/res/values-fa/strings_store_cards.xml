@@ -8,4 +8,6 @@
     <string name="recommendation_tab_label">پیشنهادی</string>
     <string name="dl_settings_rules">قوانین</string>
     <string name="dl_t_set_shared_note">این تنظیمات هنگام پخش تورنت در Telos Video نیز استفاده می‌شوند.</string>
+    <string name="au22_stremio_addons">افزونه‌ها</string>
+    <string name="hc_more">بیشتر</string>
 </resources>
