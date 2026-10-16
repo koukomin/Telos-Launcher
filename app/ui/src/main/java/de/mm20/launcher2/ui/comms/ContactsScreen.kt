@@ -1,9 +1,11 @@
 package de.mm20.launcher2.ui.comms
 
+import de.mm20.launcher2.comms.model.isInAccounts
 import android.content.Intent
 import android.provider.ContactsContract
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
@@ -95,9 +97,14 @@ fun ContactsScreen(
     val hasPermission by permissionsManager.hasPermission(PermissionGroup.Contacts)
         .collectAsStateWithLifecycle(false)
     val contacts by viewModel.contacts.collectAsStateWithLifecycle()
+    val accountPrefs = remember(context) { context.getSharedPreferences("contact_account_filter", android.content.Context.MODE_PRIVATE) }
+    var selectedAccounts by remember { mutableStateOf(accountPrefs.getStringSet("accounts", null)?.toSet()) }
+    var showAccounts by remember { mutableStateOf(false) }
+    val accounts = remember(contacts) { contacts.flatMap { it.accounts }.distinctBy { it.key }.sortedBy { it.name.orEmpty() } }
     var localQuery by remember { mutableStateOf("") }
     var localStarred by remember { mutableStateOf(false) }
     var gridMode by remember { mutableStateOf(false) }
+    var deleteContact by remember { mutableStateOf<DialerContact?>(null) }
     var cabContact by remember { mutableStateOf<DialerContact?>(null) }
     var pendingCall by remember { mutableStateOf<String?>(null) }
     val tapToCall by viewModel.tapToCall.collectAsStateWithLifecycle()
@@ -129,8 +136,9 @@ fun ContactsScreen(
         return
     }
 
-    val filtered = remember(contacts, query, starredFilter) {
-        val pool = if (starredFilter) contacts.filter { it.starred } else contacts
+    val filtered = remember(contacts, query, starredFilter, selectedAccounts) {
+        val visible = contacts.filter { it.isInAccounts(selectedAccounts) }
+        val pool = if (starredFilter) visible.filter { it.starred } else visible
         ContactSearch.search(query, pool)
     }
     val rows = remember(filtered, query) {
@@ -154,6 +162,12 @@ fun ContactsScreen(
 
     Box(Modifier.fillMaxSize()) {
         Column(Modifier.fillMaxSize()) {
+            androidx.compose.material3.AssistChip(
+                onClick = { showAccounts = true },
+                label = { Text(if (selectedAccounts == null) stringResource(R.string.contacts_accounts_all)
+                    else stringResource(R.string.contacts_accounts_selected, selectedAccounts!!.size)) },
+                modifier = Modifier.padding(horizontal = 16.dp),
+            )
             if (showLocalSearch) TelosSearchBar(
                 value = localQuery,
                 onValueChange = { localQuery = it },
@@ -364,11 +378,45 @@ fun ContactsScreen(
                 },
             )
         }
+        if (showAccounts) AlertDialog(
+            onDismissRequest = { showAccounts = false },
+            title = { Text(stringResource(R.string.contacts_accounts)) },
+            text = {
+                androidx.compose.foundation.rememberScrollState().let { scroll ->
+                    Column(Modifier.heightIn(max = 420.dp).verticalScroll(scroll)) {
+                        androidx.compose.material3.TextButton(onClick = {
+                            selectedAccounts = null
+                            accountPrefs.edit().remove("accounts").apply()
+                        }) { Text(stringResource(R.string.contacts_accounts_all)) }
+                        accounts.forEach { account ->
+                            Row(Modifier.fillMaxWidth().clickable {
+                                val next = (selectedAccounts ?: accounts.map { it.key }.toSet()).toMutableSet()
+                                if (!next.add(account.key)) next.remove(account.key)
+                                selectedAccounts = next
+                                accountPrefs.edit().putStringSet("accounts", next).apply()
+                            }, verticalAlignment = Alignment.CenterVertically) {
+                                androidx.compose.material3.Checkbox(
+                                    checked = selectedAccounts?.contains(account.key) ?: true, onCheckedChange = null,
+                                )
+                                Column(Modifier.weight(1f).padding(vertical = 8.dp)) {
+                                    Text(account.name ?: stringResource(R.string.contacts_account_device))
+                                    account.type?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            confirmButton = { TextButton(onClick = { showAccounts = false }) { Text(stringResource(android.R.string.ok)) } },
+        )
+        deleteContact?.let { DeleteContactDialog(it) { deleteContact = null } }
         cabContact?.let { selected ->
             val number = viewModel.numberFor(selected)
             val callLabel = stringResource(R.string.search_action_call)
             val messageLabel = stringResource(R.string.search_action_message)
             val detailsLabel = stringResource(R.string.contact_details_title)
+            val editLabel = stringResource(R.string.net_dns_action_edit)
+            val deleteLabel = stringResource(R.string.hc_delete)
             val shareLabel = stringResource(R.string.search_action_share)
             val blockLabel = stringResource(R.string.comms_block_number)
             CommsCabSheet(
@@ -385,6 +433,8 @@ fun ContactsScreen(
                     add(CommsCabAction(R.drawable.info_24px, detailsLabel) {
                         backStack.add(ContactDetailsRoute(contactId = selected.id))
                     })
+                    add(CommsCabAction(R.drawable.edit_24px, editLabel) { ContactActions.edit(context, selected.id) })
+                    add(CommsCabAction(R.drawable.delete_24px, deleteLabel, destructive = true) { deleteContact = selected })
                     add(CommsCabAction(R.drawable.share_24px, shareLabel) {
                         viewModel.share(context, selected)
                     })

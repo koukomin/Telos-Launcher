@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <queries>
+        <package android:name="com.termux" />
         <intent>
             <action android:name="android.support.customtabs.action.CustomTabsService" />
         </intent>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">پایانه</string>
+    <string name="terminal_runtime_summary">از برنامهٔ جداگانهٔ Termux استفاده می‌کند. Termux و همهٔ افزونه‌ها را از یک منبع نصب کنید. پوسته در Termux و خارج از Telos اجرا می‌شود.</string>
+    <string name="terminal_open_failed">باز کردن Termux یا وب‌سایت ممکن نشد.</string>
+</resources>

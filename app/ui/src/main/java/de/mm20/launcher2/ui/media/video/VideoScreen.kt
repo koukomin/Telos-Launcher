@@ -282,15 +282,23 @@ fun VideoScreen() {
             .sortedBy { it.title.lowercase() }
     }
 
+    var showLibraryActions by remember { mutableStateOf(false) }
     de.mm20.launcher2.ui.media.MediaFrame(stringResource(R.string.au_video_title), guardKey = "telos_video_app://video", actions = {
-        FilledTonalIconButton(onClick = { showOpen = true }, colors = IconButtonDefaults.filledTonalIconButtonColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.9f))) {
-            Icon(painterResource(R.drawable.link_24px), contentDescription = stringResource(R.string.hc_play_from_the_web))
-        }
-        FilledTonalIconButton(onClick = { showOrganize = true }, colors = IconButtonDefaults.filledTonalIconButtonColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.9f))) {
-            Icon(painterResource(R.drawable.folder_24px), contentDescription = stringResource(R.string.au7_vidfolders_action))
-        }
-        FilledTonalIconButton(onClick = { showServices = true }, colors = IconButtonDefaults.filledTonalIconButtonColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.9f))) {
-            Icon(painterResource(R.drawable.settings_24px), contentDescription = stringResource(R.string.hc_video_services))
+        Box {
+            IconButton(onClick = { showLibraryActions = true }) {
+                Icon(painterResource(R.drawable.more_vert_24px), stringResource(R.string.hc_more))
+            }
+            DropdownMenu(expanded = showLibraryActions, onDismissRequest = { showLibraryActions = false }) {
+                DropdownMenuItem(text = { Text(stringResource(R.string.hc_play_from_the_web)) },
+                    leadingIcon = { Icon(painterResource(R.drawable.link_24px), null) },
+                    onClick = { showLibraryActions = false; showOpen = true })
+                DropdownMenuItem(text = { Text(stringResource(R.string.au7_vidfolders_action)) },
+                    leadingIcon = { Icon(painterResource(R.drawable.folder_24px), null) },
+                    onClick = { showLibraryActions = false; showOrganize = true })
+                DropdownMenuItem(text = { Text(stringResource(R.string.hc_video_services)) },
+                    leadingIcon = { Icon(painterResource(R.drawable.settings_24px), null) },
+                    onClick = { showLibraryActions = false; showServices = true })
+            }
         }
     }) {
     if (showOpen) OpenSourceDialog { showOpen = false }

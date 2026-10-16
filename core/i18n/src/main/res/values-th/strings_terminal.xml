@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">เทอร์มินัล</string>
+    <string name="terminal_runtime_summary">ใช้แอป Termux ที่ติดตั้งแยกต่างหาก ติดตั้ง Termux และส่วนเสริมทั้งหมดจากแหล่งเดียวกัน เชลล์ทำงานใน Termux ภายนอก Telos</string>
+    <string name="terminal_open_failed">ไม่สามารถเปิด Termux หรือเว็บไซต์ได้</string>
+</resources>

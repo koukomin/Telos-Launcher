@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Kontuak</string>
+    <string name="contacts_accounts_all">Kontu guztiak</string>
+    <string name="contacts_accounts_selected">Hautatutako kontuak (%1$d)</string>
+    <string name="contacts_account_device">Gailu honetan</string>
+    <string name="contacts_delete_confirm">Ezabatu %1$s lotutako kontu guztietatik? Ezin da desegin.</string>
+</resources>

@@ -90,7 +90,7 @@ class WidgetsService(
             ),
             BuiltInWidgetInfo(
                 type = NetworkWidget.Type,
-                label = context.getString(R.string.widget_name_network),
+                label = context.getString(R.string.net_hub_title),
             ),
             BuiltInWidgetInfo(
                 type = SystemWidget.Type,

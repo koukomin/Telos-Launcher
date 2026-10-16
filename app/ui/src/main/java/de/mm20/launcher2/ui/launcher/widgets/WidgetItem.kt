@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets
 
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import android.appwidget.AppWidgetManager
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
@@ -84,6 +85,8 @@ fun WidgetItem(
     onDragStopped: () -> Unit = {}
 ) {
     val context = LocalContext.current
+    val uiSettings = org.koin.compose.koinInject<de.mm20.launcher2.preferences.ui.UiSettings>()
+    val glassWidgets by uiSettings.widgetsGlassBackground.collectAsStateWithLifecycle(true)
 
     var configure by rememberSaveable { mutableStateOf(false) }
 
@@ -97,7 +100,7 @@ fun WidgetItem(
     val elevation by animateDpAsState(if (isDragged) 8.dp else 0.dp)
 
     val backgroundOpacity by animateFloatAsState(
-        if (widget is AppWidget && !widget.config.background && !editMode) 0f else MaterialTheme.transparency.surface,
+        if (widget is AppWidget && !widget.config.background && !editMode) 0f else if (glassWidgets && widget !is AppWidget) 0.42f else MaterialTheme.transparency.surface,
         label = "widgetCardBackgroundOpacity",
     )
 

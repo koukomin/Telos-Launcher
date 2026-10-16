@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">खाते</string>
+    <string name="contacts_accounts_all">सभी खाते</string>
+    <string name="contacts_accounts_selected">चुने गए खाते (%1$d)</string>
+    <string name="contacts_account_device">इस डिवाइस पर</string>
+    <string name="contacts_delete_confirm">सभी जुड़े खातों से %1$s मिटाएँ? इसे वापस नहीं किया जा सकता।</string>
+</resources>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Hesablar</string>
+    <string name="contacts_accounts_all">Bütün hesablar</string>
+    <string name="contacts_accounts_selected">Seçilmiş hesablar (%1$d)</string>
+    <string name="contacts_account_device">Bu cihazda</string>
+    <string name="contacts_delete_confirm">%1$s bütün əlaqəli hesablardan silinsin? Geri qaytarmaq mümkün deyil.</string>
+</resources>

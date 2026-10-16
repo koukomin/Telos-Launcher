@@ -53,6 +53,11 @@ data object AppearanceSettingsRoute: NavKey
 
 @Composable
 fun AppearanceSettingsScreen() {
+    val uiSettings = org.koin.compose.koinInject<de.mm20.launcher2.preferences.ui.UiSettings>()
+    val glassWidgets by uiSettings.widgetsGlassBackground.collectAsStateWithLifecycle(true)
+    val drawerBackground by uiSettings.drawerBackgroundEnabled.collectAsStateWithLifecycle(true)
+    val drawerBlur by uiSettings.drawerBackgroundBlur.collectAsStateWithLifecycle(32)
+    val drawerOpacity by uiSettings.drawerBackgroundOpacity.collectAsStateWithLifecycle(0.35f)
     val viewModel: AppearanceSettingsScreenVM = viewModel()
     val backStack = LocalBackStack.current
     val colorThemeName by viewModel.colorThemeName.collectAsStateWithLifecycle(null)
@@ -69,6 +74,38 @@ fun AppearanceSettingsScreen() {
     }
 
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
+        item {
+            PreferenceCategory(title = stringResource(R.string.preference_drawer_background)) {
+                de.mm20.launcher2.ui.component.preferences.SwitchPreference(
+                    title = stringResource(R.string.preference_drawer_background),
+                    summary = stringResource(R.string.preference_drawer_background_summary),
+                    value = drawerBackground,
+                    onValueChanged = uiSettings::setDrawerBackgroundEnabled,
+                )
+                AnimatedVisibility(drawerBackground) {
+                    Column {
+                        SliderPreference(
+                            title = stringResource(R.string.preference_dock_background_blur),
+                            value = drawerBlur, min = 0, max = 100,
+                            onValueChanged = uiSettings::setDrawerBackgroundBlur,
+                        )
+                        SliderPreference(
+                            title = stringResource(R.string.preference_dock_background_opacity),
+                            value = (drawerOpacity * 100).roundToInt(), min = 0, max = 100,
+                            onValueChanged = { uiSettings.setDrawerBackgroundOpacity(it / 100f) },
+                        )
+                    }
+                }
+            }
+            PreferenceCategory(title = stringResource(R.string.preference_category_widgets)) {
+                de.mm20.launcher2.ui.component.preferences.SwitchPreference(
+                    title = stringResource(R.string.preference_blur_wallpaper),
+                    summary = stringResource(R.string.preference_blur_wallpaper_summary),
+                    value = glassWidgets,
+                    onValueChanged = uiSettings::setWidgetsGlassBackground,
+                )
+            }
+        }
         item {
             PreferenceCategory {
                 // === TELOS_PENDING_REVIEW_START: ui_i18n_and_features_batch ===

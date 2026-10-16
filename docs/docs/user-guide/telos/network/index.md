@@ -58,3 +58,9 @@ The first time you turn it on, Android asks for your consent to set up a VPN. Wi
 - [Firewall](firewall.md)
 - [Blocklists and exceptions](blocklists-bypass.md)
 - [Logs and settings](logs-settings.md)
+
+## Home widget
+
+Add **Telos Network** from the built-in widget picker. It shows VPN state, the selected DNS server, blocked query/connection counts since logs were cleared, local interface addresses and sampled download/upload rates. Rates use device counters, including possible VPN interface overhead; they are not a tunnel speed test.
+
+WAN lookup runs only when tapped and contacts the displayed `api.ipify.org` endpoint. It shows the route used by Telos itself, which is normally excluded from its own VPN; it must not be interpreted as the exit IP of a selected WireGuard or Tor route.

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">Terminal</string>
+    <string name="terminal_runtime_summary">Ayrıca quraşdırılmış Termux tətbiqindən istifadə edir. Termux və bütün əlavələrini eyni mənbədən quraşdırın. Örtük Telos xaricində Termux-da işləyir.</string>
+    <string name="terminal_open_failed">Termux və ya sayt açıla bilmədi.</string>
+</resources>

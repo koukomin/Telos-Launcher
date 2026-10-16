@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au2_radio2_record">Yaz</string>
+    <string name="au2_radio2_stop_recording">Yazmanı dayandır</string>
+    <string name="au7_vidfolders_action">Filmlər və seriallar qovluqlarına ayır</string>
+    <string name="au_phonea_action_failed">Dəyişikliyi yadda saxlamaq olmadı. Kontaktlara giriş icazəsini yoxlayın.</string>
+    <string name="hc_failed_try_again">Uğursuz oldu, yenidən cəhd edin</string>
+    <string name="hc_install">Quraşdır</string>
+    <string name="hc_menu">Menyu</string>
+    <string name="hc_open">Aç</string>
+    <string name="hc_play_from_the_web">Vebdən oxut</string>
+    <string name="hc_sleep_timer">Yuxu taymeri</string>
+    <string name="hc_video_services">Video xidmətləri</string>
+    <string name="network_widget_cellular">Mobil data</string>
+    <string name="network_widget_connected">Qoşulub</string>
+    <string name="network_widget_disconnected">Bağlantı yoxdur</string>
+    <string name="network_widget_ethernet">Ethernet</string>
+    <string name="network_widget_wifi">Wi-Fi</string>
+    <string name="preference_blur_wallpaper">Divar kağızını bulanıqlaşdır</string>
+    <string name="preference_blur_wallpaper_summary">Divar kağızına bulanıqlıq effekti tətbiq et</string>
+    <string name="preference_category_widgets">Vidcetlər</string>
+    <string name="preference_dock_background_opacity">Fonun qeyri-şəffaflığı</string>
+    <string name="preference_drawer_background">Tətbiq siyirməsinin fonu</string>
+    <string name="preference_drawer_background_summary">Tətbiq siyirməsinin arxasında fon göstər</string>
+</resources>

@@ -37,3 +37,7 @@ In this panel, you can
 - configure frequently used items
   - how many rows of frequently used items should be shown (including the last row of pinned items which will be filled first)
   - disable non-pinned frequently used altogether
+
+## Drawer and widget backgrounds
+
+Open **Settings → Appearance** for drawer background, blur and opacity controls. The fresh-install drawer preset uses 32 blur and 35% tint; saved drawer choices remain intact. Built-in widgets use translucent glass by default; the Widgets blur switch in Appearance returns to theme surfaces when disabled. External widgets keep their own background behavior. Blur depends on platform support. The sidebar uses slimmer icon cells, padding and handle without reducing system font scaling.

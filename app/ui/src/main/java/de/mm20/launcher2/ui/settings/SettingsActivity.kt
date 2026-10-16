@@ -303,6 +303,9 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.downloads.DownloadsSettingsRoute> {
                 de.mm20.launcher2.ui.downloads.DownloadsSettingsScreen()
             }
+            entry<de.mm20.launcher2.ui.terminal.TerminalRoute> {
+                de.mm20.launcher2.ui.terminal.TerminalScreen()
+            }
             entry<de.mm20.launcher2.ui.network.NetworkRoute> {
                 de.mm20.launcher2.ui.network.NetworkHomeScreen()
             }
@@ -691,6 +694,7 @@ open class SettingsActivity : BaseActivity() {
             SettingsDeepLinkContract.ROUTE_YOUTUBE_MUSIC -> "telos_youtube_music_app"
             ROUTE_PHOTOS, SettingsDeepLinkContract.ROUTE_VIEWER -> "telos_viewer_app"
             ROUTE_FILES -> "telos_files_app"
+            SettingsDeepLinkContract.ROUTE_TERMINAL -> "telos_terminal_app"
             ROUTE_NETWORK -> "telos_network_app"
             ROUTE_CALCULATOR -> "telos_calculator_app"
             ROUTE_VOICE_RECORDER -> "telos_voice_recorder_app"
@@ -785,6 +789,7 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_PHOTOS -> de.mm20.launcher2.ui.media.docs.ViewerRoute
             SettingsDeepLinkContract.ROUTE_VIEWER -> de.mm20.launcher2.ui.media.docs.ViewerRoute
             ROUTE_FILES -> de.mm20.launcher2.ui.files.FilesRoute
+            SettingsDeepLinkContract.ROUTE_TERMINAL -> de.mm20.launcher2.ui.terminal.TerminalRoute
             ROUTE_NETWORK -> de.mm20.launcher2.ui.network.NetworkRoute
             ROUTE_CALCULATOR -> de.mm20.launcher2.ui.calculator.CalculatorRoute
             ROUTE_VOICE_RECORDER -> de.mm20.launcher2.ui.voice.VoiceRecorderRoute

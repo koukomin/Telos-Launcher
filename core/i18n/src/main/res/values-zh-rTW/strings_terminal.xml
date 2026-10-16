@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">終端機</string>
+    <string name="terminal_runtime_summary">使用另外安裝的 Termux 應用程式。請從同一來源安裝 Termux 及其所有附加元件。Shell 在 Telos 外部的 Termux 中執行。</string>
+    <string name="terminal_open_failed">無法開啟 Termux 或網站。</string>
+</resources>

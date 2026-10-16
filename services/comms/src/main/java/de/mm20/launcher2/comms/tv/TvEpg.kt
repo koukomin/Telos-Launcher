@@ -208,6 +208,7 @@ class TvEpg(
 
     @Volatile private var data: Map<String, TvChannelProgrammes> = emptyMap()
     private var loadedKey: String? = null
+    private var loadedIndex: TvIndex? = null
     private val _version = MutableStateFlow(0)
 
     /** Increases whenever the guide data changed; collect it to refresh the "now / next" texts */
@@ -247,12 +248,13 @@ class TvEpg(
                 updated = outcome == TvExtraCache.Outcome.UPDATED
                 file = cache.usable(key, now) ?: continue
             }
-            if (loadedKey == key && !updated && !due) return false
+            if (loadedKey == key && loadedIndex === index && !updated && !due) return false
             val f = file ?: continue
             val parsed = runCatching { parseFile(f, index, now) }.getOrNull().orEmpty()
             if (parsed.isNotEmpty()) {
                 data = parsed
                 loadedKey = key
+                loadedIndex = index
                 return true
             }
         }

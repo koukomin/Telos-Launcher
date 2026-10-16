@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Tài khoản</string>
+    <string name="contacts_accounts_all">Tất cả tài khoản</string>
+    <string name="contacts_accounts_selected">Tài khoản đã chọn (%1$d)</string>
+    <string name="contacts_account_device">Trên thiết bị này</string>
+    <string name="contacts_delete_confirm">Xóa %1$s khỏi mọi tài khoản liên kết? Không thể hoàn tác.</string>
+</resources>

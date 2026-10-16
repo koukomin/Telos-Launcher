@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Comptes</string>
+    <string name="contacts_accounts_all">Tots els comptes</string>
+    <string name="contacts_accounts_selected">Comptes seleccionats (%1$d)</string>
+    <string name="contacts_account_device">En aquest dispositiu</string>
+    <string name="contacts_delete_confirm">Voleu suprimir %1$s de tots els comptes vinculats? No es pot desfer.</string>
+</resources>

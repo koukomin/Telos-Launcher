@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Tilit</string>
+    <string name="contacts_accounts_all">Kaikki tilit</string>
+    <string name="contacts_accounts_selected">Valitut tilit (%1$d)</string>
+    <string name="contacts_account_device">Tässä laitteessa</string>
+    <string name="contacts_delete_confirm">Poistetaanko %1$s kaikilta liitetyiltä tileiltä? Tätä ei voi kumota.</string>
+</resources>

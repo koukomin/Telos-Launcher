@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">계정</string>
+    <string name="contacts_accounts_all">모든 계정</string>
+    <string name="contacts_accounts_selected">선택한 계정 (%1$d)</string>
+    <string name="contacts_account_device">이 기기에 저장</string>
+    <string name="contacts_delete_confirm">연결된 모든 계정에서 %1$s을(를) 삭제할까요? 취소할 수 없습니다.</string>
+</resources>

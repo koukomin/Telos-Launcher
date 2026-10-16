@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au2_radio2_record">Registri</string>
+    <string name="au2_radio2_stop_recording">Ĉesigi registradon</string>
+    <string name="au7_vidfolders_action">Organizi en dosierujojn por filmoj kaj serioj</string>
+    <string name="au_phonea_action_failed">Ne eblis konservi la ŝanĝon. Kontrolu la permeson aliri kontaktojn.</string>
+    <string name="hc_failed_try_again">Malsukcesis, reprovu</string>
+    <string name="hc_install">Instali</string>
+    <string name="hc_menu">Menuo</string>
+    <string name="hc_open">Malfermi</string>
+    <string name="hc_play_from_the_web">Ludi el la reto</string>
+    <string name="hc_sleep_timer">Dormotempigilo</string>
+    <string name="hc_video_services">Videoservoj</string>
+    <string name="network_widget_cellular">Poŝtelefonaj datumoj</string>
+    <string name="network_widget_connected">Konektita</string>
+    <string name="network_widget_disconnected">Neniu konekto</string>
+    <string name="network_widget_ethernet">Ethernet</string>
+    <string name="network_widget_wifi">Wi-Fi</string>
+    <string name="preference_blur_wallpaper">Malklarigi la ekranfonon</string>
+    <string name="preference_blur_wallpaper_summary">Uzi malklarigan efekton sur la ekranfono</string>
+    <string name="preference_category_widgets">Fenestraĵoj</string>
+    <string name="preference_dock_background_opacity">Fona opakeco</string>
+    <string name="preference_drawer_background">Fono de la aplikaĵa tirkesto</string>
+    <string name="preference_drawer_background_summary">Montri fonon malantaŭ la aplikaĵa tirkesto</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">Terminala</string>
+    <string name="terminal_runtime_summary">Bereiz instalatutako Termux erabiltzen du. Instalatu Termux eta gehigarri guztiak iturri beretik. Shell-a Termuxen exekutatzen da, Telosetik kanpo.</string>
+    <string name="terminal_open_failed">Ezin izan da Termux edo webgunea ireki.</string>
+</resources>

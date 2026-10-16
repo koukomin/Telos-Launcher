@@ -196,7 +196,7 @@ private fun SidebarCard(
         Surface(
             modifier = Modifier
                 .padding(8.dp)
-                .widthIn(max = if (hasWidget) 320.dp else sidebarCell() * columns + 32.dp)
+                .widthIn(max = if (hasWidget) 320.dp else sidebarCell() * columns + 24.dp)
                 .heightIn(max = minOf(maxCardHeight, sidebarCell() * maxPerColumn + 160.dp))
                 .clickable(interactionSource = remember { MutableInteractionSource() }, indication = null, onClick = {})
                 .dragAndDropTarget(
@@ -226,7 +226,7 @@ private fun SidebarCard(
             shape = RoundedCornerShape(28.dp),
             shadowElevation = 8.dp,
         ) {
-            Column(modifier = Modifier.padding(12.dp)) {
+            Column(modifier = Modifier.padding(8.dp)) {
                 if (style.fileDock) {
                     SidebarWideButton(
                         icon = R.drawable.ic_sidebar_file_dock,

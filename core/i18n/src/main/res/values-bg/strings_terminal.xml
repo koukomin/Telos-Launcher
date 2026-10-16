@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">Терминал</string>
+    <string name="terminal_runtime_summary">Използва отделно инсталирания Termux. Инсталирайте Termux и всичките му добавки от един източник. Обвивката работи в Termux извън Telos.</string>
+    <string name="terminal_open_failed">Termux или сайтът не могат да се отворят.</string>
+</resources>

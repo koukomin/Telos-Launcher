@@ -1,0 +1,21 @@
+<resources>
+    <string name="au2_radio2_record">Ghi âm</string>
+    <string name="au2_radio2_stop_recording">Dừng ghi âm</string>
+    <string name="au7_vidfolders_action">Sắp xếp vào thư mục Phim và Phim bộ</string>
+    <string name="au_phonea_action_failed">Không thể lưu thay đổi. Hãy kiểm tra quyền truy cập danh bạ.</string>
+    <string name="hc_failed_try_again">Thất bại, thử lại</string>
+    <string name="hc_install">Cài đặt</string>
+    <string name="hc_menu">Trình đơn</string>
+    <string name="hc_open">Mở</string>
+    <string name="hc_play_from_the_web">Phát từ web</string>
+    <string name="hc_sleep_timer">Hẹn giờ ngủ</string>
+    <string name="hc_video_services">Dịch vụ video</string>
+    <string name="network_widget_cellular">Dữ liệu di động</string>
+    <string name="network_widget_connected">Đã kết nối</string>
+    <string name="network_widget_disconnected">Không có kết nối</string>
+    <string name="network_widget_ethernet">Ethernet</string>
+    <string name="network_widget_wifi">Wi-Fi</string>
+    <string name="preference_dock_background_opacity">Độ mờ đục của nền</string>
+    <string name="preference_drawer_background">Nền ngăn ứng dụng</string>
+    <string name="preference_drawer_background_summary">Hiển thị nền phía sau ngăn ứng dụng</string>
+</resources>

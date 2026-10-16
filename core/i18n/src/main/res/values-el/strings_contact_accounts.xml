@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Λογαριασμοί</string>
+    <string name="contacts_accounts_all">Όλοι οι λογαριασμοί</string>
+    <string name="contacts_accounts_selected">Επιλεγμένοι λογαριασμοί (%1$d)</string>
+    <string name="contacts_account_device">Σε αυτή τη συσκευή</string>
+    <string name="contacts_delete_confirm">Να διαγραφεί η επαφή %1$s από όλους τους συνδεδεμένους λογαριασμούς; Δεν είναι δυνατή η αναίρεση.</string>
+</resources>

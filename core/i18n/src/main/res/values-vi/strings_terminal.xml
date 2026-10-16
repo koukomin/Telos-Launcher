@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">Thiết bị đầu cuối</string>
+    <string name="terminal_runtime_summary">Dùng Termux được cài riêng. Cài Termux và mọi tiện ích từ cùng một nguồn. Shell chạy trong Termux, bên ngoài Telos.</string>
+    <string name="terminal_open_failed">Không thể mở Termux hoặc trang web.</string>
+</resources>

@@ -152,11 +152,9 @@ private val MediaSpace.groupIcon: Int get() = when (group) {
 }
 
 /**
- * Telos Media: Telos Music, Telos Radio, Telos TV and Telos Video as four spaces, switched with a pill at
- * the top. The screens are the ones of the three apps. Only the open space is composed, its
- * view models (library, player connection) stay while another space is open, and its saved state
- * (tab, search) is restored when it comes back. A mini player for music, radio and TV sits at the
- * bottom (not on the video space, and not on the TV space while the full TV player is open).
+ * The unified media library. A single source toolbar hosts each screen's contextual actions;
+ * source selection and ordering live in its menu, leaving the viewport for media.
+ * Only the open source is composed, while view models and saveable navigation state survive switches.
  */
 @Composable
 fun MediaHubScreen(initialSpace: String = "") {
@@ -236,62 +234,6 @@ fun MediaHubScreen(initialSpace: String = "") {
                 .statusBarsPadding()
                 .navigationBarsPadding()
         ) {
-            // soft scrim behind the floating controls
-            Box(
-                Modifier
-                    .fillMaxWidth()
-                    .background(Brush.verticalGradient(listOf(scheme.surface.copy(alpha = 0.55f), Color.Transparent)))
-                    .padding(horizontal = 12.dp, vertical = 6.dp),
-                contentAlignment = Alignment.Center,
-            ) {
-                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                    Surface(
-                        onClick = { backStack.removeLastOrNull() },
-                        shape = CircleShape,
-                        color = scheme.surfaceContainerHigh.copy(alpha = 0.8f),
-                        modifier = Modifier
-                            .size(40.dp)
-                            .border(1.dp, scheme.outline.copy(alpha = 0.2f), CircleShape),
-                    ) {
-                        Box(contentAlignment = Alignment.Center) {
-                            Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back), modifier = Modifier.size(20.dp))
-                        }
-                    }
-                    Spacer(Modifier.width(8.dp))
-                    if (current != null) {
-                        SpacePill(
-                            spaces = groupSpaces,
-                            selected = groupSpaces.first { it.group == current.group },
-                            onSelect = { space = it.id },
-                            onReorder = { reordered ->
-                                settings.setMediaHubOrder(reordered.flatMap { group -> available.filter { it.group == group.group }.map { it.id } })
-                            },
-                            reduceAnimations = reduceAnimations,
-                            modifier = Modifier.weight(1f),
-                        )
-                    }
-                    IconButton(onClick = { showTrash = true }) {
-                        Icon(painterResource(R.drawable.delete_24px), stringResource(R.string.telos_trash_title))
-                    }
-                }
-            }
-
-            current?.let { selectedSpace ->
-                val sources = available.filter { it.group == selectedSpace.group }
-                if (sources.size > 1) Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    for (source in sources) FilterChip(selected = source == selectedSpace, onClick = { space = source.id },
-                        label = { Text(stringResource(source.label)) })
-                }
-
-                Text(
-                    stringResource(selectedSpace.label),
-                    style = MaterialTheme.typography.headlineLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = accent,
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 8.dp),
-                )
-            }
-
             Box(Modifier.weight(1f).fillMaxWidth()) {
                 AnimatedContent(
                     targetState = current,
@@ -310,7 +252,22 @@ fun MediaHubScreen(initialSpace: String = "") {
                 ) { target ->
                     if (target != null) {
                         stateHolder.SaveableStateProvider(target.id) {
-                            CompositionLocalProvider(LocalInMediaHub provides true) {
+                            CompositionLocalProvider(
+                                LocalInMediaHub provides true,
+                                de.mm20.launcher2.ui.media.LocalMediaHubToolbar provides { actions ->
+                                    HubToolbar(
+                                        current = target, available = available, groupSpaces = groupSpaces,
+                                        onSelect = { space = it.id },
+                                        onReorder = { reordered ->
+                                            settings.setMediaHubOrder(reordered.flatMap { group -> available.filter { it.group == group.group }.map { it.id } })
+                                        },
+                                        reduceAnimations = reduceAnimations,
+                                        onBack = { backStack.removeLastOrNull() },
+                                        onTrash = { showTrash = true },
+                                        actions = actions,
+                                    )
+                                },
+                            ) {
                                 when (target) {
                                     MediaSpace.Music -> MusicScreen(
                                         openNowPlaying = openMusicPlayer,
@@ -347,6 +304,60 @@ fun MediaHubScreen(initialSpace: String = "") {
                 )
             }
         }
+    }
+}
+
+/** One toolbar: source navigation and contextual controls share space instead of stacking headers. */
+@Composable
+private fun HubToolbar(
+    current: MediaSpace,
+    available: List<MediaSpace>,
+    groupSpaces: List<MediaSpace>,
+    onSelect: (MediaSpace) -> Unit,
+    onReorder: (List<MediaSpace>) -> Unit,
+    reduceAnimations: Boolean,
+    onBack: () -> Unit,
+    onTrash: () -> Unit,
+    actions: @Composable androidx.compose.foundation.layout.RowScope.() -> Unit,
+) {
+    var expanded by remember { mutableStateOf(false) }
+    Row(
+        Modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 2.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        IconButton(onClick = onBack) {
+            Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back))
+        }
+        Box(Modifier.weight(1f)) {
+            Surface(onClick = { expanded = true }, shape = RoundedCornerShape(16.dp), color = Color.Transparent) {
+                Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Text(stringResource(current.label), style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold, maxLines = 2, overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f))
+                    Icon(painterResource(R.drawable.unfold_more_24px), null, modifier = Modifier.size(18.dp))
+                }
+            }
+            androidx.compose.material3.DropdownMenu(expanded, { expanded = false }) {
+                // Existing long-press reordering remains available without occupying the library viewport.
+                SpacePill(groupSpaces, groupSpaces.first { it.group == current.group },
+                    onSelect = { onSelect(it); expanded = false }, onReorder = onReorder,
+                    reduceAnimations = reduceAnimations, modifier = Modifier.width(280.dp).padding(8.dp))
+                available.forEach { source ->
+                    androidx.compose.material3.DropdownMenuItem(
+                        text = { Text(stringResource(source.label), fontWeight = if (source == current) FontWeight.Bold else FontWeight.Normal) },
+                        leadingIcon = { Icon(painterResource(source.icon), null, modifier = Modifier.size(24.dp)) },
+                        onClick = { onSelect(source); expanded = false },
+                    )
+                }
+                androidx.compose.material3.HorizontalDivider()
+                androidx.compose.material3.DropdownMenuItem(
+                    text = { Text(stringResource(R.string.telos_trash_title)) },
+                    leadingIcon = { Icon(painterResource(R.drawable.delete_24px), null) },
+                    onClick = { expanded = false; onTrash() },
+                )
+            }
+        }
+        actions()
     }
 }
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">Terminal</string>
+    <string name="terminal_runtime_summary">Korzysta z osobno zainstalowanego Termuksa. Zainstaluj Termux i wszystkie dodatki z tego samego źródła. Powłoka działa w Termuksie poza Telosem.</string>
+    <string name="terminal_open_failed">Nie można otworzyć Termuksa lub witryny.</string>
+</resources>

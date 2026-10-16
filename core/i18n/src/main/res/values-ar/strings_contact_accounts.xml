@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">الحسابات</string>
+    <string name="contacts_accounts_all">كل الحسابات</string>
+    <string name="contacts_accounts_selected">الحسابات المحددة (%1$d)</string>
+    <string name="contacts_account_device">على هذا الجهاز</string>
+    <string name="contacts_delete_confirm">حذف %1$s من كل الحسابات المرتبطة؟ لا يمكن التراجع.</string>
+</resources>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">帳戶</string>
+    <string name="contacts_accounts_all">所有帳戶</string>
+    <string name="contacts_accounts_selected">所選帳戶（%1$d）</string>
+    <string name="contacts_account_device">此裝置上</string>
+    <string name="contacts_delete_confirm">要從所有連結帳戶中刪除 %1$s 嗎？此操作無法復原。</string>
+</resources>

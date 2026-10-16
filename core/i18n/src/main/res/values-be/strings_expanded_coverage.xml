@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au2_radio2_record">Запісаць</string>
+    <string name="au2_radio2_stop_recording">Спыніць запіс</string>
+    <string name="au7_vidfolders_action">Упарадкаваць у папкі фільмаў і серыялаў</string>
+    <string name="au_phonea_action_failed">Не ўдалося захаваць змяненне. Праверце дазвол на доступ да кантактаў.</string>
+    <string name="hc_failed_try_again">Не ўдалося, паспрабуйце яшчэ раз</string>
+    <string name="hc_install">Усталяваць</string>
+    <string name="hc_menu">Меню</string>
+    <string name="hc_open">Адкрыць</string>
+    <string name="hc_play_from_the_web">Прайграць з інтэрнэту</string>
+    <string name="hc_sleep_timer">Таймер сну</string>
+    <string name="hc_video_services">Відэасэрвісы</string>
+    <string name="network_widget_cellular">Мабільныя даныя</string>
+    <string name="network_widget_connected">Падключана</string>
+    <string name="network_widget_disconnected">Няма злучэння</string>
+    <string name="network_widget_ethernet">Ethernet</string>
+    <string name="network_widget_wifi">Wi-Fi</string>
+    <string name="preference_dock_background_opacity">Непразрыстасць фону</string>
+    <string name="preference_drawer_background">Фон меню праграм</string>
+    <string name="preference_drawer_background_summary">Паказваць фон за меню праграм</string>
+</resources>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Akun</string>
+    <string name="contacts_accounts_all">Semua akun</string>
+    <string name="contacts_accounts_selected">Akun terpilih (%1$d)</string>
+    <string name="contacts_account_device">Di perangkat ini</string>
+    <string name="contacts_delete_confirm">Hapus %1$s dari semua akun tertaut? Ini tidak dapat dibatalkan.</string>
+</resources>

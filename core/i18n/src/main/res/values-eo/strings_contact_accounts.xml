@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Kontoj</string>
+    <string name="contacts_accounts_all">Ĉiuj kontoj</string>
+    <string name="contacts_accounts_selected">Elektitaj kontoj (%1$d)</string>
+    <string name="contacts_account_device">Sur ĉi tiu aparato</string>
+    <string name="contacts_delete_confirm">Ĉu forigi %1$s el ĉiuj ligitaj kontoj? Tio ne estas malfarebla.</string>
+</resources>

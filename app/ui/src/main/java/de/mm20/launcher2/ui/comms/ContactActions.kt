@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.ContactsContract
+import de.mm20.launcher2.ktx.tryStartActivity
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -15,6 +17,13 @@ internal data class DataAction(val uri: Uri, val mimeType: String) {
 }
 
 internal object ContactActions {
+
+    fun edit(context: Context, id: Long) {
+        if (!context.tryStartActivity(Intent(Intent.ACTION_EDIT,
+            ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id)))) {
+            android.widget.Toast.makeText(context, de.mm20.launcher2.ui.R.string.au_phonea_action_failed, android.widget.Toast.LENGTH_LONG).show()
+        }
+    }
 
     /** Mime types the messenger apps use for their actions in the contacts database */
     val whatsAppCall = listOf("vnd.android.cursor.item/vnd.com.whatsapp.voip.call")
@@ -62,4 +71,41 @@ internal object ContactActions {
             }.getOrDefault(false)
         }
     }
+}
+
+@androidx.compose.runtime.Composable
+internal fun DeleteContactDialog(contact: de.mm20.launcher2.comms.model.DialerContact, onDismiss: () -> Unit) {
+    val repo: de.mm20.launcher2.comms.repository.ContactDirectoryRepository = org.koin.compose.koinInject()
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+    val deleting = androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+    androidx.compose.material3.AlertDialog(
+        onDismissRequest = { if (!deleting.value) onDismiss() },
+        title = { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.hc_delete)) },
+        text = { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.contacts_delete_confirm, contact.displayName)) },
+        confirmButton = {
+            androidx.compose.material3.TextButton(enabled = !deleting.value, onClick = {
+                deleting.value = true
+                scope.launch {
+                    val deleted = try {
+                        repo.deleteContact(contact.id)
+                    } catch (e: kotlinx.coroutines.CancellationException) {
+                        throw e
+                    } catch (_: Exception) {
+                        false
+                    }
+                    deleting.value = false
+                    if (!deleted) {
+                        android.widget.Toast.makeText(context, de.mm20.launcher2.ui.R.string.au_phonea_action_failed, android.widget.Toast.LENGTH_LONG).show()
+                    }
+                    onDismiss()
+                }
+            }) { androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(de.mm20.launcher2.ui.R.string.hc_delete)) }
+        },
+        dismissButton = {
+            androidx.compose.material3.TextButton(enabled = !deleting.value, onClick = onDismiss) {
+                androidx.compose.material3.Text(androidx.compose.ui.res.stringResource(android.R.string.cancel))
+            }
+        },
+    )
 }

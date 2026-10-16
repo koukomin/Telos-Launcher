@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Kontod</string>
+    <string name="contacts_accounts_all">Kõik kontod</string>
+    <string name="contacts_accounts_selected">Valitud kontod (%1$d)</string>
+    <string name="contacts_account_device">Selles seadmes</string>
+    <string name="contacts_delete_confirm">Kas kustutada %1$s kõigilt seotud kontodelt? Seda ei saa tagasi võtta.</string>
+</resources>

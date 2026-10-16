@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Računi</string>
+    <string name="contacts_accounts_all">Svi računi</string>
+    <string name="contacts_accounts_selected">Odabrani računi (%1$d)</string>
+    <string name="contacts_account_device">Na ovom uređaju</string>
+    <string name="contacts_delete_confirm">Izbrisati %1$s iz svih povezanih računa? Ovo se ne može poništiti.</string>
+</resources>

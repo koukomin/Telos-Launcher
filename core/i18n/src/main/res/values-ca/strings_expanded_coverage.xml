@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au2_radio2_record">Enregistra</string>
+    <string name="au2_radio2_stop_recording">Atura l’enregistrament</string>
+    <string name="au7_vidfolders_action">Organitza en carpetes de pel·lícules i sèries</string>
+    <string name="au_phonea_action_failed">No s’ha pogut desar el canvi. Comproveu el permís d’accés als contactes.</string>
+    <string name="hc_failed_try_again">Ha fallat, torna-ho a provar</string>
+    <string name="hc_install">Instal·la</string>
+    <string name="hc_menu">Menú</string>
+    <string name="hc_open">Obre</string>
+    <string name="hc_play_from_the_web">Reprodueix des del web</string>
+    <string name="hc_sleep_timer">Temporitzador de repòs</string>
+    <string name="hc_video_services">Serveis de vídeo</string>
+    <string name="network_widget_cellular">Dades mòbils</string>
+    <string name="network_widget_connected">Connectat</string>
+    <string name="network_widget_disconnected">Sense connexió</string>
+    <string name="network_widget_ethernet">Ethernet</string>
+    <string name="network_widget_wifi">Wi-Fi</string>
+    <string name="preference_dock_background_opacity">Opacitat del fons</string>
+    <string name="preference_drawer_background">Fons del calaix d’aplicacions</string>
+    <string name="preference_drawer_background_summary">Mostra un fons darrere del calaix d’aplicacions</string>
+</resources>

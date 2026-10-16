@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terminal_title">Terminal</string>
+    <string name="terminal_runtime_summary">Bruker Termux som er installert separat. Installer Termux og alle tillegg fra samme kilde. Skallet kjører i Termux utenfor Telos.</string>
+    <string name="terminal_open_failed">Kunne ikke åpne Termux eller nettstedet.</string>
+</resources>

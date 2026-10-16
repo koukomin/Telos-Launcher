@@ -171,7 +171,7 @@ internal data class SidebarStyle(
     val fileDock: Boolean = true,
 ) {
     /** Width and height of one cell: the icon plus room for the name */
-    val cell: Dp get() = iconSize + if (showLabels) 36.dp else 24.dp
+    val cell: Dp get() = iconSize + if (showLabels) 24.dp else 16.dp
 }
 
 internal val LocalSidebarStyle = compositionLocalOf { SidebarStyle() }

@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Cuentas</string>
+    <string name="contacts_accounts_all">Todas las cuentas</string>
+    <string name="contacts_accounts_selected">Cuentas seleccionadas (%1$d)</string>
+    <string name="contacts_account_device">En este dispositivo</string>
+    <string name="contacts_delete_confirm">¿Eliminar %1$s de todas las cuentas vinculadas? No se puede deshacer.</string>
+</resources>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="contacts_accounts">Akaun</string>
+    <string name="contacts_accounts_all">Semua akaun</string>
+    <string name="contacts_accounts_selected">Akaun dipilih (%1$d)</string>
+    <string name="contacts_account_device">Pada peranti ini</string>
+    <string name="contacts_delete_confirm">Padam %1$s daripada semua akaun terpaut? Ini tidak boleh dibuat asal.</string>
+</resources>

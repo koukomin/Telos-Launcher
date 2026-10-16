@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au2_radio2_record">Registrar</string>
+    <string name="au2_radio2_stop_recording">Arrestar le registration</string>
+    <string name="au7_vidfolders_action">Organisar in dossiers de Films e Series</string>
+    <string name="au_phonea_action_failed">Impossibile salvar le modification. Verifica le permission de contactos.</string>
+    <string name="hc_failed_try_again">Fallite, tenta de novo</string>
+    <string name="hc_install">Installar</string>
+    <string name="hc_menu">Menu</string>
+    <string name="hc_open">Aperir</string>
+    <string name="hc_play_from_the_web">Reproducer ab le web</string>
+    <string name="hc_sleep_timer">Temporisator de somno</string>
+    <string name="hc_video_services">Servicios video</string>
+    <string name="network_widget_cellular">Datos mobile</string>
+    <string name="network_widget_connected">Connectite</string>
+    <string name="network_widget_disconnected">Nulle connexion</string>
+    <string name="network_widget_ethernet">Ethernet</string>
+    <string name="network_widget_wifi">Wi-Fi</string>
+    <string name="preference_blur_wallpaper">Diffuminar le fundo de schermo</string>
+    <string name="preference_blur_wallpaper_summary">Applicar un effecto de diffumination al fundo de schermo</string>
+    <string name="preference_dock_background_opacity">Opacitate del fundo</string>
+    <string name="preference_drawer_background">Fundo del tiratorio de applicationes</string>
+    <string name="preference_drawer_background_summary">Monstrar un fundo detra le tiratorio de applicationes</string>
+</resources>

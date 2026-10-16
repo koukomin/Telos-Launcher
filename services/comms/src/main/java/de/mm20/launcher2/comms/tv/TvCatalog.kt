@@ -79,8 +79,8 @@ class TvCatalog(context: Context) {
         synchronized(this) {
             extras = value
             extrasBad = bad
-            val base = baseIndex ?: return
-            _index.value = merged(base)
+            // Extra playlists remain useful even when the main catalog cannot be downloaded.
+            _index.value = TvExtraMerge.mergeAvailable(baseIndex, extras, extrasBad(), System.currentTimeMillis())
         }
     }
 

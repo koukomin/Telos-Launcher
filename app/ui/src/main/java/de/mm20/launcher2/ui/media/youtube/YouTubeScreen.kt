@@ -36,19 +36,25 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
     val message by vm.message.collectAsStateWithLifecycle()
     val controller by vm.controller.collectAsStateWithLifecycle()
     val now by vm.nowPlaying.collectAsStateWithLifecycle()
-    Column(Modifier.fillMaxSize().padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        TextButton(onClick = { accountPanel = true }, modifier = Modifier.align(Alignment.End)) {
-            Icon(painterResource(R.drawable.open_in_new_24px), null)
-            Spacer(Modifier.width(8.dp))
-            Text(stringResource(R.string.telos_youtube_browser_account))
-        }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            OutlinedTextField(query, { query = it }, modifier = Modifier.weight(1f), singleLine = true,
-                label = { Text(stringResource(R.string.telos_youtube_search)) }, shape = RoundedCornerShape(24.dp))
-            IconButton(onClick = { vm.search(context, query, music) }, enabled = query.isNotBlank() && !searching) {
-                Icon(painterResource(R.drawable.search_24px), stringResource(R.string.telos_youtube_search))
+    de.mm20.launcher2.ui.media.MediaFrame(
+        stringResource(if (music) R.string.telos_youtube_music_label else R.string.telos_youtube_label),
+        actions = {
+            IconButton(onClick = { accountPanel = true }) {
+                Icon(painterResource(R.drawable.open_in_new_24px), stringResource(R.string.telos_youtube_browser_account))
             }
-        }
+        },
+    ) {
+    Column(Modifier.fillMaxSize().padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        de.mm20.launcher2.ui.component.TelosSearchTopBar(
+            query, { query = it }, stringResource(R.string.telos_youtube_search),
+            modifier = Modifier.padding(vertical = 8.dp),
+            onSearch = { if (query.isNotBlank() && !searching) vm.search(context, query, music) },
+            trailing = {
+                IconButton(onClick = { vm.search(context, query, music) }, enabled = query.isNotBlank() && !searching) {
+                    Icon(painterResource(R.drawable.search_24px), stringResource(R.string.telos_youtube_search))
+                }
+            },
+        )
         if (!music && now?.mediaMetadata?.extras?.getBoolean("audioOnly") == false && controller != null) {
             AndroidView(factory = { PlayerView(it).apply { player = controller; useController = true } },
                 update = { it.player = controller }, onRelease = { it.player = null },
@@ -67,7 +73,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                 Surface(onClick = { vm.play(context, entry, music) }, shape = RoundedCornerShape(20.dp), color = MaterialTheme.colorScheme.surfaceContainer) {
                     Row(Modifier.fillMaxWidth().padding(10.dp), verticalAlignment = Alignment.CenterVertically) {
                         AsyncImage(entry.thumbnail, null, contentScale = ContentScale.Crop,
-                            modifier = Modifier.width(if (music) 76.dp else 128.dp).height(76.dp).clip(RoundedCornerShape(12.dp)))
+                            modifier = Modifier.width(if (music || androidx.compose.ui.platform.LocalConfiguration.current.fontScale > 1.3f) 64.dp else 112.dp).height(64.dp).clip(RoundedCornerShape(12.dp)))
                         Column(Modifier.weight(1f).padding(horizontal = 12.dp)) {
                             Text(entry.title, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
                             Text(entry.artist, style = MaterialTheme.typography.bodySmall, maxLines = 1, overflow = TextOverflow.Ellipsis)
@@ -77,6 +83,7 @@ fun YouTubeScreen(music: Boolean, vm: YouTubeViewModel) {
                 }
             }
         }
+    }
     }
     if (accountPanel) {
         AlertDialog(onDismissRequest = { accountPanel = false },
