@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_store_pinned">Fixada</string>
+    <string name="hc_apps">Aplicacions</string>
+    <string name="hc_details">Detalls</string>
+    <string name="hc_telos_apps">Aplicacions Telos</string>
+    <string name="hf_store_track_only">Només seguiment</string>
+    <string name="recommendation_tab_label">Recomanades</string>
+</resources>

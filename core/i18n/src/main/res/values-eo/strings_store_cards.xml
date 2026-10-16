@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_store_pinned">Fiksita</string>
+    <string name="hc_apps">Aplikaĵoj</string>
+    <string name="hc_details">Detaloj</string>
+    <string name="hc_telos_apps">Aplikaĵoj de Telos</string>
+    <string name="hf_store_track_only">Nur sekvi</string>
+    <string name="recommendation_tab_label">Rekomenditaj</string>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_store_pinned">Замацавана</string>
+    <string name="hc_apps">Праграмы</string>
+    <string name="hc_details">Падрабязнасці</string>
+    <string name="hc_telos_apps">Праграмы Telos</string>
+    <string name="hf_store_track_only">Толькі адсочваць</string>
+    <string name="recommendation_tab_label">Рэкамендаваныя</string>
+</resources>

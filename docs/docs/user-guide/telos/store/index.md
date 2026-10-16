@@ -235,3 +235,5 @@ components; explicit custom icons still take precedence. Recents and Store use f
 referenced directly so release resource shrinking cannot remove it.
 
 The launcher drawer width is controlled separately under Settings → Icons → App drawer → Full width on tablets. Tablets use adaptive columns unless a custom drawer column count is selected.
+
+Store cards wrap full app names and separate actions from the title for large system fonts. Tabs scroll horizontally instead of squeezing labels. Tap a tracked or recommended card to visit the project or app listing (not the release); Details retains per-app management. Direct APK sources without a known project resolve to the hosting site's home page. This uses source addresses only, without AI or generated descriptions. Shizuku does not bypass Android update-signature validation.

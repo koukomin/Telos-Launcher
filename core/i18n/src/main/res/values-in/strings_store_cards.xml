@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_store_pinned">Disematkan</string>
+    <string name="hc_apps">Aplikasi</string>
+    <string name="hc_details">Detail</string>
+    <string name="hc_telos_apps">Aplikasi Telos</string>
+    <string name="hf_store_track_only">Hanya pantau</string>
+    <string name="recommendation_tab_label">Direkomendasikan</string>
+</resources>

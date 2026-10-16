@@ -1220,3 +1220,5 @@ The plugin SDK modules (`plugins/sdk` and `core/shared`) are licensed under the 
 Tablet drawer: a dedicated full-width switch under Settings → Icons → App drawer, with adaptive columns unless a custom drawer column count is selected.
 
 Frozen application targets assigned to icon shutters and folder children use the same app-lock and verified thaw-before-launch path as drawer and dock icons. An authorized freeze backend is required to thaw an app.
+
+Store cards wrap full app names and separate actions from the title for large system fonts. Tabs scroll horizontally instead of squeezing labels. Tap a tracked or recommended card to visit the project or app listing (not the release); Details retains per-app management. Direct APK sources without a known project resolve to the hosting site's home page. This uses source addresses only, without AI or generated descriptions. Shizuku does not bypass Android update-signature validation.

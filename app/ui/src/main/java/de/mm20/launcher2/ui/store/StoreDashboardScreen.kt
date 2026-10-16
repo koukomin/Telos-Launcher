@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -45,7 +46,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
+import androidx.compose.material3.PrimaryScrollableTabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -78,6 +79,7 @@ import de.mm20.launcher2.store.catalog.RecommendedApps
 import de.mm20.launcher2.store.catalog.RecommendedCategory
 import de.mm20.launcher2.store.catalog.TelosApp
 import de.mm20.launcher2.store.catalog.TelosApps
+import de.mm20.launcher2.store.model.projectPageUrl
 import de.mm20.launcher2.store.model.AppSource
 import de.mm20.launcher2.store.model.StoreItem
 import de.mm20.launcher2.store.parser.StoreUrlParser
@@ -178,10 +180,10 @@ fun StoreDashboardScreen(initialLink: String = "") {
     }) {
         Box(Modifier.fillMaxSize()) {
             Column(Modifier.fillMaxSize()) {
-                TabRow(selectedTabIndex = tab) {
-                    Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(R.string.hc_apps)) })
-                    Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(R.string.hc_telos_apps)) })
-                    Tab(selected = tab == 2, onClick = { tab = 2 }, text = { Text(stringResource(R.string.recommendation_tab_label)) })
+                PrimaryScrollableTabRow(selectedTabIndex = tab, edgePadding = 16.dp) {
+                    Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(R.string.hc_apps), maxLines = 1) })
+                    Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(R.string.hc_telos_apps), maxLines = 1) })
+                    Tab(selected = tab == 2, onClick = { tab = 2 }, text = { Text(stringResource(R.string.recommendation_tab_label), maxLines = 1) })
                 }
                 if (tab == 0) {
                     AppsTab(
@@ -261,6 +263,7 @@ private fun AppsTab(
     onAction: (StoreRow) -> Unit,
     onUpdateAll: () -> Unit,
 ) {
+    val context = LocalContext.current
     Column(Modifier.fillMaxSize()) {
         de.mm20.launcher2.ui.component.TelosSearchBar(query, onQuery, stringResource(R.string.hf_store_search))
         var showFilters by rememberSaveable { mutableStateOf(false) }
@@ -319,7 +322,11 @@ private fun AppsTab(
                     StoreItemRow(
                         row = row,
                         installState = installStates[row.item.id] ?: StoreInstallUiState.Idle,
-                        onClick = { onOpen(row) },
+                        onClick = {
+                            val url = row.item.source.projectPageUrl()
+                            runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse(url))) }
+                        },
+                        onDetailsClick = { onOpen(row) },
                         onActionClick = { onAction(row) },
                     )
                 }
@@ -331,6 +338,7 @@ private fun AppsTab(
 /** Suggested free apps in four groups; "Add" puts one into the tracked apps (it is then installed and updated like any other) */
 @Composable
 private fun RecommendedTab(tracked: Set<String>, onAdd: (RecommendedApp, () -> Unit) -> Unit) {
+    val context = LocalContext.current
     var adding by remember { mutableStateOf(setOf<String>()) }
     LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
         for (category in RecommendedCategory.values()) {
@@ -354,16 +362,20 @@ private fun RecommendedTab(tracked: Set<String>, onAdd: (RecommendedApp, () -> U
                 Surface(
                     shape = RoundedCornerShape(20.dp),
                     color = MaterialTheme.colorScheme.surfaceContainerLow,
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp),
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp).clickable {
+                        runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, android.net.Uri.parse(app.source.projectPageUrl()))) }
+                    },
                 ) {
-                    Row(Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Row(verticalAlignment = Alignment.Top) {
                         AppIcon(app.packageName, app.name, 44, source = app.source)
                         Spacer(Modifier.width(12.dp))
                         Column(Modifier.weight(1f)) {
-                            Text(app.name, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            Text(app.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
                             Text(app.source.summary(), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         }
-                        Spacer(Modifier.width(8.dp))
+                    }
+                    Box(Modifier.align(Alignment.End)) {
                         if (isTracked) {
                             OutlinedButton(onClick = {}, enabled = false) { Text(stringResource(R.string.dl_detail_created)) }
                         } else if (app.name in adding) {
@@ -375,6 +387,7 @@ private fun RecommendedTab(tracked: Set<String>, onAdd: (RecommendedApp, () -> U
                                 onAdd(app) { adding = adding - app.name }
                             }) { Text(stringResource(R.string.hc_add)) }
                         }
+                    }
                     }
                 }
             }
@@ -401,6 +414,7 @@ internal fun StoreItemRow(
     installState: StoreInstallUiState,
     onClick: () -> Unit,
     onActionClick: () -> Unit,
+    onDetailsClick: () -> Unit,
 ) {
     val item = row.item
     val context = LocalContext.current
@@ -413,23 +427,26 @@ internal fun StoreItemRow(
         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp)
             .combinedClickable(onClick = onClick, onLongClick = { menu = true }),
     ) {
-        Row(Modifier.fillMaxWidth().padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
-            AppIcon(item.packageName, item.displayName, 44, item.installedVersionCode, item.source)
-            Spacer(Modifier.width(12.dp))
-            Column(Modifier.weight(1f)) {
-                Text(item.displayName, style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Medium, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                Text(item.versionLine(row.updateAvailable), style = MaterialTheme.typography.bodySmall, color = if (row.updateAvailable) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                Text(
-                    listOfNotNull(item.source.summary(), row.options.category.ifBlank { null }, if (row.options.trackOnly) stringResource(R.string.hf_store_track_only) else null, if (row.options.pinned) stringResource(R.string.au_store_pinned) else null).joinToString(" · "),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-                StoreTransferProgress(item.id)
+        Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(verticalAlignment = Alignment.Top) {
+                AppIcon(item.packageName, item.displayName, 48, item.installedVersionCode, item.source)
+                Spacer(Modifier.width(12.dp))
+                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(item.displayName, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+                    Text(item.versionLine(row.updateAvailable), style = MaterialTheme.typography.bodySmall,
+                        color = if (row.updateAvailable) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(listOfNotNull(item.source.summary(), row.options.category.ifBlank { null },
+                        if (row.options.trackOnly) stringResource(R.string.hf_store_track_only) else null,
+                        if (row.options.pinned) stringResource(R.string.au_store_pinned) else null).joinToString(" · "),
+                        style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
             }
-            Spacer(Modifier.width(8.dp))
-            StoreActionButton(row, installState, onActionClick)
+            StoreTransferProgress(item.id)
+            FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End),
+                verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                TextButton(onClick = onDetailsClick) { Text(stringResource(R.string.hc_details)) }
+                StoreActionButton(row, installState, onActionClick)
+            }
         }
     }
     DropdownMenu(menu, { menu = false }) {

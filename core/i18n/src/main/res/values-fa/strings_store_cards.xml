@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_store_pinned">سنجاق‌شده</string>
+    <string name="hc_apps">برنامه‌ها</string>
+    <string name="hc_details">جزئیات</string>
+    <string name="hc_telos_apps">برنامه‌های Telos</string>
+    <string name="hf_store_track_only">فقط پیگیری</string>
+    <string name="recommendation_tab_label">پیشنهادی</string>
+</resources>

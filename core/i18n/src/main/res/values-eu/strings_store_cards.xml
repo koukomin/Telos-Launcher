@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_store_pinned">Ainguratuta</string>
+    <string name="hc_apps">Aplikazioak</string>
+    <string name="hc_details">Xehetasunak</string>
+    <string name="hc_telos_apps">Telos aplikazioak</string>
+    <string name="hf_store_track_only">Jarraipena soilik</string>
+    <string name="recommendation_tab_label">Gomendatuak</string>
+</resources>

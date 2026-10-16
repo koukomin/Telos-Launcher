@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="au_store_pinned">Đã ghim</string>
+    <string name="hc_apps">Ứng dụng</string>
+    <string name="hc_details">Chi tiết</string>
+    <string name="hc_telos_apps">Ứng dụng Telos</string>
+    <string name="hf_store_track_only">Chỉ theo dõi</string>
+    <string name="recommendation_tab_label">Đề xuất</string>
+</resources>
