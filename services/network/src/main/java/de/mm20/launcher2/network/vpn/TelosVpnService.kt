@@ -112,7 +112,10 @@ class TelosVpnService : VpnService(), KoinComponent {
                 requestStop(StopReason.User, null)
                 return START_NOT_STICKY
             }
-            ACTION_START, SERVICE_INTERFACE -> {
+            ACTION_START -> {
+                if (settings.current.engineWanted) begin() else requestStop(StopReason.User, null)
+            }
+            SERVICE_INTERFACE -> {
                 settings.update { it.copy(engineWanted = true) }
                 settings.flush()
                 begin()

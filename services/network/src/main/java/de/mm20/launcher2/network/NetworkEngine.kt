@@ -116,12 +116,14 @@ class NetworkEngine internal constructor(
     }
 
     /** Restore prior user intent without ever opening consent from a background context. */
+    @Synchronized
     fun restoreIfWanted() {
         if (!settings.current.engineWanted) return
         if (runCatching { VpnService.prepare(context) == null }.getOrDefault(false)) start()
     }
 
     /** Turns the VPN off. Safe to call in any state. The internet works normally again right after. */
+    @Synchronized
     fun stop() {
         recovery?.cancel()
         recoveryAttempts = 0
@@ -145,7 +147,7 @@ class NetworkEngine internal constructor(
             // Preserve user intent across configuration restart, but respect a subsequent Stop.
             service.requestStop(StopReason.User, null)
             val stopped = withTimeoutOrNull(RESTART_WAIT_MS) { _state.first { it is NetState.Off } }
-            if (stopped != null && settings.current.engineWanted) start()
+            if (stopped != null) restoreIfWanted()
         }
     }
 

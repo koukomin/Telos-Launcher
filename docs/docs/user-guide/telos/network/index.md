@@ -3,8 +3,7 @@
 A firewall and DNS filter for the whole phone, built on the engine of [RethinkDNS](https://github.com/celzero/rethink-app).
 
 ::: warning Early version
-Telos Network was written without a compiler and has **not been run on a device yet**. It is new and may fail. If it does,
-the internet simply works as before (see [Safety](#safety)). You can turn it off at any time.
+Network changes are covered by automated tests and build checks. Android 16 device recovery and Tor still need target-device validation. See [Safety](#safety) for failure behavior and Android lockdown. You can turn it off at any time.
 :::
 
 ::: tip At a glance
@@ -34,7 +33,7 @@ The first time you turn it on, Android asks for your consent to set up a VPN. Wi
 
 ## Safety
 
-- Previously active Network is restored after a process restart or app update when Android permits. The saved DNS, firewall, WireGuard and Tor configuration is reapplied. Manual **Turn off** and VPN revocation cancel restoration. Reboot restoration additionally requires *Start on boot* and previously granted VPN permission.
+- Previously active Network is restored after a process restart or app update when Android permits. The saved DNS, firewall, WireGuard and Tor configuration is reapplied. Manual **Turn off** and VPN revocation cancel restoration. The boot receiver requires *Start on boot* and previously granted VPN permission; opening the launcher also restores saved active intent.
 - If the engine fails to start or stops working, the VPN is shut down and your normal connection is back (the state shows *Stopped*
   and a notification says so). Up to three delayed retries are attempted while active intent remains saved. It does not block the internet between retries unless Android lockdown is enabled.
 - **Turn off** always works, also while it is starting.

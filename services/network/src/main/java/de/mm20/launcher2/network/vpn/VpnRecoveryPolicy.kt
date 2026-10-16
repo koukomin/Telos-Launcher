@@ -5,7 +5,7 @@ internal object VpnRecoveryPolicy {
     const val MAX_RETRIES = 3
     fun shouldStart(action: String?, wanted: Boolean): Boolean = when (action) {
         "de.mm20.launcher2.network.STOP" -> false
-        "de.mm20.launcher2.network.START", "android.net.VpnService" -> true
+        "android.net.VpnService" -> true
         else -> wanted
     }
     fun restoreAfterBroadcast(isBoot: Boolean, wanted: Boolean, startOnBoot: Boolean) =

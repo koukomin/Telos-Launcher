@@ -215,7 +215,10 @@ open class SettingsActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        org.koin.mp.KoinPlatform.getKoin().get<de.mm20.launcher2.network.NetworkEngine>().restoreIfWanted()
+        val koin = org.koin.mp.KoinPlatform.getKoin()
+        if (koin.get<de.mm20.launcher2.network.api.NetworkSettings>().current.engineWanted) {
+            koin.get<de.mm20.launcher2.network.NetworkEngine>().restoreIfWanted()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

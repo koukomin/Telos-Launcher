@@ -7,6 +7,8 @@ class VpnRecoveryPolicyTest {
     @Test fun stickyRestartRestoresOnlyPriorIntent() {
         assertTrue(VpnRecoveryPolicy.shouldStart(null, true))
         assertFalse(VpnRecoveryPolicy.shouldStart(null, false))
+        assertFalse(VpnRecoveryPolicy.shouldStart("de.mm20.launcher2.network.START", false))
+        assertTrue(VpnRecoveryPolicy.shouldStart("de.mm20.launcher2.network.START", true))
         assertTrue(VpnRecoveryPolicy.shouldStart("android.net.VpnService", false))
         assertFalse(VpnRecoveryPolicy.shouldStart("de.mm20.launcher2.network.STOP", true))
     }
