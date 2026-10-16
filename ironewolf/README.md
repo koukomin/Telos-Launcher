@@ -1,6 +1,6 @@
 # Ironewolf — source and browser build foundation
 
-**Status: preparation only. No Ironewolf virtual app, APK or default renderer is implemented yet.**
+**Status: launcher dispatch and virtual-app registration are capability-gated; the actual embedded Fenix runtime is still missing. No working integrated browser APK exists yet.**
 
 The upstream IronFox repository is an unchanged, pinned submodule. Its own version file pins
 Firefox, Phoenix and the remaining dependencies. A small, separately reviewed branding patch is applied in a disposable build worktree. All upstream feature patches are retained; Telos does
@@ -98,3 +98,28 @@ patch option requests GeckoView archive output without requiring GitLab branch/p
 The actual local source preparation now passes CI environment setup and stops at the missing
 `/bin/yq` host dependency. The local `doctor` check reports 28.7 GiB free and missing host tools;
 no local native compilation is claimed.
+
+## Launcher integration boundary
+
+The launcher now has a persisted engine preference (Ironewolf by default when a compatible
+runtime is bundled), a same-APK dispatch contract, virtual-app serialization/search/icon wiring
+and an Android WebView compatibility choice. A private activity named
+`de.mm20.launcher2.ironewolf.BrowserActivity` must advertise activity metadata
+`de.mm20.launcher2.ironewolf.EMBEDDED_CONTRACT_VERSION=1` to enable those paths. An external
+Ironewolf installation does not qualify. No such host is included in this branch yet, so normal
+builds continue to use WebView and do not show a nonfunctional Ironewolf icon or selector.
+
+Contract v1 requires the host to handle the existing URL/label/custom-CSS/shortcut-key extras,
+preserve per-web-app site-data isolation and settings, open the complete Fenix UI for a null URL,
+and maintain its own stable task identity. Do not mark a URL-only Fenix forwarding activity as
+version 1. Native startup, manifest/resources, dependencies and the Fenix Application still need
+actual integration and Android validation.
+
+Merged PR #35 is retained. Shutters and folder children continue through `launchTarget`; frozen
+package readiness checks remain unchanged. The web-app lock gate now forwards the saved shortcut
+key to the same central renderer dispatcher after authentication.
+
+The first native run failed during patch validation: Ubuntu's Python yq emitted JSON-quoted
+filenames. The downstream patch now requests raw output explicitly with `-r`, with a regression
+test against the actual patched driver. Native compilation must be retried; this fix is not a
+claim that the full browser has compiled.

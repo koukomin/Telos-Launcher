@@ -13,6 +13,29 @@ spec.loader.exec_module(engine)
 
 
 class SourceContractTest(unittest.TestCase):
+    def test_patch_names_are_raw_with_ubuntu_yq(self):
+        engine.working_source(engine.checked_source())
+        with tempfile.TemporaryDirectory() as directory:
+            fake_yq = Path(directory) / 'yq'
+            fake_yq.write_text('#!/bin/bash\nif [[ "$1" == "-r" ]]; then echo fixture.patch; else echo \'"fixture.patch"\'; fi\n')
+            fake_yq.chmod(0o755)
+            env = engine.os.environ.copy()
+            env.update(IRONFOX_DIRNAME='/usr/bin/dirname', IRONFOX_PATCH='/usr/bin/patch',
+                       IRONFOX_YQ=str(fake_yq), IRONFOX_PATCHES=directory,
+                       IRONFOX_UP_AC=str(Path(directory) / 'missing'))
+            # Source the real patched driver; only its tool verification helpers are stubbed.
+            script = '''set -eu
+set_verbosity() { :; }
+verify_exec() { :; }
+verify_dir_with_env() { :; }
+source "$1"
+[[ "${PATCH_FILES[0]}" == fixture.patch ]]
+[[ "${AS_PATCH_FILES[0]}" == fixture.patch ]]
+[[ "${GLEAN_PATCH_FILES[0]}" == fixture.patch ]]
+'''
+            subprocess.run(['bash', '-c', script, str(engine.SOURCE / 'scripts/prebuild.sh'),
+                            str(engine.SOURCE / 'scripts/patches.sh')], env=env, check=True)
+
     def test_branding_applies_to_locked_upstream_without_changing_original(self):
         pin = engine.checked_source()
         engine.working_source(pin)

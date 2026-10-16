@@ -8,6 +8,7 @@ package de.mm20.launcher2.webapp
  */
 object WebAppLockLaunchContract {
     const val ACTIVITY_CLASS_NAME = "de.mm20.launcher2.ui.applock.WebAppLockActivity"
+    const val EXTRA_KEY = "de.mm20.launcher2.webapp.extra.KEY"
     const val EXTRA_URL = "de.mm20.launcher2.webapp.extra.URL"
     const val EXTRA_LABEL = "de.mm20.launcher2.webapp.extra.LABEL"
     const val EXTRA_RENDERER_PACKAGE = "de.mm20.launcher2.webapp.extra.RENDERER_PACKAGE"

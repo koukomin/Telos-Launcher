@@ -6,6 +6,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.ui.launcher.search.listItemViewModel
+import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.preferences.ui.ShutterSettings
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.ui.common.SearchablePicker
@@ -26,12 +28,13 @@ fun ShutterGate(
     val shutterSettings = koinInject<ShutterSettings>()
     val searchableRepository = koinInject<SavableSearchableRepository>()
     val context = LocalContext.current
+    val launcher: SearchableItemVM = listItemViewModel(key = "shutter-launch-$packageName")
 
     if (shutterKey != null) {
         LaunchedEffect(shutterKey) {
             val target = searchableRepository.getByKeys(listOf(shutterKey)).firstOrNull()?.firstOrNull()
             if (target != null) {
-                target.launch(context, null)
+                launcher.launchTarget(context, target)
             } else {
                 // Stale reference (e.g. the assigned shortcut/app was uninstalled) - clear it so
                 // the next swipe-up shows the picker instead of silently doing nothing.
@@ -50,7 +53,7 @@ fun ShutterGate(
                 onValueChanged = { picked ->
                     if (picked != null) {
                         shutterSettings.setApp(packageName, picked.key)
-                        picked.launch(context, null)
+                        launcher.launchTarget(context, picked)
                     }
                     onDismiss()
                 },

@@ -1097,8 +1097,9 @@ Some features are new and not tested on every device. This is what the project's
 ## Planned
 
 - **Ironewolf browser:** preserve the complete IronFox/Fenix UI and hardened engine as a built-in
-  browser. [Pinned source and build tooling](ironewolf/README.md) are available; launcher integration
-  and replacement of WebView are not implemented yet.
+  browser. [Source/build tooling and capability-gated launcher dispatch](ironewolf/README.md) are
+  available. The embedded Fenix runtime is not bundled yet; current builds retain WebView and
+  do not show an unusable Ironewolf entry.
 
 - SIP: text messages, video and Bluetooth routing, and Android Telecom integration (SIP calls are
   handled by their own call screen for now)
@@ -1217,3 +1218,5 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 The plugin SDK modules (`plugins/sdk` and `core/shared`) are licensed under the Apache License 2.0.
 
 Tablet drawer: a dedicated full-width switch under Settings → Icons → App drawer, with adaptive columns unless a custom drawer column count is selected.
+
+Frozen application targets assigned to icon shutters and folder children use the same app-lock and verified thaw-before-launch path as drawer and dock icons. An authorized freeze backend is required to thaw an app.

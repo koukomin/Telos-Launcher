@@ -184,3 +184,5 @@ Built-in apps use localized names without a Telos prefix, while `telos` and Engl
 names remain search aliases. Their own artwork is retained in the launcher, Store and Recents.
 
 The tablet drawer offers a full-width switch in Settings → Icons → App drawer; columns adapt to available width unless overridden.
+
+Frozen application targets assigned to icon shutters and folder children use the same app-lock and verified thaw-before-launch path as drawer and dock icons. An authorized freeze backend is required to thaw an app.
