@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">.onion için Tor</string>
+    <string name="nt_mode_hint">Tor modunu değiştirmeden önce VPN’i durdurun.</string>
+    <string name="nt_waiting">.onion isteği bekleniyor</string>
+    <string name="nt_auto">Tor’u otomatik başlat</string>
+    <string name="nt_auto_hint">Yalnızca görünür DNS; bağlandıktan sonra yeniden deneyin. Şifreli DNS Tor’u başlatamaz.</string>
+    <string name="nt_apps">Yalnızca Tor kullanan uygulamalar</string>
+    <string name="nt_scope">Yalnızca etkin VPN ve TCP ile. Telos hariçtir; VPN atlama ve diğer uygulama istisnaları devre dışıdır.</string>
+    <string name="nt_safety">VPN durduktan sonra korunmak için Android’de Her zaman açık VPN ve VPN olmadan bağlantıları engelle seçeneklerini açın.</string>
+    <string name="nweb_intro">ASCII adları. .eth: ENS Ideas / eth.limo; diğerleri: kendi UD vekiliniz. Sağlayıcılar adları/IP’yi görür. Siteler HTTPS ağ geçitleri kullanır.</string>
+    <string name="nweb_proxy">Unstoppable Domains vekili (HTTPS)</string>
+    <string name="nweb_wallets">Cüzdan adresleri</string>
+</resources>

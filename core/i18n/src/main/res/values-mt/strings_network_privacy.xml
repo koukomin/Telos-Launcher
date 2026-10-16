@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor għal .onion</string>
+    <string name="nt_mode_hint">Waqqaf il-VPN qabel tibdel il-modalità Tor.</string>
+    <string name="nt_waiting">Qed jistenna talba .onion</string>
+    <string name="nt_auto">Ibda Tor awtomatikament</string>
+    <string name="nt_auto_hint">DNS viżibbli biss; erġa’ pprova wara l-konnessjoni. DNS kriptat ma jistax jibda Tor.</string>
+    <string name="nt_apps">Apps permezz ta’ Tor biss</string>
+    <string name="nt_scope">VPN attiv u TCP biss. Telos huwa eskluż; il-bypass tal-VPN u esklużjonijiet oħra tal-apps huma diżattivati.</string>
+    <string name="nt_safety">Għal protezzjoni wara li jieqaf il-VPN, attiva VPN dejjem mixgħul u Imblokka konnessjonijiet mingħajr VPN f’Android.</string>
+    <string name="nweb_intro">Ismijiet ASCII. .eth: ENS Ideas / eth.limo; oħrajn: il-proxy UD tiegħek. Il-fornituri jaraw ismijiet/IP. Is-siti jużaw gateways HTTPS.</string>
+    <string name="nweb_proxy">Proxy Unstoppable Domains (HTTPS)</string>
+    <string name="nweb_wallets">Indirizzi tal-wallet</string>
+</resources>

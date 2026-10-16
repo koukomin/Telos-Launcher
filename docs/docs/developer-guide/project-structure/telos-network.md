@@ -48,3 +48,9 @@ Create a `@Serializable data object ...Route : NavKey` and a parameterless `@Com
 ## Status
 
 The module and the screens were written without a compiler and have not been run on a device.
+
+## Tor and Web3
+
+`network.tor.TorController` binds the Guardian Project Tor Android service while the foreground VPN runs. It registers a loopback SOCKS5 proxy and local Tor DNS transport only after bootstrap. `TorPolicy` recognizes onion names and reserved synthetic IPv4/IPv6 ranges without DNS calls. `FlowBridge` applies firewall blocks first, then routes Tor-required flows only through the Tor proxy; no UDP or direct fallback is allowed. Unknown owners use Tor conservatively while any Tor-only app rule exists. Proxy IDs are exclusive, not a fallback list. Tor mode must change while the VPN is off so the interface routes and exclusions match the policy. The native service shares the excluded Telos UID; this integration does not intercept Telos traffic.
+
+`network.web3.Web3Resolver` performs bounded, read-only JSON requests through Telos' own connection, using public ENS Ideas and eth.limo DNSLink endpoints for ASCII ENS names. UD names require a user-supplied HTTPS backend proxy returning the official Resolution API schema; no API key is embedded. It produces wallet records and explicit website gateway URLs independently. It does not implement a DNS A/AAAA adapter, ENSIP-15 normalization, chain proof verification or arbitrary namespace support. Screens are registered in both SettingsActivity and TelosPages. See the [user guide](../../user-guide/telos/network/tor-web3.md) for trust and failure boundaries.

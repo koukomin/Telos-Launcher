@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor do .onion</string>
+    <string name="nt_mode_hint">Stop an VPN sula n-athraíonn tú mód Tor.</string>
+    <string name="nt_waiting">Ag fanacht le hiarratas .onion</string>
+    <string name="nt_auto">Tosaigh Tor go huathoibríoch</string>
+    <string name="nt_auto_hint">DNS infheicthe amháin; bain triail eile as tar éis nascadh. Ní féidir le DNS criptithe Tor a thosú.</string>
+    <string name="nt_apps">Aipeanna trí Tor amháin</string>
+    <string name="nt_scope">VPN gníomhach agus TCP amháin. Eisiatar Telos; díchumasaítear seachaint VPN agus eisiaimh eile aipeanna.</string>
+    <string name="nt_safety">Chun cosaint a fháil tar éis don VPN stopadh, cumasaigh VPN i gcónaí ar siúl agus Blocáil naisc gan VPN in Android.</string>
+    <string name="nweb_intro">Ainmneacha ASCII. .eth: ENS Ideas / eth.limo; eile: do sheachfhreastalaí UD. Feiceann soláthraithe ainmneacha/IP. Úsáideann suíomhanna geataí HTTPS.</string>
+    <string name="nweb_proxy">Seachfhreastalaí Unstoppable Domains (HTTPS)</string>
+    <string name="nweb_wallets">Seoltaí sparán</string>
+</resources>

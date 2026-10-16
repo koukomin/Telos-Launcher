@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor .onion helbideetarako</string>
+    <string name="nt_mode_hint">Gelditu VPNa Tor modua aldatu aurretik.</string>
+    <string name="nt_waiting">.onion eskaera baten zain</string>
+    <string name="nt_auto">Abiarazi Tor automatikoki</string>
+    <string name="nt_auto_hint">DNS ikusgaia soilik; saiatu berriro konektatu ondoren. DNS zifratuak ezin du Tor abiarazi.</string>
+    <string name="nt_apps">Aplikazioak Tor bidez soilik</string>
+    <string name="nt_scope">VPN aktiboarekin eta TCP bidez soilik. Telos kanpoan dago; VPN saihestea eta beste aplikazioen salbuespenak desgaituta daude.</string>
+    <string name="nt_safety">VPNa gelditu ondoren babesteko, aktibatu Androiden beti aktibo dagoen VPNa eta VPNrik gabeko konexioak blokeatzea.</string>
+    <string name="nweb_intro">ASCII izenak. .eth: ENS Ideas / eth.limo; besteak: zure UD proxya. Hornitzaileek izenak/IPa ikusten dituzte. Webguneek HTTPS atebideak erabiltzen dituzte.</string>
+    <string name="nweb_proxy">Unstoppable Domains proxya (HTTPS)</string>
+    <string name="nweb_wallets">Diru-zorroen helbideak</string>
+    <string name="au22_stremio_opens_browser">Arakatzailean irekitzen da</string>
+    <string name="au8_traktweb_copy_redirect">Kopiatu helbidea</string>
+</resources>

@@ -12,3 +12,6 @@
 # is called from native code as well.
 -keep class de.mm20.launcher2.network.vpn.FlowBridge { *; }
 -keep class de.mm20.launcher2.network.vpn.TelosVpnService { *; }
+
+# Tor's JNI symbols bind to these Java class and method names.
+-keep class org.torproject.jni.** { *; }

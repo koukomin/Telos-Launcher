@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor для .onion</string>
+    <string name="nt_mode_hint">Остановите VPN перед сменой режима Tor.</string>
+    <string name="nt_waiting">Ожидание запроса .onion</string>
+    <string name="nt_auto">Запускать Tor автоматически</string>
+    <string name="nt_auto_hint">Только видимый DNS; повторите после подключения. Зашифрованный DNS не может запустить Tor.</string>
+    <string name="nt_apps">Приложения только через Tor</string>
+    <string name="nt_scope">Только при работающем VPN и только TCP. Telos исключён; обход VPN и другие исключения приложений отключены.</string>
+    <string name="nt_safety">Для защиты после остановки VPN включите в Android постоянный VPN и блокировку соединений без VPN.</string>
+    <string name="nweb_intro">Имена ASCII. .eth: ENS Ideas / eth.limo; остальные: ваш прокси UD. Провайдеры видят имена/IP. Сайты используют шлюзы HTTPS.</string>
+    <string name="nweb_proxy">Прокси Unstoppable Domains (HTTPS)</string>
+    <string name="nweb_wallets">Адреса кошельков</string>
+</resources>

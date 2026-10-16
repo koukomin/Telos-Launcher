@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor для .onion</string>
+    <string name="nt_mode_hint">Спыніце VPN перад зменай рэжыму Tor.</string>
+    <string name="nt_waiting">Чаканне запыту .onion</string>
+    <string name="nt_auto">Запускаць Tor аўтаматычна</string>
+    <string name="nt_auto_hint">Толькі бачны DNS; паўтарыце пасля падлучэння. Зашыфраваны DNS не можа запусціць Tor.</string>
+    <string name="nt_apps">Праграмы толькі праз Tor</string>
+    <string name="nt_scope">Толькі з актыўным VPN і толькі TCP. Telos выключаны; абыход VPN і іншыя выключэнні праграм адключаны.</string>
+    <string name="nt_safety">Для абароны пасля спынення VPN уключыце ў Android пастаянны VPN і блакаванне злучэнняў без VPN.</string>
+    <string name="nweb_intro">Імёны ASCII. .eth: ENS Ideas / eth.limo; астатнія: ваш проксі UD. Правайдары бачаць імёны/IP. Сайты выкарыстоўваюць шлюзы HTTPS.</string>
+    <string name="nweb_proxy">Проксі Unstoppable Domains (HTTPS)</string>
+    <string name="nweb_wallets">Адрасы кашалькоў</string>
+    <string name="au22_stremio_opens_browser">Адкрываецца ў браўзеры</string>
+    <string name="au8_traktweb_copy_redirect">Скапіяваць адрас</string>
+</resources>

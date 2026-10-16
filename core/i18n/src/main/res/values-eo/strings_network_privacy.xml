@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor por .onion</string>
+    <string name="nt_mode_hint">Haltigu la VPN antaŭ ŝanĝi la reĝimon Tor.</string>
+    <string name="nt_waiting">Atendante peton .onion</string>
+    <string name="nt_auto">Lanĉi Tor aŭtomate</string>
+    <string name="nt_auto_hint">Nur videbla DNS; reprovu post konektiĝo. Ĉifrita DNS ne povas lanĉi Tor.</string>
+    <string name="nt_apps">Aplikaĵoj nur per Tor</string>
+    <string name="nt_scope">Nur kun aktiva VPN kaj TCP. Telos estas ekskludita; preteriro de VPN kaj aliaj aplikaĵaj esceptoj estas malŝaltitaj.</string>
+    <string name="nt_safety">Por protekto post halto de VPN, ebligu en Android ĉiam aktivan VPN kaj blokadon de konektoj sen VPN.</string>
+    <string name="nweb_intro">ASCII-nomoj. .eth: ENS Ideas / eth.limo; aliaj: via UD-prokurilo. Provizantoj vidas nomojn/IP. Retejoj uzas HTTPS-enirejojn.</string>
+    <string name="nweb_proxy">Prokurilo Unstoppable Domains (HTTPS)</string>
+    <string name="nweb_wallets">Monujaj adresoj</string>
+    <string name="au22_stremio_opens_browser">Malfermas en retumilo</string>
+    <string name="au8_traktweb_copy_redirect">Kopii adreson</string>
+</resources>

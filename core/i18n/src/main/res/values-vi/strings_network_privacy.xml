@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor cho .onion</string>
+    <string name="nt_mode_hint">Dừng VPN trước khi đổi chế độ Tor.</string>
+    <string name="nt_waiting">Đang chờ yêu cầu .onion</string>
+    <string name="nt_auto">Tự động khởi động Tor</string>
+    <string name="nt_auto_hint">Chỉ DNS quan sát được; thử lại sau khi kết nối. DNS mã hóa không thể khởi động Tor.</string>
+    <string name="nt_apps">Ứng dụng chỉ dùng Tor</string>
+    <string name="nt_scope">Chỉ khi VPN hoạt động và chỉ TCP. Telos được loại trừ; vô hiệu hóa việc vượt VPN và các ngoại lệ ứng dụng khác.</string>
+    <string name="nt_safety">Để bảo vệ sau khi VPN dừng, bật VPN luôn bật và Chặn kết nối không dùng VPN trong Android.</string>
+    <string name="nweb_intro">Tên ASCII. .eth: ENS Ideas / eth.limo; tên khác: proxy UD của bạn. Nhà cung cấp thấy tên/IP. Trang web dùng cổng HTTPS.</string>
+    <string name="nweb_proxy">Proxy Unstoppable Domains (HTTPS)</string>
+    <string name="nweb_wallets">Địa chỉ ví</string>
+    <string name="au22_stremio_opens_browser">Mở trong trình duyệt</string>
+    <string name="au8_traktweb_copy_redirect">Sao chép địa chỉ</string>
+</resources>

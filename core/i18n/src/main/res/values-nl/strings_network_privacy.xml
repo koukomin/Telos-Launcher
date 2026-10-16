@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor voor .onion</string>
+    <string name="nt_mode_hint">Stop de VPN voordat je de Tor-modus wijzigt.</string>
+    <string name="nt_waiting">Wachten op een .onion-aanvraag</string>
+    <string name="nt_auto">Tor automatisch starten</string>
+    <string name="nt_auto_hint">Alleen zichtbare DNS; probeer opnieuw na verbinding. Versleutelde DNS kan Tor niet starten.</string>
+    <string name="nt_apps">Apps uitsluitend via Tor</string>
+    <string name="nt_scope">Alleen met actieve VPN en TCP. Telos is uitgesloten; VPN-omzeiling en andere app-uitzonderingen zijn uitgeschakeld.</string>
+    <string name="nt_safety">Voor bescherming nadat de VPN stopt: schakel in Android Altijd-aan-VPN en Verbindingen zonder VPN blokkeren in.</string>
+    <string name="nweb_intro">ASCII-namen. .eth: ENS Ideas / eth.limo; overige: je UD-proxy. Providers zien namen/IP. Websites gebruiken HTTPS-gateways.</string>
+    <string name="nweb_proxy">Unstoppable Domains-proxy (HTTPS)</string>
+    <string name="nweb_wallets">Walletadressen</string>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">.onion के लिए Tor</string>
+    <string name="nt_mode_hint">Tor मोड बदलने से पहले VPN बंद करें।</string>
+    <string name="nt_waiting">.onion अनुरोध की प्रतीक्षा</string>
+    <string name="nt_auto">Tor अपने आप शुरू करें</string>
+    <string name="nt_auto_hint">केवल दिखाई देने वाला DNS; जुड़ने के बाद फिर कोशिश करें। एन्क्रिप्ट किया गया DNS Tor शुरू नहीं कर सकता।</string>
+    <string name="nt_apps">केवल Tor इस्तेमाल करने वाले ऐप</string>
+    <string name="nt_scope">केवल सक्रिय VPN और TCP पर। Telos बाहर रहता है; VPN बायपास और अन्य ऐप अपवाद बंद होते हैं।</string>
+    <string name="nt_safety">VPN रुकने के बाद सुरक्षा के लिए Android में हमेशा चालू VPN और VPN के बिना कनेक्शन रोकना चालू करें।</string>
+    <string name="nweb_intro">ASCII नाम। .eth: ENS Ideas / eth.limo; अन्य: आपका UD प्रॉक्सी। प्रदाता नाम/IP देखते हैं। साइटें HTTPS गेटवे इस्तेमाल करती हैं।</string>
+    <string name="nweb_proxy">Unstoppable Domains प्रॉक्सी (HTTPS)</string>
+    <string name="nweb_wallets">वॉलेट पते</string>
+</resources>

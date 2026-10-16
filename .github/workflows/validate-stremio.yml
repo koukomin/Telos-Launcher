@@ -2,6 +2,9 @@ name: Validate Stremio Fork
 on:
   pull_request:
     paths:
+      - 'services/network/**'
+      - 'app/ui/src/main/java/de/mm20/launcher2/ui/network/**'
+      - 'settings.gradle.kts'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/media/**'
       - 'services/comms/src/**'
       - 'services/store/src/**'
@@ -49,6 +52,8 @@ jobs:
         run: ./gradlew :services:comms:testDebugUnitTest --tests 'de.mm20.launcher2.comms.network.*' --tests 'de.mm20.launcher2.comms.search.*' --tests 'de.mm20.launcher2.comms.stremio.*' --tests 'de.mm20.launcher2.comms.tv.*' --tests 'de.mm20.launcher2.comms.youtube.*' --tests 'de.mm20.launcher2.comms.files.FilesSharingServerTest' --stacktrace
       - name: Test home media session discovery and priority
         run: ./gradlew :services:music:testDebugUnitTest --stacktrace
+      - name: Test Tor routing and Web3 resolution
+        run: ./gradlew :services:network:testDebugUnitTest --stacktrace
       - name: Test frozen launcher component ordering
         run: ./gradlew :data:applications:testDebugUnitTest --stacktrace
       - name: Test persisted frozen-app snapshots

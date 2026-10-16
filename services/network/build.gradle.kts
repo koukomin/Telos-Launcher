@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.koin.android)
     implementation(libs.androidx.work)
+    implementation("info.guardianproject:tor-android:0.4.9.14")
 
     // The Go network engine of Rethink DNS (MPL-2.0), used unmodified from Maven Central.
     // It is published as an AAR but its POM says "jar", hence the explicit @aar.

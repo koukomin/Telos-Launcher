@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">用于 .onion 的 Tor</string>
+    <string name="nt_mode_hint">更改 Tor 模式前请停止 VPN。</string>
+    <string name="nt_waiting">等待 .onion 请求</string>
+    <string name="nt_auto">自动启动 Tor</string>
+    <string name="nt_auto_hint">仅支持可见的 DNS 请求；连接后请重试。加密 DNS 无法启动 Tor。</string>
+    <string name="nt_apps">仅通过 Tor 联网的应用</string>
+    <string name="nt_scope">仅在 VPN 运行时生效，且仅支持 TCP。Telos 除外；VPN 绕过及其他应用排除规则将禁用。</string>
+    <string name="nt_safety">若要在 VPN 停止后继续保护，请启用 Android 的始终开启 VPN 和阻止未使用 VPN 的连接。</string>
+    <string name="nweb_intro">仅支持 ASCII 名称。.eth 使用 ENS Ideas / eth.limo；其他名称使用你的 UD 代理。提供商可见名称/IP。网站通过 HTTPS 网关打开。</string>
+    <string name="nweb_proxy">Unstoppable Domains 代理（HTTPS）</string>
+    <string name="nweb_wallets">钱包地址</string>
+</resources>

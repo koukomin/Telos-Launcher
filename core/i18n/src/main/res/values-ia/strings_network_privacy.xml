@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor pro .onion</string>
+    <string name="nt_mode_hint">Stoppa le VPN ante cambiar le modo Tor.</string>
+    <string name="nt_waiting">Attende un demanda .onion</string>
+    <string name="nt_auto">Lancear Tor automaticamente</string>
+    <string name="nt_auto_hint">Solo DNS visibile; reproba post le connexion. DNS cryptate non pote lancear Tor.</string>
+    <string name="nt_apps">Applicationes solo via Tor</string>
+    <string name="nt_scope">Solo con VPN active e TCP. Telos es excludite; le circumvention de VPN e altere exclusiones es disactivate.</string>
+    <string name="nt_safety">Pro protection post le arresto del VPN, activa in Android VPN sempre active e Bloccar connexiones sin VPN.</string>
+    <string name="nweb_intro">Nomines ASCII. .eth: ENS Ideas / eth.limo; alteres: tu proxy UD. Le fornitores vide nomines/IP. Le sitos usa portas HTTPS.</string>
+    <string name="nweb_proxy">Proxy Unstoppable Domains (HTTPS)</string>
+    <string name="nweb_wallets">Adresses de portafolio</string>
+    <string name="au22_stremio_opens_browser">Aperi in le navigator</string>
+    <string name="au8_traktweb_copy_redirect">Copiar adresse</string>
+</resources>

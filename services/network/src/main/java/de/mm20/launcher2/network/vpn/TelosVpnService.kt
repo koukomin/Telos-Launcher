@@ -73,6 +73,7 @@ class TelosVpnService : VpnService(), KoinComponent {
     private val blocklists: BlocklistController by inject()
     private val logs: LogController by inject()
     private val apps: AppDirectory by inject()
+    private val tor: de.mm20.launcher2.network.tor.TorController by inject()
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
@@ -201,6 +202,7 @@ class TelosVpnService : VpnService(), KoinComponent {
                 logs = logs,
                 settings = settings,
                 apps = apps,
+                tor = tor,
                 onFault = { why -> requestStop(StopReason.Failure, why) },
             )
             val t = Intra.connect(
@@ -307,34 +309,35 @@ class TelosVpnService : VpnService(), KoinComponent {
         }
         underlyingNetworks(snapshot)?.let { b.setUnderlyingNetworks(it) }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) b.setMetered(s.vpnMetered)
-        if (s.allowBypass) b.allowBypass()
+        if (s.allowBypass && !s.torEnabled) b.allowBypass()
 
-        if (s.excludeSelf) excludeApp(b, packageName)
-        firewall.appRules.value.values.filter { it.excludeFromVpn }.forEach { rule ->
+        if (s.excludeSelf || s.torEnabled) excludeApp(b, packageName)
+        firewall.appRules.value.values.filter { it.excludeFromVpn && !s.torEnabled }.forEach { rule ->
             apps.apps.value.firstOrNull { it.appId == rule.appId }?.packages?.forEach { excludeApp(b, it) }
         }
 
         val noRoutes = !r.has4 && !r.has6
-        val v4 = r.has4 || noRoutes
+        val v4 = r.has4 || noRoutes || s.torEnabled
+        val v6 = r.has6 || s.torEnabled
         if (v4) b.addAddress(TunnelConstants.GATEWAY_V4, TunnelConstants.PREFIX_V4)
-        if (r.has6) b.addAddress(TunnelConstants.GATEWAY_V6, TunnelConstants.PREFIX_V6)
+        if (v6) b.addAddress(TunnelConstants.GATEWAY_V6, TunnelConstants.PREFIX_V6)
 
         // the fake DNS servers, reachable through the tunnel only
         if (v4) {
             b.addDnsServer(TunnelConstants.DNS_V4)
             b.addRoute(TunnelConstants.DNS_V4, 32)
         }
-        if (r.has6) {
+        if (v6) {
             b.addDnsServer(TunnelConstants.DNS_V6)
             b.addRoute(TunnelConstants.DNS_V6, 128)
         }
 
         // everything else that has to be seen by the firewall
         if (v4) {
-            if (s.routeLan) b.addRoute("0.0.0.0", 0) else RouteTable.ipv4WithoutLan().forEach { (a, p) -> b.addRoute(a, p) }
+            if (s.routeLan || s.torEnabled) b.addRoute("0.0.0.0", 0) else RouteTable.ipv4WithoutLan().forEach { (a, p) -> b.addRoute(a, p) }
         }
-        if (r.has6) {
-            if (s.routeLan) b.addRoute("::", 0) else RouteTable.ipv6WithoutLan.forEach { (a, p) -> b.addRoute(a, p) }
+        if (v6) {
+            if (s.routeLan || s.torEnabled) b.addRoute("::", 0) else RouteTable.ipv6WithoutLan.forEach { (a, p) -> b.addRoute(a, p) }
         }
         return b.establish()
     }

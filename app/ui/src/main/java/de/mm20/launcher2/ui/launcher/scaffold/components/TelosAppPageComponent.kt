@@ -114,6 +114,8 @@ internal object TelosPages {
         entry<de.mm20.launcher2.ui.downloads.DownloadsRoute> { de.mm20.launcher2.ui.downloads.DownloadsScreen(it.initialUrls) }
         entry<de.mm20.launcher2.ui.downloads.DownloadsSettingsRoute> { de.mm20.launcher2.ui.downloads.DownloadsSettingsScreen() }
         entry<de.mm20.launcher2.ui.network.NetworkRoute> { de.mm20.launcher2.ui.network.NetworkHomeScreen() }
+        entry<de.mm20.launcher2.ui.network.NetworkPrivacyRoute> { de.mm20.launcher2.ui.network.NetworkPrivacyScreen() }
+        entry<de.mm20.launcher2.ui.network.NetworkTorAppsRoute> { de.mm20.launcher2.ui.network.NetworkTorAppsScreen() }
         entry<de.mm20.launcher2.ui.network.NetworkSettingsRoute> { de.mm20.launcher2.ui.network.NetworkSettingsScreen() }
         entry<de.mm20.launcher2.ui.network.dns.NetworkDnsRoute> { de.mm20.launcher2.ui.network.dns.NetworkDnsScreen() }
         entry<de.mm20.launcher2.ui.network.wireguard.NetworkWireguardRoute> { de.mm20.launcher2.ui.network.wireguard.NetworkWireguardScreen() }

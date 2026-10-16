@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor .onion adresams</string>
+    <string name="nt_mode_hint">Prieš keisdami Tor režimą sustabdykite VPN.</string>
+    <string name="nt_waiting">Laukiama .onion užklausos</string>
+    <string name="nt_auto">Paleisti Tor automatiškai</string>
+    <string name="nt_auto_hint">Tik matomas DNS; bandykite prisijungę. Šifruotas DNS negali paleisti Tor.</string>
+    <string name="nt_apps">Programos tik per Tor</string>
+    <string name="nt_scope">Tik su aktyviu VPN ir TCP. Telos neįtraukiama; VPN apėjimas ir kitos programų išimtys išjungtos.</string>
+    <string name="nt_safety">Apsaugai sustojus VPN įjunkite Android nuolatinį VPN ir ryšių be VPN blokavimą.</string>
+    <string name="nweb_intro">ASCII vardai. .eth: ENS Ideas / eth.limo; kiti: jūsų UD tarpinis serveris. Teikėjai mato vardus/IP. Svetainės naudoja HTTPS šliuzus.</string>
+    <string name="nweb_proxy">Unstoppable Domains tarpinis serveris (HTTPS)</string>
+    <string name="nweb_wallets">Piniginių adresai</string>
+</resources>

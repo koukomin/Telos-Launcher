@@ -289,3 +289,14 @@ The branding patch modifies these scripts under the same license. Other source f
 their original MPL-2.0, Apache-2.0, GPL and other notices; consult upstream COPYING and headers.
 Build scripts are separate tooling and are not linked into Telos. No IronFox binary is bundled
 in the launcher at this stage. Firefox and IronFox names do not imply upstream endorsement.
+
+## Tor Android / Tor
+
+Telos uses the unmodified `info.guardianproject:tor-android:0.4.9.14` AAR
+(https://github.com/guardianproject/tor-android), distributed by the Guardian Project.
+Copyright (c) 2009-2010 Nathan Freitas, The Guardian Project. BSD-3-Clause.
+Tor: Copyright Roger Dingledine, Nick Mathewson, The Tor Project, Inc. and contributors.
+The upstream license and bundled-component notices are reproduced verbatim in
+`core/base/src/main/res/raw/license_tor_android.txt` and displayed in the app license screen.
+The upstream notice also describes components used by Orbot; this integration does not bundle
+Orbot, Privoxy or obfs4. No upstream Tor source files are modified or copied into Telos.

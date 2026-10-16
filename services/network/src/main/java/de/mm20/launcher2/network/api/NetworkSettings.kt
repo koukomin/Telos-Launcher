@@ -8,6 +8,13 @@ import kotlinx.coroutines.flow.map
 /** All settings of Telos Network in one immutable snapshot. Defaults are the safe, quiet choice. */
 @Serializable
 data class NetworkSettingsValues(
+    /** Tor mode changes interface routing; edit only while the VPN is stopped. */
+    val torEnabled: Boolean = false,
+    val torAutoStart: Boolean = false,
+    /** Android app IDs, including every package sharing that ID. Telos itself is excluded. */
+    val torAppIds: Set<Int> = emptySet(),
+    /** User-owned proxy exposing GET <base>/<name> with UD resolution API responses. */
+    val web3UnstoppableProxy: String = "",
     /**
      * Start the VPN after the device booted. Off by default. Even when on, the VPN only starts if
      * the Android VPN permission was granted before and the user left it switched on ([engineWanted]).

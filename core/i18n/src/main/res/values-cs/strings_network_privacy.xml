@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor pro .onion</string>
+    <string name="nt_mode_hint">Před změnou režimu Tor zastavte VPN.</string>
+    <string name="nt_waiting">Čekání na dotaz .onion</string>
+    <string name="nt_auto">Spouštět Tor automaticky</string>
+    <string name="nt_auto_hint">Jen viditelné DNS; po připojení to zkuste znovu. Šifrované DNS nemůže spustit Tor.</string>
+    <string name="nt_apps">Aplikace pouze přes Tor</string>
+    <string name="nt_scope">Jen s aktivní VPN a TCP. Telos je vyjmut; obcházení VPN a ostatní výjimky aplikací jsou vypnuty.</string>
+    <string name="nt_safety">Pro ochranu po zastavení VPN zapněte v Androidu Trvale zapnutá VPN a Blokovat připojení bez VPN.</string>
+    <string name="nweb_intro">Názvy ASCII. .eth: ENS Ideas / eth.limo; ostatní: vaše UD proxy. Poskytovatelé vidí názvy/IP. Weby používají HTTPS brány.</string>
+    <string name="nweb_proxy">Proxy Unstoppable Domains (HTTPS)</string>
+    <string name="nweb_wallets">Adresy peněženek</string>
+</resources>

@@ -8,6 +8,9 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
+        maven("https://raw.githubusercontent.com/guardianproject/gpmaven/master") {
+            content { includeGroup("info.guardianproject") }
+        }
         maven("https://jitpack.io") { content { includeGroup("com.github.TeamNewPipe") } }
         google()
         mavenCentral()

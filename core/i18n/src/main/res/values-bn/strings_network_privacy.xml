@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">.onion-এর জন্য Tor</string>
+    <string name="nt_mode_hint">Tor মোড বদলানোর আগে VPN বন্ধ করুন।</string>
+    <string name="nt_waiting">.onion অনুরোধের অপেক্ষায়</string>
+    <string name="nt_auto">Tor স্বয়ংক্রিয়ভাবে চালু করুন</string>
+    <string name="nt_auto_hint">শুধু দৃশ্যমান DNS; সংযোগের পর আবার চেষ্টা করুন। এনক্রিপ্ট করা DNS Tor চালু করতে পারে না।</string>
+    <string name="nt_apps">শুধু Tor ব্যবহারকারী অ্যাপ</string>
+    <string name="nt_scope">শুধু সক্রিয় VPN ও TCP-তে। Telos বাদ থাকে; VPN বাইপাস ও অন্য অ্যাপের ব্যতিক্রম নিষ্ক্রিয় হয়।</string>
+    <string name="nt_safety">VPN বন্ধ হওয়ার পর সুরক্ষার জন্য Android-এ সর্বদা চালু VPN এবং VPN ছাড়া সংযোগ ব্লক করা চালু করুন।</string>
+    <string name="nweb_intro">ASCII নাম। .eth: ENS Ideas / eth.limo; অন্যগুলি: আপনার UD প্রক্সি। সরবরাহকারীরা নাম/IP দেখে। সাইটগুলি HTTPS গেটওয়ে ব্যবহার করে।</string>
+    <string name="nweb_proxy">Unstoppable Domains প্রক্সি (HTTPS)</string>
+    <string name="nweb_wallets">ওয়ালেট ঠিকানা</string>
+</resources>

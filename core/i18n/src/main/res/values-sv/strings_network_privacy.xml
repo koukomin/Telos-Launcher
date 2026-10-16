@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nt_onion">Tor för .onion</string>
+    <string name="nt_mode_hint">Stoppa VPN innan du ändrar Tor-läge.</string>
+    <string name="nt_waiting">Väntar på en .onion-fråga</string>
+    <string name="nt_auto">Starta Tor automatiskt</string>
+    <string name="nt_auto_hint">Endast synlig DNS; försök igen efter anslutning. Krypterad DNS kan inte starta Tor.</string>
+    <string name="nt_apps">Appar endast via Tor</string>
+    <string name="nt_scope">Endast med aktiv VPN och TCP. Telos undantas; VPN-förbikoppling och andra appundantag inaktiveras.</string>
+    <string name="nt_safety">För skydd när VPN stannar: aktivera Alltid aktiv VPN och Blockera anslutningar utan VPN i Android.</string>
+    <string name="nweb_intro">ASCII-namn. .eth: ENS Ideas / eth.limo; övriga: din UD-proxy. Leverantörer ser namn/IP. Webbplatser använder HTTPS-gateways.</string>
+    <string name="nweb_proxy">Unstoppable Domains-proxy (HTTPS)</string>
+    <string name="nweb_wallets">Plånboksadresser</string>
+</resources>
