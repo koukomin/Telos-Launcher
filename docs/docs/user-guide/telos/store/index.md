@@ -237,3 +237,5 @@ referenced directly so release resource shrinking cannot remove it.
 The launcher drawer width is controlled separately under Settings → Icons → App drawer → Full width on tablets. Tablets use adaptive columns unless a custom drawer column count is selected.
 
 Store cards wrap full app names and separate actions from the title for large system fonts. Tabs scroll horizontally instead of squeezing labels. Tap a tracked or recommended card to visit the project or app listing (not the release); Details retains per-app management. Direct APK sources without a known project resolve to the hosting site's home page. This uses source addresses only, without AI or generated descriptions. Shizuku does not bypass Android update-signature validation.
+
+Dock and shutter app pickers show applications only and start a fresh search on every opening. App picker names wrap at large font sizes, overflow action menus scroll, and Telos Media reserves the navigation-bar inset even when no mini player is visible. Other general item pickers retain their supported item types.

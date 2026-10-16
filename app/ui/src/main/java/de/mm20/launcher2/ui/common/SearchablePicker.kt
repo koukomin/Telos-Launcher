@@ -47,9 +47,23 @@ fun SearchablePicker(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(),
     value: SavableSearchable?,
+    applicationsOnly: Boolean = false,
     onValueChanged: (SavableSearchable?) -> Unit,
 ) {
-    val viewModel: SearchablePickerVM = viewModel()
+    // Each sheet owns its search and cancels it on dismissal, including with an activity owner.
+    val store = remember { androidx.lifecycle.ViewModelStore() }
+    val owner = remember(store) {
+        object : androidx.lifecycle.ViewModelStoreOwner {
+            override val viewModelStore = store
+        }
+    }
+    androidx.compose.runtime.DisposableEffect(store) {
+        onDispose { store.clear() }
+    }
+    val viewModel: SearchablePickerVM = viewModel(viewModelStoreOwner = owner)
+    androidx.compose.runtime.LaunchedEffect(viewModel, applicationsOnly) {
+        viewModel.startSession(applicationsOnly)
+    }
 
     val colorSurface = MaterialTheme.colorScheme.surfaceContainerLow
 
@@ -178,8 +192,6 @@ fun SearchablePicker(
                             .weight(1f)
                             .padding(start = 8.dp, top = 16.dp, bottom = 16.dp),
                         style = MaterialTheme.typography.titleMedium,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
                     )
                     if (selected) {
                         Icon(

@@ -381,6 +381,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                 onDismissRequest = { showSearchablePickerForSlot = null }
             ) {
                 SearchablePicker(
+                applicationsOnly = true,
                     value = null,
                     onValueChanged = { searchable ->
                         if (searchable != null) {

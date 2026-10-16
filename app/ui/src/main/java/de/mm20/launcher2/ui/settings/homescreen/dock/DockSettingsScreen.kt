@@ -348,6 +348,7 @@ fun DockSettingsScreen() {
             onDismissRequest = { showSearchablePicker = false }
         ) {
             SearchablePicker(
+                applicationsOnly = true,
                 modifier = Modifier.fillMaxWidth().height(400.dp),
                 value = null,
                 onValueChanged = { searchable ->
