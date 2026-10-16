@@ -271,7 +271,16 @@ internal class FreezeMaintenance(
             }
             launchWhenReady(
                 find = {
-                    val activities = runCatching { apps.getActivityList(packageName, user) }.getOrDefault(emptyList())
+                    // A listed launcher activity can still be suspended. Do not invoke Android's
+                    // unavailable-app dialog while package state is propagating after thawing.
+                    val ready = runCatching {
+                        val info = apps.getApplicationInfo(packageName, flags, user)
+                        info.enabled && apps.isPackageEnabled(packageName, user) &&
+                            info.flags and ApplicationInfo.FLAG_SUSPENDED == 0
+                    }.getOrDefault(false)
+                    val activities = if (ready) runCatching {
+                        apps.getActivityList(packageName, user)
+                    }.getOrDefault(emptyList()) else emptyList()
                     activities.firstOrNull { it.componentName == preferred }?.componentName
                         ?: activities.firstOrNull()?.componentName
                 }, launch = launch,

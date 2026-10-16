@@ -164,8 +164,11 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     }
 
     fun launch(context: Context, bounds: IntRect? = null): Boolean {
-        val searchable = searchable.value ?: return false
-        
+        return launchTarget(context, searchable.value ?: return false, bounds)
+    }
+
+    /** Shared entry for icons, shutters and folder children, including app lock and thawing. */
+    fun launchTarget(context: Context, searchable: SavableSearchable, bounds: IntRect? = null): Boolean {
         val activity = context as? AppCompatActivity
         val promptTitle = context.getString(R.string.app_lock_prompt_title, searchable.label)
 
@@ -280,9 +283,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     }
 
     fun launchChild(context: Context, child: SavableSearchable) {
-        if (child.launch(context, null)) {
-            reportUsage(child)
-        }
+        launchTarget(context, child)
     }
 
     fun launchChildAt(context: Context, index: Int) {
