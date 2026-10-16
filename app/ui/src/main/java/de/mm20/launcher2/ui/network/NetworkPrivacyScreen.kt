@@ -148,7 +148,7 @@ private fun Web3Lookup() {
         result?.let { resolution ->
             Text(resolution.name, style = MaterialTheme.typography.titleMedium)
             Text(stringResource(R.string.nweb_wallets))
-            if (resolution.wallets.isEmpty()) Text(stringResource(R.string.od_no_results))
+            if (resolution.wallets.isEmpty() && !resolution.partialFailure) Text(stringResource(R.string.od_no_results))
             resolution.wallets.forEach { (chain, address) ->
                 SelectionContainer { Text("$chain\n$address") }
                 TextButton(onClick = {
@@ -161,7 +161,8 @@ private fun Web3Lookup() {
                     try { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) }
                     catch (_: Exception) { failed = true }
                 }) { Text(stringResource(R.string.au22_stremio_opens_browser)) }
-            } ?: Text(stringResource(R.string.od_no_results))
+            }
+            if (resolution.website == null && !resolution.partialFailure) Text(stringResource(R.string.od_no_results))
             Text(stringResource(R.string.net_dns_detail_provider), style = MaterialTheme.typography.labelLarge)
             SelectionContainer { Text(resolution.providers.joinToString("\n")) }
             if (resolution.partialFailure) Text(stringResource(R.string.nwg_status_error), color = MaterialTheme.colorScheme.error)

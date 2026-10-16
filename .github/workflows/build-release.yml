@@ -169,6 +169,10 @@ jobs:
           if [ "$ABIS" != "${{ matrix.abi }} " ]; then
             echo "::error::Το APK πρέπει να έχει native βιβλιοθήκες μόνο για ${{ matrix.abi }}, βρέθηκαν: $ABIS"; exit 1
           fi
+          # The embedded Tor service requires this JNI library in every published ABI.
+          unzip -Z1 "$APK" "lib/${{ matrix.abi }}/libtor.so" | grep -q '/libtor.so$' || {
+            echo "::error::Missing embedded Tor library for ${{ matrix.abi }}"; exit 1;
+          }
           mkdir -p "$RUNNER_TEMP/out"
           cp "$APK" "$RUNNER_TEMP/out/telos-${{ matrix.abi }}.apk"
 
