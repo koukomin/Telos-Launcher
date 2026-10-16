@@ -61,13 +61,14 @@ source "$1"
                 engine.require_prepared({'commit': '0' * 40})
 
     def test_compiles_source_and_never_signs_or_installs(self):
-        with patch.dict(engine.os.environ, {'IRONFOX_CI': '1'}):
+        with patch.dict(engine.os.environ, {'IRONFOX_CI': '1', 'IRONEWOLF_ARCHIVE_GECKOVIEW': '1'}):
             env = engine.environment()
         self.assertEqual(env['IRONFOX_RELEASE'], '1')
         self.assertEqual(env['IRONFOX_SIGN'], '0')
         self.assertEqual(env['IRONFOX_SIGN_SKIP_ADB'], '1')
         self.assertNotIn('IRONFOX_CI', env)
-        self.assertEqual(env['IRONEWOLF_ARCHIVE_GECKOVIEW'], '1')
+        self.assertNotIn('IRONEWOLF_ARCHIVE_GECKOVIEW', env)
+        self.assertEqual(engine.environment(archive_geckoview=True)['IRONEWOLF_ARCHIVE_GECKOVIEW'], '1')
 
 
 if __name__ == '__main__':

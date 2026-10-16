@@ -58,14 +58,16 @@ def working_source(pin):
         raise RuntimeError("Unexpected source modifications in build worktree")
 
 
-def environment():
+def environment(*, archive_geckoview=False):
     env = os.environ.copy()
     env.pop("IRONFOX_CI", None)
     env.update(IRONFOX_RELEASE="1", IRONFOX_SIGN="0",
                IRONFOX_SIGN_SKIP_ADB="1")
     # Upstream checks whether IRONFOX_CI exists, even if its value is zero.
     # Local source mode compiles dependencies without requiring GitLab variables.
-    env["IRONEWOLF_ARCHIVE_GECKOVIEW"] = "1"
+    env.pop("IRONEWOLF_ARCHIVE_GECKOVIEW", None)
+    if archive_geckoview:
+        env["IRONEWOLF_ARCHIVE_GECKOVIEW"] = "1"
     return env
 
 
@@ -133,7 +135,7 @@ def main():
             output = SOURCE / "outputs" / "apk" / "unsigned" / f"ironewolf-{abi}-unsigned.apk"
         if output.exists():
             raise RuntimeError("Output already exists; move it aside to avoid accepting a stale artifact")
-        env = environment()
+        env = environment(archive_geckoview=args.project == "engine")
         if args.project == "engine":
             env[f"IRONFOX_OUTPUTS_GECKOVIEW_AAR_{args.arch.upper()}"] = str(output)
         else:
