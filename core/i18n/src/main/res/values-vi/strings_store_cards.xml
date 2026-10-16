@@ -7,4 +7,5 @@
     <string name="hf_store_track_only">Chỉ theo dõi</string>
     <string name="recommendation_tab_label">Đề xuất</string>
     <string name="dl_settings_rules">Quy tắc</string>
+    <string name="dl_t_set_shared_note">Các cài đặt này cũng được Telos Video sử dụng khi phát trực tuyến torrent.</string>
 </resources>

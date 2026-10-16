@@ -7,4 +7,5 @@
     <string name="hf_store_track_only">Jarraipena soilik</string>
     <string name="recommendation_tab_label">Gomendatuak</string>
     <string name="dl_settings_rules">Arauak</string>
+    <string name="dl_t_set_shared_note">Ezarpen hauek Telos Video aplikazioan ere erabiltzen dira torrent bat erreproduzitzean.</string>
 </resources>

@@ -7,4 +7,5 @@
     <string name="hf_store_track_only">Hanya pantau</string>
     <string name="recommendation_tab_label">Direkomendasikan</string>
     <string name="dl_settings_rules">Aturan</string>
+    <string name="dl_t_set_shared_note">Pengaturan ini juga digunakan oleh Telos Video saat memutar torrent.</string>
 </resources>

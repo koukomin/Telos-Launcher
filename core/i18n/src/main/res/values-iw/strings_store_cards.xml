@@ -7,4 +7,5 @@
     <string name="hf_store_track_only">מעקב בלבד</string>
     <string name="recommendation_tab_label">מומלצות</string>
     <string name="dl_settings_rules">כללים</string>
+    <string name="dl_t_set_shared_note">ההגדרות האלה משמשות גם את Telos Video בהזרמת טורנט.</string>
 </resources>

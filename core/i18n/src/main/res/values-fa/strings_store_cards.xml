@@ -7,4 +7,5 @@
     <string name="hf_store_track_only">فقط پیگیری</string>
     <string name="recommendation_tab_label">پیشنهادی</string>
     <string name="dl_settings_rules">قوانین</string>
+    <string name="dl_t_set_shared_note">این تنظیمات هنگام پخش تورنت در Telos Video نیز استفاده می‌شوند.</string>
 </resources>

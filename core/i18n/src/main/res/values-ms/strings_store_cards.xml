@@ -7,4 +7,5 @@
     <string name="hf_store_track_only">Jejak sahaja</string>
     <string name="recommendation_tab_label">Disyorkan</string>
     <string name="dl_settings_rules">Peraturan</string>
+    <string name="dl_t_set_shared_note">Tetapan ini juga digunakan oleh Telos Video semasa menstrim torrent.</string>
 </resources>

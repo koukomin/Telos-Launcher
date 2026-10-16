@@ -7,4 +7,5 @@
     <string name="hf_store_track_only">Толькі адсочваць</string>
     <string name="recommendation_tab_label">Рэкамендаваныя</string>
     <string name="dl_settings_rules">Правілы</string>
+    <string name="dl_t_set_shared_note">Гэтыя налады таксама выкарыстоўваюцца ў Telos Video пры прайграванні торэнта.</string>
 </resources>
