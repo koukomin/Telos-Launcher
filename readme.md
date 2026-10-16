@@ -1096,6 +1096,10 @@ Some features are new and not tested on every device. This is what the project's
 
 ## Planned
 
+- **Ironewolf browser:** preserve the complete IronFox/Fenix UI and hardened engine as a built-in
+  browser. [Pinned source and build tooling](ironewolf/README.md) are available; launcher integration
+  and replacement of WebView are not implemented yet.
+
 - SIP: text messages, video and Bluetooth routing, and Android Telecom integration (SIP calls are
   handled by their own call screen for now)
 
@@ -1137,6 +1141,7 @@ adapted, the original license is respected.
 
 | Project | License | What Telos uses it for |
 | --- | --- | --- |
+| [IronFox](https://gitlab.com/ironfox-oss/IronFox) | AGPL-3.0-or-later build scripts; per-file MPL-2.0 / Apache-2.0 / GPL licenses | Pinned source and build preparation for Ironewolf; not shipped in the launcher APK yet |
 | [libarchive](https://libarchive.org) with [libarchive-android](https://github.com/zhanghai/libarchive-android) | BSD-2-Clause, Apache-2.0 | RAR and RAR5 reading in Telos Files (standard version only, prebuilt library, used unchanged) |
 | [Kvaesitso](https://github.com/MM2-0/Kvaesitso) | GPL-3.0 | The whole launcher, plugin SDK and architecture |
 | [Right Dialer (Goodwy/Dialer)](https://github.com/Goodwy/Dialer) | GPL-3.0 | Phone app layout and look: recents, contacts, dialpad, call screens |

@@ -10,6 +10,10 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
     link: '/docs/developer-guide/setup',
   },
   {
+    text: 'Ironewolf browser',
+    link: '/docs/developer-guide/ironewolf',
+  },
+  {
     text: 'External APIs',
     link: '/docs/developer-guide/external-apis/',
     items: [
