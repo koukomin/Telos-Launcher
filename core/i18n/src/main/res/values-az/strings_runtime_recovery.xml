@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Android icazə verdikdə əvvəl aktiv olan VPN bərpa edilir. Əl ilə dayandırıldıqda sönülü qalır.</string>
+    <string name="netfw_u_unmetered">Limitsiz şəbəkələrdə blokla</string>
+    <string name="netfw_vpn_bypass">VPN-dən yan keç</string>
+    <string name="hc_allow">İcazə ver</string>
+    <string name="hc_new_message">Yeni mesaj</string>
+    <string name="hc_notes">Qeydlər</string>
+    <string name="hc_save">Saxla</string>
+    <string name="hc_set">Təyin et</string>
+    <string name="hc_settings">Ayarlar</string>
+    <string name="preference_freeze_usage_access">İstifadə məlumatlarına giriş</string>
+    <string name="preference_freeze_usage_access_summary_not_granted">İcazə verilməyib. Onsuz proqram istifadə zamanı da avtomatik dondurula bilər. İcazə vermək üçün toxunun.</string>
+</resources>

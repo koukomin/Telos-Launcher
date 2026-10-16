@@ -34,10 +34,9 @@ The first time you turn it on, Android asks for your consent to set up a VPN. Wi
 
 ## Safety
 
-- It **never starts by itself**. The only automatic start is after a reboot, and only if you switched on *Start on boot* and gave the VPN
-  permission before.
+- Previously active Network is restored after a process restart or app update when Android permits. The saved DNS, firewall, WireGuard and Tor configuration is reapplied. Manual **Turn off** and VPN revocation cancel restoration. Reboot restoration additionally requires *Start on boot* and previously granted VPN permission.
 - If the engine fails to start or stops working, the VPN is shut down and your normal connection is back (the state shows *Stopped*
-  and a notification says so). It does not block the internet when it breaks.
+  and a notification says so). Up to three delayed retries are attempted while active intent remains saved. It does not block the internet between retries unless Android lockdown is enabled.
 - **Turn off** always works, also while it is starting.
 - Telos itself is kept out of the tunnel by default (*Exclude Telos*).
 - Android's own *Always-on VPN* and *Block connections without VPN* are your choice in the Android settings; Telos never switches

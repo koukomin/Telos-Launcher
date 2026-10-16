@@ -217,6 +217,7 @@ fun CommsDashboardScreen(
                         Triple(CommsTab.Favorites, R.drawable.star_24px, CommsTab.Favorites.label),
                         Triple(CommsTab.Recents, R.drawable.schedule_24px, CommsTab.Recents.label),
                         Triple(CommsTab.Contacts, R.drawable.person_24px_filled, CommsTab.Contacts.label),
+                        Triple(CommsTab.Messages, R.drawable.sms_24px, CommsTab.Messages.label),
                     ).forEach { (tab, icon, label) ->
                         NavigationBarItem(
                             selected = selectedTab == tab,

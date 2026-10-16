@@ -23,6 +23,11 @@ class TorController internal constructor(private val context: Context, private v
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private val mutableStatus = MutableStateFlow(TorStatus.Off)
     val status: StateFlow<TorStatus> = mutableStatus
+    private val mutableProgress = MutableStateFlow(0)
+    val progress: StateFlow<Int> = mutableProgress
+    private val mutableError = MutableStateFlow<String?>(null)
+    val error: StateFlow<String?> = mutableError
+    private var nextStartAt = 0L
     @Volatile internal var ready = false
         private set
     @Volatile private var requested = false
@@ -49,7 +54,7 @@ class TorController internal constructor(private val context: Context, private v
     override suspend fun onTunnelConnected(tunnel: Tunnel) = withContext(Dispatchers.Main.immediate) {
         shutdown()
         this@TorController.tunnel = tunnel
-        requested = false
+        requested = settings.current.torWasActive
         if (!settings.current.torEnabled) return@withContext
         mutableStatus.value = TorStatus.Waiting
         monitor = scope.launch {
@@ -58,12 +63,15 @@ class TorController internal constructor(private val context: Context, private v
                 if (!config.torEnabled) {
                     unavailable()
                 } else if (requested || !config.torAutoStart || config.torAppIds.isNotEmpty()) {
-                    if (!bound) startService()
+                    if (!bound && android.os.SystemClock.elapsedRealtime() >= nextStartAt) startService()
                     val tor = service
                     val port = tor?.socksPort ?: 0
-                    val bootstrapped = withContext(Dispatchers.IO) {
-                        tor?.getInfo("status/bootstrap-phase")?.contains("PROGRESS=100 ") == true
-                    }
+                    val phase = try {
+                        withContext(Dispatchers.IO) { tor?.getInfo("status/bootstrap-phase") }
+                    } catch (cancel: CancellationException) { throw cancel }
+                    catch (error: Exception) { unavailable(error); null }
+                    mutableProgress.value = TorPolicy.bootstrapProgress(phase)
+                    val bootstrapped = mutableProgress.value == 100
                     if (port > 0 && bootstrapped) {
                         try {
                             if (registeredPort != port) {
@@ -75,7 +83,7 @@ class TorController internal constructor(private val context: Context, private v
                             }
                             ready = true
                             mutableStatus.value = TorStatus.Ready
-                        } catch (_: Exception) { unavailable() }
+                        } catch (error: Exception) { unavailable(error) }
                     } else {
                         if (ready) unavailable()
                     }
@@ -87,7 +95,11 @@ class TorController internal constructor(private val context: Context, private v
 
     private fun startService() {
         try {
+            nextStartAt = android.os.SystemClock.elapsedRealtime() + 30_000L
+            mutableError.value = null
             mutableStatus.value = TorStatus.Starting
+            settings.update { it.copy(torWasActive = true) }
+            settings.flush()
             dnsPort = freePort()
             val socks = freePort()
             // TorService supplies its private control socket and cookie authentication separately.
@@ -98,11 +110,13 @@ class TorController internal constructor(private val context: Context, private v
             )
             bound = context.bindService(Intent(context, TorService::class.java), connection, Context.BIND_AUTO_CREATE)
             if (!bound) unavailable()
-        } catch (_: Exception) { unavailable() }
+        } catch (error: Exception) { unavailable(error) }
+        catch (error: LinkageError) { unavailable(error) }
     }
 
-    private fun unavailable() {
+    private fun unavailable(error: Throwable? = null) {
         ready = false
+        if (error != null) mutableError.value = error.message ?: error.javaClass.simpleName
         mutableStatus.value = TorStatus.Unavailable
         try { tunnel?.closeConns("") } catch (_: Exception) { }
     }
@@ -118,6 +132,9 @@ class TorController internal constructor(private val context: Context, private v
         service = null
         tunnel = null
         registeredPort = 0
+        nextStartAt = 0
+        mutableProgress.value = 0
+        mutableError.value = null
         mutableStatus.value = TorStatus.Off
     }
 

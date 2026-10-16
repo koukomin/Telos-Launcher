@@ -101,9 +101,10 @@ fun AppItem(
     val context = LocalContext.current
 
     val shutterSettings = koinInject<ShutterSettings>()
+    val shutterRepository = koinInject<de.mm20.launcher2.searchable.SavableSearchableRepository>()
     val shuttersEnabled by shutterSettings.enabled.collectAsStateWithLifecycle(false)
     val shutterKey by remember(app.key) {
-        shutterSettings.appFor(app.componentName.packageName)
+        shutterSettings.appFor(ShutterSettings.hostKey(app.key, app.componentName.packageName))
     }.collectAsStateWithLifecycle(null)
     var showShutterPicker by remember { mutableStateOf(false) }
 
@@ -527,7 +528,7 @@ fun AppItem(
                                     icon = R.drawable.close_24px,
                                     action = {
                                         shutterSettings.setApp(
-                                            app.componentName.packageName,
+                                            ShutterSettings.hostKey(app.key, app.componentName.packageName),
                                             null
                                         )
                                     }
@@ -667,7 +668,8 @@ fun AppItem(
                 value = null,
                 onValueChanged = { picked ->
                     if (picked != null) {
-                        shutterSettings.setApp(app.componentName.packageName, picked.key)
+                        shutterRepository.insert(picked)
+                        shutterSettings.setApp(ShutterSettings.hostKey(app.key, app.componentName.packageName), picked.key)
                     }
                     showShutterPicker = false
                 },

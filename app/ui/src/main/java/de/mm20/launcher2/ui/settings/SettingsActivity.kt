@@ -213,6 +213,11 @@ open class SettingsActivity : BaseActivity() {
 
     private var initialRoute by mutableStateOf<NavKey?>(null)
 
+    override fun onResume() {
+        super.onResume()
+        org.koin.mp.KoinPlatform.getKoin().get<de.mm20.launcher2.network.NetworkEngine>().restoreIfWanted()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (redirectVirtualApp(intent)) {
@@ -322,7 +327,8 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.network.firewall.NetworkUniversalRulesRoute> {
                 de.mm20.launcher2.ui.network.firewall.NetworkUniversalRulesScreen()
             }
-            entry<de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesRoute> {
+            entry<de.mm20.launcher2.ui.network.firewall.NetworkAppRulesRoute> { key -> de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesScreen(key.appId) }
+        entry<de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesRoute> {
                 de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesScreen()
             }
             entry<de.mm20.launcher2.ui.network.blocklists.NetworkBlocklistsRoute> {

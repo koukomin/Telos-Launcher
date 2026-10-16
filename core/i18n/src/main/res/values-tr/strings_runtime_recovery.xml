@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Android izin verdiğinde önceden etkin VPN’i geri yükler. Elle durdurma korunur.</string>
+    <string name="netfw_u_unmetered">Sınırsız ağlarda engelle</string>
+    <string name="netfw_vpn_bypass">VPN’i atla</string>
+</resources>

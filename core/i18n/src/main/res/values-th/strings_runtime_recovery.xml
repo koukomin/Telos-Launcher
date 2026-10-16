@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">กู้คืน VPN ที่เคยเปิดอยู่เมื่อ Android อนุญาต หากหยุดด้วยตนเองจะยังคงปิดอยู่</string>
+    <string name="netfw_u_unmetered">บล็อกบนเครือข่ายที่ไม่จำกัดปริมาณข้อมูล</string>
+    <string name="netfw_vpn_bypass">ข้าม VPN</string>
+    <string name="hc_allow">อนุญาต</string>
+    <string name="hc_new_message">ข้อความใหม่</string>
+    <string name="hc_notes">บันทึก</string>
+    <string name="hc_save">บันทึก</string>
+    <string name="hc_set">ตั้งค่า</string>
+    <string name="hc_settings">การตั้งค่า</string>
+    <string name="preference_freeze_usage_access">การเข้าถึงข้อมูลการใช้งาน</string>
+    <string name="preference_freeze_usage_access_summary_not_granted">ยังไม่ได้รับอนุญาต หากไม่มีสิทธิ์นี้ แอปอาจถูกแช่แข็งอัตโนมัติขณะใช้งาน แตะเพื่ออนุญาต</string>
+</resources>

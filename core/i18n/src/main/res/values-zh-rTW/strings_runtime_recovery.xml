@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">在 Android 允許時恢復先前啟用的 VPN。手動停止後維持關閉。</string>
+    <string name="netfw_u_unmetered">在不限流量網路上封鎖</string>
+    <string name="netfw_vpn_bypass">繞過 VPN</string>
+</resources>

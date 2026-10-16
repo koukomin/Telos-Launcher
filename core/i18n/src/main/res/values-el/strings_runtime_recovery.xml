@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Επαναφέρει το VPN που ήταν ενεργό όταν το επιτρέπει το Android. Η χειροκίνητη διακοπή διατηρείται.</string>
+    <string name="netfw_u_unmetered">Αποκλεισμός σε μη χρεώσιμα δίκτυα</string>
+    <string name="netfw_vpn_bypass">Παράκαμψη VPN</string>
+</resources>

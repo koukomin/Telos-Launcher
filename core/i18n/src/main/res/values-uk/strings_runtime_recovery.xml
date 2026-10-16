@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Відновлює раніше активний VPN, коли Android дозволяє. Ручна зупинка зберігається.</string>
+    <string name="netfw_u_unmetered">Блокувати в мережах без обліку трафіку</string>
+    <string name="netfw_vpn_bypass">Обхід VPN</string>
+</resources>

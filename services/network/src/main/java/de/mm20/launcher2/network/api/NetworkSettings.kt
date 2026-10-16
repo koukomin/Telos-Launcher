@@ -11,6 +11,7 @@ data class NetworkSettingsValues(
     /** Tor mode changes interface routing; edit only while the VPN is stopped. */
     val torEnabled: Boolean = false,
     val torAutoStart: Boolean = false,
+    val torWasActive: Boolean = false,
     /** Android app IDs, including every package sharing that ID. Telos itself is excluded. */
     val torAppIds: Set<Int> = emptySet(),
     /** User-owned proxy exposing GET <base>/<name> with UD resolution API responses. */

@@ -43,3 +43,7 @@ newly installed apps, apps that cannot be identified, UDP, plain HTTP (port 80),
 
 *Trust* allows the connection and skips the app rules, the universal rules and the blocklists for the match. Changes apply to new connections; open connections can be closed so that
 apps reconnect.
+
+## Quick app controls
+
+App cards show wrapping names, packages, UID and aggregate traffic. Filter allowed or blocked apps, then use the Wi-Fi, mobile (including 5G), LAN and other-VPN chips; selected means allowed. VPN bypass excludes the app from this local VPN and requires reconnecting; it is disabled while Tor routing requires full capture. Expanded controls include metered/unmetered blocking, notes, IP/domain rules scoped to the app, temporary access, firewall/universal bypass and direct WireGuard routing. Direct WireGuard routing does not override Tor-only rules. Android permits one active VPN, so the other-VPN rule describes an underlying VPN transport, not a second parallel Android VPN. LAN blocking enables LAN capture when needed.

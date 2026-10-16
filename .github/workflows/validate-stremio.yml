@@ -2,6 +2,7 @@ name: Validate Stremio Fork
 on:
   pull_request:
     paths:
+      - 'tools/validation/**'
       - 'services/network/**'
       - 'app/ui/src/main/java/de/mm20/launcher2/ui/network/**'
       - 'settings.gradle.kts'
@@ -42,6 +43,8 @@ jobs:
           fetch-depth: 0
       - name: Validate complete translations and Android placeholders
         run: python tools/translations/validate.py
+      - name: Verify default SMS role eligibility
+        run: python tools/validation/sms_manifest.py
       - uses: actions/setup-java@v4
         with:
           java-version: '21'

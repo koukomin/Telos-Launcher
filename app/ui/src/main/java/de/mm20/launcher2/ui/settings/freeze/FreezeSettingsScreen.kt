@@ -195,16 +195,6 @@ fun FreezeSettingsScreen() {
                 )
                 AnimatedVisibility(autoFreezeEnabled == true) {
                     Column {
-                        Preference(
-                            title = stringResource(R.string.preference_freeze_usage_access),
-                            summary = stringResource(
-                                if (usageAccessGranted) R.string.preference_freeze_usage_access_summary_granted
-                                else R.string.preference_freeze_usage_access_summary_not_granted
-                            ),
-                            onClick = {
-                                (context as? AppCompatActivity)?.let { viewModel.requestUsageAccess(it) }
-                            }
-                        )
                         ListPreference(
                             title = stringResource(R.string.preference_freeze_profile),
                             items = listOf(
@@ -267,7 +257,15 @@ fun FreezeSettingsScreen() {
                             title = stringResource(R.string.freeze_exclude_foreground),
                             summary = stringResource(R.string.freeze_exclude_foreground_summary),
                             value = excludeForeground,
-                            onValueChanged = viewModel::setExcludeForeground,
+                            onValueChanged = {
+                                viewModel.setExcludeForeground(it)
+                                if (it && !usageAccessGranted) (context as? AppCompatActivity)?.let(viewModel::requestUsageAccess)
+                            },
+                        )
+                        if (excludeForeground && !usageAccessGranted) Preference(
+                            title = stringResource(R.string.preference_freeze_usage_access),
+                            summary = stringResource(R.string.preference_freeze_usage_access_summary_not_granted),
+                            onClick = { (context as? AppCompatActivity)?.let(viewModel::requestUsageAccess) },
                         )
                         SwitchPreference(
                             title = stringResource(R.string.preference_freeze_exclude_music),

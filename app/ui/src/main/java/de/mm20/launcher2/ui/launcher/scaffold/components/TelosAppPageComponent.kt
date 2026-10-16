@@ -122,6 +122,7 @@ internal object TelosPages {
         entry<de.mm20.launcher2.ui.network.wireguard.NetworkWireguardAppsRoute> { de.mm20.launcher2.ui.network.wireguard.NetworkWireguardAppsScreen() }
         entry<de.mm20.launcher2.ui.network.firewall.NetworkFirewallRoute> { de.mm20.launcher2.ui.network.firewall.NetworkFirewallScreen() }
         entry<de.mm20.launcher2.ui.network.firewall.NetworkUniversalRulesRoute> { de.mm20.launcher2.ui.network.firewall.NetworkUniversalRulesScreen() }
+        entry<de.mm20.launcher2.ui.network.firewall.NetworkAppRulesRoute> { key -> de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesScreen(key.appId) }
         entry<de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesRoute> { de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesScreen() }
         entry<de.mm20.launcher2.ui.network.blocklists.NetworkBlocklistsRoute> { de.mm20.launcher2.ui.network.blocklists.NetworkBlocklistsScreen() }
         entry<de.mm20.launcher2.ui.network.logs.NetworkLogsRoute> { de.mm20.launcher2.ui.network.logs.NetworkLogsScreen() }

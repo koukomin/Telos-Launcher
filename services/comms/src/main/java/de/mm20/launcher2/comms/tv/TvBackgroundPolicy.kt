@@ -6,10 +6,10 @@ object TvBackgroundPolicy {
     const val IDLE_STOP_MS = 5 * 60 * 1000L
 
     /** Leaving the app or switching the screen off pauses playback unless the user allowed background playback */
-    fun pauseWhenLeaving(keepInBackground: Boolean): Boolean = !keepInBackground
+    fun pauseWhenLeaving(keepInBackground: Boolean, screenOff: Boolean = false): Boolean = !keepInBackground && !screenOff
 
     /** In the background only the sound is needed: the video track is switched off to save data */
-    fun videoDisabled(keepInBackground: Boolean, inBackground: Boolean): Boolean = keepInBackground && inBackground
+    fun videoDisabled(keepInBackground: Boolean, inBackground: Boolean, screenOff: Boolean = false): Boolean = (keepInBackground || screenOff) && inBackground
 
     /**
      * True when the service should stop and release TV: nothing is playing or loading and it has been

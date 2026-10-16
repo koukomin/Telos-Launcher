@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Taastab varem aktiivse VPN-i, kui Android lubab. Käsitsi peatamine jääb jõusse.</string>
+    <string name="netfw_u_unmetered">Blokeeri mahupiiranguta võrkudes</string>
+    <string name="netfw_vpn_bypass">Möödu VPN-ist</string>
+</resources>

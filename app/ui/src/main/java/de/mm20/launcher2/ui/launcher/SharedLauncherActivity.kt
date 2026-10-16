@@ -98,6 +98,11 @@ abstract class SharedLauncherActivity(
 
     internal val enterHomeTransitionManager = EnterHomeTransitionManager()
 
+    override fun onResume() {
+        super.onResume()
+        org.koin.mp.KoinPlatform.getKoin().get<de.mm20.launcher2.network.NetworkEngine>().restoreIfWanted()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         if (isAtLeastApiLevel(29)) {

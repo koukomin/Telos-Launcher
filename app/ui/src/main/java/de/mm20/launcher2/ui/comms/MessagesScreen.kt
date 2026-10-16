@@ -98,6 +98,26 @@ fun MessagesScreen(
     }
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { granted = it[Manifest.permission.READ_SMS] == true }
 
+    var isDefault by remember { mutableStateOf(SmsRole.isDefault(context)) }
+    var roleSettingsFallback by remember { mutableStateOf(false) }
+    val roleLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        isDefault = SmsRole.isDefault(context)
+        granted = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
+        // Android may suppress a repeatedly denied role prompt. Offer the system picker explicitly.
+        roleSettingsFallback = !isDefault
+    }
+    fun requestSmsRole() {
+        try { roleLauncher.launch(if (roleSettingsFallback) SmsRole.settingsIntent() else SmsRole.requestIntent(context)) }
+        catch (_: Exception) {
+            roleSettingsFallback = true
+            try { roleLauncher.launch(SmsRole.settingsIntent()) } catch (_: Exception) { }
+        }
+    }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        isDefault = SmsRole.isDefault(context)
+        granted = ContextCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
+    }
+
     if (!granted) {
         Column(
             Modifier.fillMaxSize().padding(32.dp),
@@ -111,14 +131,11 @@ fun MessagesScreen(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(vertical = 12.dp),
             )
-            Button(onClick = { launcher.launch(arrayOf(Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS)) }) { Text(stringResource(R.string.hc_allow)) }
+            Button(onClick = { if (!isDefault) requestSmsRole() else launcher.launch(arrayOf(Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS)) }) { Text(stringResource(R.string.hc_allow)) }
         }
         return
     }
 
-    var isDefault by remember { mutableStateOf(SmsRole.isDefault(context)) }
-    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { isDefault = SmsRole.isDefault(context) }
-    val roleLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { isDefault = SmsRole.isDefault(context) }
 
     var refresh by remember { mutableStateOf(0) }
     var all by remember { mutableStateOf<List<SmsConversation>?>(null) }
@@ -192,13 +209,12 @@ fun MessagesScreen(
     Column(Modifier.fillMaxSize()) {
         if (!isDefault) {
             Surface(color = MaterialTheme.colorScheme.secondaryContainer, modifier = Modifier.fillMaxWidth()) {
-                Row(Modifier.padding(horizontal = 16.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
                         stringResource(R.string.hc_make_telos_your_sms_app_to_receive_messa),
                         style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.weight(1f),
                     )
-                    TextButton(onClick = { runCatching { roleLauncher.launch(SmsRole.requestIntent(context)) } }) { Text(stringResource(R.string.hc_set)) }
+                    Button(onClick = ::requestSmsRole) { Text(stringResource(if (roleSettingsFallback) R.string.hc_settings else R.string.hc_set)) }
                 }
             }
         }
@@ -206,10 +222,15 @@ fun MessagesScreen(
             value = listQuery,
             onValueChange = { listQuery = it },
             placeholder = stringResource(R.string.tsp_search_messages),
-            trailing = {
-                TextButton(onClick = { newMessage = true }) { Text(stringResource(R.string.hc_new_message)) }
-            },
+
         )
+        androidx.compose.material3.FilledTonalButton(
+            onClick = { newMessage = true },
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+        ) {
+            Icon(painterResource(R.drawable.sms_24px), contentDescription = null)
+            Text(stringResource(R.string.hc_new_message), Modifier.padding(start = 12.dp))
+        }
         if (blockedCount > 0) TextButton(
             onClick = { showBlocked = true },
             modifier = Modifier.padding(horizontal = 8.dp),
@@ -220,14 +241,24 @@ fun MessagesScreen(
             shown.isEmpty() -> EmptyCommsTab(stringResource(R.string.au_messages_no_conversations), stringResource(R.string.au_messages_no_conversations_hint))
             else -> LazyColumn(Modifier.fillMaxSize()) {
                 items(shown, key = { it.threadId.toString() + it.address }) { c ->
-                    ListItem(
-                        headlineContent = {
-                            Text(c.name ?: c.address, fontWeight = if (c.unread > 0) FontWeight.Bold else FontWeight.Normal, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                        },
-                        supportingContent = { Text(c.snippet, maxLines = 2, overflow = TextOverflow.Ellipsis) },
-                        trailingContent = { Text(shortDate(c.date), style = MaterialTheme.typography.labelSmall) },
-                        modifier = Modifier.clickable { open = c },
-                    )
+                    Surface(
+                        shape = RoundedCornerShape(24.dp),
+                        color = if (c.unread > 0) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainer,
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp).clickable { open = c },
+                    ) {
+                        Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                            Surface(shape = androidx.compose.foundation.shape.CircleShape, color = MaterialTheme.colorScheme.primaryContainer) {
+                                Text((c.name ?: c.address).trim().take(1).uppercase(), Modifier.padding(16.dp), style = MaterialTheme.typography.titleMedium)
+                            }
+                            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                                Text(c.name ?: c.address, style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = if (c.unread > 0) FontWeight.Bold else FontWeight.Normal, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                                Text(shortDate(c.date), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                if (c.snippet.isNotBlank()) Text(c.snippet, style = MaterialTheme.typography.bodyMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                                if (c.unread > 0) androidx.compose.material3.Badge { Text(c.unread.toString()) }
+                            }
+                        }
+                    }
                 }
             }
         }

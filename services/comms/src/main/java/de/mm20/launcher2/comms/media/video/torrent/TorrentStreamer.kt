@@ -152,8 +152,16 @@ object TorrentStreamer {
                 // only the video files are downloaded, the rest is ignored
                 val priorities = Array(ti.numFiles()) { Priority.IGNORE }
                 videos.forEach { priorities[it] = Priority.DEFAULT }
-                sm.download(ti, dir, null, priorities, null, null)
-                val h = sm.find(ti.infoHash()) ?: fail("Could not start the download")
+                sm.download(ti, dir, null, priorities, null, TorrentFlags.SEQUENTIAL_DOWNLOAD)
+                val h = kotlinx.coroutines.withTimeoutOrNull(10_000L) {
+                    var found = sm.find(ti.infoHash())
+                    while (found == null && alive()) {
+                        kotlinx.coroutines.delay(50)
+                        found = sm.find(ti.infoHash())
+                    }
+                    found
+                } ?: fail("Could not start the download")
+                if (!alive()) throw kotlinx.coroutines.CancellationException("The torrent was closed")
                 h.setFlags(TorrentFlags.SEQUENTIAL_DOWNLOAD)
                 // not part of the queue of the session (its limits are for the downloads), and not paused by it
                 h.unsetFlags(TorrentFlags.AUTO_MANAGED)

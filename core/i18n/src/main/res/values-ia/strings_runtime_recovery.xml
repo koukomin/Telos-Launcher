@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Restabili le VPN antea active quando Android lo permitte. Le arresto manual remane valide.</string>
+    <string name="netfw_u_unmetered">Bloccar in retes non mesurate</string>
+    <string name="netfw_vpn_bypass">Circumvenir VPN</string>
+    <string name="hc_allow">Permitter</string>
+    <string name="hc_new_message">Nove message</string>
+    <string name="hc_notes">Notas</string>
+    <string name="hc_save">Salveguardar</string>
+    <string name="hc_set">Definir</string>
+    <string name="hc_settings">Configurationes</string>
+    <string name="preference_freeze_usage_access">Accesso al datos de uso</string>
+    <string name="preference_freeze_usage_access_summary_not_granted">Non concedite. Sin illo, un application pote esser congelate automaticamente mesmo durante su uso. Tocca pro conceder lo.</string>
+</resources>

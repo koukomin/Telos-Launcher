@@ -164,3 +164,7 @@ read failures and a native encrypted-database write/read/reopen test, which pass
 15 (API 35, x86_64) emulator. This does not verify an existing device database migration or runtime
 behavior on a 16 KiB-page device. A specific device crash still needs its own crash trace to
 establish its exact cause.
+
+## Messages
+
+The bottom navigation includes Messages. To make Telos the default SMS app, use Set in Messages: the Android SMS role is requested before SMS permissions. After a denied or suppressed request, Settings opens the system default-app picker. Conversation cards put the date below the name and keep search and New message on separate rows for large fonts. Scrobbling belongs to Music and Radio settings.

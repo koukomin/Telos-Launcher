@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">משחזר את ה־VPN שהיה פעיל כש־Android מאפשר זאת. עצירה ידנית נשמרת.</string>
+    <string name="netfw_u_unmetered">חסימה ברשתות ללא חיוב לפי שימוש</string>
+    <string name="netfw_vpn_bypass">עקיפת VPN</string>
+    <string name="hc_allow">אישור</string>
+    <string name="hc_new_message">הודעה חדשה</string>
+    <string name="hc_notes">הערות</string>
+    <string name="hc_save">שמירה</string>
+    <string name="hc_set">הגדרה</string>
+    <string name="hc_settings">הגדרות</string>
+    <string name="preference_freeze_usage_access">גישה לנתוני שימוש</string>
+    <string name="preference_freeze_usage_access_summary_not_granted">לא ניתנה הרשאה. בלעדיה, אפליקציה עשויה להיות מוקפאת אוטומטית גם בזמן השימוש. יש להקיש כדי לתת הרשאה.</string>
+</resources>

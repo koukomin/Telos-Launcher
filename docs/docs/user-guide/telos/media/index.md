@@ -155,3 +155,7 @@ Choose YouTube Music under Listen or YouTube under Video. Search or paste a vide
 ### Shared trash
 
 Files, Viewer and Media share a delete/trash choice and restore UI. Local files use an atomic same-volume move with durable metadata, a default 30-day retention configurable to 1–365 days for future deletions, and daily expiry cleanup. Restore never overwrites an existing file. Android-managed media trash uses the system’s fixed 30-day retention and permission dialog. Unsupported storages offer explicitly confirmed permanent deletion. The private trash is removed on app uninstall or app-data deletion.
+
+## Screen-off playback
+
+TV, YouTube, music and the video player keep their media service running when the screen turns off. TV disables the video track while background audio continues, including with the older background-playback preference off; explicit pause/stop still works. Network playback has a wake lock while playing. Torrent startup uses non-null libtorrent flags and waits for asynchronous torrent registration. Screen-off behavior and battery restrictions still require testing on the target device.

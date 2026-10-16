@@ -11,6 +11,11 @@ import kotlinx.coroutines.flow.map
 class ShutterSettings internal constructor(
     private val dataStore: LauncherDataStore,
 ) {
+    companion object {
+        fun hostKey(applicationKey: String, packageName: String): String =
+            if (applicationKey.startsWith("telos_") && applicationKey.contains("://")) applicationKey else packageName
+    }
+
     val enabled
         get() = dataStore.data.map { it.shutters.shuttersEnabled }.distinctUntilChanged()
 

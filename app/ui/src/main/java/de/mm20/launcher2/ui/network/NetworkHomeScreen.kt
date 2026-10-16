@@ -126,7 +126,7 @@ fun NetworkHomeScreen() {
         item {
             Banner(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.net_hub_safety),
+                text = stringResource(R.string.net_restore_summary),
                 icon = IconsNetworkHomeScreen.info_24px,
             )
         }

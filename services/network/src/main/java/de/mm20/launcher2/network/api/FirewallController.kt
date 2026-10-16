@@ -16,6 +16,8 @@ data class AppRule(
     val blockWifi: Boolean = false,
     /** Block connections over mobile data. */
     val blockMobile: Boolean = false,
+    val blockMetered: Boolean = false,
+    val blockUnmetered: Boolean = false,
     /** Block connections over mobile data while roaming. */
     val blockRoaming: Boolean = false,
     /** Block connections to the local network (private and link-local addresses). */
@@ -32,7 +34,10 @@ data class AppRule(
     val bypassFirewall: Boolean = false,
     /** The app does not use the VPN at all; its traffic leaves the device directly. Applies after the VPN restarted. */
     val excludeFromVpn: Boolean = false,
+    val note: String = "",
 ) {
+    fun blocksMetering(metered: Boolean): Boolean = if (metered) blockMetered else blockUnmetered
+
     /** True when the entry has no effect and can be deleted. */
     val isEmpty: Boolean
         get() = this == AppRule(appId)

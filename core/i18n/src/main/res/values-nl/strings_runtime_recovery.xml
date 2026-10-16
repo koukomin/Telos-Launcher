@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="net_restore_summary">Herstelt de eerder actieve VPN als Android dat toestaat. Handmatig stoppen blijft gelden.</string>
+    <string name="netfw_u_unmetered">Blokkeren op onbeperkte netwerken</string>
+    <string name="netfw_vpn_bypass">VPN omzeilen</string>
+</resources>

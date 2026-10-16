@@ -20,6 +20,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 /** Why the VPN service ended. */
 internal enum class StopReason {
@@ -37,8 +39,8 @@ internal enum class StopReason {
  * Starts, stops and restarts Telos Network. This is the one object the rest of the app talks to.
  *
  * Safety rules (see also [TelosVpnService]):
- *  - It never starts by itself. The only automatic start is after a reboot when the user enabled
- *    "start on boot" (see [de.mm20.launcher2.network.vpn.BootReceiver]).
+ *  - Previously active user intent survives process death and updates. Explicit Stop and VPN
+ *    revocation cancel it. Reboot restoration additionally requires "start on boot".
  *  - Whenever the engine fails to start or stops working, the VPN is torn down. The device then
  *    has its normal internet connection again (fail-open), and [state] becomes [NetState.Error].
  *  - [stop] always works, also while starting.
@@ -63,7 +65,11 @@ class NetworkEngine internal constructor(
      */
     val tunnel: StateFlow<Tunnel?> = _tunnel
 
+    private val componentsLock = Mutex()
     private var watchdog: Job? = null
+    private var recovery: Job? = null
+    private var stableConnection: Job? = null
+    private var recoveryAttempts = 0
 
     /**
      * Turns the VPN on. Call this only as the result of a user action.
@@ -107,8 +113,16 @@ class NetworkEngine internal constructor(
         }
     }
 
+    /** Restore prior user intent without ever opening consent from a background context. */
+    fun restoreIfWanted() {
+        if (!settings.current.engineWanted) return
+        if (runCatching { VpnService.prepare(context) == null }.getOrDefault(false)) start()
+    }
+
     /** Turns the VPN off. Safe to call in any state. The internet works normally again right after. */
     fun stop() {
+        recovery?.cancel()
+        recoveryAttempts = 0
         settings.update { it.copy(engineWanted = false) }
         settings.flush()
         val service = TelosVpnService.current
@@ -123,10 +137,13 @@ class NetworkEngine internal constructor(
 
     /** Stops the VPN and starts it again, for example to apply changes that need a new interface. */
     fun restart() {
+        if (_state.value !is NetState.On) return
+        val service = TelosVpnService.current ?: return
         scope.launch {
-            stop()
-            withTimeoutOrNull(RESTART_WAIT_MS) { _state.first { it is NetState.Off } }
-            start()
+            // Preserve user intent across configuration restart, but respect a subsequent Stop.
+            service.requestStop(StopReason.User, null)
+            val stopped = withTimeoutOrNull(RESTART_WAIT_MS) { _state.first { it is NetState.Off } }
+            if (stopped != null && settings.current.engineWanted) start()
         }
     }
 
@@ -151,32 +168,51 @@ class NetworkEngine internal constructor(
         watchdog?.cancel()
         _tunnel.value = tunnel
         _state.value = NetState.On
+        stableConnection?.cancel()
+        stableConnection = scope.launch {
+            delay(30_000L)
+            if (_tunnel.value === tunnel) recoveryAttempts = 0
+        }
     }
 
     internal fun onServiceStopped(reason: StopReason, detail: String?) {
         watchdog?.cancel()
         _tunnel.value = null
+        stableConnection?.cancel()
         scope.launch {
-            components.forEach { c ->
-                try {
-                    c.onTunnelDisconnected()
-                } catch (e: Throwable) {
-                    // a broken component must not keep the others from cleaning up
+            componentsLock.withLock {
+                components.forEach { c ->
+                    try {
+                        c.onTunnelDisconnected()
+                    } catch (e: Throwable) {
+                        // a broken component must not keep the others from cleaning up
+                    }
                 }
-            }
-        }
-        when (reason) {
-            StopReason.User -> _state.value = NetState.Off
-            StopReason.Failure, StopReason.Revoked -> {
-                settings.update { it.copy(engineWanted = false) }
-                settings.flush()
-                _state.value = NetState.Error(messageFor(reason, detail))
+                when (reason) {
+                    StopReason.User -> _state.value = NetState.Off
+                    StopReason.Failure, StopReason.Revoked -> {
+                        if (reason == StopReason.Revoked) {
+                            settings.update { it.copy(engineWanted = false) }
+                            settings.flush()
+                            recovery?.cancel()
+                        }
+                        _state.value = NetState.Error(messageFor(reason, detail))
+                        if (reason == StopReason.Failure && settings.current.engineWanted && recoveryAttempts < de.mm20.launcher2.network.vpn.VpnRecoveryPolicy.MAX_RETRIES) {
+                            val attempt = ++recoveryAttempts
+                            recovery?.cancel()
+                            recovery = scope.launch {
+                                delay(attempt * 3000L)
+                                restoreIfWanted()
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 
     /** Hands the tunnel to the components so they can apply their configuration. */
-    internal suspend fun applyComponents(tunnel: Tunnel) {
+    internal suspend fun applyComponents(tunnel: Tunnel) = componentsLock.withLock {
         components.forEach { c ->
             try {
                 c.onTunnelConnected(tunnel)

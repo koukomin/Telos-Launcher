@@ -22,6 +22,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 /**
@@ -61,6 +63,12 @@ class AutoFreezeController internal constructor(
         }
     }
 
+    private val packageReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            refreshNotificationLater()
+        }
+    }
+
     private val freezeNowReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             freezeAllCandidatesNow()
@@ -68,6 +76,10 @@ class AutoFreezeController internal constructor(
     }
 
     init {
+        ContextCompat.registerReceiver(context, packageReceiver,
+            IntentFilter(Intent.ACTION_PACKAGE_CHANGED).apply { addDataScheme("package") }, ContextCompat.RECEIVER_EXPORTED)
+        ContextCompat.registerReceiver(context, packageReceiver,
+            IntentFilter().apply { addAction(Intent.ACTION_PACKAGES_SUSPENDED); addAction(Intent.ACTION_PACKAGES_UNSUSPENDED) }, ContextCompat.RECEIVER_EXPORTED)
         ContextCompat.registerReceiver(
             context,
             receiver,
@@ -101,7 +113,9 @@ class AutoFreezeController internal constructor(
         // whole point of a battery-saving feature; it's refreshed at every point this class
         // already wakes up for, which covers the common cases.
         scope.launch {
-            settings.candidates.collect {
+            combine(settings.candidates, settings.autoFreezeEnabled, settings.stats, settings.maintenance) { a, b, c, d ->
+                listOf(a, b, c, d)
+            }.collectLatest {
                 try {
                     updateUnfrozenNotification()
                 } catch (e: kotlinx.coroutines.CancellationException) {
@@ -109,6 +123,17 @@ class AutoFreezeController internal constructor(
                 } catch (e: Exception) {
                     android.util.Log.w("AutoFreezeController", "notification update failed", e)
                 }
+            }
+        }
+    }
+
+    private fun refreshNotificationLater() {
+        scope.launch {
+            try { updateUnfrozenNotification() }
+            catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (error: Exception) {
+                context.getSystemService<NotificationManager>()?.cancel(NOTIFICATION_ID)
+                android.util.Log.w("AutoFreezeController", "notification refresh failed", error)
             }
         }
     }
@@ -135,7 +160,7 @@ class AutoFreezeController internal constructor(
     private fun onScreenOn() {
         idleJob?.cancel()
         idleJob = null
-        scope.launch { updateUnfrozenNotification() }
+        refreshNotificationLater()
     }
 
     private fun onPowerSaveModeChanged() {
@@ -162,7 +187,10 @@ class AutoFreezeController internal constructor(
         val candidates = settings.candidates.first()
         if (candidates.isEmpty()) return emptyList()
         val held = settings.maintenance.first().values.map { it.packageName }.toSet()
-        return candidates.filterNot { it in held }
+        return candidates.filter { pkg -> runCatching {
+            val info = context.packageManager.getApplicationInfo(pkg, PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_UNINSTALLED_PACKAGES)
+            info.flags and android.content.pm.ApplicationInfo.FLAG_INSTALLED != 0
+        }.getOrDefault(false) }.filterNot { it in held }
             .filterNot { freezeManager.isFrozen(it) }
             .filterNot { exclusionChecker.isExcluded(it) }
     }
@@ -172,7 +200,7 @@ class AutoFreezeController internal constructor(
         // from this background scope.
         try {
             val freezable = freezableCandidates()
-            if (freezable.isEmpty()) return
+            if (freezable.isEmpty()) { updateUnfrozenNotification(); return }
             freezeManager.refreshBackendState()
             // Not freeze(): this runs from a background trigger (screen-off/idle/battery-saver, no
             // foreground activity), and Island's freeze mechanism needs a foreground context to
@@ -230,6 +258,14 @@ class AutoFreezeController internal constructor(
                 )
             )
             .setContentText(context.getString(R.string.freeze_ready_notification_text))
+            .setStyle(NotificationCompat.InboxStyle().also { style ->
+                val pm = context.packageManager
+                freezable.map { pkg -> runCatching {
+                    pm.getApplicationInfo(pkg, PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_UNINSTALLED_PACKAGES)
+                        .loadLabel(pm).toString()
+                }.getOrDefault(pkg) }.sorted().forEach { style.addLine(it) }
+            })
+            .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .setContentIntent(freezeNowIntent)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_LOW)

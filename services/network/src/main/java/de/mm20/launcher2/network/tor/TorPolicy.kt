@@ -4,6 +4,9 @@ import de.mm20.launcher2.network.util.IpUtil
 
 /** No DNS calls here: this policy also runs on firestack's callback threads. */
 internal object TorPolicy {
+    fun bootstrapProgress(phase: String?): Int = Regex("""PROGRESS=(\d+)""")
+        .find(phase.orEmpty())?.groupValues?.get(1)?.toIntOrNull()?.takeIf { it in 0..100 } ?: 0
+
     const val PROXY = "telos-tor"
     const val DNS = "telos-tor-dns"
     const val VIRTUAL_V4 = "10.192.0.0/10"

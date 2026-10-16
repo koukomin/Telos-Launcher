@@ -45,16 +45,20 @@ fun NetworkPrivacyScreen() {
     val config by settings.values.collectAsState()
     val state by engine.state.collectAsState()
     val status by tor.status.collectAsState()
+    val progress by tor.progress.collectAsState()
+    val torError by tor.error.collectAsState()
     val backStack = LocalBackStack.current
-    val canConfigure = state is NetState.Off || state is NetState.Error || state is NetState.NeedsPermission
     PreferenceScreen(title = { Text(stringResource(R.string.nt_title), Modifier.padding(horizontal = 16.dp)) }) {
         item {
             PreferenceCategory(title = "Tor") {
                 SwitchPreference(
                     title = stringResource(R.string.nt_onion),
-                    summary = stringResource(R.string.nt_mode_hint),
-                    value = config.torEnabled, enabled = canConfigure,
-                    onValueChanged = { settings.update { s -> s.copy(torEnabled = it) }; settings.flush() },
+                    summary = stringResource(R.string.net_settings_apply_sum),
+                    value = config.torEnabled, enabled = state !is NetState.Starting,
+                    onValueChanged = {
+                        settings.update { s -> s.copy(torEnabled = it, torWasActive = if (it) s.torWasActive else false) }; settings.flush()
+                        if (state is NetState.On) engine.restart()
+                    },
                 )
                 Preference(title = stringResource(R.string.net_hub_status), summary = stringResource(when (status) {
                     TorStatus.Off -> R.string.nwg_status_off
@@ -63,6 +67,8 @@ fun NetworkPrivacyScreen() {
                     TorStatus.Ready -> R.string.nwg_status_up
                     TorStatus.Unavailable -> R.string.nwg_status_down
                 }))
+                if (status == TorStatus.Starting) Text("$progress%", Modifier.padding(16.dp))
+                torError?.let { Text(it, Modifier.padding(16.dp), color = MaterialTheme.colorScheme.error) }
                 SwitchPreference(
                     title = stringResource(R.string.nt_auto), summary = stringResource(R.string.nt_auto_hint),
                     value = config.torAutoStart, enabled = config.torEnabled,
