@@ -6,7 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.preferences.ui.ShutterSettings
 import de.mm20.launcher2.searchable.SavableSearchableRepository
@@ -28,7 +28,7 @@ fun ShutterGate(
     val shutterSettings = koinInject<ShutterSettings>()
     val searchableRepository = koinInject<SavableSearchableRepository>()
     val context = LocalContext.current
-    val launcher: SearchableItemVM = viewModel(key = "shutter-launch")
+    val launcher: SearchableItemVM = listItemViewModel(key = "shutter-launch-$packageName")
 
     if (shutterKey != null) {
         LaunchedEffect(shutterKey) {
