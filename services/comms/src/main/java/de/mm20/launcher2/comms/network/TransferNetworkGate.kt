@@ -11,12 +11,12 @@ import kotlinx.coroutines.flow.StateFlow
 /** Process-local observers of persistent download/torrent rules and Android's default network. */
 class TransferNetworkGate private constructor(context: Context, scope: String) {
     private val prefs = context.applicationContext.getSharedPreferences("transfer_network_$scope", Context.MODE_PRIVATE)
-    private val mirror = android.util.AtomicFile(java.io.File(context.filesDir, "transfer_network_$scope.json"))
+    private val mirror = java.io.File(context.filesDir, "transfer_network_$scope.json")
     private val legacyWifiOnly = if (scope == "downloads")
         context.getSharedPreferences("telos_downloads", Context.MODE_PRIVATE).getBoolean("wifiOnly", false)
     else runCatching { org.json.JSONObject(java.io.File(context.filesDir, "video_services.json").readText()).optBoolean("wifiOnly", true) }.getOrDefault(true)
     private val cm = context.getSystemService(ConnectivityManager::class.java)
-    private fun mirrored() = runCatching { org.json.JSONObject(mirror.openRead().bufferedReader().use { it.readText() }) }.getOrNull()
+    private fun mirrored() = runCatching { org.json.JSONObject(mirror.readText()) }.getOrNull()
     private fun read(): TransferNetworkPolicy {
         val json = mirrored()
         if (json != null) return TransferNetworkPolicy(json.optBoolean("wifi", true), json.optBoolean("mobile", false),
@@ -43,7 +43,7 @@ class TransferNetworkGate private constructor(context: Context, scope: String) {
             override fun onLost(network: Network) = refresh()
         }) }
     }
-    fun refresh() {
+    @Synchronized fun refresh() {
         // The isolated player reads the atomic mirror, rather than a stale cross-process preferences cache.
         _policy.value = read()
         _configured.value = mirrored() != null || prefs.getBoolean("configured", false)
@@ -56,17 +56,19 @@ class TransferNetworkGate private constructor(context: Context, scope: String) {
             metered = caps?.hasCapability(NetworkCapabilities.NET_CAPABILITY_NOT_METERED) != true,
         )
     }
-    fun update(value: TransferNetworkPolicy) {
+    @Synchronized fun update(value: TransferNetworkPolicy) {
         val json = org.json.JSONObject().put("wifi", value.wifi).put("mobile", value.mobile)
             .put("roaming", value.roaming).put("metered", value.metered)
-        var output: java.io.FileOutputStream? = null
+        // Readers never touch the temporary file; rename publishes one complete JSON snapshot.
+        val temporary = java.io.File.createTempFile("transfer-network-", ".tmp", mirror.parentFile)
         try {
-            output = mirror.startWrite()
-            output.write(json.toString().toByteArray(Charsets.UTF_8))
-            mirror.finishWrite(output)
-        } catch (error: Exception) {
-            output?.let { mirror.failWrite(it) }
-            throw error
+            java.io.FileOutputStream(temporary).use { output ->
+                output.write(json.toString().toByteArray(Charsets.UTF_8))
+                output.fd.sync()
+            }
+            check(temporary.renameTo(mirror)) { "Could not save network rules" }
+        } finally {
+            temporary.delete()
         }
         prefs.edit().putBoolean("wifi", value.wifi).putBoolean("mobile", value.mobile)
             .putBoolean("roaming", value.roaming).putBoolean("metered", value.metered)
