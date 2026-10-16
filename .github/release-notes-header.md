@@ -2,15 +2,17 @@
 
 ### Ελληνικά
 
-- Οι εφαρμογές που έχουν ανατεθεί σε shutters και τα στοιχεία φακέλων περνούν πλέον από την κοινή διαδικασία κλειδώματος και ξεπαγώματος πριν ανοίξουν.
-- Η εκκίνηση παγωμένων εφαρμογών από συρτάρι και dock περιμένει να επιβεβαιώσει το Android ότι η εφαρμογή είναι ενεργή και δεν βρίσκεται πλέον σε αναστολή.
-- Ενημέρωση README, οδηγού χρήσης και Pages. Απαιτείται εξουσιοδοτημένο backend για το ξεπάγωμα. Η συμπεριφορά στη συσκευή με το συγκεκριμένο πρόβλημα χρειάζεται επιβεβαίωση.
+- Προετοιμασία Ironewolf: κλειδωμένος κώδικας IronFox, ξεχωριστό branding και υποδομή δρομολόγησης/καταχώρισης στον launcher.
+- Τα κλειδωμένα web apps διατηρούν πλέον το αναγνωριστικό τους μετά την ταυτοποίηση, ώστε να χρησιμοποιείται το σωστό ξεχωριστό προφίλ.
+- Διατηρούνται οι διορθώσεις του PR #35 για shutters, στοιχεία φακέλων και εκκίνηση frozen/suspended εφαρμογών.
+- **Το Ironewolf δεν είναι ακόμη διαθέσιμο ως λειτουργικός browser.** Το Fenix runtime δεν περιλαμβάνεται σε αυτή την έκδοση. Το WebView παραμένει ενεργό· η νέα εγγραφή και η επιλογή μηχανής εμφανίζονται μόνο όταν ενσωματωθεί συμβατό runtime.
 
 ### English
 
-- Shutter targets and folder children now share the app-lock and verified thaw-before-launch path used by launcher icons.
-- Frozen-app launches from the drawer and dock wait for Android to report an enabled, unsuspended package before opening its launcher activity.
-- Updated README, user guide and Pages source. Thawing requires an authorized backend. Physical-device confirmation is still required for the reported suspension dialog.
+- Ironewolf preparation: pinned IronFox sources, isolated branding and capability-gated virtual-app/renderer dispatch wiring.
+- Locked web apps now preserve their saved shortcut key after authentication, retaining the correct isolated profile identity.
+- Retains PR #35 fixes for shutters, folder children and frozen/suspended application launches.
+- **Ironewolf is not yet a working browser in this release.** The Fenix runtime is not bundled. WebView remains active; the browser entry and engine selector only appear when a compatible embedded runtime is included.
 
 ---
 
