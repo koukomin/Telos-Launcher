@@ -222,10 +222,7 @@ internal fun VideoServicesDialog(onDismiss: () -> Unit) {
                 TextButton(onClick = { showNetwork = true }) { Text(stringResource(R.string.vn_network_scan_title)) }
 
                 Text(stringResource(R.string.dl_tab_torrents), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 16.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(stringResource(R.string.hc_only_on_wi_fi), modifier = Modifier.weight(1f))
-                    Switch(checked = wifiOnly, onCheckedChange = { wifiOnly = it })
-                }
+                de.mm20.launcher2.ui.downloads.TransferNetworkPreferences("torrent")
                 Text(stringResource(R.string.blocklists_torrent_title), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(top = 12.dp))
                 de.mm20.launcher2.ui.component.BlockListsSection(de.mm20.launcher2.comms.blocklist.BlockListKind.TORRENT_IP)
 

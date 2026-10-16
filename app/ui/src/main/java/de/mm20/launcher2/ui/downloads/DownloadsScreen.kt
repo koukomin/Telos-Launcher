@@ -328,6 +328,7 @@ fun DownloadsScreen(initialUrls: List<String> = emptyList()) {
 @Composable
 private fun BlockBanner(reason: BlockReason) {
     val text = when (reason) {
+        BlockReason.NetworkPolicy -> R.string.netfw_blocked
         BlockReason.Offline -> R.string.dl_block_offline
         BlockReason.WifiOnly -> R.string.dl_block_wifi
         BlockReason.LowBattery -> R.string.dl_block_battery

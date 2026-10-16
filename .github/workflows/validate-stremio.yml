@@ -46,7 +46,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: chmod +x gradlew
       - name: Test Stremio protocol and watched state
-        run: ./gradlew :services:comms:testDebugUnitTest --tests 'de.mm20.launcher2.comms.search.*' --tests 'de.mm20.launcher2.comms.stremio.*' --tests 'de.mm20.launcher2.comms.tv.*' --tests 'de.mm20.launcher2.comms.youtube.*' --tests 'de.mm20.launcher2.comms.files.FilesSharingServerTest' --stacktrace
+        run: ./gradlew :services:comms:testDebugUnitTest --tests 'de.mm20.launcher2.comms.network.*' --tests 'de.mm20.launcher2.comms.search.*' --tests 'de.mm20.launcher2.comms.stremio.*' --tests 'de.mm20.launcher2.comms.tv.*' --tests 'de.mm20.launcher2.comms.youtube.*' --tests 'de.mm20.launcher2.comms.files.FilesSharingServerTest' --stacktrace
       - name: Test home media session discovery and priority
         run: ./gradlew :services:music:testDebugUnitTest --stacktrace
       - name: Test frozen launcher component ordering
@@ -59,6 +59,8 @@ jobs:
         run: ./gradlew :services:wallpapers:testDebugUnitTest --stacktrace
       - name: Test virtual app task identities
         run: ./gradlew :core:base:testDebugUnitTest --tests 'de.mm20.launcher2.webapp.EmbeddedBrowserPolicyTest' --tests 'de.mm20.launcher2.applock.VirtualAppTaskTest' --tests 'de.mm20.launcher2.search.TelosAppKeywordsTest' --tests 'de.mm20.launcher2.helper.BatchNamesTest' --tests 'de.mm20.launcher2.helper.StorageAnalysisTest' --tests 'de.mm20.launcher2.helper.FileTrashTest' --tests 'de.mm20.launcher2.helper.FileSearchIndexTest' --tests 'de.mm20.launcher2.helper.FileTreeOpsTest' --tests 'de.mm20.launcher2.helper.ResumableFileTransferTest' --tests 'de.mm20.launcher2.helper.PasswordFileEncryptionTest' --tests 'de.mm20.launcher2.helper.SplitZipArchiveTest' --tests 'de.mm20.launcher2.helper.ExclusiveFilePublicationTest' --stacktrace
+      - name: Test Downloader queue and transfer policies
+        run: ./gradlew :services:downloads:testDebugUnitTest --stacktrace
       - name: Test Store download and update policies
         run: ./gradlew :services:store:testDebugUnitTest --stacktrace
       - name: Test UI settings, archives and contact recovery

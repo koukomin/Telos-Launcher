@@ -39,10 +39,18 @@ object TorrentMetadata {
      * (this needs peers, DHT or trackers and can take up to [timeoutSeconds]).
      */
     suspend fun load(context: Context, source: String, timeoutSeconds: Int = 75): TorrentPreview = withContext(Dispatchers.IO) {
+        val kind = TorrentSources.classify(source)
+        if (kind == TorrentSourceKind.Magnet || kind == TorrentSourceKind.TorrentUrl) {
+            val gate = de.mm20.launcher2.comms.network.TransferNetworkGate.get(context, "torrent")
+            gate.refresh()
+            val downloads = de.mm20.launcher2.comms.network.TransferNetworkGate.get(context, "downloads")
+            downloads.refresh()
+            if (!gate.allowed.value || !downloads.allowed.value) throw java.io.IOException(context.getString(de.mm20.launcher2.i18n.R.string.netfw_blocked))
+        }
         // interruptible: closing the sheet ends the wait for the swarm instead of holding the session for the full timeout
         val bytes = runInterruptible { when (TorrentSources.classify(source)) {
             TorrentSourceKind.Magnet -> fetchMagnet(context, source.trim(), timeoutSeconds)
-            TorrentSourceKind.TorrentUrl -> download(source.trim())
+            TorrentSourceKind.TorrentUrl -> download(context, source.trim())
             TorrentSourceKind.TorrentFile -> read(context, source.trim())
             TorrentSourceKind.None -> throw DownloadException(ErrorKind.Validation, "This is not a magnet link or a .torrent address", false)
         } }
@@ -89,7 +97,7 @@ object TorrentMetadata {
         }
     }
 
-    private fun download(url: String): ByteArray {
+    private fun download(context: Context, url: String): ByteArray {
         val c = URL(url).openConnection() as HttpURLConnection
         try {
             c.connectTimeout = 15_000
@@ -99,7 +107,10 @@ object TorrentMetadata {
             val code = c.responseCode
             if (code !in 200..299) throw DownloadException(ErrorKind.Http, "HTTP $code", code >= 500)
             if (c.contentLengthLong > MAX_TORRENT_BYTES) throw DownloadException(ErrorKind.Validation, "The torrent file is too large", false)
-            return readLimited(c.inputStream)
+            return readLimited(c.inputStream, context.getString(de.mm20.launcher2.i18n.R.string.netfw_blocked)) {
+                de.mm20.launcher2.comms.network.TransferNetworkGate.get(context, "torrent").allowed.value &&
+                    de.mm20.launcher2.comms.network.TransferNetworkGate.get(context, "downloads").allowed.value
+            }
         } catch (e: DownloadException) {
             throw e
         } catch (e: java.io.IOException) {
@@ -119,10 +130,11 @@ object TorrentMetadata {
         return readLimited(stream)
     }
 
-    private fun readLimited(input: java.io.InputStream): ByteArray = input.use {
+    private fun readLimited(input: java.io.InputStream, blockedMessage: String = "", allowed: () -> Boolean = { true }): ByteArray = input.use {
         val out = java.io.ByteArrayOutputStream()
         val buf = ByteArray(16 * 1024)
         while (true) {
+            if (!allowed()) throw java.io.IOException(blockedMessage)
             val n = it.read(buf)
             if (n < 0) break
             out.write(buf, 0, n)

@@ -103,10 +103,7 @@ fun DownloadsSettingsScreen() {
         }
         item {
             PreferenceCategory(title = stringResource(R.string.dl_settings_rules)) {
-                SwitchPreference(
-                    title = stringResource(R.string.dl_wifi_only), summary = stringResource(R.string.dl_wifi_only_summary),
-                    value = s.wifiOnly, onValueChanged = { v -> store.update { it.copy(wifiOnly = v) } },
-                )
+                TransferNetworkPreferences("downloads")
                 SwitchPreference(
                     title = stringResource(R.string.dl_low_battery), summary = stringResource(R.string.dl_low_battery_summary, s.lowBatteryPercent),
                     value = s.pauseOnLowBattery, onValueChanged = { v -> store.update { it.copy(pauseOnLowBattery = v) } },
