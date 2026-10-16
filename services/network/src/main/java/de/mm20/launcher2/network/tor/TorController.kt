@@ -1,5 +1,8 @@
 package de.mm20.launcher2.network.tor
 
+import android.content.BroadcastReceiver
+import android.content.IntentFilter
+import androidx.core.content.ContextCompat
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -37,6 +40,22 @@ class TorController internal constructor(private val context: Context, private v
     private var monitor: Job? = null
     private var dnsPort = 0
     private var registeredPort = 0
+    private var observingErrors = false
+    private val errorReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action != TorService.ACTION_ERROR ||
+                intent.getStringExtra(TorService.EXTRA_SERVICE_PACKAGE_NAME) != context.packageName) return
+            unavailable(IllegalStateException(intent.getStringExtra(Intent.EXTRA_TEXT) ?: TorStatus.Unavailable.name))
+            // A bound service stays alive after stopSelf(), even if its native thread has failed.
+            // Release it before the monitor's next bounded retry.
+            if (bound) {
+                bound = false
+                runCatching { context.unbindService(connection) }
+            }
+            service = null
+            registeredPort = 0
+        }
+    }
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, binder: IBinder?) {
             service = (binder as? TorService.LocalBinder)?.service
@@ -56,6 +75,8 @@ class TorController internal constructor(private val context: Context, private v
         this@TorController.tunnel = tunnel
         requested = settings.current.torWasActive
         if (!settings.current.torEnabled) return@withContext
+        ContextCompat.registerReceiver(context, errorReceiver, IntentFilter(TorService.ACTION_ERROR), ContextCompat.RECEIVER_NOT_EXPORTED)
+        observingErrors = true
         mutableStatus.value = TorStatus.Waiting
         monitor = scope.launch {
             while (isActive) {
@@ -127,6 +148,8 @@ class TorController internal constructor(private val context: Context, private v
         ready = false
         monitor?.cancel()
         monitor = null
+        if (observingErrors) runCatching { context.unregisterReceiver(errorReceiver) }
+        observingErrors = false
         if (bound) try { context.unbindService(connection) } catch (_: Exception) { }
         bound = false
         service = null

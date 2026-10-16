@@ -328,7 +328,7 @@ open class SettingsActivity : BaseActivity() {
                 de.mm20.launcher2.ui.network.firewall.NetworkUniversalRulesScreen()
             }
             entry<de.mm20.launcher2.ui.network.firewall.NetworkAppRulesRoute> { key -> de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesScreen(key.appId) }
-        entry<de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesRoute> {
+            entry<de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesRoute> {
                 de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesScreen()
             }
             entry<de.mm20.launcher2.ui.network.blocklists.NetworkBlocklistsRoute> {
