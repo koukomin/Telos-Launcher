@@ -111,7 +111,7 @@ class WebAppActivity : BaseActivity() {
         // All embedded launches (including the app-lock gate) enter this dispatcher. Do not
         // register the renderer until its same-APK host implements the complete v1 contract.
         lifecycleScope.launch {
-            val settings: WebAppBrowsingSettings = get()
+            val settings: WebAppBrowsingSettings = org.koin.java.KoinJavaComponent.getKoin().get()
             val selected = EmbeddedBrowserPolicy.select(settings.engine.first(), IronewolfRuntime.isBundled(this@WebAppActivity))
             if (selected == EmbeddedBrowserPolicy.Ironewolf) {
                 if (!IronewolfRuntime.launch(this@WebAppActivity, url, label, customCss, shortcutKey)) {
