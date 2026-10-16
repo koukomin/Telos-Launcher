@@ -17,9 +17,9 @@ internal object TorPolicy {
 
     fun isVirtual(ip: String): Boolean = IpUtil.parse(ip)?.let { address -> ranges.any { it.contains(address) } } == true
 
-    fun required(uid: Int, domain: String?, ips: List<String>, enabled: Boolean, appIds: Set<Int>): Boolean =
+    fun required(uid: Int, domain: String?, ips: List<String>, appIds: Set<Int>): Boolean =
         isOnion(domain) || ips.any(::isVirtual) ||
-            (enabled && appIds.isNotEmpty() && (uid < 0 || uid % 100000 in appIds))
+            (appIds.isNotEmpty() && (uid < 0 || uid % 100000 in appIds))
 
     /** Tor has no UDP transport. Never fall back when a circuit is not ready. */
     fun mayConnect(enabled: Boolean, ready: Boolean, protocol: Int): Boolean = enabled && ready && protocol == 6

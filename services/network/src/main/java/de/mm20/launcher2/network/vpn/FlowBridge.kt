@@ -154,7 +154,7 @@ internal class FlowBridge(
 
             val appId = info.appId
             val torConfig = settings.current
-            val needsTor = de.mm20.launcher2.network.tor.TorPolicy.required(owner, domain, ips + dstIp, torConfig.torEnabled, torConfig.torAppIds)
+            val needsTor = de.mm20.launcher2.network.tor.TorPolicy.required(owner, domain, ips + dstIp, torConfig.torAppIds)
             if (appId == ownAppId) {
                 // Telos itself is never filtered; normally it is not even routed through the tunnel
                 return mark(if (needsTor) Backend.Block else Backend.Exit, cid, owner)
@@ -201,7 +201,7 @@ internal class FlowBridge(
             return mark(proxy, cid, owner)
         } catch (t: Throwable) {
             fault("flow", t)
-            return mark(if (settings.current.torEnabled) Backend.Block else Backend.Exit, cid, uid)
+            return mark(if (torRestrictions()) Backend.Block else Backend.Exit, cid, uid)
         }
     }
 
@@ -223,7 +223,7 @@ internal class FlowBridge(
                 environment = environment(),
             )
             val torConfig = settings.current
-            if (torConfig.torEnabled && torConfig.torAppIds.isNotEmpty() && (owner < 0 || owner % FlowInfo.PER_USER_RANGE in torConfig.torAppIds)) {
+            if (torConfig.torAppIds.isNotEmpty() && (owner < 0 || owner % FlowInfo.PER_USER_RANGE in torConfig.torAppIds)) {
                 return mark(Backend.Block, cid, owner)
             }
             val decision = try {
@@ -237,7 +237,7 @@ internal class FlowBridge(
             return mark(if (decision.blocked) Backend.Block else Backend.Ingress, cid, owner)
         } catch (t: Throwable) {
             fault("inflow", t)
-            return mark(if (settings.current.torEnabled) Backend.Block else Backend.Ingress, cid, recvdUid)
+            return mark(if (torRestrictions()) Backend.Block else Backend.Ingress, cid, recvdUid)
         }
     }
 
@@ -253,6 +253,8 @@ internal class FlowBridge(
             fault("postflow", t)
         }
     }
+
+    private fun torRestrictions() = settings.current.let { it.torEnabled || it.torAppIds.isNotEmpty() }
 
     private fun safeRoute(info: FlowInfo): WgRoute = try {
         wireguard.routeFor(info)
@@ -327,7 +329,7 @@ internal class FlowBridge(
             }
             val config = settings.current
             val onion = de.mm20.launcher2.network.tor.TorPolicy.isOnion(domain)
-            val needsTor = de.mm20.launcher2.network.tor.TorPolicy.required(owner, domain, emptyList(), config.torEnabled, config.torAppIds)
+            val needsTor = de.mm20.launcher2.network.tor.TorPolicy.required(owner, domain, emptyList(), config.torAppIds)
             if (onion && verdict != DnsVerdict.Block) tor.requestForOnion()
             val transport = if (verdict == DnsVerdict.Block || (needsTor && (!config.torEnabled || !tor.ready))) {
                 Backend.BlockAll
@@ -346,7 +348,7 @@ internal class FlowBridge(
             fault("onQuery", t)
             opts.setUID(uid.orEmpty())
             opts.setIPCSV("")
-            val failClosed = settings.current.torEnabled || de.mm20.launcher2.network.tor.TorPolicy.isOnion(domain)
+            val failClosed = torRestrictions() || de.mm20.launcher2.network.tor.TorPolicy.isOnion(domain)
             opts.setTIDCSV("${if (failClosed) Backend.BlockAll else Backend.System}:${Backend.Base}")
             opts.setTIDSECCSV("")
             opts.setNOBLOCK(false)
@@ -427,7 +429,7 @@ internal class FlowBridge(
         }
         if (faultCount.incrementAndGet() > MAX_FAULTS_IN_WINDOW) {
             faultCount.set(0)
-            if (!settings.current.torEnabled) onFault("$where: ${t.javaClass.simpleName}: ${t.message}")
+            if (!torRestrictions()) onFault("$where: ${t.javaClass.simpleName}: ${t.message}")
         }
     }
 

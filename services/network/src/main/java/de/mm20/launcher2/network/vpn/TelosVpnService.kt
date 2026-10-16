@@ -299,6 +299,7 @@ class TelosVpnService : VpnService(), KoinComponent {
     /** Builds the interface. Returns null when Android refuses (the VPN permission is gone). */
     private fun establish(r: Routes, snapshot: NetSnapshot): ParcelFileDescriptor? {
         val s = settings.current
+        val torRestricted = s.torEnabled || s.torAppIds.isNotEmpty()
         val b = Builder()
             .setSession("Telos Network")
             .setMtu(r.mtu)
@@ -309,16 +310,16 @@ class TelosVpnService : VpnService(), KoinComponent {
         }
         underlyingNetworks(snapshot)?.let { b.setUnderlyingNetworks(it) }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) b.setMetered(s.vpnMetered)
-        if (s.allowBypass && !s.torEnabled) b.allowBypass()
+        if (s.allowBypass && !torRestricted) b.allowBypass()
 
-        if (s.excludeSelf || s.torEnabled) excludeApp(b, packageName)
-        firewall.appRules.value.values.filter { it.excludeFromVpn && !s.torEnabled }.forEach { rule ->
+        if (s.excludeSelf || torRestricted) excludeApp(b, packageName)
+        firewall.appRules.value.values.filter { it.excludeFromVpn && !torRestricted }.forEach { rule ->
             apps.apps.value.firstOrNull { it.appId == rule.appId }?.packages?.forEach { excludeApp(b, it) }
         }
 
         val noRoutes = !r.has4 && !r.has6
-        val v4 = r.has4 || noRoutes || s.torEnabled
-        val v6 = r.has6 || s.torEnabled
+        val v4 = r.has4 || noRoutes || torRestricted
+        val v6 = r.has6 || torRestricted
         if (v4) b.addAddress(TunnelConstants.GATEWAY_V4, TunnelConstants.PREFIX_V4)
         if (v6) b.addAddress(TunnelConstants.GATEWAY_V6, TunnelConstants.PREFIX_V6)
 
@@ -334,10 +335,10 @@ class TelosVpnService : VpnService(), KoinComponent {
 
         // everything else that has to be seen by the firewall
         if (v4) {
-            if (s.routeLan || s.torEnabled) b.addRoute("0.0.0.0", 0) else RouteTable.ipv4WithoutLan().forEach { (a, p) -> b.addRoute(a, p) }
+            if (s.routeLan || torRestricted) b.addRoute("0.0.0.0", 0) else RouteTable.ipv4WithoutLan().forEach { (a, p) -> b.addRoute(a, p) }
         }
         if (v6) {
-            if (s.routeLan || s.torEnabled) b.addRoute("::", 0) else RouteTable.ipv6WithoutLan.forEach { (a, p) -> b.addRoute(a, p) }
+            if (s.routeLan || torRestricted) b.addRoute("::", 0) else RouteTable.ipv6WithoutLan.forEach { (a, p) -> b.addRoute(a, p) }
         }
         return b.establish()
     }
