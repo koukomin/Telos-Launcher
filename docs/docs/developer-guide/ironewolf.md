@@ -21,3 +21,11 @@ share or migrate cookies and other private site data between engines.
 
 Διατηρείται το πλήρες Firefox UI. Έχει προστεθεί μόνο η υποδομή κώδικα/build, όχι λειτουργικό
 virtual app ούτε αλλαγή προεπιλεγμένης μηχανής. Η ενσωμάτωση και οι δοκιμές Android εκκρεμούν.
+
+## Native build execution
+
+The dedicated `Build Ironewolf Fenix ARM64` workflow provisions an ephemeral Linux runner and
+uploads an unsigned full-browser build plus provenance on success. Source verification runs
+separately from native compilation; a passing verification job does not establish that an APK
+exists. See Actions for the actual compilation result. The build wrapper clears IronFox's GitLab
+CI mode and uses an explicit GeckoView-archive switch when only the engine is requested.

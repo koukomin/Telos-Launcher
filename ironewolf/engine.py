@@ -7,6 +7,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import sys
 
@@ -59,11 +60,12 @@ def working_source(pin):
 
 def environment():
     env = os.environ.copy()
-    env.update(IRONFOX_RELEASE="1", IRONFOX_CI="1", IRONFOX_SIGN="0",
+    env.pop("IRONFOX_CI", None)
+    env.update(IRONFOX_RELEASE="1", IRONFOX_SIGN="0",
                IRONFOX_SIGN_SKIP_ADB="1")
-    # Compile the patched engine instead of substituting upstream prebuilt Gecko.
-    for arch in ("ARM", "ARM64", "X86_64"):
-        env[f"IRONFOX_CI_BUILD_GECKO_{arch}"] = "1"
+    # Upstream checks whether IRONFOX_CI exists, even if its value is zero.
+    # Local source mode compiles dependencies without requiring GitLab variables.
+    env["IRONEWOLF_ARCHIVE_GECKOVIEW"] = "1"
     return env
 
 
@@ -81,12 +83,22 @@ def require_prepared(pin):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("init", "verify", "check-update", "bootstrap", "prepare", "build"))
+    parser.add_argument("command", choices=("init", "verify", "check-update", "doctor", "bootstrap", "prepare", "build"))
     parser.add_argument("--arch", choices=("arm64", "arm", "x86_64"), default="arm64")
     parser.add_argument("--project", choices=("browser", "engine"), default="browser")
     args = parser.parse_args()
     if args.command == "init":
         run("git", "submodule", "update", "--init", "--", "ironewolf/upstream", cwd=ROOT.parent)
+    if args.command == "doctor":
+        available = shutil.disk_usage(ROOT).free
+        required = 30 * 1024 ** 3
+        missing = [tool for tool in ("bash", "git", "curl", "gawk", "clang-18", "nasm", "ninja", "yq")
+                   if shutil.which(tool) is None]
+        print(json.dumps({"free_gib": round(available / 1024 ** 3, 1),
+                          "minimum_free_gib": 30, "missing_host_tools": missing}, indent=2))
+        if available < required or missing:
+            raise RuntimeError("Native build host is not ready; use the dedicated GitHub build workflow")
+        return
     pin = checked_source()
     if args.command in ("bootstrap", "prepare", "build"):
         working_source(pin)

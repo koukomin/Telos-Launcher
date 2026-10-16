@@ -10,6 +10,7 @@ not included in the launcher APK by Gradle.
 ```sh
 python3 ironewolf/engine.py init
 python3 ironewolf/engine.py verify
+python3 ironewolf/engine.py doctor
 python3 ironewolf/engine.py check-update
 # On a dedicated Linux build machine; bootstrap installs upstream build dependencies:
 python3 ironewolf/engine.py bootstrap
@@ -80,3 +81,20 @@ IronFox build scripts are AGPL-3.0-or-later; patches and copied code retain thei
 licenses (including MPL-2.0, Apache-2.0 and GPL-3.0-or-later). See the pinned upstream README,
 COPYING and source headers. This wrapper is GPL-3.0-or-later. Source/build tools are kept separate
 from the Android application. No trademark ownership or upstream endorsement is implied.
+
+## Dedicated build workflow
+
+`.github/workflows/build-ironewolf.yml` starts an ARM64 Fenix source build for pushes to the
+Ironewolf working branch, or by manual dispatch. It provisions a disposable Ubuntu 24.04 runner,
+checks available disk and host tools, fetches pinned dependencies, applies upstream patches and
+uploads the unsigned APK with provenance. It never changes the default launcher renderer or
+publishes a release. Native compilation success must be checked in Actions; creating a workflow
+is not evidence of a successful build.
+
+The wrapper deliberately removes `IRONFOX_CI` from the environment. Upstream treats the variable's
+presence (even `0`) as a request for GitLab CI configuration. An independent, narrow branding
+patch option requests GeckoView archive output without requiring GitLab branch/pipeline secrets.
+
+The actual local source preparation now passes CI environment setup and stops at the missing
+`/bin/yq` host dependency. The local `doctor` check reports 28.7 GiB free and missing host tools;
+no local native compilation is claimed.

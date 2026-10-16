@@ -38,12 +38,13 @@ class SourceContractTest(unittest.TestCase):
                 engine.require_prepared({'commit': '0' * 40})
 
     def test_compiles_source_and_never_signs_or_installs(self):
-        env = engine.environment()
+        with patch.dict(engine.os.environ, {'IRONFOX_CI': '1'}):
+            env = engine.environment()
         self.assertEqual(env['IRONFOX_RELEASE'], '1')
         self.assertEqual(env['IRONFOX_SIGN'], '0')
         self.assertEqual(env['IRONFOX_SIGN_SKIP_ADB'], '1')
-        for arch in ('ARM64', 'ARM', 'X86_64'):
-            self.assertEqual(env[f'IRONFOX_CI_BUILD_GECKO_{arch}'], '1')
+        self.assertNotIn('IRONFOX_CI', env)
+        self.assertEqual(env['IRONEWOLF_ARCHIVE_GECKOVIEW'], '1')
 
 
 if __name__ == '__main__':

@@ -42,7 +42,7 @@ index 0b115767..cceb1442 100644
  set_define("IRONFOX_APP_ID", ironfox_app_id)
  
 diff --git a/scripts/build-if.sh b/scripts/build-if.sh
-index c6f7deb7..f41ece50 100755
+index c6f7deb7..cffd1de5 100755
 --- a/scripts/build-if.sh
 +++ b/scripts/build-if.sh
 @@ -492,9 +492,9 @@ if [[ "${IRONFOX_RELEASE}" != 1 ]] && [[ "${IRONFOX_RELEASE}" != 0 ]]; then
@@ -80,6 +80,15 @@ index c6f7deb7..f41ece50 100755
      -e "s/Config.releaseVersionName(project)/'${IRONFOX_IF_VERSION}'/" \
      "${IRONFOX_FENIX}/app/build.gradle" || return 1
  
+@@ -1338,7 +1338,7 @@ function _build_geckoview() {
+   local publish_gv_to_maven_local=1
+   if [[ "${target_arch}" != "${IRONFOX_TARGET_ARCH}" ]]; then
+     local publish_gv_to_maven_local=0
+-  elif [[ "${IRONFOX_CI}" == 1 ]] && [[ "${target_arch}" != 'bundle' ]]; then
++  elif [[ "${IRONFOX_CI}" == 1 || "${IRONEWOLF_ARCHIVE_GECKOVIEW:-0}" == 1 ]] && [[ "${target_arch}" != 'bundle' ]]; then
+     local publish_gv_to_maven_local=0
+   fi
+   local -r publish_gv_to_maven_local
 diff --git a/scripts/env_common.sh b/scripts/env_common.sh
 index b61fe292..27854fc5 100644
 --- a/scripts/env_common.sh
