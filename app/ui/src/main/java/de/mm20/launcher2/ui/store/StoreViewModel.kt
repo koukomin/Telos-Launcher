@@ -228,6 +228,25 @@ class StoreViewModel : ViewModel(), KoinComponent {
         if (_checking.value) return
         viewModelScope.launch {
             _checking.value = true
+            // === TELOS_PENDING_REVIEW_START: uninstall_cleanup ===
+            try {
+                val items = repository.getAll()
+                val opts = options.items.value
+                for (item in items) {
+                    val trackOnly = opts[item.id]?.trackOnly == true
+                    if (item.installedVersionCode == null && !trackOnly) {
+                        val isInstalled = runCatching {
+                            context.packageManager.getPackageInfo(item.packageName, 0)
+                            true
+                        }.getOrDefault(false)
+                        if (!isInstalled) {
+                            repository.deleteItem(item.id)
+                        }
+                    }
+                }
+            } catch (_: Exception) {}
+            // === TELOS_PENDING_REVIEW_END: uninstall_cleanup ===
+
             val summary = try {
                 runCatching { updater.checkAll(background = false) }.getOrNull()
             } finally {

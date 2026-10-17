@@ -180,6 +180,19 @@ fun StoreDashboardScreen(initialLink: String = "") {
     }) {
         Box(Modifier.fillMaxSize()) {
             Column(Modifier.fillMaxSize()) {
+                // === TELOS_PENDING_REVIEW_START: store_micro_progress ===
+                if (checking) {
+                    androidx.compose.material3.LinearProgressIndicator(
+                        modifier = Modifier.fillMaxWidth().height(2.dp)
+                    )
+                    Text(
+                        text = "Checking for updates...",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 2.dp)
+                    )
+                }
+                // === TELOS_PENDING_REVIEW_END: store_micro_progress ===
                 PrimaryScrollableTabRow(selectedTabIndex = tab, edgePadding = 16.dp) {
                     Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(R.string.hc_apps), maxLines = 1) })
                     Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(R.string.hc_telos_apps), maxLines = 1) })
