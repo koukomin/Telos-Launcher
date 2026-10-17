@@ -222,8 +222,11 @@ object TelosCallSession {
         val other = otherCall(current)
         val state = stateOf(current)
         val number = current.details.handle?.schemeSpecificPart.orEmpty()
+        val resolvedContact = de.mm20.launcher2.comms.remote.DeviceContactsResolver.lookup(inCallService, number)
         val name = current.details.callerDisplayName?.ifBlank { null }
             ?: de.mm20.launcher2.comms.remote.RemotePhonebook.lookup(number)
+            ?: resolvedContact.first
+        val photoUri = resolvedContact.second
         if (state == Call.STATE_ACTIVE) connectedAt.getOrPut(current) { System.currentTimeMillis() }
         val connectedAtMs = connectedAt[current]
         _ui.value = InCallUiState(
@@ -237,7 +240,7 @@ object TelosCallSession {
             bluetooth = _ui.value.bluetooth,
             number = number,
             name = name,
-            photoUri = _ui.value.photoUri,
+            photoUri = photoUri ?: _ui.value.photoUri,
             connectedAtEpochMs = connectedAtMs,
             secondNumber = other?.details?.handle?.schemeSpecificPart.orEmpty(),
             secondName = other?.details?.callerDisplayName?.ifBlank { null }
