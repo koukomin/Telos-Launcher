@@ -154,9 +154,6 @@ fun ContactsScreen(
             listOf(ContactListItem.Header(letter)) + people.map { ContactListItem.Person(it) }
         }
     }
-    val letters = remember(rows) {
-        rows.mapNotNull { (it as? ContactListItem.Header)?.letter }
-    }
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
 
@@ -316,30 +313,7 @@ fun ContactsScreen(
                             }
                         }
                     }
-                    if (query.isBlank()) Column(
-                        modifier = Modifier
-                            .align(Alignment.CenterEnd)
-                            .padding(end = 2.dp, top = 8.dp, bottom = 8.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        letters.filter { it != ' ' }.forEach { letter ->
-                            Text(
-                                text = letter.toString(),
-                                fontSize = 10.sp,
-                                color = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier
-                                    .clickable {
-                                        val index = rows.indexOfFirst {
-                                            it is ContactListItem.Header && it.letter == letter
-                                        }
-                                        if (index >= 0) {
-                                            scope.launch { listState.animateScrollToItem(index) }
-                                        }
-                                    }
-                                    .padding(horizontal = 4.dp, vertical = 1.dp),
-                            )
-                        }
-                    }
+
                 }
             }
         }

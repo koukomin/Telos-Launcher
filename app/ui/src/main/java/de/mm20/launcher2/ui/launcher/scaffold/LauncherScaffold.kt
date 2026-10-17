@@ -116,6 +116,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.search.filters.KeyboardFilterBar
 import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
 import de.mm20.launcher2.ui.theme.transparency.transparency
+import de.mm20.launcher2.ui.locals.LocalLauncherHazeState
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
@@ -1056,6 +1057,7 @@ internal fun LauncherScaffold(
 
     val hazeState = rememberHazeState(blurEnabled = isAtLeastApiLevel(33))
 
+    CompositionLocalProvider(LocalLauncherHazeState provides hazeState) {
     BoxWithConstraints(
         modifier = modifier,
     ) {
@@ -1568,6 +1570,7 @@ internal fun LauncherScaffold(
                     .navigationBarsPadding()
             )
         }
+    }
     }
 }
 

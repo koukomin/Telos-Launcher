@@ -123,7 +123,7 @@ fun SearchColumn(
 
     val query by viewModel.searchQuery
     val isSearchEmpty by viewModel.isSearchEmpty
-    val showAppRecommendations by viewModel.showAppRecommendations.collectAsState(true)
+    val showAppRecommendations by viewModel.showAppRecommendations.collectAsState(false)
 
     val missingCalendarPermission by viewModel.missingCalendarPermission.collectAsState(false)
     val missingShortcutsPermission by viewModel.missingAppShortcutPermission.collectAsState(false)

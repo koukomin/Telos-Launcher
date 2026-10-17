@@ -43,6 +43,8 @@ object SettingsDeepLinkContract {
     const val ROUTE_DOWNLOADS = "settings/downloads"
     const val ROUTE_TERMINAL = "settings/terminal"
     const val ROUTE_NETWORK = "settings/network"
+    const val ROUTE_SYSTEM = "settings/system"
+    const val ROUTE_TRASH = "settings/trash"
     /** Links (string array) to offer in the add sheet of Telos Downloads, from a share or an Open with */
     const val EXTRA_DOWNLOAD_URLS = "de.mm20.launcher2.settings.DOWNLOAD_URLS"
     /** Stable identity for one Recents task per built-in app, independent of launch payload. */
@@ -54,6 +56,8 @@ object SettingsDeepLinkContract {
         ROUTE_STORE -> "store"
         ROUTE_TERMINAL -> "terminal"
         ROUTE_NETWORK -> "network"
+        ROUTE_SYSTEM -> "system"
+        ROUTE_TRASH -> "trash"
         ROUTE_CALCULATOR -> "calculator"
         ROUTE_VOICE_RECORDER -> "voice_recorder"
         ROUTE_SCREEN_RECORDER -> "screen_recorder"

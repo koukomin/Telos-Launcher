@@ -194,6 +194,14 @@ object TelosApps {
             route = SettingsDeepLinkContract.ROUTE_NETWORK,
         ),
         TelosApp(
+            key = "telos_system_app://system",
+            name = "System",
+            description = "Live OS status: CPU, RAM, IPs, running processes, and saved Wi-Fi passwords (root or Shizuku) with QR share.",
+            features = listOf("CPU and RAM meters", "Local IPs", "Saved Wi-Fi list", "Password reveal with lock, root or Shizuku", "QR share"),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_network_full,
+            route = SettingsDeepLinkContract.ROUTE_SYSTEM,
+        ),
+        TelosApp(
             key = "telos_voice_recorder_app://voice_recorder",
             name = "Voice Recorder",
             description = "A voice recorder with a list of recordings, search, pause and a recording service that keeps going with the screen off.",

@@ -220,7 +220,15 @@ fun WidgetColumn(
                 viewModel.widgets.value.find { it.id.toString() == targetId }
             } else null
             if (target != null) {
-                viewModel.addToStack(target, picked)
+                if (picked is de.mm20.launcher2.widgets.NetworkWidget ||
+                    picked is de.mm20.launcher2.widgets.SystemWidget
+                ) {
+                    viewModel.addWidget(picked)
+                } else {
+                    viewModel.addToStack(target, picked)
+                }
+            } else {
+                viewModel.addWidget(picked)
             }
             stackTargetId = null
         },

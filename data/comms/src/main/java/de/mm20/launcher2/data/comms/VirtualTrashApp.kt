@@ -45,7 +45,7 @@ internal class VirtualTrashApp(context: Context) : Application {
         return try {
             val intent = Intent().apply {
                 setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
-                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, "trash_dashboard")
+                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_TRASH)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
             context.startActivity(intent, options)

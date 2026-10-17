@@ -482,6 +482,13 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(mediaHubSpace = space)) }
     }
 
+    val mediaHubCompactList
+        get() = dataStore.data.map { it.comms.mediaHubCompactList }
+
+    fun setMediaHubCompactList(compact: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(mediaHubCompactList = compact)) }
+    }
+
     fun setVirtualAppEnabled(key: String, enabled: Boolean) {
         dataStore.update { data ->
             val current = data.comms.disabledVirtualApps.split(',').filter { it.isNotBlank() }.toMutableSet()

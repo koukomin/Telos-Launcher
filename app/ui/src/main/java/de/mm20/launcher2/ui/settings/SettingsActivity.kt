@@ -343,6 +343,12 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.network.logs.NetworkLogsRoute> {
                 de.mm20.launcher2.ui.network.logs.NetworkLogsScreen()
             }
+            entry<de.mm20.launcher2.ui.system.SystemDashboardRoute> {
+                de.mm20.launcher2.ui.system.SystemDashboardScreen()
+            }
+            entry<de.mm20.launcher2.ui.trash.TrashUnlockRoute> {
+                de.mm20.launcher2.ui.trash.TrashUnlockScreen()
+            }
             entry<de.mm20.launcher2.ui.notes.NotesRoute> {
                 de.mm20.launcher2.ui.notes.NotesScreen()
             }
@@ -696,6 +702,8 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_FILES -> "telos_files_app"
             SettingsDeepLinkContract.ROUTE_TERMINAL -> "telos_terminal_app"
             ROUTE_NETWORK -> "telos_network_app"
+            SettingsDeepLinkContract.ROUTE_SYSTEM -> "telos_system_app"
+            SettingsDeepLinkContract.ROUTE_TRASH -> "telos_trash_app"
             ROUTE_CALCULATOR -> "telos_calculator_app"
             ROUTE_VOICE_RECORDER -> "telos_voice_recorder_app"
             ROUTE_SCREEN_RECORDER -> "telos_screen_recorder_app"
@@ -791,6 +799,8 @@ open class SettingsActivity : BaseActivity() {
             ROUTE_FILES -> de.mm20.launcher2.ui.files.FilesRoute
             SettingsDeepLinkContract.ROUTE_TERMINAL -> de.mm20.launcher2.ui.terminal.TerminalRoute
             ROUTE_NETWORK -> de.mm20.launcher2.ui.network.NetworkRoute
+            SettingsDeepLinkContract.ROUTE_SYSTEM -> de.mm20.launcher2.ui.system.SystemDashboardRoute
+            SettingsDeepLinkContract.ROUTE_TRASH -> de.mm20.launcher2.ui.trash.TrashUnlockRoute
             ROUTE_CALCULATOR -> de.mm20.launcher2.ui.calculator.CalculatorRoute
             ROUTE_VOICE_RECORDER -> de.mm20.launcher2.ui.voice.VoiceRecorderRoute
             ROUTE_SCREEN_RECORDER -> de.mm20.launcher2.ui.screenrec.ScreenRecorderRoute

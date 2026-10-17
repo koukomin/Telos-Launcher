@@ -1449,4 +1449,19 @@
     <string name="preference_location_managed_summary">Η τοποθεσία γι\' αυτόν τον πάροχο διαχειρίζεται από την εφαρμογή του πρόσθετου</string>
     <string name="provider_breezy">Breezy Weather</string>
     <string name="provider_openmeteo">Open-Meteo</string>
+    <string name="preference_grid_glass_summary">Θολό διαφανές φόντο για το συρτάρι και το πλέγμα εφαρμογών, σε φωτεινή και σκούρα ταπετσαρία</string>
+    <string name="telos_system_label">Σύστημα</string>
+    <string name="telos_system_cpu">Επεξεργαστής</string>
+    <string name="telos_system_ram">RAM</string>
+    <string name="telos_system_network">Δίκτυο</string>
+    <string name="telos_system_uptime">Χρόνος λειτουργίας %1$s</string>
+    <string name="telos_system_unlock_wifi">Ξεκλείδωμα κωδικών Wi-Fi</string>
+    <string name="telos_system_reveal_wifi">Εμφάνιση κωδικού Wi-Fi</string>
+    <string name="telos_system_reading_wifi">Ανάγνωση αποθηκευμένων δικτύων…</string>
+    <string name="telos_system_wifi_need_root">Χρειάζεται root ή Shizuku για τους αποθηκευμένους κωδικούς Wi-Fi</string>
+    <string name="telos_system_saved_wifi">Αποθηκευμένα δίκτυα</string>
+    <string name="telos_system_processes">Διεργασίες</string>
+    <string name="telos_trash_unlock">Ξεκλείδωμα κάδου</string>
+    <string name="telos_os_trash_unavailable">Δεν βρέθηκε κάδος του συστήματος σε αυτή τη συσκευή</string>
+    <string name="telos_media_compact_list">Συμπαγής λίστα</string>
 </resources>

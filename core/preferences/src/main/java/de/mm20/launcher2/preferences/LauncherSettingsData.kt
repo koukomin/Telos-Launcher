@@ -310,7 +310,7 @@ data class SearchBarGroup(
     val privateKeyboard: Boolean = false,
     /** Shows a single editorial "recommended app" card in the drawer and in keyword-matched
      * search results. See AppRecommendations - no affiliate relationship, editorial picks only. */
-    val showAppRecommendations: Boolean = true,
+    val showAppRecommendations: Boolean = false,
     val searchLaunchOnEnter: Boolean = true,
     val searchBarBottom: Boolean = true,
     val searchBarFixed: Boolean = false,
@@ -1293,6 +1293,8 @@ data class CommsGroup(
     val mediaHubSpace: String = "music",
     /** Telos Media: order of the spaces in the pill, comma separated ids (empty = music, radio, video, tv) */
     val mediaHubOrder: String = "",
+    /** Compact list (small icons + text) for radio/TV in Telos Media */
+    val mediaHubCompactList: Boolean = true,
     /** Telos Video: online services. Keys and passwords are encrypted with the Android Keystore. */
     val tmdbApiKeyEnc: String = "",
     val subtitleApiKeyEnc: String = "",

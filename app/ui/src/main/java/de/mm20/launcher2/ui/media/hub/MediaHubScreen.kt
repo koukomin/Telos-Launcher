@@ -198,8 +198,6 @@ fun MediaHubScreen(initialSpace: String = "") {
         runCatching { radioVm.initialize(context) }
     }
 
-    var showTrash by remember { mutableStateOf(false) }
-    if (showTrash) de.mm20.launcher2.ui.trash.TrashDialog({ showTrash = false })
     var openMusicPlayer by remember { mutableStateOf(false) }
     val stateHolder = rememberSaveableStateHolder()
     val performanceSettings: PerformanceSettings = koinInject()
@@ -263,7 +261,6 @@ fun MediaHubScreen(initialSpace: String = "") {
                                         },
                                         reduceAnimations = reduceAnimations,
                                         onBack = { backStack.removeLastOrNull() },
-                                        onTrash = { showTrash = true },
                                         actions = actions,
                                     )
                                 },
@@ -288,6 +285,14 @@ fun MediaHubScreen(initialSpace: String = "") {
 
             de.mm20.launcher2.ui.media.youtube.YouTubeMiniPlayer(youtubeVm) { music ->
                 space = if (music) MediaSpace.YouTubeMusic.id else MediaSpace.YouTube.id
+            }
+            if (current != null) {
+                HubBottomBar(
+                    current = current,
+                    groupSpaces = groupSpaces,
+                    available = available,
+                    onSelect = { space = it.id },
+                )
             }
             if (current != null) {
                 HubMiniPlayer(
@@ -317,7 +322,6 @@ private fun HubToolbar(
     onReorder: (List<MediaSpace>) -> Unit,
     reduceAnimations: Boolean,
     onBack: () -> Unit,
-    onTrash: () -> Unit,
     actions: @Composable androidx.compose.foundation.layout.RowScope.() -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -338,7 +342,15 @@ private fun HubToolbar(
                 }
             }
             androidx.compose.material3.DropdownMenu(expanded, { expanded = false }) {
-                // Existing long-press reordering remains available without occupying the library viewport.
+                val settings: CommsSettings = koinInject()
+                val compact by settings.mediaHubCompactList.collectAsState(true)
+                androidx.compose.material3.DropdownMenuItem(
+                    text = { Text(stringResource(R.string.telos_media_compact_list)) },
+                    trailingIcon = {
+                        androidx.compose.material3.Switch(checked = compact, onCheckedChange = { settings.setMediaHubCompactList(it) })
+                    },
+                    onClick = { settings.setMediaHubCompactList(!compact) },
+                )
                 SpacePill(groupSpaces, groupSpaces.first { it.group == current.group },
                     onSelect = { onSelect(it); expanded = false }, onReorder = onReorder,
                     reduceAnimations = reduceAnimations, modifier = Modifier.width(280.dp).padding(8.dp))
@@ -349,12 +361,6 @@ private fun HubToolbar(
                         onClick = { onSelect(source); expanded = false },
                     )
                 }
-                androidx.compose.material3.HorizontalDivider()
-                androidx.compose.material3.DropdownMenuItem(
-                    text = { Text(stringResource(R.string.telos_trash_title)) },
-                    leadingIcon = { Icon(painterResource(R.drawable.delete_24px), null) },
-                    onClick = { expanded = false; onTrash() },
-                )
             }
         }
         actions()
@@ -471,6 +477,60 @@ private fun SpacePill(
                         )
 
                     }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun HubBottomBar(
+    current: MediaSpace,
+    groupSpaces: List<MediaSpace>,
+    available: List<MediaSpace>,
+    onSelect: (MediaSpace) -> Unit,
+) {
+    val scheme = MaterialTheme.colorScheme
+    val extras = when (current.group) {
+        "audio" -> available.filter { it.group == "audio" }
+        "video" -> available.filter { it.group == "video" }
+        else -> groupSpaces
+    }
+    val items = (groupSpaces + extras.filter { it !in groupSpaces }).distinct()
+    Surface(
+        color = scheme.surface.copy(alpha = 0.55f),
+        tonalElevation = 0.dp,
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp, vertical = 6.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            items.forEach { space ->
+                val selected = space == current
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .clickable { onSelect(space) }
+                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                ) {
+                    Icon(
+                        painterResource(space.icon),
+                        contentDescription = stringResource(space.label),
+                        tint = if (selected) scheme.primary else scheme.onSurfaceVariant,
+                        modifier = Modifier.size(22.dp),
+                    )
+                    Text(
+                        stringResource(space.label),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = if (selected) scheme.primary else scheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
                 }
             }
         }

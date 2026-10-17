@@ -1,0 +1,314 @@
+package de.mm20.launcher2.ui.system
+
+import android.app.ActivityManager
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.net.wifi.WifiManager
+import android.os.Build
+import android.os.Process
+import android.os.SystemClock
+import android.text.format.Formatter
+import androidx.activity.compose.LocalActivity
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.core.content.getSystemService
+import androidx.fragment.app.FragmentActivity
+import androidx.navigation3.runtime.NavKey
+import de.mm20.launcher2.comms.AuthManager
+import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.comms.ContactQrImage
+import de.mm20.launcher2.ui.locals.LocalBackStack
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.Serializable
+import java.io.File
+import java.net.NetworkInterface
+import kotlin.math.sin
+
+@Serializable
+data object SystemDashboardRoute : NavKey
+
+private data class WifiEntry(val ssid: String, val psk: String?)
+private data class ProcRow(val pid: Int, val name: String, val ramKb: Long)
+
+@Composable
+fun SystemDashboardScreen() {
+    val context = LocalContext.current
+    val activity = LocalActivity.current as? FragmentActivity
+    val backStack = LocalBackStack.current
+    val scope = rememberCoroutineScope()
+    val scheme = MaterialTheme.colorScheme
+    var cpu by remember { mutableStateOf(0f) }
+    var ramUsed by remember { mutableStateOf(0L) }
+    var ramTotal by remember { mutableStateOf(0L) }
+    var ips by remember { mutableStateOf(listOf<String>()) }
+    var wifiSsid by remember { mutableStateOf<String?>(null) }
+    var wifiPsk by remember { mutableStateOf<String?>(null) }
+    var showPsk by remember { mutableStateOf(false) }
+    var networks by remember { mutableStateOf<List<WifiEntry>>(emptyList()) }
+    var processes by remember { mutableStateOf<List<ProcRow>>(emptyList()) }
+    var status by remember { mutableStateOf<String?>(null) }
+    val pulse = rememberInfiniteTransition(label = "sysPulse")
+    val t by pulse.animateFloat(0f, 1f, infiniteRepeatable(tween(2400, easing = LinearEasing), RepeatMode.Restart), label = "t")
+
+    LaunchedEffect(Unit) {
+        var prevIdle = 0L
+        var prevTotal = 0L
+        while (true) {
+            val (idle, total) = readCpu()
+            if (prevTotal > 0L && total > prevTotal) {
+                val idleDelta = idle - prevIdle
+                val totalDelta = total - prevTotal
+                cpu = (1f - idleDelta.toFloat() / totalDelta.toFloat()).coerceIn(0f, 1f)
+            }
+            prevIdle = idle
+            prevTotal = total
+            val am = context.getSystemService<ActivityManager>()
+            val mi = ActivityManager.MemoryInfo()
+            am?.getMemoryInfo(mi)
+            ramUsed = mi.totalMem - mi.availMem
+            ramTotal = mi.totalMem
+            ips = localIps()
+            wifiSsid = currentSsid(context)
+            processes = runningProcs(context)
+            delay(1500)
+        }
+    }
+
+    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(scheme.primary.copy(alpha = 0.22f), scheme.surface)))) {
+        Canvas(Modifier.fillMaxSize()) {
+            val r = size.minDimension * (0.18f + 0.04f * sin(t * Math.PI * 2).toFloat())
+            val c = Offset(size.width * 0.82f, size.height * 0.12f)
+            drawCircle(scheme.primary.copy(alpha = 0.12f), r, c, style = Stroke(width = 6f))
+            drawCircle(scheme.tertiary.copy(alpha = 0.10f), r * 1.4f, c, style = Stroke(width = 3f))
+        }
+        Column(Modifier.fillMaxSize()) {
+            Row(Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = { backStack.removeLastOrNull() }) {
+                    Icon(painterResource(R.drawable.arrow_back_24px), stringResource(R.string.hc_back))
+                }
+                Text(stringResource(R.string.telos_system_label), style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+            }
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                item {
+                    GlassCard {
+                        Text("${Build.MANUFACTURER} ${Build.MODEL}", style = MaterialTheme.typography.titleMedium)
+                        Text("Android ${Build.VERSION.RELEASE} · API ${Build.VERSION.SDK_INT} · ${Build.HARDWARE} · ${Build.SUPPORTED_ABIS.firstOrNull().orEmpty()}")
+                        Text(stringResource(R.string.telos_system_uptime, formatUptime(SystemClock.elapsedRealtime())))
+                    }
+                }
+                item {
+                    GlassCard {
+                        Text(stringResource(R.string.telos_system_cpu), style = MaterialTheme.typography.labelLarge)
+                        LinearProgressIndicator(progress = { cpu }, modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(8.dp)))
+                        Text("${(cpu * 100).toInt()}%")
+                        Text(stringResource(R.string.telos_system_ram), style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 8.dp))
+                        val ramF = if (ramTotal == 0L) 0f else ramUsed.toFloat() / ramTotal
+                        LinearProgressIndicator(progress = { ramF }, modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(8.dp)))
+                        Text("${Formatter.formatFileSize(context, ramUsed)} / ${Formatter.formatFileSize(context, ramTotal)}")
+                    }
+                }
+                item {
+                    GlassCard {
+                        Text(stringResource(R.string.telos_system_network), style = MaterialTheme.typography.titleMedium)
+                        Text("SSID: ${wifiSsid ?: "—"}")
+                        ips.forEach { Text(it) }
+                        if (showPsk && wifiPsk != null) {
+                            Text("PSK: $wifiPsk")
+                            val payload = "WIFI:T:WPA;S:${wifiSsid.orEmpty()};P:${wifiPsk.orEmpty()};;"
+                            ContactQrImage(payload, Modifier.padding(top = 8.dp))
+                        }
+                        FilledTonalButton(onClick = {
+                            scope.launch {
+                                val act = activity ?: return@launch
+                                val ok = AuthManager().authenticateNative(act, context.getString(R.string.telos_system_unlock_wifi))
+                                if (!ok) return@launch
+                                status = context.getString(R.string.telos_system_reading_wifi)
+                                val list = withContext(Dispatchers.IO) { readWifiStore() }
+                                networks = list
+                                wifiPsk = list.firstOrNull { it.ssid == wifiSsid }?.psk
+                                    ?: list.firstOrNull()?.psk
+                                showPsk = true
+                                status = if (list.isEmpty()) context.getString(R.string.telos_system_wifi_need_root) else null
+                            }
+                        }) { Text(stringResource(R.string.telos_system_reveal_wifi)) }
+                        status?.let { Text(it, color = scheme.error) }
+                    }
+                }
+                if (networks.isNotEmpty()) {
+                    item { Text(stringResource(R.string.telos_system_saved_wifi), style = MaterialTheme.typography.titleMedium) }
+                    items(networks, key = { it.ssid }) { n ->
+                        GlassCard {
+                            Text(n.ssid, style = MaterialTheme.typography.titleSmall)
+                            Text(n.psk ?: "—")
+                        }
+                    }
+                }
+                item { Text(stringResource(R.string.telos_system_processes), style = MaterialTheme.typography.titleMedium) }
+                items(processes.take(40), key = { it.pid }) { p ->
+                    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                        Text("${p.pid}  ${p.name}", modifier = Modifier.weight(1f), maxLines = 1)
+                        Text(Formatter.formatFileSize(context, p.ramKb * 1024))
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun GlassCard(content: @Composable () -> Unit) {
+    val scheme = MaterialTheme.colorScheme
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(20.dp))
+            .background(scheme.surface.copy(alpha = 0.55f))
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+        content = { content() },
+    )
+}
+
+private fun formatUptime(ms: Long): String {
+    val s = ms / 1000
+    val h = s / 3600
+    val m = (s % 3600) / 60
+    return "%dh %dm".format(h, m)
+}
+
+private fun localIps(): List<String> = buildList {
+    runCatching {
+        NetworkInterface.getNetworkInterfaces()?.toList().orEmpty().forEach { ni ->
+            if (!ni.isUp || ni.isLoopback) return@forEach
+            ni.inetAddresses.toList().forEach { addr ->
+                if (!addr.isLoopbackAddress) add("${ni.displayName}: ${addr.hostAddress}")
+            }
+        }
+    }
+}
+
+@Suppress("DEPRECATION")
+private fun currentSsid(context: Context): String? {
+    val cm = context.getSystemService<ConnectivityManager>() ?: return null
+    val caps = cm.getNetworkCapabilities(cm.activeNetwork) ?: return null
+    if (!caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) return null
+    val wm = context.getSystemService<WifiManager>() ?: return null
+    val ssid = wm.connectionInfo?.ssid?.trim('"')
+    return ssid?.takeIf { it.isNotBlank() && it != "<unknown ssid>" }
+}
+
+private fun readCpu(): Pair<Long, Long> {
+    val line = runCatching { File("/proc/stat").bufferedReader().readLine() }.getOrNull() ?: return 0L to 0L
+    val parts = line.split(Regex("\\s+")).drop(1).mapNotNull { it.toLongOrNull() }
+    if (parts.size < 4) return 0L to 0L
+    val idle = parts[3]
+    return idle to parts.sum()
+}
+
+private fun runningProcs(context: Context): List<ProcRow> {
+    val am = context.getSystemService<ActivityManager>() ?: return emptyList()
+    return am.runningAppProcesses.orEmpty().map {
+        ProcRow(it.pid, it.processName, 0L)
+    }.sortedBy { it.name }
+}
+
+private fun privileged(cmd: String): String? {
+    val attempts = listOf(
+        arrayOf("su", "-c", cmd),
+        arrayOf("sh", "-c", cmd),
+    )
+    for (args in attempts) {
+        val out = runCatching {
+            val p = Runtime.getRuntime().exec(args)
+            val text = p.inputStream.bufferedReader().readText()
+            p.waitFor()
+            text
+        }.getOrNull()
+        if (!out.isNullOrBlank()) return out
+    }
+    return shizuku(cmd)
+}
+
+private fun shizuku(cmd: String): String? = runCatching {
+    val shizuku = Class.forName("rikka.shizuku.Shizuku")
+    val ping = shizuku.getMethod("pingBinder").invoke(null) as Boolean
+    if (!ping) return null
+    val perm = shizuku.getMethod("checkSelfPermission").invoke(null) as Int
+    if (perm != 0) return null
+    val method = shizuku.getDeclaredMethod("newProcess", Array<String>::class.java, Array<String>::class.java, String::class.java)
+    method.isAccessible = true
+    val proc = method.invoke(null, arrayOf("sh", "-c", cmd), null, null) ?: return null
+    val getIn = proc.javaClass.methods.firstOrNull { it.name == "getInputStream" } ?: return null
+    val stream = getIn.invoke(proc) as java.io.InputStream
+    stream.bufferedReader().readText()
+}.getOrNull()
+
+private fun readWifiStore(): List<WifiEntry> {
+    val files = listOf(
+        "/data/misc/apexdata/com.android.wifi/WifiConfigStore.xml",
+        "/data/misc/wifi/WifiConfigStore.xml",
+        "/data/misc/wifi/wpa_supplicant.conf",
+    )
+    val raw = files.firstNotNullOfOrNull { privileged("cat $it") }.orEmpty() +
+        (privileged("dumpsys wifi").orEmpty())
+    if (raw.isBlank()) return emptyList()
+    val xml = Regex("<string name=\"SSID\">(?:&quot;)?(.*?)(?:&quot;)?</string>[\\s\\S]*?<string name=\"PreSharedKey\">(?:&quot;)?(.*?)(?:&quot;)?</string>")
+        .findAll(raw)
+        .map { WifiEntry(it.groupValues[1].replace("&quot;", "").trim('"'), it.groupValues[2].replace("&quot;", "").trim('"')) }
+        .toList()
+    if (xml.isNotEmpty()) return xml.distinctBy { it.ssid }
+    val conf = Regex("ssid=\"([^\"]+)\"[\\s\\S]*?psk=\"([^\"]+)\"").findAll(raw)
+        .map { WifiEntry(it.groupValues[1], it.groupValues[2]) }
+        .toList()
+    return conf.distinctBy { it.ssid }
+}

@@ -5,11 +5,21 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.TrafficStats
 import android.os.SystemClock
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -102,9 +112,18 @@ fun NetworkWidget(widget: NetworkWidget) {
         is NetState.NeedsPermission -> R.string.net_hub_state_permission
         else -> R.string.net_hub_state_off
     }
+    val pulse = rememberInfiniteTransition(label = "netPulse")
+    val ring by pulse.animateFloat(0.2f, 1f, infiniteRepeatable(tween(1800, easing = LinearEasing), RepeatMode.Restart), label = "ring")
+    val scheme = MaterialTheme.colorScheme
     Column(Modifier.fillMaxWidth().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(painterResource(R.drawable.language_24px), null, tint = MaterialTheme.colorScheme.primary)
+            Box(Modifier.size(40.dp), contentAlignment = Alignment.Center) {
+                Canvas(Modifier.fillMaxSize()) {
+                    drawCircle(scheme.primary.copy(alpha = (1f - ring) * 0.35f), radius = size.minDimension / 2f * ring, style = Stroke(width = 3f))
+                    drawCircle(scheme.tertiary.copy(alpha = 0.35f), radius = size.minDimension / 5f, center = Offset(size.width / 2f, size.height / 2f))
+                }
+                Icon(painterResource(R.drawable.language_24px), null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(22.dp))
+            }
             Column(Modifier.weight(1f).padding(horizontal = 12.dp)) {
                 Text(stringResource(R.string.net_hub_title), style = MaterialTheme.typography.titleMedium)
                 Text("VPN · ${stringResource(status)}", color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.labelLarge)

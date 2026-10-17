@@ -78,7 +78,7 @@ fun AppearanceSettingsScreen() {
             PreferenceCategory(title = stringResource(R.string.preference_drawer_background)) {
                 de.mm20.launcher2.ui.component.preferences.SwitchPreference(
                     title = stringResource(R.string.preference_drawer_background),
-                    summary = stringResource(R.string.preference_drawer_background_summary),
+                    summary = stringResource(R.string.preference_grid_glass_summary),
                     value = drawerBackground,
                     onValueChanged = uiSettings::setDrawerBackgroundEnabled,
                 )

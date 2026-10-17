@@ -32,6 +32,8 @@ object TelosAppKeywords {
         "telos_calendar_app" to listOf("events", "agenda", "schedule", "ημερολόγιο", "εκδηλώσεις"),
         "telos_downloads_app" to listOf("download", "downloader", "λήψεις", "κατεβάσματα"),
         "telos_network_app" to listOf("vpn", "dns", "firewall", "wifi", "internet", "δίκτυο", "τείχος προστασίας"),
+        "telos_system_app" to listOf("system", "cpu", "ram", "wifi", "ip", "processes", "σύστημα", "επεξεργαστής"),
+        "telos_trash_app" to listOf("trash", "bin", "recycle", "κάδος", "ανακύκλωση"),
         "telos_voice_recorder_app" to listOf("recorder", "recording", "dictaphone", "audio", "καταγραφή ήχου", "εγγραφή φωνής"),
         "telos_screen_recorder_app" to listOf("recorder", "recording", "screencast", "εγγραφή οθόνης"),
         "telos_screenshot_app" to listOf("screen capture", "screengrab", "στιγμιότυπο", "αποτύπωση οθόνης"),
@@ -60,6 +62,8 @@ object TelosAppKeywords {
         "telos_media_app" to "media",
         "telos_network_app" to "network",
         "telos_store_app" to "store",
+        "telos_system_app" to "system",
+        "telos_trash_app" to "trash",
     )
 
     fun forDomain(domain: String): List<String> {
