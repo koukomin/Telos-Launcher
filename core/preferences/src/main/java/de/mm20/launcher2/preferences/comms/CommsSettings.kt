@@ -259,6 +259,91 @@ class CommsSettings internal constructor(
         }
     }
 
+    val contactDefaultCallApp
+        get() = dataStore.data.map { it.comms.contactDefaultCallApp }
+    fun setContactDefaultCallApp(number: String, appId: String?) {
+        dataStore.update { data ->
+            val map = data.comms.contactDefaultCallApp.toMutableMap()
+            val key = number.filter { it.isDigit() }
+            if (appId.isNullOrBlank() || appId == "phone" || key.isBlank()) map.remove(key) else map[key] = appId
+            data.copy(comms = data.comms.copy(contactDefaultCallApp = map))
+        }
+    }
+
+    val contactDefaultMessageApp
+        get() = dataStore.data.map { it.comms.contactDefaultMessageApp }
+    fun setContactDefaultMessageApp(number: String, appId: String?) {
+        dataStore.update { data ->
+            val map = data.comms.contactDefaultMessageApp.toMutableMap()
+            val key = number.filter { it.isDigit() }
+            if (appId.isNullOrBlank() || appId == "sms" || key.isBlank()) map.remove(key) else map[key] = appId
+            data.copy(comms = data.comms.copy(contactDefaultMessageApp = map))
+        }
+    }
+
+    val archivedConversations
+        get() = dataStore.data.map { it.comms.archivedConversations }
+    fun setConversationArchived(address: String, archived: Boolean) {
+        dataStore.update { data ->
+            val map = data.comms.archivedConversations.toMutableMap()
+            val key = address.filter { it.isDigit() || it == ',' }
+            if (!archived || key.isBlank()) map.remove(key) else map[key] = "1"
+            data.copy(comms = data.comms.copy(archivedConversations = map))
+        }
+    }
+
+    val pinnedConversations
+        get() = dataStore.data.map { it.comms.pinnedConversations }
+    fun setConversationPinned(address: String, pinned: Boolean) {
+        dataStore.update { data ->
+            val map = data.comms.pinnedConversations.toMutableMap()
+            val key = address.filter { it.isDigit() || it == ',' }
+            if (!pinned || key.isBlank()) map.remove(key) else map[key] = "1"
+            data.copy(comms = data.comms.copy(pinnedConversations = map))
+        }
+    }
+
+    val conversationNames
+        get() = dataStore.data.map { it.comms.conversationNames }
+    fun setConversationName(address: String, name: String?) {
+        dataStore.update { data ->
+            val map = data.comms.conversationNames.toMutableMap()
+            val key = address.filter { it.isDigit() || it == ',' }
+            if (name.isNullOrBlank() || key.isBlank()) map.remove(key) else map[key] = name
+            data.copy(comms = data.comms.copy(conversationNames = map))
+        }
+    }
+
+    val smsSignature
+        get() = dataStore.data.map { it.comms.smsSignature }
+    fun setSmsSignature(value: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(smsSignature = value)) }
+    }
+
+    val unreadOnTop
+        get() = dataStore.data.map { it.comms.unreadOnTop }
+    fun setUnreadOnTop(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(unreadOnTop = enabled)) }
+    }
+
+    val smsAutoDeleteDays
+        get() = dataStore.data.map { it.comms.smsAutoDeleteDays }
+    fun setSmsAutoDeleteDays(days: Int) {
+        dataStore.update { it.copy(comms = it.comms.copy(smsAutoDeleteDays = days.coerceAtLeast(0))) }
+    }
+
+    val blockAlphanumeric
+        get() = dataStore.data.map { it.comms.blockAlphanumeric }
+    fun setBlockAlphanumeric(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(blockAlphanumeric = enabled)) }
+    }
+
+    val smsPopupReply
+        get() = dataStore.data.map { it.comms.smsPopupReply }
+    fun setSmsPopupReply(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(smsPopupReply = enabled)) }
+    }
+
     val hiddenNumbers
         get() = dataStore.data.map { it.comms.hiddenNumbers }
     fun setHiddenNumber(number: String, hidden: Boolean) {

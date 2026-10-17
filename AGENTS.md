@@ -46,7 +46,13 @@ External apps can extend Kvaesitso (weather, file/contact/places search, calenda
 
 ## Documentation
 
-Docs live in `docs/` (a VitePress site, published at https://telos.mm20.de) — check `docs/docs/developer-guide/` before making structural changes, and update it if module structure, plugin contracts, or external API integrations change.
+Docs live in `docs/` (a VitePress site, published as GitHub Pages at https://koukomin.github.io/Telos-Launcher/ and historically at https://telos.mm20.de). Every user-visible or architectural change must update, **in the same change**:
+
+- `readme.md` (feature lists, based-on table, status text);
+- the matching pages under `docs/docs/` (user guide and developer guide);
+- `THIRD_PARTY_NOTICES.md` when a library or license changes.
+
+Check `docs/docs/developer-guide/` before structural changes. Do not describe anything that is not implemented.
 
 ## Contributing conventions
 
@@ -54,16 +60,24 @@ Docs live in `docs/` (a VitePress site, published at https://telos.mm20.de) — 
 - For bigger new features, an issue should be opened first to discuss design before implementation.
 - All contributed code must be GPL-3.0-or-later licensed (except contributions to `plugins/sdk` / `core/shared`, which are Apache-2.0).
 
-## Keeping the README up to date
+## Keeping README, docs and Pages up to date
 
-`readme.md` is the public face of the project. Whenever you add or change a user-visible feature, or
-you port, adapt or take design from another project, update `readme.md` **in the same commit**:
+`readme.md` is the public face of the project. The VitePress tree in `docs/` is the GitHub Pages site. Whenever you add or change a user-visible feature, or you port, adapt or take design from another project, update **readme, docs and Pages in the same commit**:
 
 - add the feature to the matching list under "Features" (move it out of "Planned" if it was there);
+- update the matching user-guide page under `docs/docs/user-guide/` and, for internals, `docs/docs/developer-guide/`;
 - add or update the project in the "Projects Telos is based on" table with its link and license
   (check the license is GPL-3.0 compatible before copying code) and keep its copyright notice in
   `THIRD_PARTY_NOTICES.md`;
 - do not describe anything that is not implemented.
+
+## Translations
+
+Every new or changed user-visible string must be translated into **all** supported languages **in the same change**. English goes in `core/i18n/src/main/res/values/` first. Greek (`values-el`) is the first locale after English. Then fill every other `values-*` folder. Never leave a language with an English fallback for a string you added.
+
+Supported: Greek, German, Spanish, French, Italian, Portuguese (pt, pt-BR), Russian, Turkish, Dutch, Polish, Czech, Slovak, Slovenian, Croatian, Bulgarian, Romanian, Hungarian, Danish, Swedish, Finnish, Estonian, Latvian, Lithuanian, Irish, Maltese, Ukrainian, Norwegian, Chinese (zh-CN, zh-TW), Japanese, Korean, Arabic, Hindi, Bengali.
+
+Use `tools/i18n/` (see its README): `extract.py` for missing keys, `build.py` to write `strings_telos_translations.xml`. Keep placeholders (`%1$s`, `%d`, XML tags) unchanged.
 
 ## User workflow preferences
 

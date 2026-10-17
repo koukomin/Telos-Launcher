@@ -17,7 +17,7 @@ Library by songs, albums and artists, a play queue with shuffle and repeat, a sl
 ## What it is
 
 Telos Music reads the audio files that Android has indexed (the system media library) and plays them with a media
-session service built on Media3 / ExoPlayer. Because it is a standard media session, the notification, the lock
+session service built on Media3 / ExoPlayer and official NextLib FFmpeg software decoders. Because it is a standard media session, the notification, the lock
 screen and headset buttons control it, and it also shows up in the launcher's
 [media control](../../integrations/mediacontrol). It is a [virtual app](../#how-the-built-in-apps-work) and is
 guarded by the crash guard. Switching it off in [Telos Store](../store/) disables its services and screens, so it
@@ -80,7 +80,7 @@ Telos Music has no settings page. The few options are in the top bar and the pla
 
 | Item | Support |
 | --- | --- |
-| Playback | Formats the Android media player (Media3 / ExoPlayer) can decode on your device, typically MP3, AAC / M4A, FLAC, OGG, Opus and WAV |
+| Playback | Media3 / ExoPlayer plus official NextLib FFmpeg decoders: typically MP3, AAC / M4A, FLAC, OGG, Opus and WAV, and extra codecs such as AC3 when the phone has no decoder |
 | Tag editing | MP3, FLAC, M4A, OGG |
 | Lyrics | Synchronized (`LRC` style) and plain text from LRCLIB |
 

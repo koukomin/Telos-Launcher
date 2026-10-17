@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">기본 통화</string>
+    <string name="comms_pref_default_message">기본 메시지</string>
+    <string name="comms_channel_phone">전화</string>
+    <string name="comms_channel_sms">문자</string>
+    <string name="comms_messenger_fallback_call">%s을(를) 열 수 없습니다. 전화로 겁니다.</string>
+    <string name="comms_messenger_fallback_sms">%s을(를) 열 수 없습니다. 문자를 보냅니다.</string>
+    <string name="comms_pin_conversation">고정</string>
+    <string name="comms_unpin_conversation">고정 해제</string>
+    <string name="comms_archive_conversation">보관</string>
+    <string name="comms_unarchive_conversation">받은편지함</string>
+    <string name="comms_archived">보관됨</string>
+    <string name="comms_send_via">보내기 방법</string>
+    <string name="comms_delayed_send">보내기 지연</string>
+    <string name="comms_speak">말하기</string>
+    <string name="comms_mark_read">읽음</string>
+    <string name="comms_mark_unread">안 읽음</string>
+    <string name="comms_delete_conversation">대화 삭제</string>
+    <string name="comms_rename_conversation">이름 바꾸기</string>
+    <string name="comms_schedule_send">예약 보내기</string>
+    <string name="comms_messages_settings">메시지</string>
+    <string name="comms_sms_signature">문자 서명</string>
+    <string name="comms_unread_on_top">안 읽은 대화 위쪽</string>
+    <string name="comms_sms_auto_delete">며칠 후 오래된 문자 삭제 (0 = 유지)</string>
+    <string name="comms_block_alphanumeric">영숫자 발신자 차단</string>
+    <string name="comms_popup_reply">새 문자 팝업 답장</string>
+    <string name="comms_export_sms">문자 기록 내보내기</string>
+    <string name="comms_import_sms">문자 기록 가져오기</string>
+</resources>

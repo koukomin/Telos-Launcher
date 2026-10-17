@@ -84,9 +84,9 @@ from Telos Store.
 | **Telos Calculator** | Standard and scientific calculator, VAT, unit and currency converter, history | [Calculator](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calculator/) |
 | **Telos Viewer** | Two tabs: **Photos** (gallery, EXIF tools, photo editor) and **Documents** (library with categories, search and recents, viewer and editor for PDF, Office, OpenDocument, text and EPUB, PDF tools) | [Viewer](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) | [Viewer](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/photos/) |
 | **Telos Media** | Music, Radio, YouTube Music, local Video, YouTube, TV and **Stremio Fork** in one app: a compact source toolbar and selection menu (the last source is remembered), a single mini player on each Music/Radio page with a shared player on other sections, home-screen media metadata and controls for built-in playback as well as external players, the older apps open inside it, **TV** with live channels from iptv-org (country, language and category filters, favorites, recents, your own channels and M3U import, automatic failover to another or updated stream, optional extra Greek playlists and a Greek programme guide with now/next, favorites-first home with Browse and localized categories, optional background playback with a notification, automatic reconnecting when the connection is lost, and animated TV static for channels that are offline; **Stremio Fork**: Telos' own client for Stremio add-ons, written from the public add-on protocol, with add-on management and a directory of add-ons, catalogs, search, detail pages with episodes, a stream list (web, torrent with the file an add-on names, YouTube), subtitles from add-ons, a library and continue watching, Stremio account sign-in shown on entry, a separate account panel with sign-out, account sync (unofficial) for add-ons, library and continue watching, watched marks on movies and episodes from Stremio and the connected Trakt account, no add-ons or content included and not affiliated with Stremio), music and radio pause while a video plays, Share from long-press menus (songs, albums, videos, radio stations with a Telos import link, contacts, notes, files, documents, installed APKs) | [Media](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/media/) |
-| **Telos Music** | Local library with a Home tab (genre chips, quick picks, shelves), artwork-tinted Now Playing, sharing, lyrics, scrobbling, tag editor | [Music](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/music/) |
-| **Telos Video** | Library, player, web streams, torrents, subtitles, Trakt | [Video](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/video/) |
-| **Telos Radio** | Internet radio with station search, sleep timer and stream recording | [Radio](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/radio/) |
+| **Telos Music** | Local library with a Home tab (genre chips, quick picks, shelves), artwork-tinted Now Playing, sharing, lyrics, scrobbling, tag editor; Media3 plus official NextLib FFmpeg decoders | [Music](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/music/) |
+| **Telos Video** | Library, player, web streams, torrents, subtitles, Trakt; Media3 plus official NextLib FFmpeg decoders (AC3, DTS, TrueHD) inside Telos | [Video](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/video/) |
+| **Telos Radio** | Internet radio with station search, sleep timer and stream recording; Media3 plus official NextLib FFmpeg decoders | [Radio](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/radio/) |
 | **Telos Store** | Install and update apps from GitHub, F-Droid and more, manages the Telos apps | [Store](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/store/) |
 | **Smart Freeze** | Freeze or hide apps through Shizuku, root, device owner or Island (a launcher feature in Settings, not a Telos app) | [Smart Freeze](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/freeze/) |
 
@@ -97,7 +97,7 @@ Built-in apps display short localized names such as **Phone / Τηλέφωνο**
 ### Contacts, Media, home and Terminal updates
 
 - **Contacts and Phone:** edit through the Android contact editor, explicitly confirmed deletion, persistent all/selected-account filters, account membership in duplicate-contact groups and live contact photos in recent calls. The large dialer heading is removed; search and menu share the top row.
-- **Compact Media:** one source/action toolbar replaces stacked source chips and headings; labeled overflow actions and scrolling category tabs leave more space for media and large fonts. TV uses horizontal channel swipes, wrapping now/next programme details and independent Greek playlist fallback when the main catalog is unavailable.
+- **Compact Media:** one source/action toolbar replaces stacked source chips and headings; labeled overflow actions and scrolling category tabs leave more space for media and large fonts. TV uses horizontal channel swipes, wrapping now/next programme details and independent Greek playlist fallback when the main catalog is unavailable. Local Video, Music, Radio, TV, YouTube and YouTube Music share one Media3 player stack with official NextLib FFmpeg software decoders from Maven; playback stays in Telos. Telos Viewer (photos and documents) stays built into the launcher.
 - **Home glass and Network widget:** Appearance exposes drawer blur and opacity directly. Built-in widget cards use wallpaper glass by default, with a switch, and the sidebar is slimmer. The built-in Network widget shows VPN state, device traffic rates, DNS/block counts and local addresses; a manual api.ipify.org lookup shows Telos’s route IP, not a claimed VPN exit.
 - **Terminal companion:** a virtual Terminal opens the separately installed official Termux runtime and provides installation/plugin guidance. Official Termux APK/plugin compatibility requires its package and signing identity; this is not an embedded renamed runtime.
 
@@ -679,13 +679,15 @@ A complete phone app inside the launcher. Its layout follows [Right Dialer](http
 
 ### Telos Messages
 
-Text (SMS) and picture (MMS) messages as conversations with a reply field. It is part of Telos Phone: open **Messages** from the three-dot menu. [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/messages/).
+Text (SMS) and picture (MMS) messages as conversations with a reply field. It is a tab of Telos Phone (Recents, Contacts, Keypad, Messages). [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/messages/).
 
 **Conversations**
 
 - Conversation list with unread conversations in bold, **New message** by number, reply field, message bubbles with pictures and videos inline
+- Search, pin, archive, rename, delete thread, unread on top, attach any file, speech-to-text, tap a bubble to hear it (TTS), optional 3 second delayed send, schedule (+1h), SMS signature, JSON SMS backup/restore, block alphanumeric senders, notification reply / mark read / speak, optional popup reply
 - Failed messages are marked "not sent"; opening a conversation marks it read
 - Group messages as MMS (default SMS app only)
+- Per-contact **default message app**: SMS, or Signal / WhatsApp / Telegram (including common forks) / Viber when that app is installed. If the messenger cannot open, Telos sends SMS.
 
 **Default SMS app**
 
@@ -711,7 +713,9 @@ Text (SMS) and picture (MMS) messages as conversations with a reply field. It is
 - Conversations with hidden contacts are only listed while the hidden contacts are unlocked, and their notifications read "New message" without sender or text
 - No upload feature: messages move only between your phone, the system SMS service and your carrier
 
-**Status and limitations:** MMS (pictures, videos, group messages) is experimental and untested across devices and carriers. A video of more than about 2.4 MB is silently left out of a message. There is no search, delete, archive, delivery report or draft saving, no RCS and no end-to-end encryption.
+**Messengers:** On a contact you can set the **default call** to the phone or to Signal, WhatsApp, Telegram or Viber. The dialer opens that app; if it fails, Telos places a normal phone call. Telegram detection includes official Telegram, Telegram X, Plus, Nekogram, Nagram, Forkgram, Mercurygram and similar packages. Telos does not talk to Signal (or other) servers.
+
+**Status and limitations:** MMS (pictures, videos, group messages) is experimental and untested across devices and carriers. A video of more than about 2.4 MB is silently left out of a message. There is no RCS and no end-to-end encryption. Messenger calls and chats use the installed app via Intents.
 
 ### Telos Files
 
@@ -1154,6 +1158,7 @@ adapted, the original license is respected.
 | [IronFox](https://gitlab.com/ironfox-oss/IronFox) | AGPL-3.0-or-later build scripts; per-file MPL-2.0 / Apache-2.0 / GPL licenses | Pinned source and build preparation for Ironewolf; not shipped in the launcher APK yet |
 | [libarchive](https://libarchive.org) with [libarchive-android](https://github.com/zhanghai/libarchive-android) | BSD-2-Clause, Apache-2.0 | RAR and RAR5 reading in Telos Files (standard version only, prebuilt library, used unchanged) |
 | [Kvaesitso](https://github.com/MM2-0/Kvaesitso) | GPL-3.0 | The whole launcher, plugin SDK and architecture |
+| [QUIK](https://github.com/quik-sms/quik) | GPL-3.0 | Ideas for Telos Messages: pin, archive, delayed send, any-file attachments, speech-to-text (written in Compose, no QUIK code copied) |
 | [Right Dialer (Goodwy/Dialer)](https://github.com/Goodwy/Dialer) | GPL-3.0 | Phone app layout and look: recents, contacts, dialpad, call screens |
 | [Secure Dialer](https://github.com/Secure-Phone-apps/Secure-Dialer) | GPL-3.0 | Privacy features: biometric lock, secure call screen, call screening, callback reminders |
 | [Ever Dialer](https://github.com/hari161008/Ever-Dialer) | GPL-3.0 | Power-user features: recording backends and retention, gestures, auto redial, fake calls, network switcher, notes |

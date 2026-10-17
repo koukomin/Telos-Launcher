@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Oletuspuhelu</string>
+    <string name="comms_pref_default_message">Oletusviesti</string>
+    <string name="comms_channel_phone">Puhelin</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">%s ei avautunut. Soitetaan puhelimella.</string>
+    <string name="comms_messenger_fallback_sms">%s ei avautunut. Lähetetään SMS.</string>
+    <string name="comms_pin_conversation">Kiinnitä</string>
+    <string name="comms_unpin_conversation">Irrota</string>
+    <string name="comms_archive_conversation">Arkistoi</string>
+    <string name="comms_unarchive_conversation">Saapuneet</string>
+    <string name="comms_archived">Arkistoitu</string>
+    <string name="comms_send_via">Lähetä kautta</string>
+    <string name="comms_delayed_send">Viivästä lähetystä</string>
+    <string name="comms_speak">Puhu</string>
+    <string name="comms_mark_read">Luettu</string>
+    <string name="comms_mark_unread">Lukematon</string>
+    <string name="comms_delete_conversation">Poista keskustelu</string>
+    <string name="comms_rename_conversation">Nimeä uudelleen</string>
+    <string name="comms_schedule_send">Ajoita</string>
+    <string name="comms_messages_settings">Viestit</string>
+    <string name="comms_sms_signature">SMS-allekirjoitus</string>
+    <string name="comms_unread_on_top">Lukemattomat ylhäällä</string>
+    <string name="comms_sms_auto_delete">Poista vanhat viestit päivien jälkeen (0 = säilytä)</string>
+    <string name="comms_block_alphanumeric">Estä aakkosnumeeriset lähettäjät</string>
+    <string name="comms_popup_reply">Ponnahdusvastaus uuteen SMS:ään</string>
+    <string name="comms_export_sms">Vie SMS-historia</string>
+    <string name="comms_import_sms">Tuo SMS-historia</string>
+</resources>

@@ -141,7 +141,9 @@ features:
 ## Latest improvements
 
 - **Media:** one mini player per Music/Radio page, home-screen metadata and controls for built-in
-  playback, and separate Music, Radio, TV and YouTube notifications.
+  playback, and separate Music, Radio, TV and YouTube notifications. Video, Music, Radio, TV and
+  YouTube share Media3 plus official NextLib FFmpeg decoders; playback stays in Telos. Viewer
+  (photos and documents) stays built in.
 - **Video, TV and Stremio Fork:** brightness-left and volume-right sliders with icons; a top-left
   stop-and-back button. TV keeps a separate minimize action.
 - **Freeze Manager:** consistent snowflake/grayscale and icon packs, verified Disable/Suspend

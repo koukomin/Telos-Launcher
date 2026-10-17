@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">デフォルトの通話</string>
+    <string name="comms_pref_default_message">デフォルトのメッセージ</string>
+    <string name="comms_channel_phone">電話</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">%s を開けませんでした。電話で発信します。</string>
+    <string name="comms_messenger_fallback_sms">%s を開けませんでした。SMS を送信します。</string>
+    <string name="comms_pin_conversation">ピン留め</string>
+    <string name="comms_unpin_conversation">ピンを外す</string>
+    <string name="comms_archive_conversation">アーカイブ</string>
+    <string name="comms_unarchive_conversation">受信トレイ</string>
+    <string name="comms_archived">アーカイブ済み</string>
+    <string name="comms_send_via">送信方法</string>
+    <string name="comms_delayed_send">送信を遅らせる</string>
+    <string name="comms_speak">音声</string>
+    <string name="comms_mark_read">既読</string>
+    <string name="comms_mark_unread">未読</string>
+    <string name="comms_delete_conversation">会話を削除</string>
+    <string name="comms_rename_conversation">名前を変更</string>
+    <string name="comms_schedule_send">予約送信</string>
+    <string name="comms_messages_settings">メッセージ</string>
+    <string name="comms_sms_signature">SMS 署名</string>
+    <string name="comms_unread_on_top">未読を上部に</string>
+    <string name="comms_sms_auto_delete">指定日後に古い SMS を削除（0 = 保持）</string>
+    <string name="comms_block_alphanumeric">英数字の送信者をブロック</string>
+    <string name="comms_popup_reply">新しい SMS のポップアップ返信</string>
+    <string name="comms_export_sms">SMS 履歴を書き出す</string>
+    <string name="comms_import_sms">SMS 履歴を取り込む</string>
+</resources>

@@ -23,7 +23,8 @@ has not been tried on many devices and carriers. Sending and receiving pictures 
 | --- | --- |
 | Banner "Make Telos your SMS app ..." with **Set** | Shown while Telos is not the default SMS app. **Set** opens Android's confirmation |
 | **New message** button | Asks for a number, then opens the conversation. An existing conversation with that number is reused |
-| A conversation row | Contact name or number, a snippet of 2 lines, the date. Unread conversations are bold |
+| A conversation row | Contact name or number, a snippet of 2 lines, the date. Unread conversations are bold. Pin and archive sit on the row |
+| Archived | Toggle under the list to show archived threads instead of the inbox |
 | Empty state | "No conversations. Your messages appear here." |
 | Back arrow | Returns to Recents |
 
@@ -40,7 +41,12 @@ them here." with an **Allow** button.
 | `[type]` | An attachment that is not a picture or video is shown as its file type, for example `[application/pdf]` |
 | **+** | Attach pictures. Only as the default SMS app |
 | "N attached" with **Remove** | Appears after attaching or sharing into Messages |
-| Reply field and **Send** | Sends a text. With attachments, or more than one recipient, it is sent as MMS |
+| Reply field and **Send** | Sends a text. With attachments, or more than one recipient, it is sent as MMS. If the contact's default is a messenger, Telos opens that app first and falls back to SMS. An optional signature is appended. **3s** delays send; **Schedule** queues a message one hour later |
+| Pin, archive, delete | On each conversation row. Archived threads have their own list |
+| Rename | Tap the conversation title |
+| Speak | Tap a message bubble to hear it |
+| **+** | Attach any file (pictures, documents). Only as the default SMS app |
+| Speech and **3s** | Speech-to-text into the field. **3s** waits three seconds before sending so you can cancel by leaving the thread |
 | **Send with** chips | Choose the SIM when two or more SIMs are active and the Phone permission is granted. The last SIM is remembered per conversation |
 | **Block number** / **Unblock** | In the header of a conversation with one recipient. Shares the block list with call blocking, see [SMS and MMS](./sms-mms#blocking-numbers) |
 

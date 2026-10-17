@@ -99,6 +99,7 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".sms.SmsSentReceiver" android:exported="false" />
+        <receiver android:name=".sms.SmsNotifActionReceiver" android:exported="false" />
         <receiver android:name=".sms.MmsDownloadedReceiver" android:exported="false" />
         <receiver android:name=".sms.MmsSentReceiver" android:exported="false" />
         <service

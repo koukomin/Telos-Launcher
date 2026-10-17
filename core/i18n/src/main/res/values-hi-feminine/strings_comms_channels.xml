@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">डिफ़ॉल्ट कॉल</string>
+    <string name="comms_pref_default_message">डिफ़ॉल्ट संदेश</string>
+    <string name="comms_channel_phone">फ़ोन</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">%s नहीं खुल सका। फ़ोन से कॉल की जा रही है।</string>
+    <string name="comms_messenger_fallback_sms">%s नहीं खुल सका। SMS भेजा जा रहा है।</string>
+    <string name="comms_pin_conversation">पिन</string>
+    <string name="comms_unpin_conversation">पिन हटाएँ</string>
+    <string name="comms_archive_conversation">संग्रहित करें</string>
+    <string name="comms_unarchive_conversation">इनबॉक्स</string>
+    <string name="comms_archived">संग्रहित</string>
+    <string name="comms_send_via">इससे भेजें</string>
+    <string name="comms_delayed_send">भेजना विलंबित करें</string>
+    <string name="comms_speak">बोलें</string>
+    <string name="comms_mark_read">पढ़ा हुआ</string>
+    <string name="comms_mark_unread">अपठित</string>
+    <string name="comms_delete_conversation">बातचीत हटाएँ</string>
+    <string name="comms_rename_conversation">नाम बदलें</string>
+    <string name="comms_schedule_send">समय निर्धारित करें</string>
+    <string name="comms_messages_settings">संदेश</string>
+    <string name="comms_sms_signature">SMS हस्ताक्षर</string>
+    <string name="comms_unread_on_top">अपठित ऊपर</string>
+    <string name="comms_sms_auto_delete">दिनों बाद पुराने संदेश हटाएँ (0 = रखें)</string>
+    <string name="comms_block_alphanumeric">अक्षरांकीय प्रेषकों को ब्लॉक करें</string>
+    <string name="comms_popup_reply">नए SMS पर पॉपअप उत्तर</string>
+    <string name="comms_export_sms">SMS इतिहास निर्यात</string>
+    <string name="comms_import_sms">SMS इतिहास आयात</string>
+</resources>

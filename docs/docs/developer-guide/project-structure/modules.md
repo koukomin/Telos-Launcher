@@ -23,6 +23,7 @@ started this project so future refactorings are to be expected. This is the curr
       notification drawer
     - `:icons`: Used to retrieve icons for items. Handles icon packs, themed icons and also custom
       icons (on a higher level)
+    - `:comms`: Built-in Phone, Messages, Media (music, radio, video, TV, YouTube, Stremio), Files helpers and the Media3 / NextLib playback stack (`MediaDecoderPack`)
     - `:music`: Manage media sessions and extract metadata
     - `:plugins`: Plugin service to list, enable and disable plugins.
     - `:search`: Search service

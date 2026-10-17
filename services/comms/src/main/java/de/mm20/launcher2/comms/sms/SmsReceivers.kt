@@ -11,6 +11,7 @@ import de.mm20.launcher2.base.containedScope
 import de.mm20.launcher2.comms.repository.SpamRepository
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -33,6 +34,12 @@ class SmsDeliverReceiver : BroadcastReceiver(), KoinComponent {
             try {
                 // a blocked number: kept in "Blocked messages", not stored in the conversations, no notification
                 if (BlockedMessages.interceptIfBlocked(context, spam, address, body, date)) return@launch
+                val snap = runCatching { settings.snapshot.first() }.getOrNull()
+                if (snap?.blockAlphanumeric == true && address.any { it.isLetter() }) {
+                    runCatching { spam.setBlocked(address, true) }
+                    BlockedMessages.interceptIfBlocked(context, spam, address, body, date)
+                    return@launch
+                }
                 SmsStore.insertInbox(context, address, body, date)
                 SmsNotifier.incoming(context, settings, address, body)
             } finally {

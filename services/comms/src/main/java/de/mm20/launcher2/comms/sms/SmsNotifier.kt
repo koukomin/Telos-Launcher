@@ -20,6 +20,17 @@ object SmsNotifier {
         // a hidden contact is not named, and the text is not shown
         val title = if (hidden) SmsText.get(context, "hc_new_message", "New message") else (SmsThreads.displayName(context, address) ?: address)
         show(context, address, title, if (hidden) "" else text)
+        if (!hidden && settings.smsPopupReply.first()) {
+            runCatching {
+                context.startActivity(
+                    Intent().setClassName(context.packageName, "de.mm20.launcher2.ui.comms.SmsPopupActivity")
+                        .putExtra("address", address)
+                        .putExtra("title", title)
+                        .putExtra("text", text)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP),
+                )
+            }
+        }
     }
 
     fun show(context: Context, address: String, title: String, text: String) {
@@ -34,6 +45,31 @@ object SmsNotifier {
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
+        val flags = PendingIntent.FLAG_UPDATE_CURRENT or
+            (if (android.os.Build.VERSION.SDK_INT >= 31) PendingIntent.FLAG_MUTABLE else 0)
+        val reply = PendingIntent.getBroadcast(
+            context, address.hashCode() + 1,
+            Intent(context, SmsNotifActionReceiver::class.java)
+                .setAction(SmsNotifActionReceiver.REPLY)
+                .putExtra("address", address),
+            flags,
+        )
+        val markRead = PendingIntent.getBroadcast(
+            context, address.hashCode() + 2,
+            Intent(context, SmsNotifActionReceiver::class.java)
+                .setAction(SmsNotifActionReceiver.READ)
+                .putExtra("address", address),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+        )
+        val speak = PendingIntent.getBroadcast(
+            context, address.hashCode() + 3,
+            Intent(context, SmsNotifActionReceiver::class.java)
+                .setAction(SmsNotifActionReceiver.SPEAK)
+                .putExtra("address", address)
+                .putExtra("text", text),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+        )
+        val remote = android.app.RemoteInput.Builder("reply").setLabel(SmsText.get(context, "hc_message", "Message")).build()
         nm.notify(
             address.hashCode(),
             Notification.Builder(context, CHANNEL)
@@ -43,6 +79,13 @@ object SmsNotifier {
                 .setContentIntent(open)
                 .setAutoCancel(true)
                 .setCategory(Notification.CATEGORY_MESSAGE)
+                .addAction(
+                    Notification.Action.Builder(null, SmsText.get(context, "hc_send", "Reply"), reply)
+                        .addRemoteInput(remote)
+                        .build(),
+                )
+                .addAction(Notification.Action.Builder(null, SmsText.get(context, "comms_mark_read", "Read"), markRead).build())
+                .addAction(Notification.Action.Builder(null, SmsText.get(context, "comms_speak", "Speak"), speak).build())
                 .build()
         )
     }

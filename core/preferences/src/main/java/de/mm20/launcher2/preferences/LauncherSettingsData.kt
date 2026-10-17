@@ -1330,6 +1330,18 @@ data class CommsGroup(
     val postCallPopup: Boolean = false,
     val inCallNotes: Boolean = true,
     val contactDefaultNumbers: Map<String, String> = emptyMap(),
+    /** Phone number digits → messenger id (phone|signal|whatsapp|telegram|viber) for outgoing calls */
+    val contactDefaultCallApp: Map<String, String> = emptyMap(),
+    /** Phone number digits → messenger id (sms|signal|whatsapp|telegram|viber) for outgoing messages */
+    val contactDefaultMessageApp: Map<String, String> = emptyMap(),
+    val archivedConversations: Map<String, String> = emptyMap(),
+    val pinnedConversations: Map<String, String> = emptyMap(),
+    val conversationNames: Map<String, String> = emptyMap(),
+    val smsSignature: String = "",
+    val unreadOnTop: Boolean = true,
+    val smsAutoDeleteDays: Int = 0,
+    val blockAlphanumeric: Boolean = false,
+    val smsPopupReply: Boolean = false,
     val hiddenNumbers: Map<String, String> = emptyMap(),
     val hideFromContacts: Boolean = true,
     val hideFromRecents: Boolean = true,

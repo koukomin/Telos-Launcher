@@ -34,6 +34,9 @@ import de.mm20.launcher2.comms.radio.CellularRadio
 import android.provider.Settings as AndroidSettings
 import android.content.Intent
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.rememberCoroutineScope
 import de.mm20.launcher2.ui.comms.DuplicateContactsRoute
 import de.mm20.launcher2.ui.comms.FakeCallSettingsRoute
@@ -565,6 +568,67 @@ fun CommsSettingsScreen() {
                     summary = stringResource(R.string.hc_add_contacts_from_a_vcf_file),
                     onClick = { vcfPicker.launch("text/*") },
                 )
+            }
+        }
+
+        item {
+            PreferenceCategory(title = stringResource(R.string.comms_messages_settings)) {
+                val signature by viewModel.smsSignature.collectAsStateWithLifecycle()
+                val unreadTop by viewModel.unreadOnTop.collectAsStateWithLifecycle()
+                val autoDays by viewModel.smsAutoDeleteDays.collectAsStateWithLifecycle()
+                val blockAlpha by viewModel.blockAlphanumeric.collectAsStateWithLifecycle()
+                val popupReply by viewModel.smsPopupReply.collectAsStateWithLifecycle()
+                var sigDraft by remember { mutableStateOf(signature) }
+                LaunchedEffect(signature) { sigDraft = signature }
+                OutlinedTextField(
+                    value = sigDraft,
+                    onValueChange = { sigDraft = it; viewModel.setSmsSignature(it) },
+                    label = { Text(stringResource(R.string.comms_sms_signature)) },
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.comms_unread_on_top),
+                    value = unreadTop,
+                    onValueChanged = { viewModel.setUnreadOnTop(it) },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.comms_block_alphanumeric),
+                    value = blockAlpha,
+                    onValueChanged = { viewModel.setBlockAlphanumeric(it) },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.comms_popup_reply),
+                    value = popupReply,
+                    onValueChanged = { viewModel.setSmsPopupReply(it) },
+                )
+                ListPreference(
+                    title = stringResource(R.string.comms_sms_auto_delete),
+                    value = autoDays,
+                    items = listOf(0, 7, 30, 90, 365).map { (if (it == 0) "0" else it.toString()) to it },
+                    onValueChanged = { viewModel.setSmsAutoDeleteDays(it) },
+                )
+                val smsExport = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("application/json")) { uri ->
+                    if (uri == null) return@rememberLauncherForActivityResult
+                    settingsScope.launch {
+                        val json = withContext(kotlinx.coroutines.Dispatchers.IO) {
+                            de.mm20.launcher2.comms.sms.SmsHistory.exportJson(context)
+                        }
+                        runCatching { context.contentResolver.openOutputStream(uri)?.use { it.write(json.toByteArray()) } }
+                    }
+                }
+                val smsImport = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+                    if (uri == null) return@rememberLauncherForActivityResult
+                    settingsScope.launch {
+                        val json = runCatching {
+                            context.contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() }
+                        }.getOrNull() ?: return@launch
+                        withContext(kotlinx.coroutines.Dispatchers.IO) {
+                            de.mm20.launcher2.comms.sms.SmsHistory.importJson(context, json)
+                        }
+                    }
+                }
+                Preference(title = stringResource(R.string.comms_export_sms), onClick = { smsExport.launch("telos-sms.json") })
+                Preference(title = stringResource(R.string.comms_import_sms), onClick = { smsImport.launch(arrayOf("application/json", "text/*")) })
             }
         }
 

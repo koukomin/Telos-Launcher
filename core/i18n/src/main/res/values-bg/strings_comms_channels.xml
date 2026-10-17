@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Подразбирано обаждане</string>
+    <string name="comms_pref_default_message">Подразбирано съобщение</string>
+    <string name="comms_channel_phone">Телефон</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">%s не може да се отвори. Обаждане по телефона.</string>
+    <string name="comms_messenger_fallback_sms">%s не може да се отвори. Изпращане на SMS.</string>
+    <string name="comms_pin_conversation">Закачи</string>
+    <string name="comms_unpin_conversation">Откачи</string>
+    <string name="comms_archive_conversation">Архивирай</string>
+    <string name="comms_unarchive_conversation">Входящи</string>
+    <string name="comms_archived">Архивирани</string>
+    <string name="comms_send_via">Изпрати чрез</string>
+    <string name="comms_delayed_send">Отложи изпращането</string>
+    <string name="comms_speak">Говори</string>
+    <string name="comms_mark_read">Прочетено</string>
+    <string name="comms_mark_unread">Непрочетено</string>
+    <string name="comms_delete_conversation">Изтрий разговора</string>
+    <string name="comms_rename_conversation">Преименувай</string>
+    <string name="comms_schedule_send">Насрочи</string>
+    <string name="comms_messages_settings">Съобщения</string>
+    <string name="comms_sms_signature">SMS подпис</string>
+    <string name="comms_unread_on_top">Непрочетени отгоре</string>
+    <string name="comms_sms_auto_delete">Изтрий стари съобщения след дни (0 = запази)</string>
+    <string name="comms_block_alphanumeric">Блокирай буквено-цифрови податели</string>
+    <string name="comms_popup_reply">Изскачащ отговор на ново SMS</string>
+    <string name="comms_export_sms">Експорт на SMS история</string>
+    <string name="comms_import_sms">Импорт на SMS история</string>
+</resources>

@@ -37,6 +37,10 @@ Tapping the green button, swiping or using a speed dial calls the **default numb
 marked with **Set as default** on the contact page, or else the first number. Tapping a row when **Tap to call**
 is off opens the contact page instead.
 
+On the contact page, **Default call** and **Default message** choose the phone/SMS or an installed messenger
+(Signal, WhatsApp, Telegram including Forkgram, Mercurygram and other common forks, Viber). A messenger call that cannot start falls back to a
+normal phone call. A messenger chat that cannot start falls back to SMS. Telos does not use those apps' servers.
+
 ## The contact page
 
 Open it by tapping a contact, a recent's photo, or **Details** in the long-press sheet.

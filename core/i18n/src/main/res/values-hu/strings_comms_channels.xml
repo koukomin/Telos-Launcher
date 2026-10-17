@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Alapértelmezett hívás</string>
+    <string name="comms_pref_default_message">Alapértelmezett üzenet</string>
+    <string name="comms_channel_phone">Telefon</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">A(z) %s nem nyitható meg. Hívás telefonon.</string>
+    <string name="comms_messenger_fallback_sms">A(z) %s nem nyitható meg. SMS küldése.</string>
+    <string name="comms_pin_conversation">Rögzítés</string>
+    <string name="comms_unpin_conversation">Feloldás</string>
+    <string name="comms_archive_conversation">Archiválás</string>
+    <string name="comms_unarchive_conversation">Beérkezett</string>
+    <string name="comms_archived">Archivált</string>
+    <string name="comms_send_via">Küldés ezzel</string>
+    <string name="comms_delayed_send">Küldés késleltetése</string>
+    <string name="comms_speak">Beszéd</string>
+    <string name="comms_mark_read">Olvasott</string>
+    <string name="comms_mark_unread">Olvasatlan</string>
+    <string name="comms_delete_conversation">Beszélgetés törlése</string>
+    <string name="comms_rename_conversation">Átnevezés</string>
+    <string name="comms_schedule_send">Ütemezés</string>
+    <string name="comms_messages_settings">Üzenetek</string>
+    <string name="comms_sms_signature">SMS-aláírás</string>
+    <string name="comms_unread_on_top">Olvasatlanok felül</string>
+    <string name="comms_sms_auto_delete">Régi üzenetek törlése napok után (0 = megtartás)</string>
+    <string name="comms_block_alphanumeric">Alfanumerikus feladók tiltása</string>
+    <string name="comms_popup_reply">Felugró válasz új SMS-re</string>
+    <string name="comms_export_sms">SMS-előzmények exportálása</string>
+    <string name="comms_import_sms">SMS-előzmények importálása</string>
+</resources>

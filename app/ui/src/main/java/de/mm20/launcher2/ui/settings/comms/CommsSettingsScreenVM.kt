@@ -237,6 +237,17 @@ class CommsSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
+    val smsSignature = commsSettings.smsSignature.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
+    fun setSmsSignature(value: String) = commsSettings.setSmsSignature(value)
+    val unreadOnTop = commsSettings.unreadOnTop.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    fun setUnreadOnTop(enabled: Boolean) = commsSettings.setUnreadOnTop(enabled)
+    val smsAutoDeleteDays = commsSettings.smsAutoDeleteDays.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
+    fun setSmsAutoDeleteDays(days: Int) = commsSettings.setSmsAutoDeleteDays(days)
+    val blockAlphanumeric = commsSettings.blockAlphanumeric.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    fun setBlockAlphanumeric(enabled: Boolean) = commsSettings.setBlockAlphanumeric(enabled)
+    val smsPopupReply = commsSettings.smsPopupReply.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    fun setSmsPopupReply(enabled: Boolean) = commsSettings.setSmsPopupReply(enabled)
+
     fun importVcf(content: String, onDone: (Int) -> Unit) {
         viewModelScope.launch {
             onDone(contacts.importVcf(content))

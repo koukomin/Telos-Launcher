@@ -67,4 +67,27 @@ object SmsStore {
             context.contentResolver.update(Telephony.Mms.CONTENT_URI, values, "${Telephony.Mms.THREAD_ID} = ? AND ${Telephony.Mms.READ} = 0", arrayOf(threadId.toString()))
         }
     }
+
+    fun markThreadUnread(context: Context, threadId: Long) {
+        if (threadId < 0 || !SmsRole.isDefault(context)) return
+        val values = ContentValues().apply { put(Telephony.Sms.READ, 0) }
+        runCatching {
+            context.contentResolver.update(Telephony.Sms.CONTENT_URI, values, "${Telephony.Sms.THREAD_ID} = ?", arrayOf(threadId.toString()))
+        }
+    }
+
+    fun deleteThread(context: Context, threadId: Long): Boolean {
+        if (threadId < 0 || !SmsRole.isDefault(context)) return false
+        val id = threadId.toString()
+        runCatching { context.contentResolver.delete(Telephony.Sms.CONTENT_URI, "${Telephony.Sms.THREAD_ID} = ?", arrayOf(id)) }
+        runCatching { context.contentResolver.delete(Telephony.Mms.CONTENT_URI, "${Telephony.Mms.THREAD_ID} = ?", arrayOf(id)) }
+        return true
+    }
+
+    fun deleteOlderThan(context: Context, olderThanMs: Long) {
+        if (!SmsRole.isDefault(context) || olderThanMs <= 0) return
+        val cut = olderThanMs.toString()
+        runCatching { context.contentResolver.delete(Telephony.Sms.CONTENT_URI, "${Telephony.Sms.DATE} < ?", arrayOf(cut)) }
+        runCatching { context.contentResolver.delete(Telephony.Mms.CONTENT_URI, "${Telephony.Mms.DATE} < ?", arrayOf((olderThanMs / 1000).toString())) }
+    }
 }

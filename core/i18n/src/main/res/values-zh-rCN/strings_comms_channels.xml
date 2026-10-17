@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">默认通话</string>
+    <string name="comms_pref_default_message">默认消息</string>
+    <string name="comms_channel_phone">电话</string>
+    <string name="comms_channel_sms">短信</string>
+    <string name="comms_messenger_fallback_call">无法打开 %s。改用电话呼叫。</string>
+    <string name="comms_messenger_fallback_sms">无法打开 %s。改为发送短信。</string>
+    <string name="comms_pin_conversation">置顶</string>
+    <string name="comms_unpin_conversation">取消置顶</string>
+    <string name="comms_archive_conversation">归档</string>
+    <string name="comms_unarchive_conversation">收件箱</string>
+    <string name="comms_archived">已归档</string>
+    <string name="comms_send_via">发送方式</string>
+    <string name="comms_delayed_send">延迟发送</string>
+    <string name="comms_speak">语音</string>
+    <string name="comms_mark_read">标为已读</string>
+    <string name="comms_mark_unread">标为未读</string>
+    <string name="comms_delete_conversation">删除会话</string>
+    <string name="comms_rename_conversation">重命名</string>
+    <string name="comms_schedule_send">定时发送</string>
+    <string name="comms_messages_settings">短信</string>
+    <string name="comms_sms_signature">短信签名</string>
+    <string name="comms_unread_on_top">未读置顶</string>
+    <string name="comms_sms_auto_delete">若干天后删除旧短信（0 = 保留）</string>
+    <string name="comms_block_alphanumeric">拦截字母数字发件人</string>
+    <string name="comms_popup_reply">新短信弹出回复</string>
+    <string name="comms_export_sms">导出短信记录</string>
+    <string name="comms_import_sms">导入短信记录</string>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Numatytasis skambutis</string>
+    <string name="comms_pref_default_message">Numatytoji žinutė</string>
+    <string name="comms_channel_phone">Telefonas</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">Nepavyko atidaryti %s. Skambinama telefonu.</string>
+    <string name="comms_messenger_fallback_sms">Nepavyko atidaryti %s. Siunčiama SMS.</string>
+    <string name="comms_pin_conversation">Prisegti</string>
+    <string name="comms_unpin_conversation">Atsegti</string>
+    <string name="comms_archive_conversation">Archyvuoti</string>
+    <string name="comms_unarchive_conversation">Gauta</string>
+    <string name="comms_archived">Archyvuota</string>
+    <string name="comms_send_via">Siųsti per</string>
+    <string name="comms_delayed_send">Atidėti siuntimą</string>
+    <string name="comms_speak">Kalba</string>
+    <string name="comms_mark_read">Skaityta</string>
+    <string name="comms_mark_unread">Neskaityta</string>
+    <string name="comms_delete_conversation">Ištrinti pokalbį</string>
+    <string name="comms_rename_conversation">Pervadinti</string>
+    <string name="comms_schedule_send">Suplanuoti</string>
+    <string name="comms_messages_settings">Žinutės</string>
+    <string name="comms_sms_signature">SMS parašas</string>
+    <string name="comms_unread_on_top">Neskaitytos viršuje</string>
+    <string name="comms_sms_auto_delete">Ištrinti senas žinutes po dienų (0 = palikti)</string>
+    <string name="comms_block_alphanumeric">Blokuoti raidinius-skaitinius siuntėjus</string>
+    <string name="comms_popup_reply">Iššokantis atsakymas į naują SMS</string>
+    <string name="comms_export_sms">Eksportuoti SMS istoriją</string>
+    <string name="comms_import_sms">Importuoti SMS istoriją</string>
+</resources>

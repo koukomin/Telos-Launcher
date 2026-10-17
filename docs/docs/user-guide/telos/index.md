@@ -25,9 +25,9 @@ gallery, music, video and radio players, an app store and an app freezer.
 <a href="./downloads/"><b>⬇️ Downloads</b><span>Download manager: several connections, resume, queue, folder of your choice</span></a>
 <a href="./calculator/"><b>🧮 Calculator</b><span>Scientific calculator, VAT, unit and currency converter, history</span></a>
 <a href="./photos/"><b>🖼️ Viewer</b><span>Gallery, EXIF tools, photo editor, document viewer and editor, PDF tools</span></a>
-<a href="./music/"><b>🎵 Music</b><span>Local library, lyrics, scrobbling, tag editor</span></a>
-<a href="./video/"><b>🎬 Video</b><span>Library, player, web streams, torrents, subtitles, Trakt</span></a>
-<a href="./radio/"><b>📻 Radio</b><span>Internet radio with station search and sleep timer</span></a>
+<a href="./music/"><b>🎵 Music</b><span>Local library, lyrics, scrobbling, tag editor, NextLib decoders</span></a>
+<a href="./video/"><b>🎬 Video</b><span>Library, player, NextLib decoders, streams, torrents, subtitles, Trakt</span></a>
+<a href="./radio/"><b>📻 Radio</b><span>Internet radio with station search, sleep timer, NextLib decoders</span></a>
 <a href="./network/"><b>🛡️ Network</b><span>VPN based firewall and DNS filter: DNS servers, per-app rules, blocklists, WireGuard</span></a>
 <a href="./store/"><b>🛍️ Store</b><span>Install and update apps from GitHub, F-Droid and more</span></a>
 <a href="./freeze/"><b>❄️ Smart Freeze</b><span>Freeze or hide apps through Shizuku, Dhizuku, root, Island or device owner</span></a>

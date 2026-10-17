@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Standardanruf</string>
+    <string name="comms_pref_default_message">Standardnachricht</string>
+    <string name="comms_channel_phone">Telefon</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">%s konnte nicht geöffnet werden. Anruf über das Telefon.</string>
+    <string name="comms_messenger_fallback_sms">%s konnte nicht geöffnet werden. SMS wird gesendet.</string>
+    <string name="comms_pin_conversation">Anheften</string>
+    <string name="comms_unpin_conversation">Lösen</string>
+    <string name="comms_archive_conversation">Archivieren</string>
+    <string name="comms_unarchive_conversation">Posteingang</string>
+    <string name="comms_archived">Archiviert</string>
+    <string name="comms_send_via">Senden über</string>
+    <string name="comms_delayed_send">Versand verzögern</string>
+    <string name="comms_speak">Sprechen</string>
+    <string name="comms_mark_read">Als gelesen</string>
+    <string name="comms_mark_unread">Als ungelesen</string>
+    <string name="comms_delete_conversation">Unterhaltung löschen</string>
+    <string name="comms_rename_conversation">Umbenennen</string>
+    <string name="comms_schedule_send">Planen</string>
+    <string name="comms_messages_settings">Nachrichten</string>
+    <string name="comms_sms_signature">SMS-Signatur</string>
+    <string name="comms_unread_on_top">Ungelesene oben</string>
+    <string name="comms_sms_auto_delete">Alte Nachrichten nach Tagen löschen (0 = behalten)</string>
+    <string name="comms_block_alphanumeric">Alphanumerische Absender blockieren</string>
+    <string name="comms_popup_reply">Popup-Antwort bei neuer SMS</string>
+    <string name="comms_export_sms">SMS-Verlauf exportieren</string>
+    <string name="comms_import_sms">SMS-Verlauf importieren</string>
+</resources>

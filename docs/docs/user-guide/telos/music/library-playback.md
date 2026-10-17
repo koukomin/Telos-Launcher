@@ -118,7 +118,7 @@ Android 13 and later ask for the notification permission when Music opens.
 - The library excludes non-music audio and files in `.nomedia` folders.
 - No sorting options: songs by title, albums by name and artists by name.
 - There is no saved queue: it exists only while the player service is running.
-- Playback depends on the codecs of the phone.
+- Playback uses Media3 / ExoPlayer with official NextLib FFmpeg software decoders when the phone has no decoder.
 
 ## Troubleshooting
 
@@ -126,7 +126,7 @@ Android 13 and later ask for the notification permission when Music opens.
 | --- | --- |
 | "No music found on this device" | Files must be indexed as music. Restart the phone or trigger a media scan with a file manager |
 | A song is missing | It has no duration tag, is in a `.nomedia` folder, or is marked as a ringtone or recording |
-| A song will not play | The codec is not supported on this phone. Try another file |
+| A song will not play | The codec is not supported. Try another file. NextLib covers extra audio such as AC3 |
 | Playback stops by itself | The sleep timer ran out, or Android stopped the service in battery saver |
 | Controls missing in the notification | Allow notifications for Telos |
 | Album shows twice | The files have different album ids. Fix the tags so they match, then rescan |

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Privzeti klic</string>
+    <string name="comms_pref_default_message">Privzeto sporočilo</string>
+    <string name="comms_channel_phone">Telefon</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">%s ni bilo mogoče odpreti. Klic prek telefona.</string>
+    <string name="comms_messenger_fallback_sms">%s ni bilo mogoče odpreti. Pošiljanje SMS.</string>
+    <string name="comms_pin_conversation">Pripni</string>
+    <string name="comms_unpin_conversation">Odpni</string>
+    <string name="comms_archive_conversation">Arhiviraj</string>
+    <string name="comms_unarchive_conversation">Prejeto</string>
+    <string name="comms_archived">Arhivirano</string>
+    <string name="comms_send_via">Pošlji prek</string>
+    <string name="comms_delayed_send">Zakasni pošiljanje</string>
+    <string name="comms_speak">Govori</string>
+    <string name="comms_mark_read">Prebrano</string>
+    <string name="comms_mark_unread">Neprebrano</string>
+    <string name="comms_delete_conversation">Izbriši pogovor</string>
+    <string name="comms_rename_conversation">Preimenuj</string>
+    <string name="comms_schedule_send">Načrtuj</string>
+    <string name="comms_messages_settings">Sporočila</string>
+    <string name="comms_sms_signature">Podpis SMS</string>
+    <string name="comms_unread_on_top">Neprebrano zgoraj</string>
+    <string name="comms_sms_auto_delete">Izbriši stara sporočila po dneh (0 = obdrži)</string>
+    <string name="comms_block_alphanumeric">Blokiraj alfanumerične pošiljatelje</string>
+    <string name="comms_popup_reply">Pojavni odgovor na nov SMS</string>
+    <string name="comms_export_sms">Izvozi zgodovino SMS</string>
+    <string name="comms_import_sms">Uvozi zgodovino SMS</string>
+</resources>

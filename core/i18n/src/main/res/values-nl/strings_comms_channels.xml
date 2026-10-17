@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Standaardoproep</string>
+    <string name="comms_pref_default_message">Standaardbericht</string>
+    <string name="comms_channel_phone">Telefoon</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">%s kon niet worden geopend. Bellen via de telefoon.</string>
+    <string name="comms_messenger_fallback_sms">%s kon niet worden geopend. SMS wordt verzonden.</string>
+    <string name="comms_pin_conversation">Vastzetten</string>
+    <string name="comms_unpin_conversation">Losmaken</string>
+    <string name="comms_archive_conversation">Archiveren</string>
+    <string name="comms_unarchive_conversation">Inbox</string>
+    <string name="comms_archived">Gearchiveerd</string>
+    <string name="comms_send_via">Verzenden via</string>
+    <string name="comms_delayed_send">Verzending uitstellen</string>
+    <string name="comms_speak">Spreken</string>
+    <string name="comms_mark_read">Als gelezen</string>
+    <string name="comms_mark_unread">Als ongelezen</string>
+    <string name="comms_delete_conversation">Gesprek verwijderen</string>
+    <string name="comms_rename_conversation">Hernoemen</string>
+    <string name="comms_schedule_send">Plannen</string>
+    <string name="comms_messages_settings">Berichten</string>
+    <string name="comms_sms_signature">SMS-handtekening</string>
+    <string name="comms_unread_on_top">Ongelezen bovenaan</string>
+    <string name="comms_sms_auto_delete">Oude berichten na dagen verwijderen (0 = bewaren)</string>
+    <string name="comms_block_alphanumeric">Alfanumerieke afzenders blokkeren</string>
+    <string name="comms_popup_reply">Popup-antwoord bij nieuwe SMS</string>
+    <string name="comms_export_sms">SMS-geschiedenis exporteren</string>
+    <string name="comms_import_sms">SMS-geschiedenis importeren</string>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">預設通話</string>
+    <string name="comms_pref_default_message">預設訊息</string>
+    <string name="comms_channel_phone">電話</string>
+    <string name="comms_channel_sms">簡訊</string>
+    <string name="comms_messenger_fallback_call">無法開啟 %s。改用電話撥打。</string>
+    <string name="comms_messenger_fallback_sms">無法開啟 %s。改為傳送簡訊。</string>
+    <string name="comms_pin_conversation">釘選</string>
+    <string name="comms_unpin_conversation">取消釘選</string>
+    <string name="comms_archive_conversation">封存</string>
+    <string name="comms_unarchive_conversation">收件匣</string>
+    <string name="comms_archived">已封存</string>
+    <string name="comms_send_via">傳送方式</string>
+    <string name="comms_delayed_send">延遲傳送</string>
+    <string name="comms_speak">語音</string>
+    <string name="comms_mark_read">標為已讀</string>
+    <string name="comms_mark_unread">標為未讀</string>
+    <string name="comms_delete_conversation">刪除對話</string>
+    <string name="comms_rename_conversation">重新命名</string>
+    <string name="comms_schedule_send">排程傳送</string>
+    <string name="comms_messages_settings">訊息</string>
+    <string name="comms_sms_signature">簡訊簽名</string>
+    <string name="comms_unread_on_top">未讀置頂</string>
+    <string name="comms_sms_auto_delete">若干天後刪除舊簡訊（0 = 保留）</string>
+    <string name="comms_block_alphanumeric">封鎖字母數字寄件者</string>
+    <string name="comms_popup_reply">新簡訊快顯回覆</string>
+    <string name="comms_export_sms">匯出簡訊紀錄</string>
+    <string name="comms_import_sms">匯入簡訊紀錄</string>
+</resources>

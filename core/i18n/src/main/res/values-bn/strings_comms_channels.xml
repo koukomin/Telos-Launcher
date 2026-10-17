@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">ডিফল্ট কল</string>
+    <string name="comms_pref_default_message">ডিফল্ট বার্তা</string>
+    <string name="comms_channel_phone">ফোন</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">%s খোলা যায়নি। ফোন দিয়ে কল করা হচ্ছে।</string>
+    <string name="comms_messenger_fallback_sms">%s খোলা যায়নি। SMS পাঠানো হচ্ছে।</string>
+    <string name="comms_pin_conversation">পিন</string>
+    <string name="comms_unpin_conversation">আনপিন</string>
+    <string name="comms_archive_conversation">আর্কাইভ</string>
+    <string name="comms_unarchive_conversation">ইনবক্স</string>
+    <string name="comms_archived">আর্কাইভ করা</string>
+    <string name="comms_send_via">এর মাধ্যমে পাঠান</string>
+    <string name="comms_delayed_send">পাঠাতে দেরি</string>
+    <string name="comms_speak">বলুন</string>
+    <string name="comms_mark_read">পঠিত</string>
+    <string name="comms_mark_unread">অপঠিত</string>
+    <string name="comms_delete_conversation">কথোপকথন মুছুন</string>
+    <string name="comms_rename_conversation">নাম পরিবর্তন</string>
+    <string name="comms_schedule_send">সময়সূচি</string>
+    <string name="comms_messages_settings">বার্তা</string>
+    <string name="comms_sms_signature">SMS স্বাক্ষর</string>
+    <string name="comms_unread_on_top">অপঠিত উপরে</string>
+    <string name="comms_sms_auto_delete">দিন পরে পুরনো বার্তা মুছুন (0 = রাখুন)</string>
+    <string name="comms_block_alphanumeric">আলফানিউমেরিক প্রেরক ব্লক</string>
+    <string name="comms_popup_reply">নতুন SMS-এ পপআপ উত্তর</string>
+    <string name="comms_export_sms">SMS ইতিহাস রপ্তানি</string>
+    <string name="comms_import_sms">SMS ইতিহাস আমদানি</string>
+</resources>

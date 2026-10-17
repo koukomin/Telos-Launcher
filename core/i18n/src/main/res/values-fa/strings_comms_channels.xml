@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Default call</string>
+    <string name="comms_pref_default_message">Default message</string>
+    <string name="comms_channel_phone">Phone</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">Could not open %s. Calling with the phone.</string>
+    <string name="comms_messenger_fallback_sms">Could not open %s. Sending SMS.</string>
+    <string name="comms_pin_conversation">Pin</string>
+    <string name="comms_unpin_conversation">Unpin</string>
+    <string name="comms_archive_conversation">Archive</string>
+    <string name="comms_unarchive_conversation">Inbox</string>
+    <string name="comms_archived">Archived</string>
+    <string name="comms_send_via">Send via</string>
+    <string name="comms_delayed_send">Delay send</string>
+    <string name="comms_speak">Speak</string>
+    <string name="comms_mark_read">Mark read</string>
+    <string name="comms_mark_unread">Mark unread</string>
+    <string name="comms_delete_conversation">Delete conversation</string>
+    <string name="comms_rename_conversation">Rename</string>
+    <string name="comms_schedule_send">Schedule</string>
+    <string name="comms_messages_settings">Messages</string>
+    <string name="comms_sms_signature">SMS signature</string>
+    <string name="comms_unread_on_top">Unread conversations on top</string>
+    <string name="comms_sms_auto_delete">Delete old messages after days (0 = keep)</string>
+    <string name="comms_block_alphanumeric">Block alphanumeric senders</string>
+    <string name="comms_popup_reply">Popup reply on new SMS</string>
+    <string name="comms_export_sms">Export SMS history</string>
+    <string name="comms_import_sms">Import SMS history</string>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Standardsamtal</string>
+    <string name="comms_pref_default_message">Standardmeddelande</string>
+    <string name="comms_channel_phone">Telefon</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">Kunde inte öppna %s. Ringer med telefonen.</string>
+    <string name="comms_messenger_fallback_sms">Kunde inte öppna %s. Skickar SMS.</string>
+    <string name="comms_pin_conversation">Fäst</string>
+    <string name="comms_unpin_conversation">Lossa</string>
+    <string name="comms_archive_conversation">Arkivera</string>
+    <string name="comms_unarchive_conversation">Inkorg</string>
+    <string name="comms_archived">Arkiverat</string>
+    <string name="comms_send_via">Skicka via</string>
+    <string name="comms_delayed_send">Fördröj sändning</string>
+    <string name="comms_speak">Tala</string>
+    <string name="comms_mark_read">Läst</string>
+    <string name="comms_mark_unread">Oläst</string>
+    <string name="comms_delete_conversation">Ta bort konversation</string>
+    <string name="comms_rename_conversation">Byt namn</string>
+    <string name="comms_schedule_send">Schemalägg</string>
+    <string name="comms_messages_settings">Meddelanden</string>
+    <string name="comms_sms_signature">SMS-signatur</string>
+    <string name="comms_unread_on_top">Olästa överst</string>
+    <string name="comms_sms_auto_delete">Ta bort gamla meddelanden efter dagar (0 = behåll)</string>
+    <string name="comms_block_alphanumeric">Blockera alfanumeriska avsändare</string>
+    <string name="comms_popup_reply">Popup-svar vid nytt SMS</string>
+    <string name="comms_export_sms">Exportera SMS-historik</string>
+    <string name="comms_import_sms">Importera SMS-historik</string>
+</resources>

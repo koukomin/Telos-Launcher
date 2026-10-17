@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Виклик за замовчуванням</string>
+    <string name="comms_pref_default_message">Повідомлення за замовчуванням</string>
+    <string name="comms_channel_phone">Телефон</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">Не вдалося відкрити %s. Виклик телефоном.</string>
+    <string name="comms_messenger_fallback_sms">Не вдалося відкрити %s. Надсилання SMS.</string>
+    <string name="comms_pin_conversation">Закріпити</string>
+    <string name="comms_unpin_conversation">Відкріпити</string>
+    <string name="comms_archive_conversation">Архівувати</string>
+    <string name="comms_unarchive_conversation">Вхідні</string>
+    <string name="comms_archived">Архів</string>
+    <string name="comms_send_via">Надіслати через</string>
+    <string name="comms_delayed_send">Відкласти надсилання</string>
+    <string name="comms_speak">Голос</string>
+    <string name="comms_mark_read">Прочитано</string>
+    <string name="comms_mark_unread">Не прочитано</string>
+    <string name="comms_delete_conversation">Видалити розмову</string>
+    <string name="comms_rename_conversation">Перейменувати</string>
+    <string name="comms_schedule_send">Запланувати</string>
+    <string name="comms_messages_settings">Повідомлення</string>
+    <string name="comms_sms_signature">Підпис SMS</string>
+    <string name="comms_unread_on_top">Непрочитані зверху</string>
+    <string name="comms_sms_auto_delete">Видаляти старі повідомлення через дні (0 = зберігати)</string>
+    <string name="comms_block_alphanumeric">Блокувати буквено-цифрових відправників</string>
+    <string name="comms_popup_reply">Спливна відповідь на нове SMS</string>
+    <string name="comms_export_sms">Експорт історії SMS</string>
+    <string name="comms_import_sms">Імпорт історії SMS</string>
+</resources>

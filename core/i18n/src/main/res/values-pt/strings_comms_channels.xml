@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Chamada padrão</string>
+    <string name="comms_pref_default_message">Mensagem padrão</string>
+    <string name="comms_channel_phone">Telefone</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">Não foi possível abrir %s. A ligar pelo telefone.</string>
+    <string name="comms_messenger_fallback_sms">Não foi possível abrir %s. A enviar SMS.</string>
+    <string name="comms_pin_conversation">Fixar</string>
+    <string name="comms_unpin_conversation">Desafixar</string>
+    <string name="comms_archive_conversation">Arquivar</string>
+    <string name="comms_unarchive_conversation">Entrada</string>
+    <string name="comms_archived">Arquivadas</string>
+    <string name="comms_send_via">Enviar via</string>
+    <string name="comms_delayed_send">Atrasar envio</string>
+    <string name="comms_speak">Falar</string>
+    <string name="comms_mark_read">Marcar como lida</string>
+    <string name="comms_mark_unread">Marcar como não lida</string>
+    <string name="comms_delete_conversation">Eliminar conversa</string>
+    <string name="comms_rename_conversation">Mudar nome</string>
+    <string name="comms_schedule_send">Agendar</string>
+    <string name="comms_messages_settings">Mensagens</string>
+    <string name="comms_sms_signature">Assinatura SMS</string>
+    <string name="comms_unread_on_top">Não lidas no topo</string>
+    <string name="comms_sms_auto_delete">Apagar mensagens antigas após dias (0 = manter)</string>
+    <string name="comms_block_alphanumeric">Bloquear remetentes alfanuméricos</string>
+    <string name="comms_popup_reply">Resposta popup em SMS novo</string>
+    <string name="comms_export_sms">Exportar histórico SMS</string>
+    <string name="comms_import_sms">Importar histórico SMS</string>
+</resources>

@@ -119,6 +119,9 @@ Telos Viewer has **no settings page of its own**. Its behavior depends on the sy
 | Read-only | `.doc`, `.xls`, `.ppt` (can be converted to `.docx`, `.xlsx`, `.pptx`) |
 | Not supported | Encrypted or password-protected Office files |
 
+Photos and documents open in Telos Viewer, which is part of the launcher. There is no downloadable
+viewer add-on.
+
 ## Limitations
 
 - Office and OpenDocument files are shown with structure but without page layout or fonts.

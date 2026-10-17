@@ -121,7 +121,11 @@ fun CommsDashboardScreen(
                     MessengerApp("SMS", "com.google.android.apps.messaging"),
                     MessengerApp("WhatsApp", "com.whatsapp", listOf("com.whatsapp.w4b")),
                     MessengerApp("Viber", "com.viber.voip"),
-                    MessengerApp("Telegram", "org.telegram.messenger", listOf("org.telegram.plus", "org.thunderdog.challegram", "nekogram.messenger", "xyz.nextalone.nagram")),
+                    MessengerApp(
+                        "Telegram",
+                        "org.telegram.messenger",
+                        de.mm20.launcher2.comms.intent.MessengerApps.telegramPkgs.filter { it != "org.telegram.messenger" },
+                    ),
                     MessengerApp("Signal", "org.thoughtcrime.securesms")
                 )
                 

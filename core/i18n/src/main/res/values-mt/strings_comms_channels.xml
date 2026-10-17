@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Sejħa default</string>
+    <string name="comms_pref_default_message">Messaġġ default</string>
+    <string name="comms_channel_phone">Telefon</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">Ma setax jinfetaħ %s. Qed iċempel bit-telefon.</string>
+    <string name="comms_messenger_fallback_sms">Ma setax jinfetaħ %s. Qed jibgħat SMS.</string>
+    <string name="comms_pin_conversation">Waħħal</string>
+    <string name="comms_unpin_conversation">Neħħi</string>
+    <string name="comms_archive_conversation">Arkivja</string>
+    <string name="comms_unarchive_conversation">Inbox</string>
+    <string name="comms_archived">Arkivjati</string>
+    <string name="comms_send_via">Ibgħat permezz</string>
+    <string name="comms_delayed_send">Dewwem il-ħruġ</string>
+    <string name="comms_speak">Tkellem</string>
+    <string name="comms_mark_read">Moqri</string>
+    <string name="comms_mark_unread">Mhux moqri</string>
+    <string name="comms_delete_conversation">Ħassar konverżazzjoni</string>
+    <string name="comms_rename_conversation">Ibdel l-isem</string>
+    <string name="comms_schedule_send">Iskeda</string>
+    <string name="comms_messages_settings">Messaġġi</string>
+    <string name="comms_sms_signature">Firma SMS</string>
+    <string name="comms_unread_on_top">Mhux moqrija fuq</string>
+    <string name="comms_sms_auto_delete">Ħassar messaġġi qodma wara ġranet (0 = żomm)</string>
+    <string name="comms_block_alphanumeric">Imblokka mittenti alfanumeriċi</string>
+    <string name="comms_popup_reply">Tweġiba popup għal SMS ġdid</string>
+    <string name="comms_export_sms">Esporta storja SMS</string>
+    <string name="comms_import_sms">Importa storja SMS</string>
+</resources>

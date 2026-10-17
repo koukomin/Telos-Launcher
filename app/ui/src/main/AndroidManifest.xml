@@ -312,6 +312,12 @@
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
 
+        <activity
+            android:name=".comms.SmsPopupActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!-- Telos Messages: what the system and other apps open for text links and shared files -->
         <activity
             android:name=".comms.ComposeSmsActivity"

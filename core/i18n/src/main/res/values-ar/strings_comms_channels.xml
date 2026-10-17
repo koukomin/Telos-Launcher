@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">المكالمة الافتراضية</string>
+    <string name="comms_pref_default_message">الرسالة الافتراضية</string>
+    <string name="comms_channel_phone">الهاتف</string>
+    <string name="comms_channel_sms">رسالة قصيرة</string>
+    <string name="comms_messenger_fallback_call">تعذر فتح %s. جارٍ الاتصال بالهاتف.</string>
+    <string name="comms_messenger_fallback_sms">تعذر فتح %s. جارٍ إرسال رسالة قصيرة.</string>
+    <string name="comms_pin_conversation">تثبيت</string>
+    <string name="comms_unpin_conversation">إلغاء التثبيت</string>
+    <string name="comms_archive_conversation">أرشفة</string>
+    <string name="comms_unarchive_conversation">الوارد</string>
+    <string name="comms_archived">مؤرشف</string>
+    <string name="comms_send_via">إرسال عبر</string>
+    <string name="comms_delayed_send">تأخير الإرسال</string>
+    <string name="comms_speak">تحدث</string>
+    <string name="comms_mark_read">تعيين كمقروء</string>
+    <string name="comms_mark_unread">تعيين كغير مقروء</string>
+    <string name="comms_delete_conversation">حذف المحادثة</string>
+    <string name="comms_rename_conversation">إعادة تسمية</string>
+    <string name="comms_schedule_send">جدولة</string>
+    <string name="comms_messages_settings">الرسائل</string>
+    <string name="comms_sms_signature">توقيع الرسالة</string>
+    <string name="comms_unread_on_top">غير المقروء في الأعلى</string>
+    <string name="comms_sms_auto_delete">حذف الرسائل القديمة بعد أيام (0 = إبقاء)</string>
+    <string name="comms_block_alphanumeric">حظر المرسلين الأبجديين الرقميين</string>
+    <string name="comms_popup_reply">رد منبثق لرسالة جديدة</string>
+    <string name="comms_export_sms">تصدير سجل الرسائل</string>
+    <string name="comms_import_sms">استيراد سجل الرسائل</string>
+</resources>

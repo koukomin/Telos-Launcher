@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Standardanrop</string>
+    <string name="comms_pref_default_message">Standardmelding</string>
+    <string name="comms_channel_phone">Telefon</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">Kunne ikke åpne %s. Ringer med telefonen.</string>
+    <string name="comms_messenger_fallback_sms">Kunne ikke åpne %s. Sender SMS.</string>
+    <string name="comms_pin_conversation">Fest</string>
+    <string name="comms_unpin_conversation">Løsne</string>
+    <string name="comms_archive_conversation">Arkiver</string>
+    <string name="comms_unarchive_conversation">Innboks</string>
+    <string name="comms_archived">Arkivert</string>
+    <string name="comms_send_via">Send via</string>
+    <string name="comms_delayed_send">Utsett sending</string>
+    <string name="comms_speak">Snakk</string>
+    <string name="comms_mark_read">Lest</string>
+    <string name="comms_mark_unread">Ulest</string>
+    <string name="comms_delete_conversation">Slett samtale</string>
+    <string name="comms_rename_conversation">Gi nytt navn</string>
+    <string name="comms_schedule_send">Planlegg</string>
+    <string name="comms_messages_settings">Meldinger</string>
+    <string name="comms_sms_signature">SMS-signatur</string>
+    <string name="comms_unread_on_top">Uleste øverst</string>
+    <string name="comms_sms_auto_delete">Slett gamle meldinger etter dager (0 = behold)</string>
+    <string name="comms_block_alphanumeric">Blokker alfanumeriske avsendere</string>
+    <string name="comms_popup_reply">Popup-svar ved ny SMS</string>
+    <string name="comms_export_sms">Eksporter SMS-historikk</string>
+    <string name="comms_import_sms">Importer SMS-historikk</string>
+</resources>

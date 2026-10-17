@@ -47,8 +47,10 @@ Enabling it again restores the components.
 
 - Player services (Radio, Music) are started only when something plays and stop by themselves when
   playback ends.
-- Heavy parts (FFmpeg decoders, the torrent engine, the SIP stack) are created on first use, not at
+- Heavy parts (FFmpeg decoders from official NextLib, the torrent engine, the SIP stack) are created on first use, not at
   launcher start. A torrent is stopped and its cache deleted when the player closes.
+- `MediaDecoderPack` in `:services:comms` builds Media3 renderers with NextLib (`io.github.anilbeesetti:nextlib-media3ext`).
+  Music, Radio, YouTube, TV and Video all use it. Playback stays in the Telos UI.
 - The Store checks for updates with WorkManager (a periodic job), not with a service of its own.
 
 ## The video player in its own process (experimental)

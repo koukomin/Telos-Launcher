@@ -204,7 +204,7 @@ Subtitles are searched and downloaded through the OpenSubtitles API (https://www
 Both services are used with the user's own API key.
 
 
-## NextLib (FFmpeg decoders in Telos Video)
+## NextLib (FFmpeg decoders in Telos Media)
 
 NextLib, https://github.com/anilbeesetti/nextlib (GPL-3.0), used unchanged as a Maven dependency
 (`io.github.anilbeesetti:nextlib-media3ext`). It bundles FFmpeg (LGPL-2.1+, https://ffmpeg.org) and

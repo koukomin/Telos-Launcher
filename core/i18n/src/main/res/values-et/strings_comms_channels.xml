@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Vaikekõne</string>
+    <string name="comms_pref_default_message">Vaikesõnum</string>
+    <string name="comms_channel_phone">Telefon</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">%s ei avanenud. Helistamine telefoniga.</string>
+    <string name="comms_messenger_fallback_sms">%s ei avanenud. SMS-i saatmine.</string>
+    <string name="comms_pin_conversation">Kinnita</string>
+    <string name="comms_unpin_conversation">Eemalda</string>
+    <string name="comms_archive_conversation">Arhiveeri</string>
+    <string name="comms_unarchive_conversation">Sisendkaust</string>
+    <string name="comms_archived">Arhiveeritud</string>
+    <string name="comms_send_via">Saada rakendusega</string>
+    <string name="comms_delayed_send">Viivita saatmist</string>
+    <string name="comms_speak">Räägi</string>
+    <string name="comms_mark_read">Loetud</string>
+    <string name="comms_mark_unread">Lugemata</string>
+    <string name="comms_delete_conversation">Kustuta vestlus</string>
+    <string name="comms_rename_conversation">Nimeta ümber</string>
+    <string name="comms_schedule_send">Ajasta</string>
+    <string name="comms_messages_settings">Sõnumid</string>
+    <string name="comms_sms_signature">SMS-allkiri</string>
+    <string name="comms_unread_on_top">Lugemata üleval</string>
+    <string name="comms_sms_auto_delete">Kustuta vanad sõnumid päevade pärast (0 = säilita)</string>
+    <string name="comms_block_alphanumeric">Blokeeri tähtnumbrilised saatjad</string>
+    <string name="comms_popup_reply">Hüpikvastus uuele SMS-ile</string>
+    <string name="comms_export_sms">Ekspordi SMS-ajalugu</string>
+    <string name="comms_import_sms">Impordi SMS-ajalugu</string>
+</resources>

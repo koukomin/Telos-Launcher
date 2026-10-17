@@ -18,7 +18,7 @@ in picture. Optional posters (Wikipedia or TMDB), subtitles (OpenSubtitles) and 
 ## What it is
 
 Telos Video reads the videos Android has indexed, groups them into a library, and plays them with Media3 /
-ExoPlayer. It is also registered with Android as a handler for video files, `magnet:` links and `.torrent` files,
+ExoPlayer and official NextLib FFmpeg software decoders. Playback stays in Telos. It is also registered with Android as a handler for video files, `magnet:` links and `.torrent` files,
 so other apps and browsers can open them in it. It is a [virtual app](../#how-the-built-in-apps-work), is guarded
 by the crash guard, and its services and screens are disabled when you switch it off in [Telos Store](../store/).
 

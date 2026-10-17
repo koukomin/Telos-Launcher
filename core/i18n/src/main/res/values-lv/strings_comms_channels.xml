@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Noklusējuma zvans</string>
+    <string name="comms_pref_default_message">Noklusējuma ziņa</string>
+    <string name="comms_channel_phone">Tālrunis</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">Neizdevās atvērt %s. Zvana ar tālruni.</string>
+    <string name="comms_messenger_fallback_sms">Neizdevās atvērt %s. Sūta SMS.</string>
+    <string name="comms_pin_conversation">Piespraust</string>
+    <string name="comms_unpin_conversation">Atspraust</string>
+    <string name="comms_archive_conversation">Arhivēt</string>
+    <string name="comms_unarchive_conversation">Iesūtne</string>
+    <string name="comms_archived">Arhivēts</string>
+    <string name="comms_send_via">Sūtīt ar</string>
+    <string name="comms_delayed_send">Aizkavēt sūtīšanu</string>
+    <string name="comms_speak">Runāt</string>
+    <string name="comms_mark_read">Lasīts</string>
+    <string name="comms_mark_unread">Nelasīts</string>
+    <string name="comms_delete_conversation">Dzēst sarunu</string>
+    <string name="comms_rename_conversation">Pārdēvēt</string>
+    <string name="comms_schedule_send">Ieplānot</string>
+    <string name="comms_messages_settings">Ziņas</string>
+    <string name="comms_sms_signature">SMS paraksts</string>
+    <string name="comms_unread_on_top">Nelasītie augšā</string>
+    <string name="comms_sms_auto_delete">Dzēst vecās ziņas pēc dienām (0 = saglabāt)</string>
+    <string name="comms_block_alphanumeric">Bloķēt burtu-ciparu sūtītājus</string>
+    <string name="comms_popup_reply">Uznirstošā atbilde jaunam SMS</string>
+    <string name="comms_export_sms">Eksportēt SMS vēsturi</string>
+    <string name="comms_import_sms">Importēt SMS vēsturi</string>
+</resources>

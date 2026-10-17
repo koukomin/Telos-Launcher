@@ -22,6 +22,13 @@ access and display settings as external players. Explicit player exclusions stil
 sessions take priority over newer paused notifications, and Music/Radio session taps open the
 correct section. Each built-in media service has its own notification ID.
 
+## Playback engine
+
+Music, Radio, YouTube, YouTube Music, local Video, TV and Stremio streams use **Media3 / ExoPlayer**
+inside Telos. Official **NextLib** (`io.github.anilbeesetti:nextlib-media3ext` on Maven Central) adds
+FFmpeg software decoders (AC3, E-AC3, DTS, TrueHD and more) when the phone has no hardware decoder.
+There is no separate player APK. Photos and documents stay in [Telos Viewer](../photos/).
+
 ## What is kept when you switch
 
 Search text, the open tab and the library state of each space are kept; an open album or series page is not.

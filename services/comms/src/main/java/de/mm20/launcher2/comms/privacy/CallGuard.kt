@@ -27,6 +27,24 @@ object CallGuard : KoinComponent {
             val activity = context as? FragmentActivity ?: return cannotConfirm(context)
             if (!authManager.authenticateNative(activity, activity.getString(I18nR.string.au_phoneb_confirm_call))) return
         }
+        val channel = de.mm20.launcher2.comms.intent.MessengerApps.resolvePref(
+            snap.contactDefaultCallApp, number,
+        )
+        if (handle == null && channel != de.mm20.launcher2.comms.intent.MessengerChannel.Phone &&
+            channel != de.mm20.launcher2.comms.intent.MessengerChannel.Sms
+        ) {
+            val opened = withContext(Dispatchers.Main) {
+                de.mm20.launcher2.comms.intent.MessengerApps.openCall(context, channel, number)
+            }
+            if (opened) return
+            withContext(Dispatchers.Main) {
+                Toast.makeText(
+                    context.applicationContext,
+                    context.getString(I18nR.string.comms_messenger_fallback_call, channel.id),
+                    Toast.LENGTH_SHORT,
+                ).show()
+            }
+        }
         // Calls without an explicit SIM go over SIP when the account is set to be preferred
         if (handle == null && de.mm20.launcher2.comms.sip.SipDialer.isDefault() &&
             de.mm20.launcher2.comms.sip.SipDialer.place(context, number)

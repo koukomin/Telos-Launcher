@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Glao réamhshocraithe</string>
+    <string name="comms_pref_default_message">Teachtaireacht réamhshocraithe</string>
+    <string name="comms_channel_phone">Fón</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">Níorbh fhéidir %s a oscailt. Ag glaoch leis an bhfón.</string>
+    <string name="comms_messenger_fallback_sms">Níorbh fhéidir %s a oscailt. SMS á sheoladh.</string>
+    <string name="comms_pin_conversation">Bioráin</string>
+    <string name="comms_unpin_conversation">Díphionnáil</string>
+    <string name="comms_archive_conversation">Cartlann</string>
+    <string name="comms_unarchive_conversation">Bosca isteach</string>
+    <string name="comms_archived">Cartlannaithe</string>
+    <string name="comms_send_via">Seol trí</string>
+    <string name="comms_delayed_send">Moilligh seoladh</string>
+    <string name="comms_speak">Labhair</string>
+    <string name="comms_mark_read">Léite</string>
+    <string name="comms_mark_unread">Neamhléite</string>
+    <string name="comms_delete_conversation">Scrios comhrá</string>
+    <string name="comms_rename_conversation">Athainmnigh</string>
+    <string name="comms_schedule_send">Sceideal</string>
+    <string name="comms_messages_settings">Teachtaireachtaí</string>
+    <string name="comms_sms_signature">Síniú SMS</string>
+    <string name="comms_unread_on_top">Neamhléite ag an mbarr</string>
+    <string name="comms_sms_auto_delete">Scrios sean-teachtaireachtaí tar éis laethanta (0 = coinnigh)</string>
+    <string name="comms_block_alphanumeric">Cuir bac ar sheoltóirí alfa-uimhriúla</string>
+    <string name="comms_popup_reply">Freagra aníos ar SMS nua</string>
+    <string name="comms_export_sms">Easpórtáil stair SMS</string>
+    <string name="comms_import_sms">Iompórtáil stair SMS</string>
+</resources>

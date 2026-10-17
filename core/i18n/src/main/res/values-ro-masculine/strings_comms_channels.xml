@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Apel implicit</string>
+    <string name="comms_pref_default_message">Mesaj implicit</string>
+    <string name="comms_channel_phone">Telefon</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">Nu s-a putut deschide %s. Se apelează prin telefon.</string>
+    <string name="comms_messenger_fallback_sms">Nu s-a putut deschide %s. Se trimite SMS.</string>
+    <string name="comms_pin_conversation">Fixează</string>
+    <string name="comms_unpin_conversation">Anulează fixarea</string>
+    <string name="comms_archive_conversation">Arhivează</string>
+    <string name="comms_unarchive_conversation">Inbox</string>
+    <string name="comms_archived">Arhivate</string>
+    <string name="comms_send_via">Trimite prin</string>
+    <string name="comms_delayed_send">Amână trimiterea</string>
+    <string name="comms_speak">Vorbește</string>
+    <string name="comms_mark_read">Citit</string>
+    <string name="comms_mark_unread">Necitit</string>
+    <string name="comms_delete_conversation">Șterge conversația</string>
+    <string name="comms_rename_conversation">Redenumește</string>
+    <string name="comms_schedule_send">Programează</string>
+    <string name="comms_messages_settings">Mesaje</string>
+    <string name="comms_sms_signature">Semnătură SMS</string>
+    <string name="comms_unread_on_top">Necitite sus</string>
+    <string name="comms_sms_auto_delete">Șterge mesajele vechi după zile (0 = păstrează)</string>
+    <string name="comms_block_alphanumeric">Blochează expeditori alfanumerici</string>
+    <string name="comms_popup_reply">Răspuns popup la SMS nou</string>
+    <string name="comms_export_sms">Export istoric SMS</string>
+    <string name="comms_import_sms">Import istoric SMS</string>
+</resources>

@@ -13,7 +13,7 @@ Radio-Browser directory, see the current track, use a sleep timer, and record th
 
 ## What it is
 
-Telos Radio streams live radio over the internet with a media session service built on Media3 / ExoPlayer. Playback
+Telos Radio streams live radio over the internet with a media session service built on Media3 / ExoPlayer and official NextLib FFmpeg decoders. Playback
 continues in the background with a notification, and a small player with the station name and current track is shown
 while a station is loaded. It pauses when headphones are unplugged. It is a
 [virtual app](../#how-the-built-in-apps-work), is guarded by the crash guard, and its service and screens are disabled
@@ -165,7 +165,7 @@ you search for.
 
 | Type | Support |
 | --- | --- |
-| Streams | What ExoPlayer plays: typically MP3, AAC, Ogg and HLS (`.m3u8`) over http or https |
+| Streams | Media3 / ExoPlayer plus official NextLib: typically MP3, AAC, Ogg and HLS (`.m3u8`) over http or https |
 | Playlists | `.pls`, `.m3u` (also detected by their content type) |
 | Collection files | M3U export, JSON backup |
 

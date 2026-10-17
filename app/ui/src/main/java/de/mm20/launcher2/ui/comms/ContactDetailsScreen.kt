@@ -128,6 +128,20 @@ class ContactDetailsViewModel : ViewModel(), KoinComponent {
         SharingStarted.WhileSubscribed(),
         emptyMap(),
     )
+    val contactDefaultCallApp = commsSettings.contactDefaultCallApp.stateIn(
+        viewModelScope, SharingStarted.WhileSubscribed(), emptyMap(),
+    )
+    val contactDefaultMessageApp = commsSettings.contactDefaultMessageApp.stateIn(
+        viewModelScope, SharingStarted.WhileSubscribed(), emptyMap(),
+    )
+
+    fun setDefaultCallApp(number: String, appId: String?) {
+        commsSettings.setContactDefaultCallApp(number, appId)
+    }
+
+    fun setDefaultMessageApp(number: String, appId: String?) {
+        commsSettings.setContactDefaultMessageApp(number, appId)
+    }
     val hiddenNumbers = commsSettings.hiddenNumbers.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(),
@@ -286,6 +300,8 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
     val notes by viewModel.callerNotes.collectAsStateWithLifecycle()
     val numberSims by viewModel.numberDefaultSim.collectAsStateWithLifecycle()
     val defaultNumbers by viewModel.contactDefaultNumbers.collectAsStateWithLifecycle()
+    val defaultCallApp by viewModel.contactDefaultCallApp.collectAsStateWithLifecycle()
+    val defaultMessageApp by viewModel.contactDefaultMessageApp.collectAsStateWithLifecycle()
     val hiddenNumbers by viewModel.hiddenNumbers.collectAsStateWithLifecycle()
     val protectedNumbers by viewModel.protectedCallNumbers.collectAsStateWithLifecycle()
     var confirmDelete by remember { mutableStateOf(false) }
@@ -601,6 +617,52 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                             onCall = launcher(actions["vb_call"]),
                             onVideo = null,
                         )
+                        Spacer(Modifier.height(12.dp))
+                        Text(
+                            text = stringResource(R.string.comms_pref_default_call),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                        ChannelChips(
+                            selected = de.mm20.launcher2.comms.intent.MessengerApps.resolvePref(defaultCallApp, primary).id,
+                            options = listOf(
+                                "phone" to stringResource(R.string.comms_channel_phone),
+                                "signal" to stringResource(R.string.action_signal),
+                                "whatsapp" to stringResource(R.string.action_whatsapp),
+                                "telegram" to stringResource(R.string.action_telegram),
+                                "viber" to stringResource(R.string.action_viber),
+                            ).filter { (id, _) ->
+                                id == "phone" || de.mm20.launcher2.comms.intent.MessengerApps.installedPackage(
+                                    context,
+                                    de.mm20.launcher2.comms.intent.MessengerChannel.fromId(id),
+                                ) != null
+                            },
+                            onSelect = { viewModel.setDefaultCallApp(primary, it) },
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        Text(
+                            text = stringResource(R.string.comms_pref_default_message),
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                        ChannelChips(
+                            selected = de.mm20.launcher2.comms.intent.MessengerApps.resolvePref(defaultMessageApp, primary).let {
+                                if (it == de.mm20.launcher2.comms.intent.MessengerChannel.Phone) "sms" else it.id
+                            },
+                            options = listOf(
+                                "sms" to stringResource(R.string.comms_channel_sms),
+                                "signal" to stringResource(R.string.action_signal),
+                                "whatsapp" to stringResource(R.string.action_whatsapp),
+                                "telegram" to stringResource(R.string.action_telegram),
+                                "viber" to stringResource(R.string.action_viber),
+                            ).filter { (id, _) ->
+                                id == "sms" || de.mm20.launcher2.comms.intent.MessengerApps.installedPackage(
+                                    context,
+                                    de.mm20.launcher2.comms.intent.MessengerChannel.fromId(id),
+                                ) != null
+                            },
+                            onSelect = { viewModel.setDefaultMessageApp(primary, it) },
+                        )
                     }
                 }
             }
@@ -911,6 +973,26 @@ fun ContactDetailsScreen(contactId: Long, phoneNumber: String = "") {
                 }
             },
         )
+    }
+}
+
+@Composable
+private fun ChannelChips(
+    selected: String,
+    options: List<Pair<String, String>>,
+    onSelect: (String) -> Unit,
+) {
+    androidx.compose.foundation.layout.FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier.fillMaxWidth(),
+    ) {
+        options.forEach { (id, label) ->
+            FilterChip(
+                selected = selected == id,
+                onClick = { onSelect(id) },
+                label = { Text(label, maxLines = 1) },
+            )
+        }
     }
 }
 

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Προεπιλογή κλήσης</string>
+    <string name="comms_pref_default_message">Προεπιλογή μηνύματος</string>
+    <string name="comms_channel_phone">Τηλέφωνο</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">Δεν άνοιξε το %s. Κλήση από το τηλέφωνο.</string>
+    <string name="comms_messenger_fallback_sms">Δεν άνοιξε το %s. Αποστολή SMS.</string>
+    <string name="comms_pin_conversation">Καρφίτσωμα</string>
+    <string name="comms_unpin_conversation">Ξεκαρφίτσωμα</string>
+    <string name="comms_archive_conversation">Αρχειοθέτηση</string>
+    <string name="comms_unarchive_conversation">Εισερχόμενα</string>
+    <string name="comms_archived">Αρχειοθετημένα</string>
+    <string name="comms_send_via">Αποστολή μέσω</string>
+    <string name="comms_delayed_send">Καθυστέρηση αποστολής</string>
+    <string name="comms_speak">Ομιλία</string>
+    <string name="comms_mark_read">Σήμανση ως διαβασμένο</string>
+    <string name="comms_mark_unread">Σήμανση ως μη διαβασμένο</string>
+    <string name="comms_delete_conversation">Διαγραφή συνομιλίας</string>
+    <string name="comms_rename_conversation">Μετονομασία</string>
+    <string name="comms_schedule_send">Προγραμματισμός</string>
+    <string name="comms_messages_settings">Μηνύματα</string>
+    <string name="comms_sms_signature">Υπογραφή SMS</string>
+    <string name="comms_unread_on_top">Μη διαβασμένα πάνω</string>
+    <string name="comms_sms_auto_delete">Διαγραφή παλιών μηνυμάτων μετά από ημέρες (0 = κράτηση)</string>
+    <string name="comms_block_alphanumeric">Αποκλεισμός αλφαριθμητικών αποστολέων</string>
+    <string name="comms_popup_reply">Αναδυόμενη απάντηση σε νέο SMS</string>
+    <string name="comms_export_sms">Εξαγωγή ιστορικού SMS</string>
+    <string name="comms_import_sms">Εισαγωγή ιστορικού SMS</string>
+</resources>

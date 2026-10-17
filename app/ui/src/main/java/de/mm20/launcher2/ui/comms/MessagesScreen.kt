@@ -70,8 +70,11 @@ import de.mm20.launcher2.comms.sms.SmsStore
 import de.mm20.launcher2.comms.sms.SmsThreads
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import androidx.compose.runtime.rememberCoroutineScope
+import de.mm20.launcher2.comms.sms.ScheduledSmsStore
 import org.koin.compose.koinInject
 import java.text.DateFormat
 import java.util.Date
@@ -90,6 +93,7 @@ fun MessagesScreen(
 ) {
     val context = LocalContext.current
     val settings: CommsSettings = koinInject()
+    val sendScope = rememberCoroutineScope()
     val hidden by settings.hiddenNumbers.collectAsStateWithLifecycle(emptyMap())
     val unlocked by PrivacySession.hiderUnlocked.collectAsStateWithLifecycle()
 
@@ -165,6 +169,12 @@ fun MessagesScreen(
         if (initialNumber.isNotBlank() && open == null) open = conversationFor(initialNumber)
         initialHandled = true
     }
+    val archived by settings.archivedConversations.collectAsStateWithLifecycle(emptyMap())
+    val pinned by settings.pinnedConversations.collectAsStateWithLifecycle(emptyMap())
+    var showArchived by remember { mutableStateOf(false) }
+    fun convKey(address: String) = address.filter { it.isDigit() || it == ',' }
+    fun isArchived(c: SmsConversation) = archived.containsKey(convKey(c.address))
+    fun isPinned(c: SmsConversation) = pinned.containsKey(convKey(c.address))
     var listQuery by remember { mutableStateOf("") }
     // message texts per thread, loaded in the background while a search is active
     val bodies = remember { androidx.compose.runtime.mutableStateMapOf<Long, List<String>>() }
@@ -180,10 +190,25 @@ fun MessagesScreen(
         }
     }
     val visibleAll = all?.filter { unlocked || !isHidden(it) }
-    val shown = if (visibleAll == null || listQuery.isBlank()) visibleAll else
+        ?.filter { if (showArchived) isArchived(it) else !isArchived(it) }
+    val searched = if (visibleAll == null || listQuery.isBlank()) visibleAll else
         de.mm20.launcher2.comms.search.TelosSearch.filter(visibleAll, listQuery) { c ->
             listOf(c.name, c.address, c.snippet) + (bodies[c.threadId] ?: emptyList())
         }
+    val unreadOnTop by settings.unreadOnTop.collectAsStateWithLifecycle(true)
+    val names by settings.conversationNames.collectAsStateWithLifecycle(emptyMap())
+    fun displayName(c: SmsConversation) = names[convKey(c.address)] ?: c.name ?: c.address
+    LaunchedEffect(Unit) {
+        val days = settings.smsAutoDeleteDays.first()
+        if (days > 0) withContext(Dispatchers.IO) {
+            SmsStore.deleteOlderThan(context, System.currentTimeMillis() - days * 86_400_000L)
+        }
+    }
+    val shown = searched?.sortedWith(
+        compareByDescending<SmsConversation> { isPinned(it) }
+            .thenByDescending { if (unreadOnTop) it.unread else 0 }
+            .thenByDescending { it.date }
+    )
 
     if (showBlocked) {
         BackHandler { showBlocked = false; refresh++ }
@@ -235,6 +260,10 @@ fun MessagesScreen(
             onClick = { showBlocked = true },
             modifier = Modifier.padding(horizontal = 8.dp),
         ) { Text(stringResource(R.string.au2_msg2_blocked_messages_count, blockedCount)) }
+        TextButton(
+            onClick = { showArchived = !showArchived },
+            modifier = Modifier.padding(horizontal = 8.dp),
+        ) { Text(stringResource(if (showArchived) R.string.comms_unarchive_conversation else R.string.comms_archived)) }
         when {
             shown == null -> Box(Modifier.fillMaxSize())
             shown.isEmpty() && listQuery.isNotBlank() -> SearchEmptyState(listQuery)
@@ -251,11 +280,29 @@ fun MessagesScreen(
                                 Text((c.name ?: c.address).trim().take(1).uppercase(), Modifier.padding(16.dp), style = MaterialTheme.typography.titleMedium)
                             }
                             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                                Text(c.name ?: c.address, style = MaterialTheme.typography.titleMedium,
+                                Text(
+                                    (if (isPinned(c)) "📌 " else "") + displayName(c),
+                                    style = MaterialTheme.typography.titleMedium,
                                     fontWeight = if (c.unread > 0) FontWeight.Bold else FontWeight.Normal, maxLines = 2, overflow = TextOverflow.Ellipsis)
                                 Text(shortDate(c.date), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 if (c.snippet.isNotBlank()) Text(c.snippet, style = MaterialTheme.typography.bodyMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
                                 if (c.unread > 0) androidx.compose.material3.Badge { Text(c.unread.toString()) }
+                            }
+                            Column {
+                                IconButton(onClick = { settings.setConversationPinned(c.address, !isPinned(c)) }) {
+                                    Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.comms_pin_conversation))
+                                }
+                                IconButton(onClick = { settings.setConversationArchived(c.address, !isArchived(c)) }) {
+                                    Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.comms_archive_conversation))
+                                }
+                                if (isDefault) IconButton(onClick = {
+                                    sendScope.launch {
+                                        withContext(Dispatchers.IO) { SmsStore.deleteThread(context, c.threadId) }
+                                        refresh++
+                                    }
+                                }) {
+                                    Icon(painterResource(R.drawable.close_24px), contentDescription = stringResource(R.string.comms_delete_conversation))
+                                }
                             }
                         }
                     }
@@ -311,6 +358,13 @@ private fun ThreadView(
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) { picked ->
         if (picked.isNotEmpty()) onAttachments(attachments + picked)
     }
+    val speech = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        val spoken = result.data?.getStringArrayListExtra(android.speech.RecognizerIntent.EXTRA_RESULTS)?.firstOrNull()
+        if (!spoken.isNullOrBlank()) onBody(if (body.isBlank()) spoken else "$body $spoken")
+    }
+    val settings: CommsSettings = koinInject()
+    val messageApps by settings.contactDefaultMessageApp.collectAsStateWithLifecycle(emptyMap())
+    var delaySend by remember { mutableStateOf(false) }
     val addresses = conversation.address.split(", ").filter { it.isNotBlank() }
     // the SIM that sends (only offered on a phone with two or more active SIMs)
     val sims = remember { SmsSims.active(context) }
@@ -325,7 +379,24 @@ private fun ThreadView(
     Column(Modifier.fillMaxSize().imePadding()) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 8.dp)) {
             TextButton(onClick = onBack) { Text(stringResource(R.string.hc_back)) }
-            Text(conversation.name ?: conversation.address, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
+            val names by settings.conversationNames.collectAsStateWithLifecycle(emptyMap())
+            val title = names[conversation.address.filter { it.isDigit() || it == ',' }] ?: conversation.name ?: conversation.address
+            var rename by remember { mutableStateOf(false) }
+            Text(title, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f).clickable { rename = true })
+            if (rename) {
+                var draft by remember { mutableStateOf(title) }
+                AlertDialog(
+                    onDismissRequest = { rename = false },
+                    title = { Text(stringResource(R.string.comms_rename_conversation)) },
+                    text = { OutlinedTextField(draft, { draft = it }, singleLine = true) },
+                    confirmButton = {
+                        TextButton(onClick = { settings.setConversationName(conversation.address, draft); rename = false }) {
+                            Text(stringResource(android.R.string.ok))
+                        }
+                    },
+                    dismissButton = { TextButton(onClick = { rename = false }) { Text(stringResource(R.string.hc_cancel)) } },
+                )
+            }
             if (single) TextButton(onClick = {
                 val number = addresses[0]
                 val block = !blocked
@@ -362,7 +433,18 @@ private fun ThreadView(
                     Surface(
                         shape = RoundedCornerShape(16.dp),
                         color = if (m.outgoing) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerHigh,
-                        modifier = Modifier.widthIn(max = 300.dp),
+                        modifier = Modifier.widthIn(max = 300.dp).clickable {
+                            if (m.body.isNotBlank()) {
+                                android.speech.tts.TextToSpeech(context) { status ->
+                                    if (status == android.speech.tts.TextToSpeech.SUCCESS) {
+                                        /* started below */
+                                    }
+                                }.also { engine ->
+                                    engine.setOnUtteranceProgressListener(null)
+                                    engine.speak(m.body, android.speech.tts.TextToSpeech.QUEUE_FLUSH, null, m.id)
+                                }
+                            }
+                        },
                     ) {
                         Column(Modifier.padding(horizontal = 12.dp, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                             m.attachments.forEach { a ->
@@ -392,11 +474,57 @@ private fun ThreadView(
             }
         }
         if (sims.size >= 2) SimChooser(sims, simId, { simId = it }, Modifier.padding(horizontal = 12.dp))
+        if (single) {
+            val ch = de.mm20.launcher2.comms.intent.MessengerApps.resolvePref(messageApps, addresses[0]).let {
+                if (it == de.mm20.launcher2.comms.intent.MessengerChannel.Phone) de.mm20.launcher2.comms.intent.MessengerChannel.Sms else it
+            }
+            if (ch != de.mm20.launcher2.comms.intent.MessengerChannel.Sms) {
+                Text(
+                    stringResource(R.string.comms_send_via) + " " + ch.id,
+                    style = MaterialTheme.typography.labelMedium,
+                    modifier = Modifier.padding(horizontal = 12.dp),
+                )
+            }
+        }
         Row(Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
-            if (isDefault) IconButton(onClick = { picker.launch("image/*") }) {
+            if (isDefault) IconButton(onClick = { picker.launch("*/*") }) {
                 Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.au_messages_attach))
             }
+            IconButton(onClick = {
+                runCatching {
+                    speech.launch(
+                        android.content.Intent(android.speech.RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+                            putExtra(android.speech.RecognizerIntent.EXTRA_LANGUAGE_MODEL, android.speech.RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                        }
+                    )
+                }
+            }) {
+                Icon(painterResource(R.drawable.search_24px), contentDescription = stringResource(R.string.comms_speak))
+            }
             OutlinedTextField(body, onBody, modifier = Modifier.weight(1f), placeholder = { Text(stringResource(R.string.hc_message)) })
+            FilterChip(selected = delaySend, onClick = { delaySend = !delaySend }, label = { Text("3s") })
+            var scheduleOpen by remember { mutableStateOf(false) }
+            FilterChip(selected = false, onClick = { scheduleOpen = true }, label = { Text(stringResource(R.string.comms_schedule_send)) })
+            if (scheduleOpen) {
+                AlertDialog(
+                    onDismissRequest = { scheduleOpen = false },
+                    title = { Text(stringResource(R.string.comms_schedule_send)) },
+                    text = { Text(stringResource(R.string.hc_scheduled_sms)) },
+                    confirmButton = {
+                        TextButton(
+                            enabled = body.isNotBlank() && single,
+                            onClick = {
+                                val dest = addresses.firstOrNull().orEmpty()
+                                val whenMs = System.currentTimeMillis() + 3_600_000L
+                                ScheduledSmsStore.add(context, dest, body, whenMs, if (sims.size >= 2) simId else -1)
+                                onBody("")
+                                scheduleOpen = false
+                            },
+                        ) { Text("+1h") }
+                    },
+                    dismissButton = { TextButton(onClick = { scheduleOpen = false }) { Text(stringResource(R.string.hc_cancel)) } },
+                )
+            }
             TextButton(
                 enabled = body.isNotBlank() || attachments.isNotEmpty(),
                 onClick = {
@@ -406,11 +534,27 @@ private fun ThreadView(
                     val sub = if (sims.size >= 2) simId else -1
                     if (sub >= 0) SmsSims.remember(context, conversation.address, sub)
                     failed = false
-                    // message store, attachment reading and the carrier hand-over are not main thread work
+                    val wait = if (delaySend) 3000L else 0L
+                    val dest = addresses.firstOrNull().orEmpty()
                     sendScope.launch {
+                        if (wait > 0) kotlinx.coroutines.delay(wait)
+                        val signature = settings.smsSignature.first()
+                        val outbound = if (signature.isBlank()) text else "$text\n$signature"
+                        val channel = de.mm20.launcher2.comms.intent.MessengerApps.resolvePref(messageApps, dest).let {
+                            if (it == de.mm20.launcher2.comms.intent.MessengerChannel.Phone) de.mm20.launcher2.comms.intent.MessengerChannel.Sms else it
+                        }
+                        if (channel != de.mm20.launcher2.comms.intent.MessengerChannel.Sms && !asMms) {
+                            val opened = de.mm20.launcher2.comms.intent.MessengerApps.openChat(context, channel, dest, outbound)
+                            if (opened) { onBody(""); onAttachments(emptyList()); return@launch }
+                            android.widget.Toast.makeText(
+                                context,
+                                context.getString(R.string.comms_messenger_fallback_sms, channel.id),
+                                android.widget.Toast.LENGTH_SHORT,
+                            ).show()
+                        }
                         val ok = withContext(Dispatchers.IO) {
-                            if (asMms) SmsThreads.sendMms(context, addresses, text, picked, sub)
-                            else SmsThreads.send(context, addresses.firstOrNull().orEmpty(), text, sub)
+                            if (asMms) SmsThreads.sendMms(context, addresses, outbound, picked, sub)
+                            else SmsThreads.send(context, dest, outbound, sub)
                         }
                         failed = !ok
                         if (ok) { onBody(""); onAttachments(emptyList()); version++ }

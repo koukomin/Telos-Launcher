@@ -28,8 +28,20 @@ internal object ContactActions {
     /** Mime types the messenger apps use for their actions in the contacts database */
     val whatsAppCall = listOf("vnd.android.cursor.item/vnd.com.whatsapp.voip.call")
     val whatsAppVideo = listOf("vnd.android.cursor.item/vnd.com.whatsapp.video.call")
-    val telegramCall = listOf("vnd.android.cursor.item/vnd.org.telegram.messenger.android.call")
-    val signalCall = listOf("vnd.android.cursor.item/vnd.org.thoughtcrime.securesms.call")
+    val telegramCall = listOf(
+        "vnd.android.cursor.item/vnd.org.telegram.messenger.android.call",
+        "vnd.android.cursor.item/vnd.org.telegram.plus.android.call",
+        "vnd.android.cursor.item/vnd.org.thunderdog.challegram.call",
+        "vnd.android.cursor.item/vnd.nekogram.messenger.call",
+        "vnd.android.cursor.item/vnd.tw.nekomimi.nekogram.call",
+        "vnd.android.cursor.item/vnd.xyz.nextalone.nagram.call",
+        "vnd.android.cursor.item/vnd.org.forkgram.messenger.android.call",
+        "vnd.android.cursor.item/vnd.it.belloworld.mercurygram.android.call",
+    )
+    val signalCall = listOf(
+        "vnd.android.cursor.item/vnd.org.thoughtcrime.securesms.call",
+        "vnd.android.cursor.item/vnd.im.molly.app.call",
+    )
     val viberCall = listOf("vnd.android.cursor.item/vnd.com.viber.voip.viber_number_call")
 
     /** The first data row of the contact with one of [mimeTypes], or null when the app has none */

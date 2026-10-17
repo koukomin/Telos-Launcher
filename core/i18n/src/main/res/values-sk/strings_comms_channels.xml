@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_pref_default_call">Predvolaný hovor</string>
+    <string name="comms_pref_default_message">Predvolená správa</string>
+    <string name="comms_channel_phone">Telefón</string>
+    <string name="comms_channel_sms">SMS</string>
+    <string name="comms_messenger_fallback_call">%s sa nepodarilo otvoriť. Volanie telefónom.</string>
+    <string name="comms_messenger_fallback_sms">%s sa nepodarilo otvoriť. Odosielanie SMS.</string>
+    <string name="comms_pin_conversation">Pripnúť</string>
+    <string name="comms_unpin_conversation">Odopnúť</string>
+    <string name="comms_archive_conversation">Archivovať</string>
+    <string name="comms_unarchive_conversation">Doručené</string>
+    <string name="comms_archived">Archivované</string>
+    <string name="comms_send_via">Odoslať cez</string>
+    <string name="comms_delayed_send">Odložiť odoslanie</string>
+    <string name="comms_speak">Hovoriť</string>
+    <string name="comms_mark_read">Prečítané</string>
+    <string name="comms_mark_unread">Neprečítané</string>
+    <string name="comms_delete_conversation">Odstrániť konverzáciu</string>
+    <string name="comms_rename_conversation">Premenovať</string>
+    <string name="comms_schedule_send">Naplánovať</string>
+    <string name="comms_messages_settings">Správy</string>
+    <string name="comms_sms_signature">Podpis SMS</string>
+    <string name="comms_unread_on_top">Neprečítané hore</string>
+    <string name="comms_sms_auto_delete">Odstrániť staré správy po dňoch (0 = ponechať)</string>
+    <string name="comms_block_alphanumeric">Blokovať alfanumerických odosielateľov</string>
+    <string name="comms_popup_reply">Vyskakovacia odpoveď na nové SMS</string>
+    <string name="comms_export_sms">Exportovať históriu SMS</string>
+    <string name="comms_import_sms">Importovať históriu SMS</string>
+</resources>
