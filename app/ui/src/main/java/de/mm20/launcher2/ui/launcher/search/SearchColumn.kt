@@ -265,21 +265,24 @@ fun SearchColumn(
                     )
                 }
 
-                if (isSearchEmpty && profiles.size > 1 && allAppsEnabled) {
+                val drawerProfiles = profiles.filter { it.type != Profile.Type.Clone }
+                if (isSearchEmpty && drawerProfiles.size > 1 && allAppsEnabled) {
                     AppResults(
-                        apps = when (profiles.getOrNull(selectedAppProfileIndex)?.type) {
+                        apps = when (drawerProfiles.getOrNull(selectedAppProfileIndex)?.type) {
                             Profile.Type.Private -> privateApps
                             Profile.Type.Work -> workApps
                             else -> apps
                         },
                         highlightedItem = bestMatch as? Application,
-                        profiles = profiles,
+                        profiles = drawerProfiles,
                         selectedProfileIndex = selectedAppProfileIndex,
                         onProfileSelected = {
                             selectedAppProfileIndex = it
                             onHideKeyboard()
                         },
-                        isProfileLocked = profileStates.getOrNull(selectedAppProfileIndex)?.locked == true,
+                        isProfileLocked = profileStates.getOrNull(
+                            profiles.indexOfFirst { it.userHandle == drawerProfiles.getOrNull(selectedAppProfileIndex)?.userHandle }
+                        )?.locked == true,
                         onProfileLockChange = { p, l ->
                             changeProfileLock(p, l)
                         },

@@ -15,8 +15,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.graphics.drawable.toBitmap
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -71,15 +72,21 @@ fun CommsDashboardScreen(
     val coroutineScope = rememberCoroutineScope()
     
     val commsSettings: CommsSettings = koinInject()
-    val autoOpenDialpad by commsSettings.autoOpenDialpad.collectAsStateWithLifecycle(false)
     val phoneAppLock by commsSettings.phoneAppLock.collectAsStateWithLifecycle(false)
     val phoneUnlocked by de.mm20.launcher2.comms.privacy.PrivacySession.phoneUnlocked.collectAsStateWithLifecycle()
+    val simNames by commsSettings.simNames.collectAsStateWithLifecycle(emptyMap())
     val context = LocalContext.current
     val backStack = LocalBackStack.current
     val scope = rememberCoroutineScope()
 
-    LaunchedEffect(autoOpenDialpad, initialNumber) {
-        if (initialTab.lowercase() != "messages" && (autoOpenDialpad || initialNumber.isNotEmpty())) selectedTab = CommsTab.Keypad
+    LaunchedEffect(simNames) {
+        simNames.forEach { (id, name) ->
+            id.toIntOrNull()?.let { de.mm20.launcher2.comms.sms.SmsSims.setCustomName(context, it, name) }
+        }
+    }
+
+    LaunchedEffect(initialNumber) {
+        if (initialNumber.isNotEmpty() && initialTab.lowercase() != "messages") selectedTab = CommsTab.Keypad
     }
 
     if (selectedTab == CommsTab.Keypad || selectedTab == CommsTab.Messages) {
@@ -88,100 +95,99 @@ fun CommsDashboardScreen(
 
     val inSubScreen = selectedTab == CommsTab.Keypad || selectedTab == CommsTab.Messages
 
+    val messengers = remember {
+        de.mm20.launcher2.comms.intent.MessengerApps.listLaunchers(context)
+    }
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            ModalDrawerSheet {
-                Spacer(Modifier.height(16.dp))
-                Text("Telos Comms", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(horizontal = 24.dp))
-                HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
+            ModalDrawerSheet(
+                modifier = Modifier.width(280.dp),
+                drawerShape = RoundedCornerShape(topEnd = 28.dp, bottomEnd = 28.dp),
+            ) {
+                Spacer(Modifier.height(20.dp))
+                Text(
+                    stringResource(R.string.au_phonea_dialer),
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.padding(horizontal = 24.dp),
+                )
+                Text(
+                    stringResource(R.string.hc_messages),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 4.dp),
+                )
+                HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
                 NavigationDrawerItem(
+                    icon = { Icon(painterResource(R.drawable.settings_24px), contentDescription = null) },
                     label = { Text(stringResource(R.string.hc_settings)) },
                     selected = false,
                     onClick = {
                         coroutineScope.launch { drawerState.close() }
                         backStack.add(CommsSettingsRoute)
-                    }
+                    },
                 )
                 NavigationDrawerItem(
-                    label = { Text("Clear call history") },
+                    icon = { Icon(painterResource(R.drawable.close_24px), contentDescription = null) },
+                    label = { Text(stringResource(R.string.comms_clear_history)) },
                     selected = false,
                     onClick = {
                         coroutineScope.launch { drawerState.close() }
                         showClearHistoryDialog = true
-                    }
+                    },
                 )
-                HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
-                Text("Messengers", style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp))
-                
-                // Messenger shortcuts
-                val pm = context.packageManager
-                data class MessengerApp(val name: String, val pkg: String, val forks: List<String> = emptyList())
-                val messengers = listOf(
-                    MessengerApp("SMS", "com.google.android.apps.messaging"),
-                    MessengerApp("WhatsApp", "com.whatsapp", listOf("com.whatsapp.w4b")),
-                    MessengerApp("Viber", "com.viber.voip"),
-                    MessengerApp(
-                        "Telegram",
-                        "org.telegram.messenger",
-                        de.mm20.launcher2.comms.intent.MessengerApps.telegramPkgs.filter { it != "org.telegram.messenger" },
-                    ),
-                    MessengerApp("Signal", "org.thoughtcrime.securesms")
+                HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
+                Text(
+                    stringResource(R.string.comms_messengers),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp),
                 )
-                
+                NavigationDrawerItem(
+                    icon = { Icon(painterResource(R.drawable.sms_24px), contentDescription = null) },
+                    label = { Text(stringResource(R.string.hc_messages)) },
+                    selected = selectedTab == CommsTab.Messages,
+                    onClick = {
+                        coroutineScope.launch { drawerState.close() }
+                        selectedTab = CommsTab.Messages
+                    },
+                )
                 messengers.forEach { app ->
-                    val name = app.name
-                    val pkg = app.pkg
-                    val forks = app.forks
-                    var installed = false
-                    try {
-                        pm.getPackageInfo(pkg, 0)
-                        installed = true
-                    } catch (_: Exception) {
-                        if (forks.isNotEmpty()) {
-                            val fList: List<String> = forks
-                            for (f in fList) {
-                                try {
-                                    pm.getPackageInfo(f, 0)
-                                    installed = true
-                                    break
-                                } catch (_: Exception) {}
+                    NavigationDrawerItem(
+                        icon = {
+                            val bmp = remember(app.component, app.user) {
+                                app.icon?.toBitmap(96, 96)
                             }
-                        }
-                    }
-                    
-                    if (installed) {
-                        NavigationDrawerItem(
-                            label = { Text(name) },
-                            selected = false,
-                            onClick = {
-                                coroutineScope.launch { drawerState.close() }
-                                val intent = pm.getLaunchIntentForPackage(pkg) ?: run {
-    var foundIntent: Intent? = null
-    if (forks.isNotEmpty()) {
-                            val fList: List<String> = forks
-        for (f in fList) {
-            val i = pm.getLaunchIntentForPackage(f)
-            if (i != null) {
-                foundIntent = i
-                break
-            }
-        }
-    }
-    foundIntent
-}
-                                if (intent != null) {
-                                    context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-                                }
+                            if (bmp != null) {
+                                androidx.compose.foundation.Image(
+                                    bitmap = bmp.asImageBitmap(),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(24.dp).clip(CircleShape),
+                                )
+                            } else {
+                                Icon(painterResource(R.drawable.sms_24px), contentDescription = null)
                             }
-                        )
-                    }
+                        },
+                        label = {
+                            val dual = app.user != android.os.Process.myUserHandle()
+                            Text(
+                                if (dual) "${app.label} · ${stringResource(R.string.comms_dual_app)}" else app.label,
+                                maxLines = 1,
+                            )
+                        },
+                        selected = false,
+                        onClick = {
+                            coroutineScope.launch { drawerState.close() }
+                            de.mm20.launcher2.comms.intent.MessengerApps.launch(context, app)
+                        },
+                    )
                 }
             }
         }
     ) {
         Scaffold(
-            containerColor = Color.Black,
+            containerColor = MaterialTheme.colorScheme.background,
             topBar = {
                 Column(Modifier.statusBarsPadding()) {
                     if (inSubScreen) Row(
@@ -193,7 +199,7 @@ fun CommsDashboardScreen(
                     ) {
                         if (inSubScreen) {
                             IconButton(onClick = { selectedTab = CommsTab.Recents }) {
-                                Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back), tint = Color.White)
+                                Icon(painterResource(R.drawable.arrow_back_24px), contentDescription = stringResource(R.string.hc_back))
                             }
                         }
                         Text(
@@ -201,11 +207,10 @@ fun CommsDashboardScreen(
                                 if (inSubScreen) selectedTab.label else R.string.au_phonea_dialer
                             ),
                             style = MaterialTheme.typography.titleLarge,
-                            color = Color.White,
                             modifier = Modifier.weight(1f).padding(start = if (inSubScreen) 8.dp else 0.dp),
                         )
                         IconButton(onClick = { coroutineScope.launch { drawerState.open() } }) {
-                            Icon(painterResource(R.drawable.menu_24px), contentDescription = "Menu", tint = Color.White)
+                            Icon(painterResource(R.drawable.menu_24px), contentDescription = stringResource(R.string.comms_menu))
                         }
                     }
                     if (!inSubScreen) {
@@ -220,7 +225,7 @@ fun CommsDashboardScreen(
                             ),
                             leading = {
                                 IconButton(onClick = { coroutineScope.launch { drawerState.open() } }) {
-                                    Icon(painterResource(R.drawable.menu_24px), contentDescription = "Menu", tint = Color.White)
+                                    Icon(painterResource(R.drawable.menu_24px), contentDescription = stringResource(R.string.comms_menu))
                                 }
                             },
                             trailing = {
@@ -273,7 +278,7 @@ fun CommsDashboardScreen(
                 }
             },
         ) { contentPadding ->
-            Box(modifier = Modifier.padding(contentPadding).fillMaxSize().background(Color.Black)) {
+            Box(modifier = Modifier.padding(contentPadding).fillMaxSize()) {
                 when (selectedTab) {
                     CommsTab.Recents -> RecentsScreen(searchQuery = searchQuery, showFilters = showFilters)
                     CommsTab.Contacts -> ContactsScreen(

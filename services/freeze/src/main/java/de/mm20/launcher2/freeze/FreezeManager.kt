@@ -141,17 +141,33 @@ class FreezeManager internal constructor(
     // === TELOS_PENDING_REVIEW_START: multi_user_freeze ===
     suspend fun freeze(packageName: String, userId: Int = Process.myUid() / 100000): Set<String> {
         if (_activeBackend.value == null) refreshBackendState()
-        return setSuspended(listOf(packageName), true, userId)
+        val result = setSuspended(listOf(packageName), true, userId)
+        if (packageName in result) {
+            val companions = settings.clearCompanionHoldsForMaster(packageName)
+            if (companions.isNotEmpty()) setSuspended(companions.toList(), true, userId)
+        }
+        return result
     }
 
-    suspend fun unfreeze(packageName: String, userId: Int = Process.myUid() / 100000): Set<String> {
+    /** Called after a user-driven unfreeze (launcher tap), not after Play-update thaw. */
+    var onUserUnfreeze: ((String) -> Unit)? = null
+
+    suspend fun unfreeze(
+        packageName: String,
+        userId: Int = Process.myUid() / 100000,
+        fromUser: Boolean = true,
+    ): Set<String> {
         if (_activeBackend.value == null) refreshBackendState()
-        return setSuspended(listOf(packageName), false, userId)
+        val result = setSuspended(listOf(packageName), false, userId)
+        if (fromUser) onUserUnfreeze?.invoke(packageName)
+        return result
     }
 
     suspend fun freeze(packageNames: List<String>, userId: Int = Process.myUid() / 100000): Set<String> {
         if (_activeBackend.value == null) refreshBackendState()
-        return setSuspended(packageNames, true, userId)
+        val result = setSuspended(packageNames, true, userId)
+        freezeHeldCompanions(result, userId)
+        return result
     }
 
     /**
@@ -169,8 +185,18 @@ class FreezeManager internal constructor(
         if (_activeBackend.value == FreezeBackendType.Island) {
             islandProvider.postFreezeNotification(packageNames)
         } else {
-            operationMutex.withLock { applySuspended(packageNames, true, userId, respectMaintenance = true) }
+            val changed = operationMutex.withLock { applySuspended(packageNames, true, userId, respectMaintenance = true) }
+            freezeHeldCompanions(changed, userId)
         }
+    }
+
+    private suspend fun freezeHeldCompanions(masters: Set<String>, userId: Int) {
+        if (masters.isEmpty()) return
+        val extras = mutableListOf<String>()
+        for (master in masters) {
+            extras += settings.clearCompanionHoldsForMaster(master)
+        }
+        if (extras.isNotEmpty()) setSuspended(extras, true, userId)
     }
 
     /** Apply a method change to an already frozen app before committing its new policy. */
@@ -235,9 +261,10 @@ class FreezeManager internal constructor(
         // Package names end up in shell commands (root / Shizuku fallbacks), so anything that is not a
         // well-formed package name is dropped here rather than trusted.
         val held = if (respectMaintenance) settings.maintenance.first().values.map { it.packageName }.toSet() else emptySet()
+        val companionHolds = if (suspended) settings.companionHolds.first().keys else emptySet()
         val foreground = if (suspended && userId == Process.myUid() / 100000 && settings.excludeForeground.first()) usageStats.currentForegroundPackage() else null
         val safePackages = packageNames.filter { VALID_PACKAGE_NAME.matches(it) }
-            .filterNot { (suspended && PROTECTED_PACKAGES.contains(it)) || it in held || it == foreground }
+            .filterNot { (suspended && PROTECTED_PACKAGES.contains(it)) || it in held || it in companionHolds || it == foreground }
         if (safePackages.isEmpty()) {
             Log.w(TAG, "All targeted packages are protected system packages. Aborting freeze.")
             return emptySet()

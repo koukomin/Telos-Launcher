@@ -36,6 +36,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.component.preferences.TextPreference
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import kotlinx.serialization.Serializable
 import androidx.appcompat.app.AppCompatActivity
@@ -76,6 +77,8 @@ fun FreezeSettingsScreen() {
     val freezeMethods by viewModel.freezeMethods.collectAsStateWithLifecycle()
     val advancedFeaturesEnabled by viewModel.advancedFeaturesEnabled.collectAsStateWithLifecycle()
     val hideFromLauncher by viewModel.hideFromLauncher.collectAsStateWithLifecycle()
+    val gameBoosterPackage by viewModel.gameBoosterPackage.collectAsStateWithLifecycle()
+    val gameBoosterApps by viewModel.gameBoosterApps.collectAsStateWithLifecycle()
     // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
     val frozenAppStyle by viewModel.frozenAppStyle.collectAsStateWithLifecycle(FrozenAppStyle.SnowflakeBadge)
     // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
@@ -290,6 +293,19 @@ fun FreezeSettingsScreen() {
                                 label = { Text(stringResource(R.string.au_freeze_kbps, it)) }
                             )
                         }
+                        TextPreference(
+                            title = stringResource(R.string.freeze_game_booster_package),
+                            summary = stringResource(R.string.freeze_game_booster_package_summary),
+                            value = gameBoosterPackage,
+                            onValueChanged = { viewModel.setGameBoosterPackage(it) },
+                            placeholder = "com.miui.securitycenter",
+                        )
+                        TextPreference(
+                            title = stringResource(R.string.freeze_game_booster_apps),
+                            summary = stringResource(R.string.freeze_game_booster_apps_summary),
+                            value = gameBoosterApps.joinToString(", "),
+                            onValueChanged = { viewModel.setGameBoosterAppsCsv(it) },
+                        )
                     }
                 }
             }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Actualizează</string>
+    <string name="store_play_update_available">Actualizare disponibilă</string>
+    <string name="store_play_up_to_date">La zi</string>
+    <string name="store_play_update_unknown">Deschide Play Store pentru verificare</string>
+    <string name="store_play_empty">Nicio aplicație Play Store</string>
+    <string name="store_play_empty_hint">Aplicațiile din Play Store apar aici, inclusiv cele înghețate.</string>
+    <string name="store_play_hint">Aplicațiile înghețate sunt dezghețate și se deschide Play Store. Telos le îngheață din nou de îndată ce Play instalează versiunea nouă (o oră doar ca rezervă). Opțional: cu VPN Telos Network, fără internet până le deschizi.</string>
+    <string name="store_play_open_my_apps">Deschide actualizările Play Store</string>
+    <string name="store_play_block_network">Blochează rețeaua până la deschidere</string>
+    <string name="store_play_block_network_summary">Când VPN-ul Telos Network e pornit, aplicațiile dezghețate pentru Play nu au internet până le deschizi din nou.</string>
+    <string name="play_update_pause_channel">Actualizări Play Store</string>
+    <string name="play_update_pause_title">Se așteaptă actualizările Play Store</string>
+    <string name="play_update_pause_text">%2$d aplicații dezghețate vor fi înghețate din nou imediat ce Play instalează o versiune nouă (rezervă %1$d oră).</string>
+</resources>

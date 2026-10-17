@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Atnaujinti</string>
+    <string name="store_play_update_available">Yra naujinimas</string>
+    <string name="store_play_up_to_date">Naujausia</string>
+    <string name="store_play_update_unknown">Atidarykite „Play Store“ patikrinti</string>
+    <string name="store_play_empty">Nėra „Play Store“ programų</string>
+    <string name="store_play_empty_hint">Iš „Play Store“ įdiegtos programos rodomos čia, įskaitant užšaldytas.</string>
+    <string name="store_play_hint">Užšaldytos programos atšildomos ir atidaroma „Play Store“. Telos jas vėl užšaldo, kai tik „Play“ įdiegia naują versiją (valanda tik atsargai). Pasirinktinai: su Telos Network VPN nėra interneto, kol jų neatidarysite.</string>
+    <string name="store_play_open_my_apps">Atidaryti „Play Store“ naujinimus</string>
+    <string name="store_play_block_network">Blokuoti tinklą iki atidarymo</string>
+    <string name="store_play_block_network_summary">Kai Telos Network VPN įjungtas, atšildytos „Play“ programos neturi interneto, kol jų vėl neatidarysite.</string>
+    <string name="play_update_pause_channel">„Play Store“ naujinimai</string>
+    <string name="play_update_pause_title">Laukiama „Play Store“ naujinimų</string>
+    <string name="play_update_pause_text">%2$d atšildytos programos vėl bus užšaldytos, kai tik „Play“ įdiegs naują versiją (atsarga %1$d val.).</string>
+</resources>

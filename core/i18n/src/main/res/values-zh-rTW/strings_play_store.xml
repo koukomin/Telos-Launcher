@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play 商店</string>
+    <string name="store_play_update">更新</string>
+    <string name="store_play_update_available">有可用更新</string>
+    <string name="store_play_up_to_date">已是最新</string>
+    <string name="store_play_update_unknown">開啟 Play 商店檢查</string>
+    <string name="store_play_empty">沒有 Play 商店應用程式</string>
+    <string name="store_play_empty_hint">從 Play 商店安裝的應用程式會顯示在此，包含已凍結的。</string>
+    <string name="store_play_hint">已凍結的應用程式會解凍並開啟 Play 商店。Play 一裝上新版本，Telos 就立刻再凍結（一小時只是後備）。選用：Telos Network VPN 開啟時，在你打開它們之前沒有網路。</string>
+    <string name="store_play_open_my_apps">開啟 Play 商店更新</string>
+    <string name="store_play_block_network">開啟前封鎖網路</string>
+    <string name="store_play_block_network_summary">Telos Network VPN 開啟時，為 Play 解凍的應用程式在你再次啟動前不能上網。</string>
+    <string name="play_update_pause_channel">Play 商店更新</string>
+    <string name="play_update_pause_title">正在等待 Play 商店更新</string>
+    <string name="play_update_pause_text">Play 安裝新版本後會立即重新凍結 %2$d 個已解凍應用程式（後備 %1$d 小時）。</string>
+</resources>

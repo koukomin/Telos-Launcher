@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">SIM %1$d adı</string>
+    <string name="freeze_unfreeze_with_title">%1$s ilə dondurmanı aç</string>
+    <string name="freeze_unfreeze_with_open">Aç və başlat</string>
+    <string name="freeze_unfreeze_only_this">Yalnız bu tətbiq</string>
+    <string name="freeze_game_booster_package">Oyun booster paketi</string>
+    <string name="freeze_game_booster_package_summary">Aşağıdakı oyunlardan əvvəl bu sistem boosterini aç</string>
+    <string name="freeze_game_booster_apps">Booster lazım olan oyunlar</string>
+    <string name="freeze_game_booster_apps_summary">Paket adları, vergüllə</string>
+</resources>

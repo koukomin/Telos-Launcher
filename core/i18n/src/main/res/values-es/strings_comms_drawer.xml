@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">Apps de mensajería</string>
+    <string name="comms_reply">Responder</string>
+    <string name="comms_menu">Menú</string>
+    <string name="comms_dual_app">App dual</string>
+</resources>

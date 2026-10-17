@@ -37,6 +37,11 @@ data class Profile(
          * The private space profile (Android 15+)
          */
         Private,
+
+        /**
+         * OEM dual / clone apps (Xiaomi Dual Apps, Oppo/OnePlus clone, extra user 999, …).
+         */
+        Clone,
     }
 
     data class State(

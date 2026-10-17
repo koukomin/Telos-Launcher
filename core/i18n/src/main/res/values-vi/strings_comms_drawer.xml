@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">Ứng dụng nhắn tin</string>
+    <string name="comms_reply">Trả lời</string>
+    <string name="comms_menu">Menu</string>
+    <string name="comms_dual_app">Ứng dụng kép</string>
+</resources>

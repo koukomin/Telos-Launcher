@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Обновить</string>
+    <string name="store_play_update_available">Доступно обновление</string>
+    <string name="store_play_up_to_date">Обновлено</string>
+    <string name="store_play_update_unknown">Откройте Play Store для проверки</string>
+    <string name="store_play_empty">Нет приложений Play Store</string>
+    <string name="store_play_empty_hint">Приложения из Play Store показаны здесь, включая замороженные.</string>
+    <string name="store_play_hint">Замороженные приложения размораживаются, открывается Play Store. Telos заморозит их снова, как только Play установит новую версию (час — запасной срок). По желанию: при VPN Telos Network нет интернета, пока вы их не откроете.</string>
+    <string name="store_play_open_my_apps">Открыть обновления Play Store</string>
+    <string name="store_play_block_network">Блокировать сеть до открытия</string>
+    <string name="store_play_block_network_summary">Если VPN Telos Network включён, размороженные для Play приложения без интернета, пока вы их снова не откроете.</string>
+    <string name="play_update_pause_channel">Обновления Play Store</string>
+    <string name="play_update_pause_title">Ожидание обновлений Play Store</string>
+    <string name="play_update_pause_text">%2$d размороженн. прилож. заморозятся снова, как только Play установит новую версию (запас %1$d ч).</string>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Ažuriraj</string>
+    <string name="store_play_update_available">Dostupno je ažuriranje</string>
+    <string name="store_play_up_to_date">Ažurirano</string>
+    <string name="store_play_update_unknown">Otvori Play Store za provjeru</string>
+    <string name="store_play_empty">Nema aplikacija iz Play Storea</string>
+    <string name="store_play_empty_hint">Aplikacije iz Play Storea prikazuju se ovdje, uključujući zamrznute.</string>
+    <string name="store_play_hint">Zamrznute se aplikacije odmrznu i otvara se Play Store. Telos ih ponovno zamrzne čim Play instalira novu verziju (sat samo kao rezerva). Po želji: uz VPN Telos Network nema interneta dok ih ne otvoriš.</string>
+    <string name="store_play_open_my_apps">Otvori ažuriranja Play Storea</string>
+    <string name="store_play_block_network">Blokiraj mrežu do otvaranja</string>
+    <string name="store_play_block_network_summary">Kad je VPN Telos Network uključen, odmrznute Play aplikacije nemaju internet dok ih ponovno ne otvoriš.</string>
+    <string name="play_update_pause_channel">Ažuriranja Play Storea</string>
+    <string name="play_update_pause_title">Čekanje ažuriranja Play Storea</string>
+    <string name="play_update_pause_text">%2$d odmrznute aplikacije ponovno se zamrznu čim Play instalira novu verziju (rezerva %1$d sat).</string>
+</resources>

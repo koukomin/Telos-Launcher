@@ -2,9 +2,11 @@ package de.mm20.launcher2.freeze
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.os.SystemClock
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -15,6 +17,12 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
+import de.mm20.launcher2.i18n.R
+import de.mm20.launcher2.network.NetState
+import de.mm20.launcher2.network.NetworkEngine
+import de.mm20.launcher2.network.api.AppDirectory
+import de.mm20.launcher2.network.api.AppRule
+import de.mm20.launcher2.network.api.FirewallController
 import de.mm20.launcher2.preferences.freeze.FreezeSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -49,9 +57,13 @@ class AutoFreezeController internal constructor(
     private val settings: FreezeSettings,
     private val exclusionChecker: FreezeExclusionChecker,
     private val profileManager: FreezeProfileManager,
+    private val firewall: FirewallController,
+    private val apps: AppDirectory,
+    private val networkEngine: NetworkEngine,
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private var idleJob: Job? = null
+    private var playWatchJob: Job? = null
 
     private val receiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -66,6 +78,13 @@ class AutoFreezeController internal constructor(
     private val packageReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             refreshNotificationLater()
+            val pkg = intent.data?.schemeSpecificPart ?: return
+            if (intent.action == Intent.ACTION_PACKAGE_REPLACED ||
+                intent.action == Intent.ACTION_PACKAGE_ADDED ||
+                intent.action == Intent.ACTION_PACKAGE_CHANGED
+            ) {
+                scope.launch { maybeRefreezeUpdated(pkg) }
+            }
         }
     }
 
@@ -76,8 +95,14 @@ class AutoFreezeController internal constructor(
     }
 
     init {
+        freezeManager.onUserUnfreeze = { pkg -> scope.launch { onUserOpenedApp(pkg) } }
         ContextCompat.registerReceiver(context, packageReceiver,
-            IntentFilter(Intent.ACTION_PACKAGE_CHANGED).apply { addDataScheme("package") }, ContextCompat.RECEIVER_EXPORTED)
+            IntentFilter().apply {
+                addAction(Intent.ACTION_PACKAGE_CHANGED)
+                addAction(Intent.ACTION_PACKAGE_REPLACED)
+                addAction(Intent.ACTION_PACKAGE_ADDED)
+                addDataScheme("package")
+            }, ContextCompat.RECEIVER_EXPORTED)
         ContextCompat.registerReceiver(context, packageReceiver,
             IntentFilter().apply { addAction(Intent.ACTION_PACKAGES_SUSPENDED); addAction(Intent.ACTION_PACKAGES_UNSUSPENDED) }, ContextCompat.RECEIVER_EXPORTED)
         ContextCompat.registerReceiver(
@@ -96,6 +121,24 @@ class AutoFreezeController internal constructor(
             IntentFilter(ACTION_FREEZE_NOW),
             ContextCompat.RECEIVER_NOT_EXPORTED,
         )
+        ContextCompat.registerReceiver(
+            context,
+            object : BroadcastReceiver() {
+                override fun onReceive(context: Context, intent: Intent) {
+                    refreezeAfterPlayUpdates()
+                }
+            },
+            IntentFilter(ACTION_PLAY_UPDATE_REFREEZE),
+            ContextCompat.RECEIVER_NOT_EXPORTED,
+        )
+        scope.launch {
+            val until = runCatching { settings.playUpdatePauseUntil.first() }.getOrDefault(0L)
+            if (until > System.currentTimeMillis()) {
+                startPlayWatch(until)
+            } else if (until > 0L) {
+                refreezeAfterPlayUpdates()
+            }
+        }
 
         scope.launch {
             try {
@@ -113,8 +156,8 @@ class AutoFreezeController internal constructor(
         // whole point of a battery-saving feature; it's refreshed at every point this class
         // already wakes up for, which covers the common cases.
         scope.launch {
-            combine(settings.candidates, settings.autoFreezeEnabled, settings.stats, settings.maintenance) { a, b, c, d ->
-                listOf(a, b, c, d)
+            combine(settings.candidates, settings.autoFreezeEnabled, settings.stats, settings.maintenance, settings.playUpdatePauseUntil) { a, b, c, d, e ->
+                listOf(a, b, c, d, e)
             }.collectLatest {
                 try {
                     updateUnfrozenNotification()
@@ -183,19 +226,197 @@ class AutoFreezeController internal constructor(
         scope.launch { freezeCandidates() }
     }
 
+    /**
+     * Thaw [packages] for Play Store updates and pause auto-freeze for [durationMs] as a fallback.
+     * Each package is frozen again as soon as its installed versionCode rises.
+     * When [blockNetwork] is true and Telos Network VPN is on, those apps cannot use the internet
+     * until the user opens them.
+     */
+    fun pauseForPlayUpdates(
+        packages: Collection<String>,
+        durationMs: Long = PLAY_UPDATE_PAUSE_MS,
+        blockNetwork: Boolean = false,
+    ) {
+        scope.launch {
+            val vending = CompanionRules.PLAY_STORE
+            val playWasFrozen = freezeManager.isFrozen(vending)
+            if (playWasFrozen) freezeManager.unfreeze(vending, fromUser = false)
+            val thawed = packages.filter { freezeManager.isFrozen(it) }.toSet()
+            thawed.forEach { freezeManager.unfreeze(it, fromUser = false) }
+            val watch = thawed.ifEmpty { emptySet() }
+            val baselines = watch.associateWith { versionCode(it) }
+            val until = System.currentTimeMillis() + durationMs
+            val netBlocked = if (blockNetwork && networkEngine.state.value is NetState.On && watch.isNotEmpty()) {
+                applyPlayNetworkBlock(watch)
+            } else emptyMap()
+            settings.startPlayUpdatePause(
+                packages = watch,
+                untilMillis = until,
+                baselines = baselines,
+                netBlocked = netBlocked,
+                playStoreHeld = playWasFrozen,
+            )
+            val am = context.getSystemService<AlarmManager>()
+            val pi = PendingIntent.getBroadcast(
+                context,
+                1,
+                Intent(ACTION_PLAY_UPDATE_REFREEZE).setPackage(context.packageName),
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+            )
+            if (watch.isNotEmpty() || playWasFrozen) {
+                am?.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + durationMs, pi)
+                notifyPlayUpdatePause(watch.size + if (playWasFrozen) 1 else 0, durationMs)
+                startPlayWatch(until)
+            }
+        }
+    }
+
+    private fun startPlayWatch(untilMillis: Long) {
+        playWatchJob?.cancel()
+        playWatchJob = scope.launch {
+            while (System.currentTimeMillis() < untilMillis) {
+                val thawed = settings.playUpdateThawed.first()
+                if (thawed.isEmpty() && !settings.playUpdatePlayStoreHeld.first()) return@launch
+                thawed.forEach { maybeRefreezeUpdated(it) }
+                delay(5_000L)
+            }
+            refreezeAfterPlayUpdates()
+        }
+    }
+
+    private suspend fun maybeRefreezeUpdated(packageName: String) {
+        val thawed = settings.playUpdateThawed.first()
+        if (packageName !in thawed) return
+        val baseline = settings.playUpdateBaselines.first()[packageName] ?: 0L
+        if (versionCode(packageName) <= baseline) return
+        refreezePackages(listOf(packageName))
+    }
+
+    fun refreezeAfterPlayUpdates() {
+        scope.launch {
+            val thawed = settings.playUpdateThawed.first()
+            refreezePackages(thawed)
+        }
+    }
+
+    private suspend fun refreezePackages(packages: Collection<String>) {
+        val candidates = settings.candidates.first()
+        if (packages.isNotEmpty()) {
+            val toFreeze = packages.filter { it in candidates }
+            settings.removePlayUpdateThawed(packages)
+            if (toFreeze.isNotEmpty()) {
+                freezeManager.refreshBackendState()
+                freezeManager.freezeInBackground(toFreeze)
+            }
+        }
+        if (packages.isEmpty() || settings.playUpdateThawed.first().isEmpty()) {
+            playWatchJob?.cancel()
+            context.getSystemService<NotificationManager>()?.cancel(PLAY_PAUSE_NOTIFICATION_ID)
+            val am = context.getSystemService<AlarmManager>()
+            val pi = PendingIntent.getBroadcast(
+                context,
+                1,
+                Intent(ACTION_PLAY_UPDATE_REFREEZE).setPackage(context.packageName),
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+            )
+            am?.cancel(pi)
+            val holdPlay = settings.playUpdatePlayStoreHeld.first()
+            settings.clearPlayUpdatePause()
+            if (holdPlay) {
+                val vending = CompanionRules.PLAY_STORE
+                val held = settings.companionHolds.first()
+                val candidatesNow = settings.candidates.first()
+                if (vending in candidatesNow && vending !in held && !freezeManager.isFrozen(vending)) {
+                    freezeManager.freeze(vending)
+                }
+            }
+        }
+    }
+
+    private suspend fun applyPlayNetworkBlock(packages: Set<String>): Map<String, Boolean> {
+        val result = HashMap<String, Boolean>()
+        for (pkg in packages) {
+            val appId = apps.byPackage(pkg)?.appId ?: runCatching {
+                context.packageManager.getApplicationInfo(pkg, 0).uid % 100000
+            }.getOrNull() ?: continue
+            val existing = firewall.appRules.value[appId] ?: AppRule(appId)
+            result[pkg] = existing.blockAll
+            if (!existing.blockAll) {
+                firewall.setAppRule(existing.copy(blockAll = true))
+            }
+        }
+        return result
+    }
+
+    private suspend fun onUserOpenedApp(packageName: String) {
+        val blocked = settings.playUpdateNetBlocked.first()
+        val hadBlockAll = blocked[packageName] ?: return
+        if (!hadBlockAll) {
+            val appId = apps.byPackage(packageName)?.appId ?: runCatching {
+                context.packageManager.getApplicationInfo(packageName, 0).uid % 100000
+            }.getOrNull()
+            if (appId != null) {
+                val existing = firewall.appRules.value[appId]
+                if (existing != null && existing.blockAll) {
+                    firewall.setAppRule(existing.copy(blockAll = false))
+                }
+            }
+        }
+        settings.clearPlayUpdateNetBlocked(listOf(packageName))
+    }
+
+    private fun versionCode(packageName: String): Long {
+        return runCatching {
+            context.packageManager.getPackageInfo(
+                packageName,
+                PackageManager.MATCH_UNINSTALLED_PACKAGES or PackageManager.MATCH_DISABLED_COMPONENTS,
+            ).longVersionCode
+        }.getOrDefault(0L)
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun notifyPlayUpdatePause(thawedCount: Int, durationMs: Long) {
+        val nm = context.getSystemService<NotificationManager>() ?: return
+        if (nm.getNotificationChannel(PLAY_PAUSE_CHANNEL) == null) {
+            nm.createNotificationChannel(
+                NotificationChannel(
+                    PLAY_PAUSE_CHANNEL,
+                    context.getString(R.string.play_update_pause_channel),
+                    NotificationManager.IMPORTANCE_DEFAULT,
+                )
+            )
+        }
+        val hours = (durationMs / 3_600_000L).coerceAtLeast(1L)
+        val text = context.getString(R.string.play_update_pause_text, hours.toInt(), thawedCount)
+        val notification = NotificationCompat.Builder(context, PLAY_PAUSE_CHANNEL)
+            .setSmallIcon(android.R.drawable.stat_sys_download)
+            .setContentTitle(context.getString(R.string.play_update_pause_title))
+            .setContentText(text)
+            .setOngoing(true)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
+        if (NotificationManagerCompat.from(context).areNotificationsEnabled()) {
+            NotificationManagerCompat.from(context).notify(PLAY_PAUSE_NOTIFICATION_ID, notification)
+        }
+    }
+
     private suspend fun freezableCandidates(): List<String> {
         val candidates = settings.candidates.first()
         if (candidates.isEmpty()) return emptyList()
         val held = settings.maintenance.first().values.map { it.packageName }.toSet()
+        val companionHolds = settings.companionHolds.first().keys
         return candidates.filter { pkg -> runCatching {
             val info = context.packageManager.getApplicationInfo(pkg, PackageManager.MATCH_DISABLED_COMPONENTS or PackageManager.MATCH_UNINSTALLED_PACKAGES)
             info.flags and android.content.pm.ApplicationInfo.FLAG_INSTALLED != 0
         }.getOrDefault(false) }.filterNot { it in held }
+            .filterNot { it in companionHolds }
             .filterNot { freezeManager.isFrozen(it) }
             .filterNot { exclusionChecker.isExcluded(it) }
     }
 
     private suspend fun freezeCandidates() {
+        val pauseUntil = settings.playUpdatePauseUntil.first()
+        if (pauseUntil > System.currentTimeMillis()) return
         // A backend that dies (Shizuku binder gone, root denied, ...) must not crash the launcher
         // from this background scope.
         try {
@@ -251,7 +472,7 @@ class AutoFreezeController internal constructor(
         )
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ac_unit_24px)
+            .setSmallIcon(android.R.drawable.ic_lock_idle_lock)
             .setContentTitle(
                 context.resources.getQuantityString(
                     R.plurals.freeze_ready_notification_title, freezable.size, freezable.size
@@ -281,6 +502,10 @@ class AutoFreezeController internal constructor(
     companion object {
         private const val CHANNEL_ID = "freeze_ready"
         private const val NOTIFICATION_ID = 4822
+        private const val PLAY_PAUSE_CHANNEL = "play_update_pause"
+        private const val PLAY_PAUSE_NOTIFICATION_ID = 4823
         private const val ACTION_FREEZE_NOW = "de.mm20.launcher2.freeze.ACTION_FREEZE_NOW"
+        const val ACTION_PLAY_UPDATE_REFREEZE = "de.mm20.launcher2.freeze.ACTION_PLAY_UPDATE_REFREEZE"
+        const val PLAY_UPDATE_PAUSE_MS = 60L * 60L * 1000L
     }
 }

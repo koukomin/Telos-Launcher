@@ -105,5 +105,9 @@ class PresetsSettingsScreenVM : ViewModel(), KoinComponent {
         layout.fixedSearchBar?.let { uiSettings.setFixedSearchBar(it) }
         layout.reduceAnimations?.let { performanceSettings.setReduceAnimations(it) }
         layout.animationSpeed?.let { performanceSettings.setAnimationSpeed(it) }
+        layout.drawerBackgroundEnabled?.let { uiSettings.setDrawerBackgroundEnabled(it) }
+        layout.drawerBackgroundBlur?.let { uiSettings.setDrawerBackgroundBlur(it) }
+        layout.drawerBackgroundOpacity?.let { uiSettings.setDrawerBackgroundOpacity(it) }
+        layout.widgetsGlassBackground?.let { uiSettings.setWidgetsGlassBackground(it) }
     }
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">SIM %1$d adı</string>
+    <string name="freeze_unfreeze_with_title">%1$s ile çöz</string>
+    <string name="freeze_unfreeze_with_open">Çöz ve aç</string>
+    <string name="freeze_unfreeze_only_this">Yalnızca bu uygulama</string>
+    <string name="freeze_game_booster_package">Oyun hızlandırıcı paketi</string>
+    <string name="freeze_game_booster_package_summary">Aşağıdaki oyunlardan önce bu sistem hızlandırıcısını çöz</string>
+    <string name="freeze_game_booster_apps">Hızlandırıcı isteyen oyunlar</string>
+    <string name="freeze_game_booster_apps_summary">Paket adları, virgülle</string>
+</resources>

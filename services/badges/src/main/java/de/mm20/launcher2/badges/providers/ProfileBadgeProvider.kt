@@ -31,6 +31,7 @@ class ProfileBadgeProvider : BadgeProvider, KoinComponent {
                     when (it?.type) {
                         Profile.Type.Work -> WorkProfile
                         Profile.Type.Private -> PrivateProfile
+                        Profile.Type.Clone -> CloneProfile
                         else -> null
                     }
                 }
@@ -47,6 +48,10 @@ class ProfileBadgeProvider : BadgeProvider, KoinComponent {
 
         private val PrivateProfile = Badge(
             icon = BadgeIcon(R.drawable.encrypted_20px)
+        )
+
+        private val CloneProfile = Badge(
+            icon = BadgeIcon(R.drawable.person_24px)
         )
     }
 }

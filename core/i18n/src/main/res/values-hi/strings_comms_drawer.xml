@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">मैसेजिंग ऐप्स</string>
+    <string name="comms_reply">जवाब दें</string>
+    <string name="comms_menu">मेनू</string>
+    <string name="comms_dual_app">डुअल ऐप</string>
+</resources>

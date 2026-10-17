@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">Имя SIM %1$d</string>
+    <string name="freeze_unfreeze_with_title">Разморозить вместе с %1$s</string>
+    <string name="freeze_unfreeze_with_open">Разморозить и открыть</string>
+    <string name="freeze_unfreeze_only_this">Только это приложение</string>
+    <string name="freeze_game_booster_package">Пакет игрового бустера</string>
+    <string name="freeze_game_booster_package_summary">Разморозить системный бустер перед играми из списка</string>
+    <string name="freeze_game_booster_apps">Игры, которым нужен бустер</string>
+    <string name="freeze_game_booster_apps_summary">Имена пакетов через запятую</string>
+</resources>

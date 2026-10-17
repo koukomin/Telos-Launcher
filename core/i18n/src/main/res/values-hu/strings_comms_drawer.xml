@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">Üzenetküldő alkalmazások</string>
+    <string name="comms_reply">Válasz</string>
+    <string name="comms_menu">Menü</string>
+    <string name="comms_dual_app">Dupla alkalmazás</string>
+</resources>

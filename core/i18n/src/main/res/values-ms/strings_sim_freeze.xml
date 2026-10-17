@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">Nama SIM %1$d</string>
+    <string name="freeze_unfreeze_with_title">Nyahbeku dengan %1$s</string>
+    <string name="freeze_unfreeze_with_open">Nyahbeku dan buka</string>
+    <string name="freeze_unfreeze_only_this">Aplikasi ini sahaja</string>
+    <string name="freeze_game_booster_package">Pakej game booster</string>
+    <string name="freeze_game_booster_package_summary">Nyahbeku booster sistem ini sebelum permainan di bawah</string>
+    <string name="freeze_game_booster_apps">Permainan yang perlukan booster</string>
+    <string name="freeze_game_booster_apps_summary">Nama pakej, dipisahkan koma</string>
+</resources>

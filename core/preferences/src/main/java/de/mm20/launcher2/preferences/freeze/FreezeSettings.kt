@@ -216,4 +216,131 @@ class FreezeSettings internal constructor(
             )
         }
     }
+
+    val playUpdatePauseUntil
+        get() = dataStore.data.map { it.freeze.playUpdatePauseUntil }
+
+    val playUpdateThawed
+        get() = dataStore.data.map { it.freeze.playUpdateThawed }
+
+    fun startPlayUpdatePause(
+        packages: Set<String>,
+        untilMillis: Long,
+        baselines: Map<String, Long>,
+        netBlocked: Map<String, Boolean>,
+        playStoreHeld: Boolean = false,
+    ) {
+        dataStore.update {
+            it.copy(
+                freeze = it.freeze.copy(
+                    playUpdatePauseUntil = untilMillis,
+                    playUpdateThawed = it.freeze.playUpdateThawed + packages,
+                    playUpdateBaselines = it.freeze.playUpdateBaselines + baselines,
+                    playUpdateNetBlocked = it.freeze.playUpdateNetBlocked + netBlocked,
+                    playUpdatePlayStoreHeld = it.freeze.playUpdatePlayStoreHeld || playStoreHeld,
+                )
+            )
+        }
+    }
+
+    val playUpdateBaselines
+        get() = dataStore.data.map { it.freeze.playUpdateBaselines }
+
+    val playUpdateNetBlocked
+        get() = dataStore.data.map { it.freeze.playUpdateNetBlocked }
+
+    fun removePlayUpdateThawed(packages: Collection<String>) {
+        dataStore.update {
+            val left = it.freeze.playUpdateThawed - packages.toSet()
+            val bases = it.freeze.playUpdateBaselines - packages.toSet()
+            it.copy(
+                freeze = it.freeze.copy(
+                    playUpdateThawed = left,
+                    playUpdateBaselines = bases,
+                    playUpdatePauseUntil = if (left.isEmpty()) 0L else it.freeze.playUpdatePauseUntil,
+                )
+            )
+        }
+    }
+
+    fun clearPlayUpdateNetBlocked(packages: Collection<String>) {
+        dataStore.update {
+            it.copy(freeze = it.freeze.copy(playUpdateNetBlocked = it.freeze.playUpdateNetBlocked - packages.toSet()))
+        }
+    }
+
+    fun clearPlayUpdatePause() {
+        dataStore.update {
+            it.copy(
+                freeze = it.freeze.copy(
+                    playUpdatePauseUntil = 0L,
+                    playUpdateThawed = emptySet(),
+                    playUpdateBaselines = emptyMap(),
+                    playUpdatePlayStoreHeld = false,
+                )
+            )
+        }
+    }
+
+    val playUpdatePlayStoreHeld
+        get() = dataStore.data.map { it.freeze.playUpdatePlayStoreHeld }
+
+    fun setPlayUpdatePlayStoreHeld(held: Boolean) {
+        dataStore.update { it.copy(freeze = it.freeze.copy(playUpdatePlayStoreHeld = held)) }
+    }
+
+    val companionExtras
+        get() = dataStore.data.map { it.freeze.freezeCompanionExtras }
+
+    fun setCompanionExtras(master: String, packagesCsv: String) {
+        dataStore.update {
+            val map = if (packagesCsv.isBlank()) it.freeze.freezeCompanionExtras - master
+            else it.freeze.freezeCompanionExtras + (master to packagesCsv)
+            it.copy(freeze = it.freeze.copy(freezeCompanionExtras = map))
+        }
+    }
+
+    val companionHolds
+        get() = dataStore.data.map { it.freeze.freezeCompanionHolds }
+
+    suspend fun addCompanionHolds(master: String, companions: Collection<String>) {
+        if (companions.isEmpty()) return
+        dataStore.updateAndWait {
+            val holds = it.freeze.freezeCompanionHolds.toMutableMap()
+            companions.forEach { pkg -> holds[pkg] = master }
+            it.copy(freeze = it.freeze.copy(freezeCompanionHolds = holds))
+        }
+    }
+
+    suspend fun clearCompanionHoldsForMaster(master: String): Set<String> {
+        var removed = emptySet<String>()
+        dataStore.updateAndWait {
+            val holds = it.freeze.freezeCompanionHolds
+            removed = holds.filterValues { m -> m == master }.keys
+            it.copy(freeze = it.freeze.copy(freezeCompanionHolds = holds - removed))
+        }
+        return removed
+    }
+
+    val gameBoosterPackage
+        get() = dataStore.data.map { it.freeze.freezeGameBoosterPackage }
+
+    fun setGameBoosterPackage(packageName: String) {
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeGameBoosterPackage = packageName.trim())) }
+    }
+
+    val gameBoosterApps
+        get() = dataStore.data.map { it.freeze.freezeGameBoosterApps }
+
+    fun setGameBoosterApp(packageName: String, enabled: Boolean) {
+        dataStore.update {
+            val set = if (enabled) it.freeze.freezeGameBoosterApps + packageName
+            else it.freeze.freezeGameBoosterApps - packageName
+            it.copy(freeze = it.freeze.copy(freezeGameBoosterApps = set))
+        }
+    }
+
+    fun setGameBoosterApps(packages: Set<String>) {
+        dataStore.update { it.copy(freeze = it.freeze.copy(freezeGameBoosterApps = packages)) }
+    }
 }

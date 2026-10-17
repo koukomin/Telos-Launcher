@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Aktualizovať</string>
+    <string name="store_play_update_available">K dispozícii je aktualizácia</string>
+    <string name="store_play_up_to_date">Aktuálna</string>
+    <string name="store_play_update_unknown">Otvorte Play Store na kontrolu</string>
+    <string name="store_play_empty">Žiadne aplikácie z Play Store</string>
+    <string name="store_play_empty_hint">Aplikácie z Play Store sú tu, vrátane zmrazených.</string>
+    <string name="store_play_hint">Zmrazené aplikácie sa rozmrazia a otvorí sa Play Store. Telos ich znova zmrazí, hneď ako Play nainštaluje novú verziu (hodina len ako záloha). Voliteľne: s VPN Telos Network bez internetu, kým ich neotvoríš.</string>
+    <string name="store_play_open_my_apps">Otvoriť aktualizácie Play Store</string>
+    <string name="store_play_block_network">Blokovať sieť do otvorenia</string>
+    <string name="store_play_block_network_summary">Keď beží VPN Telos Network, rozmrazené aplikácie Play nemajú internet, kým ich znova nespustíš.</string>
+    <string name="play_update_pause_channel">Aktualizácie Play Store</string>
+    <string name="play_update_pause_title">Čakanie na aktualizácie Play Store</string>
+    <string name="play_update_pause_text">%2$d rozmrazených aplikácií sa znova zmrazí, hneď ako Play nainštaluje novú verziu (záloha %1$d hodina).</string>
+</resources>

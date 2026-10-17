@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">Name von SIM %1$d</string>
+    <string name="freeze_unfreeze_with_title">Mit %1$s auftauen</string>
+    <string name="freeze_unfreeze_with_open">Auftauen und öffnen</string>
+    <string name="freeze_unfreeze_only_this">Nur diese App</string>
+    <string name="freeze_game_booster_package">Game-Booster-Paket</string>
+    <string name="freeze_game_booster_package_summary">Diesen System-Booster vor den unten gelisteten Spielen auftauen</string>
+    <string name="freeze_game_booster_apps">Spiele, die den Booster brauchen</string>
+    <string name="freeze_game_booster_apps_summary">Paketnamen, durch Komma getrennt</string>
+</resources>

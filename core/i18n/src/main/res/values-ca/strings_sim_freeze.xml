@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">Nom de la SIM %1$d</string>
+    <string name="freeze_unfreeze_with_title">Descongela amb %1$s</string>
+    <string name="freeze_unfreeze_with_open">Descongela i obre</string>
+    <string name="freeze_unfreeze_only_this">Només aquesta app</string>
+    <string name="freeze_game_booster_package">Paquet del game booster</string>
+    <string name="freeze_game_booster_package_summary">Descongela aquest booster del sistema abans dels jocs llistats</string>
+    <string name="freeze_game_booster_apps">Jocs que necessiten el booster</string>
+    <string name="freeze_game_booster_apps_summary">Noms de paquet, separats per comes</string>
+</resources>

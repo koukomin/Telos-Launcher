@@ -68,9 +68,9 @@ class TransparenciesRepository(
             id = DefaultThemeId,
             builtIn = true,
             name = context.getString(R.string.preference_transparencies_default),
-            background = 0.85f,
-            surface = 1f,
-            elevatedSurface = 1f,
+            background = 0.22f,
+            surface = 0.48f,
+            elevatedSurface = 0.62f,
         )
 
 

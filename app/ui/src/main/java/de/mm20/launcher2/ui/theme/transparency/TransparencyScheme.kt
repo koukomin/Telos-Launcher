@@ -11,20 +11,20 @@ import de.mm20.launcher2.themes.transparencies.Transparencies
 fun transparencySchemeOf(transparencies: Transparencies): TransparencyScheme {
     return remember(transparencies) {
         TransparencyScheme(
-            background = transparencies.background ?: 0.85f,
-            surface = transparencies.surface ?: 1f,
-            elevatedSurface = transparencies.elevatedSurface ?: 1f,
+            background = transparencies.background ?: 0.22f,
+            surface = transparencies.surface ?: 0.48f,
+            elevatedSurface = transparencies.elevatedSurface ?: 0.62f,
         )
     }
 }
 
 data class TransparencyScheme(
-    val background: Float = 0.85f,
-    val surface: Float = 1f,
-    val elevatedSurface: Float = 1f,
+    val background: Float = 0.22f,
+    val surface: Float = 0.48f,
+    val elevatedSurface: Float = 0.62f,
 )
 
-val LocalTransparencyScheme = compositionLocalOf { TransparencyScheme(background = 0.85f, surface = 1f, elevatedSurface = 1f) }
+val LocalTransparencyScheme = compositionLocalOf { TransparencyScheme() }
 
 val MaterialTheme.transparency
     @Composable

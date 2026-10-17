@@ -407,7 +407,11 @@ internal fun RecentCallRow(
                         )
                         if (simSlot != null) {
                             Spacer(Modifier.width(6.dp))
-                            SimBadge(slot = simSlot, color = simColor)
+                            SimBadge(
+                                slot = simSlot,
+                                color = simColor,
+                                label = sims.getOrNull(simSlot)?.label,
+                            )
                         }
                         val secondary = listOfNotNull(
                             call.durationSeconds.takeIf { it > 0 }?.let { formatCallDuration(it) },

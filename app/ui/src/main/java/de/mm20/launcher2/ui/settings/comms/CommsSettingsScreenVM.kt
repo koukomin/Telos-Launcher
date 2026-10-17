@@ -14,6 +14,7 @@ import org.koin.core.component.inject
 
 class CommsSettingsScreenVM : ViewModel(), KoinComponent {
 
+    private val appContext: android.content.Context by inject()
     private val commsSettings: CommsSettings by inject()
     private val contacts: ContactDirectoryRepository by inject()
     private val backup: CommsBackupManager by inject()
@@ -172,6 +173,11 @@ class CommsSettingsScreenVM : ViewModel(), KoinComponent {
     fun setSim1Color(color: String) = commsSettings.setSim1Color(color)
     val sim2Color = commsSettings.sim2Color.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "blue")
     fun setSim2Color(color: String) = commsSettings.setSim2Color(color)
+    val simNames = commsSettings.simNames.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyMap())
+    fun setSimName(subscriptionId: String, name: String?) {
+        commsSettings.setSimName(subscriptionId, name)
+        subscriptionId.toIntOrNull()?.let { de.mm20.launcher2.comms.sms.SmsSims.setCustomName(appContext, it, name) }
+    }
     val answerStyle = commsSettings.answerStyle.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "buttons")
     fun setAnswerStyle(style: String) = commsSettings.setAnswerStyle(style)
     val recordingAutoDeleteDays = commsSettings.recordingAutoDeleteDays.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)

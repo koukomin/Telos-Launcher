@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">Navn på SIM %1$d</string>
+    <string name="freeze_unfreeze_with_title">Optø med %1$s</string>
+    <string name="freeze_unfreeze_with_open">Optø og åbn</string>
+    <string name="freeze_unfreeze_only_this">Kun denne app</string>
+    <string name="freeze_game_booster_package">Game booster-pakke</string>
+    <string name="freeze_game_booster_package_summary">Optø denne systembooster før spillene nedenfor</string>
+    <string name="freeze_game_booster_apps">Spil der skal bruge boosteren</string>
+    <string name="freeze_game_booster_apps_summary">Pakkenavne, kommasepareret</string>
+</resources>

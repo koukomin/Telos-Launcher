@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">تطبيقات المراسلة</string>
+    <string name="comms_reply">رد</string>
+    <string name="comms_menu">القائمة</string>
+    <string name="comms_dual_app">تطبيق مزدوج</string>
+</resources>

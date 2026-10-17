@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">برنامه‌های پیام‌رسان</string>
+    <string name="comms_reply">پاسخ</string>
+    <string name="comms_menu">منو</string>
+    <string name="comms_dual_app">برنامه دوگانه</string>
+</resources>

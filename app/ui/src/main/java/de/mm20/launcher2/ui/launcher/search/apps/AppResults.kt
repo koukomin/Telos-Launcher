@@ -71,12 +71,13 @@ fun LazyListScope.AppResults(
                                         Profile.Type.Personal -> stringResource(R.string.apps_profile_main)
                                         Profile.Type.Work -> stringResource(R.string.apps_profile_work)
                                         Profile.Type.Private -> stringResource(R.string.apps_profile_private)
+                                        Profile.Type.Clone -> stringResource(R.string.apps_profile_main)
                                     }
                                 )
                             },
                             icon = {
                                 when (profile.type) {
-                                    Profile.Type.Personal -> Icon(
+                                    Profile.Type.Personal, Profile.Type.Clone -> Icon(
                                         painterResource(if (selected) R.drawable.person_24px_filled else R.drawable.person_24px),
                                         contentDescription = null
                                     )

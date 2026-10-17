@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">Viestisovellukset</string>
+    <string name="comms_reply">Vastaa</string>
+    <string name="comms_menu">Valikko</string>
+    <string name="comms_dual_app">Kaksoissovellus</string>
+</resources>

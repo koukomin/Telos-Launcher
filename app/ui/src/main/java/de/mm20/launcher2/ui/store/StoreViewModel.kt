@@ -20,7 +20,10 @@ import de.mm20.launcher2.store.repository.StoreRepository
 import de.mm20.launcher2.store.updater.StoreTools
 import de.mm20.launcher2.store.updater.StoreUpdater
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.freeze.AutoFreezeController
+import de.mm20.launcher2.freeze.FreezeManager
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -89,6 +92,8 @@ class StoreViewModel : ViewModel(), KoinComponent {
     private val updater: StoreUpdater by inject()
     val options: StoreOptions by inject()
     val settings: CommsSettings by inject()
+    private val freezeManager: FreezeManager by inject()
+    private val autoFreeze: AutoFreezeController by inject()
 
     val items: StateFlow<List<StoreItem>> = repository.observeItems()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
@@ -468,6 +473,83 @@ class StoreViewModel : ViewModel(), KoinComponent {
     fun setTelosAppEnabled(key: String, enabled: Boolean) {
         if (enabled) de.mm20.launcher2.base.VirtualAppGuard.reset(context, key)
         settings.setVirtualAppEnabled(key, enabled)
+    }
+
+    // ---- Play Store inventory ----
+
+    val playStoreInstalled: Boolean = PlayStoreInventory.isPlayStoreInstalled(context)
+
+    val playQuery = MutableStateFlow("")
+    val playFilterUpdates = MutableStateFlow(false)
+    private val _playApps = MutableStateFlow<List<PlayStoreApp>>(emptyList())
+    val playApps: StateFlow<List<PlayStoreApp>> = _playApps
+    val playChecking = MutableStateFlow(false)
+
+    val visiblePlayApps: StateFlow<List<PlayStoreApp>> =
+        combine(_playApps, playQuery, playFilterUpdates) { list, q, updatesOnly ->
+            list.asSequence()
+                .filter { !updatesOnly || it.updateAvailable == true }
+                .filter { q.isBlank() || TelosSearch.matches(q, it.label, it.packageName, it.versionName) }
+                .toList()
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
+    fun refreshPlayApps() {
+        if (!playStoreInstalled) return
+        viewModelScope.launch {
+            val listed = withContext(Dispatchers.IO) {
+                PlayStoreInventory.installedFromPlay(context) { freezeManager.isFrozen(it) }
+            }
+            _playApps.value = listed
+        }
+    }
+
+    fun checkPlayUpdates() {
+        if (!playStoreInstalled) return
+        viewModelScope.launch {
+            playChecking.value = true
+            try {
+                val current = _playApps.value.ifEmpty {
+                    withContext(Dispatchers.IO) {
+                        PlayStoreInventory.installedFromPlay(context) { freezeManager.isFrozen(it) }
+                    }
+                }
+                val updated = current.toMutableList()
+                for (i in updated.indices) {
+                    val listing = withContext(Dispatchers.IO) {
+                        PlayStoreInventory.listingVersion(updated[i].packageName)
+                    }
+                    val app = updated[i]
+                    updated[i] = app.copy(
+                        playVersion = listing,
+                        updateAvailable = PlayStoreInventory.updateAvailable(app.versionName, listing),
+                    )
+                    _playApps.value = updated.toList()
+                    delay(250)
+                }
+            } finally {
+                playChecking.value = false
+            }
+        }
+    }
+
+    fun updatePlayApp(packageName: String) {
+        autoFreeze.pauseForPlayUpdates(
+            listOf(packageName),
+            blockNetwork = options.global.value.playUpdateBlockNetwork,
+        )
+        PlayStoreInventory.openPlayApp(context, packageName)
+    }
+
+    fun updateAllPlayApps() {
+        val pkgs = _playApps.value
+            .filter { it.updateAvailable == true || it.updateAvailable == null }
+            .map { it.packageName }
+        val thaw = pkgs.ifEmpty { _playApps.value.map { it.packageName } }
+        autoFreeze.pauseForPlayUpdates(
+            thaw,
+            blockNetwork = options.global.value.playUpdateBlockNetwork,
+        )
+        PlayStoreInventory.openPlayUpdates(context)
     }
 
     // ---- helpers ----

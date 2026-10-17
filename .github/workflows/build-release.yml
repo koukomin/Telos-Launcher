@@ -38,7 +38,7 @@ on:
     paths-ignore:
       - 'docs/**'
       - '**.md'
-      - '.github/release-notes-header.md'
+      - '.github/release-notes-apk.md'
     tags:
       - 'v*'
   workflow_dispatch:
@@ -192,6 +192,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Download APKs
         uses: actions/download-artifact@v4
@@ -205,11 +207,16 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           ls -l apks
-          # Create the release with both APKs, or (if the tag UI already made the release) just upload them to it
-          # --target: σε push στο main το tag φτιάχνεται πάνω στο commit που χτίστηκε
-          gh release create "$TAG" apks/*.apk \
-            --target "$GITHUB_SHA" \
-            --title "Telos $TAG" \
-            --notes-file .github/release-notes-header.md \
-            --generate-notes \
-          || gh release upload "$TAG" apks/*.apk --clobber
+          chmod +x tools/release-notes.sh
+          tools/release-notes.sh "$TAG" "$RUNNER_TEMP/notes.md"
+          # Always refresh notes: a previous gh release create (auto_release.sh) used to
+          # leave the same static header on every tag, and `|| upload` skipped notes.
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" apks/*.apk --clobber
+            gh release edit "$TAG" --title "Telos $TAG" --notes-file "$RUNNER_TEMP/notes.md"
+          else
+            gh release create "$TAG" apks/*.apk \
+              --target "$GITHUB_SHA" \
+              --title "Telos $TAG" \
+              --notes-file "$RUNNER_TEMP/notes.md"
+          fi

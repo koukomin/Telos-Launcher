@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">نام سیم‌کارت %1$d</string>
+    <string name="freeze_unfreeze_with_title">باز کردن انجماد با %1$s</string>
+    <string name="freeze_unfreeze_with_open">باز کردن انجماد و اجرا</string>
+    <string name="freeze_unfreeze_only_this">فقط همین برنامه</string>
+    <string name="freeze_game_booster_package">بسته تقویت‌کننده بازی</string>
+    <string name="freeze_game_booster_package_summary">قبل از بازی‌های فهرست‌شده این تقویت‌کننده سیستم را باز کن</string>
+    <string name="freeze_game_booster_apps">بازی‌هایی که تقویت‌کننده می‌خواهند</string>
+    <string name="freeze_game_booster_apps_summary">نام بسته‌ها، جداشده با ویرگول</string>
+</resources>

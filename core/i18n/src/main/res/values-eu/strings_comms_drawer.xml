@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">Mezu aplikazioak</string>
+    <string name="comms_reply">Erantzun</string>
+    <string name="comms_menu">Menua</string>
+    <string name="comms_dual_app">Aplikazio duala</string>
+</resources>

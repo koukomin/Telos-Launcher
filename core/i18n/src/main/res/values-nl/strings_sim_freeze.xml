@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">Naam van SIM %1$d</string>
+    <string name="freeze_unfreeze_with_title">Ontdooien met %1$s</string>
+    <string name="freeze_unfreeze_with_open">Ontdooien en openen</string>
+    <string name="freeze_unfreeze_only_this">Alleen deze app</string>
+    <string name="freeze_game_booster_package">Game-boosterpakket</string>
+    <string name="freeze_game_booster_package_summary">Ontdooi deze systeambooster voor de games hieronder</string>
+    <string name="freeze_game_booster_apps">Games die de booster nodig hebben</string>
+    <string name="freeze_game_booster_apps_summary">Pakketnamen, komma-gescheiden</string>
+</resources>

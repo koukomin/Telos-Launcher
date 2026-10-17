@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Nuashonraigh</string>
+    <string name="store_play_update_available">Nuashonrú ar fáil</string>
+    <string name="store_play_up_to_date">Cothrom le dáta</string>
+    <string name="store_play_update_unknown">Oscail Play Store le seiceáil</string>
+    <string name="store_play_empty">Gan aipeanna Play Store</string>
+    <string name="store_play_empty_hint">Taispeántar aipeanna Play Store anseo, aipeanna reoite san áireamh.</string>
+    <string name="store_play_hint">Díreoitear aipeanna reoite agus osclaítear Play Store. Reonn Telos arís iad a luaithe a shuiteálann Play an leagan nua (uair amháin mar chúltaca). Roghnach: le VPN Telos Network níl idirlíon acu go n-osclaíonn tú iad.</string>
+    <string name="store_play_open_my_apps">Oscail nuashonruithe Play Store</string>
+    <string name="store_play_block_network">Cuir an líonra faoi ghlas go n-osclaítear</string>
+    <string name="store_play_block_network_summary">Nuair atá VPN Telos Network ar siúl, níl idirlíon ag aipeanna díreoite Play go n-osclaíonn tú arís iad.</string>
+    <string name="play_update_pause_channel">Nuashonruithe Play Store</string>
+    <string name="play_update_pause_title">Ag fanacht le nuashonruithe Play Store</string>
+    <string name="play_update_pause_text">Reofar %2$d aip dhíreoite arís a luaithe a shuiteálann Play leagan nua (cúltaca %1$d uair).</string>
+</resources>

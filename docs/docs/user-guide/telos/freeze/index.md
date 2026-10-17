@@ -17,7 +17,12 @@ Smart Freeze is a feature of the launcher settings, not a separate Telos app, so
 - **Settings > Smart Freeze Dashboard**: backend status, counters, filters and a quick toggle for each app.
 
 There is also a **Freeze** home screen widget with a "Freeze now" button, and Freeze / Unfreeze entries in the context
-menu of an app.
+menu of an app. Updating a frozen Play Store app from Telos Store thaws it, then freezes it again as soon as Play
+installs a new version. If Play Store itself is frozen, Telos unfreezes it for that session and freezes it again when
+the updates finish. With Telos Network VPN on and the Store setting enabled, that app has no internet until you
+open it. Opening a frozen app can also unfreeze companions (Google for Gemini, microG for ReVanced/Morphe YouTube,
+Play Store for Play-licensed apps, a game booster for games you list). Those stay unfrozen until the master app is
+frozen again. Auto-freeze skips the foreground app (on by default), music, and apps with network traffic.
 :::
 
 ## What it is

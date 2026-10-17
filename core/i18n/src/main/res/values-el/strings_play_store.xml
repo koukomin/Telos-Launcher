@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Ενημέρωση</string>
+    <string name="store_play_update_available">Υπάρχει ενημέρωση</string>
+    <string name="store_play_up_to_date">Ενημερωμένη</string>
+    <string name="store_play_update_unknown">Άνοιξε το Play Store για έλεγχο</string>
+    <string name="store_play_empty">Καμία εφαρμογή Play Store</string>
+    <string name="store_play_empty_hint">Οι εφαρμογές που εγκαταστάθηκαν από το Play Store εμφανίζονται εδώ, μαζί με τις παγωμένες.</string>
+    <string name="store_play_hint">Οι παγωμένες εφαρμογές ξεπαγώνουν και ανοίγει το Play Store. Μόλις εγκατασταθεί η νέα έκδοση, ξαναπαγώνουν αμέσως (η μία ώρα είναι μόνο εφεδρεία). Προαιρετικά, με ενεργό VPN του Telos Network δεν έχουν διαδίκτυο μέχρι να τις ανοίξεις.</string>
+    <string name="store_play_open_my_apps">Άνοιγμα ενημερώσεων Play Store</string>
+    <string name="store_play_block_network">Φραγή δικτύου μέχρι το άνοιγμα</string>
+    <string name="store_play_block_network_summary">Όταν το VPN του Telos Network είναι ενεργό, οι ξεπαγωμένες εφαρμογές Play δεν έχουν διαδίκτυο μέχρι να τις ανοίξεις ξανά.</string>
+    <string name="play_update_pause_channel">Ενημερώσεις Play Store</string>
+    <string name="play_update_pause_title">Αναμονή ενημερώσεων Play Store</string>
+    <string name="play_update_pause_text">%2$d ξεπαγωμένη(-ες) εφαρμογή(-ές) θα ξαναπαγώσουν μόλις το Play εγκαταστήσει νέα έκδοση (εφεδρεία %1$d ώρα).</string>
+</resources>

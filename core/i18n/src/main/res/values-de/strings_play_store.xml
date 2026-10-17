@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Aktualisieren</string>
+    <string name="store_play_update_available">Update verfügbar</string>
+    <string name="store_play_up_to_date">Aktuell</string>
+    <string name="store_play_update_unknown">Play Store öffnen zum Prüfen</string>
+    <string name="store_play_empty">Keine Play-Store-Apps</string>
+    <string name="store_play_empty_hint">Über den Play Store installierte Apps erscheinen hier, auch eingefrorene.</string>
+    <string name="store_play_hint">Eingefrorene Apps werden aufgetaut und der Play Store öffnet sich. Telos friert Freeze-Kandidaten wieder ein, sobald Play die neue Version installiert (eine Stunde nur als Fallback). Optional: bei laufendem Telos-Network-VPN haben diese Apps kein Internet, bis du sie öffnest.</string>
+    <string name="store_play_open_my_apps">Play-Store-Updates öffnen</string>
+    <string name="store_play_block_network">Netzwerk sperren bis zum Öffnen</string>
+    <string name="store_play_block_network_summary">Wenn das Telos-Network-VPN an ist, haben aufgetaute Play-Update-Apps kein Internet, bis du sie wieder startest.</string>
+    <string name="play_update_pause_channel">Play-Store-Updates</string>
+    <string name="play_update_pause_title">Warten auf Play-Store-Updates</string>
+    <string name="play_update_pause_text">%2$d aufgetaute App(s) werden wieder eingefroren, sobald Play eine neue Version installiert (Fallback %1$d Stunde).</string>
+</resources>

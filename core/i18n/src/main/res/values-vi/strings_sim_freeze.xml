@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">Tên SIM %1$d</string>
+    <string name="freeze_unfreeze_with_title">Rã đông cùng %1$s</string>
+    <string name="freeze_unfreeze_with_open">Rã đông và mở</string>
+    <string name="freeze_unfreeze_only_this">Chỉ ứng dụng này</string>
+    <string name="freeze_game_booster_package">Gói game booster</string>
+    <string name="freeze_game_booster_package_summary">Rã đông booster hệ thống trước các trò trong danh sách</string>
+    <string name="freeze_game_booster_apps">Trò chơi cần booster</string>
+    <string name="freeze_game_booster_apps_summary">Tên gói, cách nhau bằng dấu phẩy</string>
+</resources>

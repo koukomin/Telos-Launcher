@@ -49,9 +49,17 @@ object TelosDialer {
             PackageManager.PERMISSION_GRANTED
         ) return emptyList()
         return try {
+            val sms = de.mm20.launcher2.comms.sms.SmsSims.active(context)
             telecom.callCapablePhoneAccounts.mapIndexed { index, handle ->
                 val account = telecom.getPhoneAccount(handle)
-                SimLine(handle, account?.label?.toString()?.ifBlank { null } ?: "SIM ${index + 1}")
+                val named = sms.getOrNull(index)?.label
+                    ?: sms.firstOrNull { it.slot == index }?.label
+                SimLine(
+                    handle,
+                    named
+                        ?: account?.label?.toString()?.ifBlank { null }
+                        ?: "SIM ${index + 1}",
+                )
             }
         } catch (_: SecurityException) {
             emptyList()

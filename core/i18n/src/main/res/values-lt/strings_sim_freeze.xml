@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">SIM %1$d pavadinimas</string>
+    <string name="freeze_unfreeze_with_title">Atšildyti su %1$s</string>
+    <string name="freeze_unfreeze_with_open">Atšildyti ir atidaryti</string>
+    <string name="freeze_unfreeze_only_this">Tik ši programėlė</string>
+    <string name="freeze_game_booster_package">Žaidimų boosterio paketas</string>
+    <string name="freeze_game_booster_package_summary">Prieš žemiau nurodytus žaidimus atšildyti šį sistemos boosterį</string>
+    <string name="freeze_game_booster_apps">Žaidimai, kuriems reikia boosterio</string>
+    <string name="freeze_game_booster_apps_summary">Paketų pavadinimai, atskirti kableliais</string>
+</resources>

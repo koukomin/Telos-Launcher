@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">A(z) %1$d. SIM neve</string>
+    <string name="freeze_unfreeze_with_title">Kiolvasztás ezzel: %1$s</string>
+    <string name="freeze_unfreeze_with_open">Kiolvasztás és megnyitás</string>
+    <string name="freeze_unfreeze_only_this">Csak ez az alkalmazás</string>
+    <string name="freeze_game_booster_package">Játékgyorsító csomag</string>
+    <string name="freeze_game_booster_package_summary">Ezt a rendszer-boostert kiolvasztja a lenti játékok előtt</string>
+    <string name="freeze_game_booster_apps">Boostert igénylő játékok</string>
+    <string name="freeze_game_booster_apps_summary">Csomagnevek, vesszővel elválasztva</string>
+</resources>

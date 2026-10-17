@@ -107,6 +107,7 @@ page. A floating note window can stay on screen after you leave the call screen 
 | Vibrate on Hangup | Sounds & Vibrations | off | One short pulse when a call ends |
 | Secure call screen | Incoming call | off | Blocks screenshots and hides the call screen in the recent apps overview |
 | SIM 1 color, SIM 2 color | Incoming call | green, blue | Accent for SIM badges (green, blue, orange, red, purple, pink, teal) |
+| Name of SIM 1 / SIM 2 | Incoming call | Android name | A Telos label for that SIM. Empty uses the name you set in Android (or the carrier). Shown on badges and SIM chips |
 | Answer style | Incoming call | Buttons | Buttons or Swipe |
 
 Call state can also appear in the launcher's Dynamic Island.
@@ -165,7 +166,8 @@ prefix is up to the carrier.
 
 Default Call SIM values: **Always Ask** (default, shows one call button per SIM), **Last used SIM**, **Same SIM
 as last call to this number**, **SIM 1**, **SIM 2**. A phone with one SIM always uses it. Recents show a coloured
-SIM badge when two SIMs are present.
+SIM badge when two SIMs are present. Badge and chip text use the Telos name from Phone settings, otherwise the
+name you set in Android.
 
 ## Cellular network mode
 

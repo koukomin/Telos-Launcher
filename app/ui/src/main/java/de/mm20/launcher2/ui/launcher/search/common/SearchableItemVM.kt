@@ -49,6 +49,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlin.coroutines.resume
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.time.Duration.Companion.minutes
@@ -233,8 +234,23 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
             (searchable.isSuspended || (searchable.user == android.os.Process.myUserHandle() &&
                 freezeManager.isFrozen(searchable.componentName.packageName)))) {
             viewModelScope.launch(kotlinx.coroutines.NonCancellable) {
+                val pkg = searchable.componentName.packageName
+                val extras = freezeSettings.companionExtras.first()
+                val booster = freezeSettings.gameBoosterPackage.first()
+                val games = freezeSettings.gameBoosterApps.first()
+                val frozenCompanions = de.mm20.launcher2.freeze.CompanionRules.suggested(
+                    context, pkg, extras, booster, games,
+                ).filter { freezeManager.isFrozen(it) }
+                val chosen = if (frozenCompanions.isNotEmpty() && context is AppCompatActivity) {
+                    promptCompanions(context, pkg, frozenCompanions)
+                } else frozenCompanions
+                if (chosen == null) return@launch
                 try {
-                    val started = freezeManager.launchThawed(searchable.componentName.packageName, searchable.user,
+                    if (chosen.isNotEmpty()) {
+                        chosen.forEach { freezeManager.unfreeze(it, fromUser = false) }
+                        freezeSettings.addCompanionHolds(pkg, chosen)
+                    }
+                    val started = freezeManager.launchThawed(pkg, searchable.user,
                         searchable.componentName) { component ->
                         try {
                             requireNotNull(context.getSystemService(android.content.pm.LauncherApps::class.java))
@@ -443,5 +459,32 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
 
     fun reportUsage(searchable: SavableSearchable) {
         favoritesService.reportLaunch(searchable)
+    }
+
+    /** Null = user cancelled. Empty = open only the tapped app. Otherwise companions to thaw. */
+    private suspend fun promptCompanions(
+        activity: AppCompatActivity,
+        master: String,
+        companions: List<String>,
+    ): List<String>? = kotlinx.coroutines.suspendCancellableCoroutine { cont ->
+        val labels = companions.map { de.mm20.launcher2.freeze.CompanionRules.label(activity, it) }.toTypedArray()
+        val checked = BooleanArray(companions.size) { true }
+        val masterLabel = de.mm20.launcher2.freeze.CompanionRules.label(activity, master)
+        val dialog = android.app.AlertDialog.Builder(activity)
+            .setTitle(activity.getString(R.string.freeze_unfreeze_with_title, masterLabel))
+            .setMultiChoiceItems(labels, checked) { _, which, isChecked -> checked[which] = isChecked }
+            .setPositiveButton(R.string.freeze_unfreeze_with_open) { _, _ ->
+                if (cont.isActive) cont.resume(companions.filterIndexed { i, _ -> checked[i] })
+            }
+            .setNeutralButton(R.string.freeze_unfreeze_only_this) { _, _ ->
+                if (cont.isActive) cont.resume(emptyList())
+            }
+            .setNegativeButton(android.R.string.cancel) { _, _ ->
+                if (cont.isActive) cont.resume(null)
+            }
+            .setOnCancelListener { if (cont.isActive) cont.resume(null) }
+            .create()
+        cont.invokeOnCancellation { dialog.dismiss() }
+        activity.runOnUiThread { dialog.show() }
     }
 }

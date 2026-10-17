@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">Beskedapps</string>
+    <string name="comms_reply">Svar</string>
+    <string name="comms_menu">Menu</string>
+    <string name="comms_dual_app">Dobbelt app</string>
+</resources>

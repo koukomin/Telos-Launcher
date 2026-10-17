@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">Aplikace pro zprávy</string>
+    <string name="comms_reply">Odpovědět</string>
+    <string name="comms_menu">Nabídka</string>
+    <string name="comms_dual_app">Duální aplikace</string>
+</resources>

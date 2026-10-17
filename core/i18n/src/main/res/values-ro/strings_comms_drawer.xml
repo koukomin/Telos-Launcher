@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">Aplicații de mesagerie</string>
+    <string name="comms_reply">Răspunde</string>
+    <string name="comms_menu">Meniu</string>
+    <string name="comms_dual_app">Aplicație duală</string>
+</resources>

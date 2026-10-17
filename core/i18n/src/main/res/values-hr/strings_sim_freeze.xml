@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">Naziv SIM-a %1$d</string>
+    <string name="freeze_unfreeze_with_title">Odmrzni s %1$s</string>
+    <string name="freeze_unfreeze_with_open">Odmrzni i otvori</string>
+    <string name="freeze_unfreeze_only_this">Samo ova aplikacija</string>
+    <string name="freeze_game_booster_package">Paket game boostera</string>
+    <string name="freeze_game_booster_package_summary">Odmrzni ovaj sistemski booster prije igara s popisa</string>
+    <string name="freeze_game_booster_apps">Igre koj trebaju booster</string>
+    <string name="freeze_game_booster_apps_summary">Nazivi paketa, odvojeni zarezom</string>
+</resources>

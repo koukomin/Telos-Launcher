@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">SIM %1$d izena</string>
+    <string name="freeze_unfreeze_with_title">Desizoztu %1$s-rekin</string>
+    <string name="freeze_unfreeze_with_open">Desizoztu eta ireki</string>
+    <string name="freeze_unfreeze_only_this">Aplikazio hau soilik</string>
+    <string name="freeze_game_booster_package">Game booster paketea</string>
+    <string name="freeze_game_booster_package_summary">Desizoztu sistema-booster hau beheko jokoen aurretik</string>
+    <string name="freeze_game_booster_apps">Boosterra behar duten jokoak</string>
+    <string name="freeze_game_booster_apps_summary">Pakete-izenak, komekin</string>
+</resources>

@@ -360,10 +360,9 @@ internal class SearchServiceImpl(
                             )
 
                             else -> {
-                                Log.w(
-                                    "MM20",
-                                    "App ${app.label} does not belong to any known profile. Ignoring."
-                                )
+                                // Dual / clone apps live in extra user handles (not work/private).
+                                // Show them in the main drawer, like stock launchers.
+                                standardProfileApps.add(app)
                             }
                         }
                     }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Update</string>
+    <string name="store_play_update_available">Update available</string>
+    <string name="store_play_up_to_date">Up to date</string>
+    <string name="store_play_update_unknown">Open Play Store to check</string>
+    <string name="store_play_empty">No Play Store apps</string>
+    <string name="store_play_empty_hint">Apps installed from the Play Store appear here, including frozen apps.</string>
+    <string name="store_play_hint">Frozen apps are thawed and Play Store opens. Telos freezes each freeze-candidate again as soon as Play installs the new version (one hour is only a fallback). Optional: while Telos Network VPN is on, those apps have no internet until you open them.</string>
+    <string name="store_play_open_my_apps">Open Play Store updates</string>
+    <string name="store_play_block_network">Block network until opened</string>
+    <string name="store_play_block_network_summary">When Telos Network VPN is on, thawed Play-update apps cannot use the internet until you launch them again.</string>
+    <string name="play_update_pause_channel">Play Store updates</string>
+    <string name="play_update_pause_title">Waiting for Play Store updates</string>
+    <string name="play_update_pause_text">%2$d thawed app(s) will freeze again as soon as Play installs a new version (fallback %1$d hour).</string>
+</resources>

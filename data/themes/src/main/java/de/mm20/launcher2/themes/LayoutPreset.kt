@@ -22,4 +22,8 @@ data class LayoutPreset(
     val fixedSearchBar: Boolean? = null,
     val reduceAnimations: Boolean? = null,
     val animationSpeed: Float? = null,
+    val drawerBackgroundEnabled: Boolean? = null,
+    val drawerBackgroundBlur: Int? = null,
+    val drawerBackgroundOpacity: Float? = null,
+    val widgetsGlassBackground: Boolean? = null,
 )

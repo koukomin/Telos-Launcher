@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.locals.LocalBackStack
+import de.mm20.launcher2.ui.theme.transparency.transparency
 
 /**
  * True inside Telos Media (the hub): the hub shows the top bar (space pill and back button) and
@@ -65,7 +66,7 @@ fun MediaFrame(
         return
     }
     Scaffold(
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = MaterialTheme.colorScheme.surface.copy(alpha = MaterialTheme.transparency.surface),
         contentColor = MaterialTheme.colorScheme.onSurface,
         topBar = {
             CenterAlignedTopAppBar(

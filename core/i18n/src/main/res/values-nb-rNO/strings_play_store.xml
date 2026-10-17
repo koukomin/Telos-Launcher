@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Oppdater</string>
+    <string name="store_play_update_available">Oppdatering tilgjengelig</string>
+    <string name="store_play_up_to_date">Oppdatert</string>
+    <string name="store_play_update_unknown">Åpne Play Butikk for å sjekke</string>
+    <string name="store_play_empty">Ingen Play Butikk-apper</string>
+    <string name="store_play_empty_hint">Apper fra Play Butikk vises her, også frosne.</string>
+    <string name="store_play_hint">Frosne apper tines, og Play Butikk åpnes. Telos fryser dem igjen så snart Play installerer den nye versjonen (én time bare som reserve). Valgfritt: med Telos Network-VPN ingen internett før du åpner dem.</string>
+    <string name="store_play_open_my_apps">Åpne Play Butikk-oppdateringer</string>
+    <string name="store_play_block_network">Blokker nettverk til åpning</string>
+    <string name="store_play_block_network_summary">Når Telos Network-VPN er på, har tinte Play-apper ingen internett før du åpner dem igjen.</string>
+    <string name="play_update_pause_channel">Play Butikk-oppdateringer</string>
+    <string name="play_update_pause_title">Venter på Play Butikk-oppdateringer</string>
+    <string name="play_update_pause_text">%2$d tinte apper fryses igjen så snart Play installerer en ny versjon (reserve %1$d time).</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">Názov SIM %1$d</string>
+    <string name="freeze_unfreeze_with_title">Rozmraziť s %1$s</string>
+    <string name="freeze_unfreeze_with_open">Rozmraziť a otvoriť</string>
+    <string name="freeze_unfreeze_only_this">Len táto aplikácia</string>
+    <string name="freeze_game_booster_package">Balík game boostera</string>
+    <string name="freeze_game_booster_package_summary">Pred hrami nižšie rozmraziť tento systémový booster</string>
+    <string name="freeze_game_booster_apps">Hry, ktoré potrebujú booster</string>
+    <string name="freeze_game_booster_apps_summary">Názvy balíkov oddelené čiarkou</string>
+</resources>

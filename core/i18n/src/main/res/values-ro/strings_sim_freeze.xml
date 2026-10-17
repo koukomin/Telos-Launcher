@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">Numele SIM %1$d</string>
+    <string name="freeze_unfreeze_with_title">Dezgheață cu %1$s</string>
+    <string name="freeze_unfreeze_with_open">Dezgheață și deschide</string>
+    <string name="freeze_unfreeze_only_this">Doar această aplicație</string>
+    <string name="freeze_game_booster_package">Pachetul game booster</string>
+    <string name="freeze_game_booster_package_summary">Dezgheață acest booster de sistem înainte de jocurile listate</string>
+    <string name="freeze_game_booster_apps">Jocuri care au nevoie de booster</string>
+    <string name="freeze_game_booster_apps_summary">Nume de pachete, separate prin virgulă</string>
+</resources>

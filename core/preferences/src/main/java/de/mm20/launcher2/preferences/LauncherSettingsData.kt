@@ -562,7 +562,7 @@ data class FreezeGroup(
     val freezeExclusionStrictness: FreezeExclusionStrictness = FreezeExclusionStrictness.Strict,
     val freezeNeverFreezeApps: Set<String> = emptySet(),
     val freezeStats: Map<String, FreezeAppStats> = emptyMap(),
-    val freezeExcludeForeground: Boolean = false,
+    val freezeExcludeForeground: Boolean = true,
     val freezeExcludeMusic: Boolean = true,
     val freezeExcludeNetwork: Boolean = true,
     val freezeNetworkThresholdKb: Int = 100,
@@ -577,6 +577,19 @@ data class FreezeGroup(
     // === TELOS_PENDING_REVIEW_START: ui_frozen_apps_style ===
     val frozenAppStyle: FrozenAppStyle = FrozenAppStyle.SnowflakeBadge,
     // === TELOS_PENDING_REVIEW_END: ui_frozen_apps_style ===
+    /** Epoch millis until auto-freeze is paused after a Play Store update session. 0 = not paused. */
+    val playUpdatePauseUntil: Long = 0L,
+    /** Packages thawed for a Play Store update; refrozen when the pause ends if still freeze candidates. */
+    val playUpdateThawed: Set<String> = emptySet(),
+    /** versionCode at thaw time; a higher installed version means Play finished the update. */
+    val playUpdateBaselines: Map<String, Long> = emptyMap(),
+    /** Packages whose firewall blockAll we set for a Play update; value is whether blockAll was already on. */
+    val playUpdateNetBlocked: Map<String, Boolean> = emptyMap(),
+    val playUpdatePlayStoreHeld: Boolean = false,
+    val freezeCompanionExtras: Map<String, String> = emptyMap(),
+    val freezeCompanionHolds: Map<String, String> = emptyMap(),
+    val freezeGameBoosterPackage: String = "",
+    val freezeGameBoosterApps: Set<String> = emptySet(),
 )
 
 @Serializable
@@ -1287,6 +1300,8 @@ data class CommsGroup(
     val answerStyle: String = "buttons",
     val sim1Color: String = "green",
     val sim2Color: String = "blue",
+    /** Subscription id → user label for the SIM in Phone and Messages. Empty uses Android's SIM name. */
+    val simNames: Map<String, String> = emptyMap(),
     /** Keys of Telos virtual apps (Phone, Music, ...) that were removed in the Store, comma separated */
     val disabledVirtualApps: String = "",
     /** Telos Media: the space that was open last (music, radio or video) */

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Aktualizuj</string>
+    <string name="store_play_update_available">Dostępna aktualizacja</string>
+    <string name="store_play_up_to_date">Aktualna</string>
+    <string name="store_play_update_unknown">Otwórz Sklep Play, aby sprawdzić</string>
+    <string name="store_play_empty">Brak aplikacji ze Sklepu Play</string>
+    <string name="store_play_empty_hint">Aplikacje ze Sklepu Play są tutaj, także zamrożone.</string>
+    <string name="store_play_hint">Zamrożone aplikacje są odmrażane i otwiera się Sklep Play. Telos zamraża je ponownie, gdy Play zainstaluje nową wersję (godzina tylko jako zapas). Opcjonalnie: przy VPN Telos Network bez internetu, aż je otworzysz.</string>
+    <string name="store_play_open_my_apps">Otwórz aktualizacje Sklepu Play</string>
+    <string name="store_play_block_network">Blokuj sieć do otwarcia</string>
+    <string name="store_play_block_network_summary">Gdy VPN Telos Network jest włączony, odmrożone aplikacje Play nie mają internetu, dopóki ich nie otworzysz.</string>
+    <string name="play_update_pause_channel">Aktualizacje Sklepu Play</string>
+    <string name="play_update_pause_title">Oczekiwanie na aktualizacje Sklepu Play</string>
+    <string name="play_update_pause_text">%2$d odmrożonych aplikacji zostanie ponownie zamrożonych, gdy Play zainstaluje nową wersję (zapas %1$d godz.).</string>
+</resources>

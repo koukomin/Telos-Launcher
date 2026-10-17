@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Aġġorna</string>
+    <string name="store_play_update_available">Aġġornament disponibbli</string>
+    <string name="store_play_up_to_date">Aġġornata</string>
+    <string name="store_play_update_unknown">Iftaħ il-Play Store biex tiċċekkja</string>
+    <string name="store_play_empty">L-ebda app tal-Play Store</string>
+    <string name="store_play_empty_hint">L-apps mill-Play Store jidhru hawn, inklużi dawk iffriżati.</string>
+    <string name="store_play_hint">L-apps iffriżati jinħallu u jiftaħ il-Play Store. Telos jerġa’ jiffriżahom hekk kif Play jinstalla l-verżjoni l-ġdida (siegħa biss bħala riżerva). Mhux obbligatorju: bil-VPN Telos Network m’għandhomx internet sakemm tiftaħhom.</string>
+    <string name="store_play_open_my_apps">Iftaħ l-aġġornamenti tal-Play Store</string>
+    <string name="store_play_block_network">Imblokka n-netwerk sakemm tiftaħ</string>
+    <string name="store_play_block_network_summary">Meta l-VPN Telos Network ikun mixgħul, l-apps imdewba tal-Play m’għandhomx internet sakemm terġa’ tiftaħhom.</string>
+    <string name="play_update_pause_channel">Aġġornamenti tal-Play Store</string>
+    <string name="play_update_pause_title">Stennija għall-aġġornamenti tal-Play Store</string>
+    <string name="play_update_pause_text">%2$d app imdewba jerġgħu jiġu ffriżati hekk kif Play jinstalla verżjoni ġdida (riżerva %1$d siegħa).</string>
+</resources>

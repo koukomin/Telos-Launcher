@@ -1,9 +1,15 @@
 package de.mm20.launcher2.comms.intent
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Process
+import android.os.UserHandle
+import androidx.core.content.getSystemService
 import de.mm20.launcher2.ktx.tryStartActivity
 
 enum class MessengerChannel(val id: String) {
@@ -117,6 +123,46 @@ object MessengerApps {
         if (digits.isEmpty()) return MessengerChannel.Phone
         val exact = prefs[digits] ?: prefs.entries.firstOrNull { numberMatch(it.key, digits) }?.value
         return MessengerChannel.fromId(exact)
+    }
+
+    data class LauncherEntry(
+        val label: String,
+        val packageName: String,
+        val icon: Drawable?,
+        val user: UserHandle,
+        val component: ComponentName,
+    )
+
+    /** Installed messenger launchers, including dual/clone copies in other user profiles. */
+    fun listLaunchers(context: Context): List<LauncherEntry> {
+        val launcherApps = context.getSystemService<LauncherApps>() ?: return emptyList()
+        val known = (signalPkgs + whatsAppPkgs + viberPkgs + telegramPkgs).toSet()
+        val out = mutableListOf<LauncherEntry>()
+        val users = launcherApps.profiles.ifEmpty { listOf(Process.myUserHandle()) }
+        for (user in users) {
+            for (pkg in known) {
+                val activities = runCatching { launcherApps.getActivityList(pkg, user) }.getOrDefault(emptyList())
+                for (info in activities) {
+                    out += LauncherEntry(
+                        label = info.label?.toString() ?: pkg,
+                        packageName = pkg,
+                        icon = runCatching { info.getBadgedIcon(0) }.getOrNull(),
+                        user = user,
+                        component = info.componentName,
+                    )
+                }
+            }
+        }
+        return out.distinctBy { it.component.flattenToString() + it.user.hashCode() }
+            .sortedBy { it.label.lowercase() }
+    }
+
+    fun launch(context: Context, entry: LauncherEntry): Boolean {
+        val launcherApps = context.getSystemService<LauncherApps>() ?: return false
+        return runCatching {
+            launcherApps.startMainActivity(entry.component, entry.user, null, null)
+            true
+        }.getOrDefault(false)
     }
 
     private fun numberMatch(a: String, bDigits: String): Boolean {

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Bijwerken</string>
+    <string name="store_play_update_available">Update beschikbaar</string>
+    <string name="store_play_up_to_date">Actueel</string>
+    <string name="store_play_update_unknown">Open Play Store om te controleren</string>
+    <string name="store_play_empty">Geen Play Store-apps</string>
+    <string name="store_play_empty_hint">Apps uit de Play Store staan hier, ook bevroren apps.</string>
+    <string name="store_play_hint">Bevroren apps worden ontdooid en Play Store opent. Telos bevriest ze weer zodra Play de nieuwe versie installeert (één uur alleen als fallback). Optioneel: met Telos Network-VPN geen internet tot je ze opent.</string>
+    <string name="store_play_open_my_apps">Play Store-updates openen</string>
+    <string name="store_play_block_network">Netwerk blokkeren tot openen</string>
+    <string name="store_play_block_network_summary">Als Telos Network-VPN aan staat, hebben ontdooide Play-apps geen internet tot je ze weer opent.</string>
+    <string name="play_update_pause_channel">Play Store-updates</string>
+    <string name="play_update_pause_title">Wachten op Play Store-updates</string>
+    <string name="play_update_pause_text">%2$d ontdooide app(s) worden weer bevroren zodra Play een nieuwe versie installeert (fallback %1$d uur).</string>
+</resources>

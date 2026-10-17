@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">Месенджери</string>
+    <string name="comms_reply">Відповісти</string>
+    <string name="comms_menu">Меню</string>
+    <string name="comms_dual_app">Подвійний додаток</string>
+</resources>

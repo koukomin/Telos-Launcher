@@ -71,7 +71,8 @@ internal class AppRepositoryImpl(
 
     private val installedApps = MutableStateFlow<List<LauncherApp>>(emptyList())
 
-    private val profiles = profileManager.activeProfiles
+    // All users, including OEM dual/clone profiles that stay unlocked but are not work/private.
+    private val profiles = profileManager.profiles
 
     private val mutex = Mutex()
 

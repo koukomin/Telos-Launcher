@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">SIM %1$d nosaukums</string>
+    <string name="freeze_unfreeze_with_title">Atkausēt kopā ar %1$s</string>
+    <string name="freeze_unfreeze_with_open">Atkausēt un atvērt</string>
+    <string name="freeze_unfreeze_only_this">Tikai šī lietotne</string>
+    <string name="freeze_game_booster_package">Spēļu boosteris</string>
+    <string name="freeze_game_booster_package_summary">Atkausē šo sistēmas boosteri pirms zemāk esošajām spēlēm</string>
+    <string name="freeze_game_booster_apps">Spēles, kurām vajag boosteri</string>
+    <string name="freeze_game_booster_apps_summary">Pakotņu nosaukumi, atdalīti ar komatu</string>
+</resources>

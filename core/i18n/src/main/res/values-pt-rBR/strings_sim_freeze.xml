@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">Nome do SIM %1$d</string>
+    <string name="freeze_unfreeze_with_title">Descongelar com %1$s</string>
+    <string name="freeze_unfreeze_with_open">Descongelar e abrir</string>
+    <string name="freeze_unfreeze_only_this">Só este app</string>
+    <string name="freeze_game_booster_package">Pacote do game booster</string>
+    <string name="freeze_game_booster_package_summary">Descongela este booster do sistema antes dos jogos listados</string>
+    <string name="freeze_game_booster_apps">Jogos que precisam do booster</string>
+    <string name="freeze_game_booster_apps_summary">Nomes de pacote, separados por vírgulas</string>
+</resources>

@@ -52,7 +52,7 @@ itself a Telos app, but it **cannot be removed**, otherwise there would be no wa
 | Title "Store" | The screen name |
 | **Check for updates** (refresh icon) | Asks every source now |
 | **More** menu | **Add installed apps**, **Import (Obtainium file)**, **Export (Obtainium file)**, **Store settings** |
-| Tabs **Apps**, **Telos apps** and **Recommended** | Your tracked apps, the built-in Telos apps, and a list of suggested free apps |
+| Tabs **Apps**, **Telos apps**, **Recommended** and **Play Store** | Your tracked apps, the built-in Telos apps, suggested free apps, and (when Play Store is installed) every Play-installed app including frozen ones |
 | Search field "Search apps" | Matches the name, the package name and the category |
 | Filter chips | **All**, **Updates (N)**, **Installed**, **Not installed**, **Track only**, and one chip per category |
 | **Update all (N)** | Installs every available update, except for apps set to Track only |
@@ -62,6 +62,10 @@ itself a Telos app, but it **cannot be removed**, otherwise there would be no wa
 The list shows apps with updates first, then the others by name. A row says `v1.2 -> v1.3` for an update, `v1.2` for
 the installed version, "Not installed", "v1.3 available" for track only apps, and marks "track only" and "pinned" apps.
 An empty list says "No apps yet" and a filter without results says "No apps match".
+
+### Play Store
+
+The **Play Store** tab appears only when `com.android.vending` is installed. It lists Play-installed apps, frozen included. **Check for updates** compares installed version names with the public listing page. **Update** unfreezes the app if needed and opens its Play page. If Play Store itself is frozen, Telos unfreezes it for that session and freezes it again when the updates finish (only when you had frozen it). Telos watches the installed version code and freezes freeze-candidates again as soon as Play installs a newer build (one hour is only a fallback). **Update all** opens Play's updates screen the same way. Store settings **Block network until opened** (on by default): when Telos Network VPN is running, those thawed apps have no internet until you launch them. Network block applies only to the thawed apps, not to the whole device.
 
 ### Recommended
 

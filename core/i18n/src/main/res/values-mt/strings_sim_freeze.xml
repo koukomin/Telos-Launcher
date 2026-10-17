@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">Isem tas-SIM %1$d</string>
+    <string name="freeze_unfreeze_with_title">Iftaħ silġ ma’ %1$s</string>
+    <string name="freeze_unfreeze_with_open">Iftaħ silġ u iftaħ</string>
+    <string name="freeze_unfreeze_only_this">Din l-app biss</string>
+    <string name="freeze_game_booster_package">Pakkett tal-game booster</string>
+    <string name="freeze_game_booster_package_summary">Iftaħ dan il-booster tas-sistema qabel il-logħob elenkat</string>
+    <string name="freeze_game_booster_apps">Logħob li jeħtieġ il-booster</string>
+    <string name="freeze_game_booster_apps_summary">Ismijiet tal-pakketti, separati b’virgola</string>
+</resources>

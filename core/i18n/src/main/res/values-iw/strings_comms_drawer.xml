@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">אפליקציות הודעות</string>
+    <string name="comms_reply">השב</string>
+    <string name="comms_menu">תפריט</string>
+    <string name="comms_dual_app">אפליקציה כפולה</string>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Aggiorna</string>
+    <string name="store_play_update_available">Aggiornamento disponibile</string>
+    <string name="store_play_up_to_date">Aggiornata</string>
+    <string name="store_play_update_unknown">Apri Play Store per controllare</string>
+    <string name="store_play_empty">Nessuna app Play Store</string>
+    <string name="store_play_empty_hint">Le app installate dal Play Store compaiono qui, anche quelle congelate.</string>
+    <string name="store_play_hint">Le app congelate vengono scongelate e si apre Play Store. Telos le ricongela appena Play installa la nuova versione (un’ora solo come riserva). Opzionale: con VPN Telos Network non hanno internet finché non le apri.</string>
+    <string name="store_play_open_my_apps">Apri aggiornamenti Play Store</string>
+    <string name="store_play_block_network">Blocca rete fino all’apertura</string>
+    <string name="store_play_block_network_summary">Quando la VPN Telos Network è attiva, le app scongelate per Play non hanno internet finché non le apri di nuovo.</string>
+    <string name="play_update_pause_channel">Aggiornamenti Play Store</string>
+    <string name="play_update_pause_title">In attesa degli aggiornamenti Play Store</string>
+    <string name="play_update_pause_text">%2$d app scongelate verranno ricongelate appena Play installa una nuova versione (riserva %1$d ora).</string>
+</resources>

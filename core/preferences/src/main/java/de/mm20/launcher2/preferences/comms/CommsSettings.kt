@@ -577,6 +577,16 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(sim2Color = color)) }
     }
 
+    val simNames
+        get() = dataStore.data.map { it.comms.simNames }
+    fun setSimName(subscriptionId: String, name: String?) {
+        dataStore.update {
+            val map = it.comms.simNames.toMutableMap()
+            if (name.isNullOrBlank()) map.remove(subscriptionId) else map[subscriptionId] = name.trim()
+            it.copy(comms = it.comms.copy(simNames = map))
+        }
+    }
+
     val answerStyle
         get() = dataStore.data.map { it.comms.answerStyle }
     fun setAnswerStyle(style: String) {

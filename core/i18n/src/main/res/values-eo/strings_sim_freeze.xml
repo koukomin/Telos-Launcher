@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">Nomo de SIM %1$d</string>
+    <string name="freeze_unfreeze_with_title">Malfrostigi kun %1$s</string>
+    <string name="freeze_unfreeze_with_open">Malfrostigi kaj malfermi</string>
+    <string name="freeze_unfreeze_only_this">Nur ĉi tiu programo</string>
+    <string name="freeze_game_booster_package">Pakaĵo de luda akcelilo</string>
+    <string name="freeze_game_booster_package_summary">Malfrostigi ĉi tiun sisteman akcelilon antaŭ la ludoj</string>
+    <string name="freeze_game_booster_apps">Ludoj kiuj bezonas la akcelilon</string>
+    <string name="freeze_game_booster_apps_summary">Pakaĵnomoj, komo-apartigitaj</string>
+</resources>

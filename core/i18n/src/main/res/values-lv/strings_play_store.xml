@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Atjaunināt</string>
+    <string name="store_play_update_available">Ir pieejams atjauninājums</string>
+    <string name="store_play_up_to_date">Aktuāla</string>
+    <string name="store_play_update_unknown">Atveriet Play Store, lai pārbaudītu</string>
+    <string name="store_play_empty">Nav Play Store lietotņu</string>
+    <string name="store_play_empty_hint">No Play Store instalētās lietotnes, arī sasaldētās, ir šeit.</string>
+    <string name="store_play_hint">Sasaldētās lietotnes tiek atkausētas un atveras Play Store. Telos tās atkal sasaldē, tiklīdz Play instalē jauno versiju (stunda tikai kā rezerve). Pēc izvēles: ar Telos Network VPN nav interneta, līdz tās atver.</string>
+    <string name="store_play_open_my_apps">Atvērt Play Store atjauninājumus</string>
+    <string name="store_play_block_network">Bloķēt tīklu līdz atvēršanai</string>
+    <string name="store_play_block_network_summary">Kad Telos Network VPN ir ieslēgts, atkausētajām Play lietotnēm nav interneta, līdz tās atverat no jauna.</string>
+    <string name="play_update_pause_channel">Play Store atjauninājumi</string>
+    <string name="play_update_pause_title">Gaida Play Store atjauninājumus</string>
+    <string name="play_update_pause_text">%2$d atkausētās lietotnes tiks sasaldētas atkal, tiklīdz Play instalēs jaunu versiju (rezerve %1$d stunda).</string>
+</resources>

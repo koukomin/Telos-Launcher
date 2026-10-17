@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">SIM %1$d の名前</string>
+    <string name="freeze_unfreeze_with_title">%1$s と一緒に解除</string>
+    <string name="freeze_unfreeze_with_open">解除して開く</string>
+    <string name="freeze_unfreeze_only_this">このアプリのみ</string>
+    <string name="freeze_game_booster_package">ゲームブースターのパッケージ</string>
+    <string name="freeze_game_booster_package_summary">下記のゲームの前にこのシステムブースターを解除</string>
+    <string name="freeze_game_booster_apps">ブースターが必要なゲーム</string>
+    <string name="freeze_game_booster_apps_summary">パッケージ名（カンマ区切り）</string>
+</resources>

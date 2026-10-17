@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">Aplikasi pesan</string>
+    <string name="comms_reply">Balas</string>
+    <string name="comms_menu">Menu</string>
+    <string name="comms_dual_app">Aplikasi dual</string>
+</resources>

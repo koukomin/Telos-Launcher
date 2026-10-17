@@ -49,28 +49,18 @@ class ProfileManager(
 
     private val scope = CoroutineScope(Dispatchers.Default + Job())
 
-    /**
-     * An array of exactly 3 profiles with their states.
-     * - Index 0: Personal profile
-     * - Index 1: Work profile
-     * - Index 2: Private profile
-     *
-     * Profiles that don't exist are null.
-     */
-    private val profileStates: MutableStateFlow<Array<ProfileWithState?>> =
-        MutableStateFlow(arrayOf(null, null, null))
+    private val profileStates: MutableStateFlow<List<ProfileWithState>> =
+        MutableStateFlow(emptyList())
 
     /**
      * List of profiles that are active and unlocked.
      */
-    val activeProfiles: Flow<List<Profile>> = profileStates.map {
-        it.mapNotNull {
-            if (it?.state?.locked != false) null else it.profile
-        }
+    val activeProfiles: Flow<List<Profile>> = profileStates.map { rows ->
+        rows.mapNotNull { if (it.state.locked) null else it.profile }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), replay = 1)
 
-    val profiles: Flow<List<Profile>> = profileStates.map {
-        it.mapNotNull { it?.profile }
+    val profiles: Flow<List<Profile>> = profileStates.map { rows ->
+        rows.map { it.profile }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), replay = 1)
 
     init {
@@ -112,72 +102,60 @@ class ProfileManager(
 
     private suspend fun refreshProfiles() {
         mutex.withLock {
-            val profiles = arrayOf<ProfileWithState?>(null, null, null)
-
+            val rows = mutableListOf<ProfileWithState>()
             for (userHandle in launcherApps.profiles) {
                 val serial = userManager.getSerialNumberForUser(userHandle)
                 if (android.os.Build.MANUFACTURER == "samsung" && serial == 150L) continue // Hide Samsung Secure Folder
-
-                val type = getProfileType(userHandle)
-                val index = when (type) {
-                    Profile.Type.Personal -> 0
-                    Profile.Type.Work -> 1
-                    Profile.Type.Private -> 2
-                }
-
-                if (profiles[index] == null) {
-                    profiles[index] = ProfileWithState(
-                        Profile(
-                            type = getProfileType(userHandle),
-                            userHandle = userHandle,
-                            serial = serial,
-                        ),
-                        getProfileState(userHandle),
-                    )
-                }
+                rows += ProfileWithState(
+                    Profile(
+                        type = getProfileType(userHandle),
+                        userHandle = userHandle,
+                        serial = serial,
+                    ),
+                    getProfileState(userHandle),
+                )
             }
-            profileStates.value = profiles
+            profileStates.value = rows
         }
     }
 
     fun getProfile(userHandle: UserHandle): Flow<Profile?> {
-        return profileStates.map {
-            it.find { it?.profile?.userHandle == userHandle }?.profile
+        return profileStates.map { rows ->
+            rows.find { it.profile.userHandle == userHandle }?.profile
         }
     }
 
     /**
-     * Returns the profile of the given type, or null if it doesn't exist.
+     * Returns the first profile of the given type, or null if it doesn't exist.
      */
     fun getProfile(profileType: Profile.Type): Profile? {
-        return when (profileType) {
-            Profile.Type.Personal -> profileStates.value[0]?.profile
-            Profile.Type.Work -> profileStates.value[1]?.profile
-            Profile.Type.Private -> profileStates.value[2]?.profile
-        }
+        return profileStates.value.find { it.profile.type == profileType }?.profile
     }
 
     fun getProfileState(profile: Profile?): Flow<Profile.State?> {
-        return profileStates.map { profiles ->
-            profiles.find { it?.profile == profile }?.state
+        return profileStates.map { rows ->
+            rows.find { it.profile == profile }?.state
         }
     }
 
     fun getProfileStateOnce(profile: Profile?): Profile.State? {
-        return profileStates.value.find { it?.profile == profile }?.state
+        return profileStates.value.find { it.profile == profile }?.state
     }
 
     private fun getProfileType(userHandle: UserHandle): Profile.Type {
+        if (userHandle == Process.myUserHandle()) return Profile.Type.Personal
         if (isAtLeastApiLevel(35)) {
             val launcherUserInfo = launcherApps.getLauncherUserInfo(userHandle)
             return when (launcherUserInfo?.userType) {
                 UserManager.USER_TYPE_PROFILE_PRIVATE -> Profile.Type.Private
                 UserManager.USER_TYPE_PROFILE_MANAGED -> Profile.Type.Work
-                else -> Profile.Type.Personal
-
+                else -> Profile.Type.Clone
             }
         }
-        return if (userHandle == Process.myUserHandle()) Profile.Type.Personal else Profile.Type.Work
+        // Dual Apps on many OEMs use user 999. Work profiles are typically user 10.
+        val id = Regex("(\\d+)").findAll(userHandle.toString()).lastOrNull()?.value?.toIntOrNull()
+        if (id == 999) return Profile.Type.Clone
+        return Profile.Type.Work
     }
 
     private fun getProfileState(userHandle: UserHandle): Profile.State {

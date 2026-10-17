@@ -67,4 +67,5 @@ dependencies {
     implementation(project(":core:i18n"))
     implementation(project(":data:notifications"))
     implementation(project(":services:context-profiles"))
+    implementation(project(":services:network"))
 }

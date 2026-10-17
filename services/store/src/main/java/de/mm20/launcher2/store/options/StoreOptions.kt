@@ -37,6 +37,11 @@ data class GlobalOptions(
     val updateFrozenApps: Boolean = false,
     /** session, shizuku, root, or external:<package>. */
     val installer: String = "session",
+    /**
+     * When updating a frozen Play Store app, if Telos Network VPN is on, block that app's
+     * internet until the user opens it again.
+     */
+    val playUpdateBlockNetwork: Boolean = true,
     /** Raises the GitHub limit from 60 to 5000 requests per hour; optional */
     val githubToken: String = "",
     val lastCheckMillis: Long = 0,

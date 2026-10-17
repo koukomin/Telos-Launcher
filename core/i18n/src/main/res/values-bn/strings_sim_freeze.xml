@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">সিম %1$d-এর নাম</string>
+    <string name="freeze_unfreeze_with_title">%1$s-এর সাথে আনফ্রিজ</string>
+    <string name="freeze_unfreeze_with_open">আনফ্রিজ করে খুলুন</string>
+    <string name="freeze_unfreeze_only_this">শুধু এই অ্যাপ</string>
+    <string name="freeze_game_booster_package">গেম বুস্টার প্যাকেজ</string>
+    <string name="freeze_game_booster_package_summary">নিচের গেমগুলোর আগে এই সিস্টেম বুস্টার আনফ্রিজ করুন</string>
+    <string name="freeze_game_booster_apps">বুস্টার লাগে এমন গেম</string>
+    <string name="freeze_game_booster_apps_summary">প্যাকেজ নাম, কমা দিয়ে</string>
+</resources>

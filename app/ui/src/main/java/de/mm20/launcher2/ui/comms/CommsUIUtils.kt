@@ -57,19 +57,22 @@ internal fun simAccentColor(key: String): Color = when (key) {
 }
 
 @Composable
-internal fun SimBadge(slot: Int, color: Color, modifier: Modifier = Modifier) {
+internal fun SimBadge(slot: Int, color: Color, modifier: Modifier = Modifier, label: String? = null) {
+    val text = label?.trim()?.takeIf { it.isNotEmpty() }?.take(3) ?: (slot + 1).toString()
     Box(
         modifier = modifier
-            .size(16.dp)
+            .height(16.dp)
             .clip(RoundedCornerShape(4.dp))
-            .background(color),
+            .background(color)
+            .padding(horizontal = 4.dp),
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            text = (slot + 1).toString(),
+            text = text,
             color = Color.White,
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.labelSmall,
+            maxLines = 1,
         )
     }
 }

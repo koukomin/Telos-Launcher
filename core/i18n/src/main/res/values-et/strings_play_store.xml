@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Uuenda</string>
+    <string name="store_play_update_available">Värskendus on saadaval</string>
+    <string name="store_play_up_to_date">Ajakohane</string>
+    <string name="store_play_update_unknown">Ava Play Store kontrollimiseks</string>
+    <string name="store_play_empty">Play Store’i rakendusi pole</string>
+    <string name="store_play_empty_hint">Play Store’ist installitud rakendused, sh külmutatud, kuvatakse siin.</string>
+    <string name="store_play_hint">Külmutatud rakendused sulatatakse ja Play Store avaneb. Telos külmutab need uuesti, kui Play installib uue versiooni (tund ainult varuks). Valikuline: Telos Networki VPN-iga pole internetti, kuni need avad.</string>
+    <string name="store_play_open_my_apps">Ava Play Store’i värskendused</string>
+    <string name="store_play_block_network">Blokeeri võrk avamiseni</string>
+    <string name="store_play_block_network_summary">Kui Telos Networki VPN on sees, pole Play jaoks sulatatud rakendustel internetti, kuni need uuesti avad.</string>
+    <string name="play_update_pause_channel">Play Store’i värskendused</string>
+    <string name="play_update_pause_title">Play Store’i värskenduste ootamine</string>
+    <string name="play_update_pause_text">%2$d sulatatud rakendust külmutatakse uuesti, kui Play installib uue versiooni (varu %1$d tund).</string>
+</resources>

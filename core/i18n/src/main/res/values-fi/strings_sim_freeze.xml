@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">SIM %1$d:n nimi</string>
+    <string name="freeze_unfreeze_with_title">Sula yhdessä: %1$s</string>
+    <string name="freeze_unfreeze_with_open">Sula ja avaa</string>
+    <string name="freeze_unfreeze_only_this">Vain tämä sovellus</string>
+    <string name="freeze_game_booster_package">Peliboosterin paketti</string>
+    <string name="freeze_game_booster_package_summary">Sula tämä järjestelmäboosteri ennen alla olevia pelejä</string>
+    <string name="freeze_game_booster_apps">Pelit, jotka tarvitsevat boosterin</string>
+    <string name="freeze_game_booster_apps_summary">Pakettinimet, pilkuilla erotettuina</string>
+</resources>

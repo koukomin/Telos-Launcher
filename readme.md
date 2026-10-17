@@ -88,7 +88,7 @@ from Telos Store.
 | **Telos Music** | Local library with a Home tab (genre chips, quick picks, shelves), artwork-tinted Now Playing, sharing, lyrics, scrobbling, tag editor; Media3 plus official NextLib FFmpeg decoders | [Music](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/music/) |
 | **Telos Video** | Library, player, web streams, torrents, subtitles, Trakt; Media3 plus official NextLib FFmpeg decoders (AC3, DTS, TrueHD) inside Telos | [Video](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/video/) |
 | **Telos Radio** | Internet radio with station search, sleep timer and stream recording; Media3 plus official NextLib FFmpeg decoders | [Radio](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/radio/) |
-| **Telos Store** | Install and update apps from GitHub, F-Droid and more, manages the Telos apps | [Store](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/store/) |
+| **Telos Store** | Install and update apps from GitHub, F-Droid and more, manages the Telos apps, and lists Play Store apps when Play is installed | [Store](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/store/) |
 | **Smart Freeze** | Freeze or hide apps through Shizuku, root, device owner or Island (a launcher feature in Settings, not a Telos app) | [Smart Freeze](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/freeze/) |
 
 Telos Phone now reads the full Android contact list across synced accounts, including email-only contacts, rather than seeding its directory only from phone-number rows.
@@ -413,7 +413,7 @@ Full catalogue: [System catalogue](https://koukomin.github.io/Telos-Launcher/doc
 - **Fonts (typography):** Default, System, Monospace, Serif, Rounded, or custom with a brand and a plain font and a style per text role.
 - **Shapes:** Default, Extra round, Cut, Rectangular, or custom. **Transparency:** Default, Semi-transparent, or custom opacity of background, surface and elevated surface.
 - **Blur and surfaces:** wallpaper blur (radius 4 to 64), drawer background plate (default 35 percent), dock plate, folder background color.
-- **Presets** (applied at once, no confirmation, no undo): AMOLED Black and Cyberpunk (colors), Colorful Grid (colors and layout), Classic Grid, Clean Grid, Pixel-style (layout). A layout preset overwrites grid, icon shape, dock and search bar settings.
+- **Presets** (applied at once, no confirmation, no undo): **Telos** (glass transparencies, transparent search bar, drawer blur and glass widgets), AMOLED Black and Cyberpunk (colors), Colorful Grid (colors and layout), Classic Grid, Clean Grid, Pixel-style (layout). A layout preset overwrites grid, icon shape, dock and search bar settings. Fresh installs already use the Telos glass values.
 - **Grid:** 3 to 12 columns (5 default), icon size 32 to 64 dp, labels (size 8 to 24, one or two lines, shadow, color), apps as a list, separate overrides for home and search grids, folders and folder covers.
 - **Icons:** shapes (Platform default, Circle, Square, Rounded square, Squircle, Reuleaux triangle, Hexagon, Pentagon, Teardrop, Pebble), enforce shape, themed icons, enforce themed icons, one **icon pack** (appfilter and grayscale-map formats, live calendar and clock icons), icon cache size 50 to 500.
 - **Badges:** notification badges (dot or count, color), cloud, suspended or frozen apps, shortcut and plugin badges; work profile, hidden item and Store update badges are always on. Frozen apps follow the selected grayscale or snowflake style consistently in grids, lists, folders and the sidebar.
@@ -481,9 +481,9 @@ Backup and restore ask first **what** to include: **Launcher** (settings and the
 
 ### Profiles
 
-- **Personal, Work and Private** profiles are recognized (private space on Android 15+; on older versions any other profile counts as work). The Samsung Secure Folder is hidden. Apps get tabs per profile in the empty-search grid, work apps a briefcase badge, private apps a lock badge.
-- **Work profile screen** (Advanced > Work profile): status, a **Work Mode** switch to pause or resume work apps (Telos must be the default home app), optional authentication for the toggle.
-- **Sandbox** (experimental, pending review): **Initialize Telos Sandbox** starts managed profile provisioning with Telos as profile owner; **Clone to Sandbox** copies an app into the work profile. There is **no "clone" profile type**; apps cloned by Android's dual apps feature live in other user handles and show a badged icon.
+- **Personal, Work, Private and Dual/clone** profiles are recognized (private space on Android 15+; OEM Dual Apps such as Xiaomi user 999 as Clone). The Samsung Secure Folder is hidden. Apps get tabs per profile in the empty-search grid (clone copies stay on the main tab), work apps a briefcase badge, private apps a lock badge, dual apps a person badge.
+- Opening a frozen app can **unfreeze companions** with it (Gemini → Google, ReVanced/Morphe YouTube → microG, Play-licensed apps → Play Store, games you tie to a game booster). Those companions stay unfrozen until the master app is frozen again, including Freeze all and screen-off. Foreground, music and network-active apps are skipped by auto-freeze (foreground skip is on by default).
+- **Sandbox** (experimental, pending review): **Initialize Telos Sandbox** starts managed profile provisioning with Telos as profile owner; **Clone to Sandbox** copies an app into the work profile. OEM dual apps (Viber, WhatsApp, …) also appear in the app drawer and in the Phone sidebar.
 - **Context profiles** (experimental) are a different feature: named bundles of overrides (gestures, freeze profile, widget page, Do Not Disturb, brightness, launch an app) triggered manually, by time, WiFi name, Bluetooth device, Battery Saver or charging, checked only while the launcher is open. Details below.
 
 ### Permissions, assistant and global actions
@@ -605,7 +605,7 @@ Every Telos app has the same modern search bar (a rounded field with a clear but
 
 ### Telos Phone
 
-A complete phone app inside the launcher. Its layout follows [Right Dialer](https://github.com/Goodwy/Dialer); privacy and power-user ideas come from [Secure Dialer](https://github.com/Secure-Phone-apps/Secure-Dialer) and [Ever Dialer](https://github.com/hari161008/Ever-Dialer). [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/phone/). Most call features need Telos to be the default phone app (Settings > Default phone app).
+A complete phone app inside the launcher. Its layout follows [Right Dialer](https://github.com/Goodwy/Dialer); privacy and power-user ideas come from [Secure Dialer](https://github.com/Secure-Phone-apps/Secure-Dialer) and [Ever Dialer](https://github.com/hari161008/Ever-Dialer). [Docs](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/phone/). Most call features need Telos to be the default phone app (Settings > Default phone app). Opening Phone shows **recents**. The menu is a side sheet (not full width) with settings, clear history, Messages, and installed messengers with **icon and name**, including Dual App copies.
 
 **Keypad and calls**
 
@@ -618,6 +618,7 @@ A complete phone app inside the launcher. Its layout follows [Right Dialer](http
 **Dual SIM**
 
 - Per-call SIM choice, per-number default SIM, last-used SIM, same SIM as last call to the number, fixed SIM 1 or SIM 2
+- SIM names: the name you set in Android, or a Telos name in Phone settings, shown on badges and SIM chips
 - SIM badges in call history with configurable colors for SIM 1 and SIM 2
 - Outgoing caller ID masking (CLIR) with regional prefixes (a blank custom prefix sends `#31#`) and emergency-number bypass
 - Vibrate on answer and on hangup: one short pulse when an outgoing call is answered and one when a call ends
@@ -684,7 +685,7 @@ Text (SMS) and picture (MMS) messages as conversations with a reply field. It is
 
 **Conversations**
 
-- Conversation list with unread conversations in bold, **New message** by number, reply field, message bubbles with pictures and videos inline
+- Conversation list with unread conversations in bold, a **Reply** button on each thread, **New message** by number, a send button on the composer, message bubbles with pictures and videos inline
 - Search, pin, archive, rename, delete thread, unread on top, attach any file, speech-to-text, tap a bubble to hear it (TTS), optional 3 second delayed send, schedule (+1h), SMS signature, JSON SMS backup/restore, block alphanumeric senders, notification reply / mark read / speak, optional popup reply
 - Failed messages are marked "not sent"; opening a conversation marks it read
 - Group messages as MMS (default SMS app only)
@@ -1046,6 +1047,12 @@ An app installer and updater that works like [Obtainium](https://github.com/Imra
 
 - The Telos apps (Phone, Messages, Radio, Music, Video, Viewer, Files, Calculator, Screenshot, Screen Recorder, Voice Recorder) are listed with what each one does; "installing" one shows its icon in the app grid and in search, "removing" hides it. Telos Store itself cannot be removed.
 - Crash guard: an app that crashes (or hangs) twice within a day is switched off automatically, with a notification pointing to the Store; "installing" it again resets the counter.
+
+**Play Store tab**
+
+- Shown only when the Google Play Store app is installed. Lists every app that Play installed, including frozen ones.
+- Telos can compare the installed version name with the public Play listing. When that comparison is missing, the row still lets you open Play.
+- **Update** on one app, or **Update all**, unfreezes frozen apps, opens Play Store, and watches installed version codes. If Play Store itself is frozen, Telos unfreezes it for the session and freezes it again when updates finish (only if you had frozen it). Each freeze-candidate is frozen again as soon as Play installs a newer version (one hour is only a fallback). **Block network until opened** is on by default: only those thawed packages get a firewall `blockAll` on Telos Network VPN (the rest of the device stays online). Store settings can turn this off. Opening the app restores its previous firewall rule.
 
 **Status and limitations:** Only the listed sources: APKMirror, Uptodown, Aptoide, APKPure, the Play Store, Huawei, Tencent, RuStore and Telegram entries are skipped when importing. Split APKs and apps that need a login are not supported, direct APK links have no version check, and silent installs need Shizuku or root. Installing APKs from outside an app store means you trust the source.
 

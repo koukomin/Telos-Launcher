@@ -116,6 +116,13 @@ fun StoreDashboardScreen(initialLink: String = "") {
     val installationError by viewModel.installationError.collectAsStateWithLifecycle()
     val disabledTelos by viewModel.disabledTelosApps.collectAsStateWithLifecycle()
     val trackedUrls by viewModel.trackedUrls.collectAsStateWithLifecycle()
+    val playStoreInstalled = viewModel.playStoreInstalled
+    val playApps by viewModel.visiblePlayApps.collectAsStateWithLifecycle()
+    val allPlayApps by viewModel.playApps.collectAsStateWithLifecycle()
+    val playChecking by viewModel.playChecking.collectAsStateWithLifecycle()
+    val playQuery by viewModel.playQuery.collectAsStateWithLifecycle()
+    val playFilterUpdates by viewModel.playFilterUpdates.collectAsStateWithLifecycle()
+    val playTabIndex = if (playStoreInstalled) 3 else -1
 
     var tab by rememberSaveable { mutableIntStateOf(0) }
     var showAdd by remember { mutableStateOf(false) }
@@ -127,6 +134,9 @@ fun StoreDashboardScreen(initialLink: String = "") {
     // an address that opened the Store is handled once, not again after a rotation
     var linkHandled by rememberSaveable(initialLink) { mutableStateOf(false) }
     LaunchedEffect(Unit) { viewModel.checkAll() }
+    LaunchedEffect(playStoreInstalled) {
+        if (playStoreInstalled) viewModel.refreshPlayApps()
+    }
     LaunchedEffect(initialLink) {
         if (linkHandled) return@LaunchedEffect
         linkHandled = true
@@ -160,20 +170,35 @@ fun StoreDashboardScreen(initialLink: String = "") {
     }
 
     MediaFrame(stringResource(R.string.hf_store_title), askNotifications = true, actions = {
-        if (tab == 0) {
-            IconButton(onClick = { viewModel.checkAll() }, enabled = !checking) {
-                if (checking) CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
-                else Icon(painterResource(R.drawable.download_24px), contentDescription = stringResource(R.string.hc_check_for_updates))
+        if (tab == 0 || tab == playTabIndex) {
+            IconButton(
+                onClick = {
+                    if (tab == playTabIndex) viewModel.checkPlayUpdates() else viewModel.checkAll()
+                },
+                enabled = if (tab == playTabIndex) !playChecking else !checking,
+            ) {
+                if ((tab == playTabIndex && playChecking) || (tab == 0 && checking)) {
+                    CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
+                } else {
+                    Icon(painterResource(R.drawable.download_24px), contentDescription = stringResource(R.string.hc_check_for_updates))
+                }
             }
             Box {
                 IconButton(onClick = { menuOpen = true }) {
                     Icon(painterResource(R.drawable.more_vert_24px), contentDescription = stringResource(R.string.hc_more))
                 }
                 DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
-                    DropdownMenuItem(text = { Text(stringResource(R.string.hc_add_installed_apps)) }, onClick = { menuOpen = false; showInstalled = true })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.hc_import_obtainium_file)) }, onClick = { menuOpen = false; importPicker.launch(arrayOf("*/*")) })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.hc_export_obtainium_file)) }, onClick = { menuOpen = false; exportPicker.launch("telos-store-export.json") })
-                    DropdownMenuItem(text = { Text(stringResource(R.string.hc_store_settings)) }, onClick = { menuOpen = false; showSettings = true })
+                    if (tab == 0) {
+                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_add_installed_apps)) }, onClick = { menuOpen = false; showInstalled = true })
+                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_import_obtainium_file)) }, onClick = { menuOpen = false; importPicker.launch(arrayOf("*/*")) })
+                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_export_obtainium_file)) }, onClick = { menuOpen = false; exportPicker.launch("telos-store-export.json") })
+                        DropdownMenuItem(text = { Text(stringResource(R.string.hc_store_settings)) }, onClick = { menuOpen = false; showSettings = true })
+                    } else {
+                        DropdownMenuItem(text = { Text(stringResource(R.string.store_play_open_my_apps)) }, onClick = {
+                            menuOpen = false
+                            PlayStoreInventory.openPlayUpdates(context)
+                        })
+                    }
                 }
             }
         }
@@ -197,6 +222,9 @@ fun StoreDashboardScreen(initialLink: String = "") {
                     Tab(selected = tab == 0, onClick = { tab = 0 }, text = { Text(stringResource(R.string.hc_apps), maxLines = 1) })
                     Tab(selected = tab == 1, onClick = { tab = 1 }, text = { Text(stringResource(R.string.hc_telos_apps), maxLines = 1) })
                     Tab(selected = tab == 2, onClick = { tab = 2 }, text = { Text(stringResource(R.string.recommendation_tab_label), maxLines = 1) })
+                    if (playStoreInstalled) {
+                        Tab(selected = tab == playTabIndex, onClick = { tab = playTabIndex }, text = { Text(stringResource(R.string.store_play_tab), maxLines = 1) })
+                    }
                 }
                 if (tab == 0) {
                     AppsTab(
@@ -225,7 +253,7 @@ fun StoreDashboardScreen(initialLink: String = "") {
                             }
                         },
                     )
-                } else {
+                } else if (tab == 1) {
                     TelosAppsTab(
                         disabled = disabledTelos,
                         onToggle = { app, enabled -> viewModel.setTelosAppEnabled(app.key, enabled) },
@@ -237,6 +265,21 @@ fun StoreDashboardScreen(initialLink: String = "") {
                                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             )
                         },
+                    )
+                } else if (playStoreInstalled && tab == playTabIndex) {
+                    PlayStoreTab(
+                        apps = playApps,
+                        totalCount = allPlayApps.size,
+                        updateCount = allPlayApps.count { it.updateAvailable == true },
+                        query = playQuery,
+                        filterUpdates = playFilterUpdates,
+                        checking = playChecking,
+                        onQuery = { viewModel.playQuery.value = it },
+                        onFilterUpdates = { viewModel.playFilterUpdates.value = it },
+                        onCheck = { viewModel.checkPlayUpdates() },
+                        onUpdate = { viewModel.updatePlayApp(it.packageName) },
+                        onUpdateAll = { viewModel.updateAllPlayApps() },
+                        onOpen = { PlayStoreInventory.openPlayApp(context, it.packageName) },
                     )
                 }
             }
@@ -258,6 +301,126 @@ fun StoreDashboardScreen(initialLink: String = "") {
 }
 
 // ---------------------------------------------------------------------------------------------
+
+@Composable
+private fun PlayStoreTab(
+    apps: List<PlayStoreApp>,
+    totalCount: Int,
+    updateCount: Int,
+    query: String,
+    filterUpdates: Boolean,
+    checking: Boolean,
+    onQuery: (String) -> Unit,
+    onFilterUpdates: (Boolean) -> Unit,
+    onCheck: () -> Unit,
+    onUpdate: (PlayStoreApp) -> Unit,
+    onUpdateAll: () -> Unit,
+    onOpen: (PlayStoreApp) -> Unit,
+) {
+    Column(Modifier.fillMaxSize()) {
+        de.mm20.launcher2.ui.component.TelosSearchBar(query, onQuery, stringResource(R.string.hf_store_search))
+        Row(
+            Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            FilterChip(
+                selected = filterUpdates,
+                onClick = { onFilterUpdates(!filterUpdates) },
+                label = { Text(stringResource(R.string.hf_store_filter_updates, updateCount)) },
+            )
+            if (updateCount > 0) {
+                FilledTonalButton(onClick = onUpdateAll) {
+                    Text(stringResource(R.string.hc_update_all_count, updateCount))
+                }
+            }
+        }
+        Text(
+            stringResource(R.string.store_play_hint),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+        )
+        if (checking) {
+            androidx.compose.material3.LinearProgressIndicator(Modifier.fillMaxWidth().height(2.dp))
+        }
+        if (apps.isEmpty() && query.isNotBlank()) {
+            de.mm20.launcher2.ui.component.SearchEmptyState(query.trim())
+        } else if (apps.isEmpty()) {
+            EmptyMessage(
+                stringResource(R.string.store_play_empty),
+                stringResource(R.string.store_play_empty_hint),
+            )
+        } else {
+            LazyColumn(contentPadding = PaddingValues(bottom = 96.dp), modifier = Modifier.fillMaxSize()) {
+                items(apps, key = { it.packageName }) { app ->
+                    PlayStoreAppRow(app = app, onOpen = { onOpen(app) }, onUpdate = { onUpdate(app) })
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun PlayStoreAppRow(app: PlayStoreApp, onOpen: () -> Unit, onUpdate: () -> Unit) {
+    Surface(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 4.dp).clickable(onClick = onOpen),
+        shape = RoundedCornerShape(16.dp),
+        tonalElevation = 1.dp,
+    ) {
+        Row(
+            Modifier.fillMaxWidth().padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            val bmp = remember(app.packageName, app.icon) {
+                app.icon?.toBitmap(96, 96)?.asImageBitmap()
+            }
+            if (bmp != null) {
+                Image(bmp, contentDescription = null, modifier = Modifier.size(48.dp).clip(RoundedCornerShape(12.dp)))
+            } else {
+                Box(Modifier.size(48.dp).clip(RoundedCornerShape(12.dp)))
+            }
+            Spacer(Modifier.width(12.dp))
+            Column(Modifier.weight(1f)) {
+                Text(app.label, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(
+                    app.packageName,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                val versionLine = buildString {
+                    app.versionName?.let { append(it) }
+                    if (app.frozen) {
+                        if (isNotEmpty()) append(" · ")
+                        append("❄")
+                    }
+                    app.playVersion?.let {
+                        if (isNotEmpty()) append(" · ")
+                        append(it)
+                    }
+                }
+                if (versionLine.isNotBlank()) {
+                    Text(versionLine, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                val status = when (app.updateAvailable) {
+                    true -> stringResource(R.string.store_play_update_available)
+                    false -> stringResource(R.string.store_play_up_to_date)
+                    null -> stringResource(R.string.store_play_update_unknown)
+                }
+                Text(
+                    status,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = if (app.updateAvailable == true) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            OutlinedButton(onClick = onUpdate) {
+                Text(stringResource(R.string.store_play_update))
+            }
+        }
+    }
+}
 
 @Composable
 private fun AppsTab(
@@ -757,6 +920,15 @@ private fun StoreSettingsDialog(viewModel: StoreViewModel, onDismiss: () -> Unit
                 ToggleRow(stringResource(R.string.hc_only_on_wi_fi), g.wifiOnly) { v -> viewModel.setGlobal { it.copy(wifiOnly = v) } }
                 ToggleRow(stringResource(R.string.hf_store_notify), g.notifyUpdates) { v -> viewModel.setGlobal { it.copy(notifyUpdates = v) } }
                 ToggleRow(stringResource(R.string.store_update_frozen), g.updateFrozenApps) { v -> viewModel.setGlobal { it.copy(updateFrozenApps = v) } }
+                ToggleRow(stringResource(R.string.store_play_block_network), g.playUpdateBlockNetwork) { v ->
+                    viewModel.setGlobal { it.copy(playUpdateBlockNetwork = v) }
+                }
+                Text(
+                    stringResource(R.string.store_play_block_network_summary),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp),
+                )
                 ToggleRow(stringResource(R.string.hf_store_auto_install), g.autoInstall) { v -> viewModel.setGlobal { it.copy(autoInstall = v) } }
                 Text(
                     stringResource(R.string.freeze_backend_shizuku) + " / " + stringResource(R.string.freeze_backend_root) +

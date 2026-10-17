@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">Ziņojumprogrammas</string>
+    <string name="comms_reply">Atbildēt</string>
+    <string name="comms_menu">Izvēlne</string>
+    <string name="comms_dual_app">Dubultā lietotne</string>
+</resources>

@@ -27,6 +27,7 @@ Presets are bundles shipped with the app. A bundle can set colors, a layout, or 
 
 | Preset | What it changes |
 | --- | --- |
+| Telos | Glass transparencies, transparent search bar, drawer blur, glass widgets (listed first) |
 | AMOLED Black | Colors |
 | Cyberpunk | Colors |
 | Colorful Grid | Colors and layout |

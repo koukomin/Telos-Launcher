@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">Mesaĝaj aplikaĵoj</string>
+    <string name="comms_reply">Respondi</string>
+    <string name="comms_menu">Menuo</string>
+    <string name="comms_dual_app">Duobla aplikaĵo</string>
+</resources>

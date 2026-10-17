@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Обнови</string>
+    <string name="store_play_update_available">Има налична актуализация</string>
+    <string name="store_play_up_to_date">Актуална</string>
+    <string name="store_play_update_unknown">Отворете Play Store за проверка</string>
+    <string name="store_play_empty">Няма приложения от Play Store</string>
+    <string name="store_play_empty_hint">Приложенията от Play Store се показват тук, включително замразените.</string>
+    <string name="store_play_hint">Замразените приложения се размразяват и се отваря Play Store. Telos ги замразява отново щом Play инсталира новата версия (час само като резерва). По желание: с VPN на Telos Network няма интернет, докато не ги отворите.</string>
+    <string name="store_play_open_my_apps">Отвори актуализациите на Play Store</string>
+    <string name="store_play_block_network">Блокирай мрежата до отваряне</string>
+    <string name="store_play_block_network_summary">Когато VPN на Telos Network е включен, размразените за Play приложения нямат интернет, докато не ги отворите отново.</string>
+    <string name="play_update_pause_channel">Актуализации на Play Store</string>
+    <string name="play_update_pause_title">Изчакване на актуализации от Play Store</string>
+    <string name="play_update_pause_text">%2$d размразени приложения ще се замразят отново щом Play инсталира нова версия (резерва %1$d час).</string>
+</resources>

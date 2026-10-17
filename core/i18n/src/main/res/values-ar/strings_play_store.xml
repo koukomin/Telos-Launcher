@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">متجر Play</string>
+    <string name="store_play_update">تحديث</string>
+    <string name="store_play_update_available">يتوفر تحديث</string>
+    <string name="store_play_up_to_date">محدَّثة</string>
+    <string name="store_play_update_unknown">افتح متجر Play للتحقق</string>
+    <string name="store_play_empty">لا تطبيقات من متجر Play</string>
+    <string name="store_play_empty_hint">تظهر هنا التطبيقات المثبّتة من متجر Play، بما فيها المجمَّدة.</string>
+    <string name="store_play_hint">يُلغى تجميد التطبيقات ويُفتح متجر Play. يعيد Telos تجميدها فور تثبيت Play للنسخة الجديدة (ساعة احتياطية فقط). اختياري: مع VPN Telos Network لا إنترنت حتى تفتحها.</string>
+    <string name="store_play_open_my_apps">فتح تحديثات متجر Play</string>
+    <string name="store_play_block_network">حظر الشبكة حتى الفتح</string>
+    <string name="store_play_block_network_summary">عند تشغيل VPN Telos Network لا تملك التطبيقات المُلغى تجميدها لمتجر Play إنترنت حتى تفتحها مجددًا.</string>
+    <string name="play_update_pause_channel">تحديثات متجر Play</string>
+    <string name="play_update_pause_title">انتظار تحديثات متجر Play</string>
+    <string name="play_update_pause_text">ستُجمَّد %2$d تطبيق(ات) أُلغي تجميدها فور تثبيت Play لنسخة جديدة (احتياط %1$d ساعة).</string>
+</resources>

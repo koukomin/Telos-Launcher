@@ -27,9 +27,12 @@ fi
 git push origin "$TAG"
 
 gh repo set-default koukomin/Telos-Launcher >/dev/null 2>&1 || true
+chmod +x tools/release-notes.sh
+tools/release-notes.sh "$TAG" /tmp/telos-release-notes.md
 if gh release view "$TAG" >/dev/null 2>&1; then
-  echo "GitHub release ${TAG} already exists."
+  echo "GitHub release ${TAG} already exists; refreshing notes."
+  gh release edit "$TAG" --title "Telos ${TAG}" --notes-file /tmp/telos-release-notes.md
 else
-  gh release create "$TAG" --title "Telos ${TAG}" --generate-notes
+  gh release create "$TAG" --title "Telos ${TAG}" --notes-file /tmp/telos-release-notes.md
 fi
 echo "Release: https://github.com/koukomin/Telos-Launcher/releases/tag/${TAG}"

@@ -25,6 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
+import de.mm20.launcher2.ui.component.preferences.TextPreference
 import android.Manifest
 import de.mm20.launcher2.ui.comms.CallRecordingsRoute
 import de.mm20.launcher2.ui.comms.CallerNotesRoute
@@ -80,6 +81,7 @@ fun CommsSettingsScreen() {
     val secureCallScreen by viewModel.secureCallScreen.collectAsStateWithLifecycle()
     val sim1Color by viewModel.sim1Color.collectAsStateWithLifecycle()
     val sim2Color by viewModel.sim2Color.collectAsStateWithLifecycle()
+    val simNames by viewModel.simNames.collectAsStateWithLifecycle()
     val answerStyle by viewModel.answerStyle.collectAsStateWithLifecycle()
     val recordingAutoDeleteDays by viewModel.recordingAutoDeleteDays.collectAsStateWithLifecycle()
     val pocketMode by viewModel.pocketMode.collectAsStateWithLifecycle()
@@ -250,6 +252,22 @@ fun CommsSettingsScreen() {
                     value = sim2Color,
                     onValueChanged = { viewModel.setSim2Color(it) }
                 )
+                val activeSims = remember { de.mm20.launcher2.comms.sms.SmsSims.active(context) }
+                LaunchedEffect(simNames) {
+                    simNames.forEach { (id, name) ->
+                        id.toIntOrNull()?.let { de.mm20.launcher2.comms.sms.SmsSims.setCustomName(context, it, name) }
+                    }
+                }
+                activeSims.forEach { sim ->
+                    val key = sim.subId.toString()
+                    TextPreference(
+                        title = stringResource(R.string.comms_sim_name, sim.slot + 1),
+                        value = simNames[key].orEmpty(),
+                        summary = simNames[key]?.takeIf { it.isNotBlank() } ?: sim.label,
+                        placeholder = sim.label,
+                        onValueChanged = { viewModel.setSimName(key, it) },
+                    )
+                }
                 SwitchPreference(
                     title = stringResource(R.string.hc_secure_call_screen),
                     summary = stringResource(R.string.hc_block_screenshots_and_hide_the_call_scre),

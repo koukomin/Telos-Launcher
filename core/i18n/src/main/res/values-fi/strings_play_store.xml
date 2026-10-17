@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">Päivitä</string>
+    <string name="store_play_update_available">Päivitys saatavilla</string>
+    <string name="store_play_up_to_date">Ajantasalla</string>
+    <string name="store_play_update_unknown">Avaa Play Kauppa tarkistusta varten</string>
+    <string name="store_play_empty">Ei Play Kaupan sovelluksia</string>
+    <string name="store_play_empty_hint">Play Kaupasta asennetut sovellukset näkyvät tässä, myös jäädytetyt.</string>
+    <string name="store_play_hint">Jäädytetyt sovellukset sulatetaan ja Play Kauppa avautuu. Telos jäädyttää ne uudelleen heti, kun Play asentaa uuden version (tunti vain varalla). Valinnainen: Telos Network -VPN:llä ei internetiä, ennen kuin avaat ne.</string>
+    <string name="store_play_open_my_apps">Avaa Play Kaupan päivitykset</string>
+    <string name="store_play_block_network">Estä verkko avaamiseen asti</string>
+    <string name="store_play_block_network_summary">Kun Telos Network -VPN on päällä, Playtä varten sulatetut sovellukset ovat ilman internetiä, kunnes avaat ne uudelleen.</string>
+    <string name="play_update_pause_channel">Play Kaupan päivitykset</string>
+    <string name="play_update_pause_title">Odotetaan Play Kaupan päivityksiä</string>
+    <string name="play_update_pause_text">%2$d sulatettua sovellusta jäädytetään uudelleen, kun Play asentaa uuden version (vara %1$d tunti).</string>
+</resources>

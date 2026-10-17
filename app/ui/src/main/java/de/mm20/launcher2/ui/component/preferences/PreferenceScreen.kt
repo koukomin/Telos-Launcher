@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.theme.transparency.transparency
 import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropColumn
 import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropListState
 import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
@@ -85,7 +86,7 @@ fun PreferenceScreen(
                 scrollBehavior = scrollBehavior,
             )
         },
-        containerColor = MaterialTheme.colorScheme.surfaceContainer
+        containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = MaterialTheme.transparency.elevatedSurface)
     ) {
         LazyColumn(
             modifier = Modifier
@@ -125,7 +126,7 @@ fun DragAndDropPreferenceScreen(
                 scrollBehavior = scrollBehavior,
             )
         },
-        containerColor = MaterialTheme.colorScheme.surfaceContainer
+        containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = MaterialTheme.transparency.elevatedSurface)
     ) {
         LazyDragAndDropColumn(
             modifier = Modifier

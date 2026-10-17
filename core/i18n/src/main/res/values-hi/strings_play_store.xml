@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play Store</string>
+    <string name="store_play_update">अपडेट</string>
+    <string name="store_play_update_available">अपडेट उपलब्ध</string>
+    <string name="store_play_up_to_date">अप टू डेट</string>
+    <string name="store_play_update_unknown">जांच के लिए Play Store खोलें</string>
+    <string name="store_play_empty">कोई Play Store ऐप नहीं</string>
+    <string name="store_play_empty_hint">Play Store से इंस्टॉल ऐप यहाँ दिखते हैं, फ्रोज़न सहित।</string>
+    <string name="store_play_hint">फ्रोज़न ऐप अनफ्रीज़ होते हैं और Play Store खुलता है। Play नया वर्शन इंस्टॉल करते ही Telos फिर फ्रीज़ करता है (एक घंटा केवल बैकअप)। वैकल्पिक: Telos Network VPN चालू हो तो खोलने तक इंटरनेट नहीं।</string>
+    <string name="store_play_open_my_apps">Play Store अपडेट खोलें</string>
+    <string name="store_play_block_network">खोलने तक नेटवर्क ब्लॉक</string>
+    <string name="store_play_block_network_summary">Telos Network VPN चालू हो तो Play के लिए अनफ्रीज़ ऐप को फिर खोलने तक इंटरनेट नहीं मिलता।</string>
+    <string name="play_update_pause_channel">Play Store अपडेट</string>
+    <string name="play_update_pause_title">Play Store अपडेट की प्रतीक्षा</string>
+    <string name="play_update_pause_text">Play नया वर्शन इंस्टॉल करते ही %2$d अनफ्रीज़ ऐप फिर फ्रीज़ होंगे (बैकअप %1$d घंटा)।</string>
+</resources>

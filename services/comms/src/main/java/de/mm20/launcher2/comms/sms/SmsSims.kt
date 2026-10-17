@@ -15,6 +15,34 @@ object SmsSims {
     data class Sim(val subId: Int, val slot: Int, val label: String)
 
     private const val PREFS = "telos_sms_sim"
+    const val NAME_PREFS = "telos_sim_names"
+
+    fun customName(context: Context, subId: Int): String? =
+        runCatching {
+            context.getSharedPreferences(NAME_PREFS, Context.MODE_PRIVATE).getString(subId.toString(), null)
+        }.getOrNull()?.trim()?.takeIf { it.isNotEmpty() }
+
+    fun setCustomName(context: Context, subId: Int, name: String?) {
+        runCatching {
+            val ed = context.getSharedPreferences(NAME_PREFS, Context.MODE_PRIVATE).edit()
+            if (name.isNullOrBlank()) ed.remove(subId.toString()) else ed.putString(subId.toString(), name.trim())
+            ed.apply()
+        }
+    }
+
+    fun labelFor(context: Context, subId: Int, slot: Int, displayName: String?, carrierName: String?): String {
+        customName(context, subId)?.let { return it }
+        val slotLabel = "SIM ${slot + 1}"
+        val androidName = displayName?.trim().orEmpty()
+        if (androidName.isNotBlank() &&
+            !androidName.equals(slotLabel, ignoreCase = true) &&
+            !androidName.equals("CARD ${slot + 1}", ignoreCase = true)
+        ) {
+            return androidName
+        }
+        val carrier = carrierName?.trim()?.takeIf { it.isNotBlank() }
+        return if (carrier != null) "$slotLabel · $carrier" else slotLabel
+    }
 
     /** The active SIMs, ordered by slot. Fewer than two means there is nothing to choose. */
     fun active(context: Context): List<Sim> {
@@ -24,9 +52,17 @@ object SmsSims {
         return try {
             val manager = context.getSystemService(SubscriptionManager::class.java) ?: return emptyList()
             manager.activeSubscriptionInfoList.orEmpty().sortedBy { it.simSlotIndex }.map {
-                val carrier = it.carrierName?.toString()?.takeIf { name -> name.isNotBlank() }
-                val slot = "SIM ${it.simSlotIndex + 1}"
-                Sim(it.subscriptionId, it.simSlotIndex, if (carrier != null) "$slot · $carrier" else slot)
+                Sim(
+                    it.subscriptionId,
+                    it.simSlotIndex,
+                    labelFor(
+                        context,
+                        it.subscriptionId,
+                        it.simSlotIndex,
+                        it.displayName?.toString(),
+                        it.carrierName?.toString(),
+                    ),
+                )
             }
         } catch (_: SecurityException) {
             emptyList()

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="store_play_tab">Play ストア</string>
+    <string name="store_play_update">更新</string>
+    <string name="store_play_update_available">更新があります</string>
+    <string name="store_play_up_to_date">最新です</string>
+    <string name="store_play_update_unknown">Play ストアで確認</string>
+    <string name="store_play_empty">Play ストアのアプリはありません</string>
+    <string name="store_play_empty_hint">Play ストアからインストールしたアプリ（凍結中も含む）がここに表示されます。</string>
+    <string name="store_play_hint">凍結中のアプリを解除して Play ストアを開きます。Play が新バージョンを入れるとすぐ再凍結します（1時間は予備）。任意: Telos Network VPN 使用中は開くまでネットなし。</string>
+    <string name="store_play_open_my_apps">Play ストアの更新を開く</string>
+    <string name="store_play_block_network">開くまで通信を遮断</string>
+    <string name="store_play_block_network_summary">Telos Network VPN がオンのとき、Play 用に解除したアプリは再び開くまでインターネットを使えません。</string>
+    <string name="play_update_pause_channel">Play ストアの更新</string>
+    <string name="play_update_pause_title">Play ストアの更新を待機中</string>
+    <string name="play_update_pause_text">Play が新しいバージョンを入れると %2$d 件の解除済みアプリをすぐ再凍結します（予備 %1$d 時間）。</string>
+</resources>

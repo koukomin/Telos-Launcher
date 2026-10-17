@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">Aipeanna teachtaireachtaí</string>
+    <string name="comms_reply">Freagair</string>
+    <string name="comms_menu">Roghchlár</string>
+    <string name="comms_dual_app">Aip dhúbailte</string>
+</resources>

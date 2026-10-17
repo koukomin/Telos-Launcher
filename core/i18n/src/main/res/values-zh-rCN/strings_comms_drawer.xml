@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">即时通讯应用</string>
+    <string name="comms_reply">回复</string>
+    <string name="comms_menu">菜单</string>
+    <string name="comms_dual_app">双开应用</string>
+</resources>

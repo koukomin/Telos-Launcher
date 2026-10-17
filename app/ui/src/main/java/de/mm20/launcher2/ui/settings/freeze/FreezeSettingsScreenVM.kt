@@ -190,7 +190,7 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     val excludeForeground = freezeSettings.excludeForeground
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
     fun setExcludeForeground(value: Boolean) = freezeSettings.setExcludeForeground(value)
 
     val excludeMusic = freezeSettings.excludeMusic
@@ -208,6 +208,15 @@ class FreezeSettingsScreenVM : ViewModel(), KoinComponent {
 
     val hideFromLauncher = freezeSettings.hideFromLauncher
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+    val gameBoosterPackage = freezeSettings.gameBoosterPackage
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
+    fun setGameBoosterPackage(value: String) = freezeSettings.setGameBoosterPackage(value)
+    val gameBoosterApps = freezeSettings.gameBoosterApps
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptySet())
+    fun setGameBoosterAppsCsv(csv: String) {
+        freezeSettings.setGameBoosterApps(csv.split(',').map { it.trim() }.filter { it.isNotEmpty() }.toSet())
+    }
 
     fun refreshBackendState() {
         viewModelScope.launch {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">שם SIM %1$d</string>
+    <string name="freeze_unfreeze_with_title">הפשרה עם %1$s</string>
+    <string name="freeze_unfreeze_with_open">הפשרה ופתיחה</string>
+    <string name="freeze_unfreeze_only_this">רק האפליקציה הזו</string>
+    <string name="freeze_game_booster_package">חבילת מאיץ משחקים</string>
+    <string name="freeze_game_booster_package_summary">הפשר את מאיץ המערכת לפני המשחקים שברשימה</string>
+    <string name="freeze_game_booster_apps">משחקים שצריכים מאיץ</string>
+    <string name="freeze_game_booster_apps_summary">שמות חבילות, מופרדים בפסיק</string>
+</resources>

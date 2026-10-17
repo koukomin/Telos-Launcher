@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">اسم الشريحة %1$d</string>
+    <string name="freeze_unfreeze_with_title">إلغاء التجميد مع %1$s</string>
+    <string name="freeze_unfreeze_with_open">إلغاء التجميد وفتح</string>
+    <string name="freeze_unfreeze_only_this">هذا التطبيق فقط</string>
+    <string name="freeze_game_booster_package">حزمة معزّز الألعاب</string>
+    <string name="freeze_game_booster_package_summary">ألغِ تجميد معزّز النظام قبل الألعاب أدناه</string>
+    <string name="freeze_game_booster_apps">ألعاب تحتاج المعزّز</string>
+    <string name="freeze_game_booster_apps_summary">أسماء الحزم مفصولة بفواصل</string>
+</resources>

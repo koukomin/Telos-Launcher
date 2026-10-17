@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_messengers">メッセージアプリ</string>
+    <string name="comms_reply">返信</string>
+    <string name="comms_menu">メニュー</string>
+    <string name="comms_dual_app">デュアルアプリ</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="comms_sim_name">SIM %1$d nimi</string>
+    <string name="freeze_unfreeze_with_title">Sula koos rakendusega %1$s</string>
+    <string name="freeze_unfreeze_with_open">Sula ja ava</string>
+    <string name="freeze_unfreeze_only_this">Ainult see rakendus</string>
+    <string name="freeze_game_booster_package">Mänguboosteri pakett</string>
+    <string name="freeze_game_booster_package_summary">Sula see süsteemibooster enne allolevaid mänge</string>
+    <string name="freeze_game_booster_apps">Boosterit vajavad mängud</string>
+    <string name="freeze_game_booster_apps_summary">Paketinimed, komadega eraldatud</string>
+</resources>

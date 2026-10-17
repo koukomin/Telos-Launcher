@@ -319,6 +319,9 @@ fun MessagesScreen(
                                 if (c.unread > 0) androidx.compose.material3.Badge { Text(c.unread.toString()) }
                             }
                             Column {
+                                IconButton(onClick = { open = c }) {
+                                    Icon(painterResource(R.drawable.sms_24px), contentDescription = stringResource(R.string.comms_reply))
+                                }
                                 IconButton(onClick = { settings.setConversationPinned(c.address, !isPinned(c)) }) {
                                     Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.comms_pin_conversation))
                                 }
@@ -516,7 +519,11 @@ private fun ThreadView(
                 )
             }
         }
-        Row(Modifier.fillMaxWidth().padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
+        val e2eOn by settings.smsE2eEnabled.collectAsStateWithLifecycle(false)
+        val e2eReady = single && e2eOn && de.mm20.launcher2.comms.sms.EncryptedSms.hasSession(context, addresses[0])
+        var sendVia by remember { mutableStateOf<String?>(null) }
+        Column(Modifier.fillMaxWidth().padding(8.dp)) {
+        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             if (isDefault) IconButton(onClick = { picker.launch("*/*") }) {
                 Icon(painterResource(R.drawable.add_24px), contentDescription = stringResource(R.string.au_messages_attach))
             }
@@ -532,75 +539,7 @@ private fun ThreadView(
                 Icon(painterResource(R.drawable.search_24px), contentDescription = stringResource(R.string.comms_speak))
             }
             OutlinedTextField(body, onBody, modifier = Modifier.weight(1f), placeholder = { Text(stringResource(R.string.hc_message)) })
-            FilterChip(selected = delaySend, onClick = { delaySend = !delaySend }, label = { Text("3s") })
-            var scheduleOpen by remember { mutableStateOf(false) }
-            FilterChip(selected = false, onClick = { scheduleOpen = true }, label = { Text(stringResource(R.string.comms_schedule_send)) })
-            if (scheduleOpen) {
-                val fmt = remember { java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault()) }
-                var whenText by remember { mutableStateOf(fmt.format(java.util.Date(System.currentTimeMillis() + 3_600_000L))) }
-                AlertDialog(
-                    onDismissRequest = { scheduleOpen = false },
-                    title = { Text(stringResource(R.string.comms_schedule_send)) },
-                    text = {
-                        OutlinedTextField(whenText, { whenText = it }, label = { Text("yyyy-MM-dd HH:mm") }, singleLine = true)
-                    },
-                    confirmButton = {
-                        TextButton(
-                            enabled = body.isNotBlank() && single,
-                            onClick = {
-                                val dest = addresses.firstOrNull().orEmpty()
-                                val whenMs = runCatching { fmt.parse(whenText)?.time }.getOrNull() ?: return@TextButton
-                                if (whenMs <= System.currentTimeMillis()) return@TextButton
-                                ScheduledSmsStore.add(context, dest, body, whenMs, if (sims.size >= 2) simId else -1)
-                                onBody("")
-                                scheduleOpen = false
-                            },
-                        ) { Text(stringResource(android.R.string.ok)) }
-                    },
-                    dismissButton = { TextButton(onClick = { scheduleOpen = false }) { Text(stringResource(R.string.hc_cancel)) } },
-                )
-            }
-            val e2eOn by settings.smsE2eEnabled.collectAsStateWithLifecycle(false)
-            val e2eReady = single && e2eOn && de.mm20.launcher2.comms.sms.EncryptedSms.hasSession(context, addresses[0])
-            var sendVia by remember { mutableStateOf<String?>(null) }
-            if (single && e2eOn) {
-                TextButton(onClick = {
-                    sendScope.launch {
-                        withContext(Dispatchers.IO) {
-                            SmsThreads.send(context, addresses[0], de.mm20.launcher2.comms.sms.EncryptedSms.handshakeSms(context))
-                        }
-                    }
-                }) { Text(stringResource(R.string.comms_e2e_start)) }
-                de.mm20.launcher2.comms.sms.EncryptedSms.safetyNumber(context, addresses[0])?.let { sn ->
-                    Text(sn, style = MaterialTheme.typography.labelSmall, modifier = Modifier.padding(horizontal = 12.dp))
-                    ContactQrImage(sn.replace("\n", " "), Modifier.padding(12.dp))
-                }
-            }
-            if (single) {
-                val installed = listOf(
-                    "sms" to stringResource(R.string.comms_channel_sms),
-                    "signal" to stringResource(R.string.action_signal),
-                    "whatsapp" to stringResource(R.string.action_whatsapp),
-                    "telegram" to stringResource(R.string.action_telegram),
-                    "viber" to stringResource(R.string.action_viber),
-                ).filter { (id, _) ->
-                    id == "sms" || de.mm20.launcher2.comms.intent.MessengerApps.installedPackage(
-                        context, de.mm20.launcher2.comms.intent.MessengerChannel.fromId(id),
-                    ) != null
-                }
-                val current = sendVia ?: de.mm20.launcher2.comms.intent.MessengerApps.resolvePref(messageApps, addresses[0]).let {
-                    if (it == de.mm20.launcher2.comms.intent.MessengerChannel.Phone) "sms" else it.id
-                }
-                androidx.compose.foundation.layout.FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.padding(horizontal = 12.dp),
-                ) {
-                    installed.forEach { (id, label) ->
-                        FilterChip(selected = current == id, onClick = { sendVia = id }, label = { Text(label) })
-                    }
-                }
-            }
-            TextButton(
+            androidx.compose.material3.FilledIconButton(
                 enabled = body.isNotBlank() || attachments.isNotEmpty(),
                 onClick = {
                     val asMms = attachments.isNotEmpty() || addresses.size > 1
@@ -640,7 +579,77 @@ private fun ThreadView(
                         if (ok) { onBody(""); onAttachments(emptyList()); version++ }
                     }
                 },
-            ) { Text(stringResource(R.string.hc_send)) }
+            ) {
+                Icon(painterResource(R.drawable.sms_24px), contentDescription = stringResource(R.string.hc_send))
+            }
+        }
+        Row(Modifier.fillMaxWidth().padding(top = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+            FilterChip(selected = delaySend, onClick = { delaySend = !delaySend }, label = { Text("3s") })
+            var scheduleOpen by remember { mutableStateOf(false) }
+            FilterChip(selected = false, onClick = { scheduleOpen = true }, label = { Text(stringResource(R.string.comms_schedule_send)) })
+            if (scheduleOpen) {
+                val fmt = remember { java.text.SimpleDateFormat("yyyy-MM-dd HH:mm", java.util.Locale.getDefault()) }
+                var whenText by remember { mutableStateOf(fmt.format(java.util.Date(System.currentTimeMillis() + 3_600_000L))) }
+                AlertDialog(
+                    onDismissRequest = { scheduleOpen = false },
+                    title = { Text(stringResource(R.string.comms_schedule_send)) },
+                    text = {
+                        OutlinedTextField(whenText, { whenText = it }, label = { Text("yyyy-MM-dd HH:mm") }, singleLine = true)
+                    },
+                    confirmButton = {
+                        TextButton(
+                            enabled = body.isNotBlank() && single,
+                            onClick = {
+                                val dest = addresses.firstOrNull().orEmpty()
+                                val whenMs = runCatching { fmt.parse(whenText)?.time }.getOrNull() ?: return@TextButton
+                                if (whenMs <= System.currentTimeMillis()) return@TextButton
+                                ScheduledSmsStore.add(context, dest, body, whenMs, if (sims.size >= 2) simId else -1)
+                                onBody("")
+                                scheduleOpen = false
+                            },
+                        ) { Text(stringResource(android.R.string.ok)) }
+                    },
+                    dismissButton = { TextButton(onClick = { scheduleOpen = false }) { Text(stringResource(R.string.hc_cancel)) } },
+                )
+            }
+            if (single && e2eOn) {
+                TextButton(onClick = {
+                    sendScope.launch {
+                        withContext(Dispatchers.IO) {
+                            SmsThreads.send(context, addresses[0], de.mm20.launcher2.comms.sms.EncryptedSms.handshakeSms(context))
+                        }
+                    }
+                }) { Text(stringResource(R.string.comms_e2e_start)) }
+                de.mm20.launcher2.comms.sms.EncryptedSms.safetyNumber(context, addresses[0])?.let { sn ->
+                    Text(sn, style = MaterialTheme.typography.labelSmall, modifier = Modifier.padding(horizontal = 12.dp))
+                    ContactQrImage(sn.replace("\n", " "), Modifier.padding(12.dp))
+                }
+            }
+            if (single) {
+                val installed = listOf(
+                    "sms" to stringResource(R.string.comms_channel_sms),
+                    "signal" to stringResource(R.string.action_signal),
+                    "whatsapp" to stringResource(R.string.action_whatsapp),
+                    "telegram" to stringResource(R.string.action_telegram),
+                    "viber" to stringResource(R.string.action_viber),
+                ).filter { (id, _) ->
+                    id == "sms" || de.mm20.launcher2.comms.intent.MessengerApps.installedPackage(
+                        context, de.mm20.launcher2.comms.intent.MessengerChannel.fromId(id),
+                    ) != null
+                }
+                val current = sendVia ?: de.mm20.launcher2.comms.intent.MessengerApps.resolvePref(messageApps, addresses[0]).let {
+                    if (it == de.mm20.launcher2.comms.intent.MessengerChannel.Phone) "sms" else it.id
+                }
+                androidx.compose.foundation.layout.FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.padding(horizontal = 12.dp),
+                ) {
+                    installed.forEach { (id, label) ->
+                        FilterChip(selected = current == id, onClick = { sendVia = id }, label = { Text(label) })
+                    }
+                }
+            }
+        }
         }
     }
 }
