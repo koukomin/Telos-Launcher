@@ -7,4 +7,5 @@ val islandOverlayModule = module {
     single { TimerManager() }
     single { CallStateProvider(androidContext(), get()) }
     single { DynamicIslandContentProvider(androidContext(), get(), get(), get(), get()) }
+    single(createdAtStart = true) { de.mm20.launcher2.ui.theme.PowerSaveThemeWatcher(androidContext(), get()) }
 }

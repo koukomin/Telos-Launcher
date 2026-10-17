@@ -510,6 +510,34 @@ class UiSettings internal constructor(
         }
     }
 
+    val amoledOnPowerSave
+        get() = launcherDataStore.data.map { it.ui.uiAmoledOnPowerSave }.distinctUntilChanged()
+
+    fun setAmoledOnPowerSave(enabled: Boolean) {
+        launcherDataStore.update { it.copy(ui = it.ui.copy(uiAmoledOnPowerSave = enabled)) }
+    }
+
+    val systemWidgetEnabled
+        get() = launcherDataStore.data.map { it.ui.systemWidgetEnabled }.distinctUntilChanged()
+
+    fun setSystemWidgetEnabled(enabled: Boolean) {
+        launcherDataStore.update { it.copy(ui = it.ui.copy(systemWidgetEnabled = enabled)) }
+    }
+
+    fun replacePowerSaveTheme(engaged: Boolean, savedColorsId: java.util.UUID, colorsId: java.util.UUID? = null) {
+        launcherDataStore.update {
+            it.copy(
+                ui = it.ui.copy(
+                    uiAmoledPowerSaveEngaged = engaged,
+                    uiColorsIdBeforePowerSave = savedColorsId,
+                    uiColorsId = colorsId ?: it.ui.uiColorsId,
+                )
+            )
+        }
+    }
+
+    val snapshotUi get() = launcherDataStore.data.map { it.ui }
+
     val shapesId
         get() = launcherDataStore.data.map {
             it.ui.uiShapesId

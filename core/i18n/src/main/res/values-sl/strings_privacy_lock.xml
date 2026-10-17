@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Odklenite s PIN, vzorcem, geslom ali biometrijo sistema ali s PIN zaganjalnika, če ga imate.</string>
+    <string name="auth_gate_unlock">Odkleni</string>
+    <string name="auth_gate_recordings">Odkleni posnetke klicev</string>
+    <string name="auth_gate_files">Odkleni Datoteke</string>
+    <string name="lock_call_recordings">Zakleni posnetke klicev</string>
+    <string name="lock_call_recordings_summary">Pred prikazom posnetkov klicev zahteva zaklep sistema ali PIN zaganjalnika. Privzeto vklopljeno.</string>
+    <string name="call_recordings_encryption">Posnetki klicev so šifrirani</string>
+    <string name="call_recordings_encryption_summary">Vsaka datoteka je shranjena z AES-256-GCM. Ključ ostane v Android Keystore. Predvajanje dešifrira začasno kopijo.</string>
+    <string name="telos_files_lock_on_open">Zahtevaj zaklep za odpiranje Datotek</string>
+    <string name="telos_files_lock_on_open_off">Ne zahtevaj zaklepa ob odpiranju Datotek</string>
+    <string name="voice_hide_from_media">Skrij glasovne zapiske pred Mediji</string>
+    <string name="voice_hide_from_media_summary">Doda datoteko .nomedia v mapo glasovnih zapiskov, da jo galerije in Telos Mediji preskočijo. Privzeto izklopljeno. Posnetki klicev so že v zasebni shrambi in šifrirani, Mediji jih ne prikažejo.</string>
+    <string name="call_recordings_hide_from_media">Skrij posnetke klicev pred Mediji</string>
+    <string name="call_recordings_hide_from_media_summary">Doda datoteko .nomedia v mapo posnetkov klicev, da jo galerije in Telos Mediji preskočijo. Privzeto izklopljeno. Posnetki so že v zasebni šifrirani shrambi; to je dodatna oznaka.</string>
+</resources>

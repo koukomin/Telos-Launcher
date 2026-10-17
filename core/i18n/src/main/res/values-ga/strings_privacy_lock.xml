@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Díghlasáil le PIN, patrún, pasfhocal nó bithmhéadracht an chórais, nó le PIN an tosaitheora má shocraigh tú é.</string>
+    <string name="auth_gate_unlock">Díghlasáil</string>
+    <string name="auth_gate_recordings">Díghlasáil taifeadtaí glaonna</string>
+    <string name="auth_gate_files">Díghlasáil Comhaid</string>
+    <string name="lock_call_recordings">Glasáil taifeadtaí glaonna</string>
+    <string name="lock_call_recordings_summary">Iarrann glas an chórais nó PIN an tosaitheora sula dtaispeántar taifeadtaí glaonna. Casta air de réir réamhshocraithe.</string>
+    <string name="call_recordings_encryption">Tá taifeadtaí glaonna criptithe</string>
+    <string name="call_recordings_encryption_summary">Stóráiltear gach comhad le AES-256-GCM. Fanann an eochair in Android Keystore. Díchriptíonn an seinm cóip shealadach.</string>
+    <string name="telos_files_lock_on_open">Éiligh glas chun Comhaid a oscailt</string>
+    <string name="telos_files_lock_on_open_off">Ná héiligh glas ag oscailt Comhad</string>
+    <string name="voice_hide_from_media">Folaigh meamraim ghutha ó na Meáin</string>
+    <string name="voice_hide_from_media_summary">Cuireann comhad .nomedia i bhfillteán na meamram gutha ionas go scipeálann gailearaithe agus Telos Meáin é. Múchta de réir réamhshocraithe. Tá taifeadtaí glaonna i stóras príobháideach cheana agus criptithe, ní liostálann na Meáin iad.</string>
+    <string name="call_recordings_hide_from_media">Folaigh taifeadtaí glaonna ó na Meáin</string>
+    <string name="call_recordings_hide_from_media_summary">Cuireann comhad .nomedia i bhfillteán na dtaifeadtaí glaonna ionas go scipeálann gailearaithe agus Telos Meáin é. Múchta de réir réamhshocraithe. Tá na taifeadtaí i stóras príobháideach criptithe cheana; is marc breise é seo.</string>
+</resources>

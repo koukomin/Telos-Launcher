@@ -173,6 +173,13 @@ fun AppearanceSettingsScreen() {
         }
         item {
             PreferenceCategory {
+                val amoledSaver by uiSettings.amoledOnPowerSave.collectAsStateWithLifecycle(false)
+                de.mm20.launcher2.ui.component.preferences.SwitchPreference(
+                    title = stringResource(R.string.theme_amoled_powersave),
+                    summary = stringResource(R.string.theme_amoled_powersave_sum),
+                    value = amoledSaver,
+                    onValueChanged = { uiSettings.setAmoledOnPowerSave(it) },
+                )
                 Preference(
                     title = stringResource(id = R.string.preference_screen_colors),
                     summary = colorThemeName,

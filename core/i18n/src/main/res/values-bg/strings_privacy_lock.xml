@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Отключете с PIN, шаблон, парола или биометрия на системата или с PIN на лаунчера, ако е зададен.</string>
+    <string name="auth_gate_unlock">Отключване</string>
+    <string name="auth_gate_recordings">Отключване на записите на обаждания</string>
+    <string name="auth_gate_files">Отключване на Файлове</string>
+    <string name="lock_call_recordings">Заключване на записите на обаждания</string>
+    <string name="lock_call_recordings_summary">Преди да покаже записите на обаждания иска системното заключване или PIN на лаунчера. Включено по подразбиране.</string>
+    <string name="call_recordings_encryption">Записите на обаждания са криптирани</string>
+    <string name="call_recordings_encryption_summary">Всеки файл се съхранява с AES-256-GCM. Ключът остава в Android Keystore. Възпроизвеждането декриптира временно копие.</string>
+    <string name="telos_files_lock_on_open">Изисквай заключване за отваряне на Файлове</string>
+    <string name="telos_files_lock_on_open_off">Без заключване при отваряне на Файлове</string>
+    <string name="voice_hide_from_media">Скрий гласовите бележки от Медия</string>
+    <string name="voice_hide_from_media_summary">Добавя файл .nomedia в папката с гласови бележки, за да я пропускат галериите и Telos Медия. Изключено по подразбиране. Записите на обаждания вече са в частно хранилище и криптирани, Медия не ги показва.</string>
+    <string name="call_recordings_hide_from_media">Скрий записите на обаждания от Медия</string>
+    <string name="call_recordings_hide_from_media_summary">Добавя файл .nomedia в папката със записи на обаждания, за да я пропускат галериите и Telos Медия. Изключено по подразбиране. Записите вече са в частно криптирано хранилище; това е допълнителен маркер.</string>
+</resources>

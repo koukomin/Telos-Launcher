@@ -80,5 +80,21 @@ fun TrashDialog(onDismiss: () -> Unit, onChanged: () -> Unit = {}) {
 
             }
         } },
-        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_close)) } })
+        confirmButton = {
+            Row {
+                TextButton(onClick = {
+                    scope.launch {
+                        busy = true
+                        val cleaner = de.mm20.launcher2.comms.files.DiskCleaner(context)
+                        val junk = cleaner.scan()
+                        cleaner.fillTrash(trash, junk)
+                        items = trash.entries()
+                        systemItems = trash.systemEntries()
+                        busy = false
+                        onChanged()
+                    }
+                }, enabled = !busy) { Text(stringResource(R.string.trash_fill_bin)) }
+                TextButton(onClick = onDismiss) { Text(stringResource(R.string.hc_close)) }
+            }
+        })
 }

@@ -77,13 +77,7 @@ sealed class Widget {
                             ?: BatteryWidgetConfig()
                     BatteryWidget(entity.id, entity.stackId, config)
                 }
-                NetworkWidget.Type -> {
-                    val config: NetworkWidgetConfig =
-                        Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
-                            ?: NetworkWidgetConfig()
-                    NetworkWidget(entity.id, entity.stackId, config)
-                }
-                SystemWidget.Type -> {
+                "network", SystemWidget.Type -> {
                     val config: SystemWidgetConfig =
                         Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
                             ?: SystemWidgetConfig()
@@ -136,7 +130,6 @@ fun Widget.withStackId(stackId: UUID?): Widget {
         is AppWidget -> copy(stackId = stackId)
         is NotesWidget -> copy(stackId = stackId)
         is BatteryWidget -> copy(stackId = stackId)
-        is NetworkWidget -> copy(stackId = stackId)
         is SystemWidget -> copy(stackId = stackId)
         is RemindersWidget -> copy(stackId = stackId)
         is FreezeWidget -> copy(stackId = stackId)
@@ -158,7 +151,6 @@ val Widget.height: Int?
         is AppWidget -> config.height
         is NotesWidget -> config.height
         is BatteryWidget -> config.height
-        is NetworkWidget -> config.height
         is SystemWidget -> config.height
         is RemindersWidget -> config.height
         is FreezeWidget -> config.height
@@ -175,7 +167,6 @@ fun Widget.withHeight(height: Int?): Widget {
         is AppWidget -> copy(config = config.copy(height = height ?: config.height))
         is NotesWidget -> copy(config = config.copy(height = height))
         is BatteryWidget -> copy(config = config.copy(height = height))
-        is NetworkWidget -> copy(config = config.copy(height = height))
         is SystemWidget -> copy(config = config.copy(height = height))
         is RemindersWidget -> copy(config = config.copy(height = height))
         is FreezeWidget -> copy(config = config.copy(height = height))

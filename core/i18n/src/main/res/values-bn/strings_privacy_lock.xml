@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">সিস্টেম PIN, প্যাটার্ন, পাসওয়ার্ড বা বায়োমেট্রিক দিয়ে আনলক করুন, অথবা লঞ্চার PIN দিয়ে যদি সেট করে থাকেন।</string>
+    <string name="auth_gate_unlock">আনলক</string>
+    <string name="auth_gate_recordings">কল রেকর্ডিং আনলক করুন</string>
+    <string name="auth_gate_files">ফাইল আনলক করুন</string>
+    <string name="lock_call_recordings">কল রেকর্ডিং লক করুন</string>
+    <string name="lock_call_recordings_summary">কল রেকর্ডিং দেখানোর আগে সিস্টেম লক বা লঞ্চার PIN চায়। ডিফল্টে চালু।</string>
+    <string name="call_recordings_encryption">কল রেকর্ডিং এনক্রিপ্টেড</string>
+    <string name="call_recordings_encryption_summary">প্রতিটি ফাইল AES-256-GCM দিয়ে সংরক্ষিত। চাবি Android Keystore-এ থাকে। প্লেব্যাক একটি অস্থায়ী কপি ডিক্রিপ্ট করে।</string>
+    <string name="telos_files_lock_on_open">ফাইল খুলতে লক চাইবে</string>
+    <string name="telos_files_lock_on_open_off">ফাইল খোলার সময় লক চাইবে না</string>
+    <string name="voice_hide_from_media">মিডিয়া থেকে ভয়েস মেমো লুকান</string>
+    <string name="voice_hide_from_media_summary">ভয়েস মেমো ফোল্ডারে .nomedia যোগ করে যাতে গ্যালারি ও Telos মিডিয়া এড়িয়ে যায়। ডিফল্টে বন্ধ। কল রেকর্ডিং ইতিমধ্যেই ব্যক্তিগত স্টোরেজে এনক্রিপ্টেড, মিডিয়া সেগুলো তালিকা করে না।</string>
+    <string name="call_recordings_hide_from_media">মিডিয়া থেকে কল রেকর্ডিং লুকান</string>
+    <string name="call_recordings_hide_from_media_summary">কল রেকর্ডিং ফোল্ডারে .nomedia যোগ করে যাতে গ্যালারি ও Telos মিডিয়া এড়িয়ে যায়। ডিফল্টে বন্ধ। রেকর্ডিং ইতিমধ্যেই ব্যক্তিগত এনক্রিপ্টেড স্টোরেজে; এটি অতিরিক্ত চিহ্ন।</string>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Lås upp med systemets PIN, mönster, lösenord eller biometri, eller med launcher-PIN om du har ställt in en.</string>
+    <string name="auth_gate_unlock">Lås upp</string>
+    <string name="auth_gate_recordings">Lås upp samtalsinspelningar</string>
+    <string name="auth_gate_files">Lås upp Filer</string>
+    <string name="lock_call_recordings">Lås samtalsinspelningar</string>
+    <string name="lock_call_recordings_summary">Ber om systemlåset eller launcher-PIN innan samtalsinspelningar visas. På som standard.</string>
+    <string name="call_recordings_encryption">Samtalsinspelningar är krypterade</string>
+    <string name="call_recordings_encryption_summary">Varje fil lagras med AES-256-GCM. Nyckeln stannar i Android Keystore. Uppspelning dekrypterar en tillfällig kopia.</string>
+    <string name="telos_files_lock_on_open">Kräv lås för att öppna Filer</string>
+    <string name="telos_files_lock_on_open_off">Kräv inte lås när Filer öppnas</string>
+    <string name="voice_hide_from_media">Dölj röstanteckningar från Media</string>
+    <string name="voice_hide_from_media_summary">Lägger till en .nomedia-fil i mappen för röstanteckningar så gallerier och Telos Media hoppar över den. Av som standard. Samtalsinspelningar ligger redan i privat lagring och är krypterade, Media listar dem inte.</string>
+    <string name="call_recordings_hide_from_media">Dölj samtalsinspelningar från Media</string>
+    <string name="call_recordings_hide_from_media_summary">Lägger till en .nomedia-fil i mappen för samtalsinspelningar så gallerier och Telos Media hoppar över den. Av som standard. Inspelningarna ligger redan i privat krypterad lagring; detta är en extra markör.</string>
+</resources>

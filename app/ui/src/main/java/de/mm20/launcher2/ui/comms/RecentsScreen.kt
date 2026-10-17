@@ -410,7 +410,7 @@ internal fun RecentCallRow(
                             SimBadge(
                                 slot = simSlot,
                                 color = simColor,
-                                label = sims.getOrNull(simSlot)?.label,
+                                label = null,
                             )
                         }
                         val secondary = listOfNotNull(

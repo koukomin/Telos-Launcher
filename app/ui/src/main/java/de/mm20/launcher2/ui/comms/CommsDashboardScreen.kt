@@ -45,6 +45,7 @@ data class CommsDashboardRoute(
 private enum class CommsTab(@StringRes val label: Int) {
     Recents(R.string.au_phonea_recents),
     Contacts(R.string.preference_search_contacts),
+    Recordings(R.string.hc_recordings_tab),
     Keypad(R.string.comms_keypad),
     Messages(R.string.hc_messages),
 }
@@ -60,6 +61,7 @@ fun CommsDashboardScreen(
     val defaultTab = when (initialTab.lowercase()) {
         "messages" -> CommsTab.Messages
         "contacts" -> CommsTab.Contacts
+        "recordings", "recording" -> CommsTab.Recordings
         "keypad", "dialpad", "dial" -> CommsTab.Keypad
         else -> CommsTab.Recents
     }
@@ -74,6 +76,8 @@ fun CommsDashboardScreen(
     val commsSettings: CommsSettings = koinInject()
     val phoneAppLock by commsSettings.phoneAppLock.collectAsStateWithLifecycle(false)
     val phoneUnlocked by de.mm20.launcher2.comms.privacy.PrivacySession.phoneUnlocked.collectAsStateWithLifecycle()
+    val lockCallRecordings by commsSettings.lockCallRecordings.collectAsStateWithLifecycle(true)
+    val recordingsUnlocked by de.mm20.launcher2.comms.privacy.PrivacySession.recordingsUnlocked.collectAsStateWithLifecycle()
     val simNames by commsSettings.simNames.collectAsStateWithLifecycle(emptyMap())
     val context = LocalContext.current
     val backStack = LocalBackStack.current
@@ -119,6 +123,15 @@ fun CommsDashboardScreen(
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 4.dp),
                 )
                 HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
+                NavigationDrawerItem(
+                    icon = { Icon(painterResource(R.drawable.mic_24px), contentDescription = null) },
+                    label = { Text(stringResource(R.string.hc_call_recordings)) },
+                    selected = selectedTab == CommsTab.Recordings,
+                    onClick = {
+                        coroutineScope.launch { drawerState.close() }
+                        selectedTab = CommsTab.Recordings
+                    },
+                )
                 NavigationDrawerItem(
                     icon = { Icon(painterResource(R.drawable.settings_24px), contentDescription = null) },
                     label = { Text(stringResource(R.string.hc_settings)) },
@@ -220,6 +233,7 @@ fun CommsDashboardScreen(
                             placeholder = stringResource(
                                 when (selectedTab) {
                                     CommsTab.Recents -> R.string.tsp_search_calls
+                                    CommsTab.Recordings -> R.string.tsp_search_call_recordings
                                     else -> R.string.tsp_search_contacts
                                 }
                             ),
@@ -253,6 +267,7 @@ fun CommsDashboardScreen(
                         listOf(
                             Triple(CommsTab.Recents, R.drawable.schedule_24px, CommsTab.Recents.label),
                             Triple(CommsTab.Contacts, R.drawable.person_24px_filled, CommsTab.Contacts.label),
+                            Triple(CommsTab.Recordings, R.drawable.mic_24px, CommsTab.Recordings.label),
                             Triple(CommsTab.Messages, R.drawable.sms_24px, CommsTab.Messages.label),
                         ).forEach { (tab, icon, label) ->
                             NavigationBarItem(
@@ -281,6 +296,15 @@ fun CommsDashboardScreen(
             Box(modifier = Modifier.padding(contentPadding).fillMaxSize()) {
                 when (selectedTab) {
                     CommsTab.Recents -> RecentsScreen(searchQuery = searchQuery, showFilters = showFilters)
+                    CommsTab.Recordings -> de.mm20.launcher2.ui.component.AuthGate(
+                        enabled = lockCallRecordings,
+                        title = stringResource(R.string.auth_gate_recordings),
+                        unlocked = recordingsUnlocked,
+                        onUnlocked = { de.mm20.launcher2.comms.privacy.PrivacySession.unlockRecordings() },
+                        onCancelled = { selectedTab = CommsTab.Recents },
+                    ) {
+                        CallRecordingsList(searchQuery = searchQuery)
+                    }
                     CommsTab.Contacts -> ContactsScreen(
                         searchQuery = searchQuery,
                         showLocalSearch = false,

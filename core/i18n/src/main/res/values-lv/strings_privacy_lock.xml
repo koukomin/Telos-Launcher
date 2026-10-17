@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Atbloķējiet ar sistēmas PIN, rakstu, paroli vai biometriju vai palaidēja PIN, ja tāds ir iestatīts.</string>
+    <string name="auth_gate_unlock">Atbloķēt</string>
+    <string name="auth_gate_recordings">Atbloķēt zvanu ierakstus</string>
+    <string name="auth_gate_files">Atbloķēt Failus</string>
+    <string name="lock_call_recordings">Bloķēt zvanu ierakstus</string>
+    <string name="lock_call_recordings_summary">Pirms zvanu ierakstu rādīšanas prasa sistēmas slēdzeni vai palaidēja PIN. Pēc noklusējuma ieslēgts.</string>
+    <string name="call_recordings_encryption">Zvanu ieraksti ir šifrēti</string>
+    <string name="call_recordings_encryption_summary">Katrs fails tiek saglabāts ar AES-256-GCM. Atslēga paliek Android Keystore. Atskaņošana atšifrē pagaidu kopiju.</string>
+    <string name="telos_files_lock_on_open">Pieprasīt slēdzeni, lai atvērtu Failus</string>
+    <string name="telos_files_lock_on_open_off">Nepieprasīt slēdzeni, atverot Failus</string>
+    <string name="voice_hide_from_media">Paslēpt balss piezīmes no Multivides</string>
+    <string name="voice_hide_from_media_summary">Pievieno .nomedia failu balss piezīmju mapei, lai galerijas un Telos Multivide to izlaistu. Pēc noklusējuma izslēgts. Zvanu ieraksti jau ir privātajā krātuvē un šifrēti, Multivide tos nerāda.</string>
+    <string name="call_recordings_hide_from_media">Paslēpt zvanu ierakstus no Multivides</string>
+    <string name="call_recordings_hide_from_media_summary">Pievieno .nomedia failu zvanu ierakstu mapei, lai galerijas un Telos Multivide to izlaistu. Pēc noklusējuma izslēgts. Ieraksti jau ir privātajā šifrētajā krātuvē; tas ir papildu marķējums.</string>
+</resources>

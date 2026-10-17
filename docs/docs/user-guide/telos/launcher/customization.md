@@ -17,6 +17,7 @@ schemes](../../customization/color-schemes), [Themed icons](../../customization/
 | Source for dynamic colors | Appearance > Advanced | System | System colors, or colors taken from the wallpaper (compat mode) |
 | Presets | Appearance > Presets | n/a | Apply a ready-made bundle |
 | Color scheme, Typography, Shapes, Transparency | Appearance | Default | Each has its own list of schemes to pick, edit or duplicate |
+| AMOLED theme in Battery Saver | Appearance | off | While power saving is on, colors switch to AMOLED Black. When it turns off, the previous scheme returns. If you already use AMOLED or Cyberpunk, nothing changes. |
 | Import theme, Export theme | Appearance | n/a | Share a theme as a `.kvtheme` file |
 
 The "Time of day" mode switches by the clock hours you set, not by sunrise.

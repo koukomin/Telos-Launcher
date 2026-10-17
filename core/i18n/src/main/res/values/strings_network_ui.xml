@@ -14,6 +14,13 @@
     <string name="net_hub_early">Telos Network is new and has not been tested on many devices yet. You can turn it off at any time.</string>
     <string name="net_hub_turn_on">Turn on</string>
     <string name="net_hub_turn_off">Turn off</string>
+    <string name="net_hub_start">START</string>
+    <string name="net_hub_stop">STOP</string>
+    <string name="net_hub_fw_apps_n">%1$d apps with rules</string>
+    <string name="net_hub_wg_up">%1$d tunnels up</string>
+    <string name="net_hub_lists_n">%1$d lists on</string>
+    <string name="net_hub_logs_sum_short">Connections and DNS</string>
+    <string name="net_hub_settings_sum_short">Boot, IP, logs</string>
     <string name="net_hub_dismiss">Dismiss</string>
     <string name="net_hub_permission_denied">Without the VPN permission Telos Network cannot start.</string>
     <string name="net_hub_status">Status</string>

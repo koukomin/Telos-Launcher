@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Déverrouillez avec le code PIN, le schéma, le mot de passe ou la biométrie du système, ou avec le PIN du launcher s’il est défini.</string>
+    <string name="auth_gate_unlock">Déverrouiller</string>
+    <string name="auth_gate_recordings">Déverrouiller les enregistrements d’appels</string>
+    <string name="auth_gate_files">Déverrouiller Fichiers</string>
+    <string name="lock_call_recordings">Verrouiller les enregistrements d’appels</string>
+    <string name="lock_call_recordings_summary">Demande le verrouillage du système ou le PIN du launcher avant d’afficher les enregistrements d’appels. Activé par défaut.</string>
+    <string name="call_recordings_encryption">Les enregistrements d’appels sont chiffrés</string>
+    <string name="call_recordings_encryption_summary">Chaque fichier est stocké avec AES-256-GCM. La clé reste dans l’Android Keystore. La lecture déchiffre une copie temporaire.</string>
+    <string name="telos_files_lock_on_open">Exiger un verrouillage pour ouvrir Fichiers</string>
+    <string name="telos_files_lock_on_open_off">Ne pas exiger de verrouillage pour ouvrir Fichiers</string>
+    <string name="voice_hide_from_media">Masquer les mémos vocaux de Médias</string>
+    <string name="voice_hide_from_media_summary">Ajoute un fichier .nomedia dans le dossier des mémos vocaux pour que les galeries et Telos Médias l’ignorent. Désactivé par défaut. Les enregistrements d’appels sont déjà en stockage privé et chiffrés, Médias ne les liste pas.</string>
+    <string name="call_recordings_hide_from_media">Masquer les enregistrements d’appels de Médias</string>
+    <string name="call_recordings_hide_from_media_summary">Ajoute un fichier .nomedia dans le dossier des enregistrements d’appels pour que les galeries et Telos Médias l’ignorent. Désactivé par défaut. Les enregistrements sont déjà en stockage privé chiffré ; c’est un marqueur supplémentaire.</string>
+</resources>

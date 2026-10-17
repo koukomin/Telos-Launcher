@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Iftaħ bil-PIN, pattern, password jew bijometrija tas-sistema, jew bil-PIN tal-launcher jekk settjajt wieħed.</string>
+    <string name="auth_gate_unlock">Iftaħ</string>
+    <string name="auth_gate_recordings">Iftaħ ir-reġistrazzjonijiet tas-sejħiet</string>
+    <string name="auth_gate_files">Iftaħ Files</string>
+    <string name="lock_call_recordings">Agħlaq ir-reġistrazzjonijiet tas-sejħiet</string>
+    <string name="lock_call_recordings_summary">Jistaqsi għall-lock tas-sistema jew il-PIN tal-launcher qabel juri r-reġistrazzjonijiet tas-sejħiet. Mixgħul b’mod default.</string>
+    <string name="call_recordings_encryption">Ir-reġistrazzjonijiet tas-sejħiet huma encrypted</string>
+    <string name="call_recordings_encryption_summary">Kull fajl jinħażen b’AES-256-GCM. Iċ-ċavetta tibqa’ fl-Android Keystore. Il-playback jiddekripta kopja temporanja.</string>
+    <string name="telos_files_lock_on_open">Jeħtieġ lock biex tiftaħ Files</string>
+    <string name="telos_files_lock_on_open_off">Mhux jeħtieġ lock meta tiftaħ Files</string>
+    <string name="voice_hide_from_media">Aħbi memos tal-vuċi mill-Midja</string>
+    <string name="voice_hide_from_media_summary">Iżżid fajl .nomedia fil-folder tal-memos tal-vuċi biex galleriji u Telos Midja jaqbżuha. Mitfi b’mod default. Ir-reġistrazzjonijiet tas-sejħiet diġà qegħdin f’ħażna privata u encrypted, il-Midja ma telenkahomx.</string>
+    <string name="call_recordings_hide_from_media">Aħbi r-reġistrazzjonijiet tas-sejħiet mill-Midja</string>
+    <string name="call_recordings_hide_from_media_summary">Iżżid fajl .nomedia fil-folder tar-reġistrazzjonijiet tas-sejħiet biex galleriji u Telos Midja jaqbżuha. Mitfi b’mod default. Ir-reġistrazzjonijiet diġà qegħdin f’ħażna privata encrypted; din hija marka żejda.</string>
+</resources>

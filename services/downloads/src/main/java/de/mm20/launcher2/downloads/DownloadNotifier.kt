@@ -82,7 +82,14 @@ class DownloadNotifier(private val context: Context, private val settings: Downl
             }
         }
         val b = NotificationCompat.Builder(context, CHANNEL_PROGRESS)
-            .setSmallIcon(BaseR.drawable.ic_glyph_downloads)
+            .setSmallIcon(
+                de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_downloads_app")
+                    ?: BaseR.drawable.ic_glyph_downloads,
+            )
+            .apply {
+                de.mm20.launcher2.search.VirtualAppAppearance.largeIcon(context, "telos_downloads_app")
+                    ?.let { setLargeIcon(it) }
+            }
             .setContentTitle(title)
             .setContentText(text)
             .setContentIntent(openApp())
@@ -119,7 +126,14 @@ class DownloadNotifier(private val context: Context, private val settings: Downl
                 "${Formatting.size(t.downloadedBytes)} / ${Formatting.size(t.totalBytes)}" + (if (t.speedBps > 0) " · " + Formatting.speed(t.speedBps) else "") + eta
             } else Formatting.size(t.downloadedBytes)
             val b = NotificationCompat.Builder(context, CHANNEL_PROGRESS)
-                .setSmallIcon(BaseR.drawable.ic_glyph_downloads)
+                .setSmallIcon(
+                de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_downloads_app")
+                    ?: BaseR.drawable.ic_glyph_downloads,
+            )
+            .apply {
+                de.mm20.launcher2.search.VirtualAppAppearance.largeIcon(context, "telos_downloads_app")
+                    ?.let { setLargeIcon(it) }
+            }
                 .setContentTitle(t.displayName)
                 .setContentText(text)
                 .setContentIntent(openApp())
@@ -155,7 +169,14 @@ class DownloadNotifier(private val context: Context, private val settings: Downl
         nm.cancel(notificationId(task.id))
         val uri = task.fileUri?.let(Uri::parse)
         val b = NotificationCompat.Builder(context, CHANNEL_DONE)
-            .setSmallIcon(BaseR.drawable.ic_glyph_downloads)
+            .setSmallIcon(
+                de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_downloads_app")
+                    ?: BaseR.drawable.ic_glyph_downloads,
+            )
+            .apply {
+                de.mm20.launcher2.search.VirtualAppAppearance.largeIcon(context, "telos_downloads_app")
+                    ?.let { setLargeIcon(it) }
+            }
             .setContentTitle(task.displayName)
             .setContentText(context.getString(I18nR.string.dl_notification_done, Formatting.size(task.totalBytes)))
             .setAutoCancel(true)
@@ -180,7 +201,14 @@ class DownloadNotifier(private val context: Context, private val settings: Downl
         nm.notify(
             notificationId(task.id) + RESULT_OFFSET,
             NotificationCompat.Builder(context, CHANNEL_DONE)
-                .setSmallIcon(BaseR.drawable.ic_glyph_downloads)
+                .setSmallIcon(
+                de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_downloads_app")
+                    ?: BaseR.drawable.ic_glyph_downloads,
+            )
+            .apply {
+                de.mm20.launcher2.search.VirtualAppAppearance.largeIcon(context, "telos_downloads_app")
+                    ?.let { setLargeIcon(it) }
+            }
                 .setContentTitle(task.displayName)
                 .setContentText(context.getString(I18nR.string.dl_notification_failed, task.error.orEmpty()))
                 .setAutoCancel(true)

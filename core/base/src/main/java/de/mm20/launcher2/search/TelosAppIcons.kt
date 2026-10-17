@@ -21,11 +21,14 @@ object TelosAppIcons {
         "telos_screen_recorder_app" -> R.drawable.ic_app_screen_recorder_full
         "telos_screenshot_app" -> R.drawable.ic_app_screenshot_full
         "telos_notes_app" -> R.drawable.ic_app_notes_full
+        "telos_ermis_app" -> R.drawable.ic_app_messages_full
         "telos_calendar_app" -> R.drawable.ic_app_calendar_full
         "telos_downloads_app" -> R.drawable.ic_app_downloads_full
         "telos_network_app" -> R.drawable.ic_app_network_full
         "telos_media_app" -> R.drawable.ic_app_media_full
         "telos_store_app" -> R.drawable.ic_app_store_full
+        "telos_system_app" -> R.drawable.ic_app_network_full
+        "telos_trash_app" -> R.drawable.ic_app_files_full
         else -> null
     }
 }

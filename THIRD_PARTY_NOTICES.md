@@ -26,6 +26,10 @@ based on" table in `readme.md`.
 | [yt-dlp](https://github.com/yt-dlp/yt-dlp) | Unlicense (public domain) | Used unchanged, inside the optional media build (see below) |
 | [youtubedl-android](https://github.com/yausername/youtubedl-android) (fork io.github.junkfood02.youtubedl-android) | GPL-3.0 | Copyright (c) the youtubedl-android authors (yausername, JunkFood02 and contributors), used unchanged as a Maven dependency in the optional media build |
 | [RethinkDNS](https://github.com/celzero/rethink-app) | Apache-2.0 | Copyright (c) Celzero / The Rethink DNS Open Source Project (full notice below) |
+| [NetGuard](https://github.com/M66B/NetGuard) | GPL-3.0-only | Copyright © Marcel Bokhorst (M66B) / FairCode B.V. Feature ideas only for Telos Network; no NetGuard source was copied |
+| [FairEmail](https://github.com/M66B/FairEmail) | GPL-3.0 | Copyright © 2018–2026 Marcel Bokhorst. Feature ideas only for Ermis; no FairEmail source was copied |
+| [SD Maid SE](https://github.com/d4rken-org/sdmaid-se) | GPL-3.0 | Copyright the SD Maid SE authors (d4rken). Feature ideas for Fill the bin (caches, leftovers, scheduler); no SD Maid source was copied |
+| [GAMA](https://github.com/palincat/gama) | see project | Copyright the GAMA authors (palincat). Feature idea for the Vulkan/OpenGL HWUI switch; no GAMA source was copied |
 | [firestack](https://github.com/celzero/firestack) | MPL-2.0 | Copyright (c) Celzero / The Rethink DNS Open Source Project; used unchanged as a Maven dependency |
 | [WireGuard](https://www.wireguard.com) | see project | Implemented inside firestack; WireGuard is a registered trademark of Jason A. Donenfeld |
 | [Transistor](https://codeberg.org/y20k/transistor) | MIT | Copyright (c) 2015-22 - Y20K.org (full notice below) |

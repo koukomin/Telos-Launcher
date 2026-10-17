@@ -74,7 +74,6 @@ import de.mm20.launcher2.widgets.BatteryWidget
 import de.mm20.launcher2.widgets.FreezeWidget
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.MusicWidget
-import de.mm20.launcher2.widgets.NetworkWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.PluginWidget
 import de.mm20.launcher2.widgets.PluginWidgetConfig
@@ -413,7 +412,6 @@ fun WidgetPickerSheet(
                                     AppsWidget.Type -> AppsWidget(id)
                                     NotesWidget.Type -> NotesWidget(id)
                                     BatteryWidget.Type -> BatteryWidget(id)
-                                    NetworkWidget.Type -> NetworkWidget(id)
                                     SystemWidget.Type -> SystemWidget(id)
                                     RemindersWidget.Type -> RemindersWidget(id)
                                     FreezeWidget.Type -> FreezeWidget(id)
@@ -437,7 +435,6 @@ fun WidgetPickerSheet(
                                         AppsWidget.Type -> R.drawable.apps_24px
                                         NotesWidget.Type -> R.drawable.sticky_note_2_24px
                                         BatteryWidget.Type -> R.drawable.battery_full_24px
-                                        NetworkWidget.Type -> R.drawable.wifi_24px
                                         SystemWidget.Type -> R.drawable.memory_24px
                                         RemindersWidget.Type -> R.drawable.task_alt_24px
                                         FreezeWidget.Type -> R.drawable.ac_unit_24px

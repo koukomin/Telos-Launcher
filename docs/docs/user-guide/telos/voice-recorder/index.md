@@ -29,7 +29,7 @@ features. Switching it off in [Telos Store](../store/) hides its icon.
 | --- | --- |
 | Search (top right) | Filters the list by name |
 | Menu (three dots) | **Earpiece mode** or **Speaker mode** for playback, and **Settings** |
-| Chips | **All recordings** or **Call recordings** (the recordings of [Telos Phone](../phone/recents-recording), which stay encrypted) |
+| Chips | **All recordings**, **Voice memos**, or **Call recordings** (the recordings of [Telos Phone](../phone/recents-recording), which stay encrypted) |
 | A recording | Tap to play, tap again to pause. The row opens a seek bar. The three dots offer **Rename**, **Share** and **Delete** |
 
 Recordings are named `Recording_<date>_<time>` and listed newest first with their length and date.
@@ -42,12 +42,15 @@ Recordings are named `Recording_<date>_<time>` and listed newest first with thei
 | Recording mode | Standard | **Standard** uses the normal microphone input, **Voice** uses the input that is tuned for speech |
 | Quality | Balanced | Compact (24 kbit/s, 16 kHz), Balanced (48 kbit/s, 16 kHz), High (96 kbit/s, 44.1 kHz). Opus always uses 48 kHz |
 | Play through the speaker | On | Off plays through the earpiece, like on a phone call |
+| Lock call recordings | On | Same switch as in Phone settings. Opening **Call recordings** (or those items in **All recordings**) asks for the system lock or the launcher PIN |
+| Hide voice recordings from Media | Off | Writes a `.nomedia` file in `files/VoiceRecordings` so galleries and Telos Media skip the folder |
+| Hide call recordings from Media | Off | Same switch as in Phone settings. Writes a `.nomedia` file in `files/CallRecordings` |
 
 ## Privacy
 
 Recordings stay in the app's own storage (`files/VoiceRecordings`), nothing is uploaded. Other apps cannot read them
 unless you share a recording. Recordings of Telos Voice Recorder are not encrypted at rest, the call recordings of
-Telos Phone are.
+Telos Phone are (AES-256-GCM, Android Keystore).
 
 ## Limitations
 

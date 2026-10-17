@@ -66,7 +66,14 @@ class RadioRecordingService : Service() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
         return NotificationCompat.Builder(this, CHANNEL)
-            .setSmallIcon(android.R.drawable.ic_btn_speak_now)
+            .setSmallIcon(
+                de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_radio_app")
+                    ?: android.R.drawable.ic_btn_speak_now,
+            )
+            .apply {
+                de.mm20.launcher2.search.VirtualAppAppearance.largeIcon(this@RadioRecordingService, "telos_radio_app")
+                    ?.let { setLargeIcon(it) }
+            }
             .setContentTitle(getString(I18nR.string.au2_radio2_notif_title, station))
             .setOngoing(true)
             .setOnlyAlertOnce(true)

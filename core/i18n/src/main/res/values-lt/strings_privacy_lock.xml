@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Atrakinkite sistemos PIN, raštu, slaptažodžiu ar biometrija arba paleidėjo PIN, jei jį nustatėte.</string>
+    <string name="auth_gate_unlock">Atrakinti</string>
+    <string name="auth_gate_recordings">Atrakinti skambučių įrašus</string>
+    <string name="auth_gate_files">Atrakinti Failus</string>
+    <string name="lock_call_recordings">Užrakinti skambučių įrašus</string>
+    <string name="lock_call_recordings_summary">Prieš rodydama skambučių įrašus prašo sistemos užrakto arba paleidėjo PIN. Pagal numatytuosius nustatymus įjungta.</string>
+    <string name="call_recordings_encryption">Skambučių įrašai užšifruoti</string>
+    <string name="call_recordings_encryption_summary">Kiekvienas failas saugomas su AES-256-GCM. Raktas lieka Android Keystore. Atkūrimas iššifruoja laikiną kopiją.</string>
+    <string name="telos_files_lock_on_open">Reikalauti užrakto Failams atidaryti</string>
+    <string name="telos_files_lock_on_open_off">Nereikalauti užrakto atidarant Failus</string>
+    <string name="voice_hide_from_media">Slėpti balso įrašus nuo Medijos</string>
+    <string name="voice_hide_from_media_summary">Prideda .nomedia failą balso įrašų aplanke, kad galerijos ir Telos Medija jį praleistų. Pagal numatytuosius nustatymus išjungta. Skambučių įrašai jau privačioje saugykloje ir užšifruoti, Medija jų nerodo.</string>
+    <string name="call_recordings_hide_from_media">Slėpti skambučių įrašus nuo Medijos</string>
+    <string name="call_recordings_hide_from_media_summary">Prideda .nomedia failą skambučių įrašų aplanke, kad galerijos ir Telos Medija jį praleistų. Pagal numatytuosius nustatymus išjungta. Įrašai jau privačioje užšifruotoje saugykloje; tai papildoma žymė.</string>
+</resources>

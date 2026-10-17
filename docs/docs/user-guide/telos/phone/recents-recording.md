@@ -122,14 +122,16 @@ The format is AAC in an `.m4a` container.
 
 | Item | Detail |
 | --- | --- |
-| Folder | `CallRecordings` in Telos' private app storage. Other apps cannot read it |
+| Folder | `CallRecordings` in Telos' private app storage. Other apps cannot read it. Telos Media does not list these files |
 | File name | `REC_<digits of the number>_<date and time>.m4a` |
 | Encryption | After recording stops each file is encrypted with AES-256-GCM. The key stays in the Android Keystore. Older plain files are encrypted when the list is opened |
+| Lock | **Lock call recordings** is on by default (Phone settings and Voice Recorder settings). Opening the list asks for the system PIN, pattern, password or biometrics, or the launcher PIN if you set one |
+| Hide from Media | **Hide call recordings from Media** is off by default. Writes a `.nomedia` file in `CallRecordings` so galleries and Telos Media skip the folder |
 | Delete old recordings | **Never** (default), after 7, 30 or 90 days. It runs when the next recording **starts**, not on a schedule |
 
 ### The recordings list
 
-**Phone settings > Call recording > Recordings** lists each recording with the number, date and size.
+The **Recordings** tab on the Phone bottom bar (microphone icon) lists each recording with the number, date and size. The same list is in the Phone drawer and in **Phone settings > Call recording > Recordings**. Telos Voice Recorder also has a **Call recordings** chip.
 
 - **Tap** decrypts a temporary copy into the cache and opens it in an audio player app of your choice. The copy is
   removed again the next time the list is opened and is at least 10 minutes old.

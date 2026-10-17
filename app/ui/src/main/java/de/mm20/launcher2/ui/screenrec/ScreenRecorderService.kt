@@ -358,7 +358,7 @@ class ScreenRecorderService : Service() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_glyph_screen_recorder)
+            .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, this, "telos_screen_recorder_app") }
             .setContentTitle(text)
             .setContentIntent(open)
             .setOngoing(true)

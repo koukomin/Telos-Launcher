@@ -4,20 +4,34 @@ import android.app.Activity
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.FilledTonalButton
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -28,41 +42,42 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.network.NetState
 import de.mm20.launcher2.network.NetworkEngine
+import de.mm20.launcher2.network.api.BlocklistController
 import de.mm20.launcher2.network.api.DnsController
+import de.mm20.launcher2.network.api.FirewallController
 import de.mm20.launcher2.network.api.LogController
 import de.mm20.launcher2.network.api.WgStatus
 import de.mm20.launcher2.network.api.WireguardController
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.Banner
-import de.mm20.launcher2.ui.component.preferences.Preference
-import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
-import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.locals.LocalBackStack
 import de.mm20.launcher2.ui.network.blocklists.NetworkBlocklistsRoute
 import de.mm20.launcher2.ui.network.dns.NetworkDnsRoute
-import de.mm20.launcher2.ui.network.firewall.NetworkCustomRulesRoute
 import de.mm20.launcher2.ui.network.firewall.NetworkFirewallRoute
-import de.mm20.launcher2.ui.network.firewall.NetworkUniversalRulesRoute
 import de.mm20.launcher2.ui.network.logs.NetworkLogsRoute
-import de.mm20.launcher2.ui.network.wireguard.NetworkWireguardAppsRoute
 import de.mm20.launcher2.ui.network.wireguard.NetworkWireguardRoute
+import de.mm20.launcher2.ui.theme.transparency.transparency
 import kotlinx.serialization.Serializable
 import org.koin.compose.koinInject
 import java.text.NumberFormat
 
-private typealias IconsNetworkHomeScreen = de.mm20.launcher2.base.R.drawable
+private typealias Icons = de.mm20.launcher2.base.R.drawable
 
-/** The hub of Telos Network: on/off switch, a short live summary and links to all areas. */
 @Serializable
 data object NetworkRoute : NavKey
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NetworkHomeScreen() {
     val context = LocalContext.current
@@ -71,26 +86,25 @@ fun NetworkHomeScreen() {
     val dnsController: DnsController = koinInject()
     val wireguard: WireguardController = koinInject()
     val logs: LogController = koinInject()
+    val firewall: FirewallController = koinInject()
+    val blocklists: BlocklistController = koinInject()
 
     val state by engine.state.collectAsState()
     val selectedDns by dnsController.selected.collectAsState()
     val wgConfigs by wireguard.configs.collectAsState()
     val wgStatus by wireguard.status.collectAsState()
     val stats by logs.stats.collectAsState()
+    val appRules by firewall.appRules.collectAsState()
+    val listsOn by blocklists.enabled.collectAsState()
 
-    // The consent dialog is only shown after the user pressed the button, never because an old
-    // NeedsPermission state is still around when the screen opens.
     var requested by rememberSaveable { mutableStateOf(false) }
-
     val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            engine.start()
-        } else {
+        if (result.resultCode == Activity.RESULT_OK) engine.start()
+        else {
             engine.acknowledgeError()
             Toast.makeText(context, R.string.net_hub_permission_denied, Toast.LENGTH_LONG).show()
         }
     }
-
     LaunchedEffect(state, requested) {
         val current = state
         if (current is NetState.NeedsPermission && requested) {
@@ -102,216 +116,208 @@ fun NetworkHomeScreen() {
     }
 
     val number = remember { NumberFormat.getInstance() }
-    val wgUp = wgConfigs.filter { wgStatus[it.id] == WgStatus.Up }.joinToString(", ") { it.name }
+    val wgUp = wgConfigs.count { wgStatus[it.id] == WgStatus.Up }
+    val on = state is NetState.On
+    val t = MaterialTheme.transparency
+    val card = MaterialTheme.colorScheme.surface.copy(alpha = t.surface)
+    val bar = MaterialTheme.colorScheme.surface.copy(alpha = t.elevatedSurface)
+    val ring by animateColorAsState(
+        if (on) Color(0xFF00E5A8) else MaterialTheme.colorScheme.outline,
+        label = "ring",
+    )
 
-    PreferenceScreen(
-        title = { Text(stringResource(R.string.net_hub_title), modifier = Modifier.padding(horizontal = 16.dp)) },
-        topBarActions = {
-            IconButton(onClick = { backStack.add(NetworkSettingsRoute) }) {
-                Icon(painterResource(IconsNetworkHomeScreen.settings_24px), contentDescription = stringResource(R.string.net_hub_settings))
+    Box(Modifier.fillMaxSize()) {
+        Box(
+            Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background.copy(alpha = t.background))
+                .blur(32.dp),
+        )
+        Scaffold(
+            containerColor = Color.Transparent,
+            topBar = {
+                TopAppBar(
+                    title = { Text(stringResource(R.string.net_hub_title), fontWeight = FontWeight.Medium) },
+                    actions = {
+                        IconButton(onClick = { backStack.add(NetworkSettingsRoute) }) {
+                            Icon(painterResource(Icons.settings_24px), contentDescription = stringResource(R.string.net_hub_settings))
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = bar),
+                )
+            },
+        ) { pad ->
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier.fillMaxSize().padding(pad).padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                item(span = { GridItemSpan(2) }) {
+                    Column(Modifier.fillMaxWidth().padding(top = 8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Box(
+                            Modifier
+                                .size(168.dp)
+                                .background(ring.copy(alpha = if (on) 0.18f else 0.08f), CircleShape)
+                                .clickable(enabled = state !is NetState.Starting) {
+                                    if (on || state is NetState.Starting) engine.stop()
+                                    else {
+                                        requested = true
+                                        engine.start()
+                                    }
+                                },
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Box(
+                                Modifier
+                                    .size(132.dp)
+                                    .background(card, CircleShape),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Icon(
+                                        painterResource(Icons.ic_glyph_network),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(36.dp),
+                                        tint = ring,
+                                    )
+                                    Text(
+                                        text = stringResource(
+                                            when (state) {
+                                                is NetState.On -> R.string.net_hub_stop
+                                                is NetState.Starting -> R.string.net_hub_state_starting
+                                                else -> R.string.net_hub_start
+                                            }
+                                        ),
+                                        fontWeight = FontWeight.Bold,
+                                        letterSpacing = 2.sp,
+                                        modifier = Modifier.padding(top = 8.dp),
+                                    )
+                                    Text(
+                                        stringResource(
+                                            when (state) {
+                                                is NetState.Off -> R.string.net_hub_state_off
+                                                is NetState.Starting -> R.string.net_hub_state_starting
+                                                is NetState.On -> R.string.net_hub_state_on
+                                                is NetState.Error -> R.string.net_hub_state_error
+                                                is NetState.NeedsPermission -> R.string.net_hub_state_permission
+                                            }
+                                        ),
+                                        style = MaterialTheme.typography.labelMedium,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    )
+                                }
+                            }
+                        }
+                        if (state is NetState.Error) {
+                            Text((state as NetState.Error).message, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(top = 12.dp))
+                            TextButton(onClick = { engine.acknowledgeError() }) { Text(stringResource(R.string.net_hub_dismiss)) }
+                        }
+                        Row(Modifier.padding(top = 20.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                            StatChip(stringResource(R.string.net_hub_stat_blocked_dns), number.format(stats.dnsBlocked), card) {
+                                backStack.add(NetworkLogsRoute)
+                            }
+                            StatChip(stringResource(R.string.net_hub_stat_blocked_conn), number.format(stats.connectionsBlocked), card) {
+                                backStack.add(NetworkLogsRoute)
+                            }
+                        }
+                    }
+                }
+                item {
+                    HubTile(
+                        title = stringResource(R.string.net_hub_dns),
+                        value = selectedDns.name,
+                        icon = Icons.language_24px,
+                        card = card,
+                        onClick = { backStack.add(NetworkDnsRoute) },
+                    )
+                }
+                item {
+                    HubTile(
+                        title = stringResource(R.string.net_hub_cat_firewall),
+                        value = stringResource(R.string.net_hub_fw_apps_n, appRules.size),
+                        icon = Icons.apps_24px,
+                        card = card,
+                        onClick = { backStack.add(NetworkFirewallRoute) },
+                    )
+                }
+                item {
+                    HubTile(
+                        title = stringResource(R.string.net_hub_wireguard),
+                        value = if (wgUp == 0) stringResource(R.string.net_hub_stat_wg_off)
+                        else stringResource(R.string.net_hub_wg_up, wgUp),
+                        icon = Icons.lock_24px,
+                        card = card,
+                        onClick = { backStack.add(NetworkWireguardRoute) },
+                    )
+                }
+                item {
+                    HubTile(
+                        title = stringResource(R.string.net_hub_blocklists),
+                        value = stringResource(R.string.net_hub_lists_n, listsOn.size),
+                        icon = Icons.visibility_off_24px,
+                        card = card,
+                        onClick = { backStack.add(NetworkBlocklistsRoute) },
+                    )
+                }
+                item {
+                    HubTile(
+                        title = stringResource(R.string.net_hub_logs),
+                        value = stringResource(R.string.net_hub_logs_sum_short),
+                        icon = Icons.manage_search_24px,
+                        card = card,
+                        onClick = { backStack.add(NetworkLogsRoute) },
+                    )
+                }
+                item {
+                    HubTile(
+                        title = stringResource(R.string.net_hub_settings),
+                        value = stringResource(R.string.net_hub_settings_sum_short),
+                        icon = Icons.settings_24px,
+                        card = card,
+                        onClick = { backStack.add(NetworkSettingsRoute) },
+                    )
+                }
+                item(span = { GridItemSpan(2) }) {
+                    Text(
+                        stringResource(R.string.net_hub_safety),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(vertical = 8.dp),
+                    )
+                    Spacer(Modifier.height(16.dp))
+                }
             }
-        },
-    ) {
-        item {
-            StatusCard(
-                state = state,
-                onTurnOn = {
-                    requested = true
-                    engine.start()
-                },
-                onTurnOff = { engine.stop() },
-                onDismiss = { engine.acknowledgeError() },
-            )
-        }
-        item {
-            Banner(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.net_restore_summary),
-                icon = IconsNetworkHomeScreen.info_24px,
-            )
-        }
-        item {
-            PreferenceCategory(title = stringResource(R.string.net_hub_status)) {
-                Preference(
-                    title = stringResource(R.string.net_hub_stat_dns),
-                    summary = selectedDns.name,
-                    icon = IconsNetworkHomeScreen.language_24px,
-                    onClick = { backStack.add(NetworkDnsRoute) },
-                )
-                Preference(
-                    title = stringResource(R.string.net_hub_wireguard),
-                    summary = wgUp.ifEmpty { stringResource(R.string.net_hub_stat_wg_off) },
-                    icon = IconsNetworkHomeScreen.lock_24px,
-                    onClick = { backStack.add(NetworkWireguardRoute) },
-                )
-                Preference(
-                    title = stringResource(R.string.net_hub_stat_blocked_dns),
-                    summary = number.format(stats.dnsBlocked),
-                    icon = IconsNetworkHomeScreen.visibility_off_24px,
-                    onClick = { backStack.add(NetworkLogsRoute) },
-                )
-                Preference(
-                    title = stringResource(R.string.net_hub_stat_blocked_conn),
-                    summary = number.format(stats.connectionsBlocked) + "\n" + stringResource(R.string.net_hub_stats_note),
-                    icon = IconsNetworkHomeScreen.error_24px,
-                    onClick = { backStack.add(NetworkLogsRoute) },
-                )
-            }
-        }
-        item {
-            PreferenceCategory(title = stringResource(R.string.net_hub_cat_dns)) {
-                Preference(title = stringResource(R.string.nt_title),
-                    icon = IconsNetworkHomeScreen.language_24px,
-                    onClick = { backStack.add(NetworkPrivacyRoute) })
-                Preference(
-                    title = stringResource(R.string.net_hub_dns),
-                    summary = stringResource(R.string.net_hub_dns_sum),
-                    icon = IconsNetworkHomeScreen.language_24px,
-                    onClick = { backStack.add(NetworkDnsRoute) },
-                )
-                Preference(
-                    title = stringResource(R.string.net_hub_wireguard),
-                    summary = stringResource(R.string.net_hub_wg_sum),
-                    icon = IconsNetworkHomeScreen.lock_24px,
-                    onClick = { backStack.add(NetworkWireguardRoute) },
-                )
-                Preference(
-                    title = stringResource(R.string.net_hub_wg_apps),
-                    summary = stringResource(R.string.net_hub_wg_apps_sum),
-                    icon = IconsNetworkHomeScreen.apps_24px,
-                    onClick = { backStack.add(NetworkWireguardAppsRoute) },
-                )
-            }
-        }
-        item {
-            PreferenceCategory(title = stringResource(R.string.net_hub_cat_firewall)) {
-                Preference(
-                    title = stringResource(R.string.net_hub_fw_apps),
-                    summary = stringResource(R.string.net_hub_fw_apps_sum),
-                    icon = IconsNetworkHomeScreen.apps_24px,
-                    onClick = { backStack.add(NetworkFirewallRoute) },
-                )
-                Preference(
-                    title = stringResource(R.string.net_hub_fw_universal),
-                    summary = stringResource(R.string.net_hub_fw_universal_sum),
-                    icon = IconsNetworkHomeScreen.rule_settings_24px,
-                    onClick = { backStack.add(NetworkUniversalRulesRoute) },
-                )
-                Preference(
-                    title = stringResource(R.string.net_hub_fw_custom),
-                    summary = stringResource(R.string.net_hub_fw_custom_sum),
-                    icon = IconsNetworkHomeScreen.filter_alt_24px,
-                    onClick = { backStack.add(NetworkCustomRulesRoute) },
-                )
-            }
-        }
-        item {
-            PreferenceCategory(title = stringResource(R.string.net_hub_cat_tools)) {
-                Preference(
-                    title = stringResource(R.string.net_hub_blocklists),
-                    summary = stringResource(R.string.net_hub_blocklists_sum),
-                    icon = IconsNetworkHomeScreen.visibility_off_24px,
-                    onClick = { backStack.add(NetworkBlocklistsRoute) },
-                )
-                Preference(
-                    title = stringResource(R.string.net_hub_logs),
-                    summary = stringResource(R.string.net_hub_logs_sum),
-                    icon = IconsNetworkHomeScreen.manage_search_24px,
-                    onClick = { backStack.add(NetworkLogsRoute) },
-                )
-                Preference(
-                    title = stringResource(R.string.net_hub_settings),
-                    summary = stringResource(R.string.net_hub_settings_sum),
-                    icon = IconsNetworkHomeScreen.settings_24px,
-                    onClick = { backStack.add(NetworkSettingsRoute) },
-                )
-            }
-        }
-        item {
-            Banner(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.net_hub_early),
-                icon = IconsNetworkHomeScreen.warning_24px,
-            )
         }
     }
 }
 
 @Composable
-private fun StatusCard(
-    state: NetState,
-    onTurnOn: () -> Unit,
-    onTurnOff: () -> Unit,
-    onDismiss: () -> Unit,
-) {
-    val container = when (state) {
-        is NetState.On -> MaterialTheme.colorScheme.primaryContainer
-        is NetState.Error -> MaterialTheme.colorScheme.errorContainer
-        else -> MaterialTheme.colorScheme.secondaryContainer
-    }
-    val content = when (state) {
-        is NetState.On -> MaterialTheme.colorScheme.onPrimaryContainer
-        is NetState.Error -> MaterialTheme.colorScheme.onErrorContainer
-        else -> MaterialTheme.colorScheme.onSecondaryContainer
-    }
-    val stateLabel = when (state) {
-        is NetState.Off -> R.string.net_hub_state_off
-        is NetState.Starting -> R.string.net_hub_state_starting
-        is NetState.On -> R.string.net_hub_state_on
-        is NetState.Error -> R.string.net_hub_state_error
-        is NetState.NeedsPermission -> R.string.net_hub_state_permission
-    }
-    val summary = when (state) {
-        is NetState.Off -> stringResource(R.string.net_hub_summary_off)
-        is NetState.Starting -> stringResource(R.string.net_hub_summary_starting)
-        is NetState.On -> stringResource(R.string.net_hub_summary_on)
-        is NetState.Error -> state.message
-        is NetState.NeedsPermission -> stringResource(R.string.net_hub_summary_permission)
-    }
-    val running = state is NetState.On || state is NetState.Starting
-
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        shape = MaterialTheme.shapes.extraLarge,
-        color = container,
-        contentColor = content,
+private fun StatChip(label: String, value: String, card: Color, onClick: () -> Unit) {
+    Column(
+        Modifier
+            .background(card, RoundedCornerShape(16.dp))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 10.dp),
     ) {
-        Column(
-            modifier = Modifier.padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    painter = painterResource(IconsNetworkHomeScreen.ic_glyph_network),
-                    contentDescription = null,
-                    modifier = Modifier.size(40.dp),
-                )
-                Column(modifier = Modifier.padding(start = 16.dp)) {
-                    Text(
-                        text = stringResource(R.string.net_hub_title),
-                        style = MaterialTheme.typography.titleMedium,
-                    )
-                    Text(
-                        text = stringResource(stateLabel),
-                        style = MaterialTheme.typography.headlineMedium,
-                    )
-                }
-            }
-            Text(text = summary, style = MaterialTheme.typography.bodyMedium)
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                if (state is NetState.Error) {
-                    TextButton(onClick = onDismiss) { Text(stringResource(R.string.net_hub_dismiss)) }
-                }
-                if (running) {
-                    FilledTonalButton(onClick = onTurnOff) { Text(stringResource(R.string.net_hub_turn_off)) }
-                } else {
-                    Button(onClick = onTurnOn) { Text(stringResource(R.string.net_hub_turn_on)) }
-                }
-            }
-        }
+        Text(value, fontWeight = FontWeight.SemiBold, fontSize = 18.sp)
+        Text(label, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
+    }
+}
+
+@Composable
+private fun HubTile(title: String, value: String, icon: Int, card: Color, onClick: () -> Unit) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .aspectRatio(1.15f)
+            .background(card, RoundedCornerShape(22.dp))
+            .clickable(onClick = onClick)
+            .padding(16.dp),
+    ) {
+        Icon(painterResource(icon), contentDescription = null, modifier = Modifier.size(28.dp), tint = Color(0xFF00E5A8))
+        Spacer(Modifier.weight(1f))
+        Text(title, fontWeight = FontWeight.SemiBold)
+        Text(value, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 2, overflow = TextOverflow.Ellipsis)
     }
 }

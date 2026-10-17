@@ -163,6 +163,19 @@ object TelosApps {
             route = SettingsDeepLinkContract.ROUTE_NOTES,
         ),
         TelosApp(
+            key = "telos_ermis_app://ermis",
+            name = "Ermis",
+            description = "Email client with a Gmail-style inbox. IMAP/SMTP accounts, conversation list, compose, and per-message notes that sync to Gmail via an Ermis-Notes folder.",
+            features = listOf(
+                "Gmail-style inbox with blur theme",
+                "IMAP and SMTP (app password for Gmail)",
+                "Conversation threading",
+                "Notes on Gmail messages, stored locally and in IMAP folder Ermis-Notes",
+            ),
+            iconRes = de.mm20.launcher2.base.R.drawable.ic_app_messages_full,
+            route = SettingsDeepLinkContract.ROUTE_ERMIS,
+        ),
+        TelosApp(
             key = "telos_calendar_app://calendar",
             name = "Calendar",
             description = "Month and agenda calendar on the calendars of the phone, with a local calendar and sync through your Google, CalDAV or Exchange account.",

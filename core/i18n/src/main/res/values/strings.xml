@@ -845,7 +845,7 @@
     <string name="floating_launcher_tool_screenshot">Screenshot</string>
     <string name="floating_launcher_tool_calculator">Calculator</string>
     <string name="floating_launcher_tool_quick_settings">Quick settings</string>
-    <string name="floating_launcher_tool_needs_accessibility">Turn on the accessibility service in Settings > Gestures to take screenshots</string>
+    <string name="floating_launcher_tool_needs_accessibility">Turn on the accessibility service in Settings &gt; Gestures to take screenshots</string>
     <string name="preference_floating_launcher_haptic_feedback">Haptic feedback</string>
     <string name="preference_floating_launcher_haptic_feedback_summary">Vibrate briefly when tapping a tab</string>
     <string name="preference_floating_launcher_auto_hide_gaming">Hide during Gaming profile</string>

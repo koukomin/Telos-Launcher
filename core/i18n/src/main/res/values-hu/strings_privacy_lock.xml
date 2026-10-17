@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Oldja fel a rendszer PIN-kódjával, mintájával, jelszavával vagy biometriájával, vagy a launcher PIN-kódjával, ha beállította.</string>
+    <string name="auth_gate_unlock">Feloldás</string>
+    <string name="auth_gate_recordings">Hívásfelvételek feloldása</string>
+    <string name="auth_gate_files">Fájlok feloldása</string>
+    <string name="lock_call_recordings">Hívásfelvételek zárolása</string>
+    <string name="lock_call_recordings_summary">A hívásfelvételek megjelenítése előtt a rendszerzárat vagy a launcher PIN-kódját kéri. Alapból bekapcsolva.</string>
+    <string name="call_recordings_encryption">A hívásfelvételek titkosítva vannak</string>
+    <string name="call_recordings_encryption_summary">Minden fájl AES-256-GCM-mel tárolódik. A kulcs az Android Keystore-ban marad. A lejátszás ideiglenes másolatot old fel.</string>
+    <string name="telos_files_lock_on_open">Zár kérése a Fájlok megnyitásához</string>
+    <string name="telos_files_lock_on_open_off">Ne kérjen zárat a Fájlok megnyitásakor</string>
+    <string name="voice_hide_from_media">Hangjegyzetek elrejtése a Médiától</string>
+    <string name="voice_hide_from_media_summary">.nomedia fájlt ír a hangjegyzetek mappájába, hogy a galériák és a Telos Média kihagyják. Alapból kikapcsolva. A hívásfelvételek már privát tárhelyen és titkosítva vannak, a Média nem listázza őket.</string>
+    <string name="call_recordings_hide_from_media">Hívásfelvételek elrejtése a Médiától</string>
+    <string name="call_recordings_hide_from_media_summary">.nomedia fájlt ír a hívásfelvételek mappájába, hogy a galériák és a Telos Média kihagyják. Alapból kikapcsolva. A felvételek már privát titkosított tárhelyen vannak; ez egy extra jelölő.</string>
+</resources>

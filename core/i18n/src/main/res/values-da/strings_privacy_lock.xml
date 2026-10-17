@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Lås op med systemets PIN, mønster, adgangskode eller biometri, eller med launcher-PIN’en hvis du har sat en.</string>
+    <string name="auth_gate_unlock">Lås op</string>
+    <string name="auth_gate_recordings">Lås opkaldsoptagelser op</string>
+    <string name="auth_gate_files">Lås Filer op</string>
+    <string name="lock_call_recordings">Lås opkaldsoptagelser</string>
+    <string name="lock_call_recordings_summary">Spørger efter systemlåsen eller launcher-PIN’en før opkaldsoptagelser vises. Slået til som standard.</string>
+    <string name="call_recordings_encryption">Opkaldsoptagelser er krypteret</string>
+    <string name="call_recordings_encryption_summary">Hver fil gemmes med AES-256-GCM. Nøglen bliver i Android Keystore. Afspilning dekrypterer en midlertidig kopi.</string>
+    <string name="telos_files_lock_on_open">Kræv lås for at åbne Filer</string>
+    <string name="telos_files_lock_on_open_off">Kræv ikke lås ved åbning af Filer</string>
+    <string name="voice_hide_from_media">Skjul stemmememoer for Medier</string>
+    <string name="voice_hide_from_media_summary">Tilføjer en .nomedia-fil i mappen med stemmememoer, så gallerier og Telos Medier springer den over. Slået fra som standard. Opkaldsoptagelser ligger allerede i privat lager og er krypteret, Medier viser dem ikke.</string>
+    <string name="call_recordings_hide_from_media">Skjul opkaldsoptagelser for Medier</string>
+    <string name="call_recordings_hide_from_media_summary">Tilføjer en .nomedia-fil i mappen med opkaldsoptagelser, så gallerier og Telos Medier springer den over. Slået fra som standard. Optagelserne ligger allerede i privat krypteret lager; dette er et ekstra mærke.</string>
+</resources>

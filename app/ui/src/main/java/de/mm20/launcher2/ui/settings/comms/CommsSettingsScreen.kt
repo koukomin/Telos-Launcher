@@ -68,6 +68,8 @@ fun CommsSettingsScreen() {
     val blockInternational by viewModel.blockInternational.collectAsStateWithLifecycle()
     val clirEnabled by viewModel.clirEnabled.collectAsStateWithLifecycle()
     val autoRecord by viewModel.autoRecordCalls.collectAsStateWithLifecycle()
+    val lockCallRecordings by viewModel.lockCallRecordings.collectAsStateWithLifecycle()
+    val hideCallRecordingsFromMedia by viewModel.hideCallRecordingsFromMedia.collectAsStateWithLifecycle()
     val recordingQuality by viewModel.recordingQuality.collectAsStateWithLifecycle()
     val recordingBackend by viewModel.recordingBackend.collectAsStateWithLifecycle()
     val rememberDialpad by viewModel.rememberDialpad.collectAsStateWithLifecycle()
@@ -739,6 +741,23 @@ fun CommsSettingsScreen() {
                     ),
                     value = recordingQuality,
                     onValueChanged = { if (it != null) viewModel.setRecordingQuality(it) }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.lock_call_recordings),
+                    summary = stringResource(R.string.lock_call_recordings_summary),
+                    value = lockCallRecordings,
+                    onValueChanged = { viewModel.setLockCallRecordings(it) },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.call_recordings_hide_from_media),
+                    summary = stringResource(R.string.call_recordings_hide_from_media_summary),
+                    value = hideCallRecordingsFromMedia,
+                    onValueChanged = { viewModel.setHideCallRecordingsFromMedia(it) },
+                )
+                Preference(
+                    title = stringResource(R.string.call_recordings_encryption),
+                    summary = stringResource(R.string.call_recordings_encryption_summary),
+                    onClick = { },
                 )
                 Preference(
                     title = stringResource(R.string.hc_recordings),

@@ -64,6 +64,23 @@ class VoiceRecorderSettings(context: Context) {
     var speaker: Boolean
         get() = prefs.getBoolean("speaker", true)
         set(value) = prefs.edit().putBoolean("speaker", value).apply()
+
+    /** Write `.nomedia` in the recordings folder so galleries and Telos Media skip it. Off by default. */
+    var hideFromMedia: Boolean
+        get() = prefs.getBoolean("hide_from_media", false)
+        set(value) {
+            prefs.edit().putBoolean("hide_from_media", value).apply()
+        }
+
+    fun applyNomedia(context: Context) {
+        val dir = File(context.filesDir, "VoiceRecordings").apply { mkdirs() }
+        val marker = File(dir, ".nomedia")
+        if (hideFromMedia) {
+            if (!marker.exists()) runCatching { marker.createNewFile() }
+        } else if (marker.exists()) {
+            runCatching { marker.delete() }
+        }
+    }
 }
 
 data class VoiceRecording(
@@ -100,7 +117,10 @@ object VoiceRecorderEngine {
     private var timer: Job? = null
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
-    fun directory(context: Context): File = File(context.filesDir, "VoiceRecordings").apply { mkdirs() }
+    fun directory(context: Context): File = File(context.filesDir, "VoiceRecordings").apply {
+        mkdirs()
+        VoiceRecorderSettings(context).applyNomedia(context)
+    }
 
     @Synchronized
     fun start(context: Context): Boolean {

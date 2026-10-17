@@ -126,6 +126,24 @@ internal class FilesWorkspaceViewModel(application: Application) : AndroidViewMo
 
 @Composable
 fun FilesScreen() {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val filesPrefs = remember { context.getSharedPreferences("telos_files", android.content.Context.MODE_PRIVATE) }
+    var lockOnOpen by remember { mutableStateOf(filesPrefs.getBoolean("lock_on_open", false)) }
+    val filesUnlocked by de.mm20.launcher2.comms.privacy.PrivacySession.filesUnlocked.collectAsState()
+    val backStack = de.mm20.launcher2.ui.locals.LocalBackStack.current
+    de.mm20.launcher2.ui.component.AuthGate(
+        enabled = lockOnOpen,
+        title = stringResource(R.string.auth_gate_files),
+        unlocked = filesUnlocked,
+        onUnlocked = { de.mm20.launcher2.comms.privacy.PrivacySession.unlockFiles() },
+        onCancelled = { backStack.removeLastOrNull() },
+    ) {
+    FilesScreenBody()
+    }
+}
+
+@Composable
+private fun FilesScreenBody() {
     val workspace: FilesWorkspaceViewModel = viewModel()
     var dropped by remember { mutableStateOf<Triple<FilesViewModel, FilesInternalDrag, String>?>(null) }
     val dragScope = remember(workspace) { FilesDragScope(java.util.UUID.randomUUID().toString()) { target, data -> target.path?.let { dropped = Triple(target, data, it) } } }

@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Lås opp med systemets PIN, mønster, passord eller biometri, eller med launcher-PIN hvis du har satt en.</string>
+    <string name="auth_gate_unlock">Lås opp</string>
+    <string name="auth_gate_recordings">Lås opp samtaleopptak</string>
+    <string name="auth_gate_files">Lås opp Filer</string>
+    <string name="lock_call_recordings">Lås samtaleopptak</string>
+    <string name="lock_call_recordings_summary">Ber om systemlåsen eller launcher-PIN før samtaleopptak vises. På som standard.</string>
+    <string name="call_recordings_encryption">Samtaleopptak er kryptert</string>
+    <string name="call_recordings_encryption_summary">Hver fil lagres med AES-256-GCM. Nøkkelen blir i Android Keystore. Avspilling dekrypterer en midlertidig kopi.</string>
+    <string name="telos_files_lock_on_open">Krev lås for å åpne Filer</string>
+    <string name="telos_files_lock_on_open_off">Ikke krev lås ved åpning av Filer</string>
+    <string name="voice_hide_from_media">Skjul talenotater fra Medier</string>
+    <string name="voice_hide_from_media_summary">Legger til en .nomedia-fil i mappen for talenotater slik at gallerier og Telos Medier hopper over den. Av som standard. Samtaleopptak ligger allerede i privat lagring og er kryptert, Medier viser dem ikke.</string>
+    <string name="call_recordings_hide_from_media">Skjul samtaleopptak fra Medier</string>
+    <string name="call_recordings_hide_from_media_summary">Legger til en .nomedia-fil i mappen for samtaleopptak slik at gallerier og Telos Medier hopper over den. Av som standard. Opptakene ligger allerede i privat kryptert lagring; dette er en ekstra merker.</string>
+</resources>

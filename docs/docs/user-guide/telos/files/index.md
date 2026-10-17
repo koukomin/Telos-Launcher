@@ -71,6 +71,9 @@ cloud connections (with **Add or manage...**), and Tools with the root explorer 
 
 ### Folder view
 
+**Require lock to open Files** is in the **More** menu and is off by default. When it is on, opening Telos Files asks
+for the system PIN, pattern, password or biometrics, or the launcher PIN if you set one.
+
 Top bar with the folder name, a **search** icon and a three-dot **More** menu. Under it a **breadcrumb** path bar
 (Home > storage > folders) where every part is tappable. A **+** button creates a folder or a file. A progress bar
 under the title shows loading. See [Browsing](./browsing).
@@ -172,6 +175,8 @@ The local-folder menu offers storage analysis, the ten largest files and byte-ve
 
 Files, Viewer and Media share a delete/trash choice and restore UI. Local files use an atomic same-volume move with durable metadata, a default 30-day retention configurable to 1–365 days for future deletions, and daily expiry cleanup. Restore never overwrites an existing file. Android-managed media trash uses the system’s fixed 30-day retention and permission dialog. Unsupported storages offer explicitly confirmed permanent deletion. The private trash is removed on app uninstall or app-data deletion.
 
+
+**Γέμισε τον κάδο** σαρώνει άχρηστα αρχεία (cache του Telos, προσωρινά, logs, μικρογραφίες, παλιά APK στα Λήψεις, άδειους φακέλους) και τα βάζει στον κάδο όπου γίνεται. Ιδέες από [SD Maid SE](https://github.com/d4rken-org/sdmaid-se) (GPL-3), χωρίς αντιγραφή κώδικα. Στο virtual app Κάδος ρυθμίζεις αυτόματο καθάρισμα ανά ώρα/μέρα/εβδομάδα/μήνα, μόνο στη φόρτιση, και παράλειψη στο Battery Saver. Το Shizuku/root (υπολείμματα απεγκατεστημένων εφαρμογών, `pm trim-caches`) είναι **ανενεργό** μέχρι να το ενεργοποιήσεις μετά από προειδοποίηση.
 
 Ο ίδιος διάλογος χρησιμοποιείται επίσης για εγγραφές ραδιοφώνου/φωνής/κλήσεων/οθόνης, ολοκληρωμένα αρχεία Downloads και το Delete στην ειδοποίηση screenshot. Οι εγγραφές κλήσεων παραμένουν κρυπτογραφημένες μέσα στον ιδιωτικό κάδο. Προσωρινά ή ημιτελή αρχεία εργασιών δεν αντιμετωπίζονται ως ολοκληρωμένα αρχεία χρήστη.
 

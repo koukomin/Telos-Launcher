@@ -34,7 +34,7 @@ screen, page 1 is no longer offered as a gesture target, because it is the home 
    a stack to switch between its widgets. Use **Remove from stack** to split them.
 5. **Replace** swaps a widget for another one, **Remove** deletes it.
 
-Widgets without options (Battery, Network, System, Freeze, At a Glance and plugin widgets) show no
+Widgets without options (Battery, System, Freeze, At a Glance and plugin widgets) show no
 settings button.
 
 Android widgets have extra options: **Borderless**, **Background card** and **Use theme color**, and
@@ -51,8 +51,7 @@ Android widgets have extra options: **Borderless**, **Background card** and **Us
 | Media | Playing media with controls | Notification access | Interactive progress bar |
 | Note | A free text note | Nothing | Link to an existing or new file |
 | Battery | Charge level and charging state | Nothing | None |
-| Network | Wi-Fi, mobile data, Ethernet, or no connection | Nothing | None |
-| System | RAM and storage usage | Nothing | None |
+| System | RAM, storage, active HWUI renderer (Vulkan/OpenGL), VPN and device traffic. Off in the picker until you enable it in Telos System. Vulkan/OpenGL chips switch the renderer only when Settings → Advanced → Switch from System widget is on | Enable in Telos System; Shizuku, root or ADB to change the renderer | None |
 | Freeze | The [Smart Freeze](../freeze/) candidates, with a **Freeze now** button | Freeze set up | None |
 | Android widgets | Any app widget installed on the phone | The app | Per widget |
 | Plugin widgets | Rows of title, subtitle and value from a plugin | A widget plugin | None |

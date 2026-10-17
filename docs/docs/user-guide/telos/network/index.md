@@ -23,11 +23,9 @@ unchanged. See [THIRD_PARTY_NOTICES.md](https://github.com/koukomin/Telos-Launch
 
 | Part | What it shows |
 | --- | --- |
-| Big card | The state: **Off**, **Starting**, **On**, **Stopped** (with the reason) or **Permission needed**, and the **Turn on** / **Turn off** button |
-| Status | The DNS server in use, the WireGuard tunnels that are up, blocked DNS queries and blocked connections (counted since the logs were last cleared) |
-| DNS and tunnels | [DNS](dns.md), [WireGuard](wireguard.md), WireGuard per app |
-| Firewall | Rules per app, universal rules, custom rules ([Firewall](firewall.md)) |
-| Filters and logs | [Blocklists](blocklists-bypass.md), [Logs](logs-settings.md), [Settings](logs-settings.md#settings) |
+| START / STOP | A circular control in the middle. Green ring when Telos Network is on. Tap to start or stop. |
+| Live counts | Blocked DNS queries and blocked connections since logs were cleared |
+| Tiles | [DNS](dns.md), firewall, [WireGuard](wireguard.md), [blocklists](blocklists-bypass.md), [logs](logs-settings.md), [settings](logs-settings.md#settings) |
 
 The first time you turn it on, Android asks for your consent to set up a VPN. Without it Telos Network cannot start.
 
@@ -46,6 +44,8 @@ The first time you turn it on, Android asks for your consent to set up a VPN. Wi
 - No subscription and no RPN (no paid proxy service), no account, no server of ours.
 - None of the experimental features of RethinkDNS.
 - It cannot look inside encrypted connections. It filters by app, address and domain.
+- NetGuard extras (notify on access, new apps, pause on call, speed notification, hosts import) run on this engine. Port forwarding and live PCAP capture from NetGuard are not included.
+- NetGuard's JNI packet filter is GPL-3 and small (~a few hundred KB per ABI, under ~1.5 MB for four ABIs). It is **not** bundled: Android allows one VPN, and Telos Network already uses firestack for DNS, WireGuard and Tor. A second packet engine would replace those, not sit beside them.
 - It does not make you anonymous. Websites still see your IP address, unless you use a WireGuard tunnel you trust or explicitly route the connection through Tor.
 - Android allows one VPN at a time. Telos Network replaces another VPN while it runs; use [WireGuard](wireguard.md) inside Telos Network instead.
 - The engine does not know which app is in the foreground. Rules for *background* work only if you grant *usage access* (the firewall screen offers a button for it); without it they never block.

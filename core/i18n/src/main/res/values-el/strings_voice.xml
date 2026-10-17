@@ -8,6 +8,8 @@
     <string name="voice_settings">Ρυθμίσεις</string>
     <string name="voice_all_recordings">Όλες οι εγγραφές</string>
     <string name="voice_call_recordings">Εγγραφές κλήσεων</string>
+    <string name="voice_voice_recordings">Φωνητικά μηνύματα</string>
+    <string name="voice_no_call_recordings">Δεν υπάρχουν ακόμα εγγραφές κλήσεων</string>
     <string name="voice_no_recordings">Χωρίς εγγραφές</string>
     <string name="voice_permission_needed">Η Ηχογράφηση χρειάζεται την άδεια μικροφώνου για να ηχογραφήσει</string>
     <string name="voice_start_failed">Η εγγραφή δεν μπόρεσε να ξεκινήσει</string>
@@ -41,4 +43,6 @@
     <string name="voice_speaker_summary">Απενεργοποιήστε για αναπαραγωγή από τον δέκτη, όπως σε κλήση</string>
     <string name="voice_settings_privacy">Ιδιωτικότητα</string>
     <string name="voice_privacy_text">Οι εγγραφές μένουν στον ιδιωτικό χώρο του Telos σε αυτό το τηλέφωνο. Τίποτα δεν ανεβαίνει στο διαδίκτυο. Εδώ εμφανίζονται και οι εγγραφές κλήσεων του Telos Phone, που παραμένουν κρυπτογραφημένες.</string>
+    <string name="voice_hide_from_media">Απόκρυψη ηχογραφήσεων από τα Πολυμέσα</string>
+    <string name="voice_hide_from_media_summary">Προσθέτει αρχείο .nomedia στον φάκελο των φωνητικών ηχογραφήσεων ώστε οι συλλογές και τα Πολυμέσα Telos να τον αγνοούν. Απενεργοποιημένο από προεπιλογή.</string>
 </resources>

@@ -28,6 +28,9 @@ fun AdvancedSettingsScreen() {
         title = stringResource(R.string.preference_screen_advanced),
     ) {
         item {
+            GraphicsApiPreferenceCategory()
+        }
+        item {
             PreferenceCategory {
                 Preference(
                     icon = R.drawable.speed_24px,

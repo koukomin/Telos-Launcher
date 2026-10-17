@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Unlock with your device PIN, pattern, password or biometrics, or with the launcher PIN if you set one.</string>
+    <string name="auth_gate_unlock">Unlock</string>
+    <string name="auth_gate_recordings">Unlock call recordings</string>
+    <string name="auth_gate_files">Unlock Files</string>
+    <string name="lock_call_recordings">Lock call recordings</string>
+    <string name="lock_call_recordings_summary">Ask for the system lock or the launcher PIN before showing call recordings. On by default.</string>
+    <string name="call_recordings_encryption">Call recordings are encrypted</string>
+    <string name="call_recordings_encryption_summary">Each file is stored with AES-256-GCM. The key stays in the Android Keystore. Playback decrypts a temporary copy.</string>
+    <string name="telos_files_lock_on_open">Require lock to open Files</string>
+    <string name="telos_files_lock_on_open_off">Do not require lock to open Files</string>
+    <string name="call_recordings_hide_from_media">Hide call recordings from Media</string>
+    <string name="call_recordings_hide_from_media_summary">Adds a .nomedia file in the call recordings folder so galleries and Telos Media skip it. Off by default. Call recordings already live in private encrypted storage; this is an extra marker.</string>
+</resources>

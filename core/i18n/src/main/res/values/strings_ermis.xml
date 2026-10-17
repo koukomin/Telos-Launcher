@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ermis_title">Ermis</string>
+    <string name="ermis_search">Search mail</string>
+    <string name="ermis_search_in_mail">Search in mail</string>
+    <string name="ermis_compose">Compose</string>
+    <string name="ermis_compose_body">Compose email</string>
+    <string name="ermis_inbox">Inbox</string>
+    <string name="ermis_starred">Starred</string>
+    <string name="ermis_primary">Primary</string>
+    <string name="ermis_sync">Sync</string>
+    <string name="ermis_no_subject">(no subject)</string>
+    <string name="ermis_loading">Loading…</string>
+    <string name="ermis_note">Note</string>
+    <string name="ermis_note_hint">Private note on this email (Gmail: also saved in folder Ermis-Notes)</string>
+    <string name="ermis_note_save">Save note</string>
+    <string name="ermis_to">To</string>
+    <string name="ermis_subject">Subject</string>
+    <string name="ermis_body">Message</string>
+    <string name="ermis_send">Send</string>
+    <string name="ermis_add_account">Add account</string>
+    <string name="ermis_add_account_sum">Use a Google account from microG or Play services when it is installed, or a Gmail app password. Other providers: IMAP and SMTP with TLS. Passwords stay in the Android Keystore.</string>
+    <string name="ermis_microg_sign_in">Sign in with microG / Google</string>
+    <string name="ermis_use_google">Use %1$s</string>
+    <string name="ermis_email">Email</string>
+    <string name="ermis_password">Password</string>
+    <string name="ermis_connect">Connect</string>
+    <string name="ermis_attach">Attach from this phone</string>
+    <string name="ermis_attach_cloud">Attach from Telos Files cloud</string>
+    <string name="ermis_cloud_empty">No cloud or network storages yet. Add them in Telos Files.</string>
+    <string name="ermis_remove">Remove</string>
+    <string name="ermis_large_title">Large attachment</string>
+    <string name="ermis_large_text">%1$s is %2$s. Mail servers often reject files over about 20 MB. Upload it to a transfer site and send the link instead?</string>
+    <string name="ermis_large_transfer_sh">Upload to transfer.sh and paste the link</string>
+    <string name="ermis_large_wetransfer">Open WeTransfer</string>
+    <string name="ermis_large_transfer_it">Open transfer.it</string>
+    <string name="ermis_large_keep">Keep as attachment</string>
+    <string name="ermis_notif_channel">Ermis mail</string>
+    <string name="ermis_notif_title">New mail</string>
+    <string name="ermis_notif_text">%1$d new message(s) in %2$s</string>
+</resources>

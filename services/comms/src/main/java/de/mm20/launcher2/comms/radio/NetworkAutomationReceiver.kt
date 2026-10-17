@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.PowerManager
+import de.mm20.launcher2.comms.graphics.HwuiRenderer
 import de.mm20.launcher2.preferences.comms.CommsSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +38,12 @@ class NetworkAutomationReceiver : BroadcastReceiver(), KoinComponent {
                             CellularRadio.applyPreferred(context, if (saver) "lte" else snap.preferredNetworkMode)
                         }
                     }
-                    Intent.ACTION_BOOT_COMPLETED -> CellularRadio.applyPreferred(context)
+                    Intent.ACTION_BOOT_COMPLETED -> {
+                        CellularRadio.applyPreferred(context)
+                        if (snap.hwuiRestoreOnBoot && snap.hwuiRenderer != HwuiRenderer.MODE_DEFAULT) {
+                            HwuiRenderer.apply(snap.hwuiRenderer)
+                        }
+                    }
                 }
             } finally {
                 pending.finish()

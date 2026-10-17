@@ -54,6 +54,10 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         ],
       },
       {
+        text: 'Ermis',
+        link: '/docs/user-guide/telos/ermis/',
+      },
+      {
         text: 'Files',
         collapsed: true,
         link: '/docs/user-guide/telos/files/',

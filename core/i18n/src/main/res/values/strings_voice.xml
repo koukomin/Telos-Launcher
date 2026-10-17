@@ -8,6 +8,8 @@
     <string name="voice_settings">Settings</string>
     <string name="voice_all_recordings">All recordings</string>
     <string name="voice_call_recordings">Call recordings</string>
+    <string name="voice_voice_recordings">Voice memos</string>
+    <string name="voice_no_call_recordings">No call recordings yet</string>
     <string name="voice_no_recordings">No recordings</string>
     <string name="voice_permission_needed">Telos Voice Recorder needs the microphone permission to record</string>
     <string name="voice_start_failed">The recording could not be started</string>
@@ -41,4 +43,6 @@
     <string name="voice_speaker_summary">Turn off to play through the earpiece, like on a phone call</string>
     <string name="voice_settings_privacy">Privacy</string>
     <string name="voice_privacy_text">Recordings stay in the private storage of Telos on this phone. Nothing is uploaded. Call recordings of Telos Phone are listed here too, they stay encrypted.</string>
+    <string name="voice_hide_from_media">Hide voice recordings from Media</string>
+    <string name="voice_hide_from_media_summary">Adds a .nomedia file in the voice recordings folder so galleries and Telos Media skip it. Off by default.</string>
 </resources>

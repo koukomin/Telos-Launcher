@@ -64,6 +64,7 @@
     <string name="hc_call_over_sip">Κλήση μέσω SIP</string>
     <string name="hc_call_recording">Εγγραφή κλήσεων</string>
     <string name="hc_call_recordings">Εγγραφές κλήσεων</string>
+    <string name="hc_recordings_tab">Εγγραφές</string>
     <string name="hc_caller_name">Όνομα καλούντος</string>
     <string name="hc_calling">Κλήση σε εξέλιξη</string>
     <string name="hc_cancel">Ακύρωση</string>

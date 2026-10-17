@@ -274,6 +274,9 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
         // enqueueUniquePeriodicWork + KEEP is idempotent, so it's safe to call this on every
         // process start rather than gating it behind a one-time setup step.
         launch(Dispatchers.Default) { runCatching { get<StoreUpdateScheduler>().enable() } }
+        launch(Dispatchers.Default) {
+            runCatching { de.mm20.launcher2.comms.files.DiskCleanerWorker.enqueue(this@LauncherApplication) }
+        }
 
         launch(Dispatchers.Default) { guardVirtualApps() }
         // Telos Downloads: queue the downloads that were running when the process ended
@@ -294,6 +297,17 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
      */
     private suspend fun guardVirtualApps() {
         val settings = get<CommsSettings>()
+        // === TELOS_PENDING_REVIEW_START: tablet_telephony_detection ===
+        val hasTelephony = packageManager.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)
+        if (!hasTelephony) {
+            runCatching {
+                val current = settings.disabledVirtualApps.first()
+                // Default Phone & Messages to disabled on tablets/devices without SIM/telephony hardware
+                if ("telos_phone_app" !in current) settings.setVirtualAppEnabled("telos_phone_app", false)
+                if ("telos_messages_app" !in current) settings.setVirtualAppEnabled("telos_messages_app", false)
+            }
+        }
+        // === TELOS_PENDING_REVIEW_END: tablet_telephony_detection ===
         val tripped = runCatching { VirtualAppGuard.collectTripped(this, GUARDED.keys) }.getOrDefault(emptyList())
         for (key in tripped) settings.setVirtualAppEnabled(key, false)
         if (tripped.isNotEmpty()) notifyTripped(tripped)

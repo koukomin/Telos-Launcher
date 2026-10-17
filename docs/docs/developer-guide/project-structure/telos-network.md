@@ -57,4 +57,4 @@ The module and the screens were written without a compiler and have not been run
 
 ## Built-in status widget
 
-NetworkWidget observes engine, DNS and log flows; TrafficRate derives bytes/second from monotonic elapsed time and real device counters. Sampling runs only while resumed. Local interface addresses exclude VPN TUN networks. External IP lookup is manual and bounded, through api.ipify.org, and refers to the Telos app route rather than the tunnel exit.
+The Network home-screen widget was removed. VPN state, DNS/block counts and device traffic rates live on the System widget (off in the picker until enabled in Telos System). TrafficRate still derives bytes/second from monotonic elapsed time and real device counters. Sampling runs only while the widget is resumed.

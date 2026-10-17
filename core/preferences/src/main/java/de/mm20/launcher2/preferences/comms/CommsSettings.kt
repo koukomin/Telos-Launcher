@@ -396,6 +396,17 @@ class CommsSettings internal constructor(
     fun setPhoneAppLock(enabled: Boolean) {
         dataStore.update { it.copy(comms = it.comms.copy(phoneAppLock = enabled)) }
     }
+    val lockCallRecordings
+        get() = dataStore.data.map { it.comms.lockCallRecordings }
+    fun setLockCallRecordings(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(lockCallRecordings = enabled)) }
+    }
+
+    val hideCallRecordingsFromMedia
+        get() = dataStore.data.map { it.comms.hideCallRecordingsFromMedia }
+    fun setHideCallRecordingsFromMedia(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(hideCallRecordingsFromMedia = enabled)) }
+    }
 
     val callProtectMode
         get() = dataStore.data.map { it.comms.callProtectMode }
@@ -458,6 +469,21 @@ class CommsSettings internal constructor(
         get() = dataStore.data.map { it.comms.batterySaverLte }
     fun setBatterySaverLte(enabled: Boolean) {
         dataStore.update { it.copy(comms = it.comms.copy(batterySaverLte = enabled)) }
+    }
+    val hwuiRenderer
+        get() = dataStore.data.map { it.comms.hwuiRenderer }
+    fun setHwuiRenderer(mode: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(hwuiRenderer = mode)) }
+    }
+    val hwuiRestoreOnBoot
+        get() = dataStore.data.map { it.comms.hwuiRestoreOnBoot }
+    fun setHwuiRestoreOnBoot(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(hwuiRestoreOnBoot = enabled)) }
+    }
+    val hwuiWidgetSwitch
+        get() = dataStore.data.map { it.comms.hwuiWidgetSwitch }
+    fun setHwuiWidgetSwitch(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(hwuiWidgetSwitch = enabled)) }
     }
 
     /** Keys of the Telos virtual apps that are hidden from the app grid and from search */
@@ -603,6 +629,40 @@ class CommsSettings internal constructor(
         get() = dataStore.data.map { it.comms.recordingAutoDeleteDays }
     fun setRecordingAutoDeleteDays(days: Int) {
         dataStore.update { it.copy(comms = it.comms.copy(recordingAutoDeleteDays = days)) }
+    }
+
+        val autoRecordMode
+        get() = dataStore.data.map { it.comms.autoRecordMode }
+    fun setAutoRecordMode(mode: String) {
+        dataStore.update { it.copy(comms = it.comms.copy(autoRecordMode = mode)) }
+    }
+
+    val recordProhibitedNumbers
+        get() = dataStore.data.map { it.comms.recordProhibitedNumbers }
+    fun setNumberRecordProhibited(number: String, prohibited: Boolean) {
+        val clean = number.filter { it.isDigit() || it == '+' }
+        if (clean.isBlank()) return
+        dataStore.update {
+            val set = it.comms.recordProhibitedNumbers.toMutableSet()
+            if (prohibited) set.add(clean) else set.remove(clean)
+            val mandatorySet = it.comms.recordMandatoryNumbers.toMutableSet()
+            if (prohibited) mandatorySet.remove(clean)
+            it.copy(comms = it.comms.copy(recordProhibitedNumbers = set, recordMandatoryNumbers = mandatorySet))
+        }
+    }
+
+    val recordMandatoryNumbers
+        get() = dataStore.data.map { it.comms.recordMandatoryNumbers }
+    fun setNumberRecordMandatory(number: String, mandatory: Boolean) {
+        val clean = number.filter { it.isDigit() || it == '+' }
+        if (clean.isBlank()) return
+        dataStore.update {
+            val set = it.comms.recordMandatoryNumbers.toMutableSet()
+            if (mandatory) set.add(clean) else set.remove(clean)
+            val prohibitedSet = it.comms.recordProhibitedNumbers.toMutableSet()
+            if (mandatory) prohibitedSet.remove(clean)
+            it.copy(comms = it.comms.copy(recordMandatoryNumbers = set, recordProhibitedNumbers = prohibitedSet))
+        }
     }
 
     val snapshot

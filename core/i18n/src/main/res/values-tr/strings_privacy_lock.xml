@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Sistem PIN’i, desen, parola veya biyometri ile ya da ayarladıysanız başlatıcı PIN’i ile açın.</string>
+    <string name="auth_gate_unlock">Kilidi aç</string>
+    <string name="auth_gate_recordings">Arama kayıtlarının kilidini aç</string>
+    <string name="auth_gate_files">Dosyalar’ın kilidini aç</string>
+    <string name="lock_call_recordings">Arama kayıtlarını kilitle</string>
+    <string name="lock_call_recordings_summary">Arama kayıtlarını göstermeden önce sistem kilidini veya başlatıcı PIN’ini ister. Varsayılan olarak açık.</string>
+    <string name="call_recordings_encryption">Arama kayıtları şifrelenir</string>
+    <string name="call_recordings_encryption_summary">Her dosya AES-256-GCM ile saklanır. Anahtar Android Keystore’da kalır. Oynatma geçici bir kopyanın şifresini çözer.</string>
+    <string name="telos_files_lock_on_open">Dosyalar’ı açmak için kilit iste</string>
+    <string name="telos_files_lock_on_open_off">Dosyalar açılırken kilit isteme</string>
+    <string name="voice_hide_from_media">Ses kayıtlarını Medya’dan gizle</string>
+    <string name="voice_hide_from_media_summary">Ses kayıtları klasörüne .nomedia dosyası ekler, galeriler ve Telos Medya klasörü atlar. Varsayılan olarak kapalı. Arama kayıtları zaten özel depolamada ve şifrelidir, Medya onları listelemez.</string>
+    <string name="call_recordings_hide_from_media">Arama kayıtlarını Medya’dan gizle</string>
+    <string name="call_recordings_hide_from_media_summary">Arama kayıtları klasörüne .nomedia dosyası ekler, galeriler ve Telos Medya klasörü atlar. Varsayılan olarak kapalı. Kayıtlar zaten özel şifreli depolamada; bu ek bir işaret.</string>
+</resources>

@@ -21,7 +21,7 @@ DNS queries off.
 | Mark the VPN as metered | Off by default. Tells Android the connection has limited data |
 | Hold traffic without a network | Off by default. Blocks traffic while no network is available, instead of resuming by itself |
 | MTU | Automatic (default), 1280, 1380, 1420 or 1500 |
-| Notification | Minimal (default) or with the number of blocked connections; hide the content on the lock screen (on by default); alert when it stopped by itself (on by default) |
+| Notification | Minimal (default), blocked-connection count, or count plus sampled speed; hide the content on the lock screen (on by default); alert when it stopped by itself (on by default); notify on access (off); notify on new apps (on); pause filtering during a phone call (off) |
 | Logs | Switches for connections and DNS queries (both on), maximum entries, days to keep |
 | Always-on VPN | Opens the Android VPN settings. Telos never switches this on by itself |
 | Battery optimisation | Opens the Android list, in case Android stops Telos Network in the background |

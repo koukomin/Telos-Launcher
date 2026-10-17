@@ -58,7 +58,7 @@ object CallAudioRecorder {
         synchronized(this) {
             if (_isRecording.value) return true
             stopping.set(false)
-            val dir = File(context.filesDir, "CallRecordings").apply { mkdirs() }
+            val dir = recordingsDir(context)
             val digits = phoneNumber.filter { it.isDigit() }.ifEmpty { "Unknown" }
             val stamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
             val file = File(dir, "REC_${digits}_$stamp.m4a")
@@ -153,6 +153,19 @@ object CallAudioRecorder {
             // off the main thread (the call service stops the recording there); list() finishes it if the process dies first
             Thread { RecordingCrypto.encryptInPlace(file) }.start()
             return file
+        }
+    }
+
+    fun recordingsDir(context: Context): File = File(context.filesDir, "CallRecordings").apply { mkdirs() }
+
+    /** Write or remove `.nomedia` in the call recordings folder. Off unless the user turns it on. */
+    fun applyNomedia(context: Context, hideFromMedia: Boolean) {
+        val dir = recordingsDir(context)
+        val marker = File(dir, ".nomedia")
+        if (hideFromMedia) {
+            if (!marker.exists()) runCatching { marker.createNewFile() }
+        } else if (marker.exists()) {
+            runCatching { marker.delete() }
         }
     }
 

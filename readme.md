@@ -77,6 +77,7 @@ from Telos Store.
 | **Telos Screenshot** | Full, partial and scrolling screenshots with an editor | [Screenshot](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/screenshot/) |
 | **Telos Screen Recorder** | Screen to video with microphone, pause and countdown | [Screen Recorder](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/screen-recorder/) |
 | **Telos Notes** | Notes with labels, sync with a Markdown folder or Nextcloud Notes, Keep and Evernote import | [Notes](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/notes/) |
+| **Ermis** | Email client with a Gmail-style inbox, IMAP/SMTP, notifications, Telos Files cloud attachments, large-file transfer links, and per-message notes | [Ermis](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/ermis/) |
 | **Telos Calendar** | Month and agenda calendar, local calendar, Google and CalDAV through the system | [Calendar](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/calendar/) |
 | **Telos System** | CPU, RAM, IPs, processes, saved Wi-Fi passwords (root or Shizuku) with QR share | — |
 | **Telos Downloads** | Download manager: several connections per file, resume, queue, retry, folder of your choice, torrents and magnet links with file selection, seeding and IP block lists, video and audio sites through yt-dlp (optional build), schedule, backup | [Downloads](https://koukomin.github.io/Telos-Launcher/docs/user-guide/telos/downloads/) |
@@ -99,7 +100,7 @@ Built-in apps display short localized names such as **Phone / Τηλέφωνο**
 
 - **Contacts and Phone:** edit through the Android contact editor, explicitly confirmed deletion, persistent all/selected-account filters, account membership in duplicate-contact groups and live contact photos in recent calls. The large dialer heading is removed; search and menu share the top row.
 - **Compact Media:** one source/action toolbar replaces stacked source chips and headings; labeled overflow actions and scrolling category tabs leave more space for media and large fonts. TV uses horizontal channel swipes, wrapping now/next programme details and independent Greek playlist fallback when the main catalog is unavailable. Local Video, Music, Radio, TV, YouTube and YouTube Music share one Media3 player stack with official NextLib FFmpeg software decoders from Maven; playback stays in Telos. Telos Viewer (photos and documents) stays built into the launcher.
-- **Home glass and Network widget:** Appearance exposes drawer blur and opacity directly. Built-in widget cards use wallpaper glass by default, with a switch, and the sidebar is slimmer. The built-in Network widget shows VPN state, device traffic rates, DNS/block counts and local addresses; a manual api.ipify.org lookup shows Telos’s route IP, not a claimed VPN exit.
+- **Home glass and System widget:** Appearance exposes drawer blur and opacity directly. Built-in widget cards use wallpaper glass by default, with a switch, and the sidebar is slimmer. The Network widget is gone. The System widget (off in the picker until you enable it in Telos System) shows RAM, storage, the live Vulkan/OpenGL renderer, VPN state and device traffic. Vulkan/OpenGL can be switched from the widget when that option is on in Settings → Advanced.
 - **Terminal companion:** a virtual Terminal opens the separately installed official Termux runtime and provides installation/plugin guidance. Official Termux APK/plugin compatibility requires its package and signing identity; this is not an embedded renamed runtime.
 
 ### Installer, dock, drawer and GIF wallpaper updates
@@ -648,7 +649,7 @@ A complete phone app inside the launcher. Its layout follows [Right Dialer](http
 - Manual or automatic (**Auto-record calls**). Needs the default dialer role and the microphone permission. Telos plays no announcement to the other party. Check your local law.
 - **Backends:** Auto (Shizuku, then root, then microphone), Shizuku with microphone fallback, Root with microphone fallback, or microphone only. With Shizuku or root, Telos grants itself `CAPTURE_AUDIO_OUTPUT` and tries the call audio sources first. The microphone alone often captures only your side.
 - **Quality presets:** Compact (24 kbps, 16 kHz), Balanced (48 kbps, 16 kHz, default), High (96 kbps, 44.1 kHz). AAC in an `.m4a` container.
-- **Storage:** private app storage, each file encrypted with AES-256-GCM with a key in the Android Keystore. Automatic deletion after 7, 30 or 90 days (runs when the next recording starts). A recordings list opens a temporary decrypted copy in a player app.
+- **Storage:** private app storage, each file encrypted with AES-256-GCM with a key in the Android Keystore. Automatic deletion after 7, 30 or 90 days (runs when the next recording starts). Open recordings from the Phone **Recordings** tab, the Phone drawer, Phone settings, or the **Call recordings** chip in Voice Recorder. A tap opens a temporary decrypted copy in a player app. **Lock call recordings** is on by default (Phone and Voice Recorder settings): the list asks for the system lock or the launcher PIN. Optional `.nomedia` for call recordings (off by default) so galleries and Telos Media skip that folder.
 - Recordings are not part of the encrypted settings backup and cannot be moved to another phone. SIP calls are not recorded.
 
 </details>
@@ -670,6 +671,7 @@ A complete phone app inside the launcher. Its layout follows [Right Dialer](http
 - **Smart gestures** (off by default, SIM calls only): raise to answer, flip to decline, rain mode shake gesture, pocket mode, proximity speaker, volume-button Do Not Disturb shortcut
 - **Auto redial** for busy, missed or rejected outgoing calls (configurable attempts and delay), fake incoming calls (scheduled)
 - **Cellular network mode switcher** (Shizuku or root) with a Quick Settings tile and screen-off / battery-saver automation
+- **Graphics API:** Vulkan or OpenGL for Android’s HWUI renderer (`debug.hwui.renderer`), in Settings → Advanced, with an explanation, live status there and in Telos System, Shizuku/root/ADB, optional restore after reboot, and a System-widget switch that is off until you enable it
 - **Home screen widgets:** recent calls and direct call (dialpad)
 - **Settings page** in the Right Dialer style (accent section captions, rounded cards)
 - **SIP / VoIP (experimental):** a SIP account (for example a FRITZ!Box IP telephone) on top of [baresip](https://github.com/baresip/baresip), kept registered in the background only while it is switched on. **Verify the server certificate** (TLS) is on for new accounts and stays off for accounts saved earlier; a FRITZ!Box with a self-signed certificate usually needs it off, and a certificate-looking registration failure shows a clear message. Incoming SIP calls with a call screen, notification and call log entries. Outgoing as a separate SIP button, as the default, or not at all so that it only receives calls. Opus and G.711, one SIP call at a time, no hold, merge or recording. TLS certificates are not verified, so use it only on networks you trust.
@@ -735,6 +737,7 @@ File scans, duplicate checks and resumable transfers reuse bounded scratch buffe
 - View, sorting and hidden-file preferences are remembered per folder.
 - Export/import Files display settings, per-folder options, toolbar shortcuts, bookmarks and up to 16 workspace tabs as validated JSON (512 KiB maximum). Connection credentials and transfer journals are excluded.
 - Customize up to two optional toolbar shortcuts. Read-only collections show recent files, bookmarks and local file types with bounded scans and partial-results reporting.
+- Optional **Require lock to open Files** in the More menu (off by default): the system lock or the launcher PIN before the file list.
 - Batch rename with name/extension tokens, padded numbering, literal/regex replacement and previews. Targets are checked before renaming; failures attempt to restore original names.
 - Local storage analyzer with largest-file lists and byte-verified duplicate groups. Scans are cancellable, bounded and skip symlinks; no files are deleted automatically.
 - Read-only local HTTP sharing on a private LAN, with a random access link; stops when the dialog closes or the app leaves the foreground. Secure filesystem support is required.
@@ -756,6 +759,7 @@ A file manager for your phone, network storages and cloud storages. The layout f
 **File operations**
 
 - Multi-select, copy, cut and paste with progress and cancel, rename, shared Trash or permanent deletion, new folder and file, share, compress to zip, 7z or tar.gz (zip with an optional AES-256 password)
+- **Fill the bin** collects junk (caches, temp files, logs, thumbnails, old APKs, empty folders, leftovers of uninstalled apps with Shizuku/root) into the Trash. Optional schedule (hour/day/week/month), only while charging, skip in Battery Saver. Shizuku/root cleaning is off until you accept a warning. Ideas from SD Maid SE (GPL-3), no code copied. **Appearance:** AMOLED colors while Battery Saver is on, previous theme restored after (skipped if you already use AMOLED or Cyberpunk).
 - Properties with permissions and on-demand MD5, SHA-1 and SHA-256 checksums
 - Copy between any two storages (local, network, cloud); nothing is ever overwritten, a free name is used
 
@@ -874,6 +878,7 @@ A firewall and DNS filter that works through the Android VPN service, built on t
 - **Tor / Web3:** embedded Tor for `.onion` DNS and Tor-only app routing (TCP, blocked while Tor is unavailable within the running VPN); optional startup on visible onion queries. Telos itself remains outside the VPN. Read-only ASCII Web3 lookup separates websites and wallet addresses: `.eth` through ENS Ideas / eth.limo, supported Unstoppable names through your own HTTPS API proxy. Explicit website gateways, no universal blockchain DNS claim. [Setup and limits](docs/docs/user-guide/telos/network/tor-web3.md).
 - **WireGuard:** import `.conf` files, from a QR code image or pasted text, or add tunnels by hand, a system default tunnel, a tunnel per app, "only on mobile data" and lockdown (block the app while its tunnel is down). The tunnels run inside the engine, no second VPN is needed
 - **Firewall:** wrapping app cards with UID, traffic totals, allowed/blocked filters and immediate Wi-Fi, mobile/5G, LAN, other-VPN and VPN-exclusion chips; expanded per-app metered/unmetered blocking, notes and scoped IP/domain rules. Rethink-inspired controls include block everything, roaming, background, screen off, ignore universal rules, bypass the firewall, exclude from the VPN and temporary allow for 15 minutes to 8 hours; universal rules for all apps (including metered networks, device locked, new apps, unknown apps, UDP, plain HTTP, own-DNS bypass and default deny), and custom IP and domain rules that block or trust
+- **NetGuard-style extras (GPL-3, on the Rethink engine, no NetGuard native code):** notify on access, notify on new apps, pause filtering during a call, speed line in the VPN notification, import a hosts file as domain block rules
 - **Blocklists:** downloadable Rethink domain lists in groups (parental controls, security, privacy) that you switch on one by one, counters per list, update on request or daily on an unmetered network, and exceptions (trusted domains) for one app or for all
 - **Logs:** connection and DNS logs and per-app totals with search and filters, CSV export, limited by entry count and days
 - **Settings:** start on boot, IPv4 and/or IPv6, route the local network, exclude Telos, MTU, let apps bypass the VPN, notification detail, log retention, help for Android's always-on VPN and battery optimisation
@@ -888,7 +893,8 @@ A voice recorder with a list, search and a service that keeps recording with the
 - Big red record button, pause and resume, a waveform, a notification with pause and stop
 - AAC (.m4a) or Opus (.ogg, Android 10+), standard or voice mode, three qualities
 - List newest first with duration and date, search, rename, share, delete, playback with a seek bar through the speaker or the earpiece
-- The call recordings of Telos Phone in the same list (they stay encrypted)
+- The call recordings of Telos Phone in the same list (they stay encrypted). Opening them asks for the system lock or the launcher PIN unless you turn **Lock call recordings** off
+- Optional `.nomedia` for voice memos and for call recordings (both off by default) so galleries and Telos Media skip those folders
 - Also a tool in the floating launcher
 
 **Status and limitations:** recordings are in the private storage of Telos and not encrypted (call recordings are), no AI assistant, transcription, markers, trimming or WAV.
@@ -1172,6 +1178,7 @@ adapted, the original license is respected.
 | [Right Dialer (Goodwy/Dialer)](https://github.com/Goodwy/Dialer) | GPL-3.0 | Phone app layout and look: recents, contacts, dialpad, call screens |
 | [Secure Dialer](https://github.com/Secure-Phone-apps/Secure-Dialer) | GPL-3.0 | Privacy features: biometric lock, secure call screen, call screening, callback reminders |
 | [Ever Dialer](https://github.com/hari161008/Ever-Dialer) | GPL-3.0 | Power-user features: recording backends and retention, gestures, auto redial, fake calls, network switcher, notes |
+| [GAMA](https://github.com/palincat/gama) | see project | Idea only for the Vulkan/OpenGL HWUI switch (`debug.hwui.renderer`); no GAMA source was copied |
 | [Thor](https://github.com/trinadhthatakula/Thor) | GPL-3.0 | Freeze backends (Shizuku, Dhizuku) and OEM suspend fallbacks |
 | [Undead Wallpaper](https://github.com/maocide/UndeadWallpaper) | GPL-3.0 | Video live wallpaper engine |
 | [Stremio add-on protocol](https://github.com/Stremio/stremio-addon-sdk) (docs) and [stremio-core](https://github.com/Stremio/stremio-core) (API types) and [stremio-watched-bitfield](https://github.com/Stremio/stremio-watched-bitfield) (watched-state format) | MIT | The public description of the add-on protocol (manifest, catalog, meta, stream, subtitles and add-on catalog requests) and the request formats of the account service documented in stremio-core were used to write Telos' own client in Telos Media. No code of Stremio or of other Stremio clients is used |
@@ -1189,6 +1196,8 @@ adapted, the original license is respected.
 | [Aurora Store](https://gitlab.com/AuroraOSS/AuroraStore) | GPL-3.0-or-later | Reference for the explicit privileged install-session sequence; independently implemented in Telos |
 | [Obtainium](https://github.com/ImranR98/Obtainium) | GPL-3.0 | Store behaviour and features: sources, per-app settings, update flow, export format, links, update broadcasts (the behaviour is re-implemented, no code was copied) |
 | [RethinkDNS](https://github.com/celzero/rethink-app) | Apache-2.0 | Telos Network: concept, feature set, per-app firewall card/control design and the way the VPN service, DNS, firewall rules and logs are organised (adapted where noted, copyright notice kept in `THIRD_PARTY_NOTICES.md`) |
+| [NetGuard](https://github.com/M66B/NetGuard) | GPL-3.0-only | Feature ideas for Telos Network (notify on access, new-app alerts, pause on call, speed notification, hosts import). Engine stays Rethink/firestack; no NetGuard JNI was copied |
+| [FairEmail](https://github.com/M66B/FairEmail) | GPL-3.0 | Feature ideas for Ermis (IMAP/SMTP accounts, threading, compose, notes). Gmail-style UI is original; FairEmail source was not copied |
 | [Termux](https://github.com/termux/termux-app) | GPL-3.0-only (upstream app) | External runtime integration and ecosystem links for Terminal; no upstream source is bundled or copied |
 | [Tor Android](https://github.com/guardianproject/tor-android) / [Tor](https://www.torproject.org/) | BSD-3-Clause | Embedded Tor client, used unchanged as `info.guardianproject:tor-android:0.4.9.14`; notices bundled in the license screen |
 | [firestack](https://github.com/celzero/firestack) | MPL-2.0 | The Go network engine behind Telos Network, used unchanged as a Maven dependency (`com.celzero:firestack`) |

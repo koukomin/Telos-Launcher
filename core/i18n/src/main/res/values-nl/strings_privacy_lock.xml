@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Ontgrendel met de PIN, het patroon, wachtwoord of biometrie van het systeem, of met de launcher-PIN als je die hebt ingesteld.</string>
+    <string name="auth_gate_unlock">Ontgrendelen</string>
+    <string name="auth_gate_recordings">Gespreksopnamen ontgrendelen</string>
+    <string name="auth_gate_files">Bestanden ontgrendelen</string>
+    <string name="lock_call_recordings">Gespreksopnamen vergrendelen</string>
+    <string name="lock_call_recordings_summary">Vraagt om de systeemvergrendeling of de launcher-PIN voordat gespreksopnamen worden getoond. Standaard aan.</string>
+    <string name="call_recordings_encryption">Gespreksopnamen zijn versleuteld</string>
+    <string name="call_recordings_encryption_summary">Elk bestand wordt opgeslagen met AES-256-GCM. De sleutel blijft in de Android Keystore. Afspelen ontsleutelt een tijdelijke kopie.</string>
+    <string name="telos_files_lock_on_open">Vergrendeling vragen om Bestanden te openen</string>
+    <string name="telos_files_lock_on_open_off">Geen vergrendeling bij het openen van Bestanden</string>
+    <string name="voice_hide_from_media">Spraakopnamen verbergen voor Media</string>
+    <string name="voice_hide_from_media_summary">Voegt een .nomedia-bestand toe in de map met spraakopnamen zodat galerijen en Telos Media die overslaan. Standaard uit. Gespreksopnamen staan al in privéopslag en zijn versleuteld, Media toont ze niet.</string>
+    <string name="call_recordings_hide_from_media">Gespreksopnamen verbergen voor Media</string>
+    <string name="call_recordings_hide_from_media_summary">Voegt een .nomedia-bestand toe in de map met gespreksopnamen zodat galerijen en Telos Media die overslaan. Standaard uit. Opnamen staan al in privé versleutelde opslag; dit is een extra merker.</string>
+</resources>

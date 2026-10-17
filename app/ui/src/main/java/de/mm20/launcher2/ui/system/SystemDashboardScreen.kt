@@ -30,14 +30,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -58,6 +61,13 @@ import androidx.core.content.getSystemService
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation3.runtime.NavKey
 import de.mm20.launcher2.comms.AuthManager
+import de.mm20.launcher2.comms.graphics.HwuiRenderer
+import de.mm20.launcher2.network.NetState
+import de.mm20.launcher2.network.NetworkEngine
+import de.mm20.launcher2.network.api.DnsController
+import de.mm20.launcher2.network.api.LogController
+import de.mm20.launcher2.preferences.comms.CommsSettings
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.comms.ContactQrImage
 import de.mm20.launcher2.ui.locals.LocalBackStack
@@ -65,6 +75,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.compose.koinInject
 import kotlinx.serialization.Serializable
 import java.io.File
 import java.net.NetworkInterface
@@ -93,6 +104,16 @@ fun SystemDashboardScreen() {
     var networks by remember { mutableStateOf<List<WifiEntry>>(emptyList()) }
     var processes by remember { mutableStateOf<List<ProcRow>>(emptyList()) }
     var status by remember { mutableStateOf<String?>(null) }
+    val uiSettings: UiSettings = koinInject()
+    val comms: CommsSettings = koinInject()
+    val engine: NetworkEngine = koinInject()
+    val logs: LogController = koinInject()
+    val dns: DnsController = koinInject()
+    val systemWidgetOn by uiSettings.systemWidgetEnabled.collectAsState(false)
+    val netState by engine.state.collectAsState()
+    val netStats by logs.stats.collectAsState()
+    val dnsServer by dns.selected.collectAsState()
+    var liveRenderer by remember { mutableStateOf(HwuiRenderer.MODE_DEFAULT) }
     val pulse = rememberInfiniteTransition(label = "sysPulse")
     val t by pulse.animateFloat(0f, 1f, infiniteRepeatable(tween(2400, easing = LinearEasing), RepeatMode.Restart), label = "t")
 
@@ -116,6 +137,7 @@ fun SystemDashboardScreen() {
             ips = localIps()
             wifiSsid = currentSsid(context)
             processes = runningProcs(context)
+            liveRenderer = HwuiRenderer.current()
             delay(1500)
         }
     }
@@ -148,6 +170,53 @@ fun SystemDashboardScreen() {
                 }
                 item {
                     GlassCard {
+                        Text(stringResource(R.string.hc_graphics_api), style = MaterialTheme.typography.titleMedium)
+                        Text(
+                            stringResource(R.string.hc_graphics_current) + ": " + when (liveRenderer) {
+                                HwuiRenderer.MODE_VULKAN -> stringResource(R.string.hc_graphics_vulkan)
+                                HwuiRenderer.MODE_OPENGL -> stringResource(R.string.hc_graphics_opengl)
+                                else -> stringResource(R.string.hc_graphics_default)
+                            },
+                            color = if (liveRenderer == HwuiRenderer.MODE_VULKAN) Color(0xFF00E5A8) else scheme.primary,
+                        )
+                        Text(stringResource(R.string.hc_graphics_api_about_summary), style = MaterialTheme.typography.bodySmall)
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            FilterChip(
+                                selected = liveRenderer == HwuiRenderer.MODE_VULKAN,
+                                onClick = {
+                                    scope.launch {
+                                        comms.setHwuiRenderer(HwuiRenderer.MODE_VULKAN)
+                                        HwuiRenderer.apply(HwuiRenderer.MODE_VULKAN)
+                                        liveRenderer = HwuiRenderer.current()
+                                    }
+                                },
+                                label = { Text(stringResource(R.string.hc_graphics_vulkan)) },
+                            )
+                            FilterChip(
+                                selected = liveRenderer == HwuiRenderer.MODE_OPENGL,
+                                onClick = {
+                                    scope.launch {
+                                        comms.setHwuiRenderer(HwuiRenderer.MODE_OPENGL)
+                                        HwuiRenderer.apply(HwuiRenderer.MODE_OPENGL)
+                                        liveRenderer = HwuiRenderer.current()
+                                    }
+                                },
+                                label = { Text(stringResource(R.string.hc_graphics_opengl)) },
+                            )
+                        }
+                        Row(
+                            Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            Text(stringResource(R.string.hc_system_widget_enable), modifier = Modifier.weight(1f))
+                            Switch(checked = systemWidgetOn, onCheckedChange = { uiSettings.setSystemWidgetEnabled(it) })
+                        }
+                        Text(stringResource(R.string.hc_system_widget_enable_summary), style = MaterialTheme.typography.bodySmall)
+                    }
+                }
+                item {
+                    GlassCard {
                         Text(stringResource(R.string.telos_system_cpu), style = MaterialTheme.typography.labelLarge)
                         LinearProgressIndicator(progress = { cpu }, modifier = Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(8.dp)))
                         Text("${(cpu * 100).toInt()}%")
@@ -160,6 +229,15 @@ fun SystemDashboardScreen() {
                 item {
                     GlassCard {
                         Text(stringResource(R.string.telos_system_network), style = MaterialTheme.typography.titleMedium)
+                        val vpnOn = netState is NetState.On
+                        Text(
+                            stringResource(R.string.net_hub_title) + " · " + stringResource(
+                                if (vpnOn) R.string.net_hub_state_on else R.string.net_hub_state_off,
+                            ),
+                            color = if (vpnOn) Color(0xFF00E5A8) else scheme.onSurfaceVariant,
+                        )
+                        Text("${stringResource(R.string.net_hub_stat_dns)} ${dnsServer.name}")
+                        Text("${stringResource(R.string.net_hub_stat_blocked_dns)} ${netStats.dnsBlocked}  ·  ${stringResource(R.string.net_hub_stat_blocked_conn)} ${netStats.connectionsBlocked}")
                         Text("SSID: ${wifiSsid ?: "—"}")
                         ips.forEach { Text(it) }
                         if (showPsk && wifiPsk != null) {

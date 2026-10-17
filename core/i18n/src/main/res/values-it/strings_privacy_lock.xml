@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Sblocca con PIN, schema, password o biometria di sistema, o con il PIN del launcher se lo hai impostato.</string>
+    <string name="auth_gate_unlock">Sblocca</string>
+    <string name="auth_gate_recordings">Sblocca registrazioni delle chiamate</string>
+    <string name="auth_gate_files">Sblocca File</string>
+    <string name="lock_call_recordings">Blocca registrazioni delle chiamate</string>
+    <string name="lock_call_recordings_summary">Chiede il blocco di sistema o il PIN del launcher prima di mostrare le registrazioni delle chiamate. Attivo per impostazione predefinita.</string>
+    <string name="call_recordings_encryption">Le registrazioni delle chiamate sono cifrate</string>
+    <string name="call_recordings_encryption_summary">Ogni file è salvato con AES-256-GCM. La chiave resta nell’Android Keystore. La riproduzione decifra una copia temporanea.</string>
+    <string name="telos_files_lock_on_open">Richiedi blocco per aprire File</string>
+    <string name="telos_files_lock_on_open_off">Non richiedere blocco all’apertura di File</string>
+    <string name="voice_hide_from_media">Nascondi i memo vocali da Media</string>
+    <string name="voice_hide_from_media_summary">Aggiunge un file .nomedia nella cartella dei memo vocali così gallerie e Telos Media la saltano. Disattivato per impostazione predefinita. Le registrazioni delle chiamate sono già in archivio privato e cifrate, Media non le elenca.</string>
+    <string name="call_recordings_hide_from_media">Nascondi le registrazioni delle chiamate da Media</string>
+    <string name="call_recordings_hide_from_media_summary">Aggiunge un file .nomedia nella cartella delle registrazioni delle chiamate così gallerie e Telos Media la saltano. Disattivato per impostazione predefinita. Le registrazioni sono già in archivio privato cifrato; questo è un segno extra.</string>
+</resources>

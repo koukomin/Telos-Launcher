@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Deblocați cu PIN-ul, modelul, parola sau biometria sistemului, sau cu PIN-ul launcherului dacă l-ați setat.</string>
+    <string name="auth_gate_unlock">Deblocare</string>
+    <string name="auth_gate_recordings">Deblocare înregistrări apeluri</string>
+    <string name="auth_gate_files">Deblocare Fișiere</string>
+    <string name="lock_call_recordings">Blocare înregistrări apeluri</string>
+    <string name="lock_call_recordings_summary">Cere blocarea sistemului sau PIN-ul launcherului înainte de a arăta înregistrările apelurilor. Activat implicit.</string>
+    <string name="call_recordings_encryption">Înregistrările apelurilor sunt criptate</string>
+    <string name="call_recordings_encryption_summary">Fiecare fișier este stocat cu AES-256-GCM. Cheia rămâne în Android Keystore. Redarea decriptează o copie temporară.</string>
+    <string name="telos_files_lock_on_open">Cere blocare pentru a deschide Fișiere</string>
+    <string name="telos_files_lock_on_open_off">Nu cere blocare la deschiderea Fișierelor</string>
+    <string name="voice_hide_from_media">Ascunde notele vocale de Media</string>
+    <string name="voice_hide_from_media_summary">Adaugă un fișier .nomedia în folderul notelor vocale ca galeriile și Telos Media să-l sară. Dezactivat implicit. Înregistrările apelurilor sunt deja în stocare privată și criptate, Media nu le listează.</string>
+    <string name="call_recordings_hide_from_media">Ascunde înregistrările apelurilor de Media</string>
+    <string name="call_recordings_hide_from_media_summary">Adaugă un fișier .nomedia în folderul înregistrărilor de apeluri ca galeriile și Telos Media să-l sară. Dezactivat implicit. Înregistrările sunt deja în stocare privată criptată; acesta este un marcaj extra.</string>
+</resources>

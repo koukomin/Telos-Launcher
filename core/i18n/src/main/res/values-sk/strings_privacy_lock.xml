@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Odomknite PIN kódom, vzorom, heslom alebo biometriou systému, alebo PIN kódom launchera, ak ho máte.</string>
+    <string name="auth_gate_unlock">Odomknúť</string>
+    <string name="auth_gate_recordings">Odomknúť nahrávky hovorov</string>
+    <string name="auth_gate_files">Odomknúť Súbory</string>
+    <string name="lock_call_recordings">Zamknúť nahrávky hovorov</string>
+    <string name="lock_call_recordings_summary">Pred zobrazením nahrávok hovorov požiada o zámok systému alebo PIN launchera. Predvolene zapnuté.</string>
+    <string name="call_recordings_encryption">Nahrávky hovorov sú šifrované</string>
+    <string name="call_recordings_encryption_summary">Každý súbor sa ukladá s AES-256-GCM. Kľúč ostáva v Android Keystore. Prehrávanie dešifruje dočasnú kópiu.</string>
+    <string name="telos_files_lock_on_open">Vyžadovať zámok na otvorenie Súborov</string>
+    <string name="telos_files_lock_on_open_off">Nevyžadovať zámok pri otvorení Súborov</string>
+    <string name="voice_hide_from_media">Skryť hlasové poznámky pred Médiami</string>
+    <string name="voice_hide_from_media_summary">Pridá súbor .nomedia do priečinka hlasových poznámok, aby ho galérie a Telos Médiá preskočili. Predvolene vypnuté. Nahrávky hovorov sú už v súkromnom úložisku a šifrované, Médiá ich nezobrazujú.</string>
+    <string name="call_recordings_hide_from_media">Skryť nahrávky hovorov pred Médiami</string>
+    <string name="call_recordings_hide_from_media_summary">Pridá súbor .nomedia do priečinka nahrávok hovorov, aby ho galérie a Telos Médiá preskočili. Predvolene vypnuté. Nahrávky už sú v súkromnom šifrovanom úložisku; toto je ďalšia značka.</string>
+</resources>

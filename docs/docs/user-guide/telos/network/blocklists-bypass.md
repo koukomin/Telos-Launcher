@@ -10,6 +10,7 @@ the apps to use its DNS.
   date of the last update, the storage used and errors. **Delete downloaded lists** removes them.
 - **Update automatically** (off until you switch it on, available after the first download) checks once a day on an unmetered network.
 - Each list counts how many queries it blocked. **Reset counters** starts again (after a confirmation).
+- **Import hosts file** (NetGuard-style) turns lines such as `0.0.0.0 ads.example` into system-wide domain block rules. The Rethink engine stays in use; this is not NetGuard's native filter.
 
 ## Exceptions (bypass)
 

@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Avaa laitteen PIN-koodilla, kuviolla, salasanalla tai biometrialla tai käynnistimen PIN-koodilla, jos asetit sen.</string>
+    <string name="auth_gate_unlock">Avaa</string>
+    <string name="auth_gate_recordings">Avaa puhelutallenteet</string>
+    <string name="auth_gate_files">Avaa Tiedostot</string>
+    <string name="lock_call_recordings">Lukitse puhelutallenteet</string>
+    <string name="lock_call_recordings_summary">Kysyy järjestelmän lukitusta tai käynnistimen PIN-koodia ennen puhelutallenteiden näyttämistä. Oletuksena päällä.</string>
+    <string name="call_recordings_encryption">Puhelutallenteet on salattu</string>
+    <string name="call_recordings_encryption_summary">Jokainen tiedosto tallennetaan AES-256-GCM:llä. Avain pysyy Android Keystoressa. Toisto purkaa tilapäisen kopion.</string>
+    <string name="telos_files_lock_on_open">Vaadi lukitus Tiedostojen avaamiseen</string>
+    <string name="telos_files_lock_on_open_off">Älä vaadi lukitusta Tiedostoja avattaessa</string>
+    <string name="voice_hide_from_media">Piilota äänimuistiot Medialta</string>
+    <string name="voice_hide_from_media_summary">Lisää .nomedia-tiedoston äänimuistioiden kansioon, jotta galleriat ja Telos Media ohittavat sen. Oletuksena pois. Puhelutallenteet ovat jo yksityisessä tallennuksessa ja salattuja, Media ei listaa niitä.</string>
+    <string name="call_recordings_hide_from_media">Piilota puhelutallenteet Medialta</string>
+    <string name="call_recordings_hide_from_media_summary">Lisää .nomedia-tiedoston puhelutallenteiden kansioon, jotta galleriat ja Telos Media ohittavat sen. Oletuksena pois. Tallenteet ovat jo yksityisessä salatussa tallennuksessa; tämä on lisämerkintä.</string>
+</resources>

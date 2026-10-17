@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">使用系统 PIN、图案、密码或生物识别解锁，或使用你设置的启动器 PIN。</string>
+    <string name="auth_gate_unlock">解锁</string>
+    <string name="auth_gate_recordings">解锁通话录音</string>
+    <string name="auth_gate_files">解锁文件</string>
+    <string name="lock_call_recordings">锁定通话录音</string>
+    <string name="lock_call_recordings_summary">显示通话录音前要求系统锁屏或启动器 PIN。默认开启。</string>
+    <string name="call_recordings_encryption">通话录音已加密</string>
+    <string name="call_recordings_encryption_summary">每个文件使用 AES-256-GCM 存储。密钥保存在 Android Keystore。播放时解密临时副本。</string>
+    <string name="telos_files_lock_on_open">打开文件时要求锁屏</string>
+    <string name="telos_files_lock_on_open_off">打开文件时不要求锁屏</string>
+    <string name="voice_hide_from_media">对媒体隐藏语音备忘</string>
+    <string name="voice_hide_from_media_summary">在语音备忘文件夹中写入 .nomedia，使图库和 Telos 媒体跳过该文件夹。默认关闭。通话录音已在私有存储中并加密，媒体不会列出它们。</string>
+    <string name="call_recordings_hide_from_media">对媒体隐藏通话录音</string>
+    <string name="call_recordings_hide_from_media_summary">在通话录音文件夹中写入 .nomedia，使图库和 Telos 媒体跳过该文件夹。默认关闭。录音已在私有加密存储中；这是额外标记。</string>
+</resources>

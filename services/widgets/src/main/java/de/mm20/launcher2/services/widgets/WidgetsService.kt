@@ -12,7 +12,6 @@ import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.AppsWidget
 import de.mm20.launcher2.widgets.FreezeWidget
 import de.mm20.launcher2.widgets.MusicWidget
-import de.mm20.launcher2.widgets.NetworkWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.RemindersWidget
 import de.mm20.launcher2.widgets.SystemWidget
@@ -87,10 +86,6 @@ class WidgetsService(
             BuiltInWidgetInfo(
                 type = BatteryWidget.Type,
                 label = context.getString(R.string.widget_name_battery),
-            ),
-            BuiltInWidgetInfo(
-                type = NetworkWidget.Type,
-                label = context.getString(R.string.net_hub_title),
             ),
             BuiltInWidgetInfo(
                 type = SystemWidget.Type,

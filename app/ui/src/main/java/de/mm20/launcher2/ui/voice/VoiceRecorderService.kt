@@ -94,7 +94,7 @@ class VoiceRecorderService : Service() {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_glyph_voice_recorder)
+            .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, this, "telos_voice_recorder_app") }
             .setContentTitle(getString(if (paused) R.string.voice_notification_paused else R.string.voice_notification_recording))
             .setContentIntent(open)
             .setOngoing(true)

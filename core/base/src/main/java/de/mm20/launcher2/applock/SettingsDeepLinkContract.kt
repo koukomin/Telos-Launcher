@@ -39,6 +39,7 @@ object SettingsDeepLinkContract {
     const val ROUTE_SCREEN_RECORDER = "settings/screen_recorder"
     const val ROUTE_SCREENSHOT = "settings/screenshot"
     const val ROUTE_NOTES = "settings/notes"
+    const val ROUTE_ERMIS = "settings/ermis"
     const val ROUTE_CALENDAR = "settings/calendar"
     const val ROUTE_DOWNLOADS = "settings/downloads"
     const val ROUTE_TERMINAL = "settings/terminal"
@@ -63,6 +64,7 @@ object SettingsDeepLinkContract {
         ROUTE_SCREEN_RECORDER -> "screen_recorder"
         ROUTE_SCREENSHOT -> "screenshot"
         ROUTE_NOTES -> "notes"
+        ROUTE_ERMIS -> "ermis"
         ROUTE_CALENDAR -> "calendar"
         ROUTE_DOWNLOADS -> "downloads"
         else -> null

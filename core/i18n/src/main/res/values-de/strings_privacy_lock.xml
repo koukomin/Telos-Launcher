@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Entsperren Sie mit PIN, Muster, Passwort oder Biometrie des Geräts oder mit der Launcher-PIN, falls gesetzt.</string>
+    <string name="auth_gate_unlock">Entsperren</string>
+    <string name="auth_gate_recordings">Anrufaufnahmen entsperren</string>
+    <string name="auth_gate_files">Dateien entsperren</string>
+    <string name="lock_call_recordings">Anrufaufnahmen sperren</string>
+    <string name="lock_call_recordings_summary">Fragt nach der Systemsperre oder der Launcher-PIN, bevor Anrufaufnahmen gezeigt werden. Standardmäßig an.</string>
+    <string name="call_recordings_encryption">Anrufaufnahmen sind verschlüsselt</string>
+    <string name="call_recordings_encryption_summary">Jede Datei wird mit AES-256-GCM gespeichert. Der Schlüssel bleibt im Android Keystore. Die Wiedergabe entschlüsselt eine temporäre Kopie.</string>
+    <string name="telos_files_lock_on_open">Sperre zum Öffnen von Dateien verlangen</string>
+    <string name="telos_files_lock_on_open_off">Keine Sperre beim Öffnen von Dateien</string>
+    <string name="voice_hide_from_media">Sprachaufnahmen vor Medien verbergen</string>
+    <string name="voice_hide_from_media_summary">Legt eine .nomedia-Datei im Ordner der Sprachaufnahmen an, damit Galerien und Telos Medien ihn überspringen. Standardmäßig aus. Anrufaufnahmen liegen bereits im privaten Speicher und sind verschlüsselt, Medien listen sie nicht.</string>
+    <string name="call_recordings_hide_from_media">Anrufaufnahmen vor Medien verbergen</string>
+    <string name="call_recordings_hide_from_media_summary">Legt eine .nomedia-Datei im Ordner der Anrufaufnahmen an, damit Galerien und Telos Medien ihn überspringen. Standardmäßig aus. Anrufaufnahmen liegen bereits im privaten, verschlüsselten Speicher; das ist ein zusätzliches Merkmal.</string>
+</resources>

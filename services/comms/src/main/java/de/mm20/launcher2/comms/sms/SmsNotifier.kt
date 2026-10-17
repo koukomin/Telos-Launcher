@@ -73,7 +73,14 @@ object SmsNotifier {
         nm.notify(
             address.hashCode(),
             Notification.Builder(context, CHANNEL)
-                .setSmallIcon(de.mm20.launcher2.base.R.drawable.sms_24px)
+                .setSmallIcon(
+                    de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_messages_app")
+                        ?: de.mm20.launcher2.base.R.drawable.sms_24px,
+                )
+                .apply {
+                    de.mm20.launcher2.search.VirtualAppAppearance.largeIcon(context, "telos_messages_app")
+                        ?.let { setLargeIcon(it) }
+                }
                 .setContentTitle(title)
                 .apply { if (text.isNotBlank()) setContentText(text) }
                 .setContentIntent(open)

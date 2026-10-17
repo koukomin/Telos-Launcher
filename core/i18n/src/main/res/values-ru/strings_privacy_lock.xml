@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Разблокируйте PIN-кодом, графическим ключом, паролем или биометрией системы либо PIN-кодом лаунчера, если он задан.</string>
+    <string name="auth_gate_unlock">Разблокировать</string>
+    <string name="auth_gate_recordings">Разблокировать записи звонков</string>
+    <string name="auth_gate_files">Разблокировать Файлы</string>
+    <string name="lock_call_recordings">Блокировать записи звонков</string>
+    <string name="lock_call_recordings_summary">Перед показом записей звонков запрашивает блокировку системы или PIN лаунчера. Включено по умолчанию.</string>
+    <string name="call_recordings_encryption">Записи звонков зашифрованы</string>
+    <string name="call_recordings_encryption_summary">Каждый файл хранится с AES-256-GCM. Ключ остаётся в Android Keystore. Воспроизведение расшифровывает временную копию.</string>
+    <string name="telos_files_lock_on_open">Требовать блокировку для открытия Файлов</string>
+    <string name="telos_files_lock_on_open_off">Не требовать блокировку при открытии Файлов</string>
+    <string name="voice_hide_from_media">Скрыть голосовые записи от Медиа</string>
+    <string name="voice_hide_from_media_summary">Добавляет файл .nomedia в папку голосовых записей, чтобы галереи и Telos Медиа её пропускали. По умолчанию выключено. Записи звонков уже в закрытом хранилище и зашифрованы, Медиа их не показывает.</string>
+    <string name="call_recordings_hide_from_media">Скрыть записи звонков от Медиа</string>
+    <string name="call_recordings_hide_from_media_summary">Добавляет файл .nomedia в папку записей звонков, чтобы галереи и Telos Медиа её пропускали. По умолчанию выключено. Записи уже в закрытом зашифрованном хранилище; это дополнительная метка.</string>
+</resources>

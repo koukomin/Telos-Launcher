@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Desbloqueie com o PIN, padrão, palavra-passe ou biometria do sistema, ou com o PIN do launcher se o definiu.</string>
+    <string name="auth_gate_unlock">Desbloquear</string>
+    <string name="auth_gate_recordings">Desbloquear gravações de chamadas</string>
+    <string name="auth_gate_files">Desbloquear Ficheiros</string>
+    <string name="lock_call_recordings">Bloquear gravações de chamadas</string>
+    <string name="lock_call_recordings_summary">Pede o bloqueio do sistema ou o PIN do launcher antes de mostrar as gravações de chamadas. Ativado por predefinição.</string>
+    <string name="call_recordings_encryption">As gravações de chamadas estão encriptadas</string>
+    <string name="call_recordings_encryption_summary">Cada ficheiro é guardado com AES-256-GCM. A chave fica no Android Keystore. A reprodução desencripta uma cópia temporária.</string>
+    <string name="telos_files_lock_on_open">Exigir bloqueio para abrir Ficheiros</string>
+    <string name="telos_files_lock_on_open_off">Não exigir bloqueio ao abrir Ficheiros</string>
+    <string name="voice_hide_from_media">Ocultar memos de voz da Multimédia</string>
+    <string name="voice_hide_from_media_summary">Adiciona um ficheiro .nomedia na pasta dos memos de voz para galerias e Telos Multimédia a ignorarem. Desativado por predefinição. As gravações de chamadas já estão no armazenamento privado e encriptadas, a Multimédia não as lista.</string>
+    <string name="call_recordings_hide_from_media">Ocultar gravações de chamadas da Multimédia</string>
+    <string name="call_recordings_hide_from_media_summary">Adiciona um ficheiro .nomedia na pasta das gravações de chamadas para galerias e Telos Multimédia a ignorarem. Desativado por predefinição. As gravações já estão no armazenamento privado encriptado; isto é uma marca extra.</string>
+</resources>

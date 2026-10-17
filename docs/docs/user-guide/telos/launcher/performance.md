@@ -9,6 +9,12 @@ profile is hand-written, not measured on a device.
 
 Settings > Advanced > **Performance** (summary: "Animations, search speed, caching").
 
+## Graphics API (Vulkan / OpenGL)
+
+Settings > Advanced, at the top of the screen. Forces Android’s HWUI renderer with `debug.hwui.renderer` (`skiavk` for Vulkan, `opengl` for OpenGL), the same switch used by [GAMA](https://github.com/palincat/gama). Telos does not copy GAMA code. Vulkan often uses less power; OpenGL is the fallback if Vulkan glitches. The **active renderer** is shown here and in Telos System.
+
+Applying it needs **Shizuku**, **root**, or the **ADB** command on the screen (copyable). Android clears the property on reboot; **Restore after reboot** re-applies it when Shizuku or root is available. **Switch from System widget** (off by default) lets the home-screen System widget change Vulkan or OpenGL. If the screen freezes, hold Volume down and Power.
+
 | Setting | Where | Default | Range | What it does |
 | --- | --- | --- | --- | --- |
 | Reduce animations | Performance > Animations | Off | On or off | Makes transitions instant and also switches the bounce off. Covers most, but not all, motion |

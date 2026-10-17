@@ -5,8 +5,11 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -18,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -43,10 +47,34 @@ data object CallRecordingsRoute : NavKey
 
 @Composable
 fun CallRecordingsScreen() {
+    val comms: de.mm20.launcher2.preferences.comms.CommsSettings = org.koin.compose.koinInject()
+    val lock by comms.lockCallRecordings.collectAsStateWithLifecycle(true)
+    val unlocked by de.mm20.launcher2.comms.privacy.PrivacySession.recordingsUnlocked.collectAsStateWithLifecycle()
+    val backStack = de.mm20.launcher2.ui.locals.LocalBackStack.current
+    PreferenceScreen(title = { Text(stringResource(R.string.hc_call_recordings)) }) {
+        item {
+            de.mm20.launcher2.ui.component.AuthGate(
+                enabled = lock,
+                title = stringResource(R.string.auth_gate_recordings),
+                unlocked = unlocked,
+                onUnlocked = { de.mm20.launcher2.comms.privacy.PrivacySession.unlockRecordings() },
+                onCancelled = { backStack.removeLastOrNull() },
+            ) {
+                CallRecordingsList(embeddedSearch = true)
+            }
+        }
+    }
+}
+
+/** Call recordings list for Phone settings and the Dialer Recordings tab. */
+@Composable
+fun CallRecordingsList(
+    searchQuery: String? = null,
+    embeddedSearch: Boolean = false,
+) {
     val context = LocalContext.current
     var files by remember { mutableStateOf(emptyList<CallRecordingFile>()) }
     val loadScope = androidx.compose.runtime.rememberCoroutineScope()
-    // listing also encrypts recordings of older versions: not on the main thread
     val reload: () -> Unit = {
         loadScope.launch { files = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { CallAudioRecorder.list(context) } }
     }
@@ -55,21 +83,24 @@ fun CallRecordingsScreen() {
         files = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) { CallAudioRecorder.list(context) }
     }
     var recQuery by remember { mutableStateOf("") }
-    val shownFiles = de.mm20.launcher2.comms.search.TelosSearch.filter(files, recQuery) {
+    val query = searchQuery ?: recQuery
+    val shownFiles = de.mm20.launcher2.comms.search.TelosSearch.filter(files, query) {
         listOf(it.number, SimpleDateFormat("d MMM yyyy HH:mm", Locale.getDefault()).format(Date(it.file.lastModified())))
     }
-    PreferenceScreen(title = { Text(stringResource(R.string.hc_call_recordings)) }) {
-        if (files.isNotEmpty()) {
-            item { TelosSearchBar(recQuery, { recQuery = it }, stringResource(R.string.tsp_search_call_recordings)) }
-            if (shownFiles.isEmpty() && recQuery.isNotBlank()) item { SearchEmptyState(recQuery) }
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .then(if (embeddedSearch) Modifier else Modifier.fillMaxSize().verticalScroll(rememberScrollState())),
+    ) {
+        if (embeddedSearch && files.isNotEmpty()) {
+            TelosSearchBar(recQuery, { recQuery = it }, stringResource(R.string.tsp_search_call_recordings))
         }
-        if (files.isEmpty()) {
-            item {
-                Text(stringResource(R.string.hc_no_recordings_yet), modifier = Modifier.padding(16.dp))
-            }
-        }
-        shownFiles.forEach { rec ->
-            item {
+        if (shownFiles.isEmpty() && query.isNotBlank()) {
+            SearchEmptyState(query)
+        } else if (files.isEmpty()) {
+            Text(stringResource(R.string.hc_no_recordings_yet), modifier = Modifier.padding(16.dp))
+        } else {
+            shownFiles.forEach { rec ->
                 RecordingRow(rec, onChanged = reload)
             }
         }

@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">افتح بقفل النظام (رمز أو نمط أو كلمة مرور أو بصمة) أو برمز المشغّل إن ضبطته.</string>
+    <string name="auth_gate_unlock">فتح القفل</string>
+    <string name="auth_gate_recordings">فتح تسجيلات المكالمات</string>
+    <string name="auth_gate_files">فتح الملفات</string>
+    <string name="lock_call_recordings">قفل تسجيلات المكالمات</string>
+    <string name="lock_call_recordings_summary">يطلب قفل النظام أو رمز المشغّل قبل عرض تسجيلات المكالمات. مفعّل افتراضيًا.</string>
+    <string name="call_recordings_encryption">تسجيلات المكالمات مشفّرة</string>
+    <string name="call_recordings_encryption_summary">يُحفظ كل ملف بـ AES-256-GCM. يبقى المفتاح في Android Keystore. التشغيل يفك تشفير نسخة مؤقتة.</string>
+    <string name="telos_files_lock_on_open">طلب قفل لفتح الملفات</string>
+    <string name="telos_files_lock_on_open_off">بدون قفل عند فتح الملفات</string>
+    <string name="voice_hide_from_media">إخفاء المذكرات الصوتية عن الوسائط</string>
+    <string name="voice_hide_from_media_summary">يضيف ملف .nomedia في مجلد المذكرات الصوتية حتى تتخطاه المعارض ووسائط Telos. معطّل افتراضيًا. تسجيلات المكالمات أصلًا في تخزين خاص ومشفّرة، والوسائط لا تعرضها.</string>
+    <string name="call_recordings_hide_from_media">إخفاء تسجيلات المكالمات عن الوسائط</string>
+    <string name="call_recordings_hide_from_media_summary">يضيف ملف .nomedia في مجلد تسجيلات المكالمات حتى تتخطاه المعارض ووسائط Telos. معطّل افتراضيًا. التسجيلات أصلًا في تخزين خاص مشفّر؛ هذه علامة إضافية.</string>
+</resources>

@@ -31,7 +31,7 @@ The top level of Settings, and where each topic of this page lives.
 | --- | --- |
 | Search | Favorites, Excluded search results, Tags, Protection (see [Privacy and protection](../privacy-protection.md)), the Wikipedia switch |
 | Integrations | Weather, Media control, Feed, Cloud and network storage, Nextcloud, Owncloud, Wikipedia, Tasks, Breezy Weather, Smartspacer |
-| Advanced settings | Performance, Context profiles, Plugins, Freeze, App Lock, Work profile, Backup and restore, Debug |
+| Advanced settings | Graphics API (Vulkan / OpenGL), Performance, Context profiles, Plugins, Freeze, App Lock, Work profile, Backup and restore, Debug |
 | Gestures | Which action each gesture runs, including global actions, Feed and plugin actions |
 | Floating launcher, Smart Freeze Dashboard | Own entries on the main screen. Smart Freeze Dashboard is <Badge type="warning" text="pending review" /> |
 | About | Version, Build information, licenses, links |

@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">システムのPIN、パターン、パスワード、生体認証、または設定したランチャーPINでロック解除します。</string>
+    <string name="auth_gate_unlock">ロック解除</string>
+    <string name="auth_gate_recordings">通話録音のロックを解除</string>
+    <string name="auth_gate_files">ファイルのロックを解除</string>
+    <string name="lock_call_recordings">通話録音をロック</string>
+    <string name="lock_call_recordings_summary">通話録音を表示する前にシステムのロックまたはランチャーPINを求めます。初期値はオンです。</string>
+    <string name="call_recordings_encryption">通話録音は暗号化されています</string>
+    <string name="call_recordings_encryption_summary">各ファイルはAES-256-GCMで保存されます。鍵はAndroid Keystoreに残ります。再生は一時コピーを復号します。</string>
+    <string name="telos_files_lock_on_open">ファイルを開くときにロックを要求</string>
+    <string name="telos_files_lock_on_open_off">ファイルを開くときにロックを要求しない</string>
+    <string name="voice_hide_from_media">音声メモをメディアから隠す</string>
+    <string name="voice_hide_from_media_summary">音声メモフォルダに.nomediaを書き、ギャラリーとTelosメディアがスキップするようにします。初期値はオフです。通話録音はすでに非公開ストレージにあり暗号化されているため、メディアは一覧に出しません。</string>
+    <string name="call_recordings_hide_from_media">通話録音をメディアから隠す</string>
+    <string name="call_recordings_hide_from_media_summary">通話録音フォルダに.nomediaを書き、ギャラリーとTelosメディアがスキップするようにします。初期値はオフです。録音はすでに非公開の暗号化ストレージにあります。これは追加の印です。</string>
+</resources>

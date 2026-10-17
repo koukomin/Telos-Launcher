@@ -48,6 +48,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -204,7 +205,7 @@ fun VoiceRecorderScreen() {
     // readable copies of call recordings that were played or shared earlier must not stay in the cache
     LaunchedEffect(Unit) { withContext(Dispatchers.IO) { runCatching { RecordingCrypto.clearSharedCopies(context) } } }
 
-    var tab by rememberSaveable { mutableStateOf(0) } // 0 all, 1 call recordings
+    var tab by rememberSaveable { mutableStateOf(0) } // 0 all, 1 voice, 2 call recordings
     var searching by rememberSaveable { mutableStateOf(false) }
     var query by rememberSaveable { mutableStateOf("") }
     var menu by remember { mutableStateOf(false) }
@@ -213,9 +214,20 @@ fun VoiceRecorderScreen() {
     var renaming by remember { mutableStateOf<RecordingItem?>(null) }
     var deleting by remember { mutableStateOf<RecordingItem?>(null) }
 
+    val comms: de.mm20.launcher2.preferences.comms.CommsSettings = org.koin.compose.koinInject()
+    val lockCalls by comms.lockCallRecordings.collectAsStateWithLifecycle(true)
+    val recordingsUnlocked by de.mm20.launcher2.comms.privacy.PrivacySession.recordingsUnlocked.collectAsStateWithLifecycle()
     val items by produceItems(context, reload, recorder.status)
-    val shown = remember(items, tab, query) {
-        items.filter { (tab == 0 || it.isCall) && (query.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(query, it.title)) }
+    val shown = remember(items, tab, query, lockCalls, recordingsUnlocked) {
+        items.filter {
+            val kind = when (tab) {
+                1 -> !it.isCall
+                2 -> it.isCall
+                else -> true
+            }
+            val hideLockedCalls = it.isCall && lockCalls && !recordingsUnlocked
+            kind && !hideLockedCalls && (query.isBlank() || de.mm20.launcher2.comms.search.TelosSearch.matches(query, it.title))
+        }
     }
 
     LaunchedEffect(player.playing) {
@@ -316,14 +328,40 @@ fun VoiceRecorderScreen() {
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
                 )
                 Row(Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    FilterChip(selected = tab == 0, onClick = { tab = 0 }, label = { Text(stringResource(R.string.voice_all_recordings)) })
-                    FilterChip(selected = tab == 1, onClick = { tab = 1 }, label = { Text(stringResource(R.string.voice_call_recordings)) })
+                    FilterChip(
+                        selected = tab == 0,
+                        onClick = { tab = 0 },
+                        label = { Text(stringResource(R.string.voice_all_recordings)) },
+                    )
+                    FilterChip(
+                        selected = tab == 1,
+                        onClick = { tab = 1 },
+                        leadingIcon = {
+                            Icon(painterResource(R.drawable.ic_glyph_voice_recorder), contentDescription = null, modifier = Modifier.size(18.dp))
+                        },
+                        label = { Text(stringResource(R.string.voice_voice_recordings)) },
+                    )
+                    FilterChip(
+                        selected = tab == 2,
+                        onClick = { tab = 2 },
+                        leadingIcon = {
+                            Icon(painterResource(R.drawable.mic_24px), contentDescription = null, modifier = Modifier.size(18.dp))
+                        },
+                        label = { Text(stringResource(R.string.voice_call_recordings)) },
+                    )
                 }
                 Box(Modifier.weight(1f).fillMaxWidth()) {
+                    de.mm20.launcher2.ui.component.AuthGate(
+                        enabled = tab == 2 && lockCalls,
+                        title = stringResource(R.string.auth_gate_recordings),
+                        unlocked = recordingsUnlocked,
+                        onUnlocked = { de.mm20.launcher2.comms.privacy.PrivacySession.unlockRecordings() },
+                        onCancelled = { tab = 0 },
+                    ) {
                     if (shown.isEmpty() && query.isNotBlank()) {
                         SearchEmptyState(query)
                     } else if (shown.isEmpty()) {
-                        EmptyState()
+                        EmptyState(callsOnly = tab == 2)
                     } else {
                         LazyColumn(Modifier.fillMaxSize()) {
                             items(shown, key = { it.file.absolutePath }) { item ->
@@ -345,6 +383,7 @@ fun VoiceRecorderScreen() {
                                 )
                             }
                         }
+                    }
                     }
                 }
                 Box(Modifier.fillMaxWidth().padding(vertical = 20.dp), contentAlignment = Alignment.Center) {
@@ -397,7 +436,7 @@ private fun produceItems(context: Context, reload: Int, status: VoiceStatus) =
     }
 
 @Composable
-private fun EmptyState() {
+private fun EmptyState(callsOnly: Boolean = false) {
     Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         // a microphone with a waveform, drawn here so that no picture is needed
         Box(Modifier.size(width = 180.dp, height = 120.dp), contentAlignment = Alignment.Center) {
@@ -421,7 +460,11 @@ private fun EmptyState() {
                 modifier = Modifier.size(56.dp),
             )
         }
-        Text(stringResource(R.string.voice_no_recordings), style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(top = 16.dp))
+        Text(
+            stringResource(if (callsOnly) R.string.voice_no_call_recordings else R.string.voice_no_recordings),
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(top = 16.dp),
+        )
     }
 }
 
@@ -577,6 +620,10 @@ fun VoiceSettingsScreen() {
     var mode by remember { mutableStateOf(settings.mode) }
     var quality by remember { mutableStateOf(settings.quality) }
     var speaker by remember { mutableStateOf(settings.speaker) }
+    var hideFromMedia by remember { mutableStateOf(settings.hideFromMedia) }
+    val comms: de.mm20.launcher2.preferences.comms.CommsSettings = org.koin.compose.koinInject()
+    val lockCalls by comms.lockCallRecordings.collectAsStateWithLifecycle(true)
+    val hideCallFromMedia by comms.hideCallRecordingsFromMedia.collectAsStateWithLifecycle(false)
 
     PreferenceScreen(title = stringResource(R.string.voice_settings)) {
         item {
@@ -622,6 +669,35 @@ fun VoiceSettingsScreen() {
         }
         item {
             PreferenceCategory(title = stringResource(R.string.voice_settings_privacy)) {
+                SwitchPreference(
+                    title = stringResource(R.string.lock_call_recordings),
+                    summary = stringResource(R.string.lock_call_recordings_summary),
+                    value = lockCalls,
+                    onValueChanged = {
+                        comms.setLockCallRecordings(it)
+                        if (!it) de.mm20.launcher2.comms.privacy.PrivacySession.unlockRecordings()
+                        else de.mm20.launcher2.comms.privacy.PrivacySession.lockRecordings()
+                    },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.voice_hide_from_media),
+                    summary = stringResource(R.string.voice_hide_from_media_summary),
+                    value = hideFromMedia,
+                    onValueChanged = {
+                        hideFromMedia = it
+                        settings.hideFromMedia = it
+                        settings.applyNomedia(context)
+                    },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.call_recordings_hide_from_media),
+                    summary = stringResource(R.string.call_recordings_hide_from_media_summary),
+                    value = hideCallFromMedia,
+                    onValueChanged = {
+                        comms.setHideCallRecordingsFromMedia(it)
+                        de.mm20.launcher2.comms.recording.CallAudioRecorder.applyNomedia(context, it)
+                    },
+                )
                 Text(
                     stringResource(R.string.voice_privacy_text),
                     style = MaterialTheme.typography.bodyMedium,

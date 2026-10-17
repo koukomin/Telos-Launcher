@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Odblokuj kodem PIN, wzorem, hasłem lub biometrią systemu albo PIN-em launchera, jeśli go ustawiono.</string>
+    <string name="auth_gate_unlock">Odblokuj</string>
+    <string name="auth_gate_recordings">Odblokuj nagrania rozmów</string>
+    <string name="auth_gate_files">Odblokuj Pliki</string>
+    <string name="lock_call_recordings">Blokuj nagrania rozmów</string>
+    <string name="lock_call_recordings_summary">Pyta o blokadę systemu lub PIN launchera przed pokazaniem nagrań rozmów. Domyślnie włączone.</string>
+    <string name="call_recordings_encryption">Nagrania rozmów są zaszyfrowane</string>
+    <string name="call_recordings_encryption_summary">Każdy plik jest przechowywany z AES-256-GCM. Klucz zostaje w Android Keystore. Odtwarzanie odszyfrowuje kopię tymczasową.</string>
+    <string name="telos_files_lock_on_open">Wymagaj blokady, aby otworzyć Pliki</string>
+    <string name="telos_files_lock_on_open_off">Nie wymagaj blokady przy otwieraniu Plików</string>
+    <string name="voice_hide_from_media">Ukryj notatki głosowe przed Mediami</string>
+    <string name="voice_hide_from_media_summary">Dodaje plik .nomedia w folderze notatek głosowych, aby galerie i Telos Media go pomijały. Domyślnie wyłączone. Nagrania rozmów są już w prywatnej pamięci i zaszyfrowane, Media ich nie listują.</string>
+    <string name="call_recordings_hide_from_media">Ukryj nagrania rozmów przed Mediami</string>
+    <string name="call_recordings_hide_from_media_summary">Dodaje plik .nomedia w folderze nagrań rozmów, aby galerie i Telos Media go pomijały. Domyślnie wyłączone. Nagrania są już w prywatnej zaszyfrowanej pamięci; to dodatkowy znacznik.</string>
+</resources>

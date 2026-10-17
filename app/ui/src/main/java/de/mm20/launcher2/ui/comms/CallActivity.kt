@@ -35,6 +35,7 @@ class CallActivity : BaseActivity(), SensorEventListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        de.mm20.launcher2.search.VirtualAppAppearance.applyRecents(this, "telos_phone_app")
         window.addFlags(
             WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or

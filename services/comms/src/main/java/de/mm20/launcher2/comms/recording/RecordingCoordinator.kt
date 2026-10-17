@@ -52,6 +52,7 @@ object RecordingCoordinator : KoinComponent {
         quality: RecordingQuality,
     ): Boolean {
         if (CallAudioRecorder.isRecording.value) return true
+        CallAudioRecorder.applyNomedia(context, commsSettings.hideCallRecordingsFromMedia.first())
         purgeOld(context)
         val pref = commsSettings.recordingBackend.first()
         val order = when (pref) {

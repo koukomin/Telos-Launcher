@@ -43,7 +43,7 @@ object CallNotification {
             }
         )
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(android.R.drawable.stat_sys_phone_call)
+            .setSmallIcon(de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_phone_app") ?: android.R.drawable.stat_sys_phone_call)
             .setContentTitle(title)
             .setContentText(text)
             .setOngoing(true)
@@ -51,6 +51,7 @@ object CallNotification {
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pending)
             .setFullScreenIntent(pending, state.incoming)
+            .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, context, "telos_phone_app") }
             .build()
         manager.notify(NOTIFICATION_ID, notification)
     }

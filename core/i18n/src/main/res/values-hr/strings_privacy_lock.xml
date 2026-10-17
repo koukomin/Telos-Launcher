@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Otključajte PIN-om, uzorkom, lozinkom ili biometrijom sustava ili PIN-om pokretača ako ste ga postavili.</string>
+    <string name="auth_gate_unlock">Otključaj</string>
+    <string name="auth_gate_recordings">Otključaj snimke poziva</string>
+    <string name="auth_gate_files">Otključaj Datoteke</string>
+    <string name="lock_call_recordings">Zaključaj snimke poziva</string>
+    <string name="lock_call_recordings_summary">Prije prikaza snimki poziva traži zaključavanje sustava ili PIN pokretača. Uključeno prema zadanim postavkama.</string>
+    <string name="call_recordings_encryption">Snimke poziva su šifrirane</string>
+    <string name="call_recordings_encryption_summary">Svaka se datoteka sprema s AES-256-GCM. Ključ ostaje u Android Keystoreu. Reprodukcija dešifrira privremenu kopiju.</string>
+    <string name="telos_files_lock_on_open">Zahtijevaj zaključavanje za otvaranje Datoteka</string>
+    <string name="telos_files_lock_on_open_off">Ne zahtijevaj zaključavanje pri otvaranju Datoteka</string>
+    <string name="voice_hide_from_media">Sakrij glasovne bilješke od Medija</string>
+    <string name="voice_hide_from_media_summary">Dodaje datoteku .nomedia u mapu glasovnih bilješki da je galerije i Telos Mediji preskoče. Isključeno prema zadanim postavkama. Snimke poziva već su u privatnoj pohrani i šifrirane, Mediji ih ne prikazuju.</string>
+    <string name="call_recordings_hide_from_media">Sakrij snimke poziva od Medija</string>
+    <string name="call_recordings_hide_from_media_summary">Dodaje datoteku .nomedia u mapu snimki poziva da je galerije i Telos Mediji preskoče. Isključeno prema zadanim postavkama. Snimke su već u privatnoj šifriranoj pohrani; ovo je dodatna oznaka.</string>
+</resources>

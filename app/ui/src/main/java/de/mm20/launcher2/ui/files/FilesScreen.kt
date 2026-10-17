@@ -130,6 +130,8 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
     val context = LocalContext.current
     val backStack = LocalBackStack.current
     val scope = rememberCoroutineScope()
+    val filesPrefs = remember { context.getSharedPreferences("telos_files", android.content.Context.MODE_PRIVATE) }
+    var lockOnOpen by remember { mutableStateOf(filesPrefs.getBoolean("lock_on_open", false)) }
 
     var hasAccess by remember { mutableStateOf(hasAllFilesAccess(context)) }
     LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { hasAccess = hasAllFilesAccess(context); vm.refreshVolumes(); vm.reloadConnections(); vm.reload() }
@@ -357,6 +359,15 @@ internal fun FilesBrowser(vm: FilesViewModel, handlesBack: Boolean = true) {
                                         }
                                         DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_transfers_title)) }, onClick = { menuOpen = false; showTransfers = true })
                                         DropdownMenuItem(text = { Text(stringResource(R.string.telos_files_toolbar_title)) }, onClick = { menuOpen = false; showToolbarSettings = true })
+                                        DropdownMenuItem(
+                                            text = { Text(stringResource(if (lockOnOpen) R.string.telos_files_lock_on_open_off else R.string.telos_files_lock_on_open)) },
+                                            onClick = {
+                                                menuOpen = false
+                                                val next = !lockOnOpen
+                                                lockOnOpen = next
+                                                filesPrefs.edit().putBoolean("lock_on_open", next).apply()
+                                            },
+                                        )
                                         if (vm.path != null && FilesToolbarAction.View !in toolbarConfig.actions) {
                                             listOf(0 to R.string.au22_files_view_list, 1 to R.string.au22_files_view_grid_medium, 2 to R.string.au22_files_view_grid_large).forEach { (mode, label) ->
                                                 DropdownMenuItem(text = { Text(stringResource(label)) }, onClick = { menuOpen = false; vm.updateViewMode(mode) })

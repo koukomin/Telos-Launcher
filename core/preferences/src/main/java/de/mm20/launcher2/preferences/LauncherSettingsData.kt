@@ -105,6 +105,13 @@ data class UiGroup(
     @Deprecated("No longer in use, only used for migration")
     val uiBaseLayout: BaseLayout = BaseLayout.PullDown,
     val uiOrientation: ScreenOrientation = ScreenOrientation.Auto,
+    /** Switch the color theme to AMOLED while Battery Saver is on. */
+    val uiAmoledOnPowerSave: Boolean = false,
+    val uiAmoledPowerSaveEngaged: Boolean = false,
+    @Serializable(with = UUIDSerializer::class)
+    val uiColorsIdBeforePowerSave: UUID = UUID(0L, 0L),
+    /** Home-screen System widget (Vulkan + Network). Off until enabled in Telos System. */
+    val systemWidgetEnabled: Boolean = false,
 )
 
 @Serializable
@@ -1282,6 +1289,9 @@ data class CommsGroup(
     val homeCountry: String = "",
     val clirEnabled: Boolean = false,
     val autoRecordCalls: Boolean = false,
+    val autoRecordMode: String = "ALL_EXCEPT_EXCEPTIONS",
+    val recordProhibitedNumbers: Set<String> = emptySet(),
+    val recordMandatoryNumbers: Set<String> = emptySet(),
     val recordingQuality: String = "BALANCED",
     /** auto | shizuku | root | unprivileged */
     val recordingBackend: String = "auto",
@@ -1367,6 +1377,10 @@ data class CommsGroup(
     val maskHiddenIncoming: Boolean = true,
     val stealthHiderMenu: Boolean = false,
     val phoneAppLock: Boolean = false,
+    /** Require system or launcher lock to open call recordings. On by default. */
+    val lockCallRecordings: Boolean = true,
+    /** Write `.nomedia` in CallRecordings. Off by default. */
+    val hideCallRecordingsFromMedia: Boolean = false,
     val callProtectMode: String = "none",
     val protectedCallNumbers: Map<String, String> = emptyMap(),
     val raiseToAnswer: Boolean = false,
@@ -1378,6 +1392,11 @@ data class CommsGroup(
     val networkBackend: String = "auto",
     val screenOffLte: Boolean = false,
     val batterySaverLte: Boolean = false,
+    /** default | vulkan | opengl — system HWUI renderer (debug.hwui.renderer) */
+    val hwuiRenderer: String = "default",
+    val hwuiRestoreOnBoot: Boolean = true,
+    /** Allow Vulkan/OpenGL tap-switch on the System home widget. */
+    val hwuiWidgetSwitch: Boolean = false,
 )
 // === TELOS_PENDING_REVIEW_END: comms_settings_engine ===
 

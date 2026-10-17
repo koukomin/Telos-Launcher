@@ -10,7 +10,7 @@ class VirtualAppTaskTest {
         val routes = listOf(contract.ROUTE_FILES, contract.ROUTE_MEDIA, contract.ROUTE_VIEWER,
             contract.ROUTE_STORE, contract.ROUTE_TERMINAL, contract.ROUTE_NETWORK, contract.ROUTE_CALCULATOR,
             contract.ROUTE_VOICE_RECORDER, contract.ROUTE_SCREEN_RECORDER, contract.ROUTE_SCREENSHOT,
-            contract.ROUTE_NOTES, contract.ROUTE_CALENDAR, contract.ROUTE_DOWNLOADS)
+            contract.ROUTE_NOTES, contract.ROUTE_ERMIS, contract.ROUTE_CALENDAR, contract.ROUTE_DOWNLOADS)
         val ids = routes.map { contract.virtualAppTaskId(it) }
         assertFalse(ids.contains(null))
         assertEquals(routes.size, ids.toSet().size)

@@ -16,6 +16,8 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import de.mm20.launcher2.plugin.Plugin
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugins.PluginService
+import de.mm20.launcher2.preferences.ui.UiSettings
+import de.mm20.launcher2.widgets.SystemWidget
 import de.mm20.launcher2.search.ResultScore
 import de.mm20.launcher2.search.StringNormalizer
 import kotlinx.coroutines.Dispatchers
@@ -37,6 +39,7 @@ class WidgetPickerSheetVM(
     private val packageManager: PackageManager,
     private val stringNormalizer: StringNormalizer,
     private val pluginService: PluginService,
+    private val uiSettings: UiSettings,
 ) : ViewModel() {
 
     val searchQuery = MutableStateFlow("")
@@ -62,6 +65,9 @@ class WidgetPickerSheetVM(
             .shareIn(viewModelScope, SharingStarted.WhileSubscribed(100))
 
     val builtInWidgets = allBuiltInWidgets
+        .combine(uiSettings.systemWidgetEnabled) { widgets, systemOn ->
+            if (systemOn) widgets else widgets.filter { it.type != SystemWidget.Type }
+        }
         .combine(searchQuery) { widgets, query ->
             if (query.isBlank()) return@combine widgets
             withContext(Dispatchers.IO) {
@@ -167,7 +173,7 @@ class WidgetPickerSheetVM(
     companion object : KoinComponent {
         val Factory = viewModelFactory {
             initializer {
-                WidgetPickerSheetVM(get(), get(), get(), get())
+                WidgetPickerSheetVM(get(), get(), get(), get(), get())
             }
         }
     }

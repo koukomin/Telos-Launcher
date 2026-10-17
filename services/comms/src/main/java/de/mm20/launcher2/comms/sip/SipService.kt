@@ -273,7 +273,10 @@ class SipService : Service(), KoinComponent {
 
     private fun statusNotification(text: String, inCall: Boolean = false): Notification =
         NotificationCompat.Builder(this, CHANNEL_STATUS)
-            .setSmallIcon(android.R.drawable.stat_sys_phone_call)
+            .setSmallIcon(
+                de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_phone_app")
+                    ?: android.R.drawable.stat_sys_phone_call,
+            )
             .setContentTitle("Telos SIP")
             .setContentText(text)
             .setOngoing(true)
@@ -285,7 +288,10 @@ class SipService : Service(), KoinComponent {
     private fun incomingNotification(call: SipCall): Notification {
         val name = SipUri.displayName(this, SipUri.user(call.peer))
         return NotificationCompat.Builder(this, CHANNEL_CALLS)
-            .setSmallIcon(android.R.drawable.stat_sys_phone_call)
+            .setSmallIcon(
+                de.mm20.launcher2.search.VirtualAppAppearance.glyph("telos_phone_app")
+                    ?: android.R.drawable.stat_sys_phone_call,
+            )
             .setContentTitle(getString(I18nR.string.au_phoneb_sip_incoming))
             .setContentText(name)
             .setCategory(NotificationCompat.CATEGORY_CALL)

@@ -349,6 +349,12 @@ open class SettingsActivity : BaseActivity() {
             entry<de.mm20.launcher2.ui.trash.TrashUnlockRoute> {
                 de.mm20.launcher2.ui.trash.TrashUnlockScreen()
             }
+            entry<de.mm20.launcher2.ui.tools.MagnifierRoute> {
+                de.mm20.launcher2.ui.tools.MagnifierScreen()
+            }
+            entry<de.mm20.launcher2.ui.tools.FlashlightRoute> {
+                de.mm20.launcher2.ui.tools.FlashlightScreen()
+            }
             entry<de.mm20.launcher2.ui.notes.NotesRoute> {
                 de.mm20.launcher2.ui.notes.NotesScreen()
             }
@@ -798,6 +804,8 @@ open class SettingsActivity : BaseActivity() {
             SettingsDeepLinkContract.ROUTE_VIEWER -> de.mm20.launcher2.ui.media.docs.ViewerRoute
             ROUTE_FILES -> de.mm20.launcher2.ui.files.FilesRoute
             SettingsDeepLinkContract.ROUTE_TERMINAL -> de.mm20.launcher2.ui.terminal.TerminalRoute
+            "settings/magnifier" -> de.mm20.launcher2.ui.tools.MagnifierRoute
+            "settings/flashlight" -> de.mm20.launcher2.ui.tools.FlashlightRoute
             ROUTE_NETWORK -> de.mm20.launcher2.ui.network.NetworkRoute
             SettingsDeepLinkContract.ROUTE_SYSTEM -> de.mm20.launcher2.ui.system.SystemDashboardRoute
             SettingsDeepLinkContract.ROUTE_TRASH -> de.mm20.launcher2.ui.trash.TrashUnlockRoute

@@ -832,6 +832,57 @@ internal class VirtualNotesApp(private val context: Context) : Application {
     }
 }
 
+internal class VirtualErmisApp(private val context: Context) : Application {
+
+    override val key: String = "$Domain://ermis"
+    override val label: String get() = de.mm20.launcher2.search.TelosAppLabels.forDomain(context, Domain)
+    override val labelOverride: String? = null
+    override val keywords: List<String> = TelosAppKeywords.forDomain(Domain)
+    override val domain: String = Domain
+    override val score: ResultScore = ResultScore.Unspecified
+
+    override val componentName: ComponentName = ComponentName(
+        context.packageName,
+        "de.mm20.launcher2.comms.VirtualErmisApp",
+    )
+    override val isSuspended: Boolean = false
+    override val user: UserHandle = Process.myUserHandle()
+    override val versionName: String? = null
+    override val canUninstall: Boolean = false
+    override fun uninstall(context: Context) {}
+    override fun openAppDetails(context: Context) {}
+    override val canShareApk: Boolean = false
+    override fun overrideLabel(label: String): SavableSearchable = this
+
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return try {
+            val intent = Intent().apply {
+                setClassName(context.packageName, SettingsDeepLinkContract.ACTIVITY_CLASS_NAME)
+                putExtra(SettingsDeepLinkContract.EXTRA_ROUTE, SettingsDeepLinkContract.ROUTE_ERMIS)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent, options)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
+        val drawable = androidx.core.content.ContextCompat.getDrawable(context, de.mm20.launcher2.base.R.drawable.ic_app_messages_fg) ?: return null
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(drawable, 1f),
+            backgroundLayer = StaticIconLayer(android.graphics.drawable.ColorDrawable(0xFFD93025.toInt()), 1f),
+        )
+    }
+
+    override fun getSerializer(): SearchableSerializer = VirtualAppSerializer()
+
+    companion object {
+        const val Domain = "telos_ermis_app"
+    }
+}
+
 internal class VirtualCalendarApp(private val context: Context) : Application {
 
     override val key: String = "$Domain://calendar"
@@ -1120,6 +1171,7 @@ internal class CommsVirtualAppProvider(private val context: Context) : VirtualAp
         VirtualScreenRecorderApp(context),
         VirtualScreenshotApp(context),
         VirtualNotesApp(context),
+        VirtualErmisApp(context),
         VirtualCalendarApp(context),
         VirtualDownloadsApp(context),
         VirtualNetworkApp(context),

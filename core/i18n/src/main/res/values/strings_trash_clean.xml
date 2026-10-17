@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="trash_fill_bin">Fill the bin</string>
+    <string name="trash_clean_scanning">Scanning for junk…</string>
+    <string name="trash_clean_done">Moved %1$d, deleted %2$d (%3$d MB)</string>
+    <string name="trash_clean_schedule">Automatic cleaning</string>
+    <string name="trash_clean_interval">How often</string>
+    <string name="trash_clean_off">Off</string>
+    <string name="trash_clean_hourly">Every hour</string>
+    <string name="trash_clean_daily">Every day</string>
+    <string name="trash_clean_weekly">Every week</string>
+    <string name="trash_clean_monthly">Every month</string>
+    <string name="trash_clean_charging">Only while charging</string>
+    <string name="trash_clean_charging_sum">Skip the schedule when the battery is not charging</string>
+    <string name="trash_clean_powersave">Skip in Battery Saver</string>
+    <string name="trash_clean_powersave_sum">Do not run automatic cleaning while power saving is on</string>
+    <string name="trash_clean_privileged">Use Shizuku or root</string>
+    <string name="trash_clean_privileged_sum">Off by default. Finds leftovers of uninstalled apps and trims caches that need extra access</string>
+    <string name="trash_clean_priv_warn_title">Shizuku or root cleaning</string>
+    <string name="trash_clean_priv_warn_text">This can delete leftover folders of uninstalled apps and run pm trim-caches. It never runs unless you turn it on. A mistake can remove data. Continue only if you trust Shizuku or root on this phone.</string>
+    <string name="trash_clean_priv_confirm">Turn on</string>
+    <string name="theme_amoled_powersave">AMOLED theme in Battery Saver</string>
+    <string name="theme_amoled_powersave_sum">Switch to the AMOLED colors while power saving is on, then restore the previous theme. If you already use AMOLED or Cyberpunk, nothing changes.</string>
+    <string name="trash_scan">Scan</string>
+    <string name="trash_found">Found</string>
+    <string name="trash_in_bin">In the bin</string>
+    <string name="trash_hero_ready">Ready to move</string>
+    <string name="trash_hero_bin">In the bin</string>
+    <string name="trash_hero_items">%1$d selected</string>
+    <string name="trash_hero_stored">%1$d items stored</string>
+    <string name="trash_kind_count">%1$d · %2$s</string>
+    <string name="trash_kind_cache">App cache</string>
+    <string name="trash_kind_temp">Temporary files</string>
+    <string name="trash_kind_log">Logs</string>
+    <string name="trash_kind_thumb">Thumbnails</string>
+    <string name="trash_kind_apk">Old installers</string>
+    <string name="trash_kind_empty">Empty folders</string>
+    <string name="trash_kind_corpse">Uninstalled app leftovers</string>
+</resources>

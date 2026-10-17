@@ -12,6 +12,12 @@ object PrivacySession {
     private val _phoneUnlocked = MutableStateFlow(false)
     val phoneUnlocked = _phoneUnlocked.asStateFlow()
 
+    private val _recordingsUnlocked = MutableStateFlow(false)
+    val recordingsUnlocked = _recordingsUnlocked.asStateFlow()
+
+    private val _filesUnlocked = MutableStateFlow(false)
+    val filesUnlocked = _filesUnlocked.asStateFlow()
+
     fun unlockHider() {
         _hiderUnlocked.value = true
     }
@@ -22,6 +28,18 @@ object PrivacySession {
 
     fun unlockPhone() {
         _phoneUnlocked.value = true
+    }
+
+    fun unlockRecordings() {
+        _recordingsUnlocked.value = true
+    }
+
+    fun lockRecordings() {
+        _recordingsUnlocked.value = false
+    }
+
+    fun unlockFiles() {
+        _filesUnlocked.value = true
     }
 }
 

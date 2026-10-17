@@ -124,6 +124,21 @@ class CommsSettingsScreenVM : ViewModel(), KoinComponent {
         commsSettings.setAutoRecordCalls(enabled)
     }
 
+    val lockCallRecordings = commsSettings.lockCallRecordings
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    fun setLockCallRecordings(enabled: Boolean) {
+        commsSettings.setLockCallRecordings(enabled)
+        if (!enabled) de.mm20.launcher2.comms.privacy.PrivacySession.unlockRecordings()
+        else de.mm20.launcher2.comms.privacy.PrivacySession.lockRecordings()
+    }
+
+    val hideCallRecordingsFromMedia = commsSettings.hideCallRecordingsFromMedia
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    fun setHideCallRecordingsFromMedia(enabled: Boolean) {
+        commsSettings.setHideCallRecordingsFromMedia(enabled)
+        de.mm20.launcher2.comms.recording.CallAudioRecorder.applyNomedia(appContext, enabled)
+    }
+
     val recordingQuality = commsSettings.recordingQuality
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "BALANCED")
     fun setRecordingQuality(quality: String) {
@@ -230,7 +245,6 @@ class CommsSettingsScreenVM : ViewModel(), KoinComponent {
     fun setScreenOffLte(enabled: Boolean) = commsSettings.setScreenOffLte(enabled)
     val batterySaverLte = commsSettings.batterySaverLte.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
     fun setBatterySaverLte(enabled: Boolean) = commsSettings.setBatterySaverLte(enabled)
-
     fun exportBackup(password: String, onDone: (String?) -> Unit) {
         viewModelScope.launch {
             onDone(runCatching { backup.exportEncrypted(password) }.getOrNull())

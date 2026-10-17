@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Ξεκλειδώστε με PIN, μοτίβο, κωδικό ή βιομετρικά του συστήματος, ή με το PIN του launcher αν το έχετε ορίσει.</string>
+    <string name="auth_gate_unlock">Ξεκλείδωμα</string>
+    <string name="auth_gate_recordings">Ξεκλείδωμα εγγραφών κλήσεων</string>
+    <string name="auth_gate_files">Ξεκλείδωμα Αρχείων</string>
+    <string name="lock_call_recordings">Κλείδωμα εγγραφών κλήσεων</string>
+    <string name="lock_call_recordings_summary">Ζητά τον κωδικό του συστήματος ή το PIN του launcher πριν εμφανιστούν οι εγγραφές κλήσεων. Ενεργό από προεπιλογή.</string>
+    <string name="call_recordings_encryption">Οι εγγραφές κλήσεων είναι κρυπτογραφημένες</string>
+    <string name="call_recordings_encryption_summary">Κάθε αρχείο αποθηκεύεται με AES-256-GCM. Το κλειδί μένει στο Android Keystore. Η αναπαραγωγή αποκρυπτογραφεί ένα προσωρινό αντίγραφο.</string>
+    <string name="telos_files_lock_on_open">Απαίτηση κωδικού για άνοιγμα Αρχείων</string>
+    <string name="telos_files_lock_on_open_off">Χωρίς κωδικό στο άνοιγμα Αρχείων</string>
+    <string name="call_recordings_hide_from_media">Απόκρυψη εγγραφών κλήσεων από τα Πολυμέσα</string>
+    <string name="call_recordings_hide_from_media_summary">Προσθέτει αρχείο .nomedia στον φάκελο των εγγραφών κλήσεων ώστε οι συλλογές και τα Πολυμέσα Telos να τον αγνοούν. Απενεργοποιημένο από προεπιλογή. Οι εγγραφές κλήσεων είναι ήδη στον ιδιωτικό χώρο και κρυπτογραφημένες· αυτό είναι επιπλέον σήμανση.</string>
+</resources>

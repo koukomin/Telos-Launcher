@@ -60,7 +60,7 @@ import de.mm20.launcher2.widgets.BatteryWidget
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.FreezeWidget
 import de.mm20.launcher2.widgets.MusicWidget
-import de.mm20.launcher2.widgets.NetworkWidget
+
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.RemindersWidget
 import de.mm20.launcher2.widgets.SystemWidget
@@ -79,7 +79,6 @@ private val SIDEBAR_WIDGET_TYPES = listOf(
     BatteryWidget.Type to R.drawable.battery_full_24px,
     AtAGlanceWidget.Type to R.drawable.visibility_24px,
     RemindersWidget.Type to R.drawable.task_alt_24px,
-    NetworkWidget.Type to R.drawable.wifi_24px,
     SystemWidget.Type to R.drawable.memory_24px,
     FreezeWidget.Type to R.drawable.ac_unit_24px,
     AppsWidget.Type to R.drawable.apps_24px,
@@ -95,7 +94,6 @@ private fun newSidebarWidget(type: String): Widget? {
         BatteryWidget.Type -> BatteryWidget(id)
         AtAGlanceWidget.Type -> AtAGlanceWidget(id)
         RemindersWidget.Type -> RemindersWidget(id)
-        NetworkWidget.Type -> NetworkWidget(id)
         SystemWidget.Type -> SystemWidget(id)
         FreezeWidget.Type -> FreezeWidget(id)
         AppsWidget.Type -> AppsWidget(id)
@@ -398,7 +396,6 @@ private fun widgetIcon(widget: Widget): Int = when (widget) {
     is BatteryWidget -> R.drawable.battery_full_24px
     is AtAGlanceWidget -> R.drawable.visibility_24px
     is RemindersWidget -> R.drawable.task_alt_24px
-    is NetworkWidget -> R.drawable.wifi_24px
     is SystemWidget -> R.drawable.memory_24px
     is FreezeWidget -> R.drawable.ac_unit_24px
     is AppsWidget -> R.drawable.apps_24px

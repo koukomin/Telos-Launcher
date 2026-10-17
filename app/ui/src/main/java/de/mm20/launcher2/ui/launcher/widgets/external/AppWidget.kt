@@ -31,7 +31,7 @@ import de.mm20.launcher2.widgets.BatteryWidget
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.FreezeWidget
 import de.mm20.launcher2.widgets.MusicWidget
-import de.mm20.launcher2.widgets.NetworkWidget
+
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.RemindersWidget
 import de.mm20.launcher2.widgets.SystemWidget
@@ -89,7 +89,6 @@ fun AppWidget(
                     is AppsWidget -> it.copy(id = widget.id)
                     is NotesWidget -> it.copy(id = widget.id)
                     is BatteryWidget -> it.copy(id = widget.id)
-                    is NetworkWidget -> it.copy(id = widget.id)
                     is SystemWidget -> it.copy(id = widget.id)
                     is RemindersWidget -> it.copy(id = widget.id)
                     is FreezeWidget -> it.copy(id = widget.id)

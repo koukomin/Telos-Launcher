@@ -48,7 +48,7 @@ import de.mm20.launcher2.ui.launcher.widgets.external.AppWidget
 import de.mm20.launcher2.ui.launcher.widgets.favorites.AppsWidget
 import de.mm20.launcher2.ui.launcher.widgets.freeze.FreezeWidget
 import de.mm20.launcher2.ui.launcher.widgets.music.MusicWidget
-import de.mm20.launcher2.ui.launcher.widgets.network.NetworkWidget
+
 import de.mm20.launcher2.ui.launcher.widgets.notes.NotesWidget
 import de.mm20.launcher2.ui.launcher.widgets.plugin.PluginWidget as PluginWidgetContent
 import de.mm20.launcher2.ui.launcher.widgets.reminders.RemindersWidget
@@ -62,7 +62,7 @@ import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.AppsWidget
 import de.mm20.launcher2.widgets.FreezeWidget
 import de.mm20.launcher2.widgets.MusicWidget
-import de.mm20.launcher2.widgets.NetworkWidget
+
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.RemindersWidget
 import de.mm20.launcher2.widgets.SystemWidget
@@ -210,10 +210,6 @@ fun WidgetItem(
 
                         is BatteryWidget -> {
                             BatteryWidget(widget)
-                        }
-
-                        is NetworkWidget -> {
-                            NetworkWidget(widget)
                         }
 
                         is SystemWidget -> {

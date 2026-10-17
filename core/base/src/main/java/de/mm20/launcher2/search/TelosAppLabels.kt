@@ -24,6 +24,7 @@ object TelosAppLabels {
         "telos_screen_recorder_app" -> R.string.screenrec_title
         "telos_screenshot_app" -> R.string.screenshot_title
         "telos_notes_app" -> R.string.notes_title
+        "telos_ermis_app" -> R.string.ermis_title
         "telos_calendar_app" -> R.string.backup_group_calendar
         "telos_downloads_app" -> R.string.dl_title
         "telos_media_app" -> R.string.dl_m_tab

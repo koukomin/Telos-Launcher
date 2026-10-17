@@ -178,7 +178,7 @@ object ScreenshotController {
         nm.notify(
             id,
             NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_sidebar_screenshot)
+                .let { de.mm20.launcher2.search.VirtualAppAppearance.decorate(it, context, "telos_screenshot_app") }
                 .setContentTitle(context.getString(R.string.screenshot_saved))
                 .setContentText(context.getString(R.string.screenshot_notification_text))
                 .setStyle(NotificationCompat.BigPictureStyle().bigPicture(thumb))

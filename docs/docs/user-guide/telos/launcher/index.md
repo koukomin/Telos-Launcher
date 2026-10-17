@@ -45,7 +45,7 @@ The pages above explain how the launcher works. These three list every feature a
 | Dynamic Island | Dynamic Island |
 | Weather, media, Nextcloud, Tasks and similar | Integrations |
 | Language, units, time format | Language and region |
-| Performance, context profiles, plugins, App Lock, work profile, backup, debug | Advanced settings |
+| Graphics API (Vulkan / OpenGL), performance, context profiles, plugins, App Lock, work profile, backup, debug | Advanced settings |
 | Smart Freeze | Freeze Manager, see [Smart Freeze](../freeze/) |
 
 ## What Telos adds to Kvaesitso

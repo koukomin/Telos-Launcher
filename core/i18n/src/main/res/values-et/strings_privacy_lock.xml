@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Ava süsteemi PIN-koodi, mustri, parooli või biomeetriaga või käivitaja PIN-iga, kui selle määrasid.</string>
+    <string name="auth_gate_unlock">Ava</string>
+    <string name="auth_gate_recordings">Ava kõnesalvestused</string>
+    <string name="auth_gate_files">Ava Failid</string>
+    <string name="lock_call_recordings">Lukusta kõnesalvestused</string>
+    <string name="lock_call_recordings_summary">Küsib enne kõnesalvestuste näitamist süsteemi lukku või käivitaja PIN-i. Vaikimisi sees.</string>
+    <string name="call_recordings_encryption">Kõnesalvestused on krüptitud</string>
+    <string name="call_recordings_encryption_summary">Iga fail salvestatakse AES-256-GCM-iga. Võti jääb Android Keystore’i. Taasesitus dekrüpteerib ajutise koopia.</string>
+    <string name="telos_files_lock_on_open">Nõua Failide avamiseks lukku</string>
+    <string name="telos_files_lock_on_open_off">Ära nõua lukku Failide avamisel</string>
+    <string name="voice_hide_from_media">Peida häälememoed Meedia eest</string>
+    <string name="voice_hide_from_media_summary">Lisab .nomedia-faili häälememode kausta, et galeriid ja Telos Meedia selle vahele jätaksid. Vaikimisi väljas. Kõnesalvestused on juba privaatses salvestusruumis ja krüptitud, Meedia neid ei loetle.</string>
+    <string name="call_recordings_hide_from_media">Peida kõnesalvestused Meedia eest</string>
+    <string name="call_recordings_hide_from_media_summary">Lisab .nomedia-faili kõnesalvestuste kausta, et galeriid ja Telos Meedia selle vahele jätaksid. Vaikimisi väljas. Salvestused on juba privaatses krüptitud ruumis; see on lisamarker.</string>
+</resources>

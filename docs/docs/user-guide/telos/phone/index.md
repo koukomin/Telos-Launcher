@@ -33,7 +33,7 @@ This is the feature reference of Telos Phone. It is split into pages:
 ### Dialer screen (the main screen)
 
 - The title is "Dialer". Under it is a rounded **Search** field that filters the current tab.
-- A bottom bar switches between **Recents**, **Contacts**, **Keypad** and **Messages**.
+- A bottom bar switches between **Recents**, **Contacts**, **Recordings** and **Messages**. The keypad is the round button.
 - The **three-dot menu** and the drawer open **Settings**.
 - On the Recents tab the search field has a **filter** button that shows or hides the filter chips.
 - Back from the Keypad or Messages returns to Recents.

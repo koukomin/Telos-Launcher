@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="auth_gate_message">Desbloquee con el PIN, patrón, contraseña o biometría del sistema, o con el PIN del launcher si lo configuró.</string>
+    <string name="auth_gate_unlock">Desbloquear</string>
+    <string name="auth_gate_recordings">Desbloquear grabaciones de llamadas</string>
+    <string name="auth_gate_files">Desbloquear Archivos</string>
+    <string name="lock_call_recordings">Bloquear grabaciones de llamadas</string>
+    <string name="lock_call_recordings_summary">Pide el bloqueo del sistema o el PIN del launcher antes de mostrar las grabaciones de llamadas. Activado por defecto.</string>
+    <string name="call_recordings_encryption">Las grabaciones de llamadas están cifradas</string>
+    <string name="call_recordings_encryption_summary">Cada archivo se guarda con AES-256-GCM. La clave permanece en el Android Keystore. La reproducción descifra una copia temporal.</string>
+    <string name="telos_files_lock_on_open">Pedir bloqueo para abrir Archivos</string>
+    <string name="telos_files_lock_on_open_off">No pedir bloqueo al abrir Archivos</string>
+    <string name="voice_hide_from_media">Ocultar notas de voz de Multimedia</string>
+    <string name="voice_hide_from_media_summary">Añade un archivo .nomedia en la carpeta de notas de voz para que las galerías y Telos Multimedia la omitan. Desactivado por defecto. Las grabaciones de llamadas ya están en almacenamiento privado y cifradas, Multimedia no las lista.</string>
+    <string name="call_recordings_hide_from_media">Ocultar grabaciones de llamadas de Multimedia</string>
+    <string name="call_recordings_hide_from_media_summary">Añade un archivo .nomedia en la carpeta de grabaciones de llamadas para que las galerías y Telos Multimedia la omitan. Desactivado por defecto. Las grabaciones ya están en almacenamiento privado cifrado; esto es una marca extra.</string>
+</resources>

@@ -64,6 +64,7 @@
     <string name="hc_call_over_sip">Call over SIP</string>
     <string name="hc_call_recording">Call recording</string>
     <string name="hc_call_recordings">Call recordings</string>
+    <string name="hc_recordings_tab">Recordings</string>
     <string name="hc_caller_name">Caller name</string>
     <string name="hc_calling">Calling</string>
     <string name="hc_cancel">Cancel</string>

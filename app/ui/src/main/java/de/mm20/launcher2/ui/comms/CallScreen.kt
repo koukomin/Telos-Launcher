@@ -71,6 +71,20 @@ fun CallScreen(onFinished: () -> Unit) {
     val recording by CallAudioRecorder.isRecording.collectAsStateWithLifecycle()
     val commsSettings: CommsSettings = koinInject()
     val autoRecord by commsSettings.autoRecordCalls.collectAsStateWithLifecycle(false)
+    val autoRecordMode by commsSettings.autoRecordMode.collectAsStateWithLifecycle("ALL_EXCEPT_EXCEPTIONS")
+    val prohibitedNumbers by commsSettings.recordProhibitedNumbers.collectAsStateWithLifecycle(emptySet())
+    val mandatoryNumbers by commsSettings.recordMandatoryNumbers.collectAsStateWithLifecycle(emptySet())
+
+    fun shouldRecordCall(number: String): Boolean {
+        val clean = number.filter { it.isDigit() || it == '+' }
+        if (clean.isNotEmpty() && clean in prohibitedNumbers) return false
+        if (clean.isNotEmpty() && clean in mandatoryNumbers) return true
+        return when (autoRecordMode) {
+            "ALL_EXCEPT_EXCEPTIONS" -> autoRecord
+            "EXCEPTIONS_ONLY" -> false
+            else -> false
+        }
+    }
     val qualityKey by commsSettings.recordingQuality.collectAsStateWithLifecycle("BALANCED")
     val rejectSms by commsSettings.rejectSmsTemplate.collectAsStateWithLifecycle("")
     val notesEnabled by commsSettings.inCallNotes.collectAsStateWithLifecycle(true)
@@ -108,7 +122,7 @@ fun CallScreen(onFinished: () -> Unit) {
     LaunchedEffect(state.active, autoRecord, qualityKey) {
         val hasMic = ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) ==
             PackageManager.PERMISSION_GRANTED
-        if (state.active && autoRecord && hasMic && !CallAudioRecorder.isRecording.value) {
+        if (state.active && shouldRecordCall(state.number) && hasMic && !CallAudioRecorder.isRecording.value) {
             RecordingCoordinator.start(context, state.number, RecordingQuality.fromKey(qualityKey))
         }
     }
