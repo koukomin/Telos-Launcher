@@ -75,6 +75,12 @@ class CommsSettingsScreenVM : ViewModel(), KoinComponent {
         commsSettings.setEnableSpamBlocking(enabled)
     }
 
+    val showRecentsFavorites = commsSettings.showRecentsFavorites
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    fun setShowRecentsFavorites(enabled: Boolean) {
+        commsSettings.setShowRecentsFavorites(enabled)
+    }
+
     val hideDialpadLetters = commsSettings.hideDialpadLetters
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
     fun setHideDialpadLetters(enabled: Boolean) {

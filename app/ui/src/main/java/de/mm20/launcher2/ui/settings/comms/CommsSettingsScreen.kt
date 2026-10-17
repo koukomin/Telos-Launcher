@@ -56,6 +56,7 @@ fun CommsSettingsScreen() {
     val vibrateOnHangup by viewModel.vibrateOnHangup.collectAsStateWithLifecycle()
     val clirPrefix by viewModel.clirPrefix.collectAsStateWithLifecycle()
     val enableSpamBlocking by viewModel.enableSpamBlocking.collectAsStateWithLifecycle()
+    val showRecentsFavorites by viewModel.showRecentsFavorites.collectAsStateWithLifecycle()
     val hideLetters by viewModel.hideDialpadLetters.collectAsStateWithLifecycle()
     val blockHidden by viewModel.blockHiddenNumbers.collectAsStateWithLifecycle()
     val blockUnknown by viewModel.blockUnknownNumbers.collectAsStateWithLifecycle()

@@ -1249,6 +1249,7 @@ data class FreezeAppStats(
 // === TELOS_PENDING_REVIEW_START: comms_settings_engine ===
 @Serializable
 data class CommsGroup(
+    val showRecentsFavorites: Boolean = true,
     val speedDials: Map<Int, String> = emptyMap(),
     val t9Alphabet: String = "latin",
     val defaultSim: String = "ask",

@@ -73,6 +73,12 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(enableSpamBlocking = enabled)) }
     }
 
+    val showRecentsFavorites
+        get() = dataStore.data.map { it.comms.showRecentsFavorites }
+    fun setShowRecentsFavorites(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(showRecentsFavorites = enabled)) }
+    }
+
     val hideDialpadLetters
         get() = dataStore.data.map { it.comms.hideDialpadLetters }
     fun setHideDialpadLetters(enabled: Boolean) {
