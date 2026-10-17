@@ -1,8 +1,35 @@
 #!/bin/bash
-git add .
-git commit -m "Auto-update: $(date +'%Y-%m-%d %H:%M:%S')"
-git push origin main
+set -euo pipefail
+cd "$(dirname "$0")"
 
-# Δημιουργία μοναδικού Tag και GitHub Release με το APK/build
-TAG="v1.0.$(date +%s)"
-gh release create "$TAG" --title "Automated Build $TAG" --notes "Generated automatically by Grok AI agent."
+VERSION=$(python3 - <<'PY'
+import re
+text = open("app/app/build.gradle.kts", encoding="utf-8").read()
+m = re.search(r'versionName = .*?"([0-9]+\.[0-9]+\.[0-9]+)"', text)
+if not m:
+    raise SystemExit("versionName not found in app/app/build.gradle.kts")
+print(m.group(1))
+PY
+)
+TAG="v${VERSION}"
+
+git add .
+if ! git diff --cached --quiet; then
+  git commit -m "Release ${TAG}"
+fi
+git push origin HEAD
+
+if git rev-parse "$TAG" >/dev/null 2>&1; then
+  echo "Tag ${TAG} already exists locally."
+else
+  git tag -a "$TAG" -m "Telos ${TAG}"
+fi
+git push origin "$TAG"
+
+gh repo set-default koukomin/Telos-Launcher >/dev/null 2>&1 || true
+if gh release view "$TAG" >/dev/null 2>&1; then
+  echo "GitHub release ${TAG} already exists."
+else
+  gh release create "$TAG" --title "Telos ${TAG}" --generate-notes
+fi
+echo "Release: https://github.com/koukomin/Telos-Launcher/releases/tag/${TAG}"
