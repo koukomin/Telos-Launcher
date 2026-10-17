@@ -37,7 +37,7 @@ class YouTubePlayerService : MediaSessionService() {
                 return MergingMediaSource(video, default.createMediaSource(MediaItem.fromUri(audio)))
             }
         }
-        val player = ExoPlayer.Builder(this).setMediaSourceFactory(sources)
+        val player = ExoPlayer.Builder(this, de.mm20.launcher2.comms.media.MediaDecoderPack.renderersFactory(this)).setMediaSourceFactory(sources)
             .setAudioAttributes(AudioAttributes.Builder().setUsage(C.USAGE_MEDIA).setContentType(C.AUDIO_CONTENT_TYPE_MUSIC).build(), true)
             .setHandleAudioBecomingNoisy(true).setWakeMode(C.WAKE_MODE_NETWORK).build()
         player.addListener(object : Player.Listener {

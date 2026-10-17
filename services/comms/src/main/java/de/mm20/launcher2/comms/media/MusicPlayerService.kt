@@ -1,5 +1,6 @@
 package de.mm20.launcher2.comms.media
 
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.common.AudioAttributes
 import android.os.Handler
 import android.os.Looper
@@ -15,6 +16,7 @@ import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
 
 /** Plays the local music library. Media3 takes care of the notification and lock screen controls. */
+@UnstableApi
 class MusicPlayerService : MediaSessionService() {
 
     private var mediaSession: MediaSession? = null
@@ -37,7 +39,7 @@ class MusicPlayerService : MediaSessionService() {
             .setUsage(C.USAGE_MEDIA)
             .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
             .build()
-        val player = ExoPlayer.Builder(this)
+        val player = ExoPlayer.Builder(this, MediaDecoderPack.renderersFactory(this))
             .setAudioAttributes(audioAttributes, true)
             .setHandleAudioBecomingNoisy(true)
             // keeps the CPU (and for a stream the Wi-Fi) awake while playing with the screen off

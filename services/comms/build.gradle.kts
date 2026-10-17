@@ -54,6 +54,7 @@ android {
     kotlin {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_1_8)
+            optIn.add("androidx.media3.common.util.UnstableApi")
         }
     }
     namespace = "de.mm20.launcher2.comms"
@@ -94,5 +95,6 @@ dependencies {
     implementation(libs.androidx.media3.common)
     implementation(libs.androidx.media3.hls)
     implementation(libs.androidx.media3.dash)
+    implementation(libs.nextlib) // official NextLib FFmpeg decoders (Maven Central, GPL-3.0)
     // === TELOS_PENDING_REVIEW_END: sms_and_radio_engine ===
 }

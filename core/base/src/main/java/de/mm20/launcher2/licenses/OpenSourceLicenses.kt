@@ -228,9 +228,9 @@ val OpenSourceLicenses = arrayOf(
     ),
     OpenSourceLibrary(
         name = "NextLib",
-        description = "FFmpeg based extension for Media3",
-        licenseName = R.string.apache_license_name,
-        licenseText = R.raw.license_apache_2,
+        description = "Official FFmpeg extension for Media3 (Maven: nextlib-media3ext)",
+        licenseName = R.string.gpl3_name,
+        licenseText = R.raw.license_gpl_3,
         url = "https://github.com/anilbeesetti/nextlib",
     ),
     OpenSourceLibrary(

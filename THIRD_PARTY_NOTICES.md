@@ -206,8 +206,9 @@ Both services are used with the user's own API key.
 
 ## NextLib (FFmpeg decoders in Telos Video)
 
-NextLib, https://github.com/anilbeesetti/nextlib (GPL-3.0), used unchanged as a Maven dependency. It
-bundles FFmpeg (LGPL-2.1+, https://ffmpeg.org) and dav1d (BSD-2-Clause, https://code.videolan.org/videolan/dav1d).
+NextLib, https://github.com/anilbeesetti/nextlib (GPL-3.0), used unchanged as a Maven dependency
+(`io.github.anilbeesetti:nextlib-media3ext`). It bundles FFmpeg (LGPL-2.1+, https://ffmpeg.org) and
+dav1d (BSD-2-Clause, https://code.videolan.org/videolan/dav1d).
 
 ## Next Player
 

@@ -125,7 +125,7 @@ and stays on while the player is open.
 ### Decoding
 
 - Media3 / ExoPlayer plays what the phone's hardware decoders support.
-- **FFmpeg software decoders** take over for audio such as AC3, E-AC3, DTS and TrueHD when the phone has no decoder.
+- Official **NextLib** FFmpeg software decoders (Maven) take over for audio such as AC3, E-AC3, DTS and TrueHD when the phone has no decoder. Playback stays in the Telos player.
 - A playlist of videos from the library plays in order.
 
 ### Picture in picture

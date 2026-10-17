@@ -108,7 +108,7 @@ are entered by you and kept on the device, encrypted with the Android Keystore.
 | Posters and descriptions | Movies, Series | stable, needs network |
 | Gestures, speed, picture size, audio tracks, repeat | Player | stable |
 | Picture in picture | Player | stable |
-| FFmpeg audio decoders | Player | stable |
+| FFmpeg audio decoders | Player | official NextLib |
 | Web streams (HLS, DASH, MP4, RTSP) | Link icon | stable |
 | Torrents | Link icon, magnet links | stable, depends on peers |
 | Subtitles from a file, and online search without an account | Player | stable (Podnapisi untested) |

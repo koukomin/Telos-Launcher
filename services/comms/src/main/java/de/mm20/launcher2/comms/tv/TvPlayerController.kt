@@ -543,7 +543,7 @@ class TvPlayerController(
             .setUsage(C.USAGE_MEDIA)
             .setContentType(C.AUDIO_CONTENT_TYPE_MOVIE)
             .build()
-        val p = ExoPlayer.Builder(app)
+        val p = ExoPlayer.Builder(app, de.mm20.launcher2.comms.media.MediaDecoderPack.renderersFactory(app))
             .setMediaSourceFactory(DefaultMediaSourceFactory(DefaultDataSource.Factory(app, httpFactory)))
             .setAudioAttributes(attributes, true)
             .setHandleAudioBecomingNoisy(true)

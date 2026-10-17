@@ -69,7 +69,7 @@ class RadioPlayerService : MediaSessionService(), KoinComponent {
         // Streams are requested with an app specific user agent. Android's default "Dalvik/..."
         // agent is rejected by some stations (same fix as Transistor 4.3.8, for example Live365).
         val httpFactory = DefaultHttpDataSource.Factory().setUserAgent(USER_AGENT)
-        val exo = ExoPlayer.Builder(this)
+        val exo = ExoPlayer.Builder(this, de.mm20.launcher2.comms.media.MediaDecoderPack.renderersFactory(this))
             .setMediaSourceFactory(DefaultMediaSourceFactory(DefaultDataSource.Factory(this, httpFactory)))
             .setAudioAttributes(audioAttributes, true)
             .setHandleAudioBecomingNoisy(true)

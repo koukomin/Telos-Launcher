@@ -175,9 +175,7 @@ private fun PlayerContent(
     val managedNetwork = isTorrent || uris.any { it.scheme in setOf("http", "https") && it.host !in setOf("127.0.0.1", "localhost", "::1", "[::1]") }
     val player = remember {
         videoState("started")
-        // FFmpeg software decoders (AC3, E-AC3, DTS, TrueHD, ...) take over where the phone has no decoder
-        val renderers = io.github.anilbeesetti.nextlib.media3ext.ffdecoder.NextRenderersFactory(context)
-            .setExtensionRendererMode(androidx.media3.exoplayer.DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
+        val renderers = de.mm20.launcher2.comms.media.MediaDecoderPack.renderersFactory(context)
         ExoPlayer.Builder(context, renderers).setWakeMode(androidx.media3.common.C.WAKE_MODE_NETWORK)
             // addresses of network storages (rem://) are read through Telos Files
             .setMediaSourceFactory(androidx.media3.exoplayer.source.DefaultMediaSourceFactory(RemoteRoutingDataSource.factory(context)))
