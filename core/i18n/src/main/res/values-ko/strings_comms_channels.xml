@@ -27,4 +27,9 @@
     <string name="comms_popup_reply">새 문자 팝업 답장</string>
     <string name="comms_export_sms">문자 기록 내보내기</string>
     <string name="comms_import_sms">문자 기록 가져오기</string>
+    <string name="comms_e2e_enable">Encrypted SMS (Telos to Telos)</string>
+    <string name="comms_e2e_enable_summary">ECDH and AES-GCM over SMS. Both sides need Telos. Not Signal or SMSecure compatible.</string>
+    <string name="comms_e2e_start">Start encrypted session</string>
+    <string name="comms_e2e_session_started">Encrypted SMS session started</string>
+    <string name="comms_e2e_undecryptable">Encrypted message (could not decrypt)</string>
 </resources>

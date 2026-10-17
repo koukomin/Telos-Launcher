@@ -27,4 +27,9 @@
     <string name="comms_popup_reply">Αναδυόμενη απάντηση σε νέο SMS</string>
     <string name="comms_export_sms">Εξαγωγή ιστορικού SMS</string>
     <string name="comms_import_sms">Εισαγωγή ιστορικού SMS</string>
+    <string name="comms_e2e_enable">Κρυπτογραφημένα SMS (Telos προς Telos)</string>
+    <string name="comms_e2e_enable_summary">ECDH και AES-GCM πάνω σε SMS. Και οι δύο πλευρές χρειάζονται Telos. Δεν είναι συμβατό με Signal ή SMSecure.</string>
+    <string name="comms_e2e_start">Έναρξη κρυπτογραφημένης συνεδρίας</string>
+    <string name="comms_e2e_session_started">Η κρυπτογραφημένη συνεδρία SMS ξεκίνησε</string>
+    <string name="comms_e2e_undecryptable">Κρυπτογραφημένο μήνυμα (αδυναμία αποκρυπτογράφησης)</string>
 </resources>

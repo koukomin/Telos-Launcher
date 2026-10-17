@@ -525,6 +525,20 @@ private fun ThreadView(
                     dismissButton = { TextButton(onClick = { scheduleOpen = false }) { Text(stringResource(R.string.hc_cancel)) } },
                 )
             }
+            val e2eOn by settings.smsE2eEnabled.collectAsStateWithLifecycle(false)
+            val e2eReady = single && e2eOn && de.mm20.launcher2.comms.sms.EncryptedSms.hasSession(context, addresses[0])
+            if (single && e2eOn) {
+                TextButton(onClick = {
+                    sendScope.launch {
+                        withContext(Dispatchers.IO) {
+                            SmsThreads.send(context, addresses[0], de.mm20.launcher2.comms.sms.EncryptedSms.handshakeSms(context))
+                        }
+                    }
+                }) { Text(stringResource(R.string.comms_e2e_start)) }
+                de.mm20.launcher2.comms.sms.EncryptedSms.safetyNumber(context, addresses[0])?.let { sn ->
+                    Text(sn, style = MaterialTheme.typography.labelSmall, modifier = Modifier.padding(horizontal = 12.dp))
+                }
+            }
             TextButton(
                 enabled = body.isNotBlank() || attachments.isNotEmpty(),
                 onClick = {
@@ -554,7 +568,10 @@ private fun ThreadView(
                         }
                         val ok = withContext(Dispatchers.IO) {
                             if (asMms) SmsThreads.sendMms(context, addresses, outbound, picked, sub)
-                            else SmsThreads.send(context, dest, outbound, sub)
+                            else {
+                                val wire = if (e2eReady) de.mm20.launcher2.comms.sms.EncryptedSms.encrypt(context, dest, outbound) else null
+                                SmsThreads.send(context, dest, outbound, sub, wire)
+                            }
                         }
                         failed = !ok
                         if (ok) { onBody(""); onAttachments(emptyList()); version++ }

@@ -715,6 +715,8 @@ Text (SMS) and picture (MMS) messages as conversations with a reply field. It is
 
 **Messengers:** On a contact you can set the **default call** to the phone or to Signal, WhatsApp, Telegram or Viber. The dialer opens that app; if it fails, Telos places a normal phone call. Telegram detection includes official Telegram, Telegram X, Plus, Nekogram, Nagram, Forkgram, Mercurygram and similar packages. Telos does not talk to Signal (or other) servers.
 
+**Encrypted SMS (optional):** Telos-to-Telos ECDH (P-256) and AES-GCM over ordinary SMS. Enable it in Phone settings, then start a session in the conversation. Both sides must use Telos. It is not compatible with Signal or SMSecure. MMS stays unencrypted.
+
 **Status and limitations:** MMS (pictures, videos, group messages) is experimental and untested across devices and carriers. A video of more than about 2.4 MB is silently left out of a message. There is no RCS and no end-to-end encryption. Messenger calls and chats use the installed app via Intents.
 
 ### Telos Files

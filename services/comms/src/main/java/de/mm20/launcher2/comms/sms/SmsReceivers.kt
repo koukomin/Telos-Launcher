@@ -40,8 +40,19 @@ class SmsDeliverReceiver : BroadcastReceiver(), KoinComponent {
                     BlockedMessages.interceptIfBlocked(context, spam, address, body, date)
                     return@launch
                 }
-                SmsStore.insertInbox(context, address, body, date)
-                SmsNotifier.incoming(context, settings, address, body)
+                var stored = body
+                if (snap?.smsE2eEnabled == true && EncryptedSms.isTelosE2e(body)) {
+                    if (EncryptedSms.isHandshake(body)) {
+                        val reply = EncryptedSms.acceptHandshake(context, address, body)
+                        if (reply != null) SmsThreads.send(context, address, reply)
+                        stored = SmsText.get(context, "comms_e2e_session_started", "Encrypted SMS session started")
+                    } else {
+                        stored = EncryptedSms.decrypt(context, address, body)
+                            ?: SmsText.get(context, "comms_e2e_undecryptable", "Encrypted message (could not decrypt)")
+                    }
+                }
+                SmsStore.insertInbox(context, address, stored, date)
+                SmsNotifier.incoming(context, settings, address, stored)
             } finally {
                 pending.finish()
             }

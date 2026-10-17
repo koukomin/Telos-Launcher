@@ -188,9 +188,11 @@ object SmsThreads {
      * copy is kept by Telos (the system does not store what another app sends). Returns false when
      * it could not be sent.
      */
-    fun send(context: Context, address: String, text: String, subId: Int = -1): Boolean {
+    fun send(context: Context, address: String, text: String, subId: Int = -1, wire: String? = null): Boolean {
         if (address.isBlank() || text.isBlank()) return false
-        val row = SmsStore.insertOutgoing(context, address, text.trim(), subId)
+        val stored = text.trim()
+        val payload = (wire ?: stored).trim()
+        val row = SmsStore.insertOutgoing(context, address, stored, subId)
         val sentIntent = row?.let {
             android.app.PendingIntent.getBroadcast(
                 context, it.hashCode(),
@@ -199,9 +201,9 @@ object SmsThreads {
                     (if (android.os.Build.VERSION.SDK_INT >= 31) android.app.PendingIntent.FLAG_MUTABLE else 0),
             )
         }
-        val sent = SmsRepository(context).sendSms(address, text.trim(), sentIntent, subId)
+        val sent = SmsRepository(context).sendSms(address, payload, sentIntent, subId)
         if (!sent) row?.let { SmsStore.setType(context, it, Telephony.Sms.MESSAGE_TYPE_FAILED) }
-        if (sent && row == null) SentLog.add(context, address, text.trim())
+        if (sent && row == null) SentLog.add(context, address, stored)
         return sent
     }
 

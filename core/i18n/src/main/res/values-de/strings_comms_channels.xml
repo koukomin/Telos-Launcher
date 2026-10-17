@@ -27,4 +27,9 @@
     <string name="comms_popup_reply">Popup-Antwort bei neuer SMS</string>
     <string name="comms_export_sms">SMS-Verlauf exportieren</string>
     <string name="comms_import_sms">SMS-Verlauf importieren</string>
+    <string name="comms_e2e_enable">Verschlüsselte SMS (Telos zu Telos)</string>
+    <string name="comms_e2e_enable_summary">ECDH und AES-GCM über SMS. Beide Seiten brauchen Telos. Nicht mit Signal oder SMSecure kompatibel.</string>
+    <string name="comms_e2e_start">Verschlüsselte Sitzung starten</string>
+    <string name="comms_e2e_session_started">Verschlüsselte SMS-Sitzung gestartet</string>
+    <string name="comms_e2e_undecryptable">Verschlüsselte Nachricht (Entschlüsselung fehlgeschlagen)</string>
 </resources>

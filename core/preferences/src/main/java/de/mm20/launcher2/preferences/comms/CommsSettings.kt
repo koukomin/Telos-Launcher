@@ -344,6 +344,12 @@ class CommsSettings internal constructor(
         dataStore.update { it.copy(comms = it.comms.copy(smsPopupReply = enabled)) }
     }
 
+    val smsE2eEnabled
+        get() = dataStore.data.map { it.comms.smsE2eEnabled }
+    fun setSmsE2eEnabled(enabled: Boolean) {
+        dataStore.update { it.copy(comms = it.comms.copy(smsE2eEnabled = enabled)) }
+    }
+
     val hiddenNumbers
         get() = dataStore.data.map { it.comms.hiddenNumbers }
     fun setHiddenNumber(number: String, hidden: Boolean) {

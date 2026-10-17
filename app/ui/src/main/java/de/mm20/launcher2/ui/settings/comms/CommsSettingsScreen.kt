@@ -601,6 +601,13 @@ fun CommsSettingsScreen() {
                     value = popupReply,
                     onValueChanged = { viewModel.setSmsPopupReply(it) },
                 )
+                val e2e by viewModel.smsE2eEnabled.collectAsStateWithLifecycle()
+                SwitchPreference(
+                    title = stringResource(R.string.comms_e2e_enable),
+                    summary = stringResource(R.string.comms_e2e_enable_summary),
+                    value = e2e,
+                    onValueChanged = { viewModel.setSmsE2eEnabled(it) },
+                )
                 ListPreference(
                     title = stringResource(R.string.comms_sms_auto_delete),
                     value = autoDays,

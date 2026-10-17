@@ -247,6 +247,8 @@ class CommsSettingsScreenVM : ViewModel(), KoinComponent {
     fun setBlockAlphanumeric(enabled: Boolean) = commsSettings.setBlockAlphanumeric(enabled)
     val smsPopupReply = commsSettings.smsPopupReply.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
     fun setSmsPopupReply(enabled: Boolean) = commsSettings.setSmsPopupReply(enabled)
+    val smsE2eEnabled = commsSettings.smsE2eEnabled.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    fun setSmsE2eEnabled(enabled: Boolean) = commsSettings.setSmsE2eEnabled(enabled)
 
     fun importVcf(content: String, onDone: (Int) -> Unit) {
         viewModelScope.launch {

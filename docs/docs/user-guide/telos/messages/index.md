@@ -45,6 +45,7 @@ them here." with an **Allow** button.
 | Pin, archive, delete | On each conversation row. Archived threads have their own list |
 | Rename | Tap the conversation title |
 | Speak | Tap a message bubble to hear it |
+| Encrypted SMS | Optional Telos-to-Telos ECDH and AES-GCM over SMS. Enable in Phone settings, then **Start encrypted session**. Both sides need Telos. Not Signal or SMSecure. MMS stays unencrypted |
 | **+** | Attach any file (pictures, documents). Only as the default SMS app |
 | Speech and **3s** | Speech-to-text into the field. **3s** waits three seconds before sending so you can cancel by leaving the thread |
 | **Send with** chips | Choose the SIM when two or more SIMs are active and the Phone permission is granted. The last SIM is remembered per conversation |
